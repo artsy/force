@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<972437d8b712917f301d8b14f647c454>>
+ * @generated SignedSource<<562e6a4b86a8fc4df6dc44b1f3632487>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type SaleAgreementStatus = "ARCHIVED" | "CURRENT" | "PAST" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type SaleAgreementsFilter_viewer$data = {
@@ -172,8 +172,7 @@ return {
                     ],
                     "storageKey": null
                   },
-                  "action": "NONE",
-                  "path": "saleAgreementsConnection.edges.node.sale"
+                  "action": "NONE"
                 }
               ],
               "storageKey": null

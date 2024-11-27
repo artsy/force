@@ -60,7 +60,7 @@ export const useSelectArtworkLists = (artworkID: string) => {
         return
       }
 
-      const response = data.artworksCollectionsBatchUpdate?.responseOrError
+      const response = data?.artworksCollectionsBatchUpdate?.responseOrError
       const addedCounts = getCountsByLists(response?.addedToArtworkLists)
       const removedCounts = getCountsByLists(response?.removedFromArtworkLists)
 

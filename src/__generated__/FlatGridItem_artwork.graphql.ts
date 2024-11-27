@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<049dc2dac2c2b433704451913514031c>>
+ * @generated SignedSource<<2352f590c2b47d97b98a016c0ee58310>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FlatGridItem_artwork$data = {
   readonly artistNames: string | null | undefined;

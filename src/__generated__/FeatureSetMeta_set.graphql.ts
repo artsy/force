@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b0b3edd21e7a9b730c1d745e7ea4c1da>>
+ * @generated SignedSource<<bd9cba104a8d445f99884ced4265e3d3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FeatureSetMeta_set$data = {
   readonly description: string | null | undefined;

@@ -20,15 +20,15 @@ export const fairsRoutes: RouteProps[] = [
   {
     path: "/art-fairs",
     getComponent: () => FairsApp,
-    onClientSideRender: () => {
-      return FairsApp.preload()
+    onPreloadJS: () => {
+      FairsApp.preload()
     },
     children: [
       {
         path: "",
         getComponent: () => FairsIndexRoute,
-        onClientSideRender: () => {
-          return FairsIndexRoute.preload()
+        onPreloadJS: () => {
+          FairsIndexRoute.preload()
         },
         query: graphql`
           query fairsRoutes_FairsQuery @cacheable {

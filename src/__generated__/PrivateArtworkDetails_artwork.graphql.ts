@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<343c50f095cd1c66dc06b268ad64d679>>
+ * @generated SignedSource<<3dbfed61302ba8ca2ce174983f3d6d42>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PrivateArtworkDetails_artwork$data = {
   readonly " $fragmentSpreads": FragmentRefs<"PrivateArtworkAboutArtist_artwork" | "PrivateArtworkAboutWork_artwork" | "PrivateArtworkMetadata_artwork">;

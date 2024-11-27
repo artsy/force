@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e94918c7956bfaa41354741a2a0d987>>
+ * @generated SignedSource<<fbe327ab6de08f6c3b04e3945225c0b3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairOverview_fair$data = {
   readonly articlesConnection: {

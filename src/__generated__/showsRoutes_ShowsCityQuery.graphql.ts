@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<02187584980e269b24cc1281ba68dcfe>>
+ * @generated SignedSource<<a8aff238964e22aeff945b65f883de80>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type showsRoutes_ShowsCityQuery$variables = {
   page?: number | null | undefined;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9ea5e3eb410fa84ed34b2887b9e98870>>
+ * @generated SignedSource<<ad42cfc22e8e83d808380480cf2f2054>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type partnerRoutes_ContactQuery$variables = {
   partnerId: string;

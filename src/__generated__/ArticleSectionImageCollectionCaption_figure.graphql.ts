@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d0cfd5f799434074ea68b6a2ff505152>>
+ * @generated SignedSource<<1bd7fe3432b84b1f0ef7ebb1b4857e96>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionImageCollectionCaption_figure$data = {
   readonly __typename: string;

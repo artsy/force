@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<700aa65e5a435796723dd68613ca1ecd>>
+ * @generated SignedSource<<f3f0e801d389af4fa213a832d18549cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityHeaderGeneStoryQuery$variables = {
   id: string;

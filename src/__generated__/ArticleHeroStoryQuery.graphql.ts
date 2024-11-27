@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0de33fc26d564b7a84bf30f19eebe1e8>>
+ * @generated SignedSource<<ee9b8c3d1aa077ce7e13cbbe5b6b4dd5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleHeroStoryQuery$variables = {
   id: string;

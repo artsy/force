@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8b654e161a8f03413a1fc394fe13caa8>>
+ * @generated SignedSource<<e380358d5c93d4e2f42d3577856566fd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PhoneNumberRoute_submission$data = {
   readonly userPhoneNumber: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4222d227a1c16cd0ca8ca3c0570f70e0>>
+ * @generated SignedSource<<a8ced46c1cd13289e77459082b7b410d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsCurrentShow_show$data = {
   readonly artworksConnection: {

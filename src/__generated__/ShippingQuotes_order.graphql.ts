@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<57e350f701551bebebe503023a4ff735>>
+ * @generated SignedSource<<e65845ea0a2b4b252c68f01568bf149a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShippingQuotes_order$data = {
   readonly lineItems: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9a5a07aab2fd4c20c6eab8bb1213b8ba>>
+ * @generated SignedSource<<1fde37615297f665f663ac7a6e445059>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerArtistDetails_partnerArtist$data = {
   readonly biographyBlurb: {

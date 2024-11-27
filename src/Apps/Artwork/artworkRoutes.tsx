@@ -16,7 +16,7 @@ export const artworkRoutes: RouteProps[] = [
     path: "/artwork/:artworkID/:optional?", // There's a `confirm-bid` nested route.
     fetchPolicy: "store-and-network",
     getComponent: () => ArtworkApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       ArtworkApp.preload()
     },
     prepareVariables: ({ artworkID }) => {

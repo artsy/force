@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<69bc6a65b9da04853a7ab99dc079faa4>>
+ * @generated SignedSource<<13abb643381f9984ae1a44fd7106f8b1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type deleteAlertInput = {
   clientMutationId?: string | null | undefined;
   id: string;

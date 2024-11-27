@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ce17d9813bf5a1fd24b71c84316fc1e4>>
+ * @generated SignedSource<<86c6aa92e862bdb4d76e15e7a3c7a2e4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DimensionsRoute_submission$data = {
   readonly depth: string | null | undefined;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6fb7954cc034b3488d79d0fa3b97711e>>
+ * @generated SignedSource<<81f7c6fc3107e8ce0823f2473ae049c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomCard_viewingRoom$data = {
   readonly coverImage: {

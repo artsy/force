@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<49683831b66af656cc2e63f480d1af8c>>
+ * @generated SignedSource<<0be8ff9b8392c6828d6ae97307e0f936>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsSavesProfilesQuery$variables = {
   after?: string | null | undefined;

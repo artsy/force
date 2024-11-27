@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f2f01f3a88a080c01cbc9192a469666f>>
+ * @generated SignedSource<<0a8c51b2700b8e0b0637d6a7d2e8ac7c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarArtworkTitle_Test_Query$variables = Record<PropertyKey, never>;
 export type ArtworkSidebarArtworkTitle_Test_Query$data = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<044eb6b1718c9e8482f05c0f5d8e292a>>
+ * @generated SignedSource<<08dca9e24d4359b4da906fa261ef5e27>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditSettingsPassword_me$data = {
   readonly hasPassword: boolean;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a07c99a56d56258133515c2a2c32a5e8>>
+ * @generated SignedSource<<ec2a801ca3678c6878a482b23871445e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionConfirmRegistrationRoute_me$data = {
   readonly hasQualifiedCreditCards: boolean | null | undefined;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<383f127f76b5cc900ab7e76791b7d04d>>
+ * @generated SignedSource<<bfcdeea3172a8a3ac951682e795c6512>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionVideo_section$data = {
   readonly embed: string | null | undefined;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<db801f75fc0c166cd03f0e8aa4a37b5b>>
+ * @generated SignedSource<<641c44bd7d1cd66b3301a48e943806ee>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type NotificationsPillsQuery$variables = Record<PropertyKey, never>;
 export type NotificationsPillsQuery$data = {
   readonly viewer: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4877837b8b637ef985f8ff8740bce61a>>
+ * @generated SignedSource<<ff7cc3a3eefc9f8788185481c69a0ef7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkTopContextBar_Test_Query$variables = Record<PropertyKey, never>;
 export type ArtworkTopContextBar_Test_Query$data = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<30eab97e11954e2e5b951fe9bc6738c9>>
+ * @generated SignedSource<<b8a04a8484bbe133218950924dcc8267>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type AlertProviderTestQuery$variables = Record<PropertyKey, never>;
 export type AlertProviderTestQuery$data = {
   readonly artist: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ad853981b94e59714f00b8c24160988e>>
+ * @generated SignedSource<<d98f7ae82044b9eb4a8c9c9b2d691281>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type SavesArtworksHeaderQuery$variables = {
   id: string;
 };

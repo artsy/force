@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eaf82dadf6f5457e8816600eb107d4d2>>
+ * @generated SignedSource<<b42f021e3f1b5f9d85f61e37b4758cf0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FollowGeneButton_gene$data = {
   readonly id: string;

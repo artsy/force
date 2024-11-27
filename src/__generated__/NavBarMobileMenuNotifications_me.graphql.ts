@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f3612dffe88ecd2b814abbdb3fa7efd4>>
+ * @generated SignedSource<<d2b8a29f4e509772e99d1d442996ac9e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NavBarMobileMenuNotifications_me$data = {
   readonly unreadConversationCount: number;

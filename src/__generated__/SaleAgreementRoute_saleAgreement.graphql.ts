@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<589dbbb54fe5e7987a6e44d0475c7601>>
+ * @generated SignedSource<<8e3c8429b8331bc34cf15ecc48a2ebe8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SaleAgreementRoute_saleAgreement$data = {
   readonly content: string;
@@ -68,8 +68,7 @@ return {
         "name": "content",
         "storageKey": "content(format:\"HTML\")"
       },
-      "action": "NONE",
-      "path": "content"
+      "action": "NONE"
     },
     {
       "alias": null,
@@ -106,8 +105,7 @@ return {
         ],
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "sale"
+      "action": "NONE"
     }
   ],
   "type": "SaleAgreement",

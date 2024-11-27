@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a8889795298cf38fa6d19e9c9fbc1c64>>
+ * @generated SignedSource<<ed418eb46079729d12b65d5a5965fab1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationApp_viewer$data = {
   readonly " $fragmentSpreads": FragmentRefs<"ConversationsContext_viewer" | "ConversationsSidebar_viewer">;

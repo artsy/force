@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5746ff62f8d5252746adc9244b732b90>>
+ * @generated SignedSource<<300965262ab7a9a3a63b19ad14bbec48>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CreditCardPicker_me$data = {
   readonly creditCards: {

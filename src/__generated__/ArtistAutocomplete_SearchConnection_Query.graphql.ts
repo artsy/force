@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a2c916fd5034f86a06e783660208b564>>
+ * @generated SignedSource<<44b834e6a0208b3960c33a8f9bef0543>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type ArtistAutocomplete_SearchConnection_Query$variables = {
   searchQuery: string;
 };

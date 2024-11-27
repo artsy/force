@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e92fd904adcf6b7dfb7374b88b8162e7>>
+ * @generated SignedSource<<65c354ba5c575ee850d6633e2558de1d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HomeHeroUnits_heroUnits$data = {
   readonly edges: ReadonlyArray<{

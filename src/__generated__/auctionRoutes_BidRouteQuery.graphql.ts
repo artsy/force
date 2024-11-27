@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4096ddeb520ebe4b1fb851456cf8e674>>
+ * @generated SignedSource<<c5cf3aa3ba59891fb32a561bbaedb88d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type auctionRoutes_BidRouteQuery$variables = {
   artworkSlug: string;

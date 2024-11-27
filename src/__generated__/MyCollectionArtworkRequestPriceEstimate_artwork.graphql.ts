@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fcfd048cb16027c782b3f2a22c38c8a2>>
+ * @generated SignedSource<<f33d735d8c5ba6ff1fa8b1a31ff5fa08>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkRequestPriceEstimate_artwork$data = {
   readonly hasPriceEstimateRequest: boolean | null | undefined;

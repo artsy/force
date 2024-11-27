@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2c2684939f5d5be10d33318dec17bf53>>
+ * @generated SignedSource<<7338b5e375ac787fd688fae269038ff9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type RequestCredentialsForAssetUploadInput = {
   acl: string;
   clientMutationId?: string | null | undefined;

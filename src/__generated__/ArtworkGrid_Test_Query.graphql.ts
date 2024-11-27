@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<797825a8bb52a56c287603ed607e74ef>>
+ * @generated SignedSource<<b3aae7df5640cb4988af6db1e2065db5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 export type ArtworkGrid_Test_Query$variables = Record<PropertyKey, never>;

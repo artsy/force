@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f5a0bd9f91f8ab31eaff59623b51370e>>
+ * @generated SignedSource<<c1e7ed3ed86f97b307accfed1a95df1b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarCreateAlert_artwork$data = {
   readonly isEligibleToCreateAlert: boolean;

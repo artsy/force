@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<42adddd99e80cbfef8ee31e747f0b6c5>>
+ * @generated SignedSource<<8bacec8b14ad29203c49fe0e4b9854c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtQuizTrendingArtists_viewer$data = {
   readonly curatedTrendingArtists: {

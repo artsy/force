@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2561f57903acda14f87a530fde0af19c>>
+ * @generated SignedSource<<1e0571f4208965ad8feca1f29e500984>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type collectorProfileRoutes_CollectorProfileQuery$variables = Record<PropertyKey, never>;
 export type collectorProfileRoutes_CollectorProfileQuery$data = {

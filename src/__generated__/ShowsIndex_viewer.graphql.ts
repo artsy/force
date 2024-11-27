@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d6834f4d2aa2fc929b167d84319a8ae4>>
+ * @generated SignedSource<<b7425e1c5f0af6064c2d88d6b4a5507b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsIndex_viewer$data = {
   readonly " $fragmentSpreads": FragmentRefs<"ShowsHeader_viewer">;

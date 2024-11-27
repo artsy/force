@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b094819d4673064acd73fe3c18c6fc6d>>
+ * @generated SignedSource<<4919a85a13724d911053c7c6ec326b45>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MockRelayRendererFixturesArtistQuery$variables = {
   id: string;

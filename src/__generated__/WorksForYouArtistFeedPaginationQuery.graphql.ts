@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f64a136d05133feeee2f376bed38c944>>
+ * @generated SignedSource<<da1d64d82f4a7a5ff8f989426ad64ef9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistArtworksFilters = "IS_FOR_SALE" | "IS_NOT_FOR_SALE" | "%future added value";
 export type WorksForYouArtistFeedPaginationQuery$variables = {

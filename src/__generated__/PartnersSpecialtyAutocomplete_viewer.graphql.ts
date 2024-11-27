@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<56815c4a3ed8f6c7c3957f25dd95480e>>
+ * @generated SignedSource<<ce57e8efcf6526471508898ffd1529e5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnersSpecialtyAutocomplete_viewer$data = {
   readonly allOptions: {

@@ -36,14 +36,14 @@ export const showsRoutes: RouteProps[] = [
   {
     path: "/shows",
     getComponent: () => ShowsApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       return ShowsApp.preload()
     },
     children: [
       {
         path: "",
         getComponent: () => ShowsIndexRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           return ShowsIndexRoute.preload()
         },
         query: graphql`
@@ -60,7 +60,7 @@ export const showsRoutes: RouteProps[] = [
       {
         path: "all-cities",
         getComponent: () => ShowsAllCities,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           return ShowsAllCities.preload()
         },
         query: graphql`
@@ -74,7 +74,7 @@ export const showsRoutes: RouteProps[] = [
       {
         path: ":slug",
         getComponent: () => ShowsCityRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           return ShowsCityRoute.preload()
         },
         prepareVariables: ({ slug }: { slug: string }, props) => {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<21f9fef4b34389bf228d78486277886f>>
+ * @generated SignedSource<<3d65d0e40e4cababa5bcb6c4122c802a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionLotInfo_saleArtwork$data = {
   readonly artwork: {

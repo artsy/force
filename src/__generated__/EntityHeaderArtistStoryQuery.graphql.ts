@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0743e75df54553f11cfbaae5690d069a>>
+ * @generated SignedSource<<3c4bb2dfaeec780acc11eed295dcd40e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityHeaderArtistStoryQuery$variables = {
   id: string;

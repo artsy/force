@@ -73,6 +73,9 @@ export const usePrefetchRoute = (
             if (isDevelopment) {
               console.log("[usePrefetchRoute] Starting prefetch:", path)
             }
+
+            // Prefetch bundle split JS alongside data, if defined
+            foundRoute.route.onPreloadJS?.()
           },
           complete: () => {
             if (isDevelopment) {

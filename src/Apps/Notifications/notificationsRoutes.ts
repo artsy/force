@@ -15,7 +15,7 @@ export const notificationsRoutes: RouteProps[] = [
     path: "/notifications",
     layout: "FullBleed",
     getComponent: () => NotificationsApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       NotificationsApp.preload()
     },
     query: graphql`
@@ -30,7 +30,7 @@ export const notificationsRoutes: RouteProps[] = [
     path: "/notification/:notificationId",
     layout: "FullBleed",
     getComponent: () => NotificationsApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       NotificationsApp.preload()
     },
     query: graphql`

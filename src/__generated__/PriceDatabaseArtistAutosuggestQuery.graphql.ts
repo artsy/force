@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4cf58f7e950d69e79f45270deff02fa3>>
+ * @generated SignedSource<<10ec8b96c41f76576053d20a58e2c86b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type PriceDatabaseArtistAutosuggestQuery$variables = {
   query: string;
 };

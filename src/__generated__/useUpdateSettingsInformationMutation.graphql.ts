@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c4c6fd685bd3a29ca524bcc4ce52b60a>>
+ * @generated SignedSource<<1ca2ffaacc72965f99c91b3d5d9956bc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CurrencyPreference = "EUR" | "GBP" | "USD" | "%future added value";
 export type LengthUnitPreference = "CM" | "IN" | "%future added value";

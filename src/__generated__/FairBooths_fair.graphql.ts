@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<918e0e8bdb92d2691986b3e7737466c1>>
+ * @generated SignedSource<<6b02c2e70b75f8ca2cdc5fa7be584ab6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairBooths_fair$data = {
   readonly exhibitors: {

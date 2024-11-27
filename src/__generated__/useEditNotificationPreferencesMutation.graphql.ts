@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3bb09563946ad291f3d5740be8ced4c2>>
+ * @generated SignedSource<<c9ed6a49554f5b3f102258dca359afed>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type SubGroupInputStatus = "SUBSCRIBED" | "UNSUBSCRIBED" | "%future added value";
 export type updateNotificationPreferencesMutationInput = {
   authenticationToken?: string | null | undefined;

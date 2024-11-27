@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e53cc020c20285d42c435c7e5ea9dec7>>
+ * @generated SignedSource<<747bf3f3bb330bf53609b28fcbd32da5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsCreditCard_creditCard$data = {
   readonly brand: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<edb5a1bbc8058db51b749ad4f224316a>>
+ * @generated SignedSource<<c105e7ff1844500cdc94b30712bf77a6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionApp_viewer$data = {
   readonly showFollowedArtistsTab?: {

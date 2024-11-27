@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3ca5cdfdb0197193e4163b9181cc3eb6>>
+ * @generated SignedSource<<f1a69395aa20ed28766347a7135c7bd5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkDemandIndex_marketPriceInsights$data = {
   readonly demandRank: number | null | undefined;

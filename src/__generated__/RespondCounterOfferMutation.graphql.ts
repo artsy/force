@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<636d4b7a190a4c265e44189288aab640>>
+ * @generated SignedSource<<15434c35d67ff28a7df7a7f247a7a848>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceBuyerCounterOfferInput = {
   amountCents: number;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3bfce272e2df696c733312038d17b179>>
+ * @generated SignedSource<<c5ee7508bd1a0c8c87b5dd1c025fbee6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type conversationsRoutes_ConversationQuery$variables = Record<PropertyKey, never>;
 export type conversationsRoutes_ConversationQuery$data = {
   readonly conversationsConnection: {

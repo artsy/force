@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4040f2f0b958c35ca90a4b6e3e476b50>>
+ * @generated SignedSource<<6a2b6d14028235c0c3ffea711072be9e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type ArticleSectionImageCollectionLayout = "COLUMN_WIDTH" | "FILLWIDTH" | "OVERFLOW_FILLWIDTH" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionImageCollection_section$data = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<10066eb886d1c08cb0821627de799eb1>>
+ * @generated SignedSource<<bccdd3e12218e51e26cddc823ae0f2f3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type conversationsRoutes_DetailQuery$variables = {
   conversationId: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<af60512d574400419df39d9bf4e86cb7>>
+ * @generated SignedSource<<1f5530314489689740dadde688ae2dd1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationStatusWithCounter_order$data = {
   readonly formattedStateExpiresAt: string | null | undefined;
@@ -36,8 +36,7 @@ const node: ReaderFragment = {
         "name": "stateExpiresAt",
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "stateExpiresAt"
+      "action": "NONE"
     },
     {
       "kind": "RequiredField",
@@ -48,8 +47,7 @@ const node: ReaderFragment = {
         "name": "stateUpdatedAt",
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "stateUpdatedAt"
+      "action": "NONE"
     },
     {
       "alias": "formattedStateExpiresAt",

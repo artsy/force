@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<89841c528846e6962b1a86a9dd065b55>>
+ * @generated SignedSource<<62c87950fc828e594776074c7e91ddd2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FrameRoute_submission$data = {
   readonly myCollectionArtwork: {

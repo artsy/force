@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ffd5a3a56a17065e5e8f7ece05322d99>>
+ * @generated SignedSource<<f14411afd1e1bb504b25d791ed1733b1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistArtistSeriesRoute_artist$data = {
   readonly artistSeriesConnection: {

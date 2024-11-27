@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8e81e4b2f87d9272af185eed29be0059>>
+ * @generated SignedSource<<4ee460abc2cdb59208f1cf73d2ee7333>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsApp_me$data = {
   readonly name: string | null | undefined;

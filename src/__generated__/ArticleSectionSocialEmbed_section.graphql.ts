@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<079e1dc6ca178dabeb44944dc78b6cc0>>
+ * @generated SignedSource<<48a032dac47c625b5a05c4b4cd0765f1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionSocialEmbed_section$data = {
   readonly embed: string | null | undefined;

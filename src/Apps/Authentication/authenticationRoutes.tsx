@@ -67,7 +67,7 @@ export const authenticationRoutes: RouteProps[] = [
 
       runAuthMiddleware(props)
     },
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       LoginRoute.preload()
     },
   },
@@ -102,7 +102,7 @@ export const authenticationRoutes: RouteProps[] = [
 
       runAuthMiddleware({ req, res })
     },
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       ResetPasswordRoute.preload()
     },
   },
@@ -120,7 +120,7 @@ export const authenticationRoutes: RouteProps[] = [
 
       runAuthMiddleware(props)
     },
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       SignupRoute.preload()
     },
   },

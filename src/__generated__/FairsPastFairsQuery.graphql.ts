@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5da2ee2225594b012c4f6b4bcd459dd8>>
+ * @generated SignedSource<<52255a39426e06bbe9b4ac1ae1d21de1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairsPastFairsQuery$variables = {
   after?: string | null | undefined;

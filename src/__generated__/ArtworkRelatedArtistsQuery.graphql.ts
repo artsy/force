@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d9aea4b3f39f371c918ffd88037c5496>>
+ * @generated SignedSource<<bd3151e313b999a558839cef46e5c726>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkRelatedArtistsQuery$variables = {
   slug: string;

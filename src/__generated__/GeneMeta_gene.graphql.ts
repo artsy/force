@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<478ba688af0b77e35225d041f4cc65d3>>
+ * @generated SignedSource<<5ec4a54f6e581d9a24ec1b96a42f0d36>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type GeneMeta_gene$data = {
   readonly displayName: string | null | undefined;

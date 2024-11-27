@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4c2d6a331558c75422cf77b3f4665b55>>
+ * @generated SignedSource<<3602be43502c00114965d76c81a1b324>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnersFeaturedCarouselCell_profile$data = {
   readonly internalID: string;

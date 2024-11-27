@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<28986925500825b641ccef93f21be97d>>
+ * @generated SignedSource<<e410bbced2065d246870789a1352e49d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type useBidderPositionQuery$variables = {
   bidderPositionID: string;

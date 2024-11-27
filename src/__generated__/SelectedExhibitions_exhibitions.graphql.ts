@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<906ca7a7cba53d849006eda83c0332c5>>
+ * @generated SignedSource<<ac198a58fdf34b337084c91f83faf29f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SelectedExhibitions_exhibitions$data = ReadonlyArray<{
   readonly city: string | null | undefined;

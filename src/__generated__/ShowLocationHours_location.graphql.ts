@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f90a72ceb389a29614a8e89bbeb29226>>
+ * @generated SignedSource<<34edbb4fe326ae3afdcd822f8f74404a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowLocationHours_location$data = {
   readonly openingHours: {

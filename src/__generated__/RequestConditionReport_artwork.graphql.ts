@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<613fdf3a61e7d48090d73e610d0583cb>>
+ * @generated SignedSource<<f18a648fc703d42386ab18b27a2aa2c9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RequestConditionReport_artwork$data = {
   readonly internalID: string;

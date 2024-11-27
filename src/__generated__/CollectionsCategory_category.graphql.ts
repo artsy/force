@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<770540461563104245ad9fbd7102c2ff>>
+ * @generated SignedSource<<ec1959ce9c8f230672067be0a3c5e3fd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectionsCategory_category$data = {
   readonly collections: ReadonlyArray<{

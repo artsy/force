@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e9796466b2e4ded0caa1c63da1251344>>
+ * @generated SignedSource<<c46afaa6c41fbbf08871155d0464dc4e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsAuctionsRoute_me$data = {
   readonly " $fragmentSpreads": FragmentRefs<"UserActiveBids_me" | "UserBidHistory_me" | "UserRegistrationAuctions_me">;

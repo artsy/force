@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9fc4b8f9812278ddf3e6e451a0409642>>
+ * @generated SignedSource<<60b014c449540e89e7f12f244f3cd422>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchResultsArtistsQuery$variables = {
   first?: number | null | undefined;

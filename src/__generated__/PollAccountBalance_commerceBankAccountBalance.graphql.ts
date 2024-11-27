@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9f3f2bb5c973366ea0bda0b808c7659a>>
+ * @generated SignedSource<<30aba058184e5804e5c95973527fd6b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PollAccountBalance_commerceBankAccountBalance$data = {
   readonly balanceCents: number | null | undefined;

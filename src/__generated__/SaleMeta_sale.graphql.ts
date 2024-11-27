@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a73e907ca3b2e81d647aca2f65c34c49>>
+ * @generated SignedSource<<46b15d72007e7ea7fb90dcd691f534e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SaleMeta_sale$data = {
   readonly coverImage: {

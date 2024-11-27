@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d607ef4ec3a073efe289e3947978e3cf>>
+ * @generated SignedSource<<bfca7b64d430aba9e57e2d4122f8af0f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type OnboardingQuestionOneMutation$variables = {
   collectorLevel: number;
 };

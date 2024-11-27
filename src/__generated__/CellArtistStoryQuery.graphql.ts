@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<06b1911ff5b7a73f5c302c82e2be0fe8>>
+ * @generated SignedSource<<36bb04c20395796a7d27b24b12f250a2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CellArtistStoryQuery$variables = {
   id: string;

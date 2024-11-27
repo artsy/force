@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<90746fcaa6db227a4fc95c22b4ef2a6c>>
+ * @generated SignedSource<<651639d668b592cef5fc9f4bea754d3a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditProfileImage_me$data = {
   readonly icon: {

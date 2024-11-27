@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<50a110316e9b5beaebba6b04b3167e5b>>
+ * @generated SignedSource<<4bada19c2e00be75771b6f80dc93efcb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CareerHighlightModalStepTestQuery$variables = Record<PropertyKey, never>;
 export type CareerHighlightModalStepTestQuery$data = {

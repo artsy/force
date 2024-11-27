@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c4be4fed5954d27319bcc500c063430>>
+ * @generated SignedSource<<09fb8323ac2e3ca03fb39aa09d571f10>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type InquiryInquiryQuery$variables = {
   id: string;

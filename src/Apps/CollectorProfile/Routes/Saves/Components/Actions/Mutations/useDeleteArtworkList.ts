@@ -59,6 +59,10 @@ export const useDeleteArtworkList = () => {
         }
       }
     `,
-    updater: (store, data) => deleteArtworkListUpdater(store, data),
+    updater: (store, data) =>
+      deleteArtworkListUpdater(
+        store,
+        data as useDeleteArtworkListMutation$data
+      ),
   })
 }

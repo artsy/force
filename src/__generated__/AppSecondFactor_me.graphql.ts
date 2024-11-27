@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8d66b7c9880bbd60a74f6ced6a1d3bba>>
+ * @generated SignedSource<<18e597663b8b710dfdb782a9ce79c37f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AppSecondFactor_me$data = {
   readonly appSecondFactors: ReadonlyArray<{

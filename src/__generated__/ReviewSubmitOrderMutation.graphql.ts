@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e5ca05ef6bae5d48835417a282d1ac02>>
+ * @generated SignedSource<<50e947e669bb7542ae84920eb3b496d9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceSubmitOrderInput = {
   clientMutationId?: string | null | undefined;

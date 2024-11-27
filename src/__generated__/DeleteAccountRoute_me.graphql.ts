@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0eed723064404da91c461fd84ef5e7be>>
+ * @generated SignedSource<<a3e1786382db618439857d329b9cf464>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeleteAccountRoute_me$data = {
   readonly hasPassword: boolean;

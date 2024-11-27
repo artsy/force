@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1b0bb7e75d0645b5e950fd51baa3bc38>>
+ * @generated SignedSource<<4a3935048420a77c58b0c86f9c554dd6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomStatementRoute_viewingRoom$data = {
   readonly artworksConnection: {

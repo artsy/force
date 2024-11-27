@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<610c11db51855111cd6470671546a100>>
+ * @generated SignedSource<<697a606465a02ca6757e76e32c8cb31b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerShowOpenedNotification_notification$data = {
   readonly headline: string;

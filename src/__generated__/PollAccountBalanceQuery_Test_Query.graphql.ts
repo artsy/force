@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ddc60503d11f45fcc2d3d20ef3d93c9a>>
+ * @generated SignedSource<<e05dcdf3a05153e81b81532acabe2aaf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PollAccountBalanceQuery_Test_Query$variables = {
   setupIntentId: string;

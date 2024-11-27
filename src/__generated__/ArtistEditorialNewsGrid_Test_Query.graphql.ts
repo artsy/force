@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a4641fafc0377387cd7a8b35815831d>>
+ * @generated SignedSource<<0a90382a34ca69b3a1bd1c4c62ac71bd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistEditorialNewsGrid_Test_Query$variables = Record<PropertyKey, never>;
 export type ArtistEditorialNewsGrid_Test_Query$data = {

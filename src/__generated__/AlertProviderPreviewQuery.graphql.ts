@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ff0293dbe42a3e60ff7bd110d371cc7e>>
+ * @generated SignedSource<<d2b1f6053f7ad3d91e8c0b39d1f384b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type PreviewSavedSearchAttributes = {
   acquireable?: boolean | null | undefined;

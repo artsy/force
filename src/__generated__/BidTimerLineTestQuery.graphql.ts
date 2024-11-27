@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1b7c1171765a698773b464ee00502ca6>>
+ * @generated SignedSource<<08fe23fba598d98b1acf841ba6aceb8f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type BidTimerLineTestQuery$variables = Record<PropertyKey, never>;
 export type BidTimerLineTestQuery$data = {

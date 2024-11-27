@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<384a679dac7be38762307a90e08eefd4>>
+ * @generated SignedSource<<1c7f25a76acd6fe6b9507ecadd535834>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type searchRoutes_SearchResultsTopLevelQuery$variables = {
   keyword: string;

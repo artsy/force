@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<037323d858a6c8260c73fcead9664a47>>
+ * @generated SignedSource<<6ac38919a2a4c2299be601ce52534305>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectionFeaturedArtists_collection$data = {
   readonly category: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<040922970317104adcce57a2535e61a7>>
+ * @generated SignedSource<<e4d94144b81081a3d36b949f3db3659b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkLightbox_artwork$data = {
   readonly formattedMetadata: string | null | undefined;

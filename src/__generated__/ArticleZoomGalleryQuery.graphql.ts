@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5fc1c994a70330de08e6df8d9e3b3924>>
+ * @generated SignedSource<<9216924cdaa225cb0d69134bff5d6a15>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleZoomGalleryQuery$variables = {
   id: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9f94e9e746bfc8c52acba2cfb189788a>>
+ * @generated SignedSource<<2e886c890b9b798659486061db6de89d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type fairOrganizerRoutes_FairOrganizerQuery$variables = {
   slug: string;

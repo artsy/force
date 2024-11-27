@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef97417fd169baed3c3ea7b77f4295e3>>
+ * @generated SignedSource<<73e6bcda5ef173da55950b073989c812>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type WorksForYouFeedPaginationQuery$variables = {
   count: number;

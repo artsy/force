@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0726596a6eefd42b05c96682ee3e4540>>
+ * @generated SignedSource<<89fc9cb2cd0c8357c4a1a14223596208>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebar_me$data = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuctionInfoPolling_me" | "ArtworkSidebarCommercialButtons_me">;

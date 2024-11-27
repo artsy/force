@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e50bbdce3a7a342a1330bb3d0d3bec93>>
+ * @generated SignedSource<<d77f8f2aa0ae8da936278d19c71a7484>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type createCollectionInput = {
   clientMutationId?: string | null | undefined;
   name: string;

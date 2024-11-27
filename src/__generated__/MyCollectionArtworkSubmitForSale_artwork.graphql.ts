@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<495561470b960d5c86c2775f95717041>>
+ * @generated SignedSource<<f3a9c7473141c08a711973f8c467366d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type ArtistTargetSupplyPriority = "FALSE" | "TRUE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkSubmitForSale_artwork$data = {

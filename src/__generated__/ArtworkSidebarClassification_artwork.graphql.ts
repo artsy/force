@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b06798f858077c99140a9986c7175da2>>
+ * @generated SignedSource<<081db95725ae3db4e8de85e07398b7b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarClassification_artwork$data = {
   readonly attributionClass: {

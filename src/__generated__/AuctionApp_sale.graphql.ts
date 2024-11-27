@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ee37fae49eac9e945e5b7eef5eacf527>>
+ * @generated SignedSource<<b87c2c3677c4518f94fc1b22027995c2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionApp_sale$data = {
   readonly cascadingEndTimeIntervalMinutes: number | null | undefined;

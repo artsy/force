@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6870df65d15bfe29ff90b78dcc51ea82>>
+ * @generated SignedSource<<70e2a9f37125af088f932e1dac58a88f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type InvoiceApp_invoice$data = {
   readonly number: string;

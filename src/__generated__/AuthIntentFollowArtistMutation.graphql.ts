@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fe84e05629cd15c9c7b3b675d0fb2824>>
+ * @generated SignedSource<<42d46e344c68a758b69f8a7e68ce2c4f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type FollowArtistInput = {
   artistID: string;
   clientMutationId?: string | null | undefined;

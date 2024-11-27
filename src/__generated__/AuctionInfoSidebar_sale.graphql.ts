@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b6a7f100d286c28d658c1e2f7ba113bd>>
+ * @generated SignedSource<<fce06f2a6f6c1e84213a64042fd53efd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionInfoSidebar_sale$data = {
   readonly liveStartAt: string | null | undefined;

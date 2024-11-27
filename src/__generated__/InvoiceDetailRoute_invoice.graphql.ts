@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9bbe210d85fc8192b0ba37a76cb58162>>
+ * @generated SignedSource<<cbe775f8a0f6b31e5c1982ee82bf3732>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type InvoiceState = "CANCELED" | "DRAFT" | "PAID" | "READY" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type InvoiceDetailRoute_invoice$data = {

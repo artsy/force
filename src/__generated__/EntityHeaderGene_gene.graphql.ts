@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a98cf0495bf3737a20416b4000c89126>>
+ * @generated SignedSource<<f827ed4c1a0aa88d4927ff4df68a961b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityHeaderGene_gene$data = {
   readonly avatar: {

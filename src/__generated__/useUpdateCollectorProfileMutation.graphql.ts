@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2e7e6a38c2782bf0e9b240a6e08821ff>>
+ * @generated SignedSource<<e591c8383a66e9f827a4b98e7ef40c05>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type Intents = "BUY_ART_AND_DESIGN" | "FIND_ART_EXHIBITS" | "LEARN_ABOUT_ART" | "READ_ART_MARKET_NEWS" | "RESEARCH_ART_PRICES" | "SELL_ART_AND_DESIGN" | "%future added value";
 export type UpdateCollectorProfileInput = {
   affiliatedAuctionHouseIds?: ReadonlyArray<string | null | undefined> | null | undefined;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<15b76a8f6589c5b94612b60c082e2935>>
+ * @generated SignedSource<<0291f6699317f3ea68c806fe54f22d53>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileHeader_me$data = {
   readonly collectorProfile: {

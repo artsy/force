@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<841f0ea33635fe7ed82cb1586aae526c>>
+ * @generated SignedSource<<d7d82ee70f6fd08aa2a15ac3ad4ea0db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type InquiryBasicInfo_me$data = {
   readonly location: {

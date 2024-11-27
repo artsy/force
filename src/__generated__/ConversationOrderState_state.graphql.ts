@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<faa3bec21290f09f7b21f93ba3b4d0c3>>
+ * @generated SignedSource<<ee1eb06b6c4c8e8473c5c7c4a09b08c4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
@@ -45,8 +45,7 @@ const node: ReaderFragment = {
         "name": "state",
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "state"
+      "action": "NONE"
     },
     {
       "kind": "RequiredField",
@@ -57,8 +56,7 @@ const node: ReaderFragment = {
         "name": "mode",
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "mode"
+      "action": "NONE"
     },
     {
       "alias": null,
@@ -98,8 +96,7 @@ const node: ReaderFragment = {
                 ],
                 "storageKey": null
               },
-              "action": "NONE",
-              "path": "lastOffer.from"
+              "action": "NONE"
             },
             {
               "alias": null,

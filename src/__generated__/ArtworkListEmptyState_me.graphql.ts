@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8d51ecaf3e0e672b77f8ab2989afcef3>>
+ * @generated SignedSource<<527ef06244df5bdc283225ee349658db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkListEmptyState_me$data = {
   readonly artworkList: {

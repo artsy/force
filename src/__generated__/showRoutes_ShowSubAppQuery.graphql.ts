@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d8bc7d19e9ac13799fa1f62e93e754b2>>
+ * @generated SignedSource<<dc56c1702e0056c925f7c8d32861fb78>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type showRoutes_ShowSubAppQuery$variables = {
   slug: string;

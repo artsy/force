@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e755cad0c35ec049766fab9743bb04c0>>
+ * @generated SignedSource<<29a366669cdb71e59492d817fe53dc8f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionCurrentAuctionsRail_viewer$data = {
   readonly salesConnection: {

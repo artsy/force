@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7984213b87edcd3c8ce5d66edc9f91a6>>
+ * @generated SignedSource<<c6be74aa86352e84919e75c0330b7209>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type SubmitInquiryRequestMutationInput = {
   clientMutationId?: string | null | undefined;
   contactGallery?: boolean | null | undefined;

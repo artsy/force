@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<36a5c2c8fb6d0697cb189cd209d0c733>>
+ * @generated SignedSource<<a15eecb8b254460a73dd3e0f2a1e44b5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ExampleApp_system$data = {
   readonly time: {

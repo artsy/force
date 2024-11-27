@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef3a896bdf86b1618925dafd16d40afe>>
+ * @generated SignedSource<<55b522fdcdc6aeaaa26fa69e87520025>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type FollowGeneInput = {
   clientMutationId?: string | null | undefined;
   geneID?: string | null | undefined;

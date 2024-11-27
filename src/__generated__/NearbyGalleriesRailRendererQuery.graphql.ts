@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e41d9a16eeb3ead5751ce982740e2de0>>
+ * @generated SignedSource<<ea0da2be1c0c78e6598dfff1827395b9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NearbyGalleriesRailRendererQuery$variables = {
   near: string;

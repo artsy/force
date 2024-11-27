@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<54124edc09ff72f62f1a4ce2e2ee99c5>>
+ * @generated SignedSource<<ef06ae01a06a844cbc872458a29370bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SubmittedOrderModal_submittedOrder$data = {
   readonly stateExpiresAt: string | null | undefined;

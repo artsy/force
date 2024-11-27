@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7f375e1701bdaedb243780821cc0d427>>
+ * @generated SignedSource<<2f11f0cccb14dd21aa2007e152c1ab79>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type fetchFollowedArtistsRawQuery$variables = Record<PropertyKey, never>;
 export type fetchFollowedArtistsRawQuery$data = {
   readonly me: {

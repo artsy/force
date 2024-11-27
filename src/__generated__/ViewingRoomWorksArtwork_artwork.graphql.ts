@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<35852b4d77b8f03ddc4deda879bf76c6>>
+ * @generated SignedSource<<b69db0328f70baf4bc1f76c29d34ca69>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomWorksArtwork_artwork$data = {
   readonly artistNames: string | null | undefined;

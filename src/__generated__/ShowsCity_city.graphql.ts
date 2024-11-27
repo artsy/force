@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a54a7b1f4adeecffd178871f54506e15>>
+ * @generated SignedSource<<979fb8d1943235469f87bab0fc19b0fe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsCity_city$data = {
   readonly currentShows: {

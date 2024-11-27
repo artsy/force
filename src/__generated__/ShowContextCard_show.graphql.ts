@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b8a9c60dcc83e5ba56dc421b9e06406e>>
+ * @generated SignedSource<<3bbbb0599f75fd732450c78b35cb2e33>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowContextCard_show$data = {
   readonly fair: {

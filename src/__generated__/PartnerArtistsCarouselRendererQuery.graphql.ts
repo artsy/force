@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a12afa2369173bdd0c0900cb2f140d5f>>
+ * @generated SignedSource<<05b0627a7e06390c7f7d2680e6514a4b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerArtistsCarouselRendererQuery$variables = {
   partnerId: string;

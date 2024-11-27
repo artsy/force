@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7a274bf00d508d4c165e64758e119608>>
+ * @generated SignedSource<<b5bea708e4ff4a82f33c5019024ad2ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchResultsEntity_viewer$data = {
   readonly searchConnection: {

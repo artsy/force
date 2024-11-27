@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<352dd7f539f50e8ec85bd01b592b729f>>
+ * @generated SignedSource<<23625bce306745eeba543cd866b8ffe4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type newForYouRoutes_TopLevelQuery$variables = {
   first?: number | null | undefined;

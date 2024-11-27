@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a0998747da6d1c1e1fef319bd32571b0>>
+ * @generated SignedSource<<14ecd697e28e7c2bba1d7f6a8ac7a6fe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RelatedCollectionsRailQuery$variables = {
   slug: string;

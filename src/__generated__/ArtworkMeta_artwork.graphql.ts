@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6d1940b0edfbbe8d006b9cbe576d9cf6>>
+ * @generated SignedSource<<2362f47ddce113ebef3934d6e1b22544>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkMeta_artwork$data = {
   readonly href: string | null | undefined;

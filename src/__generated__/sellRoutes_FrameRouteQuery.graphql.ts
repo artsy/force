@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fec72c28984bef87f4729188830b5d32>>
+ * @generated SignedSource<<07e43b4be3615e881fe35d358e8a98db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type sellRoutes_FrameRouteQuery$variables = {
   id: string;

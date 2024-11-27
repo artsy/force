@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5b75cd69114f19bbd63e5bcd6ea2a65a>>
+ * @generated SignedSource<<c6d1122bc73373f851272d7f70443251>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type JobLink_job$data = {
   readonly id: string;

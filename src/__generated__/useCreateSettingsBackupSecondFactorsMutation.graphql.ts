@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9a45e30e16e2285fe426f29750cc8405>>
+ * @generated SignedSource<<53b061ca1210cfdb341e224db00419be>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type CreateBackupSecondFactorsInput = {
   clientMutationId?: string | null | undefined;
   password: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6ed0eac9c4eb8700975eb6100c4759ce>>
+ * @generated SignedSource<<9261f382edbdcdf4fceec816b83a4f5e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NavBarMobileMenuNotificationsQuery$variables = Record<PropertyKey, never>;
 export type NavBarMobileMenuNotificationsQuery$data = {

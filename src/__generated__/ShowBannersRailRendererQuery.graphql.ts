@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b1f79dd98d9c5e6932b5b50ee02fe16e>>
+ * @generated SignedSource<<608435a0460806b1510d3a21de7fd1fc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowBannersRailRendererQuery$variables = {
   partnerId: string;

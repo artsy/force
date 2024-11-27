@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<528252aff05e7c4f4b9d37783b80d0c7>>
+ * @generated SignedSource<<e8a91e38828a3a93e31399f7b5188611>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SaveButton_artwork$data = {
   readonly collectorSignals: {

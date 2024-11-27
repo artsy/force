@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5803dc99c94ff9ec2527d932b35e6364>>
+ * @generated SignedSource<<dddd71148ae7980bfb3aa2f08e9d785f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type preferencesRoutes_PreferencesQuery$variables = {
   authenticationToken?: string | null | undefined;

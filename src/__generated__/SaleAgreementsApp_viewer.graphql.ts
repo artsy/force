@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd87bd875741731b62dc71409f60f1bc>>
+ * @generated SignedSource<<573df1e4821001e3645ec2c2d6820ac0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SaleAgreementsApp_viewer$data = {
   readonly " $fragmentSpreads": FragmentRefs<"SaleAgreementsFilter_viewer">;

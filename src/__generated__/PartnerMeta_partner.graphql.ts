@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9aa0b5a197de627873701d60bc8a3471>>
+ * @generated SignedSource<<afd3887750959f9bb905d465931d6424>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerMeta_partner$data = {
   readonly locationsConnection: {

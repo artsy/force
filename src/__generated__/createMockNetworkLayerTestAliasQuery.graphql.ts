@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<17d982772f1553f36c2497bec5baa42e>>
+ * @generated SignedSource<<6b77bdb3848410d33722ae06344de36b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type createMockNetworkLayerTestAliasQuery$variables = Record<PropertyKey, never>;
 export type createMockNetworkLayerTestAliasQuery$data = {
   readonly artist: {

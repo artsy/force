@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<478840e800956f733786ca06c82ec6d0>>
+ * @generated SignedSource<<84f3036a5fdba856a125e3e4a1f0754b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type CommerceBuyerOfferActionEnum = "OFFER_ACCEPTED" | "OFFER_ACCEPTED_CONFIRM_NEEDED" | "OFFER_RECEIVED" | "OFFER_RECEIVED_CONFIRM_NEEDED" | "PAYMENT_FAILED" | "PROVISIONAL_OFFER_ACCEPTED" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
@@ -259,8 +259,7 @@ return {
         ],
         "storageKey": "__ConversationMessages_conversation_messagesConnection_connection(sort:\"DESC\")"
       },
-      "action": "NONE",
-      "path": "messagesConnection"
+      "action": "NONE"
     },
     {
       "alias": null,
@@ -510,8 +509,7 @@ return {
         ],
         "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\",\"CANCELED\",\"PROCESSING_APPROVAL\"])"
       },
-      "action": "NONE",
-      "path": "orderEvents"
+      "action": "NONE"
     }
   ],
   "type": "Conversation",

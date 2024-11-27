@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3b3c44c98838d030e4b29582434a7eae>>
+ * @generated SignedSource<<7947d70b53ffe5eae74ba0c8f7c5adf7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FeatureApp_feature$data = {
   readonly callout: string | null | undefined;

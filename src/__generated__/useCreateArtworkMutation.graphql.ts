@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0b126ae26abaf199b47013569f5509d1>>
+ * @generated SignedSource<<e5ed23b4ac7175b71d61b566de8387e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type ArtworkAttributionClassType = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type ArtworkConditionEnumType = "EXCELLENT" | "FAIR" | "GOOD" | "VERY_GOOD" | "%future added value";
 export type ArtworkImportSource = "CONVECTION" | "MY_COLLECTION" | "%future added value";

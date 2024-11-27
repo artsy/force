@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<84c5ac1e285f193a3d7d3cdeda506a87>>
+ * @generated SignedSource<<e1e5c275b1ceff5ae5e3f24e8ef37eba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 export type MyCollectionArtworkSWASubmissionStatus_Test_Query$variables = Record<PropertyKey, never>;

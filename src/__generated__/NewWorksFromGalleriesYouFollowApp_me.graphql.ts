@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<792ed476b2fab60e2998b3cba3d346c6>>
+ * @generated SignedSource<<dcb4210efd824def2530a40326ce7615>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NewWorksFromGalleriesYouFollowApp_me$data = {
   readonly newWorksFromGalleriesYouFollowConnection: {

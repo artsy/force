@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<70a66a9af76ff827ec80439130c12bbe>>
+ * @generated SignedSource<<79a526568f1eecf567a8cb5a9173d150>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type TriggerCampaignID = "ART_QUIZ" | "%future added value";
 export type TriggerCampaignInput = {
   campaignID: TriggerCampaignID;

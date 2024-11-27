@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b634f04e2fee166e5ebf192fbfed0941>>
+ * @generated SignedSource<<319986c790eadc1c4f1e73ed366aa057>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsAuctionsLotStanding_lotStanding$data = {
   readonly isLeadingBidder: boolean | null | undefined;

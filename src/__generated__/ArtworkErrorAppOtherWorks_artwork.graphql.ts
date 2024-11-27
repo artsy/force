@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d13f8aee6d4d870198b082c64cc50f2e>>
+ * @generated SignedSource<<33480e67f4fef30fd1247a0ee0737c29>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkErrorAppOtherWorks_artwork$data = {
   readonly context: {

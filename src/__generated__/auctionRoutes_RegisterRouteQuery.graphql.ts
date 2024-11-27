@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e8d966966e1dfc85d116458bde87559c>>
+ * @generated SignedSource<<bde31d1bdffe4fdba92d524c22619d95>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type auctionRoutes_RegisterRouteQuery$variables = {
   slug: string;

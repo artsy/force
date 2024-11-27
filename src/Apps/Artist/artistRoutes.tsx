@@ -115,7 +115,7 @@ export const artistRoutes: RouteProps[] = [
     serverCacheTTL: serverCacheTTLs.artist,
     getComponent: () => ArtistApp,
     onServerSideRender: enableArtistPageCTA,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       ArtistApp.preload()
       OverviewRoute.preload()
       WorksForSaleRoute.preload()
@@ -133,7 +133,7 @@ export const artistRoutes: RouteProps[] = [
         serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => WorksForSaleRoute,
         onServerSideRender: redirectWithCanonicalParams,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           WorksForSaleRoute.preload()
         },
         prepareVariables: getWorksForSaleRouteVariables,
@@ -149,7 +149,7 @@ export const artistRoutes: RouteProps[] = [
         path: "auction-results",
         serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => AuctionResultsRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           AuctionResultsRoute.preload()
         },
         prepareVariables: ({ artistID }, props) => {
@@ -207,7 +207,7 @@ export const artistRoutes: RouteProps[] = [
         serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => OverviewRoute,
         onServerSideRender: enableArtistPageCTA,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           OverviewRoute.preload()
         },
         query: graphql`
@@ -237,7 +237,7 @@ export const artistRoutes: RouteProps[] = [
         path: "articles/:artworkId?",
         serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => ArticlesRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           ArticlesRoute.preload()
         },
         query: graphql`
@@ -251,7 +251,7 @@ export const artistRoutes: RouteProps[] = [
       {
         path: "consign",
         getComponent: () => ConsignRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           ConsignRoute.preload()
         },
         query: graphql`
@@ -284,7 +284,7 @@ export const artistRoutes: RouteProps[] = [
         path: "cv",
         serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => CVRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           CVRoute.preload()
         },
         query: graphql`
@@ -299,7 +299,7 @@ export const artistRoutes: RouteProps[] = [
         path: "series",
         serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => ArtistSeriesRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           ArtistSeriesRoute.preload()
         },
         query: graphql`
@@ -314,7 +314,7 @@ export const artistRoutes: RouteProps[] = [
         path: "shows",
         serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => ShowsRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           ShowsRoute.preload()
         },
         query: graphql`
@@ -342,7 +342,7 @@ export const artistRoutes: RouteProps[] = [
     serverCacheTTL: serverCacheTTLs.artist,
     getComponent: () => AuctionResultRoute,
     onServerSideRender: enableArtistPageCTA,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       AuctionResultRoute.preload()
     },
     query: graphql`

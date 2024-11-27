@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9c66b2c6d3f21de8025df65884e82e38>>
+ * @generated SignedSource<<c0e9cb527550fba81b0246bdbaa0bc52>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomStatusEnum = "closed" | "draft" | "live" | "scheduled" | "%future added value";
 export type PartnerViewingRoomsGrid_ViewingRoomsQuery$variables = {

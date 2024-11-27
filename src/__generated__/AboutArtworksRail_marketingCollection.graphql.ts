@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5fb53af13cc01e96a260e44013e4c83f>>
+ * @generated SignedSource<<eade5b3ba54e99a98b7aab011b2fb2e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AboutArtworksRail_marketingCollection$data = {
   readonly artworksConnection: {

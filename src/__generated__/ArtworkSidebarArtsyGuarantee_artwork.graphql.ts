@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3f771889f0464befe79b595e0a74902c>>
+ * @generated SignedSource<<fd4c392d0caa577e65ebc29957e2af0f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarArtsyGuarantee_artwork$data = {
   readonly isUnlisted: boolean;

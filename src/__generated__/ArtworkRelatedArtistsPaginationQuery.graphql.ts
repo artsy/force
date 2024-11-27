@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d9e2bb2587c334f9b26ee8e11371ee07>>
+ * @generated SignedSource<<241f9aa0fbf70a490cea10270e937522>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkRelatedArtistsPaginationQuery$variables = {
   artworkID: string;

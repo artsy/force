@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0c281de6d28d6c7f9a76c329cf5c6118>>
+ * @generated SignedSource<<aa1cc901e12b2cc56632f3d234bb8ce0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AppSecondFactorRefetchQuery$variables = Record<PropertyKey, never>;
 export type AppSecondFactorRefetchQuery$data = {

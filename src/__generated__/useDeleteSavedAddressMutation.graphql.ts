@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<64f06cd9d0b3abb4da5f1a0224ad3d24>>
+ * @generated SignedSource<<1f3d86cf19b909eaf6024b3ee7ea5477>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeleteUserAddressInput = {
   clientMutationId?: string | null | undefined;

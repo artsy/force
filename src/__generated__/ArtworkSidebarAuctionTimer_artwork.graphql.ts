@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7e8823ebe426d078eab6ee7e7194d2ed>>
+ * @generated SignedSource<<7a0dbabae68c58a2b42c3320ec3e33c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarAuctionTimer_artwork$data = {
   readonly internalID: string;

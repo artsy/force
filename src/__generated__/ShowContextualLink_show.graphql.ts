@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ccc554045184cf30b8bd05d2b9a53484>>
+ * @generated SignedSource<<e59f81d71a8fcdcea16f7c4657196f6a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowContextualLink_show$data = {
   readonly fair: {
