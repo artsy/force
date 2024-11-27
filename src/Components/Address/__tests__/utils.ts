@@ -63,33 +63,62 @@ export const fillAddressFormFields = async (
     clearInputs: false,
   }
 ) => {
+  const start = performance.now()
   const { country, phoneNumber, ...defaultTextInputs } = address
 
+  const promises: Promise<void>[] = []
   if (country) {
-    const countrySelect = await screen.findByLabelText(
-      ADDRESS_FORM_INPUTS.country.label
+    promises.push(
+      new Promise<void>(async resolve => {
+        const countryStart = performance.now()
+        const countrySelect = await screen.findByLabelText(
+          ADDRESS_FORM_INPUTS.country.label
+        )
+        console.log("Found country select")
+        await userEvent.selectOptions(countrySelect, [country])
+        console.log("Selected country", country)
+        console.log("Country select time", performance.now() - countryStart)
+        resolve()
+      })
     )
-    await userEvent.selectOptions(countrySelect, [country])
-    await flushPromiseQueue()
   }
 
+  Object.entries(defaultTextInputs).forEach(([key, value]) => {
+    promises.push(
+      new Promise<void>(async resolve => {
+        const inputStart = performance.now()
+        const input = await screen.findByLabelText(
+          ADDRESS_FORM_INPUTS[key].label
+        )
+        console.log("Input time", key, performance.now() - inputStart)
+        if (options?.clearInputs) {
+          await userEvent.clear(input)
+        }
+        await userEvent.paste(input, value)
+        resolve()
+      })
+    )
+    // const input = await screen.findByLabelText(ADDRESS_FORM_INPUTS[key].label)
+    // if (options?.clearInputs) {
+    //   await userEvent.clear(input)
+    // }
+    // await userEvent.paste(input, value)
+  })
   if (phoneNumber) {
-    const phoneNumberInput = await screen.findByLabelText(
-      ADDRESS_FORM_INPUTS.phoneNumber.label
+    promises.push(
+      new Promise<void>(async resolve => {
+        const start = performance.now()
+        const phoneNumberInput = await screen.findByLabelText(
+          ADDRESS_FORM_INPUTS.phoneNumber.label
+        )
+        if (options?.clearInputs) {
+          await userEvent.clear(phoneNumberInput)
+        }
+        await userEvent.paste(phoneNumberInput, phoneNumber)
+        console.log("Phone number time", performance.now() - start)
+        resolve()
+      })
     )
-    if (options?.clearInputs) {
-      await userEvent.clear(phoneNumberInput)
-    }
-
-    await userEvent.paste(phoneNumberInput, phoneNumber)
   }
-  await Promise.all(
-    Object.entries(defaultTextInputs).map(async ([key, value]) => {
-      const input = await screen.findByLabelText(ADDRESS_FORM_INPUTS[key].label)
-      if (options?.clearInputs) {
-        await userEvent.clear(input)
-      }
-      await userEvent.paste(input, value)
-    })
-  )
+  await Promise.all(promises)
 }

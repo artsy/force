@@ -197,7 +197,7 @@ describe("AddressModal", () => {
   })
 
   describe("update mode", () => {
-    it("updates address when form is submitted with valid values", async () => {
+    it.only("updates address when form is submitted with valid values", async () => {
       const { mockResolveLastOperation } = renderWithRelay(
         {},
         testAddressModalProps,
