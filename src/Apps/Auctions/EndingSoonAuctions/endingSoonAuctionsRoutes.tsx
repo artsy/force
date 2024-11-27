@@ -10,7 +10,7 @@ export const endingSoonAuctionsRoutes: RouteProps[] = [
   {
     path: "/auctions/lots-for-you-ending-soon",
     getComponent: () => EndingSoonAuctions,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       EndingSoonAuctions.preload()
     },
     query: graphql`

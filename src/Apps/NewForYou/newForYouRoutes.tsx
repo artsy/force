@@ -15,7 +15,7 @@ export const newForYouRoutes: RouteProps[] = [
   {
     path: "/new-for-you",
     getComponent: () => NewForYouApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       NewForYouApp.preload()
     },
     prepareVariables: (params, props) => {

@@ -21,14 +21,14 @@ export const marketingRoutes: RouteProps[] = [
   {
     path: "/meet-your-new-art-advisor",
     getComponent: () => MarketingMeetArtAdvisorRoute,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       MarketingMeetArtAdvisorRoute.preload()
     },
   },
   {
     path: "/find-the-art-you-love",
     getComponent: () => MarketingFindArtYouLoveRoute,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       MarketingFindArtYouLoveRoute.preload()
     },
   },

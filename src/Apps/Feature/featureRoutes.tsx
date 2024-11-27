@@ -13,7 +13,7 @@ export const featureRoutes: RouteProps[] = [
   {
     path: "/feature/:slug",
     getComponent: () => FeatureApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       FeatureApp.preload()
     },
     query: graphql`

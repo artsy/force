@@ -195,15 +195,12 @@ const ConsignmentInquiryContainer = loadable(
 export const sellRoutes: RouteProps[] = [
   {
     path: "/sell",
-    onPreloadJS: () => {
-      MarketingLandingApp.preload()
-    },
     children: [
       {
         path: "",
         layout: "FullBleed",
         getComponent: () => MarketingLandingApp,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           MarketingLandingApp.preload()
         },
       },
@@ -211,7 +208,7 @@ export const sellRoutes: RouteProps[] = [
         path: "faq",
         layout: "NavOnly",
         getComponent: () => FAQApp,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           FAQApp.preload()
         },
       },
@@ -222,7 +219,7 @@ export const sellRoutes: RouteProps[] = [
         path: "intro",
         layout: "ContainerOnly",
         Component: IntroRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           IntroRoute.preload()
         },
       },
@@ -230,7 +227,7 @@ export const sellRoutes: RouteProps[] = [
         path: "submissions/new",
         layout: "ContainerOnly",
         Component: NewRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           NewRoute.preload()
         },
       },
@@ -238,7 +235,7 @@ export const sellRoutes: RouteProps[] = [
         path: "artist-not-eligible/:artistID",
         layout: "ContainerOnly",
         Component: ArtistNotEligibleRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           ArtistNotEligibleRoute.preload()
         },
         query: graphql`
@@ -256,7 +253,7 @@ export const sellRoutes: RouteProps[] = [
         path: "submissions/new/collection",
         layout: "ContainerOnly",
         Component: NewFromMyCollectionRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           NewFromMyCollectionRoute.preload()
         },
         onServerSideRender: checkIfLoggedIn,
@@ -265,7 +262,7 @@ export const sellRoutes: RouteProps[] = [
       {
         path: "submissions/:id",
         Component: SubmissionRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           SubmissionRoute.preload()
         },
         query: graphql`
@@ -283,7 +280,7 @@ export const sellRoutes: RouteProps[] = [
             path: "artist",
             layout: "ContainerOnly",
             Component: ArtistRoute,
-            onPreloadJS: () => {
+            onClientSideRender: () => {
               ArtistRoute.preload()
             },
             query: graphql`
@@ -301,7 +298,7 @@ export const sellRoutes: RouteProps[] = [
             path: "title",
             layout: "ContainerOnly",
             Component: TitleRoute,
-            onPreloadJS: () => {
+            onClientSideRender: () => {
               TitleRoute.preload()
             },
             query: graphql`
@@ -319,7 +316,7 @@ export const sellRoutes: RouteProps[] = [
             path: "photos",
             layout: "ContainerOnly",
             Component: PhotosRoute,
-            onPreloadJS: () => {
+            onClientSideRender: () => {
               PhotosRoute.preload()
             },
             query: graphql`
@@ -337,7 +334,7 @@ export const sellRoutes: RouteProps[] = [
             path: "details",
             layout: "ContainerOnly",
             Component: DetailsRoute,
-            onPreloadJS: () => {
+            onClientSideRender: () => {
               DetailsRoute.preload()
             },
             query: graphql`
@@ -358,7 +355,7 @@ export const sellRoutes: RouteProps[] = [
             path: "purchase-history",
             layout: "ContainerOnly",
             Component: PurchaseHistoryRoute,
-            onPreloadJS: () => {
+            onClientSideRender: () => {
               PurchaseHistoryRoute.preload()
             },
             query: graphql`
@@ -379,7 +376,7 @@ export const sellRoutes: RouteProps[] = [
             path: "dimensions",
             layout: "ContainerOnly",
             Component: DimensionsRoute,
-            onPreloadJS: () => {
+            onClientSideRender: () => {
               DimensionsRoute.preload()
             },
             query: graphql`
@@ -400,7 +397,7 @@ export const sellRoutes: RouteProps[] = [
             path: "phone-number",
             layout: "ContainerOnly",
             Component: PhoneNumberRoute,
-            onPreloadJS: () => {
+            onClientSideRender: () => {
               PhoneNumberRoute.preload()
             },
             query: graphql`
@@ -424,7 +421,7 @@ export const sellRoutes: RouteProps[] = [
             path: "thank-you",
             layout: "ContainerOnly",
             Component: ThankYouRoute,
-            onPreloadJS: () => {
+            onClientSideRender: () => {
               ThankYouRoute.preload()
             },
             onServerSideRender: checkIfLoggedIn,
@@ -446,7 +443,7 @@ export const sellRoutes: RouteProps[] = [
             path: "shipping-location",
             layout: "ContainerOnly",
             Component: ShippingLocationRoute,
-            onPreloadJS: () => {
+            onClientSideRender: () => {
               ShippingLocationRoute.preload()
             },
             onServerSideRender: checkIfLoggedIn,
@@ -468,7 +465,7 @@ export const sellRoutes: RouteProps[] = [
             path: "frame",
             layout: "ContainerOnly",
             Component: FrameRoute,
-            onPreloadJS: () => {
+            onClientSideRender: () => {
               FrameRoute.preload()
             },
             onServerSideRender: checkIfLoggedIn,
@@ -487,7 +484,7 @@ export const sellRoutes: RouteProps[] = [
             path: "additional-documents",
             layout: "ContainerOnly",
             Component: AdditionalDocumentsRoute,
-            onPreloadJS: () => {
+            onClientSideRender: () => {
               AdditionalDocumentsRoute.preload()
             },
             onServerSideRender: checkIfLoggedIn,
@@ -506,7 +503,7 @@ export const sellRoutes: RouteProps[] = [
             path: "condition",
             layout: "ContainerOnly",
             Component: ConditionRoute,
-            onPreloadJS: () => {
+            onClientSideRender: () => {
               ConditionRoute.preload()
             },
             onServerSideRender: checkIfLoggedIn,
@@ -525,7 +522,7 @@ export const sellRoutes: RouteProps[] = [
             path: "thank-you-post-approval",
             layout: "ContainerOnly",
             Component: ThankYouRoute,
-            onPreloadJS: () => {
+            onClientSideRender: () => {
               ThankYouRoute.preload()
             },
             onServerSideRender: checkIfLoggedIn,
@@ -553,7 +550,7 @@ export const sellRoutes: RouteProps[] = [
             path: "",
             getComponent: () => ConsignmentInquiryApp,
             layout: "ContainerOnly",
-            onPreloadJS: () => {
+            onClientSideRender: () => {
               ConsignmentInquiryApp.preload()
             },
             query: graphql`
@@ -577,7 +574,7 @@ export const sellRoutes: RouteProps[] = [
             path: "sent",
             layout: "ContainerOnly",
             getComponent: () => ConsignmentInquiryConfirmationApp,
-            onPreloadJS: () => {
+            onClientSideRender: () => {
               ConsignmentInquiryConfirmationApp.preload()
             },
           },
@@ -588,7 +585,7 @@ export const sellRoutes: RouteProps[] = [
                 path: "",
                 getComponent: () => ConsignmentInquiryApp,
                 layout: "ContainerOnly",
-                onPreloadJS: () => {
+                onClientSideRender: () => {
                   ConsignmentInquiryApp.preload()
                 },
                 query: graphql`
@@ -612,7 +609,7 @@ export const sellRoutes: RouteProps[] = [
                 path: "sent",
                 layout: "ContainerOnly",
                 getComponent: () => ConsignmentInquiryConfirmationApp,
-                onPreloadJS: () => {
+                onClientSideRender: () => {
                   ConsignmentInquiryConfirmationApp.preload()
                 },
               },

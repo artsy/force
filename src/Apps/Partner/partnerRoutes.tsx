@@ -68,7 +68,7 @@ export const partnerRoutes: RouteProps[] = [
     path: "/partner/:partnerId",
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => PartnerApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       PartnerApp.preload()
     },
     query: graphql`
@@ -107,7 +107,7 @@ export const partnerRoutes: RouteProps[] = [
       {
         path: "",
         getComponent: () => OverviewRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           OverviewRoute.preload()
         },
         query: graphql`
@@ -130,7 +130,7 @@ export const partnerRoutes: RouteProps[] = [
       {
         path: "shows",
         getComponent: () => ShowsRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           ShowsRoute.preload()
         },
         query: graphql`
@@ -171,7 +171,7 @@ export const partnerRoutes: RouteProps[] = [
       {
         path: "viewing-rooms",
         getComponent: () => ViewingRoomsRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           ViewingRoomsRoute.preload()
         },
         query: graphql`
@@ -192,7 +192,7 @@ export const partnerRoutes: RouteProps[] = [
       {
         path: "works",
         getComponent: () => WorksRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           WorksRoute.preload()
         },
         query: graphql`
@@ -235,7 +235,7 @@ export const partnerRoutes: RouteProps[] = [
         path: "artists/:artistId?",
         ignoreScrollBehavior: true,
         getComponent: () => ArtistsRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           ArtistsRoute.preload()
         },
         query: graphql`
@@ -276,7 +276,7 @@ export const partnerRoutes: RouteProps[] = [
       {
         path: "articles",
         getComponent: () => ArticlesRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           ArticlesRoute.preload()
         },
         prepareVariables: (params, { location }) => {
@@ -324,7 +324,7 @@ export const partnerRoutes: RouteProps[] = [
       {
         path: "contact",
         getComponent: () => ContactRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           ContactRoute.preload()
         },
         query: graphql`

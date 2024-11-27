@@ -13,7 +13,7 @@ export const tagRoutes: RouteProps[] = [
   {
     path: "/tag/:slug",
     getComponent: () => TagApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       TagApp.preload()
     },
 

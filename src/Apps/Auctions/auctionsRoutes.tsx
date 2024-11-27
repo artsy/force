@@ -54,7 +54,7 @@ export const auctionsRoutes: RouteProps[] = [
     path: "/auctions",
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => AuctionsApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       AuctionsApp.preload()
     },
     children: [

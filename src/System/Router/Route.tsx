@@ -22,7 +22,6 @@ interface Route extends RouteObjectBase {
    * Render hooks
    */
 
-  onPreloadJS?: () => void
   onClientSideRender?: (props: { match: Match }) => void
   onServerSideRender?: (props: {
     req: ArtsyRequest

@@ -23,7 +23,7 @@ export const articleRoutes: RouteProps[] = [
   {
     path: "/article/:id",
     Component: ArticleApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       ArticleApp.preload()
     },
     query: graphql`

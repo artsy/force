@@ -107,7 +107,7 @@ export const settingsRoutes: RouteProps[] = [
   {
     path: "/settings",
     getComponent: () => SettingsApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       SettingsApp.preload()
     },
     query: graphql`
@@ -121,7 +121,7 @@ export const settingsRoutes: RouteProps[] = [
       {
         path: "auctions",
         getComponent: () => AuctionsRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           AuctionsRoute.preload()
         },
         onServerSideRender: handleServerSideRender,
@@ -136,7 +136,7 @@ export const settingsRoutes: RouteProps[] = [
       {
         path: "edit-profile",
         getComponent: () => EditProfileRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           EditProfileRoute.preload()
         },
         onServerSideRender: handleServerSideRender,
@@ -151,7 +151,7 @@ export const settingsRoutes: RouteProps[] = [
       {
         path: "payments",
         getComponent: () => PaymentsRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           PaymentsRoute.preload()
         },
         onServerSideRender: handleServerSideRender,
@@ -166,7 +166,7 @@ export const settingsRoutes: RouteProps[] = [
       {
         path: "purchases",
         getComponent: () => PurchasesRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           PurchasesRoute.preload()
         },
         onServerSideRender: handleServerSideRender,
@@ -187,7 +187,7 @@ export const settingsRoutes: RouteProps[] = [
       {
         path: "insights",
         getComponent: () => InsightsRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           InsightsRoute.preload()
         },
         onServerSideRender: handleServerSideRender,
@@ -202,7 +202,7 @@ export const settingsRoutes: RouteProps[] = [
       {
         path: "edit-settings",
         getComponent: () => EditSettingsRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           EditSettingsRoute.preload()
         },
         onServerSideRender: handleServerSideRender,
@@ -217,7 +217,7 @@ export const settingsRoutes: RouteProps[] = [
       {
         path: "delete",
         getComponent: () => DeleteAccountRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           DeleteAccountRoute.preload()
         },
         onServerSideRender: handleServerSideRender,
@@ -232,7 +232,7 @@ export const settingsRoutes: RouteProps[] = [
       {
         path: "shipping",
         getComponent: () => ShippingRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           ShippingRoute.preload()
         },
         onServerSideRender: handleServerSideRender,

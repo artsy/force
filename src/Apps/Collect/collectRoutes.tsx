@@ -29,7 +29,7 @@ export const collectRoutes: RouteProps[] = [
     path: "/collect/:medium?",
     serverCacheTTL: serverCacheTTLs.collect,
     getComponent: () => CollectApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       CollectApp.preload()
     },
     prepareVariables: initializeVariablesWithFilterState,
@@ -39,7 +39,7 @@ export const collectRoutes: RouteProps[] = [
     path: "/collect/color/:color?",
     serverCacheTTL: serverCacheTTLs.collect,
     getComponent: () => CollectApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       CollectApp.preload()
     },
     prepareVariables: initializeVariablesWithFilterState,
@@ -49,7 +49,7 @@ export const collectRoutes: RouteProps[] = [
     path: "/collections",
     serverCacheTTL: serverCacheTTLs.collections,
     getComponent: () => CollectionsApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       CollectionsApp.preload()
     },
     query: graphql`
@@ -65,7 +65,7 @@ export const collectRoutes: RouteProps[] = [
     serverCacheTTL: serverCacheTTLs.collections,
     getComponent: () => CollectionApp,
     onServerSideRender: redirectCollectionToArtistSeries,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       CollectionApp.preload()
     },
     prepareVariables: initializeVariablesWithFilterState,

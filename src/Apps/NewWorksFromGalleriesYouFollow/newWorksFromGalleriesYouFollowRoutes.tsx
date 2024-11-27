@@ -17,7 +17,7 @@ export const newWorksFromGalleriesYouFollowRoutes: RouteProps[] = [
   {
     path: "/new-works-from-galleries-you-follow",
     getComponent: () => NewWorksFromGalleriesYouFollowApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       NewWorksFromGalleriesYouFollowApp.preload()
     },
     query: graphql`

@@ -36,7 +36,7 @@ export const PAGE_SLUGS_WITH_AUTH_REQUIRED = [
 
 const PAGE_ROUTE_CONFIG = {
   getComponent: () => PageApp,
-  onPreloadJS: () => {
+  onClientSideRender: () => {
     PageApp.preload()
   },
   query: graphql`

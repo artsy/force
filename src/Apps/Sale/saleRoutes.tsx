@@ -18,7 +18,7 @@ export const saleRoutes: RouteProps[] = [
     path: "/sale/:slug",
     serverCacheTTL: serverCacheTTLs.sale,
     getComponent: () => SaleApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       SaleApp.preload()
     },
     query: graphql`

@@ -34,7 +34,7 @@ export const invoiceRoutes: RouteProps[] = [
     path: "/invoice/:token",
     layout: "LogoOnly",
     getComponent: () => InvoiceApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       InvoiceApp.preload()
     },
     query: graphql`
@@ -49,7 +49,7 @@ export const invoiceRoutes: RouteProps[] = [
         path: "",
         layout: "LogoOnly",
         getComponent: () => InvoiceDetailRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           InvoiceDetailRoute.preload()
         },
         query: graphql`
@@ -66,7 +66,7 @@ export const invoiceRoutes: RouteProps[] = [
         path: "payment",
         layout: "LogoOnly",
         getComponent: () => InvoicePaymentRoute,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           InvoicePaymentRoute.preload()
         },
         query: graphql`

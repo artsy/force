@@ -13,7 +13,7 @@ export const preferencesRoutes: RouteProps[] = [
   {
     path: "/unsubscribe",
     getComponent: () => PreferencesApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       PreferencesApp.preload()
     },
     prepareVariables: (_params, props) => {

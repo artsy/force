@@ -15,7 +15,7 @@ export const artistSeriesRoutes: RouteProps[] = [
     path: "/artist-series/:slug",
     serverCacheTTL: serverCacheTTLs.artistSeries,
     getComponent: () => ArtistSeriesApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       ArtistSeriesApp.preload()
     },
     query: graphql`

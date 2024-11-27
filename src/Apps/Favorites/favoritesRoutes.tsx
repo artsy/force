@@ -38,7 +38,7 @@ export const favoritesRoutes: RouteProps[] = [
   {
     path: "/favorites",
     getComponent: () => FavoritesApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       FavoritesApp.preload()
     },
     children: [
@@ -46,7 +46,7 @@ export const favoritesRoutes: RouteProps[] = [
         path: "saves/:id?",
         ignoreScrollBehavior: true,
         getComponent: () => Saves,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           Saves.preload()
         },
         query: graphql`
@@ -60,7 +60,7 @@ export const favoritesRoutes: RouteProps[] = [
       {
         path: "follows",
         getComponent: () => Follows,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           Follows.preload()
         },
       },
@@ -68,7 +68,7 @@ export const favoritesRoutes: RouteProps[] = [
         path: "alerts",
         getComponent: () => Alerts,
         layout: "NavOnly",
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           Alerts.preload()
         },
         query: graphql`
@@ -84,7 +84,7 @@ export const favoritesRoutes: RouteProps[] = [
         getComponent: () => Alerts,
         layout: "NavOnly",
 
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           Alerts.preload()
         },
         query: graphql`
@@ -100,7 +100,7 @@ export const favoritesRoutes: RouteProps[] = [
         layout: "NavOnly",
 
         getComponent: () => Alerts,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           Alerts.preload()
         },
         query: graphql`

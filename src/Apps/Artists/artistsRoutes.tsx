@@ -30,16 +30,16 @@ export const artistsRoutes: RouteProps[] = [
     path: "/artists",
     serverCacheTTL: serverCacheTTLs.artists,
     getComponent: () => ArtistsApp,
-    onPreloadJS: () => {
-      ArtistsApp.preload()
+    onClientSideRender: () => {
+      return ArtistsApp.preload()
     },
     children: [
       {
         path: "",
         serverCacheTTL: serverCacheTTLs.artists,
         getComponent: () => ArtistsIndexRoute,
-        onPreloadJS: () => {
-          ArtistsIndexRoute.preload()
+        onClientSideRender: () => {
+          return ArtistsIndexRoute.preload()
         },
         query: graphql`
           query artistsRoutes_ArtistsQuery @cacheable {
@@ -56,8 +56,8 @@ export const artistsRoutes: RouteProps[] = [
         path: "artists-starting-with-:letter([a-zA-Z])",
         serverCacheTTL: serverCacheTTLs.artists,
         getComponent: () => ArtistsByLetterRoute,
-        onPreloadJS: () => {
-          ArtistsByLetterRoute.preload()
+        onClientSideRender: () => {
+          return ArtistsByLetterRoute.preload()
         },
         prepareVariables: (params, props) => {
           return {

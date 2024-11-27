@@ -25,8 +25,8 @@ export const geneRoutes: RouteProps[] = [
     serverCacheTTL: serverCacheTTLs.gene,
     getComponent: () => GeneApp,
     onServerSideRender: redirectGeneToCollection,
-    onPreloadJS: () => {
-      GeneApp.preload()
+    onClientSideRender: () => {
+      return GeneApp.preload()
     },
     children: [
       {
@@ -43,8 +43,8 @@ export const geneRoutes: RouteProps[] = [
         path: "",
         serverCacheTTL: serverCacheTTLs.gene,
         getComponent: () => GeneShowRoute,
-        onPreloadJS: () => {
-          GeneShowRoute.preload()
+        onClientSideRender: () => {
+          return GeneShowRoute.preload()
         },
         query: graphql`
           query geneRoutes_GeneShowQuery($slug: String!) {

@@ -12,7 +12,7 @@ export const onboardingRoutes: RouteProps[] = [
   {
     path: "/onboarding2",
     getComponent: () => OnboardingApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       OnboardingApp.preload()
     },
   },

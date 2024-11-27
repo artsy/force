@@ -60,7 +60,7 @@ export const myCollectionRoutes: RouteProps[] = [
   {
     path: "/my-collection/artwork/:artworkID",
     getComponent: () => MyCollectionArtwork,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       MyCollectionArtwork.preload()
     },
     query: graphql`
@@ -78,7 +78,7 @@ export const myCollectionRoutes: RouteProps[] = [
     path: "/my-collection/artwork/:artworkID/price-estimate",
     layout: "ContainerOnly",
     getComponent: () => PriceEstimateContactInformation,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       PriceEstimateContactInformation.preload()
     },
     query: graphql`
@@ -98,7 +98,7 @@ export const myCollectionRoutes: RouteProps[] = [
     path: "/my-collection/artwork/:artworkID/price-estimate/success",
     layout: "ContainerOnly",
     getComponent: () => PriceEstimateConfirmation,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       PriceEstimateConfirmation.preload()
     },
   },
@@ -109,7 +109,7 @@ export const myCollectionRoutes: RouteProps[] = [
         path: "artworks/new",
         layout: "ContainerOnly",
         getComponent: () => MyCollectionCreateArtwork,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           MyCollectionCreateArtwork.preload()
         },
         query: graphql`
@@ -127,7 +127,7 @@ export const myCollectionRoutes: RouteProps[] = [
         path: "artworks/:slug/edit",
         layout: "ContainerOnly",
         getComponent: () => MyCollectionEditArtwork,
-        onPreloadJS: () => {
+        onClientSideRender: () => {
           MyCollectionEditArtwork.preload()
         },
         query: graphql`

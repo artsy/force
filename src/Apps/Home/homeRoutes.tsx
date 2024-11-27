@@ -11,7 +11,7 @@ export const homeRoutes: RouteProps[] = [
   {
     path: "/",
     getComponent: () => HomeApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       HomeApp.preload()
     },
     prepareVariables: (_params, props) => {

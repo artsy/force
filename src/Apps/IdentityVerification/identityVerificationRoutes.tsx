@@ -30,21 +30,21 @@ export const identityVerificationRoutes: RouteProps[] = [
   {
     path: "/identity-verification/processing",
     getComponent: () => Processing,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       Processing.preload()
     },
   },
   {
     path: "/identity-verification/error",
     getComponent: () => Error,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       Error.preload()
     },
   },
   {
     path: "/identity-verification/:id",
     getComponent: () => IdentityVerificationApp,
-    onPreloadJS: () => {
+    onClientSideRender: () => {
       IdentityVerificationApp.preload()
     },
     query: graphql`
