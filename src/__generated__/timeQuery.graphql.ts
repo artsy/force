@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<995e0404ec00b44b59eb99f3ef76c82e>>
+ * @generated SignedSource<<c34381e0f884865a37092f1d99eb7b6a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type timeQuery$variables = Record<PropertyKey, never>;
 export type timeQuery$data = {
   readonly system: {

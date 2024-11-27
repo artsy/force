@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<86aee7b135b36f1dd7cf87f92d5ba84b>>
+ * @generated SignedSource<<bd1b79f01bdef42edf723e14d9a72769>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SaveButtonQuery$variables = {
   id: string;

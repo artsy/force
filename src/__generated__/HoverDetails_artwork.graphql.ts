@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<08a72352a1e1e49eb65f4bf025847bd8>>
+ * @generated SignedSource<<8685e16d56371e4c326b41e704147c2c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HoverDetails_artwork$data = {
   readonly attributionClass: {

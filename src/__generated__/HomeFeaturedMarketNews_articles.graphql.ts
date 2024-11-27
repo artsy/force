@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<10bae0cb44d7a2d27db04f0499836888>>
+ * @generated SignedSource<<1680cad813e494d5540d098ff85a1abd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HomeFeaturedMarketNews_articles$data = ReadonlyArray<{
   readonly byline: string | null | undefined;

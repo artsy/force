@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7209f7bdbcf6b64bfa4e7e134549d256>>
+ * @generated SignedSource<<ab13f3f4bb4bd91376478fbcf7c93e0f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Shipping_order$data = {
   readonly internalID: string;

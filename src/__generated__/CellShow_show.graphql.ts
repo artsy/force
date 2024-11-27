@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<72c3a112f1addcf0e8076f3bf68a52e5>>
+ * @generated SignedSource<<1a8bd13456b384788515aabe88f6efbe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CellShow_show$data = {
   readonly coverImage: {

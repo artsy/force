@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3ae85a3dab09fb8bc548545602091dab>>
+ * @generated SignedSource<<c6bdfbac961167a62914620ecb726d4f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsIndex_featuredShows$data = {
   readonly items: ReadonlyArray<{

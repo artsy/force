@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<636911e58f2a19e401555b178dd6c2ae>>
+ * @generated SignedSource<<cc660b017bb2aff1d3af0bbf4086ebc9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type JobsFilter_viewer$data = {
   readonly departments: ReadonlyArray<{

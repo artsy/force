@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<36d62a195b7cc64d96fff53e449e89e1>>
+ * @generated SignedSource<<fc8fc83c322b3d19649057eae6fb580a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResultTitleInfo_auctionResult$data = {
   readonly artist: {

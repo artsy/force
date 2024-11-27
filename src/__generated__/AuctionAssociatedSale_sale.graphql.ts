@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<17ac461d83b79b16594831671bfa2296>>
+ * @generated SignedSource<<4b04d403fd09e64c5dca7c1abc8182c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionAssociatedSale_sale$data = {
   readonly associatedSale: {

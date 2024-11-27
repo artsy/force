@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0067fe9e7424226a409d65d9ce7c645a>>
+ * @generated SignedSource<<dbce47cbb45db6daa1a8bf53e6cf3457>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SubmittedOrderModalQuery$variables = {
   orderId: string;

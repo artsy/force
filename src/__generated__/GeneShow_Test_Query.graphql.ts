@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<24786977abec85ee7501c1347a6a8997>>
+ * @generated SignedSource<<3fa3411857cf45e25de8b4dddac5de72>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type GeneShow_Test_Query$variables = Record<PropertyKey, never>;
 export type GeneShow_Test_Query$data = {

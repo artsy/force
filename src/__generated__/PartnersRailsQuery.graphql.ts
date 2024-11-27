@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a1959329e349e4c284908b87b34ceef>>
+ * @generated SignedSource<<54aab3072675fecdc6b2b685a58c509b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerCategoryType = "GALLERY" | "INSTITUTION" | "%future added value";
 export type PartnersRailsQuery$variables = {

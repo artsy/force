@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9ceed408ff5629709c99a645794722ca>>
+ * @generated SignedSource<<e6cddc828f8737dda772a402220e14e4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationConfirmModal_artwork$data = {
   readonly artistNames: string | null | undefined;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d3191585caf406aa8c244a4c1b82b683>>
+ * @generated SignedSource<<5ef8e9a524d7eaa268c1be0ecd6c7b1d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConditionRoute_submission$data = {
   readonly myCollectionArtwork: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<93e624a07944c740dc8604bba35d6848>>
+ * @generated SignedSource<<01ba5c59a2ec712696c4870062da9cb0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type PartnerOfferArtwork_artwork$data = {

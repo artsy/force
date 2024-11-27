@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bb6e718be4bf3f22d87fca10bb10aec4>>
+ * @generated SignedSource<<b4d000bb43b06ab5b8d23959df6f800d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnersLocationAutocompleteQuery$variables = Record<PropertyKey, never>;
 export type PartnersLocationAutocompleteQuery$data = {

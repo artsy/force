@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<54389a7d125990df70a1659a5d1d6e1c>>
+ * @generated SignedSource<<fbcc1a17fe913b9949b51ca1f2e50562>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityTooltipPartner_partner$data = {
   readonly href: string | null | undefined;

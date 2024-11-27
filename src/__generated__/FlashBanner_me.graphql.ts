@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<785644f4f2b0c7e94d276ced4140e9b7>>
+ * @generated SignedSource<<e09170b4fd166a26273dec646eccafc7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FlashBanner_me$data = {
   readonly canRequestEmailConfirmation: boolean;

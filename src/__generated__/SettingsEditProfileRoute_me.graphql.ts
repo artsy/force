@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2294686851c8cf707b94edcf2a9814fa>>
+ * @generated SignedSource<<f33a7e15b44b97b3e3f892173a42790f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditProfileRoute_me$data = {
   readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileAboutYou_me" | "SettingsEditProfileArtistsYouCollect_me" | "SettingsEditProfileFields_me">;

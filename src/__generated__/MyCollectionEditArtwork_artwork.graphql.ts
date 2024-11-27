@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<787659dd3f07537b2597c07bac78a829>>
+ * @generated SignedSource<<e93f4c78f13ccf07956642973d0b6201>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionEditArtwork_artwork$data = {
   readonly artist: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e910b96fc6a0d08871ed6502ae0723aa>>
+ * @generated SignedSource<<f2e0f7b6bb13f8abd385f60f5dbac268>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomApp_viewingRoom$data = {
   readonly internalID: string;

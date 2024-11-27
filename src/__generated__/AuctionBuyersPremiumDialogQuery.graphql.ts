@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0fc2edb03b20bb9bfd6214312802c495>>
+ * @generated SignedSource<<01034df35d77e91a9e1c6628f287c29d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionBuyersPremiumDialogQuery$variables = {
   saleID: string;

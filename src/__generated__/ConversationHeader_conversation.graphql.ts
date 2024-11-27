@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<79b5dea9545a3a1654d8297e8a56a6ca>>
+ * @generated SignedSource<<868b652ff5f444ca9698db7f856a141c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationHeader_conversation$data = {
   readonly from: {
@@ -247,8 +247,7 @@ return {
             ],
             "storageKey": null
           },
-          "action": "NONE",
-          "path": "orderConnection.edges"
+          "action": "NONE"
         }
       ],
       "storageKey": "orderConnection(first:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\",\"REFUNDED\",\"CANCELED\"])"

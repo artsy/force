@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e438f03b29199bb4fd7293ab8eab0c75>>
+ * @generated SignedSource<<77353cb576959c51987c8653afd640bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeleteUserInterestMutationInput = {
   anonymousSessionId?: string | null | undefined;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a240bbe314198c9fc090d50a775a37dc>>
+ * @generated SignedSource<<56918530cf5c13de56039307ed0ba011>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type GeneFamily_geneFamily$data = {
   readonly genes: ReadonlyArray<{

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b9fea5b48387322db2ac1a29335b331b>>
+ * @generated SignedSource<<5ead33fcb63e20cc2796a8e26e6c6775>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NearbyGalleriesRail_partners$data = ReadonlyArray<{
   readonly node: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<db7a3b045965092bcf39b858143f1250>>
+ * @generated SignedSource<<96f7145998879afc337a648740f44f32>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type RssArticlesQuery$variables = {
   channelId: string;
 };

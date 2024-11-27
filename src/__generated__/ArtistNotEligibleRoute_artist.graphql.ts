@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f4cfc47c3e3ccd4c9a093f5fb81865f5>>
+ * @generated SignedSource<<01ab0f3c0b537dd5bc944d7533b8218c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistNotEligibleRoute_artist$data = {
   readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;

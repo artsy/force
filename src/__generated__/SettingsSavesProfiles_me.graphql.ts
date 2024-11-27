@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5b33455b9508c413b2fc5cad0ca117b6>>
+ * @generated SignedSource<<2403a7859c045af5c0471ffd4e4c3f69>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsSavesProfiles_me$data = {
   readonly followsAndSaves: {

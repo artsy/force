@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<43b7ea294857c057ec5caf6ecf40c99c>>
+ * @generated SignedSource<<2fc221ce588ba0e0248cc9882606e9b8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerPastEventRailCell_fair$data = {
   readonly image: {

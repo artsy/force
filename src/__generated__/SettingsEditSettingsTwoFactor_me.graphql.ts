@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<115186e4fc8a515f3144958eb341ca83>>
+ * @generated SignedSource<<2741716de9a8ab22e3a86dce81be7678>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditSettingsTwoFactor_me$data = {
   readonly hasSecondFactorEnabled: boolean;

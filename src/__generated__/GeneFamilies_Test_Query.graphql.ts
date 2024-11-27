@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<96695c47b368cfd36c2aa9f2526b9eae>>
+ * @generated SignedSource<<4889b4046f5fa5d8207fb92d706aab9e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type GeneFamilies_Test_Query$variables = Record<PropertyKey, never>;
 export type GeneFamilies_Test_Query$data = {

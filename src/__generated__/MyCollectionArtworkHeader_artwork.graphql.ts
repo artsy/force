@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8f360f224fdf82cf2503a23b6d6a7f98>>
+ * @generated SignedSource<<0cd7513f2175d8959ef313b224361196>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkHeader_artwork$data = {
   readonly consignmentSubmission: {

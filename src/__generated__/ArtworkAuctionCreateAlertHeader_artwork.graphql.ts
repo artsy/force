@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a6073a0c5fc2957e1144539f4fd01b8b>>
+ * @generated SignedSource<<0e1f2c96668bf4abc63984a8f9190948>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkAuctionCreateAlertHeader_artwork$data = {
   readonly artistNames: string | null | undefined;

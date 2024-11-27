@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ff3310e3bae92b261317832755c0bf0>>
+ * @generated SignedSource<<adca85bb647e03acf5a6e84c31476494>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type createMockNetworkLayerTestQuery$variables = Record<PropertyKey, never>;
 export type createMockNetworkLayerTestQuery$data = {
   readonly artwork: {

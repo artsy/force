@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8afc64dc684d2226b9cf544a343808aa>>
+ * @generated SignedSource<<dc857473d10f374893801b3033f3da39>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
 export type PartnersSearchQuery$variables = {
   near?: string | null | undefined;

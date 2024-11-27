@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<87eb12cdc73738800bf5571ecb2c6862>>
+ * @generated SignedSource<<4bea2ef6f0d94ccb64b90a7d440dbb6f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type validatePhoneNumberQuery$variables = {
   phoneNumber: string;
   regionCode?: string | null | undefined;

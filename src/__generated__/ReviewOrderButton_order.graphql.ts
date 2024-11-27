@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<42f8ff3fe66133a69f5ae36047f3f520>>
+ * @generated SignedSource<<551a93752c2765b9b0c150f57c3a25e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
@@ -55,8 +55,7 @@ return {
     {
       "kind": "RequiredField",
       "field": (v0/*: any*/),
-      "action": "NONE",
-      "path": "id"
+      "action": "NONE"
     },
     {
       "kind": "RequiredField",
@@ -67,8 +66,7 @@ return {
         "name": "state",
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "state"
+      "action": "NONE"
     },
     {
       "kind": "RequiredField",
@@ -79,8 +77,7 @@ return {
         "name": "mode",
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "mode"
+      "action": "NONE"
     },
     {
       "alias": null,
@@ -158,8 +155,7 @@ return {
                 ],
                 "storageKey": null
               },
-              "action": "NONE",
-              "path": "lastOffer.from"
+              "action": "NONE"
             },
             {
               "kind": "RequiredField",
@@ -170,8 +166,7 @@ return {
                 "name": "offerAmountChanged",
                 "storageKey": null
               },
-              "action": "NONE",
-              "path": "lastOffer.offerAmountChanged"
+              "action": "NONE"
             }
           ],
           "storageKey": null

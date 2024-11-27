@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef2a0b99816b34b4755ce48e5bdf5c26>>
+ * @generated SignedSource<<bbedd6f162e28cc2e6ebcd48bac9fa61>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchInputPills_viewer$data = {
   readonly searchConnectionAggregation: {

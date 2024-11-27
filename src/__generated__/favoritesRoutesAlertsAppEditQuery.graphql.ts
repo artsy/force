@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<24d20f1b5843eb7498d8a8116a0e04d4>>
+ * @generated SignedSource<<149a41e848156c22882ae33ecd8e5018>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type favoritesRoutesAlertsAppEditQuery$variables = Record<PropertyKey, never>;
 export type favoritesRoutesAlertsAppEditQuery$data = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<547bb238afc2ac7a31368aa582c05846>>
+ * @generated SignedSource<<ff2876f28202d2731ef253d0118c4217>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionDetails_me$data = {
   readonly " $fragmentSpreads": FragmentRefs<"RegisterButton_me">;

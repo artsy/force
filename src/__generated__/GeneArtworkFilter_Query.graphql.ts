@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<31782472e3bb39c284c3061a5542425d>>
+ * @generated SignedSource<<530734ceb0ebf3c4083b46687883f308>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type GeneArtworkFilter_Query$variables = {
   slug: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c09ca8f4264756396799024e9002e33e>>
+ * @generated SignedSource<<c03f438da055dc4ccc4af1ec6939f7cb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type FooterDownloadAppBannerQuery$variables = {
   slug: string;
 };

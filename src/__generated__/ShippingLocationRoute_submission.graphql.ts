@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<80b55861afe1dfda433c2d8e6017a239>>
+ * @generated SignedSource<<51abae73529c19255d3f20771eb40d3f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShippingLocationRoute_submission$data = {
   readonly locationAddress: string | null | undefined;

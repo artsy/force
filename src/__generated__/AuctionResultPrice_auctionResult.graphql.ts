@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f49de0eb5df37ba8bc1d28e008d62e03>>
+ * @generated SignedSource<<11e699b805353a7e2ac255e5de6fe4c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResultPrice_auctionResult$data = {
   readonly boughtIn: boolean | null | undefined;

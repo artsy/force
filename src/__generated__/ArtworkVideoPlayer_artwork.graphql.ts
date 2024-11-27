@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebf225abed775d8d5c2bc805ad61b3cd>>
+ * @generated SignedSource<<a5aafb39e6a01b45c4e9220ebd0cad99>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkVideoPlayer_artwork$data = {
   readonly figures: ReadonlyArray<{

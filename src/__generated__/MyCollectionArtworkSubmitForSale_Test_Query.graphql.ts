@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb7e49cfb8e066745fc327d8a9fe7801>>
+ * @generated SignedSource<<d84a9c16bb6ca80375bb5be8d4e8f41a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistTargetSupplyPriority = "FALSE" | "TRUE" | "%future added value";
 export type MyCollectionArtworkSubmitForSale_Test_Query$variables = Record<PropertyKey, never>;

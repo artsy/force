@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4154283353200ef93ab8c13bd506a3ee>>
+ * @generated SignedSource<<dcce8cfc81c7214c2f4eaf692e793308>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileArtistsListArtistsQuery$variables = {
   page: number;

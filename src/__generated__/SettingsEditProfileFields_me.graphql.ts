@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<49f53b47567f76e16d6032347cda3dc5>>
+ * @generated SignedSource<<c91537682ef57525d0193fd72558b3f9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditProfileFields_me$data = {
   readonly bio: string | null | undefined;

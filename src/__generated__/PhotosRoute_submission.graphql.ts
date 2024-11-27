@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<426e7cc1ce30df4c09b5418d67c84111>>
+ * @generated SignedSource<<4510c4fa500b1016b6c6ed6b4bbbc6f2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PhotosRoute_submission$data = {
   readonly assets: ReadonlyArray<{

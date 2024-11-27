@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fc0bae3c80219ba3f442cf0f62deffe0>>
+ * @generated SignedSource<<24c74c0b342361d6955e797ce6679b7d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerDedicatedArticlesQuery$variables = {
   first?: number | null | undefined;

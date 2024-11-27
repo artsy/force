@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1dc72b4fc40cea049a59a7d723b0c5b2>>
+ * @generated SignedSource<<67c7e4fffdb60a3905fee75cfc987a0a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairEditorialRailArticles_Test_Query$variables = Record<PropertyKey, never>;
 export type FairEditorialRailArticles_Test_Query$data = {

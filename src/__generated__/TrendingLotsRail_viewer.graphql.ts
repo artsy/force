@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<256c1a163487b1eb5278b9d1a10668df>>
+ * @generated SignedSource<<e64f81b4c740c45c67cbe67a71f95240>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type TrendingLotsRail_viewer$data = {
   readonly trendingLotsConnection: {

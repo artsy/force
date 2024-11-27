@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<354415cb8600d898add35040f9b4c7df>>
+ * @generated SignedSource<<c4bcaead4791d2a5f55d0385e38e3017>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type TrendingLotsRailQuery$variables = Record<PropertyKey, never>;
 export type TrendingLotsRailQuery$data = {

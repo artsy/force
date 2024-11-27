@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9757df965d52fafd3e30a51b22cb953f>>
+ * @generated SignedSource<<49e8e7c48be39a8dae384897c9e07fe9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeprecatedSaveButtonQuery$variables = {
   id: string;

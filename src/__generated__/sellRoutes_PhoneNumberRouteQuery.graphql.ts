@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cc97b04b741e3f68046f4a5371c05f79>>
+ * @generated SignedSource<<9bc3c5181f9614f5e79c55cebb0f5400>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type sellRoutes_PhoneNumberRouteQuery$variables = {
   id: string;

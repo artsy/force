@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<31cc9e4b140934bf91119e1c4c79fc0d>>
+ * @generated SignedSource<<b5642d45300354b5498ce7b3e72fa575>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomHeader_viewingRoom$data = {
   readonly distanceToClose: string | null | undefined;

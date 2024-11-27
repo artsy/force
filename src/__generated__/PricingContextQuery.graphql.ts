@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fbfc16b86e511a336be0f38f0cae90f6>>
+ * @generated SignedSource<<5c89b777444e1622cd80bc61e2bec124>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PricingContextQuery$variables = {
   slug: string;

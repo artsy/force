@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<806c7108f9a286ec7a35541b991e843a>>
+ * @generated SignedSource<<467f934d6951beaa7852493f253317a2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type RequestPriceEstimateInput = {
   artworkId: string;
   clientMutationId?: string | null | undefined;

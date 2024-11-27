@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e12d0b9f127db76be9734e1bb0cf95c3>>
+ * @generated SignedSource<<0fb43659f42dafcefcd1844ba56c180c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type FollowProfileInput = {
   clientMutationId?: string | null | undefined;
   profileID?: string | null | undefined;

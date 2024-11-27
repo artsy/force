@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<39e29f79f8e8df8ad23436358feb360b>>
+ * @generated SignedSource<<1fbe03127b002c94f367ed81cb33628a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtQuizTrendingCollections_viewer$data = {
   readonly marketingCollections: ReadonlyArray<{

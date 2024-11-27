@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8289ff91283fb0aac06964968c9a046c>>
+ * @generated SignedSource<<bd04244badf264a9ba7544eac1b25e7d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MockRelayRendererFixtures_artwork$data = {
   readonly artist: {

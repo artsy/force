@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e8234de9afe5e94138c6f0ac3f71883d>>
+ * @generated SignedSource<<ff71b4594980d0ceac9aa348be2ecbf1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type SubGroupStatus = "SUBSCRIBED" | "UNSUBSCRIBED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type NotificationPreferences_viewer$data = {

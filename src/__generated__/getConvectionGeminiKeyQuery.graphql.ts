@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<42dcbe7ee743922776511896d1e58505>>
+ * @generated SignedSource<<96d691298366e2c11c519733a977fa83>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type getConvectionGeminiKeyQuery$variables = Record<PropertyKey, never>;
 export type getConvectionGeminiKeyQuery$data = {
   readonly system: {

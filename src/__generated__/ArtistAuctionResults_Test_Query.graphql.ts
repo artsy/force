@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7a6288a9bae469dadad79cea50e47021>>
+ * @generated SignedSource<<02487d88ef4b96422c19dfd136a0be19>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResultsAggregation = "CURRENCIES_COUNT" | "LOTS_BY_CREATED_YEAR" | "LOTS_BY_SALE_YEAR" | "SIMPLE_PRICE_HISTOGRAM" | "%future added value";
 export type ArtistAuctionResults_Test_Query$variables = {

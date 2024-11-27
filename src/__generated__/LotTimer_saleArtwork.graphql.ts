@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f236de665fd63c3b0d36aaa0503f38e6>>
+ * @generated SignedSource<<955ea7b644062ffb9dae9f5c4ef856db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type LotTimer_saleArtwork$data = {
   readonly endAt: string | null | undefined;

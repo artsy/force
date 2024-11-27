@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7013e6489f4b50d16fc936f1dd5eaf65>>
+ * @generated SignedSource<<decaeddaed2300e79cadaf176cd69f88>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleInfiniteScroll_viewer$data = {
   readonly articlesConnection: {

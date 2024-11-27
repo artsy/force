@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f3325ff655743be05aad3d4c366bb3ef>>
+ * @generated SignedSource<<d1ea45d9daf6339d531357f96db670d4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MeetTheSpecialists_staticContent$data = {
   readonly specialistBios: ReadonlyArray<{

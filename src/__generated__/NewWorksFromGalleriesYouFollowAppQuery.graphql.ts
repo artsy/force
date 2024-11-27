@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9417166eaad4f72dca349b4857397f3b>>
+ * @generated SignedSource<<041e0946ee14425424dd8d02c7abdbe2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NewWorksFromGalleriesYouFollowAppQuery$variables = {
   count: number;

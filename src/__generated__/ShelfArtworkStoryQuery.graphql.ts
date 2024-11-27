@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a23abd9bad8953f98db3d4b3b18aa992>>
+ * @generated SignedSource<<37ed818928ba9a3ad95b50557ade9be8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShelfArtworkStoryQuery$variables = {
   id: string;

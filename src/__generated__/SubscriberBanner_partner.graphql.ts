@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f3ce19f6b15dc5359ad1633ee29a894e>>
+ * @generated SignedSource<<6e15028ea01b5241b9201e93e3d9955e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SubscriberBanner_partner$data = {
   readonly name: string | null | undefined;

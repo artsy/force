@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2fa7c95994a7bb3892c68f51cededb91>>
+ * @generated SignedSource<<e7cd687981934bb6ff261f98e672991b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HomeFeaturedGalleriesRail_orderedSet$data = {
   readonly orderedItemsConnection: {

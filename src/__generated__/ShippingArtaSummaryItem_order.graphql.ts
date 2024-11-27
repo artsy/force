@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9e30e059e85bb5dd670fa88dbae133a8>>
+ * @generated SignedSource<<92316b9b47cd1d1b7769245ed836a4fa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShippingArtaSummaryItem_order$data = {
   readonly lineItems: {

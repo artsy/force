@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6f4c483d394cba0ba857b7546a8893b6>>
+ * @generated SignedSource<<f4eba589e507f6eb84160691fee7ec93>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleByline_article$data = {
   readonly authors: ReadonlyArray<{

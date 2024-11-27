@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<92586a323a3396264d611eae1538d9e7>>
+ * @generated SignedSource<<0897c7c5a89d9c36efb9412c789dd9d2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NotificationsApp_me$data = {
   readonly unreadNotificationsCount: number;

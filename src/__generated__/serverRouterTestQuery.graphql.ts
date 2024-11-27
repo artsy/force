@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3a719fd6600638ff538407979b528701>>
+ * @generated SignedSource<<da267e7f86834bbbbe20c7bc425cf98c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type serverRouterTestQuery$variables = Record<PropertyKey, never>;
 export type serverRouterTestQuery$data = {
   readonly me: {

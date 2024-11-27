@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ecb945f80b96a5a00f2b623d35626130>>
+ * @generated SignedSource<<b79cea7e1055cac728c8e70a41ef4b4c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type artQuizRoutes_WelcomeQuery$variables = Record<PropertyKey, never>;
 export type artQuizRoutes_WelcomeQuery$data = {
   readonly me: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f3649f5c945c9287e021d372fb00fdf5>>
+ * @generated SignedSource<<023c9cbc6818abec034513aada303bad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairHeader_fair$data = {
   readonly exhibitionPeriod: string | null | undefined;

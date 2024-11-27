@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<534a1fe4aaca28fa9572099e17b54d35>>
+ * @generated SignedSource<<23c7151788fd70f746e16fa0aa2dad6c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CategoriesApp_geneFamiliesConnection$data = {
   readonly " $fragmentSpreads": FragmentRefs<"GeneFamilies_geneFamiliesConnection" | "StickyNav_geneFamiliesConnection">;

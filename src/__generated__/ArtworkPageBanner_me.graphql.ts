@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3400e7710aa0e9582a35d918790c86f5>>
+ * @generated SignedSource<<0c5b4b6bd4d58fb5b008fc9cb4d99daa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkPageBanner_me$data = {
   readonly partnerOffersConnection: {

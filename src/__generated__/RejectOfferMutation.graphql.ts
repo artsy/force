@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7c489169b2002e4fd2a9b866bb42bce0>>
+ * @generated SignedSource<<e96c671734a7d60c38b5e961c805eff5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type CommerceCancelReasonTypeEnum = "ADMIN_CANCELED" | "ADMIN_FAILED_REVIEW" | "BUYER_LAPSED" | "BUYER_REJECTED" | "FUNDS_NOT_RECEIVED" | "SELLER_LAPSED" | "SELLER_REJECTED" | "SELLER_REJECTED_ARTWORK_UNAVAILABLE" | "SELLER_REJECTED_OFFER_TOO_LOW" | "SELLER_REJECTED_OTHER" | "SELLER_REJECTED_SHIPPING_UNAVAILABLE" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceBuyerRejectOfferInput = {

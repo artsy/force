@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7d8ce94f612c3985dcb731bad1d29f71>>
+ * @generated SignedSource<<253c92de5ef40be2139e90ddb3cf79a7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Contact_partner$data = {
   readonly locations: {

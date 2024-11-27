@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e8b6800bff407d5f21a33aca20f323b>>
+ * @generated SignedSource<<514f04608430c0681486b897e3dd55c2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type viewingRoomRoutes_ViewingRoomsAppQuery$variables = {
   after?: string | null | undefined;

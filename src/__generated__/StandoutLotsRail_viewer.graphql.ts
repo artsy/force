@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ba65a07e02254dbe35cd3a5323e86731>>
+ * @generated SignedSource<<3f9e77298905c9297d95422f63e7cde4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type StandoutLotsRail_viewer$data = {
   readonly standoutLotsRailConnection: {

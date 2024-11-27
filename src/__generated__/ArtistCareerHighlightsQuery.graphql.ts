@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f412f43171769022f6f28a5e8c520d5a>>
+ * @generated SignedSource<<8cbc28ca1d3dae7454b9e9067e7cce07>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCareerHighlightsQuery$variables = {
   id: string;

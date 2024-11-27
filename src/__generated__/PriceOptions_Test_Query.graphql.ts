@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<57acbb65bd33a5de2854d7a2e0a4db9a>>
+ * @generated SignedSource<<aef0dd6ec48fb2b144d61537f9919bc2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PriceOptions_Test_Query$variables = Record<PropertyKey, never>;
 export type PriceOptions_Test_Query$data = {

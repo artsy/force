@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<869a5d12d49f7d7c934bdbec187f8832>>
+ * @generated SignedSource<<4362f0de587d11510f87c5ec8b76369c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairBoothRailArtworksQuery$variables = {
   id: string;

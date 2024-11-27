@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1f299a7db06ca4f5b656eebd362903d5>>
+ * @generated SignedSource<<f31d6f0046b42a83e1b8e0e10190dc1f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowHours_show$data = {
   readonly fair: {

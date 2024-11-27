@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ddcbc89b9d4e53e20ed08d08f53e7642>>
+ * @generated SignedSource<<8291a40daaf8c2ae3cf9a75562e6de0d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type BackToFairBanner_show$data = {
   readonly fair: {

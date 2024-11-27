@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<befa260b435894bac11574f3d7afc1e4>>
+ * @generated SignedSource<<208f334c00d47cade120efb7a6973091>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerHeaderImage_fairOrganizer$data = {
   readonly profile: {

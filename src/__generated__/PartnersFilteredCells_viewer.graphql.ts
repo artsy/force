@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<38553379ce8d716c6ae67bd7f365af2d>>
+ * @generated SignedSource<<1c5d7b719f1f8c84ca08212ff13edf28>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnersFilteredCells_viewer$data = {
   readonly partnersConnection: {

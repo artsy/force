@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<180c9b38b215f8e4badbbaa3a06bc926>>
+ * @generated SignedSource<<74175d2681450c6eeb4140cf5b563d4a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeepZoom_Test_Query$variables = Record<PropertyKey, never>;
 export type DeepZoom_Test_Query$data = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6db853ada7e1511682dd61035a4bbc12>>
+ * @generated SignedSource<<0cbba8cfa99787b396067be38aae6a9b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertListItem_item$data = {
   readonly artistIDs: ReadonlyArray<string | null | undefined> | null | undefined;

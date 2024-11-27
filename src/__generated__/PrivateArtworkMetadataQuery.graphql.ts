@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ff8d0f4bccff1a29bc0e55d0b893b4a7>>
+ * @generated SignedSource<<90a9d2e7932400188ba7888ba0821e13>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PrivateArtworkMetadataQuery$variables = Record<PropertyKey, never>;
 export type PrivateArtworkMetadataQuery$data = {

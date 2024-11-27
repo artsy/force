@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1ca750db6ce5199d47b3b5bd90fd3cfe>>
+ * @generated SignedSource<<e36c3b2cd40ddaec7fbae1ca833387da>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistRelatedGeneCategories_artist$data = {
   readonly related: {

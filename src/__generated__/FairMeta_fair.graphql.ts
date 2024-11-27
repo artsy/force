@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<875b5d8a46c48dc1e5aed8786dc6c7c0>>
+ * @generated SignedSource<<049b337e4196de723c3f31cbb1efe2a9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairMeta_fair$data = {
   readonly metaDescription: string | null | undefined;

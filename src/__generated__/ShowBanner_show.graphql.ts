@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<81148cc6be5026551c00b0de4947590d>>
+ * @generated SignedSource<<18fce2dcd4f561fd2eb93f5d73c6769c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowBanner_show$data = {
   readonly coverImage: {

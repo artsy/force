@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a6c3b7cb71742b6d017c5e1b3ae96f23>>
+ * @generated SignedSource<<911d4b671faf078d4ad3f1766de67ee2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleInfiniteScrollQuery$variables = {
   after?: string | null | undefined;

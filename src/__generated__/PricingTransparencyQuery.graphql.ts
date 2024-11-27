@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d6d92d377ccac53e3e7b75068f2d8fe8>>
+ * @generated SignedSource<<cfa602a91f0e9bf6d667cf4c420ea90c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type PricingTransparencyQuery$variables = {
   artworkId: string;
   bidAmountMinor: number;

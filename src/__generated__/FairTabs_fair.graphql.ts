@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ac0004b414bf0a18bb2c5a0068b1f371>>
+ * @generated SignedSource<<562e8c62930d40aff12850759d51ea25>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairTabs_fair$data = {
   readonly counts: {

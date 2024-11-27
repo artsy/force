@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2d64dec1f0ed48c278f32c1ce2be4d78>>
+ * @generated SignedSource<<876171608962a8b9c12281bdd2b8262e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RegisterButton_me$data = {
   readonly hasCreditCards: boolean | null | undefined;

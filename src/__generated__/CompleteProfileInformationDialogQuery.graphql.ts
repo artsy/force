@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<62ef8b50384256db7fdcbebcc01d6b01>>
+ * @generated SignedSource<<a9eb7240a4c176d81707a6a585dee64a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type CompleteProfileInformationDialogQuery$variables = Record<PropertyKey, never>;
 export type CompleteProfileInformationDialogQuery$data = {
   readonly me: {

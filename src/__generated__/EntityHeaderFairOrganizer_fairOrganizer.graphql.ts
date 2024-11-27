@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<408a4f954c9a0b8c10d4331e1e6ae502>>
+ * @generated SignedSource<<456c5680b33955f9036880c2e4e6e8d9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityHeaderFairOrganizer_fairOrganizer$data = {
   readonly fairsConnection: {

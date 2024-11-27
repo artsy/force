@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<39b814827860a0ab9cf4815e5ce30884>>
+ * @generated SignedSource<<5b3cadc0b05c259d9664da272815d9cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationMessageArtwork_item$data = {
   readonly __typename: "Artwork";

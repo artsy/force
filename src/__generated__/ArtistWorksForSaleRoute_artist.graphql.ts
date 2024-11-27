@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e2ce1086ee3879b4ee64809ca6a91391>>
+ * @generated SignedSource<<b7e14378138a293120d777e914709647>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistWorksForSaleRoute_artist$data = {
   readonly meta: {

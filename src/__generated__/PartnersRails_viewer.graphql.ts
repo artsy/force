@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<459e49a555eddb5af5143e936bd17e8c>>
+ * @generated SignedSource<<a9ec7f5fa9a6c4798c107085393986d9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnersRails_viewer$data = {
   readonly partnerCategories: ReadonlyArray<{

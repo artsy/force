@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ba92b6d321fb64abfc715dff36ce975>>
+ * @generated SignedSource<<7f639861088270bef60d9956166830df>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceSetPaymentByStripeIntentInput = {
   clientMutationId?: string | null | undefined;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<09b1cb3df10c103f37c6e923e928a8e7>>
+ * @generated SignedSource<<5820762c4a8a443be56bba945e40208d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarAuctionInfoPolling_artwork$data = {
   readonly internalID: string;

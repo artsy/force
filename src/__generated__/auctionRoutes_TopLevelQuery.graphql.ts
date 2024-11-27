@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<67e884dee49dae1fefdc099050cbfdea>>
+ * @generated SignedSource<<c5b7e8870de3702eee58eac7c5ddfac3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type auctionRoutes_TopLevelQuery$variables = {
   isLoggedIn: boolean;

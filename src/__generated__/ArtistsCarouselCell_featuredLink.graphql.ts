@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b93fbbc3d8e769d45d24da2f3c16827b>>
+ * @generated SignedSource<<1c7acdf27b04e369aa00e40514f17514>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistsCarouselCell_featuredLink$data = {
   readonly entity: {

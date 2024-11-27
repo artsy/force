@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<afaa83d4565d640b8d33787ad37c33c6>>
+ * @generated SignedSource<<840dd55e1d7fe1ce357455d0daaa55b1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type AddAssetToConsignmentSubmissionInput = {
   assetType?: string | null | undefined;
   clientMutationId?: string | null | undefined;

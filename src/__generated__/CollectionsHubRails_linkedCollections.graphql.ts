@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<907844f455be02312dde02305059bd0d>>
+ * @generated SignedSource<<c98950029a2a2a151bed40a3504a37fa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type MarketingCollectionGroupTypeEnum = "ArtistSeries" | "FeaturedCollections" | "OtherCollections" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type CollectionsHubRails_linkedCollections$data = ReadonlyArray<{

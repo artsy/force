@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8fb5061eb13b1c7806af177af352965b>>
+ * @generated SignedSource<<0174642308fb3e1128a359fed0a71351>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type TagApp_tag$data = {
   readonly name: string | null | undefined;

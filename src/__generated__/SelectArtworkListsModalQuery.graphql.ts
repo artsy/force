@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<775988469ddc647ca8c124d4172be0d6>>
+ * @generated SignedSource<<8652106856ea4e957d8c499fd63ef7ba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SelectArtworkListsModalQuery$variables = {
   artworkID: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<696af457f657b6aa098f02f4a29ed1c8>>
+ * @generated SignedSource<<a2e0a6c858a810a743230ae1940b1b49>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairExhibitorCard_fair$data = {
   readonly href: string | null | undefined;

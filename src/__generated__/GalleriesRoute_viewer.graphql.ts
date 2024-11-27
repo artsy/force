@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e8c6666bca3eef1482c029d5a43b133c>>
+ * @generated SignedSource<<76a4089cbbe659fa48c0b4f9b6e63d7c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type GalleriesRoute_viewer$data = {
   readonly " $fragmentSpreads": FragmentRefs<"PartnersFeaturedCarousel_viewer">;

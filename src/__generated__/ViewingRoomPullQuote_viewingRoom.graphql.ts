@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4218a09c771b93004a70e03bd38e6c17>>
+ * @generated SignedSource<<e1147ad48d1c385e4c41044ac073b82a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomPullQuote_viewingRoom$data = {
   readonly pullQuote: string | null | undefined;

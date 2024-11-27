@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<93b9d1063e246dc3db80b810c3e1b90d>>
+ * @generated SignedSource<<13ea0aa425aa71fff3f06050fb9dd551>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarAuthenticityCertificate_artwork$data = {
   readonly hasCertificateOfAuthenticity: boolean | null | undefined;

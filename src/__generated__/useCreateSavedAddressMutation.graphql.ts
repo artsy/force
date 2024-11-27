@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9f6f6f6a0ffca733c33aedb70b0d7434>>
+ * @generated SignedSource<<6360e59ea6fa700909fc354103703193>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CreateUserAddressInput = {
   attributes: UserAddressAttributes;

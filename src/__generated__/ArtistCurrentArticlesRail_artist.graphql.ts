@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3bc0073f2e8781688e7e7d9921dcd28d>>
+ * @generated SignedSource<<9de07d0e90d4c4fff25cfd02d6861247>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCurrentArticlesRail_artist$data = {
   readonly articlesConnection: {

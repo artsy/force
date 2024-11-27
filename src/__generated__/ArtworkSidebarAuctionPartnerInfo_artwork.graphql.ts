@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ff675b8f7698c69bb4ec8ea09e371621>>
+ * @generated SignedSource<<50d484c2120bb4c803330ecef607584c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarAuctionPartnerInfo_artwork$data = {
   readonly partner: {

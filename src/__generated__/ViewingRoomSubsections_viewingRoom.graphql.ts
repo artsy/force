@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<37f83f8cb5f59df953af65844afbc09b>>
+ * @generated SignedSource<<df2d9e0c95603cb887327f9011fcf89d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomSubsections_viewingRoom$data = {
   readonly subsections: ReadonlyArray<{

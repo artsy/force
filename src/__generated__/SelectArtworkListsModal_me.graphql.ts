@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8a12f1f009e54ac76db2189ea0908bf1>>
+ * @generated SignedSource<<d9eb248221dffc9e42faea2751b0fec6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SelectArtworkListsModal_me$data = {
   readonly customArtworkLists: {

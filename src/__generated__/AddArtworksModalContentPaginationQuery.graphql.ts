@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<91caa3cc6b157e6785762cc578a3d15a>>
+ * @generated SignedSource<<356f10af868270fa5f52bd76eca266f6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectionArtworkSorts = "POSITION_ASC" | "POSITION_DESC" | "SAVED_AT_ASC" | "SAVED_AT_DESC" | "%future added value";
 export type AddArtworksModalContentPaginationQuery$variables = {

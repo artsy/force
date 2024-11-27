@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d7031f5b7e993e9b37d3d85aeead72aa>>
+ * @generated SignedSource<<42e14207222bcbb036371dec9db5687e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionRoute_me$data = {
   readonly myCollectionConnection: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1c8ce35879da8cc872e2bd6f7b65e1c1>>
+ * @generated SignedSource<<ac56500ce95a3aa3bf55f38979bc868c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ExampleArtistRoute_artist$data = {
   readonly bio: string | null | undefined;

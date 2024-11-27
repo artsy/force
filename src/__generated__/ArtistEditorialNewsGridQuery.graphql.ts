@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ee38aa353289cc908e76e1793cc7daf4>>
+ * @generated SignedSource<<bf765b5ed58d67d3966fa5c02ad01403>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistEditorialNewsGridQuery$variables = {
   id: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<99f38371b022452aeef49c6457eec7a9>>
+ * @generated SignedSource<<d314fdfe161237c48d0091f1d41af8c3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type OfferHistoryItemTestQuery$variables = Record<PropertyKey, never>;

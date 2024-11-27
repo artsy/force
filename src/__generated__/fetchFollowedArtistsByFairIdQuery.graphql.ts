@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<52d2cf47436b8fd44807fbd9d31f154b>>
+ * @generated SignedSource<<da852aef9fc6a4d8b05bab6abdb36939>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type fetchFollowedArtistsByFairIdQuery$variables = {
   fairID?: string | null | undefined;
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b8957c239a6e4285d25d022b36435ee7>>
+ * @generated SignedSource<<bc3dfd6fef24237d57d7e5cac10ccd3f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowContextCard_Test_Query$variables = Record<PropertyKey, never>;
 export type ShowContextCard_Test_Query$data = {

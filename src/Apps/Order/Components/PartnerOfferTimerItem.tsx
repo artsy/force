@@ -12,13 +12,14 @@ export const PartnerOfferTimerItem: React.FC<React.PropsWithChildren<{
   const data = useFragment(query, order)
 
   const endTime = data.stateExpiresAt || ""
+
   const startTime = endTime
     ? DateTime.fromISO(endTime).minus({ days: 3 }).toString()
     : ""
 
   const { remainingTime, percentComplete, isImminent } = useCountdownTimer({
-    startTime: startTime,
-    endTime: endTime,
+    startTime,
+    endTime,
     imminentTime: 1,
   })
 

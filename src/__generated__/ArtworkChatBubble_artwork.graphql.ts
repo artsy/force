@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e5531f376695ea4dbc8f4fb2c2fa8440>>
+ * @generated SignedSource<<c7bae4f602ccbb566f03091f86778471>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkChatBubble_artwork$data = {
   readonly isAcquireable: boolean | null | undefined;

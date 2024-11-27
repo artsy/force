@@ -88,7 +88,7 @@ const FollowArtistButton = ({
       },
     },
     updater: (store, data) => {
-      if (!data.followArtist?.artist || !data.followArtist.me) return
+      if (!data?.followArtist?.artist || !data?.followArtist.me) return
 
       const { artist, me } = data.followArtist
 

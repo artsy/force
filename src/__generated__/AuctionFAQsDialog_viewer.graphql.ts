@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9d6dc64d1b70d04f6faee9105acac014>>
+ * @generated SignedSource<<aeceb114103d9f2c6f409a0f86af2e63>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionFAQsDialog_viewer$data = {
   readonly bidding: {

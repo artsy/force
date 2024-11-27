@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d9ff9353f32281ac62a2debc1665dacb>>
+ * @generated SignedSource<<3c663a1085280cf4f070578ddb16daad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityTooltipGeneQuery$variables = {
   id: string;

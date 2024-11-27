@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4bdb5cb01ce7ce7f7865b187b78b6a1d>>
+ * @generated SignedSource<<bb35349fec498d910bdcdfeb11209761>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type useCountryCodeQuery$variables = {
   ip: string;
 };

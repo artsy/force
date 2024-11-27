@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b7c55f208a8592d88739bead6e4a4b8c>>
+ * @generated SignedSource<<4fef90a27fde3a376bd5fce92437f794>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
 export type PartnersSpecialtyAutocompleteQuery$variables = {

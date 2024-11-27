@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a8461fd6b24dd13ccae1ce8b179d469>>
+ * @generated SignedSource<<d61bc1afe925780cc1806a959c78c0fa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommercePagination_pageCursors$data = {
   readonly around: ReadonlyArray<{

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ed9cd245c1fc95aa1b2746663c1f772b>>
+ * @generated SignedSource<<c4ff6d8882b38fad048412b874484966>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyBidsBidHeader_sale$data = {
   readonly coverImage: {

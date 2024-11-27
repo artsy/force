@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<921a991740b882f170f3430dc988614b>>
+ * @generated SignedSource<<ed30d8ba1c214a7cb087d60963a17ddc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DedicatedArticlesBreadcrumbs_fairOrganizer$data = {
   readonly name: string | null | undefined;

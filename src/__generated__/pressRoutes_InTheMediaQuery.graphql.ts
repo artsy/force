@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1a30523163309f83b2aac6a0b1bc6c91>>
+ * @generated SignedSource<<17576c3e7d0f102f1943399b84e3f788>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type pressRoutes_InTheMediaQuery$variables = Record<PropertyKey, never>;
 export type pressRoutes_InTheMediaQuery$data = {

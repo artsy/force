@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<00906541689708d6e61e076b24110a0f>>
+ * @generated SignedSource<<67711edeb3c65aa8bf77f5cc42dd7394>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkArtistSeries_artwork$data = {
   readonly internalID: string;

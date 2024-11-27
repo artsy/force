@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34bae28eaa58dd92f6814e22845fb726>>
+ * @generated SignedSource<<0d05ec87d7ff4ce6d5690c5f4d62ad83>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionImageCollectionImage_figure$data = {
   readonly formattedMetadata?: string | null | undefined;

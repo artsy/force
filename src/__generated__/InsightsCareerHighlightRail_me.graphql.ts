@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d8325ffc58c38f7bfcb01f6d205fec21>>
+ * @generated SignedSource<<4d76a20cdecf630f7750bc80a44b1085>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type InsightsCareerHighlightRail_me$data = {
   readonly myCollectionInfo: {

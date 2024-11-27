@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a4096c348b6b9eb86db7939f1b3279e2>>
+ * @generated SignedSource<<084fdf44d07f7bd4e5e35a7cd58ece5a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type MarkNotificationAsReadInput = {
   clientMutationId?: string | null | undefined;
   id: string;

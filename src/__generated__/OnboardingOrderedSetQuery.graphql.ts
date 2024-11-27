@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a335c29752c7023f7207b835ada2e982>>
+ * @generated SignedSource<<ce1433670a10e1ca97ab37634f134b87>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type OnboardingOrderedSetQuery$variables = {
   key: string;

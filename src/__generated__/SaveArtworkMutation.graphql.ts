@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2ce1e5b972689f6af2545024cff5e2f5>>
+ * @generated SignedSource<<0ded1ba5a68863c5d1cfb5d206bba732>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type SaveArtworkInput = {
   artworkID?: string | null | undefined;
   clientMutationId?: string | null | undefined;
