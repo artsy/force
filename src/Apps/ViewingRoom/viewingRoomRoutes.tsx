@@ -40,7 +40,7 @@ export const viewingRoomRoutes: RouteProps[] = [
   {
     path: "/viewing-rooms",
     getComponent: () => ViewingRoomsApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       ViewingRoomsApp.preload()
     },
     prepareVariables: () => {
@@ -67,7 +67,7 @@ export const viewingRoomRoutes: RouteProps[] = [
     path: "/viewing-room/:slug",
     getComponent: () => ViewingRoomApp,
     ignoreScrollBehaviorBetweenChildren: true,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       ViewingRoomApp.preload()
     },
     query: graphql`
