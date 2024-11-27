@@ -75,7 +75,7 @@ export const exampleRoutes: RouteProps[] = [
   {
     path: "/example",
     getComponent: () => ExampleApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       ExampleApp.preload()
     },
     query: graphql`
@@ -93,7 +93,7 @@ export const exampleRoutes: RouteProps[] = [
       {
         path: "artist/:slug",
         getComponent: () => ArtistRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           ArtistRoute.preload()
         },
         query: graphql`
@@ -108,7 +108,7 @@ export const exampleRoutes: RouteProps[] = [
       {
         path: "artwork/:slug",
         getComponent: () => ArtworkRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           ArtworkRoute.preload()
         },
         query: graphql`
@@ -123,7 +123,7 @@ export const exampleRoutes: RouteProps[] = [
       {
         path: "artwork-filter",
         getComponent: () => ArtworkFilterRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           ArtworkRoute.preload()
         },
         query: graphql`
@@ -144,7 +144,7 @@ export const exampleRoutes: RouteProps[] = [
       {
         path: "add-to-collection",
         getComponent: () => AddToCollectionRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           AddToCollectionRoute.preload()
         },
         query: graphql`
@@ -158,7 +158,7 @@ export const exampleRoutes: RouteProps[] = [
       {
         path: "search",
         getComponent: () => SearchRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           SearchRoute.preload()
         },
       },

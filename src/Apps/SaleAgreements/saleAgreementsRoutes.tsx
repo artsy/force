@@ -21,7 +21,7 @@ export const saleAgreementsRoutes: RouteProps[] = [
   {
     path: "/supplemental-cos",
     getComponent: () => SaleAgreementsApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       SaleAgreementsApp.preload()
     },
     query: graphql`
@@ -35,7 +35,7 @@ export const saleAgreementsRoutes: RouteProps[] = [
   {
     path: "/supplemental-cos/:id",
     getComponent: () => SaleAgreementRoute,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       SaleAgreementRoute.preload()
     },
     query: graphql`

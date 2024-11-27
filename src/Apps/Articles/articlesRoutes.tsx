@@ -21,7 +21,7 @@ export const articlesRoutes: RouteProps[] = [
   {
     path: "/articles",
     Component: ArticlesApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       ArticlesApp.preload()
     },
     query: graphql`
@@ -36,7 +36,7 @@ export const articlesRoutes: RouteProps[] = [
   {
     path: "/news",
     Component: NewsApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       NewsApp.preload()
     },
     query: graphql`
@@ -51,7 +51,7 @@ export const articlesRoutes: RouteProps[] = [
   {
     path: "/channel/:id",
     Component: ChannelApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       ChannelApp.preload()
     },
     query: graphql`

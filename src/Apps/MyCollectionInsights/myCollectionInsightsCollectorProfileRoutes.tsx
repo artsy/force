@@ -22,7 +22,7 @@ export const myCollectionInsightsCollectorProfileRoutes: RouteProps[] = [
     path:
       "/collector-profile/my-collection/median-sale-price-at-auction/:artistID",
     getComponent: () => MyCollectionInsightsMedianSalePriceAtAuction,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       MyCollectionInsightsMedianSalePriceAtAuction.preload()
     },
     query: graphql`

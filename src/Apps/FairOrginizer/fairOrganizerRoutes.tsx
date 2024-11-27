@@ -33,13 +33,15 @@ export const fairOrganizerRoutes: RouteProps[] = [
   {
     path: "/fair-organizer/:slug",
     getComponent: () => FairOrganizerApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       FairOrganizerApp.preload()
     },
     render: ({ Component, props }) => {
       if (Component && props) {
         const { fairOrganizer } = props as Props
-        const { profile, runningFairs } = fairOrganizer!
+        const { profile, runningFairs } = fairOrganizer as NonNullable<
+          Props["fairOrganizer"]
+        >
         if (!profile) {
           return <ErrorPage code={404} />
         }
@@ -80,7 +82,7 @@ export const fairOrganizerRoutes: RouteProps[] = [
   {
     path: "/fair-organizer/:slug/articles",
     getComponent: () => FairOrganizerDedicatedArticles,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       FairOrganizerDedicatedArticles.preload()
     },
     prepareVariables: ({ slug }, { location }) => {
