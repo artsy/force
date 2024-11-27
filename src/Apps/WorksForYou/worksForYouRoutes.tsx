@@ -13,7 +13,7 @@ export const worksForYouRoutes: RouteProps[] = [
   {
     path: "/works-for-you/:artistSlug?",
     getComponent: () => WorksForYouApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       WorksForYouApp.preload()
     },
     query: graphql`
