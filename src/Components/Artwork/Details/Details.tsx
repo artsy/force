@@ -8,14 +8,14 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
-import { useTimer } from "Utils/Hooks/useTimer"
 import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { HoverDetailsFragmentContainer } from "Components/Artwork/HoverDetails"
 import { SaveButtonQueryRenderer } from "Components/Artwork/SaveButton/SaveButton"
 import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork/ConsignmentSubmissionStatus"
 import HighDemandIcon from "@artsy/icons/HighDemandIcon"
 import { BidTimerLine } from "./BidTimerLine"
-import { PrimaryLabelLine } from "Components/Artwork/Details/PrimaryLabelLine"
+import { PrimaryLabelLineQueryRenderer } from "./PrimaryLabelLine"
+import { SaleMessageQueryRenderer } from "./SaleMessage"
 
 export interface DetailsProps {
   artwork: Details_artwork$data
@@ -32,13 +32,10 @@ export interface DetailsProps {
   renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
-interface SaleInfoLineProps extends DetailsProps {
-  showActivePartnerOffer: boolean
-}
-
-interface SaleMessageProps extends DetailsProps {
-  showActivePartnerOffer: boolean
-}
+const LINE_HEIGHT = 22
+const NUM_OF_LINES = 5
+const CONTAINER_HEIGHT = LINE_HEIGHT * NUM_OF_LINES
+const LINE_HEIGHT_PX = LINE_HEIGHT + "px"
 
 const StyledConditionalLink = styled(RouterLink)`
   color: ${themeGet("colors.black100")};
@@ -62,7 +59,7 @@ const ArtistLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
 }) => {
   if (cultural_maker) {
     return (
-      <Text variant="sm-display" lineHeight="22px" overflowEllipsis>
+      <Text variant="sm-display" lineHeight={LINE_HEIGHT_PX} overflowEllipsis>
         {cultural_maker}
       </Text>
     )
@@ -71,7 +68,7 @@ const ArtistLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   if (!artists?.length) {
     if (showSaveButton) {
       return (
-        <Text variant="sm-display" lineHeight="22px" overflowEllipsis>
+        <Text variant="sm-display" lineHeight={LINE_HEIGHT_PX} overflowEllipsis>
           Artist Unavailable
         </Text>
       )
@@ -81,7 +78,7 @@ const ArtistLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   }
 
   return (
-    <Text variant="sm-display" lineHeight="22px" overflowEllipsis>
+    <Text variant="sm-display" lineHeight={LINE_HEIGHT_PX} overflowEllipsis>
       {artists.map((artist, i) => {
         if (!artist || !artist.href || !artist.name) return null
 
@@ -104,7 +101,7 @@ const TitleLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
     <ConditionalLink includeLinks={includeLinks} to={href}>
       <Text
         variant="sm-display"
-        lineHeight="22px"
+        lineHeight={LINE_HEIGHT_PX}
         color="black60"
         overflowEllipsis
       >
@@ -123,7 +120,7 @@ const PartnerLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
     return (
       <Text
         variant="sm-display"
-        lineHeight="22px"
+        lineHeight={LINE_HEIGHT_PX}
         color="black60"
         overflowEllipsis
       >
@@ -137,7 +134,7 @@ const PartnerLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
       <ConditionalLink includeLinks={includeLinks} to={partner?.href}>
         <Text
           variant="sm-display"
-          lineHeight="22px"
+          lineHeight={LINE_HEIGHT_PX}
           color="black60"
           overflowEllipsis
         >
@@ -150,8 +147,7 @@ const PartnerLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   return null
 }
 
-const SaleInfoLine: React.FC<React.PropsWithChildren<SaleInfoLineProps>> = props => {
-  const { showActivePartnerOffer } = props
+const SaleInfoLine: React.FC<React.PropsWithChildren<DetailsProps>> = props => {
   const { lotClosesAt } = props.artwork.collectorSignals?.auction ?? {}
   const { liveBiddingStarted } = props.artwork.collectorSignals?.auction ?? {}
 
@@ -159,7 +155,7 @@ const SaleInfoLine: React.FC<React.PropsWithChildren<SaleInfoLineProps>> = props
     return (
       <Text
         variant="sm-display"
-        lineHeight="22px"
+        lineHeight={LINE_HEIGHT_PX}
         color="black100"
         fontWeight="bold"
       >
@@ -170,7 +166,7 @@ const SaleInfoLine: React.FC<React.PropsWithChildren<SaleInfoLineProps>> = props
 
   if (liveBiddingStarted) {
     return (
-      <Text variant="sm-display" lineHeight="22px" color="blue100">
+      <Text variant="sm-display" lineHeight={LINE_HEIGHT_PX} color="blue100">
         Bidding live now
       </Text>
     )
@@ -180,23 +176,15 @@ const SaleInfoLine: React.FC<React.PropsWithChildren<SaleInfoLineProps>> = props
     <Flex flexDirection="row" alignItems="center">
       <Text
         variant="sm-display"
-        lineHeight="22px"
+        lineHeight={LINE_HEIGHT_PX}
         color="black100"
         fontWeight="bold"
         overflowEllipsis
       >
-        <SaleMessage {...props} /> <BidInfo {...props} />
+        <SaleMessageQueryRenderer {...props} id={props.artwork.internalID} />{" "}
+        <BidInfo {...props} />
       </Text>
-      {showActivePartnerOffer && <ActivePartnerOfferTimer {...props} />}
     </Flex>
-  )
-}
-
-export const EmptyLine: React.FC<React.PropsWithChildren<unknown>> = () => {
-  return (
-    <Text variant="xs" lineHeight="22px">
-      &nbsp;
-    </Text>
   )
 }
 
@@ -204,34 +192,16 @@ const HighDemandInfo = () => {
   return (
     <Flex flexDirection="row" alignItems="center">
       <HighDemandIcon fill="blue100" />
-      <Text variant="sm-display" lineHeight="22px" color="blue100" ml={0.3}>
+      <Text
+        variant="sm-display"
+        lineHeight={LINE_HEIGHT_PX}
+        color="blue100"
+        ml={0.3}
+      >
         &nbsp;High Demand
       </Text>
     </Flex>
   )
-}
-
-const NBSP = " "
-
-const SaleMessage: React.FC<React.PropsWithChildren<SaleMessageProps>> = props => {
-  const {
-    artwork: { sale, sale_message, sale_artwork, collectorSignals },
-    showActivePartnerOffer,
-  } = props
-
-  if (sale?.is_auction && !sale?.is_closed) {
-    const highestBid_display = sale_artwork?.highest_bid?.display
-    const openingBid_display = sale_artwork?.opening_bid?.display
-
-    return <>{highestBid_display || openingBid_display || ""}</>
-  }
-
-  if (showActivePartnerOffer) {
-    return <>{collectorSignals?.partnerOffer?.priceWithDiscount?.display}</>
-  }
-
-  // NBSP is used to prevent un-aligned carousels
-  return <>{sale_message ?? NBSP}</>
 }
 
 const BidInfo: React.FC<React.PropsWithChildren<DetailsProps>> = ({
@@ -253,29 +223,6 @@ const BidInfo: React.FC<React.PropsWithChildren<DetailsProps>> = ({
     <>
       ({bidCount} bid{bidCount === 1 ? "" : "s"})
     </>
-  )
-}
-
-const ActivePartnerOfferTimer: React.FC<React.PropsWithChildren<DetailsProps>> = ({
-  artwork: { collectorSignals },
-}) => {
-  const SEPARATOR = <>&nbsp;</>
-  const { endAt } = collectorSignals?.partnerOffer ?? {}
-  const { time } = useTimer(endAt ?? "")
-  const { days, hours } = time
-
-  return (
-    <Text
-      variant="sm-display"
-      lineHeight="22px"
-      color="blue100"
-      px={0.5}
-      alignSelf="flex-start"
-    >
-      Exp.{SEPARATOR}
-      {Number(days)}d{SEPARATOR}
-      {Number(hours)}h{SEPARATOR}
-    </Text>
   )
 }
 
@@ -310,17 +257,11 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
     showHighDemandIcon &&
     !isConsignmentSubmission
 
-  const partnerOffer = rest?.artwork?.collectorSignals?.partnerOffer
   const isAuction = rest?.artwork?.sale?.is_auction ?? false
+  const artworkId = rest?.artwork?.internalID
 
-  const showActivePartnerOffer: boolean =
-    !isAuction && !!partnerOffer && contextModule !== "activity"
-
-  const showPrimaryLabelLine: boolean =
-    !!rest?.artwork?.collectorSignals?.primaryLabel && !isAuction
-
-  const padForPrimaryLabelLine: boolean =
-    contextModule !== "activity" && !showPrimaryLabelLine
+  const primaryLabel = rest?.artwork?.collectorSignals?.primaryLabel
+  const showPrimaryLabelLine: boolean = !isAuction
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
@@ -352,12 +293,16 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   }
 
   return (
-    <Box>
+    <Box height={CONTAINER_HEIGHT + "px"}>
       {isAuctionArtwork && (
         <Flex flexDirection="row">
           <Join separator={<Spacer x={1} />}>
             {!hideLotLabel && (
-              <Text variant="sm-display" lineHeight="22px" flexShrink={0}>
+              <Text
+                variant="sm-display"
+                lineHeight={LINE_HEIGHT_PX}
+                flexShrink={0}
+              >
                 LOT {rest.artwork?.sale_artwork?.lotLabel}
               </Text>
             )}
@@ -371,7 +316,12 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
           maxWidth={showPrimaryLabelLine ? "95%" : "75%"}
           overflow="hidden"
         >
-          {showPrimaryLabelLine && <PrimaryLabelLine artwork={rest.artwork} />}
+          {showPrimaryLabelLine && (
+            <PrimaryLabelLineQueryRenderer
+              id={artworkId}
+              label={primaryLabel}
+            />
+          )}
           {!hideArtistName && (
             <ArtistLine showSaveButton={showSaveButton} {...rest} />
           )}
@@ -395,16 +345,9 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
         <ConsignmentSubmissionStatusFragmentContainer artwork={rest.artwork} />
       )}
 
-      {!hideSaleInfo && (
-        <SaleInfoLine
-          showActivePartnerOffer={showActivePartnerOffer}
-          {...rest}
-        />
-      )}
+      {!hideSaleInfo && <SaleInfoLine {...rest} />}
 
-      <BidTimerLine artwork={rest.artwork} />
-
-      {padForPrimaryLabelLine && <EmptyLine />}
+      {isAuction && <BidTimerLine artwork={rest.artwork} />}
     </Box>
   )
 }
@@ -427,12 +370,6 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           liveBiddingStarted
           registrationEndsAt
           onlineBiddingExtended
-        }
-        partnerOffer {
-          endAt
-          priceWithDiscount {
-            display
-          }
         }
       }
       sale_message: saleMessage
@@ -504,23 +441,23 @@ export const DetailsPlaceholder: React.FC<React.PropsWithChildren<DetailsPlaceho
   return (
     <>
       {!hideArtistName && (
-        <SkeletonText variant="sm-display" lineHeight="22px">
+        <SkeletonText variant="sm-display" lineHeight={LINE_HEIGHT_PX}>
           Artist Name
         </SkeletonText>
       )}
 
-      <SkeletonText variant="sm-display" lineHeight="22px">
+      <SkeletonText variant="sm-display" lineHeight={LINE_HEIGHT_PX}>
         Artwork Title
       </SkeletonText>
 
       {!hidePartnerName && (
-        <SkeletonText variant="sm-display" lineHeight="22px">
+        <SkeletonText variant="sm-display" lineHeight={LINE_HEIGHT_PX}>
           Partner
         </SkeletonText>
       )}
 
       {!hideSaleInfo && (
-        <SkeletonText variant="sm-display" lineHeight="22px">
+        <SkeletonText variant="sm-display" lineHeight={LINE_HEIGHT_PX}>
           Price
         </SkeletonText>
       )}
