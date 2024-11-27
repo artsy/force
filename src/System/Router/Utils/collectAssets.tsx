@@ -70,6 +70,8 @@ export const collectAssets = async ({
 
   const initialRelayData = await relaySSRMiddleware.getCache()
 
+  console.log(initialRelayData)
+
   const extractScriptTags = () => {
     const initialScripts: string[] = []
 
