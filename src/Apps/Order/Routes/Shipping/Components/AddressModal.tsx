@@ -250,7 +250,9 @@ const AddressModalForm: FC<React.PropsWithChildren<{
             <Flex mt={2} flexDirection="column" alignItems="center">
               <Clickable
                 data-testid="deleteButton"
-                onClick={() => setShowDeleteDialog(true)}
+                onClick={() => {
+                  setShowDeleteDialog(true)
+                }}
               >
                 <Text variant="xs" color="red100">
                   Delete address
@@ -313,11 +315,11 @@ const AddressModalForm: FC<React.PropsWithChildren<{
 // two different error messages for the same error?
 const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
   "Validation failed for phone: not a valid phone number": {
-    field: "attributes.phoneNumber",
+    field: "phoneNumber",
     message: "Please enter a valid phone number",
   },
   "Validation failed: Phone not a valid phone number": {
-    field: "attributes.phoneNumber",
+    field: "phoneNumber",
     message: "Please enter a valid phone number",
   },
 }

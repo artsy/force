@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import {
   ADDRESS_FORM_INPUTS,
+  hasCorrectAddressFormFields,
   fillAddressFormFields,
 } from "Components/Address/__tests__/utils"
 import {
@@ -45,19 +46,7 @@ describe("AddressFormFields", () => {
     })
 
     it("renders the correct components with label & placeholder copy", () => {
-      const { phoneNumber, ...remainingInputs } = ADDRESS_FORM_INPUTS
-
-      Object.values(remainingInputs).forEach(({ label, placeholder }) => {
-        const input = screen.getByLabelText(label)
-        expect(input).toBeInTheDocument()
-        if (placeholder) {
-          // eslint-disable-next-line jest/no-conditional-expect
-          expect(input).toHaveAttribute("placeholder", placeholder)
-        } else {
-          // eslint-disable-next-line jest/no-conditional-expect
-          expect(input).not.toHaveAttribute("placeholder")
-        }
-      })
+      expect(hasCorrectAddressFormFields({ withPhoneNumber: false })).toBe(true)
     })
 
     it("can be filled out with valid values", async () => {
@@ -136,6 +125,7 @@ describe("AddressFormFields", () => {
     })
 
     it("renders the correct components with label & placeholder copy", () => {
+      expect(hasCorrectAddressFormFields({ withPhoneNumber: true })).toBe(true)
       Object.values(ADDRESS_FORM_INPUTS).forEach(({ label, placeholder }) => {
         const input = screen.getByLabelText(label)
         expect(input).toBeInTheDocument()

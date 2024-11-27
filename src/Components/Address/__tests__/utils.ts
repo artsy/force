@@ -32,10 +32,37 @@ export const ADDRESS_FORM_INPUTS: Record<
   phoneNumber: { label: "Phone number", placeholder: "Add phone number" },
 }
 
+export const hasCorrectAddressFormFields = ({
+  withPhoneNumber,
+}: { withPhoneNumber?: boolean } = {}): boolean => {
+  const expectedInputs = withPhoneNumber
+    ? Object.values(ADDRESS_FORM_INPUTS)
+    : Object.entries(ADDRESS_FORM_INPUTS)
+        .filter(([input, _spec]) => input !== "phoneNumber")
+        .map(([_, spec]) => spec)
+  Object.values(expectedInputs).forEach(({ label, placeholder }) => {
+    const input = screen.getByLabelText(label)
+    expect(input).toBeInTheDocument()
+    if (placeholder) {
+      // eslint-disable-next-line jest/no-conditional-expect
+      expect(input).toHaveAttribute("placeholder", placeholder)
+    } else {
+      // eslint-disable-next-line jest/no-conditional-expect
+      expect(input).not.toHaveAttribute("placeholder")
+    }
+  })
+  return true
+}
+
 /**
  * Fill the `<AddressFormFields />` component's inputs with the provided address
  */
-export const fillAddressFormFields = async (address: Partial<Address>) => {
+export const fillAddressFormFields = async (
+  address: Partial<Address>,
+  options: { clearInputs?: boolean } = {
+    clearInputs: false,
+  }
+) => {
   const { country, phoneNumber, ...defaultTextInputs } = address
 
   if (country) {
@@ -50,11 +77,18 @@ export const fillAddressFormFields = async (address: Partial<Address>) => {
     const phoneNumberInput = await screen.findByLabelText(
       ADDRESS_FORM_INPUTS.phoneNumber.label
     )
+    if (options?.clearInputs) {
+      await userEvent.clear(phoneNumberInput)
+    }
+
     await userEvent.paste(phoneNumberInput, phoneNumber)
   }
   await Promise.all(
     Object.entries(defaultTextInputs).map(async ([key, value]) => {
       const input = await screen.findByLabelText(ADDRESS_FORM_INPUTS[key].label)
+      if (options?.clearInputs) {
+        await userEvent.clear(input)
+      }
       await userEvent.paste(input, value)
     })
   )

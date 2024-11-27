@@ -1,3 +1,6 @@
+import { render, screen, fireEvent, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
+import { graphql } from "react-relay"
 import {
   AddressModal,
   AddressModalProps,
@@ -6,13 +9,16 @@ import { validAddress } from "Components/__tests__/Utils/addressForm2"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { createMockEnvironment } from "relay-test-utils"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { graphql } from "react-relay"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { AddressModalTestQuery } from "__generated__/AddressModalTestQuery.graphql"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import { DeepPartial } from "Utils/typeSupport"
-
+import {
+  fillAddressFormFields,
+  hasCorrectAddressFormFields,
+} from "Components/Address/__tests__/utils"
+import { post } from "superagent"
 /*
 Some tests queue up promises that bleed into subsequent tests
 on the first flushPromiseQueue call.
@@ -39,6 +45,7 @@ let testAddressModalProps: AddressModalProps
 let mockRelayEnv: ReturnType<typeof createMockEnvironment>
 
 let mockShippingcontext: DeepPartial<ShippingContextProps> = {
+  state: {},
   orderData: {
     shipsFrom: "US",
   },
@@ -51,12 +58,12 @@ jest.mock("Apps/Order/Routes/Shipping/Hooks/useShippingContext", () => ({
   useShippingContext: () => mockShippingcontext,
 }))
 
-const { getWrapper: _getWrapper } = setupTestWrapper<AddressModalTestQuery>({
+const { renderWithRelay } = setupTestWrapperTL<AddressModalTestQuery>({
   Component: (props: unknown) => {
     return <AddressModal {...(props as AddressModalProps)} />
   },
   query: graphql`
-    query AddressModalTest2Query @relay_test_operation {
+    query AddressModalTestQuery @relay_test_operation {
       _unused: artist(id: "whocare") {
         name
       }
@@ -64,22 +71,20 @@ const { getWrapper: _getWrapper } = setupTestWrapper<AddressModalTestQuery>({
   `,
 })
 
-let globalWrapper: ReturnType<typeof _getWrapper>["wrapper"]
-const getWrapper = ({
-  mockResolvers = {},
-  componentProps = testAddressModalProps,
-  relayEnvironment = mockRelayEnv,
-} = {}) => {
-  const result = _getWrapper(mockResolvers, componentProps, relayEnvironment)
-  globalWrapper = result.wrapper
-  return result
-}
+// let globalWrapper: ReturnType<typeof renderWithRelay>
+// const getWrapper = ({
+//   mockResolvers = {},
+//   componentProps = testAddressModalProps,
+//   relayEnvironment = mockRelayEnv,
+// } = {}) => {
+//   const result = renderWithRelay(
+//     mockResolvers,
+//     componentProps,
+//     relayEnvironment
+//   )
+//   return result
+// }
 
-afterEach(() => {
-  globalWrapper?.unmount()
-})
-
-// FIXME: CI Timeouts
 // eslint-disable-next-line jest/no-disabled-tests
 describe("AddressModal", () => {
   beforeEach(() => {
@@ -103,21 +108,22 @@ describe("AddressModal", () => {
     }
   })
 
-  it("renders EditModal with the title, input fields and buttons", () => {
-    const { wrapper } = getWrapper()
+  it("renders EditModal with the title, input fields and buttons", async () => {
+    renderWithRelay({}, testAddressModalProps)
 
-    expect(wrapper.text()).toContain("Edit address")
-    expect(wrapper.find("input").length).toBe(7)
-    expect(wrapper.find("select").length).toBe(1)
+    await screen.findByText("Edit address")
+    expect(hasCorrectAddressFormFields({ withPhoneNumber: true })).toBe(true)
+    expect(screen.getByText("Delete address")).toBeInTheDocument()
 
-    expect(wrapper.find("Checkbox[data-testid='setAsDefault']").length).toBe(1)
-    expect(wrapper.find("Clickable[data-testid='deleteButton']").length).toBe(1)
-    expect(wrapper.find("Button[data-testid='saveButton']").length).toBe(1)
+    const saveAsDefault = screen.getByTestId("setAsDefault")
+    expect(saveAsDefault).toBeInTheDocument()
+    expect(saveAsDefault).not.toBeChecked()
   })
 
-  it("renders EditModal without checkbox when address is default", () => {
-    const { wrapper } = getWrapper({
-      componentProps: {
+  it("renders EditModal without checkbox when address is default", async () => {
+    renderWithRelay(
+      {},
+      {
         ...testAddressModalProps,
         addressModalAction: {
           type: "edit",
@@ -126,62 +132,54 @@ describe("AddressModal", () => {
             isDefault: true,
           },
         },
-      },
-    })
-    expect(wrapper.text()).toContain("Edit address")
-    expect(wrapper.find("Checkbox[data-testid='setAsDefault']").length).toBe(0)
+      }
+    )
+    await screen.findByText("Edit address")
+
+    expect(screen.queryByTestId("setAsDefault")).not.toBeInTheDocument()
   })
 
-  it("renders AddModal with the title, input fields, checkbox and button", () => {
-    const { wrapper } = getWrapper({
-      componentProps: {
+  it("renders AddModal with the title, input fields, checkbox and button", async () => {
+    renderWithRelay(
+      {},
+      {
         ...testAddressModalProps,
         addressModalAction: {
           type: "create",
         },
-      },
-    })
-    expect(wrapper.text()).toContain("Add address")
-    expect(wrapper.find("input").length).toBe(7)
-    expect(wrapper.find("select").length).toBe(1)
+      }
+    )
 
-    expect(wrapper.find("Checkbox[data-testid='setAsDefault']").length).toBe(1)
-    expect(wrapper.find("Clickable[data-testid='deleteButton']").length).toBe(0)
-    expect(wrapper.find("Button[data-testid='saveButton']").length).toBe(1)
+    await screen.findByText("Add address")
+
+    expect(hasCorrectAddressFormFields({ withPhoneNumber: true })).toBe(true)
+    const saveAsDefault = screen.getByTestId("setAsDefault")
+    expect(saveAsDefault).toBeInTheDocument()
+    expect(saveAsDefault).not.toBeChecked()
+    expect(screen.queryByText("Delete address")).not.toBeInTheDocument()
   })
 
   // eslint-disable-next-line jest/no-disabled-tests
-  it.skip("clicking the delete button spawns a correct dialog", async () => {
-    const { wrapper } = getWrapper()
-    const deleteButton = wrapper.find("Clickable[data-testid='deleteButton']")
-    deleteButton.simulate("click")
-    await wrapper.update()
-    const dialog = wrapper.find(
-      "ModalDialog[data-testid='deleteAddressDialog']"
+  it("address can be deleted via dialog", async () => {
+    const { mockResolveLastOperation } = renderWithRelay(
+      {},
+      testAddressModalProps,
+      mockRelayEnv
     )
 
-    expect(dialog).toHaveLength(1)
-    expect(dialog.text()).toContain("Delete address?")
-    expect(dialog.text()).toContain(
+    await screen.findByText("Edit address")
+    const deleteButton = screen.getByText("Delete address")
+    // const deleteButton = screen.getByTestId("deleteButton")
+    userEvent.click(deleteButton)
+
+    await flushPromiseQueue()
+    const dialog = await screen.findByTestId("deleteAddressDialog")
+
+    expect(dialog).toHaveTextContent(
       "This will remove this address from your saved addresses"
     )
-    const dialogDelete = dialog.find("Button").at(1)
-    expect(dialogDelete.text()).toContain("Delete")
-    const dialogCancel = dialog.find("Button").at(0)
-    expect(dialogCancel.text()).toContain("Cancel")
-  })
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip("when the dialog is confirmed, the delete action happens", async () => {
-    const { mockResolveLastOperation, wrapper } = getWrapper()
-
-    const deleteButton = wrapper.find("Clickable[data-testid='deleteButton']")
-    deleteButton.simulate("click")
-    const dialog = wrapper.find(
-      "ModalDialog[data-testid='deleteAddressDialog']"
-    )
-    const dialogDelete = dialog.find("Button").at(1)
-    dialogDelete.simulate("click")
+    await userEvent.click(screen.getByText("Delete"))
 
     const {
       operationName,
@@ -195,20 +193,27 @@ describe("AddressModal", () => {
     })
 
     await flushPromiseQueue()
-
-    expect(wrapper.find(AddressModal).props().closeModal).toHaveBeenCalled()
+    expect(testAddressModalProps.closeModal).toHaveBeenCalled()
   })
 
   describe("update mode", () => {
-    // TODO: Migrate to RTL for easier address form filling?
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip("updates address when form is submitted with valid values", async () => {
-      const { mockResolveLastOperation, wrapper } = getWrapper()
+    it("updates address when form is submitted with valid values", async () => {
+      const { mockResolveLastOperation } = renderWithRelay(
+        {},
+        testAddressModalProps,
+        mockRelayEnv
+      )
 
-      const formik = wrapper.find("Formik").first()
-      formik.props().onSubmit!(validAddress as any)
+      await screen.findByText("Edit address")
 
+      await fillAddressFormFields(
+        { ...validAddress, postalCode: "90210" },
+        { clearInputs: true }
+      )
+
+      await userEvent.click(screen.getByText("Save"))
       await flushPromiseQueue()
+
       const {
         operationName,
         operationVariables,
@@ -217,11 +222,14 @@ describe("AddressModal", () => {
           userAddressOrErrors: {
             __typename: "UserAddress",
             ...mockSavedAddress,
+            postalCode: "90210",
             isDefault: true,
           },
         }),
       })
+
       expect(operationName).toBe("useUpdateSavedAddressMutation")
+
       expect(operationVariables).toMatchObject({
         input: {
           userAddressID: "internal-id",
@@ -232,25 +240,41 @@ describe("AddressModal", () => {
             country: "US",
             name: "Joelle Van Dyne",
             phoneNumber: "120938120983",
-            postalCode: "10013",
+            postalCode: "90210",
             region: "NY",
           },
         },
       })
 
       await flushPromiseQueue()
-      const addressModal = wrapper.find(AddressModal)
-      const { onSuccess, closeModal } = addressModal.props()
-      expect(onSuccess).toHaveBeenCalled()
-      expect(closeModal).toHaveBeenCalled()
+      expect(testAddressModalProps.onSuccess).toHaveBeenCalledWith(
+        expect.objectContaining({
+          addressLine1: "401 Broadway",
+          addressLine2: "Suite 25",
+          city: "New York",
+          country: "US",
+          id: "id",
+          internalID: "internal-id",
+          isDefault: true,
+          name: "Joelle Van Dyne",
+          phoneNumber: "8475937743",
+          postalCode: "90210",
+          region: "NY",
+        })
+      )
+      expect(testAddressModalProps.closeModal).toHaveBeenCalled()
     })
 
     it("shows generic error when mutation returns error", async () => {
-      const { mockResolveLastOperation, wrapper } = getWrapper()
+      const { mockResolveLastOperation } = renderWithRelay(
+        {},
+        testAddressModalProps,
+        mockRelayEnv
+      )
 
-      const form = wrapper.find("Form")
-      form.simulate("submit")
+      await screen.findByText("Edit address")
 
+      await userEvent.click(screen.getByText("Save"))
       await flushPromiseQueue()
 
       mockResolveLastOperation({
@@ -267,48 +291,46 @@ describe("AddressModal", () => {
         }),
       })
 
-      await flushPromiseQueue()
-
-      await wrapper.update()
-
-      await flushPromiseQueue()
-
-      expect(wrapper.find(errorBoxQuery).text()).toContain(
+      const errorMessage = await screen.findByText(
         "Sorry, there has been an issue saving your address. Please try again."
       )
+      expect(errorMessage).toBeInTheDocument()
     })
 
     it("shows generic error when mutation fails", async () => {
-      const { wrapper, mockRejectLastOperation } = getWrapper()
+      const { mockRejectLastOperation } = renderWithRelay(
+        {},
+        testAddressModalProps,
+        mockRelayEnv
+      )
 
-      const form = wrapper.find("Form")
-      form.simulate("submit")
+      await screen.findByText("Edit address")
 
+      await userEvent.click(screen.getByText("Save"))
       await flushPromiseQueue()
 
       mockRejectLastOperation(new TypeError("Network request failed"))
 
       await flushPromiseQueue()
 
-      await wrapper.update()
-      expect(wrapper.find(errorBoxQuery).text()).toContain(
+      const errorMessage = screen.getByText(
         "Sorry, there has been an issue saving your address. Please try again."
       )
+
+      expect(errorMessage).toBeInTheDocument()
     })
 
-    // FIXME: Flakey test
     // eslint-disable-next-line jest/no-disabled-tests
-    it.skip("sets formik error when address mutation returns phone validation error", async () => {
-      const { mockResolveLastOperation, wrapper } = getWrapper()
+    it("sets formik error when address mutation returns phone validation error", async () => {
+      const { mockResolveLastOperation } = renderWithRelay(
+        {},
+        testAddressModalProps,
+        mockRelayEnv
+      )
 
-      const formik = wrapper.find("Formik").first()
-      const setFieldError = jest.fn()
+      await screen.findByText("Edit address")
 
-      const onSubmit = formik.props().onSubmit as any
-      onSubmit(validAddress as any, {
-        setFieldError,
-        setSubmitting: jest.fn(),
-      })
+      await userEvent.click(screen.getByText("Save"))
 
       await flushPromiseQueue()
       mockResolveLastOperation({
@@ -326,11 +348,9 @@ describe("AddressModal", () => {
         }),
       })
 
-      await flushPromiseQueue()
-      expect(setFieldError).toHaveBeenCalledWith(
-        "attributes.phoneNumber",
-        "Please enter a valid phone number"
-      )
+      expect(
+        await screen.findByText("Please enter a valid phone number")
+      ).toBeInTheDocument()
     })
   })
 })
