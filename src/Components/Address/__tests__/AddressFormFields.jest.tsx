@@ -1,5 +1,5 @@
 import { Button } from "@artsy/palette"
-import { render, screen } from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import {
   ADDRESS_FORM_INPUTS,
@@ -180,7 +180,7 @@ describe("AddressFormFields", () => {
       await flushPromiseQueue()
       expect(mockOnSubmit).not.toHaveBeenCalled()
 
-      screen.getByText("Full name is required")
+      await screen.findByText("Full name is required")
       screen.getByText("Country is required")
       screen.getByText("Street address is required")
       screen.getByText("City is required")
@@ -191,10 +191,12 @@ describe("AddressFormFields", () => {
       await fillAddressFormFields({ country: "US" })
       await userEvent.click(screen.getByText("Submit"))
 
-      await flushPromiseQueue()
-      expect(mockOnSubmit).not.toHaveBeenCalled()
-
-      expect(screen.queryByText("Country is required")).not.toBeInTheDocument()
+      await waitFor(() => {
+        expect(
+          screen.queryByText("Country is required")
+        ).not.toBeInTheDocument()
+        expect(mockOnSubmit).not.toHaveBeenCalled()
+      })
       screen.getByText("State is required")
       screen.getByText("ZIP code is required")
     })

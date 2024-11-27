@@ -1,7 +1,6 @@
-import { screen } from "@testing-library/react"
+import { screen, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { Address } from "Components/Address/utils"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 export const ADDRESS_FORM_INPUTS: Record<
   keyof Address,
@@ -56,69 +55,49 @@ export const hasCorrectAddressFormFields = ({
 
 /**
  * Fill the `<AddressFormFields />` component's inputs with the provided address
+ * Options:
+ * - `clearInputs`: Clear text inputs before filling them
+ * - `wrapperTestId`: The test ID of the wrapper element containing the inputs
  */
 export const fillAddressFormFields = async (
   address: Partial<Address>,
-  options: { clearInputs?: boolean } = {
-    clearInputs: false,
-  }
+  options: { clearInputs?: boolean; wrapperTestId?: string } = {}
 ) => {
-  const start = performance.now()
+  const { clearInputs = false, wrapperTestId = "addressFormFields" } = options
+
+  const wrapper = screen.getByTestId(wrapperTestId)
   const { country, phoneNumber, ...defaultTextInputs } = address
 
   const promises: Promise<void>[] = []
   if (country) {
     promises.push(
       new Promise<void>(async resolve => {
-        const countryStart = performance.now()
-        const countrySelect = await screen.findByLabelText(
+        const countrySelect = within(wrapper).getByLabelText(
           ADDRESS_FORM_INPUTS.country.label
         )
-        console.log("Found country select")
-        await userEvent.selectOptions(countrySelect, [country])
-        console.log("Selected country", country)
-        console.log("Country select time", performance.now() - countryStart)
+
+        userEvent.selectOptions(countrySelect, [country])
         resolve()
       })
     )
   }
 
   Object.entries(defaultTextInputs).forEach(([key, value]) => {
-    promises.push(
-      new Promise<void>(async resolve => {
-        const inputStart = performance.now()
-        const input = await screen.findByLabelText(
-          ADDRESS_FORM_INPUTS[key].label
-        )
-        console.log("Input time", key, performance.now() - inputStart)
-        if (options?.clearInputs) {
-          await userEvent.clear(input)
-        }
-        await userEvent.paste(input, value)
-        resolve()
-      })
-    )
-    // const input = await screen.findByLabelText(ADDRESS_FORM_INPUTS[key].label)
-    // if (options?.clearInputs) {
-    //   await userEvent.clear(input)
-    // }
-    // await userEvent.paste(input, value)
+    const input = within(wrapper).getByLabelText(ADDRESS_FORM_INPUTS[key].label)
+    if (clearInputs) {
+      userEvent.clear(input)
+    }
+    userEvent.paste(input, value)
   })
+
   if (phoneNumber) {
-    promises.push(
-      new Promise<void>(async resolve => {
-        const start = performance.now()
-        const phoneNumberInput = await screen.findByLabelText(
-          ADDRESS_FORM_INPUTS.phoneNumber.label
-        )
-        if (options?.clearInputs) {
-          await userEvent.clear(phoneNumberInput)
-        }
-        await userEvent.paste(phoneNumberInput, phoneNumber)
-        console.log("Phone number time", performance.now() - start)
-        resolve()
-      })
+    const phoneNumberInput = within(wrapper).getByLabelText(
+      ADDRESS_FORM_INPUTS.phoneNumber.label
     )
+    if (clearInputs) {
+      userEvent.clear(phoneNumberInput)
+    }
+    userEvent.paste(phoneNumberInput, phoneNumber)
   }
   await Promise.all(promises)
 }

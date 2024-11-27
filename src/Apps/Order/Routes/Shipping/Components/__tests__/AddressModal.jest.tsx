@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { graphql } from "react-relay"
 import {
@@ -18,18 +18,12 @@ import {
   fillAddressFormFields,
   hasCorrectAddressFormFields,
 } from "Components/Address/__tests__/utils"
-import { post } from "superagent"
-/*
-Some tests queue up promises that bleed into subsequent tests
-on the first flushPromiseQueue call.
-*/
+
 jest.setTimeout(10000)
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useSystemContext")
 const mockUseSystemContext = useSystemContext as jest.Mock
-
-const errorBoxQuery = "Banner[data-testid='form-banner-error']"
 
 const mockSavedAddress: SavedAddressType = {
   ...validAddress,
@@ -71,21 +65,6 @@ const { renderWithRelay } = setupTestWrapperTL<AddressModalTestQuery>({
   `,
 })
 
-// let globalWrapper: ReturnType<typeof renderWithRelay>
-// const getWrapper = ({
-//   mockResolvers = {},
-//   componentProps = testAddressModalProps,
-//   relayEnvironment = mockRelayEnv,
-// } = {}) => {
-//   const result = renderWithRelay(
-//     mockResolvers,
-//     componentProps,
-//     relayEnvironment
-//   )
-//   return result
-// }
-
-// eslint-disable-next-line jest/no-disabled-tests
 describe("AddressModal", () => {
   beforeEach(() => {
     mockRelayEnv = createMockEnvironment()
@@ -159,7 +138,6 @@ describe("AddressModal", () => {
     expect(screen.queryByText("Delete address")).not.toBeInTheDocument()
   })
 
-  // eslint-disable-next-line jest/no-disabled-tests
   it("address can be deleted via dialog", async () => {
     const { mockResolveLastOperation } = renderWithRelay(
       {},
@@ -169,7 +147,6 @@ describe("AddressModal", () => {
 
     await screen.findByText("Edit address")
     const deleteButton = screen.getByText("Delete address")
-    // const deleteButton = screen.getByTestId("deleteButton")
     userEvent.click(deleteButton)
 
     await flushPromiseQueue()
@@ -197,7 +174,7 @@ describe("AddressModal", () => {
   })
 
   describe("update mode", () => {
-    it.only("updates address when form is submitted with valid values", async () => {
+    it("updates address when form is submitted with valid values", async () => {
       const { mockResolveLastOperation } = renderWithRelay(
         {},
         testAddressModalProps,
@@ -207,17 +184,41 @@ describe("AddressModal", () => {
       await screen.findByText("Edit address")
 
       await fillAddressFormFields(
-        { ...validAddress, postalCode: "90210" },
+        { postalCode: "90210" },
         { clearInputs: true }
       )
 
-      await userEvent.click(screen.getByText("Save"))
+      const saveAsDefault = screen.getByTestId("setAsDefault")
+      userEvent.click(saveAsDefault)
+
+      userEvent.click(screen.getByText("Save"))
       await flushPromiseQueue()
 
-      const {
-        operationName,
-        operationVariables,
-      } = await mockResolveLastOperation({
+      const { operationName, operationVariables } = mockResolveLastOperation({
+        UpdateUserAddressPayload: () => ({
+          userAddressOrErrors: {
+            __typename: "UserAddress",
+            ...mockSavedAddress,
+            postalCode: "90210",
+            isDefault: false,
+          },
+        }),
+      })
+
+      expect(operationName).toBe("useUpdateSavedAddressMutation")
+
+      expect(operationVariables).toMatchObject({
+        input: {
+          userAddressID: "internal-id",
+          attributes: expect.objectContaining({
+            postalCode: "90210",
+          }),
+        },
+      })
+
+      await flushPromiseQueue()
+
+      const saveAsDefaultOperation = mockResolveLastOperation({
         UpdateUserAddressPayload: () => ({
           userAddressOrErrors: {
             __typename: "UserAddress",
@@ -228,38 +229,21 @@ describe("AddressModal", () => {
         }),
       })
 
-      expect(operationName).toBe("useUpdateSavedAddressMutation")
-
-      expect(operationVariables).toMatchObject({
+      expect(saveAsDefaultOperation.operationName).toBe(
+        "useUpdateUserDefaultAddressMutation"
+      )
+      expect(saveAsDefaultOperation.operationVariables).toMatchObject({
         input: {
           userAddressID: "internal-id",
-          attributes: {
-            addressLine1: "401 Broadway",
-            addressLine2: "Suite 25",
-            city: "New York",
-            country: "US",
-            name: "Joelle Van Dyne",
-            phoneNumber: "120938120983",
-            postalCode: "90210",
-            region: "NY",
-          },
         },
       })
 
       await flushPromiseQueue()
+
       expect(testAddressModalProps.onSuccess).toHaveBeenCalledWith(
         expect.objectContaining({
-          addressLine1: "401 Broadway",
-          addressLine2: "Suite 25",
-          city: "New York",
-          country: "US",
-          id: "id",
-          internalID: "internal-id",
-          isDefault: true,
-          name: "Joelle Van Dyne",
-          phoneNumber: "8475937743",
+          ...mockSavedAddress,
           postalCode: "90210",
-          region: "NY",
         })
       )
       expect(testAddressModalProps.closeModal).toHaveBeenCalled()
@@ -320,7 +304,6 @@ describe("AddressModal", () => {
       expect(errorMessage).toBeInTheDocument()
     })
 
-    // eslint-disable-next-line jest/no-disabled-tests
     it("sets formik error when address mutation returns phone validation error", async () => {
       const { mockResolveLastOperation } = renderWithRelay(
         {},

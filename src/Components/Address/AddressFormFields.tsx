@@ -76,6 +76,8 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
     setFieldValue,
   } = useFormikContext<V>()
 
+  const dataTestIdPrefix = "addressFormFields"
+
   // Formik types don't understand our specific nested structure
   // so we need to cast these to what we know to be the correct types
   const touchedAddress = touched.address as
@@ -94,11 +96,12 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
   }
 
   return (
-    <GridColumns>
+    <GridColumns data-testid={dataTestIdPrefix}>
       <Column span={12}>
         <Input
           name="address.name"
           id="address.name"
+          data-testid={`${dataTestIdPrefix}.name`}
           title="Full name"
           placeholder="Add full name"
           autoComplete="name"
@@ -116,6 +119,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           name="address.country"
           id="address.country"
           title="Country"
+          data-testid={`${dataTestIdPrefix}.country`}
           // TODO: Accept a value prop in Select
           // @ts-ignore
           value={values.address.country}
@@ -130,6 +134,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
         <AddressAutocompleteInput
           name="address.addressLine1"
           id="address.addressLine1"
+          data-testid={`${dataTestIdPrefix}.addressLine1`}
           trackingValues={autocompleteTrackingValues}
           address={{
             country: values.address.country,
@@ -168,6 +173,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
         <Input
           name="address.addressLine2"
           id="address.addressLine2"
+          data-testid={`${dataTestIdPrefix}.addressLine2`}
           title="Apt, floor, suite, etc. (optional)"
           placeholder="Add apartment, floor, suite, etc."
           autoComplete="address-line2"
@@ -182,6 +188,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
         <Input
           name="address.city"
           id="address.city"
+          data-testid={`${dataTestIdPrefix}.city`}
           title="City"
           placeholder="Add city"
           autoComplete="address-level2"
@@ -197,6 +204,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
         <Input
           name="address.region"
           id="address.region"
+          data-testid={`${dataTestIdPrefix}.region`}
           title="State, region or province"
           placeholder="Add state, region or province"
           autoComplete="address-level1"
@@ -212,6 +220,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
         <Input
           name="address.postalCode"
           id="address.postalCode"
+          data-testid={`${dataTestIdPrefix}.postalCode`}
           title="ZIP/Postal code"
           placeholder="Add ZIP/Postal code"
           autoComplete="postal-code"
@@ -228,6 +237,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           <Input
             name="phoneNumber"
             id="phoneNumber"
+            data-testid={`${dataTestIdPrefix}.phoneNumber`}
             title="Phone number"
             type="tel"
             description="Required for shipping logistics"
