@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2e229a78795cac901a6887b4d64f87d7>>
+ * @generated SignedSource<<506569dd49d7abf1b819fe5fb7af1003>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionAppTestQuery$variables = {
   slug: string;

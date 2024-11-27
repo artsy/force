@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f225c016f423a5cc49d78761bb0332bb>>
+ * @generated SignedSource<<5ebd542e49245ee336e41af98a24a15d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairTimer_fair$data = {
   readonly endAt: string | null | undefined;

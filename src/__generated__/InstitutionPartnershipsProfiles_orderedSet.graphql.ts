@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b4341d8962f0a63190fb9a38f3659b25>>
+ * @generated SignedSource<<d52140f24333b8ffb0001fb99cbdc20f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type InstitutionPartnershipsProfiles_orderedSet$data = {
   readonly items: ReadonlyArray<{

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<886867bad519579baf4c237b829a64df>>
+ * @generated SignedSource<<a475a61c6caa9da4f10a01f996dfc97c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileSavesRoute_me$data = {
   readonly customArtworkLists: {

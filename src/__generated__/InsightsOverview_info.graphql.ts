@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<07db594942ef71d2bc6d8783ded403b1>>
+ * @generated SignedSource<<27f337593e8a95145cb59b1e2ea4fd40>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type InsightsOverview_info$data = {
   readonly artistsCount: number;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b3abc93742f1931cf173db023dbad7e3>>
+ * @generated SignedSource<<304cf8f8547345b4ad5faecc13af2cab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomMeta_viewingRoom$data = {
   readonly href: string | null | undefined;

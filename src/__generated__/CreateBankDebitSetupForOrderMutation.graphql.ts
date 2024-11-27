@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7d74c554d2e7a761e40bcc87b4e9bb75>>
+ * @generated SignedSource<<6d73d0c9ed0c3d7e601f2290c1e72707>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type CommerceCreateBankDebitSetupForOrderInput = {
   clientMutationId?: string | null | undefined;
   id: string;

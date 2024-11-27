@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<01194086ab1ad84894ec52fee5c576d6>>
+ * @generated SignedSource<<66f1899119350f392121b8c6eb35d09d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerPastEventsRail_fairOrganizer$data = {
   readonly pastFairs: {

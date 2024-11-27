@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<51f1ccd073ad6ac32926a6ba87e2dfc9>>
+ * @generated SignedSource<<604183d80079e9e156ef3a4ac513a974>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HomeEmergingPicksArtworksRailQuery$variables = Record<PropertyKey, never>;
 export type HomeEmergingPicksArtworksRailQuery$data = {

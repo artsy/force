@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8019286d9c8ce67d24933fd6dece471d>>
+ * @generated SignedSource<<b5b425f9bba58e4a21ad1ef8d94d1819>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type OnboardingSearchResults_viewer$data = {
   readonly matchConnection: {

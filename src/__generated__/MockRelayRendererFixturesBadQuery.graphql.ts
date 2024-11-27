@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d58e7c13f8f12884f993b24540a679ce>>
+ * @generated SignedSource<<50f4e169f1baf6ee491c604886d7903f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MockRelayRendererFixturesBadQuery$variables = Record<PropertyKey, never>;
 export type MockRelayRendererFixturesBadQuery$data = {

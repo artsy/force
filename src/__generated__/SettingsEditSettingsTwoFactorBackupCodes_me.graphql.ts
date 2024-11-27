@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d9197cfc0e32b627d19a63ad9d54d20c>>
+ * @generated SignedSource<<20f9337ab702490d40a6b0a26a739938>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditSettingsTwoFactorBackupCodes_me$data = {
   readonly backupSecondFactors: ReadonlyArray<{

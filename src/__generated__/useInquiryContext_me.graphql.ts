@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d13e5d75c5f6591ba75aa6488e2c116d>>
+ * @generated SignedSource<<1d10d689c838e6199d5fd57fd9357cf5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type useInquiryContext_me$data = {
   readonly collectorLevel: number | null | undefined;

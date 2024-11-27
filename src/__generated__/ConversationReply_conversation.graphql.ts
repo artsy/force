@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c8820bfb0f9d12a68aee1a6cece9d28f>>
+ * @generated SignedSource<<680e15471477393d79f124137dc08a61>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationReply_conversation$data = {
   readonly from: {
@@ -69,20 +69,17 @@ return {
               "name": "email",
               "storageKey": null
             },
-            "action": "NONE",
-            "path": "from.email"
+            "action": "NONE"
           },
           {
             "kind": "RequiredField",
             "field": (v0/*: any*/),
-            "action": "NONE",
-            "path": "from.id"
+            "action": "NONE"
           }
         ],
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "from"
+      "action": "NONE"
     },
     {
       "kind": "RequiredField",
@@ -93,8 +90,7 @@ return {
         "name": "internalID",
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "internalID"
+      "action": "NONE"
     },
     {
       "kind": "RequiredField",
@@ -105,8 +101,7 @@ return {
         "name": "inquiryID",
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "inquiryID"
+      "action": "NONE"
     },
     {
       "alias": null,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<75c6e8c38619e7df29ea19f2687f027d>>
+ * @generated SignedSource<<639021fd150c70d363747d7a0bc8cdb7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type artworkRoutes_ArtworkQuery$variables = {
   artworkID: string;

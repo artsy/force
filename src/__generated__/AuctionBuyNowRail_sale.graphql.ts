@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a0ec5bc6ac9bdbb2f265d4cdf641f745>>
+ * @generated SignedSource<<6027ffcdf95154db46763f3e0d1a6277>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionBuyNowRail_sale$data = {
   readonly promotedSale: {

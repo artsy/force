@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<36e3edcf559109afd885c91c8503133c>>
+ * @generated SignedSource<<349200297c2b61a24ae83dda10959810>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchRouteQuery$variables = {
   query: string;

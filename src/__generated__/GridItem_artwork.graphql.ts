@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<09b130f8b9a441ec99ca165068841835>>
+ * @generated SignedSource<<41b8dccf42540686e6dffb8269b7c8d4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type GridItem_artwork$data = {
   readonly artistNames: string | null | undefined;

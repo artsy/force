@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7e0ba633aa59d4645654ff94834d4544>>
+ * @generated SignedSource<<52e612f8cf8433dbf5ea3d284ec8a883>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShippingLocationRoute_me$data = {
   readonly addressConnection: {

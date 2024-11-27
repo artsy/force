@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fb986d9e82273ad35df779a7dd102871>>
+ * @generated SignedSource<<dcf5ebfb4d4cc02a0e7c067bc32e037a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type OfferSummaryItem_order$data = {
   readonly currencyCode: string;

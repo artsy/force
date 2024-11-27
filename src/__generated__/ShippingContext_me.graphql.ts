@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<812825fe6765381cdb711bb655c33466>>
+ * @generated SignedSource<<f445027a568a16e45950389732b160dc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShippingContext_me$data = {
   readonly addressConnection: {

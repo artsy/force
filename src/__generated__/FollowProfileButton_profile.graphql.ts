@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<77a2b0f33432688b47c0445f6369095d>>
+ * @generated SignedSource<<54458290a3bf1a96ead3bbea8fb0f525>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FollowProfileButton_profile$data = {
   readonly counts: {

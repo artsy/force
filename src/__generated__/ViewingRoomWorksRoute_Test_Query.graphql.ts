@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1ca7ced4ca5156f51f3da45f90840082>>
+ * @generated SignedSource<<0ec36dea35caf987183508abc7799982>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 export type ViewingRoomWorksRoute_Test_Query$variables = {

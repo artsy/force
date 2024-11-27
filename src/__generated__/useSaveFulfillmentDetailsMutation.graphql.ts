@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ca93462e8f332a0f564a3ecbcea66c25>>
+ * @generated SignedSource<<2b5b505e7a602df0501ea1170a279f6b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderFulfillmentTypeEnum = "PICKUP" | "SHIP" | "SHIP_ARTA" | "%future added value";
 export type CommerceShippingAddressVerifiedByEnum = "ARTSY" | "USER" | "%future added value";

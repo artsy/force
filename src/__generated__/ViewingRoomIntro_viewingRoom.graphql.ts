@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<834630851fb63498d596be3d1f461440>>
+ * @generated SignedSource<<b7f6866a0c4135603e74acbad588b5ff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomIntro_viewingRoom$data = {
   readonly introStatement: string | null | undefined;

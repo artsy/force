@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cee433aa692b77e2bbe567bc2732f78a>>
+ * @generated SignedSource<<8b9539880f0cd841e999bf61901df29a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type GeneShow_gene$data = {
   readonly artistsConnection: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b22039528dd6e183c9c76f74c577e053>>
+ * @generated SignedSource<<626141cb5542184d9a001054baa17960>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type useRecordArtworkViewMutation$variables = {
   artworkID: string;
 };

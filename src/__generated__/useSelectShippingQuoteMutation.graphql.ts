@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9ac832e83df3d5f6ed669c3def756175>>
+ * @generated SignedSource<<60d05d3700e6f197f9e1483e11df4127>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceSelectShippingOptionInput = {
   clientMutationId?: string | null | undefined;

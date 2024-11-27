@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dfea5d851bb1eae29331cf305d982eb9>>
+ * @generated SignedSource<<81d269aa6391f7c7145b40aaea1c84b8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type collectorProfileRoutes_ArtworkQuery$variables = {
   artworkID: string;

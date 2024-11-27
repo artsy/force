@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f918f8f59d437e75e2db2343e03ad9b1>>
+ * @generated SignedSource<<ba4ac09fa393c73c0f8603f775b249ec>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NotificationPartnerShow_show$data = {
   readonly coverImage: {

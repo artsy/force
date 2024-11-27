@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fb1802e5dc6ca78e72ad018c28769d22>>
+ * @generated SignedSource<<578b15d34c9ab34b22333eeeb40e5cbc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type CurrencyPreference = "EUR" | "GBP" | "USD" | "%future added value";
 export type LengthUnitPreference = "CM" | "IN" | "%future added value";
 export type UpdateMyProfileInput = {

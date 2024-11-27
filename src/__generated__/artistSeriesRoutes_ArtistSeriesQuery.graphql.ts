@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8eb4e17658dc7c1acc773a2fb5feba40>>
+ * @generated SignedSource<<c728770aa9923d90db84186c43d9fdd7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type artistSeriesRoutes_ArtistSeriesQuery$variables = {
   slug: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<983b04eee890fc2a962fcf67295de79b>>
+ * @generated SignedSource<<e042b6c08eadf9ee7c5ddd641d0dca30>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerContacts_edges$data = ReadonlyArray<{
   readonly node: {

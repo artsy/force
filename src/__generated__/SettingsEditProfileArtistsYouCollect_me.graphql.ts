@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<19839a0254f797169ad15736cb3fed85>>
+ * @generated SignedSource<<7e77f33ff7a6be919f0acf99d2686919>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type UserInterestCategory = "COLLECTED_BEFORE" | "INTERESTED_IN_COLLECTING" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditProfileArtistsYouCollect_me$data = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dcdb27a7cdbde2e669da1c52955c5d38>>
+ * @generated SignedSource<<4a1145abb1eefa71c66af7e35837cbf3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsBankAccount_bankAccount$data = {
   readonly internalID: string;

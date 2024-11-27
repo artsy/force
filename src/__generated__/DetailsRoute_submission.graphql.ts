@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b09b8d88c66c7ca32f2de9130ba60a86>>
+ * @generated SignedSource<<7f2658708060071e90c8e0ed6f36851c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DetailsRoute_submission$data = {
   readonly category: string | null | undefined;

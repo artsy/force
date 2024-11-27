@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e202e0e134c873bcfba568d973fc16d>>
+ * @generated SignedSource<<ef77c613a7ec63e8eb8000562a21368c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type ArtistTargetSupplyPriority = "FALSE" | "TRUE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkAboutTab_artwork$data = {

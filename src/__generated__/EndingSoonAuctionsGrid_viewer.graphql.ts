@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<170a88282c213cff4289676882021f7f>>
+ * @generated SignedSource<<4ac31220dbeddf8bce7d9e92c9d685a1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EndingSoonAuctionsGrid_viewer$data = {
   readonly saleArtworksConnection: {

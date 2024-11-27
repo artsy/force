@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f5a098d9592f80d8a06543c774f7ad38>>
+ * @generated SignedSource<<3b095345976f92c7fe2d9bf60c4b5bdf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleMetaTags_article$data = {
   readonly byline: string | null | undefined;

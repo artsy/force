@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ba95b4400a4ca0720612ac7c178caa94>>
+ * @generated SignedSource<<e9c5f92e078080345fcb8d0336c932b1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationsSidebarItem_conversation$data = {
   readonly internalID: string | null | undefined;
@@ -191,8 +191,7 @@ return {
                       "name": "title",
                       "storageKey": null
                     },
-                    "action": "NONE",
-                    "path": "items.item.title"
+                    "action": "NONE"
                   },
                   {
                     "alias": null,
@@ -221,14 +220,12 @@ return {
                         {
                           "kind": "RequiredField",
                           "field": (v0/*: any*/),
-                          "action": "NONE",
-                          "path": "items.item.artist.name"
+                          "action": "NONE"
                         }
                       ],
                       "storageKey": null
                     },
-                    "action": "NONE",
-                    "path": "items.item.artist"
+                    "action": "NONE"
                   },
                   {
                     "kind": "RequiredField",
@@ -258,14 +255,12 @@ return {
                             "name": "url",
                             "storageKey": "url(version:[\"small\",\"square\"])"
                           },
-                          "action": "NONE",
-                          "path": "items.item.image.url"
+                          "action": "NONE"
                         }
                       ],
                       "storageKey": null
                     },
-                    "action": "NONE",
-                    "path": "items.item.image"
+                    "action": "NONE"
                   }
                 ],
                 "type": "Artwork",
@@ -274,8 +269,7 @@ return {
             ],
             "storageKey": null
           },
-          "action": "NONE",
-          "path": "items.item"
+          "action": "NONE"
         }
       ],
       "storageKey": null

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9a79ae205d5237576b262699f3841920>>
+ * @generated SignedSource<<c050b1737e2a89cf5b4897a40b7fb53a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FeaturedCollectionRailEntity_member$data = {
   readonly description: string | null | undefined;

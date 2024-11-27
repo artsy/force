@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d0cceda0a733ff699877342e51b765a5>>
+ * @generated SignedSource<<6400c507835f6f27a67986b137ed6845>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type VerificationStatuses = "NOT_FOUND" | "NOT_PERFORMED" | "VERIFICATION_UNAVAILABLE" | "VERIFIED_NO_CHANGE" | "VERIFIED_WITH_CHANGES" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type AddressVerificationFlow_verifyAddress$data = {

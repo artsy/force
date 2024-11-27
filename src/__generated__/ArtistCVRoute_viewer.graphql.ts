@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5f658b3a153e3846d5a0bcbfded16649>>
+ * @generated SignedSource<<7a75bd75f9de0cc9703f421a0e044326>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCVRoute_viewer$data = {
   readonly fairBooths: {
@@ -84,8 +84,7 @@ return {
         ],
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "soloShows"
+      "action": "NONE"
     },
     {
       "kind": "RequiredField",
@@ -112,8 +111,7 @@ return {
         ],
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "groupShows"
+      "action": "NONE"
     },
     {
       "kind": "RequiredField",
@@ -139,8 +137,7 @@ return {
         ],
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "fairBooths"
+      "action": "NONE"
     }
   ],
   "type": "Viewer",

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ed3c60ab4915e269fa64a057a6d9d204>>
+ * @generated SignedSource<<6d13e2dbea4f1276952720d116581712>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDARD" | "VIDEO" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionAd_article$data = {

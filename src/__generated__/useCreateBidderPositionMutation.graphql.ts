@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2b99b27c7204d154657833b7cc49367e>>
+ * @generated SignedSource<<2781684eb7c346ae5e0f02455640f74b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type BidderPositionInput = {
   artworkID: string;
   clientMutationId?: string | null | undefined;

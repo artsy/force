@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<419987d6735688430baf0c67be54ceb6>>
+ * @generated SignedSource<<cfb55fff0888fa46a8d8038f91928128>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionCard_sale$data = {
   readonly coverImage: {

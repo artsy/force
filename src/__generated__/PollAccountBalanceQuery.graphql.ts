@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1ea6e7e197ec8a79b6280501ef130af2>>
+ * @generated SignedSource<<c273ccf6af48ed5133d2ae5ac064484c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PollAccountBalanceQuery$variables = {
   bankAccountId?: string | null | undefined;

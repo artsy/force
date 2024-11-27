@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<22f1e7e76bc85fb85f9b3987c839f06c>>
+ * @generated SignedSource<<f215dcd34cf08058c8c594d9c5c0070a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type searchRoutes_SearchResultsArtistsQuery$variables = {
   keyword: string;

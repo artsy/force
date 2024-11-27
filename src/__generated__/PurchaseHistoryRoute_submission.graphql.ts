@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f12c8bc21d219af2615dd6420766ec3a>>
+ * @generated SignedSource<<e92a7c6da988f82adcabb0845a11ea82>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PurchaseHistoryRoute_submission$data = {
   readonly provenance: string | null | undefined;

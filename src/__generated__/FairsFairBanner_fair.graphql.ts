@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1af084fa7a94476f819a448a7709f77d>>
+ * @generated SignedSource<<8b13f87d7901800fe6c09bd6d824f434>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairsFairBanner_fair$data = {
   readonly bannerSize: string | null | undefined;

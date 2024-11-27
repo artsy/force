@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6b521f2d50b240571866462d017b00c1>>
+ * @generated SignedSource<<40e3237505976ea0e22498fffe81a354>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSharePanel_artwork$data = {
   readonly artworkMeta: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fab98e750d5faefd525338da6d55143e>>
+ * @generated SignedSource<<3cacf6d2e3a4e2b0630c47cfd847915a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomsApp_featuredViewingRooms$data = {
   readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomsFeaturedRail_featuredViewingRooms">;

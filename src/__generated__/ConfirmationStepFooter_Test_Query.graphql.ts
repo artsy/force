@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c390b7f37eaf74e0a9a85f7d3340cb63>>
+ * @generated SignedSource<<2a1083f6f40a424e7f57598ab1c1ef4f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type ConfirmationStepFooter_Test_Query$variables = {
   alertID: string;
 };

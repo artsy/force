@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a90afd768f7ffeb9532e7635dd2c395d>>
+ * @generated SignedSource<<a791b83e2e68de5aa2cbbf4a30a860d6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EventStatus = "ALL" | "CLOSED" | "CLOSING_SOON" | "CURRENT" | "RUNNING" | "RUNNING_AND_UPCOMING" | "UPCOMING" | "%future added value";
 export type ShowPaginatedEventsQuery$variables = {

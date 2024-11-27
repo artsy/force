@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0927f7115be4a30801ff34ae044b6603>>
+ * @generated SignedSource<<35b80d4251d759e94bcfb8d0d71c76da>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type AuctionResultsState = "ALL" | "PAST" | "UPCOMING" | "%future added value";

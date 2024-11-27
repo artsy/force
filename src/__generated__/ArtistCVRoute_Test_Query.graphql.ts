@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e948919d33177779464bb3279e17170>>
+ * @generated SignedSource<<2dcd09990d6265f8489fd8cd49e943e5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCVRoute_Test_Query$variables = {
   artistID: string;

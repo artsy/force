@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9b7f0f7d50a4714f57d00e4527474ac7>>
+ * @generated SignedSource<<f97bb511535ed64ac68129645ddd2bc3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowHeader_show$data = {
   readonly endAt: string | null | undefined;

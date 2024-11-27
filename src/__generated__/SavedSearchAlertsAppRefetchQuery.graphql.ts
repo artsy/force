@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2d2e53fb0db83c17bd08503fd8710feb>>
+ * @generated SignedSource<<deb1ad89c2b07913ca8fcbf961f012cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AlertsConnectionSortEnum = "ENABLED_AT_DESC" | "NAME_ASC" | "%future added value";
 export type SavedSearchAlertsAppRefetchQuery$variables = {

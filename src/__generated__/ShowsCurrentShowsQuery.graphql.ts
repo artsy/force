@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d7dc900c2aa0b53dc27e9fb7619ea2d9>>
+ * @generated SignedSource<<d17a4a445c3fe90f0074473c328dd54f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsCurrentShowsQuery$variables = {
   after?: string | null | undefined;

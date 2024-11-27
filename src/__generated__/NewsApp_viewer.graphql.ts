@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7f5392dddc4711adf31dbfaf9622498f>>
+ * @generated SignedSource<<ef8759ff674b8aa4635a3a9077acebce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NewsApp_viewer$data = {
   readonly " $fragmentSpreads": FragmentRefs<"NewsIndexArticles_viewer">;

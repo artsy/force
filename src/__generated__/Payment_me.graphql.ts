@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b87fd7b71131e5c11dba3fddf77b23bc>>
+ * @generated SignedSource<<ad329019384c4d355c30e346c42fea70>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Payment_me$data = {
   readonly bankAccounts: {

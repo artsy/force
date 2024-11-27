@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<faa740fbf391e195ae72202d7d3c5ae0>>
+ * @generated SignedSource<<598e760a4ab14326816fe3c65ae042b5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ExclusiveAccessBadge_artwork$data = {
   readonly isUnlisted: boolean;

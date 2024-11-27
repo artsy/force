@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2e1e124fcaebd50aa111b95552532362>>
+ * @generated SignedSource<<fec0d83dd96881346535853715dc9762>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairCard_fair$data = {
   readonly image: {

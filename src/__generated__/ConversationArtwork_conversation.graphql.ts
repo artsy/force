@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0b2749e1e38174069b09a7050fda99b4>>
+ * @generated SignedSource<<f0f57b4184566065a8971e3653bd5a09>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationArtwork_conversation$data = {
   readonly items: ReadonlyArray<{

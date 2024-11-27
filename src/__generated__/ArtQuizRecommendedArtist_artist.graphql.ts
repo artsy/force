@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e91df5c2bc0f361515d8ff99c0dd59dd>>
+ * @generated SignedSource<<dd0f6c8175e707fa0b0ef433279ddea0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtQuizRecommendedArtist_artist$data = {
   readonly artworksConnection: {

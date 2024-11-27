@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<465fec28364b00ceea1442f45b52a020>>
+ * @generated SignedSource<<4a3adace15e9a4aeec722c2a08d47841>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type ConfirmPasswordInput = {
   clientMutationId?: string | null | undefined;
   password: string;

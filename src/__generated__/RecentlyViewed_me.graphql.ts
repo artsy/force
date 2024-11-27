@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f18ef4cb96b23c77e0d7b520e3a50775>>
+ * @generated SignedSource<<2893d874b68a8ff7e08374da10d3e20f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RecentlyViewed_me$data = {
   readonly recentlyViewedArtworksConnection: {

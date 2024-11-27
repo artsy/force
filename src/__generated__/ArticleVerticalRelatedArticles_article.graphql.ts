@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4b176b96e56056c24f3d6f84a381b876>>
+ * @generated SignedSource<<3efee383120834fba10ee03f33eb0485>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleVerticalRelatedArticles_article$data = {
   readonly vertical: string | null | undefined;

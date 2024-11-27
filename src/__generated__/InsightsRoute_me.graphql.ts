@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0dad67e254e3e3b1129bae32784ec611>>
+ * @generated SignedSource<<13ec0d394f03f77c9e1063a3392353c2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type InsightsRoute_me$data = {
   readonly internalID: string;

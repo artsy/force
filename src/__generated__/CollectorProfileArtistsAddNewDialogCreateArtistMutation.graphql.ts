@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<75ad7e738b3fc94318f433b3641c181a>>
+ * @generated SignedSource<<a8fcb55c40ed0c4537b54369321d6eba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type CreateArtistMutationInput = {
   birthday?: string | null | undefined;
   clientMutationId?: string | null | undefined;

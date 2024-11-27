@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a4d1f824807fce67692a10aab50bdceb>>
+ * @generated SignedSource<<d5d1ad9a60af6a8d7f82f91609188940>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PriceEstimateContactInformation_artwork$data = {
   readonly internalID: string;

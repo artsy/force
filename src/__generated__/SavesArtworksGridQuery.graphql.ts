@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f24db47342cae6018b470da746794992>>
+ * @generated SignedSource<<42b91cf2b6dbe5acce594ceadb74acc2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectionArtworkSorts = "POSITION_ASC" | "POSITION_DESC" | "SAVED_AT_ASC" | "SAVED_AT_DESC" | "%future added value";
 export type SavesArtworksGridQuery$variables = {

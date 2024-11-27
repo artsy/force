@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c6d8a1469e72f56f68d610b1a5e12743>>
+ * @generated SignedSource<<8b536153cd9bdcdbadc70bb19695109a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type VerifyAddressInput = {
   addressLine1: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5e261f8c00f2645495be8aab6a5ce6fd>>
+ * @generated SignedSource<<0e9b3cdc4397b0b8b4c4720d0508df29>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 export type ThankYouRoute_Test_Query$variables = Record<PropertyKey, never>;

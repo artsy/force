@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<132dcd7b300de07ed24e5ecc78ee79e9>>
+ * @generated SignedSource<<244732d605363acd52ce441cbee52ab2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PriceAggregationsQuery$variables = {
   artistIDs: ReadonlyArray<string>;

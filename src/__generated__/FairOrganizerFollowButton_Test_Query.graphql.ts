@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<732292772f0efdcad6376994eaf37c1f>>
+ * @generated SignedSource<<822253c1af1d082a9f54b61e2e456948>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerFollowButton_Test_Query$variables = {
   id: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c71d24736624e929f01fe7be0426c90>>
+ * @generated SignedSource<<db7249f6afff09bffd274ac67b367c91>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type SearchAggregation = "TYPE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type SearchApp_viewer$data = {

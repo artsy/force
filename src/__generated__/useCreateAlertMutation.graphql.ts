@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<538a7944e01a951e90180be67742f6b5>>
+ * @generated SignedSource<<378aff4ecb4430d48e94417e27ed23c3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type AlertSettingsFrequency = "DAILY" | "INSTANT" | "%future added value";
 export type createAlertInput = {
   acquireable?: boolean | null | undefined;

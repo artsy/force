@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<51cb9c646dbe3885a01532873eb618e1>>
+ * @generated SignedSource<<f438137b92bd5e8135cd35d017b94556>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type StandoutLotsRail_Test_Query$variables = Record<PropertyKey, never>;
 export type StandoutLotsRail_Test_Query$data = {

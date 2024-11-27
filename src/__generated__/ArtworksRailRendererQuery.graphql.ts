@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7a18f0f5f9ba8eb72e77e873e978ad58>>
+ * @generated SignedSource<<1a1071734bb570b7f0c20a60076549d4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworksRailRendererQuery$variables = {
   partnerId: string;

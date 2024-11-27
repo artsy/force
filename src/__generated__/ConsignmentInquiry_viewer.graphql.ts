@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4db31d7dabf63725125f8e41cbfe1534>>
+ * @generated SignedSource<<d2bf1120bc14e3b5cf4326cb5e349d30>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentInquiry_viewer$data = {
   readonly staticContent: {

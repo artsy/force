@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6331faf17afb9b7325f6aed7de3ed753>>
+ * @generated SignedSource<<bb324820c5ac36ebd72badbcd1f6baaf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
 export type PartnersRailQuery$variables = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c7974e44a9b798c84ae89669a99d3da2>>
+ * @generated SignedSource<<9b8e669900f51a68caa3af5b7f3971da>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment, RefetchableFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationsSidebar_viewer$data = {
   readonly conversationsConnection: {

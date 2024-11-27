@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<394051c1bae78fd51069f940b0163206>>
+ * @generated SignedSource<<3aed7f59f183b2f6ebb05f1ae59e3f77>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MarketStats_Test_Query$variables = {
   artistInternalID: string;

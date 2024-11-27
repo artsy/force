@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b02cd7af80a9bd2f1343e475f869033e>>
+ * @generated SignedSource<<d479ea3ff5322c02a012ad4a9b119611>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Shows_partner$data = {
   readonly currentEvents: {

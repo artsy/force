@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5cc839696db396036376b5684534e09b>>
+ * @generated SignedSource<<3f9b2dfc3a03a55f109a68e630597156>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type InstitutionPartnershipsProfilesQuery$variables = Record<PropertyKey, never>;
 export type InstitutionPartnershipsProfilesQuery$data = {

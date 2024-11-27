@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<32a1939112fc760d82677164c2f02d9e>>
+ * @generated SignedSource<<b35f2e5e1e5b245b8aa5babb3f26fe0d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type useArtworkListsArtworkSaveStatesQuery$variables = {
   artworkID: string;
 };

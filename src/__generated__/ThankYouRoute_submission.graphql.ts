@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<df065e88ab1f7b90f3f0e82b16206667>>
+ * @generated SignedSource<<5f5ab60399d3c8b0f872d4af45a7215e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ThankYouRoute_submission$data = {

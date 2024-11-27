@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5ce7684ec3737efdd7a9290a76d0b2ed>>
+ * @generated SignedSource<<83554d4f19321105a4c2430d47548de8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityHeaderArtist_artist$data = {
   readonly counts: {

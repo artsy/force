@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e57d4160d00561b95ccbf734791aab74>>
+ * @generated SignedSource<<e6c7c83a80390d8af9f2938307a3e37e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditProfileImageQuery$variables = Record<PropertyKey, never>;
 export type SettingsEditProfileImageQuery$data = {

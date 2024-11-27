@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f7a220ad608f6d1add5bbd4bfda56b00>>
+ * @generated SignedSource<<53fd146381976e3965a9fe9f7c7c298f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type collectRoutes_ArtworkFilterQuery$variables = Record<PropertyKey, never>;
 export type collectRoutes_ArtworkFilterQuery$data = {

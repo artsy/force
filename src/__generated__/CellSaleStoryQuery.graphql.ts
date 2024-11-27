@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<854a2e021bebc05602bca954f30b7108>>
+ * @generated SignedSource<<80a7ca545001b8d4ac3f365f3ad5fd1f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CellSaleStoryQuery$variables = Record<PropertyKey, never>;
 export type CellSaleStoryQuery$data = {

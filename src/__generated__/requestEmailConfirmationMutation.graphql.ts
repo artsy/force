@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cff46f7c0a011951b5dc29feca89dfb1>>
+ * @generated SignedSource<<500969e99f41884c75ff92d7328df811>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type requestEmailConfirmationMutation$variables = Record<PropertyKey, never>;
 export type requestEmailConfirmationMutation$data = {
   readonly sendConfirmationEmail: {

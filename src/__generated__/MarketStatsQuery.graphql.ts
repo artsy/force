@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fc6e5eca8288031676d3aaa1b36e8469>>
+ * @generated SignedSource<<af3a5e1eac090a5b0d4b7e771c1f9a63>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MarketStatsQuery$variables = {
   id: string;

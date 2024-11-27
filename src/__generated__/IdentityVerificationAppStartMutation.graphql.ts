@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3818543a2c52c41f4a4198d8ca7d3167>>
+ * @generated SignedSource<<d08649c0e5fa1eb06bd6b5f2753058ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type startIdentityVerificationMutationInput = {
   clientMutationId?: string | null | undefined;
   identityVerificationId: string;

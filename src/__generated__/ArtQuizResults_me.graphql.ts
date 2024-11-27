@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<11ca5f5c6c9357578d8e86cbcd226ea5>>
+ * @generated SignedSource<<2db90fb4ced51c3c2c51158fc1563319>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtQuizResults_me$data = {
   readonly quiz: {

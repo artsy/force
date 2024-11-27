@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0619a089c9445cf07798cb6d2cdcc3dd>>
+ * @generated SignedSource<<867ae1dcfe6d43205492443acf743ab1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceBuyerAcceptOfferInput = {
   clientMutationId?: string | null | undefined;

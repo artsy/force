@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<92346ed9be395018f36b2ab8d5817043>>
+ * @generated SignedSource<<232c2cbcaf7eda67e745ba0f33060def>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairFollowedArtists_fair$data = {
   readonly followedArtistArtworks: {

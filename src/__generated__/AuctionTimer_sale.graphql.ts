@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<93e1d1d386dff0c402401e96c3dfc47e>>
+ * @generated SignedSource<<a8f84551dd24f0509dd7434c70d6a448>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionTimer_sale$data = {
   readonly endAt: string | null | undefined;

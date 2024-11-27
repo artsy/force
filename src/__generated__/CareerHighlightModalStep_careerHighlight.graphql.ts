@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<606463b1c38aaee20e0791371728ee61>>
+ * @generated SignedSource<<18a8657266f30b0ab0d2d1dd90be3e28>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CareerHighlightModalStep_careerHighlight$data = ReadonlyArray<{
   readonly artist: {

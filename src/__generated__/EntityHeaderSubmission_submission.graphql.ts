@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<578242c7e182b2540296369f80c36ad6>>
+ * @generated SignedSource<<0cfc8aad56919796a393d6e7b9f767da>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityHeaderSubmission_submission$data = {
   readonly artist: {

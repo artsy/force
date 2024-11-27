@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e495f3b57bb2b3193964ef66b08d7a9f>>
+ * @generated SignedSource<<f710ae537d6ead3777352db18d8dc874>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarBidAction_me$data = {
   readonly isIdentityVerified: boolean | null | undefined;

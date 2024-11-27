@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3121159ad7cdd51f9afa5e9871bc716f>>
+ * @generated SignedSource<<84a7ce5d48e2566a20488e4396da3e55>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type identityVerificationRoutes_IdentityVerificationAppQuery$variables = {
   id: string;

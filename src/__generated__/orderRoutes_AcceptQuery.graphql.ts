@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<224281108ec1dc8a4bfddf3cf333e52b>>
+ * @generated SignedSource<<81b8063f81960de71106481669a15b64>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type orderRoutes_AcceptQuery$variables = {
   orderID: string;

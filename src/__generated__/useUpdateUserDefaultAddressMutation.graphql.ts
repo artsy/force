@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<27be3f25fec5b6e4b54abc1b86a5db56>>
+ * @generated SignedSource<<307e423a79ad5ab95f56298b7141c910>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type UpdateUserDefaultAddressInput = {
   clientMutationId?: string | null | undefined;

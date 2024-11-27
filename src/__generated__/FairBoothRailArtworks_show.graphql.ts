@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<17117552ac59e99d54aa7261b292bc32>>
+ * @generated SignedSource<<163ca577fb7fab7f213a15c9c7f92c76>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairBoothRailArtworks_show$data = {
   readonly artworksConnection: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e39a2fc0411330f2e0007f06a0066b17>>
+ * @generated SignedSource<<4a36ec4bf79eb86053a90d063088978c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type SavedSearchAlertsApp_Alert_Query$variables = {
   alertID: string;
 };

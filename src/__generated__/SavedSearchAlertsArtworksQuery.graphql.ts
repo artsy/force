@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7dda0ca1d95eb61d1ca45d138fc2b02f>>
+ * @generated SignedSource<<5d29fe2ed1cf1a7ac6e69485b0132b4f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertsArtworksQuery$variables = {
   id: string;

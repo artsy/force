@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<97933fecad2ae40c30bd8e8160de3970>>
+ * @generated SignedSource<<23264d0b893b6ef6d59861972ebe3b76>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairsFairRow_fair$data = {
   readonly exhibitionPeriod: string | null | undefined;

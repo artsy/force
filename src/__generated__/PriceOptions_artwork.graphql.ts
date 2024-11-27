@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4f4367de8799274cb85a9a2d4064db01>>
+ * @generated SignedSource<<b75690d73df0afe66c0c551834a178d6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PriceOptions_artwork$data = {
   readonly isPriceRange: boolean | null | undefined;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<658e47af5ca551a7b2962a071530de7d>>
+ * @generated SignedSource<<61530e028cb6fb85f232bfc53b27ae7f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type fairRoutes_FairQuery$variables = {
   slug: string;

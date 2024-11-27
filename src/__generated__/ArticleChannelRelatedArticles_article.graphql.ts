@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3de74561ca990071ea87b36eadb469c0>>
+ * @generated SignedSource<<e5346d1ef2d59d352c20c47d65c8c580>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleChannelRelatedArticles_article$data = {
   readonly byline: string | null | undefined;

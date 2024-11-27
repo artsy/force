@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<26da431c2d392f913af7f43deed4facb>>
+ * @generated SignedSource<<463fe5e2fc6aaaa24a64d12f64bdb6e4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type TransactionDetailsSummaryItemOfferProperties$data = {

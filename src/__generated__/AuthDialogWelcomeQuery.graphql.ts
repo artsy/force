@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dfcfc5419c7dab1f4ea82a5987ee0208>>
+ * @generated SignedSource<<20ad969c80de5fe1059db7e51f504517>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type AuthDialogWelcomeQuery$variables = {
   email: string;
   recaptchaToken: string;

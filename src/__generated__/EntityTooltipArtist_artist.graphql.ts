@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4a76b211d4dd6e24aec96041cc0a1a4e>>
+ * @generated SignedSource<<9581c1fd612c97d147c60d023a484a45>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityTooltipArtist_artist$data = {
   readonly blurb: string | null | undefined;

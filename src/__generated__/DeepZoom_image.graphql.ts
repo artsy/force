@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<52db1a9b997f1bd9fa214fcf801fc795>>
+ * @generated SignedSource<<f02957710ab8ef5ae87701e16249b182>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeepZoom_image$data = {
   readonly deepZoom: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<900e607c85a870671382b28b6493d592>>
+ * @generated SignedSource<<2ca8af43041e5a2da1800ab2cf7cdc9a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityTooltipGene_gene$data = {
   readonly description: string | null | undefined;

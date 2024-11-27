@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<66b6d8413a8cdb3a288f75182834c676>>
+ * @generated SignedSource<<62e7c8236b3d0a92b9c04205dde34af9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HomeAuctionLotsForYouRail_artworksForUser$data = {
   readonly edges: ReadonlyArray<{

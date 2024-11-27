@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<116f4581b9441a2f979cfcece02a6be7>>
+ * @generated SignedSource<<c0661f54d390b0d98eb07ef115ad7313>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type PartnerOfferSourceEnum = "ABANDONED_ORDER" | "SAVE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type PartnerOfferCreatedNotification_notification$data = {

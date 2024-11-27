@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bb979efba5ba37fa605790c1efefc883>>
+ * @generated SignedSource<<dae418573266477671aaf9d4db4f3b45>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityHeaderPartner_partner$data = {
   readonly categories: ReadonlyArray<{

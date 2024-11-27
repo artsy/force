@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2bc1f4d08815467b0973bba832af4063>>
+ * @generated SignedSource<<61ccece7e979eb33a02624ba71fe1cb5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type InsightsMedianSalePrice_me$data = {
   readonly medianSalePrices: {

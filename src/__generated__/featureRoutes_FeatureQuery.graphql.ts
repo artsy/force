@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4c3e91137d98be429609708b8b84b03f>>
+ * @generated SignedSource<<80c27c2fdb84dfb62ce3dc72047b37e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type featureRoutes_FeatureQuery$variables = {
   slug: string;

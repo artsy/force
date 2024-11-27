@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<06163617d4b01bd907e7d44af7136e40>>
+ * @generated SignedSource<<7ee401699904dffe2ee7eb2ce8d15214>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type RedirectsShortcutsQuery$variables = {
   id: string;
 };

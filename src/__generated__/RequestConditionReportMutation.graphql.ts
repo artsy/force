@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c83a9b4c157067b0d0e52bcb34a85db>>
+ * @generated SignedSource<<91947e3600ad727b2f41138802f5d151>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type RequestConditionReportInput = {
   clientMutationId?: string | null | undefined;
   saleArtworkID: string;

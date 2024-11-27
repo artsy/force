@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<90a6edc7c8a6d5c1855910b5845b44ab>>
+ * @generated SignedSource<<a180c3691876b86694232103322ab7e8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleVisibilityMetadata_article$data = {
   readonly href: string | null | undefined;

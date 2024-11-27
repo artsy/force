@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a544e3d5cf4685655d3504d324ac1a73>>
+ * @generated SignedSource<<6b7209a59e16c1688d48d9b4f4418643>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type JobApp_job$data = {
   readonly content: string;

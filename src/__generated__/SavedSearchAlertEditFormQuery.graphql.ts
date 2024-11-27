@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<76b6a9b8ecb3a3c3634dc3ad7e119251>>
+ * @generated SignedSource<<e9bf0decaf6f7c52c00979577af05a35>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertEditFormQuery$variables = {
   id: string;

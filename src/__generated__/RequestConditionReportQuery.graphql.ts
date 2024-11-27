@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fcb18928f73b0644e0c4467254c37600>>
+ * @generated SignedSource<<8c3f88095847ae84faa1873e317c0ec2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RequestConditionReportQuery$variables = {
   artworkID: string;

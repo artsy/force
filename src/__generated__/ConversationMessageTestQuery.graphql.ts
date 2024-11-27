@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<450f09b16de4859309f70d954a458224>>
+ * @generated SignedSource<<c0971e51ed14589130d39bb372201fdf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationMessageTestQuery$variables = Record<PropertyKey, never>;
 export type ConversationMessageTestQuery$data = {
@@ -142,20 +142,17 @@ return {
                       ],
                       "storageKey": null
                     },
-                    "action": "NONE",
-                    "path": "conversation.messagesConnection.edges"
+                    "action": "NONE"
                   }
                 ],
                 "storageKey": "messagesConnection(first:1)"
               },
-              "action": "NONE",
-              "path": "conversation.messagesConnection"
+              "action": "NONE"
             }
           ],
           "storageKey": "conversation(id:\"123\")"
         },
-        "action": "NONE",
-        "path": "conversation"
+        "action": "NONE"
       }
     ],
     "type": "Query",

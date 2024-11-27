@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7b98618c656a7f270db32f32f3b5e3b0>>
+ * @generated SignedSource<<2bc9130d56097dbfa6de1122195e28a5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RegistrationAuctionTimer_sale$data = {
   readonly isRegistrationClosed: boolean | null | undefined;

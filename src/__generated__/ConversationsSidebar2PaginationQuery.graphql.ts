@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<08113af453e9d156f9f2e449cb19d923>>
+ * @generated SignedSource<<8a7e43db6695dc98a6b372d955751722>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationsSidebar2PaginationQuery$variables = {
   after?: string | null | undefined;

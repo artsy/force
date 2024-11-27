@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d89da0b7728563a90de16bc22d9fbdf3>>
+ * @generated SignedSource<<56b70569a0dab9f4c47796d2a9c6759a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPrivateArtwork_artwork$data = {
   readonly additionalInformation: string | null | undefined;

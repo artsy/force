@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f01f87391dcfd40eec0da2a77ba52930>>
+ * @generated SignedSource<<41b77da72c05df97f5745153bfb83732>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnersRail_partnerCategory$data = {
   readonly name: string | null | undefined;

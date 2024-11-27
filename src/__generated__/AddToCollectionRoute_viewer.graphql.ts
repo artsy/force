@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2f525069b23102b176e2f254d957e335>>
+ * @generated SignedSource<<4a089628a77efdfb5fecc5aede756f93>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AddToCollectionRoute_viewer$data = {
   readonly artworksConnection: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ba453fa233afc25c599304b842bf105b>>
+ * @generated SignedSource<<f1a5ec4350e6929235485494bef8cbee>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkActionsWatchLotButton_artwork$data = {
   readonly sale: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eabebbb34aba0ab6a185ff633d0cad10>>
+ * @generated SignedSource<<1e0ece51355c88ee5913e28e1aa4dac5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistConsignRoute_artist$data = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistConsignFAQ_artist" | "ArtistConsignHeader_artist" | "ArtistConsignHowToSell_artist" | "ArtistConsignMarketTrends_artist" | "ArtistConsignMeta_artist" | "ArtistConsignPageViews_artist" | "ArtistConsignRecentlySold_artist" | "ArtistConsignSellArt_artist">;

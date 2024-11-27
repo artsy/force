@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<029d5790a92c749bcc82c16b8103c606>>
+ * @generated SignedSource<<491a9921b1d98713e1bb83309b706d03>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileArtistsAddResult_artist$data = {
   readonly internalID: string;

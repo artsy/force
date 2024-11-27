@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<30553cf3ea2a86775eab04b41bf7b142>>
+ * @generated SignedSource<<e71097c6308ede3d614f52ca6dc7ba58>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type IdentityVerificationApp_identityVerification$data = {
   readonly internalID: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c63e3f0c576c60116cdf4e0184031bb6>>
+ * @generated SignedSource<<0926689bc790808e927635783676cbe5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkArtistMarket_marketPriceInsights$data = {
   readonly annualLotsSold: number | null | undefined;

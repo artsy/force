@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<22ab3e6724219cb34d20bf0d6921245e>>
+ * @generated SignedSource<<ca55d72b7373223b457867cd51badef5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowInfoLocation_show$data = {
   readonly fair: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<264bbb8e1d97a2f3cca914a1e47d88f3>>
+ * @generated SignedSource<<8d5086cb9857a08b188621860193b141>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type Visibility = "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkApp_artwork$data = {

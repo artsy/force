@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c6f2cc76bf778ede3e27b8261de6940e>>
+ * @generated SignedSource<<ccc59f0e817baef964c94fec907b9074>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type geneRoutes_GeneShowQuery$variables = {
   slug: string;

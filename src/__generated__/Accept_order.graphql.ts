@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ed2df5f0e001c551fad4b39b55d0f1a0>>
+ * @generated SignedSource<<103a475a4bfac0b486e0598834aca8f1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Accept_order$data = {
   readonly creditCardId: string | null | undefined;
