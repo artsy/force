@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<052cc6d354ae42f2d80552fc38c04add>>
+ * @generated SignedSource<<6ab16dbbbd93b8a1bf62b458bec8ccbf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewInRoom_artwork$data = {
   readonly " $fragmentSpreads": FragmentRefs<"ViewInRoomArtwork_artwork">;

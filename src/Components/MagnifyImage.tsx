@@ -3,13 +3,6 @@ import { useRef, useState } from "react"
 import styled from "styled-components"
 import { isTouch } from "Utils/device"
 
-type Position = number | null
-
-interface Positions {
-  x: Position
-  y: Position
-}
-
 interface MagnifyImageProps extends ImageProps {
   scale?: number
   scaleDuration?: number
@@ -19,7 +12,9 @@ const ENTER_TIMEOUT_DELAY = 300
 const DEFAULT_SCALE = 1.75
 const DEFAULT_SCALE_DURATION = 0.15
 
-export const MagnifyImage: React.FC<MagnifyImageProps> = ({
+export const MagnifyImage: React.FC<React.PropsWithChildren<
+  MagnifyImageProps
+>> = ({
   scale = DEFAULT_SCALE,
   scaleDuration = DEFAULT_SCALE_DURATION,
   ...rest
@@ -27,10 +22,7 @@ export const MagnifyImage: React.FC<MagnifyImageProps> = ({
   const containerRef = useRef<HTMLDivElement | null>(null)
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [zoomed, setZoomed] = useState(false)
-  const [positions, setPositions] = useState<Positions>({
-    x: null,
-    y: null,
-  })
+  const [transformOrigin, setTransformOrigin] = useState("center center")
 
   const onMouseOver = () => {
     if (isTouch) {
@@ -54,7 +46,7 @@ export const MagnifyImage: React.FC<MagnifyImageProps> = ({
     setZoomed(false)
   }
 
-  const onMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current || isTouch) {
       return
     }
@@ -63,9 +55,8 @@ export const MagnifyImage: React.FC<MagnifyImageProps> = ({
     const x = e.clientX - containerRect.left
     const y = e.clientY - containerRect.top
 
-    setPositions({
-      x,
-      y,
+    requestAnimationFrame(() => {
+      setTransformOrigin(`${x}px ${y}px`)
     })
   }
 
@@ -78,16 +69,16 @@ export const MagnifyImage: React.FC<MagnifyImageProps> = ({
       onMouseMove={onMouseMove}
       width="100%"
       height="100%"
-      ref={containerRef as any}
+      ref={containerRef}
     >
       <Image
         {...rest}
         title={undefined} // don't display a tooltip when hovering over the image
         style={{
           ...rest.style,
-          transformOrigin: getTransformOrigin(positions),
-          transition: `transform ${scaleDuration}s ease, transform-origin 100ms ease, opacity 0.25s`,
+          transformOrigin,
           transform: zoomed ? `scale(${scale})` : `scale(1.0)`,
+          transition: `transform ${scaleDuration}s ease, opacity 0.25s`,
         }}
       />
     </Box>
@@ -99,11 +90,3 @@ const Image = styled(BaseImage)`
   width: 100%;
   height: 100%;
 `
-
-const getTransformOrigin = (positions: Positions) => {
-  if (positions.x === null && positions.y === null) {
-    return "center center"
-  }
-
-  return `${positions.x}px ${positions.y}px`
-}

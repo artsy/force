@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { MockBoot } from "DevTools/MockBoot"
 import { ArtworkAppTestQuery } from "__generated__/ArtworkAppTestQuery.graphql"
 import { ArtworkResultFragmentContainer } from "Apps/Artwork/ArtworkApp"
@@ -47,10 +47,10 @@ const { renderWithRelay } = setupTestWrapperTL<ArtworkAppTestQuery>({
   query: graphql`
     query ArtworkAppTestQuery {
       artworkResult(id: "artwork-id") {
-        ...ArtworkApp_artworkResult
+        ...ArtworkApp_artworkResult @arguments(loadSidebar: true)
       }
       me {
-        ...ArtworkApp_me @arguments(artworkID: "artwork-id")
+        ...ArtworkApp_me @arguments(artworkID: "artwork-id", loadSidebar: true)
       }
     }
   `,

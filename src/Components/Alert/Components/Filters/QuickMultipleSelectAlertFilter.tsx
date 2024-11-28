@@ -21,7 +21,7 @@ interface QuickMultipleSelectAlertFilterProps {
   truncate?: number
 }
 
-export const QuickMultipleSelectAlertFilter: FC<QuickMultipleSelectAlertFilterProps> = ({
+export const QuickMultipleSelectAlertFilter: FC<React.PropsWithChildren<QuickMultipleSelectAlertFilterProps>> = ({
   criteriaKey,
   description,
   label,

@@ -1,19 +1,19 @@
 import { Spacer, Text, Join, Box, Pill } from "@artsy/palette"
 import { FC } from "react"
-import { OnboardingFigure } from "../Components/OnboardingFigure"
-import { OnboardingQuestionPanel } from "../Components/OnboardingQuestionPanel"
+import { OnboardingFigure } from "Components/Onboarding/Components/OnboardingFigure"
+import { OnboardingQuestionPanel } from "Components/Onboarding/Components/OnboardingQuestionPanel"
 import {
   OPTION_COLLECTING_ART_THAT_MOVES_ME,
   OPTION_DEVELOPING_MY_ART_TASTES,
   OPTION_FINDING_GREAT_INVESTMENTS,
   OPTION_KEEP_TRACK_OF_ART,
-} from "../config"
-import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
-import { useOnboardingContext } from "../Hooks/useOnboardingContext"
-import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
+} from "Components/Onboarding/config"
+import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
+import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
+import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
 
-export const OnboardingQuestionTwo: FC = () => {
+export const OnboardingQuestionTwo: FC<React.PropsWithChildren<unknown>> = () => {
   const { state, dispatch, next } = useOnboardingContext()
   const { register, loading, handleNext } = useOnboardingFadeTransition({
     next,

@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { SettingsSavesCategoriesPaginationContainer } from "Apps/Favorites/Routes/FavoritesFollows/Components/SettingsSavesCategories"
 
 jest.unmock("react-relay")

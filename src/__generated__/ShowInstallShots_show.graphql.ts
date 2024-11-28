@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<04de00ed2c69c5347fe805135c64b655>>
+ * @generated SignedSource<<592668cd643121ded7750d0b0d02a82e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowInstallShots_show$data = {
   readonly images: ReadonlyArray<{

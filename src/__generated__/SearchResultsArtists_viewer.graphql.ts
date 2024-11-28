@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8004413ba166ac2bcf1823390d7625a9>>
+ * @generated SignedSource<<df581bdf752912dff2a137fa204c85d9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchResultsArtists_viewer$data = {
   readonly searchConnection: {

@@ -23,7 +23,7 @@ interface Props {
   data: Array<StepsWithImageDataType>
 }
 
-export const StepsWithImage: React.FC<Props> = props => {
+export const StepsWithImage: React.FC<React.PropsWithChildren<Props>> = props => {
   const { data, sectionTitle } = props
   if (!data.length) {
     return null
@@ -57,7 +57,7 @@ export const StepsWithImage: React.FC<Props> = props => {
   )
 }
 
-const StepCard: React.FC<StepsWithImageDataType> = ({
+const StepCard: React.FC<React.PropsWithChildren<StepsWithImageDataType>> = ({
   src,
   title,
   step,

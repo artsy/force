@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c3831504ef14a26cd19ca766eb93f6c>>
+ * @generated SignedSource<<a40e04b54939d819a06eb0a3ea88ef59>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Collect_marketingCollections$data = ReadonlyArray<{
   readonly " $fragmentSpreads": FragmentRefs<"CollectionsHubsNav_marketingCollections">;

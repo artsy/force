@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3fc9f86c2e83c4d273002f8d897b2d8c>>
+ * @generated SignedSource<<8a7e43db6695dc98a6b372d955751722>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationsSidebar2PaginationQuery$variables = {
   after?: string | null | undefined;
@@ -160,47 +160,6 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "internalID",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "ConversationInitiator",
-                        "kind": "LinkedField",
-                        "name": "from",
-                        "plural": false,
-                        "selections": (v5/*: any*/),
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "User",
-                        "kind": "LinkedField",
-                        "name": "fromUser",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "CollectorProfileType",
-                            "kind": "LinkedField",
-                            "name": "collectorProfile",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "confirmedBuyerAt",
-                                "storageKey": null
-                              },
-                              (v4/*: any*/)
-                            ],
-                            "storageKey": null
-                          },
-                          (v4/*: any*/)
-                        ],
                         "storageKey": null
                       },
                       {
@@ -428,12 +387,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f8f2093d84cec7fd09790b717b8d2765",
+    "cacheID": "cd48606558a56bb0e5a0a371e0926b54",
     "id": null,
     "metadata": {},
     "name": "ConversationsSidebar2PaginationQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebar2PaginationQuery(\n  $after: String\n  $first: Int = 10\n) {\n  viewer {\n    ...ConversationsSidebar_viewer_2HEEH6\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer_2HEEH6 on Viewer {\n  conversationsConnection(first: $first, after: $after, type: USER) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ConversationsSidebar2PaginationQuery(\n  $after: String\n  $first: Int = 10\n) {\n  viewer {\n    ...ConversationsSidebar_viewer_2HEEH6\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer_2HEEH6 on Viewer {\n  conversationsConnection(first: $first, after: $after, type: USER) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

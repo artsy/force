@@ -26,7 +26,7 @@ export const showRoutes: RouteProps[] = [
   {
     getComponent: () => ShowApp,
     path: "/show/:slug",
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       ShowApp.preload()
     },
     query: graphql`
@@ -44,7 +44,7 @@ export const showRoutes: RouteProps[] = [
       {
         getComponent: () => ShowInfoRoute,
         path: "info",
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           ShowInfoRoute.preload()
         },
         query: graphql`
@@ -64,7 +64,7 @@ export const showRoutes: RouteProps[] = [
     ],
     getComponent: () => ShowSubApp,
     path: "/show/:slug",
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       ShowSubApp.preload()
     },
     query: graphql`

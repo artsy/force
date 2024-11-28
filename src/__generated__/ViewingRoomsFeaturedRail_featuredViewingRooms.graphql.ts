@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a38debd6d792fb72eb204965e0acf7ea>>
+ * @generated SignedSource<<fe3916e039b408190f81345938f95b9e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomsFeaturedRail_featuredViewingRooms$data = {
   readonly edges: ReadonlyArray<{

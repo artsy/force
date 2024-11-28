@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9527f7ffd05a6e52f952fd8aeae39668>>
+ * @generated SignedSource<<2ebb3ca817be6f6bafcd607344b3c2ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResultImage_auctionResult$data = {
   readonly images: {

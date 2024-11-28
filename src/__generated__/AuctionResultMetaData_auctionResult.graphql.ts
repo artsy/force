@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<93ac1fc6f013307367cc4fbe5e292368>>
+ * @generated SignedSource<<4389c380a80273d9330371099e15a28d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResultMetaData_auctionResult$data = {
   readonly dimensionText: string | null | undefined;

@@ -2,7 +2,7 @@ import { Flex, Text } from "@artsy/palette"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 
-export const ConversationNewMessageMarker: React.FC = () => (
+export const ConversationNewMessageMarker: React.FC<React.PropsWithChildren<unknown>> = () => (
   <Separator alignItems="center" my={1}>
     <Text color="black60">New</Text>
   </Separator>

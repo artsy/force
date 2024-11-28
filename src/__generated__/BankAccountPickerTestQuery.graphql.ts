@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4a4de0accc2ec062710c2fee16bef2b5>>
+ * @generated SignedSource<<ada072bfcabb93ee70402c56eff78c8a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type BankAccountPickerTestQuery$variables = Record<PropertyKey, never>;

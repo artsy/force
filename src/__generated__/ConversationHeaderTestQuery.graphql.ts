@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9780852a67ba32b2e52287a3a8007104>>
+ * @generated SignedSource<<197f936b74c345b4d4e791f928334434>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationHeaderTestQuery$variables = Record<PropertyKey, never>;
 export type ConversationHeaderTestQuery$data = {
@@ -186,13 +186,19 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "shallow",
+                            "value": true
+                          }
+                        ],
                         "concreteType": "Artist",
                         "kind": "LinkedField",
                         "name": "artist",
                         "plural": false,
                         "selections": (v2/*: any*/),
-                        "storageKey": null
+                        "storageKey": "artist(shallow:true)"
                       },
                       {
                         "alias": null,
@@ -388,7 +394,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5eef4e0872be906c862a501635d3939e",
+    "cacheID": "94f1c0eb0ac0367d39a17756b6c9f5d6",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -545,7 +551,7 @@ return {
     },
     "name": "ConversationHeaderTestQuery",
     "operationKind": "query",
-    "text": "query ConversationHeaderTestQuery {\n  conversation(id: \"conversation-id\") {\n    ...ConversationHeader_conversation\n    id\n  }\n}\n\nfragment ConversationHeader_conversation on Conversation {\n  from {\n    name\n    id\n  }\n  to {\n    name\n    id\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        id\n        slug\n        date\n        title\n        artist {\n          name\n          id\n        }\n        image {\n          url\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  orderConnection(first: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED, CANCELED]) {\n    edges {\n      node {\n        __typename\n        ...ReviewOrderButton_order\n        id\n      }\n    }\n  }\n}\n\nfragment ReviewOrderButton_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  id\n  state\n  mode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      from {\n        __typename\n      }\n      offerAmountChanged\n      id\n    }\n  }\n}\n"
+    "text": "query ConversationHeaderTestQuery {\n  conversation(id: \"conversation-id\") {\n    ...ConversationHeader_conversation\n    id\n  }\n}\n\nfragment ConversationHeader_conversation on Conversation {\n  from {\n    name\n    id\n  }\n  to {\n    name\n    id\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        id\n        slug\n        date\n        title\n        artist(shallow: true) {\n          name\n          id\n        }\n        image {\n          url\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  orderConnection(first: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED, CANCELED]) {\n    edges {\n      node {\n        __typename\n        ...ReviewOrderButton_order\n        id\n      }\n    }\n  }\n}\n\nfragment ReviewOrderButton_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  id\n  state\n  mode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      from {\n        __typename\n      }\n      offerAmountChanged\n      id\n    }\n  }\n}\n"
   }
 };
 })();

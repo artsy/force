@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5b12bad2772496b7bf611ef42f47b205>>
+ * @generated SignedSource<<273a93c04c9b46702c8f0f8907567d57>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type AuthenticationStatus = "INVALID" | "LOGGED_IN" | "LOGGED_OUT" | "%future added value";
 export type useAuthValidationQuery$variables = Record<PropertyKey, never>;
 export type useAuthValidationQuery$data = {

@@ -7,7 +7,7 @@ interface ShowLocationHoursProps extends BoxProps {
   location: ShowLocationHours_location$data
 }
 
-export const ShowLocationHours: React.FC<ShowLocationHoursProps> = ({
+export const ShowLocationHours: React.FC<React.PropsWithChildren<ShowLocationHoursProps>> = ({
   location: { openingHours },
   ...rest
 }) => {

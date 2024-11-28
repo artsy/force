@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ef6f830a0f4aaf4d9a207fbf56b1a97>>
+ * @generated SignedSource<<361ed6f0d56026e0f7af28116e3199cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionRouteQuery$variables = {
   count: number;

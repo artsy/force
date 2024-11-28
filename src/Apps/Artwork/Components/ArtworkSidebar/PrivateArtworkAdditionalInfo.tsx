@@ -24,7 +24,7 @@ export interface PrivateArtworkAdditionalInfoProps extends FlexProps {
   artwork: PrivateArtworkAdditionalInfo_artwork$key
 }
 
-export const PrivateArtworkAdditionalInfo: React.FC<PrivateArtworkAdditionalInfoProps> = ({
+export const PrivateArtworkAdditionalInfo: React.FC<React.PropsWithChildren<PrivateArtworkAdditionalInfoProps>> = ({
   artwork,
   ...flexProps
 }) => {

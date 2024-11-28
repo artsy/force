@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1da8f325c9fe110e9d79685200ef047c>>
+ * @generated SignedSource<<72a3bf03fd1da23ed022d13f7ef46926>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NotificationViewingRoomsList_viewingRoomsConnection$data = {
   readonly edges: ReadonlyArray<{

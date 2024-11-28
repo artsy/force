@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e41ee591ba7afdd93e660608fd2a6ce2>>
+ * @generated SignedSource<<5d10fdb8cfacb4e660377a25c55a909f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CellPartner_partner$data = {
   readonly categories: ReadonlyArray<{

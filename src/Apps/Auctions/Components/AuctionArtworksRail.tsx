@@ -36,7 +36,7 @@ interface AuctionArtworksRailProps extends BoxProps {
   tabType: TabType
 }
 
-export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
+export const AuctionArtworksRail: React.FC<React.PropsWithChildren<AuctionArtworksRailProps>> = ({
   sale,
   tabType,
   ...rest

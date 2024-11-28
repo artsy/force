@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c8807fb654c2fc694da6c4294998b6bb>>
+ * @generated SignedSource<<db94f7a183883bd31a9401a83e7de608>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type fetchFollowedArtists_response$data = {
   readonly edges: ReadonlyArray<{

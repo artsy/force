@@ -7,9 +7,11 @@ interface ArtworkDownloadButtonProps {
   artwork: ArtworkDownloadButton_artwork$data
 }
 
-const ArtworkDownloadButton: React.FC<ArtworkDownloadButtonProps> = ({
+const ArtworkDownloadButton: React.FC<React.PropsWithChildren<ArtworkDownloadButtonProps>> = ({
   artwork,
 }) => {
+  if (!artwork.downloadableImageUrl) return null
+
   const { artists, title, date } = artwork
   const artistNames = (artists ?? []).map(artist => artist?.name).join(", ")
   const filename = compact([artistNames, title, date]).join(", ").trim()
@@ -17,7 +19,7 @@ const ArtworkDownloadButton: React.FC<ArtworkDownloadButtonProps> = ({
   return (
     <UtilButton
       name="download"
-      href={artwork.downloadableImageUrl!}
+      href={artwork.downloadableImageUrl}
       label="Download"
       download={filename}
       Component={UtilButtonLink}
@@ -33,7 +35,7 @@ export const ArtworkDownloadButtonFragmentContainer = createFragmentContainer(
         title
         date
         downloadableImageUrl
-        artists {
+        artists(shallow: true) {
           name
         }
       }

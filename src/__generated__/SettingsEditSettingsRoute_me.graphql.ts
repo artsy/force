@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<be1315eb8e2bebe72a3d55ea25201f94>>
+ * @generated SignedSource<<df764049c2c3ff93fc3b24084a141f71>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditSettingsRoute_me$data = {
   readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsInformation_me" | "SettingsEditSettingsLinkedAccounts_me" | "SettingsEditSettingsPassword_me" | "SettingsEditSettingsTwoFactor_me">;

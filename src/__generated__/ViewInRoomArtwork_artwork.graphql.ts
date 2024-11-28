@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f6370d334f504060e310782e972e6f22>>
+ * @generated SignedSource<<239770042dd44af51697b2300b1dba37>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewInRoomArtwork_artwork$data = {
   readonly heightCm: number | null | undefined;

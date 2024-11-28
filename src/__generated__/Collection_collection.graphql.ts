@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6883bc72872d0bbe893d14906c1a9467>>
+ * @generated SignedSource<<801dfec75aa512cc7492f63ad74ed48d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Collection_collection$data = {
   readonly headerImage: string | null | undefined;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f7cdb881147a665261b8d322686f8063>>
+ * @generated SignedSource<<3602301dbf908185a97de48fb36cc8bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type withProgressiveOnboardingCountsQuery$variables = Record<PropertyKey, never>;
 export type withProgressiveOnboardingCountsQuery$data = {
   readonly me: {

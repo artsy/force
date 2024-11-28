@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d4cddbdc27723f1e4efddb6eb64a6628>>
+ * @generated SignedSource<<b3380a6c60c072c4389cacd1fc9ee4bd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type ArtworkAttributionClassType = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type ArtworkConditionEnumType = "EXCELLENT" | "FAIR" | "GOOD" | "VERY_GOOD" | "%future added value";
 export type ArtworkSignatureTypeEnum = "HAND_SIGNED_BY_ARTIST" | "NOT_SIGNED" | "OTHER" | "SIGNED_IN_PLATE" | "STAMPED_BY_ARTIST_ESTATE" | "STICKER_LABEL" | "%future added value";

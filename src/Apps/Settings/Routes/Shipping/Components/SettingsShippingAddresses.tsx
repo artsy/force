@@ -13,7 +13,7 @@ interface SettingsShippingAddressesProps {
 
 type Mode = "Pending" | "Adding"
 
-export const SettingsShippingAddresses: FC<SettingsShippingAddressesProps> = ({
+export const SettingsShippingAddresses: FC<React.PropsWithChildren<SettingsShippingAddressesProps>> = ({
   me,
 }) => {
   const addresses = extractNodes(me.addresses)

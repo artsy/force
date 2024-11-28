@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { fireEvent, screen } from "@testing-library/react"
 import { HomeFeaturedGalleriesRailFragmentContainer } from "Apps/Home/Components/HomeFeaturedGalleriesRail"
 import { useTracking } from "react-tracking"

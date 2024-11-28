@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d364db5861d19e85861a247555f604ac>>
+ * @generated SignedSource<<7dabd6c3b1cc336f39f8ae6d5d126fa0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type useConversationPurchaseButtonData_conversation$data = {
   readonly internalID: string | null | undefined;

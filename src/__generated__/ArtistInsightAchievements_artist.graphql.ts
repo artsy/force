@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c6e67de1fed6ec671cc0f67a000f9e84>>
+ * @generated SignedSource<<f28fb2bcf2dbe1f3a90fe1b1481096e0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistInsightAchievements_artist$data = {
   readonly insightAchievements: ReadonlyArray<{

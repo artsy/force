@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<39b594907c879a406982dd294b9fad4c>>
+ * @generated SignedSource<<5e6effd3a28d203abbcc72805fe0bb75>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NewPayment_me$data = {
   readonly " $fragmentSpreads": FragmentRefs<"CreditCardPicker_me">;

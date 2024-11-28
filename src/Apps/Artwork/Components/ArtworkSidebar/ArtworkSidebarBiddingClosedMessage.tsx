@@ -9,7 +9,7 @@ interface BiddingClosedMessageProps {
   artwork: ArtworkSidebarBiddingClosedMessage_artwork$data
 }
 
-const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
+const BiddingClosedMessage: React.FC<React.PropsWithChildren<BiddingClosedMessageProps>> = ({
   artwork,
 }) => {
   return (
@@ -40,7 +40,7 @@ export const ArtworkSidebarBiddingClosedMessageFragmentContainer = createFragmen
     artwork: graphql`
       fragment ArtworkSidebarBiddingClosedMessage_artwork on Artwork {
         isEligibleToCreateAlert
-        artists {
+        artists(shallow: true) {
           internalID
         }
         attributionClass {

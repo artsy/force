@@ -32,7 +32,7 @@ interface SaveButtonBaseProps {
 const BTN_HEIGHT = 18
 const BTN_WIDTH = 18
 
-export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
+export const SaveButtonBase: React.FC<React.PropsWithChildren<SaveButtonBaseProps>> = ({
   isSaved,
   onClick,
   artwork,
@@ -103,7 +103,7 @@ export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
   )
 }
 
-export const SaveButton: React.FC<SaveButtonProps> = ({
+export const SaveButton: React.FC<React.PropsWithChildren<SaveButtonProps>> = ({
   artwork,
   contextModule,
 }) => {
@@ -169,7 +169,7 @@ interface SaveButtonQueryRendererProps
   id: string
 }
 
-export const SaveButtonQueryRenderer: React.FC<SaveButtonQueryRendererProps> = ({
+export const SaveButtonQueryRenderer: React.FC<React.PropsWithChildren<SaveButtonQueryRendererProps>> = ({
   id,
   contextModule,
 }) => {

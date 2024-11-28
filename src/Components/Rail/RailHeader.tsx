@@ -20,7 +20,7 @@ type RailHeaderTitleProps = Pick<
   "title" | "viewAllHref" | "viewAllOnClick"
 >
 
-export const RailHeaderTitle: React.FC<RailHeaderTitleProps> = ({
+export const RailHeaderTitle: React.FC<React.PropsWithChildren<RailHeaderTitleProps>> = ({
   viewAllHref,
   viewAllOnClick,
   title,
@@ -36,7 +36,7 @@ export const RailHeaderTitle: React.FC<RailHeaderTitleProps> = ({
   )
 }
 
-export const RailHeader: React.FC<RailHeaderProps> = ({
+export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
   countLabel,
   isLoading = false,
   title,

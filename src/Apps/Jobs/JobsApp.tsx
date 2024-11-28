@@ -14,7 +14,7 @@ interface JobsAppProps {
   viewer: JobsApp_viewer$data
 }
 
-const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
+const JobsApp: FC<React.PropsWithChildren<JobsAppProps>> = ({ viewer }) => {
   return (
     <>
       <MetaTags

@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { AuctionBuyersPremiumDialogFragmentContainer } from "Components/AuctionBuyersPremiumDialog"
 import { AuctionBuyersPremiumDialog_Test_Query } from "__generated__/AuctionBuyersPremiumDialog_Test_Query.graphql"
 import { screen } from "@testing-library/react"

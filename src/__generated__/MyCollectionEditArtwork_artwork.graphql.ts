@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7b6b7df2dbaf0adf144c6de8b172c6b7>>
+ * @generated SignedSource<<e93f4c78f13ccf07956642973d0b6201>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionEditArtwork_artwork$data = {
   readonly artist: {
@@ -119,7 +119,13 @@ return {
   "selections": [
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "shallow",
+          "value": true
+        }
+      ],
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artist",
@@ -216,7 +222,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "artist(shallow:true)"
     },
     {
       "alias": null,
@@ -484,6 +490,6 @@ return {
 };
 })();
 
-(node as any).hash = "8af37a3034bbaf3fed88307722f0e76d";
+(node as any).hash = "3650fa1235e00c7c57a37daf63cebef3";
 
 export default node;

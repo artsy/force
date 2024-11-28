@@ -23,7 +23,6 @@ import { Boot } from "System/Boot"
 import { collectAssets } from "System/Router/Utils/collectAssets"
 import { getServerAppContext } from "System/Router/Utils/serverAppContext"
 import { queryStringParsing } from "System/Router/Utils/queryStringParsing"
-import { Transform } from "stream"
 
 export interface ServerAppResults {
   html?: string
@@ -31,8 +30,6 @@ export interface ServerAppResults {
     url: string
   }
   status?: number
-  stream?: Transform
-  scripts?: string
   extractScriptTags?: () => string
   headTags?: any[]
   styleTags?: string
@@ -107,7 +104,7 @@ export const setupServerRouter = async ({
 
   const matchingMediaQueries = matchingMediaQueriesForUserAgent(userAgent)
 
-  const ServerRouter: React.FC = () => {
+  const ServerRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
     return (
       <Boot
         context={matchContext}
@@ -125,6 +122,7 @@ export const setupServerRouter = async ({
   const { html, stream, extractScriptTags, styleTags } = await collectAssets({
     ServerRouter,
     relayEnvironment,
+    req,
   })
 
   // Sentry names transactions according to their Express route.

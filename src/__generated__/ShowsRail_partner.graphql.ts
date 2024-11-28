@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<71c808601ec808bf21909a4383fa7de3>>
+ * @generated SignedSource<<b60ff538bd95367451ddee193331e597>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsRail_partner$data = {
   readonly displayFullPartnerPage: boolean | null | undefined;

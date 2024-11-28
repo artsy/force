@@ -2,13 +2,13 @@ import { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.grap
 import { CreditCardPicker_order$data } from "__generated__/CreditCardPicker_order.graphql"
 import { CreditCardPickerCreateCreditCardMutation } from "__generated__/CreditCardPickerCreateCreditCardMutation.graphql"
 import {
-  Address,
   AddressChangeHandler,
   AddressErrors,
   AddressForm,
   AddressTouched,
-  emptyAddress,
 } from "Components/Address/AddressForm"
+
+import { Address, emptyAddress } from "Components/Address/utils"
 
 import { CreditCardInput } from "Components/CreditCardInput"
 import { validateAddress } from "Apps/Order/Utils/formValidators"
@@ -91,7 +91,7 @@ export class CreditCardPicker extends React.Component<
       return this.props.me.creditCards?.edges?.length
         ? {
             type: "existing",
-            id: this.props.me.creditCards.edges[0]?.node?.internalID!,
+            id: this.props.me.creditCards.edges[0]?.node?.internalID as string,
           }
         : { type: "new" }
     }
@@ -121,6 +121,7 @@ export class CreditCardPicker extends React.Component<
     try {
       this.setState({ isCreatingStripeToken: true })
       const stripeBillingAddress = this.getStripeBillingAddress()
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const cardNumberElement = this.props.elements.getElement(
         CardNumberElement
       )!
@@ -167,7 +168,7 @@ export class CreditCardPicker extends React.Component<
     const creditCardOrError = (
       await this.createCreditCard({
         input: {
-          token: stripeResult?.token?.id!,
+          token: stripeResult.token.id,
           oneTimeUse: !saveNewCreditCard,
         },
       })
@@ -192,7 +193,7 @@ export class CreditCardPicker extends React.Component<
     } else
       return {
         type: "success",
-        creditCardId: creditCardOrError?.creditCard?.internalID!,
+        creditCardId: creditCardOrError?.creditCard?.internalID as string,
       }
   }
 
@@ -458,11 +459,9 @@ export class CreditCardPicker extends React.Component<
 // Our mess of HOC wrappers is not amenable to ref forwarding, so to expose a
 // ref to the CreditCardPicker instance (for getCreditCardId) we'll add an
 // `innerRef` prop which gets sneakily injected here
-const CreditCardPickerWithInnerRef: React.FC<
-  CreditCardPickerProps & {
-    innerRef: React.RefObject<CreditCardPicker>
-  }
-> = ({ innerRef, ...props }) => (
+const CreditCardPickerWithInnerRef: React.FC<React.PropsWithChildren<CreditCardPickerProps & {
+  innerRef: React.RefObject<CreditCardPicker>
+}>> = ({ innerRef, ...props }) => (
   <SystemContextConsumer>
     {({ isEigen }) => {
       return (

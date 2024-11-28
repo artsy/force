@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f83872ea65a184325ec722d6568632c2>>
+ * @generated SignedSource<<f0d2d0af6c29af426273acd2fa193cef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkActions_artwork$data = {
   readonly downloadableImageUrl: string | null | undefined;

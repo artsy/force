@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3a0e91fb11710de4e7ff919ad62756b5>>
+ * @generated SignedSource<<61d0333a3e04c9bb0b99e507f8521638>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type CommerceSetPaymentInput = {

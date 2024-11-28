@@ -8,7 +8,7 @@ interface ArticleSectionImageCollectionCaptionProps {
   figure: ArticleSectionImageCollectionCaption_figure$data
 }
 
-const ArticleSectionImageCollectionCaption: FC<ArticleSectionImageCollectionCaptionProps> = ({
+const ArticleSectionImageCollectionCaption: FC<React.PropsWithChildren<ArticleSectionImageCollectionCaptionProps>> = ({
   figure,
 }) => {
   if (figure.__typename === "Artwork") {

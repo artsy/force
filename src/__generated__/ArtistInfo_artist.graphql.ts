@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3aae22058e9859200b01c2081853f36b>>
+ * @generated SignedSource<<1a56efe9512a6510c19e141294babb94>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistInfo_artist$data = {
   readonly auctionResultsConnection: {

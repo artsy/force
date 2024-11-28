@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd06491c330e4ee044f8540eed93a152>>
+ * @generated SignedSource<<28eec211cc96504eccd5be0ec24e80c4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type markAllNotificationsAsReadMutation$variables = Record<PropertyKey, never>;
 export type markAllNotificationsAsReadMutation$data = {
   readonly markAllNotificationsAsRead: {

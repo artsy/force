@@ -3,7 +3,7 @@ import { AlertProvider } from "Components/Alert/AlertProvider"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { Formik } from "formik"
 import { createMockEnvironment } from "relay-test-utils"
 

@@ -28,7 +28,7 @@ interface SavesArtworksGridProps {
   sort: CollectionArtworkSorts
 }
 
-export const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
+export const SavesArtworksGrid: FC<React.PropsWithChildren<SavesArtworksGridProps>> = ({
   id,
   onClearFilters,
   onPage,
@@ -120,7 +120,7 @@ const QUERY = graphql`
   }
 `
 
-export const SavesArtworksGridPlaceholder: FC = () => {
+export const SavesArtworksGridPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Stack gap={4}>
       <ArtworkGridPlaceholder amount={30} columnCount={[2, 3, 4]} />
@@ -134,7 +134,7 @@ interface SavesArtworksGridEmptyStateProps {
   onClearFilters: () => void
 }
 
-export const SavesArtworksGridEmptyState: FC<SavesArtworksGridEmptyStateProps> = ({
+export const SavesArtworksGridEmptyState: FC<React.PropsWithChildren<SavesArtworksGridEmptyStateProps>> = ({
   onClearFilters,
 }) => {
   return (

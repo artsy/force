@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ConversationDetails } from "Apps/Conversations/components/Details/ConversationDetails"
 import { ConversationDetailsTestQuery } from "__generated__/ConversationDetailsTestQuery.graphql"
 import { useTracking } from "react-tracking"

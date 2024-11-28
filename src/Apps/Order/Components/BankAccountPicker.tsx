@@ -27,7 +27,7 @@ interface Props {
   onError: (error: Error | StripeError) => void
 }
 
-export const BankAccountPicker: FC<Props> = props => {
+export const BankAccountPicker: FC<React.PropsWithChildren<Props>> = props => {
   const { me, order } = props
 
   const {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e7646f1a4314bea627ca5925fbffe8c1>>
+ * @generated SignedSource<<aa3898f19ae8132fc3f40c79ae1d6ec6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesRailQuery$variables = {
   id: string;

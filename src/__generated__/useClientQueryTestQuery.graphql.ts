@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<21b7a64f8a07552b1ed62ca5d535c88f>>
+ * @generated SignedSource<<1bdd62fd36300252a0e14494d417b6cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type useClientQueryTestQuery$variables = Record<PropertyKey, never>;
 export type useClientQueryTestQuery$data = {
   readonly artwork: {

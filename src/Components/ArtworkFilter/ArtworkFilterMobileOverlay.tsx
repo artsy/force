@@ -10,7 +10,7 @@ interface ArtworkFilterMobileOverlayProps {
   onClose: () => void
 }
 
-export const ArtworkFilterMobileOverlay: React.FC<ArtworkFilterMobileOverlayProps> = ({
+export const ArtworkFilterMobileOverlay: React.FC<React.PropsWithChildren<ArtworkFilterMobileOverlayProps>> = ({
   children,
   onClose,
 }) => {

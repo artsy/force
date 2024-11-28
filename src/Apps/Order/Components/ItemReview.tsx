@@ -16,7 +16,7 @@ const dimensionsDisplay = dimensions => (
   </Text>
 )
 
-export const ItemReview: React.FC<ItemReviewProps> = ({
+export const ItemReview: React.FC<React.PropsWithChildren<ItemReviewProps>> = ({
   lineItem: { artwork, artworkVersion, editionSetId },
   orderSource,
 }) => {

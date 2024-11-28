@@ -22,7 +22,7 @@ interface HomeWorksByArtistsYouFollowRailProps {
   homePage: HomeWorksByArtistsYouFollowRail_homePage$data
 }
 
-const HomeWorksByArtistsYouFollowRail: React.FC<HomeWorksByArtistsYouFollowRailProps> = ({
+const HomeWorksByArtistsYouFollowRail: React.FC<React.PropsWithChildren<HomeWorksByArtistsYouFollowRailProps>> = ({
   homePage,
 }) => {
   const { trackEvent } = useTracking()
@@ -106,7 +106,7 @@ export const HomeWorksByArtistsYouFollowRailFragmentContainer = createFragmentCo
   }
 )
 
-export const HomeWorksByArtistsYouFollowRailQueryRenderer: React.FC = () => {
+export const HomeWorksByArtistsYouFollowRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

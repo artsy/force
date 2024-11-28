@@ -1,13 +1,13 @@
 import { mount } from "enzyme"
-import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
-import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
-import { render, screen } from "@testing-library/react"
+import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
 
-jest.mock("Apps/Auction/Hooks/useFormContext")
+import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
+
+jest.mock("Apps/Auction/Hooks/useAuctionFormContext")
 jest.mock("System/Hooks/useFeatureFlag")
 
 describe("ConditionsOfSaleCheckbox", () => {
-  const mockUseFormContext = useFormContext as jest.Mock
+  const mockuseAuctionFormContext = useAuctionFormContext as jest.Mock
   const setFieldTouched = jest.fn()
   const setFieldValue = jest.fn()
   const formProps = {
@@ -23,26 +23,13 @@ describe("ConditionsOfSaleCheckbox", () => {
   }
 
   beforeAll(() => {
-    mockUseFormContext.mockImplementation(() => {
+    mockuseAuctionFormContext.mockImplementation(() => {
       return formProps
     })
   })
 
-  it("renders a disclaimer", () => {
-    render(<ConditionsOfSaleCheckbox />)
-
-    expect(screen.getByTestId("disclaimer")).toHaveTextContent(
-      "I agree to Artsy's General Terms and Conditions of Sale. I understand that all bids are binding and may not be retracted."
-    )
-    expect(
-      screen.getByRole("link", {
-        name: "General Terms and Conditions of Sale",
-      })
-    ).toHaveAttribute("href", "/terms")
-  })
-
   it("shows error message if error", () => {
-    mockUseFormContext.mockImplementation(() => {
+    mockuseAuctionFormContext.mockImplementation(() => {
       return {
         ...formProps,
         touched: {

@@ -52,7 +52,7 @@ export const auctionRoutes: RouteProps[] = [
     path: "/auction/:slug?",
     getComponent: () => AuctionApp,
     serverCacheTTL: serverCacheTTLs.auction,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       AuctionApp.preload()
     },
     query: graphql`

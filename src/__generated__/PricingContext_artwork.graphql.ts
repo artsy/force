@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<28f615fa5892514fd120bdabfc057b2f>>
+ * @generated SignedSource<<4a5aa1db7201b98e2782bd8f40396673>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type AnalyticsPricingContextCategoryEnum = "ARCHITECTURE" | "BOOKS_AND_PORTFOLIOS" | "DESIGN_DECORATIVE_ART" | "DRAWING_COLLAGE_OTHER_WORK_ON_PAPER" | "FASHION" | "INSTALLATION" | "JEWELRY" | "MIXED_MEDIA" | "OTHER" | "PAINTING" | "PERFORMANCE" | "PHOTOGRAPHY" | "POSTERS" | "PRINT" | "SCULPTURE" | "SOUND" | "TEXTILE" | "VIDEO_FILM_ANIMATION" | "WORK_ON_PAPER" | "%future added value";
 export type AnalyticsPricingContextDimensionEnum = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
@@ -130,7 +130,13 @@ return {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "shallow",
+          "value": true
+        }
+      ],
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artists",
@@ -144,7 +150,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "artists(shallow:true)"
     },
     (v1/*: any*/),
     {
@@ -236,6 +242,6 @@ return {
 };
 })();
 
-(node as any).hash = "5bed9e56daed01d03014005a648b39f3";
+(node as any).hash = "2e36c7d37666ca7d5421ffdb991a7083";
 
 export default node;

@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { Collapse } from "Apps/Order/Components/Collapse"
 
 describe("Collapse", () => {

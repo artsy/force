@@ -26,7 +26,7 @@ interface ConfirmPasswordModalProps {
   title?: string
 }
 
-export const ConfirmPasswordModal: FC<ConfirmPasswordModalProps> = ({
+export const ConfirmPasswordModal: FC<React.PropsWithChildren<ConfirmPasswordModalProps>> = ({
   buttonText,
   onCancel,
   onConfirm,

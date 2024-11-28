@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<11f83503c189e76b7331f9d757b2c38c>>
+ * @generated SignedSource<<e45d958490b6045db202ef6d37cc519f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceCreateOrderWithArtworkInput = {
   artworkId: string;

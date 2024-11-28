@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5e4c831a5c453ff6798d1a2af1a925cd>>
+ * @generated SignedSource<<19234326078323a4c537b10ef6e6238b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type BankAccountPicker_order$data = {

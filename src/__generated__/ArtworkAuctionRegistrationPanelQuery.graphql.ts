@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<955c6b38da8cf3ae8536d89193a626e9>>
+ * @generated SignedSource<<c47954374c81acde06df892c0a130920>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkAuctionRegistrationPanelQuery$variables = Record<PropertyKey, never>;
 export type ArtworkAuctionRegistrationPanelQuery$data = {

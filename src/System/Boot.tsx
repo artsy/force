@@ -1,7 +1,6 @@
 import { Theme, injectGlobalStyles, ToastsProvider } from "@artsy/palette"
 import { RouteProps } from "System/Router/Route"
 import { FC, useEffect } from "react"
-import * as React from "react"
 import { HeadProvider } from "react-head"
 import { Environment, RelayEnvironmentProvider } from "react-relay"
 import Events from "Utils/Events"
@@ -24,8 +23,7 @@ import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { StyleSheetManager } from "styled-components"
 import isPropValid from "@emotion/is-prop-valid"
 
-export interface BootProps {
-  children: React.ReactNode
+export interface BootProps extends React.PropsWithChildren {
   context: ClientContext
   headTags?: JSX.Element[]
   onlyMatchMediaQueries?: MatchingMediaQueries
@@ -36,7 +34,9 @@ export interface BootProps {
 
 const { GlobalStyles } = injectGlobalStyles()
 
-export const Boot = track(undefined, {
+export const Boot: React.FC<React.PropsWithChildren<
+  React.PropsWithChildren<BootProps>
+>> = track(undefined, {
   dispatch: Events.postEvent,
 })((props: BootProps) => {
   /**
@@ -80,7 +80,6 @@ export const Boot = track(undefined, {
                           >
                             <CookieConsentManager>
                               <SiftContainer />
-
                               {children}
                             </CookieConsentManager>
                           </DismissibleProvider>
@@ -98,10 +97,9 @@ export const Boot = track(undefined, {
   )
 })
 
-const EnvironmentProvider: FC<{ environment: Environment }> = ({
-  children,
-  environment,
-}) => {
+const EnvironmentProvider: FC<React.PropsWithChildren<{
+  environment: Environment
+}>> = ({ children, environment }) => {
   if (process.env.NODE_ENV === "test") return <>{children}</>
 
   return (
@@ -111,7 +109,7 @@ const EnvironmentProvider: FC<{ environment: Environment }> = ({
   )
 }
 
-const ThemeProvider: FC = ({ children }) => {
+const ThemeProvider: FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const { preferences } = useAppPreferences()
 
   return (

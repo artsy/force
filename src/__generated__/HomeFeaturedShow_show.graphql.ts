@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ce0fdea759566dd09344e5d8fe30e70d>>
+ * @generated SignedSource<<c5c336515cf640b46357f6c7009c9f27>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HomeFeaturedShow_show$data = {
   readonly internalID: string;

@@ -11,8 +11,10 @@ interface AvailabilityFilterProps {
   expanded?: boolean
 }
 
-export const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({ expanded }) => {
-  const { setFilter } = useArtworkFilterContext()
+export const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({
+  expanded,
+}) => {
+  const { unsetFilter, setFilter } = useArtworkFilterContext()
   const currentSelectedFilters = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
@@ -22,11 +24,19 @@ export const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({ expanded
 
   const isSelected = currentSelectedFilters?.forSale
 
+  const handleOnSelect = (selected: boolean) => {
+    if (selected) {
+      setFilter("forSale", true)
+    } else {
+      unsetFilter("forSale")
+    }
+  }
+
   return (
     <FilterExpandable label={label} expanded={isSelected || expanded}>
       <Checkbox
         selected={!!currentSelectedFilters?.forSale}
-        onSelect={selected => setFilter("forSale", selected)}
+        onSelect={handleOnSelect}
         my={1}
       >
         Only works for sale

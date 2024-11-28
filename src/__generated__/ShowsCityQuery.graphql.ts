@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8870d754986333666df5cb0d70b75fd4>>
+ * @generated SignedSource<<169451c7ad201ceca6d1db8f5ad96308>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsCityQuery$variables = {
   after?: string | null | undefined;

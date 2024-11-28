@@ -15,7 +15,7 @@ export const categoriesRoutes: RouteProps[] = [
     path: "/categories",
     serverCacheTTL: serverCacheTTLs.categories,
     getComponent: () => CategoriesApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       CategoriesApp.preload()
     },
     query: graphql`

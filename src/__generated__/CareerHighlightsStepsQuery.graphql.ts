@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b0e14f77e9a1943d49221332572ea033>>
+ * @generated SignedSource<<5162325d84771146366aa3b0e656367d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CareerHighlightsStepsQuery$variables = Record<PropertyKey, never>;
 export type CareerHighlightsStepsQuery$data = {

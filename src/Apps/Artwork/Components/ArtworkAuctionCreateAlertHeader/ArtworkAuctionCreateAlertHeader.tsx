@@ -1,5 +1,4 @@
 import { Box, Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
-import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
 import { useTimer } from "Utils/Hooks/useTimer"
@@ -26,7 +25,7 @@ interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
 }
 
-const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> = ({
+const ArtworkAuctionCreateAlertHeader: FC<React.PropsWithChildren<ArtworkAuctionCreateAlertHeaderProps>> = ({
   artwork,
 }) => {
   const biddingEndAt =
@@ -172,7 +171,7 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
         isInAuction
         artistNames
         internalID
-        artists {
+        artists(shallow: true) {
           internalID
           name
           slug

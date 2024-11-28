@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ec1f8d566cdc5c46567f63bcccb3fd00>>
+ * @generated SignedSource<<36163790ad51070aea18147229082c91>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionActiveBidsRefetchQuery$variables = {
   saleID: string;

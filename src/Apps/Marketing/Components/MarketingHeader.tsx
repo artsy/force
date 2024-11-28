@@ -19,7 +19,7 @@ interface MarketingHeaderProps {
   accentColor: string
 }
 
-export const MarketingHeader: FC<MarketingHeaderProps> = ({
+export const MarketingHeader: FC<React.PropsWithChildren<MarketingHeaderProps>> = ({
   title,
   subtitle,
   src,

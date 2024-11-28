@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ac09a48c56e541516874f231377be318>>
+ * @generated SignedSource<<c19fde77c2135cf25c037cc05473a2ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyBidsBidItem_saleArtwork$data = {
   readonly artwork: {

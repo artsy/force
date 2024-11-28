@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<16fb78736c9f22e819f42db8777b3175>>
+ * @generated SignedSource<<0b82a6345946a4990c940eced4f0ef95>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type LengthUnitPreference = "CM" | "IN" | "%future added value";
 export type fetchUserPreferencesQuery$variables = Record<PropertyKey, never>;
 export type fetchUserPreferencesQuery$data = {

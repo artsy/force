@@ -26,6 +26,7 @@ export const debugRoutes: RouteProps[] = [
     children: [
       {
         path: "baseline",
+        // layout: "LogoOnly",
         Component: DebugApp,
       },
       // TODO: Remove this route once new AuthDialog is deployed

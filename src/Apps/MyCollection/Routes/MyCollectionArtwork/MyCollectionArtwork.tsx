@@ -22,7 +22,7 @@ interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork$data
 }
 
-const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
+const MyCollectionArtwork: React.FC<React.PropsWithChildren<MyCollectionArtworkProps>> = ({
   artwork,
 }) => {
   const enablePostApprovalSubmissionFlow = useFeatureFlag(
@@ -169,7 +169,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
           internalID
         }
         submissionId
-        artist {
+        artist(shallow: true) {
           slug
           targetSupply {
             priority

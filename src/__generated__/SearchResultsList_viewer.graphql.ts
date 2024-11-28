@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<14c762de2da01af9985fd9d403e379f1>>
+ * @generated SignedSource<<670212337c6efe4898e1e0c116304585>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchResultsList_viewer$data = {
   readonly searchConnection: {

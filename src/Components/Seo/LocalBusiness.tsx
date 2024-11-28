@@ -73,7 +73,7 @@ interface LocalBusinessProps {
   partnerName
 }
 
-export const LocalBusiness: React.FC<LocalBusinessProps> = props => {
+export const LocalBusiness: React.FC<React.PropsWithChildren<LocalBusinessProps>> = props => {
   const { partnerLocation, partnerName } = props
 
   const schemaData: LocalBusinessSchemaData = {

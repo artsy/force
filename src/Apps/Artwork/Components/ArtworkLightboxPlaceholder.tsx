@@ -16,7 +16,7 @@ interface ArtworkLightboxPlaceholderProps {
  * quality images are larger and so load slower, but the 1px difference means this
  * counts as the LCP. Despite the 1px difference it's shrunk to occupy the same size.
  */
-export const ArtworkLightboxPlaceholder: React.FC<ArtworkLightboxPlaceholderProps> = ({
+export const ArtworkLightboxPlaceholder: React.FC<React.PropsWithChildren<ArtworkLightboxPlaceholderProps>> = ({
   src,
   lazyLoad,
   preload,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b15ffec7613784972fd601aff573d2aa>>
+ * @generated SignedSource<<2844da54c90534ccf1474274e6223ad0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionActiveBids_me$data = {
   readonly internalID: string;

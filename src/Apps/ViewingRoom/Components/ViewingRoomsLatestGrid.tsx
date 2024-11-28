@@ -19,7 +19,7 @@ export interface ViewingRoomsLatestGridProps {
 
 export const PAGE_SIZE = 12
 
-export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = props => {
+export const ViewingRoomsLatestGrid: React.FC<React.PropsWithChildren<ViewingRoomsLatestGridProps>> = props => {
   const [loading, setLoading] = useState(false)
 
   const hasMore = props.relay.hasMore()

@@ -9,7 +9,7 @@ interface ArtworkSidebarDetailsProps {
   artwork: ArtworkSidebarDetails_artwork$data
 }
 
-const ArtworkSidebarDetails: React.FC<ArtworkSidebarDetailsProps> = ({
+const ArtworkSidebarDetails: React.FC<React.PropsWithChildren<ArtworkSidebarDetailsProps>> = ({
   artwork,
 }) => {
   const {

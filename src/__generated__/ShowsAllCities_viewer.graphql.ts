@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4202b5d23f59ad8db3b099b3eb8ddbc1>>
+ * @generated SignedSource<<a8aa25b01aa6370806cfdbcc0c664b3d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsAllCities_viewer$data = {
   readonly cities: ReadonlyArray<{

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f1977bb42dd14b829377e5aac0a2efb5>>
+ * @generated SignedSource<<51da6d53a2a24db861d41df7aed1ec79>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type ArtistTargetSupplyPriority = "FALSE" | "TRUE" | "%future added value";
 export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";

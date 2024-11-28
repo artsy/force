@@ -1,6 +1,5 @@
 import { useNetworkOfflineMonitor } from "Utils/Hooks/useNetworkOfflineMonitor"
 import { Match } from "found"
-import { isFunction } from "lodash"
 import { useEffect } from "react"
 import * as React from "react"
 import createLogger from "Utils/logger"
@@ -19,7 +18,9 @@ interface AppShellProps {
   match?: Match
 }
 
-export const AppShell: React.FC<AppShellProps> = props => {
+export const AppShell: React.FC<React.PropsWithChildren<
+  AppShellProps
+>> = props => {
   useSetupAuth()
 
   const { onboardingComponent } = useOnboardingModal()
@@ -33,13 +34,17 @@ export const AppShell: React.FC<AppShellProps> = props => {
   // typically to preload bundle-split components (import()) while the route is
   // fetching data in the background.
   useEffect(() => {
-    if (isFunction(routeConfig?.onClientSideRender) && match) {
-      try {
-        routeConfig?.onClientSideRender({ match })
-      } catch (error) {
-        logger.error(error)
+    try {
+      if (match) {
+        routeConfig?.onClientSideRender?.({ match })
       }
+
+      // Preload current route's JS bundle
+      routeConfig?.onPreloadJS?.()
+    } catch (error) {
+      logger.error(error)
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routeConfig])
 

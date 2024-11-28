@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7d0cc4c48261106285a4bcaa2380fa62>>
+ * @generated SignedSource<<ae5a504eb163ea9c99dc1d46a3d5dd7e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeprecatedSaveButtonTestQuery$variables = Record<PropertyKey, never>;
 export type DeprecatedSaveButtonTestQuery$data = {

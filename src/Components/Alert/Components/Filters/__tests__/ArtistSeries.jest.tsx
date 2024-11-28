@@ -1,7 +1,6 @@
-import { screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { screen, waitFor } from "@testing-library/react"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ArtistSeriesQueryRenderer } from "Components/Alert/Components/Filters/ArtistSeries"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { ArtistSeriesOptionsQuery$data } from "__generated__/ArtistSeriesOptionsQuery.graphql"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import userEvent from "@testing-library/user-event"
@@ -24,18 +23,21 @@ describe("ArtistSeries", () => {
       FilterArtworksConnection: () => mockArtistSeries.artworksConnection,
     })
 
-    await flushPromiseQueue()
+    await waitFor(() => {
+      expect(screen.getByText("Artist Series")).toBeInTheDocument()
 
-    expect(screen.getByText("Artist Series")).toBeInTheDocument()
-
-    // 1st through 8th options are displayed
-    expect(screen.getByText("Posters")).toBeInTheDocument()
-    expect(screen.getByText("A Bigger Book")).toBeInTheDocument()
+      // 1st through 8th options are displayed
+      expect(screen.getByText("Posters")).toBeInTheDocument()
+      expect(screen.getByText("A Bigger Book")).toBeInTheDocument()
+    })
 
     // 8th and later are truncated until "Show More" is clicked
     expect(screen.queryByText("iPad Drawings")).not.toBeInTheDocument()
     userEvent.click(screen.getByText("Show more"))
-    expect(screen.getByText("iPad Drawings")).toBeInTheDocument()
+
+    await waitFor(() => {
+      expect(screen.getByText("iPad Drawings")).toBeInTheDocument()
+    })
   })
 })
 

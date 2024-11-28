@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<08dab0ed5bb32d70783bef516c6b32c5>>
+ * @generated SignedSource<<5c0904e1549b5c0e880a6a52ea0716e5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkAuctionCreateAlertHeader_Test_Query$variables = Record<PropertyKey, never>;
 export type ArtworkAuctionCreateAlertHeader_Test_Query$data = {
@@ -148,7 +148,13 @@ return {
           },
           {
             "alias": null,
-            "args": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "shallow",
+                "value": true
+              }
+            ],
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artists",
@@ -159,7 +165,7 @@ return {
               (v1/*: any*/),
               (v4/*: any*/)
             ],
-            "storageKey": null
+            "storageKey": "artists(shallow:true)"
           },
           {
             "alias": null,
@@ -283,7 +289,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8325ea9e0655663de8b1b221516efe20",
+    "cacheID": "9cc63990bb37ca1c76ec946adaad1adf",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -368,7 +374,7 @@ return {
     },
     "name": "ArtworkAuctionCreateAlertHeader_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkAuctionCreateAlertHeader_Test_Query {\n  artwork(id: \"emily-ludwig-shaffer-untitled-3\") {\n    ...ArtworkAuctionCreateAlertHeader_artwork\n    id\n  }\n}\n\nfragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {\n  slug\n  internalID\n  title\n  isEligibleToCreateAlert\n  isInAuction\n  artistNames\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    extendedBiddingEndAt\n    endAt\n    endedAt\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n  myLotStandingManageAlerts: myLotStanding {\n    isHighestBidder\n  }\n}\n"
+    "text": "query ArtworkAuctionCreateAlertHeader_Test_Query {\n  artwork(id: \"emily-ludwig-shaffer-untitled-3\") {\n    ...ArtworkAuctionCreateAlertHeader_artwork\n    id\n  }\n}\n\nfragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {\n  slug\n  internalID\n  title\n  isEligibleToCreateAlert\n  isInAuction\n  artistNames\n  artists(shallow: true) {\n    internalID\n    name\n    slug\n    id\n  }\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    extendedBiddingEndAt\n    endAt\n    endedAt\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n  myLotStandingManageAlerts: myLotStanding {\n    isHighestBidder\n  }\n}\n"
   }
 };
 })();

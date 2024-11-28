@@ -159,12 +159,14 @@ export class PricingContext extends React.Component<PricingContextProps> {
                 label: {
                   title,
                   description: binValue + labelSuffix,
+                  noPadding: false,
                 },
                 onHover: this.barchartHover.bind(this),
                 highlightLabel: artworkFallsInThisBin
                   ? {
                       title,
                       description: "This work",
+                      noPadding: false,
                     }
                   : undefined,
               }
@@ -196,7 +198,7 @@ export const PricingContextFragmentContainer = createFragmentContainer(
             minor
           }
         }
-        artists {
+        artists(shallow: true) {
           slug
         }
         category
@@ -232,9 +234,9 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const PricingContextQueryRenderer: React.FC<{
+export const PricingContextQueryRenderer: React.FC<React.PropsWithChildren<{
   slug: string
-}> = ({ slug }) => {
+}>> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

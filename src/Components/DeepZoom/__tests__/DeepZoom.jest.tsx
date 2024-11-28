@@ -1,13 +1,14 @@
 import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { DeepZoomFragmentContainer } from "Components/DeepZoom/DeepZoom"
 import { DeepZoom_Test_Query } from "__generated__/DeepZoom_Test_Query.graphql"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
 const handleClose = jest.fn()
 
-const { getWrapper } = setupTestWrapper<DeepZoom_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<DeepZoom_Test_Query>({
   Component: ({ artwork }) => {
     const image = artwork!.images![0]!
 
@@ -29,20 +30,18 @@ describe("DeepZoom", () => {
     handleClose.mockReset()
   })
 
-  it("renders correctly", () => {
-    const { wrapper } = getWrapper()
+  it("renders correctly", async () => {
+    renderWithRelay()
 
-    expect(wrapper.html()).toContain(
-      'input min="0" max="1" step="0.001" type="range"'
-    )
+    expect(screen.getByRole("slider")).toBeInTheDocument()
   })
 
   it("calls onClose when the close button is clicked", () => {
-    const { wrapper } = getWrapper()
+    renderWithRelay()
 
     expect(handleClose).not.toBeCalled()
 
-    wrapper.find("button").first().simulate("click")
+    screen.getAllByRole("button")[0].click()
 
     expect(handleClose).toBeCalledTimes(1)
   })

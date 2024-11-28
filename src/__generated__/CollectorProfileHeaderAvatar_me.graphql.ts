@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<68717a16407d6ccfa51d09f140f654ea>>
+ * @generated SignedSource<<33653482a8e5c71dec49ff31f110dcf6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileHeaderAvatar_me$data = {
   readonly icon: {

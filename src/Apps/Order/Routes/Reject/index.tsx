@@ -26,7 +26,7 @@ interface RejectProps {
   isCommittingMutation: boolean
 }
 
-export const Reject: FC<RejectProps> = ({
+export const Reject: FC<React.PropsWithChildren<RejectProps>> = ({
   order,
   router,
   dialog,

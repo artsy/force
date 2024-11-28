@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b183be8117d6a66c0a30548693344c13>>
+ * @generated SignedSource<<26b0a64625362f2ad545e04b6e204d18>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type OnboardingOrderedSet_orderedSet$data = {
   readonly orderedItemsConnection: {

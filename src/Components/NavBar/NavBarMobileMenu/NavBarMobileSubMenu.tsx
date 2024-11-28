@@ -17,7 +17,7 @@ interface NavBarMobileSubMenuProps {
   menu: MenuData
 }
 
-export const NavBarMobileSubMenu: React.FC<NavBarMobileSubMenuProps> = ({
+export const NavBarMobileSubMenu: React.FC<React.PropsWithChildren<NavBarMobileSubMenuProps>> = ({
   children,
   menu,
 }) => {
@@ -69,7 +69,7 @@ interface NavBarMobileSubMenuPanelProps {
   showBacknav?: boolean
 }
 
-const NavBarMobileSubMenuPanel: React.FC<NavBarMobileSubMenuPanelProps> = ({
+const NavBarMobileSubMenuPanel: React.FC<React.PropsWithChildren<NavBarMobileSubMenuPanelProps>> = ({
   isOpen,
   title,
   links,
@@ -120,7 +120,7 @@ const NavBarMobileSubMenuPanel: React.FC<NavBarMobileSubMenuPanelProps> = ({
   )
 }
 
-export const NavBarMobileSubMenuBack: React.FC = () => {
+export const NavBarMobileSubMenuBack: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { trackEvent } = useTracking()
   const { pop } = useNavBarMobileMenuNavigation()
   const contextModule = useTrackingContextModule()
@@ -159,7 +159,7 @@ interface NavBarMobileSubMenuItemProps {
   link: LinkData
 }
 
-export const NavBarMobileSubMenuItem: React.FC<NavBarMobileSubMenuItemProps> = ({
+export const NavBarMobileSubMenuItem: React.FC<React.PropsWithChildren<NavBarMobileSubMenuItemProps>> = ({
   link,
 }) => {
   const { trackEvent } = useTracking()

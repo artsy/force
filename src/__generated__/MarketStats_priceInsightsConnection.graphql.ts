@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7e653773362bf21baeff99ec66f221f6>>
+ * @generated SignedSource<<d7857d287e3883e7b5a0c3e210ac5f16>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MarketStats_priceInsightsConnection$data = {
   readonly edges: ReadonlyArray<{

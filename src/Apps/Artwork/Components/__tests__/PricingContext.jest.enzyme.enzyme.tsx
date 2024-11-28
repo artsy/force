@@ -219,6 +219,7 @@ describe("PricingContext", () => {
     expect(wrapper.find(BarChart).props().bars[0].label).toMatchInlineSnapshot(`
       {
         "description": "1 work",
+        "noPadding": false,
         "title": "$0–$247",
       }
     `)
@@ -263,6 +264,7 @@ describe("PricingContext", () => {
     expect(wrapper.find(BarChart).props().bars[1].label).toMatchInlineSnapshot(`
       {
         "description": "1 work",
+        "noPadding": false,
         "title": "$247+",
       }
     `)

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ed0e0e21e2cec4b12e11088f2090cebc>>
+ * @generated SignedSource<<3b1f4d2be569afc43cb3922ad2ac1dea>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistEditorialNewsGrid_artist$data = {
   readonly articlesConnection: {

@@ -11,9 +11,10 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useRefreshUserData } from "Apps/Auction/Queries/useRefreshUserData"
 
-jest.mock("Components/Address/AddressForm", () => ({
-  toStripeAddress: jest.fn(),
-}))
+jest.mock("Components/Address/utils", () => {
+  const actual = jest.requireActual("Components/Address/utils")
+  return { ...actual, toStripeAddress: jest.fn() }
+})
 
 jest.mock("Apps/Auction/Queries/useRefreshUserData")
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")
@@ -39,6 +40,7 @@ describe("useCreateTokenAndSubmit", () => {
 
   const values = {
     phoneNumber: "+1 (123) 456-7890",
+    address: {},
   }
 
   const helpers = {
@@ -252,6 +254,7 @@ describe("useCreateTokenAndSubmit", () => {
   it("sets submitting to false at the very end", async () => {
     await setupHook()
     await flushPromiseQueue()
+
     expect(helpers.setSubmitting).toHaveBeenCalledWith(false)
   })
 })

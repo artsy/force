@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b47363bab0c763c3772607cb9672da58>>
+ * @generated SignedSource<<d8478bfbb1105706f93a614619e50978>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type ArtistTargetSupplyPriority = "FALSE" | "TRUE" | "%future added value";
 export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
@@ -120,7 +120,13 @@ return {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "shallow",
+          "value": true
+        }
+      ],
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artist",
@@ -167,7 +173,7 @@ return {
           "name": "MyCollectionArtworkAuctionResults_artist"
         }
       ],
-      "storageKey": null
+      "storageKey": "artist(shallow:true)"
     },
     {
       "alias": null,
@@ -226,6 +232,6 @@ return {
 };
 })();
 
-(node as any).hash = "a4908e94f350de80bde3f41cd9b3948c";
+(node as any).hash = "f2ef25fdcf0853e04e000e85e0721901";
 
 export default node;

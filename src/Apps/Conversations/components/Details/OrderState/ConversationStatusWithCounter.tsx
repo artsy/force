@@ -10,7 +10,7 @@ interface ConversationStatusWithCounterProps {
   status: "offer" | "buy" | "buyerCounteroffer" | "sellerCounteroffer"
 }
 
-export const ConversationStatusWithCounter: React.FC<ConversationStatusWithCounterProps> = ({
+export const ConversationStatusWithCounter: React.FC<React.PropsWithChildren<ConversationStatusWithCounterProps>> = ({
   order,
   status,
 }) => {

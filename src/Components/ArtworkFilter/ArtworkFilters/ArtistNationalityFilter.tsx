@@ -1,12 +1,12 @@
 import React from "react"
-import { SelectedFiltersCountsLabels } from "../ArtworkFilterContext"
+import { SelectedFiltersCountsLabels } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ResultsFilter } from "./ResultsFilter"
 
 export interface ArtistNationalityFilterProps {
   expanded?: boolean
 }
 
-export const ArtistNationalityFilter: React.FC<ArtistNationalityFilterProps> = ({
+export const ArtistNationalityFilter: React.FC<React.PropsWithChildren<ArtistNationalityFilterProps>> = ({
   expanded,
 }) => {
   return (

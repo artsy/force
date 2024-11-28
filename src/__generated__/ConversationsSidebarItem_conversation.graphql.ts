@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6fc120e7dbd8b8459437e2689827b9db>>
+ * @generated SignedSource<<e9c5f92e078080345fcb8d0336c932b1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,17 +8,9 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationsSidebarItem_conversation$data = {
-  readonly from: {
-    readonly name: string;
-  };
-  readonly fromUser: {
-    readonly collectorProfile: {
-      readonly confirmedBuyerAt: string | null | undefined;
-    } | null | undefined;
-  } | null | undefined;
   readonly internalID: string | null | undefined;
   readonly items: ReadonlyArray<{
     readonly item: {
@@ -65,10 +57,7 @@ var v0 = {
   "name": "name",
   "storageKey": null
 },
-v1 = [
-  (v0/*: any*/)
-],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -91,50 +80,13 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "ConversationInitiator",
-      "kind": "LinkedField",
-      "name": "from",
-      "plural": false,
-      "selections": (v1/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "User",
-      "kind": "LinkedField",
-      "name": "fromUser",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "CollectorProfileType",
-          "kind": "LinkedField",
-          "name": "collectorProfile",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "confirmedBuyerAt",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": "ConversationResponder",
       "kind": "LinkedField",
       "name": "to",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": [
+        (v0/*: any*/)
+      ],
       "storageKey": null
     },
     {
@@ -191,7 +143,7 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v2/*: any*/)
+                (v1/*: any*/)
               ],
               "storageKey": null
             }
@@ -219,7 +171,7 @@ return {
             "name": "item",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
+              (v1/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -239,8 +191,7 @@ return {
                       "name": "title",
                       "storageKey": null
                     },
-                    "action": "NONE",
-                    "path": "items.item.title"
+                    "action": "NONE"
                   },
                   {
                     "alias": null,
@@ -269,14 +220,12 @@ return {
                         {
                           "kind": "RequiredField",
                           "field": (v0/*: any*/),
-                          "action": "NONE",
-                          "path": "items.item.artist.name"
+                          "action": "NONE"
                         }
                       ],
                       "storageKey": null
                     },
-                    "action": "NONE",
-                    "path": "items.item.artist"
+                    "action": "NONE"
                   },
                   {
                     "kind": "RequiredField",
@@ -306,14 +255,12 @@ return {
                             "name": "url",
                             "storageKey": "url(version:[\"small\",\"square\"])"
                           },
-                          "action": "NONE",
-                          "path": "items.item.image.url"
+                          "action": "NONE"
                         }
                       ],
                       "storageKey": null
                     },
-                    "action": "NONE",
-                    "path": "items.item.image"
+                    "action": "NONE"
                   }
                 ],
                 "type": "Artwork",
@@ -322,8 +269,7 @@ return {
             ],
             "storageKey": null
           },
-          "action": "NONE",
-          "path": "items.item"
+          "action": "NONE"
         }
       ],
       "storageKey": null
@@ -334,6 +280,6 @@ return {
 };
 })();
 
-(node as any).hash = "b76da419554ef825d77d83bbb8b4d92f";
+(node as any).hash = "ab5ad7b876566aa73e0834e682f1529d";
 
 export default node;

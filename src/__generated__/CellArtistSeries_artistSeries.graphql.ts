@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<32241b4a0c075cb79106e7c5fd64515c>>
+ * @generated SignedSource<<f284a04aa1df57407bf72c1ad6fce3a4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CellArtistSeries_artistSeries$data = {
   readonly artworksCountMessage: string | null | undefined;

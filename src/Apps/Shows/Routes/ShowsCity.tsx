@@ -36,7 +36,7 @@ type Shows = {
 
 const CURRENT_SHOWS_JUMP_ID = "CurrentShows"
 
-export const ShowsCity: React.FC<ShowsCityProps> = ({
+export const ShowsCity: React.FC<React.PropsWithChildren<ShowsCityProps>> = ({
   viewer,
   city,
   relay,

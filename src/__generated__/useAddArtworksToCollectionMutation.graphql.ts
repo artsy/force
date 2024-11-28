@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b27fa7e7822e506ad0a023285eef68bc>>
+ * @generated SignedSource<<e764406e689974b0de63dcc96be54499>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworksCollectionsBatchUpdateInput = {
   addToCollectionIDs?: ReadonlyArray<string> | null | undefined;

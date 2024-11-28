@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<14e768d3b45442a0c2fa7ded743ca0c4>>
+ * @generated SignedSource<<f3ca4c9050fc96145f8fd9e282039dc0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FeatureHeaderDefault_feature$data = {
   readonly defaultImage: {

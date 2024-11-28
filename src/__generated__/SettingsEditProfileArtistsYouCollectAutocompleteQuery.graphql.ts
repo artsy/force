@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2cb50f720b5aa0a23866edc6999833cf>>
+ * @generated SignedSource<<1d8b0de6dbc5eb0ec1845210f3b65801>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type SettingsEditProfileArtistsYouCollectAutocompleteQuery$variables = {
   term: string;
 };

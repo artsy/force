@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<27183ccfb6813aad1bff5c360d099822>>
+ * @generated SignedSource<<b21198158d0f3ae2d0e2cbd1a6f6d8d5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HomeApp_featuredEventsOrderedSet$data = {
   readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedEventsRail_orderedSet">;

@@ -15,7 +15,7 @@ export interface PartnerArtistsCarouselProps {
   partner: PartnerArtistsCarousel_partner$data
 }
 
-export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
+export const PartnerArtistsCarousel: React.FC<React.PropsWithChildren<PartnerArtistsCarouselProps>> = ({
   partner,
 }) => {
   if (
@@ -63,9 +63,9 @@ export const PartnerArtistsCarouselFragmentContainer = createFragmentContainer(
   }
 )
 
-export const PartnerArtistsCarouselRenderer: React.FC<{
+export const PartnerArtistsCarouselRenderer: React.FC<React.PropsWithChildren<{
   partnerId: string
-}> = ({ partnerId, ...rest }) => {
+}>> = ({ partnerId, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

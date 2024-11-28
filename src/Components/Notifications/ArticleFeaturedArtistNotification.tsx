@@ -21,7 +21,7 @@ interface ArticleFeaturedArtistNotificationProps {
   notification: ArticleFeaturedArtistNotification_notification$key
 }
 
-export const ArticleFeaturedArtistNotification: FC<ArticleFeaturedArtistNotificationProps> = ({
+export const ArticleFeaturedArtistNotification: FC<React.PropsWithChildren<ArticleFeaturedArtistNotificationProps>> = ({
   notification,
 }) => {
   const notificationData = useFragment(

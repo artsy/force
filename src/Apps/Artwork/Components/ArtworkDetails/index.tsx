@@ -155,9 +155,9 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtworkDetailsQueryRenderer: React.FC<{
+export const ArtworkDetailsQueryRenderer: React.FC<React.PropsWithChildren<{
   slug: string
-}> = ({ slug }) => {
+}>> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

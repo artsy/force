@@ -1,4 +1,3 @@
-import React from "react"
 import {
   Box,
   FullBleed,
@@ -8,23 +7,23 @@ import {
   Text,
 } from "@artsy/palette"
 import { SearchApp_viewer$data } from "__generated__/SearchApp_viewer.graphql"
+import { AppContainer } from "Apps/Components/AppContainer"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "Apps/Search/Components/NavigationTabs"
 import { SearchMeta } from "Apps/Search/Components/SearchMeta"
 import { RecentlyViewed } from "Components/RecentlyViewed"
-import { createFragmentContainer, graphql } from "react-relay"
-import { ZeroState } from "./Components/ZeroState"
-import { useRouter } from "System/Hooks/useRouter"
 import { Sticky } from "Components/Sticky"
-import { AppContainer } from "Apps/Components/AppContainer"
+import React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useRouter } from "System/Hooks/useRouter"
+import { ZeroState } from "./Components/ZeroState"
 
 import { Jump } from "Utils/Hooks/useJump"
-import { usePrevious } from "@artsy/palette"
 
 export interface SearchAppProps {
   viewer: SearchApp_viewer$data
 }
 
-const TotalResults: React.FC<{ count: number; term: string }> = ({
+const TotalResults: React.FC<React.PropsWithChildren<{ count: number; term: string }>> = ({
   count,
   term,
 }) => {
@@ -42,7 +41,7 @@ const TotalResults: React.FC<{ count: number; term: string }> = ({
   )
 }
 
-export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
+export const SearchApp: React.FC<React.PropsWithChildren<SearchAppProps>> = ({ viewer, children }) => {
   const {
     match: { location },
   } = useRouter()
@@ -50,7 +49,7 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
   const { query } = location
   const { aggregations } = searchConnection ?? {}
 
-  const term = usePrevious(query.term ?? "")
+  const term = query.term
   const typeAggregation = aggregations?.find(agg => agg?.slice === "TYPE")
     ?.counts
 

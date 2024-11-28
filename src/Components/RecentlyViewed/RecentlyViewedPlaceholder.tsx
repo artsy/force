@@ -2,7 +2,7 @@ import * as React from "react"
 import { ShelfArtworkPlaceholder } from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail/Rail"
 
-export const RecentlyViewedPlaceholder: React.FC = () => {
+export const RecentlyViewedPlaceholder: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Rail
       title="Recently Viewed"

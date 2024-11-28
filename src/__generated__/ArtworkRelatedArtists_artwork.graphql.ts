@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e87b8927d86302648adb0b5de1960211>>
+ * @generated SignedSource<<93f14d32f460fe2d32cb159efe29c627>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkRelatedArtists_artwork$data = {
   readonly artist: {
@@ -73,7 +73,13 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "shallow",
+          "value": true
+        }
+      ],
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artist",
@@ -181,13 +187,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "artist(shallow:true)"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "58def2ad4d787dbc12f883e88be33351";
+(node as any).hash = "ae5a3f875701f629a5613031d9fdd2a7";
 
 export default node;

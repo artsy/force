@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ac0022e69524821cde37d60042a09aeb>>
+ * @generated SignedSource<<f7fdeef373358ed02d78e6129da7f5eb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceAddInitialOfferToOrderInput = {
   amountCents: number;

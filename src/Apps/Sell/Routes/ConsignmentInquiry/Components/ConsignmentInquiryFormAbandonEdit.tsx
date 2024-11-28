@@ -1,9 +1,9 @@
 import { Button, Flex, ModalDialog, Spacer, Text } from "@artsy/palette"
 import { useRouter } from "System/Hooks/useRouter"
 
-export const ConsignmentInquiryFormAbandonEditModal: React.FC<{
+export const ConsignmentInquiryFormAbandonEditModal: React.FC<React.PropsWithChildren<{
   onClose: () => void
-}> = ({ onClose }) => {
+}>> = ({ onClose }) => {
   const { router } = useRouter()
   return (
     <ModalDialog onClose={onClose} title="Leave without sending message?">

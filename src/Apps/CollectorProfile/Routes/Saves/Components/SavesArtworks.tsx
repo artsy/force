@@ -31,7 +31,9 @@ const DEFAULT_FILTERS: {
   priceMin: "*",
 }
 
-export const SavesArtworks: FC<SavesArtworksProps> = ({ id }) => {
+export const SavesArtworks: FC<React.PropsWithChildren<SavesArtworksProps>> = ({
+  id,
+}) => {
   const [state, setState] = useState<{
     page: number
     priceMin: CustomRangeSegment

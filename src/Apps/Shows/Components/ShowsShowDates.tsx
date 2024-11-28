@@ -9,7 +9,7 @@ interface ShowsShowDatesProps extends TextProps {
   show: ShowsShowDates_show$data
 }
 
-const ShowsShowDates: React.FC<ShowsShowDatesProps> = ({ show, ...rest }) => {
+const ShowsShowDates: React.FC<React.PropsWithChildren<ShowsShowDatesProps>> = ({ show, ...rest }) => {
   const { formattedTime, closesSoon, closesToday, hasEnded } = useEventTiming({
     currentTime: useCurrentTime(),
     startAt: show.startAt!,

@@ -26,7 +26,7 @@ interface ArtistsIndexProps {
   featuredGenes: ArtistsIndex_featuredGenes$data | null
 }
 
-export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
+export const ArtistsIndex: React.FC<React.PropsWithChildren<ArtistsIndexProps>> = ({
   featuredArtists,
   featuredGenes,
 }) => {
@@ -36,6 +36,8 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
   const headline = featuredArtistsSet?.name ?? "Artists"
   const artists = compact(featuredArtistsSet?.artists) ?? []
   const genes = compact(featuredGenesSet?.genes) ?? []
+
+  const isMobile = getENV("IS_MOBILE")
 
   return (
     <>
@@ -72,7 +74,7 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                     featuredLink={featuredLink}
                     index={index}
                     // Improves LCP for above the fold content
-                    lazyLoad={false}
+                    lazyLoad={isMobile ? true : false}
                   />
                 )
               })}
@@ -82,7 +84,7 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
 
         {genes.length > 0 && (
           <Join separator={<Spacer y={6} />}>
-            {genes.map((gene, i) => {
+            {genes.map((gene, geneIndex) => {
               if (
                 !gene ||
                 !gene.trendingArtists ||
@@ -92,7 +94,7 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
               }
 
               return (
-                <Box key={gene.name ?? i}>
+                <Box key={gene.name ?? geneIndex}>
                   <Box display="flex" justifyContent="space-between">
                     <RouterLink
                       to={gene.href}
@@ -123,15 +125,17 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                     {gene.trendingArtists.map((artist, artistsIndex) => {
                       if (!artist) return null
 
-                      const isMobile = getENV("IS_MOBILE")
-
                       return (
                         <Column key={artist.internalID} span={[12, 6, 3, 3]}>
                           <CellArtistFragmentContainer
                             mode="GRID"
                             artist={artist}
                             // LCP above the fold optimization for mobile
-                            lazyLoad={isMobile ? artistsIndex > 0 : true}
+                            lazyLoad={
+                              isMobile && geneIndex === 0 && artistsIndex === 0
+                                ? false
+                                : true
+                            }
                           />
                         </Column>
                       )

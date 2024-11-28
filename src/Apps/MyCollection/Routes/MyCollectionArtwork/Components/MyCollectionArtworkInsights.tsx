@@ -17,7 +17,7 @@ interface MyCollectionArtworkInsightsProps {
   artwork: MyCollectionArtworkInsights_artwork$key
 }
 
-export const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = ({
+export const MyCollectionArtworkInsights: React.FC<React.PropsWithChildren<MyCollectionArtworkInsightsProps>> = ({
   ...restProps
 }) => {
   const enablePostApprovalSubmissionFlow = useFeatureFlag(
@@ -112,7 +112,7 @@ const FRAGMENT = graphql`
     ...MyCollectionArtworkRequestPriceEstimate_artwork
     ...MyCollectionArtworkSWASectionSubmitted_submissionState
     ...MyCollectionArtworkSWASubmissionStatus_artwork
-    artist {
+    artist(shallow: true) {
       slug
       auctionResultsCount: auctionResultsConnection(first: 1) {
         totalCount

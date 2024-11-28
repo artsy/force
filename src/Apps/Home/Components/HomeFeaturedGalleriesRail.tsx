@@ -23,7 +23,7 @@ interface HomeFeaturedGalleriesRailProps {
   orderedSet: HomeFeaturedGalleriesRail_orderedSet$data
 }
 
-const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
+const HomeFeaturedGalleriesRail: React.FC<React.PropsWithChildren<HomeFeaturedGalleriesRailProps>> = ({
   orderedSet,
 }) => {
   const { trackEvent } = useTracking()
@@ -120,7 +120,7 @@ export const HomeFeaturedGalleriesRailFragmentContainer = createFragmentContaine
   }
 )
 
-export const HomeFeaturedGalleriesRailQueryRenderer: React.FC = () => {
+export const HomeFeaturedGalleriesRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

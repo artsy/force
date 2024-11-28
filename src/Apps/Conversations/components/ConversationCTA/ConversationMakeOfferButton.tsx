@@ -12,7 +12,7 @@ interface ConversationMakeOfferButtonProps extends BoxProps {
   conversation: useConversationPurchaseButtonData_conversation$key
 }
 
-export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonProps> = ({
+export const ConversationMakeOfferButton: React.FC<React.PropsWithChildren<ConversationMakeOfferButtonProps>> = ({
   conversation,
   ...boxProps
 }) => {

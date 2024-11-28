@@ -8,7 +8,7 @@ interface EventTimingProps extends TextProps {
   currentTime: string
 }
 
-export const EventTiming: React.FC<EventTimingProps> = ({
+export const EventTiming: React.FC<React.PropsWithChildren<EventTimingProps>> = ({
   currentTime,
   startAt,
   endAt,

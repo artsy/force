@@ -10,7 +10,7 @@ interface SplitLayoutProps {
   hideLogo?: boolean
 }
 
-export const SplitLayout: FC<SplitLayoutProps> = ({
+export const SplitLayout: FC<React.PropsWithChildren<SplitLayoutProps>> = ({
   left,
   right,
   leftProps = {},

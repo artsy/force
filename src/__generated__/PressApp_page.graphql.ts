@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c1a68c36101457f3de87a88d202dca20>>
+ * @generated SignedSource<<8807b808846f3a83db7a599bc3a10dec>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PressApp_page$data = {
   readonly content: string | null | undefined;

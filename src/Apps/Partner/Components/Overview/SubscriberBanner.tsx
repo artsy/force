@@ -8,7 +8,7 @@ export interface SubscriberBannerProps {
   partner: SubscriberBanner_partner$data
 }
 
-export const SubscriberBanner: React.FC<SubscriberBannerProps> = ({
+export const SubscriberBanner: React.FC<React.PropsWithChildren<SubscriberBannerProps>> = ({
   partner: { name },
 }) => {
   const title = `${name} does not have a full profile.`

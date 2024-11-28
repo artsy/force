@@ -55,8 +55,7 @@ describe("Two factor authentication enrollment", () => {
       expect(downloadButton.text()).toBe("Download")
     })
 
-    // FIXME: SWC_COMPILER_MIGRATION
-    it.skip("enables user to download the recovery codes", () => {
+    it("enables user to download the recovery codes", () => {
       global.URL.createObjectURL = jest.fn()
       global.URL.revokeObjectURL = jest.fn()
 

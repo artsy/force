@@ -1,5 +1,5 @@
 /* Address utilities for the old address form without improvements like state select */
-import { Address } from "Components/Address/AddressForm"
+import { Address } from "Components/Address/utils"
 import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
 import { screen, waitFor } from "@testing-library/react"
@@ -66,5 +66,5 @@ export const fillAddressForm = async (address: Address) => {
   userEvent.paste(city, address.city)
   userEvent.paste(region, address.region)
   userEvent.paste(postalCode, address.postalCode)
-  userEvent.paste(phoneNumber, address.phoneNumber!)
+  address.phoneNumber && userEvent.paste(phoneNumber, address.phoneNumber)
 }

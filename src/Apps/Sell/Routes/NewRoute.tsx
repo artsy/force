@@ -6,7 +6,7 @@ import { SellFlowContextProvider } from "Apps/Sell/SellFlowContext"
 import { EnableRecaptcha } from "Utils/EnableRecaptcha"
 import * as React from "react"
 
-export const NewRoute: React.FC = () => {
+export const NewRoute: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <FullBleed>
       <EnableRecaptcha />

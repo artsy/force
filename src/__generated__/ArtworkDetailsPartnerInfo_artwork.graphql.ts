@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<11ccc136653c44be1e150a0ed16400a7>>
+ * @generated SignedSource<<11ca99c2fd9dfdc1c0b1ab0abe575aaf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetailsPartnerInfo_artwork$data = {
   readonly partner: {

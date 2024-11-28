@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7a54c7deb80c7fac1b6b660d98921d1e>>
+ * @generated SignedSource<<917441daa44f6221a6e6d417da47735d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type invoiceRoutes_InvoiceQuery$variables = {
   token: string;

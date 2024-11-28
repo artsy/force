@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9f0ff567fa95700e4c4bfe72881a338f>>
+ * @generated SignedSource<<4e220d3743404609fb1bc63881499705>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityHeaderFair_fair$data = {
   readonly avatar: {

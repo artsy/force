@@ -16,7 +16,7 @@ interface ConfirmationStepFooterProps {
   onClose: () => void
 }
 
-export const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({
+export const ConfirmationStepFooter: FC<React.PropsWithChildren<ConfirmationStepFooterProps>> = ({
   artworksCount,
   me,
   onClose,
@@ -63,7 +63,7 @@ interface ConfirmationStepFooterQueryRendererProps {
   onClose: () => void
 }
 
-export const ConfirmationStepFooterQueryRenderer: FC<ConfirmationStepFooterQueryRendererProps> = props => {
+export const ConfirmationStepFooterQueryRenderer: FC<React.PropsWithChildren<ConfirmationStepFooterQueryRendererProps>> = props => {
   return (
     <SystemQueryRenderer<ConfirmationStepFooterQuery>
       placeholder={<ConfirmationStepFooterContentPlaceholder />}
@@ -98,7 +98,7 @@ export const ConfirmationStepFooterQueryRenderer: FC<ConfirmationStepFooterQuery
   )
 }
 
-export const ConfirmationStepFooterContentPlaceholder: FC = () => {
+export const ConfirmationStepFooterContentPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Flex flexDirection={["column", "row"]} gap={1}>
       <Button width="100%" disabled>

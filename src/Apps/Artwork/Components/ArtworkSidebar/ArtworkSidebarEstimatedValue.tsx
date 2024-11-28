@@ -7,7 +7,7 @@ interface ArtworkSidebarEstimatedValueProps {
   artwork: ArtworkSidebarEstimatedValue_artwork$data
 }
 
-const ArtworkSidebarEstimatedValue: React.FC<ArtworkSidebarEstimatedValueProps> = ({
+const ArtworkSidebarEstimatedValue: React.FC<React.PropsWithChildren<ArtworkSidebarEstimatedValueProps>> = ({
   artwork,
 }) => {
   const { saleArtwork, sale } = artwork

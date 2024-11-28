@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4fbd1e1dc419c43cfcd3b55f43ff9dee>>
+ * @generated SignedSource<<c88b99d57c1b3ba0594292afbee1efb2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SmsSecondFactor_me$data = {
   readonly email: string | null | undefined;

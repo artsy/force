@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bc2f4be184e924401503a052eb148628>>
+ * @generated SignedSource<<3183ea62ebf72553301876175d0a995f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type jobsRoutes_JobQuery$variables = {
   id: string;

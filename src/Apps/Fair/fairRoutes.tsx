@@ -45,7 +45,7 @@ export const fairRoutes: RouteProps[] = [
     path: "/fair/:slug?",
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => FairApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       FairApp.preload()
     },
     query: graphql`
@@ -59,7 +59,7 @@ export const fairRoutes: RouteProps[] = [
       {
         path: "",
         getComponent: () => FairOverviewRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           FairOverviewRoute.preload()
         },
         query: graphql`
@@ -73,7 +73,7 @@ export const fairRoutes: RouteProps[] = [
       {
         path: "exhibitors(.*)?",
         getComponent: () => FairExhibitorsRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           FairExhibitorsRoute.preload()
         },
         query: graphql`
@@ -94,7 +94,7 @@ export const fairRoutes: RouteProps[] = [
       {
         path: "artworks(.*)?",
         getComponent: () => FairArtworksRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           FairArtworksRoute.preload()
         },
       },
@@ -105,7 +105,7 @@ export const fairRoutes: RouteProps[] = [
   {
     path: "/fair/:slug",
     getComponent: () => FairSubApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       FairSubApp.preload()
     },
     query: graphql`
@@ -119,7 +119,7 @@ export const fairRoutes: RouteProps[] = [
       {
         path: "articles",
         getComponent: () => FairArticlesRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           FairArticlesRoute.preload()
         },
         query: graphql`

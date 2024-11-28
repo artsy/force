@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c33c4752c182c5ac7067646ba2933cce>>
+ * @generated SignedSource<<20deabea9b00ca266664640188f06320>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditProfileAboutYou_me$data = {
   readonly location: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3652d5e57f5d10eb05ef4b7e4122cd2f>>
+ * @generated SignedSource<<3efaaea38630243bb902f02db7aa60ee>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type artistsRoutes_ArtistsByLetterQuery$variables = {
   letter: string;

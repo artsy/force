@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<374a97a4a324c9959e7bdf7160022714>>
+ * @generated SignedSource<<cc5d0a892f1562e3987ba8c1be1caa5e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationsSidebarItemTestQuery$variables = Record<PropertyKey, never>;
 export type ConversationsSidebarItemTestQuery$data = {
@@ -117,47 +117,6 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "internalID",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "ConversationInitiator",
-            "kind": "LinkedField",
-            "name": "from",
-            "plural": false,
-            "selections": (v2/*: any*/),
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "User",
-            "kind": "LinkedField",
-            "name": "fromUser",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "CollectorProfileType",
-                "kind": "LinkedField",
-                "name": "collectorProfile",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "confirmedBuyerAt",
-                    "storageKey": null
-                  },
-                  (v1/*: any*/)
-                ],
-                "storageKey": null
-              },
-              (v1/*: any*/)
-            ],
             "storageKey": null
           },
           {
@@ -339,7 +298,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "277c46502bd3cb8a02b176c40e0a3376",
+    "cacheID": "30d2e9b0312a355ec1d8d819e0f44040",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -349,29 +308,6 @@ return {
           "plural": false,
           "type": "Conversation"
         },
-        "conversation.from": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "ConversationInitiator"
-        },
-        "conversation.from.id": (v4/*: any*/),
-        "conversation.from.name": (v5/*: any*/),
-        "conversation.fromUser": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "User"
-        },
-        "conversation.fromUser.collectorProfile": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CollectorProfileType"
-        },
-        "conversation.fromUser.collectorProfile.confirmedBuyerAt": (v6/*: any*/),
-        "conversation.fromUser.collectorProfile.id": (v4/*: any*/),
-        "conversation.fromUser.id": (v4/*: any*/),
         "conversation.id": (v4/*: any*/),
         "conversation.internalID": {
           "enumValues": null,
@@ -450,7 +386,7 @@ return {
     },
     "name": "ConversationsSidebarItemTestQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebarItemTestQuery {\n  conversation(id: \"conversation-id\") {\n    ...ConversationsSidebarItem_conversation\n    id\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ConversationsSidebarItemTestQuery {\n  conversation(id: \"conversation-id\") {\n    ...ConversationsSidebarItem_conversation\n    id\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

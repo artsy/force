@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1852dc199378340b74057deeb2ce3207>>
+ * @generated SignedSource<<3dde4e99cc53b7fdac64df4ed2d7f4e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EndingSoonAuctionsGridQuery$variables = {
   after?: string | null | undefined;

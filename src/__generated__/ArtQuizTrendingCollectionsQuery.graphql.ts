@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<39f060c7cc227c73a86510366b41f74f>>
+ * @generated SignedSource<<72698cb469d9aa4ed10de7c6df103fee>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtQuizTrendingCollectionsQuery$variables = Record<PropertyKey, never>;
 export type ArtQuizTrendingCollectionsQuery$data = {

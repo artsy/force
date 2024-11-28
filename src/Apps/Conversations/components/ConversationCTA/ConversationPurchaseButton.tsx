@@ -15,7 +15,7 @@ interface ConversationPurchaseButtonProps extends BoxProps {
   partnerOffer: { internalID: string } | null
 }
 
-export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProps> = ({
+export const ConversationPurchaseButton: React.FC<React.PropsWithChildren<ConversationPurchaseButtonProps>> = ({
   conversation,
   partnerOffer,
   ...boxProps

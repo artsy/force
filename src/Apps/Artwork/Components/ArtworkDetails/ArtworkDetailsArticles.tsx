@@ -8,7 +8,7 @@ export interface ArtworkDetailsArticlesProps {
   artwork: ArtworkDetailsArticles_artwork$data
 }
 
-export const ArtworkDetailsArticles: React.FC<ArtworkDetailsArticlesProps> = ({
+export const ArtworkDetailsArticles: React.FC<React.PropsWithChildren<ArtworkDetailsArticlesProps>> = ({
   artwork: { articles },
 }) => {
   if (!articles || articles.length < 1) {

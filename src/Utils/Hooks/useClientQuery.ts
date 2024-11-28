@@ -1,11 +1,18 @@
+import { useUpdateEffect } from "@artsy/palette"
 import { useEffect, useRef, useState } from "react"
-import { Environment, fetchQuery, GraphQLTaggedNode } from "react-relay"
+import {
+  Disposable,
+  Environment,
+  fetchQuery,
+  GraphQLTaggedNode,
+} from "react-relay"
 import {
   CacheConfig,
+  createOperationDescriptor,
   FetchQueryFetchPolicy,
+  getRequest,
   OperationType,
 } from "relay-runtime"
-import { useUpdateEffect } from "@artsy/palette"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
 export const useClientQuery = <T extends OperationType>({
@@ -27,6 +34,7 @@ export const useClientQuery = <T extends OperationType>({
   const { relayEnvironment } = useSystemContext()
 
   const [data, setData] = useState<T["response"] | null>(null)
+  const [disposable, setDisposable] = useState<Disposable | null>(null)
   const [error, setError] = useState<Error | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -50,6 +58,16 @@ export const useClientQuery = <T extends OperationType>({
 
       setData(res)
       setLoading(false)
+
+      const operation = createOperationDescriptor(
+        getRequest(query),
+        variables ?? {}
+      )
+
+      // Retain the operation to prevent it from being garbage collected. Garbage collection can compromise type safety (e.g. non-nullable values being `null`), potentially leading to runtime errors.
+      const disposable = relayEnvironment.retain(operation)
+
+      setDisposable(disposable)
     } catch (err) {
       setError(err)
       setLoading(false)
@@ -75,6 +93,7 @@ export const useClientQuery = <T extends OperationType>({
   }, [
     cacheConfig,
     data,
+    disposable,
     environment,
     error,
     query,
@@ -83,5 +102,5 @@ export const useClientQuery = <T extends OperationType>({
     variables,
   ])
 
-  return { data, error, loading: skip ? false : loading, refetch }
+  return { data, disposable, error, loading: skip ? false : loading, refetch }
 }

@@ -8,7 +8,7 @@ interface FairHeaderImageProps {
 }
 
 // TODO: Remove
-export const FairCard: React.FC<FairHeaderImageProps> = ({
+export const FairCard: React.FC<React.PropsWithChildren<FairHeaderImageProps>> = ({
   fair: { name, image },
 }) => {
   return (

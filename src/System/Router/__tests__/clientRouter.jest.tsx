@@ -22,7 +22,7 @@ jest.mock("Utils/Hooks/useOnboardingModal", () => ({
 
 describe("clientRouter", () => {
   it("resolves with a <ClientRouter /> component", async () => {
-    const { ClientRouter } = setupClientRouter({
+    const { ClientRouter } = await setupClientRouter({
       history: {
         protocol: "memory",
       },
@@ -46,7 +46,7 @@ describe("clientRouter", () => {
   })
 
   it("accepts an initial route", async () => {
-    const { ClientRouter } = setupClientRouter({
+    const { ClientRouter } = await setupClientRouter({
       history: {
         protocol: "memory",
       },
@@ -70,7 +70,7 @@ describe("clientRouter", () => {
     })
   })
 
-  it("bootstraps data from __RELAY_BOOTSTRAP__", async () => {
+  it("bootstraps data from __RELAY_HYDRATION_DATA__", async () => {
     const createRelayEnvSpy = jest.spyOn(
       relaySystem,
       "createRelaySSREnvironment"
@@ -82,9 +82,9 @@ describe("clientRouter", () => {
         "found window cache",
       ],
     ]
-    window.__RELAY_BOOTSTRAP__ = JSON.stringify(relayBootstrap)
+    window.__RELAY_HYDRATION_DATA__ = JSON.stringify(relayBootstrap)
 
-    const { ClientRouter } = setupClientRouter({
+    const { ClientRouter } = await setupClientRouter({
       history: {
         protocol: "memory",
       },
@@ -134,7 +134,7 @@ describe("clientRouter", () => {
       )
     }
 
-    const { ClientRouter } = setupClientRouter({
+    const { ClientRouter } = await setupClientRouter({
       history: {
         protocol: "memory",
       },
@@ -185,7 +185,7 @@ describe("clientRouter", () => {
       createRelaySSREnvironment.mockReturnValue(relay())
 
       try {
-        const { ClientRouter } = setupClientRouter({
+        const { ClientRouter } = await setupClientRouter({
           history: {
             protocol: "memory",
           },

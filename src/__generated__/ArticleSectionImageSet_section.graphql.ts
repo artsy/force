@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0e0b2e8d0ea0fc75e71d1e9a1ea61e58>>
+ * @generated SignedSource<<50754608f03c3ce8b02ff56c63330d60>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type ArticleSectionImageSetLayout = "FULL" | "MINI" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionImageSet_section$data = {

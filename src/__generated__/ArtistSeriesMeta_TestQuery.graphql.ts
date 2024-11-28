@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<781bb8e550d5341b20449fdd73dbd6a3>>
+ * @generated SignedSource<<f24afb71a73d728dac9f34a15c533331>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesMeta_TestQuery$variables = {
   slug: string;

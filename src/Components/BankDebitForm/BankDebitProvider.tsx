@@ -34,7 +34,7 @@ interface Props {
   onError: (error: Error | StripeError) => void
 }
 
-export const BankDebitProvider: FC<Props> = ({ order, onError }) => {
+export const BankDebitProvider: FC<React.PropsWithChildren<Props>> = ({ order, onError }) => {
   const {
     selectedPaymentMethod,
     stripeClient,

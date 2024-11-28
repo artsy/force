@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1128b87a1e830b4e5bee063970f460f4>>
+ * @generated SignedSource<<e1c3b1495402ff1ace49662fa1472b3e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NewForYouApp_viewer$data = {
   readonly " $fragmentSpreads": FragmentRefs<"NewForYouArtworksGrid_viewer">;

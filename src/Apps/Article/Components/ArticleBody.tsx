@@ -34,7 +34,7 @@ interface ArticleBodyProps {
   article: ArticleBody_article$data
 }
 
-const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
+const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({ article }) => {
   const centered = article.layout === "FEATURE" || article.layout === "NEWS"
 
   return (

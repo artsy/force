@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<610f054f40983bd129bf6f88c41060f9>>
+ * @generated SignedSource<<baaa381e6a737d38773c1dc7804f1bd2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCVGroup_artist$data = {
   readonly showsConnection: {

@@ -26,9 +26,9 @@ export const CARD_HEIGHT = 610
 export const CARD_HEIGHT_MD = 557
 export const CARD_HEIGHT_MOBILE = 418
 
-export const MeetTheSpecialists: React.FC<{
+export const MeetTheSpecialists: React.FC<React.PropsWithChildren<{
   staticContent: MeetTheSpecialists_staticContent$data
-}> = ({ staticContent }) => {
+}>> = ({ staticContent }) => {
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
@@ -163,7 +163,7 @@ const Info = styled(Box)`
   text-shadow: ${themeGet("effects.textShadow")};
 `
 
-export const MeetTheSpecialistsQueryRenderer: React.FC = () => {
+export const MeetTheSpecialistsQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <SystemQueryRenderer<MeetTheSpecialistsQuery>
       lazyLoad

@@ -8,7 +8,7 @@ interface ConversationArtworkProps {
   conversation: ConversationArtwork_conversation$key
 }
 
-export const ConversationArtwork: React.FC<ConversationArtworkProps> = ({
+export const ConversationArtwork: React.FC<React.PropsWithChildren<ConversationArtworkProps>> = ({
   conversation,
 }) => {
   const { trackEvent } = useTracking()
@@ -25,7 +25,7 @@ export const ConversationArtwork: React.FC<ConversationArtworkProps> = ({
               date
               title
               isUnlisted
-              artist {
+              artist(shallow: true) {
                 name
                 slug
               }

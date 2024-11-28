@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<47928b73fec68db1ef987c0bc67afe73>>
+ * @generated SignedSource<<9f17a8695597a2cdb8cd5242f3481bfe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkApp_me$data = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkPageBanner_me" | "ArtworkSidebar_me">;
@@ -33,6 +33,11 @@ return {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "artworkID"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "loadSidebar"
     }
   ],
   "kind": "Fragment",
@@ -40,9 +45,16 @@ return {
   "name": "ArtworkApp_me",
   "selections": [
     {
-      "args": (v0/*: any*/),
-      "kind": "FragmentSpread",
-      "name": "ArtworkSidebar_me"
+      "condition": "loadSidebar",
+      "kind": "Condition",
+      "passingValue": true,
+      "selections": [
+        {
+          "args": (v0/*: any*/),
+          "kind": "FragmentSpread",
+          "name": "ArtworkSidebar_me"
+        }
+      ]
     },
     {
       "args": (v0/*: any*/),
@@ -55,6 +67,6 @@ return {
 };
 })();
 
-(node as any).hash = "e646f380ea65e1122c532261b0af267c";
+(node as any).hash = "6b6741bf6376caa6102bd169272cfe18";
 
 export default node;

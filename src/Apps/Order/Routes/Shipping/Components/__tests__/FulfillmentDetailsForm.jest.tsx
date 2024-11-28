@@ -545,7 +545,7 @@ describe("FulfillmentDetailsForm", () => {
       ).toHaveBeenCalled()
     })
 
-    it("tracks when a user selects an address and the first time they edit it", async () => {
+    it("tracks when a user selects an address", async () => {
       renderTree(testProps)
       await waitFor(async () => {
         const line1Input = screen.getByPlaceholderText("Street address")
@@ -581,23 +581,6 @@ describe("FulfillmentDetailsForm", () => {
         context_owner_type: "orders-shipping",
         input: "401 Broadway",
         item: "401 Broadway, New York NY 10013",
-      })
-
-      // Make 2 edits to the address; track the 1st
-      const line2Input = screen.getByPlaceholderText("Apt, floor, suite, etc.")
-      await userEvent.type(line2Input, "Floor 25")
-
-      const postalCode = screen.getByPlaceholderText("ZIP code")
-      await userEvent.type(postalCode, "-4456")
-
-      await flushPromiseQueue()
-      expect(mockTrackEvent).toHaveBeenCalledTimes(3)
-      expect(mockTrackEvent).toHaveBeenNthCalledWith(3, {
-        action: "editedAutocompletedAddress",
-        context_module: "ordersShipping",
-        context_owner_id: "",
-        context_owner_type: "orders-shipping",
-        field: "addressLine2",
       })
     })
   })

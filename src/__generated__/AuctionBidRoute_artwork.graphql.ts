@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4da7df016211ac7894029242b768a922>>
+ * @generated SignedSource<<fa75cd0c7503a32b899dc3c388a492ed>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionBidRoute_artwork$data = {
   readonly internalID: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ea502da0cf392921f4d48649f964de19>>
+ * @generated SignedSource<<a8c10122f417efc37db57ab8d926632f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PAYMENT_FAILED" | "PENDING" | "PROCESSING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
@@ -400,7 +400,13 @@ return {
                     },
                     {
                       "alias": null,
-                      "args": null,
+                      "args": [
+                        {
+                          "kind": "Literal",
+                          "name": "shallow",
+                          "value": true
+                        }
+                      ],
                       "concreteType": "Artist",
                       "kind": "LinkedField",
                       "name": "artists",
@@ -408,7 +414,7 @@ return {
                       "selections": [
                         (v2/*: any*/)
                       ],
-                      "storageKey": null
+                      "storageKey": "artists(shallow:true)"
                     }
                   ],
                   "storageKey": null
@@ -474,6 +480,6 @@ return {
 };
 })();
 
-(node as any).hash = "f241267fa70b8bb2bb0063509efa4860";
+(node as any).hash = "4a896a515342b1fcc037206f76bb1dbd";
 
 export default node;

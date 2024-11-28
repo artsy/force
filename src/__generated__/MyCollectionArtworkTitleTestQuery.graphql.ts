@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<677a10d34d70a02b9c2ffcb83b3cd486>>
+ * @generated SignedSource<<d3762685c617b59c5af9a053d7bbfcff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkTitleTestQuery$variables = Record<PropertyKey, never>;
 export type MyCollectionArtworkTitleTestQuery$data = {
@@ -112,7 +112,13 @@ return {
           },
           {
             "alias": null,
-            "args": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "shallow",
+                "value": true
+              }
+            ],
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artist",
@@ -134,7 +140,7 @@ return {
               },
               (v1/*: any*/)
             ],
-            "storageKey": null
+            "storageKey": "artist(shallow:true)"
           },
           (v1/*: any*/)
         ],
@@ -143,7 +149,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "20bcec5e63fae8ad317c8458c12f05eb",
+    "cacheID": "27814b52bd0ea5db9e5d0f4b7461f0d5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -175,7 +181,7 @@ return {
     },
     "name": "MyCollectionArtworkTitleTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkTitleTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkTitle_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkTitle_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    isPersonalArtist\n    id\n  }\n}\n"
+    "text": "query MyCollectionArtworkTitleTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkTitle_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkTitle_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist(shallow: true) {\n    href\n    isPersonalArtist\n    id\n  }\n}\n"
   }
 };
 })();

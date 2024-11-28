@@ -9,7 +9,7 @@ interface UserActiveBidsProps {
   me: UserActiveBids_me$data
 }
 
-export const UserActiveBids: React.FC<UserActiveBidsProps> = ({
+export const UserActiveBids: React.FC<React.PropsWithChildren<UserActiveBidsProps>> = ({
   me: { activeLotStandings: lotStandings },
 }) => {
   if (!lotStandings || lotStandings.length === 0) {

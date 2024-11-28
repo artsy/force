@@ -35,7 +35,7 @@ interface ArticleInfiniteScrollProps {
   relay: RelayPaginationProp
 }
 
-export const ArticleInfiniteScroll: FC<ArticleInfiniteScrollProps> = ({
+export const ArticleInfiniteScroll: FC<React.PropsWithChildren<ArticleInfiniteScrollProps>> = ({
   viewer,
   relay,
 }) => {
@@ -145,14 +145,14 @@ interface ArticleInfiniteScrollQueryRendererProps {
   channelID: string
 }
 
-export const ArticleInfiniteScrollQueryRenderer: FC<ArticleInfiniteScrollQueryRendererProps> = ({
+export const ArticleInfiniteScrollQueryRenderer: FC<React.PropsWithChildren<ArticleInfiniteScrollQueryRendererProps>> = ({
   articleID,
   channelID,
 }) => {
   return (
     // Disable scroll anchoring for infinite article scroll
     // https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-anchor/Guide_to_scroll_anchoring
-    <div style={{ overflowAnchor: "none" }}>
+    (<div style={{ overflowAnchor: "none" }}>
       <SystemQueryRenderer<ArticleInfiniteScrollQuery>
         lazyLoad
         placeholder={<ArticleInfiniteScrollPlaceholder />}
@@ -173,11 +173,11 @@ export const ArticleInfiniteScrollQueryRenderer: FC<ArticleInfiniteScrollQueryRe
           )
         }}
       />
-    </div>
-  )
+    </div>)
+  );
 }
 
-const ArticleInfiniteScrollPlaceholder: FC = () => {
+const ArticleInfiniteScrollPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <FullBleed bg="black5" p={1}>

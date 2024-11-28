@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0e1c5aeb625c1e9c733d399d59cffd07>>
+ * @generated SignedSource<<fdaf1378d70bdda76b604943e7ba3718>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleZoomGallery_article$data = {
   readonly sections: ReadonlyArray<{

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2727615e9cadc27bd5a0047f7c2d301c>>
+ * @generated SignedSource<<2da2f182f113531cdb2f2d88cceb9395>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchRouteOption_artist$data = {
   readonly formattedNationalityAndBirthday: string | null | undefined;

@@ -26,7 +26,7 @@ interface ArticleHeroProps {
   fixed?: boolean
 }
 
-const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
+const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({ article, fixed = true }) => {
   const height = useFullBleedHeaderHeight()
 
   const { theme } = useTheme()
@@ -108,15 +108,27 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
             )}
 
             {image && (
-              <Image
-                src={image.src}
-                srcSet={image.srcSet}
+              <Box
+                position="relative"
                 width="100%"
-                height={height}
-                style={{ objectFit: "cover" }}
-                alt=""
-                lazyLoad
-              />
+                minHeight={height}
+                height="100%"
+                bg="black10"
+              >
+                <Image
+                  src={image.src}
+                  srcSet={image.srcSet}
+                  width="100%"
+                  height="100%"
+                  style={{
+                    objectFit: "cover",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                  }}
+                  alt=""
+                />
+              </Box>
             )}
           </Box>
         </FullBleed>

@@ -12,7 +12,7 @@ interface ViewingRoomsFeaturedRailProps {
   featuredViewingRooms: ViewingRoomsFeaturedRail_featuredViewingRooms$data
 }
 
-export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> = ({
+export const ViewingRoomsFeaturedRail: React.FC<React.PropsWithChildren<ViewingRoomsFeaturedRailProps>> = ({
   featuredViewingRooms,
 }) => {
   const viewingRooms = extractNodes(featuredViewingRooms)

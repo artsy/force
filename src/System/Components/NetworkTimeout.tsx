@@ -8,7 +8,7 @@ const logger = createLogger("Artsy/Router/NetworkTimeout")
 
 const NETWORK_TIMEOUT_MS = 15000
 
-export const NetworkTimeout: React.FC = () => {
+export const NetworkTimeout: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { sendToast } = useToasts()
 
   useEffect(() => {

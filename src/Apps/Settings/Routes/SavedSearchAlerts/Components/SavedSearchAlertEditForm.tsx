@@ -58,7 +58,7 @@ interface SavedSearchAlertEditFormProps {
   onCompleted: () => void
 }
 
-const SavedSearchAlertEditSteps: React.FC<SavedSearchAlertEditStepsProps> = ({
+const SavedSearchAlertEditSteps: React.FC<React.PropsWithChildren<SavedSearchAlertEditStepsProps>> = ({
   viewer,
   onDeleteClick,
   onCompleted,
@@ -115,7 +115,7 @@ const SavedSearchAlertEditSteps: React.FC<SavedSearchAlertEditStepsProps> = ({
   )
 }
 
-const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
+const SavedSearchAlertEditForm: React.FC<React.PropsWithChildren<SavedSearchAlertEditFormProps>> = ({
   onDeleteClick,
   onCompleted,
 }) => {
@@ -291,7 +291,7 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
   }
 )
 
-export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEditFormQueryRendererProps> = ({
+export const SavedSearchAlertEditFormQueryRenderer: React.FC<React.PropsWithChildren<SavedSearchAlertEditFormQueryRendererProps>> = ({
   editAlertEntity,
   onDeleteClick,
   onCompleted,

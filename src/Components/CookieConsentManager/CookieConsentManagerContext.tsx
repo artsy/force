@@ -42,7 +42,7 @@ interface CookieConsentManagerProviderProps {
   children: ReactNode
 }
 
-export const CookieConsentManagerProvider: FC<CookieConsentManagerProviderProps> = ({
+export const CookieConsentManagerProvider: FC<React.PropsWithChildren<CookieConsentManagerProviderProps>> = ({
   children,
   openConsentManager,
 }) => {

@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ConversationMessagesPaginationContainer } from "Apps/Conversations/components/Message/ConversationMessages"
 import { ConversationMessagesTestQuery } from "__generated__/ConversationMessagesTestQuery.graphql"
 import { format, subDays } from "date-fns"

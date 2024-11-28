@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7da06f9534468f353eb475ea55c2bc04>>
+ * @generated SignedSource<<524cd66bae9fb7277c05127b0700ac28>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CreateBidderInput = {
   clientMutationId?: string | null | undefined;

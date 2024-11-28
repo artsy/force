@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<89e8004962a285f386f26946faee533f>>
+ * @generated SignedSource<<be47c5d1bd0d9bac67f9b92a2aaedde3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationMessage_message$data = {
   readonly __typename: "Message";
@@ -140,8 +140,7 @@ return {
         "name": "createdAt",
         "storageKey": "createdAt(format:\"h:mmA\")"
       },
-      "action": "NONE",
-      "path": "createdAtTime"
+      "action": "NONE"
     },
     {
       "kind": "RequiredField",
@@ -170,8 +169,7 @@ return {
         ],
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "deliveries"
+      "action": "NONE"
     },
     {
       "kind": "RequiredField",
@@ -182,8 +180,7 @@ return {
         "name": "isFromUser",
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "isFromUser"
+      "action": "NONE"
     },
     {
       "alias": null,
@@ -212,8 +209,7 @@ return {
         ],
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "from"
+      "action": "NONE"
     },
     {
       "kind": "RequiredField",
@@ -224,8 +220,7 @@ return {
         "name": "to",
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "to"
+      "action": "NONE"
     },
     {
       "kind": "RequiredField",
@@ -236,8 +231,7 @@ return {
         "name": "cc",
         "storageKey": null
       },
-      "action": "NONE",
-      "path": "cc"
+      "action": "NONE"
     }
   ],
   "type": "Message",

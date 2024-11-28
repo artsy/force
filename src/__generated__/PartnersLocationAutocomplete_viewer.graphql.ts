@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6f71ffe515f7963867773d9406871303>>
+ * @generated SignedSource<<87fdbebe20df80169feee4f514d8c4aa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnersLocationAutocomplete_viewer$data = {
   readonly allCities: ReadonlyArray<{

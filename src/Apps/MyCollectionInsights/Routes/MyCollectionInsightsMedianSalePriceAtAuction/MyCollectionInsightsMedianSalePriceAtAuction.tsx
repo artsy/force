@@ -9,7 +9,7 @@ interface MyCollectionInsightsMedianSalePriceAtAuctionProps {
   artist: MyCollectionInsightsMedianSalePriceAtAuction_artist$key
 }
 
-export const MyCollectionInsightsMedianSalePriceAtAuction: React.FC<MyCollectionInsightsMedianSalePriceAtAuctionProps> = ({
+export const MyCollectionInsightsMedianSalePriceAtAuction: React.FC<React.PropsWithChildren<MyCollectionInsightsMedianSalePriceAtAuctionProps>> = ({
   artist,
 }) => {
   const artistData = useFragment(medianSalePriceAtAuctionFragment, artist)

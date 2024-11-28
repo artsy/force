@@ -9,29 +9,17 @@ import { extractNodes } from "Utils/extractNodes"
 import { Box, Flex, Message, Spacer, Text } from "@artsy/palette"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { OnboardingThankYou } from "Components/Onboarding/Views/OnboardingThankYou"
-import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 
 interface OnboardingMarketingCollectionProps {
   marketingCollection: OnboardingMarketingCollection_marketingCollection$data
   description: JSX.Element
 }
 
-const OnboardingMarketingCollection: FC<OnboardingMarketingCollectionProps> = ({
+const OnboardingMarketingCollection: FC<React.PropsWithChildren<OnboardingMarketingCollectionProps>> = ({
   marketingCollection,
   description,
 }) => {
   const artworks = extractNodes(marketingCollection.artworks)
-  const { onClose } = useOnboardingContext()
-  const tracking = useOnboardingTracking()
-
-  useEffect(() => {
-    return () => {
-      if (onClose) {
-        tracking.userCompletedOnboarding()
-        onClose()
-      }
-    }
-  }, [onClose, tracking])
 
   return (
     <Box px={[2, 4]} py={6}>
@@ -94,7 +82,7 @@ interface OnboardingMarketingCollectionQueryRendererProps {
   description: JSX.Element
 }
 
-export const OnboardingMarketingCollectionQueryRenderer: FC<OnboardingMarketingCollectionQueryRendererProps> = ({
+export const OnboardingMarketingCollectionQueryRenderer: FC<React.PropsWithChildren<OnboardingMarketingCollectionQueryRendererProps>> = ({
   slug,
   description,
 }) => {

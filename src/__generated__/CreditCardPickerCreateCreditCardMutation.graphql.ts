@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5d6bdef39e0b404ff237f146ce6a32d0>>
+ * @generated SignedSource<<fcc514fd8349ae3a949fdecf87e4ecbd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type CreditCardInput = {
   clientMutationId?: string | null | undefined;
   oneTimeUse?: boolean | null | undefined;

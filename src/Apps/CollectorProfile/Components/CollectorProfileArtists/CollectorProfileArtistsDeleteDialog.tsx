@@ -11,7 +11,7 @@ interface CollectorProfileArtistsDeleteDialogProps {
   onClose: () => void
 }
 
-export const CollectorProfileArtistsDeleteDialog: FC<CollectorProfileArtistsDeleteDialogProps> = ({
+export const CollectorProfileArtistsDeleteDialog: FC<React.PropsWithChildren<CollectorProfileArtistsDeleteDialogProps>> = ({
   id,
   name,
   onClose,

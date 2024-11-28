@@ -6,7 +6,7 @@ import {
   createQueryMiddleware,
 } from "farce"
 import { Resolver } from "found-relay"
-import { createFarceRouter, createRender } from "found"
+import { createInitialFarceRouter, createRender } from "found"
 import { ScrollManager, ScrollManagerProps } from "found-scroll"
 import { renderStates } from "System/Router/RenderStates"
 import { RouteProps } from "System/Router/Route"
@@ -21,6 +21,7 @@ import { Boot } from "System/Boot"
 import { SystemContextProps } from "System/Contexts/SystemContext"
 import { loadingIndicatorMiddleware } from "System/Router/Middleware/loadingIndicatorMiddleware"
 import { trackingMiddleware } from "System/Router/Middleware/trackingMiddleware"
+import React from "react"
 
 export interface RouterConfig {
   context?: SystemContextProps
@@ -34,13 +35,17 @@ export interface RouterConfig {
   url?: string
 }
 
-export const setupClientRouter = (config: RouterConfig) => {
+export const setupClientRouter = async (
+  config: RouterConfig
+): Promise<{
+  ClientRouter: React.ComponentType<any>
+}> => {
   const matchContext = getClientAppContext(config.context)
 
   const user = getUser(matchContext.user)
 
   const relayEnvironment = createRelaySSREnvironment({
-    cache: JSON.parse(window.__RELAY_BOOTSTRAP__ || "{}"),
+    cache: JSON.parse(window.__RELAY_HYDRATION_DATA__ || "{}"),
     user,
   })
 
@@ -77,10 +82,12 @@ export const setupClientRouter = (config: RouterConfig) => {
     }
   })()
 
-  const Router = createFarceRouter({
+  const BrowserRouter = await createInitialFarceRouter({
+    routeConfig: config.routes,
     historyProtocol,
     historyMiddlewares,
-    routeConfig: config.routes,
+    resolver,
+    matchContext,
     render: renderArgs => {
       return (
         <ScrollManager
@@ -95,18 +102,20 @@ export const setupClientRouter = (config: RouterConfig) => {
     },
   })
 
-  const ClientRouter: React.FC = () => {
-    return (
-      <Boot
-        context={matchContext}
-        user={user}
-        relayEnvironment={relayEnvironment}
-        routes={config.routes}
-      >
-        <Router resolver={resolver} matchContext={matchContext} />
-      </Boot>
-    )
-  }
+  const ClientRouter: React.FC<React.PropsWithChildren<unknown>> = React.memo(
+    () => {
+      return (
+        <Boot
+          context={matchContext}
+          user={user}
+          relayEnvironment={relayEnvironment}
+          routes={config.routes}
+        >
+          <BrowserRouter resolver={resolver} />
+        </Boot>
+      )
+    }
+  )
 
   return { ClientRouter }
 }

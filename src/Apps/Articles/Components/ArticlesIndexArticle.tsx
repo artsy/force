@@ -1,4 +1,3 @@
-import { FC } from "react"
 import {
   Column,
   GridColumns,
@@ -11,16 +10,16 @@ import { graphql, createFragmentContainer } from "react-relay"
 import { ArticlesIndexArticle_article$data } from "__generated__/ArticlesIndexArticle_article.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 import { ArticleShare } from "Components/ArticleShare"
+import React from "react"
 
 interface ArticlesIndexArticleProps {
   article: ArticlesIndexArticle_article$data
   lazyLoad?: boolean
 }
 
-const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({
-  article,
-  lazyLoad = true,
-}) => {
+const ArticlesIndexArticle: React.FC<React.PropsWithChildren<
+  ArticlesIndexArticleProps
+>> = ({ article, lazyLoad = true }) => {
   const image = article.thumbnailImage?.cropped
 
   return (
@@ -68,6 +67,7 @@ const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({
           >
             {image && (
               <Image
+                key={image.src}
                 src={image.src}
                 srcSet={image.srcSet}
                 width="100%"

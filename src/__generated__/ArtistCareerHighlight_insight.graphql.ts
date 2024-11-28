@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<30ab9f16292809fed459f3ff2bbf6355>>
+ * @generated SignedSource<<a5d20e1342fff744ebf4c565f5c24bfa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCareerHighlight_insight$data = {
   readonly description: string | null | undefined;

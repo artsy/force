@@ -9,7 +9,7 @@ interface AuctionResultImageProps {
   auctionResult: AuctionResultImage_auctionResult$key
 }
 
-export const AuctionResultImage: React.FC<AuctionResultImageProps> = ({
+export const AuctionResultImage: React.FC<React.PropsWithChildren<AuctionResultImageProps>> = ({
   auctionResult,
 }) => {
   const { images, title } = useFragment(

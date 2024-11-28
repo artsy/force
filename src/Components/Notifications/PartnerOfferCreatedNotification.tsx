@@ -14,7 +14,7 @@ interface PartnerOfferCreatedNotificationProps {
   notification: PartnerOfferCreatedNotification_notification$key
 }
 
-export const PartnerOfferCreatedNotification: FC<PartnerOfferCreatedNotificationProps> = ({
+export const PartnerOfferCreatedNotification: FC<React.PropsWithChildren<PartnerOfferCreatedNotificationProps>> = ({
   notification,
 }) => {
   const notificationData = useFragment(

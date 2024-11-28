@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fa05c2297f9d81ff94d1e5366d0644b6>>
+ * @generated SignedSource<<26bd7f29a1e9791a6fc1334e86888f57>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PrivateArtworkAboutArtist_artwork$data = {
   readonly artists: ReadonlyArray<{
@@ -16,9 +16,7 @@ export type PrivateArtworkAboutArtist_artwork$data = {
       readonly text: string | null | undefined;
     } | null | undefined;
     readonly counts: {
-      readonly artworks: any | null | undefined;
       readonly follows: any | null | undefined;
-      readonly forSaleArtworks: any | null | undefined;
     } | null | undefined;
     readonly coverArtwork: {
       readonly image: {
@@ -69,7 +67,13 @@ return {
     (v0/*: any*/),
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "shallow",
+          "value": true
+        }
+      ],
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artists",
@@ -124,20 +128,6 @@ return {
           "name": "counts",
           "plural": false,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "artworks",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "forSaleArtworks",
-              "storageKey": null
-            },
             {
               "alias": null,
               "args": null,
@@ -236,7 +226,7 @@ return {
           "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
         }
       ],
-      "storageKey": null
+      "storageKey": "artists(shallow:true)"
     }
   ],
   "type": "Artwork",
@@ -244,6 +234,6 @@ return {
 };
 })();
 
-(node as any).hash = "e80b892b9afca1198326fce527569b5c";
+(node as any).hash = "b6ff0be56d2f9f811cd58ed50d04aacb";
 
 export default node;

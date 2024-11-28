@@ -11,7 +11,7 @@ interface FairOrganizerFollowButtonProps {
   fairOrganizer: FairOrganizerFollowButton_fairOrganizer$data
 }
 
-export const FairOrganizerFollowButton: React.FC<FairOrganizerFollowButtonProps> = props => {
+export const FairOrganizerFollowButton: React.FC<React.PropsWithChildren<FairOrganizerFollowButtonProps>> = props => {
   const { fairOrganizer } = props
   const { profile } = fairOrganizer
 

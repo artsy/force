@@ -8,8 +8,10 @@ import { FeatureFlags } from "System/Hooks/useFeatureFlag"
 import { logout } from "Utils/auth"
 
 jest.mock("react-tracking")
-jest.mock("Server/isServer", () => ({
-  isServer: true,
+
+jest.mock("@artsy/palette", () => ({
+  ...jest.requireActual("@artsy/palette"),
+  useDidMount: jest.fn().mockReturnValue(false), // SSR-render
 }))
 
 jest.mock("Utils/auth", () => ({ logout: jest.fn() }))

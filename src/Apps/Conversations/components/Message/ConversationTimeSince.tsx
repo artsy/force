@@ -11,7 +11,7 @@ interface ConversationTimeSinceProps extends Omit<BoxProps, "color"> {
   style?: React.CSSProperties
 }
 
-export const ConversationTimeSince: React.FC<ConversationTimeSinceProps> = ({
+export const ConversationTimeSince: React.FC<React.PropsWithChildren<ConversationTimeSinceProps>> = ({
   message,
   exact,
   ...props

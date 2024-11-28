@@ -8,7 +8,7 @@ interface ArticleContextProviderProps {
   articleId: string
 }
 
-export const ArticleContextProvider: FC<ArticleContextProviderProps> = ({
+export const ArticleContextProvider: FC<React.PropsWithChildren<ArticleContextProviderProps>> = ({
   articleId,
   children,
 }) => {

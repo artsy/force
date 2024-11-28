@@ -12,7 +12,7 @@ export const alertRoutes: RouteProps[] = [
   {
     path: "/dev/alert",
     getComponent: () => AlertApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       AlertApp.preload()
     },
   },

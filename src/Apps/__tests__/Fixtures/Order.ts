@@ -22,10 +22,6 @@ const OrderArtworkNodeWithoutShipping = {
       url:
         "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
     },
-    resized_ArtworkSummaryItem: {
-      url:
-        "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
-    },
   },
   internalID: "artworkId",
   is_acquireable: true as boolean,
@@ -73,10 +69,6 @@ const OrderArtworkVersionNode = {
     provenance: "",
     condition_description: "",
     image: {
-      resized_ArtworkSummaryItem: {
-        url:
-          "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
-      },
       resized: {
         url:
           "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",

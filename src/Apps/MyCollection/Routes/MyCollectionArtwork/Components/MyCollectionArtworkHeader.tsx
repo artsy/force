@@ -10,7 +10,7 @@ interface MyCollectionArtworkHeaderProps {
   artwork: MyCollectionArtworkHeader_artwork$key
 }
 
-export const MyCollectionArtworkHeader: React.FC<MyCollectionArtworkHeaderProps> = props => {
+export const MyCollectionArtworkHeader: React.FC<React.PropsWithChildren<MyCollectionArtworkHeaderProps>> = props => {
   const {
     editCollectedArtwork: trackEditCollectedArtwork,
   } = useMyCollectionTracking()

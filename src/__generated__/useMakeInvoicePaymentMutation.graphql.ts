@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<41eb028e2f86698e979ade9779094e69>>
+ * @generated SignedSource<<71d85db2fea55168b689c58459fd5408>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type CreateInvoicePaymentInput = {
   amountMinor: number;
   clientMutationId?: string | null | undefined;

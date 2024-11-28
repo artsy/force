@@ -24,10 +24,9 @@ interface ArtworkActionsProps {
   selectRoomViewableFigure(): void
 }
 
-export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
-  artwork,
-  selectRoomViewableFigure,
-}) => {
+export const ArtworkActions: React.FC<React.PropsWithChildren<
+  ArtworkActionsProps
+>> = ({ artwork, selectRoomViewableFigure }) => {
   const { user } = useSystemContext()
   const isAdmin = userIsAdmin(user)
   const isTeam = userIsTeam(user)

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bc3a4da935897764d429c87d1372cbde>>
+ * @generated SignedSource<<9390ce47681486d640ef9c4a0e7914bb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type InsightsAuctionResults_me$data = {
   readonly myCollectionAuctionResults: {

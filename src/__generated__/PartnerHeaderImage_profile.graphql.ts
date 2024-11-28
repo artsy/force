@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e08fb4f9e95028909ebcbe58eac2c95a>>
+ * @generated SignedSource<<7917793137b31f8c8680ddcfb859129f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerHeaderImage_profile$data = {
   readonly image: {

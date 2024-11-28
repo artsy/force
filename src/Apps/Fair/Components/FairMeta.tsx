@@ -8,7 +8,7 @@ interface FairMetaProps {
   fair: FairMeta_fair$data
 }
 
-const FairMeta: React.FC<FairMetaProps> = ({
+const FairMeta: React.FC<React.PropsWithChildren<FairMetaProps>> = ({
   fair: { name, slug, metaDescription, metaImage },
 }) => {
   const title = `${name} | Artsy`

@@ -35,7 +35,7 @@ interface InquiryInquiryProps {
   artwork: InquiryInquiry_artwork$data
 }
 
-const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
+const InquiryInquiry: React.FC<React.PropsWithChildren<InquiryInquiryProps>> = ({ artwork }) => {
   const { user } = useSystemContext()
 
   const {
@@ -214,7 +214,7 @@ const InquiryInquiryFragmentContainer = createFragmentContainer(
         internalID
         title
         date
-        artist {
+        artist(shallow: true) {
           name
         }
         partner {
@@ -233,7 +233,7 @@ const InquiryInquiryFragmentContainer = createFragmentContainer(
   }
 )
 
-export const InquiryInquiryPlaceholder: React.FC = () => {
+export const InquiryInquiryPlaceholder: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Skeleton>
       <SkeletonText variant="lg-display" mr={4}>
@@ -285,7 +285,7 @@ export const InquiryInquiryPlaceholder: React.FC = () => {
   )
 }
 
-export const InquiryInquiryQueryRenderer: React.FC = () => {
+export const InquiryInquiryQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { relayEnvironment } = useSystemContext()
   const { artworkID } = useInquiryContext()
 

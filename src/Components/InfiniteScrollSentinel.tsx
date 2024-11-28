@@ -7,7 +7,7 @@ interface InfiniteScrollSentinelProps {
   once?: boolean
 }
 
-export const InfiniteScrollSentinel: FC<InfiniteScrollSentinelProps> = ({
+export const InfiniteScrollSentinel: FC<React.PropsWithChildren<InfiniteScrollSentinelProps>> = ({
   onNext,
   once = true,
 }) => {

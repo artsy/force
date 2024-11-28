@@ -1,4 +1,4 @@
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { screen, fireEvent, waitFor } from "@testing-library/react"
 import { ArtworkSidebarCommercialButtons_Test_Query } from "__generated__/ArtworkSidebarCommercialButtons_Test_Query.graphql"
@@ -617,11 +617,13 @@ describe("ArtworkSidebarCommercialButtons", () => {
         mockEnvironment
       )
 
-      userEvent.click(screen.getByText("Make an Offer"))
-
-      const { operationName } = await mockResolveLastOperation({})
-
       await waitFor(() => {
+        userEvent.click(screen.getByText("Make an Offer"))
+      })
+
+      await waitFor(async () => {
+        const { operationName } = await mockResolveLastOperation({})
+
         expect(operationName).toBe(
           "ArtworkSidebarCommercialButtonsOfferOrderMutation"
         )
@@ -648,11 +650,17 @@ describe("ArtworkSidebarCommercialButtons", () => {
         mockEnvironment
       )
 
-      userEvent.click(screen.getByText("Purchase"))
+      await waitFor(() => {
+        userEvent.click(screen.getByText("Purchase"))
+      })
 
-      const { operationName } = await mockResolveLastOperation({})
+      await waitFor(async () => {
+        const { operationName } = await mockResolveLastOperation({})
 
-      expect(operationName).toBe("ArtworkSidebarCommercialButtonsOrderMutation")
+        expect(operationName).toBe(
+          "ArtworkSidebarCommercialButtonsOrderMutation"
+        )
+      })
     })
 
     it("creates a partner offer order via mutation when clicking 'purchase' with an active partner offer", async () => {
@@ -683,18 +691,21 @@ describe("ArtworkSidebarCommercialButtons", () => {
         mockEnvironment
       )
 
-      userEvent.click(screen.getByText("Purchase"))
-
-      const { operationName } = await mockResolveLastOperation({
-        CommerceCreateOrderWithArtworkPayload: () => ({
-          orderOrError: {
-            __typename: "CommerceOrderWithMutationSuccess",
-            order: { internalID: "order-id" },
-          },
-        }),
+      await waitFor(() => {
+        userEvent.click(screen.getByText("Purchase"))
       })
 
-      expect(operationName).toBe("UsePartnerOfferCheckoutMutation")
+      await waitFor(async () => {
+        const { operationName } = await mockResolveLastOperation({
+          CommerceCreateOrderWithArtworkPayload: () => ({
+            orderOrError: {
+              __typename: "CommerceOrderWithMutationSuccess",
+              order: { internalID: "order-id" },
+            },
+          }),
+        })
+        expect(operationName).toBe("UsePartnerOfferCheckoutMutation")
+      })
     })
 
     it("uses the regular order mutation if the partner offer expires after the page loads", async () => {

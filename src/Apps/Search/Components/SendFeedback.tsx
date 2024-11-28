@@ -17,7 +17,7 @@ import { SendFeedbackSearchResultsMutation } from "__generated__/SendFeedbackSea
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
 
-export const SendFeedback: FC = () => {
+export const SendFeedback: FC<React.PropsWithChildren<unknown>> = () => {
   const { isLoggedIn, user } = useSystemContext()
   const { match } = useRouter()
 

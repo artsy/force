@@ -20,7 +20,7 @@ interface ShowsIndexProps {
   viewer: ShowsIndex_viewer$data
 }
 
-export const ShowsIndex: React.FC<ShowsIndexProps> = ({
+export const ShowsIndex: React.FC<React.PropsWithChildren<ShowsIndexProps>> = ({
   featuredShows,
   viewer,
 }) => {

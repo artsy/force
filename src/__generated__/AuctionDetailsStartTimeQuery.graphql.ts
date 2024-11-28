@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f50f0e343d711e9415f0d068cfa891e7>>
+ * @generated SignedSource<<9811641c377f1fe559c5f36c1c6479b5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionDetailsStartTimeQuery$variables = {
   id: string;

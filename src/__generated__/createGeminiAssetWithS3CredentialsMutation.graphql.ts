@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<969d332c62328604b806558704c2b21d>>
+ * @generated SignedSource<<31cf481997609353bca8a421bd5ac6b9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type CreateGeminiEntryForAssetInput = {
   clientMutationId?: string | null | undefined;
   metadata: any;

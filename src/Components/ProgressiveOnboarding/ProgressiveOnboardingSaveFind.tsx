@@ -17,7 +17,7 @@ const ALERTS = {
 interface ProgressiveOnboardingSaveFindProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingSaveFind__: FC<ProgressiveOnboardingSaveFindProps> = ({
+export const __ProgressiveOnboardingSaveFind__: FC<React.PropsWithChildren<ProgressiveOnboardingSaveFindProps>> = ({
   children,
   counts,
 }) => {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e59027dde096b64810fe119b7add5c3c>>
+ * @generated SignedSource<<868b652ff5f444ca9698db7f856a141c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationHeader_conversation$data = {
   readonly from: {
@@ -150,13 +150,19 @@ return {
                 },
                 {
                   "alias": null,
-                  "args": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "shallow",
+                      "value": true
+                    }
+                  ],
                   "concreteType": "Artist",
                   "kind": "LinkedField",
                   "name": "artist",
                   "plural": false,
                   "selections": (v0/*: any*/),
-                  "storageKey": null
+                  "storageKey": "artist(shallow:true)"
                 },
                 {
                   "alias": null,
@@ -241,8 +247,7 @@ return {
             ],
             "storageKey": null
           },
-          "action": "NONE",
-          "path": "orderConnection.edges"
+          "action": "NONE"
         }
       ],
       "storageKey": "orderConnection(first:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\",\"REFUNDED\",\"CANCELED\"])"
@@ -253,6 +258,6 @@ return {
 };
 })();
 
-(node as any).hash = "db25b31209d5f3c27adb98ebe43709f7";
+(node as any).hash = "56329ae8601cc3cb5e23118dce2f2d38";
 
 export default node;

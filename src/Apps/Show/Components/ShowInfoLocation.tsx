@@ -7,7 +7,7 @@ interface ShowInfoLocationProps extends BoxProps {
   show: ShowInfoLocation_show$data
 }
 
-export const ShowInfoLocation: React.FC<ShowInfoLocationProps> = ({
+export const ShowInfoLocation: React.FC<React.PropsWithChildren<ShowInfoLocationProps>> = ({
   show,
   ...rest
 }) => {

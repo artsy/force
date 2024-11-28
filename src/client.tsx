@@ -1,23 +1,29 @@
 import "Server/webpackPublicPath"
-import ReactDOM from "react-dom"
 import { getAppRoutes } from "routes"
 import { loadableReady } from "@loadable/component"
 import { setupAnalytics } from "Server/analytics/helpers"
 import { setupClientRouter } from "System/Router/clientRouter"
 import { setupSentryClient } from "System/Utils/setupSentryClient"
 import { setupWebVitals } from "System/Utils/setupWebVitals"
+import { hydrateRoot } from "react-dom/client"
 
 setupAnalytics()
 setupSentryClient()
 setupWebVitals()
 
-const { ClientRouter } = setupClientRouter({
-  routes: getAppRoutes(),
-})
+// Rehydrate app
+;(async () => {
+  const { ClientRouter } = await setupClientRouter({
+    routes: getAppRoutes(),
+  })
 
-loadableReady().then(() => {
-  ReactDOM.hydrate(<ClientRouter />, document.getElementById("react-root"))
-})
+  loadableReady().then(() => {
+    hydrateRoot(
+      document.getElementById("react-root") as HTMLElement,
+      <ClientRouter />
+    )
+  })
+})()
 
 // Enable hot-reloading if available.
 if (module.hot) {

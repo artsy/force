@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3ae0c46357e04728bd184b4795ca881f>>
+ * @generated SignedSource<<103a475a4bfac0b486e0598834aca8f1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Accept_order$data = {
   readonly creditCardId: string | null | undefined;
@@ -102,7 +102,13 @@ return {
                     (v1/*: any*/),
                     {
                       "alias": null,
-                      "args": null,
+                      "args": [
+                        {
+                          "kind": "Literal",
+                          "name": "shallow",
+                          "value": true
+                        }
+                      ],
                       "concreteType": "Artist",
                       "kind": "LinkedField",
                       "name": "artists",
@@ -110,7 +116,7 @@ return {
                       "selections": [
                         (v1/*: any*/)
                       ],
-                      "storageKey": null
+                      "storageKey": "artists(shallow:true)"
                     }
                   ],
                   "storageKey": null
@@ -188,6 +194,6 @@ return {
 };
 })();
 
-(node as any).hash = "35b6163a6de496400d239187d3804132";
+(node as any).hash = "806679e5521a031e6918fb411652b062";
 
 export default node;

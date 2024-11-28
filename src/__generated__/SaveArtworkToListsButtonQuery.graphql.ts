@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<18074a843d0443f0b26f3ccf5e69345d>>
+ * @generated SignedSource<<8e8d3b2a05248102a9b6f982f69a4a62>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SaveArtworkToListsButtonQuery$variables = {
   id: string;

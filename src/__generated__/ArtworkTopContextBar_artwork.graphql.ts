@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<01416075ff4659528ac5f1d30b9519ad>>
+ * @generated SignedSource<<e4cc07d5b380890df580195390e7b362>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkTopContextBar_artwork$data = {
   readonly context: {

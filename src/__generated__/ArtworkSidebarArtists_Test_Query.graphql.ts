@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f8b9e44bc63edbf955aaa45297c3654c>>
+ * @generated SignedSource<<4d02bac9b644bff6bdf176d9aa87f05f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarArtists_Test_Query$variables = Record<PropertyKey, never>;
 export type ArtworkSidebarArtists_Test_Query$data = {
@@ -98,7 +98,13 @@ return {
           },
           {
             "alias": null,
-            "args": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "shallow",
+                "value": true
+              }
+            ],
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artists",
@@ -120,7 +126,7 @@ return {
               },
               (v1/*: any*/)
             ],
-            "storageKey": null
+            "storageKey": "artists(shallow:true)"
           },
           (v1/*: any*/)
         ],
@@ -129,7 +135,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ad2720fe53b17d686c2a6f35ae1f81d6",
+    "cacheID": "4f548eddf761c91ffb59e62c4904858e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -154,7 +160,7 @@ return {
     },
     "name": "ArtworkSidebarArtists_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarArtists_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarArtists_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarArtists_artwork on Artwork {\n  culturalMaker\n  artists {\n    slug\n    name\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarArtists_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarArtists_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarArtists_artwork on Artwork {\n  culturalMaker\n  artists(shallow: true) {\n    slug\n    name\n    id\n  }\n}\n"
   }
 };
 })();

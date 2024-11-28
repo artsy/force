@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<06c93ad8734d584b0eea10ef868f6f4c>>
+ * @generated SignedSource<<a4674660a91297016ccc35585c243d78>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairArticlesQuery$variables = {
   id: string;

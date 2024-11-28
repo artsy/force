@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d9c295c20d65490fddc008c11a3c1801>>
+ * @generated SignedSource<<bf6e96278898468c72b54bba3000d0dc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type jobsRoutes_JobsQuery$variables = Record<PropertyKey, never>;
 export type jobsRoutes_JobsQuery$data = {

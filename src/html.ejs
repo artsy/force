@@ -36,6 +36,8 @@
     <%- htmlWebpackPlugin.tags.headTags.map((originalTag) => { const tag = { ...originalTag, attributes: { ...originalTag.attributes } }; tag.attributes['src'] = "<" + "%= cdnUrl %" + ">" + originalTag.attributes['src']; return tag; }) %>
   <%% } %>
 
+  <%%- content.linkPreloadTags.join("") %>
+
   <%%- content.head %>
   <%%- content.style %>
   <%%- content.data %>
@@ -45,6 +47,9 @@
   <!-- Inject route-level bundle-split scripts from loadable-components -->
   <!-- Other scripts are injected via HTMLWebpackPlugin during webpack build time -->
   <%%- content.scripts %>
+
+  <div id="react-modal-container"></div>
+  <div id="react-root"><%%- content.body %></div>
 
   <%% if (!disable.scripts) { %>
     <!-- String concatenation is needed allow outputting a template tag -->
@@ -57,8 +62,6 @@
     }}();
   </script>
   <%% } %>
-
-  <div id="react-modal-container"></div>
-  <div id="react-root"><%%- content.body %></div>
 </body>
+
 </html>

@@ -89,7 +89,7 @@ export const orderRoutes: RouteProps[] = [
     path: "/order(2|s)/:orderID",
     layout: "LogoOnly",
     Component: OrderApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       OrderApp.preload()
       OfferRoute.preload()
     },

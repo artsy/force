@@ -10,14 +10,14 @@ import { useRouter } from "System/Hooks/useRouter"
 import { FlashBanner_me$data } from "__generated__/FlashBanner_me.graphql"
 
 interface FlashBannerProps {
-  me?: FlashBanner_me$data
+  me?: FlashBanner_me$data | null
 }
 
 /**
  * The component responsible for selecting a determining and
  * displaying a flash message on the homepage.
  */
-const FlashBanner: FC<FlashBannerProps> = ({ me }) => {
+const FlashBanner: FC<React.PropsWithChildren<FlashBannerProps>> = ({ me }) => {
   const {
     match: { location },
   } = useRouter()
@@ -80,10 +80,16 @@ export const FlashBannerFragmentContainer = createFragmentContainer(
   }
 )
 
-export const FlashBannerQueryRenderer: FC = () => {
+export const FlashBannerQueryRenderer: FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   const { user } = useSystemContext()
 
-  return user ? (
+  if (!user) {
+    return <FlashBannerFragmentContainer me={null} />
+  }
+
+  return (
     <SystemQueryRenderer<FlashBannerQuery>
       query={graphql`
         query FlashBannerQuery {
@@ -95,17 +101,15 @@ export const FlashBannerQueryRenderer: FC = () => {
       render={({ props, error }) => {
         if (error) {
           console.error(error)
-          return <FlashBannerFragmentContainer />
+          return <FlashBannerFragmentContainer me={null} />
         }
 
         if (!props?.me) {
-          return <FlashBannerFragmentContainer />
+          return <FlashBannerFragmentContainer me={null} />
         }
 
         return <FlashBannerFragmentContainer me={props.me} />
       }}
     />
-  ) : (
-    <FlashBannerFragmentContainer />
   )
 }

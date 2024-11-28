@@ -13,7 +13,7 @@ interface MyCollectionArworkSearchProps {
   query?: string | null
 }
 
-export const MyCollectionArworkSearch: React.FC<MyCollectionArworkSearchProps> = ({
+export const MyCollectionArworkSearch: React.FC<React.PropsWithChildren<MyCollectionArworkSearchProps>> = ({
   artistId,
   onClick,
   onSkip,
@@ -111,10 +111,10 @@ export const MyCollectionArworkSearch: React.FC<MyCollectionArworkSearchProps> =
   )
 }
 
-const NoResults: React.FC<{
+const NoResults: React.FC<React.PropsWithChildren<{
   onSkip: () => void
   query?: string | null
-}> = ({ onSkip, query }) => {
+}>> = ({ onSkip, query }) => {
   return (
     <Box my={4}>
       <Text variant={["xs", "sm-display"]} flexWrap="wrap">

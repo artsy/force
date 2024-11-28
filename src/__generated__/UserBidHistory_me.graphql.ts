@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<76bef43c9946562b1e570c48a05c7923>>
+ * @generated SignedSource<<b457fe4709099f2980871d7d6f4f3442>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type UserBidHistory_me$data = {
   readonly inactiveLotStandings: ReadonlyArray<{

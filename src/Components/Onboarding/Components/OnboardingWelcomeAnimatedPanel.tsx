@@ -82,7 +82,7 @@ const Down = styled(Box)`
   animation: ${down} ${DURATION} linear infinite;
 `
 
-const Duplicate: FC = ({ children }) => {
+const Duplicate: FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <>
       {children}

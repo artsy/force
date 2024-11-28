@@ -7,7 +7,7 @@ import { NotificationsPillsQuery } from "__generated__/NotificationsPillsQuery.g
 import { compact, times } from "lodash"
 import { graphql } from "react-relay"
 
-export const NotificationsPills: React.FC = () => {
+export const NotificationsPills: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { tracking } = useNotificationsTracking()
   const { setCurrentNotificationFilterType, state } = useNotificationsContext()
 
@@ -62,7 +62,7 @@ const notificationsPillsQuery = graphql`
   }
 `
 
-export const NotificationsPillsPlaceholder: React.FC = () => (
+export const NotificationsPillsPlaceholder: React.FC<React.PropsWithChildren<unknown>> = () => (
   <Flex gap={0.5}>
     {times(3).map(index => (
       <SkeletonBox key={`pill-${index}`} width={70} height={30} />

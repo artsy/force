@@ -11,7 +11,7 @@ interface WayToBuy {
   key: SearchCriteriaAttributeKeys
 }
 
-export const WaysToBuy: FC = () => {
+export const WaysToBuy: FC<React.PropsWithChildren<unknown>> = () => {
   const { state, dispatch } = useAlertContext()
 
   const checkboxes: WayToBuy[] = entries(WAYS_TO_BUY_OPTIONS).map(

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c26224544ac7fc65646961163df8d9cc>>
+ * @generated SignedSource<<38839379e372a74cf446ba51fb0d3a96>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeleteBankAccountInput = {
   clientMutationId?: string | null | undefined;

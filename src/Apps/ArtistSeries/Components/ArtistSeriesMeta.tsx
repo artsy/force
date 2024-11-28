@@ -8,7 +8,7 @@ interface ArtistSeriesMetaProps {
   artistSeries: ArtistSeriesMeta_artistSeries$data
 }
 
-export const ArtistSeriesMeta: React.FC<ArtistSeriesMetaProps> = props => {
+export const ArtistSeriesMeta: React.FC<React.PropsWithChildren<ArtistSeriesMetaProps>> = props => {
   const { artistSeries } = props
   const artist = artistSeries?.artists?.[0]
   const artistName = artist?.name ? `${artist.name}’s ` : ""

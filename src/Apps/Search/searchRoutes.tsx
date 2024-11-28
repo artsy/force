@@ -76,7 +76,7 @@ const entityTabs = Object.entries(tabsToEntitiesMap).map(([key, entities]) => {
   return {
     path: key,
     getComponent: () => SearchResultsEntity,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       SearchResultsEntity.preload()
     },
     prepareVariables: (params, { location }) => {
@@ -105,7 +105,7 @@ export const searchRoutes: RouteProps[] = [
     path: "/search",
     getComponent: () => SearchApp,
     onServerSideRender: redirectQueryToTerm,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       SearchApp.preload()
     },
     query: graphql`
@@ -120,7 +120,7 @@ export const searchRoutes: RouteProps[] = [
       {
         path: "",
         getComponent: () => SearchResultsArtworks,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           SearchResultsArtworks.preload()
         },
         prepareVariables: (params, { location, context }) => {
@@ -165,7 +165,7 @@ export const searchRoutes: RouteProps[] = [
       {
         path: "artists",
         getComponent: () => SearchResultsArtists,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           SearchResultsArtists.preload()
         },
         prepareVariables,

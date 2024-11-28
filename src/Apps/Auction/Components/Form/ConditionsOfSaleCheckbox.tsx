@@ -1,15 +1,16 @@
 import { Checkbox, Spacer, Text } from "@artsy/palette"
-import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
+import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
+
 import { RouterLink } from "System/Components/RouterLink"
 
-export const ConditionsOfSaleCheckbox: React.FC = () => {
+export const ConditionsOfSaleCheckbox: React.FC<React.PropsWithChildren<unknown>> = () => {
   const {
     values,
     touched,
     errors,
     setFieldTouched,
     setFieldValue,
-  } = useFormContext()
+  } = useAuctionFormContext()
 
   const showErrorMessage = !!(touched.agreeToTerms && errors.agreeToTerms)
 

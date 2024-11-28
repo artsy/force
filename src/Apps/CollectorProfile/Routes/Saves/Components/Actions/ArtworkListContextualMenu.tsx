@@ -21,7 +21,7 @@ interface ArtworkListContextualMenuProps {
   artworkList: ArtworkListEntity
 }
 
-export const ArtworkListContextualMenu: React.FC<ArtworkListContextualMenuProps> = ({
+export const ArtworkListContextualMenu: React.FC<React.PropsWithChildren<ArtworkListContextualMenuProps>> = ({
   artworkList,
 }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)

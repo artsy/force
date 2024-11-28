@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<51f8852268f743c9b31a706a0ecd24b6>>
+ * @generated SignedSource<<8d07a0d77eec0c825e913fa31dd4f343>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairBoothRail_show$data = {
   readonly counts: {

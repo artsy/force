@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4d67c439714a985efd50eb92004ff97e>>
+ * @generated SignedSource<<c6e6e1f77ce48bc3c460c97369c909d5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowArtworksEmptyState_show$data = {
   readonly isFairBooth: boolean | null | undefined;

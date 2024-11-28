@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d951e10ce824dca7c715363168780ae8>>
+ * @generated SignedSource<<011fa0e8f523b4d93ffc8004f9a7edc6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
@@ -59,7 +59,7 @@ export type RejectTestQuery$rawResponse = {
             readonly date: string | null | undefined;
             readonly id: string;
             readonly image: {
-              readonly resized_ArtworkSummaryItem: {
+              readonly resized: {
                 readonly url: string;
               } | null | undefined;
             } | null | undefined;
@@ -141,7 +141,7 @@ export type RejectTestQuery$rawResponse = {
             readonly date: string | null | undefined;
             readonly id: string;
             readonly image: {
-              readonly resized_ArtworkSummaryItem: {
+              readonly resized: {
                 readonly url: string;
               } | null | undefined;
             } | null | undefined;
@@ -445,12 +445,12 @@ return {
                             "plural": false,
                             "selections": [
                               {
-                                "alias": "resized_ArtworkSummaryItem",
+                                "alias": null,
                                 "args": [
                                   {
                                     "kind": "Literal",
                                     "name": "width",
-                                    "value": 55
+                                    "value": 185
                                   }
                                 ],
                                 "concreteType": "ResizedImageUrl",
@@ -466,7 +466,7 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "storageKey": "resized(width:55)"
+                                "storageKey": "resized(width:185)"
                               }
                             ],
                             "storageKey": null
@@ -664,7 +664,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a407aa503498949904c5725749d6afef",
+    "cacheID": "c7e00a6ed57ba1b5fb7abb18390086c4",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -741,13 +741,13 @@ return {
           "plural": false,
           "type": "Image"
         },
-        "order.lineItems.edges.node.artworkVersion.image.resized_ArtworkSummaryItem": {
+        "order.lineItems.edges.node.artworkVersion.image.resized": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "order.lineItems.edges.node.artworkVersion.image.resized_ArtworkSummaryItem.url": (v7/*: any*/),
+        "order.lineItems.edges.node.artworkVersion.image.resized.url": (v7/*: any*/),
         "order.lineItems.edges.node.artworkVersion.title": (v10/*: any*/),
         "order.lineItems.edges.node.id": (v8/*: any*/),
         "order.lineItems.edges.node.shippingQuoteOptions": {
@@ -822,7 +822,7 @@ return {
     },
     "name": "RejectTestQuery",
     "operationKind": "query",
-    "text": "query RejectTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Reject_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  currencyCode\n  mode\n  source\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          slug\n          shippingOrigin\n          isUnlisted\n          id\n        }\n        artworkVersion {\n          date\n          artistNames\n          title\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment OrderStepper_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  mode\n  paymentSet\n  requestedFulfillment {\n    __typename\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      id\n    }\n    ... on BankAccount {\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        shippingQuoteOptions {\n          edges {\n            node {\n              isSelected\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Reject_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  stateExpiresAt\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      createdAt\n      id\n    }\n  }\n  ...ArtworkSummaryItem_order\n  ...OrderStepper_order\n}\n"
+    "text": "query RejectTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Reject_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  currencyCode\n  mode\n  source\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          slug\n          shippingOrigin\n          isUnlisted\n          id\n        }\n        artworkVersion {\n          date\n          artistNames\n          title\n          image {\n            resized(width: 185) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment OrderStepper_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  mode\n  paymentSet\n  requestedFulfillment {\n    __typename\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      id\n    }\n    ... on BankAccount {\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        shippingQuoteOptions {\n          edges {\n            node {\n              isSelected\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Reject_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  stateExpiresAt\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      createdAt\n      id\n    }\n  }\n  ...ArtworkSummaryItem_order\n  ...OrderStepper_order\n}\n"
   }
 };
 })();

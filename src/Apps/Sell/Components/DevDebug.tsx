@@ -2,7 +2,7 @@ import { Box } from "@artsy/palette"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { useFormikContext } from "formik"
 
-export const DevDebug: React.FC = () => {
+export const DevDebug: React.FC<React.PropsWithChildren<unknown>> = () => {
   const context = useSellFlowContext()
   const formik = useFormikContext()
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<011c8fe42c1140faa9da735772d131d9>>
+ * @generated SignedSource<<fcdf25ce37edf80f9b6b0b13f00072b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsSavesCategories_me$data = {
   readonly followsAndSaves: {

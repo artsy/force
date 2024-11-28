@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b7ee285265d9326c152637ba01068f02>>
+ * @generated SignedSource<<2dd6304af979112b3e27a8bfb5eaf120>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSponsor_sponsor$data = {
   readonly partnerDarkLogo: string | null | undefined;

@@ -13,7 +13,7 @@ interface MyCollectionArtworkSubmitForSaleProps {
   artwork: MyCollectionArtworkSubmitForSale_artwork$key
 }
 
-export const MyCollectionArtworkSubmitForSale: React.FC<MyCollectionArtworkSubmitForSaleProps> = props => {
+export const MyCollectionArtworkSubmitForSale: React.FC<React.PropsWithChildren<MyCollectionArtworkSubmitForSaleProps>> = props => {
   const { trackEvent } = useTracking()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const { router } = useRouter()
@@ -89,7 +89,7 @@ export const MyCollectionArtworkSubmitForSale: React.FC<MyCollectionArtworkSubmi
 const MyCollectionArtworkSubmitForSaleFragment = graphql`
   fragment MyCollectionArtworkSubmitForSale_artwork on Artwork {
     internalID
-    artist {
+    artist(shallow: true) {
       internalID
       slug
       targetSupply {

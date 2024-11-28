@@ -6,7 +6,7 @@ import {
 } from "Components/Artwork/ManageArtworkForSaves"
 import { FC } from "react"
 
-export const SelectArtworkListsHeader: FC = () => {
+export const SelectArtworkListsHeader: FC<React.PropsWithChildren<unknown>> = () => {
   const { state, dispatch } = useManageArtworkForSavesContext()
   const artwork = state.artwork
 

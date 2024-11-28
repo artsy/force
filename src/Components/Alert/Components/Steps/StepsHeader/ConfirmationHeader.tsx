@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { Text } from "@artsy/palette"
 
-export const ConfirmationHeader: FC = () => {
+export const ConfirmationHeader: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <Text variant="lg">Your alert has been saved.</Text>

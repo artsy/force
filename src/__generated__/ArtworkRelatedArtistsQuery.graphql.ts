@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b2039a9e88bcb54a12c4414fca0b37d3>>
+ * @generated SignedSource<<bd3151e313b999a558839cef46e5c726>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkRelatedArtistsQuery$variables = {
   slug: string;
@@ -120,7 +120,13 @@ return {
           (v2/*: any*/),
           {
             "alias": null,
-            "args": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "shallow",
+                "value": true
+              }
+            ],
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artist",
@@ -338,7 +344,7 @@ return {
               },
               (v5/*: any*/)
             ],
-            "storageKey": null
+            "storageKey": "artist(shallow:true)"
           },
           (v5/*: any*/)
         ],
@@ -347,12 +353,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f32020bfc41868b3a6fefc5c3f69cf19",
+    "cacheID": "898531577d8c4fe0c194bfb8f9de1871",
     "id": null,
     "metadata": {},
     "name": "ArtworkRelatedArtistsQuery",
     "operationKind": "query",
-    "text": "query ArtworkRelatedArtistsQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...ArtworkRelatedArtists_artwork\n    id\n  }\n}\n\nfragment ArtworkRelatedArtists_artwork on Artwork {\n  slug\n  artist {\n    href\n    related {\n      artistsConnection(kind: MAIN, first: 6, after: \"\") {\n        pageInfo {\n          hasNextPage\n          endCursor\n        }\n        edges {\n          node {\n            ...EntityHeaderArtist_artist\n            id\n            __typename\n          }\n          cursor\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ArtworkRelatedArtistsQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...ArtworkRelatedArtists_artwork\n    id\n  }\n}\n\nfragment ArtworkRelatedArtists_artwork on Artwork {\n  slug\n  artist(shallow: true) {\n    href\n    related {\n      artistsConnection(kind: MAIN, first: 6, after: \"\") {\n        pageInfo {\n          hasNextPage\n          endCursor\n        }\n        edges {\n          node {\n            ...EntityHeaderArtist_artist\n            id\n            __typename\n          }\n          cursor\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

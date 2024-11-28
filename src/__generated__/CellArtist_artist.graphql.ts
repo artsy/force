@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<61eb5bb41138e1275f67c5ac509a955a>>
+ * @generated SignedSource<<91cb41911b35d3de44c6721e7ae91ec5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CellArtist_artist$data = {
   readonly coverArtwork: {

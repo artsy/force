@@ -24,7 +24,7 @@ interface HomeAuctionLotsForYouRailProps {
   artworksForUser: HomeAuctionLotsForYouRail_artworksForUser$data
 }
 
-const HomeAuctionLotsForYouRail: React.FC<HomeAuctionLotsForYouRailProps> = ({
+const HomeAuctionLotsForYouRail: React.FC<React.PropsWithChildren<HomeAuctionLotsForYouRailProps>> = ({
   artworksForUser,
 }) => {
   const { trackEvent } = useTracking()
@@ -95,7 +95,7 @@ export const HomeAuctionLotsForYouRailFragmentContainer = createFragmentContaine
   }
 )
 
-export const HomeAuctionLotsForYouRailQueryRenderer: React.FC = () => {
+export const HomeAuctionLotsForYouRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

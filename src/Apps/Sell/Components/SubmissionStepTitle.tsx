@@ -1,6 +1,6 @@
 import { Text } from "@artsy/palette"
 
-export const SubmissionStepTitle: React.FC = ({ children }) => {
+export const SubmissionStepTitle: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <Text
       variant={["lg-display", "xl"]}

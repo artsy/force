@@ -16,7 +16,7 @@ interface Props {
   onClose: () => void
 }
 
-export const DeleteArtworkListModal: React.FC<Props> = ({
+export const DeleteArtworkListModal: React.FC<React.PropsWithChildren<Props>> = ({
   artworkList,
   onClose,
 }) => {

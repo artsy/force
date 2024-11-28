@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { OrderInformationTestQuery } from "__generated__/OrderInformationTestQuery.graphql"
 import { ConversationOrderInformation } from "Apps/Conversations/components/Details/OrderInformation/ConversationOrderInformation"
 

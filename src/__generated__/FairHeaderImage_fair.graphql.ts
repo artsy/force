@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<414d9eaae12724b7d60140aa062035e6>>
+ * @generated SignedSource<<d666f6a72841fc6a74adf36655ee9c09>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairHeaderImage_fair$data = {
   readonly image: {

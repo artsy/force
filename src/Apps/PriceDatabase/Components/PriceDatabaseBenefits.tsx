@@ -13,7 +13,7 @@ import { ReactElement } from "react"
 import * as React from "react"
 import { Media } from "Utils/Responsive"
 
-export const PriceDatabaseBenefits: React.FC = () => {
+export const PriceDatabaseBenefits: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Flex flexDirection="column">
       <GridColumns gridRowGap={[2, 0]}>
@@ -88,12 +88,12 @@ export const PriceDatabaseBenefits: React.FC = () => {
   )
 }
 
-const Section: React.FC<{
+const Section: React.FC<React.PropsWithChildren<{
   title: string
   text: string
   jsx: ReactElement
   jsxPosition?: "left" | "right"
-}> = ({ title, text, jsx, jsxPosition = "left" }) => {
+}>> = ({ title, text, jsx, jsxPosition = "left" }) => {
   return (
     <>
       <Media lessThan="md">
@@ -135,14 +135,14 @@ const Section: React.FC<{
   )
 }
 
-const SectionImage: React.FC<{
+const SectionImage: React.FC<React.PropsWithChildren<{
   src: string
   srcSet: string
   alt: string
   artistName?: string
   artworkName?: string
   artworkCopyright?: string
-}> = ({ src, srcSet, alt, artistName, artworkName, artworkCopyright }) => {
+}>> = ({ src, srcSet, alt, artistName, artworkName, artworkCopyright }) => {
   return (
     <ResponsiveBox
       aspectWidth={800}

@@ -1,4 +1,4 @@
-import { useState, FC } from "react"
+import { useState, FC, useEffect } from "react"
 import * as Yup from "yup"
 import {
   Button,
@@ -61,7 +61,7 @@ interface FormValues {
   setAsDefault: boolean
 }
 
-export const AddressModal: FC<AddressModalProps> = ({
+export const AddressModal: FC<React.PropsWithChildren<AddressModalProps>> = ({
   closeModal,
   addressModalAction,
   onSuccess,
@@ -158,26 +158,49 @@ export const AddressModal: FC<AddressModalProps> = ({
         initialValues={initialValues}
         onSubmit={handleSubmit}
       >
-        {
-          <AddressModalForm
-            addressModalAction={addressModalAction}
-            onClose={closeModal}
-            onDeleteAddress={handleDeleteAddress}
-          />
-        }
+        <AddressModalForm
+          addressModalAction={addressModalAction}
+          onClose={closeModal}
+          onDeleteAddress={handleDeleteAddress}
+        />
       </Formik>
     </>
   )
 }
 
-const AddressModalForm: FC<{
+const AddressModalForm: FC<React.PropsWithChildren<{
   onClose: () => void
   addressModalAction: AddressModalProps["addressModalAction"]
   onDeleteAddress: (address: SavedAddressType) => Promise<SavedAddressResult>
-}> = ({ addressModalAction, onClose, onDeleteAddress }) => {
+}>> = ({ addressModalAction, onClose, onDeleteAddress }) => {
   const shippingContext = useShippingContext()
   const formikContext = useFormikContext<FormValues>()
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false)
+
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    setFieldValue,
+    setFieldTouched,
+  } = formikContext
+
+  const attributeErrorFieldsForEdit =
+    addressModalAction.type === "edit"
+      ? Object.keys(errors.attributes || {})
+      : []
+
+  // Touch fields that have errors on edit
+  useEffect(() => {
+    if (attributeErrorFieldsForEdit.length > 0) {
+      attributeErrorFieldsForEdit.forEach(field => {
+        setFieldTouched(`attributes.${field}`, true)
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [attributeErrorFieldsForEdit.length])
 
   if (!addressModalAction) {
     return null
@@ -197,15 +220,6 @@ const AddressModalForm: FC<{
       }
     }
   }
-
-  const {
-    values,
-    touched,
-    errors,
-    handleChange,
-    handleBlur,
-    setFieldValue,
-  } = formikContext
 
   const handleModalClose = () => {
     formikContext.resetForm()

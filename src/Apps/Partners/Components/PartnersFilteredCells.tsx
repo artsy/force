@@ -28,7 +28,7 @@ interface PartnersFilteredCellsProps {
   relay: RelayPaginationProp
 }
 
-const PartnersFilteredCells: FC<PartnersFilteredCellsProps> = ({
+const PartnersFilteredCells: FC<React.PropsWithChildren<PartnersFilteredCellsProps>> = ({
   viewer,
   relay,
 }) => {
@@ -149,7 +149,7 @@ const PartnersFilteredCellsPaginationContainer = createPaginationContainer(
   }
 )
 
-const PartnersFilteredCellsPlaceholder: FC = () => {
+const PartnersFilteredCellsPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Skeleton>
       <SkeletonText variant="lg-display" mb={4}>
@@ -175,7 +175,7 @@ interface PartnersFilteredCellsQueryRendererProps {
   type: "INSTITUTION" | "GALLERY"
 }
 
-export const PartnersFilteredCellsQueryRenderer: FC<PartnersFilteredCellsQueryRendererProps> = ({
+export const PartnersFilteredCellsQueryRenderer: FC<React.PropsWithChildren<PartnersFilteredCellsQueryRendererProps>> = ({
   near,
   category,
   type,

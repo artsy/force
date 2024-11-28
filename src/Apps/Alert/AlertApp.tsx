@@ -4,7 +4,7 @@ import { AlertProvider } from "Components/Alert/AlertProvider"
 import { Debug } from "Components/Alert/Components/Debug"
 import { Steps } from "Components/Alert/Components/Steps"
 
-export const AlertApp: FC = () => {
+export const AlertApp: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <AlertProvider initialCriteria={{ artistIDs: ["andy-warhol"] }}>
       <Debug />

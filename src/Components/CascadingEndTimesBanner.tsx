@@ -8,7 +8,7 @@ interface CascadingEndTimesBannerProps {
   sale: CascadingEndTimesBanner_sale$data
 }
 
-const CascadingEndTimesBanner: React.FC<CascadingEndTimesBannerProps> = ({
+const CascadingEndTimesBanner: React.FC<React.PropsWithChildren<CascadingEndTimesBannerProps>> = ({
   sale,
 }) => {
   const helpArticleLink = getENV("CASCADING_AUCTION_HELP_ARTICLE_LINK")

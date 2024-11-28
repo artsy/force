@@ -25,7 +25,7 @@ export interface MyCollectionEditArtworkProps {
   artwork?: MyCollectionEditArtwork_artwork$data
 }
 
-export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = ({
+export const MyCollectionEditArtwork: React.FC<React.PropsWithChildren<MyCollectionEditArtworkProps>> = ({
   artwork,
 }) => {
   const { localImages, addLocalImage, removeLocalImage } = useLocalImageState()
@@ -136,7 +136,7 @@ export const MyCollectionEditArtworkFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment MyCollectionEditArtwork_artwork on Artwork {
-        artist {
+        artist(shallow: true) {
           internalID
           initials
           name

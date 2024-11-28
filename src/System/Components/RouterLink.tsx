@@ -34,7 +34,9 @@ export type RouterLinkProps = Omit<
     enablePrefetch?: boolean
   }
 
-export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
+export const RouterLink: React.FC<React.PropsWithChildren<React.PropsWithChildren<
+  RouterLinkProps
+>>> = React.forwardRef(
   ({ inline, to, enablePrefetch = true, ...rest }, _ref) => {
     const systemContext = useSystemContext()
     const { router } = useRouter()
@@ -121,9 +123,7 @@ const routerLinkValidator = (prop: string) => {
   return VALID_ROUTER_LINK_PROPS.includes(prop)
 }
 
-export const RouterAwareLink: React.FC<
-  LinkPropsSimple & RouterLinkMixinProps
-> = styled(Link).withConfig({
+export const RouterAwareLink: React.FC<React.PropsWithChildren<LinkPropsSimple & RouterLinkMixinProps>> = styled(Link).withConfig({
   shouldForwardProp: (prop: string) => {
     return isPropValid(prop) || routerLinkValidator(prop)
   },
@@ -137,9 +137,7 @@ export const RouterAwareLink: React.FC<
   ${routerLinkMixin}
 `
 
-export const RouterUnawareLink: React.FC<
-  React.AnchorHTMLAttributes<HTMLAnchorElement> & RouterLinkMixinProps
-> = styled.a`
+export const RouterUnawareLink: React.FC<React.PropsWithChildren<React.AnchorHTMLAttributes<HTMLAnchorElement> & RouterLinkMixinProps>> = styled.a`
   :hover {
     color: ${props => props.inline && themeGet("colors.blue100")};
   }

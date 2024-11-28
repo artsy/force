@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen, within, fireEvent, waitFor } from "@testing-library/react"
 import { SubmittedOrderModalFragmentContainer } from ".."
 

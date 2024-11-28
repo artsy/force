@@ -19,7 +19,7 @@ export interface PartnerArtistDetailsListProps {
 
 const PAGE_SIZE = 10
 
-export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> = ({
+export const PartnerArtistDetailsList: React.FC<React.PropsWithChildren<PartnerArtistDetailsListProps>> = ({
   partner,
   relay,
 }) => {
@@ -142,9 +142,9 @@ export const PartnerArtistDetailsListPaginationContainer = createPaginationConta
   }
 )
 
-export const PartnerArtistDetailsListRenderer: React.FC<{
+export const PartnerArtistDetailsListRenderer: React.FC<React.PropsWithChildren<{
   partnerId: string
-}> = ({ partnerId, ...rest }) => {
+}>> = ({ partnerId, ...rest }) => {
   return (
     <SystemQueryRenderer<PartnerArtistDetailsListQuery>
       lazyLoad

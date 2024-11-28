@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3ae10cdb064c7de76df69f523262d553>>
+ * @generated SignedSource<<6cd3ef78523fba040ee137ba4104c021>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type OfferSettingsListItem_item$data = {
   readonly artworksConnection: {

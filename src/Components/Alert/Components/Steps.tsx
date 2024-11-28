@@ -4,7 +4,7 @@ import { Details } from "Components/Alert/Components/Steps/Details"
 import { Filters } from "Components/Alert/Components/Steps/Filters"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 
-export const Steps: FC = () => {
+export const Steps: FC<React.PropsWithChildren<unknown>> = () => {
   const { current } = useAlertContext()
 
   switch (current) {

@@ -3,10 +3,11 @@ import { getServerParam } from "Utils/getServerParam"
 import { renderToString } from "react-dom/server"
 import loadAssetManifest from "Server/manifest"
 import path from "path"
+import { ENABLE_SSR_STREAMING } from "Server/config"
 import { getENV } from "Utils/getENV"
 import { ServerAppResults } from "System/Router/serverRouter"
-import { Transform } from "stream"
-import { ENABLE_SSR_STREAMING } from "Server/config"
+import { getWebpackEarlyHints } from "Server/getWebpackEarlyHints"
+import { RenderToStreamResult } from "System/Router/Utils/renderToStream"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
@@ -27,7 +28,7 @@ interface RenderServerAppProps extends ServerAppResults {
   mount?: boolean
   req: ArtsyRequest
   res: ArtsyResponse
-  stream?: Transform
+  stream?: RenderToStreamResult
 }
 
 export const renderServerApp = ({
@@ -49,12 +50,15 @@ export const renderServerApp = ({
 
   const scripts = extractScriptTags?.()
 
+  const { linkPreloadTags } = getWebpackEarlyHints()
+
   const options = {
     cdnUrl: NODE_ENV === "production" ? CDN_URL : "",
     content: {
       body: html,
       data: sharify.script(),
       head: headTagsString,
+      linkPreloadTags,
       scripts,
       style: styleTags,
     },
@@ -68,7 +72,6 @@ export const renderServerApp = ({
     fontUrl: WEBFONT_URL,
     imageCdnUrl: GEMINI_CLOUDFRONT_URL,
     icons: {
-      // TODO: Move to new assset pipeline, this adds the CDN for images.
       favicon: res.locals.asset("/images/favicon.ico"),
       faviconSVG: res.locals.asset("/images/favicon.svg"),
       appleTouchIcon: res.locals.asset("/images/apple-touch-icon.png"),
@@ -78,7 +81,6 @@ export const renderServerApp = ({
       openSearch: MANIFEST.lookup("/images/opensearch.xml"),
       webmanifest: MANIFEST.lookup("/images/manifest.webmanifest"),
     },
-    // TODO: Post-release review that sharify is still used in the template.
     sd: sharify.data,
   }
 
@@ -86,7 +88,7 @@ export const renderServerApp = ({
 
   res
     .status(statusCode)
-    .render(`${PUBLIC_DIR}/html.ejs`, options, (error, html) => {
+    .render(`${PUBLIC_DIR}/html.ejs`, options, async (error, html) => {
       if (error) {
         console.error(error)
 
@@ -94,24 +96,19 @@ export const renderServerApp = ({
           .status(500)
           .send("Internal Server Error: Error rendering server app")
       } else {
-        // Stream or send HTML response
         if (ENABLE_SSR_STREAMING && stream) {
           res.write(html.split('<div id="react-root">')[0])
 
-          // Write tag that React will mount to
+          // React mount point
           res.write('<div id="react-root">')
+          const { passThroughStream, transform } = stream.initStream()
 
           // Start streaming HTML response
-          stream.pipe(res, { end: false })
+          passThroughStream.pipe(res)
 
-          stream.on("end", () => {
-            res.write("</div>")
-
-            // Append scripts at the end
-            res.write(`${scripts}`)
-            res.write("</body></html>")
-
-            // Exit stream
+          // Stream transform is the last one to close, so end here
+          transform.on("close", () => {
+            res.write("</div></body></html>")
             res.end()
           })
         } else {

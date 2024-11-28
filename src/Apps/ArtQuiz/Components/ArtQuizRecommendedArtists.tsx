@@ -14,7 +14,7 @@ interface ArtQuizRecommendedArtistsProps {
   me: ArtQuizRecommendedArtists_me$data
 }
 
-const ArtQuizRecommendedArtists: FC<ArtQuizRecommendedArtistsProps> = ({
+const ArtQuizRecommendedArtists: FC<React.PropsWithChildren<ArtQuizRecommendedArtistsProps>> = ({
   me,
 }) => {
   const likedArtists = compact(
@@ -43,7 +43,7 @@ const ArtQuizRecommendedArtistsFragmentContainer = createFragmentContainer(
         quiz {
           savedArtworks {
             isSaved
-            artist {
+            artist(shallow: true) {
               ...ArtQuizRecommendedArtist_artist
               internalID
             }

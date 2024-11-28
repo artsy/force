@@ -26,7 +26,7 @@ export const Default = () => {
   )
 }
 
-const ExampleCell: FC = ({ children }) => (
+const ExampleCell: FC<React.PropsWithChildren<unknown>> = ({ children }) => (
   <Text
     variant="xl"
     bg="black10"

@@ -11,7 +11,7 @@ export const NavBarMobileMenuNavigationContext = React.createContext<{
   pop: () => {},
 })
 
-export const NavBarMobileMenuNavigationProvider: React.FC = ({ children }) => {
+export const NavBarMobileMenuNavigationProvider: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const [path, setPath] = useState<string[]>([])
 
   const push = (entry: string) => {

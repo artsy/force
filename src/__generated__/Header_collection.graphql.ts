@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dae6245012dc29f8169b2d40819930d8>>
+ * @generated SignedSource<<5da7c2a75f24be4520fb4c602c86995e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Header_collection$data = {
   readonly category: string;

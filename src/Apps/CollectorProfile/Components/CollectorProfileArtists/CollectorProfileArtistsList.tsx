@@ -21,7 +21,7 @@ const PAGE_SIZE = 10
 
 interface CollectorProfileArtistsListProps {}
 
-export const CollectorProfileArtistsList: FC<CollectorProfileArtistsListProps> = ({
+export const CollectorProfileArtistsList: FC<React.PropsWithChildren<CollectorProfileArtistsListProps>> = ({
   children,
 }) => {
   const isMounted = useDidMount()
@@ -39,7 +39,7 @@ export const CollectorProfileArtistsList: FC<CollectorProfileArtistsListProps> =
   )
 }
 
-const CollectorProfileArtistsListPlaceholder: FC = () => {
+const CollectorProfileArtistsListPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Stack gap={2}>
       <Box>
@@ -53,7 +53,7 @@ const CollectorProfileArtistsListPlaceholder: FC = () => {
   )
 }
 
-const CollectorProfileArtistsListArtists: FC = () => {
+const CollectorProfileArtistsListArtists: FC<React.PropsWithChildren<unknown>> = () => {
   const {
     router,
     match,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e6cf0a06fd206a8c99a0c40550b24954>>
+ * @generated SignedSource<<5639574c532735a7b8704457e2e9e65f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticlesRail_partner$data = {
   readonly articlesConnection: {

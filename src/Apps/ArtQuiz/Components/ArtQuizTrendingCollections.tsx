@@ -13,7 +13,7 @@ interface ArtQuizTrendingCollectionsProps {
   viewer: ArtQuizTrendingCollections_viewer$data
 }
 
-const ArtQuizTrendingCollections: FC<ArtQuizTrendingCollectionsProps> = ({
+const ArtQuizTrendingCollections: FC<React.PropsWithChildren<ArtQuizTrendingCollectionsProps>> = ({
   viewer,
 }) => {
   if (!viewer.marketingCollections) return null

@@ -1,7 +1,7 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { ShippingLocationRoute } from "Apps/Sell/Routes/AdditionalRoutes/ShippingLocationRoute"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"

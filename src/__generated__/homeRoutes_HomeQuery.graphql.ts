@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1dc8202d367d71e756661ff449f8cff4>>
+ * @generated SignedSource<<6a64e91652985078c79f632168046c81>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type homeRoutes_HomeQuery$variables = {
   private: boolean;

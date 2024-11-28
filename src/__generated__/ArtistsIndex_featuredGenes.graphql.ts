@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<159a5a2bc3528681d862c44118e0ef0b>>
+ * @generated SignedSource<<47eddb51f6fadd4a33c0737da026aeac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistsIndex_featuredGenes$data = ReadonlyArray<{
   readonly genes: ReadonlyArray<{

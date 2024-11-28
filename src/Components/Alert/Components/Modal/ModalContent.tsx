@@ -11,7 +11,7 @@ export interface ModalDialogContentProps
   footer?: React.ReactNode
 }
 
-export const ModalContent: React.FC<ModalDialogContentProps> = ({
+export const ModalContent: React.FC<React.PropsWithChildren<ModalDialogContentProps>> = ({
   children,
   header,
   footer,

@@ -1,5 +1,5 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Box, Flex, ModalBase } from "@artsy/palette"
+import { Box, Flex, ModalBase, Spinner } from "@artsy/palette"
 import { once } from "lodash"
 import * as React from "react"
 import { DeepZoomCloseButton } from "./DeepZoomCloseButton"
@@ -20,7 +20,10 @@ interface DeepZoomProps {
   onClose(): void
 }
 
-const DeepZoom: React.FC<DeepZoomProps> = ({ image, onClose }) => {
+const DeepZoom: React.FC<React.PropsWithChildren<DeepZoomProps>> = ({
+  image,
+  onClose,
+}) => {
   const deepZoomRef = useRef<HTMLDivElement | null>(null)
   const osdViewerRef = useRef<any | null>(null)
 
@@ -79,6 +82,7 @@ const DeepZoom: React.FC<DeepZoomProps> = ({ image, onClose }) => {
           once(() => {
             setSliderState(prevSliderState => ({
               ...prevSliderState,
+              loading: false,
               min: viewer.viewport.getMinZoom(),
               max: viewer.viewport.getMaxZoom(),
               value: viewer.viewport.getHomeZoom(),
@@ -92,7 +96,8 @@ const DeepZoom: React.FC<DeepZoomProps> = ({ image, onClose }) => {
       osdViewerRef.current.destroy()
       osdViewerRef.current = null
     }
-  }, [image.deepZoom])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [image.deepZoom, deepZoomRef?.current])
 
   const zoomBy = (amount: number) => {
     if (!osdViewerRef.current) return
@@ -106,6 +111,7 @@ const DeepZoom: React.FC<DeepZoomProps> = ({ image, onClose }) => {
   }
 
   const [sliderState, setSliderState] = useState({
+    loading: true,
     min: 0,
     max: 1,
     step: 0.001,
@@ -137,7 +143,9 @@ const DeepZoom: React.FC<DeepZoomProps> = ({ image, onClose }) => {
         height="100vh"
         bg="black100"
         style={{ transition: "opacity 250ms", opacity: isMounted ? 1 : 0 }}
-      />
+      >
+        {sliderState.loading && <Spinner color="white100" />}
+      </Box>
 
       <DeepZoomCloseButton
         position="absolute"

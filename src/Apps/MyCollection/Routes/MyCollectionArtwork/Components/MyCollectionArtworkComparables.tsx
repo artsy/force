@@ -9,7 +9,7 @@ interface MyCollectionArtworkComparablesProps {
   artwork: MyCollectionArtworkComparables_artwork$data
 }
 
-const MyCollectionArtworkComparables: React.FC<MyCollectionArtworkComparablesProps> = ({
+const MyCollectionArtworkComparables: React.FC<React.PropsWithChildren<MyCollectionArtworkComparablesProps>> = ({
   artwork,
 }) => {
   if (!artwork.auctionResult) {
@@ -68,7 +68,7 @@ export const MyCollectionArtworkComparablesFragmentContainer = createFragmentCon
             }
           }
         }
-        artist {
+        artist(shallow: true) {
           name
         }
       }

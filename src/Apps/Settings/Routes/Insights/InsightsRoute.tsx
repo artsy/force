@@ -15,7 +15,7 @@ export interface InsightsRouteProps {
   me: InsightsRoute_me$data
 }
 
-const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
+const InsightsRoute: React.FC<React.PropsWithChildren<InsightsRouteProps>> = ({ me }) => {
   const isCareerHighlightEnabled = useFeatureFlag(
     "my-collection-web-phase-7-career-highlights"
   )

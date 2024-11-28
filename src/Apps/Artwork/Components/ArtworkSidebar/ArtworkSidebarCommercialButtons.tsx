@@ -57,7 +57,7 @@ interface ArtworkSidebarCommercialButtonsProps {
 
 const THE_PAST = new Date(0).toISOString()
 
-export const ArtworkSidebarCommercialButtons: React.FC<ArtworkSidebarCommercialButtonsProps> = ({
+export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<ArtworkSidebarCommercialButtonsProps>> = ({
   showPrice = true,
   showButtonActions = true,
   ...props
@@ -506,7 +506,7 @@ interface SaleMessageProps {
   saleMessage: string | null | undefined
 }
 
-const SaleMessage: React.FC<SaleMessageProps> = ({ saleMessage }) => {
+const SaleMessage: React.FC<React.PropsWithChildren<SaleMessageProps>> = ({ saleMessage }) => {
   if (!saleMessage) {
     return null
   }
@@ -525,7 +525,7 @@ interface OfferDisplayProps {
   isAvailable?: boolean | null
 }
 
-const OfferDisplay: React.FC<OfferDisplayProps> = ({
+const OfferDisplay: React.FC<React.PropsWithChildren<OfferDisplayProps>> = ({
   originalPrice,
   offerPrice,
   endAt,
@@ -572,7 +572,7 @@ const OfferDisplay: React.FC<OfferDisplayProps> = ({
   )
 }
 
-const ErrorToast: React.FC<{ onClose(): void; show: boolean }> = ({
+const ErrorToast: React.FC<React.PropsWithChildren<{ onClose(): void; show: boolean }>> = ({
   show,
   onClose,
 }) => {
@@ -654,7 +654,7 @@ const ARTWORK_FRAGMENT = graphql`
   fragment ArtworkSidebarCommercialButtons_artwork on Artwork {
     ...ArtworkSidebarEditionSets_artwork
     isEligibleToCreateAlert
-    artists {
+    artists(shallow: true) {
       internalID
     }
     attributionClass {

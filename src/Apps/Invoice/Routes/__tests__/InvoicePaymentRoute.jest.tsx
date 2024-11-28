@@ -1,5 +1,5 @@
 import { InvoicePaymentRoute } from "Apps/Invoice/Routes/InvoicePaymentRoute"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { InvoicePaymentRoute_Test_Query } from "__generated__/InvoicePaymentRoute_Test_Query.graphql"
 import { MockBoot } from "DevTools/MockBoot"

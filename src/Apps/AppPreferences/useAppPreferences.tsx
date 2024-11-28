@@ -36,7 +36,7 @@ interface AppPreferencesProviderProps {
 
 export const APP_PREFERENCES_SHARIFY_KEY = "APP_PREFERENCES"
 
-export const AppPreferencesProvider: FC<AppPreferencesProviderProps> = ({
+export const AppPreferencesProvider: FC<React.PropsWithChildren<AppPreferencesProviderProps>> = ({
   children,
 }) => {
   const initialPreferences =

@@ -10,7 +10,7 @@ interface AuthenticationInlineDialogProviderProps {
   mode: AuthDialogMode
 }
 
-export const AuthenticationInlineDialogProvider: FC<AuthenticationInlineDialogProviderProps> = ({
+export const AuthenticationInlineDialogProvider: FC<React.PropsWithChildren<AuthenticationInlineDialogProviderProps>> = ({
   children,
   mode,
 }) => {

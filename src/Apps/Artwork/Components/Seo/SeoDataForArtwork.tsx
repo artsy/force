@@ -5,10 +5,8 @@ import { SeoDataForArtwork_artwork$data } from "__generated__/SeoDataForArtwork_
 import { CreativeWork } from "Components/Seo/CreativeWork"
 import { Product } from "Components/Seo/Product"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
 import { get } from "Utils/get"
-
-const { APP_URL } = sd
+import { getENV } from "Utils/getENV"
 
 interface SeoDataForArtworkProps {
   artwork: SeoDataForArtwork_artwork$data
@@ -19,9 +17,9 @@ export const AVAILABILITY = {
   sold: "https://schema.org/OutOfStock",
 }
 
-export const SeoDataForArtwork: React.FC<SeoDataForArtworkProps> = ({
-  artwork,
-}) => {
+export const SeoDataForArtwork: React.FC<React.PropsWithChildren<
+  SeoDataForArtworkProps
+>> = ({ artwork }) => {
   const artistsName = artwork.artistNames
 
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -34,7 +32,7 @@ export const SeoDataForArtwork: React.FC<SeoDataForArtworkProps> = ({
     image: get(artwork, a => a.meta_image.resized.url),
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     description: get(artwork, a => a.meta.description),
-    url: `${APP_URL}${artwork.href}`,
+    url: `${getENV("APP_URL")}${artwork.href}`,
     ...dimensions,
     brand: {
       "@type": "Person",

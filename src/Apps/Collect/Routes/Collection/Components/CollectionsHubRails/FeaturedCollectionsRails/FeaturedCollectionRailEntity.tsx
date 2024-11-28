@@ -13,7 +13,7 @@ interface FeaturedCollectionRailEntityProps {
   index: number
 }
 
-export const FeaturedCollectionRailEntity: FC<FeaturedCollectionRailEntityProps> = ({
+export const FeaturedCollectionRailEntity: FC<React.PropsWithChildren<FeaturedCollectionRailEntityProps>> = ({
   index,
   member,
 }) => {

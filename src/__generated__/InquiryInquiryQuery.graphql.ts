@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a076f798a9103d88fb756837e7580860>>
+ * @generated SignedSource<<09fb8323ac2e3ca03fb39aa09d571f10>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type InquiryInquiryQuery$variables = {
   id: string;
@@ -119,13 +119,19 @@ return {
           },
           {
             "alias": null,
-            "args": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "shallow",
+                "value": true
+              }
+            ],
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artist",
             "plural": false,
             "selections": (v3/*: any*/),
-            "storageKey": null
+            "storageKey": "artist(shallow:true)"
           },
           {
             "alias": null,
@@ -205,12 +211,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cc093c0e6129d8204f1c5df6d594b674",
+    "cacheID": "c2f840615ae54fbab4219e2fc27a2e0d",
     "id": null,
     "metadata": {},
     "name": "InquiryInquiryQuery",
     "operationKind": "query",
-    "text": "query InquiryInquiryQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...InquiryInquiry_artwork\n    id\n  }\n}\n\nfragment InquiryInquiry_artwork on Artwork {\n  internalID\n  title\n  date\n  artist {\n    name\n    id\n  }\n  partner {\n    name\n    id\n  }\n  image {\n    resized(width: 60, height: 45) {\n      height\n      width\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query InquiryInquiryQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...InquiryInquiry_artwork\n    id\n  }\n}\n\nfragment InquiryInquiry_artwork on Artwork {\n  internalID\n  title\n  date\n  artist(shallow: true) {\n    name\n    id\n  }\n  partner {\n    name\n    id\n  }\n  image {\n    resized(width: 60, height: 45) {\n      height\n      width\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

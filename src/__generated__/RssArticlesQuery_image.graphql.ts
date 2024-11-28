@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6bcb51be68ca9df5fb761f2542e13865>>
+ * @generated SignedSource<<31d72b9ed694730e3e3f723e6bbe3764>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RssArticlesQuery_image$data = {
   readonly image: {

@@ -10,7 +10,7 @@ export const priceDatabaseRoutes: RouteProps[] = [
   {
     path: "/price-database",
     getComponent: () => PriceDatabaseApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       PriceDatabaseApp.preload()
     },
   },

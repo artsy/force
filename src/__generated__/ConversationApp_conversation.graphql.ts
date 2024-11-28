@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2cd130c64f40a31b3b1bfcb076995c20>>
+ * @generated SignedSource<<9637cfde68014d4eef4a48f698791496>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationApp_conversation$data = {
   readonly " $fragmentSpreads": FragmentRefs<"ConversationDetails_conversation" | "ConversationHeader_conversation" | "ConversationMessages_conversation" | "ConversationReply_conversation">;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0636ed6317b34ebf5331e0d88a1c21df>>
+ * @generated SignedSource<<0afe4af05dc10861baf4313a4a0a9c41>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type BidTimerLine_artwork$data = {
   readonly collectorSignals: {

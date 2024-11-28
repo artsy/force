@@ -17,7 +17,7 @@ interface ArtistSeriesHeaderProps {
   artistSeries: ArtistSeriesHeader_artistSeries$data
 }
 
-const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = ({
+const ArtistSeriesHeader: React.FC<React.PropsWithChildren<ArtistSeriesHeaderProps>> = ({
   artistSeries: {
     title,
     descriptionFormatted,

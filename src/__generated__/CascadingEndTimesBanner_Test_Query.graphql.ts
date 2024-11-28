@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f0ccf84bafd241061f2e5061ea70a636>>
+ * @generated SignedSource<<e417b4d4275b7064010959b75e8ad1fb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CascadingEndTimesBanner_Test_Query$variables = Record<PropertyKey, never>;
 export type CascadingEndTimesBanner_Test_Query$data = {

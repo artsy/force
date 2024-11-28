@@ -11,9 +11,9 @@ import { CriteriaPillsPlaceholder } from "Components/Alert/Components/CriteriaPi
 import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { Media } from "Utils/Responsive"
 
-export const SavedSearchAlertEditFormPlaceholder: React.FC<{
+export const SavedSearchAlertEditFormPlaceholder: React.FC<React.PropsWithChildren<{
   onCloseClick?: () => void
-}> = ({ onCloseClick }) => {
+}>> = ({ onCloseClick }) => {
   return (
     <>
       <Media greaterThanOrEqual="md">

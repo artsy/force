@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<80d2c1bdfcb491e6ad34c2559ba733d6>>
+ * @generated SignedSource<<1e0cf8c42487ef50c728f82fb4823c28>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertEditForm_alert$data = {
   readonly acquireable: boolean | null | undefined;

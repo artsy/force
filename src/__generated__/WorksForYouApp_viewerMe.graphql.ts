@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1fca45a2eb99a98f5807230ed86ff698>>
+ * @generated SignedSource<<43848262c7a49386edf59f932ac294cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type WorksForYouApp_viewerMe$data = {
   readonly me: {

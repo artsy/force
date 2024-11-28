@@ -10,7 +10,7 @@ import { ReactElement } from "react"
 const render = (ui: ReactElement, options: RenderOptions = {}) =>
   originalRender(ui, { wrapper: Wrapper, ...options })
 
-const Wrapper: React.FC = ({ children }) => {
+const Wrapper: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <ArtworkFilterContextProvider
       aggregations={[

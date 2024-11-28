@@ -7,7 +7,9 @@ interface CriteriaPillsProps {
   editable?: boolean
 }
 
-export const CriteriaPills: FC<CriteriaPillsProps> = ({ editable = true }) => {
+export const CriteriaPills: FC<React.PropsWithChildren<CriteriaPillsProps>> = ({
+  editable = true,
+}) => {
   const { state, dispatch } = useAlertContext()
 
   const labels = state?.preview?.labels
@@ -64,7 +66,9 @@ export const CriteriaPills: FC<CriteriaPillsProps> = ({ editable = true }) => {
   )
 }
 
-export const CriteriaPillsPlaceholder: FC = () => {
+export const CriteriaPillsPlaceholder: FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   return (
     <Flex flexDirection="row">
       <SkeletonBox width={150} height={30} mr={1} />

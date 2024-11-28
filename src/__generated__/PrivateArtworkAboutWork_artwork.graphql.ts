@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7d796811d43adb6324835c92a0a7326f>>
+ * @generated SignedSource<<73c4ae7cdaf1ab86827a3907132ae667>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PrivateArtworkAboutWork_artwork$data = {
   readonly additionalInformationHTML: string | null | undefined;

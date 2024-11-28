@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<60a563aee0a37455f3b7f1b8144f4e76>>
+ * @generated SignedSource<<124bb3cbc4c32355c2da1457b2ba7f62>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarCommercialButtons_me$data = {
   readonly partnerOffersConnection: {

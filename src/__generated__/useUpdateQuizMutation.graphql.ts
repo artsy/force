@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<80e94de58cc24adad924ad28cf9baec9>>
+ * @generated SignedSource<<ad0f6acee85accfc92df2216cb5a842d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type updateQuizMutationInput = {
   artworkId: string;
   clearInteraction?: boolean | null | undefined;

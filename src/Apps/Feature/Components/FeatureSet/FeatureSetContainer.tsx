@@ -8,7 +8,7 @@ export interface FeatureSetContainerProps {
   set: FeatureSetContainer_set$data
 }
 
-export const FeatureSetContainer: React.FC<FeatureSetContainerProps> = ({
+export const FeatureSetContainer: React.FC<React.PropsWithChildren<FeatureSetContainerProps>> = ({
   set,
   children,
 }) => {

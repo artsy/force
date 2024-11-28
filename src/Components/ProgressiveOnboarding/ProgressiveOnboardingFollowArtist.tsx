@@ -19,7 +19,7 @@ const KEY = PROGRESSIVE_ONBOARDING.followArtist
 interface ProgressiveOnboardingFollowArtistProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingFollowArtist__: FC<ProgressiveOnboardingFollowArtistProps> = ({
+export const __ProgressiveOnboardingFollowArtist__: FC<React.PropsWithChildren<ProgressiveOnboardingFollowArtistProps>> = ({
   counts,
   children,
 }) => {

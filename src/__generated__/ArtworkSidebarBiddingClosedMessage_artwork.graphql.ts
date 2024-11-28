@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bdaf0951d11188a392df66eb5e87b0b0>>
+ * @generated SignedSource<<10f5cbf5d87275a48451918d2bd0f482>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarBiddingClosedMessage_artwork$data = {
   readonly artists: ReadonlyArray<{
@@ -55,13 +55,19 @@ return {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "shallow",
+          "value": true
+        }
+      ],
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artists",
       "plural": true,
       "selections": (v0/*: any*/),
-      "storageKey": null
+      "storageKey": "artists(shallow:true)"
     },
     {
       "alias": null,
@@ -108,6 +114,6 @@ return {
 };
 })();
 
-(node as any).hash = "4bc1ff82877b7d961b3d554c24353dc0";
+(node as any).hash = "d727772d2cd83497b1a8cbce2f4d6fe5";
 
 export default node;

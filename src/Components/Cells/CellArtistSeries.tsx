@@ -19,7 +19,7 @@ export interface CellArtistSeriesProps extends Omit<RouterLinkProps, "to"> {
   mode?: "GRID" | "RAIL"
 }
 
-const CellArtistSeries: FC<CellArtistSeriesProps> = ({
+const CellArtistSeries: FC<React.PropsWithChildren<CellArtistSeriesProps>> = ({
   artistSeries,
   mode = "RAIL",
   ...rest
@@ -70,7 +70,7 @@ const CellArtistSeries: FC<CellArtistSeriesProps> = ({
   )
 }
 
-export const CellArtistSeriesPlaceholder: FC = () => {
+export const CellArtistSeriesPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Box width={DEFAULT_CELL_WIDTH}>
       <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">

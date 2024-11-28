@@ -5,7 +5,7 @@ export interface NearbyGalleriesRailPlaceholderProps extends BoxProps {
   count: number
 }
 
-export const NearbyGalleriesRailPlaceholder: React.FC<NearbyGalleriesRailPlaceholderProps> = ({
+export const NearbyGalleriesRailPlaceholder: React.FC<React.PropsWithChildren<NearbyGalleriesRailPlaceholderProps>> = ({
   count,
   ...rest
 }) => {

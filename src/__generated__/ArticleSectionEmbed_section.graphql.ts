@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6387664bb227ca3fa05f7c1564b96855>>
+ * @generated SignedSource<<6211c92fcb5367a9e66b9ecf7cae2c2d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type ArticleSectionEmbedLayout = "COLUMN_WIDTH" | "FILLWIDTH" | "OVERFLOW" | "OVERFLOW_FILLWIDTH" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionEmbed_section$data = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<849e6708e344741ccda14051bd62dda5>>
+ * @generated SignedSource<<8fc54bddcc93b36cf25883030c3eb859>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type UserInterestCategory = "COLLECTED_BEFORE" | "INTERESTED_IN_COLLECTING" | "%future added value";
 export type UserInterestInterestType = "ARTIST" | "GENE" | "%future added value";

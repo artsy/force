@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c4de4c22bc7b97174fd2f3b044af8a3c>>
+ * @generated SignedSource<<4513ac9d41e6f31a4aea94885dce6a6c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistConsignSellArt_artist$data = {
   readonly href: string | null | undefined;

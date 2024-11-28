@@ -9,7 +9,7 @@ interface FairOrganizerPastEventsRailProps {
   fairOrganizer: FairOrganizerPastEventsRail_fairOrganizer$data
 }
 
-export const FairOrganizerPastEventsRail: React.FC<FairOrganizerPastEventsRailProps> = props => {
+export const FairOrganizerPastEventsRail: React.FC<React.PropsWithChildren<FairOrganizerPastEventsRailProps>> = props => {
   const { fairOrganizer } = props
   const pastFairs = extractNodes(fairOrganizer.pastFairs)
 

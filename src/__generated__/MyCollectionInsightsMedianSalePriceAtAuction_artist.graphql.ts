@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bab99f5c72de60fdd722d756dd3fd1ee>>
+ * @generated SignedSource<<6f231ccda3c9e158c56661f98f965445>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionInsightsMedianSalePriceAtAuction_artist$data = {
   readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;

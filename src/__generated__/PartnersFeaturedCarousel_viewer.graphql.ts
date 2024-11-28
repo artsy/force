@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f13b02c0f302379d190c76b561fab5ad>>
+ * @generated SignedSource<<75c98980326fd72919865b5683fc7496>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnersFeaturedCarousel_viewer$data = {
   readonly orderedSet: {

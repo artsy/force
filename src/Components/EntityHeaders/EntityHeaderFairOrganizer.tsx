@@ -13,7 +13,7 @@ export interface EntityHeaderFairOrganizerProps extends BoxProps {
   FollowButton?: JSX.Element
 }
 
-const EntityHeaderFairOrganizer: FC<EntityHeaderFairOrganizerProps> = ({
+const EntityHeaderFairOrganizer: FC<React.PropsWithChildren<EntityHeaderFairOrganizerProps>> = ({
   fairOrganizer,
   displayAvatar = true,
   displayLink = true,

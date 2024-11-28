@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<501055ef80f2e121cffb889806272081>>
+ * @generated SignedSource<<f0bf487151d5769d663a9efd8990522a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type AuthenticationProvider = "APPLE" | "FACEBOOK" | "GOOGLE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditSettingsLinkedAccounts_me$data = {

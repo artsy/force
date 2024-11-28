@@ -24,7 +24,7 @@ const ArtworkGridPlaceholder = () => {
   )
 }
 
-const ArtworksRowPlaceholder: FC<ArtworksRowPlaceholderProps> = ({ count }) => {
+const ArtworksRowPlaceholder: FC<React.PropsWithChildren<ArtworksRowPlaceholderProps>> = ({ count }) => {
   return (
     <Flex flexDirection="row">
       <Join separator={<Spacer x={2} />}>

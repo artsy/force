@@ -22,14 +22,14 @@ export const buyerGuaranteeRoutes: RouteProps[] = [
   {
     path: "/buyer-guarantee",
     getComponent: () => BuyerGuaranteeApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       BuyerGuaranteeApp.preload()
     },
     children: [
       {
         path: "",
         getComponent: () => BuyerGuaranteeIndexRoute,
-        onClientSideRender: () => {
+        onPreloadJS: () => {
           return BuyerGuaranteeIndexRoute.preload()
         },
       },

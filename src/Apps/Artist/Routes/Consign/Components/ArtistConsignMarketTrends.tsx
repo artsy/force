@@ -12,7 +12,7 @@ interface ArtistConsignMarketTrendsProps {
   artist: ArtistConsignMarketTrends_artist$data
 }
 
-export const ArtistConsignMarketTrends: React.FC<ArtistConsignMarketTrendsProps> = props => {
+export const ArtistConsignMarketTrends: React.FC<React.PropsWithChildren<ArtistConsignMarketTrendsProps>> = props => {
   const tracking = useTracking()
 
   const {
@@ -70,7 +70,7 @@ export const ArtistConsignMarketTrends: React.FC<ArtistConsignMarketTrendsProps>
   )
 }
 
-const Statistic: React.FC<{ top: string; middle: string; bottom: string }> = ({
+const Statistic: React.FC<React.PropsWithChildren<{ top: string; middle: string; bottom: string }>> = ({
   top,
   middle,
   bottom,

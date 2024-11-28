@@ -1,4 +1,4 @@
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { CareerHighlightModalStep } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Components/CareerHighlightModalStep"
 import { CareerHighlightModalStepTestQuery } from "__generated__/CareerHighlightModalStepTestQuery.graphql"

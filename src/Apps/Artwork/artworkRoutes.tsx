@@ -2,6 +2,7 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { updateContext } from "Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
 import { RouteProps } from "System/Router/Route"
+import { getENV } from "Utils/getENV"
 
 const ArtworkApp = loadable(
   () => import(/* webpackChunkName: "artworkBundle" */ "./ArtworkApp"),
@@ -15,12 +16,16 @@ export const artworkRoutes: RouteProps[] = [
     path: "/artwork/:artworkID/:optional?", // There's a `confirm-bid` nested route.
     fetchPolicy: "store-and-network",
     getComponent: () => ArtworkApp,
-    onClientSideRender: () => {
+    onPreloadJS: () => {
       ArtworkApp.preload()
     },
-    prepareVariables: ({ artworkID }, props) => {
+    prepareVariables: ({ artworkID }) => {
+      // We want to defer loading the sidebar for mobile as it is below-the-fold.
+      const loadSidebar = !getENV("IS_MOBILE")
+
       return {
         artworkID,
+        loadSidebar,
       }
     },
     render: ({ Component, props }) => {
@@ -38,9 +43,12 @@ export const artworkRoutes: RouteProps[] = [
       return <Component {...props} />
     },
     query: graphql`
-      query artworkRoutes_ArtworkQuery($artworkID: String!) {
+      query artworkRoutes_ArtworkQuery(
+        $artworkID: String!
+        $loadSidebar: Boolean!
+      ) {
         artworkResult(id: $artworkID) {
-          ...ArtworkApp_artworkResult
+          ...ArtworkApp_artworkResult @arguments(loadSidebar: $loadSidebar)
 
           ... on ArtworkError {
             requestError {
@@ -49,7 +57,8 @@ export const artworkRoutes: RouteProps[] = [
           }
         }
         me {
-          ...ArtworkApp_me @arguments(artworkID: $artworkID)
+          ...ArtworkApp_me
+            @arguments(artworkID: $artworkID, loadSidebar: $loadSidebar)
         }
       }
     `,

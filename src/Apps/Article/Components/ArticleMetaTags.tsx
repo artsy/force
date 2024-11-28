@@ -8,11 +8,12 @@ interface ArticleMetaTagsProps {
   article: ArticleMetaTags_article$data
 }
 
-const ArticleMetaTags: FC<ArticleMetaTagsProps> = ({ article }) => {
+const ArticleMetaTags: FC<React.PropsWithChildren<ArticleMetaTagsProps>> = ({ article }) => {
   return (
     <>
       <MetaTags
         title={`${article.searchTitle || article.title} | Artsy`}
+        socialTitle={article.title}
         pathname={article.href}
         description={article.searchDescription || article.description}
         imageURL={article.thumbnailImage?.url}

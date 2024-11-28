@@ -16,7 +16,7 @@ interface PriceRangeProps {
   bars?: HistogramBarEntity[]
 }
 
-export const PriceRange: FC<PriceRangeProps> = ({
+export const PriceRange: FC<React.PropsWithChildren<PriceRangeProps>> = ({
   priceRange,
   onUpdate,
   onDebouncedUpdate,

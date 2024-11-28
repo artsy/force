@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3585f9b021dee1cb8604155a9444216d>>
+ * @generated SignedSource<<4fb70272373a63012d6254a2c22998d3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkFilter_viewer$data = {
   readonly filtered_artworks: {

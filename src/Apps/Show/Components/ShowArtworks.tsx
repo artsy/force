@@ -24,7 +24,7 @@ interface ShowArtworksFilterProps extends BoxProps {
   counts?: Counts
 }
 
-const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = props => {
+const ShowArtworksFilter: React.FC<React.PropsWithChildren<ShowArtworksFilterProps>> = props => {
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
   const { relay, show, counts, ...rest } = props
@@ -125,7 +125,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
 
 interface ShowArtworkFilterQueryRendererProps {}
 
-export const ShowArtworkFilterQueryRenderer: React.FC<ShowArtworkFilterQueryRendererProps> = rest => {
+export const ShowArtworkFilterQueryRenderer: React.FC<React.PropsWithChildren<ShowArtworkFilterQueryRendererProps>> = rest => {
   const { relayEnvironment } = useSystemContext()
   const { match } = useRouter()
 

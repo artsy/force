@@ -7,7 +7,7 @@ interface DedicatedArticlesBreadcrumbsProps {
   fairOrganizer: DedicatedArticlesBreadcrumbs_fairOrganizer$data
 }
 
-export const DedicatedArticlesBreadcrumbs: React.FC<DedicatedArticlesBreadcrumbsProps> = ({
+export const DedicatedArticlesBreadcrumbs: React.FC<React.PropsWithChildren<DedicatedArticlesBreadcrumbsProps>> = ({
   fairOrganizer,
 }) => {
   const { name, slug, profile } = fairOrganizer

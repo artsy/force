@@ -30,7 +30,7 @@ export interface SelectedExhibitionsProps {
   Container?: (props: { children: JSX.Element }) => JSX.Element
 }
 
-export const SelectedExhibitions: React.FC<SelectedExhibitionsProps> = props => {
+export const SelectedExhibitions: React.FC<React.PropsWithChildren<SelectedExhibitionsProps>> = props => {
   return props.exhibitions.length === 0 ? null : (
     <>
       <Media at="xs">
@@ -53,7 +53,7 @@ export interface ExhibitionsHeadlineProps {
   onShowClicked: (event: React.MouseEvent<HTMLElement>) => void
 }
 
-export const ExhibitionsHeadline: React.FC<ExhibitionsHeadlineProps> = props => (
+export const ExhibitionsHeadline: React.FC<React.PropsWithChildren<ExhibitionsHeadlineProps>> = props => (
   <Flex justifyContent="space-between" mb={isCollapsed(props) ? 0 : 1}>
     <Text variant="xs" fontWeight="bold">
       {props.exhibitionCount < MIN_FOR_SELECTED_EXHIBITIONS
@@ -78,7 +78,7 @@ export interface ExhibitionYearListProps {
   exhibitions: SelectedExhibitions_exhibitions$data
 }
 
-export const ExhibitionYearList: React.FC<ExhibitionYearListProps> = ({
+export const ExhibitionYearList: React.FC<React.PropsWithChildren<ExhibitionYearListProps>> = ({
   year,
   exhibitions,
 }) => {
@@ -110,7 +110,7 @@ interface FullExhibitionListProps {
   ViewAllLink?: JSX.Element
 }
 
-const FullExhibitionList: React.FC<FullExhibitionListProps> = props => {
+const FullExhibitionList: React.FC<React.PropsWithChildren<FullExhibitionListProps>> = props => {
   const {
     ViewAllLink = <Link to={`/artist/${props.artistID}/cv`}>View all</Link>,
   } = props

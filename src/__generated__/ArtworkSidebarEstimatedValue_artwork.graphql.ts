@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<30fc5404e73080fdc3e90574cf2a4df9>>
+ * @generated SignedSource<<4651294423d6a733fc700193d669d721>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarEstimatedValue_artwork$data = {
   readonly sale: {

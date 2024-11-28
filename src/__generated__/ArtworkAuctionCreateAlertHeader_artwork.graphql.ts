@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e8f1e1b05912806e8fd11f392a547c94>>
+ * @generated SignedSource<<0e1f2c96668bf4abc63984a8f9190948>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkAuctionCreateAlertHeader_artwork$data = {
   readonly artistNames: string | null | undefined;
@@ -110,7 +110,13 @@ return {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "shallow",
+          "value": true
+        }
+      ],
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artists",
@@ -120,7 +126,7 @@ return {
         (v2/*: any*/),
         (v0/*: any*/)
       ],
-      "storageKey": null
+      "storageKey": "artists(shallow:true)"
     },
     {
       "alias": null,
@@ -239,6 +245,6 @@ return {
 };
 })();
 
-(node as any).hash = "4d2ae7bc1600789f93d042786b6b1f27";
+(node as any).hash = "1a89cdf0b2c8d7990b0cd67cf7b181ab";
 
 export default node;

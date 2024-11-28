@@ -37,7 +37,7 @@ export interface ArtworkRelatedArtistsProps {
 
 const PAGE_SIZE = 6
 
-export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track()(
+export const ArtworkRelatedArtists: React.FC<React.PropsWithChildren<ArtworkRelatedArtistsProps>> = track()(
   props => {
     const { trackEvent } = useTracking()
 
@@ -105,7 +105,7 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
   }
 )
 
-const ShowMoreButton: React.FC<{ onClick: () => void; loading: boolean }> = ({
+const ShowMoreButton: React.FC<React.PropsWithChildren<{ onClick: () => void; loading: boolean }>> = ({
   onClick,
   loading,
 }) => {
@@ -128,7 +128,7 @@ export const ArtworkRelatedArtistsPaginationContainer = createPaginationContaine
           cursor: { type: "String", defaultValue: "" }
         ) {
         slug
-        artist {
+        artist(shallow: true) {
           href
           related {
             artistsConnection(kind: MAIN, first: $count, after: $cursor)
@@ -213,9 +213,9 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtworkRelatedArtistsQueryRenderer: React.FC<{
+export const ArtworkRelatedArtistsQueryRenderer: React.FC<React.PropsWithChildren<{
   slug: string
-}> = ({ slug }) => {
+}>> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

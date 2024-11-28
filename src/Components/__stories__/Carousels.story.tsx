@@ -392,9 +392,7 @@ export const CarouselShows = () => {
   )
 }
 
-const SwiperWithProgress: React.FC<
-  SwiperProps & { verticalAlign?: "top" | "bottom" }
-> = ({ children, verticalAlign = "bottom", ...rest }) => {
+const SwiperWithProgress: React.FC<React.PropsWithChildren<SwiperProps & { verticalAlign?: "top" | "bottom" }>> = ({ children, verticalAlign = "bottom", ...rest }) => {
   const count = React.Children.count(children)
   const [boxProps, swiperProps] = splitBoxProps(rest)
   const [index, setIndex] = useState(0)

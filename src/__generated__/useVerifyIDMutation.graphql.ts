@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4129ec47c4d3871a3d849471080b882a>>
+ * @generated SignedSource<<ea2f3f9743963aeb6629bf78f1b909fc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type SendIdentityVerificationEmailMutationInput = {
   clientMutationId?: string | null | undefined;
   email?: string | null | undefined;

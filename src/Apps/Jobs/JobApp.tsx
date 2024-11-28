@@ -18,7 +18,7 @@ interface JobAppProps {
   job: JobApp_job$data
 }
 
-const JobApp: FC<JobAppProps> = ({ job }) => {
+const JobApp: FC<React.PropsWithChildren<JobAppProps>> = ({ job }) => {
   return (
     <>
       <MetaTags

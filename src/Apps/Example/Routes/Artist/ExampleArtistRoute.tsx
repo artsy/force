@@ -11,7 +11,7 @@ export interface ExampleArtistAppProps {
   artist: ExampleArtistRoute_artist$data
 }
 
-const ExampleArtistRoute: React.FC<ExampleArtistAppProps> = ({ artist }) => {
+const ExampleArtistRoute: React.FC<React.PropsWithChildren<ExampleArtistAppProps>> = ({ artist }) => {
   return (
     <Box>
       <Title>{artist.name} | Artsy</Title>
@@ -35,7 +35,7 @@ const ExampleArtistRoute: React.FC<ExampleArtistAppProps> = ({ artist }) => {
 /**
  * Routes with :slugs require Analytics to provide the corresponding internalID
  */
-const TrackingWrappedExampleArtistRoute: React.FC<ExampleArtistAppProps> = props => {
+const TrackingWrappedExampleArtistRoute: React.FC<React.PropsWithChildren<ExampleArtistAppProps>> = props => {
   const {
     artist: { internalID },
   } = props

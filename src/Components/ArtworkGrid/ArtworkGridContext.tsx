@@ -24,7 +24,7 @@ const ArtworkGridContext = createContext<ArtworkGridContextProps>({
   hideSignals: false,
 })
 
-export const ArtworkGridContextProvider: React.FC<ArtworkGridContextProps> = ({
+export const ArtworkGridContextProvider: React.FC<React.PropsWithChildren<ArtworkGridContextProps>> = ({
   children,
   ...rest
 }) => {
@@ -41,7 +41,7 @@ export const useArtworkGridContext = () => {
 }
 
 export const withArtworkGridContext = <T,>(
-  Component: React.ComponentType<T>
+  Component: React.ComponentType<React.PropsWithChildren<T>>
 ) => {
   return (props: T) => {
     return (

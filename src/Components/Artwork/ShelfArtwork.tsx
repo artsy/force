@@ -27,7 +27,7 @@ export interface ShelfArtworkProps
   onClick?: () => void
 }
 
-const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
+const ShelfArtwork: React.FC<React.PropsWithChildren<ShelfArtworkProps>> = ({
   area = DEFAULT_AREA,
   artwork,
   children,
@@ -154,7 +154,7 @@ interface ShelfArtworkPlaceholderProps
   index: number
 }
 
-export const ShelfArtworkPlaceholder: React.FC<ShelfArtworkPlaceholderProps> = ({
+export const ShelfArtworkPlaceholder: React.FC<React.PropsWithChildren<ShelfArtworkPlaceholderProps>> = ({
   index,
   hideSaleInfo,
   area = DEFAULT_AREA,

@@ -62,7 +62,7 @@ export interface ShippingAddressFormValues {
 export const BASIC_PHONE_VALIDATION_SHAPE = {
   phoneNumber: Yup.string()
     .required("Phone number is required")
-    .matches(/^[+\-\d]+$/, "Phone number is required"),
+    .matches(/^[+\-\(\)\d\s]+$/, "Please enter a valid phone number"),
 }
 
 export const ADDRESS_VALIDATION_SHAPE = {

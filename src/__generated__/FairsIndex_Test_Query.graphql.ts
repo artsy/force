@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0bf429de658ae57fcf6ec2541a26cec5>>
+ * @generated SignedSource<<fbb2297c73a576319e6758bd11bf951d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairsIndex_Test_Query$variables = Record<PropertyKey, never>;
 export type FairsIndex_Test_Query$data = {

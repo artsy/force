@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<12163f59bc3ffdf4f18c4f049d2fde3c>>
+ * @generated SignedSource<<f82741da387f867ae36e4cdde16ecdf3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FeatureFeaturedLink_featuredLink$data = {
   readonly description: string | null | undefined;

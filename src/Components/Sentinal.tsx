@@ -7,7 +7,7 @@ interface SentinalProps {
   testId?: string
 }
 
-export const Sentinel: React.FC<SentinalProps> = ({
+export const Sentinel: React.FC<React.PropsWithChildren<SentinalProps>> = ({
   onEnterView,
   onExitView,
   testId,

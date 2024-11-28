@@ -8,7 +8,7 @@ interface FairCollectionsProps extends BoxProps {
   fair: FairCollections_fair$data
 }
 
-export const FairCollections: React.FC<FairCollectionsProps> = ({
+export const FairCollections: React.FC<React.PropsWithChildren<FairCollectionsProps>> = ({
   fair,
   ...rest
 }) => {

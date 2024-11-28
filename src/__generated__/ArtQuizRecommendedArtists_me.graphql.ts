@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<82cc3cd32b01a6fad39574d3b8b05826>>
+ * @generated SignedSource<<ec36694513111bcec52197f4430b9292>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtQuizRecommendedArtists_me$data = {
   readonly quiz: {
@@ -58,7 +58,13 @@ const node: ReaderFragment = {
             },
             {
               "alias": null,
-              "args": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "shallow",
+                  "value": true
+                }
+              ],
               "concreteType": "Artist",
               "kind": "LinkedField",
               "name": "artist",
@@ -77,7 +83,7 @@ const node: ReaderFragment = {
                   "storageKey": null
                 }
               ],
-              "storageKey": null
+              "storageKey": "artist(shallow:true)"
             }
           ],
           "storageKey": null
@@ -90,6 +96,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "688cbb4f044e10dd8622784dd9ed1ccc";
+(node as any).hash = "180b0dd86ad59125b77ed6fef4588527";
 
 export default node;

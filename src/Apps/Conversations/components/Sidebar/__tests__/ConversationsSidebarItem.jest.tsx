@@ -1,5 +1,5 @@
 import { fireEvent, screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ConversationsSidebarItem } from "Apps/Conversations/components/Sidebar/ConversationsSidebarItem"
 import { ConversationsSidebarItemTestQuery } from "__generated__/ConversationsSidebarItemTestQuery.graphql"
 import { useTracking } from "react-tracking"

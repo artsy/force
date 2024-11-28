@@ -11,7 +11,9 @@ import { usePriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/Pri
 export interface PriceRangeFilterQuickProps
   extends Omit<DropdownProps, "dropdown" | "children"> {}
 
-export const PriceRangeFilterQuick: FC<PriceRangeFilterQuickProps> = props => {
+export const PriceRangeFilterQuick: FC<React.PropsWithChildren<
+  PriceRangeFilterQuickProps
+>> = props => {
   const {
     count,
     filters,
@@ -26,6 +28,8 @@ export const PriceRangeFilterQuick: FC<PriceRangeFilterQuickProps> = props => {
 
   return (
     <Dropdown
+      // FIXME: REACT_18_UPGRADE
+      // eslint-disable-next-line react/no-unstable-nested-components
       dropdown={({ onHide }) => {
         return (
           <FilterQuickDropdownPanel

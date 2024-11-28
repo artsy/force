@@ -1,4 +1,4 @@
-import { act, screen } from "@testing-library/react"
+import { act, screen, waitFor } from "@testing-library/react"
 import { Notifications } from "Components/Notifications/Notifications"
 import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
@@ -39,9 +39,11 @@ describe("Notifications with pills", () => {
 
     await flushPromiseQueue()
 
-    expect(screen.getByText("All")).toBeInTheDocument()
-    expect(screen.getByText("Alerts")).toBeInTheDocument()
-    expect(screen.getByText("Follows")).toBeInTheDocument()
-    expect(screen.getByText("Offers")).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText("All")).toBeInTheDocument()
+      expect(screen.getByText("Alerts")).toBeInTheDocument()
+      expect(screen.getByText("Follows")).toBeInTheDocument()
+      expect(screen.getByText("Offers")).toBeInTheDocument()
+    })
   })
 })

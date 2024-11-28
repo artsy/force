@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<73c72741c04209adcc1fd97a67580c20>>
+ * @generated SignedSource<<1148d0c698f1646d05d87bd4a0da5fe2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkSWASectionSubmitted_submissionState$data = {

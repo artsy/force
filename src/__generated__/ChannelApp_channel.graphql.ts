@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5991c231c1ec2b40c4470985b5d1efb3>>
+ * @generated SignedSource<<916d8826ea1103c823508eaed30fccd1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ChannelApp_channel$data = {
   readonly image: {

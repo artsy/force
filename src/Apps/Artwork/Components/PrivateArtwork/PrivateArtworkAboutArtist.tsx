@@ -22,9 +22,9 @@ interface PrivateArtworkAboutArtistProps {
   artwork: PrivateArtworkAboutArtist_artwork$key
 }
 
-export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps> = ({
-  artwork,
-}) => {
+export const PrivateArtworkAboutArtist: React.FC<React.PropsWithChildren<
+  PrivateArtworkAboutArtistProps
+>> = ({ artwork }) => {
   const { trackEvent } = useTracking()
 
   const data = useFragment(
@@ -32,7 +32,7 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
       fragment PrivateArtworkAboutArtist_artwork on Artwork {
         displayArtistBio
         slug
-        artists {
+        artists(shallow: true) {
           ...FollowArtistButton_artist
           internalID
           href
@@ -41,8 +41,6 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
           initials
           formattedNationalityAndBirthday
           counts {
-            artworks
-            forSaleArtworks
             follows
           }
           coverArtwork {
@@ -53,7 +51,6 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
               }
             }
           }
-          name
           biographyBlurb(format: HTML, partnerBio: false) {
             text
           }
@@ -80,7 +77,8 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
       backgroundColor="black100"
     >
       <Text variant="md" color="white100">
-        About the Artist{data.artists && data.artists?.length > 1 ? "s" : ""}
+        About the Artist
+        {data.artists && data.artists?.length > 1 ? "s" : ""}
       </Text>
 
       <Spacer y={2} />
@@ -128,6 +126,9 @@ export const PrivateArtworkAboutArtist: React.FC<PrivateArtworkAboutArtistProps>
                       variant="secondaryWhite"
                       mr={1}
                     >
+                      {/*
+                        // FIXME: REACT_18_UPGRADE
+                        @ts-ignore */}
                       {label => {
                         return (
                           <Stack

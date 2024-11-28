@@ -9,7 +9,7 @@ interface ArtistWorksForSaleEmptyProps {
   artist: ArtistWorksForSaleEmpty_artist$data
 }
 
-const ArtistWorksForSaleEmpty: FC<ArtistWorksForSaleEmptyProps> = ({
+const ArtistWorksForSaleEmpty: FC<React.PropsWithChildren<ArtistWorksForSaleEmptyProps>> = ({
   artist,
 }) => {
   return (

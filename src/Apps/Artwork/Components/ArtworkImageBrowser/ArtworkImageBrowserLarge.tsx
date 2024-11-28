@@ -28,7 +28,7 @@ interface ArtworkImageBrowserLargeProps {
   maxHeight: number
 }
 
-const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
+const ArtworkImageBrowserLarge: React.FC<React.PropsWithChildren<ArtworkImageBrowserLargeProps>> = ({
   artwork,
   activeIndex,
   onNext,

@@ -4,7 +4,7 @@ import { FC } from "react"
 
 interface SettingsEditSettingsThemeSelectProps {}
 
-export const SettingsEditSettingsThemeSelect: FC<SettingsEditSettingsThemeSelectProps> = props => {
+export const SettingsEditSettingsThemeSelect: FC<React.PropsWithChildren<SettingsEditSettingsThemeSelectProps>> = props => {
   const { updatePreferences, preferences } = useAppPreferences()
 
   return (

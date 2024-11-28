@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<abd7b4ec23d283f34c4dabd8a34f9d02>>
+ * @generated SignedSource<<feee13e546f476c0b062814eb9f7c4cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type OtherCollectionEntity_member$data = {
   readonly id: string;

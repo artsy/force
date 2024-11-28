@@ -51,7 +51,7 @@ type ResponseOptions = "ACCEPT" | "COUNTER" | "DECLINE" | null
 
 export const logger = createLogger("Order/Routes/Respond/index.tsx")
 
-export const RespondRoute: FC<RespondProps> = ({
+export const RespondRoute: FC<React.PropsWithChildren<RespondProps>> = ({
   order,
   match,
   router,
@@ -222,7 +222,7 @@ export const RespondRoute: FC<RespondProps> = ({
           <Flex flexDirection="column">
             <CountdownTimer
               action="Respond"
-              note="Expiration will end negotiations on this offer. Keep in mind the work can be sold to another buyer in the meantime."
+              note="Once this offer expires, negotiations will end. Note that the artwork could be sold to another buyer in the meantime."
               countdownStart={order.lastOffer?.createdAt!}
               countdownEnd={order.stateExpiresAt!}
             />

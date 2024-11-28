@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e06d5b2e0a8340f8039ae36ac48ca5e7>>
+ * @generated SignedSource<<b16253a53eb4a80ea92ab50b80c3adde>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type StickyNav_geneFamiliesConnection$data = {
   readonly edges: ReadonlyArray<{

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<53b9b48953c766dcb59914f6d2013c3a>>
+ * @generated SignedSource<<9851e5bd318bceee74527b38b5b343ff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FollowArtistButton_artist$data = {
   readonly counts: {

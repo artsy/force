@@ -6,7 +6,7 @@ interface ExclusiveAccessBadgeProps {
   artwork: ExclusiveAccessBadge_artwork$key
 }
 
-export const ExclusiveAccessBadge: React.FC<ExclusiveAccessBadgeProps> = ({
+export const ExclusiveAccessBadge: React.FC<React.PropsWithChildren<ExclusiveAccessBadgeProps>> = ({
   artwork,
 }) => {
   const data = useFragment(exclusiveAccessBadgeFragment, artwork)

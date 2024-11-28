@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c357a0083ad443fb038f8e31fe83f3d4>>
+ * @generated SignedSource<<ba2e70252ad84eeb7de72774d43e53ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type NewPayment_order$data = {
@@ -111,7 +111,13 @@ return {
                     (v1/*: any*/),
                     {
                       "alias": null,
-                      "args": null,
+                      "args": [
+                        {
+                          "kind": "Literal",
+                          "name": "shallow",
+                          "value": true
+                        }
+                      ],
                       "concreteType": "Artist",
                       "kind": "LinkedField",
                       "name": "artists",
@@ -119,7 +125,7 @@ return {
                       "selections": [
                         (v1/*: any*/)
                       ],
-                      "storageKey": null
+                      "storageKey": "artists(shallow:true)"
                     }
                   ],
                   "storageKey": null
@@ -192,6 +198,6 @@ return {
 };
 })();
 
-(node as any).hash = "b19f055525d25bcddf91017a30141e00";
+(node as any).hash = "40226569d5b22c6ca865784414f9a2e5";
 
 export default node;

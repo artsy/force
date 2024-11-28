@@ -33,7 +33,7 @@ const REVIEWS: ReviewsData[] = [
   },
 ]
 
-export const Reviews: React.FC = () => {
+export const Reviews: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Box py={[0, 6, 12]}>
       <HeroCarousel progressbarVariant="dot" fullBleed={false}>
@@ -45,7 +45,7 @@ export const Reviews: React.FC = () => {
   )
 }
 
-const ListItem: React.FC<{ review: ReviewsData }> = ({ review }) => {
+const ListItem: React.FC<React.PropsWithChildren<{ review: ReviewsData }>> = ({ review }) => {
   const { reviewText, image, reviewerName, galery } = review
   return (
     <Flex alignItems="center" flexDirection="column">

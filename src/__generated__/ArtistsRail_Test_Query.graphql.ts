@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<77c5e612aa1d3483e055bcfe62fc030c>>
+ * @generated SignedSource<<df75e3c0beaca1a7d757280b2e8105fa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistsRail_Test_Query$variables = {
   partnerId: string;

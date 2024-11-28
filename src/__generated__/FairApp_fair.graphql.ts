@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<79cc002f70fa8572b684feac6791105c>>
+ * @generated SignedSource<<a5a489f57691f5201427ba0a21726c66>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairApp_fair$data = {
   readonly internalID: string;

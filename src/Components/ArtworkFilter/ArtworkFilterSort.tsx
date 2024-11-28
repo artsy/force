@@ -15,7 +15,7 @@ import { themeGet } from "@styled-system/theme-get"
 interface ArtworkFilterSortProps
   extends Omit<DropdownProps, "dropdown" | "children"> {}
 
-export const ArtworkFilterSort: FC<ArtworkFilterSortProps> = props => {
+export const ArtworkFilterSort: FC<React.PropsWithChildren<ArtworkFilterSortProps>> = props => {
   const { sortOptions, filters, setFilter } = useArtworkFilterContext()
 
   const activeSort = sortOptions?.find(({ value }) => {
@@ -45,6 +45,9 @@ export const ArtworkFilterSort: FC<ArtworkFilterSortProps> = props => {
       placement="bottom-end"
       {...props}
     >
+      {/*
+        FIXME: REACT_18_UPGRADE
+        @ts-ignore */}
       {({ anchorRef, anchorProps, onHide }) => {
         // Store ref to hide action to access up above
         hideDropdown = onHide

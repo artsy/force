@@ -3,7 +3,7 @@ import { ArtQuizTrendingArtistsQueryRenderer } from "Apps/ArtQuiz/Components/Art
 import { ArtQuizTrendingCollectionsQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizTrendingCollections"
 import { FC } from "react"
 
-export const ArtQuizResultsEmpty: FC = () => {
+export const ArtQuizResultsEmpty: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <Spacer y={[4, 6]} />

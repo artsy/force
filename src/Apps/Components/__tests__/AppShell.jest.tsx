@@ -25,7 +25,7 @@ jest.mock("Components/Footer/FooterDownloadAppBanner", () => ({
 
 describe("AppShell", () => {
   it("renders a Footer", async () => {
-    const { ClientRouter } = setupClientRouter({
+    const { ClientRouter } = await setupClientRouter({
       history: {
         protocol: "memory",
       },
@@ -53,7 +53,7 @@ describe("AppShell", () => {
 
   it("calls the matched routes `prepare` function if found", async () => {
     const onClientSideRender = jest.fn()
-    const { ClientRouter } = setupClientRouter({
+    const { ClientRouter } = await setupClientRouter({
       history: {
         protocol: "memory",
       },
@@ -63,8 +63,8 @@ describe("AppShell", () => {
           {
             path: "/foo",
             Component: () => <div />,
-            onClientSideRender: ({ match }) => {
-              expect(match.location.pathname).toBe("/foo")
+            onClientSideRender: props => {
+              expect(props?.match.location.pathname).toBe("/foo")
               onClientSideRender()
             },
           },
@@ -80,6 +80,35 @@ describe("AppShell", () => {
 
     await waitFor(() => {
       expect(onClientSideRender).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  it("calls the matched routes `onPreloadJS` function if found", async () => {
+    const spy = jest.fn()
+    const { ClientRouter } = await setupClientRouter({
+      history: {
+        protocol: "memory",
+      },
+      initialRoute: "/foo",
+      routes: buildAppRoutes([
+        [
+          {
+            path: "/foo",
+            Component: () => <div />,
+            onPreloadJS: spy,
+          },
+        ],
+      ]),
+    })
+
+    render(
+      <SystemContextProvider>
+        <ClientRouter />
+      </SystemContextProvider>
+    )
+
+    await waitFor(() => {
+      expect(spy).toHaveBeenCalledTimes(1)
     })
   })
 })

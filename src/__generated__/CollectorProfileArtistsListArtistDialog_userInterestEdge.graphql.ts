@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<110f7835d3490c7773b9c810a7f8fe6f>>
+ * @generated SignedSource<<24e5d3590d264e90327e46d811841718>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileArtistsListArtistDialog_userInterestEdge$data = {
   readonly id: string;

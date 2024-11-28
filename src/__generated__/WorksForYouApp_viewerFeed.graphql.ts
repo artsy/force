@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ccf122ecdf2846816624dfbc2fa437a4>>
+ * @generated SignedSource<<7518167f6819e39922209f4480979c59>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type WorksForYouApp_viewerFeed$data = {
   readonly " $fragmentSpreads": FragmentRefs<"WorksForYouFeed_viewer">;

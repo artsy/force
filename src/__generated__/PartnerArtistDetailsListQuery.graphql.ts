@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<72d4c394d05b1f391384fbb3765f4b47>>
+ * @generated SignedSource<<b406e69e6c58b6aa396b65c899419db7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerArtistDetailsListQuery$variables = {
   after?: string | null | undefined;

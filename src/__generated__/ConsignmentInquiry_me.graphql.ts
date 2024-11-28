@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<50e4370d0ae93ed59d956190baec5774>>
+ * @generated SignedSource<<4cadab2299720c816e0619778437f3ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentInquiry_me$data = {
   readonly email: string | null | undefined;

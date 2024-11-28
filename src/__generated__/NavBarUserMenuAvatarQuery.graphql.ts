@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a048c3f3d0bd66bd783ec2164ffd6939>>
+ * @generated SignedSource<<832e6bcc53a7d33afa2009609b27646c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type NavBarUserMenuAvatarQuery$variables = Record<PropertyKey, never>;
 export type NavBarUserMenuAvatarQuery$data = {
   readonly me: {

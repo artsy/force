@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cbba72f7c09e01a725a9a97b1d9520d0>>
+ * @generated SignedSource<<de8fc7f60e32b7ec1ee0292720c8a417>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SendConversationMessageMutationInput = {
   attachments?: ReadonlyArray<ConversationMessageAttachmentInput> | null | undefined;

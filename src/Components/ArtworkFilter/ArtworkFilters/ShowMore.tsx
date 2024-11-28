@@ -9,7 +9,7 @@ interface ShowMoreProps extends BoxProps {
 
 export const INITIAL_ITEMS_TO_SHOW = 6
 
-export const ShowMore: React.FC<ShowMoreProps> = ({
+export const ShowMore: React.FC<React.PropsWithChildren<ShowMoreProps>> = ({
   initial = INITIAL_ITEMS_TO_SHOW,
   children,
   expanded = false,

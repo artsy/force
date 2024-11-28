@@ -11,6 +11,8 @@ const DEFAULT_PATHNAME = "/"
 
 interface MetaTagsProps {
   title?: string | null
+  /** Optionally override the title for social media */
+  socialTitle?: string | null
   /** Target a character length of 50–160 characters */
   description?: string | null
   /** Will be cropped to 1200 × 630 (1.9:1) */
@@ -21,14 +23,16 @@ interface MetaTagsProps {
   blockRobots?: boolean
 }
 
-export const MetaTags: React.FC<MetaTagsProps> = ({
+export const MetaTags: React.FC<React.PropsWithChildren<MetaTagsProps>> = ({
   title: _title,
+  socialTitle: _socialTitle,
   description: _description,
   imageURL: _imageURL,
   pathname: _pathname,
   blockRobots,
 }) => {
   const title = _title ?? DEFAULT_TITLE
+  const socialTitle = _socialTitle ?? _title ?? DEFAULT_TITLE
   const description = _description ?? DEFAULT_DESCRIPTION
   const imageURL = _imageURL ?? DEFAULT_IMAGE_URL
   const pathname = _pathname ?? DEFAULT_PATHNAME
@@ -56,14 +60,14 @@ export const MetaTags: React.FC<MetaTagsProps> = ({
       {/* Open Graph / Facebook */}
       <Meta property="og:type" content="website" />
       <Meta property="og:url" content={href} />
-      <Meta property="og:title" content={title} />
+      <Meta property="og:title" content={socialTitle} />
       <Meta property="og:site_name" content="Artsy" />
       <Meta property="og:description" content={description} />
       <Meta property="og:image" content={src} />
       <Meta property="fb:app_id" content="308278682573501" />
 
       {/* Twitter */}
-      <Meta property="twitter:title" content={title} />
+      <Meta property="twitter:title" content={socialTitle} />
       <Meta property="twitter:card" content={card} />
       <Meta property="twitter:url" content={href} />
       <Meta property="twitter:site" content="@artsy" />

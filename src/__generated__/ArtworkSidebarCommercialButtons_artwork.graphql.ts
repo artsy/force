@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<456d9c1d95f09251f8aa7a81784add22>>
+ * @generated SignedSource<<8699d0891b292dfba7484484ce76cf01>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarCommercialButtons_artwork$data = {
@@ -132,13 +132,19 @@ return {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "shallow",
+          "value": true
+        }
+      ],
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artists",
       "plural": true,
       "selections": (v1/*: any*/),
-      "storageKey": null
+      "storageKey": "artists(shallow:true)"
     },
     {
       "alias": null,
@@ -347,6 +353,6 @@ return {
 };
 })();
 
-(node as any).hash = "6d01c057c0a26d6a87ccc57daaf7874c";
+(node as any).hash = "2f0076dcb4ef9a7117fa8806021078f7";
 
 export default node;

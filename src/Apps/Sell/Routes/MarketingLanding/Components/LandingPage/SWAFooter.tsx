@@ -2,7 +2,7 @@ import { Box, Button, Text } from "@artsy/palette"
 import { useMarketingLandingTracking } from "Apps/Sell/Routes/MarketingLanding/Utils/marketingLandingTracking"
 import { RouterLink } from "System/Components/RouterLink"
 
-export const SWAFooter: React.FC = () => {
+export const SWAFooter: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { trackStartSellingClick } = useMarketingLandingTracking()
 
   return (

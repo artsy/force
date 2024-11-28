@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8db41ca3d65b736c5dc033ade04b1b04>>
+ * @generated SignedSource<<92c37cf3625810bca2d79fb518f0928a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CascadingEndTimesBanner_sale$data = {
   readonly cascadingEndTimeIntervalMinutes: number | null | undefined;

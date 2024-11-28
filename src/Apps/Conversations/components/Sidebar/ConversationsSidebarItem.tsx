@@ -14,7 +14,7 @@ interface ConversationsSidebarItemProps {
   index: number
 }
 
-export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> = ({
+export const ConversationsSidebarItem: React.FC<React.PropsWithChildren<ConversationsSidebarItemProps>> = ({
   conversation,
   index,
 }) => {
@@ -132,14 +132,6 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
 const FRAGMENT = graphql`
   fragment ConversationsSidebarItem_conversation on Conversation {
     internalID
-    from {
-      name
-    }
-    fromUser {
-      collectorProfile {
-        confirmedBuyerAt
-      }
-    }
     to {
       name
     }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c335d5d81aef8b972e5b5f470f27e542>>
+ * @generated SignedSource<<c6042211e630bb6b02c73d782849128f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type AlertSourceType = "ARTIST" | "ARTWORK" | "%future added value";
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type AlertSource = {

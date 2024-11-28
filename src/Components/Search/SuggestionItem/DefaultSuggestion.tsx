@@ -11,7 +11,7 @@ interface DefaultSuggestionProps {
   query: string
 }
 
-export const DefaultSuggestion: FC<DefaultSuggestionProps> = ({
+export const DefaultSuggestion: FC<React.PropsWithChildren<DefaultSuggestionProps>> = ({
   option,
   query,
 }) => {

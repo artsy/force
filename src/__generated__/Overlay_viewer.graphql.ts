@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c54b9067a5ee4c5af10616d5d1040fd6>>
+ * @generated SignedSource<<425b6fb6f3e7142fc2daf3a891c3544a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Overlay_viewer$data = {
   readonly " $fragmentSpreads": FragmentRefs<"SearchInputPills_viewer" | "SearchResultsList_viewer">;

@@ -1,8 +1,6 @@
-import { useContext } from "react"
 import * as React from "react"
 import { NavBarUserMenu } from "./Menus"
-import { SystemContext } from "System/Contexts/SystemContext"
-import { Dropdown, Flex } from "@artsy/palette"
+import { Dropdown, Flex, useDidMount } from "@artsy/palette"
 import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
@@ -12,7 +10,6 @@ import {
   NavBarLoggedInActionsQuery,
   NavBarLoggedInActionsQuery$data,
 } from "__generated__/NavBarLoggedInActionsQuery.graphql"
-import { isServer } from "Server/isServer"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { Z } from "Apps/Components/constants"
 import { NavBarNotifications } from "./Menus/NavBarNotifications"
@@ -25,10 +22,11 @@ import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding
 import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
 import { FallbackErrorBoundary } from "System/Components/FallbackErrorBoundary"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
-export const NavBarLoggedInActions: React.FC<Partial<
-  NavBarLoggedInActionsQuery$data
+export const NavBarLoggedInActions: React.FC<React.PropsWithChildren<
+  Partial<NavBarLoggedInActionsQuery$data>
 >> = ({ me }) => {
   const { trackEvent } = useTracking()
   const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
@@ -90,7 +88,6 @@ export const NavBarLoggedInActions: React.FC<Partial<
           </NavBarItemButton>
         )}
       </Dropdown>
-
       <NavBarItemLink
         href={(() => {
           if (getENV("IS_MOBILE")) {
@@ -119,7 +116,6 @@ export const NavBarLoggedInActions: React.FC<Partial<
           />
         )}
       </NavBarItemLink>
-
       <Dropdown
         zIndex={Z.dropdown}
         dropdown={<NavBarUserMenu width={230} />}
@@ -151,15 +147,18 @@ export const NavBarLoggedInActions: React.FC<Partial<
   )
 }
 
-export const NavBarLoggedInActionsQueryRenderer: React.FC<{}> = () => {
-  const { relayEnvironment } = useContext(SystemContext)
+export const NavBarLoggedInActionsQueryRenderer: React.FC<React.PropsWithChildren<{}>> = () => {
+  const { relayEnvironment, user } = useSystemContext()
 
-  return isServer ? (
+  const isClient = useDidMount()
+
+  return !isClient ? (
     <NavBarLoggedInActions />
   ) : (
     <FallbackErrorBoundary FallbackComponent={Placeholder}>
       <SystemQueryRenderer<NavBarLoggedInActionsQuery>
         environment={relayEnvironment}
+        placeholder={user ? <Placeholder /> : undefined}
         query={graphql`
           query NavBarLoggedInActionsQuery {
             me {
@@ -206,7 +205,7 @@ export const NavBarLoggedInActionsQueryRenderer: React.FC<{}> = () => {
   )
 }
 
-const Placeholder: React.FC = () => {
+const Placeholder: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Flex gap={2} alignItems="center" ml={1}>
       <BellStrokeIcon fill="currentColor" />

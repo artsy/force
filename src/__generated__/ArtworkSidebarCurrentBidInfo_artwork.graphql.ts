@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d2b401603c2a7a19a6d5b55a3f580330>>
+ * @generated SignedSource<<fa4bace0a24a886e5ba711d388ce18fc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarCurrentBidInfo_artwork$data = {
   readonly collectorSignals: {

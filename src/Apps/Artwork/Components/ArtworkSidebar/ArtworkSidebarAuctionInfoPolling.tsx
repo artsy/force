@@ -14,7 +14,7 @@ type Props = {
   relay: RelayRefetchProp
 }
 
-export const ArtworkSidebarAuctionPolling: React.FC<Props> = ({
+export const ArtworkSidebarAuctionPolling: React.FC<React.PropsWithChildren<Props>> = ({
   artwork,
   relay,
   me,

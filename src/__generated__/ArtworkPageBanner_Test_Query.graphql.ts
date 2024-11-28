@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<baf37a4d73a550234950e12c81ec6e2f>>
+ * @generated SignedSource<<4c5062c46faf9fb735c6db945f86335f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Visibility = "LISTED" | "UNLISTED" | "%future added value";
 export type ArtworkPageBanner_Test_Query$variables = Record<PropertyKey, never>;

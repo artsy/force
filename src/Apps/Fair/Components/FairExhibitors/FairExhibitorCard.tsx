@@ -18,7 +18,7 @@ interface FairExhibitorCardProps {
   fair: FairExhibitorCard_fair$data
 }
 
-export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
+export const FairExhibitorCard: React.FC<React.PropsWithChildren<FairExhibitorCardProps>> = ({
   exhibitor,
   fair,
 }) => {

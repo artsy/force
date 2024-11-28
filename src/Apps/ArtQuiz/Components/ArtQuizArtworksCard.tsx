@@ -11,7 +11,7 @@ interface ArtQuizArtworksCardProps {
   artwork: ArtQuizArtworksCard_artwork$data
 }
 
-const ArtQuizArtworksCard: FC<ArtQuizArtworksCardProps> = ({
+const ArtQuizArtworksCard: FC<React.PropsWithChildren<ArtQuizArtworksCardProps>> = ({
   mode,
   artwork,
 }) => {

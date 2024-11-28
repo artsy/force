@@ -15,7 +15,7 @@ interface FairOverviewProps extends BoxProps {
   fair: FairOverview_fair$data
 }
 
-const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
+const FairOverview: FC<React.PropsWithChildren<FairOverviewProps>> = ({ fair }) => {
   const { user } = useSystemContext()
   const { match } = useRouter()
   const { jumpTo } = useJump()
@@ -65,7 +65,6 @@ export const FairOverviewFragmentContainer = createFragmentContainer(
       fragment FairOverview_fair on Fair {
         ...FairEditorialRailArticles_fair
         ...FairCollections_fair
-        ...FairFollowedArtists_fair
         ...FairAbout_fair
         href
         slug

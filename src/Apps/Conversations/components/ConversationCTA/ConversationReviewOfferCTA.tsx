@@ -23,7 +23,7 @@ export interface ConversationReviewOfferCTAProps {
   conversation: ConversationReviewOfferCTA_conversation$key
 }
 
-export const ConversationReviewOfferCTA: React.FC<ConversationReviewOfferCTAProps> = ({
+export const ConversationReviewOfferCTA: React.FC<React.PropsWithChildren<ConversationReviewOfferCTAProps>> = ({
   conversation,
 }) => {
   const data = useFragment(FRAGMENT, conversation)
@@ -116,7 +116,7 @@ interface GetCTAReturnProps {
   modalUrl: string
   modalTitle: string
   variant: MessageProps["variant"]
-  Icon: React.FC<any>
+  Icon: React.FC<React.PropsWithChildren<any>>
 }
 
 const getProps = ({

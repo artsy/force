@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1379b0ef35909a3ee9faf4c0df5d3ee8>>
+ * @generated SignedSource<<20335a94dfd594c00768cb83278a5a73>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PriceEstimateContactInformation_ArtworkFlowTest_Query$variables = {
   artworkID: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<008716676c5eaa67b81c3d504ed3f4e7>>
+ * @generated SignedSource<<aa4d0254837774cd10eb2a528862db13>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type DeliverSecondFactorInput = {
   clientMutationId?: string | null | undefined;
   secondFactorID: string;

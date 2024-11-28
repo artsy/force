@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f66bfb56703832030a166063b3647561>>
+ * @generated SignedSource<<08accecafa41f1431b07f0308c70ac54>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 import { FragmentRefs } from "relay-runtime";

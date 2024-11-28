@@ -33,7 +33,7 @@ interface ArtworkListFormProps {
   cancelMode?: "dismiss" | "back"
 }
 
-export const ArtworkListForm: React.FC<ArtworkListFormProps> = props => {
+export const ArtworkListForm: React.FC<React.PropsWithChildren<ArtworkListFormProps>> = props => {
   const { formik, mode, onClose, cancelMode } = props
 
   return (

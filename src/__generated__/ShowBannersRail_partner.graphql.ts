@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c5b548ba210cfae40ecb7cf8d21896dc>>
+ * @generated SignedSource<<2a9c1b43c5e0de2ba237bcaced61e94f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowBannersRail_partner$data = {
   readonly currentShows: {

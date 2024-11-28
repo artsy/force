@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<16be811773128373d123d5194d53d765>>
+ * @generated SignedSource<<b9ad8c4a26735ac9ae6e5968a0b79fe3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertsApp_me$data = {
   readonly alertsConnection: {

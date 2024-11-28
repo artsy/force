@@ -22,7 +22,9 @@ const CATEGORY_LABEL_MAP = {
   "top-emerging": "Represented by up-and-coming galleries.",
 }
 
-export class MarketInsights extends Component<MarketInsightsProps> {
+export class MarketInsights extends Component<
+  React.PropsWithChildren<MarketInsightsProps>
+> {
   static defaultProps = {
     border: true,
   }

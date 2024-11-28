@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a2559b1be41552746e79be12bab9d996>>
+ * @generated SignedSource<<5d2a0e9744e13952c21b5c8c0418c40d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairFollowedArtistsQuery$variables = {
   id: string;

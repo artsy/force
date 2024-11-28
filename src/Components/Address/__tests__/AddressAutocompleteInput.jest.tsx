@@ -4,7 +4,6 @@ import userEvent from "@testing-library/user-event"
 import {
   AddressAutocompleteInput,
   AddressAutocompleteInputProps,
-  useAddressAutocompleteTracking,
 } from "Components/Address/AddressAutocompleteInput"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import compact from "lodash/compact"
@@ -69,7 +68,7 @@ const mockOnChange = jest.fn()
 const mockOnClear = jest.fn()
 const mockOnSelect = jest.fn()
 
-const TestImplementation: FC<ImplementationProps> = ({
+const TestImplementation: FC<React.PropsWithChildren<ImplementationProps>> = ({
   initialAddress = { country: "US" },
   ...rest
 }) => {
@@ -81,12 +80,6 @@ const TestImplementation: FC<ImplementationProps> = ({
     `${address.city}, ${address.region} ${address.postalCode}`,
     address.country,
   ])
-
-  const autocompleteTracking = useAddressAutocompleteTracking({
-    contextModule: ContextModule.ordersShipping,
-    contextOwnerType: OwnerType.ordersShipping,
-    contextPageOwnerId: "1234",
-  })
 
   return (
     <>
@@ -111,14 +104,12 @@ const TestImplementation: FC<ImplementationProps> = ({
               region: suggestion.address.region,
               postalCode: suggestion.address.postalCode,
             })
-            autocompleteTracking.selectedAutocompletedAddress(
-              suggestion,
-              address.line1!
-            )
           })}
-          onReceiveAutocompleteResult={(input, resultCount) =>
-            autocompleteTracking.receivedAutocompleteResult(input, resultCount)
-          }
+          trackingValues={{
+            contextModule: ContextModule.ordersShipping,
+            contextOwnerType: OwnerType.ordersShipping,
+            contextPageOwnerId: "1234",
+          }}
           {...rest}
         />
       }
@@ -140,7 +131,6 @@ const TestImplementation: FC<ImplementationProps> = ({
       <button
         onClick={() => {
           setAddress({ ...address, line2: String(Date.now()) })
-          autocompleteTracking.editedAutocompletedAddress("line2")
         }}
       >
         Edit Address
@@ -308,7 +298,7 @@ describe("AddressAutocompleteInput", () => {
 
     // See TestImplementation for implementation details
     describe("tracking", () => {
-      it("developer can track when suggested addresses update with hook + `onReceiveAutocompleteResult` prop", async () => {
+      it("tracks when autocomplete results are received", async () => {
         render(<TestImplementation />)
 
         const line1Input = screen.getByPlaceholderText("Autocomplete input")
@@ -360,7 +350,7 @@ describe("AddressAutocompleteInput", () => {
         })
       })
 
-      it("developer can use tracking hook with `onSelect` prop to track when an address is selected", async () => {
+      it("tracks when an address is selected", async () => {
         render(<TestImplementation />)
 
         const line1Input = screen.getByPlaceholderText("Autocomplete input")
@@ -381,32 +371,6 @@ describe("AddressAutocompleteInput", () => {
           context_owner_type: "orders-shipping",
           input: "401 Broadway",
           item: "401 Broadway, New York NY 10013",
-        })
-      })
-
-      it("developer can use hook to track when the user edits an autocompleted address", async () => {
-        render(<TestImplementation />)
-
-        const line1Input = screen.getByPlaceholderText("Autocomplete input")
-        await userEvent.paste(line1Input, "401 Broadway")
-
-        const dropdown = await screen.findByRole("listbox", { hidden: true })
-        const option = within(dropdown).getByText(
-          "401 Broadway, New York NY 10013"
-        )
-
-        await userEvent.click(option)
-        await flushPromiseQueue()
-
-        const editAddressButton = screen.getByText("Edit Address")
-        await userEvent.click(editAddressButton)
-
-        expect(mockTrackEvent).toHaveBeenCalledWith({
-          action: "editedAutocompletedAddress",
-          context_module: "ordersShipping",
-          context_owner_id: "1234",
-          context_owner_type: "orders-shipping",
-          field: "line2",
         })
       })
     })

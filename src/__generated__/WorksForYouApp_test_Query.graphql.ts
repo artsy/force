@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1a7556ff99b7b728d4b926b7749d8fcc>>
+ * @generated SignedSource<<986a4739d19f287a7e57f539d361ef9b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type WorksForYouApp_test_Query$variables = {
   artistSlug: string;

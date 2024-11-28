@@ -47,8 +47,6 @@ jest.mock("Server/config", () => {
 const defaultComponent = () => <div>hi!</div>
 
 describe("serverRouter", () => {
-  const prevEnv = process.env
-
   let mockFindRoutesByPath = findRoutesByPath as jest.Mock
   let res: ArtsyResponse
   let req: Request
@@ -63,8 +61,6 @@ describe("serverRouter", () => {
   const mockTracking = useTracking as jest.Mock
 
   beforeEach(() => {
-    process.env = prevEnv
-
     res = {
       locals: { sd: {} },
     } as ArtsyResponse
@@ -113,7 +109,7 @@ describe("serverRouter", () => {
 
     const ServerRouter = Object.getOwnPropertyDescriptor(
       result,
-      __TEST_INTERNAL_SERVER_APP__!
+      __TEST_INTERNAL_SERVER_APP__ as any
     )?.value
 
     return {
@@ -138,7 +134,7 @@ describe("serverRouter", () => {
 
     it("bootstraps relay SSR data", async () => {
       const { extractScriptTags } = await getWrapper()
-      expect(extractScriptTags?.()).toContain("__RELAY_BOOTSTRAP__")
+      expect(extractScriptTags?.()).toContain("__RELAY_HYDRATION_DATA__")
     })
 
     it("does not prefix CDN_URL if not available", async () => {

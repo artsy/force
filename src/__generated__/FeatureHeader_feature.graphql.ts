@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<17a036ed9800885f32153cfc2ef15c4d>>
+ * @generated SignedSource<<9d4073fea643e6f8d5c6382fbe208343>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type FeatureLayouts = "DEFAULT" | "FULL" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type FeatureHeader_feature$data = {

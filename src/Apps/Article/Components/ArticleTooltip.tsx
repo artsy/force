@@ -15,12 +15,9 @@ interface ArticleTooltipProps {
   id: string
 }
 
-export const ArticleTooltip: FC<ArticleTooltipProps> = ({
-  entity,
-  href,
-  id,
-  children,
-}) => {
+export const ArticleTooltip: FC<React.PropsWithChildren<
+  ArticleTooltipProps
+>> = ({ entity, href, id, children }) => {
   return (
     <Dropdown
       placement="bottom"

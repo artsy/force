@@ -5,7 +5,7 @@ interface SubheaderProps extends TextProps {
   children: React.ReactNode
 }
 
-export const Subheader: React.FC<SubheaderProps> = ({ children, ...rest }) => {
+export const Subheader: React.FC<React.PropsWithChildren<SubheaderProps>> = ({ children, ...rest }) => {
   return (
     <Text
       as="h2"

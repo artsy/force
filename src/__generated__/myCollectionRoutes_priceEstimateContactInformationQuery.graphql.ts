@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f8871312e7bf27c073cc793f534206c0>>
+ * @generated SignedSource<<dcc6c9196ff38e4d2121387af12a5946>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type myCollectionRoutes_priceEstimateContactInformationQuery$variables = {
   artworkID: string;

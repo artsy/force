@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ArtworkArtistSeriesFragmentContainer } from "Apps/Artwork/Components/ArtworkArtistSeries"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
 
 jest.mock("react-tracking")
@@ -19,7 +19,9 @@ jest.mock("Components/ArtistSeriesRail/ArtistSeriesRail", () => ({
 }))
 
 const { renderWithRelay } = setupTestWrapperTL({
-  Component: ArtworkArtistSeriesFragmentContainer,
+  Component: (props: any) => (
+    <ArtworkArtistSeriesFragmentContainer {...props} />
+  ),
   query: graphql`
     query ArtworkArtistSeries_Query @relay_test_operation {
       artwork(id: "example") {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<35ab32eb3dc65a1d6617d1e895708f93>>
+ * @generated SignedSource<<7994869c126939e3925c01c1d56faf9d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SaveArtworkToListsButton_artwork$data = {
   readonly artistNames: string | null | undefined;

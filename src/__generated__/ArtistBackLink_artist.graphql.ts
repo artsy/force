@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e059d07aa2084a74babb50da3a1ec21>>
+ * @generated SignedSource<<7623aeb396b50a8a1466e40b22e8aa3e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistBackLink_artist$data = {
   readonly href: string | null | undefined;

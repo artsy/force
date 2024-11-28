@@ -8,7 +8,7 @@ interface ArticleSponsorProps extends BoxProps {
   sponsor: ArticleSponsor_sponsor$data
 }
 
-const ArticleSponsor: FC<ArticleSponsorProps> = ({ sponsor, ...rest }) => {
+const ArticleSponsor: FC<React.PropsWithChildren<ArticleSponsorProps>> = ({ sponsor, ...rest }) => {
   const { clickedSponsorLink } = useArticleTracking()
 
   const logo = sponsor.partnerLightLogo ?? sponsor.partnerDarkLogo

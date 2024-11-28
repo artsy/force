@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d6d94b4caaf32882030fa096e3336df9>>
+ * @generated SignedSource<<534d5ef1fd918029a3848cf6c3867432>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ExclusiveAccessBadge_test_Query$variables = Record<PropertyKey, never>;
 export type ExclusiveAccessBadge_test_Query$data = {

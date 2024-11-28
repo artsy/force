@@ -2,7 +2,7 @@ import { Button, Spacer } from "@artsy/palette"
 import { ConfirmationScreenComponent } from "Components/ConfirmationScreenComponent"
 import { useRouter } from "System/Hooks/useRouter"
 
-export const ConsignmentInquiryConfirmation: React.FC = () => {
+export const ConsignmentInquiryConfirmation: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { router } = useRouter()
   return (
     <>
@@ -13,7 +13,7 @@ export const ConsignmentInquiryConfirmation: React.FC = () => {
       <Spacer y={4} />
 
       <Button
-        width={["100%", "20%"]}
+        width={["100%", "auto"]}
         data-test-id="back-to-sell-with-artsy-button"
         size="large"
         variant="primaryBlack"
