@@ -1,12 +1,9 @@
 describe("/artwork/:id", () => {
-  // FIXME: test is being flakey and retries don't work in before hooks
-  // before(() => {
-  //   cy.visit("/artwork/pablo-picasso-guernica")
-  // })
+  before(() => {
+    cy.visit("/artwork/pablo-picasso-guernica")
+  })
 
   it("renders metadata", () => {
-    cy.visit("/artwork/pablo-picasso-guernica")
-
     cy.title().should("contain", "Pablo Picasso | Guernica (1937) | Artsy")
     cy.get("meta[name='description']")
       .should("have.attr", "content")
@@ -17,15 +14,11 @@ describe("/artwork/:id", () => {
   })
 
   it("renders page content", () => {
-    cy.visit("/artwork/pablo-picasso-guernica")
-
     cy.get("h1").should("contain", "Guernica, 1937")
     cy.contains("Museo Reina Sofía")
   })
 
   it("renders a 404", () => {
-    cy.visit("/artwork/pablo-picasso-guernica")
-
     cy.request({ url: "/artwork/blahblahblah", failOnStatusCode: false })
       .its("status")
       .should("equal", 404)
