@@ -1,5 +1,4 @@
 import { Clickable, ClickableProps, Image, ResponsiveBox } from "@artsy/palette"
-import { resized as resizer } from "Utils/resized"
 import { compact } from "lodash"
 import { scale } from "proportional-scale"
 import * as React from "react"
@@ -10,7 +9,6 @@ import { useLocalImage } from "Utils/localImageHelpers"
 import { userIsTeam } from "Utils/user"
 import { ArtworkLightbox_artwork$data } from "__generated__/ArtworkLightbox_artwork.graphql"
 import { ArtworkLightboxPlaceholder } from "./ArtworkLightboxPlaceholder"
-import { getENV } from "Utils/getENV"
 
 interface ArtworkLightboxProps extends ClickableProps {
   artwork: ArtworkLightbox_artwork$data
@@ -21,9 +19,14 @@ interface ArtworkLightboxProps extends ClickableProps {
 
 const MAX_SIZE = 800
 
-const ArtworkLightbox: React.FC<React.PropsWithChildren<
-  ArtworkLightboxProps
->> = ({ artwork, activeIndex, lazyLoad, maxHeight, onClick, ...rest }) => {
+const ArtworkLightbox: React.FC<React.PropsWithChildren<ArtworkLightboxProps>> = ({
+  artwork,
+  activeIndex,
+  lazyLoad,
+  maxHeight,
+  onClick,
+  ...rest
+}) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
   const images = compact(artwork.images)
@@ -47,25 +50,14 @@ const ArtworkLightbox: React.FC<React.PropsWithChildren<
 
   if (!image) return null
 
-  let lightboxImage = image
-
-  if (getENV("IS_MOBILE")) {
-    lightboxImage = resizer(image?.src, {
-      width: image.width as number,
-      height: image.height as number,
-      quality: 50,
-    }) as typeof image
-  }
-
   return (
     <>
       {isDefault && (
         <Link
           rel="preload"
           as="image"
-          href={lightboxImage.src}
-          imageSrcSet={lightboxImage.srcSet}
-          fetchPriority="high"
+          href={image.src}
+          imagesrcset={image.srcSet}
         />
       )}
 
@@ -109,8 +101,8 @@ const ArtworkLightbox: React.FC<React.PropsWithChildren<
               : {})}
             width="100%"
             height={"100%"}
-            src={lightboxImage.src}
-            srcSet={lightboxImage.srcSet}
+            src={image.src}
+            srcSet={image.srcSet}
             alt={artwork.formattedMetadata ?? ""}
             // Deliberate, to improve LCP
             lazyLoad={false}
@@ -137,7 +129,7 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
           isDefault
           placeholder: url(version: ["small", "medium"])
           fallback: cropped(
-            quality: 80
+            quality: 85
             width: 800
             height: 800
             version: ["main", "normalized", "larger", "large"]
@@ -148,7 +140,7 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
             srcSet
           }
           resized(
-            quality: 80
+            quality: 85
             width: 800
             height: 800
             version: ["main", "normalized", "larger", "large"]
