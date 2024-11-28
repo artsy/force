@@ -18,7 +18,6 @@ const ArtworkChatBubble: FC<React.PropsWithChildren<
     isInquireable,
     isOfferable,
     listPrice,
-    isInAuction,
     saleArtwork,
   } = artwork
 
