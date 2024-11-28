@@ -1,5 +1,5 @@
 // @ts-check
-import crypto from "crypto"
+const crypto = require("crypto")
 
 const FRAMEWORK_BUNDLES = ["react", "react-dom", "@sentry"]
 const ARTSY_FRAMEWORK_BUNDLES = [
@@ -12,7 +12,7 @@ const ARTSY_FRAMEWORK_BUNDLES = [
 ]
 const TOTAL_PAGES = 12
 
-export const splitChunks = {
+const splitChunks = {
   automaticNameDelimiter: "-",
   chunks: "all",
   cacheGroups: {
@@ -111,3 +111,5 @@ export const splitChunks = {
   maxSize: 307200, // 300kb
   minSize: 102400, // 100kb
 }
+
+module.exports = { splitChunks }

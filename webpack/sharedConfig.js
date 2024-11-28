@@ -1,35 +1,29 @@
 // @ts-check
 
-import path from "path"
-import TerserPlugin from "terser-webpack-plugin"
-import { basePath } from "./webpackEnv"
+const path = require("path")
+const TerserPlugin = require("terser-webpack-plugin")
+const { basePath } = require("./webpackEnv")
 
-export const productionDevtool = "source-map"
-export const devtool = process.env.WEBPACK_DEVTOOL || "eval"
-export const mode = process.env.NODE_ENV
-export const stats = process.env.WEBPACK_STATS || "errors-only"
+const productionDevtool = "source-map"
+const devtool = process.env.WEBPACK_DEVTOOL || "eval"
+const mode = process.env.NODE_ENV
+const stats = process.env.WEBPACK_STATS || "errors-only"
 
-export const experiments = {
+const experiments = {
   lazyCompilation: {
     entries: false,
     imports: false,
   },
 }
 
-export const cache = {
-  cacheDirectory: path.resolve(process.cwd(), ".cache"),
-  idleTimeout: 5000,
-  type: "filesystem", // or 'memory'
-}
-
-export const minimizer = [
+const minimizer = [
   new TerserPlugin({
     // Only use 4 cpus (default) in CircleCI, by default it will try using 36 and OOM
     parallel: process.env.CI ? 4 : true,
   }),
 ]
 
-export const resolve = {
+const resolve = {
   alias: {
     // The following packages need to be resolved to the host app (force) to get
     // around issues involving `yarn link` and multiple instances. A  similar
@@ -43,9 +37,20 @@ export const resolve = {
   symlinks: false,
 }
 
-export const externals = {
+const externals = {
   // TODO: Needs research to determine if if this is still required
   request: "request",
   // Required because getAsyncStorage isn't using async import()
   async_hooks: "async_hooks",
+}
+
+module.exports = {
+  productionDevtool,
+  devtool,
+  mode,
+  stats,
+  experiments,
+  minimizer,
+  resolve,
+  externals,
 }

@@ -1,23 +1,22 @@
 // @ts-check
-import path from "path"
-import HtmlWebpackPlugin from "html-webpack-plugin"
-import rspack from "@rspack/core"
-import LoadablePlugin from "@loadable/webpack-plugin"
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
-import { WebpackManifestPlugin } from "webpack-manifest-plugin"
-import { basePath } from "../webpackEnv"
-import { sharedPlugins } from "../sharedPlugins"
-import { splitChunks } from "../bundleSplitting"
-import { babelLoader, ejsLoader, mjsLoader } from "../sharedLoaders"
+const path = require("path")
+const rspack = require("@rspack/core")
+const LoadablePlugin = require("@loadable/webpack-plugin").default
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer")
+const { WebpackManifestPlugin } = require("webpack-manifest-plugin")
+const { basePath } = require("../webpackEnv")
+const { sharedPlugins } = require("../sharedPlugins")
+const { splitChunks } = require("../bundleSplitting")
+const { babelLoader, ejsLoader, mjsLoader } = require("../sharedLoaders")
 
-import {
+const {
   externals,
   productionDevtool,
   minimizer,
   mode,
   resolve,
   stats,
-} from "../sharedConfig"
+} = require("../sharedConfig")
 
 console.log("\n[Force] Building client-side production code...\n")
 
@@ -35,7 +34,7 @@ const clientProductionConfig = () => {
     optimization: {
       minimize: !process.env.WEBPACK_FAST_PROD_BUILD,
       minimizer,
-      runtimeChunk: "single", // Extract webpack runtime code into it's own file
+      runtimeChunk: "single", // Extract webpack runtime code into its own file
       splitChunks,
     },
     output: {
@@ -79,4 +78,4 @@ const clientProductionConfig = () => {
   }
 }
 
-export default clientProductionConfig()
+module.exports = clientProductionConfig()

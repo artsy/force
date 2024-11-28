@@ -1,4 +1,5 @@
 import "Server/webpackPublicPath"
+import "Server/webpackRetryChunks"
 import { getAppRoutes } from "routes"
 import { loadableReady } from "@loadable/component"
 import { setupAnalytics } from "Server/analytics/helpers"

@@ -20,7 +20,6 @@ import { NotificationErrorMessage } from "Components/Notifications/NotificationE
 import { PartnerOfferCreatedNotification } from "Components/Notifications/PartnerOfferCreatedNotification"
 import { PartnerShowOpenedNotification } from "Components/Notifications/PartnerShowOpenedNotification"
 import { ViewingRoomPublishedNotification } from "Components/Notifications/ViewingRoomPublishedNotification"
-import { error } from "console"
 import { Suspense, useEffect } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import { ErrorBoundary } from "System/Components/ErrorBoundary"
@@ -97,8 +96,6 @@ const Notification: React.FC<React.PropsWithChildren<NotificationProps>> = ({
   }, [notification, relayEnvironment])
 
   if (!notification) {
-    logger.error(error)
-
     return <NotificationErrorMessage />
   }
 

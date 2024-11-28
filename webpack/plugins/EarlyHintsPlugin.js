@@ -1,13 +1,11 @@
-// @ts-check
-
-import rspack from "@rspack/core"
+const rspack = require("@rspack/core")
 
 /**
  * This plugin generates a JSON file with the list of entry chunk files to
  * be used by the server to send early hints to the client.
  */
 
-export class EarlyHintsPlugin {
+class EarlyHintsPlugin {
   /**
    * @param {rspack.Compiler} compiler
    */
@@ -27,12 +25,15 @@ export class EarlyHintsPlugin {
            */
           const entryChunkFiles = Array.from(compilation.chunks)
             .filter(chunk => chunk.canBeInitial()) // Select only entry chunks
-            .reduce((acc, chunk) => {
-              const jsFiles = Array.from(chunk.files)
-                .filter(file => file.endsWith(".js"))
-                .map(file => `${publicPath}${file}`)
-              return acc.concat(jsFiles)
-            }, /** @type {string[]} */ ([]))
+            .reduce(
+              (acc, chunk) => {
+                const jsFiles = Array.from(chunk.files)
+                  .filter(file => file.endsWith(".js"))
+                  .map(file => `${publicPath}${file}`)
+                return acc.concat(jsFiles)
+              },
+              /** @type {string[]} */ []
+            )
 
           // Output `early-hints.json` to webpack output/publicPath directory
           assets["early-hints.json"] = new rspack.sources.RawSource(
@@ -44,3 +45,5 @@ export class EarlyHintsPlugin {
     })
   }
 }
+
+module.exports = { EarlyHintsPlugin }

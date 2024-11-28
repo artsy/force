@@ -1,16 +1,20 @@
 // @ts-check
 
-import nodeExternals from "webpack-node-externals"
-import path from "path"
-import LimitChunkCountPlugin from "webpack/lib/optimize/LimitChunkCountPlugin"
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
-import { basePath, webpackEnv } from "../webpackEnv"
-import { devtool, minimizer, mode, productionDevtool } from "../sharedConfig"
-import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin"
+const nodeExternals = require("webpack-node-externals")
+const path = require("path")
+const rspack = require("@rspack/core")
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer")
+const { basePath, webpackEnv } = require("../webpackEnv")
+const {
+  devtool,
+  minimizer,
+  mode,
+  productionDevtool,
+} = require("../sharedConfig")
 
 console.log("[Force Server] Building server-side code...\n")
 
-export const serverConfig = () => {
+const serverConfig = () => {
   return {
     devtool: webpackEnv.isDevelopment ? devtool : productionDevtool,
     entry: path.join(basePath, "src/index.js"),
@@ -45,14 +49,11 @@ export const serverConfig = () => {
       path: path.resolve(basePath),
     },
     plugins: [
-      new LimitChunkCountPlugin({
+      new rspack.optimize.LimitChunkCountPlugin({
         maxChunks: 1,
       }),
 
-      webpackEnv.isDevelopment &&
-        new SimpleProgressWebpackPlugin({
-          format: "minimal",
-        }),
+      webpackEnv.isDevelopment && new rspack.ProgressPlugin(),
 
       process.env.WEBPACK_BUNDLE_REPORT &&
         new BundleAnalyzerPlugin({
@@ -68,4 +69,4 @@ export const serverConfig = () => {
   }
 }
 
-export default serverConfig()
+module.exports = serverConfig()

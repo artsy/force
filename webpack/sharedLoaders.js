@@ -1,28 +1,48 @@
 // @ts-check
 
-import path from "path"
-import { basePath, webpackEnv } from "./webpackEnv"
+const path = require("path")
+const { basePath, webpackEnv } = require("./webpackEnv")
 
-export const babelLoader = {
+const babelLoader = {
   exclude: /(node_modules)/,
   include: path.resolve(basePath, "src"),
   test: /(\.(js|ts)x?$)/,
-  use: [
-    {
-      loader: "babel-loader",
-      options: {
-        cacheDirectory:
-          !process.env.CI && path.join(basePath, ".cache", "babel/force"),
-        plugins: [
-          webpackEnv.isDevelopment && require.resolve("react-refresh/babel"),
-        ].filter(Boolean),
-        presets: [["@babel/preset-env", { modules: false }]],
+  use: {
+    loader: "builtin:swc-loader",
+    options: {
+      jsc: {
+        parser: {
+          syntax: "typescript",
+          tsx: true,
+          decorators: true,
+          dynamicImport: true,
+        },
+        transform: {
+          react: {
+            development: webpackEnv.isDev,
+            refresh: webpackEnv.isDev,
+          },
+        },
       },
     },
-  ],
+  },
+  type: "javascript/auto",
+  // use: [
+  //   {
+  //     loader: "builtin:swc-loader",
+  //     options: {
+  //       cacheDirectory:
+  //         !process.env.CI && path.join(basePath, ".cache", "babel/force"),
+  //       plugins: [
+  //         webpackEnv.isDevelopment && require.resolve("react-refresh/babel"),
+  //       ].filter(Boolean),
+  //       presets: [["@babel/preset-env", { modules: false }]],
+  //     },
+  //   },
+  // ],
 }
 
-export const ejsLoader = {
+const ejsLoader = {
   test: /\.ejs$/,
   use: {
     // https://github.com/bazilio91/ejs-compiled-loader/issues/46
@@ -36,12 +56,18 @@ export const ejsLoader = {
   },
 }
 
-// Required for webpack 5 to allow interop with with non-ESM modules is handled.
-// TODO: This may be removed once all dependant references to
+// Required for webpack 5 to allow interop with non-ESM modules.
+// TODO: This may be removed once all dependent references to
 // @babel/runtime-corejs3 are removed.
-export const mjsLoader = {
+const mjsLoader = {
   resolve: {
     fullySpecified: false,
   },
   test: /\.m?js/,
+}
+
+module.exports = {
+  babelLoader,
+  ejsLoader,
+  mjsLoader,
 }

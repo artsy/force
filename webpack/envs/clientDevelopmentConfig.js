@@ -1,34 +1,32 @@
 // @ts-check
 
-import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin"
-import HtmlWebpackPlugin from "html-webpack-plugin"
-import LoadablePlugin from "@loadable/webpack-plugin"
-import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
-import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin"
-import TimeFixPlugin from "time-fix-plugin"
-import { WebpackManifestPlugin } from "webpack-manifest-plugin"
-import path from "path"
-import rspack from "@rspack/core"
-import { basePath, webpackEnv } from "../webpackEnv"
-import { splitChunks } from "../bundleSplitting"
-import { sharedPlugins } from "../sharedPlugins"
-import { babelLoader, ejsLoader, mjsLoader } from "../sharedLoaders"
+const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const LoadablePlugin = require("@loadable/webpack-plugin").default
+const ReactRefreshPlugin = require("@rspack/plugin-react-refresh")
+const TimeFixPlugin = require("time-fix-plugin")
+const { RspackManifestPlugin } = require("rspack-manifest-plugin")
+const path = require("path")
+const rspack = require("@rspack/core")
+const { basePath, webpackEnv } = require("../webpackEnv")
+const { splitChunks } = require("../bundleSplitting")
+const { sharedPlugins } = require("../sharedPlugins")
+const { babelLoader, ejsLoader, mjsLoader } = require("../sharedLoaders")
 
-import {
-  cache,
+const {
   devtool,
   experiments,
   externals,
   mode,
   resolve,
   stats,
-} from "../sharedConfig"
+} = require("../sharedConfig")
 
 console.log("\n[Force] Building client-side development code...\n")
 
-export const clientDevelopmentConfig = () => {
+const clientDevelopmentConfig = () => {
   return {
-    cache,
+    cache: true,
     devtool,
     entry: {
       "artsy-entry": [
@@ -43,7 +41,7 @@ export const clientDevelopmentConfig = () => {
       rules: [babelLoader, ejsLoader, mjsLoader],
     },
     optimization: {
-      runtimeChunk: "single", // Extract webpack runtime code into it's own file
+      runtimeChunk: "single", // Extract webpack runtime code into its own file
       splitChunks,
 
       // Webpack does extra algorithmic work to optimize the output for size and
@@ -64,7 +62,7 @@ export const clientDevelopmentConfig = () => {
       new CaseSensitivePathsPlugin(),
       new LoadablePlugin({
         filename: "loadable-stats.json",
-        path: path.resolve(basePath, "public", "assets"),
+        // path: path.resolve(basePath, "public", "assets"),
       }),
       new HtmlWebpackPlugin({
         filename: path.resolve(basePath, "public", "html.ejs"),
@@ -73,14 +71,12 @@ export const clientDevelopmentConfig = () => {
         inject: false,
         scriptLoading: "defer",
       }),
-      new ReactRefreshWebpackPlugin({
+      new ReactRefreshPlugin({
         overlay: false,
       }),
-      new SimpleProgressWebpackPlugin({
-        format: "minimal",
-      }),
+      new rspack.ProgressPlugin(),
       new TimeFixPlugin(),
-      new WebpackManifestPlugin({
+      new RspackManifestPlugin({
         basePath: "/assets/",
         fileName: path.resolve(basePath, "manifest.json"),
       }),
@@ -90,4 +86,4 @@ export const clientDevelopmentConfig = () => {
   }
 }
 
-export default clientDevelopmentConfig()
+module.exports = clientDevelopmentConfig()

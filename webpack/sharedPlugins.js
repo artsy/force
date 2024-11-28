@@ -1,11 +1,11 @@
 // @ts-check
 
-import { RetryChunkLoadPlugin } from "webpack-retry-chunk-load-plugin"
-import { EarlyHintsPlugin } from "./plugins/EarlyHintsPlugin"
-import NodePolyfillPlugin from "node-polyfill-webpack-plugin"
-import rspack from "@rspack/core"
+// const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
+const { EarlyHintsPlugin } = require("./plugins/EarlyHintsPlugin")
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
+const rspack = require("@rspack/core")
 
-export const sharedPlugins = () => [
+const sharedPlugins = () => [
   new NodePolyfillPlugin(),
 
   new rspack.DefinePlugin({
@@ -21,12 +21,7 @@ export const sharedPlugins = () => [
   // TODO: Why would these end up in the client bundle?
   new rspack.IgnorePlugin({ resourceRegExp: /^graphql(\/.*)?$/ }),
 
-  new RetryChunkLoadPlugin({
-    maxRetries: 5,
-    cacheBust: `function() {
-      return "cache-bust=" + Date.now();
-    }`,
-  }),
-
   new EarlyHintsPlugin(),
 ]
+
+module.exports = { sharedPlugins }
