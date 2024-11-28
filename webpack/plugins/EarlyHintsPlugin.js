@@ -1,6 +1,6 @@
 // @ts-check
 
-import webpack from "webpack"
+import rspack from "@rspack/core"
 
 /**
  * This plugin generates a JSON file with the list of entry chunk files to
@@ -9,14 +9,14 @@ import webpack from "webpack"
 
 export class EarlyHintsPlugin {
   /**
-   * @param {webpack.Compiler} compiler
+   * @param {rspack.Compiler} compiler
    */
   apply(compiler) {
     compiler.hooks.thisCompilation.tap("EarlyHintPlugin", compilation => {
       compilation.hooks.processAssets.tap(
         {
           name: "EarlyHintPlugin",
-          stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
+          stage: rspack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
         },
         assets => {
           const publicPath = compilation.outputOptions.publicPath || ""
@@ -35,7 +35,7 @@ export class EarlyHintsPlugin {
             }, /** @type {string[]} */ ([]))
 
           // Output `early-hints.json` to webpack output/publicPath directory
-          assets["early-hints.json"] = new webpack.sources.RawSource(
+          assets["early-hints.json"] = new rspack.sources.RawSource(
             JSON.stringify(entryChunkFiles),
             false
           )

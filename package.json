@@ -9,10 +9,10 @@
   },
   "scripts": {
     "build": "yarn build:client:prod && yarn build:server:prod",
-    "build:client:dev": "NODE_ENV=development yarn webpack --config ./webpack/envs/clientDevelopmentConfig.js",
-    "build:client:prod": "NODE_ENV=production yarn webpack --config ./webpack/envs/clientProductionConfig.js",
-    "build:server:dev": "NODE_ENV=development yarn webpack --config ./webpack/envs/serverConfig.js",
-    "build:server:prod": "NODE_ENV=production yarn webpack --config ./webpack/envs/serverConfig.js",
+    "build:client:dev": "NODE_ENV=development yarn rspack --config ./webpack/envs/clientDevelopmentConfig.js",
+    "build:client:prod": "NODE_ENV=production yarn rspack --config ./webpack/envs/clientProductionConfig.js",
+    "build:server:dev": "NODE_ENV=development yarn rspack --config ./webpack/envs/serverConfig.js",
+    "build:server:prod": "NODE_ENV=production yarn rspack --config ./webpack/envs/serverConfig.js",
     "build-storybook": "build-storybook",
     "bundle-report:client": "WEBPACK_BUNDLE_REPORT=true yarn build:client:prod",
     "bundle-report:server": "WEBPACK_BUNDLE_REPORT=true yarn build:server:prod",
@@ -61,7 +61,7 @@
     "stats:client": "WEBPACK_STATS=normal yarn build:client:prod --profile --json > stats-client.json",
     "stats:server": "WEBPACK_STATS=normal yarn build:server:prod --profile --json > stats-server.json",
     "storybook": "start-storybook -p 6006",
-    "webpack": "node --max_old_space_size=4096 -r @babel/register node_modules/.bin/webpack"
+    "webpack": "node --max_old_space_size=4096 -r @babel/register node_modules/.bin/rspack"
   },
   "resolutions": {
     "@types/react": "^18.3.12",
@@ -224,6 +224,8 @@
     "@loadable/webpack-plugin": "5.15.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@relative-ci/agent": "^4.2.10",
+    "@rspack/cli": "^1.1.4",
+    "@rspack/core": "^1.1.4",
     "@storybook/addon-actions": "6.5.13",
     "@storybook/addon-essentials": "6.5.13",
     "@storybook/addon-links": "6.5.13",
@@ -339,9 +341,7 @@
     "time-fix-plugin": "^2.0.7",
     "typescript": "^5.6.3",
     "typescript-styled-plugin": "0.15.0",
-    "webpack": "5.76.0",
     "webpack-bundle-analyzer": "4.4.2",
-    "webpack-cli": "4.9.2",
     "webpack-dev-middleware": "^6.1.2",
     "webpack-hot-middleware": "^2.25.4",
     "webpack-manifest-plugin": "3.1.1",

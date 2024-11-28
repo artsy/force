@@ -1,6 +1,7 @@
 // @ts-check
 import path from "path"
 import HtmlWebpackPlugin from "html-webpack-plugin"
+import rspack from "@rspack/core"
 import LoadablePlugin from "@loadable/webpack-plugin"
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
 import { WebpackManifestPlugin } from "webpack-manifest-plugin"
@@ -60,17 +61,13 @@ const clientProductionConfig = () => {
         basePath: "/assets/",
         fileName: path.resolve(basePath, "manifest.json"),
       }),
-      new HtmlWebpackPlugin({
+      new rspack.HtmlRspackPlugin({
         filename: path.resolve(basePath, "public", "html.ejs"),
         template: path.resolve(basePath, "src/html.ejs"),
         // We need to inject runtime CDN url in via express
         inject: false,
         scriptLoading: "defer",
-        minify: {
-          collapseWhitespace: true,
-          conservativeCollapse: true,
-          removeComments: true,
-        },
+        minify: true,
       }),
       process.env.WEBPACK_BUNDLE_REPORT &&
         new BundleAnalyzerPlugin({

@@ -1,3 +1,4 @@
+// @ts-check
 require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx", ".ejs"],
   plugins: ["babel-plugin-dynamic-import-node"],
@@ -6,13 +7,12 @@ require("@artsy/multienv").loadEnvs(".env.shared", ".env")
 
 const express = require("express")
 const path = require("path")
-const webpack = require("webpack")
+const rspack = require("@rspack/core")
 const webpackDevMiddleware = require("webpack-dev-middleware")
 const webpackHotMiddleware = require("webpack-hot-middleware")
 const { startServer } = require("./Server/startServer")
 const { setAliases } = require("require-control")
 const { createReloadable } = require("@artsy/express-reloadable")
-const { initializeMiddleware } = require("./middleware")
 const {
   clientDevelopmentConfig,
 } = require("../webpack/envs/clientDevelopmentConfig")
@@ -35,7 +35,7 @@ setAliases({
 })
 
 const webpackConfig = clientDevelopmentConfig()
-const compiler = webpack(webpackConfig)
+const compiler = rspack.rspack(webpackConfig)
 const app = express()
 
 const wdm = webpackDevMiddleware(compiler, {

@@ -8,7 +8,7 @@ import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin"
 import TimeFixPlugin from "time-fix-plugin"
 import { WebpackManifestPlugin } from "webpack-manifest-plugin"
 import path from "path"
-import webpack from "webpack"
+import rspack from "@rspack/core"
 import { basePath, webpackEnv } from "../webpackEnv"
 import { splitChunks } from "../bundleSplitting"
 import { sharedPlugins } from "../sharedPlugins"
@@ -60,7 +60,7 @@ export const clientDevelopmentConfig = () => {
     },
     plugins: [
       ...sharedPlugins(),
-      new webpack.HotModuleReplacementPlugin(),
+      new rspack.HotModuleReplacementPlugin(),
       new CaseSensitivePathsPlugin(),
       new LoadablePlugin({
         filename: "loadable-stats.json",
