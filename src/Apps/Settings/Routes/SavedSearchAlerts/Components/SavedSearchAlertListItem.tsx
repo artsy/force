@@ -15,12 +15,9 @@ interface SavedSearchAlertListItemProps {
   onViewArtworksClick: (entity: EditAlertEntity) => void
 }
 
-export const SavedSearchAlertListItem: React.FC<React.PropsWithChildren<SavedSearchAlertListItemProps>> = ({
-  item,
-  variant,
-  onEditAlertClick,
-  onViewArtworksClick,
-}) => {
+export const SavedSearchAlertListItem: React.FC<React.PropsWithChildren<
+  SavedSearchAlertListItemProps
+>> = ({ item, variant, onEditAlertClick, onViewArtworksClick }) => {
   const { jumpTo } = useJump()
   const { trackEvent } = useTracking()
 
@@ -86,7 +83,7 @@ export const SavedSearchAlertListItem: React.FC<React.PropsWithChildren<SavedSea
               textDecoration="underline"
               onClick={() => {
                 trackEvent({
-                  action_type: ActionType.clickEditAlert,
+                  action_type: ActionType.clickedEditAlert,
                   alert_id: item.internalID,
                   context_module: ContextModule.alertsList,
                   context_owner_type: OwnerType.savedSearches,
