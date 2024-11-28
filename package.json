@@ -8,6 +8,8 @@
     "yarn": "1.x.x"
   },
   "scripts": {
+    "rsbuild:dev": "rsbuild dev",
+    "rsbuild:prod": "rsbuild build",
     "build": "yarn build:client:prod && yarn build:server:prod",
     "build:client:dev": "NODE_ENV=development yarn rspack --config ./webpack/envs/clientDevelopmentConfig.js",
     "build:client:prod": "NODE_ENV=production yarn rspack --config ./webpack/envs/clientProductionConfig.js",
@@ -223,6 +225,9 @@
     "@loadable/babel-plugin": "5.13.2",
     "@loadable/webpack-plugin": "5.15.2",
     "@relative-ci/agent": "^4.2.10",
+    "@rsbuild/core": "^1.1.6",
+    "@rsbuild/plugin-node-polyfill": "^1.2.0",
+    "@rsbuild/plugin-react": "^1.0.7",
     "@rspack/cli": "^1.1.4",
     "@rspack/core": "^1.1.4",
     "@rspack/plugin-react-refresh": "^1.0.0",
