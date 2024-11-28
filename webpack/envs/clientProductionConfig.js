@@ -1,9 +1,8 @@
 // @ts-check
 const path = require("path")
-const rspack = require("@rspack/core")
 const LoadablePlugin = require("@loadable/webpack-plugin").default
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer")
-const { WebpackManifestPlugin } = require("webpack-manifest-plugin")
+const { RspackManifestPlugin } = require("rspack-manifest-plugin")
 const { basePath } = require("../webpackEnv")
 const { sharedPlugins } = require("../sharedPlugins")
 const { splitChunks } = require("../bundleSplitting")
@@ -17,6 +16,7 @@ const {
   resolve,
   stats,
 } = require("../sharedConfig")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
 
 console.log("\n[Force] Building client-side production code...\n")
 
@@ -56,11 +56,11 @@ const clientProductionConfig = () => {
         // @ts-ignore
         path: path.resolve(basePath, "public", "assets"),
       }),
-      new WebpackManifestPlugin({
+      new RspackManifestPlugin({
         basePath: "/assets/",
         fileName: path.resolve(basePath, "manifest.json"),
       }),
-      new rspack.HtmlRspackPlugin({
+      new HtmlWebpackPlugin({
         filename: path.resolve(basePath, "public", "html.ejs"),
         template: path.resolve(basePath, "src/html.ejs"),
         // We need to inject runtime CDN url in via express

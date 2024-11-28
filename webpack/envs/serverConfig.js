@@ -25,14 +25,19 @@ const serverConfig = () => {
         {
           include: path.resolve(basePath, "src"),
           test: /(\.(js|ts)x?$)/,
-          use: [
-            {
-              loader: "babel-loader",
-              options: {
-                plugins: [["@babel/plugin-transform-modules-commonjs"]],
+          use: {
+            loader: "builtin:swc-loader",
+            options: {
+              jsc: {
+                parser: {
+                  syntax: "typescript",
+                  tsx: true,
+                  decorators: true,
+                  dynamicImport: true,
+                },
               },
             },
-          ],
+          },
         },
       ],
     },
