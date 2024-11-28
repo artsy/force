@@ -1,10 +1,7 @@
-// @ts-check
-
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const LoadablePlugin = require("@loadable/webpack-plugin").default
 const ReactRefreshPlugin = require("@rspack/plugin-react-refresh")
-const TimeFixPlugin = require("time-fix-plugin")
 const { RspackManifestPlugin } = require("rspack-manifest-plugin")
 const path = require("path")
 const rspack = require("@rspack/core")
@@ -24,6 +21,10 @@ const {
 
 console.log("\n[Force] Building client-side development code...\n")
 
+/**
+ *
+ * @returns {import("@rspack/core").RspackOptions}
+ */
 const clientDevelopmentConfig = () => {
   return {
     cache: true,
@@ -75,7 +76,6 @@ const clientDevelopmentConfig = () => {
         overlay: false,
       }),
       new rspack.ProgressPlugin(),
-      new TimeFixPlugin(),
       new RspackManifestPlugin({
         basePath: "/assets/",
         fileName: path.resolve(basePath, "manifest.json"),

@@ -27,6 +27,6 @@ setupWebVitals()
 })()
 
 // Enable hot-reloading if available.
-if (module.hot) {
-  module.hot.accept()
-}
+// if (module.hot) {
+//   module.hot.accept()
+// }

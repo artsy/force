@@ -13,9 +13,7 @@ const webpackHotMiddleware = require("webpack-hot-middleware")
 const { startServer } = require("./Server/startServer")
 const { setAliases } = require("require-control")
 const { createReloadable } = require("@artsy/express-reloadable")
-const {
-  clientDevelopmentConfig,
-} = require("../webpack/envs/clientDevelopmentConfig")
+const clientDevelopmentConfig = require("../webpack/envs/clientDevelopmentConfig")
 
 /**
  * Force resolution of potentially `yarn link`'d modules to the local i
@@ -34,14 +32,13 @@ setAliases({
   ),
 })
 
-const webpackConfig = clientDevelopmentConfig()
-const compiler = rspack.rspack(webpackConfig)
+const compiler = rspack.rspack(clientDevelopmentConfig)
 const app = express()
 
 const wdm = webpackDevMiddleware(compiler, {
-  publicPath: webpackConfig.output.publicPath,
+  publicPath: clientDevelopmentConfig.output.publicPath,
   serverSideRender: true,
-  stats: webpackConfig.stats,
+  stats: clientDevelopmentConfig.stats,
   writeToDisk(filePath) {
     /**
      * Emit the stats file to disk during dev so that loadable-compoents can

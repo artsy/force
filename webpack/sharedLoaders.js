@@ -2,6 +2,7 @@
 
 const path = require("path")
 const { basePath, webpackEnv } = require("./webpackEnv")
+const relay = require("../relay.config")
 
 const babelLoader = {
   exclude: /(node_modules)/,
@@ -11,6 +12,25 @@ const babelLoader = {
     loader: "builtin:swc-loader",
     options: {
       jsc: {
+        experimental: {
+          plugins: [
+            [
+              "@swc/plugin-styled-components",
+              {
+                ssr: true,
+                displayName: true,
+              },
+            ],
+            [
+              "@swc/plugin-relay",
+              {
+                rootDir: path.resolve(basePath),
+                artifactDirectory: "src/__generated__",
+                language: "typescript",
+              },
+            ],
+          ],
+        },
         parser: {
           syntax: "typescript",
           tsx: true,
@@ -21,6 +41,7 @@ const babelLoader = {
           react: {
             development: webpackEnv.isDev,
             refresh: webpackEnv.isDev,
+            runtime: "automatic",
           },
         },
       },
