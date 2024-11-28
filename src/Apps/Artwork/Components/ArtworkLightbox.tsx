@@ -19,14 +19,9 @@ interface ArtworkLightboxProps extends ClickableProps {
 
 const MAX_SIZE = 800
 
-const ArtworkLightbox: React.FC<React.PropsWithChildren<ArtworkLightboxProps>> = ({
-  artwork,
-  activeIndex,
-  lazyLoad,
-  maxHeight,
-  onClick,
-  ...rest
-}) => {
+const ArtworkLightbox: React.FC<React.PropsWithChildren<
+  ArtworkLightboxProps
+>> = ({ artwork, activeIndex, lazyLoad, maxHeight, onClick, ...rest }) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
   const images = compact(artwork.images)
@@ -58,6 +53,7 @@ const ArtworkLightbox: React.FC<React.PropsWithChildren<ArtworkLightboxProps>> =
           as="image"
           href={image.src}
           imagesrcset={image.srcSet}
+          fetchPriority="high"
         />
       )}
 
