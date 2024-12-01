@@ -14,9 +14,10 @@ interface ArtistHeaderImageProps
   image: ValidImage
 }
 
-export const ArtistHeaderImage: FC<React.PropsWithChildren<
-  ArtistHeaderImageProps
->> = ({ image, ...rest }) => {
+export const ArtistHeaderImage: FC<React.PropsWithChildren<ArtistHeaderImageProps>> = ({
+  image,
+  ...rest
+}) => {
   const max = maxDimensionsByArea({
     width: image.width,
     height: image.height,
