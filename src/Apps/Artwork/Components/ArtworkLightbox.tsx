@@ -48,9 +48,10 @@ const ArtworkLightbox: React.FC<React.PropsWithChildren<
   if (!image) return null
 
   let lightboxImage = image
+  const mobileLightboxSource = images[activeIndex].mobileLightboxSource
 
-  if (getENV("IS_MOBILE")) {
-    lightboxImage = resizer(image?.src, {
+  if (getENV("IS_MOBILE") && mobileLightboxSource) {
+    lightboxImage = resizer(mobileLightboxSource, {
       width: image.width as number,
       height: image.height as number,
       quality: 50,
@@ -136,6 +137,9 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
           internalID
           isDefault
           placeholder: url(version: ["small", "medium"])
+          mobileLightboxSource: url(
+            version: ["main", "normalized", "larger", "large"]
+          )
           fallback: cropped(
             quality: 80
             width: 800

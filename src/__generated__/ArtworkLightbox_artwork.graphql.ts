@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebc9bcedbe6485e957a88b7a5bfea760>>
+ * @generated SignedSource<<0114728984a085f7255212ef6c83ced4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,7 @@ export type ArtworkLightbox_artwork$data = {
     } | null | undefined;
     readonly internalID: string | null | undefined;
     readonly isDefault: boolean | null | undefined;
+    readonly mobileLightboxSource: string | null | undefined;
     readonly placeholder: string | null | undefined;
     readonly resized: {
       readonly height: number | null | undefined;
@@ -38,7 +39,17 @@ export type ArtworkLightbox_artwork$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = [
+var v0 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": [
+    "main",
+    "normalized",
+    "larger",
+    "large"
+  ]
+},
+v1 = [
   {
     "kind": "Literal",
     "name": "height",
@@ -49,23 +60,14 @@ var v0 = [
     "name": "quality",
     "value": 80
   },
-  {
-    "kind": "Literal",
-    "name": "version",
-    "value": [
-      "main",
-      "normalized",
-      "larger",
-      "large"
-    ]
-  },
+  (v0/*: any*/),
   {
     "kind": "Literal",
     "name": "width",
     "value": 800
   }
 ],
-v1 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -159,23 +161,32 @@ return {
           "storageKey": "url(version:[\"small\",\"medium\"])"
         },
         {
+          "alias": "mobileLightboxSource",
+          "args": [
+            (v0/*: any*/)
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:[\"main\",\"normalized\",\"larger\",\"large\"])"
+        },
+        {
           "alias": "fallback",
-          "args": (v0/*: any*/),
+          "args": (v1/*: any*/),
           "concreteType": "CroppedImageUrl",
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": (v1/*: any*/),
+          "selections": (v2/*: any*/),
           "storageKey": "cropped(height:800,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
         },
         {
           "alias": null,
-          "args": (v0/*: any*/),
+          "args": (v1/*: any*/),
           "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
-          "selections": (v1/*: any*/),
+          "selections": (v2/*: any*/),
           "storageKey": "resized(height:800,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
         },
         {
@@ -194,6 +205,6 @@ return {
 };
 })();
 
-(node as any).hash = "75020919d3f10f6af89f3a798fbcd142";
+(node as any).hash = "8ddbe3cf4e515b8138627cde1bb7910e";
 
 export default node;
