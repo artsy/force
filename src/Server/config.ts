@@ -122,6 +122,7 @@ export const SMARTY_EMBEDDED_KEY_JSON: any = {}
 export const STRIPE_PUBLISHABLE_KEY: any = null
 export const TARGET_CAMPAIGN_URL: any = "/seattle-art-fair-2017"
 export const THIRD_PARTIES_DISABLED: any = false
+export const TOOLS_URL: any = "https://tools.artsy.net"
 export const TRACK_PAGELOAD_PATHS: any = null
 export const UNLEASH_API: any = null
 export const UNLEASH_APP_NAME: any = null
