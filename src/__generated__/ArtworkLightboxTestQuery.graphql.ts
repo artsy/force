@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<239c969f07c39496786a3594030f30c0>>
+ * @generated SignedSource<<1814e83f8e1bd3335c532af0ff3c4a52>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,7 +29,17 @@ var v0 = [
     "value": "foo"
   }
 ],
-v1 = [
+v1 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": [
+    "main",
+    "normalized",
+    "larger",
+    "large"
+  ]
+},
+v2 = [
   {
     "kind": "Literal",
     "name": "height",
@@ -38,25 +48,16 @@ v1 = [
   {
     "kind": "Literal",
     "name": "quality",
-    "value": 85
+    "value": 80
   },
-  {
-    "kind": "Literal",
-    "name": "version",
-    "value": [
-      "main",
-      "normalized",
-      "larger",
-      "large"
-    ]
-  },
+  (v1/*: any*/),
   {
     "kind": "Literal",
     "name": "width",
     "value": 800
   }
 ],
-v2 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -179,24 +180,33 @@ return {
                 "storageKey": "url(version:[\"small\",\"medium\"])"
               },
               {
+                "alias": "mobileLightboxSource",
+                "args": [
+                  (v1/*: any*/)
+                ],
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:[\"main\",\"normalized\",\"larger\",\"large\"])"
+              },
+              {
                 "alias": "fallback",
-                "args": (v1/*: any*/),
+                "args": (v2/*: any*/),
                 "concreteType": "CroppedImageUrl",
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": (v2/*: any*/),
-                "storageKey": "cropped(height:800,quality:85,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
+                "selections": (v3/*: any*/),
+                "storageKey": "cropped(height:800,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
               },
               {
                 "alias": null,
-                "args": (v1/*: any*/),
+                "args": (v2/*: any*/),
                 "concreteType": "ResizedImageUrl",
                 "kind": "LinkedField",
                 "name": "resized",
                 "plural": false,
-                "selections": (v2/*: any*/),
-                "storageKey": "resized(height:800,quality:85,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
+                "selections": (v3/*: any*/),
+                "storageKey": "resized(height:800,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
               },
               {
                 "alias": null,
@@ -221,12 +231,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "97dab2302a1a5ff32034b39881da1779",
+    "cacheID": "68614a0c1deb5f4da1d134b8dd1afc3c",
     "id": null,
     "metadata": {},
     "name": "ArtworkLightboxTestQuery",
     "operationKind": "query",
-    "text": "query ArtworkLightboxTestQuery {\n  artwork(id: \"foo\") {\n    ...ArtworkLightbox_artwork\n    id\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images(includeAll: false) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(quality: 85, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(quality: 85, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n"
+    "text": "query ArtworkLightboxTestQuery {\n  artwork(id: \"foo\") {\n    ...ArtworkLightbox_artwork\n    id\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images(includeAll: false) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    mobileLightboxSource: url(version: [\"main\", \"normalized\", \"larger\", \"large\"])\n    fallback: cropped(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n"
   }
 };
 })();
