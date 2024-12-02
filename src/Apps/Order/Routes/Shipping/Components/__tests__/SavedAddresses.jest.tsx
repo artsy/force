@@ -194,11 +194,11 @@ describe("Saved Addresses", () => {
 
       expect(await screen.findByText("Add address")).toBeInTheDocument()
 
-      const nameInput = screen.getByPlaceholderText("Full name")
+      const nameInput = screen.getByPlaceholderText("Add full name")
       expect(nameInput).toBeInTheDocument()
       expect(nameInput).toHaveDisplayValue("")
 
-      const streetInput = screen.getByPlaceholderText("Street address")
+      const streetInput = screen.getByPlaceholderText("Add street address")
       expect(streetInput).toBeInTheDocument()
       expect(streetInput).toHaveDisplayValue("")
     })
@@ -298,7 +298,7 @@ describe("Saved Addresses", () => {
 
       expect(await screen.findByText("Edit address")).toBeInTheDocument()
       expect(screen.getByDisplayValue("Test Name")).toBeInTheDocument()
-      expect(screen.getByPlaceholderText("Street address")).toHaveValue(
+      expect(screen.getByPlaceholderText("Add street address")).toHaveValue(
         "1 Main St"
       )
     })
