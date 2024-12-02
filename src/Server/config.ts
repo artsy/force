@@ -65,7 +65,6 @@ export const GALLERY_PARTNER_UPDATES_CHANNEL: any = "5762d454b5989e6f98f7799a" /
 export const GEMINI_ACCOUNT_KEY: any = "force-staging"
 export const GEMINI_APP: any = "http://localhost:3004"
 export const GEMINI_CLOUDFRONT_URL: any = "https://d7hftxdivxxvm.cloudfront.net"
-export const GENOME_URL: any = "https://helix.artsy.net"
 export const GEODATA_URL: any =
   "http://artsy-geodata.s3-website-us-east-1.amazonaws.com"
 export const GOOGLE_ADWORDS_ID: any = null
