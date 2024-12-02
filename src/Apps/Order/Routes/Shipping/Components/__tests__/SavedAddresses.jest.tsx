@@ -222,20 +222,14 @@ describe("Saved Addresses", () => {
 
     // Test takes too long to run
     // eslint-disable-next-line jest/no-disabled-tests
-    it.skip("calls the parent formik context onSubmit when the user saves a new address", async () => {
-      let startTime = Date.now()
-      const logTime = (label: string) => {
-        console.log(label, Date.now() - startTime)
-        startTime = Date.now()
-      }
-      logTime("start")
-
+    it.only("calls the parent formik context onSubmit when the user saves a new address", async () => {
+      console.time("test")
       renderWithRelay({
         Me: () => ({
           addressConnection: basicAddressList,
         }),
       })
-      logTime("rendered")
+      console.timeLog("test", "rendered")
 
       const validAddress = {
         name: "Test Name",
@@ -249,30 +243,30 @@ describe("Saved Addresses", () => {
       }
       const addAddressButton = screen.getByText("Add a new address")
       await userEvent.click(addAddressButton)
-      logTime("clicked button")
+      console.timeLog("test", "clicked button")
 
       screen.getByText("Add address")
-      logTime("found modal, filling")
+      console.timeLog("test", "found modal, filling")
 
       await fillAddressForm(validAddress)
 
       await flushPromiseQueue()
-      logTime("filled")
+      console.timeLog("test", "filled")
 
       mockExecuteUserAddressAction.mockResolvedValueOnce({
         data: { ...validAddress },
       })
-      logTime("resolved")
+      console.timeLog("test", "resolved")
 
       await userEvent.click(screen.getByText("Save"))
 
       await flushPromiseQueue()
-      logTime("clicked save")
+      console.timeLog("test", "clicked save")
 
       expect(testProps.onSelect).toHaveBeenCalledWith(
         expect.objectContaining(validAddress)
       )
-      logTime("asserted")
+      console.timeLog("test", "asserted")
 
       await flushPromiseQueue()
 

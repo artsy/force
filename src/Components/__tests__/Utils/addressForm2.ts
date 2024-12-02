@@ -54,16 +54,21 @@ export const clickSaveAddress = async () => {
 }
 
 export const fillAddressForm = async (address: Partial<Address>) => {
+  console.time("fillAddressForm")
+
   await waitFor(() => {
-    const line1Input = screen.getByPlaceholderText("Street address")
+    const line1Input = screen.getByPlaceholderText("Add street address")
     expect(line1Input).toBeEnabled()
   })
 
   if (address.country) {
-    const country = await screen.findByTestId(/Form_country/)
+    console.time("selectCountry")
+    const country = await screen.findByLabelText("Country")
     await userEvent.selectOptions(country, [address.country])
+    console.timeEnd("selectCountry")
   }
 
+  console.time("findInputs")
   const [
     name,
     addressLine1,
@@ -73,22 +78,19 @@ export const fillAddressForm = async (address: Partial<Address>) => {
     postalCode,
     phoneNumber,
   ] = await Promise.all([
-    screen.findByPlaceholderText("Full name"),
-    screen.findByPlaceholderText("Street address"),
-    screen.findByPlaceholderText("Apt, floor, suite, etc."),
-    screen.findByPlaceholderText("City"),
-    screen.findByPlaceholderText(
-      address.country === "US" ? "State" : "State, province, or region"
-    ),
-    screen.findByPlaceholderText(
-      address.country === "US" ? "ZIP code" : /ZIP\/Postal code/,
-      { exact: false }
-    ),
+    screen.findByPlaceholderText("Add full name"),
+    screen.findByPlaceholderText("Add street address"),
+    screen.findByPlaceholderText("Add apartment, floor, suite, etc."),
+    screen.findByPlaceholderText("Add city"),
+    screen.findByPlaceholderText("Add state, region or province"),
+    screen.findByPlaceholderText("Add ZIP/Postal code"),
     screen
-      .findAllByPlaceholderText("Add phone number including country code")
+      .findAllByPlaceholderText("Add phone number")
       .then(inputs => inputs[0]),
   ])
+  console.timeEnd("findInputs")
 
+  console.time("fillInputs")
   await Promise.all([
     address.name && userEvent.paste(name, address.name),
     address.addressLine1 && userEvent.paste(addressLine1, address.addressLine1),
@@ -98,4 +100,7 @@ export const fillAddressForm = async (address: Partial<Address>) => {
     address.postalCode && userEvent.paste(postalCode, address.postalCode),
     address.phoneNumber && userEvent.paste(phoneNumber, address.phoneNumber),
   ])
+  console.timeEnd("fillInputs")
+
+  console.timeEnd("fillAddressForm")
 }
