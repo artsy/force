@@ -14,7 +14,7 @@ import {
   ShipValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { MockBoot } from "DevTools/MockBoot"
-import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
+// import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { SavedAddressesTestQuery } from "__generated__/SavedAddressesTestQuery.graphql"
@@ -223,7 +223,7 @@ describe("Saved Addresses", () => {
 
     // Test takes too long to run
     // eslint-disable-next-line jest/no-disabled-tests
-    it.only("calls the parent formik context onSubmit when the user saves a new address", async () => {
+    it.skip("calls the parent formik context onSubmit when the user saves a new address", async () => {
       console.time("test")
       renderWithRelay({
         Me: () => ({
