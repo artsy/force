@@ -299,7 +299,7 @@ workflows:
 
       # Bundle stats for PRs
       - node/run:
-          <<: *not_main_or_staging_or_release
+          <<: *not_staging_or_release
           name: bundle-stats
           context: hokusai
           pkg-manager: yarn
