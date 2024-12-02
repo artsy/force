@@ -63,6 +63,8 @@ export const fillAddressFormFields = async (
   address: Partial<Address>,
   options: { clearInputs?: boolean; wrapperTestId?: string } = {}
 ) => {
+  console.time("fillAddressFormFields")
+
   const { clearInputs = false, wrapperTestId = "addressFormFields" } = options
 
   const wrapper = screen.getByTestId(wrapperTestId)
@@ -70,6 +72,7 @@ export const fillAddressFormFields = async (
 
   const promises: Promise<void>[] = []
   if (country) {
+    console.time("selectCountry")
     promises.push(
       new Promise<void>(async resolve => {
         const countrySelect = within(wrapper).getByLabelText(
@@ -77,20 +80,26 @@ export const fillAddressFormFields = async (
         )
 
         userEvent.selectOptions(countrySelect, [country])
+        console.timeLog("selectCountry", "selected country")
         resolve()
       })
     )
+    console.timeEnd("selectCountry")
   }
 
+  console.time("fillTextInputs")
   Object.entries(defaultTextInputs).forEach(([key, value]) => {
     const input = within(wrapper).getByLabelText(ADDRESS_FORM_INPUTS[key].label)
     if (clearInputs) {
       userEvent.clear(input)
     }
     userEvent.paste(input, value)
+    console.timeLog("fillTextInputs", `filled ${key}`)
   })
+  console.timeEnd("fillTextInputs")
 
   if (phoneNumber) {
+    console.time("fillPhoneNumber")
     const phoneNumberInput = within(wrapper).getByLabelText(
       ADDRESS_FORM_INPUTS.phoneNumber.label
     )
@@ -98,6 +107,10 @@ export const fillAddressFormFields = async (
       userEvent.clear(phoneNumberInput)
     }
     userEvent.paste(phoneNumberInput, phoneNumber)
+    console.timeLog("fillPhoneNumber", "filled phone number")
+    console.timeEnd("fillPhoneNumber")
   }
+
   await Promise.all(promises)
+  console.timeEnd("fillAddressFormFields")
 }

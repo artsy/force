@@ -18,6 +18,7 @@ import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { SavedAddressesTestQuery } from "__generated__/SavedAddressesTestQuery.graphql"
+import { fillAddressFormFields } from "Components/Address/__tests__/utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -248,7 +249,7 @@ describe("Saved Addresses", () => {
       screen.getByText("Add address")
       console.timeLog("test", "found modal, filling")
 
-      await fillAddressForm(validAddress)
+      await fillAddressFormFields(validAddress)
 
       await flushPromiseQueue()
       console.timeLog("test", "filled")
