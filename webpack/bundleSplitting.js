@@ -18,14 +18,6 @@ export const splitChunks = {
   cacheGroups: {
     default: false,
     defaultVendors: false,
-    // Contains the entrypoint for the client used for quick React rehydration
-    bootstrap: {
-      name: "bootstrap",
-      test: /src[\\/]client\.tsx$/,
-      chunks: "all",
-      enforce: true,
-      priority: 45,
-    },
     "artsy-framework": {
       name: "artsy-framework",
       chunks: "all",
