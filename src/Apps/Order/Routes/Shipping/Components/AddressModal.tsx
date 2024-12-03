@@ -157,31 +157,7 @@ export const AddressModal: FC<React.PropsWithChildren<AddressModalProps>> = ({
     <>
       <Formik<FormValues>
         validateOnMount
-        validate={async values => {
-          console.timeLog("AddressModal", "validate", values)
-          try {
-            validationSchema.validateSync(values, { abortEarly: false })
-            return {}
-          } catch (error) {
-            return error.inner.reduce((errors: any, err: any) => {
-              const pathParts = err.path.split(".")
-              if (pathParts.length > 1 && pathParts[0] === "address") {
-                const addressField = pathParts[1]
-                if (!errors.address) {
-                  errors.address = {}
-                }
-                errors.address[addressField] = err.message
-              } else {
-                errors[err.path] = err.message
-              }
-              console.timeLog("AddressModal", "errors", errors)
-              // console.log({ errors })
-              return errors
-            }, {})
-          } finally {
-            console.timeLog("AddressModal", "finished")
-          }
-        }}
+        validationSchema={validationSchema}
         enableReinitialize={true}
         initialValues={initialValues}
         onSubmit={handleSubmit}
@@ -209,20 +185,6 @@ const AddressModalForm: FC<React.PropsWithChildren<{
 
   const attributeErrorFieldsForEdit =
     addressModalAction.type === "edit" ? Object.keys(errors.address || {}) : []
-
-  // useEffect(() => {
-  //   console.time("AddressModal")
-  // }, [])
-
-  // const stringErrors = JSON.stringify(errors)
-  // useEffect(() => {
-  //   console.timeLog("AddressModal", "errors changed: ", Object.keys(errors))
-  // }, [stringErrors])
-
-  // const stringValues = JSON.stringify(formikContext.values)
-  // useEffect(() => {
-  //   console.timeLog("AddressModal", "values changed: ")
-  // }, [stringValues])
 
   // Touch fields that have errors on edit
   useEffect(() => {

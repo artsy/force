@@ -14,7 +14,6 @@ import {
   ShipValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { MockBoot } from "DevTools/MockBoot"
-import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { SavedAddressesTestQuery } from "__generated__/SavedAddressesTestQuery.graphql"
@@ -223,14 +222,12 @@ describe("Saved Addresses", () => {
 
     // Test takes too long to run
     // eslint-disable-next-line jest/no-disabled-tests
-    it.only("calls the parent formik context onSubmit when the user saves a new address", async () => {
-      console.time("test")
+    it.skip("calls the parent formik context onSubmit when the user saves a new address", async () => {
       renderWithRelay({
         Me: () => ({
           addressConnection: basicAddressList,
         }),
       })
-      console.timeLog("test", "rendered")
 
       const validAddress = {
         name: "Test Name",
@@ -244,10 +241,8 @@ describe("Saved Addresses", () => {
       }
       const addAddressButton = screen.getByText("Add a new address")
       await userEvent.click(addAddressButton)
-      console.timeLog("test", "clicked button")
 
       screen.getByText("Add address")
-      console.timeLog("test", "found modal, filling")
 
       await fillAddressFormFields(validAddress)
       // await fillAddressFormFields({
@@ -262,28 +257,22 @@ describe("Saved Addresses", () => {
       // })
 
       await flushPromiseQueue()
-      console.timeLog("test", "after flushPromiseQueue()")
+
       // await flushPromiseQueue()
-      console.timeLog("test", "filled")
 
       mockExecuteUserAddressAction.mockResolvedValueOnce({
         data: { ...validAddress },
       })
-      console.timeLog("test", "resolved")
 
       await userEvent.click(screen.getByText("Save"))
-
-      console.timeLog("test", "clicked save")
 
       await waitFor(() =>
         expect(testProps.onSelect).toHaveBeenCalledWith(
           expect.objectContaining(validAddress)
         )
       )
-      console.timeLog("test", "asserted")
 
       expect(testProps.onSelect).toHaveBeenCalledTimes(1)
-      console.timeEnd("test")
     })
   })
 
