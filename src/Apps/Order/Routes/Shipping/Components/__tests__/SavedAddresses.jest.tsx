@@ -17,7 +17,11 @@ import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { SavedAddressesTestQuery } from "__generated__/SavedAddressesTestQuery.graphql"
-import { fillAddressFormFields } from "Components/Address/__tests__/utils"
+import {
+  ADDRESS_FORM_INPUTS,
+  fillAddressFormFields,
+} from "Components/Address/__tests__/utils"
+import { act } from "react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -179,6 +183,147 @@ describe("Saved Addresses", () => {
     expect(testProps.onSelect).not.toHaveBeenCalled()
   })
 
+  describe.only("comparison", () => {
+    it("original", async () => {
+      console.time("initial: filling form")
+      renderWithRelay({
+        Me: () => ({
+          addressConnection: basicAddressList,
+        }),
+      })
+
+      const validAddress = {
+        name: "Test Name",
+        addressLine1: "1 Main St",
+        addressLine2: "Basement",
+        city: "Madrid",
+        region: "NY",
+        postalCode: "28001",
+        country: "ES",
+        phoneNumber: "555-555-5555",
+      }
+      const addAddressButton = screen.getByText("Add a new address")
+      await userEvent.click(addAddressButton)
+
+      screen.getByText("Add address")
+
+      console.time("fillAddressFormFields - initial implementation")
+      const wrapperTestId = "addressFormFields"
+      const wrapper = screen.getByTestId(wrapperTestId)
+      const { country, phoneNumber, ...defaultTextInputs } = validAddress
+
+      const promises: Promise<void>[] = []
+      if (country) {
+        promises.push(
+          new Promise<void>(async resolve => {
+            const countrySelect = within(wrapper).getByLabelText(
+              ADDRESS_FORM_INPUTS.country.label
+            )
+
+            userEvent.selectOptions(countrySelect, [country])
+
+            resolve()
+          })
+        )
+      }
+
+      Object.entries(defaultTextInputs).forEach(([key, value]) => {
+        const input = within(wrapper).getByLabelText(
+          ADDRESS_FORM_INPUTS[key].label
+        )
+
+        userEvent.paste(input, value)
+      })
+
+      if (phoneNumber) {
+        const phoneNumberInput = within(wrapper).getByLabelText(
+          ADDRESS_FORM_INPUTS.phoneNumber.label
+        )
+
+        userEvent.paste(phoneNumberInput, phoneNumber)
+      }
+
+      await Promise.all(promises)
+      console.timeEnd("fillAddressFormFields - initial implementation")
+
+      console.timeEnd("initial: filling form")
+      console.time("initial: clicking save")
+
+      await flushPromiseQueue()
+      // console.timeLog("initial: clicking save", "flushed promises")
+
+      mockExecuteUserAddressAction.mockResolvedValueOnce({
+        data: { ...validAddress },
+      })
+
+      await waitFor(async () => {
+        await userEvent.click(screen.getByText("Save"))
+      })
+
+      console.timeEnd("initial: clicking save")
+      console.time("initial: waiting for onSelect")
+
+      await waitFor(() =>
+        expect(testProps.onSelect).toHaveBeenCalledWith(
+          expect.objectContaining(validAddress)
+        )
+      )
+
+      expect(testProps.onSelect).toHaveBeenCalledTimes(1)
+      console.timeEnd("initial: waiting for onSelect")
+    })
+
+    it("with 'improvements'", async () => {
+      console.time("new: filling form")
+      renderWithRelay({
+        Me: () => ({
+          addressConnection: basicAddressList,
+        }),
+      })
+
+      const validAddress = {
+        name: "Test Name",
+        addressLine1: "1 Main St",
+        addressLine2: "Basement",
+        city: "Madrid",
+        region: "NY",
+        postalCode: "28001",
+        country: "ES",
+        phoneNumber: "555-555-5555",
+      }
+      const addAddressButton = screen.getByText("Add a new address")
+      userEvent.click(addAddressButton)
+
+      screen.getByText("Add address")
+
+      await fillAddressFormFields(validAddress)
+      console.timeEnd("new: filling form")
+      console.time("new: clicking save")
+
+      mockExecuteUserAddressAction.mockResolvedValueOnce({
+        data: { ...validAddress },
+      })
+
+      await waitFor(() => {
+        userEvent.click(screen.getByText("Save"))
+      })
+
+      console.timeEnd("new: clicking save")
+      console.time("new: waiting for onSelect")
+
+      await waitFor(
+        () =>
+          expect(testProps.onSelect).toHaveBeenCalledWith(
+            expect.objectContaining(validAddress)
+          ),
+        // Bottleneck waiting for form updates
+        { timeout: 4000 }
+      )
+      expect(testProps.onSelect).toHaveBeenCalledTimes(1)
+      console.timeEnd("new: waiting for onSelect")
+    })
+  })
+
   describe("Creating a new address", () => {
     it("loads the address modal in new address mode", async () => {
       renderWithRelay({
@@ -222,6 +367,7 @@ describe("Saved Addresses", () => {
 
     // Previously disabled due to timeouts
     it("calls the parent formik context onSubmit when the user saves a new address", async () => {
+      console.time("test")
       renderWithRelay({
         Me: () => ({
           addressConnection: basicAddressList,
@@ -239,26 +385,32 @@ describe("Saved Addresses", () => {
         phoneNumber: "555-555-5555",
       }
       const addAddressButton = screen.getByText("Add a new address")
-      await userEvent.click(addAddressButton)
+      userEvent.click(addAddressButton)
 
       screen.getByText("Add address")
 
       await fillAddressFormFields(validAddress)
-
-      await flushPromiseQueue()
+      console.timeLog("test", "filled form")
 
       mockExecuteUserAddressAction.mockResolvedValueOnce({
         data: { ...validAddress },
       })
 
-      await userEvent.click(screen.getByText("Save"))
+      await waitFor(() => {
+        userEvent.click(screen.getByText("Save"))
+      })
 
-      await waitFor(() =>
-        expect(testProps.onSelect).toHaveBeenCalledWith(
-          expect.objectContaining(validAddress)
-        )
+      console.timeLog("test", "clicked save")
+
+      await waitFor(
+        () =>
+          expect(testProps.onSelect).toHaveBeenCalledWith(
+            expect.objectContaining(validAddress)
+          ),
+        // Bottleneck waiting for form updates
+        { timeout: 4000 }
       )
-
+      console.timeEnd("test")
       expect(testProps.onSelect).toHaveBeenCalledTimes(1)
     })
   })

@@ -1,6 +1,8 @@
 import { screen, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { Address } from "Components/Address/utils"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { act } from "react"
 
 export const ADDRESS_FORM_INPUTS: Record<
   keyof Address,
@@ -63,43 +65,47 @@ export const fillAddressFormFields = async (
   address: Partial<Address>,
   options: { clearInputs?: boolean; wrapperTestId?: string } = {}
 ) => {
+  console.time("fillAddressFormFields")
   const { clearInputs = false, wrapperTestId = "addressFormFields" } = options
 
   const wrapper = screen.getByTestId(wrapperTestId)
   const { country, phoneNumber, ...defaultTextInputs } = address
 
-  const promises: Promise<void>[] = []
+  // Country input can trigger ui updates
   if (country) {
-    promises.push(
-      new Promise<void>(async resolve => {
-        const countrySelect = within(wrapper).getByLabelText(
-          ADDRESS_FORM_INPUTS.country.label
-        )
+    await act(async () => {
+      const countrySelect = within(wrapper).getByLabelText(
+        ADDRESS_FORM_INPUTS.country.label
+      )
 
-        userEvent.selectOptions(countrySelect, [country])
-
-        resolve()
-      })
-    )
+      userEvent.selectOptions(countrySelect, [country])
+      await flushPromiseQueue()
+    })
   }
 
-  Object.entries(defaultTextInputs).forEach(([key, value]) => {
-    const input = within(wrapper).getByLabelText(ADDRESS_FORM_INPUTS[key].label)
-    if (clearInputs) {
-      userEvent.clear(input)
-    }
-    userEvent.paste(input, value)
-  })
+  Object.entries(defaultTextInputs).length > 0 &&
+    act(() => {
+      Object.entries(defaultTextInputs).forEach(([key, value]) => {
+        const input = within(wrapper).getByLabelText(
+          ADDRESS_FORM_INPUTS[key].label
+        )
+        if (clearInputs) {
+          userEvent.clear(input)
+        }
+        userEvent.paste(input, value)
+      })
+    })
 
   if (phoneNumber) {
-    const phoneNumberInput = within(wrapper).getByLabelText(
-      ADDRESS_FORM_INPUTS.phoneNumber.label
-    )
-    if (clearInputs) {
-      userEvent.clear(phoneNumberInput)
-    }
-    userEvent.paste(phoneNumberInput, phoneNumber)
+    act(() => {
+      const phoneNumberInput = within(wrapper).getByLabelText(
+        ADDRESS_FORM_INPUTS.phoneNumber.label
+      )
+      if (clearInputs) {
+        userEvent.clear(phoneNumberInput)
+      }
+      userEvent.paste(phoneNumberInput, phoneNumber)
+    })
   }
-
-  await Promise.all(promises)
+  console.timeEnd("fillAddressFormFields")
 }
