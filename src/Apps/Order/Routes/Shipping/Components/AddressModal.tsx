@@ -5,21 +5,15 @@ import {
   Clickable,
   Checkbox,
   Flex,
-  Input,
   ModalDialog,
   Spacer,
   Text,
   Banner,
-  GridColumns,
-  Column,
 } from "@artsy/palette"
 
 import { Form, Formik, FormikHelpers, useFormikContext } from "formik"
 
-import {
-  ADDRESS_VALIDATION_SHAPE,
-  addressWithFallbackValues,
-} from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
+import { addressWithFallbackValues } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import createLogger from "Utils/logger"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
@@ -28,7 +22,11 @@ import {
   UserAddressAction,
   useUserAddressUpdates,
 } from "Apps/Order/Routes/Shipping/Hooks/useUserAddressUpdates"
-import { CountrySelect } from "Components/CountrySelect"
+import {
+  AddressFormFields,
+  FormikContextWithAddress,
+  addressFormFieldsValidator,
+} from "Components/Address/AddressFormFields"
 
 const logger = createLogger("AddressModal.tsx")
 
@@ -46,16 +44,16 @@ export interface AddressModalProps {
   addressModalAction: AddressModalAction
 }
 
-interface FormValues {
-  attributes: {
+interface FormValues extends FormikContextWithAddress {
+  phoneNumber: string
+  address: {
     name: string
-    phoneNumber: string
     isDefault?: boolean
     addressLine1: string
-    addressLine2?: string
+    addressLine2: string
     city: string
-    region?: string
-    postalCode?: string
+    region: string
+    postalCode: string
     country: string
   }
   setAsDefault: boolean
@@ -75,7 +73,8 @@ export const AddressModal: FC<React.PropsWithChildren<AddressModalProps>> = ({
     addressModalAction.type === "edit" ? addressModalAction.address : null
 
   const initialValues: FormValues = {
-    attributes: {
+    phoneNumber: incomingAddress?.phoneNumber ?? "",
+    address: {
       isDefault: incomingAddress?.isDefault ?? false,
 
       ...addressWithFallbackValues(
@@ -103,7 +102,8 @@ export const AddressModal: FC<React.PropsWithChildren<AddressModalProps>> = ({
         userAddressAction = {
           type: "edit",
           address: {
-            ...values.attributes,
+            ...values.address,
+            phoneNumber: values.phoneNumber,
             internalID: addressModalAction.address.internalID,
           },
           setAsDefault: values.setAsDefault,
@@ -113,7 +113,8 @@ export const AddressModal: FC<React.PropsWithChildren<AddressModalProps>> = ({
         userAddressAction = {
           type: "create",
           address: {
-            ...values.attributes,
+            ...values.address,
+            phoneNumber: values.phoneNumber,
           },
           setAsDefault: values.setAsDefault,
         }
@@ -149,6 +150,9 @@ export const AddressModal: FC<React.PropsWithChildren<AddressModalProps>> = ({
     })
   }
 
+  useEffect(() => {
+    console.time("AddressModal")
+  }, [])
   return (
     <>
       <Formik<FormValues>
@@ -177,20 +181,10 @@ const AddressModalForm: FC<React.PropsWithChildren<{
   const formikContext = useFormikContext<FormValues>()
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false)
 
-  const {
-    values,
-    touched,
-    errors,
-    handleChange,
-    handleBlur,
-    setFieldValue,
-    setFieldTouched,
-  } = formikContext
+  const { errors, setFieldTouched } = formikContext
 
   const attributeErrorFieldsForEdit =
-    addressModalAction.type === "edit"
-      ? Object.keys(errors.attributes || {})
-      : []
+    addressModalAction.type === "edit" ? Object.keys(errors.address || {}) : []
 
   // Touch fields that have errors on edit
   useEffect(() => {
@@ -239,130 +233,11 @@ const AddressModalForm: FC<React.PropsWithChildren<{
             </Banner>
           )}
 
-          <GridColumns mt={[1, 2]}>
-            <Column span={12}>
-              <Input
-                title="Full name"
-                placeholder="Full name"
-                id="name"
-                name="attributes.name"
-                type="text"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.attributes?.name && errors.attributes?.name}
-                value={values.attributes.name || undefined}
-              />
-            </Column>
-            <Column span={12}>
-              <CountrySelect
-                title="Country"
-                data-testid="AddressModalForm_country"
-                selected={values.attributes.country}
-                onSelect={countryCode => {
-                  setFieldValue("attributes.country", countryCode)
-                }}
-                error={
-                  touched.attributes?.country && errors.attributes?.country
-                    ? errors.attributes.country
-                    : ""
-                }
-              />
-            </Column>
-            <Column span={12}>
-              <Input
-                title="Address Line 1"
-                placeholder="Street address"
-                name="attributes.addressLine1"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={
-                  touched.attributes?.addressLine1 &&
-                  errors.attributes?.addressLine1
-                }
-                value={values.attributes.addressLine1}
-              />
-            </Column>
-            <Column span={12}>
-              <Input
-                title="Address Line 2"
-                placeholder="Apt, floor, suite, etc."
-                name="attributes.addressLine2"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={
-                  touched.attributes?.addressLine2 &&
-                  errors.attributes?.addressLine2
-                }
-                value={values.attributes.addressLine2 || ""}
-              />
-            </Column>
-            <Column span={12}>
-              <Input
-                title="City"
-                placeholder="City"
-                name="attributes.city"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.attributes?.city && errors.attributes?.city}
-                value={values.attributes.city}
-              />
-            </Column>
-            <Column span={6}>
-              <Input
-                title="State, province, or region"
-                placeholder="State, province, or region"
-                name="attributes.region"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.attributes?.region && errors.attributes?.region}
-                value={values.attributes?.region || ""}
-              />
-            </Column>
-            <Column span={6}>
-              <Input
-                placeholder={
-                  values.attributes.country === "US"
-                    ? "ZIP code"
-                    : "ZIP/Postal code"
-                }
-                title={
-                  values.attributes.country === "US"
-                    ? "ZIP code"
-                    : "Postal code"
-                }
-                name="attributes.postalCode"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={
-                  touched.attributes?.postalCode &&
-                  errors.attributes?.postalCode
-                }
-                value={values.attributes.postalCode || ""}
-              />
-            </Column>
-          </GridColumns>
+          <AddressFormFields<FormValues> withPhoneNumber />
 
           <Spacer y={2} />
 
-          <Input
-            title="Phone number"
-            description="Required for shipping logistics"
-            placeholder="Add phone number including country code"
-            name="attributes.phoneNumber"
-            type="tel"
-            onChange={formikContext.handleChange}
-            onBlur={formikContext.handleBlur}
-            error={
-              formikContext.touched.attributes?.phoneNumber &&
-              formikContext.errors.attributes?.phoneNumber
-            }
-            value={formikContext.values.attributes.phoneNumber}
-            data-testid="phoneInputWithoutValidationFlag"
-          />
-
-          <Spacer y={2} />
-
-          {!formikContext.initialValues.attributes.isDefault && (
+          {!formikContext.initialValues.address.isDefault && (
             <Checkbox
               onSelect={selected => {
                 formikContext.setFieldValue("setAsDefault", selected)
@@ -378,7 +253,9 @@ const AddressModalForm: FC<React.PropsWithChildren<{
             <Flex mt={2} flexDirection="column" alignItems="center">
               <Clickable
                 data-testid="deleteButton"
-                onClick={() => setShowDeleteDialog(true)}
+                onClick={() => {
+                  setShowDeleteDialog(true)
+                }}
               >
                 <Text variant="xs" color="red100">
                   Delete address
@@ -441,18 +318,18 @@ const AddressModalForm: FC<React.PropsWithChildren<{
 // two different error messages for the same error?
 const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
   "Validation failed for phone: not a valid phone number": {
-    field: "attributes.phoneNumber",
+    field: "phoneNumber",
     message: "Please enter a valid phone number",
   },
   "Validation failed: Phone not a valid phone number": {
-    field: "attributes.phoneNumber",
+    field: "phoneNumber",
     message: "Please enter a valid phone number",
   },
 }
 
-const validationSchema = Yup.object().shape({
-  attributes: Yup.object().shape(ADDRESS_VALIDATION_SHAPE),
-})
+const validationSchema = Yup.object().shape(
+  addressFormFieldsValidator({ withPhoneNumber: true })
+)
 
 export const GENERIC_FAIL_MESSAGE =
   "Sorry, there has been an issue saving your address. Please try again."

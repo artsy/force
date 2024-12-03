@@ -1,8 +1,9 @@
 import { Button } from "@artsy/palette"
-import { render, screen } from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import {
   ADDRESS_FORM_INPUTS,
+  hasCorrectAddressFormFields,
   fillAddressFormFields,
 } from "Components/Address/__tests__/utils"
 import {
@@ -45,19 +46,7 @@ describe("AddressFormFields", () => {
     })
 
     it("renders the correct components with label & placeholder copy", () => {
-      const { phoneNumber, ...remainingInputs } = ADDRESS_FORM_INPUTS
-
-      Object.values(remainingInputs).forEach(({ label, placeholder }) => {
-        const input = screen.getByLabelText(label)
-        expect(input).toBeInTheDocument()
-        if (placeholder) {
-          // eslint-disable-next-line jest/no-conditional-expect
-          expect(input).toHaveAttribute("placeholder", placeholder)
-        } else {
-          // eslint-disable-next-line jest/no-conditional-expect
-          expect(input).not.toHaveAttribute("placeholder")
-        }
-      })
+      expect(hasCorrectAddressFormFields({ withPhoneNumber: false })).toBe(true)
     })
 
     it("can be filled out with valid values", async () => {
@@ -136,6 +125,7 @@ describe("AddressFormFields", () => {
     })
 
     it("renders the correct components with label & placeholder copy", () => {
+      expect(hasCorrectAddressFormFields({ withPhoneNumber: true })).toBe(true)
       Object.values(ADDRESS_FORM_INPUTS).forEach(({ label, placeholder }) => {
         const input = screen.getByLabelText(label)
         expect(input).toBeInTheDocument()
@@ -190,7 +180,7 @@ describe("AddressFormFields", () => {
       await flushPromiseQueue()
       expect(mockOnSubmit).not.toHaveBeenCalled()
 
-      screen.getByText("Full name is required")
+      await screen.findByText("Full name is required")
       screen.getByText("Country is required")
       screen.getByText("Street address is required")
       screen.getByText("City is required")
@@ -201,10 +191,12 @@ describe("AddressFormFields", () => {
       await fillAddressFormFields({ country: "US" })
       await userEvent.click(screen.getByText("Submit"))
 
-      await flushPromiseQueue()
-      expect(mockOnSubmit).not.toHaveBeenCalled()
-
-      expect(screen.queryByText("Country is required")).not.toBeInTheDocument()
+      await waitFor(() => {
+        expect(
+          screen.queryByText("Country is required")
+        ).not.toBeInTheDocument()
+        expect(mockOnSubmit).not.toHaveBeenCalled()
+      })
       screen.getByText("State is required")
       screen.getByText("ZIP code is required")
     })
