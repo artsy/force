@@ -245,20 +245,8 @@ describe("Saved Addresses", () => {
       screen.getByText("Add address")
 
       await fillAddressFormFields(validAddress)
-      // await fillAddressFormFields({
-      //   name: "Test Name",
-      //   // addressLine1: "1 Main St",
-      //   addressLine2: "Basement",
-      //   city: "Madrid",
-      //   region: "NY",
-      //   // postalCode: "28001",
-      //   // country: "ES",
-      //   // phoneNumber: "555-555-5555",
-      // })
 
       await flushPromiseQueue()
-
-      // await flushPromiseQueue()
 
       mockExecuteUserAddressAction.mockResolvedValueOnce({
         data: { ...validAddress },
