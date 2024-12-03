@@ -14,10 +14,10 @@ import {
   ShipValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { MockBoot } from "DevTools/MockBoot"
-import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { SavedAddressesTestQuery } from "__generated__/SavedAddressesTestQuery.graphql"
+import { fillAddressFormFields } from "Components/Address/__tests__/utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -27,7 +27,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 
 jest.setTimeout(10000)
 
-let testProps: Omit<SavedAddressesProps, "me">
+let testProps: SavedAddressesProps
 let mockShippingContext: ShippingContextProps
 const mockFormikSubmit = jest.fn()
 const mockExecuteUserAddressAction = jest.fn()
@@ -194,11 +194,11 @@ describe("Saved Addresses", () => {
 
       expect(await screen.findByText("Add address")).toBeInTheDocument()
 
-      const nameInput = screen.getByPlaceholderText("Full name")
+      const nameInput = screen.getByPlaceholderText("Add full name")
       expect(nameInput).toBeInTheDocument()
       expect(nameInput).toHaveDisplayValue("")
 
-      const streetInput = screen.getByPlaceholderText("Street address")
+      const streetInput = screen.getByPlaceholderText("Add street address")
       expect(streetInput).toBeInTheDocument()
       expect(streetInput).toHaveDisplayValue("")
     })
@@ -223,19 +223,11 @@ describe("Saved Addresses", () => {
     // Test takes too long to run
     // eslint-disable-next-line jest/no-disabled-tests
     it.skip("calls the parent formik context onSubmit when the user saves a new address", async () => {
-      let startTime = Date.now()
-      const logTime = (label: string) => {
-        console.log(label, Date.now() - startTime)
-        startTime = Date.now()
-      }
-      logTime("start")
-
       renderWithRelay({
         Me: () => ({
           addressConnection: basicAddressList,
         }),
       })
-      logTime("rendered")
 
       const validAddress = {
         name: "Test Name",
@@ -249,32 +241,24 @@ describe("Saved Addresses", () => {
       }
       const addAddressButton = screen.getByText("Add a new address")
       await userEvent.click(addAddressButton)
-      logTime("clicked button")
 
       screen.getByText("Add address")
-      logTime("found modal, filling")
 
-      await fillAddressForm(validAddress)
+      await fillAddressFormFields(validAddress)
 
       await flushPromiseQueue()
-      logTime("filled")
 
       mockExecuteUserAddressAction.mockResolvedValueOnce({
         data: { ...validAddress },
       })
-      logTime("resolved")
 
       await userEvent.click(screen.getByText("Save"))
 
-      await flushPromiseQueue()
-      logTime("clicked save")
-
-      expect(testProps.onSelect).toHaveBeenCalledWith(
-        expect.objectContaining(validAddress)
+      await waitFor(() =>
+        expect(testProps.onSelect).toHaveBeenCalledWith(
+          expect.objectContaining(validAddress)
+        )
       )
-      logTime("asserted")
-
-      await flushPromiseQueue()
 
       expect(testProps.onSelect).toHaveBeenCalledTimes(1)
     })
@@ -298,7 +282,7 @@ describe("Saved Addresses", () => {
 
       expect(await screen.findByText("Edit address")).toBeInTheDocument()
       expect(screen.getByDisplayValue("Test Name")).toBeInTheDocument()
-      expect(screen.getByPlaceholderText("Street address")).toHaveValue(
+      expect(screen.getByPlaceholderText("Add street address")).toHaveValue(
         "1 Main St"
       )
     })

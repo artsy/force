@@ -6,7 +6,7 @@ import { MockBoot } from "DevTools/MockBoot"
 import { Breakpoint } from "@artsy/palette/dist/themes/types"
 import DownloadIcon from "@artsy/icons/DownloadIcon"
 import EditIcon from "@artsy/icons/EditIcon"
-import GenomeIcon from "@artsy/icons/GenomeIcon"
+import MagicMagnifyingGlassIcon from "@artsy/icons/MagicMagnifyingGlassIcon"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 import MoreIcon from "@artsy/icons/MoreIcon"
 import ShareIcon from "@artsy/icons/ShareIcon"
@@ -77,7 +77,7 @@ describe("ArtworkActions", () => {
       const { wrapper } = getWrapper()
 
       expect(wrapper.find(EditIcon).length).toBe(1)
-      expect(wrapper.find(GenomeIcon).length).toBe(1)
+      expect(wrapper.find(MagicMagnifyingGlassIcon).length).toBe(1)
       expect(wrapper.find(MoreIcon).length).toBe(0)
     })
 
@@ -93,7 +93,7 @@ describe("ArtworkActions", () => {
       expect(wrapper.find(ShowIcon).length).toBe(1)
       expect(wrapper.find(DownloadIcon).length).toBe(1)
       expect(wrapper.find(EditIcon).length).toBe(0)
-      expect(wrapper.find(GenomeIcon).length).toBe(0)
+      expect(wrapper.find(MagicMagnifyingGlassIcon).length).toBe(0)
       expect(wrapper.find(MoreIcon).length).toBe(0)
     })
 
@@ -189,7 +189,7 @@ describe("ArtworkActions", () => {
       expect(wrapper.find(MoreIcon).length).toBe(1)
       expect(wrapper.find(DownloadIcon).length).toBe(0)
       expect(wrapper.find(EditIcon).length).toBe(0)
-      expect(wrapper.find(GenomeIcon).length).toBe(0)
+      expect(wrapper.find(MagicMagnifyingGlassIcon).length).toBe(0)
     })
 
     it("shows no More icon if there are <= 3 actions", () => {
@@ -204,7 +204,7 @@ describe("ArtworkActions", () => {
       expect(wrapper.find(ShowIcon).length).toBe(1)
       expect(wrapper.find(DownloadIcon).length).toBe(0)
       expect(wrapper.find(EditIcon).length).toBe(0)
-      expect(wrapper.find(GenomeIcon).length).toBe(0)
+      expect(wrapper.find(MagicMagnifyingGlassIcon).length).toBe(0)
       expect(wrapper.find(MoreIcon).length).toBe(0)
     })
   })
