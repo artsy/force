@@ -65,7 +65,6 @@ export const fillAddressFormFields = async (
   address: Partial<Address>,
   options: { clearInputs?: boolean; wrapperTestId?: string } = {}
 ) => {
-  console.time("fillAddressFormFields")
   const { clearInputs = false, wrapperTestId = "addressFormFields" } = options
 
   const wrapper = screen.getByTestId(wrapperTestId)
@@ -107,5 +106,4 @@ export const fillAddressFormFields = async (
       userEvent.paste(phoneNumberInput, phoneNumber)
     })
   }
-  console.timeEnd("fillAddressFormFields")
 }
