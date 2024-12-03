@@ -220,9 +220,8 @@ describe("Saved Addresses", () => {
       })
     })
 
-    // Test takes too long to run
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip("calls the parent formik context onSubmit when the user saves a new address", async () => {
+    // Previously disabled due to timeouts
+    it("calls the parent formik context onSubmit when the user saves a new address", async () => {
       renderWithRelay({
         Me: () => ({
           addressConnection: basicAddressList,
