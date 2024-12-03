@@ -8,6 +8,9 @@
     "yarn": "1.x.x"
   },
   "scripts": {
+    "rsbuild:dev": "rsbuild dev",
+    "rsbuild:server:dev": "rsbuild dev --config ./rsbuild/rsbuild.server.ts",
+    "rsbuild:prod": "rsbuild build",
     "build": "yarn build:client:prod && yarn build:server:prod",
     "build:client:dev": "NODE_ENV=development yarn webpack --config ./webpack/envs/clientDevelopmentConfig.js",
     "build:client:prod": "NODE_ENV=production yarn webpack --config ./webpack/envs/clientProductionConfig.js",
@@ -201,7 +204,7 @@
     "uuid": "3.3.2",
     "waypoints": "4.0.0",
     "web-vitals": "^4.2.4",
-    "yargs": "11.0.0",
+    "yargs": "13",
     "yup": "0.32.6"
   },
   "devDependencies": {
@@ -224,12 +227,19 @@
     "@loadable/webpack-plugin": "5.15.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@relative-ci/agent": "^4.2.10",
+    "@rsbuild/core": "^1.1.8",
+    "@rsbuild/plugin-node-polyfill": "^1.2.0",
+    "@rsbuild/plugin-react": "^1.0.7",
     "@storybook/addon-actions": "6.5.13",
     "@storybook/addon-essentials": "6.5.13",
     "@storybook/addon-links": "6.5.13",
     "@storybook/builder-webpack5": "6.5.13",
     "@storybook/manager-webpack5": "6.5.13",
     "@storybook/react": "6.5.13",
+    "@swc-node/register": "^1.10.9",
+    "@swc/core": "^1.9.3",
+    "@swc/plugin-relay": "^5.0.1",
+    "@swc/plugin-styled-components": "^5.0.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
     "@testing-library/react-hooks": "^8.0.1",

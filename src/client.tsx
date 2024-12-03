@@ -19,7 +19,7 @@ setupWebVitals()
 
   loadableReady().then(() => {
     hydrateRoot(
-      document.getElementById("react-root") as HTMLElement,
+      document.getElementById("root") as HTMLElement,
       <ClientRouter />
     )
   })
