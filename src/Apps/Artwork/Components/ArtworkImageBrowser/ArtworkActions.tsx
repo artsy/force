@@ -95,13 +95,11 @@ export const ArtworkActions: React.FC<React.PropsWithChildren<
     />
   )
 
-  const GenomeButton = (
+  const InspectImagesButton = (
     <UtilButton
-      name="genome"
-      href={`${getENV("GENOME_URL")}/genome/artworks?artwork_ids=${
-        artwork.slug
-      }`}
-      label="Genome"
+      name="inspectImages"
+      href={`${getENV("TOOLS_URL")}/artworks/${artwork.slug}/images`}
+      label="Inspect images"
       Component={UtilButtonLink}
     />
   )
@@ -139,9 +137,9 @@ export const ArtworkActions: React.FC<React.PropsWithChildren<
       content: EditButton,
     },
     {
-      name: "genome",
+      name: "inspectImages",
       condition: isAdmin,
-      content: GenomeButton,
+      content: InspectImagesButton,
     },
   ]
 
