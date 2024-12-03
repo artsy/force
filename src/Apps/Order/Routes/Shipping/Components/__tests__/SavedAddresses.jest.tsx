@@ -28,7 +28,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 
 jest.setTimeout(10000)
 
-let testProps: Omit<SavedAddressesProps, "me">
+let testProps: SavedAddressesProps
 let mockShippingContext: ShippingContextProps
 const mockFormikSubmit = jest.fn()
 const mockExecuteUserAddressAction = jest.fn()
@@ -250,8 +250,20 @@ describe("Saved Addresses", () => {
       console.timeLog("test", "found modal, filling")
 
       await fillAddressFormFields(validAddress)
+      // await fillAddressFormFields({
+      //   name: "Test Name",
+      //   // addressLine1: "1 Main St",
+      //   addressLine2: "Basement",
+      //   city: "Madrid",
+      //   region: "NY",
+      //   // postalCode: "28001",
+      //   // country: "ES",
+      //   // phoneNumber: "555-555-5555",
+      // })
 
       await flushPromiseQueue()
+      console.timeLog("test", "after flushPromiseQueue()")
+      // await flushPromiseQueue()
       console.timeLog("test", "filled")
 
       mockExecuteUserAddressAction.mockResolvedValueOnce({
@@ -261,17 +273,17 @@ describe("Saved Addresses", () => {
 
       await userEvent.click(screen.getByText("Save"))
 
-      await flushPromiseQueue()
       console.timeLog("test", "clicked save")
 
-      expect(testProps.onSelect).toHaveBeenCalledWith(
-        expect.objectContaining(validAddress)
+      await waitFor(() =>
+        expect(testProps.onSelect).toHaveBeenCalledWith(
+          expect.objectContaining(validAddress)
+        )
       )
       console.timeLog("test", "asserted")
 
-      await flushPromiseQueue()
-
       expect(testProps.onSelect).toHaveBeenCalledTimes(1)
+      console.timeEnd("test")
     })
   })
 
