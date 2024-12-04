@@ -16,7 +16,7 @@ if [ "${NODE_ENV}" != "production" ]; then
     exec node --max_old_space_size=3072 ./src/dev.js
   # Dev
   else
-    yarn concurrently --kill-others 'yarn relay --watch' 'node --max_old_space_size=3072 ./src/dev2.js'
+    yarn concurrently --kill-others 'yarn relay --watch' 'node --max_old_space_size=3072 -r @swc-node/register ./src/dev2.js'
   fi
 # Prod
 else

@@ -1,20 +1,15 @@
 import path from "path"
+import nodeExternals from "webpack-node-externals"
 import { defineConfig } from "@rsbuild/core"
 import { pluginReact } from "@rsbuild/plugin-react"
 import { pluginNodePolyfill } from "@rsbuild/plugin-node-polyfill"
-import nodeExternals from "webpack-node-externals"
 import { EarlyHintsPlugin } from "./rspack/plugins/EarlyHintsPlugin"
 
-const basePath = path.resolve(process.cwd(), "src")
-
 export default defineConfig({
-  dev: {
-    writeToDisk: true,
-  },
-  plugins: [pluginReact(), pluginNodePolyfill()],
   environments: {
     client: {
       tools: {
+        htmlPlugin: false,
         rspack: {
           plugins: [new EarlyHintsPlugin()],
         },
@@ -28,21 +23,21 @@ export default defineConfig({
       },
       source: {
         entry: {
-          index: path.resolve(basePath, "client.tsx"),
+          index: "./src/client.tsx",
         },
-      },
-      html: {
-        template: path.resolve(basePath, "template.html"),
       },
     },
 
     server: {
       output: {
         target: "node",
+        distPath: {
+          root: "dist/server",
+        },
       },
-      performance: {
-        chunkSplit: {
-          strategy: "all-in-one",
+      source: {
+        entry: {
+          index: "./src/server",
         },
       },
       tools: {
@@ -58,14 +53,17 @@ export default defineConfig({
           },
         },
       },
-      source: {
-        entry: {
-          server: path.resolve(basePath, "dev2.js"),
-        },
-      },
     },
   },
 
+  /**
+   * Shared config across environments
+   */
+
+  dev: {
+    writeToDisk: true,
+  },
+  plugins: [pluginReact(), pluginNodePolyfill()],
   tools: {
     swc: {
       jsc: {
@@ -82,7 +80,8 @@ export default defineConfig({
             [
               "@swc/plugin-relay",
               {
-                rootDir: path.resolve(basePath),
+                // Must be fully-resolved absolute path
+                rootDir: path.resolve(process.cwd(), "src"),
                 artifactDirectory: "__generated__",
                 language: "typescript",
               },
