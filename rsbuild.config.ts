@@ -72,6 +72,7 @@ export default defineConfig({
                 displayName: true,
               },
             ],
+            ["@swc/plugin-loadable-components", {}],
             [
               "@swc/plugin-relay",
               {

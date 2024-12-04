@@ -5088,6 +5088,13 @@
   dependencies:
     tslib "^2.8.0"
 
+"@swc/plugin-loadable-components@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@swc/plugin-loadable-components/-/plugin-loadable-components-4.0.1.tgz#48e4a70085e9fc921401fd143a17907fac92a873"
+  integrity sha512-QmmTSfy/x0Jt6EW/M5H+OdSbda9L1z4zovD/T5zifXQF7es3Y6qodNvfEPcorcFteXpF1rYB0LsiBXNIJvi77A==
+  dependencies:
+    "@swc/counter" "^0.1.3"
+
 "@swc/plugin-relay@^5.0.1":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@swc/plugin-relay/-/plugin-relay-5.0.1.tgz#71a561d1de4c6c7caf042f67b290ff7589afba81"

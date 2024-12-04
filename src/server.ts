@@ -36,8 +36,6 @@ app.get(
         routes,
       })
 
-      console.log("yooo")
-
       if (redirect) {
         res.redirect(status ?? 302, redirect.url)
         return
