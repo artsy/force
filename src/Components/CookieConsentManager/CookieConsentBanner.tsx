@@ -12,17 +12,16 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { Z } from "Apps/Components/constants"
 import { RouterLink } from "System/Components/RouterLink"
-import { FC } from "react"
+import { FC, startTransition } from "react"
 
 interface CookieConsentBannerProps {
   onManage: () => void
   onAccept: () => void
 }
 
-export const CookieConsentBanner: FC<React.PropsWithChildren<CookieConsentBannerProps>> = ({
-  onManage,
-  onAccept,
-}) => {
+export const CookieConsentBanner: FC<React.PropsWithChildren<
+  CookieConsentBannerProps
+>> = ({ onManage, onAccept }) => {
   const { theme } = useTheme()
 
   return (
@@ -69,7 +68,11 @@ export const CookieConsentBanner: FC<React.PropsWithChildren<CookieConsentBanner
             >
               <Clickable
                 textDecoration="underline"
-                onClick={onManage}
+                onClick={() => {
+                  startTransition(() => {
+                    onManage()
+                  })
+                }}
                 flex={1}
                 textAlign="center"
               >
@@ -78,7 +81,15 @@ export const CookieConsentBanner: FC<React.PropsWithChildren<CookieConsentBanner
 
               <Spacer x={4} />
 
-              <Button size="large" onClick={onAccept} flex={1}>
+              <Button
+                size="large"
+                onClick={() => {
+                  startTransition(() => {
+                    onAccept()
+                  })
+                }}
+                flex={1}
+              >
                 Accept All
               </Button>
             </Column>

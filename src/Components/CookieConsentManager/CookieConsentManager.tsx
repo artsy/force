@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react"
+import { FC, ReactNode, startTransition } from "react"
 import { ConsentManagerBuilder } from "@segment/consent-manager"
 import { getENV } from "Utils/getENV"
 import { useDidMount } from "@artsy/palette"
@@ -25,9 +25,9 @@ interface CookieConsentManagerProps {
   children: ReactNode
 }
 
-export const CookieConsentManager: FC<React.PropsWithChildren<CookieConsentManagerProps>> = ({
-  children,
-}) => {
+export const CookieConsentManager: FC<React.PropsWithChildren<
+  CookieConsentManagerProps
+>> = ({ children }) => {
   const isMounted = useDidMount()
 
   const { isEigen } = useSystemContext()
@@ -39,11 +39,15 @@ export const CookieConsentManager: FC<React.PropsWithChildren<CookieConsentManag
   const [mode, setMode] = useMode<"Idle" | "Open">("Idle")
 
   const handleManage = () => {
-    setMode("Open")
+    startTransition(() => {
+      setMode("Open")
+    })
   }
 
   const handleClose = () => {
-    setMode("Idle")
+    startTransition(() => {
+      setMode("Idle")
+    })
   }
 
   if (!getENV("SEGMENT_WRITE_KEY")) {
