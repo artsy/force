@@ -25,8 +25,8 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-// TODO: Can we get away with less?
-jest.setTimeout(10000)
+// Long-running tests when we `fillAddressFormFields()`
+jest.setTimeout(15000)
 
 let testProps: SavedAddressesProps
 let mockShippingContext: ShippingContextProps
