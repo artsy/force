@@ -6,6 +6,7 @@ import { setupClientRouter } from "System/Router/clientRouter"
 import { setupSentryClient } from "System/Utils/setupSentryClient"
 import { setupWebVitals } from "System/Utils/setupWebVitals"
 import { hydrateRoot } from "react-dom/client"
+import { startTransition } from "react"
 
 setupAnalytics()
 setupSentryClient()
@@ -18,10 +19,12 @@ setupWebVitals()
   })
 
   loadableReady().then(() => {
-    hydrateRoot(
-      document.getElementById("react-root") as HTMLElement,
-      <ClientRouter />
-    )
+    startTransition(() => {
+      hydrateRoot(
+        document.getElementById("react-root") as HTMLElement,
+        <ClientRouter />
+      )
+    })
   })
 })()
 
