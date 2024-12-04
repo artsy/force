@@ -24,6 +24,9 @@ setupWebVitals()
         document.getElementById("react-root") as HTMLElement,
         <ClientRouter />
       )
+
+      // Let our end-to-end tests know that the app is hydrated and ready to go
+      document.body.setAttribute("data-test", "AppReady")
     })
   })
 })()

@@ -48,11 +48,6 @@ export const AppShell: React.FC<React.PropsWithChildren<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routeConfig])
 
-  // Let our end-to-end tests know that the app is hydrated and ready to go
-  useEffect(() => {
-    document.body.setAttribute("data-test", "AppReady")
-  }, [])
-
   useDarkModeToggle()
   useNetworkOfflineMonitor()
   useProductionEnvironmentWarning()
