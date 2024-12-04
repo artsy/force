@@ -3,6 +3,7 @@ import { defineConfig } from "@rsbuild/core"
 import { pluginReact } from "@rsbuild/plugin-react"
 import { pluginNodePolyfill } from "@rsbuild/plugin-node-polyfill"
 import nodeExternals from "webpack-node-externals"
+import { EarlyHintsPlugin } from "./rspack/plugins/EarlyHintsPlugin"
 
 const basePath = path.resolve(process.cwd(), "src")
 
@@ -13,6 +14,11 @@ export default defineConfig({
   plugins: [pluginReact(), pluginNodePolyfill()],
   environments: {
     client: {
+      tools: {
+        rspack: {
+          plugins: [new EarlyHintsPlugin()],
+        },
+      },
       output: {
         target: "web",
         manifest: true,
