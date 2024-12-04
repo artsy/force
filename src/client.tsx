@@ -6,7 +6,6 @@ import { setupClientRouter } from "System/Router/clientRouter"
 import { setupSentryClient } from "System/Utils/setupSentryClient"
 import { setupWebVitals } from "System/Utils/setupWebVitals"
 import { hydrateRoot } from "react-dom/client"
-import { startTransition } from "react"
 
 setupAnalytics()
 setupSentryClient()
@@ -19,15 +18,10 @@ setupWebVitals()
   })
 
   loadableReady().then(() => {
-    startTransition(() => {
-      hydrateRoot(
-        document.getElementById("react-root") as HTMLElement,
-        <ClientRouter />
-      )
-
-      // Let our end-to-end tests know that the app is hydrated and ready to go
-      document.body.setAttribute("data-test", "AppReady")
-    })
+    hydrateRoot(
+      document.getElementById("react-root") as HTMLElement,
+      <ClientRouter />
+    )
   })
 })()
 
