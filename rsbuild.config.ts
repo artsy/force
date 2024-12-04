@@ -5,6 +5,8 @@ import { pluginReact } from "@rsbuild/plugin-react"
 import { pluginNodePolyfill } from "@rsbuild/plugin-node-polyfill"
 import { EarlyHintsPlugin } from "./rspack/plugins/EarlyHintsPlugin"
 
+require("@artsy/multienv").loadEnvs(".env.shared", ".env")
+
 export default defineConfig({
   environments: {
     client: {
@@ -24,6 +26,11 @@ export default defineConfig({
       source: {
         entry: {
           index: "./src/client.tsx",
+        },
+        // FIXME: Do not inject all env vars into the client! this is just for test
+        define: {
+          "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+          sd: JSON.stringify(process.env.NODE_ENV),
         },
       },
     },
