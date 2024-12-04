@@ -1,6 +1,6 @@
-// @ts-check
 import express, { Express } from "express"
 import { createRsbuild, loadConfig, logger } from "@rsbuild/core"
+import { serverHMR } from "Server/serverHMR"
 
 export async function startDevServer() {
   const app = express()
@@ -16,6 +16,8 @@ export async function startDevServer() {
   const server: Express = await rsbuildServer.environments.server.loadBundle(
     "index"
   )
+
+  serverHMR(app, server)
 
   app.use("/", (req, res, next) => {
     try {

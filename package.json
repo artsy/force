@@ -228,6 +228,7 @@
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@relative-ci/agent": "^4.2.10",
     "@rsbuild/core": "^1.1.8",
+    "@rsbuild/plugin-assets-retry": "^1.0.6",
     "@rsbuild/plugin-node-polyfill": "^1.2.0",
     "@rsbuild/plugin-react": "^1.0.7",
     "@storybook/addon-actions": "6.5.13",

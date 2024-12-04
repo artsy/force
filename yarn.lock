@@ -3606,6 +3606,11 @@
     "@swc/helpers" "^0.5.15"
     core-js "~3.39.0"
 
+"@rsbuild/plugin-assets-retry@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@rsbuild/plugin-assets-retry/-/plugin-assets-retry-1.0.6.tgz#1b79ce627c32f3a8adf9c15f9ccad2b9b6c7403e"
+  integrity sha512-qH1o2R4gMC9i8p70dW9WUku4Ha4XoqA5/pMzysECrrINBI05cbFc/vB7JOqlrciF0NTer1EFZKo1p+mTAI9QSA==
+
 "@rsbuild/plugin-node-polyfill@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@rsbuild/plugin-node-polyfill/-/plugin-node-polyfill-1.2.0.tgz#0e7b15fe6dc2457c2bbb4c99f420dc167796d1fe"
@@ -5089,9 +5094,9 @@
     tslib "^2.8.0"
 
 "@swc/plugin-loadable-components@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@swc/plugin-loadable-components/-/plugin-loadable-components-4.0.1.tgz#48e4a70085e9fc921401fd143a17907fac92a873"
-  integrity sha512-QmmTSfy/x0Jt6EW/M5H+OdSbda9L1z4zovD/T5zifXQF7es3Y6qodNvfEPcorcFteXpF1rYB0LsiBXNIJvi77A==
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@swc/plugin-loadable-components/-/plugin-loadable-components-4.0.3.tgz#82d7493a79476ab65d705159f0b58929f2bc9d45"
+  integrity sha512-3eAODkYw6pGTlTGlPOrGk/ZVbmeEVoY8SU/lix4PHEfV+J/DzbeWTEa1gy3fYyzSt/J35n2jPjctiH7+KVqzTg==
   dependencies:
     "@swc/counter" "^0.1.3"
 

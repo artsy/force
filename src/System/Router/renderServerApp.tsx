@@ -1,6 +1,6 @@
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import { getServerParam } from "Utils/getServerParam"
-import { renderToStaticMarkup, renderToString } from "react-dom/server"
+import { renderToString } from "react-dom/server"
 import loadAssetManifest from "Server/manifest"
 import path from "path"
 import { ENABLE_SSR_STREAMING } from "Server/config"
@@ -8,7 +8,7 @@ import { getENV } from "Utils/getENV"
 import { ServerAppResults } from "System/Router/serverRouter"
 import { getWebpackEarlyHints } from "Server/getWebpackEarlyHints"
 import { RenderToStreamResult } from "System/Router/Utils/renderToStream"
-import { HtmlTemplate } from "HtmlTemplate"
+import { buildHtmlTemplate } from "getHtmlTemplate"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
@@ -87,7 +87,7 @@ export const renderServerApp = ({
 
   const statusCode = getENV("statusCode") ?? code
 
-  const htmlShell = renderToStaticMarkup(<HtmlTemplate {...options} />)
+  const htmlShell = buildHtmlTemplate(options)
 
   res.status(statusCode).send(htmlShell)
 
