@@ -79,12 +79,22 @@ export default defineConfig({
   dev: {
     writeToDisk: true,
   },
+
+  performance: {
+    bundleAnalyze: {
+      // TODO: Verify this works: yarn bundle-stats, along with relative-ci-agent
+      generateStatsFile: process.env.GENERATE_STATS_FILE === "true",
+    },
+  },
+
   plugins: [pluginReact(), pluginNodePolyfill()],
+
   tools: {
     swc: {
       jsc: {
         experimental: {
           plugins: [
+            ["@swc/plugin-loadable-components", {}],
             [
               "@swc/plugin-styled-components",
               {
@@ -92,7 +102,6 @@ export default defineConfig({
                 displayName: true,
               },
             ],
-            ["@swc/plugin-loadable-components", {}],
             [
               "@swc/plugin-relay",
               {

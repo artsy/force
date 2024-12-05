@@ -89,38 +89,22 @@ export const renderServerApp = ({
 
   const htmlShell = buildHtmlTemplate(options)
 
-  res.status(statusCode).send(htmlShell)
+  if (ENABLE_SSR_STREAMING && stream) {
+    res.status(statusCode).write(htmlShell.split('<div id="root">')[0])
 
-  return
+    // React mount point
+    res.write('<div id="root">')
+    const { passThroughStream, transform } = stream.initStream()
 
-  res
-    .status(statusCode)
-    .render(`${PUBLIC_DIR}/html.ejs`, options, async (error, html) => {
-      if (error) {
-        console.error(error)
+    // Start streaming HTML response
+    passThroughStream.pipe(res)
 
-        res
-          .status(500)
-          .send("Internal Server Error: Error rendering server app")
-      } else {
-        if (ENABLE_SSR_STREAMING && stream) {
-          res.write(html.split('<div id="react-root">')[0])
-
-          // React mount point
-          res.write('<div id="react-root">')
-          const { passThroughStream, transform } = stream.initStream()
-
-          // Start streaming HTML response
-          passThroughStream.pipe(res)
-
-          // Stream transform is the last one to close, so end here
-          transform.on("close", () => {
-            res.write("</div></body></html>")
-            res.end()
-          })
-        } else {
-          res.send(html)
-        }
-      }
+    // Stream transform is the last one to close, so end here
+    transform.on("close", () => {
+      res.write("</div></body></html>")
+      res.end()
     })
+  } else {
+    res.status(statusCode).send(htmlShell)
+  }
 }
