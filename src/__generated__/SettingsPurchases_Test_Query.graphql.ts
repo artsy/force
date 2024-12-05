@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7fbd90b3dbea85926ad5b4efe46b09e3>>
+ * @generated SignedSource<<6906ca9d20ac67469c5ecea1f7e29383>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -665,6 +665,20 @@ return {
                         ],
                         "storageKey": null
                       },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "buyerAction",
+                            "storageKey": null
+                          }
+                        ],
+                        "type": "CommerceOfferOrder",
+                        "abstractKey": null
+                      },
                       (v5/*: any*/)
                     ],
                     "storageKey": null
@@ -682,7 +696,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6d267189bf8afbe5847f11b6e8fbb862",
+    "cacheID": "4b72c52726e937f531c304ad14db3eca",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -714,6 +728,19 @@ return {
         },
         "me.orders.edges.node.__isCommerceOrder": (v10/*: any*/),
         "me.orders.edges.node.__typename": (v10/*: any*/),
+        "me.orders.edges.node.buyerAction": {
+          "enumValues": [
+            "OFFER_ACCEPTED",
+            "OFFER_ACCEPTED_CONFIRM_NEEDED",
+            "OFFER_RECEIVED",
+            "OFFER_RECEIVED_CONFIRM_NEEDED",
+            "PAYMENT_FAILED",
+            "PROVISIONAL_OFFER_ACCEPTED"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceBuyerOfferActionEnum"
+        },
         "me.orders.edges.node.buyerTotal": (v9/*: any*/),
         "me.orders.edges.node.code": (v10/*: any*/),
         "me.orders.edges.node.createdAt": (v10/*: any*/),
@@ -917,7 +944,7 @@ return {
     },
     "name": "SettingsPurchases_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsPurchases_Test_Query {\n  me {\n    ...SettingsPurchases_me\n    id\n  }\n}\n\nfragment CommercePagination_pageCursors on CommercePageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsPurchasesRow_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  source\n  internalID\n  code\n  displayState\n  state\n  requestedFulfillment {\n    __typename\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  buyerTotal(precision: 2)\n  createdAt\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artworkVersion {\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        artwork {\n          href\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                cropped(width: 45, height: 45) {\n                  src\n                  srcSet\n                }\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          title\n          artistNames\n          artists(shallow: true) {\n            href\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsPurchases_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED, PROCESSING_APPROVAL], first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...CommercePagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        code\n        ...SettingsPurchasesRow_order\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SettingsPurchases_Test_Query {\n  me {\n    ...SettingsPurchases_me\n    id\n  }\n}\n\nfragment CommercePagination_pageCursors on CommercePageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsPurchasesRow_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  source\n  internalID\n  code\n  displayState\n  state\n  requestedFulfillment {\n    __typename\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  buyerTotal(precision: 2)\n  createdAt\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artworkVersion {\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        artwork {\n          href\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                cropped(width: 45, height: 45) {\n                  src\n                  srcSet\n                }\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          title\n          artistNames\n          artists(shallow: true) {\n            href\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    buyerAction\n  }\n}\n\nfragment SettingsPurchases_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED, PROCESSING_APPROVAL], first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...CommercePagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        code\n        ...SettingsPurchasesRow_order\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
