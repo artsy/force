@@ -28,20 +28,6 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 // Long-running tests when we `fillAddressFormFields()`
 jest.setTimeout(15000)
 
-jest.mock("@artsy/palette", () => {
-  const originalModule = jest.requireActual("@artsy/palette")
-  return {
-    ...originalModule,
-    Input: ({ title, id, ...props }) => (
-      <>
-        {/* eslint-disable-next-line jsx-a11y/label-has-for */}
-        <label htmlFor={id}>{title}</label>
-        <input id={id} {...props} />
-      </>
-    ),
-  }
-})
-
 let testProps: SavedAddressesProps
 let mockShippingContext: ShippingContextProps
 const mockFormikSubmit = jest.fn()
