@@ -16,7 +16,11 @@ import { DateTime } from "luxon"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
-import { SettingsPurchasesRow_order$data } from "__generated__/SettingsPurchasesRow_order.graphql"
+import {
+  SettingsPurchasesRow_order$data,
+  CommerceOrderDisplayStateEnum,
+  CommerceBuyerOfferActionEnum,
+} from "__generated__/SettingsPurchasesRow_order.graphql"
 import { LocaleOptions } from "luxon"
 import { extractNodes } from "Utils/extractNodes"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
@@ -39,6 +43,7 @@ const ORDER_LABELS = {
   CANCELED: "Canceled",
   FULFILLED: "Delivered",
   IN_TRANSIT: "In transit",
+  OFFER_RECEIVED: "Counteroffer received",
   PROCESSING: "Processing",
   REFUNDED: "Refunded",
   SUBMITTED: "Pending",
@@ -51,6 +56,7 @@ const ORDER_ICONS = {
   CANCELED: <CloseStrokeIcon fill="red100" />,
   FULFILLED: <CheckmarkFillIcon fill="green100" />,
   IN_TRANSIT: <PendingIcon fill="black60" />,
+  OFFER_RECEIVED: <PendingIcon fill="blue100" />,
   PROCESSING: <PendingIcon fill="black60" />,
   REFUNDED: <CloseStrokeIcon fill="red100" />,
   SUBMITTED: <PendingIcon fill="black60" />,
@@ -63,6 +69,7 @@ const ORDER_COLORS = {
   CANCELED: "red100",
   FULFILLED: "green100",
   IN_TRANSIT: "black60",
+  OFFER_RECEIVED: "blue100",
   PROCESSING: "black60",
   REFUNDED: "red100",
   SUBMITTED: "black60",
@@ -85,14 +92,63 @@ const getPaymentMethodText = (
   }
 }
 
+const getOrderActionButton = (
+  displayState: CommerceBuyerOfferActionEnum | CommerceOrderDisplayStateEnum,
+  orderId: string
+) => {
+  switch (displayState) {
+    case "PAYMENT_FAILED":
+      return (
+        <Button
+          // @ts-ignore
+          as={RouterLink}
+          to={`/orders/${orderId}/payment/new`}
+          variant="primaryBlack"
+          size="large"
+          width="50%"
+          minWidth={["240px", "200px"]}
+          my={[1, 0]}
+        >
+          Update Payment Method
+        </Button>
+      )
+    case "OFFER_RECEIVED":
+      return (
+        <Button
+          // @ts-ignore
+          as={RouterLink}
+          to={`/orders/${orderId}/status`}
+          variant="primaryBlack"
+          size="large"
+          width="50%"
+          minWidth={["240px", "200px"]}
+          my={[1, 0]}
+        >
+          Respond to Counteroffer
+        </Button>
+      )
+    default:
+      return null
+  }
+}
+
 interface SettingsPurchasesRowProps {
   order: SettingsPurchasesRow_order$data
 }
 
-const SettingsPurchasesRow: FC<React.PropsWithChildren<SettingsPurchasesRowProps>> = ({ order }) => {
+const SettingsPurchasesRow: FC<React.PropsWithChildren<
+  SettingsPurchasesRowProps
+>> = ({ order }) => {
   const [lineItem] = extractNodes(order?.lineItems)
   const { artwork, artworkVersion, fulfillments } = lineItem
-  const { requestedFulfillment } = order
+  const { requestedFulfillment, buyerAction } = order
+  let displayState:
+    | CommerceBuyerOfferActionEnum
+    | CommerceOrderDisplayStateEnum = order.displayState
+
+  if (displayState == "SUBMITTED" && buyerAction == "OFFER_RECEIVED") {
+    displayState = "OFFER_RECEIVED"
+  }
 
   const orderCreatedAt = DateTime.fromISO(order.createdAt)
   const trackingId = fulfillments?.edges?.[0]?.node?.trackingId
@@ -114,7 +170,7 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<SettingsPurchasesRowProps
 
   const getOrderLink = order => {
     const isOrderActive = !["CANCELED", "REFUNDED"].includes(order.state)
-    const isOrderPaymentFailed = order.displayState === "PAYMENT_FAILED"
+    const isOrderPaymentFailed = displayState === "PAYMENT_FAILED"
 
     if (isOrderPaymentFailed) {
       return (
@@ -140,7 +196,7 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<SettingsPurchasesRowProps
   }
 
   return (
-    (<Box border="1px solid" borderColor="black10">
+    <Box border="1px solid" borderColor="black10">
       <Flex
         bg="black5"
         justifyContent="space-between"
@@ -152,14 +208,14 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<SettingsPurchasesRowProps
         </Text>
 
         <Flex alignItems="center">
-          {ORDER_ICONS[order.displayState]}
+          {ORDER_ICONS[displayState]}
 
           <Text
             ml={0.5}
             variant="sm-display"
-            color={ORDER_COLORS[order.displayState]}
+            color={ORDER_COLORS[displayState]}
           >
-            {ORDER_LABELS[order.displayState]}
+            {ORDER_LABELS[displayState]}
           </Text>
 
           {trackingId && (
@@ -240,20 +296,7 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<SettingsPurchasesRowProps
               name={artwork?.partner?.name ?? ""}
             />
 
-            {order.displayState === "PAYMENT_FAILED" && (
-              <Button
-                // @ts-ignore
-                as={RouterLink}
-                to={`/orders/${order.internalID}/payment/new`}
-                variant="primaryBlack"
-                size="large"
-                width="50%"
-                minWidth={["240px", "200px"]}
-                my={[1, 0]}
-              >
-                Update Payment Method
-              </Button>
-            )}
+            {getOrderActionButton(displayState, order.internalID)}
           </Flex>
         </Column>
 
@@ -311,8 +354,8 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<SettingsPurchasesRowProps
           )}
         </Text>
       </Flex>
-    </Box>)
-  );
+    </Box>
+  )
 }
 
 export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
@@ -386,12 +429,17 @@ export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
             }
           }
         }
+        ... on CommerceOfferOrder {
+          buyerAction
+        }
       }
     `,
   }
 )
 
-export const SettingsPurchasesRowPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+export const SettingsPurchasesRowPlaceholder: FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   return (
     <Skeleton>
       <Box border="1px solid" borderColor="black10">
