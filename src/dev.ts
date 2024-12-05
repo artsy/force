@@ -17,6 +17,15 @@ export async function startDevServer() {
     "index"
   )
 
+  // const mountAndReload = createReloadable(app, require)
+
+  // Mount express-reloadable on app
+  // mountAndReload(path.resolve("src/server.ts"), {
+  //   watchModules: [path.resolve(process.cwd(), "src"), "@artsy/fresnel"],
+  // })
+
+  // startServer(app)
+
   serverHMR(app, server)
 
   app.use("/", (req, res, next) => {

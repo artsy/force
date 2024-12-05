@@ -37,7 +37,6 @@ export default defineConfig({
             new EarlyHintsPlugin(),
             new LoadablePlugin({
               filename: "loadable-stats.json",
-              path: "./dist",
             }),
           ],
         },
@@ -78,6 +77,10 @@ export default defineConfig({
 
   dev: {
     writeToDisk: true,
+  },
+
+  server: {
+    port: Number(process.env.PORT) || 3000,
   },
 
   performance: {
