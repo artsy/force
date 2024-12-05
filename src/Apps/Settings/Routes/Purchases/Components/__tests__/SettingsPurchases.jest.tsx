@@ -123,4 +123,77 @@ describe("SettingsPurchases", () => {
       expect(button).toHaveAttribute("href", "/orders/123/payment/new")
     })
   })
+
+  describe("order with offer awaiting for collector reply", () => {
+    it("renders Counteroffer received status", () => {
+      renderWithRelay({
+        Me: () => ({
+          orders: {
+            edges: [
+              {
+                node: {
+                  code: "123",
+                  state: "SUBMITTED",
+                  displayState: "SUBMITTED",
+                  buyerAction: "OFFER_RECEIVED",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(screen.getByText("Counteroffer received")).toBeInTheDocument()
+    })
+
+    it("renders the order number with a link to respond to the offer", () => {
+      renderWithRelay({
+        Me: () => ({
+          orders: {
+            edges: [
+              {
+                node: {
+                  code: "123",
+                  internalID: "123",
+                  state: "SUBMITTED",
+                  displayState: "SUBMITTED",
+                  buyerAction: "OFFER_RECEIVED",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      const link = screen.getByRole("link", { name: /123/i })
+      expect(link).toBeInTheDocument()
+      expect(link).toHaveAttribute("href", "/orders/123/status")
+    })
+
+    it("renders a button to respond to the offer", () => {
+      renderWithRelay({
+        Me: () => ({
+          orders: {
+            edges: [
+              {
+                node: {
+                  code: "123",
+                  internalID: "123",
+                  state: "SUBMITTED",
+                  displayState: "SUBMITTED",
+                  buyerAction: "OFFER_RECEIVED",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      const button = screen.getByRole("link", {
+        name: /Respond to Counteroffer/i,
+      })
+      expect(button).toBeInTheDocument()
+      expect(button).toHaveAttribute("href", "/orders/123/status")
+    })
+  })
 })

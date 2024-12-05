@@ -77,6 +77,10 @@ const ORDER_COLORS = {
   PAYMENT_FAILED: "red100",
 } as const
 
+type CommerceBuyerOrderOfferStateEnum =
+  | CommerceBuyerOfferActionEnum
+  | CommerceOrderDisplayStateEnum
+
 const getPaymentMethodText = (
   paymentMethodDetails: SettingsPurchasesRow_order$data["paymentMethodDetails"]
 ) => {
@@ -93,7 +97,7 @@ const getPaymentMethodText = (
 }
 
 const getOrderActionButton = (
-  displayState: CommerceBuyerOfferActionEnum | CommerceOrderDisplayStateEnum,
+  displayState: CommerceBuyerOrderOfferStateEnum,
   orderId: string
 ) => {
   switch (displayState) {
@@ -142,9 +146,7 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<
   const [lineItem] = extractNodes(order?.lineItems)
   const { artwork, artworkVersion, fulfillments } = lineItem
   const { requestedFulfillment, buyerAction } = order
-  let displayState:
-    | CommerceBuyerOfferActionEnum
-    | CommerceOrderDisplayStateEnum = order.displayState
+  let displayState: CommerceBuyerOrderOfferStateEnum = order.displayState
 
   if (displayState == "SUBMITTED" && buyerAction == "OFFER_RECEIVED") {
     displayState = "OFFER_RECEIVED"
