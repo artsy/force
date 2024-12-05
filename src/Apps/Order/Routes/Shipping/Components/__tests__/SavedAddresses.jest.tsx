@@ -25,7 +25,8 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-jest.setTimeout(10000)
+// Long-running tests when we `fillAddressFormFields()`
+jest.setTimeout(15000)
 
 let testProps: SavedAddressesProps
 let mockShippingContext: ShippingContextProps
@@ -220,9 +221,8 @@ describe("Saved Addresses", () => {
       })
     })
 
-    // Test takes too long to run
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip("calls the parent formik context onSubmit when the user saves a new address", async () => {
+    // Previously disabled due to timeouts
+    it("calls the parent formik context onSubmit when the user saves a new address", async () => {
       renderWithRelay({
         Me: () => ({
           addressConnection: basicAddressList,
@@ -240,26 +240,29 @@ describe("Saved Addresses", () => {
         phoneNumber: "555-555-5555",
       }
       const addAddressButton = screen.getByText("Add a new address")
-      await userEvent.click(addAddressButton)
+      userEvent.click(addAddressButton)
 
       screen.getByText("Add address")
 
       await fillAddressFormFields(validAddress)
 
-      await flushPromiseQueue()
-
       mockExecuteUserAddressAction.mockResolvedValueOnce({
         data: { ...validAddress },
       })
 
-      await userEvent.click(screen.getByText("Save"))
+      await waitFor(
+        () => {
+          userEvent.click(screen.getByText("Save"))
+        },
+        // Bottleneck waiting for form updates
+        { timeout: 4000 }
+      )
 
       await waitFor(() =>
         expect(testProps.onSelect).toHaveBeenCalledWith(
           expect.objectContaining(validAddress)
         )
       )
-
       expect(testProps.onSelect).toHaveBeenCalledTimes(1)
     })
   })
