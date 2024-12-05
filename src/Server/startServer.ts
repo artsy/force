@@ -22,7 +22,7 @@ export async function startServer(
     initializeArtsyXapp(() => {
       const message =
         NODE_ENV === "development"
-          ? `[Force] Booting on ${APP_URL} \n`
+          ? `[Force] Booting on ${APP_URL}... \n`
           : `\n[Force] Started on ${APP_URL}. \n`
 
       const server = withGracefulShutdown(http.createServer(app))
