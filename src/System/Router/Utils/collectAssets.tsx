@@ -10,6 +10,7 @@ import { ENABLE_SSR_STREAMING } from "Server/config"
 import { renderToStream } from "System/Router/Utils/renderToStream"
 import { ArtsyRequest } from "Server/middleware/artsyExpress"
 import { serializeRelayHydrationData } from "System/Router/Utils/serializeRelayHydrationData"
+import { loadAssetManifest } from "Server/manifest"
 
 interface CollectAssetsProps {
   ServerRouter: React.FC<React.PropsWithChildren<unknown>>
@@ -65,12 +66,12 @@ export const collectAssets = async ({
 
   const initialRelayData = await relaySSRMiddleware.getCache()
 
-  const manifest = await fs.promises.readFile("./dist/manifest.json", "utf-8")
+  const manifest = loadAssetManifest("dist/manifest.json")
 
   const extractScriptTags = () => {
     const initialScripts: string[] = []
 
-    const { entries } = JSON.parse(manifest)
+    const { entries } = manifest?.manifest
 
     const { js = [] } = entries["index"].initial
 

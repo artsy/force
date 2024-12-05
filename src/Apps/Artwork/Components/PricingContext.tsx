@@ -26,7 +26,6 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { PricingContextQuery } from "__generated__/PricingContextQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
-import { useEffect } from "react"
 
 interface PricingContextProps {
   artwork: PricingContext_artwork$data
@@ -34,12 +33,6 @@ interface PricingContextProps {
 
 const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
   const tracking = useTracking()
-
-  useEffect(() => {
-    tracking.trackEvent({
-      context_module: DeprecatedSchema.ContextModule.PriceContext,
-    })
-  }, [tracking])
 
   if (!artwork.pricingContext) {
     return null
@@ -67,6 +60,7 @@ const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
   const handleImpression = once(() => {
     tracking.trackEvent({
       action_type: DeprecatedSchema.ActionType.Impression,
+      context_module: DeprecatedSchema.ContextModule.PriceContext,
       flow: DeprecatedSchema.Flow.ArtworkPriceContext,
       subject: DeprecatedSchema.Subject.HistogramBar,
       type: DeprecatedSchema.Type.Chart,
@@ -76,6 +70,7 @@ const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
   const handleBarChartHover = () => {
     tracking.trackEvent({
       action_type: DeprecatedSchema.ActionType.Hover,
+      context_module: DeprecatedSchema.ContextModule.PriceContext,
       flow: DeprecatedSchema.Flow.ArtworkPriceContext,
       subject: DeprecatedSchema.Subject.HistogramBar,
       type: DeprecatedSchema.Type.Chart,
@@ -85,6 +80,7 @@ const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
   const handleCollectPageLinkClick = () => {
     tracking.trackEvent({
       action_type: DeprecatedSchema.ActionType.Click,
+      context_module: DeprecatedSchema.ContextModule.PriceContext,
       flow: DeprecatedSchema.Flow.ArtworkPriceContext,
       subject: DeprecatedSchema.Subject.BrowseWorks,
       type: DeprecatedSchema.Type.Chart,
