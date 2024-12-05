@@ -1,8 +1,8 @@
 import { BoxProps, FullBleed, Image, ResponsiveBox } from "@artsy/palette"
 import { FC } from "react"
 import { maxDimensionsByArea, resized } from "Utils/resized"
-import { BREAKPOINTS, Media } from "Utils/Responsive"
 import { Link } from "react-head"
+import { getENV } from "Utils/getENV"
 
 const MOBILE_SIZE = {
   width: 350,
@@ -27,71 +27,79 @@ export const ArtistHeaderImage: FC<React.PropsWithChildren<
   const mobile = resized(image.src, {
     width: MOBILE_SIZE.width,
     height: MOBILE_SIZE.height,
-    quality: 60,
+    quality: 50,
   })
+
+  const isMobile = getENV("IS_MOBILE")
 
   return (
     <>
-      <Link
-        rel="preload"
-        href={desktop.src}
-        as="image"
-        imagesrcset={desktop.srcSet}
-        media={`(min-width: ${BREAKPOINTS.sm}px)`}
-      />
-
-      <Link
-        rel="preload"
-        href={mobile.src}
-        as="image"
-        imagesrcset={mobile.srcSet}
-        media={`(max-width: ${BREAKPOINTS.sm}px)`}
-      />
-
-      <Media at="xs">
-        <FullBleed>
-          <ResponsiveBox
-            aspectWidth={MOBILE_SIZE.width}
-            aspectHeight={MOBILE_SIZE.height}
-            maxWidth={1000}
-            minHeight={MOBILE_SIZE.height}
-          >
-            <Image
-              width="100%"
-              height="100%"
-              src={mobile.src}
-              srcSet={mobile.srcSet}
-              fetchPriority="high"
-              style={{
-                objectFit: "cover",
-              }}
-            />
-          </ResponsiveBox>
-        </FullBleed>
-      </Media>
-
-      <Media greaterThan="xs">
-        <ResponsiveBox
-          aspectWidth={image.width}
-          aspectHeight={image.height}
-          maxWidth={max.width}
-          maxHeight={max.height}
-          bg="black5"
-          {...rest}
-        >
-          <Image
-            key={desktop.src}
-            src={desktop.src}
-            srcSet={desktop.srcSet}
-            width="100%"
-            height="100%"
-            style={{ objectFit: "cover" }}
-            // Deliberate, to improve LCP
-            lazyLoad={false}
+      {isMobile ? (
+        <>
+          <Link
+            rel="preload"
+            href={mobile.src}
+            as="image"
+            imagesrcset={mobile.srcSet}
             fetchPriority="high"
           />
-        </ResponsiveBox>
-      </Media>
+
+          <FullBleed>
+            <ResponsiveBox
+              aspectWidth={MOBILE_SIZE.width}
+              aspectHeight={MOBILE_SIZE.height}
+              maxWidth={1000}
+              minHeight={MOBILE_SIZE.height}
+            >
+              <Image
+                key={mobile.src}
+                width="100%"
+                height="100%"
+                src={mobile.src}
+                srcSet={mobile.srcSet}
+                fetchPriority="high"
+                // LCP optimization
+                lazyLoad={false}
+                style={{
+                  objectFit: "cover",
+                }}
+              />
+            </ResponsiveBox>
+          </FullBleed>
+        </>
+      ) : (
+        // Desktop
+        <>
+          <Link
+            rel="preload"
+            href={desktop.src}
+            as="image"
+            imagesrcset={desktop.srcSet}
+            fetchPriority="high"
+          />
+
+          <ResponsiveBox
+            aspectWidth={image.width}
+            aspectHeight={image.height}
+            maxWidth={max.width}
+            maxHeight={max.height}
+            bg="black5"
+            {...rest}
+          >
+            <Image
+              key={desktop.src}
+              src={desktop.src}
+              srcSet={desktop.srcSet}
+              width="100%"
+              height="100%"
+              style={{ objectFit: "cover" }}
+              // Deliberate, to improve LCP
+              lazyLoad={false}
+              fetchPriority="high"
+            />
+          </ResponsiveBox>
+        </>
+      )}
     </>
   )
 }
