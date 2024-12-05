@@ -11,8 +11,6 @@ import { renderToStream } from "System/Router/Utils/renderToStream"
 import { ArtsyRequest } from "Server/middleware/artsyExpress"
 import { serializeRelayHydrationData } from "System/Router/Utils/serializeRelayHydrationData"
 
-const ASSET_PATH = "/static"
-
 interface CollectAssetsProps {
   ServerRouter: React.FC<React.PropsWithChildren<unknown>>
   relayEnvironment: Environment

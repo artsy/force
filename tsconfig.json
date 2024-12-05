@@ -11,7 +11,7 @@
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "jsx": "react-jsx",
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "outDir": ".cache/tsc", // Need output directory for incremental type-checking
@@ -19,7 +19,7 @@
     "noErrorTruncation": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "target": "es2016",
+    "target": "es2019",
     "typeRoots": ["./src/Typings", "./node_modules/@types"],
     "types": ["node", "jest", "express", "webpack-env", "google-maps"],
     "paths": {

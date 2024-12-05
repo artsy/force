@@ -1,3 +1,4 @@
+import { AnalyticsPricingContextDimensionEnum } from "__generated__/PricingContext_artwork.graphql"
 import { stringify } from "qs"
 
 export const createCollectUrl = ({
@@ -5,7 +6,7 @@ export const createCollectUrl = ({
   category,
   artistId,
 }: {
-  dimension: "SMALL" | "MEDIUM" | "LARGE" | null
+  dimension: AnalyticsPricingContextDimensionEnum
   category: FilterCategory
   artistId: string
 }) => {

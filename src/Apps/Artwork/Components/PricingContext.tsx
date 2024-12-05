@@ -10,14 +10,17 @@ import {
   Text,
 } from "@artsy/palette"
 import { BarChart, BarDescriptor } from "@artsy/palette-charts"
-import { PricingContext_artwork$data } from "__generated__/PricingContext_artwork.graphql"
+import {
+  AnalyticsPricingContextDimensionEnum,
+  PricingContext_artwork$data,
+} from "__generated__/PricingContext_artwork.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { once } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import Waypoint from "react-waypoint"
-import { createCollectUrl } from "./../Utils/createCollectUrl"
+import { createCollectUrl, FilterCategory } from "./../Utils/createCollectUrl"
 import { PricingContextModal } from "./PricingContextModal"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { PricingContextQuery } from "__generated__/PricingContextQuery.graphql"
@@ -102,9 +105,10 @@ const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
 
       <Link
         href={createCollectUrl({
-          dimension: artwork.pricingContext.appliedFilters.dimension,
-          category: artwork.category,
-          artistId: artistId,
+          dimension: artwork.pricingContext.appliedFilters
+            .dimension as AnalyticsPricingContextDimensionEnum,
+          category: artwork.category as FilterCategory,
+          artistId: artistId as string,
         })}
         onClick={handleCollectPageLinkClick}
         color="black60"

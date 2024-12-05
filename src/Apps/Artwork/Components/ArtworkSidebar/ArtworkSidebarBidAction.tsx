@@ -139,7 +139,8 @@ const ArtworkSidebarBidAction: React.FC<ArtworkSidebarBidActionProps> = ({
     pendingIdentityVerification,
     shouldPromptIdVerification,
   } = bidderQualifications(sale, me, {
-    qualifiedForBidding: sale.registrationStatus?.qualified_for_bidding,
+    qualifiedForBidding: sale.registrationStatus
+      ?.qualified_for_bidding as boolean,
   })
 
   if (sale.is_preview) {

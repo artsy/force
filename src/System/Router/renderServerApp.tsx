@@ -7,7 +7,7 @@ import { getENV } from "Utils/getENV"
 import { ServerAppResults } from "System/Router/serverRouter"
 import { getWebpackEarlyHints } from "Server/getWebpackEarlyHints"
 import { RenderToStreamResult } from "System/Router/Utils/renderToStream"
-import { buildHtmlTemplate } from "getHtmlTemplate"
+import { buildHtmlTemplate, HTMLProps } from "html"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
@@ -50,8 +50,8 @@ export const renderServerApp = ({
 
   const { linkPreloadTags } = getWebpackEarlyHints()
 
-  const options = {
-    cdnUrl: NODE_ENV === "production" ? CDN_URL : "",
+  const options: HTMLProps = {
+    cdnUrl: NODE_ENV === "production" ? (CDN_URL as string) : "",
     content: {
       body: html,
       data: sharify.script(),
@@ -62,24 +62,26 @@ export const renderServerApp = ({
     },
     disable: {
       analytics: getServerParam(req, "disableAnalytics") === "true",
-      segment: getServerParam(req, "disableSegment") === "true",
+      segment:
+        getServerParam(req, "disableSegment") === "true" ||
+        !getENV("SEGMENT_WRITE_KEY"),
       stripe: getServerParam(req, "disableStripe") === "true",
       scripts: !mount,
+      thirdParties: getENV("THIRD_PARTIES_DISABLED") === "true",
     },
-    env: NODE_ENV,
+    env: NODE_ENV as string,
     fontUrl: WEBFONT_URL,
-    imageCdnUrl: GEMINI_CLOUDFRONT_URL,
+    imageCdnUrl: GEMINI_CLOUDFRONT_URL as string,
     icons: {
       favicon: res.locals.asset("/images/favicon.ico"),
       faviconSVG: res.locals.asset("/images/favicon.svg"),
       appleTouchIcon: res.locals.asset("/images/apple-touch-icon.png"),
     },
     manifest: {
-      browserConfig: MANIFEST.lookup("/images/browserconfig.xml"),
+      browserconfig: MANIFEST.lookup("/images/browserconfig.xml"),
       openSearch: MANIFEST.lookup("/images/opensearch.xml"),
       webmanifest: MANIFEST.lookup("/images/manifest.webmanifest"),
     },
-    sd: sharify.data,
   }
 
   const statusCode = getENV("statusCode") ?? code

@@ -1,5 +1,4 @@
 import { HTML, ReadMore, Spacer, StackableBorderBox } from "@artsy/palette"
-import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
 import { ArtworkDetailsAboutTheWorkFromArtsy_artwork$data } from "__generated__/ArtworkDetailsAboutTheWorkFromArtsy_artwork.graphql"

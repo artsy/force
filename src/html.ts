@@ -1,3 +1,35 @@
+export interface HTMLProps {
+  cdnUrl: string
+  content: {
+    body?: string
+    data?: string
+    head?: string
+    linkPreloadTags?: string[]
+    scripts?: string
+    style?: string
+  }
+  disable: {
+    analytics: boolean
+    segment: boolean
+    stripe: boolean
+    scripts: boolean
+    thirdParties: boolean
+  }
+  env: string
+  fontUrl: string
+  icons: {
+    appleTouchIcon: string
+    favicon: string
+    faviconSVG: string
+  }
+  imageCdnUrl: string
+  manifest: {
+    browserconfig: string
+    openSearch: string
+    webmanifest: string
+  }
+}
+
 export function buildHtmlTemplate({
   cdnUrl,
   content,
@@ -6,7 +38,7 @@ export function buildHtmlTemplate({
   icons,
   imageCdnUrl,
   manifest,
-}) {
+}: HTMLProps) {
   return `
     <!DOCTYPE html>
     <html lang="en">
