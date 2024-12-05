@@ -76,7 +76,19 @@ export const collectAssets = async ({
 
     const { js = [] } = entries["index"].initial
 
-    const runtimeScripts = js.map(url => `<script src="${url}" defer></script>`)
+    const runtimeScripts = js.map(url => {
+      const cdnUrl = getENV("CDN_URL")
+
+      const scriptUrl = (() => {
+        if (getENV("NODE_ENV") === "production" && cdnUrl) {
+          return `${cdnUrl}${url}`
+        } else {
+          return url
+        }
+      })()
+
+      return `<script src="${scriptUrl}" defer></script>`
+    })
 
     initialScripts.push(...runtimeScripts)
 

@@ -6,8 +6,9 @@ import { pluginReact } from "@rsbuild/plugin-react"
 import { pluginAssetsRetry } from "@rsbuild/plugin-assets-retry"
 import { pluginNodePolyfill } from "@rsbuild/plugin-node-polyfill"
 import { EarlyHintsPlugin } from "./rspack/plugins/EarlyHintsPlugin"
+import { loadEnvs } from "@artsy/multienv"
 
-require("@artsy/multienv").loadEnvs(".env.shared", ".env")
+loadEnvs(".env.shared", ".env")
 
 export default defineConfig({
   environments: {
@@ -84,10 +85,10 @@ export default defineConfig({
   },
 
   performance: {
-    bundleAnalyze: {
-      // TODO: Verify this works: yarn bundle-stats, along with relative-ci-agent
-      generateStatsFile: process.env.GENERATE_STATS_FILE === "true",
-    },
+    // bundleAnalyze: {
+    //   // TODO: Verify this works: yarn bundle-stats, along with relative-ci-agent
+    //   generateStatsFile: false,
+    // },
   },
 
   plugins: [pluginReact(), pluginNodePolyfill()],

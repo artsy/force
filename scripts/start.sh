@@ -20,5 +20,5 @@ if [ "${NODE_ENV}" != "production" ]; then
   fi
 # Prod
 else
-  exec node "${OPT[@]}" --no-experimental-fetch ./server.dist.js
+  exec node "${OPT[@]}" --no-experimental-fetch -r @swc-node/register ./src/index.ts
 fi

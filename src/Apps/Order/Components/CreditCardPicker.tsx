@@ -197,18 +197,6 @@ export class CreditCardPicker extends React.Component<
       }
   }
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  @track((props: CreditCardPickerProps, state, args) => {
-    const showBillingAddress = !args[0]
-    if (showBillingAddress && props.order.state === "PENDING") {
-      return {
-        action_type: DeprecatedSchema.ActionType.Click,
-        subject: DeprecatedSchema.Subject.BNMOUseShippingAddress,
-        flow: "buy now",
-        type: "checkbox",
-      }
-    }
-  })
   private handleChangeHideBillingAddress(hideBillingAddress: boolean) {
     if (!hideBillingAddress) {
       this.setState({
@@ -217,6 +205,16 @@ export class CreditCardPicker extends React.Component<
           country: "US",
         },
       })
+
+      if (this.props.order.state === "PENDING") {
+        // FIXME: Verify this
+        track({
+          action_type: DeprecatedSchema.ActionType.Click,
+          subject: DeprecatedSchema.Subject.BNMOUseShippingAddress,
+          flow: "buy now",
+          type: "checkbox",
+        })
+      }
     }
 
     this.setState({ hideBillingAddress })
@@ -459,9 +457,11 @@ export class CreditCardPicker extends React.Component<
 // Our mess of HOC wrappers is not amenable to ref forwarding, so to expose a
 // ref to the CreditCardPicker instance (for getCreditCardId) we'll add an
 // `innerRef` prop which gets sneakily injected here
-const CreditCardPickerWithInnerRef: React.FC<React.PropsWithChildren<CreditCardPickerProps & {
-  innerRef: React.RefObject<CreditCardPicker>
-}>> = ({ innerRef, ...props }) => (
+const CreditCardPickerWithInnerRef: React.FC<React.PropsWithChildren<
+  CreditCardPickerProps & {
+    innerRef: React.RefObject<CreditCardPicker>
+  }
+>> = ({ innerRef, ...props }) => (
   <SystemContextConsumer>
     {({ isEigen }) => {
       return (

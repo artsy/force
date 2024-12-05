@@ -12,7 +12,10 @@ const { HEADERS_TIMEOUT_SECONDS, KEEPALIVE_TIMEOUT_SECONDS } = process.env
  * Run start server as a callback for now until waiting on the xapp token and
  * cache have a chance to be refactored.
  */
-export async function startServer(app, onStart) {
+export async function startServer(
+  app,
+  onStart?: () => void
+): Promise<http.Server> {
   return new Promise(resolve => {
     setupErrorHandling(app)
 
@@ -51,7 +54,7 @@ export async function startServer(app, onStart) {
       server.listen(PORT, "0.0.0.0", () => {
         console.log(message)
 
-        onStart()
+        onStart?.()
 
         resolve(server)
       })

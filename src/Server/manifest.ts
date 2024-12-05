@@ -60,7 +60,7 @@ class ManifestManager {
 
 const loadedManifests = new Map<string, ManifestManager>()
 
-export default function loadManifest(manifestFileName = "manifest.json") {
+export function loadAssetManifest(manifestFileName = "manifest.json") {
   if (loadedManifests.has(manifestFileName)) {
     return loadedManifests.get(manifestFileName)
   }

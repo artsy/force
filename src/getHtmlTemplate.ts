@@ -50,8 +50,6 @@ export function buildHtmlTemplate({
     </head>
 
     <body>
-      <!-- Inject route-level bundle-split scripts from loadable-components -->
-      <!-- Other scripts are injected via HTMLWebpackPlugin during webpack build time -->
       ${content.scripts || ""}
 
       <div id="react-modal-container"></div>

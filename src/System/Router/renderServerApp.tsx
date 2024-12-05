@@ -1,8 +1,7 @@
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import { getServerParam } from "Utils/getServerParam"
 import { renderToString } from "react-dom/server"
-import loadAssetManifest from "Server/manifest"
-import path from "path"
+import { loadAssetManifest } from "Server/manifest"
 import { ENABLE_SSR_STREAMING } from "Server/config"
 import { getENV } from "Utils/getENV"
 import { ServerAppResults } from "System/Router/serverRouter"
@@ -14,9 +13,7 @@ import { buildHtmlTemplate } from "getHtmlTemplate"
 // have a default CDN_URL while this does not.
 const { CDN_URL, NODE_ENV, GEMINI_CLOUDFRONT_URL } = process.env
 
-const PUBLIC_DIR = path.resolve(process.cwd(), "public")
-
-const MANIFEST = loadAssetManifest("manifest.json")
+const MANIFEST = loadAssetManifest("dist/manifest.json")
 
 if (!MANIFEST) {
   throw new Error("manifest.json not found")

@@ -14,8 +14,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarBidAction_artwork$data } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
 import { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSidebarBidAction_me.graphql"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import track from "react-tracking"
+import { useTracking } from "react-tracking"
 import { getENV } from "Utils/getENV"
 import { bidderQualifications } from "Utils/identityVerificationRequirements"
 import { compact } from "lodash"
@@ -25,6 +24,7 @@ import { ActionType, ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { ShowAuthDialog, withAuthDialog } from "Components/AuthDialog"
 import HelpIcon from "@artsy/icons/HelpIcon"
+import { useState } from "react"
 
 export interface ArtworkSidebarBidActionProps {
   artwork: ArtworkSidebarBidAction_artwork$data
@@ -37,9 +37,9 @@ export interface ArtworkSidebarBidActionState {
   selectedMaxBidCents: number
 }
 
-const RegisterToBidButton: React.FC<React.PropsWithChildren<{ onClick: () => void }>> = ({
-  onClick,
-}) => {
+const RegisterToBidButton: React.FC<React.PropsWithChildren<{
+  onClick: () => void
+}>> = ({ onClick }) => {
   return (
     <Button width="100%" size="large" mt={1} onClick={onClick} data-test="bid">
       Register to bid
@@ -47,7 +47,9 @@ const RegisterToBidButton: React.FC<React.PropsWithChildren<{ onClick: () => voi
   )
 }
 
-const VerifyIdentityButton: React.FC<React.PropsWithChildren<{ id: string }>> = ({ id }) => (
+const VerifyIdentityButton: React.FC<React.PropsWithChildren<{
+  id: string
+}>> = ({ id }) => (
   <a href={`/identity-verification/${id}`}>
     <Button width="100%" size="large">
       Verify identity
@@ -55,7 +57,9 @@ const VerifyIdentityButton: React.FC<React.PropsWithChildren<{ id: string }>> = 
   </a>
 )
 
-const IdentityVerificationDisclaimer: React.FC<React.PropsWithChildren<unknown>> = () => {
+const IdentityVerificationDisclaimer: React.FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   return (
     <Text variant="sm-display" color="black60" textAlign="center">
       Identity verification required to bid.{" "}
@@ -64,51 +68,36 @@ const IdentityVerificationDisclaimer: React.FC<React.PropsWithChildren<unknown>>
   )
 }
 
-@track()
-export class ArtworkSidebarBidAction extends React.Component<
-  ArtworkSidebarBidActionProps,
-  ArtworkSidebarBidActionState
-> {
-  state: ArtworkSidebarBidActionState = {
-    selectedMaxBidCents: 0,
+const ArtworkSidebarBidAction: React.FC<ArtworkSidebarBidActionProps> = ({
+  artwork,
+  me,
+  showAuthDialog,
+  router,
+}) => {
+  const [selectedMaxBidCents, setSelectedMaxBidCents] = useState(0)
+  const tracking = useTracking()
+
+  const setMaxBid = (newVal: string) => {
+    setSelectedMaxBidCents(parseInt(newVal, 10))
   }
 
-  setMaxBid = (newVal: string) => {
-    this.setState({ selectedMaxBidCents: parseInt(newVal, 10) })
-  }
-
-  redirectToRegister = () => {
-    const { sale } = this.props.artwork
-    const href = `/auction-registration/${sale?.slug}`
+  const redirectToRegister = () => {
+    const href = `/auction-registration/${artwork.sale?.slug}`
     window.location.href = href
   }
 
-  @track((props: ArtworkSidebarBidActionProps) => ({
-    action: ActionType.clickedBid,
-    context_owner_type: OwnerType.artwork,
-    context_owner_slug: props.artwork.slug,
-    context_owner_id: props.artwork.internalID,
-    signal_lot_watcher_count:
-      props.artwork.collectorSignals?.auction?.lotWatcherCount ?? undefined,
-    signal_bid_count:
-      props.artwork.collectorSignals?.auction?.bidCount ?? undefined,
-  }))
-  redirectToBid(firstIncrement: number) {
-    const { slug, sale } = this.props.artwork
-    const bid = this.state.selectedMaxBidCents || firstIncrement
-
+  const redirectToBid = (firstIncrement: number) => {
+    const { slug, sale } = artwork
+    const bid = selectedMaxBidCents || firstIncrement
     const href = `/auction/${sale?.slug}/bid/${slug}?bid=${bid}`
+    const redirectTo = href
 
-    const redirectTo = href.replace("/auction/", "/auction/")
-
-    if (!this.props.me) {
-      this.props.showAuthDialog({
+    if (!me) {
+      showAuthDialog({
         options: {
           redirectTo,
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to bid on artworks`
-          },
+          title: mode =>
+            `${mode === "SignUp" ? "Sign up" : "Log in"} to bid on artworks`,
         },
         analytics: {
           contextModule: ContextModule.artworkSidebar,
@@ -116,248 +105,174 @@ export class ArtworkSidebarBidAction extends React.Component<
         },
       })
     } else {
-      this.props.router?.push(redirectTo)
+      router?.push(redirectTo)
     }
   }
 
-  @track({
-    type: DeprecatedSchema.Type.Button,
-    flow: DeprecatedSchema.Flow.Auctions,
-    subject: DeprecatedSchema.Subject.EnterLiveAuction,
-    context_module: DeprecatedSchema.ContextModule.Sidebar,
-    action_type: DeprecatedSchema.ActionType.Click,
-  })
-  redirectToLiveBidding(me: ArtworkSidebarBidAction_me$data | null) {
-    const slug = this.props.artwork.sale?.slug
+  const redirectToLiveBidding = () => {
+    const slug = artwork.sale?.slug
     const liveUrl = `${getENV("PREDICTION_URL")}/${slug}`
-    if (me) {
-      window.location.href = `${liveUrl}/login`
-    } else {
-      window.location.href = liveUrl
-    }
+    window.location.href = me ? `${liveUrl}/login` : liveUrl
   }
 
-  render() {
-    const {
-      artwork,
-      artwork: { sale, sale_artwork },
-      me,
-    } = this.props
+  tracking.trackEvent({
+    action: ActionType.clickedBid,
+    context_owner_type: OwnerType.artwork,
+    context_owner_slug: artwork.slug,
+    context_owner_id: artwork.internalID,
+    signal_lot_watcher_count:
+      artwork.collectorSignals?.auction?.lotWatcherCount,
+    signal_bid_count: artwork.collectorSignals?.auction?.bidCount,
+  })
 
-    if (!sale || lotIsClosed(sale, sale_artwork)) return null
+  const { sale, sale_artwork } = artwork
 
-    /**
-     * NOTE: This is making an incorrect assumption that there could only ever
-     * be 1 live sale with this work. When we run into that case, there is
-     * likely design work to be done too, so we can adjust this then.
-     */
-    const myLotStanding = artwork.myLotStanding && artwork.myLotStanding[0]
-    const hasMyBids = !!(myLotStanding && myLotStanding.most_recent_bid)
+  if (!sale || lotIsClosed(sale, sale_artwork)) return null
 
-    const {
-      registrationAttempted,
-      qualifiedForBidding,
-      userLacksIdentityVerification,
-      pendingIdentityVerification,
-      shouldPromptIdVerification,
-    } = bidderQualifications(
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      sale,
-      me,
-      sale.registrationStatus && {
-        qualifiedForBidding: sale.registrationStatus.qualified_for_bidding,
-      }
-    )
+  const myLotStanding = artwork.myLotStanding && artwork.myLotStanding[0]
+  const hasMyBids = !!(myLotStanding && myLotStanding.most_recent_bid)
 
-    if (sale.is_preview) {
-      let PreviewAction: React.FC<React.PropsWithChildren<unknown>>
+  const {
+    registrationAttempted,
+    qualifiedForBidding,
+    userLacksIdentityVerification,
+    pendingIdentityVerification,
+    shouldPromptIdVerification,
+  } = bidderQualifications(sale, me, {
+    qualifiedForBidding: sale.registrationStatus?.qualified_for_bidding,
+  })
 
-      if (registrationAttempted) {
-        // FIXME: Extract to a real component
-        if (qualifiedForBidding) {
-          // eslint-disable-next-line react/no-unstable-nested-components
-          PreviewAction = () => (
+  if (sale.is_preview) {
+    return (
+      <>
+        {registrationAttempted ? (
+          qualifiedForBidding ? (
             <Button width="100%" size="large" mt={1} disabled>
               Registration complete
             </Button>
-          )
-        } else if (shouldPromptIdVerification) {
-          // eslint-disable-next-line react/no-unstable-nested-components
-          PreviewAction = () => (
+          ) : shouldPromptIdVerification ? (
             <VerifyIdentityButton
               id={pendingIdentityVerification?.internalID || ""}
             />
-          )
-        } else {
-          // eslint-disable-next-line react/no-unstable-nested-components
-          PreviewAction = () => (
+          ) : (
             <Button width="100%" size="large" mt={1} disabled>
               Registration pending
             </Button>
           )
-        }
-      } else {
-        // eslint-disable-next-line react/no-unstable-nested-components
-        PreviewAction = () => (
-          <RegisterToBidButton onClick={this.redirectToRegister} />
-        )
-      }
+        ) : (
+          <RegisterToBidButton onClick={redirectToRegister} />
+        )}
+        <Spacer y={1} />
+        {userLacksIdentityVerification && <IdentityVerificationDisclaimer />}
+      </>
+    )
+  }
+
+  if (sale.is_live_open) {
+    const notApprovedBidderBeforeRegistrationClosed =
+      !!sale.is_registration_closed && !qualifiedForBidding
+
+    return (
+      <>
+        {notApprovedBidderBeforeRegistrationClosed ? (
+          <>
+            <Text variant="xs" color="black60" pb={1} textAlign="center">
+              Registration closed
+            </Text>
+            <Button width="100%" size="large" onClick={redirectToLiveBidding}>
+              Watch live bidding
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button width="100%" size="large" onClick={redirectToLiveBidding}>
+              Enter live bidding
+            </Button>
+            <Spacer y={1} />
+            {userLacksIdentityVerification && (
+              <IdentityVerificationDisclaimer />
+            )}
+          </>
+        )}
+      </>
+    )
+  }
+
+  if (sale.is_open) {
+    if (registrationAttempted && !qualifiedForBidding) {
       return (
         <>
-          <PreviewAction />
-
+          {shouldPromptIdVerification ? (
+            <VerifyIdentityButton
+              id={pendingIdentityVerification?.internalID || ""}
+            />
+          ) : (
+            <Button width="100%" size="large" disabled>
+              Registration pending
+            </Button>
+          )}
           <Spacer y={1} />
-
           {userLacksIdentityVerification && <IdentityVerificationDisclaimer />}
         </>
       )
     }
 
-    if (sale.is_live_open) {
-      const notApprovedBidderBeforeRegistrationClosed: boolean =
-        !!sale.is_registration_closed && !qualifiedForBidding
-
-      if (notApprovedBidderBeforeRegistrationClosed) {
-        return (
-          <>
-            <Text variant="xs" color="black60" pb={1} textAlign="center">
-              Registration closed
-            </Text>
-
-            <Button
-              width="100%"
-              size="large"
-              onClick={() => this.redirectToLiveBidding(me)}
-            >
-              Watch live bidding
-            </Button>
-          </>
-        )
-      } else {
-        return (
-          <>
-            <Button
-              width="100%"
-              size="large"
-              onClick={() => this.redirectToLiveBidding(me)}
-            >
-              Enter live bidding
-            </Button>
-
-            <Spacer y={1} />
-
-            {userLacksIdentityVerification && (
-              <IdentityVerificationDisclaimer />
-            )}
-          </>
-        )
-      }
-    }
-
-    if (sale.is_open) {
-      if (registrationAttempted && !qualifiedForBidding) {
-        return (
-          <>
-            {shouldPromptIdVerification ? (
-              <VerifyIdentityButton
-                id={pendingIdentityVerification?.internalID || ""}
-              />
-            ) : (
-              <Button width="100%" size="large" disabled>
-                Registration pending
-              </Button>
-            )}
-
-            <Spacer y={1} />
-
-            {userLacksIdentityVerification && (
-              <IdentityVerificationDisclaimer />
-            )}
-          </>
-        )
-      }
-
-      if (sale.is_registration_closed && !qualifiedForBidding) {
-        return (
-          <Button width="100%" size="large" disabled>
-            Registration closed
-          </Button>
-        )
-      }
-
-      const myLastMaxBid =
-        hasMyBids && myLotStanding?.most_recent_bid?.max_bid?.cents
-
-      const increments = compact(
-        artwork.sale_artwork?.increments?.filter(
-          increment => (increment?.cents ?? 0) > (myLastMaxBid || 0)
-        )
+    if (sale.is_registration_closed && !qualifiedForBidding) {
+      return (
+        <Button width="100%" size="large" disabled>
+          Registration closed
+        </Button>
       )
-
-      const firstIncrement = increments[0]
-
-      const selectOptions = increments.map(increment => ({
-        value: increment.cents?.toString(),
-        text: increment.display,
-      }))
-
-      if (!qualifiedForBidding && userLacksIdentityVerification) {
-        return (
-          <>
-            <RegisterToBidButton onClick={this.redirectToRegister} />
-
-            <Spacer y={1} />
-
-            <IdentityVerificationDisclaimer />
-          </>
-        )
-      } else {
-        return (
-          <>
-            <Separator my={2} />
-
-            <Flex width="100%" flexDirection="row" alignItems="center">
-              <Text variant="sm-display" color="black100" mr={1}>
-                Place max bid
-              </Text>
-
-              <Tooltip
-                content="Set the maximum amount you would like Artsy to bid up to on your behalf"
-                placement="top"
-              >
-                <Box
-                  style={{
-                    // Vertically center
-                    lineHeight: 0,
-                  }}
-                >
-                  <HelpIcon aria-hidden title="" />
-                </Box>
-              </Tooltip>
-            </Flex>
-
-            <Spacer y={1} />
-
-            <Select
-              options={selectOptions as Option[]}
-              onSelect={this.setMaxBid}
-            />
-
-            <Spacer y={1} />
-
-            <Button
-              width="100%"
-              size="large"
-              data-test="bid"
-              onClick={() => this.redirectToBid(firstIncrement?.cents || 0)}
-            >
-              {hasMyBids ? "Increase max bid" : "Bid"}
-            </Button>
-          </>
-        )
-      }
     }
+
+    const myLastMaxBid =
+      hasMyBids && myLotStanding?.most_recent_bid?.max_bid?.cents
+
+    const increments = compact(
+      sale_artwork?.increments?.filter(
+        increment => (increment?.cents ?? 0) > (myLastMaxBid || 0)
+      )
+    )
+
+    const firstIncrement = increments[0]
+
+    const selectOptions = increments.map(increment => ({
+      value: increment.cents?.toString(),
+      text: increment.display,
+    }))
+
+    return (
+      <>
+        <Separator my={2} />
+        <Flex width="100%" flexDirection="row" alignItems="center">
+          <Text variant="sm-display" color="black100" mr={1}>
+            Place max bid
+          </Text>
+          <Tooltip
+            content="Set the maximum amount you would like Artsy to bid up to on your behalf"
+            placement="top"
+          >
+            <Box style={{ lineHeight: 0 }}>
+              <HelpIcon aria-hidden title="" />
+            </Box>
+          </Tooltip>
+        </Flex>
+        <Spacer y={1} />
+        <Select options={selectOptions as Option[]} onSelect={setMaxBid} />
+        <Spacer y={1} />
+        <Button
+          width="100%"
+          size="large"
+          data-test="bid"
+          onClick={() => redirectToBid(firstIncrement?.cents || 0)}
+        >
+          {hasMyBids ? "Increase max bid" : "Bid"}
+        </Button>
+      </>
+    )
   }
+
+  return null
 }
 
 export const ArtworkSidebarBidActionFragmentContainer = withAuthDialog(

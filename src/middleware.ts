@@ -40,7 +40,7 @@ import { hstsMiddleware } from "./Server/middleware/hsts"
 import { linkHeadersMiddleware } from "./Server/middleware/linkHeadersMiddleware"
 import { ipFilter } from "./Server/middleware/ipFilter"
 import { sessionMiddleware } from "./Server/middleware/session"
-import { assetMiddleware } from "./Server/middleware/asset"
+import { assetMiddleware } from "./Server/middleware/assetMiddleware"
 import { csrfTokenMiddleware } from "./Server/middleware/csrfToken"
 import { asyncLocalsMiddleware } from "./Server/middleware/asyncLocalMiddleware"
 import { bootstrapSharifyAndContextLocalsMiddleware } from "./Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
@@ -200,7 +200,7 @@ function applySecurityMiddleware(app) {
 
 function applyStaticAssetMiddlewares(app) {
   // Mount static assets from root public folder
-  app.use(express.static("public"))
+  app.use(express.static("dist"))
 
   // Mount static assets from sub-app /app `public` folders
   glob.sync(`${__dirname}/{public,**/public}`).forEach(folder => {

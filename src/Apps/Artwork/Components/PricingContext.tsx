@@ -17,166 +17,155 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import Waypoint from "react-waypoint"
-import Events from "Utils/Events"
 import { createCollectUrl } from "./../Utils/createCollectUrl"
 import { PricingContextModal } from "./PricingContextModal"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { PricingContextQuery } from "__generated__/PricingContextQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import track from "react-tracking"
+import { useTracking } from "react-tracking"
+import { useEffect } from "react"
 
 interface PricingContextProps {
   artwork: PricingContext_artwork$data
 }
 
-@track(
-  {
-    context_module: DeprecatedSchema.ContextModule.PriceContext,
-  },
-  {
-    dispatch: data => Events.postEvent(data),
+const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
+  const tracking = useTracking()
+
+  useEffect(() => {
+    tracking.trackEvent({
+      context_module: DeprecatedSchema.ContextModule.PriceContext,
+    })
+  }, [tracking])
+
+  if (!artwork.pricingContext) {
+    return null
   }
-)
-export class PricingContext extends React.Component<PricingContextProps> {
-  @track({
-    action_type: DeprecatedSchema.ActionType.Impression,
-    flow: DeprecatedSchema.Flow.ArtworkPriceContext,
-    subject: DeprecatedSchema.Subject.HistogramBar,
-    type: DeprecatedSchema.Type.Chart,
+
+  const priceCents =
+    (artwork.listPrice?.__typename === "PriceRange"
+      ? artwork.listPrice?.maxPrice?.minor || artwork.listPrice?.minPrice?.minor
+      : artwork.listPrice?.__typename === "Money"
+      ? artwork.listPrice?.minor
+      : 0) ?? 0
+
+  const artworkFallsBeforeFirstBin =
+    priceCents < artwork.pricingContext.bins[0].minPriceCents
+
+  const artworkFallsAfterLastBin =
+    priceCents >=
+    artwork.pricingContext.bins[artwork.pricingContext.bins.length - 1]
+      .maxPriceCents
+
+  if (artwork.artists === null) return null
+
+  const artistId = artwork.artists?.[0]?.slug
+
+  const handleImpression = once(() => {
+    tracking.trackEvent({
+      action_type: DeprecatedSchema.ActionType.Impression,
+      flow: DeprecatedSchema.Flow.ArtworkPriceContext,
+      subject: DeprecatedSchema.Subject.HistogramBar,
+      type: DeprecatedSchema.Type.Chart,
+    })
   })
-  trackImpression() {
-    // Tracking
+
+  const handleBarChartHover = () => {
+    tracking.trackEvent({
+      action_type: DeprecatedSchema.ActionType.Hover,
+      flow: DeprecatedSchema.Flow.ArtworkPriceContext,
+      subject: DeprecatedSchema.Subject.HistogramBar,
+      type: DeprecatedSchema.Type.Chart,
+    })
   }
 
-  @track({
-    action_type: DeprecatedSchema.ActionType.Hover,
-    flow: DeprecatedSchema.Flow.ArtworkPriceContext,
-    subject: DeprecatedSchema.Subject.HistogramBar,
-    type: DeprecatedSchema.Type.Chart,
-  })
-  barchartHover() {
-    // Tracking
+  const handleCollectPageLinkClick = () => {
+    tracking.trackEvent({
+      action_type: DeprecatedSchema.ActionType.Click,
+      flow: DeprecatedSchema.Flow.ArtworkPriceContext,
+      subject: DeprecatedSchema.Subject.BrowseWorks,
+      type: DeprecatedSchema.Type.Chart,
+    })
   }
 
-  @track({
-    action_type: DeprecatedSchema.ActionType.Click,
-    flow: DeprecatedSchema.Flow.ArtworkPriceContext,
-    subject: DeprecatedSchema.Subject.BrowseWorks,
-    type: DeprecatedSchema.Type.Chart,
-  })
-  collectPageLinkClick() {
-    // Tracking
-  }
+  return (
+    <BorderBox mb={2} flexDirection="column">
+      {/* Impression Tracking */}
+      <Waypoint onEnter={handleImpression} />
 
-  render() {
-    const { artwork } = this.props
+      <Flex alignItems="center">
+        <Text variant="xs" lineHeight={1}>
+          {artwork.pricingContext.appliedFiltersDisplay}
+        </Text>
+        <PricingContextModal />
+      </Flex>
 
-    if (!artwork.pricingContext) {
-      return null
-    }
+      <Link
+        href={createCollectUrl({
+          dimension: artwork.pricingContext.appliedFilters.dimension,
+          category: artwork.category,
+          artistId: artistId,
+        })}
+        onClick={handleCollectPageLinkClick}
+        color="black60"
+      >
+        <Text variant="xs">Browse works in this category</Text>
+      </Link>
 
-    const priceCents =
-      (artwork.listPrice?.__typename === "PriceRange"
-        ? artwork.listPrice?.maxPrice?.minor ||
-          artwork.listPrice?.minPrice?.minor
-        : artwork.listPrice?.__typename === "Money"
-        ? artwork.listPrice?.minor
-        : 0) ?? 0
+      <Spacer y={2} />
 
-    const artworkFallsBeforeFirstBin =
-      priceCents < artwork.pricingContext.bins[0].minPriceCents
+      <BarChart
+        minLabel="$0"
+        maxLabel={
+          artwork.pricingContext.bins[artwork.pricingContext.bins.length - 1]
+            .maxPrice + "+"
+        }
+        bars={artwork.pricingContext.bins.map(
+          (bin, index): BarDescriptor => {
+            const isFirstBin = index === 0
+            const isLastBin = artwork?.pricingContext?.bins?.length
+              ? index === artwork.pricingContext.bins.length - 1
+              : true
 
-    const artworkFallsAfterLastBin =
-      priceCents >=
-      artwork.pricingContext.bins[artwork.pricingContext.bins.length - 1]
-        .maxPriceCents
+            const title = isLastBin
+              ? `${bin.minPrice}+`
+              : `${isFirstBin ? "$0" : bin.minPrice}–${bin.maxPrice}`
+            const artworkFallsInThisBin =
+              (isFirstBin && artworkFallsBeforeFirstBin) ||
+              (isLastBin && artworkFallsAfterLastBin) ||
+              (priceCents >= bin.minPriceCents &&
+                priceCents < bin.maxPriceCents)
 
-    if (artwork.artists === null) return null
+            const binValue =
+              artworkFallsInThisBin && bin.numArtworks === 0
+                ? 1
+                : bin.numArtworks
+            const labelSuffix = binValue === 1 ? " work" : " works"
 
-    const artistId = artwork.artists?.[0]?.slug
-
-    return (
-      <BorderBox mb={2} flexDirection="column">
-        {/* TODO: remove this library */}
-        <Waypoint onEnter={once(this.trackImpression.bind(this))} />
-
-        <Flex alignItems="center">
-          <Text variant="xs" lineHeight={1}>
-            {artwork.pricingContext.appliedFiltersDisplay}
-          </Text>
-
-          <PricingContextModal />
-        </Flex>
-
-        <Link
-          href={createCollectUrl({
-            // @ts-ignore
-            dimension: artwork.pricingContext.appliedFilters.dimension,
-            // @ts-ignore
-            category: artwork.category,
-            // @ts-ignore
-            artistId: artistId,
-          })}
-          onClick={this.collectPageLinkClick.bind(this)}
-          color="black60"
-        >
-          <Text variant="xs">Browse works in this category</Text>
-        </Link>
-
-        <Spacer y={2} />
-
-        <BarChart
-          // TODO: use artwork's currency
-          minLabel="$0"
-          maxLabel={
-            artwork.pricingContext.bins[artwork.pricingContext.bins.length - 1]
-              .maxPrice + "+"
-          }
-          bars={artwork.pricingContext.bins.map(
-            (bin, index): BarDescriptor => {
-              const isFirstBin = index === 0
-              const isLastBin = artwork?.pricingContext?.bins?.length
-                ? index === artwork?.pricingContext?.bins?.length - 1
-                : true
-
-              const title = isLastBin
-                ? `${bin.minPrice}+`
-                : // TODO: use artwork's currency
-                  `${isFirstBin ? "$0" : bin.minPrice}–${bin.maxPrice}`
-              const artworkFallsInThisBin =
-                (isFirstBin && artworkFallsBeforeFirstBin) ||
-                (isLastBin && artworkFallsAfterLastBin) ||
-                (priceCents >= bin.minPriceCents &&
-                  priceCents < bin.maxPriceCents)
-
-              const binValue =
-                artworkFallsInThisBin && bin.numArtworks === 0
-                  ? 1
-                  : bin.numArtworks
-              const labelSuffix = binValue === 1 ? " work" : " works"
-              return {
-                value: binValue,
-                label: {
-                  title,
-                  description: binValue + labelSuffix,
-                  noPadding: false,
-                },
-                onHover: this.barchartHover.bind(this),
-                highlightLabel: artworkFallsInThisBin
-                  ? {
-                      title,
-                      description: "This work",
-                      noPadding: false,
-                    }
-                  : undefined,
-              }
+            return {
+              value: binValue,
+              label: {
+                title,
+                description: binValue + labelSuffix,
+                noPadding: false,
+              },
+              onHover: handleBarChartHover,
+              highlightLabel: artworkFallsInThisBin
+                ? {
+                    title,
+                    description: "This work",
+                    noPadding: false,
+                  }
+                : undefined,
             }
-          )}
-        />
-      </BorderBox>
-    )
-  }
+          }
+        )}
+      />
+    </BorderBox>
+  )
 }
+
+export default PricingContext
 
 export const PricingContextFragmentContainer = createFragmentContainer(
   PricingContext,

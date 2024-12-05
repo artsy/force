@@ -1,8 +1,12 @@
+import "./Server/loadenv"
 import express, { Express } from "express"
 import { createRsbuild, loadConfig, logger } from "@rsbuild/core"
 import { serverHMR } from "Server/serverHMR"
 
 export async function startDevServer() {
+  // Wait for multienv to load envs
+  const { startServer } = require("./Server/startServer")
+
   const app = express()
 
   const { content } = await loadConfig({})
@@ -13,6 +17,7 @@ export async function startDevServer() {
 
   const rsbuildServer = await rsbuild.createDevServer()
 
+  // Load compiled server code
   const server: Express = await rsbuildServer.environments.server.loadBundle(
     "index"
   )
@@ -24,26 +29,20 @@ export async function startDevServer() {
   //   watchModules: [path.resolve(process.cwd(), "src"), "@artsy/fresnel"],
   // })
 
-  // startServer(app)
+  // serverHMR(app, server)
 
-  serverHMR(app, server)
+  // serverHMR(app, server)
 
-  app.use("/", (req, res, next) => {
-    try {
-      server(req, res, next)
-    } catch (error) {
-      logger.error("SSR render error, downgrade to CSR...\n", error)
-      next()
-    }
-  })
+  app.use("/", server)
 
-  // Apply Rsbuild’s built-in middlewares
   app.use(rsbuildServer.middlewares)
 
-  const httpServer = app.listen(rsbuildServer.port, () => {
+  const httpServer = await startServer(app, () => {
     rsbuildServer.afterListen()
 
-    console.log(`Server started at http://localhost:${rsbuildServer.port}`)
+    logger.log(
+      `[Force] Server started at http://localhost:${rsbuildServer.port}`
+    )
   })
 
   rsbuildServer.connectWebSocket({ server: httpServer })
