@@ -16,9 +16,9 @@ if [ "${NODE_ENV}" != "production" ]; then
     exec node --max_old_space_size=3072 -r @swc-node/register ./src/dev.ts
   # Dev
   else
-    yarn concurrently --kill-others 'yarn relay --watch' 'node --max_old_space_size=3072 -r @swc-node/register ./src/dev.ts'
+    yarn concurrently --raw --kill-others 'yarn relay --watch' 'node --max_old_space_size=3072 -r @swc-node/register ./src/dev.ts'
   fi
 # Prod
 else
-  exec node "${OPT[@]}" --no-experimental-fetch -r @swc-node/register ./src/index.ts
+  exec node "${OPT[@]}" --no-experimental-fetch -r @swc-node/register ./src/prod.ts
 fi

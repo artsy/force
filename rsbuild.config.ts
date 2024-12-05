@@ -77,6 +77,7 @@ export default defineConfig({
    */
 
   dev: {
+    progressBar: true,
     writeToDisk: true,
   },
 
