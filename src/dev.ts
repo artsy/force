@@ -1,7 +1,7 @@
 import "./Server/loadenv"
-import express, { Express } from "express"
+import express from "express"
 import { createRsbuild, loadConfig, logger } from "@rsbuild/core"
-import { serverHMR } from "Server/serverHMR"
+import { createReloadable } from "@artsy/express-reloadable"
 
 export async function startDevServer() {
   // Wait for multienv to load envs
@@ -17,24 +17,20 @@ export async function startDevServer() {
 
   const rsbuildServer = await rsbuild.createDevServer()
 
-  // Load compiled server code
-  const server: Express = await rsbuildServer.environments.server.loadBundle(
-    "index"
-  )
+  // Add server-side hot reloading
+  const mountAndReload = createReloadable(app, require)
 
-  // const mountAndReload = createReloadable(app, require)
+  // Get the output path of the server build
+  const stats = await rsbuildServer.environments.server.getStats()
 
-  // Mount express-reloadable on app
-  // mountAndReload(path.resolve("src/server.ts"), {
-  //   watchModules: [path.resolve(process.cwd(), "src"), "@artsy/fresnel"],
-  // })
+  // Mount the server build and watch it for changes
+  const { outputPath } = stats.toJson({
+    all: true,
+  })
 
-  // serverHMR(app, server)
+  mountAndReload(outputPath)
 
-  // serverHMR(app, server)
-
-  app.use("/", server)
-
+  // Init RSBuild dev middleware
   app.use(rsbuildServer.middlewares)
 
   const httpServer = await startServer(app, () => {
