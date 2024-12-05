@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a8c10122f417efc37db57ab8d926632f>>
+ * @generated SignedSource<<3b775811d9e35c601dc32bf1fcb8a2fe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,11 +9,13 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type CommerceBuyerOfferActionEnum = "OFFER_ACCEPTED" | "OFFER_ACCEPTED_CONFIRM_NEEDED" | "OFFER_RECEIVED" | "OFFER_RECEIVED_CONFIRM_NEEDED" | "PAYMENT_FAILED" | "PROVISIONAL_OFFER_ACCEPTED" | "%future added value";
 export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PAYMENT_FAILED" | "PENDING" | "PROCESSING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type SettingsPurchasesRow_order$data = {
+  readonly buyerAction?: CommerceBuyerOfferActionEnum | null | undefined;
   readonly buyerTotal: string | null | undefined;
   readonly code: string;
   readonly createdAt: string;
@@ -473,6 +475,20 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "buyerAction",
+          "storageKey": null
+        }
+      ],
+      "type": "CommerceOfferOrder",
+      "abstractKey": null
     }
   ],
   "type": "CommerceOrder",
@@ -480,6 +496,6 @@ return {
 };
 })();
 
-(node as any).hash = "4a896a515342b1fcc037206f76bb1dbd";
+(node as any).hash = "0d315366543908efb10c9d1bd70233a5";
 
 export default node;
