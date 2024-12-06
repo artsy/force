@@ -10,13 +10,14 @@ interface ArtworkChatBubbleProps {
   artwork: ArtworkChatBubble_artwork$data
 }
 
-const ArtworkChatBubble: FC<React.PropsWithChildren<ArtworkChatBubbleProps>> = ({ artwork }) => {
+const ArtworkChatBubble: FC<React.PropsWithChildren<
+  ArtworkChatBubbleProps
+>> = ({ artwork }) => {
   const {
     isAcquireable,
     isInquireable,
     isOfferable,
     listPrice,
-    isInAuction,
     saleArtwork,
   } = artwork
 
@@ -33,7 +34,7 @@ const ArtworkChatBubble: FC<React.PropsWithChildren<ArtworkChatBubbleProps>> = (
     }
   }, [listPrice])
 
-  if (!getENV("SALESFORCE_CHAT_ENABLED")) {
+  if (!getENV("SALESFORCE_MESSAGE_ENABLED")) {
     return null
   }
 
@@ -47,7 +48,7 @@ const ArtworkChatBubble: FC<React.PropsWithChildren<ArtworkChatBubbleProps>> = (
   ) {
     return (
       <Media greaterThan="xs">
-        <SalesforceWrapper isInAuction={isInAuction} />
+        <SalesforceWrapper />
       </Media>
     )
   }
@@ -61,7 +62,7 @@ const ArtworkChatBubble: FC<React.PropsWithChildren<ArtworkChatBubbleProps>> = (
 
   return (
     <Media greaterThan="xs">
-      <SalesforceWrapper isInAuction={isInAuction} />
+      <SalesforceWrapper />
     </Media>
   )
 }

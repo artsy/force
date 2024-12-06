@@ -1,4 +1,4 @@
-import { OnboardingSearchResultsFragmentContainer } from "../OnboardingSearchResults"
+import { OnboardingSearchResultsFragmentContainer } from "Components/Onboarding/Components/OnboardingSearchResults"
 import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
