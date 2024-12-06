@@ -18,7 +18,9 @@ import { MarketingCollectionCell } from "Apps/Marketing/Components/MarketingColl
 import { MarketingQuizCTA } from "Apps/Marketing/Components/MarketingQuizCTA"
 import { BRAND_PALETTE } from "Apps/Marketing/Utils/brandPalette"
 
-export const MarketingFindArtYouLoveRoute: FC<React.PropsWithChildren<unknown>> = () => {
+export const MarketingFindArtYouLoveRoute: FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   return (
     <>
       <MetaTags
@@ -100,7 +102,7 @@ export const MarketingFindArtYouLoveRoute: FC<React.PropsWithChildren<unknown>> 
 
           <Column span={4}>
             <MarketingCollectionCell
-              title="Curators’ Picks: Emerging"
+              title="Curators’ Picks"
               href="/collection/curators-picks-emerging"
               src="https://files.artsy.net/images/marketing_emerging_april-14.jpg"
             />
