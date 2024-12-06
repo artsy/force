@@ -43,7 +43,7 @@ const Schema = Yup.object().shape({
       }
 
       return validatePhoneNumber({
-        national: `${national}` ?? `${context.parent.userPhone}`,
+        national: national ? `${national}` : `${context.parent.userPhone}`,
         regionCode: `${context.parent.phoneNumberRegionCode}`,
       })
     },
