@@ -53,15 +53,11 @@ COPY --chown=deploy:deploy --from=builder-base /app/webpack ./webpack
 COPY --chown=deploy:deploy --from=builder-base /app/yarn.lock .
 
 # Client assets
-COPY --chown=deploy:deploy --from=builder-base /app/manifest.json .
-COPY --chown=deploy:deploy --from=builder-base /app/public ./public
+COPY --chown=deploy:deploy --from=builder-base /app/dist/manifest.json .
+COPY --chown=deploy:deploy --from=builder-base /app/dist ./dist
 COPY --chown=deploy:deploy --from=builder-base /app/src ./src
-
-# Server assets
-COPY --chown=deploy:deploy --from=builder-base /app/server.dist.js .
-COPY --chown=deploy:deploy --from=builder-base /app/server.dist.js.map .
 
 ENTRYPOINT ["/usr/bin/dumb-init", "./scripts/load_secrets_and_run.sh"]
 
 # TODO: Reduce production memory, this is not a concern
-CMD ["node", "--max_old_space_size=2048", "--heapsnapshot-signal=SIGUSR2", "--no-experimental-fetch", "./server.dist.js"]
+CMD ["node", "--max_old_space_size=2048", "--heapsnapshot-signal=SIGUSR2", "--no-experimental-fetch", "-r @swc-node/register", "./src/prod.ts"]
