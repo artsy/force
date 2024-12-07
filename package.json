@@ -16,7 +16,7 @@
     "build-storybook": "storybook build",
     "bundle-report:client": "BUNDLE_ANALYZE=true yarn build:client:prod",
     "bundle-report:server": "BUNDLE_ANALYZE=true yarn build:server:prod",
-    "bundle-stats": "GENERATE_STATS_FILE=true yarn bundle-report:client npx relative-ci-agent",
+    "bundle-stats": "GENERATE_STATS_FILE=true yarn bundle-report:client && npx relative-ci-agent",
     "clean": "scripts/clean.sh",
     "clean:relay": "rm -rf '$TMPDIR'/RelayFindGraphQLTags-*",
     "cypress:run": "./node_modules/.bin/cypress run",

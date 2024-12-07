@@ -80,24 +80,30 @@ export default defineConfig({
     progressBar: true,
     writeToDisk: true,
   },
-
   server: {
     port: Number(process.env.PORT) || 3000,
   },
-
-  performance: {
-    // FIXME: Uncomment and play around with different bundle split strategies,
-    // along with stats below:
-    // chunkSplit: {
-    //   strategy: "split-by-size",
-    //   minSize: 30000,
-    //   maxSize: 50000,
-    // },
-    // bundleAnalyze: {
-    //   // TODO: Verify this works: yarn bundle-stats, along with relative-ci-agent
-    //   generateStatsFile: false,
-    // },
-  },
+  performance: Object.assign(
+    {},
+    process.env.GENERATE_STATS_FILE
+      ? {
+          bundleAnalyze: {
+            generateStatsFile: true,
+          },
+        }
+      : {}
+  ),
+  // FIXME: Uncomment and play around with different bundle split strategies,
+  // along with stats below:
+  // chunkSplit: {
+  //   strategy: "split-by-size",
+  //   minSize: 30000,
+  //   maxSize: 50000,
+  // },
+  // bundleAnalyze: {
+  //   // TODO: Verify this works: yarn bundle-stats, along with relative-ci-agent
+  //   generateStatsFile: false,
+  // },
 
   plugins: [pluginReact(), pluginNodePolyfill()],
 
