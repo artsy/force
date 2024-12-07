@@ -3,6 +3,7 @@ import { MediaContextProvider } from "Utils/Responsive"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { track } from "react-tracking"
+import { createBrowserRouter, makeRouteConfig, Route } from "found"
 
 const { GlobalStyles } = injectGlobalStyles()
 
@@ -15,12 +16,20 @@ export const decorators = [
   Story => {
     const Tracked = track()(Story)
 
+    const BrowserRouter = createBrowserRouter({
+      routeConfig: makeRouteConfig(
+        <>
+          <Route path="*" Component={Tracked} />
+        </>
+      ),
+    })
+
     return (
       <SystemContextProvider relayEnvironment={relayEnvironment}>
         <Theme>
           <MediaContextProvider>
             <GlobalStyles />
-            <Tracked />
+            <BrowserRouter />
           </MediaContextProvider>
         </Theme>
       </SystemContextProvider>
@@ -28,6 +37,8 @@ export const decorators = [
   },
 ]
 
-export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
-}
+// FIXME: Migrate this: https://storybook.js.org/docs/essentials/actions#via-storybooktest-fn-spy-function
+// export const parameters = {
+//   actions: { argTypesRegex: "^on[A-Z].*" },
+// }
+export const tags = ["autodocs"]
