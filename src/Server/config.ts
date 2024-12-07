@@ -5,7 +5,9 @@
 // on process.env and sharify.
 //
 
-import { tryParse } from "Utils/tryParse"
+// We need to bootstrap sharify in the build file where absolute paths aren't supported
+// eslint-disable-next-line no-relative-import-paths/no-relative-import-paths
+import { tryParse } from "../Utils/tryParse"
 
 // Warn if this file is included client-side
 if (process.env.NODE_ENV !== "test") {

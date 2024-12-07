@@ -54,7 +54,7 @@ export const renderServerApp = ({
     cdnUrl: NODE_ENV === "production" ? (CDN_URL as string) : "",
     content: {
       body: html,
-      data: sharify.script(),
+      sharifyData: sharify.script(),
       head: headTagsString,
       linkPreloadTags,
       scripts,

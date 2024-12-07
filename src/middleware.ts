@@ -1,7 +1,3 @@
-// Setup sharify
-// TODO: Export a function instead of loading on import.
-import "./Server/setup_sharify"
-
 import artsyPassport from "./Server/passport"
 import addRequestId from "express-request-id"
 import compression from "compression"
@@ -57,6 +53,9 @@ import {
 } from "./Server/featureFlags/unleashService"
 import { registerFeatureFlagService } from "./Server/featureFlags/featureFlagService"
 import { appPreferencesMiddleware } from "Apps/AppPreferences/appPreferencesMiddleware"
+import { bootstrapSharify } from "./Server/bootstrapSharify"
+
+bootstrapSharify()
 
 export function initializeMiddleware(app) {
   app.use(serverTimingHeaders)

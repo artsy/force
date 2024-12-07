@@ -2,7 +2,7 @@ export interface HTMLProps {
   cdnUrl: string
   content: {
     body?: string
-    data?: string
+    sharifyData?: string
     head?: string
     linkPreloadTags?: string[]
     scripts?: string
@@ -78,7 +78,7 @@ export function buildHtmlTemplate({
       ${content.linkPreloadTags ? content.linkPreloadTags.join("") : ""}
       ${content.head || ""}
       ${content.style || ""}
-      ${content.data || ""}
+      ${content.sharifyData || ""}
     </head>
 
     <body>

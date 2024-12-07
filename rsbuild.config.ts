@@ -18,11 +18,6 @@ export default defineConfig({
         entry: {
           index: "./src/client.tsx",
         },
-        // FIXME: Do not inject all env vars into the client! this is just for test
-        define: {
-          "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
-          sd: JSON.stringify(process.env.NODE_ENV),
-        },
       },
       output: {
         target: "web",
@@ -80,33 +75,26 @@ export default defineConfig({
     progressBar: true,
     writeToDisk: true,
   },
-  server: {
-    port: Number(process.env.PORT) || 3000,
-  },
-  performance: Object.assign(
-    {},
-    process.env.GENERATE_STATS_FILE
+  performance: {
+    // FIXME: Uncomment and play around with different bundle split strategies,
+    // along with stats below:
+    // chunkSplit: {
+    //   strategy: "split-by-size",
+    //   minSize: 30000,
+    //   maxSize: 50000,
+    // },
+    ...(process.env.GENERATE_STATS_FILE
       ? {
           bundleAnalyze: {
             generateStatsFile: true,
           },
         }
-      : {}
-  ),
-  // FIXME: Uncomment and play around with different bundle split strategies,
-  // along with stats below:
-  // chunkSplit: {
-  //   strategy: "split-by-size",
-  //   minSize: 30000,
-  //   maxSize: 50000,
-  // },
-  // bundleAnalyze: {
-  //   // TODO: Verify this works: yarn bundle-stats, along with relative-ci-agent
-  //   generateStatsFile: false,
-  // },
-
+      : {}),
+  },
   plugins: [pluginReact(), pluginNodePolyfill()],
-
+  server: {
+    port: Number(process.env.PORT) || 3000,
+  },
   tools: {
     swc: {
       jsc: {
