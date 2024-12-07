@@ -73,51 +73,6 @@ export function initializeMiddleware(app) {
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
 
-  // Ensure basic security settings
-  applySecurityMiddleware(app)
-
-  // Sharify and async locals
-  app.use(bootstrapSharifyAndContextLocalsMiddleware)
-
-  app.use(
-    morganMiddleware({
-      development: process.env.NODE_ENV === "development",
-      logAssets: process.env.LOG_ASSETS === "true",
-    })
-  )
-
-  // Redirect requests before they even have to deal with Force routing
-  app.use(downcaseMiddleware)
-  app.use(hardcodedRedirectsMiddleware)
-  app.use(localsMiddleware)
-  app.use(sameOriginMiddleware)
-
-  // Add CSRF to the cookie and remove it from the page. This allows the caching
-  // on the html and is used by the Login Modal to make secure requests.
-  app.use(csrfTokenMiddleware)
-
-  // Need sharify for unleash
-  registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)
-  app.use(featureFlagMiddleware(UnleashService))
-
-  // Preconnect or preload associated links
-  app.use(linkHeadersMiddleware)
-
-  /**
-   * Routes for pinging system time and up
-   */
-  app.get("/system/time", (req, res) =>
-    res.status(200).send({ time: Date.now() })
-  )
-  app.get("/system/up", (req, res) => {
-    res.status(200).send({ nodejs: true })
-  })
-
-  // Static assets
-  applyStaticAssetMiddlewares(app)
-}
-
-function applySecurityMiddleware(app) {
   // Denied IPs
   if (IP_DENYLIST && IP_DENYLIST.length > 0) {
     app.use(ipFilter(IP_DENYLIST))
@@ -196,9 +151,44 @@ function applySecurityMiddleware(app) {
 
   // Get app preferences (e.g. theme)
   app.use(appPreferencesMiddleware)
-}
 
-function applyStaticAssetMiddlewares(app) {
+  // Sharify and async locals
+  app.use(bootstrapSharifyAndContextLocalsMiddleware)
+
+  app.use(
+    morganMiddleware({
+      development: process.env.NODE_ENV === "development",
+      logAssets: process.env.LOG_ASSETS === "true",
+    })
+  )
+
+  // Redirect requests before they even have to deal with Force routing
+  app.use(downcaseMiddleware)
+  app.use(hardcodedRedirectsMiddleware)
+  app.use(localsMiddleware)
+  app.use(sameOriginMiddleware)
+
+  // Add CSRF to the cookie and remove it from the page. This allows the caching
+  // on the html and is used by the Login Modal to make secure requests.
+  app.use(csrfTokenMiddleware)
+
+  // Need sharify for unleash
+  registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)
+  app.use(featureFlagMiddleware(UnleashService))
+
+  // Preconnect or preload associated links
+  app.use(linkHeadersMiddleware)
+
+  /**
+   * Routes for pinging system time and up
+   */
+  app.get("/system/time", (req, res) =>
+    res.status(200).send({ time: Date.now() })
+  )
+  app.get("/system/up", (req, res) => {
+    res.status(200).send({ nodejs: true })
+  })
+
   // Mount static assets from root public folder
   app.use(express.static("dist"))
 

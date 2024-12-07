@@ -47,15 +47,13 @@ COPY --chown=deploy:deploy --from=builder-base /opt/node_modules.prod ./node_mod
 
 # Base code
 COPY --chown=deploy:deploy --from=builder-base /app/data ./data
-COPY --chown=deploy:deploy --from=builder-base /app/package.json .
+COPY --chown=deploy:deploy --from=builder-base /app/src ./src
 COPY --chown=deploy:deploy --from=builder-base /app/scripts ./scripts
-COPY --chown=deploy:deploy --from=builder-base /app/webpack ./webpack
+COPY --chown=deploy:deploy --from=builder-base /app/package.json .
 COPY --chown=deploy:deploy --from=builder-base /app/yarn.lock .
 
-# Client assets
-COPY --chown=deploy:deploy --from=builder-base /app/dist/manifest.json .
+# App artifacts
 COPY --chown=deploy:deploy --from=builder-base /app/dist ./dist
-COPY --chown=deploy:deploy --from=builder-base /app/src ./src
 
 ENTRYPOINT ["/usr/bin/dumb-init", "./scripts/load_secrets_and_run.sh"]
 
