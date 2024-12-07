@@ -11,7 +11,7 @@ import { IMocks } from "graphql-tools/dist/Interfaces"
 import getNetworkLayer from "relay-mock-network-layer"
 import { INetwork, Network } from "relay-runtime"
 import { get } from "Utils/get"
-import uuid from "uuid"
+import { v1 as uuid } from "uuid"
 import schema from "../../../data/schema.graphql"
 import FormattedNumber from "./CustomScalars/formatted_number"
 

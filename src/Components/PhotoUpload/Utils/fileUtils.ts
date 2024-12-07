@@ -4,7 +4,7 @@ import { getGeminiCredentialsForEnvironment } from "Components/PhotoUpload/Mutat
 import createLogger from "Utils/logger"
 import { ErrorCode, FileRejection } from "react-dropzone"
 import { Environment } from "react-relay"
-import uuid from "uuid"
+import { v1 as uuid } from "uuid"
 import { uploadFileToS3 } from "./uploadFileToS3"
 
 const logger = createLogger("PhotoUpload/fileUtils.ts")

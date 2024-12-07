@@ -1,10 +1,6 @@
 module.exports = {
   parser: "@typescript-eslint/parser",
-  ignorePatterns: [
-    "**/*", // Ignore everything by default
-    "!src/**/*", // Include only src
-    "src/__generated__/**/*", // Explicitly ignore generated files
-  ],
+  ignorePatterns: ["src/__generated__/**/*"],
   plugins: [
     "react-hooks",
     "@typescript-eslint",

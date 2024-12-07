@@ -24,8 +24,10 @@ if (process.env.NODE_ENV === "production") {
 
   // TODO: Ugh, this is a mess. Figure out a way to not relying on custom
   // webpack pathing client side.
+
+  // @ts-expect-error - webpack magic var
   __webpack_public_path__ = cdnUrl + "/assets/"
 
-  // @ts-ignore
+  // @ts-expect-error - webpack magic var
   window.__getPublicPath = () => __webpack_public_path__
 }
