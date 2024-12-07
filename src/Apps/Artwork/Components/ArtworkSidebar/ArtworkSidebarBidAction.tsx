@@ -15,7 +15,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarBidAction_artwork$data } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
 import { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSidebarBidAction_me.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import track, { TrackingProp, useTracking } from "react-tracking"
+import { TrackingProp, useTracking } from "react-tracking"
 import { getENV } from "Utils/getENV"
 import { bidderQualifications } from "Utils/identityVerificationRequirements"
 import { compact } from "lodash"
@@ -87,16 +87,6 @@ export class ArtworkSidebarBidAction extends React.Component<
     window.location.href = href
   }
 
-  @track((props: ArtworkSidebarBidActionProps) => ({
-    action: ActionType.clickedBid,
-    context_owner_type: OwnerType.artwork,
-    context_owner_slug: props.artwork.slug,
-    context_owner_id: props.artwork.internalID,
-    signal_lot_watcher_count:
-      props.artwork.collectorSignals?.auction?.lotWatcherCount ?? undefined,
-    signal_bid_count:
-      props.artwork.collectorSignals?.auction?.bidCount ?? undefined,
-  }))
   redirectToBid(firstIncrement: number) {
     const { slug, sale } = this.props.artwork
     const bid = this.state.selectedMaxBidCents || firstIncrement
@@ -104,6 +94,18 @@ export class ArtworkSidebarBidAction extends React.Component<
     const href = `/auction/${sale?.slug}/bid/${slug}?bid=${bid}`
 
     const redirectTo = href.replace("/auction/", "/auction/")
+
+    this.props.tracking.trackEvent({
+      action: ActionType.clickedBid,
+      context_owner_type: OwnerType.artwork,
+      context_owner_slug: this.props.artwork.slug,
+      context_owner_id: this.props.artwork.internalID,
+      signal_lot_watcher_count:
+        this.props.artwork.collectorSignals?.auction?.lotWatcherCount ??
+        undefined,
+      signal_bid_count:
+        this.props.artwork.collectorSignals?.auction?.bidCount ?? undefined,
+    })
 
     if (!this.props.me) {
       this.props.showAuthDialog({

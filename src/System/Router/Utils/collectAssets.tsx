@@ -1,4 +1,3 @@
-import fs from "fs"
 import path from "path"
 import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import { getENV } from "Utils/getENV"
