@@ -16,7 +16,7 @@ declare module "sharify" {
      * These properties are set by Force and configured through environment variables.
      *
      * TODO: Go through and cleanup all unused properties.
-     * TODO: Grab types from setup_sharify
+     * TODO: Grab types from bootstrapSharify
      */
     export interface GlobalData {
       ADMIN_URL: string

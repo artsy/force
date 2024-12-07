@@ -7,7 +7,6 @@ import {
   ToastsProvider,
   useToasts,
 } from "@artsy/palette"
-import { ComponentStory } from "@storybook/react"
 
 import {
   ContextualMenu,
@@ -49,7 +48,7 @@ const useConfirmation = () => {
   return { confirmIt }
 }
 
-export const Basic: ComponentStory<typeof ContextualMenu> = () => {
+export const Basic = () => {
   const { confirmIt } = useConfirmation()
 
   return (
@@ -73,7 +72,7 @@ export const Basic: ComponentStory<typeof ContextualMenu> = () => {
   )
 }
 
-export const WithDividers: ComponentStory<typeof ContextualMenu> = () => {
+export const WithDividers = () => {
   const { confirmIt } = useConfirmation()
 
   return (
@@ -103,7 +102,7 @@ export const WithDividers: ComponentStory<typeof ContextualMenu> = () => {
   )
 }
 
-export const RichContent: ComponentStory<typeof ContextualMenu> = () => {
+export const RichContent = () => {
   const { confirmIt } = useConfirmation()
 
   return (

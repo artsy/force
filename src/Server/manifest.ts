@@ -6,7 +6,7 @@ const { CDN_URL, NODE_ENV } = process.env
 
 class ManifestManager {
   private loadError = false
-  private manifest: { [key: string]: string } = {}
+  public manifest: any = {}
 
   constructor(private manifestFileName = "manifest.json") {
     const manifestPath = path.resolve(process.cwd(), this.manifestFileName)
@@ -60,7 +60,7 @@ class ManifestManager {
 
 const loadedManifests = new Map<string, ManifestManager>()
 
-export default function loadManifest(manifestFileName = "manifest.json") {
+export function loadAssetManifest(manifestFileName = "manifest.json") {
   if (loadedManifests.has(manifestFileName)) {
     return loadedManifests.get(manifestFileName)
   }

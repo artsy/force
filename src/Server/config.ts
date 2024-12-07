@@ -5,7 +5,9 @@
 // on process.env and sharify.
 //
 
-import { tryParse } from "Utils/tryParse"
+// We need to bootstrap sharify in the build file where absolute paths aren't supported
+// eslint-disable-next-line no-relative-import-paths/no-relative-import-paths
+import { tryParse } from "../Utils/tryParse"
 
 // Warn if this file is included client-side
 if (process.env.NODE_ENV !== "test") {
@@ -34,7 +36,7 @@ export const ARTSY_EDITORIAL_CHANNEL: any = "5759e3efb5989e6f98f77993"
 export const ARTSY_MERCHANDISING_PARTNER_SLUGS: any = null
 export const ALLOWED_REDIRECT_HOSTS: any = "localhost"
 export const CASCADING_AUCTION_HELP_ARTICLE_LINK: any = null
-export const CDN_URL: any = "https://d1s2w0upia4e9w.cloudfront.net"
+export const CDN_URL: any = ""
 export const CLIENT_ID: any = null
 export const CLIENT_SECRET: any = null
 export const CMS_URL: any = "https://cms.artsy.net"

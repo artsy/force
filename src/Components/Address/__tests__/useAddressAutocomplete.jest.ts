@@ -12,7 +12,11 @@ import { useTracking } from "react-tracking"
 jest.mock("react-tracking")
 jest.mock("System/Hooks/useFeatureFlag")
 jest.mock("Utils/getENV")
-jest.mock("lodash/throttle", () => jest.fn(fn => fn))
+
+jest.mock("lodash", () => ({
+  ...jest.requireActual("lodash"),
+  throttle: jest.fn(fn => fn),
+}))
 
 const mockuseTracking = useTracking as jest.Mock
 const trackingSpy = jest.fn()

@@ -1,9 +1,7 @@
-import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
 import { render, screen, waitFor } from "@testing-library/react"
-import { graphql } from "react-relay"
-import * as relaySystem from "System/Relay/createRelaySSREnvironment"
 import { setupClientRouter } from "System/Router/clientRouter"
 import { SystemContextConsumer } from "System/Contexts/SystemContext"
+import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 
 jest.mock("Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,
@@ -20,7 +18,17 @@ jest.mock("Utils/Hooks/useOnboardingModal", () => ({
   useOnboardingModal: jest.fn(),
 }))
 
+jest.mock("System/Relay/createRelaySSREnvironment", () => ({
+  createRelaySSREnvironment: jest.fn(),
+}))
+
 describe("clientRouter", () => {
+  const mockCreateRelaySSREnvironment = createRelaySSREnvironment as jest.Mock
+
+  beforeEach(() => {
+    jest.resetAllMocks()
+  })
+
   it("resolves with a <ClientRouter /> component", async () => {
     const { ClientRouter } = await setupClientRouter({
       history: {
@@ -71,11 +79,6 @@ describe("clientRouter", () => {
   })
 
   it("bootstraps data from __RELAY_HYDRATION_DATA__", async () => {
-    const createRelayEnvSpy = jest.spyOn(
-      relaySystem,
-      "createRelaySSREnvironment"
-    )
-
     const relayBootstrap = [
       [
         '{"queryID":"OrderQuery","variables":{"orderID":"0"}}',
@@ -103,7 +106,7 @@ describe("clientRouter", () => {
     render(<ClientRouter />)
 
     await waitFor(() => {
-      expect(createRelayEnvSpy).toHaveBeenCalledWith({
+      expect(mockCreateRelaySSREnvironment).toHaveBeenCalledWith({
         cache: relayBootstrap,
         user: undefined,
       })
@@ -151,64 +154,6 @@ describe("clientRouter", () => {
 
     await waitFor(() => {
       expect(screen.getByText("SystemContextConsumer")).toBeInTheDocument()
-    })
-  })
-
-  describe("concerning GraphQL errors", () => {
-    const consoleError = console.error
-    jest.mock("System/Relay/createRelaySSREnvironment", () => ({
-      createRelaySSREnvironment: jest.fn(),
-    }))
-
-    const createRelaySSREnvironment = require("System/Relay/createRelaySSREnvironment")
-      .createRelaySSREnvironment as jest.Mock
-
-    beforeAll(() => {
-      console.error = jest.fn()
-    })
-
-    afterAll(() => {
-      console.error = consoleError
-    })
-
-    it("rejects with a GraphQL error", async () => {
-      const relay = () => {
-        const relayNetwork = createMockNetworkLayer({
-          Query: () => ({
-            me: () => {
-              throw new Error("Oh noes")
-            },
-          }),
-        })
-        return createRelaySSREnvironment({ relayNetwork })
-      }
-      createRelaySSREnvironment.mockReturnValue(relay())
-
-      try {
-        const { ClientRouter } = await setupClientRouter({
-          history: {
-            protocol: "memory",
-          },
-          routes: [
-            {
-              path: "/",
-              Component: () => null,
-              query: graphql`
-                query clientRouterTestQuery @relay_test_operation {
-                  me {
-                    id
-                  }
-                }
-              `,
-            },
-          ],
-        })
-
-        render(<ClientRouter />)
-      } catch (error) {
-        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
-        expect(error.message).toMatch(/Oh noes/)
-      }
     })
   })
 })

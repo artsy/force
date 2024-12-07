@@ -21,7 +21,7 @@ function colorize(url: string, status: number): string {
 
 function skipAssets(req: ArtsyRequest, res: ArtsyResponse): boolean {
   return (
-    req.originalUrl.startsWith("/assets") ||
+    req.originalUrl.startsWith("/static") ||
     req.originalUrl.startsWith("/image")
   )
 }
