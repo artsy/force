@@ -37,7 +37,7 @@ import { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import { CreditCardDetails } from "./CreditCardDetails"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { isNull, mergeWith } from "lodash"
-import track from "react-tracking"
+import { TrackingProp, useTracking } from "react-tracking"
 import {
   SystemContextConsumer,
   SystemContextProps,
@@ -53,6 +53,7 @@ export interface CreditCardPickerProps {
   me: CreditCardPicker_me$data
   commitMutation: CommitMutation
   innerRef: React.RefObject<CreditCardPicker>
+  tracking: TrackingProp
 }
 
 interface CreditCardPickerState {
@@ -207,8 +208,7 @@ export class CreditCardPicker extends React.Component<
       })
 
       if (this.props.order.state === "PENDING") {
-        // FIXME: Verify this
-        track({
+        this.props.tracking.trackEvent({
           action_type: DeprecatedSchema.ActionType.Click,
           subject: DeprecatedSchema.Subject.BNMOUseShippingAddress,
           flow: "buy now",
@@ -461,26 +461,31 @@ const CreditCardPickerWithInnerRef: React.FC<React.PropsWithChildren<
   CreditCardPickerProps & {
     innerRef: React.RefObject<CreditCardPicker>
   }
->> = ({ innerRef, ...props }) => (
-  <SystemContextConsumer>
-    {({ isEigen }) => {
-      return (
-        <CreditCardPicker
-          ref={innerRef}
-          isEigen={isEigen}
-          {...(props as any)}
-        />
-      )
-    }}
-  </SystemContextConsumer>
-)
+>> = ({ innerRef, ...props }) => {
+  const tracking = useTracking()
+
+  return (
+    <SystemContextConsumer>
+      {({ isEigen }) => {
+        return (
+          <CreditCardPicker
+            ref={innerRef}
+            isEigen={isEigen}
+            tracking={tracking}
+            {...(props as any)}
+          />
+        )
+      }}
+    </SystemContextConsumer>
+  )
+}
 
 type SellerDetails = Exclude<
   CreditCardPicker_order$data["sellerDetails"],
   { __typename: "%other" }
 >
 
-const wrapInStripeElements = props => {
+const WrapInStripeElements = props => {
   const seller = props.order.sellerDetails as SellerDetails
   const partnerStripeAccountId = seller?.merchantAccount?.externalId
 
@@ -490,7 +495,7 @@ const wrapInStripeElements = props => {
 }
 
 export const CreditCardPickerFragmentContainer = createFragmentContainer(
-  track()(wrapInStripeElements) as typeof CreditCardPickerWithInnerRef,
+  WrapInStripeElements as typeof CreditCardPickerWithInnerRef,
   {
     me: graphql`
       fragment CreditCardPicker_me on Me {

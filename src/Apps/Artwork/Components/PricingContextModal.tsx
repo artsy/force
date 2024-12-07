@@ -19,6 +19,7 @@ export const PricingContextModal: React.FC = () => {
   const openModal = () => {
     tracking.trackEvent({
       action_type: DeprecatedSchema.ActionType.Click,
+      context_module: DeprecatedSchema.ContextModule.PriceContext,
       flow: DeprecatedSchema.Flow.ArtworkPriceContext,
       subject: DeprecatedSchema.Subject.QuestionMarkIcon,
     })

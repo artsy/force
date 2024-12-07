@@ -10,10 +10,6 @@ import { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSidebarBid
 export const bidderQualifications = (
   sale: ArtworkSidebarBidAction_artwork$data["sale"],
   user?: ArtworkSidebarBidAction_me$data,
-  // user?: {
-  //   isIdentityVerified: boolean | null | undefined
-  //   pendingIdentityVerification?: { internalID: string }
-  // },
   registration?: { qualifiedForBidding: boolean }
 ) => {
   const registrationAttempted = Boolean(registration)

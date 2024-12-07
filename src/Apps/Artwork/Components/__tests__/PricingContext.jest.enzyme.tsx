@@ -9,7 +9,8 @@ import { mount } from "enzyme"
 import { graphql } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import Waypoint from "react-waypoint"
-import PricingContext, {
+import {
+  PricingContext,
   PricingContextFragmentContainer,
 } from "Apps/Artwork/Components/PricingContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"

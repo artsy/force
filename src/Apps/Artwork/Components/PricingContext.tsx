@@ -31,7 +31,7 @@ interface PricingContextProps {
   artwork: PricingContext_artwork$data
 }
 
-const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
+export const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
   const tracking = useTracking()
 
   if (!artwork.pricingContext) {
@@ -164,8 +164,6 @@ const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
     </BorderBox>
   )
 }
-
-export default PricingContext
 
 export const PricingContextFragmentContainer = createFragmentContainer(
   PricingContext,

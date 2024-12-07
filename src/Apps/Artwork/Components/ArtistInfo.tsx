@@ -12,7 +12,6 @@ import { ArtistBioFragmentContainer } from "Components/ArtistBio"
 import { ArtistMarketInsightsFragmentContainer } from "Components/ArtistMarketInsights"
 import { SelectedExhibitionFragmentContainer } from "Components/SelectedExhibitions"
 import { ContextModule } from "@artsy/cohesion"
-import { useEffect } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -32,15 +31,10 @@ const ArtistInfo: React.FC<ArtistInfoProps> = ({ artist }) => {
   const { biographyBlurb } = artist
   const showArtistBio = !!biographyBlurb?.text
 
-  useEffect(() => {
-    tracking.trackEvent({
-      context_module: DeprecatedSchema.ContextModule.Biography,
-    })
-  }, [tracking])
-
   const handleReadMoreClick = () => {
     tracking.trackEvent({
       action_type: DeprecatedSchema.ActionType.Click,
+      context_module: DeprecatedSchema.ContextModule.Biography,
       flow: DeprecatedSchema.Flow.ArtworkAboutTheArtist,
       subject: DeprecatedSchema.Subject.ReadMore,
       type: DeprecatedSchema.Type.Button,
