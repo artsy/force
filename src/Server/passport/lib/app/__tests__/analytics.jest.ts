@@ -1,5 +1,3 @@
-import sinon from "sinon"
-
 let analytics = require("../analytics")
 
 jest.mock("sharify", () => ({
@@ -19,7 +17,7 @@ describe("analytics", function () {
       query: {},
     }
     res = { locals: { sd: {} } }
-    next = sinon.stub()
+    next = jest.fn
   })
 
   afterEach(() => {
