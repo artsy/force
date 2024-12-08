@@ -2,9 +2,8 @@ import type { Meta } from "@storybook/react"
 import { QuickMultipleSelectAlertFilter } from "./QuickMultipleSelectAlertFilter"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { Box } from "@artsy/palette"
-import { ComponentStory } from "@storybook/react"
 
-export const Basic: ComponentStory<typeof QuickMultipleSelectAlertFilter> = () => {
+export const Basic = () => {
   return (
     <AlertProvider>
       <QuickMultipleSelectAlertFilter

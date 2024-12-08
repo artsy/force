@@ -1,5 +1,4 @@
 /* eslint-disable no-restricted-imports */
-const sinon = require("sinon")
 const tokenLogin = require("../token_login")
 const { headerLogin, trustTokenLogin } = tokenLogin
 
@@ -26,7 +25,7 @@ describe("token login middleware", function () {
       "status",
       "query",
     ]) {
-      request[method] = sinon.stub().returns(request)
+      request[method] = jest.fn().mockReturnValue(request)
     }
   })
 
@@ -34,68 +33,72 @@ describe("token login middleware", function () {
     beforeEach(function () {
       req = {
         query: {},
-        get: () => {
-          return "access-foo-token"
-        },
-        login: sinon.stub(),
+        get: jest.fn(() => "access-foo-token"),
+        login: jest.fn(),
       }
-      res = { send: sinon.stub() }
-      next = sinon.stub()
+      res = { send: jest.fn() }
+      next = jest.fn()
     })
 
     it("logs in a user if they pass their access token as a header", function () {
       headerLogin(req, res, next)
-      expect(req.login.args[0][0].accessToken).toEqual("access-foo-token")
+      expect(req.login.mock.calls[0][0].accessToken).toEqual("access-foo-token")
     })
 
     it("does not log in a user on sign out", function () {
       req.path = "/users/sign_out"
       headerLogin(req, res, next)
-      expect(next.called).toEqual(true)
+      expect(next).toHaveBeenCalled()
     })
   })
 
   describe("trustTokenLogin", function () {
     it("immediately nexts if there is no trust_token query param", function () {
       const req = { query: {}, url: "/target-path" }
-      const res = { redirect: sinon.stub() }
-      const next = sinon.stub()
+      const res = { redirect: jest.fn() }
+      const next = jest.fn()
       trustTokenLogin(req, res, next)
-      expect(request.post.called).toBeFalsy()
-      expect(next.called).toBeTruthy()
-      expect(res.redirect.called).toBeFalsy()
+      expect(request.post).not.toHaveBeenCalled()
+      expect(next).toHaveBeenCalled()
+      expect(res.redirect).not.toHaveBeenCalled()
     })
 
     it(`logs the user in when there is a trust_token present, redirecting to \
 a url sans trust_token param`, function () {
       const req = {
         connection: { remoteAddress: "99.99.99.99" },
-        login: sinon.stub().yields(null),
+        login: jest.fn((user, cb) => cb(null)),
         query: { trust_token: "xxxx" },
         url: "/target-path?trust_token=xxxx",
       }
-      const res = { redirect: sinon.stub() }
-      const next = sinon.stub()
-      request.end.yields(null, { ok: true, body: { access_token: "yyy" } })
+      const res = { redirect: jest.fn() }
+      const next = jest.fn()
+      request.end.mockImplementation(cb =>
+        cb(null, { ok: true, body: { access_token: "yyy" } })
+      )
       trustTokenLogin(req, res, next)
-      expect(request.post.called).toBeTruthy()
-      expect(request.send.args[0][0].code).toEqual("xxxx")
-      expect(res.redirect.called).toBeTruthy()
-      expect(res.redirect.args[0][0]).toEqual("/target-path")
+      expect(request.post).toHaveBeenCalled()
+      expect(request.send.mock.calls[0][0].code).toEqual("xxxx")
+      expect(res.redirect).toHaveBeenCalled()
+      expect(res.redirect.mock.calls[0][0]).toEqual("/target-path")
     })
 
     it("preserves any other query string params", function () {
       const req = {
         connection: { remoteAddress: "99.99.99.99" },
-        login: sinon.stub().yields(null),
+        login: jest.fn((user, cb) => cb(null)),
         query: { trust_token: "xxxx", foo: "bar", bar: "baz" },
         url: "/target-path?foo=bar&trust_token=xxxx&bar=baz",
       }
-      const res = { redirect: sinon.stub() }
-      const next = sinon.stub()
-      request.end.yields(null, { ok: true, body: { access_token: "yyy" } })
+      const res = { redirect: jest.fn() }
+      const next = jest.fn()
+      request.end.mockImplementation(cb =>
+        cb(null, { ok: true, body: { access_token: "yyy" } })
+      )
       trustTokenLogin(req, res, next)
-      expect(res.redirect.args[0][0]).toEqual("/target-path?foo=bar&bar=baz")
+      expect(res.redirect.mock.calls[0][0]).toEqual(
+        "/target-path?foo=bar&bar=baz"
+      )
     })
 
     it("nexts on failed code response", function () {
@@ -104,12 +107,12 @@ a url sans trust_token param`, function () {
         query: { trust_token: "xxxx" },
         url: "/target-path?trust_token=xxxx",
       }
-      const res = { redirect: sinon.stub() }
-      const next = sinon.stub()
-      request.end.yields("err", null)
+      const res = { redirect: jest.fn() }
+      const next = jest.fn()
+      request.end.mockImplementation(cb => cb("err", null))
       trustTokenLogin(req, res, next)
-      expect(next.called).toBeTruthy()
-      expect(res.redirect.called).toBeFalsy()
+      expect(next).toHaveBeenCalled()
+      expect(res.redirect).not.toHaveBeenCalled()
     })
   })
 })

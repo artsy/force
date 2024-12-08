@@ -1,5 +1,4 @@
 /* eslint-disable no-restricted-imports */
-const sinon = require("sinon")
 const serializers = require("../serializers")
 const { serialize, deserialize } = serializers
 
@@ -16,11 +15,11 @@ describe("#serialize", function () {
 
   beforeEach(function () {
     for (let method of ["get", "end", "set", "post", "send", "status"]) {
-      request[method] = sinon.stub().returns(request)
+      request[method] = jest.fn().mockReturnValue(request)
     }
     resolveSerialize = () => {
-      request.end.args[0][0](null, { body: { id: "craig", foo: "baz" } })
-      request.end.args[1][0](null, { body: [{ provider: "facebook" }] })
+      request.end.mock.calls[0][0](null, { body: { id: "craig", foo: "baz" } })
+      request.end.mock.calls[1][0](null, { body: [{ provider: "facebook" }] })
     }
   })
 
@@ -43,14 +42,14 @@ describe("#serialize", function () {
     resolveSerialize()
   })
 
-  it("works when theres an error from Gravity", function (done) {
+  it("works when there's an error from Gravity", function (done) {
     const user = { id: "craig", foo: "baz", bam: "bop" }
     serialize({}, user, function (err) {
       expect(err.message).toEqual("fail")
       done()
     })
-    request.end.args[0][0](null, { body: { id: "craig", foo: "baz" } })
-    request.end.args[1][0](new Error("fail"), null)
+    request.end.mock.calls[0][0](null, { body: { id: "craig", foo: "baz" } })
+    request.end.mock.calls[1][0](new Error("fail"), null)
   })
 
   it("glues the user onto the request", function (done) {

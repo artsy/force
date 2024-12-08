@@ -65,7 +65,7 @@ jobs:
       - run:
           name: Run Jest Tests
           command: |
-            yarn jest --reporters=default --maxWorkers 2 --reporters=jest-junit --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
+            yarn jest --reporters=default --maxWorkers 4 --reporters=jest-junit --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
           environment:
             JEST_JUNIT_OUTPUT_DIR: reports/junit
             JEST_JUNIT_ADD_FILE_ATTRIBUTE: "true"
@@ -85,7 +85,7 @@ jobs:
       - run:
           name: Run Legacy Jest Tests
           command: |
-            yarn jest-enzyme --maxWorkers 2 --reporters=default --reporters=jest-junit --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
+            yarn jest-enzyme --maxWorkers 4 --reporters=default --reporters=jest-junit --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
           environment:
             JEST_JUNIT_OUTPUT_DIR: reports/junit
             JEST_JUNIT_ADD_FILE_ATTRIBUTE: "true"
