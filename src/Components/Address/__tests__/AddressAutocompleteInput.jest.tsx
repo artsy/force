@@ -248,7 +248,7 @@ describe("AddressAutocompleteInput", () => {
       const line1Input = screen.getByPlaceholderText("Autocomplete input")
       await userEvent.type(line1Input, "401 Broadway")
 
-      const clearButton = screen.getByLabelText("Clear input")
+      const clearButton = await screen.findByLabelText("Clear input")
       await userEvent.click(clearButton)
 
       expect(mockOnClear).toHaveBeenCalledTimes(1)
