@@ -10,6 +10,7 @@ import { ArtworkSidebarPartnerInfo_artwork$data } from "__generated__/ArtworkSid
 import { themeGet } from "@styled-system/theme-get"
 import { ActionType, ClickedContactGallery, OwnerType } from "@artsy/cohesion"
 import { getSignalLabel } from "Utils/getSignalLabel"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface ArtworkSidebarPartnerInfoProps {
   artwork: ArtworkSidebarPartnerInfo_artwork$data
@@ -33,20 +34,14 @@ const StyledPartnerLink = styled(RouterLink)`
   }
 `
 
-const ArtworkSidebarPartnerInfo: React.FC<React.PropsWithChildren<ArtworkSidebarPartnerInfoProps>> = ({
-  artwork,
-}) => {
-  const {
-    internalID,
-    partner,
-    sale,
-    slug,
-    isInquireable,
-    isUnlisted,
-    collectorSignals,
-  } = artwork
+const ArtworkSidebarPartnerInfo: React.FC<React.PropsWithChildren<
+  ArtworkSidebarPartnerInfoProps
+>> = ({ artwork }) => {
+  const { internalID, partner, sale, slug, isInquireable, isUnlisted } = artwork
 
   const { trackEvent } = useTracking()
+
+  const { signals } = useArtworkGridContext()
 
   const { showInquiry, inquiryComponent } = useInquiry({
     artworkID: internalID,
@@ -61,7 +56,7 @@ const ArtworkSidebarPartnerInfo: React.FC<React.PropsWithChildren<ArtworkSidebar
       context_owner_type: OwnerType.artwork,
       context_owner_slug: slug,
       context_owner_id: internalID,
-      signal_label: collectorSignals ? getSignalLabel(collectorSignals) : "",
+      signal_label: getSignalLabel(signals?.[artwork.internalID] ?? []),
     }
 
     trackEvent(event)

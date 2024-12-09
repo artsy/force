@@ -16,16 +16,18 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { getSignalLabel } from "Utils/getSignalLabel"
 
 interface HomeWorksByArtistsYouFollowRailProps {
   homePage: HomeWorksByArtistsYouFollowRail_homePage$data
 }
 
-const HomeWorksByArtistsYouFollowRail: React.FC<React.PropsWithChildren<HomeWorksByArtistsYouFollowRailProps>> = ({
-  homePage,
-}) => {
+const HomeWorksByArtistsYouFollowRail: React.FC<React.PropsWithChildren<
+  HomeWorksByArtistsYouFollowRailProps
+>> = ({ homePage }) => {
   const { trackEvent } = useTracking()
+  const { signals } = useArtworkGridContext()
 
   const results = homePage.artworkModule?.results
   if (!results || results?.length === 0) {
@@ -54,9 +56,9 @@ const HomeWorksByArtistsYouFollowRail: React.FC<React.PropsWithChildren<HomeWork
                 destination_page_owner_slug: artwork.slug,
                 destination_page_owner_type: OwnerType.artwork,
                 type: "thumbnail",
-                signal_label: artwork.collectorSignals
-                  ? getSignalLabel(artwork.collectorSignals)
-                  : "",
+                signal_label: getSignalLabel(
+                  signals?.[artwork.internalID] ?? []
+                ),
                 signal_bid_count:
                   artwork.collectorSignals?.auction?.bidCount ?? undefined,
                 signal_lot_watcher_count:
@@ -106,7 +108,9 @@ export const HomeWorksByArtistsYouFollowRailFragmentContainer = createFragmentCo
   }
 )
 
-export const HomeWorksByArtistsYouFollowRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeWorksByArtistsYouFollowRailQueryRenderer: React.FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

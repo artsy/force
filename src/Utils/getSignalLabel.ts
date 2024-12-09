@@ -1,18 +1,19 @@
-export interface CollectorSignals {
-  primaryLabel?: string | null | undefined
-}
-
-export const getSignalLabel = (collectorSignals: CollectorSignals) => {
-  const { primaryLabel } = collectorSignals
-
-  switch (primaryLabel) {
-    case "PARTNER_OFFER":
-      return "Limited-Time Offer"
-    case "INCREASED_INTEREST":
-      return "Increased Interest"
-    case "CURATORS_PICK":
-      return "Curators’ Pick"
-    default:
-      return ""
+export const getSignalLabel = (signals: string[]) => {
+  if (!signals) {
+    return ""
   }
+
+  if (signals.includes("PARTNER_OFFER")) {
+    return "Limited-Time Offer"
+  }
+
+  if (signals.includes("INCREASED_INTEREST")) {
+    return "Increased Interest"
+  }
+
+  if (signals.includes("CURATORS_PICK")) {
+    return "Curators’ Pick"
+  }
+
+  return ""
 }

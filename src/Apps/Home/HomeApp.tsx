@@ -17,6 +17,7 @@ import { HomeEmergingPicksArtworksRailQueryRenderer } from "./Components/HomeEme
 import { HomeHeroUnitsFragmentContainer } from "./Components/HomeHeroUnits"
 import { HomeNewWorksFromGalleriesYouFollowRailQueryRenderer } from "Apps/Home/Components/HomeNewWorksFromGalleriesYouFollowRail"
 import { HomeAuctionLotsTabBar } from "Apps/Home/Components/HomeAuctionLotsTabBar"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface HomeAppProps {
   featuredEventsOrderedSet: HomeApp_featuredEventsOrderedSet$data | null
@@ -40,33 +41,35 @@ export const HomeApp: React.FC<React.PropsWithChildren<HomeAppProps>> = ({
       <Spacer y={[4, 6]} />
 
       <Join separator={<Spacer y={[6, 12]} />}>
-        {featuredEventsOrderedSet && (
-          <>
-            <HomeFeaturedEventsRailFragmentContainer
-              orderedSet={featuredEventsOrderedSet}
-            />
-          </>
-        )}
+        <ArtworkGridContextProvider>
+          {featuredEventsOrderedSet && (
+            <>
+              <HomeFeaturedEventsRailFragmentContainer
+                orderedSet={featuredEventsOrderedSet}
+              />
+            </>
+          )}
 
-        <MyBidsQueryRenderer />
+          <MyBidsQueryRenderer />
 
-        <HomeWorksForYouTabBar />
+          <HomeWorksForYouTabBar />
 
-        <HomeEmergingPicksArtworksRailQueryRenderer />
+          <HomeEmergingPicksArtworksRailQueryRenderer />
 
-        <HomeFeaturedMarketNewsQueryRenderer />
+          <HomeFeaturedMarketNewsQueryRenderer />
 
-        <HomeAuctionLotsTabBar />
+          <HomeAuctionLotsTabBar />
 
-        <HomeFeaturedShowsRailQueryRenderer />
+          <HomeFeaturedShowsRailQueryRenderer />
 
-        <HomeCurrentFairsQueryRenderer />
+          <HomeCurrentFairsQueryRenderer />
 
-        <HomeFeaturedGalleriesRailQueryRenderer />
+          <HomeFeaturedGalleriesRailQueryRenderer />
 
-        <HomeNewWorksFromGalleriesYouFollowRailQueryRenderer />
+          <HomeNewWorksFromGalleriesYouFollowRailQueryRenderer />
 
-        <HomeTrendingArtistsRailQueryRenderer />
+          <HomeTrendingArtistsRailQueryRenderer />
+        </ArtworkGridContextProvider>
       </Join>
     </>
   )

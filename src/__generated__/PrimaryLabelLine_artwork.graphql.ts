@@ -1,9 +1,13 @@
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @generated SignedSource<<7d6bf1d1ff23991f50e5301ffcdfc530>>
 =======
  * @generated SignedSource<<0f59d923e037d431771e1ff412685606>>
 >>>>>>> 3ca3a1726f (feat: don't render primary label when there is a partner offer)
+=======
+ * @generated SignedSource<<dabfed9907a9a9bdb6923ad10c4887cf>>
+>>>>>>> 601b6174a9 (chore: use context to track signals)
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,6 +29,7 @@ export type PrimaryLabelLine_artwork$data = {
     } | null | undefined;
     readonly primaryLabel: LabelSignalEnum | null | undefined;
   } | null | undefined;
+  readonly internalID: string;
   readonly " $fragmentType": "PrimaryLabelLine_artwork";
 };
 export type PrimaryLabelLine_artwork$key = {
@@ -38,6 +43,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "PrimaryLabelLine_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -97,6 +109,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5db8b43463a55bc26a5350bc16e429b4";
+(node as any).hash = "0371de683dd83b88cbf9c4f6d5bd8faf";
 
 export default node;
