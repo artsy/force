@@ -146,7 +146,6 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           title="Street address"
           value={values.address.addressLine1}
           onChange={handleChange}
-          onBlur={handleBlur}
           onSelect={option => {
             const selectedAddress = option.address
             setValues({

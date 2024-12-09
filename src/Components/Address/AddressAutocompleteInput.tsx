@@ -140,9 +140,11 @@ const reducer = (state: State, action: Action): State => {
 
 /**
  * A wrapper around the Palette AutocompleteInput that handles efficiently
- * fetching address suggestions from an autocomplete provider. Use the
- * `useAddressAutocompleteTracking` hook to get pre-loaded tracking helpers.
+ * fetching address suggestions from an autocomplete provider.
  * See AddressAutocompleteInput.jest.tsx for implementation examples.
+ *
+ * *note: Passing formik's handleBlur to the onBlur prop of this component
+ * causes issues with keyboard navigation.*
  */
 export const AddressAutocompleteInput = ({
   address,

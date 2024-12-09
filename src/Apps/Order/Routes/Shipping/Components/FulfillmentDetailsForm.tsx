@@ -380,7 +380,6 @@ const FulfillmentDetailsFormLayout = (
                   title="Address line 1"
                   value={values.attributes.addressLine1}
                   onChange={withBackToFulfillmentDetails(handleChange)}
-                  onBlur={handleBlur}
                   onSelect={option => {
                     const selectedAddress = option.address
                     setValues({
@@ -404,8 +403,8 @@ const FulfillmentDetailsFormLayout = (
                       ?.addressLine1
                   }
                   data-testid="AddressForm_addressLine1"
-                  onClear={function (): void {
-                    throw new Error("Function not implemented.")
+                  onClear={() => {
+                    setFieldValue("attributes.addressLine1", "")
                   }}
                 />
               </Column>
