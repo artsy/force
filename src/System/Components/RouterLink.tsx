@@ -34,9 +34,9 @@ export type RouterLinkProps = Omit<
     enablePrefetch?: boolean
   }
 
-export const RouterLink: React.FC<React.PropsWithChildren<React.PropsWithChildren<
-  RouterLinkProps
->>> = React.forwardRef(
+export const RouterLink: React.FC<React.PropsWithChildren<
+  React.PropsWithChildren<RouterLinkProps>
+>> = React.forwardRef(
   ({ inline, to, enablePrefetch = true, ...rest }, _ref) => {
     const systemContext = useSystemContext()
     const { router } = useRouter()
@@ -52,7 +52,11 @@ export const RouterLink: React.FC<React.PropsWithChildren<React.PropsWithChildre
     const isPrefetchOnEnterEnabled =
       isPrefetchOnEnterEnabledLoggedIn || isPrefetchOnEnterEnabledLoggedOut
 
-    const { prefetch } = usePrefetchRoute(to as string)
+    // When a prefetch is completed, update the route to include a `is_prefetched=true` query param.
+    const [isPrefetched, setIsPrefetched] = React.useState(false)
+    const { prefetch } = usePrefetchRoute(to as string, () =>
+      setIsPrefetched(true)
+    )
 
     const routes = router?.matcher?.routeConfig ?? []
     const matcher = router?.matcher
@@ -84,11 +88,31 @@ export const RouterLink: React.FC<React.PropsWithChildren<React.PropsWithChildre
       }
     }
 
+    // Inject a query param to indicate that the link was successfully pre-fetched.
+    const addPrefetchQueryParam = (
+      to: string,
+      isPrefetched: boolean
+    ): string => {
+      const [baseUrl, queryString] = to.split("?")
+      const queryParams = new URLSearchParams(queryString || "")
+      if (isPrefetched) {
+        queryParams.set("is_prefetched", "true") // intentional underscore casing
+      }
+      return `${baseUrl}?${queryParams.toString()}`
+    }
+
+    const isArtistRoute = to?.startsWith("/artist/")
+
     if (isRouterAware) {
       return (
         <RouterAwareLink
           inline={inline}
-          to={to ?? ""}
+          // Update the href to include a query param if the link was a pre-fetched artist route.
+          to={
+            (isArtistRoute
+              ? addPrefetchQueryParam(to as string, isPrefetched)
+              : to) ?? ""
+          }
           onMouseOver={handleMouseOver}
           ref={isPrefetchOnEnterEnabled ? (intersectionRef as any) : null}
           {...rest}
@@ -123,7 +147,9 @@ const routerLinkValidator = (prop: string) => {
   return VALID_ROUTER_LINK_PROPS.includes(prop)
 }
 
-export const RouterAwareLink: React.FC<React.PropsWithChildren<LinkPropsSimple & RouterLinkMixinProps>> = styled(Link).withConfig({
+export const RouterAwareLink: React.FC<React.PropsWithChildren<
+  LinkPropsSimple & RouterLinkMixinProps
+>> = styled(Link).withConfig({
   shouldForwardProp: (prop: string) => {
     return isPropValid(prop) || routerLinkValidator(prop)
   },
@@ -137,7 +163,9 @@ export const RouterAwareLink: React.FC<React.PropsWithChildren<LinkPropsSimple &
   ${routerLinkMixin}
 `
 
-export const RouterUnawareLink: React.FC<React.PropsWithChildren<React.AnchorHTMLAttributes<HTMLAnchorElement> & RouterLinkMixinProps>> = styled.a`
+export const RouterUnawareLink: React.FC<React.PropsWithChildren<
+  React.AnchorHTMLAttributes<HTMLAnchorElement> & RouterLinkMixinProps
+>> = styled.a`
   :hover {
     color: ${props => props.inline && themeGet("colors.blue100")};
   }

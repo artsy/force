@@ -9,7 +9,8 @@ import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 import { isDevelopment } from "Utils/device"
 
 export const usePrefetchRoute = (
-  initialPath?: string
+  initialPath?: string,
+  onComplete?: () => void
 ): { prefetch: (path?: string) => Array<Subscription | null> | null } => {
   const { relayEnvironment } = useSystemContext()
 
@@ -60,15 +61,20 @@ export const usePrefetchRoute = (
           return null
         }
 
-        const subscription = fetchQuery(relayEnvironment, query, variables, {
-          fetchPolicy: "store-or-network",
-          networkCacheConfig: {
-            force: false,
-            metadata: {
-              maxAge: serverCacheTTL,
+        const subscription = fetchQuery(
+          relayEnvironment,
+          query,
+          { ...variables, isPrefetching: true }, // Inject a variable to indicate this is a prefetch
+          {
+            fetchPolicy: "store-or-network",
+            networkCacheConfig: {
+              force: false,
+              metadata: {
+                maxAge: serverCacheTTL,
+              },
             },
-          },
-        }).subscribe({
+          }
+        ).subscribe({
           start: () => {
             if (isDevelopment) {
               console.log("[usePrefetchRoute] Starting prefetch:", path)
@@ -81,6 +87,8 @@ export const usePrefetchRoute = (
             if (isDevelopment) {
               console.log("[usePrefetchRoute] Completed:", path)
             }
+
+            onComplete?.()
           },
           error: () => {
             console.error("[usePrefetchRoute] Error prefetching:", path)
