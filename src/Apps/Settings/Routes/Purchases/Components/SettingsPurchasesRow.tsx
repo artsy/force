@@ -16,7 +16,11 @@ import { DateTime } from "luxon"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
-import { SettingsPurchasesRow_order$data } from "__generated__/SettingsPurchasesRow_order.graphql"
+import {
+  SettingsPurchasesRow_order$data,
+  CommerceOrderDisplayStateEnum,
+  CommerceBuyerOfferActionEnum,
+} from "__generated__/SettingsPurchasesRow_order.graphql"
 import { LocaleOptions } from "luxon"
 import { extractNodes } from "Utils/extractNodes"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
@@ -34,11 +38,31 @@ import {
   ClickedChangePaymentMethod,
 } from "@artsy/cohesion"
 
+type BuyerDisplayStateEnum =
+  | CommerceBuyerOfferActionEnum
+  | CommerceOrderDisplayStateEnum
+
+interface SettingsPurchasesRowProps {
+  order: SettingsPurchasesRow_order$data
+}
+
+interface OrderLinkProps {
+  order: SettingsPurchasesRow_order$data
+  trackChangePaymentMethodClick: (orderId: string) => () => void
+}
+
+interface OrderActionButtonProps {
+  displayState: BuyerDisplayStateEnum
+  orderId: string
+  trackChangePaymentMethodClick: (orderId: string) => () => void
+}
+
 const ORDER_LABELS = {
   APPROVED: "Confirmed",
   CANCELED: "Canceled",
   FULFILLED: "Delivered",
   IN_TRANSIT: "In transit",
+  OFFER_RECEIVED: "Counteroffer received",
   PROCESSING: "Processing",
   REFUNDED: "Refunded",
   SUBMITTED: "Pending",
@@ -51,6 +75,7 @@ const ORDER_ICONS = {
   CANCELED: <CloseStrokeIcon fill="red100" />,
   FULFILLED: <CheckmarkFillIcon fill="green100" />,
   IN_TRANSIT: <PendingIcon fill="black60" />,
+  OFFER_RECEIVED: <PendingIcon fill="blue100" />,
   PROCESSING: <PendingIcon fill="black60" />,
   REFUNDED: <CloseStrokeIcon fill="red100" />,
   SUBMITTED: <PendingIcon fill="black60" />,
@@ -63,6 +88,7 @@ const ORDER_COLORS = {
   CANCELED: "red100",
   FULFILLED: "green100",
   IN_TRANSIT: "black60",
+  OFFER_RECEIVED: "blue100",
   PROCESSING: "black60",
   REFUNDED: "red100",
   SUBMITTED: "black60",
@@ -85,20 +111,97 @@ const getPaymentMethodText = (
   }
 }
 
-interface SettingsPurchasesRowProps {
-  order: SettingsPurchasesRow_order$data
+const OrderLink: FC<OrderLinkProps> = ({
+  order,
+  trackChangePaymentMethodClick,
+}) => {
+  const isOrderActive = !["CANCELED", "REFUNDED"].includes(order.displayState)
+  const isOrderPaymentFailed = order.displayState === "PAYMENT_FAILED"
+
+  if (isOrderPaymentFailed) {
+    return (
+      <RouterLink
+        inline
+        to={`/orders/${order.internalID}/payment/new`}
+        onClick={trackChangePaymentMethodClick(order.internalID)}
+      >
+        {order.code}
+      </RouterLink>
+    )
+  }
+
+  if (isOrderActive) {
+    return (
+      <RouterLink inline to={`/orders/${order.internalID}/status`}>
+        {order.code}
+      </RouterLink>
+    )
+  }
+
+  return <>{order.code}</>
 }
 
-const SettingsPurchasesRow: FC<React.PropsWithChildren<SettingsPurchasesRowProps>> = ({ order }) => {
+const OrderActionButton: FC<OrderActionButtonProps> = ({
+  displayState,
+  orderId,
+  trackChangePaymentMethodClick,
+}) => {
+  switch (displayState) {
+    case "PAYMENT_FAILED":
+      return (
+        <Button
+          // @ts-ignore
+          as={RouterLink}
+          to={`/orders/${orderId}/payment/new`}
+          variant="primaryBlack"
+          size="large"
+          width="50%"
+          minWidth={["240px", "200px"]}
+          my={[1, 0]}
+          onClick={trackChangePaymentMethodClick(orderId)}
+        >
+          Update Payment Method
+        </Button>
+      )
+    case "OFFER_RECEIVED":
+      return (
+        <Button
+          // @ts-ignore
+          as={RouterLink}
+          to={`/orders/${orderId}/status`}
+          variant="primaryBlack"
+          size="large"
+          width="50%"
+          minWidth={["240px", "200px"]}
+          my={[1, 0]}
+        >
+          Respond to Counteroffer
+        </Button>
+      )
+    default:
+      return null
+  }
+}
+
+const SettingsPurchasesRow: FC<React.PropsWithChildren<
+  SettingsPurchasesRowProps
+>> = ({ order }) => {
   const [lineItem] = extractNodes(order?.lineItems)
   const { artwork, artworkVersion, fulfillments } = lineItem
-  const { requestedFulfillment } = order
+  const { requestedFulfillment, buyerAction } = order
 
   const orderCreatedAt = DateTime.fromISO(order.createdAt)
   const trackingId = fulfillments?.edges?.[0]?.node?.trackingId
   const image = artworkVersion?.image?.cropped
 
   const isPrivateSale = order.source === "private_sale"
+
+  // Enritch displayState with buyerState.
+  // TODO: figure out how to move it to the server
+  let buyerDisplayState: BuyerDisplayStateEnum = order.displayState
+  if (buyerDisplayState == "SUBMITTED" && buyerAction == "OFFER_RECEIVED") {
+    buyerDisplayState = "OFFER_RECEIVED"
+  }
 
   const { trackEvent } = useTracking()
   const trackChangePaymentMethodClick = (orderID: string) => () => {
@@ -112,35 +215,8 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<SettingsPurchasesRowProps
     trackEvent(payload)
   }
 
-  const getOrderLink = order => {
-    const isOrderActive = !["CANCELED", "REFUNDED"].includes(order.state)
-    const isOrderPaymentFailed = order.displayState === "PAYMENT_FAILED"
-
-    if (isOrderPaymentFailed) {
-      return (
-        <RouterLink
-          inline
-          to={`/orders/${order.internalID}/payment/new`}
-          onClick={trackChangePaymentMethodClick(order.internalID)}
-        >
-          {order.code}
-        </RouterLink>
-      )
-    }
-
-    if (isOrderActive) {
-      return (
-        <RouterLink inline to={`/orders/${order.internalID}/status`}>
-          {order.code}
-        </RouterLink>
-      )
-    }
-
-    return <>{order.code}</>
-  }
-
   return (
-    (<Box border="1px solid" borderColor="black10">
+    <Box border="1px solid" borderColor="black10">
       <Flex
         bg="black5"
         justifyContent="space-between"
@@ -152,14 +228,14 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<SettingsPurchasesRowProps
         </Text>
 
         <Flex alignItems="center">
-          {ORDER_ICONS[order.displayState]}
+          {ORDER_ICONS[buyerDisplayState]}
 
           <Text
             ml={0.5}
             variant="sm-display"
-            color={ORDER_COLORS[order.displayState]}
+            color={ORDER_COLORS[buyerDisplayState]}
           >
-            {ORDER_LABELS[order.displayState]}
+            {ORDER_LABELS[buyerDisplayState]}
           </Text>
 
           {trackingId && (
@@ -240,20 +316,11 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<SettingsPurchasesRowProps
               name={artwork?.partner?.name ?? ""}
             />
 
-            {order.displayState === "PAYMENT_FAILED" && (
-              <Button
-                // @ts-ignore
-                as={RouterLink}
-                to={`/orders/${order.internalID}/payment/new`}
-                variant="primaryBlack"
-                size="large"
-                width="50%"
-                minWidth={["240px", "200px"]}
-                my={[1, 0]}
-              >
-                Update Payment Method
-              </Button>
-            )}
+            <OrderActionButton
+              displayState={buyerDisplayState}
+              orderId={order.internalID}
+              trackChangePaymentMethodClick={trackChangePaymentMethodClick}
+            />
           </Flex>
         </Column>
 
@@ -265,7 +332,10 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<SettingsPurchasesRowProps
           <Text variant="sm-display">Order No.</Text>
 
           <Text variant="sm-display" color="black60">
-            {getOrderLink(order)}
+            <OrderLink
+              order={order}
+              trackChangePaymentMethodClick={trackChangePaymentMethodClick}
+            />
           </Text>
         </Column>
 
@@ -311,8 +381,8 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<SettingsPurchasesRowProps
           )}
         </Text>
       </Flex>
-    </Box>)
-  );
+    </Box>
+  )
 }
 
 export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
@@ -324,7 +394,6 @@ export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
         internalID
         code
         displayState
-        state
         requestedFulfillment {
           __typename
         }
@@ -386,12 +455,17 @@ export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
             }
           }
         }
+        ... on CommerceOfferOrder {
+          buyerAction
+        }
       }
     `,
   }
 )
 
-export const SettingsPurchasesRowPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+export const SettingsPurchasesRowPlaceholder: FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   return (
     <Skeleton>
       <Box border="1px solid" borderColor="black10">
