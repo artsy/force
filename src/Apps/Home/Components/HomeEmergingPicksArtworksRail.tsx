@@ -40,7 +40,7 @@ export const HomeEmergingPicksArtworksRail: React.FC<React.PropsWithChildren<
         title="Curators’ Picks"
         subTitle="The best works by rising talents on Artsy, all available now."
         viewAllLabel="View All Works"
-        viewAllHref="/collection/curators-picks-emerging" // here
+        viewAllHref="/collection/curators-picks-emerging"
         viewAllOnClick={() => {
           const trackingEvent: ClickedArtworkGroup = {
             action: ActionType.clickedArtworkGroup,
