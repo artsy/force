@@ -103,19 +103,6 @@ describe("AuctionApp", () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  it("embeds Salesforce widget", () => {
-    mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
-    const { wrapper } = getWrapper()
-    expect(wrapper.find("SalesforceWrapper").exists()).toBeFalsy()
-  })
-
-  it("does not embed Salesforce widget on mobile", () => {
-    breakpoint = "xs"
-    mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
-    const { wrapper } = getWrapper()
-    expect(wrapper.find("SalesforceWrapper").exists()).toBeFalsy()
-  })
-
   it("shows header if coverImage", () => {
     const { wrapper } = getWrapper()
     expect(wrapper.find("FullBleedHeader").exists()).toBeTruthy()
@@ -354,6 +341,21 @@ describe("AuctionApp", () => {
         Sale: () => ({}),
       })
       expect(wrapper.find("AuctionCurrentAuctionsRail").length).toBe(0)
+    })
+  })
+
+  describe("salesforce widget", () => {
+    it("embeds Salesforce widget", () => {
+      mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+      const { wrapper } = getWrapper()
+      expect(wrapper.find("SalesforceWrapper").exists()).toBeFalsy()
+    })
+
+    it("does not embed Salesforce widget on mobile", () => {
+      breakpoint = "xs"
+      mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+      const { wrapper } = getWrapper()
+      expect(wrapper.find("SalesforceWrapper").exists()).toBeFalsy()
     })
   })
 })

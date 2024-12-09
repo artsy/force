@@ -77,7 +77,7 @@ describe("usePrefetchRoute", () => {
     expect(mockFetchQuery).toHaveBeenCalledWith(
       mockEnvironment,
       "TestQuery",
-      { id: "bar" },
+      { id: "bar", isPrefetching: true },
       expect.anything()
     )
   })
@@ -107,7 +107,7 @@ describe("usePrefetchRoute", () => {
     expect(mockFetchQuery).toHaveBeenCalledWith(
       mockEnvironment,
       "TestQuery",
-      { id: "bar" },
+      { id: "bar", isPrefetching: true },
       expect.anything()
     )
   })
@@ -197,7 +197,7 @@ describe("usePrefetchRoute", () => {
     expect(mockFetchQuery).toHaveBeenCalledWith(
       {},
       "TestQuery",
-      { id: "bar" },
+      { id: "bar", isPrefetching: true },
       {
         fetchPolicy: "store-or-network",
         networkCacheConfig: { force: false, metadata: { maxAge: 1000 } },
