@@ -1,5 +1,5 @@
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { OnboardingOrderedSetFragmentContainer } from "../OnboardingOrderedSet"
+import { OnboardingOrderedSetFragmentContainer } from "Components/Onboarding/Components/OnboardingOrderedSet"
 import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 

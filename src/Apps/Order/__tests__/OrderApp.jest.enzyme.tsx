@@ -684,7 +684,9 @@ describe("OrderApp", () => {
 
   describe("chat bubble", () => {
     it("shows the Salesforce chat integration button", () => {
-      mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+      mockGetENV.mockImplementation(() => ({
+        SALESFORCE_MESSAGE_ENABLED: true,
+      }))
       const props = getProps() as any
 
       const subject = getWrapper({ props }) as any
@@ -692,14 +694,18 @@ describe("OrderApp", () => {
     })
 
     it("does not show the Salesforce chat integration button on mobile", () => {
-      mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+      mockGetENV.mockImplementation(() => ({
+        SALESFORCE_MESSAGE_ENABLED: true,
+      }))
       const props = getProps() as any
       const subject = getWrapper({ props, breakpoint: "xs" }) as any
       expect(subject.find("SalesforceWrapper")).toHaveLength(0)
     })
 
     it("does not show the Salesforce chat integration button if in a modal", () => {
-      mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+      mockGetENV.mockImplementation(() => ({
+        SALESFORCE_MESSAGE_ENABLED: true,
+      }))
       const props = getProps()
       const subject = getWrapper({
         props: { ...props, match: { location: { query: { isModal: true } } } },
