@@ -21,7 +21,9 @@ interface PartnerOfferArtworkProps {
   priceWithDiscount?: string | null
 }
 
-export const PartnerOfferArtwork: FC<React.PropsWithChildren<PartnerOfferArtworkProps>> = ({
+export const PartnerOfferArtwork: FC<React.PropsWithChildren<
+  PartnerOfferArtworkProps
+>> = ({
   artwork: artworkProp,
   targetHref,
   priceWithDiscount,
@@ -136,11 +138,7 @@ export const PartnerOfferArtwork: FC<React.PropsWithChildren<PartnerOfferArtwork
           as={RouterLink}
           to={href}
           onClick={() => {
-            tracking.clickBuyNow(
-              artwork.internalID,
-              artwork.slug,
-              artwork.collectorSignals ?? undefined
-            )
+            tracking.clickBuyNow(artwork.internalID, artwork.slug)
           }}
           data-testid="partner-offer-artwork-button"
           flex={fullyAvailable ? 1 : [1, 0.5]}

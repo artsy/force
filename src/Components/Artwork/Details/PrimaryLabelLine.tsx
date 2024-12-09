@@ -2,7 +2,7 @@ import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext
 import { Text } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
 import { PrimaryLabelLine_artwork$data } from "__generated__/PrimaryLabelLine_artwork.graphql"
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { PrimaryLabelLineQuery } from "__generated__/PrimaryLabelLineQuery.graphql"
 
@@ -11,12 +11,27 @@ interface PrimaryLabelLineProps {
   artwork?: PrimaryLabelLine_artwork$data
 }
 
-export const PrimaryLabelLine: React.FC<React.PropsWithChildren<PrimaryLabelLineProps>> = ({
-  label,
-  artwork,
-}) => {
-  const { hideSignals } = useArtworkGridContext()
+export const PrimaryLabelLine: React.FC<React.PropsWithChildren<
+  PrimaryLabelLineProps
+>> = ({ label, artwork }) => {
+  const { hideSignals, updateSignals } = useArtworkGridContext()
   const partnerOffer = artwork?.collectorSignals?.partnerOffer
+
+  useEffect(() => {
+    if (updateSignals && artwork) {
+      const signals: string[] = []
+
+      if (partnerOffer) {
+        signals.push("PARTNER_OFFER")
+      }
+
+      if (label) {
+        signals.push(label)
+      }
+
+      updateSignals(artwork.internalID, signals)
+    }
+  }, [updateSignals, partnerOffer, label, artwork])
 
   if (!!partnerOffer) {
     return (
@@ -79,6 +94,7 @@ export const PrimaryLabelLineFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment PrimaryLabelLine_artwork on Artwork {
+        internalID
         collectorSignals {
           primaryLabel
           partnerOffer {

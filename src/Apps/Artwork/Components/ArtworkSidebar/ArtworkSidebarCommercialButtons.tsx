@@ -47,6 +47,7 @@ import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { ResponsiveValue } from "styled-system"
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 import { getSignalLabel } from "Utils/getSignalLabel"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface ArtworkSidebarCommercialButtonsProps {
   artwork: ArtworkSidebarCommercialButtons_artwork$key
@@ -57,11 +58,9 @@ interface ArtworkSidebarCommercialButtonsProps {
 
 const THE_PAST = new Date(0).toISOString()
 
-export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<ArtworkSidebarCommercialButtonsProps>> = ({
-  showPrice = true,
-  showButtonActions = true,
-  ...props
-}) => {
+export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<
+  ArtworkSidebarCommercialButtonsProps
+>> = ({ showPrice = true, showButtonActions = true, ...props }) => {
   const { theme } = useTheme()
 
   const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
@@ -91,6 +90,8 @@ export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<A
 
   const createOrder = useCreateOrderMutation()
   const createOfferOrder = useCreateOfferOrderMutation()
+
+  const { signals } = useArtworkGridContext()
 
   const [
     isCommitingCreateOrderMutation,
@@ -124,9 +125,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<A
       context_owner_type: OwnerType.artwork,
       context_owner_slug: artwork.slug,
       context_owner_id: artwork.internalID,
-      signal_label: artwork.collectorSignals
-        ? getSignalLabel(artwork.collectorSignals)
-        : "",
+      signal_label: getSignalLabel(signals?.[artwork.internalID] ?? []),
     }
     trackEvent(event)
 
@@ -140,9 +139,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<A
       context_owner_id: artwork.internalID,
       context_owner_slug: artwork.slug,
       flow: "Partner offer",
-      signal_label: artwork.collectorSignals
-        ? getSignalLabel(artwork.collectorSignals)
-        : "",
+      signal_label: getSignalLabel(signals?.[artwork.internalID] ?? []),
     }
 
     trackEvent(event)
@@ -198,9 +195,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<A
       context_owner_id: artwork.internalID,
       context_owner_slug: artwork.slug,
       flow: "Buy now",
-      signal_label: artwork.collectorSignals
-        ? getSignalLabel(artwork.collectorSignals)
-        : "",
+      signal_label: getSignalLabel(signals?.[artwork.internalID] ?? []),
     }
 
     trackEvent(event)
@@ -506,7 +501,9 @@ interface SaleMessageProps {
   saleMessage: string | null | undefined
 }
 
-const SaleMessage: React.FC<React.PropsWithChildren<SaleMessageProps>> = ({ saleMessage }) => {
+const SaleMessage: React.FC<React.PropsWithChildren<SaleMessageProps>> = ({
+  saleMessage,
+}) => {
   if (!saleMessage) {
     return null
   }
@@ -572,10 +569,10 @@ const OfferDisplay: React.FC<React.PropsWithChildren<OfferDisplayProps>> = ({
   )
 }
 
-const ErrorToast: React.FC<React.PropsWithChildren<{ onClose(): void; show: boolean }>> = ({
-  show,
-  onClose,
-}) => {
+const ErrorToast: React.FC<React.PropsWithChildren<{
+  onClose(): void
+  show: boolean
+}>> = ({ show, onClose }) => {
   const { sendToast } = useToasts()
 
   useEffect(() => {

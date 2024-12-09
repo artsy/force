@@ -16,17 +16,21 @@ import { extractNodes } from "Utils/extractNodes"
 import { HomeEmergingPicksArtworksRail_viewer$data } from "__generated__/HomeEmergingPicksArtworksRail_viewer.graphql"
 import { HomeEmergingPicksArtworksRailQuery } from "__generated__/HomeEmergingPicksArtworksRailQuery.graphql"
 import { useTracking } from "react-tracking"
+import {
+  ArtworkGridContextProvider,
+  useArtworkGridContext,
+} from "Components/ArtworkGrid/ArtworkGridContext"
 import { getSignalLabel } from "Utils/getSignalLabel"
-import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface HomeEmergingPicksArtworksRailProps {
   viewer: HomeEmergingPicksArtworksRail_viewer$data
 }
 
-export const HomeEmergingPicksArtworksRail: React.FC<React.PropsWithChildren<HomeEmergingPicksArtworksRailProps>> = ({
-  viewer,
-}) => {
+export const HomeEmergingPicksArtworksRail: React.FC<React.PropsWithChildren<
+  HomeEmergingPicksArtworksRailProps
+>> = ({ viewer }) => {
   const { trackEvent } = useTracking()
+  const { signals } = useArtworkGridContext()
 
   const artworks = extractNodes(viewer.artworksConnection)
 
@@ -71,9 +75,9 @@ export const HomeEmergingPicksArtworksRail: React.FC<React.PropsWithChildren<Hom
                   destination_page_owner_id: artwork.internalID,
                   destination_page_owner_slug: artwork.slug,
                   type: "thumbnail",
-                  signal_label: artwork.collectorSignals
-                    ? getSignalLabel(artwork.collectorSignals)
-                    : "",
+                  signal_label: getSignalLabel(
+                    signals?.[artwork.internalID] ?? []
+                  ),
                   signal_bid_count:
                     artwork.collectorSignals?.auction?.bidCount ?? undefined,
                   signal_lot_watcher_count:
@@ -121,7 +125,9 @@ export const HomeEmergingPicksArtworksRailFragmentContainer = createFragmentCont
   }
 )
 
-export const HomeEmergingPicksArtworksRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeEmergingPicksArtworksRailQueryRenderer: React.FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   return (
     <SystemQueryRenderer<HomeEmergingPicksArtworksRailQuery>
       placeholder={PLACEHOLDER}
