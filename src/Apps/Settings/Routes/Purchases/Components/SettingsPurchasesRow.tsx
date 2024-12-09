@@ -38,6 +38,25 @@ import {
   ClickedChangePaymentMethod,
 } from "@artsy/cohesion"
 
+type BuyerDisplayStateEnum =
+  | CommerceBuyerOfferActionEnum
+  | CommerceOrderDisplayStateEnum
+
+interface SettingsPurchasesRowProps {
+  order: SettingsPurchasesRow_order$data
+}
+
+interface OrderLinkProps {
+  order: SettingsPurchasesRow_order$data
+  trackChangePaymentMethodClick: (orderId: string) => () => void
+}
+
+interface OrderActionButtonProps {
+  displayState: BuyerDisplayStateEnum
+  orderId: string
+  trackChangePaymentMethodClick: (orderId: string) => () => void
+}
+
 const ORDER_LABELS = {
   APPROVED: "Confirmed",
   CANCELED: "Canceled",
@@ -77,11 +96,7 @@ const ORDER_COLORS = {
   PAYMENT_FAILED: "red100",
 } as const
 
-type CommerceBuyerOrderOfferStateEnum =
-  | CommerceBuyerOfferActionEnum
-  | CommerceOrderDisplayStateEnum
-
-const getPaymentMethodText = (
+const PaymentMethodText = (
   paymentMethodDetails: SettingsPurchasesRow_order$data["paymentMethodDetails"]
 ) => {
   switch (paymentMethodDetails?.__typename) {
@@ -96,10 +111,41 @@ const getPaymentMethodText = (
   }
 }
 
-const getOrderActionButton = (
-  displayState: CommerceBuyerOrderOfferStateEnum,
-  orderId: string
-) => {
+const OrderLink: FC<OrderLinkProps> = ({
+  order,
+  trackChangePaymentMethodClick,
+}) => {
+  const isOrderActive = !["CANCELED", "REFUNDED"].includes(order.state)
+  const isOrderPaymentFailed = order.displayState === "PAYMENT_FAILED"
+
+  if (isOrderPaymentFailed) {
+    return (
+      <RouterLink
+        inline
+        to={`/orders/${order.internalID}/payment/new`}
+        onClick={trackChangePaymentMethodClick(order.internalID)}
+      >
+        {order.code}
+      </RouterLink>
+    )
+  }
+
+  if (isOrderActive) {
+    return (
+      <RouterLink inline to={`/orders/${order.internalID}/status`}>
+        {order.code}
+      </RouterLink>
+    )
+  }
+
+  return <>{order.code}</>
+}
+
+const OrderActionButton: FC<OrderActionButtonProps> = ({
+  displayState,
+  orderId,
+  trackChangePaymentMethodClick,
+}) => {
   switch (displayState) {
     case "PAYMENT_FAILED":
       return (
@@ -112,6 +158,7 @@ const getOrderActionButton = (
           width="50%"
           minWidth={["240px", "200px"]}
           my={[1, 0]}
+          onClick={trackChangePaymentMethodClick(orderId)}
         >
           Update Payment Method
         </Button>
@@ -136,27 +183,25 @@ const getOrderActionButton = (
   }
 }
 
-interface SettingsPurchasesRowProps {
-  order: SettingsPurchasesRow_order$data
-}
-
 const SettingsPurchasesRow: FC<React.PropsWithChildren<
   SettingsPurchasesRowProps
 >> = ({ order }) => {
   const [lineItem] = extractNodes(order?.lineItems)
   const { artwork, artworkVersion, fulfillments } = lineItem
   const { requestedFulfillment, buyerAction } = order
-  let displayState: CommerceBuyerOrderOfferStateEnum = order.displayState
-
-  if (displayState == "SUBMITTED" && buyerAction == "OFFER_RECEIVED") {
-    displayState = "OFFER_RECEIVED"
-  }
 
   const orderCreatedAt = DateTime.fromISO(order.createdAt)
   const trackingId = fulfillments?.edges?.[0]?.node?.trackingId
   const image = artworkVersion?.image?.cropped
 
   const isPrivateSale = order.source === "private_sale"
+
+  // Enritch displayState with buyerState.
+  // TODO: figure out how to move it to the server
+  let buyerDisplayState: BuyerDisplayStateEnum = order.displayState
+  if (buyerDisplayState == "SUBMITTED" && buyerAction == "OFFER_RECEIVED") {
+    buyerDisplayState = "OFFER_RECEIVED"
+  }
 
   const { trackEvent } = useTracking()
   const trackChangePaymentMethodClick = (orderID: string) => () => {
@@ -168,33 +213,6 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<
     }
 
     trackEvent(payload)
-  }
-
-  const getOrderLink = order => {
-    const isOrderActive = !["CANCELED", "REFUNDED"].includes(order.state)
-    const isOrderPaymentFailed = displayState === "PAYMENT_FAILED"
-
-    if (isOrderPaymentFailed) {
-      return (
-        <RouterLink
-          inline
-          to={`/orders/${order.internalID}/payment/new`}
-          onClick={trackChangePaymentMethodClick(order.internalID)}
-        >
-          {order.code}
-        </RouterLink>
-      )
-    }
-
-    if (isOrderActive) {
-      return (
-        <RouterLink inline to={`/orders/${order.internalID}/status`}>
-          {order.code}
-        </RouterLink>
-      )
-    }
-
-    return <>{order.code}</>
   }
 
   return (
@@ -210,14 +228,14 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<
         </Text>
 
         <Flex alignItems="center">
-          {ORDER_ICONS[displayState]}
+          {ORDER_ICONS[buyerDisplayState]}
 
           <Text
             ml={0.5}
             variant="sm-display"
-            color={ORDER_COLORS[displayState]}
+            color={ORDER_COLORS[buyerDisplayState]}
           >
-            {ORDER_LABELS[displayState]}
+            {ORDER_LABELS[buyerDisplayState]}
           </Text>
 
           {trackingId && (
@@ -298,7 +316,11 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<
               name={artwork?.partner?.name ?? ""}
             />
 
-            {getOrderActionButton(displayState, order.internalID)}
+            <OrderActionButton
+              displayState={buyerDisplayState}
+              orderId={order.internalID}
+              trackChangePaymentMethodClick={trackChangePaymentMethodClick}
+            />
           </Flex>
         </Column>
 
@@ -310,7 +332,10 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<
           <Text variant="sm-display">Order No.</Text>
 
           <Text variant="sm-display" color="black60">
-            {getOrderLink(order)}
+            <OrderLink
+              order={order}
+              trackChangePaymentMethodClick={trackChangePaymentMethodClick}
+            />
           </Text>
         </Column>
 
@@ -326,7 +351,7 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<
           <Text variant="sm-display">Payment Method</Text>
 
           <Text variant="sm-display" color="black60">
-            {getPaymentMethodText(order.paymentMethodDetails)}
+            {PaymentMethodText(order.paymentMethodDetails)}
           </Text>
         </Column>
 

@@ -27,14 +27,14 @@ describe("SettingsPurchases", () => {
     expect(screen.getByText("Need Help?")).toBeInTheDocument()
   })
 
-  it("renders correct help email address for non-PS orders", () => {
+  it("renders correct help email address for non private sale orders", () => {
     renderWithRelay()
 
     expect(screen.getByText("Contact Us.")).toBeInTheDocument()
   })
 
   describe("with private sale orders", () => {
-    it("renders correct help email address for PS orders", () => {
+    it("renders correct help email address for private sale orders", () => {
       renderWithRelay({
         Me: () => ({
           orders: {
