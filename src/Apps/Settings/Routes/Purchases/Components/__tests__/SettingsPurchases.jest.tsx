@@ -63,7 +63,6 @@ describe("SettingsPurchases", () => {
               {
                 node: {
                   code: "123",
-                  state: "SUBMITTED",
                   displayState: "PAYMENT_FAILED",
                 },
               },
@@ -84,7 +83,6 @@ describe("SettingsPurchases", () => {
                 node: {
                   code: "123",
                   internalID: "123",
-                  state: "SUBMITTED",
                   displayState: "PAYMENT_FAILED",
                 },
               },
@@ -107,7 +105,6 @@ describe("SettingsPurchases", () => {
                 node: {
                   code: "123",
                   internalID: "123",
-                  state: "SUBMITTED",
                   displayState: "PAYMENT_FAILED",
                 },
               },
@@ -133,7 +130,6 @@ describe("SettingsPurchases", () => {
               {
                 node: {
                   code: "123",
-                  state: "SUBMITTED",
                   displayState: "SUBMITTED",
                   buyerAction: "OFFER_RECEIVED",
                 },
@@ -155,7 +151,6 @@ describe("SettingsPurchases", () => {
                 node: {
                   code: "123",
                   internalID: "123",
-                  state: "SUBMITTED",
                   displayState: "SUBMITTED",
                   buyerAction: "OFFER_RECEIVED",
                 },
@@ -179,7 +174,6 @@ describe("SettingsPurchases", () => {
                 node: {
                   code: "123",
                   internalID: "123",
-                  state: "SUBMITTED",
                   displayState: "SUBMITTED",
                   buyerAction: "OFFER_RECEIVED",
                 },

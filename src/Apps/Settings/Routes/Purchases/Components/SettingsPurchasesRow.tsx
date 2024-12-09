@@ -96,7 +96,7 @@ const ORDER_COLORS = {
   PAYMENT_FAILED: "red100",
 } as const
 
-const PaymentMethodText = (
+const getPaymentMethodText = (
   paymentMethodDetails: SettingsPurchasesRow_order$data["paymentMethodDetails"]
 ) => {
   switch (paymentMethodDetails?.__typename) {
@@ -115,7 +115,7 @@ const OrderLink: FC<OrderLinkProps> = ({
   order,
   trackChangePaymentMethodClick,
 }) => {
-  const isOrderActive = !["CANCELED", "REFUNDED"].includes(order.state)
+  const isOrderActive = !["CANCELED", "REFUNDED"].includes(order.displayState)
   const isOrderPaymentFailed = order.displayState === "PAYMENT_FAILED"
 
   if (isOrderPaymentFailed) {
@@ -351,7 +351,7 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<
           <Text variant="sm-display">Payment Method</Text>
 
           <Text variant="sm-display" color="black60">
-            {PaymentMethodText(order.paymentMethodDetails)}
+            {getPaymentMethodText(order.paymentMethodDetails)}
           </Text>
         </Column>
 
@@ -394,7 +394,6 @@ export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
         internalID
         code
         displayState
-        state
         requestedFulfillment {
           __typename
         }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3b775811d9e35c601dc32bf1fcb8a2fe>>
+ * @generated SignedSource<<1bf5aacb83cfad30de6685df2cdca129>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,6 @@ import { ReaderFragment } from 'relay-runtime';
 export type CommerceBuyerOfferActionEnum = "OFFER_ACCEPTED" | "OFFER_ACCEPTED_CONFIRM_NEEDED" | "OFFER_RECEIVED" | "OFFER_RECEIVED_CONFIRM_NEEDED" | "PAYMENT_FAILED" | "PROVISIONAL_OFFER_ACCEPTED" | "%future added value";
 export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PAYMENT_FAILED" | "PENDING" | "PROCESSING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
-export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type SettingsPurchasesRow_order$data = {
   readonly buyerAction?: CommerceBuyerOfferActionEnum | null | undefined;
@@ -83,7 +82,6 @@ export type SettingsPurchasesRow_order$data = {
     readonly __typename: string;
   } | null | undefined;
   readonly source: CommerceOrderSourceEnum;
-  readonly state: CommerceOrderStateEnum;
   readonly " $fragmentType": "SettingsPurchasesRow_order";
 };
 export type SettingsPurchasesRow_order$key = {
@@ -176,13 +174,6 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "displayState",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "state",
       "storageKey": null
     },
     {
@@ -496,6 +487,6 @@ return {
 };
 })();
 
-(node as any).hash = "0d315366543908efb10c9d1bd70233a5";
+(node as any).hash = "84bb7c5313a484e4fd25abe300450ac2";
 
 export default node;
