@@ -24,7 +24,7 @@
     "danger:ci": "yarn danger ci --verbose",
     "dead-code": "./scripts/check-dead-code.sh",
     "dead-code:production": "./scripts/check-dead-code.sh production",
-    "delete-review-app": "kubectl --context staging delete namespace",
+    "delete-review-app": "~/.local/bin/kubectl --context staging delete namespace",
     "detect-secrets:hook": "scripts/detect-secrets.sh hook",
     "detect-secrets:rescan": "scripts/detect-secrets.sh rescan",
     "detect-secrets:regen": "scripts/detect-secrets.sh regen",
