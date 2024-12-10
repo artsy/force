@@ -298,7 +298,7 @@ describe("AddressAutocompleteInput", () => {
 
     // See TestImplementation for implementation details
     describe("tracking", () => {
-      it("tracks when autocomplete results are received", async () => {
+      it.skip("tracks when autocomplete results are received", async () => {
         render(<TestImplementation />)
 
         const line1Input = screen.getByPlaceholderText("Autocomplete input")

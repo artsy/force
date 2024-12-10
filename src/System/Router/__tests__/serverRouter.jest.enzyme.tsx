@@ -44,6 +44,20 @@ jest.mock("Server/config", () => {
   }
 })
 
+jest.mock("Server/manifest", () => ({
+  loadAssetManifest: jest.fn().mockReturnValue({
+    manifest: {
+      entries: {
+        index: {
+          initial: {
+            js: [],
+          },
+        },
+      },
+    },
+  }),
+}))
+
 const defaultComponent = () => <div>hi!</div>
 
 describe("serverRouter", () => {
@@ -145,7 +159,7 @@ describe("serverRouter", () => {
 
     it("prefixes CDN_URL to script tags if available", async () => {
       process.env.CDN_URL = CDN_URL
-      const postScripts = `<script src="${CDN_URL}/assets/foo.js"></script> <script src="${CDN_URL}/assets/bar.js"></script>`
+      const postScripts = `<script src="${CDN_URL}/foo.js"></script> <script src="${CDN_URL}/bar.js"></script>`
       const { extractScriptTags } = await getWrapper()
       expect(extractScriptTags?.()).toContain(postScripts)
     })

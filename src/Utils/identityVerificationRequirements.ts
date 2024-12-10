@@ -1,3 +1,6 @@
+import { ArtworkSidebarBidAction_artwork$data } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
+import { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSidebarBidAction_me.graphql"
+
 /**
  * Process a list of bidder permissions based on a user-bidder-sale combination.
  * @param sale
@@ -5,11 +8,8 @@
  * @param registration
  */
 export const bidderQualifications = (
-  sale: { requireIdentityVerification: boolean },
-  user?: {
-    isIdentityVerified: boolean
-    pendingIdentityVerification?: { internalID: string }
-  },
+  sale: ArtworkSidebarBidAction_artwork$data["sale"],
+  user?: ArtworkSidebarBidAction_me$data,
   registration?: { qualifiedForBidding: boolean }
 ) => {
   const registrationAttempted = Boolean(registration)
@@ -18,7 +18,7 @@ export const bidderQualifications = (
     registrationAttempted && registration.qualifiedForBidding
 
   const userLacksIdentityVerification =
-    sale.requireIdentityVerification && !user?.isIdentityVerified
+    sale?.requireIdentityVerification && !user?.isIdentityVerified
   const pendingIdentityVerification = user?.pendingIdentityVerification
 
   const shouldPromptIdVerification =

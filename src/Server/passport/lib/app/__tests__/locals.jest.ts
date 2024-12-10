@@ -1,4 +1,3 @@
-const sinon = require("sinon")
 const locals = require("../locals")
 
 describe("locals", function () {
@@ -9,7 +8,7 @@ describe("locals", function () {
   beforeEach(function () {
     req = { query: {} }
     res = { locals: { sd: {} } }
-    next = sinon.stub()
+    next = jest.fn()
   })
 
   it("escapes the error message html", function () {
@@ -17,6 +16,4 @@ describe("locals", function () {
     locals(req, res, next)
     expect(res.locals.error).toEqual("&lt;img src=alert(hello) /&gt;")
   })
-
-  // TODO: Reimplement removed tests
 })

@@ -22,7 +22,6 @@
  */
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 import type { NextFunction } from "express"
-import { argv } from "yargs"
 import { IpDeniedError } from "express-ipfilter"
 import { NODE_ENV, VERBOSE_LOGGING } from "Server/config"
 import { ErrorPage } from "Components/ErrorPage"
@@ -42,8 +41,7 @@ export const errorHandlerMiddleware = async (
   res: ArtsyResponse,
   _next: NextFunction
 ) => {
-  const enableLogging =
-    NODE_ENV === "development" || argv.verbose || VERBOSE_LOGGING
+  const enableLogging = NODE_ENV === "development" || VERBOSE_LOGGING
 
   const displayStackTrace = NODE_ENV === "development"
 

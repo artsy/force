@@ -190,6 +190,7 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
     //       should probably become a custom TSLint rule, as there’s no good way
     //       to test this in a generic way, plus with the rule we get fixes.
     if (
+      // @ts-expect-error - webpack magic var
       typeof __webpack_require__ === "undefined" &&
       // eslint-disable-next-line jest/no-mocks-import
       QueryRenderer === require("../../__mocks__/react-relay").QueryRenderer

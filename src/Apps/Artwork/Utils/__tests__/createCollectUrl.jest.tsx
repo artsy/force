@@ -1,4 +1,4 @@
-import { createCollectUrl } from "../createCollectUrl"
+import { createCollectUrl } from "Apps/Artwork/Utils/createCollectUrl"
 
 describe("createCollectUrl", () => {
   it("formats the collect page url correctly (large)", async () => {
@@ -38,7 +38,7 @@ describe("createCollectUrl", () => {
 
   it("formats the collect page url correctly when not filtering by dimension", async () => {
     const result = createCollectUrl({
-      dimension: null,
+      dimension: null as any,
       category: "Drawing, Collage or other Work on Paper",
       artistId: "banksy",
     })

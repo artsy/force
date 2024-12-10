@@ -1,4 +1,4 @@
-import { screen, fireEvent } from "@testing-library/react"
+import { screen, fireEvent, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import {
   createArtworkFilterTestRenderer,
@@ -14,33 +14,45 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 const render = createArtworkFilterTestRenderer()
 
 describe("KeywordFilter", () => {
-  it("updates context on filter change", () => {
+  it("updates context on filter change", async () => {
     render(<KeywordFilter />)
-    expect(screen.getByText("Keyword Search")).toBeInTheDocument()
+    expect(screen.getByText(/Keyword Search/)).toBeInTheDocument()
 
     userEvent.type(screen.getByTestId("keywordSearchInput"), "Chopper")
-    expect(currentArtworkFilterContext().filters?.keyword).toEqual("Chopper")
+
+    await waitFor(() => {
+      expect(currentArtworkFilterContext().filters?.keyword).toEqual("Chopper")
+    })
 
     fireEvent.change(screen.getByTestId("keywordSearchInput"), {
       target: { value: "" },
     })
-    expect(currentArtworkFilterContext().filters?.keyword).toEqual(undefined)
+
+    await waitFor(() => {
+      expect(currentArtworkFilterContext().filters?.keyword).toEqual(undefined)
+    })
   })
 
-  it("clears local input state after Clear All", () => {
+  it("clears local input state after Clear All", async () => {
     render(<KeywordFilter />)
 
     userEvent.type(screen.getByTestId("keywordSearchInput"), "Chopper")
-    expect(currentArtworkFilterContext().filters?.keyword).toEqual("Chopper")
+
+    await waitFor(() => {
+      expect(currentArtworkFilterContext().filters?.keyword).toEqual("Chopper")
+    })
+
     expect(
       (screen.getByTestId("keywordSearchInput") as HTMLInputElement).value
     ).toEqual("Chopper")
 
     userEvent.click(screen.getByText("Clear all"))
 
-    expect(currentArtworkFilterContext().filters?.keyword).toEqual(undefined)
-    expect(
-      (screen.getByTestId("keywordSearchInput") as HTMLInputElement).value
-    ).toEqual("")
+    await waitFor(() => {
+      expect(currentArtworkFilterContext().filters?.keyword).toEqual(undefined)
+      expect(
+        (screen.getByTestId("keywordSearchInput") as HTMLInputElement).value
+      ).toEqual("")
+    })
   })
 })

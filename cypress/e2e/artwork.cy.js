@@ -1,9 +1,4 @@
 describe("/artwork/:id", () => {
-  // FIXME: test is being flakey and retries don't work in before hooks
-  // before(() => {
-  //   cy.visit("/artwork/pablo-picasso-guernica")
-  // })
-
   it("renders metadata", () => {
     cy.visit("/artwork/pablo-picasso-guernica")
 

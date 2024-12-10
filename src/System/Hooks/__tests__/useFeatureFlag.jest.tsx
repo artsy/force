@@ -40,7 +40,28 @@ jest.mock("System/Hooks/useRouter", () => ({
   }),
 }))
 
-jest.mock("Utils/getENV", () => ({ getENV: () => FEATURE_FLAGS }))
+jest.mock("Utils/getENV", () => ({
+  getENV: () => ({
+    "feature-a": {
+      flagEnabled: true,
+      variant: {
+        enabled: true,
+        name: "variant-a",
+        payload: {
+          type: "string",
+          value: "my payload",
+        },
+      },
+    },
+    "feature-b": {
+      flagEnabled: false,
+      variant: {
+        enabled: false,
+        name: "disabled",
+      },
+    },
+  }),
+}))
 
 beforeAll(() => {
   ;(useSystemContext as jest.Mock).mockImplementation(() => {
