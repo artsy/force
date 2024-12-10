@@ -2,7 +2,7 @@ import { CDN_URL } from "Server/config"
 import path from "path"
 import fs from "fs"
 
-const HINTS_PATH = path.join(process.cwd(), "public/assets", "early-hints.json")
+const HINTS_PATH = path.join(process.cwd(), "dist", "early-hints.json")
 
 export const getWebpackEarlyHints = (): {
   linkHeaders: string[]

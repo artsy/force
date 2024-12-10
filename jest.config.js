@@ -1,4 +1,4 @@
-const { webpackEnv } = require("./webpack/webpackEnv")
+const path = require("path")
 
 module.exports = {
   cacheDirectory: ".cache/jest",
@@ -20,7 +20,45 @@ module.exports = {
   },
   transform: {
     "\\.(gql|graphql)$": "@graphql-tools/jest-transform",
-    "(ts|tsx|js|jsx)$": "babel-jest",
+    "(ts|tsx|js|jsx)$": [
+      "@swc/jest",
+      {
+        jsc: {
+          parser: {
+            syntax: "typescript",
+            tsx: true,
+            decorators: true,
+            dynamicImport: true,
+          },
+          transform: {
+            react: {
+              runtime: "automatic",
+            },
+          },
+          experimental: {
+            plugins: [
+              ["@swc/plugin-loadable-components", {}],
+              [
+                "@swc/plugin-styled-components",
+                {
+                  ssr: true,
+                  displayName: true,
+                },
+              ],
+              [
+                "@swc/plugin-relay",
+                {
+                  // Must be fully-resolved absolute path
+                  rootDir: path.resolve(process.cwd(), "src"),
+                  artifactDirectory: "__generated__",
+                  language: "typescript",
+                },
+              ],
+            ],
+          },
+        },
+      },
+    ],
   },
   watchPlugins: [
     "jest-watch-typeahead/filename",

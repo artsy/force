@@ -32,7 +32,10 @@ interface AutocompleteTrackingValues {
 }
 
 export interface AddressAutocompleteInputProps
-  extends Partial<AutocompleteInputProps<AddressAutocompleteSuggestion>> {
+  extends Omit<
+    Partial<AutocompleteInputProps<AddressAutocompleteSuggestion>>,
+    "onBlur"
+  > {
   /* The address [including at least a country] to use for autocomplete suggestions */
   address: Partial<Address> & { country: Address["country"] }
 
@@ -140,9 +143,11 @@ const reducer = (state: State, action: Action): State => {
 
 /**
  * A wrapper around the Palette AutocompleteInput that handles efficiently
- * fetching address suggestions from an autocomplete provider. Use the
- * `useAddressAutocompleteTracking` hook to get pre-loaded tracking helpers.
+ * fetching address suggestions from an autocomplete provider.
  * See AddressAutocompleteInput.jest.tsx for implementation examples.
+ *
+ * *note: The onBlur prop is disabled because it causes issues with keyboard
+ * navigation. see https://github.com/artsy/force/pull/14963 for more info.*
  */
 export const AddressAutocompleteInput = ({
   address,

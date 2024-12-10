@@ -29,7 +29,6 @@ yalc.lock
 /node_modules
 /public
 /src/public/assets
-/src/public/assets
 /storybook-static
 node_modules
 

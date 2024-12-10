@@ -8,10 +8,7 @@ import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
 import { PageApp_page$data } from "__generated__/PageApp_page.graphql"
 import { PageHTML } from "./Components/PageHTML"
-import {
-  TOP_LEVEL_PAGE_SLUG_ALLOWLIST,
-  PAGE_SLUGS_WITH_AUTH_REQUIRED,
-} from "./pageRoutes"
+
 import { HttpError } from "found"
 import { userIsAdmin } from "Utils/user"
 
@@ -24,6 +21,12 @@ const PageApp: FC<React.PropsWithChildren<PageAppProps>> = ({ page }) => {
   const isAdmin = userIsAdmin(user)
   const { showAuthDialog } = useAuthDialog()
   const { match } = useRouter()
+
+  // Circular dep with pageRoutes
+  const {
+    TOP_LEVEL_PAGE_SLUG_ALLOWLIST,
+    PAGE_SLUGS_WITH_AUTH_REQUIRED,
+  } = require("./pageRoutes")
 
   const description = useMemo(() => {
     switch (page.internalID) {

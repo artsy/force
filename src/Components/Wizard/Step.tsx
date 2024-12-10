@@ -1,4 +1,3 @@
-import PropTypes from "prop-types"
 import { createElement, Component } from "react"
 import { StepProps } from "./types"
 
@@ -17,8 +16,8 @@ import { StepProps } from "./types"
  */
 export class Step extends Component<StepProps> {
   static contextTypes = {
-    wizard: PropTypes.object,
-    form: PropTypes.object,
+    wizard: {},
+    form: {},
   }
 
   render() {

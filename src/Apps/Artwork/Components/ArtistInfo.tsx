@@ -12,14 +12,12 @@ import { ArtistBioFragmentContainer } from "Components/ArtistBio"
 import { ArtistMarketInsightsFragmentContainer } from "Components/ArtistMarketInsights"
 import { SelectedExhibitionFragmentContainer } from "Components/SelectedExhibitions"
 import { ContextModule } from "@artsy/cohesion"
-import { Component } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import Events from "Utils/Events"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtistInfoQuery } from "__generated__/ArtistInfoQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import track from "react-tracking"
+import { useTracking } from "react-tracking"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { compact } from "lodash"
 import { RouterLink } from "System/Components/RouterLink"
@@ -28,77 +26,66 @@ interface ArtistInfoProps {
   artist: ArtistInfo_artist$data
 }
 
-const Container = ({ children }) => (
-  <StackableBorderBox p={2}>{children}</StackableBorderBox>
-)
+const ArtistInfo: React.FC<ArtistInfoProps> = ({ artist }) => {
+  const tracking = useTracking()
+  const { biographyBlurb } = artist
+  const showArtistBio = !!biographyBlurb?.text
 
-@track(
-  { context_module: DeprecatedSchema.ContextModule.Biography },
-  { dispatch: data => Events.postEvent(data) }
-)
-export class ArtistInfo extends Component<ArtistInfoProps> {
-  @track({
-    action_type: DeprecatedSchema.ActionType.Click,
-    flow: DeprecatedSchema.Flow.ArtworkAboutTheArtist,
-    subject: DeprecatedSchema.Subject.ReadMore,
-    type: DeprecatedSchema.Type.Button,
-  })
-  trackArtistBioReadMoreClick() {
-    // Tracking
+  const handleReadMoreClick = () => {
+    tracking.trackEvent({
+      action_type: DeprecatedSchema.ActionType.Click,
+      context_module: DeprecatedSchema.ContextModule.Biography,
+      flow: DeprecatedSchema.Flow.ArtworkAboutTheArtist,
+      subject: DeprecatedSchema.Subject.ReadMore,
+      type: DeprecatedSchema.Type.Button,
+    })
   }
 
-  render() {
-    const { artist } = this.props
-    const { biographyBlurb } = this.props.artist
-    const showArtistBio = !!biographyBlurb?.text
-
-    return (
-      <>
-        <StackableBorderBox flexDirection="column" data-test="artistInfo">
-          <EntityHeaderArtistFragmentContainer
-            artist={artist}
-            FollowButton={
-              <FollowArtistButtonQueryRenderer
-                id={artist.internalID}
-                contextModule={ContextModule.aboutTheWork}
-                size="small"
-              />
-            }
-          />
-
-          {showArtistBio && (
-            <>
-              <Spacer y={2} />
-
-              <ArtistBioFragmentContainer
-                bio={artist}
-                onReadMoreClicked={this.trackArtistBioReadMoreClick.bind(this)}
-              />
-            </>
-          )}
-        </StackableBorderBox>
-
-        <ArtistMarketInsightsFragmentContainer
+  return (
+    <>
+      <StackableBorderBox flexDirection="column" data-test="artistInfo">
+        <EntityHeaderArtistFragmentContainer
           artist={artist}
-          border={false}
-          Container={Container}
+          FollowButton={
+            <FollowArtistButtonQueryRenderer
+              id={artist.internalID}
+              contextModule={ContextModule.aboutTheWork}
+              size="small"
+            />
+          }
         />
 
-        <SelectedExhibitionFragmentContainer
-          artistID={artist.internalID}
-          border={false}
-          totalExhibitions={artist.counts?.partnerShows ?? 0}
-          exhibitions={compact(artist.exhibitionHighlights)}
-          ViewAllLink={
-            <RouterLink inline to={`/artist/${artist.slug}/cv`}>
-              View all
-            </RouterLink>
-          }
-          Container={Container}
-        />
-      </>
-    )
-  }
+        {showArtistBio && (
+          <>
+            <Spacer y={2} />
+            <ArtistBioFragmentContainer
+              bio={artist}
+              onReadMoreClicked={handleReadMoreClick}
+            />
+          </>
+        )}
+      </StackableBorderBox>
+
+      <ArtistMarketInsightsFragmentContainer
+        artist={artist}
+        border={false}
+        Container={Container}
+      />
+
+      <SelectedExhibitionFragmentContainer
+        artistID={artist.internalID}
+        border={false}
+        totalExhibitions={artist.counts?.partnerShows ?? 0}
+        exhibitions={compact(artist.exhibitionHighlights)}
+        ViewAllLink={
+          <RouterLink inline to={`/artist/${artist.slug}/cv`}>
+            View all
+          </RouterLink>
+        }
+        Container={Container}
+      />
+    </>
+  )
 }
 
 export const ArtistInfoFragmentContainer = createFragmentContainer(ArtistInfo, {
@@ -221,3 +208,7 @@ export const ArtistInfoQueryRenderer: React.FC<React.PropsWithChildren<{
     />
   )
 }
+
+const Container = ({ children }) => (
+  <StackableBorderBox p={2}>{children}</StackableBorderBox>
+)

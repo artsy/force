@@ -4,7 +4,6 @@ import {
   PricingContextTestQuery$rawResponse,
   PricingContextTestQuery$data,
 } from "__generated__/PricingContextTestQuery.graphql"
-import { mockTracking } from "DevTools/mockTracking"
 import { renderRelayTree } from "DevTools/renderRelayTree"
 import { mount } from "enzyme"
 import { graphql } from "react-relay"
@@ -16,9 +15,11 @@ import {
 } from "Apps/Artwork/Components/PricingContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import HelpIcon from "@artsy/icons/HelpIcon"
+import { MockBoot } from "DevTools/MockBoot"
+import { useTracking } from "react-tracking"
 
-jest.unmock("react-tracking")
 jest.unmock("react-relay")
+jest.mock("react-tracking")
 jest.mock("@artsy/palette", () => {
   return {
     ...jest.requireActual("@artsy/palette"),
@@ -88,8 +89,10 @@ describe("PricingContext", () => {
     return renderRelayTree({
       Component: (props: PricingContextTestQuery$data) => (
         <div>
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-          <PricingContextFragmentContainer {...props} />
+          <MockBoot>
+            {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
+            <PricingContextFragmentContainer {...props} />
+          </MockBoot>
         </div>
       ),
       mockData: mockData as PricingContextTestQuery$rawResponse,
@@ -271,12 +274,22 @@ describe("PricingContext", () => {
   })
 
   describe("Analytics", () => {
-    it("Tracks impressions", () => {
-      const { Component, dispatch } = mockTracking(PricingContext)
-      const component = mount(<Component artwork={mockArtwork as any} />)
+    const mockUseTracking = useTracking as jest.Mock
+    const trackEvent = jest.fn()
+
+    beforeEach(() => {
+      mockUseTracking.mockImplementation(() => ({ trackEvent }))
+    })
+
+    afterEach(() => {
+      jest.clearAllMocks()
+    })
+
+    it("Tracks impressions", async () => {
+      const component = mount(<PricingContext artwork={mockArtwork as any} />)
       component.find(Waypoint).getElement().props.onEnter()
 
-      expect(dispatch).toBeCalledWith({
+      expect(trackEvent).toBeCalledWith({
         action_type: "Impression",
         context_module: "Price Context",
         subject: "Histogram Bar",
@@ -286,32 +299,30 @@ describe("PricingContext", () => {
     })
 
     it("tracks hovers on histogram bars", () => {
-      const { Component, dispatch } = mockTracking(PricingContext)
-      const component = mount(<Component artwork={mockArtwork as any} />)
+      const component = mount(<PricingContext artwork={mockArtwork as any} />)
       component.find("Bar").at(0).simulate("mouseOver")
-      expect(dispatch).toBeCalledWith({
+      expect(trackEvent).toBeCalledWith({
         context_module: "Price Context",
         action_type: "Hover",
         subject: "Histogram Bar",
         flow: "Artwork Price Context",
         type: "Chart",
       })
-      expect(dispatch).toHaveBeenCalledTimes(1)
+      expect(trackEvent).toHaveBeenCalledTimes(1)
     })
 
     it("tracks clicks on 'Browse works in this category' link", () => {
-      const { Component, dispatch } = mockTracking(PricingContext)
-      const component = mount(<Component artwork={mockArtwork as any} />)
+      const component = mount(<PricingContext artwork={mockArtwork as any} />)
       component.find(Link).at(0).simulate("click")
 
-      expect(dispatch).toBeCalledWith({
+      expect(trackEvent).toBeCalledWith({
         context_module: "Price Context",
         action_type: "Click",
         subject: "Browse works in this category",
         flow: "Artwork Price Context",
         type: "Chart",
       })
-      expect(dispatch).toHaveBeenCalledTimes(1)
+      expect(trackEvent).toHaveBeenCalledTimes(1)
     })
   })
 })

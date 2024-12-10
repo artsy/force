@@ -1,8 +1,12 @@
 import { Intent } from "@artsy/cohesion"
-import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useRouter } from "System/Hooks/useRouter"
 
 export const useTitleWithIntent = () => {
+  // Circular dep
+  const {
+    useAuthDialogContext,
+  } = require("Components/AuthDialog/AuthDialogContext")
+
   const {
     state: { mode },
   } = useAuthDialogContext()
