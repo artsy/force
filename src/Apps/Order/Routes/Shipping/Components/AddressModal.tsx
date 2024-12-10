@@ -154,21 +154,19 @@ export const AddressModal: FC<React.PropsWithChildren<AddressModalProps>> = ({
     console.time("AddressModal")
   }, [])
   return (
-    <>
-      <Formik<FormValues>
-        validateOnMount
-        validationSchema={validationSchema}
-        enableReinitialize={true}
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-      >
-        <AddressModalForm
-          addressModalAction={addressModalAction}
-          onClose={closeModal}
-          onDeleteAddress={handleDeleteAddress}
-        />
-      </Formik>
-    </>
+    <Formik<FormValues>
+      validateOnMount
+      validationSchema={validationSchema}
+      enableReinitialize={true}
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+    >
+      <AddressModalForm
+        addressModalAction={addressModalAction}
+        onClose={closeModal}
+        onDeleteAddress={handleDeleteAddress}
+      />
+    </Formik>
   )
 }
 
