@@ -10,8 +10,8 @@ const s3 = require("s3")
 const { last } = require("lodash")
 
 const options = {
-  root: "public",
-  files: path.join(__dirname, "../dist/**"),
+  root: "dist",
+  files: path.join(process.cwd(), "./dist/**"),
   key: process.env.S3_KEY,
   secret: process.env.S3_SECRET,
   bucket: process.env.S3_BUCKET,
@@ -29,6 +29,8 @@ const files = glob.sync(options.files, {
   ignore: "node_modules",
   nodir: true,
 })
+
+console.log(files)
 
 const generateHeaders = file => {
   const extension = path.extname(file)

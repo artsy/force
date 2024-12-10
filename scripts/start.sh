@@ -20,5 +20,6 @@ if [ "${NODE_ENV}" != "production" ]; then
   fi
 # Prod
 else
-  exec node "${OPT[@]}" --no-experimental-fetch -r @swc-node/register ./src/prod.ts
+  export NODE_PATH=src
+  exec  node "${OPT[@]}" --no-experimental-fetch -r @swc-node/register ./src/prod.ts
 fi

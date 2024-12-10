@@ -65,6 +65,33 @@ export default defineConfig({
         },
       },
     },
+
+    // prod: {
+    //   output: {
+    //     target: "node",
+    //     distPath: {
+    //       root: "dist/server",
+    //     },
+    //   },
+    //   source: {
+    //     entry: {
+    //       prod: "./src/prod",
+    //     },
+    //   },
+    //   tools: {
+    //     rspack: {
+    //       externals: [nodeExternals()],
+    //       node: {
+    //         __dirname: true,
+    //       },
+    //     },
+    //     swc: {
+    //       module: {
+    //         type: "commonjs",
+    //       },
+    //     },
+    //   },
+    // },
   },
 
   /**
