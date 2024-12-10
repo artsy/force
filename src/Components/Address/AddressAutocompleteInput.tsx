@@ -147,7 +147,7 @@ const reducer = (state: State, action: Action): State => {
  * See AddressAutocompleteInput.jest.tsx for implementation examples.
  *
  * *note: The onBlur prop is disabled because it causes issues with keyboard
- * navigation.*
+ * navigation. see https://github.com/artsy/force/pull/14963 for more info.*
  */
 export const AddressAutocompleteInput = ({
   address,
