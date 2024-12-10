@@ -4,7 +4,6 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { Z } from "Apps/Components/constants"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useAssociateSubmission } from "Apps/Sell/Mutations/useAssociateSubmission"
-import { FormValues } from "Apps/Sell/Routes/PhoneNumberRoute"
 import {
   INITIAL_EDIT_STEP,
   useSellFlowContext,
@@ -95,7 +94,7 @@ const BottomFormBackButton = () => {
 
 const BottomFormNextButton = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const { isValid, values, submitForm } = useFormikContext()
+  const { isValid, submitForm } = useFormikContext()
   const { isLoggedIn } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
   const { trackTappedContinueSubmission } = useSubmissionTracking()
@@ -106,7 +105,7 @@ const BottomFormNextButton = () => {
 
   const {
     actions: { goToNextStep },
-    state: { submission, isSubmitStep, nextStep, loading, step },
+    state: { submission, isSubmitStep, nextStep, loading },
   } = useSellFlowContext()
 
   const onContinue = async () => {
@@ -181,14 +180,10 @@ const BottomFormNextButton = () => {
     }
   }, [value, clearValue, onAfterAuthCallback])
 
-  // for guest users make userPhone field required
-  const disableIfLoggedOut =
-    !isLoggedIn && step === "phone-number" && !(values as FormValues).userPhone
-
   return (
     <Button
       variant="primaryBlack"
-      disabled={!isValid || isSubmitting || loading || disableIfLoggedOut}
+      disabled={!isValid || isSubmitting || loading}
       loading={isSubmitting || loading}
       onClick={onContinue}
       data-testid="bottom-form-next-button"

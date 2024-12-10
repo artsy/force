@@ -50,7 +50,7 @@ const Schema = Yup.object().shape({
   }),
 })
 
-export interface FormValues {
+interface FormValues {
   userPhone: string
   phoneNumberRegionCode: string
 }
