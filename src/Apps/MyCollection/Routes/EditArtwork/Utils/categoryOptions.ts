@@ -26,4 +26,5 @@ export const categoryOptions = [
   { text: "Ephemera or Merchandise", value: "Ephemera or Merchandise" },
   { text: "Reproduction", value: "Reproduction" },
   { text: "NFT", value: "NFT" },
+  { text: "Digital Art", value: "Digital Art" },
 ]
