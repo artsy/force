@@ -17,7 +17,7 @@ describe("analytics", function () {
       query: {},
     }
     res = { locals: { sd: {} } }
-    next = jest.fn
+    next = jest.fn()
   })
 
   afterEach(() => {
