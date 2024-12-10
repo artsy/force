@@ -7,6 +7,7 @@ import { ArtworkSidebarAuctionInfoPolling_me$data } from "__generated__/ArtworkS
 import { usePoll } from "Utils/Hooks/usePoll"
 import { useEffect, useRef, useState } from "react"
 import { Spacer } from "@artsy/palette"
+import { useTracking } from "react-tracking"
 
 type Props = {
   artwork: ArtworkSidebarAuctionInfoPolling_artwork$data
@@ -14,11 +15,9 @@ type Props = {
   relay: RelayRefetchProp
 }
 
-export const ArtworkSidebarAuctionPolling: React.FC<React.PropsWithChildren<Props>> = ({
-  artwork,
-  relay,
-  me,
-}) => {
+export const ArtworkSidebarAuctionPolling: React.FC<React.PropsWithChildren<
+  Props
+>> = ({ artwork, relay, me }) => {
   const { sale, saleArtwork } = artwork
   const isClosed = !!sale?.isClosed
   const currentBidDisplay = saleArtwork?.currentBid?.display
@@ -26,6 +25,7 @@ export const ArtworkSidebarAuctionPolling: React.FC<React.PropsWithChildren<Prop
   const [currentBidChanged, setCurrentBidChanged] = useState(false)
 
   const isMounted = useRef(false)
+  const tracking = useTracking()
 
   useEffect(() => {
     if (isMounted.current) {
@@ -56,7 +56,11 @@ export const ArtworkSidebarAuctionPolling: React.FC<React.PropsWithChildren<Prop
         artwork={artwork}
       />
       <Spacer y={2} />
-      <ArtworkSidebarBidActionFragmentContainer artwork={artwork} me={me} />
+      <ArtworkSidebarBidActionFragmentContainer
+        artwork={artwork}
+        me={me}
+        tracking={tracking}
+      />
     </>
   )
 }

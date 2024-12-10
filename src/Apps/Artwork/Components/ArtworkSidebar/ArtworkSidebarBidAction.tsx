@@ -15,7 +15,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarBidAction_artwork$data } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
 import { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSidebarBidAction_me.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import track from "react-tracking"
+import { TrackingProp, useTracking } from "react-tracking"
 import { getENV } from "Utils/getENV"
 import { bidderQualifications } from "Utils/identityVerificationRequirements"
 import { compact } from "lodash"
@@ -31,15 +31,16 @@ export interface ArtworkSidebarBidActionProps {
   me: ArtworkSidebarBidAction_me$data
   router?: Router
   showAuthDialog: ShowAuthDialog
+  tracking: TrackingProp
 }
 
 export interface ArtworkSidebarBidActionState {
   selectedMaxBidCents: number
 }
 
-const RegisterToBidButton: React.FC<React.PropsWithChildren<{ onClick: () => void }>> = ({
-  onClick,
-}) => {
+const RegisterToBidButton: React.FC<React.PropsWithChildren<{
+  onClick: () => void
+}>> = ({ onClick }) => {
   return (
     <Button width="100%" size="large" mt={1} onClick={onClick} data-test="bid">
       Register to bid
@@ -47,7 +48,9 @@ const RegisterToBidButton: React.FC<React.PropsWithChildren<{ onClick: () => voi
   )
 }
 
-const VerifyIdentityButton: React.FC<React.PropsWithChildren<{ id: string }>> = ({ id }) => (
+const VerifyIdentityButton: React.FC<React.PropsWithChildren<{
+  id: string
+}>> = ({ id }) => (
   <a href={`/identity-verification/${id}`}>
     <Button width="100%" size="large">
       Verify identity
@@ -55,7 +58,9 @@ const VerifyIdentityButton: React.FC<React.PropsWithChildren<{ id: string }>> = 
   </a>
 )
 
-const IdentityVerificationDisclaimer: React.FC<React.PropsWithChildren<unknown>> = () => {
+const IdentityVerificationDisclaimer: React.FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   return (
     <Text variant="sm-display" color="black60" textAlign="center">
       Identity verification required to bid.{" "}
@@ -64,7 +69,6 @@ const IdentityVerificationDisclaimer: React.FC<React.PropsWithChildren<unknown>>
   )
 }
 
-@track()
 export class ArtworkSidebarBidAction extends React.Component<
   ArtworkSidebarBidActionProps,
   ArtworkSidebarBidActionState
@@ -83,16 +87,6 @@ export class ArtworkSidebarBidAction extends React.Component<
     window.location.href = href
   }
 
-  @track((props: ArtworkSidebarBidActionProps) => ({
-    action: ActionType.clickedBid,
-    context_owner_type: OwnerType.artwork,
-    context_owner_slug: props.artwork.slug,
-    context_owner_id: props.artwork.internalID,
-    signal_lot_watcher_count:
-      props.artwork.collectorSignals?.auction?.lotWatcherCount ?? undefined,
-    signal_bid_count:
-      props.artwork.collectorSignals?.auction?.bidCount ?? undefined,
-  }))
   redirectToBid(firstIncrement: number) {
     const { slug, sale } = this.props.artwork
     const bid = this.state.selectedMaxBidCents || firstIncrement
@@ -100,6 +94,18 @@ export class ArtworkSidebarBidAction extends React.Component<
     const href = `/auction/${sale?.slug}/bid/${slug}?bid=${bid}`
 
     const redirectTo = href.replace("/auction/", "/auction/")
+
+    this.props.tracking.trackEvent({
+      action: ActionType.clickedBid,
+      context_owner_type: OwnerType.artwork,
+      context_owner_slug: this.props.artwork.slug,
+      context_owner_id: this.props.artwork.internalID,
+      signal_lot_watcher_count:
+        this.props.artwork.collectorSignals?.auction?.lotWatcherCount ??
+        undefined,
+      signal_bid_count:
+        this.props.artwork.collectorSignals?.auction?.bidCount ?? undefined,
+    })
 
     if (!this.props.me) {
       this.props.showAuthDialog({
@@ -120,16 +126,18 @@ export class ArtworkSidebarBidAction extends React.Component<
     }
   }
 
-  @track({
-    type: DeprecatedSchema.Type.Button,
-    flow: DeprecatedSchema.Flow.Auctions,
-    subject: DeprecatedSchema.Subject.EnterLiveAuction,
-    context_module: DeprecatedSchema.ContextModule.Sidebar,
-    action_type: DeprecatedSchema.ActionType.Click,
-  })
   redirectToLiveBidding(me: ArtworkSidebarBidAction_me$data | null) {
     const slug = this.props.artwork.sale?.slug
     const liveUrl = `${getENV("PREDICTION_URL")}/${slug}`
+
+    this.props.tracking.trackEvent({
+      type: DeprecatedSchema.Type.Button,
+      flow: DeprecatedSchema.Flow.Auctions,
+      subject: DeprecatedSchema.Subject.EnterLiveAuction,
+      context_module: DeprecatedSchema.ContextModule.Sidebar,
+      action_type: DeprecatedSchema.ActionType.Click,
+    })
+
     if (me) {
       window.location.href = `${liveUrl}/login`
     } else {
@@ -161,12 +169,12 @@ export class ArtworkSidebarBidAction extends React.Component<
       pendingIdentityVerification,
       shouldPromptIdVerification,
     } = bidderQualifications(
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       sale,
       me,
-      sale.registrationStatus && {
-        qualifiedForBidding: sale.registrationStatus.qualified_for_bidding,
-      }
+      sale.registrationStatus &&
+        ({
+          qualifiedForBidding: sale.registrationStatus.qualified_for_bidding,
+        } as any)
     )
 
     if (sale.is_preview) {
@@ -364,7 +372,14 @@ export const ArtworkSidebarBidActionFragmentContainer = withAuthDialog(
   createFragmentContainer(
     (props: ArtworkSidebarBidActionProps) => {
       const { router } = useRouter()
-      return <ArtworkSidebarBidAction {...props} router={router} />
+      const tracking = useTracking()
+      return (
+        <ArtworkSidebarBidAction
+          {...props}
+          router={router}
+          tracking={tracking}
+        />
+      )
     },
     {
       artwork: graphql`

@@ -1,4 +1,4 @@
-const { webpackEnv } = require("./webpack/webpackEnv")
+const jestConfig = require("./jest.config")
 
 module.exports = {
   cacheDirectory: ".cache/jest",
@@ -23,7 +23,7 @@ module.exports = {
   },
   transform: {
     "\\.(gql|graphql)$": "@graphql-tools/jest-transform",
-    "(ts|tsx|js|jsx)$": "babel-jest",
+    "(ts|tsx|js|jsx)$": jestConfig.transform["(ts|tsx|js|jsx)$"],
   },
   watchPlugins: [
     "jest-watch-typeahead/filename",

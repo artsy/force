@@ -5,7 +5,7 @@ import { getWebpackEarlyHints } from "Server/getWebpackEarlyHints"
 jest.mock("fs")
 jest.mock("Server/config", () => ({ CDN_URL: "https://cdn.example.com" }))
 
-const HINTS_PATH = path.join(process.cwd(), "public/assets", "early-hints.json")
+const HINTS_PATH = path.join(process.cwd(), "dist", "early-hints.json")
 
 describe("getWebpackEarlyHints", () => {
   const mockReadFileSync = fs.readFileSync as jest.Mock

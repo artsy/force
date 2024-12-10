@@ -58,14 +58,16 @@ type CreditCardPickerResultType =
 
 const logger = createLogger("Order/Routes/NewPayment/index.tsx")
 
-export const NewPaymentRoute: FC<React.PropsWithChildren<NewPaymentProps & StripeProps>> = props => {
+export const NewPaymentRoute: FC<React.PropsWithChildren<
+  NewPaymentProps & StripeProps
+>> = props => {
   const [isGettingCreditCardId, setIsGettingCreditCardId] = useState(false)
   const [
     creditCardPickerResult,
     setCreditCardPickerResult,
   ] = useState<CreditCardPickerResultType | null>(null)
 
-  const { trackEvent } = useTracking()
+  const tracking = useTracking()
 
   const {
     order,
@@ -84,7 +86,7 @@ export const NewPaymentRoute: FC<React.PropsWithChildren<NewPaymentProps & Strip
     message: string | undefined,
     code?: string
   ) => {
-    return trackEvent({
+    return tracking.trackEvent({
       action: ActionType.errorMessageViewed,
       context_owner_type: OwnerType.ordersNewPayment,
       context_owner_id: props.order.internalID,
@@ -325,6 +327,7 @@ export const NewPaymentRoute: FC<React.PropsWithChildren<NewPaymentProps & Strip
               me={me}
               commitMutation={commitMutation}
               innerRef={CreditCardPicker}
+              tracking={tracking}
             />
             <Media greaterThan="xs">
               <ContinueButton onClick={onContinue} loading={isLoading} />
