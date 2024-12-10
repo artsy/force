@@ -50,7 +50,7 @@
     "sync-env": "aws s3 cp s3://artsy-citadel/force/.env.shared ./ && echo 'ENV sync complete.'",
     "start": "scripts/start.sh",
     "start:prod": "yarn build && SESSION_LOCAL_INSECURE=true NODE_ENV=production yarn start",
-    "start:prod:debug": "SESSION_LOCAL_INSECURE=true NODE_ENV=production node --inspect --max_old_space_size=3072 -r @swc-node/register ./src/index.ts",
+    "start:prod:debug": "SESSION_LOCAL_INSECURE=true NODE_ENV=production NODE_PATH=src node --inspect --max_old_space_size=3072 -r @swc-node/register ./src/prod.ts",
     "sync-schema": "scripts/sync-schema-pull.sh",
     "sync-schema-local": "scripts/sync-schema-local.sh",
     "test": "scripts/jest.sh",
@@ -64,6 +64,8 @@
     "@types/react-dom": "^18.3.1",
     "@types/react-relay": "^16.0.6",
     "@types/relay-runtime": "18.1.1",
+    "graceful-fs": "4.x.x",
+    "regenerator-runtime": "0.13.5",
     "styled-components": "^6.1.13"
   },
   "dependencies": {
@@ -90,6 +92,7 @@
     "@stripe/stripe-js": "^4.1.0",
     "@styled-system/theme-get": "5.1.2",
     "@swc-node/register": "^1.10.9",
+    "@swc/helpers": "^0.5.15",
     "actioncable": "^5.2.7-1",
     "analytics-node": "2.4.1",
     "async": "^3.2.4",

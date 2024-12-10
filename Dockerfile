@@ -47,15 +47,16 @@ COPY --chown=deploy:deploy --from=builder-base /opt/node_modules.prod ./node_mod
 
 # Base code
 COPY --chown=deploy:deploy --from=builder-base /app/data ./data
+COPY --chown=deploy:deploy --from=builder-base /app/dist ./dist
 COPY --chown=deploy:deploy --from=builder-base /app/src ./src
 COPY --chown=deploy:deploy --from=builder-base /app/scripts ./scripts
 COPY --chown=deploy:deploy --from=builder-base /app/package.json .
 COPY --chown=deploy:deploy --from=builder-base /app/yarn.lock .
 
-# App artifacts
-COPY --chown=deploy:deploy --from=builder-base /app/dist ./dist
 
 ENTRYPOINT ["/usr/bin/dumb-init", "./scripts/load_secrets_and_run.sh"]
+
+ENV NODE_PATH=/app/src
 
 # TODO: Reduce production memory, this is not a concern
 CMD ["node", "--max_old_space_size=2048", "--heapsnapshot-signal=SIGUSR2", "--no-experimental-fetch", "-r @swc-node/register", "./src/prod.ts"]

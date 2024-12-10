@@ -76,7 +76,7 @@ export default defineConfig({
     writeToDisk: true,
   },
   performance: {
-    // FIXME: Uncomment and play around with different bundle split strategies,
+    // TODO: Uncomment and play around with different bundle split strategies,
     // along with stats below:
     // chunkSplit: {
     //   strategy: "split-by-size",
