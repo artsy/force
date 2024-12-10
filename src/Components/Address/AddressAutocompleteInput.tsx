@@ -32,7 +32,10 @@ interface AutocompleteTrackingValues {
 }
 
 export interface AddressAutocompleteInputProps
-  extends Partial<AutocompleteInputProps<AddressAutocompleteSuggestion>> {
+  extends Omit<
+    Partial<AutocompleteInputProps<AddressAutocompleteSuggestion>>,
+    "onBlur"
+  > {
   /* The address [including at least a country] to use for autocomplete suggestions */
   address: Partial<Address> & { country: Address["country"] }
 
@@ -143,8 +146,8 @@ const reducer = (state: State, action: Action): State => {
  * fetching address suggestions from an autocomplete provider.
  * See AddressAutocompleteInput.jest.tsx for implementation examples.
  *
- * *note: Passing formik's handleBlur to the onBlur prop of this component
- * causes issues with keyboard navigation.*
+ * *note: The onBlur prop is disabled because it causes issues with keyboard
+ * navigation.*
  */
 export const AddressAutocompleteInput = ({
   address,
