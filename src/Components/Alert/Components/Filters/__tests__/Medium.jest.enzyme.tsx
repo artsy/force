@@ -27,7 +27,7 @@ describe("MediumFilter", () => {
   it("displays all mediums", () => {
     const wrapper = getWrapper()
 
-    expect(wrapper.find("Checkbox").length).toBe(14)
+    expect(wrapper.find("Checkbox").length).toBe(15)
 
     expect(wrapper.html()).toContain("Painting")
   })
