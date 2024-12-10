@@ -6,6 +6,6 @@ module.exports = {
   payloadFilepath: undefined,
   webpack: {
     // Path to Webpack stats JSON file
-    stats: "./webpack-stats.json",
+    stats: "./dist/stats.json",
   },
 }

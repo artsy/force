@@ -1,20 +1,15 @@
+import path from "path"
+import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import { getENV } from "Utils/getENV"
 import { Environment } from "react-relay"
-import path from "path"
 import { ChunkExtractor } from "@loadable/server"
 import { ServerStyleSheet } from "styled-components"
 import { renderToString } from "react-dom/server"
-import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import { ENABLE_SSR_STREAMING } from "Server/config"
 import { renderToStream } from "System/Router/Utils/renderToStream"
 import { ArtsyRequest } from "Server/middleware/artsyExpress"
 import { serializeRelayHydrationData } from "System/Router/Utils/serializeRelayHydrationData"
-
-const STATS = "loadable-stats.json"
-
-const PUBLIC_ASSET_PATH = "public/assets"
-
-const ASSET_PATH = "/assets"
+import { loadAssetManifest } from "Server/manifest"
 
 interface CollectAssetsProps {
   ServerRouter: React.FC<React.PropsWithChildren<unknown>>
@@ -33,7 +28,7 @@ export const collectAssets = async ({
    */
   const statsFile = (() => {
     try {
-      return path.resolve(process.cwd(), PUBLIC_ASSET_PATH, STATS)
+      return path.resolve(process.cwd(), "dist", "loadable-stats.json")
     } catch (error) {
       console.error(
         "[system/router/serverRouter.tsx] Error:",
@@ -42,7 +37,7 @@ export const collectAssets = async ({
     }
   })()
 
-  const assetPublicPath = (getENV("CDN_URL") ?? "") + ASSET_PATH
+  const assetPublicPath = getENV("CDN_URL") ?? ""
 
   const extractor = new ChunkExtractor({
     statsFile,
@@ -70,8 +65,30 @@ export const collectAssets = async ({
 
   const initialRelayData = await relaySSRMiddleware.getCache()
 
+  const manifest = loadAssetManifest("dist/manifest.json")
+
   const extractScriptTags = () => {
     const initialScripts: string[] = []
+
+    const { entries } = manifest?.manifest
+
+    const { js = [] } = entries["index"].initial
+
+    const runtimeScripts = js.map(url => {
+      const cdnUrl = getENV("CDN_URL")
+
+      const scriptUrl = (() => {
+        if (getENV("NODE_ENV") === "production" && cdnUrl) {
+          return `${cdnUrl}${url}`
+        } else {
+          return url
+        }
+      })()
+
+      return `<script defer src="${scriptUrl}"></script>`
+    })
+
+    initialScripts.push(...runtimeScripts)
 
     const bundleScriptTags = extractor.getScriptTags()
 
