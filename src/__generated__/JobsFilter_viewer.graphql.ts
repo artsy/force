@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cc660b017bb2aff1d3af0bbf4086ebc9>>
+ * @generated SignedSource<<2a71ef57164d680ca40592d1a6764a64>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,8 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type JobsFilter_viewer$data = {
-  readonly departments: ReadonlyArray<{
-    readonly id: string;
-    readonly jobs: ReadonlyArray<{
-      readonly id: string;
-      readonly " $fragmentSpreads": FragmentRefs<"JobLink_job">;
-    }>;
-    readonly name: string;
-  }>;
   readonly jobs: ReadonlyArray<{
+    readonly departmentName: string;
     readonly id: string;
     readonly location: string;
     readonly " $fragmentSpreads": FragmentRefs<"JobLink_job">;
@@ -31,20 +24,7 @@ export type JobsFilter_viewer$key = {
   readonly " $fragmentSpreads": FragmentRefs<"JobsFilter_viewer">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "args": null,
-  "kind": "FragmentSpread",
-  "name": "JobLink_job"
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -58,45 +38,30 @@ return {
       "name": "jobs",
       "plural": true,
       "selections": [
-        (v0/*: any*/),
-        (v1/*: any*/),
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "JobLink_job"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "location",
           "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Department",
-      "kind": "LinkedField",
-      "name": "departments",
-      "plural": true,
-      "selections": [
-        (v1/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
         },
         {
           "alias": null,
           "args": null,
-          "concreteType": "Job",
-          "kind": "LinkedField",
-          "name": "jobs",
-          "plural": true,
-          "selections": [
-            (v0/*: any*/),
-            (v1/*: any*/)
-          ],
+          "kind": "ScalarField",
+          "name": "departmentName",
           "storageKey": null
         }
       ],
@@ -106,8 +71,7 @@ return {
   "type": "Viewer",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "5764dc61fad90d31d46ceb9ba92f41e0";
+(node as any).hash = "1e422c2a88d8fb876274311737f8873b";
 
 export default node;

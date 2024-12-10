@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf6e96278898468c72b54bba3000d0dc>>
+ * @generated SignedSource<<ae431bf074879bc4c7bf972f676770c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,41 +21,7 @@ export type jobsRoutes_JobsQuery = {
   variables: jobsRoutes_JobsQuery$variables;
 };
 
-const node: ConcreteRequest = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Job",
-  "kind": "LinkedField",
-  "name": "jobs",
-  "plural": true,
-  "selections": [
-    (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "title",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "location",
-      "storageKey": null
-    }
-  ],
-  "storageKey": null
-};
-return {
+const node: ConcreteRequest = {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -96,24 +62,42 @@ return {
         "name": "viewer",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
-            "concreteType": "Department",
+            "concreteType": "Job",
             "kind": "LinkedField",
-            "name": "departments",
+            "name": "jobs",
             "plural": true,
             "selections": [
-              (v0/*: any*/),
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "name",
+                "name": "id",
                 "storageKey": null
               },
-              (v1/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "location",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "departmentName",
+                "storageKey": null
+              }
             ],
             "storageKey": null
           }
@@ -123,15 +107,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e6485e2c892b1917180aa09814990f2c",
+    "cacheID": "24fc6f2cb565c686b6c7ed1f7a187e4a",
     "id": null,
     "metadata": {},
     "name": "jobsRoutes_JobsQuery",
     "operationKind": "query",
-    "text": "query jobsRoutes_JobsQuery @cacheable {\n  viewer {\n    ...JobsApp_viewer\n  }\n}\n\nfragment JobLink_job on Job {\n  id\n  title\n  location\n}\n\nfragment JobsApp_viewer on Viewer {\n  ...JobsFilter_viewer\n}\n\nfragment JobsFilter_viewer on Viewer {\n  jobs {\n    ...JobLink_job\n    id\n    location\n  }\n  departments {\n    id\n    name\n    jobs {\n      ...JobLink_job\n      id\n    }\n  }\n}\n"
+    "text": "query jobsRoutes_JobsQuery @cacheable {\n  viewer {\n    ...JobsApp_viewer\n  }\n}\n\nfragment JobLink_job on Job {\n  id\n  title\n  location\n}\n\nfragment JobsApp_viewer on Viewer {\n  ...JobsFilter_viewer\n}\n\nfragment JobsFilter_viewer on Viewer {\n  jobs {\n    ...JobLink_job\n    id\n    location\n    departmentName\n  }\n}\n"
   }
 };
-})();
 
 (node as any).hash = "f111bf42d552fb795ffe2d669568297c";
 
