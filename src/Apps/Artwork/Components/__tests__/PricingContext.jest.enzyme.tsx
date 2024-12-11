@@ -219,6 +219,7 @@ describe("PricingContext", () => {
       },
     })
 
+    // @ts-ignore
     expect(wrapper.find(BarChart).props().bars[0].label).toMatchInlineSnapshot(`
       {
         "description": "1 work",
@@ -264,6 +265,7 @@ describe("PricingContext", () => {
       },
     })
 
+    // @ts-ignore
     expect(wrapper.find(BarChart).props().bars[1].label).toMatchInlineSnapshot(`
       {
         "description": "1 work",
