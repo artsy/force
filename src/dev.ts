@@ -2,6 +2,7 @@ import "./Server/loadenv"
 import express from "express"
 import { createRsbuild, loadConfig, logger } from "@rsbuild/core"
 import { createReloadable } from "@artsy/express-reloadable"
+import { execSync } from "child_process"
 
 export async function startDevServer() {
   // Wait for multienv to load envs
@@ -33,11 +34,14 @@ export async function startDevServer() {
   mountAndReload(outputPath)
 
   const httpServer = await startServer(app, () => {
+    const url = `http://localhost:${rsbuildServer.port}`
+
     rsbuildServer.afterListen()
 
-    logger.log(
-      `[Force] Server started at http://localhost:${rsbuildServer.port}`
-    )
+    logger.log(`[Force] Server started at ${url}`)
+
+    // Open the browser
+    execSync(`open ${url}`)
   })
 
   rsbuildServer.connectWebSocket({ server: httpServer })
