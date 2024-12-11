@@ -17,21 +17,20 @@ export async function startDevServer() {
 
   const rsbuildServer = await rsbuild.createDevServer()
 
-  // Add server-side hot reloading
-  const mountAndReload = createReloadable(app, require)
-
   // Get the output path of the server build
   const stats = await rsbuildServer.environments.server.getStats()
 
-  // Mount the server build and watch it for changes
   const { outputPath } = stats.toJson({
     all: true,
   })
 
-  mountAndReload(outputPath)
-
   // Init RSBuild dev middleware
   app.use(rsbuildServer.middlewares)
+
+  // Add server-side hot reloading
+  const mountAndReload = createReloadable(app, require)
+
+  mountAndReload(outputPath)
 
   const httpServer = await startServer(app, () => {
     rsbuildServer.afterListen()
