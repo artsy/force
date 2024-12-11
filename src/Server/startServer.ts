@@ -16,9 +16,9 @@ export async function startServer(
   app,
   onStart?: () => void
 ): Promise<http.Server> {
-  return new Promise(resolve => {
-    setupErrorHandling(app)
+  setupErrorHandling(app)
 
+  return new Promise(resolve => {
     initializeArtsyXapp(() => {
       const message =
         NODE_ENV === "development"
