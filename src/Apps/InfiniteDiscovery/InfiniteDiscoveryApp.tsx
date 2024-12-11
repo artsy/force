@@ -1,87 +1,65 @@
 import { Flex, Button, Text, Separator } from "@artsy/palette"
-import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
 import React, { useEffect } from "react"
-import { uniq, sampleSize, shuffle } from "lodash"
+import { sampleSize, uniq } from "lodash"
+import { mean } from "mathjs"
 
-const ES_URL =
-  "https://vpc-artsy-staging-es7-srsqgcck5vzy7uq2eqqhvrm4x4.us-east-1.es.amazonaws.com"
+const SEARCH_URL =
+  "https://vpc-artsy-staging-opensearch2-gfdbifpyvreziqr7r6ewx5zpe4.us-east-1.es.amazonaws.com/artworks_local/_search"
 
-const BUILD_SEARCH_QUERY = (lArtworks, dArtworks, cArtworks) => {
+const CURATORS_PICKS_URL =
+  "https://vpc-artsy-staging-opensearch2-gfdbifpyvreziqr7r6ewx5zpe4.us-east-1.es.amazonaws.com/curators_picks/_search?size=135"
+
+const calculateMeanVector = vectors => {
+  return mean(vectors, 0)
+}
+
+const BUILD_OPEN_SEARCH_QUERY = (lArtworks, dArtworks, cArtworks) => {
   const likedArtworks = lArtworks.map(artwork => {
     return {
-      _index: "artworks_7shards_production",
-      _type: "_doc",
-      _id: artwork.internalID,
+      vector_embedding: artwork.vector_embedding,
     }
   })
 
+  const meanVector = calculateMeanVector(
+    likedArtworks.map(a => a.vector_embedding)
+  )
+
   const dismissedArtworks = dArtworks.map(artwork => ({
     term: {
-      _id: artwork.internalID,
+      _id: artwork.id,
     },
   }))
 
+  const ignoreArtworks = lArtworks.map(artwork => ({
+    term: {
+      _id: artwork.id,
+    },
+  }))
+
+  const dismissedAndLiked = uniq([...dismissedArtworks, ...ignoreArtworks])
+
   const query = {
+    size: 10,
+    collapse: {
+      field: "artistName",
+    },
     query: {
       bool: {
+        filter: {
+          bool: {
+            must_not: [...(dismissedAndLiked || [])],
+          },
+        },
         should: [
           {
-            more_like_this: {
-              fields: ["id", "genes_vectors"],
-              like: likedArtworks,
-              min_term_freq: 1,
-              min_doc_freq: 30,
-              max_query_terms: 18,
-              minimum_should_match: "30%",
-            },
-          },
-        ],
-        must: [
-          {
-            term: { published: true },
-          },
-          {
-            term: { for_sale: true },
-          },
-        ],
-        filter: [
-          { range: { career_stage: { gte: 0, lte: 100 } } },
-          {
-            script: {
-              script: {
-                source: "doc['genes.raw'].size() >= 1",
+            knn: {
+              vector_embedding: {
+                vector: meanVector,
+                k: 10,
               },
             },
           },
         ],
-        must_not: [...(dismissedArtworks || [])],
-      },
-    },
-    collapse: {
-      field: "artist_id",
-    },
-    aggregations: {
-      uniq_artists: {
-        terms: {
-          field: "artist_id",
-          size: 1,
-          order: {
-            top_score: "desc",
-          },
-        },
-        aggs: {
-          sim_works: {
-            top_hits: {
-              size: 1,
-              _source: ["_id"],
-            },
-          },
-          top_score: {
-            max: {
-              script: "_score",
-            },
-          },
-        },
       },
     },
   }
@@ -92,33 +70,10 @@ const BUILD_SEARCH_QUERY = (lArtworks, dArtworks, cArtworks) => {
   return query
 }
 
-const CURATORS_PICKS_QUERY = `
-  query {
-    marketingCollection(slug: "curators-picks") {
-      slug
-      artworkIds
-    }
-  }
-`
-
-const ARTWORK_QUERY = internalID => `
-  query {
-    artwork(id: "${internalID}") {
-      title
-      imageUrl
-      internalID
-      artist {
-        name
-        internalID
-      }
-    }
-  }
-`
-
 const request = async (url, opts) => {
   try {
-    const options = {
-      method: "POST",
+    const options: RequestInit = {
+      method: opts.method || "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -166,36 +121,38 @@ export const InfiniteDiscoveryApp = () => {
 
     // continue showing curated artworks if liked artworks are less than 3
     if (likedArtworks.length < 3) {
-      setArtworks(sampleSize(curatedArtworks, 10))
+      const sampleArtworks = sampleSize(curatedArtworks, 10)
+      setArtworks(sampleArtworks)
       return setLoading(false)
     }
 
-    const data = await request(`${ES_URL}/_search`, {
+    const data = await request(`${SEARCH_URL}`, {
       body: JSON.stringify(
-        BUILD_SEARCH_QUERY(likedArtworks, dismissedArtworks, curatedArtworks)
+        BUILD_OPEN_SEARCH_QUERY(
+          likedArtworks,
+          dismissedArtworks,
+          curatedArtworks
+        )
       ),
     })
 
-    const artworksResponse = data?.hits?.hits.map(hit => hit._id)
+    const artworksResponse = data?.hits?.hits?.map(hit => hit._source)
 
     const aArtworks = artworksResponse.slice(0, 8)
     const cArtworks = sampleSize(curatedArtworks, 2)
 
-    setArtworks(shuffle([...aArtworks, ...cArtworks]))
+    setArtworks([...aArtworks, ...cArtworks])
     setLoading(false)
   }
 
   useEffect(() => {
     const req = async () => {
-      const response = await request(getMetaphysicsEndpoint(), {
-        body: JSON.stringify({ query: CURATORS_PICKS_QUERY }),
-        mode: "no-cors",
-      })
+      const response = await request(`${CURATORS_PICKS_URL}`, { method: "GET" })
+      const curatedPicksArtworks = response?.hits?.hits.map(hit => hit._source)
 
-      const artworks = uniq(response?.data?.marketingCollection?.artworkIds)
-      setArtworks(sampleSize(artworks, 10))
-      setCuratedArtworks(artworks)
-      setCa(artworks)
+      setArtworks(sampleSize(curatedPicksArtworks, 10))
+      setCuratedArtworks(curatedPicksArtworks)
+      setCa(curatedPicksArtworks)
     }
     req()
   }, [])
@@ -237,8 +194,9 @@ export const InfiniteDiscoveryApp = () => {
         {artworks.map((artwork: any) => {
           return (
             <Artwork
-              key={artwork}
-              internalID={artwork}
+              artworkResource={artwork}
+              key={artwork.id}
+              internalID={artwork.id}
               onLike={onLike}
               onDismiss={onDismiss}
               isCurated={isCurated}
@@ -255,8 +213,9 @@ export const InfiniteDiscoveryApp = () => {
           {likedArtworks.map((artwork: any) => {
             return (
               <Artwork
-                key={artwork.internalID + "liked"}
-                internalID={artwork.internalID}
+                artworkResource={artwork}
+                key={artwork.id + "liked"}
+                internalID={artwork.id}
                 onLike={onLike}
                 onDismiss={onDismiss}
                 isCurated={isCurated}
@@ -272,8 +231,9 @@ export const InfiniteDiscoveryApp = () => {
           {dismissedArtworks.map((artwork: any) => {
             return (
               <Artwork
-                key={artwork.internalID + "dismissed"}
-                internalID={artwork.internalID}
+                artworkResource={artwork}
+                key={artwork.id + "dismissed"}
+                internalID={artwork.id}
                 onLike={onLike}
                 onDismiss={onDismiss}
                 isCurated={isCurated}
@@ -293,24 +253,9 @@ const Artwork = ({
   onDismiss,
   isCurated,
   viewed = false,
+  artworkResource,
 }) => {
-  const [artwork, setArtwork] = React.useState({}) as any
-
-  useEffect(() => {
-    const req = async () => {
-      const response = await request(getMetaphysicsEndpoint(), {
-        body: JSON.stringify({ query: ARTWORK_QUERY(internalID) }),
-        mode: "no-cors",
-      })
-      if (!response?.data?.artwork) {
-        return setArtwork({
-          title: "Artwork not available",
-        })
-      }
-      setArtwork(response?.data?.artwork)
-    }
-    req()
-  }, []) // eslint-disable-line
+  const [artwork, setArtwork] = React.useState(artworkResource) as any
 
   const onLikeEvent = a => {
     onLike(a)
@@ -325,11 +270,11 @@ const Artwork = ({
   return (
     <div style={{ width: "20%", flexShrink: 1, marginBottom: "20px" }}>
       <a
-        href={`https://staging.artsy.net/artwork/${internalID}`}
+        href={`https://staging.artsy.net/artwork/${artwork.id}`}
         target="_blank"
       >
         <img
-          src={artwork?.imageUrl}
+          src={`https://d7hftxdivxxvm.cloudfront.net/?src=${artwork?.image_url}&resize_to=fit&width=200&height=200&grow=false`}
           alt={artwork?.title || ""}
           style={{ cursor: "pointer", width: viewed ? "30%" : "auto" }}
         />
@@ -338,10 +283,10 @@ const Artwork = ({
         <b>{artwork?.title}</b>
       </h2>
       <h3 style={{ fontSize: "13px" }}>
-        <i>{artwork?.artist?.name}</i>
+        <i>{artwork?.artistName}</i>
       </h3>
-      <h3 style={{ fontSize: "13px" }}>{artwork.internalID}</h3>
-      {isCurated(artwork.internalID) && (
+      <h3 style={{ fontSize: "13px" }}>{artwork.id}</h3>
+      {isCurated(artwork.id) && (
         <Text color="purple" fontSize="10px">
           curators-picks
         </Text>
