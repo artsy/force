@@ -16,7 +16,8 @@ export async function startServer(
   app,
   onStart?: () => void
 ): Promise<http.Server> {
-  setupErrorHandling(app)
+  // setupErrorHandling(app)
+  setupExpressErrorHandler(app)
 
   return new Promise(resolve => {
     initializeArtsyXapp(() => {
@@ -64,7 +65,7 @@ export async function startServer(
   })
 }
 
-function setupErrorHandling(app) {
+export function setupErrorHandling(app) {
   // Setup exception reporting
   setupExpressErrorHandler(app)
 
