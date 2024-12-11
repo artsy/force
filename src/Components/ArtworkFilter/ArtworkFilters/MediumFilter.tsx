@@ -15,7 +15,9 @@ export interface MediumFilterProps {
   expanded?: boolean
 }
 
-export const MediumFilter: FC<React.PropsWithChildren<MediumFilterProps>> = ({ expanded }) => {
+export const MediumFilter: FC<React.PropsWithChildren<MediumFilterProps>> = ({
+  expanded,
+}) => {
   const { aggregations, counts, setFilter } = useArtworkFilterContext()
   const { additionalGeneIDs = [], medium } = useCurrentlySelectedFilters()
 
@@ -91,4 +93,5 @@ export const MEDIUM_OPTIONS = [
   { value: "performance-art", name: "Performance Art" },
   { value: "reproduction", name: "Reproduction" },
   { value: "ephemera-or-merchandise", name: "Ephemera or Merchandise" },
+  { value: "digital-art", name: "Digital Art" },
 ]
