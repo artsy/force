@@ -2,7 +2,6 @@ import http from "http"
 import withGracefulShutdown from "http-shutdown"
 import { once } from "lodash"
 import { initializeArtsyXapp } from "./artsyXapp"
-import { errorHandlerMiddleware } from "./middleware/errorHandler"
 import { APP_URL, NODE_ENV, PORT } from "Server/config"
 import { setupExpressErrorHandler } from "@sentry/node"
 
@@ -16,7 +15,7 @@ export async function startServer(
   app,
   onStart?: () => void
 ): Promise<http.Server> {
-  setupErrorHandling(app)
+  setupExpressErrorHandler(app)
 
   return new Promise(resolve => {
     initializeArtsyXapp(() => {
@@ -62,20 +61,4 @@ export async function startServer(
       process.on("SIGTERM", stopServer)
     })
   })
-}
-
-function setupErrorHandling(app) {
-  // Setup exception reporting
-  setupExpressErrorHandler(app)
-
-  // And error handling
-  app.get("*", (req, res, next) => {
-    const err = new Error()
-    // @ts-ignore -- FIXME: status does not exist on err
-    err.status = 404
-    err.message = "Not Found"
-    next(err)
-  })
-
-  app.use(errorHandlerMiddleware)
 }
