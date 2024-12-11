@@ -199,7 +199,15 @@ const SettingsPurchasesRow: FC<React.PropsWithChildren<
   // Enritch displayState with buyerState.
   // TODO: figure out how to move it to the server
   let buyerDisplayState: BuyerDisplayStateEnum = order.displayState
-  if (buyerDisplayState == "SUBMITTED" && buyerAction == "OFFER_RECEIVED") {
+  if (
+    buyerDisplayState == "SUBMITTED" &&
+    !!buyerAction &&
+    [
+      "OFFER_RECEIVED",
+      "OFFER_RECEIVED_CONFIRM_NEEDED",
+      "OFFER_ACCEPTED_CONFIRM_NEEDED",
+    ].includes(buyerAction)
+  ) {
     buyerDisplayState = "OFFER_RECEIVED"
   }
 
