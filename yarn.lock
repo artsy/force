@@ -72,10 +72,10 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@^39.1.0":
-  version "39.1.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-39.1.0.tgz#f2b128aa1ea14dbfd04e903e782ab309903e1631"
-  integrity sha512-rDTYVPMkn69T78VUia68AmiTbhE6zOO4mRcSWsWIYAyGqTnrdr0NYkSix9qSokwZAn8GHwirE7TbyM3fr51A5A==
+"@artsy/palette-charts@^39.1.1":
+  version "39.1.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-39.1.1.tgz#9e8a280a18d7d29178acc8ae6172499e64a39d03"
+  integrity sha512-4hyU8FfocGPmg/c3Bc2JaIy+orrnPqpP5zbdx5iwgLxHHcrWS8Nk/c+wi/NeeaSNui8lKJ/4MLXsKWsqFBYnfA==
   dependencies:
     "@artsy/palette" "^40.1.0"
     "@seznam/compose-react-refs" "^1.0.6"
