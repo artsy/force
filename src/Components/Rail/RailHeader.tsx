@@ -1,8 +1,6 @@
 import { Box, Flex, SkeletonText, Sup, Text as BaseText } from "@artsy/palette"
 import * as React from "react"
 import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Hooks/useRouter"
-import { getENV } from "Utils/getENV"
 import { getInternalHref } from "Utils/url"
 
 export interface RailHeaderProps {
@@ -20,11 +18,9 @@ type RailHeaderTitleProps = Pick<
   "title" | "viewAllHref" | "viewAllOnClick"
 >
 
-export const RailHeaderTitle: React.FC<React.PropsWithChildren<RailHeaderTitleProps>> = ({
-  viewAllHref,
-  viewAllOnClick,
-  title,
-}) => {
+export const RailHeaderTitle: React.FC<React.PropsWithChildren<
+  RailHeaderTitleProps
+>> = ({ viewAllHref, viewAllOnClick, title }) => {
   if (!viewAllHref) return <>{title}</>
 
   const href = getInternalHref(viewAllHref)
@@ -49,7 +45,9 @@ export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
 
   const showViewAll = Boolean(viewAllLabel && _viewAllHref)
 
-  const viewAllHref = useReturnTo(_viewAllHref)
+  // FIXME: Understand what this does. disabling because query params are
+  // breaking slugID parsing on auctions pages and that's bad.
+  // const viewAllHref = useReturnTo(_viewAllHref)
 
   return (
     <Flex justifyContent="space-between" alignItems="center">
@@ -63,7 +61,7 @@ export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
         >
           <RailHeaderTitle
             title={title}
-            viewAllHref={viewAllHref}
+            viewAllHref={_viewAllHref}
             viewAllOnClick={viewAllOnClick}
           />{" "}
           {countLabel && countLabel > 1 && (
@@ -92,7 +90,7 @@ export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
           flexShrink={0}
           // @ts-ignore
           as={RouterLink}
-          to={viewAllHref}
+          to={_viewAllHref}
           onClick={viewAllOnClick}
         >
           {viewAllLabel}
@@ -102,6 +100,8 @@ export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
   )
 }
 
+// FIXME; Reenable once we understand what this does
+/**
 const useReturnTo = (href?: string | null): string | null => {
   const router = useRouter()
 
@@ -120,3 +120,4 @@ const useReturnTo = (href?: string | null): string | null => {
     return href
   }
 }
+*/
