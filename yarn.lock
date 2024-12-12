@@ -72,10 +72,10 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@^39.1.0":
-  version "39.1.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-39.1.0.tgz#f2b128aa1ea14dbfd04e903e782ab309903e1631"
-  integrity sha512-rDTYVPMkn69T78VUia68AmiTbhE6zOO4mRcSWsWIYAyGqTnrdr0NYkSix9qSokwZAn8GHwirE7TbyM3fr51A5A==
+"@artsy/palette-charts@^39.1.1":
+  version "39.1.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-39.1.1.tgz#9e8a280a18d7d29178acc8ae6172499e64a39d03"
+  integrity sha512-4hyU8FfocGPmg/c3Bc2JaIy+orrnPqpP5zbdx5iwgLxHHcrWS8Nk/c+wi/NeeaSNui8lKJ/4MLXsKWsqFBYnfA==
   dependencies:
     "@artsy/palette" "^40.1.0"
     "@seznam/compose-react-refs" "^1.0.6"
@@ -13470,10 +13470,20 @@ reflect.getprototypeof@^1.0.4:
     globalthis "^1.0.3"
     which-builtin-type "^1.1.3"
 
-regenerator-runtime@0.13.5, regenerator-runtime@^0.11.0, regenerator-runtime@^0.13.2, regenerator-runtime@^0.13.4, regenerator-runtime@^0.14.0:
+regenerator-runtime@^0.11.0:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
+  integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
+
+regenerator-runtime@^0.13.2, regenerator-runtime@^0.13.4:
   version "0.13.5"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.5.tgz#d878a1d094b4306d10b9096484b33ebd55e26697"
   integrity sha512-ZS5w8CpKFinUzOwW3c83oPeVXoNsrLsaCoLtJvAClH135j/R77RuymhiSErhm2lKcwSCIpmvIWSbDkIfAqKQlA==
+
+regenerator-runtime@^0.14.0, regenerator-runtime@^0.14.1:
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.14.1.tgz#356ade10263f685dda125100cd862c1db895327f"
+  integrity sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==
 
 regex-not@^1.0.0, regex-not@^1.0.2:
   version "1.0.2"

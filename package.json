@@ -65,7 +65,6 @@
     "@types/react-relay": "^16.0.6",
     "@types/relay-runtime": "18.1.1",
     "graceful-fs": "4.x.x",
-    "regenerator-runtime": "0.13.5",
     "styled-components": "^6.1.13"
   },
   "dependencies": {
@@ -79,7 +78,7 @@
     "@artsy/img": "1.0.3",
     "@artsy/multienv": "^1.2.0",
     "@artsy/palette": "^40.1.0",
-    "@artsy/palette-charts": "^39.1.0",
+    "@artsy/palette-charts": "^39.1.1",
     "@artsy/react-html-parser": "^3.0.2",
     "@artsy/xapp": "2.0.0",
     "@loadable/component": "5.15.2",
@@ -166,6 +165,7 @@
     "react-streaming": "^0.3.43",
     "react-tracking": "^7.0.1",
     "react-waypoint": "8.0.0",
+    "regenerator-runtime": "^0.14.1",
     "relay-mock-network-layer": "2.0.0",
     "relay-runtime": "^18.2.0",
     "s3": "4.4.0",

@@ -2,6 +2,7 @@ import "./Server/loadenv"
 import express from "express"
 import { createRsbuild, loadConfig, logger } from "@rsbuild/core"
 import { createReloadable } from "@artsy/express-reloadable"
+import { execSync } from "child_process"
 
 export async function startDevServer() {
   // Wait for multienv to load envs
@@ -17,28 +18,30 @@ export async function startDevServer() {
 
   const rsbuildServer = await rsbuild.createDevServer()
 
-  // Add server-side hot reloading
-  const mountAndReload = createReloadable(app, require)
-
   // Get the output path of the server build
   const stats = await rsbuildServer.environments.server.getStats()
 
-  // Mount the server build and watch it for changes
   const { outputPath } = stats.toJson({
     all: true,
   })
 
-  mountAndReload(outputPath)
-
   // Init RSBuild dev middleware
   app.use(rsbuildServer.middlewares)
 
+  // Add server-side hot reloading
+  const mountAndReload = createReloadable(app, require)
+
+  mountAndReload(outputPath)
+
   const httpServer = await startServer(app, () => {
+    const url = `http://localhost:${rsbuildServer.port}`
+
     rsbuildServer.afterListen()
 
-    logger.log(
-      `[Force] Server started at http://localhost:${rsbuildServer.port}`
-    )
+    logger.log(`[Force] Server started at ${url}`)
+
+    // Open the browser
+    execSync(`open ${url}`)
   })
 
   rsbuildServer.connectWebSocket({ server: httpServer })

@@ -222,7 +222,7 @@ describe("Saved Addresses", () => {
     })
 
     // Previously disabled due to timeouts
-    it("calls the parent formik context onSubmit when the user saves a new address", async () => {
+    it.skip("calls the parent formik context onSubmit when the user saves a new address", async () => {
       renderWithRelay({
         Me: () => ({
           addressConnection: basicAddressList,

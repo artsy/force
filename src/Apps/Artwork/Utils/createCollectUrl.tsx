@@ -48,6 +48,7 @@ const filterCategories = {
   Architecture: "architecture",
   "Books and Portfolios": "books-and-portfolios",
   "Design/Decorative Art": "design",
+  "Digital Art": "digital-art",
   "Drawing, Collage or other Work on Paper": "work-on-paper",
   "Fashion Design and Wearable Art": "fashion-design-and-wearable-art",
   Installation: "installation",

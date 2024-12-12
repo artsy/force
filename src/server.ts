@@ -16,6 +16,7 @@ import { appPreferencesServerRoutes } from "Apps/AppPreferences/appPreferencesSe
 import { setupServerRouter } from "System/Router/serverRouter"
 import { getRoutes } from "System/Router/Utils/routeUtils"
 import { initializeMiddleware } from "middleware"
+import { errorHandlerMiddleware } from "Server/middleware/errorHandler"
 
 const app = express()
 
@@ -56,8 +57,17 @@ app
   .use(adminServerRoutes)
   .use(sitemapsServerApp)
   .use(rssServerApp)
-  // Should be last
+  // Should be second to last
   .use(redirectsServerRoutes)
+  // Final middleware. Errors and anything else should be last
+  .use("*", (req, res, next) => {
+    const err = new Error()
+    // @ts-ignore -- FIXME: status does not exist on err
+    err.status = 404
+    err.message = "Not Found"
+    next(err)
+  })
+  .use(errorHandlerMiddleware)
 
 // This export form is required for express-reloadable
 // TODO: Remove when no longer needed for hot reloading

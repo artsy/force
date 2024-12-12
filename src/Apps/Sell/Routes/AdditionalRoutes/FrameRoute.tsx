@@ -54,7 +54,9 @@ interface FrameRouteProps {
   submission: FrameRoute_submission$key
 }
 
-export const FrameRoute: React.FC<React.PropsWithChildren<FrameRouteProps>> = props => {
+export const FrameRoute: React.FC<React.PropsWithChildren<
+  FrameRouteProps
+>> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
   const artwork = submission.myCollectionArtwork
   const { actions } = useSellFlowContext()
@@ -96,107 +98,103 @@ export const FrameRoute: React.FC<React.PropsWithChildren<FrameRouteProps>> = pr
       validateOnMount
       validationSchema={Schema}
     >
-      {({ handleChange, setFieldValue, values }) => {
-        return (
-          <SubmissionLayout>
-            <SubmissionStepTitle>Frame</SubmissionStepTitle>
+      {({ handleChange, setFieldValue, values }) => (
+        <SubmissionLayout>
+          <SubmissionStepTitle>Frame</SubmissionStepTitle>
 
-            <Join separator={<Spacer y={4} />}>
-              <Join separator={<Spacer y={2} />}>
-                <Text variant="sm-display">Is the work framed?</Text>
+          <Join separator={<Spacer y={4} />}>
+            <Join separator={<Spacer y={2} />}>
+              <Text variant="sm-display">Is the work framed?</Text>
+
+              <GridColumns>
+                <Column span={[4, 3]}>
+                  <RadioGroup
+                    flexDirection="row"
+                    onSelect={option => setFieldValue("isFramed", option)}
+                    defaultValue={values.isFramed}
+                    justifyContent="flex-start"
+                    data-testid="signature-radio"
+                  >
+                    <Radio
+                      value={true}
+                      label="Yes"
+                      data-testid="signature-radio-yes"
+                    />
+
+                    <Spacer x={2} />
+
+                    <Radio
+                      value={false}
+                      label="No"
+                      data-testid="signature-radio-no"
+                    />
+                  </RadioGroup>
+                </Column>
+              </GridColumns>
+            </Join>
+
+            {values.isFramed && (
+              <>
+                <GridColumns>
+                  <Column span={[6, 6]}>
+                    <LabeledInput
+                      label={values.framedMetric}
+                      onChange={handleChange}
+                      name="framedWidth"
+                      title="Width"
+                      defaultValue={values.framedWidth || ""}
+                      data-testid="width-input"
+                    />
+                  </Column>
+
+                  <Column span={[6, 6]}>
+                    <LabeledInput
+                      label={values.framedMetric}
+                      onChange={handleChange}
+                      name="framedHeight"
+                      title="Height"
+                      defaultValue={values.framedHeight || ""}
+                      data-testid="height-input"
+                    />
+                  </Column>
+
+                  <Column span={[6, 6]}>
+                    <LabeledInput
+                      label={values.framedMetric}
+                      onChange={handleChange}
+                      name="framedDepth"
+                      title="Depth"
+                      defaultValue={values.framedDepth || ""}
+                      data-testid="depth-input"
+                    />
+                  </Column>
+                </GridColumns>
 
                 <GridColumns>
                   <Column span={[4, 3]}>
                     <RadioGroup
                       flexDirection="row"
-                      onSelect={option => setFieldValue("isFramed", option)}
-                      defaultValue={values.isFramed}
-                      justifyContent="flex-start"
-                      data-testid="signature-radio"
+                      onSelect={option => setFieldValue("framedMetric", option)}
+                      defaultValue={values.framedMetric}
+                      justifyContent="space-between"
                     >
                       <Radio
-                        value={true}
-                        label="Yes"
-                        data-testid="signature-radio-yes"
+                        value="cm"
+                        label="cm"
+                        data-testid="dimensionsMetric-radio-cm"
                       />
-
                       <Spacer x={2} />
-
-                      <Radio
-                        value={false}
-                        label="No"
-                        data-testid="signature-radio-no"
-                      />
+                      <Radio value="in" label="in" />
                     </RadioGroup>
                   </Column>
                 </GridColumns>
-              </Join>
+              </>
+            )}
+          </Join>
 
-              {values.isFramed && (
-                <>
-                  <GridColumns>
-                    <Column span={[6, 6]}>
-                      <LabeledInput
-                        label={values.framedMetric}
-                        onChange={handleChange}
-                        name="framedWidth"
-                        title="Width"
-                        defaultValue={values.framedWidth || ""}
-                        data-testid="width-input"
-                      />
-                    </Column>
-
-                    <Column span={[6, 6]}>
-                      <LabeledInput
-                        label={values.framedMetric}
-                        onChange={handleChange}
-                        name="framedHeight"
-                        title="Height"
-                        defaultValue={values.framedHeight || ""}
-                        data-testid="height-input"
-                      />
-                    </Column>
-
-                    <Column span={[6, 6]}>
-                      <LabeledInput
-                        label={values.framedMetric}
-                        onChange={handleChange}
-                        name="framedDepth"
-                        title="Depth"
-                        defaultValue={values.framedDepth || ""}
-                        data-testid="depth-input"
-                      />
-                    </Column>
-                  </GridColumns>
-
-                  <GridColumns>
-                    <Column span={[4, 3]}>
-                      <RadioGroup
-                        flexDirection="row"
-                        onSelect={option =>
-                          setFieldValue("framedMetric", option)
-                        }
-                        defaultValue={values.framedMetric}
-                        justifyContent="space-between"
-                      >
-                        <Radio
-                          value="cm"
-                          label="cm"
-                          data-testid="dimensionsMetric-radio-cm"
-                        />
-                        <Spacer x={2} />
-                        <Radio value="in" label="in" />
-                      </RadioGroup>
-                    </Column>
-                  </GridColumns>
-                </>
-              )}
-            </Join>
-
-            <DevDebug />
-          </SubmissionLayout>
-        )
-      }}
+          <DevDebug />
+        </SubmissionLayout>
+      )}
     </Formik>
   )
 }

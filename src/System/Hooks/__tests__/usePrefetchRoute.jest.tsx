@@ -43,7 +43,9 @@ describe("usePrefetchRoute", () => {
 
   it("should return null if prefetchDisabled is true", () => {
     mockUseRouter.mockReturnValueOnce({ match: { elements: null } })
-    const { result } = renderHook(() => usePrefetchRoute("/test-path"))
+    const { result } = renderHook(() =>
+      usePrefetchRoute({ initialPath: "/test-path" })
+    )
     expect(result.current.prefetch()).toBeNull()
   })
 
@@ -69,7 +71,9 @@ describe("usePrefetchRoute", () => {
       subscribe: jest.fn(() => mockSubscription),
     })
 
-    const { result } = renderHook(() => usePrefetchRoute("/foo/bar"))
+    const { result } = renderHook(() =>
+      usePrefetchRoute({ initialPath: "/foo/bar" })
+    )
 
     const subscriptions = result.current.prefetch()
     expect(subscriptions).toHaveLength(1)
@@ -77,7 +81,7 @@ describe("usePrefetchRoute", () => {
     expect(mockFetchQuery).toHaveBeenCalledWith(
       mockEnvironment,
       "TestQuery",
-      { id: "bar" },
+      { id: "bar", isPrefetched: true },
       expect.anything()
     )
   })
@@ -107,7 +111,7 @@ describe("usePrefetchRoute", () => {
     expect(mockFetchQuery).toHaveBeenCalledWith(
       mockEnvironment,
       "TestQuery",
-      { id: "bar" },
+      { id: "bar", isPrefetched: true },
       expect.anything()
     )
   })
@@ -131,7 +135,9 @@ describe("usePrefetchRoute", () => {
 
     console.error = jest.fn()
 
-    const { result } = renderHook(() => usePrefetchRoute("/foo/bar"))
+    const { result } = renderHook(() =>
+      usePrefetchRoute({ initialPath: "/foo/bar" })
+    )
     result.current.prefetch()
 
     expect(console.error).toHaveBeenCalledWith(
@@ -163,7 +169,9 @@ describe("usePrefetchRoute", () => {
 
     console.log = jest.fn()
 
-    const { result } = renderHook(() => usePrefetchRoute("/foo/bar"))
+    const { result } = renderHook(() =>
+      usePrefetchRoute({ initialPath: "/foo/bar" })
+    )
     result.current.prefetch()
 
     expect(console.log).toHaveBeenCalledWith(
@@ -174,6 +182,29 @@ describe("usePrefetchRoute", () => {
       "[usePrefetchRoute] Completed:",
       "/foo/bar"
     )
+  })
+
+  it("should call onComplete callback when prefetch is complete", () => {
+    const mockRoute = {
+      match: { params: { id: "bar" } },
+      route: {
+        path: "/foo/:id",
+        query: "TestQuery",
+      },
+    }
+
+    mockFindRoutesByPath.mockReturnValue([mockRoute])
+    mockTake.mockReturnValue([mockRoute])
+    console.log = jest.fn()
+
+    const onComplete = jest.fn()
+
+    const { result } = renderHook(() =>
+      usePrefetchRoute({ initialPath: "/foo/bar", onComplete })
+    )
+    result.current.prefetch()
+
+    expect(onComplete).toHaveBeenCalled()
   })
 
   it("should pass along route TTLs to fetchQuery metadata", () => {
@@ -191,13 +222,15 @@ describe("usePrefetchRoute", () => {
     mockTake.mockReturnValue([mockRoute])
     console.log = jest.fn()
 
-    const { result } = renderHook(() => usePrefetchRoute("/foo/bar"))
+    const { result } = renderHook(() =>
+      usePrefetchRoute({ initialPath: "/foo/bar" })
+    )
     result.current.prefetch()
 
     expect(mockFetchQuery).toHaveBeenCalledWith(
       {},
       "TestQuery",
-      { id: "bar" },
+      { id: "bar", isPrefetched: true },
       {
         fetchPolicy: "store-or-network",
         networkCacheConfig: { force: false, metadata: { maxAge: 1000 } },

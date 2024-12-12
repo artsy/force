@@ -15,11 +15,12 @@ interface ArtistWorksForSaleRouteProps {
   artist: ArtistWorksForSaleRoute_artist$data
 }
 
-const ArtistWorksForSaleRoute: React.FC<React.PropsWithChildren<ArtistWorksForSaleRouteProps>> = ({
-  artist,
-}) => {
+const ArtistWorksForSaleRoute: React.FC<React.PropsWithChildren<
+  ArtistWorksForSaleRouteProps
+>> = ({ artist }) => {
   const { title, description } = artist.meta
   const { match } = useRouter()
+  const isPrefetched = !!match.location.state?.isPrefetched
 
   return (
     <>
@@ -27,73 +28,83 @@ const ArtistWorksForSaleRoute: React.FC<React.PropsWithChildren<ArtistWorksForSa
       <Meta name="title" content={title} />
       <Meta name="description" content={description} />
 
-      <SystemQueryRenderer<ArtistWorksForSaleRouteArtworksQuery>
-        query={graphql`
-          query ArtistWorksForSaleRouteArtworksQuery(
-            $artistID: String!
-            $aggregations: [ArtworkAggregation]
-            $input: FilterArtworksInput!
-          ) {
-            artist(id: $artistID) {
-              ...ArtistArtworkFilter_artist @arguments(input: $input)
+      {isPrefetched ? (
+        <ArtistArtworkFilterRefetchContainer
+          artist={artist}
+          aggregations={
+            artist.sidebarAggregations
+              ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+          }
+        />
+      ) : (
+        <SystemQueryRenderer<ArtistWorksForSaleRouteArtworksQuery>
+          query={graphql`
+            query ArtistWorksForSaleRouteArtworksQuery(
+              $artistID: String!
+              $aggregations: [ArtworkAggregation]
+              $input: FilterArtworksInput!
+            ) {
+              artist(id: $artistID) {
+                ...ArtistArtworkFilter_artist @arguments(input: $input)
 
-              sidebarAggregations: filterArtworksConnection(
-                aggregations: $aggregations
-                first: 1
-              ) {
-                counts {
-                  total
-                }
-                aggregations {
-                  slice
+                sidebarAggregations: filterArtworksConnection(
+                  aggregations: $aggregations
+                  first: 1
+                ) {
                   counts {
-                    name
-                    value
-                    count
+                    total
+                  }
+                  aggregations {
+                    slice
+                    counts {
+                      name
+                      value
+                      count
+                    }
                   }
                 }
               }
             }
-          }
-        `}
-        variables={{
-          ...getWorksForSaleRouteVariables(
-            match.params as { artistID: string },
-            match
-          ),
-          artistID: artist.slug,
-        }}
-        placeholder={<ArtworkFilterPlaceholder showCreateAlert />}
-        render={({ error, props }) => {
-          if (error) {
-            console.error(
-              "[ArtistWorksForSaleRoute]: Error loading artwork grid",
-              error
+          `}
+          variables={{
+            ...getWorksForSaleRouteVariables(
+              match.params as { artistID: string },
+              match
+            ),
+            artistID: artist.slug,
+          }}
+          placeholder={<ArtworkFilterPlaceholder showCreateAlert />}
+          render={({ error, props }) => {
+            if (error) {
+              console.error(
+                "[ArtistWorksForSaleRoute]: Error loading artwork grid",
+                error
+              )
+              return null
+            }
+
+            if (!props || !props.artist) {
+              return <ArtworkFilterPlaceholder showCreateAlert />
+            }
+
+            return (
+              <>
+                {props.artist.sidebarAggregations?.counts?.total === 0 ? (
+                  <ArtistWorksForSaleEmptyFragmentContainer artist={artist} />
+                ) : (
+                  <ArtistArtworkFilterRefetchContainer
+                    artist={props.artist}
+                    aggregations={
+                      props.artist.sidebarAggregations
+                        ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+                    }
+                  />
+                )}
+              </>
             )
-            return null
-          }
-
-          if (!props || !props.artist) {
-            return <ArtworkFilterPlaceholder showCreateAlert />
-          }
-
-          return (
-            <>
-              {props.artist.sidebarAggregations?.counts?.total === 0 ? (
-                <ArtistWorksForSaleEmptyFragmentContainer artist={artist} />
-              ) : (
-                <ArtistArtworkFilterRefetchContainer
-                  artist={props.artist}
-                  aggregations={
-                    props.artist.sidebarAggregations
-                      ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
-                  }
-                />
-              )}
-            </>
-          )
-        }}
-      />
+          }}
+        />
+      )}
     </>
   )
 }
@@ -102,12 +113,33 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
   ArtistWorksForSaleRoute,
   {
     artist: graphql`
-      fragment ArtistWorksForSaleRoute_artist on Artist {
+      fragment ArtistWorksForSaleRoute_artist on Artist
+        @argumentDefinitions(
+          isPrefetched: { type: "Boolean!", defaultValue: false }
+          aggregations: { type: "[ArtworkAggregation]" }
+        ) {
+        ...ArtistArtworkFilter_artist @include(if: $isPrefetched)
         ...ArtistWorksForSaleEmpty_artist
         slug
         meta(page: ARTWORKS) {
           description
           title
+        }
+        sidebarAggregations: filterArtworksConnection(
+          aggregations: $aggregations
+          first: 1
+        ) @include(if: $isPrefetched) {
+          counts {
+            total
+          }
+          aggregations {
+            slice
+            counts {
+              name
+              value
+              count
+            }
+          }
         }
       }
     `,
