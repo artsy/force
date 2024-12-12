@@ -1,8 +1,7 @@
 import { artworkGridRenders } from "../helpers/artworkGridRenders"
 import { visitWithStatusRetries } from "../helpers/visitWithStatusRetries"
 
-// FIXME: Remove skip once Staging is back up
-describe.skip("/collection/:id", () => {
+describe("/collection/:id", () => {
   beforeEach(() => {
     visitWithStatusRetries("/collection/emerging-photographers")
   })
@@ -13,7 +12,7 @@ describe.skip("/collection/:id", () => {
       .should("have.attr", "content")
       .and(
         "eq",
-        "Buy, bid, and inquire on Emerging Photographers on Artsy. Today’s leading photographers are pushing the medium into new territories&mdash;experimenting with digital manipulation, unleashing the power of new macro …"
+        "Buy, bid, and inquire on Emerging Photographers on Artsy. Today’s leading photographers are pushing the medium into new territories—experimenting with digital manipulation, unleashing the power of new macro lenses..."
       )
 
     cy.get("h1").should("contain", "Emerging Photographers")
@@ -21,8 +20,7 @@ describe.skip("/collection/:id", () => {
   })
 })
 
-// FIXME: Remove skip once Staging is back up
-describe.skip("/collection/:id (a collection hub)", () => {
+describe("/collection/:id (a collection hub)", () => {
   beforeEach(() => {
     visitWithStatusRetries("/collection/contemporary")
   })
@@ -33,7 +31,7 @@ describe.skip("/collection/:id (a collection hub)", () => {
       .should("have.attr", "content")
       .and(
         "eq",
-        "Buy, bid, and inquire on Contemporary Art on Artsy. Spanning from 1970 to the present day, the contemporary period of art history represents the most diverse and widely-collected era of artistic production. …"
+        "Buy, bid, and inquire on Contemporary Art on Artsy. Spanning from 1970 to the present day, the contemporary period of art history represents the most diverse and widely-collected era of artistic production. ..."
       )
 
     cy.get("h1").should("contain", "Contemporary")
