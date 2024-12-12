@@ -38,3 +38,19 @@ describe("/collection/:id (a collection hub)", () => {
     artworkGridRenders()
   })
 })
+
+describe("redirection", () => {
+  it("redirects selected collections to artist series", () => {
+    visitWithStatusRetries("/collection/albrecht-durer-engraving")
+    cy.location("pathname").should(
+      "eq",
+      "/artist-series/albrecht-durer-etchings-and-engravings"
+    )
+
+    visitWithStatusRetries("/collection/zeng-fanzhi-mask-series")
+    cy.location("pathname").should(
+      "eq",
+      "/artist-series/zeng-fanzhi-ceng-fan-zhi-mask-series"
+    )
+  })
+})
