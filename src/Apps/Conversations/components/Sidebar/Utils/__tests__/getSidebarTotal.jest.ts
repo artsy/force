@@ -1,15 +1,15 @@
-const mockIsServer = jest.fn()
-
-jest.mock("Utils/device", () => ({
-  isServer: mockIsServer,
-}))
-
 import {
   SIDEBAR_FETCH_PAGE_SIZE,
   getSidebarTotal,
 } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
 
-describe("YourFileName", () => {
+describe("getSidebarTotal", () => {
+  const mockIsServer = jest.fn()
+
+  jest.mock("Utils/device", () => ({
+    isServer: mockIsServer,
+  }))
+
   describe("SIDEBAR_FETCH_PAGE_SIZE", () => {
     it("should have a value of 10", () => {
       expect(SIDEBAR_FETCH_PAGE_SIZE).toBe(10)

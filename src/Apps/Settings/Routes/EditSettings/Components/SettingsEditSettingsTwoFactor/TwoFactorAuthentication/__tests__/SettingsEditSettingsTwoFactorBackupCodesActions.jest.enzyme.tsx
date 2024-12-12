@@ -60,8 +60,13 @@ describe("Two factor authentication enrollment", () => {
       global.URL.revokeObjectURL = jest.fn()
 
       // @ts-ignore: Type
-      global.Blob = (content, options) => {
-        return { content, options }
+      global.Blob = class {
+        constructor(content, options) {
+          // @ts-ignore: Type
+          this.content = content
+          // @ts-ignore: Type
+          this.options = options
+        }
       }
 
       const downloadButtonProps = downloadButton.props()

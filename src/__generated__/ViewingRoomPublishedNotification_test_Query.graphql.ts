@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd117998e85d2f9315b4e555f115dcd4>>
+ * @generated SignedSource<<b958c709fa2e868b33d8fe403821c390>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -263,7 +263,7 @@ return {
                                       {
                                         "alias": null,
                                         "args": null,
-                                        "concreteType": "ARImage",
+                                        "concreteType": "GravityARImage",
                                         "kind": "LinkedField",
                                         "name": "image",
                                         "plural": false,
@@ -271,7 +271,7 @@ return {
                                           {
                                             "alias": null,
                                             "args": null,
-                                            "concreteType": "ImageURLs",
+                                            "concreteType": "GravityImageURLs",
                                             "kind": "LinkedField",
                                             "name": "imageURLs",
                                             "plural": false,
@@ -424,14 +424,14 @@ return {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "ARImage"
+          "type": "GravityARImage"
         },
         "notificationsConnection.edges.node.item.viewingRoomsConnection.edges.node.image.height": (v7/*: any*/),
         "notificationsConnection.edges.node.item.viewingRoomsConnection.edges.node.image.imageURLs": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "ImageURLs"
+          "type": "GravityImageURLs"
         },
         "notificationsConnection.edges.node.item.viewingRoomsConnection.edges.node.image.imageURLs.normalized": (v6/*: any*/),
         "notificationsConnection.edges.node.item.viewingRoomsConnection.edges.node.image.width": (v7/*: any*/),

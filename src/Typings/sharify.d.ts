@@ -16,7 +16,7 @@ declare module "sharify" {
      * These properties are set by Force and configured through environment variables.
      *
      * TODO: Go through and cleanup all unused properties.
-     * TODO: Grab types from setup_sharify
+     * TODO: Grab types from bootstrapSharify
      */
     export interface GlobalData {
       ADMIN_URL: string
@@ -56,7 +56,6 @@ declare module "sharify" {
       FAIR?: any // mobile fair app data
       FEATURE_FLAGS: any
       GEMINI_CLOUDFRONT_URL: string
-      GENOME_URL: string
       GOOGLE_ADWORDS_ID: string
       GRAVITY_WEBSOCKET_URL: string
       IP_ADDRESS: string
@@ -99,6 +98,7 @@ declare module "sharify" {
       SUBMISSION: string
       TARGET_CAMPAIGN_URL: string
       THIRD_PARTIES_DISABLED: boolean
+      TOOLS_URL: string
       TRACK_PAGELOAD_PATHS: string
       USER_AGENT: string
       USER_PREFERENCES: any

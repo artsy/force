@@ -12,7 +12,6 @@ import {
 } from "Apps/__tests__/Fixtures/Order"
 import { TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { expectOne } from "DevTools/RootTestPage"
-import { produce } from "immer"
 import { graphql } from "react-relay"
 import { StatusFragmentContainer } from "Apps/Order/Routes/Status"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
@@ -122,19 +121,6 @@ describe("Status", () => {
         expect(page.getMessageLength()).toBe(1)
         expect(page.text()).not.toContain("Kathryn Markel Fine Arts")
         expect(page.text()).not.toContain("List price")
-      })
-
-      it("should not show a note section if none exists", async () => {
-        const { wrapper } = getWrapper({
-          CommerceOrder: () =>
-            produce(testOrder, order => {
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              order.lastOffer.note = null
-            }),
-        })
-        const page = new StatusTestPage(wrapper)
-
-        expect(page.text()).not.toContain("Your note")
       })
     })
 

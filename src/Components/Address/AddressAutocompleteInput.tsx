@@ -8,7 +8,7 @@ import {
 import { Address } from "Components/Address/utils"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { getENV } from "Utils/getENV"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useReducer } from "react"
 import { throttle, uniqBy } from "lodash"
 import { useTracking } from "react-tracking"
 import {
@@ -19,6 +19,10 @@ import {
   SelectedItemFromAddressAutoCompletion,
 } from "@artsy/cohesion"
 
+// NOTE: Due to the format of this key (a long string of numbers that cannot be parsed as json)
+// This key must be set in the env as a json string like SMARTY_EMBEDDED_KEY_JSON={ "key": "xxxxxxxxxxxxxxxxxx" }
+const { key: API_KEY } = getENV("SMARTY_EMBEDDED_KEY_JSON") || { key: "" }
+
 const THROTTLE_DELAY = 500
 
 interface AutocompleteTrackingValues {
@@ -28,7 +32,10 @@ interface AutocompleteTrackingValues {
 }
 
 export interface AddressAutocompleteInputProps
-  extends Partial<AutocompleteInputProps<AddressAutocompleteSuggestion>> {
+  extends Omit<
+    Partial<AutocompleteInputProps<AddressAutocompleteSuggestion>>,
+    "onBlur"
+  > {
   /* The address [including at least a country] to use for autocomplete suggestions */
   address: Partial<Address> & { country: Address["country"] }
 
@@ -63,17 +70,84 @@ interface AddressAutocompleteSuggestion extends AutocompleteInputOptionType {
   entries: number | null
 }
 
-interface ServiceAvailability {
+type ServiceAvailability =
+  | {
+      enabled: true
+      apiKey: string
+    }
+  | {
+      enabled: false
+    }
+
+interface State {
   loading: boolean
-  enabled?: boolean
   fetching: boolean
+  serviceAvailability: ServiceAvailability | null
+  providerSuggestions: ProviderSuggestion[]
+}
+
+const initialState: State = {
+  loading: true,
+  serviceAvailability: null,
+  fetching: false,
+  providerSuggestions: [],
+}
+
+type Action =
+  | { type: "SET_AVAILABILITY"; serviceAvailability: ServiceAvailability }
+  | { type: "FETCHING_STARTED" }
+  | { type: "FETCHING_COMPLETE" }
+  | { type: "SET_SUGGESTIONS"; providerSuggestions: ProviderSuggestion[] }
+  | { type: "RESET_SUGGESTIONS" }
+
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case "SET_AVAILABILITY": {
+      return {
+        ...state,
+        loading: false,
+        serviceAvailability: {
+          ...action.serviceAvailability,
+        },
+      }
+    }
+    case "FETCHING_STARTED": {
+      return {
+        ...state,
+        fetching: true,
+      }
+    }
+    case "FETCHING_COMPLETE": {
+      return {
+        ...state,
+        fetching: false,
+      }
+    }
+    case "SET_SUGGESTIONS": {
+      return {
+        ...state,
+        providerSuggestions: action.providerSuggestions,
+      }
+    }
+    case "RESET_SUGGESTIONS": {
+      return {
+        ...initialState,
+        providerSuggestions: [],
+      }
+    }
+    default: {
+      return state
+    }
+  }
 }
 
 /**
  * A wrapper around the Palette AutocompleteInput that handles efficiently
- * fetching address suggestions from an autocomplete provider. Use the
- * `useAddressAutocompleteTracking` hook to get pre-loaded tracking helpers.
+ * fetching address suggestions from an autocomplete provider.
  * See AddressAutocompleteInput.jest.tsx for implementation examples.
+ *
+ * *note: The onBlur prop is disabled because it causes issues with keyboard
+ * navigation. see https://github.com/artsy/force/pull/14963 for more info.*
  */
 export const AddressAutocompleteInput = ({
   address,
@@ -92,24 +166,12 @@ export const AddressAutocompleteInput = ({
   trackingValues,
   ...autocompleteProps
 }: AddressAutocompleteInputProps) => {
-  const [providerSuggestions, setProviderSuggestions] = useState<
-    ProviderSuggestion[]
-  >([])
-  const [fetching, setFetching] = useState(false)
+  const [state, dispatch] = useReducer(reducer, initialState)
 
-  // NOTE: Due to the format of this key (a long string of numbers that cannot be parsed as json)
-  // This key must be set in the env as a json string like SMARTY_EMBEDDED_KEY_JSON={ "key": "xxxxxxxxxxxxxxxxxx" }
-  const { key: apiKey } = getENV("SMARTY_EMBEDDED_KEY_JSON") || { key: "" }
+  const { serviceAvailability, providerSuggestions } = state
 
   const isUSAddress = address.country === "US"
   const isFeatureFlagEnabled = !!useFeatureFlag("address_autocomplete_us")
-
-  const [serviceAvailability, setServiceAvailability] = useState<
-    ServiceAvailability
-  >({
-    loading: true,
-    fetching: false,
-  })
 
   const { trackEvent } = useTracking()
 
@@ -145,114 +207,63 @@ export const AddressAutocompleteInput = ({
     trackEvent(event)
   }
 
+  // Load service availaibilty when country changes
   useEffect(() => {
-    const isAPIKeyPresent = !!apiKey
+    const isAPIKeyPresent = !!API_KEY
     const enabled = isAPIKeyPresent && isFeatureFlagEnabled && isUSAddress
-    if (enabled !== serviceAvailability.enabled) {
-      setServiceAvailability({
-        fetching,
-        loading: false,
-        enabled,
+    if (enabled !== serviceAvailability?.enabled) {
+      dispatch({
+        type: "SET_AVAILABILITY",
+        serviceAvailability: enabled
+          ? { enabled: true, apiKey: API_KEY }
+          : { enabled: false },
       })
     }
-  }, [
-    apiKey,
-    isFeatureFlagEnabled,
-    isUSAddress,
-    fetching,
-    serviceAvailability.enabled,
-  ])
+  }, [isFeatureFlagEnabled, isUSAddress, serviceAvailability])
 
   // reset suggestions if the country changes
   useEffect(() => {
     if (providerSuggestions.length > 0 && !isUSAddress) {
-      setProviderSuggestions([])
+      dispatch({ type: "RESET_SUGGESTIONS" })
     }
   }, [isUSAddress, providerSuggestions.length])
-
-  const fetchSuggestions = useMemo(() => {
-    const throttledFetch = throttle(
-      async ({ search, selected }: { search: string; selected?: string }) => {
-        const params = {
-          key: apiKey,
-          search: search,
-        }
-
-        if (selected) {
-          params["selected"] = selected
-        }
-
-        if (!apiKey) return null
-        let url =
-          "https://us-autocomplete-pro.api.smarty.com/lookup?" +
-          new URLSearchParams(params).toString()
-
-        setFetching(true)
-        const response = await fetch(url)
-        setFetching(false)
-        const json = await response.json()
-        return json
-      },
-      THROTTLE_DELAY,
-      {
-        leading: true,
-        trailing: true,
-      }
-    )
-    return throttledFetch
-  }, [apiKey])
-
-  const buildAddressText = useCallback(
-    (suggestion: ProviderSuggestion): string => {
-      let buildingAddress = suggestion.street_line
-      if (suggestion.secondary) buildingAddress += ` ${suggestion.secondary}`
-
-      return [
-        `${buildingAddress}, ${suggestion.city}`,
-        suggestion.state,
-        suggestion.zipcode,
-      ].join(" ")
-    },
-    []
-  )
-
-  const filterSecondarySuggestions = useCallback(
-    (suggestions: ProviderSuggestion[]) => {
-      const noSecondaryData = suggestions.map(
-        ({ secondary, ...suggestion }) => ({
-          ...suggestion,
-          secondary: "",
-        })
-      )
-      return uniqBy(noSecondaryData, (suggestion: ProviderSuggestion) =>
-        buildAddressText(suggestion)
-      )
-    },
-    [buildAddressText]
-  )
 
   const fetchForAutocomplete = useCallback(
     // these are the parameters to the Smarty API call
     async ({ search, selected }: { search: string; selected?: string }) => {
-      if (!serviceAvailability.enabled) return
+      if (!serviceAvailability?.enabled) return
 
       if (search.length < 3) {
-        setProviderSuggestions([])
+        dispatch({ type: "RESET_SUGGESTIONS" })
         return
       }
 
       try {
-        const response = await fetchSuggestions({ search, selected })
+        dispatch({ type: "FETCHING_STARTED" })
+
+        const response = await fetchSuggestionsWithThrottle({
+          search,
+          selected,
+          apiKey: serviceAvailability.apiKey,
+        })
+
+        dispatch({ type: "FETCHING_COMPLETE" })
         const finalSuggestions = filterSecondarySuggestions(
           response.suggestions
         )
 
-        setProviderSuggestions(finalSuggestions.slice(0, 5))
+        dispatch({
+          type: "SET_SUGGESTIONS",
+          providerSuggestions: finalSuggestions.slice(0, 5),
+        })
       } catch (e) {
         console.error(e)
+        dispatch({ type: "RESET_SUGGESTIONS" })
+        dispatch({ type: "FETCHING_COMPLETE" })
+        // Disable autocomplete into some error state?
       }
     },
-    [fetchSuggestions, filterSecondarySuggestions, serviceAvailability.enabled]
+    [serviceAvailability]
   )
 
   const autocompleteOptions = providerSuggestions.map(
@@ -276,8 +287,7 @@ export const AddressAutocompleteInput = ({
   )
 
   const definitelyDisabled =
-    disableAutocomplete ||
-    (!serviceAvailability.loading && !serviceAvailability.enabled)
+    disableAutocomplete || (!state.loading && !serviceAvailability?.enabled)
 
   const previousOptions = usePrevious(autocompleteOptions)
   const serializedOptions = JSON.stringify(autocompleteOptions)
@@ -285,7 +295,7 @@ export const AddressAutocompleteInput = ({
 
   useEffect(() => {
     if (
-      serviceAvailability.enabled &&
+      serviceAvailability?.enabled &&
       serializedOptions !== serializedPreviousOptions
     ) {
       trackReceivedAutocompleteResult(
@@ -294,11 +304,7 @@ export const AddressAutocompleteInput = ({
       )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    serviceAvailability.enabled,
-    serializedOptions,
-    serializedPreviousOptions,
-  ])
+  }, [serviceAvailability, serializedOptions, serializedPreviousOptions])
 
   if (definitelyDisabled) {
     return (
@@ -324,7 +330,7 @@ export const AddressAutocompleteInput = ({
       id={id}
       name={name}
       placeholder={placeholder}
-      loading={serviceAvailability.loading || serviceAvailability.fetching}
+      loading={state.loading || state.fetching}
       options={autocompleteOptions}
       title="Address line 1"
       value={value}
@@ -343,5 +349,60 @@ export const AddressAutocompleteInput = ({
       }}
       {...autocompleteProps}
     />
+  )
+}
+
+const fetchSuggestionsWithThrottle = throttle(
+  async ({
+    search,
+    selected,
+    apiKey,
+  }: {
+    search: string
+    selected?: string
+    apiKey: string
+  }) => {
+    const params = {
+      key: apiKey,
+      search: search,
+    }
+
+    if (selected) {
+      params["selected"] = selected
+    }
+
+    let url =
+      "https://us-autocomplete-pro.api.smarty.com/lookup?" +
+      new URLSearchParams(params).toString()
+
+    const response = await fetch(url)
+    const json = await response.json()
+    return json
+  },
+  THROTTLE_DELAY,
+  {
+    leading: true,
+    trailing: true,
+  }
+)
+
+const buildAddressText = (suggestion: ProviderSuggestion): string => {
+  let buildingAddress = suggestion.street_line
+  if (suggestion.secondary) buildingAddress += ` ${suggestion.secondary}`
+
+  return [
+    `${buildingAddress}, ${suggestion.city}`,
+    suggestion.state,
+    suggestion.zipcode,
+  ].join(" ")
+}
+
+const filterSecondarySuggestions = (suggestions: ProviderSuggestion[]) => {
+  const noSecondaryData = suggestions.map(({ secondary, ...suggestion }) => ({
+    ...suggestion,
+    secondary: "",
+  }))
+  return uniqBy(noSecondaryData, (suggestion: ProviderSuggestion) =>
+    buildAddressText(suggestion)
   )
 }

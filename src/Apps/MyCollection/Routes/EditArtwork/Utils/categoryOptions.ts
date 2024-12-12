@@ -22,8 +22,9 @@ export const categoryOptions = [
   { text: "Textile Arts", value: "Textile Arts" },
   { text: "Posters", value: "Posters" },
   { text: "Books and Portfolios", value: "Books and Portfolios" },
-  { text: "Other", value: "Other" },
   { text: "Ephemera or Merchandise", value: "Ephemera or Merchandise" },
   { text: "Reproduction", value: "Reproduction" },
   { text: "NFT", value: "NFT" },
+  { text: "Digital Art", value: "Digital Art" },
+  { text: "Other", value: "Other" },
 ]

@@ -6,21 +6,21 @@ import { getENV } from "Utils/getENV"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import DownloadIcon from "@artsy/icons/DownloadIcon"
 import EditIcon from "@artsy/icons/EditIcon"
-import GenomeIcon from "@artsy/icons/GenomeIcon"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 import MoreIcon from "@artsy/icons/MoreIcon"
 import ShareIcon from "@artsy/icons/ShareIcon"
 import ShowIcon from "@artsy/icons/ShowIcon"
+import MagicMagnifyingGlassIcon from "@artsy/icons/MagicMagnifyingGlassIcon"
 
 const isTest = getENV("NODE_ENV") === "test"
 
 interface UtilButtonProps {
   name:
     | "bell"
-    | "edit"
     | "download"
-    | "genome"
+    | "edit"
     | "heart"
+    | "inspectImages"
     | "more"
     | "share"
     | "viewInRoom"
@@ -65,10 +65,10 @@ export const UtilButton = React.forwardRef(
           return DownloadIcon
         case "edit":
           return EditIcon
-        case "genome":
-          return GenomeIcon
         case "heart":
           return HeartStrokeIcon
+        case "inspectImages":
+          return MagicMagnifyingGlassIcon
         case "more":
           return MoreIcon
         case "share":

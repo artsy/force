@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<33a1b2456102b57735d3e59308401b00>>
+ * @generated SignedSource<<8a3acbeb4d9e6b63023969240c9b45c8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -149,7 +149,7 @@ return {
                       {
                         "alias": "coverImage",
                         "args": null,
-                        "concreteType": "ARImage",
+                        "concreteType": "GravityARImage",
                         "kind": "LinkedField",
                         "name": "image",
                         "plural": false,
@@ -157,7 +157,7 @@ return {
                           {
                             "alias": null,
                             "args": null,
-                            "concreteType": "ImageURLs",
+                            "concreteType": "GravityImageURLs",
                             "kind": "LinkedField",
                             "name": "imageURLs",
                             "plural": false,
@@ -296,14 +296,14 @@ return {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "ARImage"
+          "type": "GravityARImage"
         },
         "viewingRoomsConnection.viewingRoomsConnection.edges.node.coverImage.height": (v3/*: any*/),
         "viewingRoomsConnection.viewingRoomsConnection.edges.node.coverImage.imageURLs": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "ImageURLs"
+          "type": "GravityImageURLs"
         },
         "viewingRoomsConnection.viewingRoomsConnection.edges.node.coverImage.imageURLs.normalized": (v4/*: any*/),
         "viewingRoomsConnection.viewingRoomsConnection.edges.node.coverImage.width": (v3/*: any*/),

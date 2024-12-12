@@ -1,3 +1,4 @@
+import { AnalyticsPricingContextDimensionEnum } from "__generated__/PricingContext_artwork.graphql"
 import { stringify } from "qs"
 
 export const createCollectUrl = ({
@@ -5,7 +6,7 @@ export const createCollectUrl = ({
   category,
   artistId,
 }: {
-  dimension: "SMALL" | "MEDIUM" | "LARGE" | null
+  dimension: AnalyticsPricingContextDimensionEnum
   category: FilterCategory
   artistId: string
 }) => {
@@ -47,6 +48,7 @@ const filterCategories = {
   Architecture: "architecture",
   "Books and Portfolios": "books-and-portfolios",
   "Design/Decorative Art": "design",
+  "Digital Art": "digital-art",
   "Drawing, Collage or other Work on Paper": "work-on-paper",
   "Fashion Design and Wearable Art": "fashion-design-and-wearable-art",
   Installation: "installation",

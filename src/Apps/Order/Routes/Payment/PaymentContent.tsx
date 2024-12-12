@@ -97,11 +97,12 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
 
       {/* Credit card */}
       <Collapse open={selectedPaymentMethod === "CREDIT_CARD"}>
-        {creditCards.length > 0 && getPaymentMethodInfo(
-          selectedPaymentMethod,
-          order.source,
-          order.availablePaymentMethods
-        )}
+        {creditCards.length > 0 &&
+          getPaymentMethodInfo(
+            selectedPaymentMethod,
+            order.source,
+            order.availablePaymentMethods
+          )}
         <Spacer y={2} />
         <Flex
           style={{
@@ -114,6 +115,7 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
             me={me}
             order={order}
             innerRef={CreditCardPicker}
+            tracking={tracking}
           />
         </Flex>
         <Spacer y={4} />

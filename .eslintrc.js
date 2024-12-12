@@ -1,6 +1,6 @@
 module.exports = {
   parser: "@typescript-eslint/parser",
-
+  ignorePatterns: ["src/__generated__/**/*"],
   plugins: [
     "react-hooks",
     "@typescript-eslint",

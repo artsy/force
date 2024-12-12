@@ -5,7 +5,9 @@
 // on process.env and sharify.
 //
 
-import { tryParse } from "Utils/tryParse"
+// We need to bootstrap sharify in the build file where absolute paths aren't supported
+// eslint-disable-next-line no-relative-import-paths/no-relative-import-paths
+import { tryParse } from "../Utils/tryParse"
 
 // Warn if this file is included client-side
 if (process.env.NODE_ENV !== "test") {
@@ -34,7 +36,7 @@ export const ARTSY_EDITORIAL_CHANNEL: any = "5759e3efb5989e6f98f77993"
 export const ARTSY_MERCHANDISING_PARTNER_SLUGS: any = null
 export const ALLOWED_REDIRECT_HOSTS: any = "localhost"
 export const CASCADING_AUCTION_HELP_ARTICLE_LINK: any = null
-export const CDN_URL: any = "https://d1s2w0upia4e9w.cloudfront.net"
+export const CDN_URL: any = ""
 export const CLIENT_ID: any = null
 export const CLIENT_SECRET: any = null
 export const CMS_URL: any = "https://cms.artsy.net"
@@ -65,7 +67,6 @@ export const GALLERY_PARTNER_UPDATES_CHANNEL: any = "5762d454b5989e6f98f7799a" /
 export const GEMINI_ACCOUNT_KEY: any = "force-staging"
 export const GEMINI_APP: any = "http://localhost:3004"
 export const GEMINI_CLOUDFRONT_URL: any = "https://d7hftxdivxxvm.cloudfront.net"
-export const GENOME_URL: any = "https://helix.artsy.net"
 export const GEODATA_URL: any =
   "http://artsy-geodata.s3-website-us-east-1.amazonaws.com"
 export const GOOGLE_ADWORDS_ID: any = null
@@ -109,6 +110,7 @@ export const SMARTY_EMBEDDED_KEY_JSON: any = {}
 export const STRIPE_PUBLISHABLE_KEY: any = null
 export const TARGET_CAMPAIGN_URL: any = "/seattle-art-fair-2017"
 export const THIRD_PARTIES_DISABLED: any = false
+export const TOOLS_URL: any = "https://tools.artsy.net"
 export const TRACK_PAGELOAD_PATHS: any = null
 export const UNLEASH_API: any = null
 export const UNLEASH_APP_NAME: any = null

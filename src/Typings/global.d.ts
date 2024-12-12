@@ -16,6 +16,23 @@ declare global {
   }
 
   interface Window {
+    __webpack_public_path__: string
+    __getPublicPath: () => string
+    __BOOTSTRAP__?: any
+    __googleMapsCallback?: () => void
+    __RELAY_HYDRATION_DATA__: string
+    _sift: any
+    analytics: any
+    braze?: typeof Braze
+    desktopPageTimeTrackers: [{ path: string; reset: (path) => void }]
+    embeddedservice_bootstrap?: any
+    grecaptcha: any
+    ReactNativeWebView?: { postMessage: (message: string) => void }
+    sd: any
+    // Zendesk properties
+    zEmbed: { show: () => void; hide: () => void }
+    zESettings: object
+
     analytics?: {
       __artsyClientSideRoutingReferrer?: string
       identify: (userId: string, traits: object, object) => void
@@ -38,20 +55,6 @@ declare global {
       enableLoggerInProd: () => void
       isLoggerEnabled?: boolean
     }
-    __BOOTSTRAP__?: any
-    __googleMapsCallback?: () => void
-    __RELAY_HYDRATION_DATA__: string
-    _sift: any
-    analytics: any
-    braze?: typeof Braze
-    desktopPageTimeTrackers: [{ path: string; reset: (path) => void }]
-    embeddedservice_bootstrap?: any
-    grecaptcha: any
-    ReactNativeWebView?: { postMessage: (message: string) => void }
-    sd: any
-    // Zendesk properties
-    zEmbed: { show: () => void; hide: () => void }
-    zESettings: object
   }
 }
 

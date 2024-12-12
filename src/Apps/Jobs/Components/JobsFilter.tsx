@@ -20,7 +20,9 @@ interface JobsFilterProps {
   viewer: JobsFilter_viewer$data
 }
 
-const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({ viewer }) => {
+const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({
+  viewer,
+}) => {
   const locations = useMemo(
     () =>
       uniq(
@@ -33,17 +35,13 @@ const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({ viewer }) =>
   )
 
   const departments = useMemo(() => {
-    const department = viewer.departments.find(department => {
-      return department.id === LEADGEN_DEPARTMENT_ID
-    })
-
-    return [
-      ...viewer.departments.filter(department => {
-        return department.id !== LEADGEN_DEPARTMENT_ID
-      }),
-      ...(department ? [department] : []),
-    ]
-  }, [viewer.departments])
+    // Jobs grouped by department
+    return viewer.jobs.reduce((acc, job) => {
+      acc[job.departmentName] = acc[job.departmentName] || []
+      acc[job.departmentName].push(job)
+      return acc
+    }, {} as Record<string, any[]>)
+  }, [viewer.jobs])
 
   const [selection, setSelection] = useState<string[]>([])
 
@@ -110,25 +108,25 @@ const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({ viewer }) =>
 
       {/* Unfiltered results, grouped by department */}
       {selection.length === 0 &&
-        departments.map(department => {
-          if (department.jobs.length === 0) {
+        Object.entries(departments).map(([departmentName, jobs]) => {
+          if (jobs.length === 0) {
             return null
           }
 
           return (
-            <Fragment key={department.id}>
+            <Fragment key={departmentName}>
               <Column span={4}>
-                <Text variant="lg-display">{department.name}</Text>
+                <Text variant="lg-display">{departmentName}</Text>
 
                 <Text variant="lg-display" color="black60">
-                  {department.jobs.length} open position
-                  {department.jobs.length === 1 ? "" : "s"}
+                  {jobs.length} open position
+                  {jobs.length === 1 ? "" : "s"}
                 </Text>
               </Column>
 
               <Column span={8}>
                 <Join separator={<Spacer y={2} />}>
-                  {department.jobs.map(job => {
+                  {jobs.map(job => {
                     return <JobLinkFragmentContainer key={job.id} job={job} />
                   })}
                 </Join>
@@ -147,14 +145,7 @@ export const JobsFilterFragmentContainer = createFragmentContainer(JobsFilter, {
         ...JobLink_job
         id
         location
-      }
-      departments {
-        id
-        name
-        jobs {
-          ...JobLink_job
-          id
-        }
+        departmentName
       }
     }
   `,

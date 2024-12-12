@@ -14,10 +14,10 @@ import {
   ShipValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { MockBoot } from "DevTools/MockBoot"
-import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { SavedAddressesTestQuery } from "__generated__/SavedAddressesTestQuery.graphql"
+import { fillAddressFormFields } from "Components/Address/__tests__/utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -25,9 +25,10 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-jest.setTimeout(10000)
+// Long-running tests when we `fillAddressFormFields()`
+jest.setTimeout(15000)
 
-let testProps: Omit<SavedAddressesProps, "me">
+let testProps: SavedAddressesProps
 let mockShippingContext: ShippingContextProps
 const mockFormikSubmit = jest.fn()
 const mockExecuteUserAddressAction = jest.fn()
@@ -194,11 +195,11 @@ describe("Saved Addresses", () => {
 
       expect(await screen.findByText("Add address")).toBeInTheDocument()
 
-      const nameInput = screen.getByPlaceholderText("Full name")
+      const nameInput = screen.getByPlaceholderText("Add full name")
       expect(nameInput).toBeInTheDocument()
       expect(nameInput).toHaveDisplayValue("")
 
-      const streetInput = screen.getByPlaceholderText("Street address")
+      const streetInput = screen.getByPlaceholderText("Add street address")
       expect(streetInput).toBeInTheDocument()
       expect(streetInput).toHaveDisplayValue("")
     })
@@ -220,22 +221,13 @@ describe("Saved Addresses", () => {
       })
     })
 
-    // Test takes too long to run
-    // eslint-disable-next-line jest/no-disabled-tests
+    // Previously disabled due to timeouts
     it.skip("calls the parent formik context onSubmit when the user saves a new address", async () => {
-      let startTime = Date.now()
-      const logTime = (label: string) => {
-        console.log(label, Date.now() - startTime)
-        startTime = Date.now()
-      }
-      logTime("start")
-
       renderWithRelay({
         Me: () => ({
           addressConnection: basicAddressList,
         }),
       })
-      logTime("rendered")
 
       const validAddress = {
         name: "Test Name",
@@ -248,34 +240,29 @@ describe("Saved Addresses", () => {
         phoneNumber: "555-555-5555",
       }
       const addAddressButton = screen.getByText("Add a new address")
-      await userEvent.click(addAddressButton)
-      logTime("clicked button")
+      userEvent.click(addAddressButton)
 
       screen.getByText("Add address")
-      logTime("found modal, filling")
 
-      await fillAddressForm(validAddress)
-
-      await flushPromiseQueue()
-      logTime("filled")
+      await fillAddressFormFields(validAddress)
 
       mockExecuteUserAddressAction.mockResolvedValueOnce({
         data: { ...validAddress },
       })
-      logTime("resolved")
 
-      await userEvent.click(screen.getByText("Save"))
-
-      await flushPromiseQueue()
-      logTime("clicked save")
-
-      expect(testProps.onSelect).toHaveBeenCalledWith(
-        expect.objectContaining(validAddress)
+      await waitFor(
+        () => {
+          userEvent.click(screen.getByText("Save"))
+        },
+        // Bottleneck waiting for form updates
+        { timeout: 4000 }
       )
-      logTime("asserted")
 
-      await flushPromiseQueue()
-
+      await waitFor(() =>
+        expect(testProps.onSelect).toHaveBeenCalledWith(
+          expect.objectContaining(validAddress)
+        )
+      )
       expect(testProps.onSelect).toHaveBeenCalledTimes(1)
     })
   })
@@ -298,7 +285,7 @@ describe("Saved Addresses", () => {
 
       expect(await screen.findByText("Edit address")).toBeInTheDocument()
       expect(screen.getByDisplayValue("Test Name")).toBeInTheDocument()
-      expect(screen.getByPlaceholderText("Street address")).toHaveValue(
+      expect(screen.getByPlaceholderText("Add street address")).toHaveValue(
         "1 Main St"
       )
     })

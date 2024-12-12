@@ -23,9 +23,9 @@ interface HomeEmergingPicksArtworksRailProps {
   viewer: HomeEmergingPicksArtworksRail_viewer$data
 }
 
-export const HomeEmergingPicksArtworksRail: React.FC<React.PropsWithChildren<HomeEmergingPicksArtworksRailProps>> = ({
-  viewer,
-}) => {
+export const HomeEmergingPicksArtworksRail: React.FC<React.PropsWithChildren<
+  HomeEmergingPicksArtworksRailProps
+>> = ({ viewer }) => {
   const { trackEvent } = useTracking()
 
   const artworks = extractNodes(viewer.artworksConnection)
@@ -37,7 +37,7 @@ export const HomeEmergingPicksArtworksRail: React.FC<React.PropsWithChildren<Hom
   return (
     <ArtworkGridContextProvider hideSignals>
       <Rail
-        title="Curators’ Picks: Emerging"
+        title="Curators’ Picks"
         subTitle="The best works by rising talents on Artsy, all available now."
         viewAllLabel="View All Works"
         viewAllHref="/collection/curators-picks-emerging"
@@ -121,7 +121,9 @@ export const HomeEmergingPicksArtworksRailFragmentContainer = createFragmentCont
   }
 )
 
-export const HomeEmergingPicksArtworksRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeEmergingPicksArtworksRailQueryRenderer: React.FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   return (
     <SystemQueryRenderer<HomeEmergingPicksArtworksRailQuery>
       placeholder={PLACEHOLDER}
@@ -156,7 +158,7 @@ export const HomeEmergingPicksArtworksRailQueryRenderer: React.FC<React.PropsWit
 const PLACEHOLDER = (
   <Skeleton>
     <Rail
-      title="Curators’ Picks: Emerging"
+      title="Curators’ Picks"
       subTitle="The best works by rising talents on Artsy, all available now."
       getItems={() => {
         return [...new Array(8)].map((_, i) => {

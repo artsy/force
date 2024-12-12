@@ -30,7 +30,6 @@
 !.nvmrc
 !.prettierignore
 !apollo.config.js
-!babel.config.js
 !dangerfile.ts
 !package.json
 !relay.config.js
