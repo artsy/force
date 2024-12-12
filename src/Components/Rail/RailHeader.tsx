@@ -1,8 +1,6 @@
 import { Box, Flex, SkeletonText, Sup, Text as BaseText } from "@artsy/palette"
 import * as React from "react"
 import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Hooks/useRouter"
-import { getENV } from "Utils/getENV"
 import { getInternalHref } from "Utils/url"
 
 export interface RailHeaderProps {
@@ -103,6 +101,7 @@ export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
 }
 
 // FIXME; Reenable once we understand what this does
+/**
 const useReturnTo = (href?: string | null): string | null => {
   const router = useRouter()
 
@@ -121,3 +120,4 @@ const useReturnTo = (href?: string | null): string | null => {
     return href
   }
 }
+*/
