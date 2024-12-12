@@ -17,6 +17,7 @@ import { setupServerRouter } from "System/Router/serverRouter"
 import { getRoutes } from "System/Router/Utils/routeUtils"
 import { initializeMiddleware } from "middleware"
 import { errorHandlerMiddleware } from "Server/middleware/errorHandler"
+import { redirectCollectionToArtistSeries } from "Apps/Collect/Server/redirectCollectionToArtistSeries"
 
 const app = express()
 
@@ -24,6 +25,12 @@ const app = express()
 initializeMiddleware(app)
 
 const { routes, routePaths } = getRoutes()
+
+// Pre-emptive redirects
+//
+// These selectively match routes that would otherwise be handled by
+// the route matchers below
+app.get("/collection/:slug", redirectCollectionToArtistSeries)
 
 // React app routes
 app.get(
