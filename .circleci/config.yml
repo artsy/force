@@ -257,6 +257,14 @@ jobs:
               ./scripts/build_review_app.sh $review_app_name
             fi
 
+  create_review_app_subdomain:
+    executor: node-executor
+    steps:
+      - checkout
+      - run:
+          name: Create Cloudflare DNS namespace
+          command: node scripts/create-review-app-subdomain.js
+
 workflows:
   default:
     jobs:
@@ -373,11 +381,22 @@ workflows:
             - horizon/block
             - validate_production_schema
 
+      # Review Apps
       - create_or_update_review_app:
-          context: hokusai
+          context:
+            - hokusai
           filters:
             branches:
               only: /^review-app-.*/
           pre-steps:
             - run:
                 command: echo 'export DOCKER_BUILDKIT=1; export BUILDKIT_PROGRESS=plain; export COMPOSE_DOCKER_CLI_BUILD=1;' >> $BASH_ENV
+
+      - create_review_app_subdomain:
+          context:
+            - cloudflare
+          filters:
+            branches:
+              only: /^review-app-.*/
+          requires:
+            - create_or_update_review_app
