@@ -3,8 +3,20 @@ import path from "path"
 import fs from "fs"
 
 const HINTS_PATH = path.join(process.cwd(), "dist", "early-hints.json")
+const PRIORITY_IMAGE_REGEX = /<img\s[^>]*fetchpriority="high"[^>]*>/gi
+const IMAGE_SRC_REGEX = /\bsrc="([^"]+)"/i
 
-export const getWebpackEarlyHints = (): {
+const cdnUrl = (() => {
+  if (process.env.NODE_ENV === "development") {
+    return ""
+  }
+
+  return CDN_URL
+})()
+
+export const getEarlyHints = (
+  body: string
+): {
   linkHeaders: string[]
   linkPreloadTags: string[]
 } => {
@@ -13,24 +25,13 @@ export const getWebpackEarlyHints = (): {
   try {
     chunkFiles = JSON.parse(fs.readFileSync(HINTS_PATH, "utf-8"))
   } catch (error) {
-    console.error(
-      "[getWebpackEarlyHints] Could not load webpack early-hints.json:",
-      error
-    )
+    console.error("[getEarlyHints] Could not load early-hints.json:", error)
 
     return {
       linkHeaders: [],
       linkPreloadTags: [],
     }
   }
-
-  const cdnUrl = (() => {
-    if (process.env.NODE_ENV === "development") {
-      return ""
-    }
-
-    return CDN_URL
-  })()
 
   const links = chunkFiles.reduce(
     (acc, file) => {
@@ -45,6 +46,11 @@ export const getWebpackEarlyHints = (): {
       linkPreloadTags: [],
     }
   )
+
+  const mainImage = body.match(PRIORITY_IMAGE_REGEX)?.[0]
+  const mainImageSrc = mainImage?.match(IMAGE_SRC_REGEX)?.[1]
+  if (mainImageSrc)
+    links.linkHeaders.unshift(`<${mainImageSrc}>; rel=preload; as=image`)
 
   return links
 }
