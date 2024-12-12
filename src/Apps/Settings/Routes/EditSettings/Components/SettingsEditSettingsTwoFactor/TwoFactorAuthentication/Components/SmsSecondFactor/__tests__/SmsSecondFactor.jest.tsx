@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { SmsSecondFactorRefetchContainer } from "../index"
+import { SmsSecondFactorRefetchContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/SmsSecondFactor/index"
 
 jest.unmock("react-relay")
 

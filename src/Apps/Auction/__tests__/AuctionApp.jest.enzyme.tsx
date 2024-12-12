@@ -346,14 +346,18 @@ describe("AuctionApp", () => {
 
   describe("salesforce widget", () => {
     it("embeds Salesforce widget", () => {
-      mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+      mockGetENV.mockImplementation(() => ({
+        SALESFORCE_MESSAGE_ENABLED: true,
+      }))
       const { wrapper } = getWrapper()
       expect(wrapper.find("SalesforceWrapper").exists()).toBeFalsy()
     })
 
     it("does not embed Salesforce widget on mobile", () => {
       breakpoint = "xs"
-      mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+      mockGetENV.mockImplementation(() => ({
+        SALESFORCE_MESSAGE_ENABLED: true,
+      }))
       const { wrapper } = getWrapper()
       expect(wrapper.find("SalesforceWrapper").exists()).toBeFalsy()
     })

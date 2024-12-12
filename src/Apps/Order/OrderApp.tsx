@@ -94,7 +94,7 @@ const OrderApp: FC<React.PropsWithChildren<OrderAppProps>> = props => {
       return null
     }
 
-    if (!getENV("SALESFORCE_CHAT_ENABLED")) {
+    if (!getENV("SALESFORCE_MESSAGE_ENABLED")) {
       return null
     }
 

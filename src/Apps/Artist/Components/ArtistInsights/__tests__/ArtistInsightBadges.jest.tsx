@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react"
-import { ArtistInsightBadgesFragmentContainer } from "../ArtistInsightBadges"
+import { ArtistInsightBadgesFragmentContainer } from "Apps/Artist/Components/ArtistInsights/ArtistInsightBadges"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 
