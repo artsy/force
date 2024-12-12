@@ -29,9 +29,9 @@ interface AuctionArtworkFilterProps {
   viewer: AuctionArtworkFilter_viewer$data
 }
 
-const AuctionArtworkFilter: React.FC<React.PropsWithChildren<AuctionArtworkFilterProps>> = ({
-  viewer,
-}) => {
+const AuctionArtworkFilter: React.FC<React.PropsWithChildren<
+  AuctionArtworkFilterProps
+>> = ({ viewer }) => {
   const { user } = useSystemContext()
   const { match } = useRouter()
 
@@ -122,7 +122,9 @@ export const AuctionArtworkFilterRefetchContainer = createRefetchContainer(
 
 interface AuctionArtworkFilterQueryRendererProps {}
 
-export const AuctionArtworkFilterQueryRenderer: React.FC<React.PropsWithChildren<AuctionArtworkFilterQueryRendererProps>> = rest => {
+export const AuctionArtworkFilterQueryRenderer: React.FC<React.PropsWithChildren<
+  AuctionArtworkFilterQueryRendererProps
+>> = rest => {
   const { relayEnvironment } = useSystemContext()
   const { match } = useRouter()
 
