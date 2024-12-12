@@ -38,31 +38,31 @@ export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
           links: [
             {
               text: "Art under $500",
-              href: "/collect?price_range=%2A-500&metric=in",
+              href: "/collect?price_range=%2A-500",
             },
             {
               text: "Art under $1,000",
-              href: "/collect?price_range=%2A-1000&metric=in",
+              href: "/collect?price_range=%2A-1000",
             },
             {
               text: "Art under $2,500",
-              href: "/collect?price_range=%2A-2500&metric=in",
+              href: "/collect?price_range=%2A-2500",
             },
             {
               text: "Art under $5,000",
-              href: "/collect?price_range=%2A-5000&metric=in",
+              href: "/collect?price_range=%2A-5000",
             },
             {
               text: "Art under $10,000",
-              href: "/collect?price_range=%2A-10000&metric=in",
+              href: "/collect?price_range=%2A-10000",
             },
             {
               text: "Art under $25,000",
-              href: "/collect?price_range=%2A-25000&metric=in",
+              href: "/collect?price_range=%2A-25000",
             },
             {
               text: "Art above $25,000",
-              href: "/collect?price_range=25000-%2A&metric=in",
+              href: "/collect?price_range=25000-%2A",
             },
           ],
         },
@@ -74,19 +74,19 @@ export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
           links: [
             {
               text: "New from Leading Galleries",
-              href: "/collection/new-from-leading-galleries?metric=in",
+              href: "/collection/new-from-leading-galleries",
             },
             {
               text: "New from Tastemaking Galleries",
-              href: "/collection/new-from-tastemaking-galleries?metric=in",
+              href: "/collection/new-from-tastemaking-galleries",
             },
             {
               text: "New from Small Galleries",
-              href: "/collection/new-from-small-galleries?metric=in",
+              href: "/collection/new-from-small-galleries",
             },
             {
               text: "New from Nonprofits",
-              href: "/collection/new-from-nonprofits?metric=in",
+              href: "/collection/new-from-nonprofits",
             },
             {
               text: "The Artsy Edition Shop",
@@ -211,7 +211,7 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
             },
             {
               text: "Takashi Murakami",
-              href: "/artist/takashi-murakami?metric=in",
+              href: "/artist/takashi-murakami",
             },
             {
               text: "Jenny Holzer",
@@ -231,23 +231,23 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           links: [
             {
               text: "Faith Ringgold",
-              href: "/artist/faith-ringgold?metric=in",
+              href: "/artist/faith-ringgold",
             },
             {
               text: "Lucy Bull",
-              href: "/artist/lucy-bull?metric=in",
+              href: "/artist/lucy-bull",
             },
             {
               text: "Martin Wong",
-              href: "/artist/martin-wong?metric=in",
+              href: "/artist/martin-wong",
             },
             {
               text: "Reggie Burrows Hodges",
-              href: "/artist/reggie-burrows-hodges?metric=in",
+              href: "/artist/reggie-burrows-hodges",
             },
             {
               text: "Ana Mendieta",
-              href: "/artist/ana-mendieta?metric=in",
+              href: "/artist/ana-mendieta",
             },
           ],
         },
@@ -263,15 +263,15 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
             },
             {
               text: "Francesca Mollett",
-              href: "/artist/francesca-mollett?metric=in",
+              href: "/artist/francesca-mollett",
             },
             {
               text: "Jessie Stevenson",
-              href: "/artist/jessie-stevenson?metric=in",
+              href: "/artist/jessie-stevenson",
             },
             {
               text: "Soojin Kang",
-              href: "/artist/soojin-kang?metric=in",
+              href: "/artist/soojin-kang",
             },
             {
               text: "Sam Moyer",
@@ -321,11 +321,11 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
           links: [
             {
               text: "Cool-Toned Artworks",
-              href: "/collection/cool-toned-artworks?metric=in",
+              href: "/collection/cool-toned-artworks",
             },
             {
               text: "Warm-Toned Artworks",
-              href: "/collection/warm-toned-artworks?metric=in",
+              href: "/collection/warm-toned-artworks",
             },
             {
               text: "Neutral Artworks",
@@ -349,7 +349,7 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
             },
             {
               text: "Emerging Art",
-              href: "/collection/emerging-art?metric=in",
+              href: "/collection/emerging-art",
             },
             {
               text: "Post-War Art",
@@ -357,7 +357,7 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
             },
             {
               text: "Abstract Art",
-              href: "/collection/abstract-art?metric=in",
+              href: "/collection/abstract-art",
             },
             {
               text: "Minimalist Art",
@@ -369,7 +369,7 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
             },
             {
               text: "Impressionist and Modern Art",
-              href: "/collection/impressionist-and-modern?metric=in",
+              href: "/collection/impressionist-and-modern",
             },
             {
               text: "Street Art",
@@ -389,19 +389,19 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
             },
             {
               text: "Prints",
-              href: "/collection/prints?metric=in",
+              href: "/collection/prints",
             },
             {
               text: "Works on Paper",
-              href: "/collection/works-on-paper?metric=in",
+              href: "/collection/works-on-paper",
             },
             {
               text: "Photography",
-              href: "/collection/photography?metric=in",
+              href: "/collection/photography",
             },
             {
               text: "Sculpture",
-              href: "/collection/sculpture?metric=in",
+              href: "/collection/sculpture",
             },
             {
               text: "Ceramics",
@@ -409,11 +409,11 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
             },
             {
               text: "Textile Art",
-              href: "/collection/textile-art?metric=in",
+              href: "/collection/textile-art",
             },
             {
               text: "Design Objects and Furniture",
-              href: "/collection/design?metric=in",
+              href: "/collection/design",
             },
           ],
         },
