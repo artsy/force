@@ -1,7 +1,6 @@
 import loadable from "@loadable/component"
 import { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
-import { redirectCollectionToArtistSeries } from "./Server/redirectCollectionToArtistSeries"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 
@@ -64,7 +63,6 @@ export const collectRoutes: RouteProps[] = [
     path: "/collection/:slug",
     serverCacheTTL: serverCacheTTLs.collections,
     getComponent: () => CollectionApp,
-    onServerSideRender: redirectCollectionToArtistSeries,
     onPreloadJS: () => {
       CollectionApp.preload()
     },

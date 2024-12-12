@@ -18,7 +18,7 @@ export function linkHeadersMiddleware(
   if (!res.headersSent) {
     res.header("Link", [
       `<${CDN_URL}>; rel=preconnect; crossorigin`,
-      `<${GEMINI_CLOUDFRONT_URL}>; rel=preconnect; crossorigin`,
+      `<${GEMINI_CLOUDFRONT_URL}>; rel=preconnect;`,
       `<${WEBFONT_URL}>; rel=preconnect; crossorigin`,
       `<${WEBFONT_URL}/all-webfonts.css>; rel=preload; as=style`,
       `<${WEBFONT_URL}/ll-unica77_regular.woff2>; rel=preload; as=font; crossorigin`,

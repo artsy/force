@@ -1,4 +1,5 @@
 import { redirectCollectionToArtistSeries } from "Apps/Collect/Server/redirectCollectionToArtistSeries"
+import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 
 describe("redirectCollectionToArtistSeries", () => {
   it("does not redirect for a non-migrated artist series", () => {
@@ -11,7 +12,13 @@ describe("redirectCollectionToArtistSeries", () => {
       redirect: jest.fn(),
       locals: { sd: {} },
     }
-    redirectCollectionToArtistSeries({ req, res })
+    const next = jest.fn()
+
+    redirectCollectionToArtistSeries(
+      (req as unknown) as ArtsyRequest,
+      (res as unknown) as ArtsyResponse,
+      next
+    )
     expect(res.redirect).not.toHaveBeenCalled()
   })
 
@@ -28,8 +35,14 @@ describe("redirectCollectionToArtistSeries", () => {
         sd: {},
       },
     }
+    const next = jest.fn()
 
-    redirectCollectionToArtistSeries({ req, res })
+    redirectCollectionToArtistSeries(
+      (req as unknown) as ArtsyRequest,
+      (res as unknown) as ArtsyResponse,
+      next
+    )
+
     expect(spy).toHaveBeenCalledWith(
       301,
       "/artist-series/kaws-4-foot-companion"
