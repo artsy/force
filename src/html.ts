@@ -49,7 +49,7 @@ export function buildHtmlTemplate({
 
       <!-- Preconnect to CDNs -->
       <link rel="preconnect" href="${cdnUrl}" crossorigin />
-      <link rel="preconnect" href="${imageCdnUrl}" crossorigin />
+      <link rel="preconnect" href="${imageCdnUrl}" />
 
       <!-- Create preload tags for most common fonts -->
       <link rel="preconnect" href="${fontUrl}" crossorigin />
