@@ -1,6 +1,8 @@
 import { Box, Flex, SkeletonText, Sup, Text as BaseText } from "@artsy/palette"
+import { useRouter } from "found"
 import * as React from "react"
 import { RouterLink } from "System/Components/RouterLink"
+import { getENV } from "Utils/getENV"
 import { getInternalHref } from "Utils/url"
 
 export interface RailHeaderProps {
@@ -45,9 +47,7 @@ export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
 
   const showViewAll = Boolean(viewAllLabel && _viewAllHref)
 
-  // FIXME: Understand what this does. disabling because query params are
-  // breaking slugID parsing on auctions pages and that's bad.
-  // const viewAllHref = useReturnTo(_viewAllHref)
+  const viewAllHref = useReturnTo(_viewAllHref)
 
   return (
     <Flex justifyContent="space-between" alignItems="center">
@@ -61,7 +61,7 @@ export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
         >
           <RailHeaderTitle
             title={title}
-            viewAllHref={_viewAllHref}
+            viewAllHref={viewAllHref}
             viewAllOnClick={viewAllOnClick}
           />{" "}
           {countLabel && countLabel > 1 && (
@@ -90,7 +90,7 @@ export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
           flexShrink={0}
           // @ts-ignore
           as={RouterLink}
-          to={_viewAllHref}
+          to={viewAllHref}
           onClick={viewAllOnClick}
         >
           {viewAllLabel}
@@ -100,14 +100,12 @@ export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
   )
 }
 
-// FIXME; Reenable once we understand what this does
-/**
 const useReturnTo = (href?: string | null): string | null => {
   const router = useRouter()
 
   if (!href) return null
 
-  const referrer = router.match?.location?.pathname
+  const referrer = router?.match?.location?.pathname
 
   if (!referrer) return href
 
@@ -120,4 +118,3 @@ const useReturnTo = (href?: string | null): string | null => {
     return href
   }
 }
-*/
