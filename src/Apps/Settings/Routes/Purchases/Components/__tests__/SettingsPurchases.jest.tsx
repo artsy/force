@@ -122,7 +122,7 @@ describe("SettingsPurchases", () => {
   })
 
   describe("order with offer awaiting for collector reply", () => {
-    it("renders Counteroffer received status", () => {
+    it("renders Counteroffer received status for regular offer received", () => {
       renderWithRelay({
         Me: () => ({
           orders: {
@@ -132,6 +132,46 @@ describe("SettingsPurchases", () => {
                   code: "123",
                   displayState: "SUBMITTED",
                   buyerAction: "OFFER_RECEIVED",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(screen.getByText("Counteroffer received")).toBeInTheDocument()
+    })
+
+    it("renders Counteroffer received status for offer received on originally incomplete offer", () => {
+      renderWithRelay({
+        Me: () => ({
+          orders: {
+            edges: [
+              {
+                node: {
+                  code: "123",
+                  displayState: "SUBMITTED",
+                  buyerAction: "OFFER_RECEIVED_CONFIRM_NEEDED",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(screen.getByText("Counteroffer received")).toBeInTheDocument()
+    })
+
+    it("renders Counteroffer received status when partner confirms originally incomplete offer", () => {
+      renderWithRelay({
+        Me: () => ({
+          orders: {
+            edges: [
+              {
+                node: {
+                  code: "123",
+                  displayState: "SUBMITTED",
+                  buyerAction: "OFFER_ACCEPTED_CONFIRM_NEEDED",
                 },
               },
             ],
