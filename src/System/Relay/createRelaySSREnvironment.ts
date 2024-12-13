@@ -26,6 +26,7 @@ import {
   hasPersonalizedArguments,
   isRequestCacheable,
 } from "System/Relay/isRequestCacheable"
+import { cdnCacheStatusMiddleware } from "System/Relay/middleware/cdnCacheStatusMiddleware"
 
 const logger = createLogger("System/Relay/createRelaySSREnvironment")
 
@@ -138,6 +139,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
     metaphysicsErrorHandlerMiddleware({ checkStatus }),
     cacheHeaderMiddleware({ url, user }),
     cacheLoggerMiddleware(),
+    cdnCacheStatusMiddleware(),
     loggingEnabled && loggerMiddleware(),
     loggingEnabled && metaphysicsExtensionsLoggerMiddleware(),
     loggingEnabled && errorMiddleware({ disableServerMiddlewareTip: true }),

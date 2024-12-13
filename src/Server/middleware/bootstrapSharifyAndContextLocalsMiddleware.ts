@@ -84,3 +84,8 @@ export function updateContext(key: string, value: any) {
   const asyncLocalStorage = getAsyncLocalStorage()
   asyncLocalStorage.getStore()?.set(key, value)
 }
+
+export function getContext(key: string): any {
+  const asyncLocalStorage = getAsyncLocalStorage()
+  return asyncLocalStorage.getStore()?.get(key)
+}

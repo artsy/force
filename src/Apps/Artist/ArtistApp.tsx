@@ -7,15 +7,26 @@ import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta/ArtistMeta"
 import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
 import { Jump } from "Utils/Hooks/useJump"
+import { getContext } from "Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
+import { cdnCacheStatusCacheKey } from "System/Relay/middleware/cdnCacheStatusMiddleware"
+import { Match } from "found"
 
 interface ArtistAppProps {
   artist: ArtistApp_artist$data
+  match: Match
 }
 
 const ArtistApp: React.FC<React.PropsWithChildren<ArtistAppProps>> = ({
   artist,
   children,
+  match,
 }) => {
+  const queryName = "artistRoutes_ArtistAppQuery"
+  const cacheStatus = getContext(
+    cdnCacheStatusCacheKey(queryName, match.params)
+  )
+  console.log("cacheStatus", cacheStatus)
+
   useScrollToOpenArtistAuthModal({ name: artist.name })
 
   return (
