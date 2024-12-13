@@ -24,7 +24,9 @@ interface HomeHeroUnitProps {
   onClick?: () => void
 }
 
-export const HomeHeroUnit: React.FC<React.PropsWithChildren<HomeHeroUnitProps>> = props => {
+export const HomeHeroUnit: React.FC<React.PropsWithChildren<
+  HomeHeroUnitProps
+>> = props => {
   return (
     <Box width="100%" height="100%">
       <Media at="xs">
@@ -38,11 +40,9 @@ export const HomeHeroUnit: React.FC<React.PropsWithChildren<HomeHeroUnitProps>> 
   )
 }
 
-const HomeHeroUnitSmall: React.FC<React.PropsWithChildren<HomeHeroUnitProps>> = ({
-  heroUnit,
-  index,
-  onClick,
-}) => {
+const HomeHeroUnitSmall: React.FC<React.PropsWithChildren<
+  HomeHeroUnitProps
+>> = ({ heroUnit, index, onClick }) => {
   const imageUrl = heroUnit.image?.imageURL
   const image = imageUrl && cropped(imageUrl, { width: 500, height: 333 })
   const href = getInternalHref(heroUnit.link.url)
@@ -95,11 +95,9 @@ const HomeHeroUnitSmall: React.FC<React.PropsWithChildren<HomeHeroUnitProps>> = 
   )
 }
 
-const HomeHeroUnitLarge: React.FC<React.PropsWithChildren<HomeHeroUnitProps>> = ({
-  heroUnit,
-  index,
-  onClick,
-}) => {
+const HomeHeroUnitLarge: React.FC<React.PropsWithChildren<
+  HomeHeroUnitProps
+>> = ({ heroUnit, index, onClick }) => {
   const imageUrl = heroUnit.image?.imageURL
   const image = imageUrl && cropped(imageUrl, { width: 1270, height: 500 })
   const href = getInternalHref(heroUnit.link.url)

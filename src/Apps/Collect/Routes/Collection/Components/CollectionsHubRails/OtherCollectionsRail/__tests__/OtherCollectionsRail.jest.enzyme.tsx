@@ -20,6 +20,7 @@ jest.mock("react-tracking")
 jest.mock("found", () => ({
   Link: props => <div>{props.children}</div>,
   RouterContext: jest.requireActual("found").RouterContext,
+  useRouter: jest.fn(),
 }))
 
 describe("CollectionsRail", () => {
