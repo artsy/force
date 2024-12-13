@@ -18,37 +18,38 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { HomeHeroUnit_heroUnit$data } from "__generated__/HomeHeroUnit_heroUnit.graphql"
 import { getInternalHref } from "Utils/url"
 
-export interface HomeHeroUnitBaseProps {
-  title: string
-  body: string
-  imageUrl?: string | null
-  credit?: string | null
-  label?: string | null
-  link: {
-    text: string
-    url: {
-      desktop: string
-      mobile: string
-    }
-  }
+interface HomeHeroUnitProps {
+  heroUnit: HomeHeroUnit_heroUnit$data
   index: number
   onClick?: () => void
 }
 
-const HomeHeroUnitBaseSmall: React.FC<HomeHeroUnitBaseProps> = ({
-  title,
-  body,
-  imageUrl,
-  link,
+export const HomeHeroUnit: React.FC<React.PropsWithChildren<HomeHeroUnitProps>> = props => {
+  return (
+    <Box width="100%" height="100%">
+      <Media at="xs">
+        <HomeHeroUnitSmall {...props} />
+      </Media>
+
+      <Media greaterThan="xs">
+        <HomeHeroUnitLarge {...props} />
+      </Media>
+    </Box>
+  )
+}
+
+const HomeHeroUnitSmall: React.FC<React.PropsWithChildren<HomeHeroUnitProps>> = ({
+  heroUnit,
   index,
   onClick,
 }) => {
-  const image = imageUrl ? cropped(imageUrl, { width: 500, height: 333 }) : null
-  const href = getInternalHref(link.url.mobile)
+  const imageUrl = heroUnit.image?.imageURL
+  const image = imageUrl && cropped(imageUrl, { width: 500, height: 333 })
+  const href = getInternalHref(heroUnit.link.url)
 
   return (
     <RouterLink
-      aria-label={`${title} - ${body}`}
+      aria-label={`${heroUnit.title} - ${heroUnit.body}`}
       bg="black5"
       display="block"
       height="100%"
@@ -77,37 +78,32 @@ const HomeHeroUnitBaseSmall: React.FC<HomeHeroUnitBaseProps> = ({
 
       <Box p={4}>
         <Text as={index === 0 ? "h1" : "h2"} variant="lg-display" lineClamp={3}>
-          {title}
+          {heroUnit.title}
         </Text>
 
         <Spacer y={1} />
 
         <Text variant="xs" color="black60" lineClamp={4}>
-          {body}
+          {heroUnit.body}
         </Text>
 
         <Spacer y={1} />
 
-        <Text variant="xs">{link.text}</Text>
+        <Text variant="xs">{heroUnit.link.text}</Text>
       </Box>
     </RouterLink>
   )
 }
 
-const HomeHeroUnitBaseLarge: React.FC<HomeHeroUnitBaseProps> = ({
-  title,
-  body,
-  imageUrl,
-  credit,
-  label,
-  link,
+const HomeHeroUnitLarge: React.FC<React.PropsWithChildren<HomeHeroUnitProps>> = ({
+  heroUnit,
   index,
   onClick,
 }) => {
-  const image = imageUrl
-    ? cropped(imageUrl, { width: 1270, height: 500 })
-    : null
-  const href = getInternalHref(link.url.desktop)
+  const imageUrl = heroUnit.image?.imageURL
+  const image = imageUrl && cropped(imageUrl, { width: 1270, height: 500 })
+  const href = getInternalHref(heroUnit.link.url)
+
   const { theme } = useTheme()
 
   const background =
@@ -117,7 +113,7 @@ const HomeHeroUnitBaseLarge: React.FC<HomeHeroUnitBaseProps> = ({
 
   return (
     <RouterLink
-      aria-label={`${title} - ${body}`}
+      aria-label={`${heroUnit.title} - ${heroUnit.body}`}
       display="block"
       onClick={onClick}
       textDecoration="none"
@@ -134,12 +130,13 @@ const HomeHeroUnitBaseLarge: React.FC<HomeHeroUnitBaseProps> = ({
                 srcSet={image.srcSet}
                 style={{ objectFit: "cover" }}
                 width="100%"
+                // LCP optimization
                 lazyLoad={index > 0}
                 fetchPriority={index > 0 ? "auto" : "high"}
               />
             )}
 
-            {credit && (
+            {heroUnit.credit && (
               <Box
                 position="absolute"
                 bottom={0}
@@ -150,7 +147,7 @@ const HomeHeroUnitBaseLarge: React.FC<HomeHeroUnitBaseProps> = ({
                 pt={6}
                 background={background}
               >
-                <HomeHeroUnitCredit>{credit}</HomeHeroUnitCredit>
+                <HomeHeroUnitCredit>{heroUnit.credit}</HomeHeroUnitCredit>
               </Box>
             )}
           </Box>
@@ -166,9 +163,10 @@ const HomeHeroUnitBaseLarge: React.FC<HomeHeroUnitBaseProps> = ({
               span={8}
               start={3}
             >
-              {label && (
+              {heroUnit.label && (
                 <>
-                  <Text variant="xs">{label}</Text>
+                  <Text variant="xs">{heroUnit.label}</Text>
+
                   <Spacer y={1} />
                 </>
               )}
@@ -178,7 +176,7 @@ const HomeHeroUnitBaseLarge: React.FC<HomeHeroUnitBaseProps> = ({
                 lineClamp={3}
                 variant={["lg-display", "xl", "xl"]}
               >
-                {title}
+                {heroUnit.title}
               </Text>
 
               <Spacer y={2} />
@@ -188,7 +186,7 @@ const HomeHeroUnitBaseLarge: React.FC<HomeHeroUnitBaseProps> = ({
                 lineClamp={4}
                 variant={["xs", "sm-display", "lg-display"]}
               >
-                {body}
+                {heroUnit.body}
               </Text>
 
               <Spacer y={[2, 2, 4]} />
@@ -196,7 +194,7 @@ const HomeHeroUnitBaseLarge: React.FC<HomeHeroUnitBaseProps> = ({
               <GridColumns>
                 <Column span={[12, 12, 6]}>
                   <Button variant="secondaryBlack" width="100%" tabIndex={-1}>
-                    {link.text}
+                    {heroUnit.link.text}
                   </Button>
                 </Column>
               </GridColumns>
@@ -205,51 +203,6 @@ const HomeHeroUnitBaseLarge: React.FC<HomeHeroUnitBaseProps> = ({
         </Column>
       </GridColumns>
     </RouterLink>
-  )
-}
-
-export const HomeHeroUnitBase: React.FC<HomeHeroUnitBaseProps> = props => {
-  return (
-    <Box width="100%" height="100%">
-      <Media at="xs">
-        <HomeHeroUnitBaseSmall {...props} />
-      </Media>
-
-      <Media greaterThan="xs">
-        <HomeHeroUnitBaseLarge {...props} />
-      </Media>
-    </Box>
-  )
-}
-
-interface HomeHeroUnitProps {
-  heroUnit: HomeHeroUnit_heroUnit$data
-  index: number
-  onClick?: () => void
-}
-
-export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
-  heroUnit,
-  index,
-  onClick,
-}) => {
-  return (
-    <HomeHeroUnitBase
-      title={heroUnit.title}
-      body={heroUnit.body}
-      imageUrl={heroUnit.image?.imageURL}
-      credit={heroUnit.credit}
-      label={heroUnit.label}
-      link={{
-        text: heroUnit.link.text,
-        url: {
-          desktop: heroUnit.link.url,
-          mobile: heroUnit.link.url,
-        },
-      }}
-      index={index}
-      onClick={onClick}
-    />
   )
 }
 
