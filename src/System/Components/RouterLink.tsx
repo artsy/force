@@ -89,12 +89,17 @@ export const RouterLink: React.FC<React.PropsWithChildren<
       }
     }
 
+    const location = router?.createLocation?.((to as string) ?? "") ?? {
+      pathname: to,
+      query: {},
+    }
+
     if (isRouterAware) {
       return (
         <RouterAwareLink
           inline={inline}
           to={{
-            pathname: to ?? "",
+            ...location,
             state: { isPrefetched },
           }}
           onMouseOver={handleMouseOver}
