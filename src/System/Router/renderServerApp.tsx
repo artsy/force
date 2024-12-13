@@ -5,7 +5,6 @@ import { loadAssetManifest } from "Server/manifest"
 import { ENABLE_SSR_STREAMING } from "Server/config"
 import { getENV } from "Utils/getENV"
 import { ServerAppResults } from "System/Router/serverRouter"
-import { getWebpackEarlyHints } from "Server/getWebpackEarlyHints"
 import { RenderToStreamResult } from "System/Router/Utils/renderToStream"
 import { buildHtmlTemplate, HTMLProps } from "html"
 
@@ -48,15 +47,12 @@ export const renderServerApp = ({
 
   const scripts = extractScriptTags?.()
 
-  const { linkPreloadTags } = getWebpackEarlyHints()
-
   const options: HTMLProps = {
     cdnUrl: NODE_ENV === "production" ? (CDN_URL as string) : "",
     content: {
       body: html,
       sharifyData: sharify.script(),
       head: headTagsString,
-      linkPreloadTags,
       scripts,
       style: styleTags,
     },

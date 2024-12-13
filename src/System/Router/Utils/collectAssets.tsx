@@ -85,7 +85,7 @@ export const collectAssets = async ({
         }
       })()
 
-      return `<script src="${scriptUrl}"></script>`
+      return `<script defer src="${scriptUrl}"></script>`
     })
 
     initialScripts.push(...runtimeScripts)
