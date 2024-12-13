@@ -8,14 +8,13 @@ import {
   Text,
 } from "@artsy/palette"
 import { MarketingAlternatingStack } from "Apps/Marketing/Components/MarketingAlternatingStack"
-import { MarketingHeaderSplitTest } from "Apps/Marketing/Components/MarketingHeaderSpitTest"
+import { MarketingHeader } from "Apps/Marketing/Components/MarketingHeader"
+import { BRAND_PALETTE } from "Apps/Marketing/Utils/brandPalette"
 import { MetaTags } from "Components/MetaTags"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { FC } from "react"
 
-export const MarketingMeetArtAdvisorRoute: FC<React.PropsWithChildren<
-  unknown
->> = () => {
+export const MarketingMeetArtAdvisorRoute: FC<React.PropsWithChildren<unknown>> = () => {
   const { isEigen } = useSystemContext()
 
   return (
@@ -26,7 +25,12 @@ export const MarketingMeetArtAdvisorRoute: FC<React.PropsWithChildren<
       />
 
       <Join separator={<Spacer y={6} />}>
-        <MarketingHeaderSplitTest />
+        <MarketingHeader
+          title="Meet your new art advisor."
+          subtitle="See what you can do on Artsy—the best tool for art collectors."
+          src="https://files.artsy.net/images/marketing_meet_header_april-14.jpg"
+          accentColor={BRAND_PALETTE.blue}
+        />
 
         <MarketingAlternatingStack
           cards={[
