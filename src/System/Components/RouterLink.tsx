@@ -52,12 +52,7 @@ export const RouterLink: React.FC<React.PropsWithChildren<
     const isPrefetchOnEnterEnabled =
       isPrefetchOnEnterEnabledLoggedIn || isPrefetchOnEnterEnabledLoggedOut
 
-    // When a prefetch is completed, propagate that in the router state.
-    const [isPrefetched, setIsPrefetched] = React.useState(false)
-    const { prefetch } = usePrefetchRoute({
-      initialPath: to as string,
-      onComplete: () => setIsPrefetched(true),
-    })
+    const { prefetch } = usePrefetchRoute(to as string)
 
     const routes = router?.matcher?.routeConfig ?? []
     const matcher = router?.matcher
@@ -93,10 +88,7 @@ export const RouterLink: React.FC<React.PropsWithChildren<
       return (
         <RouterAwareLink
           inline={inline}
-          to={{
-            pathname: to ?? "",
-            state: { isPrefetched },
-          }}
+          to={to ?? ""}
           onMouseOver={handleMouseOver}
           ref={isPrefetchOnEnterEnabled ? (intersectionRef as any) : null}
           {...rest}

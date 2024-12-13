@@ -26,8 +26,5 @@ export function getWorksForSaleRouteVariables({ artistID }, { location }) {
     aggregations,
     artistID,
     includeBlurHash: false,
-    // If the route was prefetched, we want `isPrefetched: true` so the query
-    // can be resolved immediately w/ the already-fetched variables.
-    isPrefetched: !!location?.state?.isPrefetched,
   }
 }

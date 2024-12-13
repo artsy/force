@@ -8,17 +8,9 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 import { isDevelopment } from "Utils/device"
 
-interface UsePrefetchRouteProps {
+export const usePrefetchRoute = (
   initialPath?: string
-  onComplete?: () => void
-}
-
-export const usePrefetchRoute = ({
-  initialPath,
-  onComplete,
-}: UsePrefetchRouteProps = {}): {
-  prefetch: (path?: string) => Array<Subscription | null> | null
-} => {
+): { prefetch: (path?: string) => Array<Subscription | null> | null } => {
   const { relayEnvironment } = useSystemContext()
 
   const { match } = useRouter()
@@ -68,25 +60,19 @@ export const usePrefetchRoute = ({
           return null
         }
 
-        const subscription = fetchQuery(
-          relayEnvironment,
-          query,
-          { ...variables, isPrefetched: true }, // Inject a variable to indicate this is a prefetch
-          {
-            fetchPolicy: "store-or-network",
-            networkCacheConfig: {
-              force: false,
-              metadata: {
-                maxAge: serverCacheTTL,
-              },
+        const subscription = fetchQuery(relayEnvironment, query, variables, {
+          fetchPolicy: "store-or-network",
+          networkCacheConfig: {
+            force: false,
+            metadata: {
+              maxAge: serverCacheTTL,
             },
-          }
-        ).subscribe({
+          },
+        }).subscribe({
           start: () => {
             if (isDevelopment) {
               console.log("[usePrefetchRoute] Starting prefetch:", path)
             }
-
             // Prefetch bundle split JS alongside data, if defined
             foundRoute.route.onPreloadJS?.()
           },
@@ -94,14 +80,11 @@ export const usePrefetchRoute = ({
             if (isDevelopment) {
               console.log("[usePrefetchRoute] Completed:", path)
             }
-
-            onComplete?.()
           },
           error: () => {
             console.error("[usePrefetchRoute] Error prefetching:", path)
           },
         })
-
         return subscription
       })
 

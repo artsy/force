@@ -138,17 +138,9 @@ export const artistRoutes: RouteProps[] = [
         },
         prepareVariables: getWorksForSaleRouteVariables,
         query: graphql`
-          query artistRoutes_WorksForSaleQuery(
-            $artistID: String!
-            $isPrefetched: Boolean!
-            $aggregations: [ArtworkAggregation]
-          ) {
+          query artistRoutes_WorksForSaleQuery($artistID: String!) {
             artist(id: $artistID) @principalField {
               ...ArtistWorksForSaleRoute_artist
-                @arguments(
-                  isPrefetched: $isPrefetched
-                  aggregations: $aggregations
-                )
             }
           }
         `,

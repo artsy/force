@@ -9,7 +9,7 @@ jest.mock("System/Router/Utils/shouldUpdateScroll", () => ({
 
 jest.mock("found", () => ({
   ...jest.requireActual("found"),
-  Link: ({ to }) => (to.pathname === "/foo" ? "FooLink" : "Link"),
+  Link: ({ to }) => (to === "/foo" ? "FooLink" : "Link"),
 }))
 
 jest.mock("Components/NavBar/NavBar", () => ({
