@@ -17,6 +17,10 @@ import { HomeHeroUnitCredit } from "./HomeHeroUnitCredit"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HomeHeroUnit_heroUnit$data } from "__generated__/HomeHeroUnit_heroUnit.graphql"
 import { getInternalHref } from "Utils/url"
+import { useTracking } from "react-tracking"
+import { OwnerType } from "@artsy/cohesion"
+import { ActionType } from "@artsy/cohesion"
+import { ClickedHeroUnitGroup } from "@artsy/cohesion"
 
 export interface HomeHeroUnitBaseProps {
   title: string
@@ -25,10 +29,13 @@ export interface HomeHeroUnitBaseProps {
   credit?: string | null
   label?: string | null
   link: {
-    text: string
-    url: {
-      desktop: string
-      mobile: string
+    desktop: {
+      text: string
+      url: string
+    }
+    mobile: {
+      text: string
+      url: string
     }
   }
   index: number
@@ -44,7 +51,24 @@ const HomeHeroUnitBaseSmall: React.FC<HomeHeroUnitBaseProps> = ({
   onClick,
 }) => {
   const image = imageUrl ? cropped(imageUrl, { width: 500, height: 333 }) : null
-  const href = getInternalHref(link.url.mobile)
+  const href = getInternalHref(link.mobile.url)
+
+  const { trackEvent } = useTracking()
+
+  const handleClick = () => {
+    onClick?.()
+
+    const payload: ClickedHeroUnitGroup = {
+      action: ActionType.clickedHeroUnitGroup,
+      context_module: "heroUnitsRail",
+      context_page_owner_type: OwnerType.home,
+      destination_path: href,
+      horizontal_slide_position: index,
+      type: "thumbnail",
+    }
+
+    trackEvent(payload)
+  }
 
   return (
     <RouterLink
@@ -52,7 +76,7 @@ const HomeHeroUnitBaseSmall: React.FC<HomeHeroUnitBaseProps> = ({
       bg="black5"
       display="block"
       height="100%"
-      onClick={onClick}
+      onClick={handleClick}
       textDecoration="none"
       to={href}
       width="100%"
@@ -88,7 +112,7 @@ const HomeHeroUnitBaseSmall: React.FC<HomeHeroUnitBaseProps> = ({
 
         <Spacer y={1} />
 
-        <Text variant="xs">{link.text}</Text>
+        <Text variant="xs">{link.mobile.text}</Text>
       </Box>
     </RouterLink>
   )
@@ -107,7 +131,7 @@ const HomeHeroUnitBaseLarge: React.FC<HomeHeroUnitBaseProps> = ({
   const image = imageUrl
     ? cropped(imageUrl, { width: 1270, height: 500 })
     : null
-  const href = getInternalHref(link.url.desktop)
+  const href = getInternalHref(link.desktop.url)
   const { theme } = useTheme()
 
   const background =
@@ -115,11 +139,28 @@ const HomeHeroUnitBaseLarge: React.FC<HomeHeroUnitBaseProps> = ({
       ? "linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%)"
       : "linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 100%)"
 
+  const { trackEvent } = useTracking()
+
+  const handleClick = () => {
+    onClick?.()
+
+    const payload: ClickedHeroUnitGroup = {
+      action: ActionType.clickedHeroUnitGroup,
+      context_module: "heroUnitsRail",
+      context_page_owner_type: OwnerType.home,
+      destination_path: href,
+      horizontal_slide_position: index,
+      type: "thumbnail",
+    }
+
+    trackEvent(payload)
+  }
+
   return (
     <RouterLink
       aria-label={`${title} - ${body}`}
       display="block"
-      onClick={onClick}
+      onClick={handleClick}
       textDecoration="none"
       to={href}
     >
@@ -196,7 +237,7 @@ const HomeHeroUnitBaseLarge: React.FC<HomeHeroUnitBaseProps> = ({
               <GridColumns>
                 <Column span={[12, 12, 6]}>
                   <Button variant="secondaryBlack" width="100%" tabIndex={-1}>
-                    {link.text}
+                    {link.desktop.text}
                   </Button>
                 </Column>
               </GridColumns>
@@ -241,10 +282,13 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
       credit={heroUnit.credit}
       label={heroUnit.label}
       link={{
-        text: heroUnit.link.text,
-        url: {
-          desktop: heroUnit.link.url,
-          mobile: heroUnit.link.url,
+        desktop: {
+          text: heroUnit.link.text,
+          url: heroUnit.link.url,
+        },
+        mobile: {
+          text: heroUnit.link.text,
+          url: heroUnit.link.url,
         },
       }}
       index={index}

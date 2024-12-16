@@ -15,8 +15,14 @@ export const HomeHeroUnitLoggedOut: React.FC<{ index: number }> = ({
         "Artsy is the world’s leading platform to discover, buy, and manage the art you love",
       imageUrl: "https://files.artsy.net/images/01_Artsy_App-Download-HP.jpg",
       link: {
-        text: "Get the App",
-        url: { desktop: "/meet-your-new-art-advisor", mobile: downloadAppUrl },
+        desktop: {
+          text: "Sign up",
+          url: "/signup",
+        },
+        mobile: {
+          text: "Get the App",
+          url: downloadAppUrl,
+        },
       },
       credit: "France-Lise McGurn, 90s mirror, 2023. Margot Samel",
     },
@@ -25,8 +31,14 @@ export const HomeHeroUnitLoggedOut: React.FC<{ index: number }> = ({
       body: "Artsy makes it easy to discover artists and artworks you’ll love",
       imageUrl: "https://files.artsy.net/images/02_Artsy_App-Download-HP.jpg",
       link: {
-        text: "Get the App",
-        url: { desktop: "/meet-your-new-art-advisor", mobile: downloadAppUrl },
+        desktop: {
+          text: "Sign up",
+          url: "/signup",
+        },
+        mobile: {
+          text: "Get the App",
+          url: downloadAppUrl,
+        },
       },
       credit: "Sam Gilliam, Annie, 2021. David Kordansky Gallery",
     },
