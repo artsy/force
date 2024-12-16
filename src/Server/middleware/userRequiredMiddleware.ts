@@ -1,16 +1,15 @@
 import { match } from "path-to-regexp"
 
 const USER_REQUIRED_ROUTES = [
+  "/auction-result(.*)",
+  "/favorites/alerts(.*)",
+  "/favorites/follows(.*)",
+  "/favorites/saves(.*)",
+  "/my-collection/artworks(.*)",
   "/notifications",
   "/orders(.*)",
-  "/my-collection/artworks(.*)",
-  "/favorites/alerts(.*)",
-  "/settings/payments",
-  "/settings/purchases(.*)",
-  "/settings/shipping",
+  "/settings(.*)",
   "/user/conversations(.*)",
-  "/favorites/saves(.*)",
-  "/auction-result(.*)",
 ]
 
 const isRequestRequiringUser = req => {
