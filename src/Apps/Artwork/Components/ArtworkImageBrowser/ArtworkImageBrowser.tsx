@@ -6,7 +6,6 @@ import * as React from "react"
 import { useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useCursor } from "use-cursor"
-import { Media } from "Utils/Responsive"
 import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActions"
 import { ArtworkImageBrowserLargeFragmentContainer } from "./ArtworkImageBrowserLarge"
 import { ArtworkImageBrowserSmallFragmentContainer } from "./ArtworkImageBrowserSmall"
@@ -90,25 +89,21 @@ export const ArtworkImageBrowser: React.FC<React.PropsWithChildren<
       data-test={ContextModule.artworkImage}
     >
       {isMobile ? (
-        <Media at="xs">
-          <ArtworkImageBrowserSmallFragmentContainer
-            artwork={artwork}
-            activeIndex={activeIndex}
-            setActiveIndex={setCursor}
-            maxHeight={maxHeight}
-          />
-        </Media>
+        <ArtworkImageBrowserSmallFragmentContainer
+          artwork={artwork}
+          activeIndex={activeIndex}
+          setActiveIndex={setCursor}
+          maxHeight={maxHeight}
+        />
       ) : (
-        <Media greaterThan="xs">
-          <ArtworkImageBrowserLargeFragmentContainer
-            artwork={artwork}
-            activeIndex={activeIndex}
-            onNext={handleNext}
-            onPrev={handlePrev}
-            onChange={setCursor}
-            maxHeight={maxHeight}
-          />
-        </Media>
+        <ArtworkImageBrowserLargeFragmentContainer
+          artwork={artwork}
+          activeIndex={activeIndex}
+          onNext={handleNext}
+          onPrev={handlePrev}
+          onChange={setCursor}
+          maxHeight={maxHeight}
+        />
       )}
       {!isMyCollectionArtwork && (
         <>
