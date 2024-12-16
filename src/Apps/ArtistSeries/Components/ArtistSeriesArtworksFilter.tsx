@@ -1,20 +1,24 @@
+import { OwnerType } from "@artsy/cohesion"
 import { ArtistSeriesArtworksFilter_artistSeries$data } from "__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
+import { ArtistSeriesArtworksFilterQuery } from "__generated__/ArtistSeriesArtworksFilterQuery.graphql"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
+import { ArtworkFilterAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterAlertContextProvider"
 import {
   ArtworkFilterContextProvider,
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
+import { ArtworkFilterSavedSearchAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterSavedSearchAlertContextProvider"
+import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
+import { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import { Match, RouterState, withRouter } from "found"
 import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useRouter } from "System/Hooks/useRouter"
-import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
-import { ArtistSeriesArtworksFilterQuery } from "__generated__/ArtistSeriesArtworksFilterQuery.graphql"
-import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 
 interface ArtistSeriesArtworksFilterProps {
   artistSeries: ArtistSeriesArtworksFilter_artistSeries$data
@@ -22,7 +26,9 @@ interface ArtistSeriesArtworksFilterProps {
   match?: Match
 }
 
-const ArtistSeriesArtworksFilter: React.FC<React.PropsWithChildren<ArtistSeriesArtworksFilterProps & RouterState>> = props => {
+const ArtistSeriesArtworksFilter: React.FC<React.PropsWithChildren<
+  ArtistSeriesArtworksFilterProps & RouterState
+>> = props => {
   const { userPreferences } = useSystemContext()
   const { match, relay, artistSeries } = props
   const { filtered_artworks, sidebar } = artistSeries
@@ -32,6 +38,25 @@ const ArtistSeriesArtworksFilter: React.FC<React.PropsWithChildren<ArtistSeriesA
   // If there was an error fetching the filter,
   // we still want to render the rest of the page.
   if (!hasFilter) return null
+
+  const artist = artistSeries.artists[0]
+  const savedSearchEntity: SavedSearchEntity = {
+    owner: {
+      type: OwnerType.artist,
+      id: artist.internalID,
+      name: artist.name ?? "Unknown",
+      slug: artist.slug,
+    },
+    defaultCriteria: {
+      artistIDs: artistSeries.artists.map(artist => ({
+        displayValue: artist.name ?? "Unknown",
+        value: artist.internalID,
+      })),
+      artistSeriesIDs: [
+        { displayValue: artistSeries.title, value: artistSeries.internalID },
+      ],
+    },
+  }
 
   return (
     <ArtworkFilterContextProvider
@@ -51,14 +76,25 @@ const ArtistSeriesArtworksFilter: React.FC<React.PropsWithChildren<ArtistSeriesA
       onChange={updateUrl}
       userPreferredMetric={userPreferences?.metric}
     >
-      <BaseArtworkFilter
-        relay={relay}
-        viewer={artistSeries}
-        relayVariables={{
-          aggregations: ["TOTAL"],
-          first: 20,
+      <ArtworkFilterAlertContextProvider
+        initialCriteria={{
+          artistIDs: [artist.internalID],
+          artistSeriesIDs: [artistSeries.internalID],
         }}
-      />
+      >
+        <ArtworkFilterSavedSearchAlertContextProvider
+          entity={savedSearchEntity}
+        >
+          <BaseArtworkFilter
+            relay={relay}
+            viewer={artistSeries}
+            relayVariables={{
+              aggregations: ["TOTAL"],
+              first: 20,
+            }}
+          />
+        </ArtworkFilterSavedSearchAlertContextProvider>
+      </ArtworkFilterAlertContextProvider>
     </ArtworkFilterContextProvider>
   )
 }
@@ -87,6 +123,13 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
             }
           }
         }
+        artists {
+          internalID
+          name
+          slug
+        }
+        internalID
+
         filtered_artworks: filterArtworksConnection(input: $input) {
           id
           counts {
@@ -94,6 +137,7 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
           }
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }
+        title
       }
     `,
   },
@@ -111,7 +155,9 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
 
 interface ArtistSeriesArtworkFilterQueryRendererProps {}
 
-export const ArtistSeriesArtworkFilterQueryRenderer: React.FC<React.PropsWithChildren<ArtistSeriesArtworkFilterQueryRendererProps>> = rest => {
+export const ArtistSeriesArtworkFilterQueryRenderer: React.FC<React.PropsWithChildren<
+  ArtistSeriesArtworkFilterQueryRendererProps
+>> = rest => {
   const { relayEnvironment } = useSystemContext()
   const { match } = useRouter()
 
@@ -133,10 +179,10 @@ export const ArtistSeriesArtworkFilterQueryRenderer: React.FC<React.PropsWithChi
         `}
         variables={initializeVariablesWithFilterState(match.params, match)}
         fetchPolicy="store-and-network"
-        placeholder={<ArtworkFilterPlaceholder />}
+        placeholder={<ArtworkFilterPlaceholder showCreateAlert />}
         render={({ error, props }) => {
           if (error || !props?.artistSeries) {
-            return <ArtworkFilterPlaceholder />
+            return <ArtworkFilterPlaceholder showCreateAlert />
           }
 
           return (
