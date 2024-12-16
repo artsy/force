@@ -48,7 +48,7 @@ export const renderServerApp = ({
 
   const scripts = extractScriptTags?.()
 
-  const { linkHeaders, linkPreloadTags } = getEarlyHints(html ?? "")
+  const { linkHeaders, linkPreloadTags } = getEarlyHints(headTags ?? [])
 
   const options: HTMLProps = {
     cdnUrl: NODE_ENV === "production" ? (CDN_URL as string) : "",

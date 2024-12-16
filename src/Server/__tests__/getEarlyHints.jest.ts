@@ -20,10 +20,20 @@ describe("getEarlyHints", () => {
 
     mockReadFileSync.mockReturnValueOnce(JSON.stringify(mockChunkFiles))
 
-    const result = getEarlyHints("")
+    const result = getEarlyHints([
+      {
+        type: "link",
+        props: {
+          rel: "preload",
+          as: "image",
+          href: "https://example.com/image.jpg",
+        },
+      },
+    ])
 
     expect(fs.readFileSync).toHaveBeenCalledWith(HINTS_PATH, "utf-8")
     expect(result.linkHeaders).toEqual([
+      `<https://example.com/image.jpg>; rel=preload; as=image`,
       `<https://cdn.example.com/chunk1.js>; rel=preload; as=script`,
       `<https://cdn.example.com/chunk2.js>; rel=preload; as=script`,
     ])
