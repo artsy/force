@@ -48,12 +48,10 @@ const ArtistSeriesArtworksFilter: React.FC<React.PropsWithChildren<
       slug: artist.slug,
     },
     defaultCriteria: {
-      artistIDs: [
-        {
-          displayValue: artist.name ?? "Unknown",
-          value: artist.internalID,
-        },
-      ],
+      artistIDs: artistSeries.artists.map(artist => ({
+        displayValue: artist.name ?? "Unknown",
+        value: artist.internalID,
+      })),
       artistSeriesIDs: [
         { displayValue: artistSeries.title, value: artistSeries.internalID },
       ],
