@@ -78,7 +78,7 @@ const ArtistSeriesArtworksFilter: React.FC<React.PropsWithChildren<
     >
       <ArtworkFilterAlertContextProvider
         initialCriteria={{
-          artistIDs: [artist.internalID],
+          artistIDs: artistSeries.artists.map(artist => artist.internalID),
           artistSeriesIDs: [artistSeries.internalID],
         }}
       >
