@@ -38,7 +38,7 @@ export const ArtistHeaderImage: FC<
         <>
           <Link
             rel="preload"
-            href={mobile.src}
+            href={mobile.quality2x}
             as="image"
             imagesrcset={mobile.srcSet}
             fetchPriority="high"
@@ -72,7 +72,7 @@ export const ArtistHeaderImage: FC<
         <>
           <Link
             rel="preload"
-            href={desktop.src}
+            href={desktop.quality2x}
             as="image"
             imagesrcset={desktop.srcSet}
             fetchPriority="high"
