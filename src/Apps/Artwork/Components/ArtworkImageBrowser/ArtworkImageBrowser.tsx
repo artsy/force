@@ -10,6 +10,7 @@ import { Media } from "Utils/Responsive"
 import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActions"
 import { ArtworkImageBrowserLargeFragmentContainer } from "./ArtworkImageBrowserLarge"
 import { ArtworkImageBrowserSmallFragmentContainer } from "./ArtworkImageBrowserSmall"
+import { getENV } from "Utils/getENV"
 
 // Dimension used to scale both images and videos
 export const MAX_DIMENSION = 800
@@ -19,10 +20,9 @@ interface ArtworkImageBrowserProps {
   isMyCollectionArtwork?: boolean
 }
 
-export const ArtworkImageBrowser: React.FC<React.PropsWithChildren<ArtworkImageBrowserProps>> = ({
-  artwork,
-  isMyCollectionArtwork,
-}) => {
+export const ArtworkImageBrowser: React.FC<React.PropsWithChildren<
+  ArtworkImageBrowserProps
+>> = ({ artwork, isMyCollectionArtwork }) => {
   const { figures } = artwork
 
   const { index: activeIndex, handleNext, handlePrev, setCursor } = useCursor({
@@ -81,32 +81,35 @@ export const ArtworkImageBrowser: React.FC<React.PropsWithChildren<ArtworkImageB
     return null
   }
 
+  const isMobile = getENV("IS_MOBILE")
+
   return (
     <Box
       // Keyed to the artwork ID so that state is reset on route changes
       key={artwork.internalID}
       data-test={ContextModule.artworkImage}
     >
-      <Media at="xs">
-        <ArtworkImageBrowserSmallFragmentContainer
-          artwork={artwork}
-          activeIndex={activeIndex}
-          setActiveIndex={setCursor}
-          maxHeight={maxHeight}
-        />
-      </Media>
-
-      <Media greaterThan="xs">
-        <ArtworkImageBrowserLargeFragmentContainer
-          artwork={artwork}
-          activeIndex={activeIndex}
-          onNext={handleNext}
-          onPrev={handlePrev}
-          onChange={setCursor}
-          maxHeight={maxHeight}
-        />
-      </Media>
-
+      {isMobile ? (
+        <Media at="xs">
+          <ArtworkImageBrowserSmallFragmentContainer
+            artwork={artwork}
+            activeIndex={activeIndex}
+            setActiveIndex={setCursor}
+            maxHeight={maxHeight}
+          />
+        </Media>
+      ) : (
+        <Media greaterThan="xs">
+          <ArtworkImageBrowserLargeFragmentContainer
+            artwork={artwork}
+            activeIndex={activeIndex}
+            onNext={handleNext}
+            onPrev={handlePrev}
+            onChange={setCursor}
+            maxHeight={maxHeight}
+          />
+        </Media>
+      )}
       {!isMyCollectionArtwork && (
         <>
           <Spacer y={2} />
