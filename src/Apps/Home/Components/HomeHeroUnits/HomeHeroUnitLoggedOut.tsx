@@ -2,6 +2,11 @@ import * as React from "react"
 import { HomeHeroUnitBase, HomeHeroUnitBaseProps } from "./HomeHeroUnit"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { useFeatureVariant } from "System/Hooks/useFeatureFlag"
+import { useOnce } from "Utils/Hooks/useOnce"
+import { ActionType, ExperimentViewed, OwnerType } from "@artsy/cohesion"
+import { useTracking } from "react-tracking"
+
+const EXPERIMENT_NAME = "diamond_hero-app-download"
 
 export const HomeHeroUnitLoggedOut: React.FC<{ index: number }> = ({
   index,
@@ -44,8 +49,23 @@ export const HomeHeroUnitLoggedOut: React.FC<{ index: number }> = ({
     },
   }
 
-  const featureVariant = useFeatureVariant("diamond_hero-app-download")
-  const variant = variants[featureVariant?.name || "control"]
+  const featureVariant = useFeatureVariant(EXPERIMENT_NAME)
+  const variantName = featureVariant?.name || "control"
+  const variant = variants[variantName]
+
+  const { trackEvent } = useTracking()
+
+  useOnce(() => {
+    const payload: ExperimentViewed = {
+      action: ActionType.experimentViewed,
+      experiment_name: EXPERIMENT_NAME,
+      service: "unleash",
+      variant_name: variantName,
+      context_owner_type: OwnerType.home,
+    }
+
+    trackEvent(payload)
+  })
 
   return (
     <HomeHeroUnitBase
