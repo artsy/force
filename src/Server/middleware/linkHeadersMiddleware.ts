@@ -1,7 +1,6 @@
 import type { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 import { CDN_URL, GEMINI_CLOUDFRONT_URL, WEBFONT_URL } from "Server/config"
-import { getWebpackEarlyHints } from "Server/getWebpackEarlyHints"
 
 /**
  * Link headers allow 103: Early Hints to be sent to the client (by Cloudflare).
@@ -13,8 +12,6 @@ export function linkHeadersMiddleware(
   res: ArtsyResponse,
   next: NextFunction
 ) {
-  const { linkHeaders } = getWebpackEarlyHints()
-
   if (!res.headersSent) {
     res.header("Link", [
       `<${CDN_URL}>; rel=preconnect; crossorigin`,
@@ -24,7 +21,6 @@ export function linkHeadersMiddleware(
       `<${WEBFONT_URL}/ll-unica77_regular.woff2>; rel=preload; as=font; crossorigin`,
       `<${WEBFONT_URL}/ll-unica77_medium.woff2>; rel=preload; as=font; crossorigin`,
       `<${WEBFONT_URL}/ll-unica77_italic.woff2>; rel=preload; as=font; crossorigin`,
-      ...linkHeaders,
     ])
   }
 
