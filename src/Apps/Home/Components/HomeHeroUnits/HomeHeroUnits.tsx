@@ -4,28 +4,21 @@ import { HomeHeroUnitFragmentContainer } from "./HomeHeroUnit"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HomeHeroUnits_heroUnits$data } from "__generated__/HomeHeroUnits_heroUnits.graphql"
 import { extractNodes } from "Utils/extractNodes"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { HomeHeroUnitLoggedOut } from "./HomeHeroUnitLoggedOut"
 
 interface HomeHeroUnitsProps {
   heroUnits: HomeHeroUnits_heroUnits$data
 }
 
-export const HomeHeroUnits: React.FC<React.PropsWithChildren<
-  HomeHeroUnitsProps
->> = ({ heroUnits }) => {
-  const { isLoggedIn } = useSystemContext()
+export const HomeHeroUnits: React.FC<React.PropsWithChildren<HomeHeroUnitsProps>> = ({ heroUnits }) => {
   const nodes = extractNodes(heroUnits)
 
   return (
     <HeroCarousel>
-      {!isLoggedIn && <HomeHeroUnitLoggedOut index={0} />}
       {nodes.map((heroUnit, index) => {
         return (
           <HomeHeroUnitFragmentContainer
             heroUnit={heroUnit}
-            // Increment index if we inserted the logged out unit
-            index={!isLoggedIn ? index + 1 : index}
+            index={index}
             key={index}
           />
         )
