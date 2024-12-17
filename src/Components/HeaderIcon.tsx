@@ -8,12 +8,20 @@ export interface HeaderIconProps extends Omit<BoxProps, "maxWidth"> {
   src: string
 }
 
-export const HeaderIcon: React.FC<React.PropsWithChildren<HeaderIconProps>> = ({ src, ...rest }) => {
+export const HeaderIcon: React.FC<React.PropsWithChildren<HeaderIconProps>> = ({
+  src,
+  ...rest
+}) => {
   const img = cropped(src, { width: 200, height: 200 })
 
   return (
     <>
-      <Link rel="preload" as="image" href={img.src} imagesrcset={img.srcSet} />
+      <Link
+        rel="preload"
+        as="image"
+        href={img.quality2x}
+        imagesrcset={img.srcSet}
+      />
 
       <ResponsiveBox
         aspectWidth={1}
