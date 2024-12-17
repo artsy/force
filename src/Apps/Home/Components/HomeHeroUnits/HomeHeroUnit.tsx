@@ -17,43 +17,66 @@ import { HomeHeroUnitCredit } from "./HomeHeroUnitCredit"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HomeHeroUnit_heroUnit$data } from "__generated__/HomeHeroUnit_heroUnit.graphql"
 import { getInternalHref } from "Utils/url"
+import { useTracking } from "react-tracking"
+import { OwnerType } from "@artsy/cohesion"
+import { ActionType } from "@artsy/cohesion"
+import { ClickedHeroUnitGroup } from "@artsy/cohesion"
 
-interface HomeHeroUnitProps {
-  heroUnit: HomeHeroUnit_heroUnit$data
+export interface HomeHeroUnitBaseProps {
+  title: string
+  body: string
+  imageUrl?: string | null
+  credit?: string | null
+  label?: string | null
+  link: {
+    desktop: {
+      text: string
+      url: string
+    }
+    mobile: {
+      text: string
+      url: string
+    }
+  }
   index: number
   onClick?: () => void
 }
 
-export const HomeHeroUnit: React.FC<React.PropsWithChildren<
-  HomeHeroUnitProps
->> = props => {
-  return (
-    <Box width="100%" height="100%">
-      <Media at="xs">
-        <HomeHeroUnitSmall {...props} />
-      </Media>
+const HomeHeroUnitBaseSmall: React.FC<HomeHeroUnitBaseProps> = ({
+  title,
+  body,
+  imageUrl,
+  link,
+  index,
+  onClick,
+}) => {
+  const image = imageUrl ? cropped(imageUrl, { width: 500, height: 333 }) : null
+  const href = getInternalHref(link.mobile.url)
 
-      <Media greaterThan="xs">
-        <HomeHeroUnitLarge {...props} />
-      </Media>
-    </Box>
-  )
-}
+  const { trackEvent } = useTracking()
 
-const HomeHeroUnitSmall: React.FC<React.PropsWithChildren<
-  HomeHeroUnitProps
->> = ({ heroUnit, index, onClick }) => {
-  const imageUrl = heroUnit.image?.imageURL
-  const image = imageUrl && cropped(imageUrl, { width: 500, height: 333 })
-  const href = getInternalHref(heroUnit.link.url)
+  const handleClick = () => {
+    onClick?.()
+
+    const payload: ClickedHeroUnitGroup = {
+      action: ActionType.clickedHeroUnitGroup,
+      context_module: "heroUnitsRail",
+      context_page_owner_type: OwnerType.home,
+      destination_path: href,
+      horizontal_slide_position: index,
+      type: "thumbnail",
+    }
+
+    trackEvent(payload)
+  }
 
   return (
     <RouterLink
-      aria-label={`${heroUnit.title} - ${heroUnit.body}`}
+      aria-label={`${title} - ${body}`}
       bg="black5"
       display="block"
       height="100%"
-      onClick={onClick}
+      onClick={handleClick}
       textDecoration="none"
       to={href}
       width="100%"
@@ -78,30 +101,37 @@ const HomeHeroUnitSmall: React.FC<React.PropsWithChildren<
 
       <Box p={4}>
         <Text as={index === 0 ? "h1" : "h2"} variant="lg-display" lineClamp={3}>
-          {heroUnit.title}
+          {title}
         </Text>
 
         <Spacer y={1} />
 
         <Text variant="xs" color="black60" lineClamp={4}>
-          {heroUnit.body}
+          {body}
         </Text>
 
         <Spacer y={1} />
 
-        <Text variant="xs">{heroUnit.link.text}</Text>
+        <Text variant="xs">{link.mobile.text}</Text>
       </Box>
     </RouterLink>
   )
 }
 
-const HomeHeroUnitLarge: React.FC<React.PropsWithChildren<
-  HomeHeroUnitProps
->> = ({ heroUnit, index, onClick }) => {
-  const imageUrl = heroUnit.image?.imageURL
-  const image = imageUrl && cropped(imageUrl, { width: 1270, height: 500 })
-  const href = getInternalHref(heroUnit.link.url)
-
+const HomeHeroUnitBaseLarge: React.FC<HomeHeroUnitBaseProps> = ({
+  title,
+  body,
+  imageUrl,
+  credit,
+  label,
+  link,
+  index,
+  onClick,
+}) => {
+  const image = imageUrl
+    ? cropped(imageUrl, { width: 1270, height: 500 })
+    : null
+  const href = getInternalHref(link.desktop.url)
   const { theme } = useTheme()
 
   const background =
@@ -109,11 +139,28 @@ const HomeHeroUnitLarge: React.FC<React.PropsWithChildren<
       ? "linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%)"
       : "linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 100%)"
 
+  const { trackEvent } = useTracking()
+
+  const handleClick = () => {
+    onClick?.()
+
+    const payload: ClickedHeroUnitGroup = {
+      action: ActionType.clickedHeroUnitGroup,
+      context_module: "heroUnitsRail",
+      context_page_owner_type: OwnerType.home,
+      destination_path: href,
+      horizontal_slide_position: index,
+      type: "thumbnail",
+    }
+
+    trackEvent(payload)
+  }
+
   return (
     <RouterLink
-      aria-label={`${heroUnit.title} - ${heroUnit.body}`}
+      aria-label={`${title} - ${body}`}
       display="block"
-      onClick={onClick}
+      onClick={handleClick}
       textDecoration="none"
       to={href}
     >
@@ -128,13 +175,12 @@ const HomeHeroUnitLarge: React.FC<React.PropsWithChildren<
                 srcSet={image.srcSet}
                 style={{ objectFit: "cover" }}
                 width="100%"
-                // LCP optimization
                 lazyLoad={index > 0}
                 fetchPriority={index > 0 ? "auto" : "high"}
               />
             )}
 
-            {heroUnit.credit && (
+            {credit && (
               <Box
                 position="absolute"
                 bottom={0}
@@ -145,7 +191,7 @@ const HomeHeroUnitLarge: React.FC<React.PropsWithChildren<
                 pt={6}
                 background={background}
               >
-                <HomeHeroUnitCredit>{heroUnit.credit}</HomeHeroUnitCredit>
+                <HomeHeroUnitCredit>{credit}</HomeHeroUnitCredit>
               </Box>
             )}
           </Box>
@@ -161,10 +207,9 @@ const HomeHeroUnitLarge: React.FC<React.PropsWithChildren<
               span={8}
               start={3}
             >
-              {heroUnit.label && (
+              {label && (
                 <>
-                  <Text variant="xs">{heroUnit.label}</Text>
-
+                  <Text variant="xs">{label}</Text>
                   <Spacer y={1} />
                 </>
               )}
@@ -174,7 +219,7 @@ const HomeHeroUnitLarge: React.FC<React.PropsWithChildren<
                 lineClamp={3}
                 variant={["lg-display", "xl", "xl"]}
               >
-                {heroUnit.title}
+                {title}
               </Text>
 
               <Spacer y={2} />
@@ -184,7 +229,7 @@ const HomeHeroUnitLarge: React.FC<React.PropsWithChildren<
                 lineClamp={4}
                 variant={["xs", "sm-display", "lg-display"]}
               >
-                {heroUnit.body}
+                {body}
               </Text>
 
               <Spacer y={[2, 2, 4]} />
@@ -192,7 +237,7 @@ const HomeHeroUnitLarge: React.FC<React.PropsWithChildren<
               <GridColumns>
                 <Column span={[12, 12, 6]}>
                   <Button variant="secondaryBlack" width="100%" tabIndex={-1}>
-                    {heroUnit.link.text}
+                    {link.desktop.text}
                   </Button>
                 </Column>
               </GridColumns>
@@ -201,6 +246,54 @@ const HomeHeroUnitLarge: React.FC<React.PropsWithChildren<
         </Column>
       </GridColumns>
     </RouterLink>
+  )
+}
+
+export const HomeHeroUnitBase: React.FC<HomeHeroUnitBaseProps> = props => {
+  return (
+    <Box width="100%" height="100%">
+      <Media at="xs">
+        <HomeHeroUnitBaseSmall {...props} />
+      </Media>
+
+      <Media greaterThan="xs">
+        <HomeHeroUnitBaseLarge {...props} />
+      </Media>
+    </Box>
+  )
+}
+
+interface HomeHeroUnitProps {
+  heroUnit: HomeHeroUnit_heroUnit$data
+  index: number
+  onClick?: () => void
+}
+
+export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
+  heroUnit,
+  index,
+  onClick,
+}) => {
+  return (
+    <HomeHeroUnitBase
+      title={heroUnit.title}
+      body={heroUnit.body}
+      imageUrl={heroUnit.image?.imageURL}
+      credit={heroUnit.credit}
+      label={heroUnit.label}
+      link={{
+        desktop: {
+          text: heroUnit.link.text,
+          url: heroUnit.link.url,
+        },
+        mobile: {
+          text: heroUnit.link.text,
+          url: heroUnit.link.url,
+        },
+      }}
+      index={index}
+      onClick={onClick}
+    />
   )
 }
 

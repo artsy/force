@@ -5,13 +5,13 @@ import { loadAssetManifest } from "Server/manifest"
 import { ENABLE_SSR_STREAMING } from "Server/config"
 import { getENV } from "Utils/getENV"
 import { ServerAppResults } from "System/Router/serverRouter"
-import { getWebpackEarlyHints } from "Server/getWebpackEarlyHints"
+import { getEarlyHints } from "Server/getEarlyHints"
 import { RenderToStreamResult } from "System/Router/Utils/renderToStream"
 import { buildHtmlTemplate, HTMLProps } from "html"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
-const { CDN_URL, NODE_ENV, GEMINI_CLOUDFRONT_URL } = process.env
+const { CDN_URL, NODE_ENV, GEMINI_CLOUDFRONT_URL, WEBFONT_URL } = process.env
 
 const MANIFEST = loadAssetManifest("dist/manifest.json")
 
@@ -48,7 +48,7 @@ export const renderServerApp = ({
 
   const scripts = extractScriptTags?.()
 
-  const { linkPreloadTags } = getWebpackEarlyHints()
+  const { linkHeaders, linkPreloadTags } = getEarlyHints(headTags ?? [])
 
   const options: HTMLProps = {
     cdnUrl: NODE_ENV === "production" ? (CDN_URL as string) : "",
@@ -84,6 +84,8 @@ export const renderServerApp = ({
     },
   }
 
+  setLinkHeaders(linkHeaders, res)
+
   const statusCode = getENV("statusCode") ?? code
 
   const htmlShell = buildHtmlTemplate(options)
@@ -105,5 +107,20 @@ export const renderServerApp = ({
     })
   } else {
     res.status(statusCode).send(htmlShell)
+  }
+}
+
+const setLinkHeaders = (linkHeaders: string[], res: ArtsyResponse) => {
+  if (!res.headersSent) {
+    res.header("Link", [
+      `<${CDN_URL}>; rel=preconnect; crossorigin`,
+      `<${GEMINI_CLOUDFRONT_URL}>; rel=preconnect;`,
+      `<${WEBFONT_URL}>; rel=preconnect; crossorigin`,
+      `<${WEBFONT_URL}/all-webfonts.css>; rel=preload; as=style`,
+      `<${WEBFONT_URL}/ll-unica77_regular.woff2>; rel=preload; as=font; crossorigin`,
+      `<${WEBFONT_URL}/ll-unica77_medium.woff2>; rel=preload; as=font; crossorigin`,
+      `<${WEBFONT_URL}/ll-unica77_italic.woff2>; rel=preload; as=font; crossorigin`,
+      ...linkHeaders,
+    ])
   }
 }

@@ -17,14 +17,12 @@ interface MarketingHeaderProps {
   subtitle: string
   src: string
   accentColor: string
+  children?: React.ReactNode
 }
 
-export const MarketingHeader: FC<React.PropsWithChildren<MarketingHeaderProps>> = ({
-  title,
-  subtitle,
-  src,
-  accentColor,
-}) => {
+export const MarketingHeader: FC<React.PropsWithChildren<
+  MarketingHeaderProps
+>> = ({ title, subtitle, src, accentColor, children }) => {
   const height = useFullBleedHeaderHeight()
 
   const images = {
@@ -54,7 +52,14 @@ export const MarketingHeader: FC<React.PropsWithChildren<MarketingHeaderProps>> 
 
               <Spacer y={[1, 2, 2, 4]} />
 
-              <Text variant="lg">{subtitle}</Text>
+              <Text
+                variant={["sm", "sm", "md", "md"]}
+                style={{ textWrap: "balance" }}
+              >
+                {subtitle}
+              </Text>
+
+              {children}
             </Column>
 
             <Column span={7} bg={accentColor} overflow="hidden">
@@ -88,6 +93,8 @@ export const MarketingHeader: FC<React.PropsWithChildren<MarketingHeaderProps>> 
             <Spacer y={0.5} />
 
             <Text variant="sm">{subtitle}</Text>
+
+            {children}
           </HorizontalPadding>
         </FullBleed>
       </Media>

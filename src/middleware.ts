@@ -33,7 +33,6 @@ import {
 import { morganMiddleware } from "./Server/middleware/morgan"
 import { ensureSslMiddleware } from "./Server/middleware/ensureSsl"
 import { hstsMiddleware } from "./Server/middleware/hsts"
-import { linkHeadersMiddleware } from "./Server/middleware/linkHeadersMiddleware"
 import { ipFilter } from "./Server/middleware/ipFilter"
 import { sessionMiddleware } from "./Server/middleware/session"
 import { assetMiddleware } from "./Server/middleware/assetMiddleware"
@@ -174,9 +173,6 @@ export function initializeMiddleware(app) {
   // Need sharify for unleash
   registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)
   app.use(featureFlagMiddleware(UnleashService))
-
-  // Preconnect or preload associated links
-  app.use(linkHeadersMiddleware)
 
   /**
    * Routes for pinging system time and up

@@ -1,4 +1,3 @@
-import { DEFAULT_METRIC } from "Utils/metrics"
 import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 
 export const isDefaultFilter: (
@@ -40,7 +39,7 @@ export const isDefaultFilter: (
     case name === "page":
       return value === 1
     case name === "metric":
-      return value === DEFAULT_METRIC
+      return true // We don't want to include `metric` in the URL.
     default:
       return !value
   }
