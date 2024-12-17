@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<41aea4de8500ff4ee2ab9cfd7074dc6c>>
+ * @generated SignedSource<<810eed374308b07402bd5af2aa95443f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SaleMessageQuery$variables = {
   id: string;

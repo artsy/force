@@ -1,13 +1,5 @@
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @generated SignedSource<<445acb4dfff3517ae198d845c422109f>>
-=======
- * @generated SignedSource<<ffa1d607e762f8453d29af25769728f8>>
->>>>>>> 7ed4e586e9 (feat: lazy load partner offer expiration)
-=======
- * @generated SignedSource<<41f8f6afdea4a7fa9fe6f5bca29d036f>>
->>>>>>> d46012b049 (feat: remove fetching partner offer and offered price display)
+ * @generated SignedSource<<65424bd1d286338feb38992978fffb47>>
  * @lightSyntaxTransform
  * @nogrep
  */

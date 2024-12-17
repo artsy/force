@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * @generated SignedSource<<8699d0891b292dfba7484484ce76cf01>>
-=======
- * @generated SignedSource<<d24d2cd133b736f9211d0f6a064b624a>>
->>>>>>> 2a1c83c4b3 (use server signals for sidebar tracking)
+ * @generated SignedSource<<63a27c95eb833187149d0ce741654d15>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,12 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-<<<<<<< HEAD
 import { ReaderFragment } from 'relay-runtime';
-export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
-=======
-import { Fragment, ReaderFragment } from 'relay-runtime';
->>>>>>> 2a1c83c4b3 (use server signals for sidebar tracking)
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarCommercialButtons_artwork$data = {
   readonly artists: ReadonlyArray<{

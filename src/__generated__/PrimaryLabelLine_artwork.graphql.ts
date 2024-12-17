@@ -1,13 +1,5 @@
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @generated SignedSource<<7d6bf1d1ff23991f50e5301ffcdfc530>>
-=======
- * @generated SignedSource<<0f59d923e037d431771e1ff412685606>>
->>>>>>> 3ca3a1726f (feat: don't render primary label when there is a partner offer)
-=======
- * @generated SignedSource<<dabfed9907a9a9bdb6923ad10c4887cf>>
->>>>>>> 601b6174a9 (chore: use context to track signals)
+ * @generated SignedSource<<65e6f5a34917c3937319613b598e1210>>
  * @lightSyntaxTransform
  * @nogrep
  */

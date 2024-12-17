@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * @generated SignedSource<<8c3749667e5f9bd0ddddba734a2ca220>>
-=======
- * @generated SignedSource<<6efa575d9c77b8f7ccc5e72260276606>>
->>>>>>> 2a1c83c4b3 (use server signals for sidebar tracking)
+ * @generated SignedSource<<fa0482e0ec4c2cf175c91b522c5eed20>>
  * @lightSyntaxTransform
  * @nogrep
  */

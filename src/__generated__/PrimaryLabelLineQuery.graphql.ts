@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<60c6628fd63e667668b855b6904a4047>>
+ * @generated SignedSource<<c518e52f97bd9d9d630740246184c367>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PrimaryLabelLineQuery$variables = {
   id: string;

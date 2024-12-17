@@ -1,21 +1,5 @@
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @generated SignedSource<<7b6c87d325dc368efd36064a85c4973e>>
-=======
- * @generated SignedSource<<7f0d6305953fc6d2a71b6194b56bcf6a>>
->>>>>>> 7ed4e586e9 (feat: lazy load partner offer expiration)
-=======
- * @generated SignedSource<<e62f88c7820050c6a92139ffeb778623>>
->>>>>>> d46012b049 (feat: remove fetching partner offer and offered price display)
-=======
- * @generated SignedSource<<661ddfa9bedab1f2a5b4244a179b9dec>>
->>>>>>> 3ca3a1726f (feat: don't render primary label when there is a partner offer)
-=======
- * @generated SignedSource<<b0eed5924e36d58415ed38a7be583881>>
->>>>>>> 601b6174a9 (chore: use context to track signals)
+ * @generated SignedSource<<390723675f2b9ddb6803785b269464a1>>
  * @lightSyntaxTransform
  * @nogrep
  */
