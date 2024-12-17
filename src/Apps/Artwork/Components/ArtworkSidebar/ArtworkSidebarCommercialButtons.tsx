@@ -46,8 +46,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { ResponsiveValue } from "styled-system"
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
-import { getSignalLabel } from "Utils/getSignalLabel"
-import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
+import { getSignalLabel, signalsToArray } from "Utils/getSignalLabel"
 
 interface ArtworkSidebarCommercialButtonsProps {
   artwork: ArtworkSidebarCommercialButtons_artwork$key
@@ -91,7 +90,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<
   const createOrder = useCreateOrderMutation()
   const createOfferOrder = useCreateOfferOrderMutation()
 
-  const { signals } = useArtworkGridContext()
+  const signals = signalsToArray(artwork.collectorSignals)
 
   const [
     isCommitingCreateOrderMutation,
@@ -125,7 +124,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<
       context_owner_type: OwnerType.artwork,
       context_owner_slug: artwork.slug,
       context_owner_id: artwork.internalID,
-      signal_label: getSignalLabel(signals?.[artwork.internalID] ?? []),
+      signal_label: getSignalLabel(signals) ?? "",
     }
     trackEvent(event)
 
@@ -139,7 +138,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<
       context_owner_id: artwork.internalID,
       context_owner_slug: artwork.slug,
       flow: "Partner offer",
-      signal_label: getSignalLabel(signals?.[artwork.internalID] ?? []),
+      signal_label: getSignalLabel(signals) ?? "",
     }
 
     trackEvent(event)
@@ -195,7 +194,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<
       context_owner_id: artwork.internalID,
       context_owner_slug: artwork.slug,
       flow: "Buy now",
-      signal_label: getSignalLabel(signals?.[artwork.internalID] ?? []),
+      signal_label: getSignalLabel(signals) ?? "",
     }
 
     trackEvent(event)
@@ -697,7 +696,11 @@ const ARTWORK_FRAGMENT = graphql`
       }
     }
     collectorSignals {
-      primaryLabel(ignore: [PARTNER_OFFER])
+      partnerOffer {
+        endAt
+      }
+      increasedInterest
+      curatorsPick
     }
   }
 `

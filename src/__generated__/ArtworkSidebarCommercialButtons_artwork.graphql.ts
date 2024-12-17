@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * @generated SignedSource<<8699d0891b292dfba7484484ce76cf01>>
+=======
+ * @generated SignedSource<<d24d2cd133b736f9211d0f6a064b624a>>
+>>>>>>> 2a1c83c4b3 (use server signals for sidebar tracking)
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,8 +12,12 @@
 /* eslint-disable */
 // @ts-nocheck
 
+<<<<<<< HEAD
 import { ReaderFragment } from 'relay-runtime';
 export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
+=======
+import { Fragment, ReaderFragment } from 'relay-runtime';
+>>>>>>> 2a1c83c4b3 (use server signals for sidebar tracking)
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarCommercialButtons_artwork$data = {
   readonly artists: ReadonlyArray<{
@@ -19,7 +27,11 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
     readonly internalID: string;
   } | null | undefined;
   readonly collectorSignals: {
-    readonly primaryLabel: LabelSignalEnum | null | undefined;
+    readonly curatorsPick: boolean | null | undefined;
+    readonly increasedInterest: boolean;
+    readonly partnerOffer: {
+      readonly endAt: string | null | undefined;
+    } | null | undefined;
   } | null | undefined;
   readonly editionSets: ReadonlyArray<{
     readonly dimensions: {
@@ -331,18 +343,35 @@ return {
       "selections": [
         {
           "alias": null,
-          "args": [
+          "args": null,
+          "concreteType": "PartnerOfferToCollector",
+          "kind": "LinkedField",
+          "name": "partnerOffer",
+          "plural": false,
+          "selections": [
             {
-              "kind": "Literal",
-              "name": "ignore",
-              "value": [
-                "PARTNER_OFFER"
-              ]
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endAt",
+              "storageKey": null
             }
           ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "kind": "ScalarField",
-          "name": "primaryLabel",
-          "storageKey": "primaryLabel(ignore:[\"PARTNER_OFFER\"])"
+          "name": "increasedInterest",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "curatorsPick",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -353,6 +382,6 @@ return {
 };
 })();
 
-(node as any).hash = "2f0076dcb4ef9a7117fa8806021078f7";
+(node as any).hash = "03b4a4e94936ad4c45b688b3437fc61a";
 
 export default node;
