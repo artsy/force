@@ -38,7 +38,7 @@
     "jest": "node_modules/.bin/jest --config jest.config.js",
     "jest:debug": "node --inspect node_modules/.bin/jest --runInBand",
     "jest-enzyme": "node_modules/.bin/jest --config jest.legacy.config.js",
-    "lint": "yarn biome lint",
+    "lint": "yarn biome lint --no-errors-on-unmatched",
     "local-palette-dev": "./scripts/yalc-link-local-palette",
     "local-palette-dev:stop": "./scripts/yalc-unlink-local-palette",
     "open-consent-modal": "open http://localhost:5000?otreset=false&otpreview=true&otgeo=gb",
@@ -290,7 +290,7 @@
   "lint-staged": {
     "*": "yarn detect-secrets:hook",
     "*.@(md)": ["yarn format"],
-    "*.@(js|jsx|ts|tsx)": ["yarn format", "yarn lint"]
+    "*.@(js|jsx|ts|tsx)": ["yarn format && yarn lint"]
   },
   "nyc": {
     "check-coverage": true,
