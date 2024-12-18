@@ -1,6 +1,6 @@
 import { BorderedRadio, Button } from "@artsy/palette"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import { BankAccountPickerTestQuery$rawResponse } from "__generated__/BankAccountPickerTestQuery.graphql"
+import type { BankAccountPickerTestQuery$rawResponse } from "__generated__/BankAccountPickerTestQuery.graphql"
 import {
   BuyOrderPickup,
   UntouchedBuyOrder,
@@ -10,10 +10,10 @@ import { graphql } from "react-relay"
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { BankAccountPicker_me$data } from "__generated__/BankAccountPicker_me.graphql"
+import type { BankAccountPicker_me$data } from "__generated__/BankAccountPicker_me.graphql"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
-import { BankAccountSelection } from "Apps/Order/Routes/Payment/index"
+import type { BankAccountSelection } from "Apps/Order/Routes/Payment/index"
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
 jest.mock("Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext")

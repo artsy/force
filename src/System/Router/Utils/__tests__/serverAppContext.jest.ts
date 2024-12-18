@@ -1,7 +1,8 @@
 import { getServerAppContext } from "System/Router/Utils/serverAppContext"
 
 describe("serverAppContext", () => {
-  let req, res
+  let req
+  let res
   let headers = {}
   beforeEach(() => {
     headers = {}
@@ -59,7 +60,7 @@ describe("serverAppContext", () => {
     headers["User-Agent"] = "blah blah blah"
     expect(getServerAppContext(req, res).isEigen).toBeFalsy()
 
-    delete headers["User-Agent"]
+    headers["User-Agent"] = undefined
     expect(getServerAppContext(req, res).isEigen).toBeFalsy()
   })
 })

@@ -1,7 +1,7 @@
-import * as React from "react"
-import { Box, BoxProps, HTML, Join, Spacer, Text } from "@artsy/palette"
+import type * as React from "react"
+import { Box, type BoxProps, HTML, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FeatureSetMeta_set$data } from "__generated__/FeatureSetMeta_set.graphql"
+import type { FeatureSetMeta_set$data } from "__generated__/FeatureSetMeta_set.graphql"
 
 export interface FeatureSetMetaProps extends BoxProps {
   set: FeatureSetMeta_set$data

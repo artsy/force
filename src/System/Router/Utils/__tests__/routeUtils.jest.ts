@@ -3,7 +3,7 @@ import {
   findRoutesByPath,
   getRoutes,
 } from "System/Router/Utils/routeUtils"
-import { Match, Router } from "found"
+import type { Match, Router } from "found"
 import { getAppRoutes } from "routes"
 
 jest.mock("routes", () => ({ getAppRoutes: jest.fn() }))

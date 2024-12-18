@@ -1,14 +1,14 @@
 import { Button, Message, ModalDialog, Spacer, Text } from "@artsy/palette"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   getStatusCopy,
   continueToInboxText,
 } from "Apps/Order/Utils/getStatusCopy"
 import { RouterLink } from "System/Components/RouterLink"
-import { SubmittedOrderModal_submittedOrder$data } from "__generated__/SubmittedOrderModal_submittedOrder.graphql"
+import type { SubmittedOrderModal_submittedOrder$data } from "__generated__/SubmittedOrderModal_submittedOrder.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { SubmittedOrderModalQuery } from "__generated__/SubmittedOrderModalQuery.graphql"
+import type { SubmittedOrderModalQuery } from "__generated__/SubmittedOrderModalQuery.graphql"
 
 interface SubmittedOrderModalProps {
   submittedOrder: SubmittedOrderModal_submittedOrder$data

@@ -1,7 +1,7 @@
-import * as React from "react"
+import type * as React from "react"
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   HTML,
   Join,
   Spacer,
@@ -9,7 +9,7 @@ import {
   FullBleed,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FeatureHeaderFull_feature$data } from "__generated__/FeatureHeaderFull_feature.graphql"
+import type { FeatureHeaderFull_feature$data } from "__generated__/FeatureHeaderFull_feature.graphql"
 import {
   FullBleedHeader,
   FullBleedHeaderOverlay,

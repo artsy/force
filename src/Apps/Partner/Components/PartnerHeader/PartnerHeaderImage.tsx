@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { PartnerHeaderImage_profile$data } from "__generated__/PartnerHeaderImage_profile.graphql"
+import type { PartnerHeaderImage_profile$data } from "__generated__/PartnerHeaderImage_profile.graphql"
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 
 interface PartnerHeaderImageProps {

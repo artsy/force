@@ -1,12 +1,12 @@
-import { Box, BoxProps } from "@artsy/palette"
-import { FC, ReactNode, useReducer } from "react"
+import { Box, type BoxProps } from "@artsy/palette"
+import { type FC, type ReactNode, useReducer } from "react"
 import styled, { css } from "styled-components"
 
 export enum Mode {
-  Pending,
-  Active,
-  Liked,
-  Disliked,
+  Pending = 0,
+  Active = 1,
+  Liked = 2,
+  Disliked = 3,
 }
 
 interface ArtQuizCardProps extends BoxProps {

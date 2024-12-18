@@ -1,6 +1,6 @@
-import { FC, Suspense, useMemo } from "react"
+import { type FC, Suspense, useMemo } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
-import { CollectorProfileArtistsSearchResultsQuery } from "__generated__/CollectorProfileArtistsSearchResultsQuery.graphql"
+import type { CollectorProfileArtistsSearchResultsQuery } from "__generated__/CollectorProfileArtistsSearchResultsQuery.graphql"
 import { compact } from "lodash"
 import { Message } from "@artsy/palette"
 import {

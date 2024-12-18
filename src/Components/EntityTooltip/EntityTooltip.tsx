@@ -1,5 +1,5 @@
 import { Box } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import styled from "styled-components"
 import { EntityTooltipArtistQueryRenderer } from "./EntityTooltipArtist"
 import { EntityTooltipGeneQueryRenderer } from "./EntityTooltipGene"

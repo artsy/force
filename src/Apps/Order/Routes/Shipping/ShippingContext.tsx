@@ -1,20 +1,20 @@
-import { createContext, FC, useMemo, useReducer, useRef } from "react"
+import { createContext, type FC, useMemo, useReducer, useRef } from "react"
 import {
-  ComputedOrderData,
+  type ComputedOrderData,
   computeOrderData,
 } from "Apps/Order/Routes/Shipping/Utils/computeOrderData"
-import { ShippingContext_order$key } from "__generated__/ShippingContext_order.graphql"
-import { ShippingContext_me$key } from "__generated__/ShippingContext_me.graphql"
+import type { ShippingContext_order$key } from "__generated__/ShippingContext_order.graphql"
+import type { ShippingContext_me$key } from "__generated__/ShippingContext_me.graphql"
 import { compact } from "lodash"
 import { extractNodes } from "Utils/extractNodes"
-import { ShippingProps, ShippingStage } from "Apps/Order/Routes/Shipping"
-import { FormikProps } from "formik"
-import {
+import type { ShippingProps, ShippingStage } from "Apps/Order/Routes/Shipping"
+import type { FormikProps } from "formik"
+import type {
   FulfillmentValues,
   SavedAddressType,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
-import createLogger from "Utils/logger"
-import { Dialog } from "Apps/Order/Dialogs"
+import type createLogger from "Utils/logger"
+import type { Dialog } from "Apps/Order/Dialogs"
 import { useHandleExchangeError } from "Apps/Order/Routes/Shipping/Hooks/useHandleExchangeError"
 import { graphql, useFragment } from "react-relay"
 

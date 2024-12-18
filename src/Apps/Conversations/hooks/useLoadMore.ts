@@ -1,6 +1,6 @@
 import { isFunction } from "lodash"
 import { useCallback, useEffect, useState } from "react"
-import { RelayPaginationProp, usePaginationFragment } from "react-relay"
+import type { RelayPaginationProp, usePaginationFragment } from "react-relay"
 
 type UsePaginationFragmentProps = ReturnType<typeof usePaginationFragment>
 interface UseLoadNext {

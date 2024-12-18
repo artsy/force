@@ -1,5 +1,5 @@
 import { BorderBox, Box, Join, Spacer } from "@artsy/palette"
-import { ArtistMarketInsights_artist$data } from "__generated__/ArtistMarketInsights_artist.graphql"
+import type { ArtistMarketInsights_artist$data } from "__generated__/ArtistMarketInsights_artist.graphql"
 import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
@@ -183,20 +183,12 @@ export const hasSections = ({
   const { partnersConnection } = highlights
 
   // Is there a gallery representation section?
-  if (
-    partnersConnection &&
-    partnersConnection.edges &&
-    partnersConnection.edges.length > 0
-  ) {
+  if (partnersConnection?.edges && partnersConnection.edges.length > 0) {
     return true
   }
 
   // Is there an auction highlights section?
-  if (
-    auctionResults &&
-    auctionResults.edges &&
-    auctionResults.edges.length > 0
-  ) {
+  if (auctionResults?.edges && auctionResults.edges.length > 0) {
     return true
   }
 

@@ -16,8 +16,7 @@ export const afterUpdateRedirect = () => {
 export const redirectMessage = url => {
   const urlHost = getURLHost(url)
   if (urlHost) {
-    return "You will be redirected to: " + urlHost
-  } else {
-    return ""
+    return `You will be redirected to: ${urlHost}`
   }
+  return ""
 }

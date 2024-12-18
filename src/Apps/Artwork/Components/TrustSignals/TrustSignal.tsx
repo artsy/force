@@ -1,5 +1,5 @@
-import { Clickable, Flex, FlexProps, Text } from "@artsy/palette"
-import { FC } from "react"
+import { Clickable, Flex, type FlexProps, Text } from "@artsy/palette"
+import type { FC } from "react"
 
 export interface TrustSignalProps extends Omit<FlexProps, "flexDirection"> {
   Icon: JSX.Element

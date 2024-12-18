@@ -1,6 +1,6 @@
 import { mount } from "enzyme"
 import { DateTime, Duration, Settings } from "luxon"
-import { ExtractProps } from "Utils/ExtractProps"
+import type { ExtractProps } from "Utils/ExtractProps"
 import { CountdownTimer } from "Components/CountdownTimer"
 
 const DATE = "2018-12-03T13:50:31.641Z"

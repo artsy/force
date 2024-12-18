@@ -1,9 +1,9 @@
 import InfoIcon from "@artsy/icons/InfoIcon"
 import { Box, Column, GridColumns, Text, Tooltip } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { Media } from "Utils/Responsive"
 
-interface CollectorProfileArtistsListHeaderProps {}
+type CollectorProfileArtistsListHeaderProps = {}
 
 export const CollectorProfileArtistsListHeader: FC<
   React.PropsWithChildren<CollectorProfileArtistsListHeaderProps>

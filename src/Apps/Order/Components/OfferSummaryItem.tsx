@@ -1,8 +1,8 @@
 import { Spacer, Text } from "@artsy/palette"
-import { OfferSummaryItem_order$data } from "__generated__/OfferSummaryItem_order.graphql"
+import type { OfferSummaryItem_order$data } from "__generated__/OfferSummaryItem_order.graphql"
 import {
   StepSummaryItem,
-  StepSummaryItemProps,
+  type StepSummaryItemProps,
 } from "Components/StepSummaryItem"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getOfferItemFromOrder } from "Apps/Order/Utils/offerUtils"

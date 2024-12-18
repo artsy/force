@@ -1,6 +1,6 @@
 import { GridColumns, Column, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { FC } from "react"
+import type { FC } from "react"
 import styled from "styled-components"
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 
@@ -10,7 +10,7 @@ export const BuyerGuaranteeTableDesktop: FC<
   return (
     <>
       <Row>
-        <Td span={2}></Td>
+        <Td span={2} />
 
         <Td span={2}>
           <Text variant="sm-display" fontWeight="bold">
@@ -58,11 +58,11 @@ export const BuyerGuaranteeTableDesktop: FC<
           <CheckmarkIcon width={40} height={40} />
         </Td>
 
-        <Td span={2}></Td>
+        <Td span={2} />
 
-        <Td span={2}></Td>
+        <Td span={2} />
 
-        <Td span={2}></Td>
+        <Td span={2} />
       </Row>
 
       <Row bg="white100">
@@ -102,7 +102,7 @@ export const BuyerGuaranteeTableMobile: FC<
   return (
     <>
       <Row>
-        <Td span={[4]}></Td>
+        <Td span={[4]} />
 
         <Td span={[4]}>
           <Text variant="sm-display" fontWeight="bold">
@@ -156,7 +156,7 @@ export const BuyerGuaranteeTableMobile: FC<
           </Text>
         </Td>
 
-        <Td span={[4]}></Td>
+        <Td span={[4]} />
 
         <Td span={[4]} bg="white100">
           <CheckmarkIcon width={40} height={40} />
@@ -170,7 +170,7 @@ export const BuyerGuaranteeTableMobile: FC<
           </Text>
         </Td>
 
-        <Td span={[4]}></Td>
+        <Td span={[4]} />
 
         <Td span={[4]} bg="white100">
           <CheckmarkIcon width={40} height={40} />
@@ -184,7 +184,7 @@ export const BuyerGuaranteeTableMobile: FC<
           </Text>
         </Td>
 
-        <Td span={[4]}></Td>
+        <Td span={[4]} />
 
         <Td span={[4]} bg="white100">
           <CheckmarkIcon width={40} height={40} />

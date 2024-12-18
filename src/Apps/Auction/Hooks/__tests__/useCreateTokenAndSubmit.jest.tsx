@@ -5,7 +5,7 @@ import { useAddCreditCardAndUpdateProfile } from "Apps/Auction/Queries/useAddCre
 import { useCreateBidder } from "Apps/Auction/Queries/useCreateBidder"
 import {
   useCreateTokenAndSubmit,
-  UseCreateTokenAndSubmitProps,
+  type UseCreateTokenAndSubmitProps,
 } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"

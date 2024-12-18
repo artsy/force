@@ -1,4 +1,4 @@
-import { ArtworkSidebarCurrentBidInfo_artwork$data } from "__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
+import type { ArtworkSidebarCurrentBidInfo_artwork$data } from "__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
@@ -89,12 +89,12 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<
   let reserveMessage = artwork.sale_artwork.reserve_message
 
   if (bidsPresent) {
-    bidTextParts.push(bidsCount === 1 ? "1 bid" : bidsCount + " bids")
+    bidTextParts.push(bidsCount === 1 ? "1 bid" : `${bidsCount} bids`)
     if (reserveMessage) reserveMessage = reserveMessage.toLocaleLowerCase()
   }
 
   if (reserveMessage) {
-    reserveMessage = reserveMessage + "."
+    reserveMessage = `${reserveMessage}.`
     bidTextParts.push(reserveMessage)
   }
 
@@ -105,8 +105,8 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<
    * be 1 live sale with this work. When we run into that case, there is
    * likely design work to be done too, so we can adjust this then.
    */
-  const myLotStanding = artwork.myLotStanding && artwork.myLotStanding[0]
-  const myBidPresent = !!(myLotStanding && myLotStanding.most_recent_bid)
+  const myLotStanding = artwork.myLotStanding?.[0]
+  const myBidPresent = !!myLotStanding?.most_recent_bid
   const myMostRecent = myBidPresent ? myLotStanding?.most_recent_bid : null
   const myBidWinning = myBidPresent
     ? myLotStanding?.active_bid?.is_winning
@@ -173,7 +173,7 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<
 
       <Spacer y={2} />
 
-      {artwork.sale && artwork.sale.is_with_buyers_premium && (
+      {artwork.sale?.is_with_buyers_premium && (
         <>
           <Spacer y={1} />
 

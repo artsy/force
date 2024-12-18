@@ -1,11 +1,12 @@
-export function formatLargeNumber(number: number, decimalPlaces: number = 0) {
+export function formatLargeNumber(number: number, decimalPlaces = 0) {
   if (number < 1000) {
     return number.toString()
-  } else if (number < 1000000) {
-    return `${(number / 1000).toFixed(decimalPlaces)}K`
-  } else if (number < 1000000000) {
-    return `${(number / 1000000).toFixed(decimalPlaces)}M`
-  } else {
-    return `${(number / 1000000000).toFixed(decimalPlaces)}B`
   }
+  if (number < 1000000) {
+    return `${(number / 1000).toFixed(decimalPlaces)}K`
+  }
+  if (number < 1000000000) {
+    return `${(number / 1000000).toFixed(decimalPlaces)}M`
+  }
+  return `${(number / 1000000000).toFixed(decimalPlaces)}B`
 }

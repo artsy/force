@@ -35,15 +35,13 @@ export async function startServer(
 
       if (KEEPALIVE_TIMEOUT_SECONDS) {
         console.log(
-          "Setting keepAliveTimeout to " + KEEPALIVE_TIMEOUT_SECONDS + " sec."
+          `Setting keepAliveTimeout to ${KEEPALIVE_TIMEOUT_SECONDS} sec.`
         )
         server.keepAliveTimeout = Number(KEEPALIVE_TIMEOUT_SECONDS) * 1000
       }
 
       if (HEADERS_TIMEOUT_SECONDS) {
-        console.log(
-          "Setting headersTimeout to " + HEADERS_TIMEOUT_SECONDS + " sec."
-        )
+        console.log(`Setting headersTimeout to ${HEADERS_TIMEOUT_SECONDS} sec.`)
 
         // @ts-ignore -- FIXME: Property 'headersTimeout' does not exist on type 'Server & WithShutdown'.
         server.headersTimeout = Number(HEADERS_TIMEOUT_SECONDS) * 1000

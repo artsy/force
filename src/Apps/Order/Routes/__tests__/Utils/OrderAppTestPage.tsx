@@ -1,7 +1,7 @@
 /* eslint-disable jest/no-standalone-expect */
 import { BorderedRadio, Button } from "@artsy/palette"
 import { Stepper } from "@artsy/palette"
-import { ReactWrapper } from "enzyme"
+import type { ReactWrapper } from "enzyme"
 import { ArtworkSummaryItemFragmentContainer } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
@@ -16,11 +16,6 @@ import { CountdownTimer } from "Components/CountdownTimer"
 import { RootTestPage, expectOne } from "DevTools/RootTestPage"
 
 export class OrderAppTestPage extends RootTestPage {
-  /** COMPONENT SELECTORS **/
-  constructor(wrapper?: ReactWrapper) {
-    super(wrapper)
-  }
-
   get orderStepper() {
     return expectOne(this.root.find(OrderStepper))
   }

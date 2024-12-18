@@ -1,7 +1,7 @@
 import { MockBoot } from "DevTools/MockBoot"
 import { CollectionArtworksFilterRefetchContainer as CollectionArtworksFilter } from "Apps/Collect/Routes/Collection/Components/CollectionArtworksFilter"
 import { graphql } from "react-relay"
-import { CollectionArtworksFilter_Query } from "__generated__/CollectionArtworksFilter_Query.graphql"
+import type { CollectionArtworksFilter_Query } from "__generated__/CollectionArtworksFilter_Query.graphql"
 import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import {

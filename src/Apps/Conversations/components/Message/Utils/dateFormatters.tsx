@@ -24,13 +24,14 @@ export const exactDate = (time: string) => {
 
   if (daysSince === 0) {
     return `Today ${date.toFormat("t")}`
-  } else if (daysSince === 1) {
-    return `Yesterday ${date.toFormat("t")}`
-  } else if (daysSince < 7) {
-    return date.toFormat("cccc t")
-  } else {
-    return date.toFormat("ccc, LLL d, yyyy t")
   }
+  if (daysSince === 1) {
+    return `Yesterday ${date.toFormat("t")}`
+  }
+  if (daysSince < 7) {
+    return date.toFormat("cccc t")
+  }
+  return date.toFormat("ccc, LLL d, yyyy t")
 }
 
 export const minutesSinceDate = (time: string | DateTime): number => {
@@ -46,22 +47,25 @@ export const relativeDate = (time: string) => {
 
   if (minutesSince <= 1) {
     return "Just now"
-  } else if (minutesSince <= 300) {
+  }
+  if (minutesSince <= 300) {
     return date.toRelative()
-  } else if (minutesSince <= 1440) {
+  }
+  if (minutesSince <= 1440) {
     return date.toFormat("t")
-  } else if (minutesSince <= 10080) {
+  }
+  if (minutesSince <= 10080) {
     return date.toRelative()
-  } else if (minutesSince <= 40320) {
+  }
+  if (minutesSince <= 40320) {
     const numberOfWeeksAgo = Math.floor(Math.abs(minutesSince / 10080))
 
     const formattedDate =
-      numberOfWeeksAgo == 1
+      numberOfWeeksAgo === 1
         ? `${numberOfWeeksAgo} week ago`
         : `${numberOfWeeksAgo} weeks ago`
 
     return formattedDate
-  } else {
-    return date.toFormat("D")
   }
+  return date.toFormat("D")
 }

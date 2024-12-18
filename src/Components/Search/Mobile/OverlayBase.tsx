@@ -8,7 +8,7 @@ import {
   useTheme,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { FC } from "react"
+import type { FC } from "react"
 import styled from "styled-components"
 
 export const OVERLAY_CONTENT_ID = "MobileSearchOverlayContent"
@@ -37,10 +37,7 @@ export const OverlayBase: FC<React.PropsWithChildren<OverlayBaseProps>> = ({
         backgroundColor: "white100",
       }}
     >
-      <Flex
-        bg="white100"
-        style={{ boxShadow: theme.effects.dropShadow }}
-      ></Flex>
+      <Flex bg="white100" style={{ boxShadow: theme.effects.dropShadow }} />
 
       <Flex flexDirection="column" overflow="hidden" width="100%">
         <Flex

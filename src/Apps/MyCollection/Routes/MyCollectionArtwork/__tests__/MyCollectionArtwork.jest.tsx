@@ -1,6 +1,6 @@
-import { Breakpoint } from "@artsy/palette"
+import type { Breakpoint } from "@artsy/palette"
 import { screen } from "@testing-library/react"
-import { MyCollectionArtworkTestQuery } from "__generated__/MyCollectionArtworkTestQuery.graphql"
+import type { MyCollectionArtworkTestQuery } from "__generated__/MyCollectionArtworkTestQuery.graphql"
 import { MyCollectionArtworkFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtwork"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -107,7 +107,7 @@ describe("MyCollectionArtwork", () => {
             .find(c => c.textContent?.includes("Request a Price Estimate"))
         ).toHaveAttribute(
           "href",
-          `/collector-profile/my-collection/artwork/63035a6b41808b000c7e2933/price-estimate`
+          "/collector-profile/my-collection/artwork/63035a6b41808b000c7e2933/price-estimate"
         )
       })
     })

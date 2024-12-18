@@ -1,11 +1,11 @@
 import { Toasts, ToastsProvider } from "@artsy/palette"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
-import { AdditionalDocumentsRoute_Test_Query$rawResponse } from "__generated__/AdditionalDocumentsRoute_Test_Query.graphql"
+import type { AdditionalDocumentsRoute_Test_Query$rawResponse } from "__generated__/AdditionalDocumentsRoute_Test_Query.graphql"
 import { AdditionalDocumentsRoute } from "Apps/Sell/Routes/AdditionalRoutes/AdditionalDocumentsRoute"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
+import { type MockEnvironment, createMockEnvironment } from "relay-test-utils"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -64,7 +64,7 @@ const submissionMock: Partial<
   ],
 }
 
-let relayEnv: MockEnvironment = createMockEnvironment()
+const relayEnv: MockEnvironment = createMockEnvironment()
 
 beforeEach(() => {
   ;(useSystemContext as jest.Mock).mockImplementation(() => {

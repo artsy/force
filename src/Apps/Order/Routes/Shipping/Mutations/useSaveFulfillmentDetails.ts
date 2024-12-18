@@ -1,6 +1,6 @@
 import { useMutation } from "Utils/Hooks/useMutation"
 import { graphql } from "react-relay"
-import { useSaveFulfillmentDetailsMutation } from "__generated__/useSaveFulfillmentDetailsMutation.graphql"
+import type { useSaveFulfillmentDetailsMutation } from "__generated__/useSaveFulfillmentDetailsMutation.graphql"
 
 export const useSaveFulfillmentDetails = () => {
   return useMutation<useSaveFulfillmentDetailsMutation>({

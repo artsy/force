@@ -1,5 +1,5 @@
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarDetails_artwork$data } from "__generated__/ArtworkSidebarDetails_artwork.graphql"
+import type { ArtworkSidebarDetails_artwork$data } from "__generated__/ArtworkSidebarDetails_artwork.graphql"
 import { Box, Spacer, Text } from "@artsy/palette"
 import { ArtworkSidebarClassificationFragmentContainer } from "./ArtworkSidebarClassification"
 import { ArtworkSidebarAuthenticityCertificateFragmentContainer } from "./ArtworkSidebarAuthenticityCertificate"
@@ -25,9 +25,8 @@ const ArtworkSidebarDetails: React.FC<
     if (frameDetails !== "Included") {
       if (isUnlisted) {
         return "Frame not included"
-      } else {
-        return
       }
+      return
     }
 
     return `Frame ${frameDetails.toLowerCase()}`

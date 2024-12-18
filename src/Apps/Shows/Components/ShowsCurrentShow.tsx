@@ -13,7 +13,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import GridItem from "Components/Artwork/GridItem"
 import { extractNodes } from "Utils/extractNodes"
-import { ShowsCurrentShow_show$data } from "__generated__/ShowsCurrentShow_show.graphql"
+import type { ShowsCurrentShow_show$data } from "__generated__/ShowsCurrentShow_show.graphql"
 import { Masonry } from "Components/Masonry"
 import { RouterLink } from "System/Components/RouterLink"
 

@@ -1,4 +1,4 @@
-import { identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse } from "__generated__/identityVerificationRoutes_IdentityVerificationAppQuery.graphql"
+import type { identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse } from "__generated__/identityVerificationRoutes_IdentityVerificationAppQuery.graphql"
 
 export const IdentityVerificationAppQueryResponseFixture: identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse =
   {

@@ -33,9 +33,9 @@ describe("getEarlyHints", () => {
 
     expect(fs.readFileSync).toHaveBeenCalledWith(HINTS_PATH, "utf-8")
     expect(result.linkHeaders).toEqual([
-      `<https://example.com/image.jpg>; rel=preload; as=image`,
-      `<https://cdn.example.com/chunk1.js>; rel=preload; as=script`,
-      `<https://cdn.example.com/chunk2.js>; rel=preload; as=script`,
+      "<https://example.com/image.jpg>; rel=preload; as=image",
+      "<https://cdn.example.com/chunk1.js>; rel=preload; as=script",
+      "<https://cdn.example.com/chunk2.js>; rel=preload; as=script",
     ])
     expect(result.linkPreloadTags).toEqual([
       `<link rel="preload" as="script" href="https://cdn.example.com/chunk1.js">`,

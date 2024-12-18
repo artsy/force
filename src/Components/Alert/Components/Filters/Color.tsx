@@ -6,7 +6,7 @@ import {
   GridColumns,
   Column,
 } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { COLOR_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"

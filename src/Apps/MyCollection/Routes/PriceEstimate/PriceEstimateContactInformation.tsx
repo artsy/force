@@ -1,12 +1,12 @@
 import { ActionType } from "@artsy/cohesion"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 import { Button, Flex, Spacer, Text, useToasts } from "@artsy/palette"
-import { PriceEstimateContactInformation_artwork$data } from "__generated__/PriceEstimateContactInformation_artwork.graphql"
-import { PriceEstimateContactInformation_me$data } from "__generated__/PriceEstimateContactInformation_me.graphql"
+import type { PriceEstimateContactInformation_artwork$data } from "__generated__/PriceEstimateContactInformation_artwork.graphql"
+import type { PriceEstimateContactInformation_me$data } from "__generated__/PriceEstimateContactInformation_me.graphql"
 import { AppContainer } from "Apps/Components/AppContainer"
 import {
   ContactInformationFormFragmentContainer,
-  ContactInformationFormModel,
+  type ContactInformationFormModel,
 } from "Apps/MyCollection/ContactInformation/ContactInformationForm"
 import { useRequestPriceEstimate } from "Apps/MyCollection/Routes/PriceEstimate/Mutations/useRequestPriceEstimate"
 import {

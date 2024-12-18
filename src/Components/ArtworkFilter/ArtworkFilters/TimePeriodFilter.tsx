@@ -1,5 +1,5 @@
 import { Checkbox, Flex } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { intersection } from "lodash"
 import {
   SelectedFiltersCountsLabels,
@@ -16,7 +16,7 @@ export interface TimePeriodFilterProps {
 }
 
 export const getTimePeriodToDisplay = period =>
-  isNaN(period) ? period : `${period}s`
+  Number.isNaN(period) ? period : `${period}s`
 
 export const TimePeriodFilter: FC<
   React.PropsWithChildren<TimePeriodFilterProps>
@@ -32,7 +32,7 @@ export const TimePeriodFilter: FC<
   const label = `Time Period${filtersCount}`
 
   let periods
-  if (timePeriods && timePeriods.counts) {
+  if (timePeriods?.counts) {
     periods = timePeriods.counts.filter(timePeriod => {
       return allowedPeriods.includes(timePeriod.name)
     })

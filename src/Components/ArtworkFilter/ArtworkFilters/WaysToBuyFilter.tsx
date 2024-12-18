@@ -1,6 +1,6 @@
 import { Checkbox, Flex } from "@artsy/palette"
 import { entries, isEmpty } from "lodash"
-import { FC } from "react"
+import type { FC } from "react"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
@@ -8,7 +8,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 import { FilterExpandable } from "./FilterExpandable"
-import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 
 interface WayToBuy {
   selected: boolean
@@ -59,7 +59,7 @@ export const WaysToBuyFilter: FC<
       return false
     }
 
-    return !Boolean(condition)
+    return !condition
   }
 
   const checkboxes: WayToBuy[] = entries(WAYS_TO_BUY_OPTIONS).reduce(

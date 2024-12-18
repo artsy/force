@@ -1,11 +1,11 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Avatar, BoxProps, Text, Flex, Label } from "@artsy/palette"
+import { Avatar, type BoxProps, Text, Flex, Label } from "@artsy/palette"
 import { compact, uniq } from "lodash"
-import { FC, Fragment } from "react"
+import { type FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
-import { EntityHeaderPartner_partner$data } from "__generated__/EntityHeaderPartner_partner.graphql"
+import type { EntityHeaderPartner_partner$data } from "__generated__/EntityHeaderPartner_partner.graphql"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 
 const DISPLAYABLE_BADGES = ["black-owned", "women-owned"]

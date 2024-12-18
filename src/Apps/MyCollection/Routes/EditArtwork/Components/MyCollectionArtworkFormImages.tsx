@@ -1,18 +1,18 @@
 import { Text } from "@artsy/palette"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionPhotoToPhoto } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
-import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
+import type { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { PhotoDropzone } from "Components/PhotoUpload/Components/PhotoDropzone"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
 import {
   getErrorMessage,
   normalizePhoto,
-  Photo,
+  type Photo,
   uploadPhotoToS3,
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { useFormikContext } from "formik"
 import { useEffect, useState } from "react"
-import { FileRejection } from "react-dropzone"
+import type { FileRejection } from "react-dropzone"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
 interface MyCollectionArtworkFormImagesProps {

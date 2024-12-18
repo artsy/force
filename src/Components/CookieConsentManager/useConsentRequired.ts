@@ -1,4 +1,4 @@
-import { CategoryPreferences } from "@segment/consent-manager/types/types"
+import type { CategoryPreferences } from "@segment/consent-manager/types/types"
 import {
   DEFAULT_OPT_IN_PREFERENCES,
   DEFAULT_OPT_OUT_PREFERENCES,

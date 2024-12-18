@@ -1,23 +1,26 @@
 import * as Sentry from "@sentry/node"
-import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 import { matchingMediaQueriesForUserAgent } from "System/Router/Utils/matchingMediaQueriesForUserAgent"
 import { renderStates } from "System/Router/RenderStates"
-import { RouterConfig } from "System/Router/clientRouter"
-import { MatchingMediaQueries, createMediaStyle } from "Utils/Responsive"
+import type { RouterConfig } from "System/Router/clientRouter"
+import { type MatchingMediaQueries, createMediaStyle } from "Utils/Responsive"
 import { getUser } from "Utils/user"
-import { NextFunction } from "express"
+import type { NextFunction } from "express"
 import { createQueryMiddleware } from "farce"
 import { createRender } from "found"
 import { Resolver } from "found-relay"
 import {
-  FarceElementResult,
-  FarceRedirectResult,
+  type FarceElementResult,
+  type FarceRedirectResult,
   getFarceResult,
 } from "found/server"
 import qs from "qs"
-import React from "react"
+import type React from "react"
 import { executeRouteHooks } from "System/Router/Utils/executeRouteHooks"
 import { Boot } from "System/Boot"
 import { collectAssets } from "System/Router/Utils/collectAssets"

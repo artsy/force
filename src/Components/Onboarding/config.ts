@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
 import { WorkflowEngine } from "Utils/WorkflowEngine"
-import { State } from "./Hooks/useOnboardingContext"
+import type { State } from "./Hooks/useOnboardingContext"
 import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 
 interface UseConfig {

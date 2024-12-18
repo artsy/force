@@ -13,20 +13,20 @@ import {
 } from "@artsy/palette"
 import {
   createPaginationContainer,
-  Environment,
+  type Environment,
   fetchQuery,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { SavedSearchAlertsApp_me$data } from "__generated__/SavedSearchAlertsApp_me.graphql"
+import type { SavedSearchAlertsApp_me$data } from "__generated__/SavedSearchAlertsApp_me.graphql"
 import { Media } from "Utils/Responsive"
-import { EditAlertEntity } from "./types"
+import type { EditAlertEntity } from "./types"
 import { extractNodes } from "Utils/extractNodes"
 import { SavedSearchAlertDeleteModal } from "./Components/SavedSearchAlertDeleteModal"
 import {
   SavedSearchAlertListItemFragmentContainer,
-  SavedSearchAlertListItemVariant,
+  type SavedSearchAlertListItemVariant,
 } from "./Components/SavedSearchAlertListItem"
 import { SavedSearchAlertHeader } from "./Components/SavedSearchAlertHeader"
 import { MetaTags } from "Components/MetaTags"
@@ -35,7 +35,7 @@ import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlertsApp_Alert_Query.graphql"
+import type { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlertsApp_Alert_Query.graphql"
 import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { SavedSearchAlertsArtworksQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertsArtworks"
@@ -263,7 +263,7 @@ export const SavedSearchAlertsApp: React.FC<
 
             if (isCurrentEdgeSelected) {
               variant = "active"
-            } else if (!!editAlertEntity) {
+            } else if (editAlertEntity) {
               variant = "inactive"
             }
 

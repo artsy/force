@@ -1,7 +1,7 @@
 import { Text } from "@artsy/palette"
 
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarEstimatedValue_artwork$data } from "__generated__/ArtworkSidebarEstimatedValue_artwork.graphql"
+import type { ArtworkSidebarEstimatedValue_artwork$data } from "__generated__/ArtworkSidebarEstimatedValue_artwork.graphql"
 
 interface ArtworkSidebarEstimatedValueProps {
   artwork: ArtworkSidebarEstimatedValue_artwork$data

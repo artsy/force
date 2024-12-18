@@ -1,8 +1,8 @@
-import * as React from "react"
+import type * as React from "react"
 import styled from "styled-components"
 import {
   Flex,
-  FlexProps,
+  type FlexProps,
   Text,
   StackableBorderBox,
   Clickable,

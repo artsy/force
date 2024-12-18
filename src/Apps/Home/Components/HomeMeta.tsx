@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { MetaTags } from "Components/MetaTags"
 
 export const HomeMeta: React.FC<React.PropsWithChildren<unknown>> = () => {

@@ -1,5 +1,5 @@
 import { ActionType } from "@artsy/cohesion"
-import { SavedCookieConsentPreferences } from "@artsy/cohesion/dist/Schema/Events/CookieConsent"
+import type { SavedCookieConsentPreferences } from "@artsy/cohesion/dist/Schema/Events/CookieConsent"
 import {
   Box,
   Button,
@@ -14,7 +14,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import {
+import type {
   CategoryPreferences,
   Destination,
 } from "@segment/consent-manager/types/types"
@@ -25,7 +25,7 @@ import {
 } from "Components/CookieConsentManager/categories"
 import { RouterLink } from "System/Components/RouterLink"
 import { useMode } from "Utils/Hooks/useMode"
-import { FC } from "react"
+import type { FC } from "react"
 import { useTracking } from "react-tracking"
 
 interface CookieConsentManagerDialogProps {

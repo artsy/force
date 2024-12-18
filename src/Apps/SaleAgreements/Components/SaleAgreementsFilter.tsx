@@ -1,7 +1,7 @@
 import { Flex, Join, Spacer, Tab, Tabs, Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
-import { SaleAgreementsFilter_viewer$key } from "__generated__/SaleAgreementsFilter_viewer.graphql"
+import type { SaleAgreementsFilter_viewer$key } from "__generated__/SaleAgreementsFilter_viewer.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { SaleAgreementsList } from "Apps/SaleAgreements/Components/SaleAgreementsList"
 
@@ -38,7 +38,7 @@ export const SaleAgreementsFilter: FC<
     <Tabs fill>
       <Tab name="Current">
         <Join separator={<Spacer y={4} />}>
-          {!!activeAuctions.length ? (
+          {activeAuctions.length ? (
             <SaleAgreementsList saleAgreements={activeAuctions} />
           ) : (
             <Flex justifyContent="center" my={4}>

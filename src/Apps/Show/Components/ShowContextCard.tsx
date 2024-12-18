@@ -6,9 +6,9 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowContextCard_show$data } from "__generated__/ShowContextCard_show.graphql"
+import type { ShowContextCard_show$data } from "__generated__/ShowContextCard_show.graphql"
 import { FairTimingFragmentContainer as FairTiming } from "Apps/Fair/Components/FairHeader/FairTiming"
 import { FairCardFragmentContainer as FairCard } from "Components/FairCard"
 import { StyledLink } from "Components/Links/StyledLink"
@@ -20,8 +20,8 @@ import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ActionType,
-  ClickedFairCard,
-  ClickedPartnerCard,
+  type ClickedFairCard,
+  type ClickedPartnerCard,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"

@@ -1,11 +1,11 @@
-import { Box, Flex, FlexProps, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, type FlexProps, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { ConversationMakeOfferButton } from "Apps/Conversations/components/ConversationCTA/ConversationMakeOfferButton"
 import { ConversationPurchaseButton } from "Apps/Conversations/components/ConversationCTA/ConversationPurchaseButton"
 import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "System/Components/RouterLink"
-import { ConversationCTA_conversation$key } from "__generated__/ConversationCTA_conversation.graphql"
+import type { ConversationCTA_conversation$key } from "__generated__/ConversationCTA_conversation.graphql"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { ConversationConfirmModal } from "Apps/Conversations/components/ConversationCTA/ConversationConfirmModal"
 import { ConversationReviewOfferCTA } from "Apps/Conversations/components/ConversationCTA/ConversationReviewOfferCTA"
@@ -42,9 +42,7 @@ export const ConversationCTA: React.FC<
   }
 
   // Active order. Shows status of the transaction, with various actions and modal triggers
-  const showActiveOrderReviewOfferCTA = Boolean(
-    activeOrder && activeOrder.buyerAction
-  )
+  const showActiveOrderReviewOfferCTA = Boolean(activeOrder?.buyerAction)
 
   // Inactive order waiting for commercial actions
   const canPurchase = artwork.isAcquireable || !!activePartnerOffer

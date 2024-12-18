@@ -6,7 +6,7 @@ export const useScrollToOpenEditorialAuthModal = () => {
     key: "editorial-signup-dismissed",
     options: {
       options: {
-        title: `Sign up or log in for the latest in art market news`,
+        title: "Sign up or log in for the latest in art market news",
       },
       analytics: {
         contextModule: ContextModule.popUpModal,

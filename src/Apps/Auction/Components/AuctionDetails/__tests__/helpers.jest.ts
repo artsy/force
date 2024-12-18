@@ -26,7 +26,7 @@ describe("AddToCalendar date helpers", () => {
     })
 
     it("Adds an end date if missing", () => {
-      delete event.endDate
+      event.endDate = undefined
       const link = generateGoogleCalendarUrl(event)
       expect(link).toContain("dates=20240110T000000Z/20240110T010000Z")
     })
@@ -47,7 +47,7 @@ describe("AddToCalendar date helpers", () => {
     })
 
     it("Adds an end date if missing", () => {
-      delete event.endDate
+      event.endDate = undefined
       const link = generateIcsCalendarUrl(event)
       expect(link).toContain("ADTSTART:20240110T000000Z")
       expect(link).toContain("ADTEND:20240110T010000Z")

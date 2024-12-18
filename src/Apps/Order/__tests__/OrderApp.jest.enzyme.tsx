@@ -7,7 +7,7 @@ import { getFarceResult } from "found/server"
 import { HeadProvider, Meta } from "react-head"
 import { OrderAppFragmentContainer } from "Apps/Order/OrderApp"
 
-import { orderRoutes_OrderQuery$rawResponse } from "__generated__/orderRoutes_OrderQuery.graphql"
+import type { orderRoutes_OrderQuery$rawResponse } from "__generated__/orderRoutes_OrderQuery.graphql"
 import {
   PrivateSaleOrderWithShippingDetails,
   BuyOrderPickup,
@@ -20,10 +20,10 @@ import {
   UntouchedOfferOrder,
 } from "Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "DevTools/MockBoot"
-import { FarceRedirectResult } from "found/server"
+import type { FarceRedirectResult } from "found/server"
 import { DateTime } from "luxon"
 // eslint-disable-next-line no-restricted-imports
-import { GlobalData } from "sharify"
+import type { GlobalData } from "sharify"
 import { mockStripe } from "DevTools/mockStripe"
 import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 import { getENV } from "Utils/getENV"

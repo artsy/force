@@ -7,7 +7,7 @@ import {
   Text,
 } from "@artsy/palette"
 
-import { MyCollectionArtworkSWASectionSubmitted_submissionState$key } from "__generated__/MyCollectionArtworkSWASectionSubmitted_submissionState.graphql"
+import type { MyCollectionArtworkSWASectionSubmitted_submissionState$key } from "__generated__/MyCollectionArtworkSWASectionSubmitted_submissionState.graphql"
 
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -121,7 +121,7 @@ const SubmissionStatusModal: React.FC<
       }
     >
       <Text variant="xs" mb={2}>
-        {`What does my Artwork’s status mean?`.toUpperCase()}
+        {"What does my Artwork’s status mean?".toUpperCase()}
       </Text>
       <Text as="li" variant="sm-display">
         <Text display="inline-block" fontWeight="bold">
@@ -137,7 +137,7 @@ const SubmissionStatusModal: React.FC<
         do not currently have a market for it.
       </Text>
       <Text variant="xs" my={2}>
-        {`Find out more`.toUpperCase()}
+        {"Find out more".toUpperCase()}
       </Text>
       <Text variant="sm-display" mb={2}>
         For more information, see our Collector Help Center article{" "}

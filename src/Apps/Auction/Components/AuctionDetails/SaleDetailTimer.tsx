@@ -1,6 +1,6 @@
-import { SaleDetailTimer_sale$data } from "__generated__/SaleDetailTimer_sale.graphql"
+import type { SaleDetailTimer_sale$data } from "__generated__/SaleDetailTimer_sale.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import * as React from "react"
+import type * as React from "react"
 import { Text } from "@artsy/palette"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"

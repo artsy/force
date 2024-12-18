@@ -2,7 +2,7 @@ import { Column, Separator } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
-import { UserBidHistory_me$data } from "__generated__/UserBidHistory_me.graphql"
+import type { UserBidHistory_me$data } from "__generated__/UserBidHistory_me.graphql"
 import { SettingsAuctionsLotStandingFragmentContainer } from "./SettingsAuctionsLotStanding"
 
 interface UserBidHistoryProps {
@@ -13,7 +13,7 @@ export const UserBidHistory: React.FC<
   React.PropsWithChildren<UserBidHistoryProps>
 > = ({ me: { inactiveLotStandings: lotStandings } }) => {
   if (!lotStandings || lotStandings.length === 0) {
-    return <SectionContainer title="Bid History"></SectionContainer>
+    return <SectionContainer title="Bid History" />
   }
 
   return (

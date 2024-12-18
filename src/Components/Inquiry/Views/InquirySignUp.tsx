@@ -8,7 +8,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { useState } from "react"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { EnableRecaptcha } from "Utils/EnableRecaptcha"
@@ -21,7 +21,7 @@ import {
   ActionType,
   AuthModalType,
   ContextModule,
-  CreatedAccount,
+  type CreatedAccount,
   Intent,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"

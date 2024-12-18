@@ -118,7 +118,7 @@ describe("useConsentRequired", () => {
     it("should return restrictive defaults when Intl is undefined", () => {
       const originalIntl = global.Intl
       // @ts-ignore
-      delete global.Intl
+      global.Intl = undefined
 
       const { result } = renderHook(() => useConsentRequired())
 

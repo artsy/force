@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { CellArtistSeriesFragmentContainer_Test_Query } from "__generated__/CellArtistSeriesFragmentContainer_Test_Query.graphql"
+import type { CellArtistSeriesFragmentContainer_Test_Query } from "__generated__/CellArtistSeriesFragmentContainer_Test_Query.graphql"
 import { screen } from "@testing-library/react"
 import { CellArtistSeriesFragmentContainer } from "Components/Cells/CellArtistSeries"
 

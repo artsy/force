@@ -11,8 +11,7 @@ export function principalFieldErrorHandlerMiddleware() {
 
     if (statusCode) {
       throw new HttpError(statusCode)
-    } else {
-      return res
     }
+    return res
   }
 }

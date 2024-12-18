@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { MyBidsBidHeader_sale$data } from "__generated__/MyBidsBidHeader_sale.graphql"
+import type { MyBidsBidHeader_sale$data } from "__generated__/MyBidsBidHeader_sale.graphql"
 import { Box, Image, Text, Spacer } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"

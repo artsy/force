@@ -1,5 +1,5 @@
 import { Checkbox, Flex } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
@@ -31,8 +31,9 @@ export const MediumFilter: FC<React.PropsWithChildren<MediumFilterProps>> = ({
     counts: [],
   }
 
-  const allowedMediums =
-    mediums && mediums.counts.length ? mediums.counts : MEDIUM_OPTIONS
+  const allowedMediums = mediums?.counts.length
+    ? mediums.counts
+    : MEDIUM_OPTIONS
 
   const toggleMediumSelection = (selected, slug) => {
     let updatedValues = additionalGeneIDs

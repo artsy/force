@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Contact_partner$data } from "__generated__/Contact_partner.graphql"
+import type { Contact_partner$data } from "__generated__/Contact_partner.graphql"
 import { Box, Text } from "@artsy/palette"
 import { PartnerContactsFragmentContainer } from "Apps/Partner/Components/PartnerContacts/PartnerContacts"
 

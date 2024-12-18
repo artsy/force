@@ -1,4 +1,4 @@
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
 import loadable from "@loadable/component"
 
@@ -19,7 +19,7 @@ export const newForYouRoutes: RouteProps[] = [
       NewForYouApp.preload()
     },
     prepareVariables: (params, props) => {
-      const first = parseInt(props.location.query.first, 10) || 40
+      const first = Number.parseInt(props.location.query.first, 10) || 40
       const includeBackfill = props.location.query.includeBackfill ?? true
       const version =
         props.location.query.version?.toUpperCase() || DEFAULT_NWFY_RECS_MODEL

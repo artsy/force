@@ -58,9 +58,9 @@ export const seeded = (seed: string) => {
   const shuffle = <T>(xs: T[]) => {
     const array = xs.slice()
 
-    let m = array.length,
-      t: T,
-      i: number
+    let m = array.length
+    let t: T
+    let i: number
 
     while (m) {
       i = Math.floor(random() * m--)

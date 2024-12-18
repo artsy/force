@@ -1,13 +1,13 @@
 import path from "path"
-import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
+import type RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import { getENV } from "Utils/getENV"
-import { Environment } from "react-relay"
+import type { Environment } from "react-relay"
 import { ChunkExtractor } from "@loadable/server"
 import { ServerStyleSheet } from "styled-components"
 import { renderToString } from "react-dom/server"
 import { ENABLE_SSR_STREAMING } from "Server/config"
 import { renderToStream } from "System/Router/Utils/renderToStream"
-import { ArtsyRequest } from "Server/middleware/artsyExpress"
+import type { ArtsyRequest } from "Server/middleware/artsyExpress"
 import { serializeRelayHydrationData } from "System/Router/Utils/serializeRelayHydrationData"
 import { loadAssetManifest } from "Server/manifest"
 
@@ -72,7 +72,7 @@ export const collectAssets = async ({
 
     const { entries } = manifest?.manifest
 
-    const { js = [] } = entries["index"].initial
+    const { js = [] } = entries.index.initial
 
     const runtimeScripts = js.map(url => {
       const cdnUrl = getENV("CDN_URL")
@@ -80,9 +80,8 @@ export const collectAssets = async ({
       const scriptUrl = (() => {
         if (getENV("NODE_ENV") === "production" && cdnUrl) {
           return `${cdnUrl}${url}`
-        } else {
-          return url
         }
+        return url
       })()
 
       return `<script defer src="${scriptUrl}"></script>`
@@ -102,9 +101,8 @@ export const collectAssets = async ({
               `src="${assetPublicPath}`
             )
             return scriptTagWithCDN
-          } else {
-            return script
           }
+          return script
         })
         .join("\n")
     )

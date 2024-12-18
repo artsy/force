@@ -35,8 +35,8 @@ describe("createFeatureFlagsCachePrefix", () => {
   })
 
   it("returns an empty string when there are no feature flags enabled", () => {
-    delete featureFlags["feature-a"]
-    delete featureFlags["feature-c"]
+    featureFlags["feature-a"] = undefined
+    featureFlags["feature-c"] = undefined
 
     const cachePrefix = createFeatureFlagsCachePrefix(featureFlags)
     expect(cachePrefix).toBe("")

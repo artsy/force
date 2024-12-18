@@ -1,7 +1,7 @@
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { screen, fireEvent, waitFor } from "@testing-library/react"
-import { ArtworkSidebarCommercialButtons_Test_Query } from "__generated__/ArtworkSidebarCommercialButtons_Test_Query.graphql"
+import type { ArtworkSidebarCommercialButtons_Test_Query } from "__generated__/ArtworkSidebarCommercialButtons_Test_Query.graphql"
 import { Toasts, ToastsProvider } from "@artsy/palette"
 import { createMockEnvironment } from "relay-test-utils"
 import { MockBoot } from "DevTools/MockBoot"
@@ -538,7 +538,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
             objectId: "artwork-1",
             secondaryObjectId: "edition-set-id",
           },
-          redirectTo: `/artwork/artwork-1?creating_order=true`,
+          redirectTo: "/artwork/artwork-1?creating_order=true",
         },
         analytics: {
           contextModule: "artworkSidebar",
@@ -576,7 +576,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
             objectId: "artwork-1",
             secondaryObjectId: "edition-set-id",
           },
-          redirectTo: `/artwork/artwork-1?creating_order=true`,
+          redirectTo: "/artwork/artwork-1?creating_order=true",
         },
         analytics: {
           contextModule: "artworkSidebar",

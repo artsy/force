@@ -1,6 +1,6 @@
 import { Flex, Spacer } from "@artsy/palette"
 import { DocumentPreviewItem } from "Apps/Sell/Components/DocumentPreviewItem"
-import { DocumentsFormValues } from "Apps/Sell/Routes/AdditionalRoutes/AdditionalDocumentsRoute"
+import type { DocumentsFormValues } from "Apps/Sell/Routes/AdditionalRoutes/AdditionalDocumentsRoute"
 import { useFormikContext } from "formik"
 
 export const DocumentPreviewsGrid: React.FC<

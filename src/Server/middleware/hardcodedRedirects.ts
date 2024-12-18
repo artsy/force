@@ -189,7 +189,7 @@ export const getRedirectUrl = (
   return redirectUrl + queryString
 }
 
-for (let from in PERMANENT_REDIRECTS) {
+for (const from in PERMANENT_REDIRECTS) {
   router.get(from, (req, res) => {
     const redirectUrl = getRedirectUrl(req, PERMANENT_REDIRECTS)
     res.redirect(301, redirectUrl)
@@ -201,7 +201,7 @@ const TEMP_REDIRECTS = {
   "/art-appraisals": "/sell",
 }
 
-for (let from in TEMP_REDIRECTS) {
+for (const from in TEMP_REDIRECTS) {
   const path = TEMP_REDIRECTS[from]
 
   router.get(from, (req: ArtsyRequest, res: ArtsyResponse) => {

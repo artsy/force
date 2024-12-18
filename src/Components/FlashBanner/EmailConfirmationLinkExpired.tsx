@@ -67,7 +67,6 @@ export const EmailConfirmationLinkExpired: React.FC<
         </Button>
       </>
     )
-  } else {
-    return <>{afterSubmitContent}</>
   }
+  return <>{afterSubmitContent}</>
 }

@@ -3,7 +3,7 @@ import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { Sticky } from "Components/Sticky"
 import { NotificationsListQueryRenderer } from "Components/Notifications/NotificationsList"
 import { NotificationsHeader } from "Components/Notifications/NotificationsHeader"
-import { MarkAllAsReadPanelProps } from "Components/Notifications/MarkAllAsReadPanel"
+import type { MarkAllAsReadPanelProps } from "Components/Notifications/MarkAllAsReadPanel"
 
 const DROPDOWN_HEADER_HEIGHT = 113
 const VERTICAL_OFFSET = 10

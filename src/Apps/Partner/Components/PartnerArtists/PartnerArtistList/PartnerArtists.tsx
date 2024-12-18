@@ -1,8 +1,8 @@
 import { useEffect } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { PartnerArtists_partner$data } from "__generated__/PartnerArtists_partner.graphql"
-import { PartnerArtistsQuery } from "__generated__/PartnerArtistsQuery.graphql"
+import type { PartnerArtists_partner$data } from "__generated__/PartnerArtists_partner.graphql"
+import type { PartnerArtistsQuery } from "__generated__/PartnerArtistsQuery.graphql"
 import { usePartnerArtistsLoadingContext } from "Apps/Partner/Utils/PartnerArtistsLoadingContext"
 import { PartnerArtistListPlaceholder } from "./PartnerArtistListPlaceholder"
 import { PartnerArtistListFragmentContainer } from "./PartnerArtistList"
@@ -18,7 +18,7 @@ export const PartnerArtists: React.FC<
   const { setIsLoaded } = usePartnerArtistsLoadingContext()
 
   useEffect(() => {
-    setIsLoaded && setIsLoaded(true)
+    setIsLoaded?.(true)
   }, [setIsLoaded])
 
   if (!partner) {

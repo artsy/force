@@ -1,13 +1,13 @@
 import {
   Clickable,
   Dropdown,
-  DropdownProps,
+  type DropdownProps,
   Radio,
   RadioGroup,
   Text,
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { FC } from "react"
+import type { FC } from "react"
 import SortIcon from "@artsy/icons/SortIcon"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"

@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react"
+import type React from "react"
+import { useState, useEffect, useRef } from "react"
 import styled, { keyframes, css } from "styled-components"
 import { Box } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"

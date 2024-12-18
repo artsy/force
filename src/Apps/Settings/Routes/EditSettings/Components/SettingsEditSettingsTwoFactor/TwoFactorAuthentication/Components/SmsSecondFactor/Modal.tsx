@@ -7,20 +7,20 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { FormikHelpers as FormikActions } from "formik"
+import type { FormikHelpers as FormikActions } from "formik"
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import * as Yup from "yup"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { CountrySelect } from "Components/CountrySelect"
 import { Step, Wizard } from "Components/Wizard"
-import { FormValues, StepElement } from "Components/Wizard/types"
-import { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
+import type { FormValues, StepElement } from "Components/Wizard/types"
+import type { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
 import { EnableSecondFactor } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/Mutation/EnableSecondFactor"
 import { DeliverSecondFactor } from "./Mutation/DeliverSecondFactor"
 import { UpdateSmsSecondFactor } from "./Mutation/UpdateSmsSecondFactor"
 import { BackupSecondFactorReminder } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/BackupSecondFactorReminder"
-import { CreateSmsSecondFactorMutation$data } from "__generated__/CreateSmsSecondFactorMutation.graphql"
+import type { CreateSmsSecondFactorMutation$data } from "__generated__/CreateSmsSecondFactorMutation.graphql"
 import { redirectMessage } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
 interface SmsSecondFactorModalProps {

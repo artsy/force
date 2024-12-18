@@ -1,7 +1,7 @@
-import { Clickable, ClickableProps, Flex, Text } from "@artsy/palette"
+import { Clickable, type ClickableProps, Flex, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import {
-  CareerHighlightKind,
+  type CareerHighlightKind,
   getCareerHighlight,
 } from "Apps/Settings/Routes/Insights/Utils/getCareerHighlight"
 import styled from "styled-components"

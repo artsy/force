@@ -13,15 +13,15 @@ import {
   Text,
 } from "@artsy/palette"
 import { DateTime } from "luxon"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
-import {
+import type {
   SettingsPurchasesRow_order$data,
   CommerceOrderDisplayStateEnum,
   CommerceBuyerOfferActionEnum,
 } from "__generated__/SettingsPurchasesRow_order.graphql"
-import { LocaleOptions } from "luxon"
+import type { LocaleOptions } from "luxon"
 import { extractNodes } from "Utils/extractNodes"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
@@ -35,7 +35,7 @@ import {
   ActionType,
   ContextModule,
   OwnerType,
-  ClickedChangePaymentMethod,
+  type ClickedChangePaymentMethod,
 } from "@artsy/cohesion"
 
 type BuyerDisplayStateEnum =
@@ -200,7 +200,7 @@ const SettingsPurchasesRow: FC<
   // TODO: figure out how to move it to the server
   let buyerDisplayState: BuyerDisplayStateEnum = order.displayState
   if (
-    buyerDisplayState == "SUBMITTED" &&
+    buyerDisplayState === "SUBMITTED" &&
     !!buyerAction &&
     [
       "OFFER_RECEIVED",

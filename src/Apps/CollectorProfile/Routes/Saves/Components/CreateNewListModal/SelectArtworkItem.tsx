@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { Box } from "@artsy/palette"
 import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"

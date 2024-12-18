@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 
 const SettingsApp = loadable(
   () => import(/* webpackChunkName: "settingsBundle" */ "./SettingsApp"),
@@ -170,7 +170,7 @@ export const settingsRoutes: RouteProps[] = [
       {
         path: "saves",
         render: () => {
-          throw new RedirectException(`/favorites/saves`, 301)
+          throw new RedirectException("/favorites/saves", 301)
         },
       },
       {

@@ -1,14 +1,14 @@
-import { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
-import { CreditCardPicker_order$data } from "__generated__/CreditCardPicker_order.graphql"
-import { CreditCardPickerCreateCreditCardMutation } from "__generated__/CreditCardPickerCreateCreditCardMutation.graphql"
+import type { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
+import type { CreditCardPicker_order$data } from "__generated__/CreditCardPicker_order.graphql"
+import type { CreditCardPickerCreateCreditCardMutation } from "__generated__/CreditCardPickerCreateCreditCardMutation.graphql"
 import {
-  AddressChangeHandler,
-  AddressErrors,
+  type AddressChangeHandler,
+  type AddressErrors,
   AddressForm,
-  AddressTouched,
+  type AddressTouched,
 } from "Components/Address/AddressForm"
 
-import { Address, emptyAddress } from "Components/Address/utils"
+import { type Address, emptyAddress } from "Components/Address/utils"
 
 import { CreditCardInput } from "Components/CreditCardInput"
 import { validateAddress } from "Apps/Order/Utils/formValidators"
@@ -33,14 +33,14 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import { CommitMutation } from "Apps/Order/Utils/commitMutation"
+import type { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import { CreditCardDetails } from "./CreditCardDetails"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { isNull, mergeWith } from "lodash"
-import { TrackingProp, useTracking } from "react-tracking"
+import { type TrackingProp, useTracking } from "react-tracking"
 import {
   SystemContextConsumer,
-  SystemContextProps,
+  type SystemContextProps,
 } from "System/Contexts/SystemContext"
 
 export interface StripeProps {
@@ -88,14 +88,13 @@ export class CreditCardPicker extends React.Component<
         type: "existing",
         id: this.props.order.creditCard.internalID,
       }
-    } else {
-      return this.props.me.creditCards?.edges?.length
-        ? {
-            type: "existing",
-            id: this.props.me.creditCards.edges[0]?.node?.internalID as string,
-          }
-        : { type: "new" }
     }
+    return this.props.me.creditCards?.edges?.length
+      ? {
+          type: "existing",
+          id: this.props.me.creditCards.edges[0]?.node?.internalID as string,
+        }
+      : { type: "new" }
   }
 
   private startingAddress(): Address {
@@ -174,27 +173,22 @@ export class CreditCardPicker extends React.Component<
       })
     ).createCreditCard?.creditCardOrError
 
-    if (
-      creditCardOrError?.mutationError &&
-      creditCardOrError.mutationError.detail
-    ) {
+    if (creditCardOrError?.mutationError?.detail) {
       return {
         type: "error",
         error: creditCardOrError.mutationError.detail,
       }
-    } else if (
-      creditCardOrError?.mutationError &&
-      creditCardOrError.mutationError.message
-    ) {
+    }
+    if (creditCardOrError?.mutationError?.message) {
       return {
         type: "internal_error",
         error: creditCardOrError.mutationError.message,
       }
-    } else
-      return {
-        type: "success",
-        creditCardId: creditCardOrError?.creditCard?.internalID as string,
-      }
+    }
+    return {
+      type: "success",
+      creditCardId: creditCardOrError?.creditCard?.internalID as string,
+    }
   }
 
   private handleChangeHideBillingAddress(hideBillingAddress: boolean) {

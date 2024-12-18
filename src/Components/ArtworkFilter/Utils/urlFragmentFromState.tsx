@@ -1,6 +1,6 @@
 import qs from "qs"
 import { isDefaultFilter } from "./isDefaultFilter"
-import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 
 /**
  * Returns a string representing the query part of a URL. It removes default
@@ -12,9 +12,8 @@ export const urlFragmentFromState = (state: ArtworkFilters) => {
     (acc, [key, value]: [keyof ArtworkFilters, any]) => {
       if (isDefaultFilter(key, value)) {
         return acc
-      } else {
-        return { ...acc, [key]: value }
       }
+      return { ...acc, [key]: value }
     },
     {}
   )

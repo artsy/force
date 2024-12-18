@@ -107,13 +107,12 @@ if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       err.stack = args[0].stack.replace(`Error: ${args[0].message}`, msg)
       return err
-    } else {
-      const err = new Error(
-        explanation + chalk.red(format(args[0], ...args.slice(1)))
-      )
-      Error.captureStackTrace(err, constructorOpt)
-      return err
     }
+    const err = new Error(
+      explanation + chalk.red(format(args[0], ...args.slice(1)))
+    )
+    Error.captureStackTrace(err, constructorOpt)
+    return err
   }
 
   beforeEach(() => {
@@ -131,8 +130,7 @@ if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
             // }
 
             if (
-              args[0] &&
-              args[0].includes &&
+              args[0]?.includes &&
               !args[0].includes(
                 "Warning: An update to %s inside a test was not wrapped in act"
               ) &&

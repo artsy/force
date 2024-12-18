@@ -1,7 +1,7 @@
 import { GeneShowFragmentContainer } from "Apps/Gene/Routes/GeneShow"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { GeneShow_Test_Query } from "__generated__/GeneShow_Test_Query.graphql"
+import type { GeneShow_Test_Query } from "__generated__/GeneShow_Test_Query.graphql"
 import { MockBoot } from "DevTools/MockBoot"
 
 jest.unmock("react-relay")

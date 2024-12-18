@@ -1,5 +1,11 @@
 import { compact } from "lodash"
-import { createRef, RefObject, useCallback, useEffect, useRef } from "react"
+import {
+  createRef,
+  type RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react"
 import { wait } from "../wait"
 import { useMode } from "./useMode"
 

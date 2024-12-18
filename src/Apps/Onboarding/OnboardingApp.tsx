@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { Spacer, Box } from "@artsy/palette"
 import { useRouter } from "System/Hooks/useRouter"
 import { OnboardingProvider } from "Components/Onboarding/Hooks/useOnboardingContext"

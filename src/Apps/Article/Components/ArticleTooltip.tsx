@@ -1,7 +1,7 @@
 import { Dropdown } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import {
-  Entity,
+  type Entity,
   EntityTooltip,
   EntityTooltipHighlight,
 } from "Components/EntityTooltip"

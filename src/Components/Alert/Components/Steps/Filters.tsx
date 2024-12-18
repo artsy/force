@@ -1,5 +1,5 @@
 import { Flex, Separator, Spacer, Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { Rarity } from "Components/Alert/Components/Filters/Rarity"
 import { Medium } from "Components/Alert/Components/Filters/Medium"
 import { PriceQueryRenderer } from "Components/Alert/Components/Filters/Price"

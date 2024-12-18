@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { Link, Meta, Title } from "react-head"
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"

@@ -7,7 +7,7 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { times } from "lodash"
-import { FC } from "react"
+import type { FC } from "react"
 
 interface NotificationItemPlaceholderProps {
   index: number
@@ -23,9 +23,7 @@ const NotificationItemPlaceholder: FC<
       <Flex flexDirection="row" alignItems="center">
         <Join separator={<Spacer x={1} />}>
           {times(numberOfImages).map(index => {
-            return (
-              <SkeletonBox key={index} width={58} height={58}></SkeletonBox>
-            )
+            return <SkeletonBox key={index} width={58} height={58} />
           })}
         </Join>
       </Flex>

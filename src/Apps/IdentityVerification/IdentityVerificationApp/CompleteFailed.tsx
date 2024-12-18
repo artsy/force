@@ -1,5 +1,5 @@
 import { Button, Message, Spacer, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { RouterLink } from "System/Components/RouterLink"
 
 export const CompleteFailed: React.FC<

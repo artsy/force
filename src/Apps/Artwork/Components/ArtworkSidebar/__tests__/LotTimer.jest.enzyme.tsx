@@ -2,7 +2,7 @@ import { LotTimer } from "Apps/Artwork/Components/ArtworkSidebar/LotTimer"
 import { DateTime, Settings } from "luxon"
 import { mount } from "enzyme"
 import "jest-styled-components"
-import { LotTimer_saleArtwork$data } from "__generated__/LotTimer_saleArtwork.graphql"
+import type { LotTimer_saleArtwork$data } from "__generated__/LotTimer_saleArtwork.graphql"
 
 describe("extendedBiddingInfoCopy", () => {
   describe("when extended bidding feature is on", () => {
@@ -34,10 +34,10 @@ describe("extendedBiddingInfoCopy", () => {
         )
       })
       it("shows the extended next to the timer", () => {
-        let baseDate = DateTime.local().toMillis()
-        let startDate = baseDate - 1000 * 60 * 60 // one hour ago
-        let endDate = baseDate + 1000 * 60 // one minute from now
-        let extendedEndDate = baseDate + 1000 * 60 * 2 // two minutes from now
+        const baseDate = DateTime.local().toMillis()
+        const startDate = baseDate - 1000 * 60 * 60 // one hour ago
+        const endDate = baseDate + 1000 * 60 // one minute from now
+        const extendedEndDate = baseDate + 1000 * 60 * 2 // two minutes from now
         const saleArtwork: LotTimer_saleArtwork$data = {
           endAt: new Date(endDate).toISOString(),
           formattedStartDateTime: "",
@@ -59,9 +59,9 @@ describe("extendedBiddingInfoCopy", () => {
     })
     describe("the auction has not yet been extended", () => {
       it("does not show extended next to the timer", () => {
-        let startDate = new Date()
+        const startDate = new Date()
         const startAt = new Date(startDate.setMonth(startDate.getMonth() - 1))
-        let endDate = new Date()
+        const endDate = new Date()
         const saleArtwork: LotTimer_saleArtwork$data = {
           endAt: new Date(
             endDate.setMinutes(endDate.getMinutes() + 1)

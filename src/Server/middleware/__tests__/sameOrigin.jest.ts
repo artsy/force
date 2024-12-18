@@ -1,7 +1,7 @@
 import { sameOriginMiddleware } from "Server/middleware/sameOrigin"
 
 describe("Same origin middleware", () => {
-  let headers = []
+  const headers = []
   let req
   let res
   let next

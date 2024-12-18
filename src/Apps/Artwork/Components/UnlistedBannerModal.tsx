@@ -1,5 +1,5 @@
 import { Button, ModalDialog, Spacer, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 
 interface UnlistedBannerModalProps {
   show: boolean

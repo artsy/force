@@ -1,6 +1,6 @@
-import { Box, BoxProps, THEME } from "@artsy/palette"
+import { Box, type BoxProps, THEME } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { FC, useEffect, useState } from "react"
+import { type FC, useEffect, useState } from "react"
 import styled from "styled-components"
 import { ArticleTooltip, isSupportedArticleTooltip } from "./ArticleTooltip"
 import { toStyle } from "Utils/toStyle"

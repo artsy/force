@@ -1,7 +1,7 @@
 import { MockBoot } from "DevTools/MockBoot"
 import { GeneArtworkFilterRefetchContainer } from "Apps/Gene/Components/GeneArtworkFilter"
 import { graphql } from "react-relay"
-import { GeneArtworkFilter_Query } from "__generated__/GeneArtworkFilter_Query.graphql"
+import type { GeneArtworkFilter_Query } from "__generated__/GeneArtworkFilter_Query.graphql"
 import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import {

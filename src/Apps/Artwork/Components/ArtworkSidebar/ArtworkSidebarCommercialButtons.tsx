@@ -1,7 +1,7 @@
 import { graphql, useFragment } from "react-relay"
 import {
   ArtworkSidebarEditionSetFragmentContainer,
-  EditionSet,
+  type EditionSet,
 } from "./ArtworkSidebarEditionSets"
 import {
   Box,
@@ -21,15 +21,15 @@ import { useInquiry } from "Components/Inquiry/useInquiry"
 import { ErrorWithMetadata } from "Utils/errors"
 import { logger } from "@sentry/utils"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { ArtworkSidebarCommercialButtons_artwork$key } from "__generated__/ArtworkSidebarCommercialButtons_artwork.graphql"
-import { ArtworkSidebarCommercialButtons_me$key } from "__generated__/ArtworkSidebarCommercialButtons_me.graphql"
-import { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
-import { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOfferOrderMutation.graphql"
+import type { ArtworkSidebarCommercialButtons_artwork$key } from "__generated__/ArtworkSidebarCommercialButtons_artwork.graphql"
+import type { ArtworkSidebarCommercialButtons_me$key } from "__generated__/ArtworkSidebarCommercialButtons_me.graphql"
+import type { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
+import type { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOfferOrderMutation.graphql"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
-  ClickedBuyNow,
-  ClickedContactGallery,
+  type ClickedBuyNow,
+  type ClickedContactGallery,
   ContextModule,
   Intent,
   OwnerType,
@@ -44,7 +44,7 @@ import { useMutation } from "Utils/Hooks/useMutation"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { extractNodes } from "Utils/extractNodes"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
-import { ResponsiveValue } from "styled-system"
+import type { ResponsiveValue } from "styled-system"
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 import { getSignalLabel } from "Utils/getSignalLabel"
 
@@ -160,7 +160,8 @@ export const ArtworkSidebarCommercialButtons: React.FC<
       })
 
       let redirectUrl = "/"
-      let orderOrError = response.commerceCreatePartnerOfferOrder?.orderOrError
+      const orderOrError =
+        response.commerceCreatePartnerOfferOrder?.orderOrError
 
       if (orderOrError?.error) {
         const errorCode = orderOrError.error.code
@@ -201,7 +202,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
 
     trackEvent(event)
 
-    if (!!user?.id) {
+    if (user?.id) {
       try {
         setIsCommitingCreateOrderMutation(true)
         const data = await createOrder.submitMutation({
@@ -222,11 +223,10 @@ export const ArtworkSidebarCommercialButtons: React.FC<
             orderOrError.error.code,
             orderOrError.error
           )
-        } else {
-          const url = `/orders/${orderOrError.order.internalID}`
-
-          router?.push(url)
         }
+        const url = `/orders/${orderOrError.order.internalID}`
+
+        router?.push(url)
       } catch (e) {
         onMutationError(e)
       }
@@ -259,7 +259,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
       artwork_slug: artwork.slug,
     })
 
-    if (!!user?.id) {
+    if (user?.id) {
       try {
         setIsCommitingCreateOfferOrderMutation(true)
         const data = await createOfferOrder.submitMutation({
@@ -283,10 +283,9 @@ export const ArtworkSidebarCommercialButtons: React.FC<
             orderOrError.error.code,
             orderOrError.error
           )
-        } else {
-          const url = `/orders/${orderOrError.order.internalID}/offer`
-          router?.push(url)
         }
+        const url = `/orders/${orderOrError.order.internalID}/offer`
+        router?.push(url)
       } catch (error) {
         onMutationError(error)
       }
@@ -352,7 +351,9 @@ export const ArtworkSidebarCommercialButtons: React.FC<
   }
   if (artwork.isOfferable && !(activePartnerOffer && artwork.isInquireable)) {
     renderButtons.makeOffer =
-      Object.keys(renderButtons).length == 0 ? "primaryBlack" : "secondaryBlack"
+      Object.keys(renderButtons).length === 0
+        ? "primaryBlack"
+        : "secondaryBlack"
   }
   if (artwork.isInquireable && Object.keys(renderButtons).length < 2) {
     renderButtons.contactGallery =

@@ -1,14 +1,14 @@
 import {
   ActionType,
-  ClickedShowGroup,
+  type ClickedShowGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CellShowFragmentContainer } from "Components/Cells/CellShow"
 import { useTracking } from "react-tracking"
-import { HomeFeaturedShow_show$data } from "__generated__/HomeFeaturedShow_show.graphql"
+import type { HomeFeaturedShow_show$data } from "__generated__/HomeFeaturedShow_show.graphql"
 
 interface HomeFeaturedShowProps {
   show: HomeFeaturedShow_show$data

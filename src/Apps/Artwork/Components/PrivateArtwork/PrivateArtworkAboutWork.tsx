@@ -1,8 +1,8 @@
 import { Box, HTML, ReadMore, Spacer, Text } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
-import { PrivateArtworkAboutWork_artwork$key } from "__generated__/PrivateArtworkAboutWork_artwork.graphql"
+import type { PrivateArtworkAboutWork_artwork$key } from "__generated__/PrivateArtworkAboutWork_artwork.graphql"
 import { useTracking } from "react-tracking"
-import { ActionType, ClickedOnReadMore } from "@artsy/cohesion"
+import { ActionType, type ClickedOnReadMore } from "@artsy/cohesion"
 
 interface PrivateArtworkAboutWorkProps {
   artwork: PrivateArtworkAboutWork_artwork$key

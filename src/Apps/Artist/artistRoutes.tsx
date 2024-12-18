@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
 import { redirectWithCanonicalParams } from "./Server/redirect"
 import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters"
@@ -283,9 +283,8 @@ export const artistRoutes: RouteProps[] = [
 
           if (isInMicrofunnel) {
             return <Component {...props} />
-          } else {
-            throw new RedirectException(artistPathName)
           }
+          throw new RedirectException(artistPathName)
         },
       },
       {

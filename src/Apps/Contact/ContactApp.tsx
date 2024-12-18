@@ -183,7 +183,7 @@ export const ContactApp: React.FC<React.PropsWithChildren<unknown>> = () => {
 
       <GridColumns gridRowGap={4}>
         <Column span={4}>
-          <Text as="h2" variant="lg-display"></Text>
+          <Text as="h2" variant="lg-display" />
         </Column>
 
         <Column span={2}>

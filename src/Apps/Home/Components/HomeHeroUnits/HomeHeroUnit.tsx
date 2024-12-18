@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import {
   Box,
   Image,
@@ -15,12 +15,12 @@ import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import { HomeHeroUnitCredit } from "./HomeHeroUnitCredit"
 import { createFragmentContainer, graphql } from "react-relay"
-import { HomeHeroUnit_heroUnit$data } from "__generated__/HomeHeroUnit_heroUnit.graphql"
+import type { HomeHeroUnit_heroUnit$data } from "__generated__/HomeHeroUnit_heroUnit.graphql"
 import { getInternalHref } from "Utils/url"
 import { useTracking } from "react-tracking"
 import { OwnerType } from "@artsy/cohesion"
 import { ActionType } from "@artsy/cohesion"
-import { ClickedHeroUnitGroup } from "@artsy/cohesion"
+import type { ClickedHeroUnitGroup } from "@artsy/cohesion"
 
 export interface HomeHeroUnitBaseProps {
   title: string

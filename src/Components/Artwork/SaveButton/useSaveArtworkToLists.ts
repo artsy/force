@@ -1,10 +1,10 @@
-import { AuthContextModule, Intent } from "@artsy/cohesion"
+import { type AuthContextModule, Intent } from "@artsy/cohesion"
 import { useManageArtworkForSavesContext } from "Components/Artwork/ManageArtworkForSaves"
 import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
 import { useAuthDialog } from "Components/AuthDialog"
 import { fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useSaveArtworkToListsArtworkListInclusionQuery } from "__generated__/useSaveArtworkToListsArtworkListInclusionQuery.graphql"
+import type { useSaveArtworkToListsArtworkListInclusionQuery } from "__generated__/useSaveArtworkToListsArtworkListInclusionQuery.graphql"
 
 type Artwork = {
   internalID: string
@@ -29,10 +29,10 @@ export interface SaveArtworkToListsOptions {
 }
 
 export enum ResultAction {
-  SavedToDefaultList,
-  RemovedFromDefaultList,
-  SelectingListsForArtwork,
-  ShowingAuthDialog,
+  SavedToDefaultList = 0,
+  RemovedFromDefaultList = 1,
+  SelectingListsForArtwork = 2,
+  ShowingAuthDialog = 3,
 }
 
 export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
@@ -118,14 +118,14 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
       // We are saving an unsaved artwork, so we should save it to the default list
       await saveToDefaultList(false)
       return ResultAction.SavedToDefaultList
-    } else {
-      // We are unsaving an artwork, so first let's check if it's saved to any custom lists.
-      // If so, we want to open the modal.
-      // Else, we can unsave it from the default list.
-      const data =
-        await fetchQuery<useSaveArtworkToListsArtworkListInclusionQuery>(
-          relayEnvironment,
-          graphql`
+    }
+    // We are unsaving an artwork, so first let's check if it's saved to any custom lists.
+    // If so, we want to open the modal.
+    // Else, we can unsave it from the default list.
+    const data =
+      await fetchQuery<useSaveArtworkToListsArtworkListInclusionQuery>(
+        relayEnvironment,
+        graphql`
           query useSaveArtworkToListsArtworkListInclusionQuery(
             $artworkID: String!
           ) {
@@ -134,17 +134,15 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
             }
           }
         `,
-          { artworkID: artwork.internalID }
-        ).toPromise()
+        { artworkID: artwork.internalID }
+      ).toPromise()
 
-      if (data?.artwork?.isSavedToList) {
-        openSelectListsForArtworkModal()
-        return ResultAction.SelectingListsForArtwork
-      } else {
-        await saveToDefaultList(true)
-        return ResultAction.RemovedFromDefaultList
-      }
+    if (data?.artwork?.isSavedToList) {
+      openSelectListsForArtworkModal()
+      return ResultAction.SelectingListsForArtwork
     }
+    await saveToDefaultList(true)
+    return ResultAction.RemovedFromDefaultList
   }
 
   return {

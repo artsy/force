@@ -1,9 +1,9 @@
 import {
   ActionType,
-  ClickedArtworkGroup,
-  ContextModule,
+  type ClickedArtworkGroup,
+  type ContextModule,
   OwnerType,
-  PageOwnerType,
+  type PageOwnerType,
 } from "@artsy/cohesion"
 
 export const trackHelpers = {

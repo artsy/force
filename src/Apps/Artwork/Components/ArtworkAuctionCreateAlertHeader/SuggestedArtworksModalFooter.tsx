@@ -1,5 +1,5 @@
 import { Button } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 
 import { RouterLink } from "System/Components/RouterLink"
 import { NUMBER_OF_ARTWORKS_TO_SHOW } from "./SuggestedArtworksModalGrid"

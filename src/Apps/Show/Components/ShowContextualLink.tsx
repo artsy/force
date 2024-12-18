@@ -1,8 +1,8 @@
 import { Box, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-import { ShowContextualLink_show$data } from "__generated__/ShowContextualLink_show.graphql"
+import type { ShowContextualLink_show$data } from "__generated__/ShowContextualLink_show.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 
 interface Props {
@@ -59,7 +59,7 @@ export const ContextualLink: React.FC<React.PropsWithChildren<Props>> = ({
     <Box>
       <Text variant="sm" textAlign="left">
         Presented by&nbsp;
-        {!!partnerHref ? (
+        {partnerHref ? (
           <RouterLink inline to={partnerHref}>
             {partnerName}
           </RouterLink>

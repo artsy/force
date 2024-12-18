@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react-hooks"
 import {
-  AddressAutocompleteSuggestion,
+  type AddressAutocompleteSuggestion,
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
@@ -88,7 +88,7 @@ describe("useAddressAutocomplete", () => {
           const suggestions = Array.from({ length: 10 }, (_, i) => ({
             city: "New York",
             entries: 0,
-            secondary: `Fl 13`,
+            secondary: "Fl 13",
             state: "NY",
             street_line: `40${i + 1} Broadway`,
             zipcode: "10013",
@@ -141,25 +141,25 @@ describe("useAddressAutocomplete", () => {
           const suggestions = Array.from({ length: 10 }, (_, i) => ({
             city: "New York",
             entries: 10,
-            secondary: `Fl`,
+            secondary: "Fl",
             state: "NY",
-            street_line: `401 Broadway`,
+            street_line: "401 Broadway",
             zipcode: "10013",
           })).concat(
             {
               city: "New York",
               entries: 10,
-              secondary: `Fl 1`,
+              secondary: "Fl 1",
               state: "NY",
-              street_line: `402 Broadway`,
+              street_line: "402 Broadway",
               zipcode: "10013",
             },
             {
               city: "New York",
               entries: 0,
-              secondary: `Basement`,
+              secondary: "Basement",
               state: "NY",
-              street_line: `401 Broadway`,
+              street_line: "401 Broadway",
               zipcode: "10013",
             }
           )
@@ -457,7 +457,7 @@ describe("useAddressAutocomplete", () => {
               entries: 1,
               secondary: `Fl 1${i}`,
               state: "NY",
-              street_line: `401 Broadway`,
+              street_line: "401 Broadway",
               zipcode: "10013",
             })),
           }),

@@ -1,12 +1,12 @@
 import {
   ActionType,
   ContextModule,
-  EditedUserProfile,
+  type EditedUserProfile,
   OwnerType,
-  TappedMyCollectionAddArtworkArtist,
+  type TappedMyCollectionAddArtworkArtist,
 } from "@artsy/cohesion"
 import { CollectorProfileArtistsAddDialog } from "Components/CollectorProfile/CollectorProfileArtistsAddDialog"
-import { FC } from "react"
+import type { FC } from "react"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 

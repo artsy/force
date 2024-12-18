@@ -14,11 +14,11 @@ import {
   Message,
 } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import { SavedSearchAlertsArtworksQuery } from "__generated__/SavedSearchAlertsArtworksQuery.graphql"
+import type { SavedSearchAlertsArtworksQuery } from "__generated__/SavedSearchAlertsArtworksQuery.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
-import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import type { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
+import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import ArtworkGrid, {

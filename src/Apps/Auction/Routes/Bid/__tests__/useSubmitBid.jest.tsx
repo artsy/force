@@ -5,7 +5,7 @@ import { useCreateBidderPosition } from "Apps/Auction/Queries/useCreateBidderPos
 import { useRouter } from "System/Hooks/useRouter"
 import {
   useSubmitBid,
-  UseSubmitBidProps,
+  type UseSubmitBidProps,
 } from "Apps/Auction/Routes/Bid/useSubmitBid"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useToasts } from "@artsy/palette"
@@ -77,13 +77,7 @@ describe("useSubmitBid", () => {
     }
 
     const submitBid = result.current.submitBid as any
-
-    // eslint-disable-next-line no-useless-catch
-    try {
-      await submitBid(values, helpers)
-    } catch (error) {
-      throw error
-    }
+    await submitBid(values, helpers)
   }
 
   beforeEach(() => {

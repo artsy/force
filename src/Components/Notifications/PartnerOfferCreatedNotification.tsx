@@ -1,8 +1,8 @@
 import { Flex, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import { FC } from "react"
+import type { FC } from "react"
 import { useFragment, graphql } from "react-relay"
-import { PartnerOfferCreatedNotification_notification$key } from "__generated__/PartnerOfferCreatedNotification_notification.graphql"
+import type { PartnerOfferCreatedNotification_notification$key } from "__generated__/PartnerOfferCreatedNotification_notification.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
@@ -78,7 +78,7 @@ export const PartnerOfferCreatedNotification: FC<
           <Text
             variant="xs"
             fontWeight="bold"
-            aria-label={`Notification type: Offer`}
+            aria-label={"Notification type: Offer"}
           >
             Offer
           </Text>

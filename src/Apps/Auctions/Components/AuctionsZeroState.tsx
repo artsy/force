@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { Text } from "@artsy/palette"
 
 export const AuctionsZeroState: React.FC<React.PropsWithChildren<unknown>> = ({

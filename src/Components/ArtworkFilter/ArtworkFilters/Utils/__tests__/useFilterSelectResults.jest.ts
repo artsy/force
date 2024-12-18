@@ -1,5 +1,5 @@
 import {
-  Aggregation,
+  type Aggregation,
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,

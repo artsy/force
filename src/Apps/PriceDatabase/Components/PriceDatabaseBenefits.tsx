@@ -9,8 +9,8 @@ import {
   Box,
   Spacer,
 } from "@artsy/palette"
-import { ReactElement } from "react"
-import * as React from "react"
+import type { ReactElement } from "react"
+import type * as React from "react"
 import { Media } from "Utils/Responsive"
 
 export const PriceDatabaseBenefits: React.FC<
@@ -73,7 +73,9 @@ export const PriceDatabaseBenefits: React.FC<
 
       <Section
         title="Track artists and their markets"
-        text={`Get insight into artists you follow with a personalized feed in the Artsy app, powered by the Artsy Price Database. \n Available now on iOS and Android.`}
+        text={
+          "Get insight into artists you follow with a personalized feed in the Artsy app, powered by the Artsy Price Database. \n Available now on iOS and Android."
+        }
         jsx={
           <SectionImage
             src="https://d7hftxdivxxvm.cloudfront.net?height=660&quality=80&resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fmatthew_wong_morning.jpg&width=800"

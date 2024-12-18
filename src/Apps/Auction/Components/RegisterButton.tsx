@@ -1,7 +1,7 @@
 import { Button, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RegisterButton_sale$data } from "__generated__/RegisterButton_sale.graphql"
-import { RegisterButton_me$data } from "__generated__/RegisterButton_me.graphql"
+import type { RegisterButton_sale$data } from "__generated__/RegisterButton_sale.graphql"
+import type { RegisterButton_me$data } from "__generated__/RegisterButton_me.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import { ContextModule, Intent } from "@artsy/cohesion"
@@ -67,7 +67,7 @@ export const RegisterButton: React.FC<
 
     case conditions.LIVE_OPEN: {
       const liveUrl = `${sale.liveURLIfOpen}`
-      const href = me ? liveUrl + "/login" : liveUrl
+      const href = me ? `${liveUrl}/login` : liveUrl
 
       return (
         <ButtonAction

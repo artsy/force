@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { Checkbox, Flex, Select, Spacer } from "@artsy/palette"
 import {
   useAuctionResultsFilterContext,
@@ -29,13 +29,14 @@ export const SaleEndYearFilter: React.FC<
 
   const startOptions = options.filter(
     option =>
-      parseInt(option.value) <=
-      (saleEndYear || parseInt(options[options.length - 1]?.value))
+      Number.parseInt(option.value) <=
+      (saleEndYear || Number.parseInt(options[options.length - 1]?.value))
   )
 
   const endOptions = options.filter(
     option =>
-      parseInt(option.value) >= (saleStartYear || parseInt(options[0]?.value))
+      Number.parseInt(option.value) >=
+      (saleStartYear || Number.parseInt(options[0]?.value))
   )
 
   return (
@@ -46,14 +47,18 @@ export const SaleEndYearFilter: React.FC<
             <Select
               title="Start year"
               options={startOptions}
-              onSelect={year => setFilter?.("saleStartYear", parseInt(year))}
+              onSelect={year =>
+                setFilter?.("saleStartYear", Number.parseInt(year))
+              }
               selected={(saleStartYear || options[0]?.value).toString()}
             />
             <Spacer x={1} />
             <Select
               title="End year"
               options={endOptions}
-              onSelect={year => setFilter?.("saleEndYear", parseInt(year))}
+              onSelect={year =>
+                setFilter?.("saleEndYear", Number.parseInt(year))
+              }
               selected={(
                 saleEndYear || options[options.length - 1]?.value
               ).toString()}

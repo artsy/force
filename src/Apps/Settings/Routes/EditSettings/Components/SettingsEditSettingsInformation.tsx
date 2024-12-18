@@ -11,10 +11,10 @@ import {
 import { PRICE_BUCKETS } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileAboutYou"
 import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import { Form, Formik } from "formik"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as Yup from "yup"
-import { SettingsEditSettingsInformation_me$data } from "__generated__/SettingsEditSettingsInformation_me.graphql"
+import type { SettingsEditSettingsInformation_me$data } from "__generated__/SettingsEditSettingsInformation_me.graphql"
 import { useUpdateSettingsInformation } from "./useUpdateSettingsInformation"
 import {
   PhoneNumberInput,
@@ -208,7 +208,7 @@ export const SettingsEditSettingsInformation: React.FC<
                   // so have to split it into min/max
                   const [priceRangeMin, priceRangeMax] = value
                     .split(":")
-                    .map(n => parseInt(n, 10))
+                    .map(n => Number.parseInt(n, 10))
 
                   setFieldValue("priceRangeMin", priceRangeMin)
                   setFieldValue("priceRangeMax", priceRangeMax)

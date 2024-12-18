@@ -2,15 +2,15 @@ import {
   Box,
   Flex,
   Pill,
-  ShelfNavigationProps,
+  type ShelfNavigationProps,
   ShelfNext,
   ShelfPrevious,
 } from "@artsy/palette"
-import { FC, useEffect, useRef, useState } from "react"
+import { type FC, useEffect, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
-import { SearchInputPills_viewer$data } from "__generated__/SearchInputPills_viewer.graphql"
-import { PILLS, PillType, TOP_PILL } from "./constants"
+import type { SearchInputPills_viewer$data } from "__generated__/SearchInputPills_viewer.graphql"
+import { PILLS, type PillType, TOP_PILL } from "./constants"
 
 const ChevronStyle = css`
   position: absolute;
@@ -149,7 +149,7 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
           : currentPill.nextElementSibling
       ) as HTMLElement
       let scrollBy = nextPill.offsetWidth + GRADIENT_BG_WIDTH
-      scrollBy = direction == "left" ? -scrollBy : scrollBy
+      scrollBy = direction === "left" ? -scrollBy : scrollBy
 
       pillsContainer.scrollBy({
         left: scrollBy,

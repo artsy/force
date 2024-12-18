@@ -1,4 +1,4 @@
-import { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
+import type { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
 import { Person as SeoDataForArtist } from "Components/Seo/Person"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"

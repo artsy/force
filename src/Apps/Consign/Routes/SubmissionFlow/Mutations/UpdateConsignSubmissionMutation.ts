@@ -1,8 +1,8 @@
-import {
+import type {
   UpdateConsignSubmissionMutation,
   UpdateSubmissionMutationInput,
 } from "__generated__/UpdateConsignSubmissionMutation.graphql"
-import { Environment, commitMutation, graphql } from "react-relay"
+import { type Environment, commitMutation, graphql } from "react-relay"
 
 export const updateConsignSubmissionMutation = (
   relayEnvironment: Environment,

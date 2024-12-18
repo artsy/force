@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { ShowAppFragmentContainer } from "Apps/Show/ShowApp"
 import { ShowViewingRoom } from "Apps/Show/Components/ShowViewingRoom"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { ShowApp_Test_Query } from "__generated__/ShowApp_Test_Query.graphql"
+import type { ShowApp_Test_Query } from "__generated__/ShowApp_Test_Query.graphql"
 
 jest.unmock("react-relay")
 

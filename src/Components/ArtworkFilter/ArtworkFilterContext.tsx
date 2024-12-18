@@ -2,14 +2,14 @@ import { isArray, omit } from "lodash"
 import { useContext, useReducer, useState } from "react"
 import * as React from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { SortOptions } from "Components/SortFilter"
+import type { SortOptions } from "Components/SortFilter"
 import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
 import { rangeToTuple } from "./Utils/rangeToTuple"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { DEFAULT_METRIC, getSupportedMetric, Metric } from "Utils/metrics"
-import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import { DEFAULT_METRIC, getSupportedMetric, type Metric } from "Utils/metrics"
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 
 /**
  * Initial filter state
@@ -447,7 +447,7 @@ const artworkFilterReducer = (
     case "SET": {
       const { name, value } = action.payload
 
-      let filterState: ArtworkFilters = {
+      const filterState: ArtworkFilters = {
         page: 1,
       }
 
@@ -493,7 +493,7 @@ const artworkFilterReducer = (
         }
       })
 
-      delete state.reset
+      state.reset = undefined
 
       return {
         ...state,

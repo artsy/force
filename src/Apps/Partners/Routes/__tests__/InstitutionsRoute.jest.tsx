@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { InstitutionsRouteFragmentContainer } from "Apps/Partners/Routes/InstitutionsRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { InstitutionsRouteFragmentContainer_Test_Query } from "__generated__/InstitutionsRouteFragmentContainer_Test_Query.graphql"
+import type { InstitutionsRouteFragmentContainer_Test_Query } from "__generated__/InstitutionsRouteFragmentContainer_Test_Query.graphql"
 import { MockBoot } from "DevTools/MockBoot"
 import { screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"

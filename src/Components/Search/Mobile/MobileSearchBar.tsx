@@ -1,12 +1,12 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { LabeledInput, useDidMount } from "@artsy/palette"
 import { OverlayRefetchContainer } from "./Overlay"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 
 import { graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import {
+import type {
   MobileSearchBarSuggestQuery,
   MobileSearchBarSuggestQuery$data,
 } from "__generated__/MobileSearchBarSuggestQuery.graphql"
@@ -87,9 +87,8 @@ export const MobileSearchBarQueryRenderer: FC<
           // SSR render pass. Since we don't have access to `<Boot>` context
           // from within the NavBar (it's not a part of any app) we need to lean
           // on styled-system for showing / hiding depending upon breakpoint.
-        } else {
-          return <StaticSearchContainer searchQuery={searchQuery} />
         }
+        return <StaticSearchContainer searchQuery={searchQuery} />
       }}
     />
   )

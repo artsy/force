@@ -1,6 +1,6 @@
-import { FC } from "react"
+import type { FC } from "react"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
-import { Button, ButtonProps } from "@artsy/palette"
+import { Button, type ButtonProps } from "@artsy/palette"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 

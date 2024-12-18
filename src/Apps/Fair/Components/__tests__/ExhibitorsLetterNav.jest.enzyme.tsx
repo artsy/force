@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ExhibitorsLetterNavFragmentContainer } from "Apps/Fair/Components/ExhibitorsLetterNav"
-import { ExhibitorsLetterNav_Test_Query } from "__generated__/ExhibitorsLetterNav_Test_Query.graphql"
+import type { ExhibitorsLetterNav_Test_Query } from "__generated__/ExhibitorsLetterNav_Test_Query.graphql"
 
 jest.unmock("react-relay")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
@@ -66,19 +66,19 @@ describe("ExhibitorsLetterNav", () => {
     const buttons = wrapper.find("button")
 
     expect(buttons.at(0).prop("title")).toEqual(
-      `View exhibitors starting with “K”`
+      "View exhibitors starting with “K”"
     )
 
     expect(buttons.at(1).prop("title")).toEqual(
-      `View exhibitors starting with “L”`
+      "View exhibitors starting with “L”"
     )
 
     expect(buttons.at(2).prop("title")).toEqual(
-      `View exhibitors starting with “M”`
+      "View exhibitors starting with “M”"
     )
 
     expect(buttons.at(3).prop("title")).toEqual(
-      `View exhibitors starting with special character or number`
+      "View exhibitors starting with special character or number"
     )
   })
 })

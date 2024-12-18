@@ -1,8 +1,8 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
 import { Text } from "@artsy/palette"
-import { ArtworkPageBanner_artwork$key } from "__generated__/ArtworkPageBanner_artwork.graphql"
-import { ArtworkPageBanner_me$key } from "__generated__/ArtworkPageBanner_me.graphql"
+import type { ArtworkPageBanner_artwork$key } from "__generated__/ArtworkPageBanner_artwork.graphql"
+import type { ArtworkPageBanner_me$key } from "__generated__/ArtworkPageBanner_me.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { useRouter } from "System/Hooks/useRouter"
 import { FullBleedBanner } from "Components/FullBleedBanner"
@@ -34,15 +34,15 @@ export const ArtworkPageBanner: FC<
   const queryParams = match.location.query
 
   // First show banners requested imperatively from the query string
-  if (!!queryParams.unavailable) {
+  if (queryParams.unavailable) {
     return <ArtworkUnavailableBanner />
   }
 
-  if (!!queryParams.expired_offer) {
+  if (queryParams.expired_offer) {
     return <ExpiredOfferBanner />
   }
 
-  if (!!artwork.sale) {
+  if (artwork.sale) {
     return <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
   }
 
@@ -58,7 +58,7 @@ export const ArtworkPageBanner: FC<
     if (allowExpiredPartnerOffers) {
       if (
         partnerOffer &&
-        partnerOffer.internalID == expectedPartnerOfferID &&
+        partnerOffer.internalID === expectedPartnerOfferID &&
         !partnerOffer.isActive
       ) {
         return <ExpiredOfferBanner />

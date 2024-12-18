@@ -1,14 +1,18 @@
-import { ArtistArtworkFilter_artist$data } from "__generated__/ArtistArtworkFilter_artist.graphql"
+import type { ArtistArtworkFilter_artist$data } from "__generated__/ArtistArtworkFilter_artist.graphql"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
-  Counts,
-  SharedArtworkFilterContextProps,
+  type Counts,
+  type SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { Match } from "found"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import type { Match } from "found"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
-import { SavedSearchEntity } from "Components/SavedSearchAlert/types"
+import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import { OwnerType } from "@artsy/cohesion"
 import { ZeroState } from "./ZeroState"
 import { ArtistArtworkFilters } from "./ArtistArtworkFilters"
@@ -30,7 +34,7 @@ const ArtistArtworkFilter: React.FC<
   const { match } = useRouter()
   const { relay, aggregations, artist } = props
   const { filtered_artworks } = artist
-  const hasFilter = filtered_artworks && filtered_artworks.id
+  const hasFilter = filtered_artworks?.id
 
   if (!hasFilter) {
     return null

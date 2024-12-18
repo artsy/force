@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 
-interface FairsAppProps {}
+type FairsAppProps = {}
 
 export const FairsApp: React.FC<React.PropsWithChildren<FairsAppProps>> = ({
   children,

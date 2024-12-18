@@ -1,5 +1,5 @@
 import { DEFUALT_OFFER_NOTE_PREFIX } from "Apps/Order/Routes/Offer"
-import { PriceOptions_artwork$data } from "__generated__/PriceOptions_artwork.graphql"
+import type { PriceOptions_artwork$data } from "__generated__/PriceOptions_artwork.graphql"
 
 export interface OfferItem {
   price: string
@@ -28,9 +28,8 @@ export const getOfferItemFromOrder = (orderLineItemsNode): OfferItem | null => {
 export const lastOfferNote = (note: string) => {
   if (note.startsWith(DEFUALT_OFFER_NOTE_PREFIX)) {
     return ""
-  } else {
-    return note
   }
+  return note
 }
 
 export const getInitialOfferState = (

@@ -1,5 +1,5 @@
 import { graphql, useFragment } from "react-relay"
-import { PrivateArtworkMetadata_artwork$key } from "__generated__/PrivateArtworkMetadata_artwork.graphql"
+import type { PrivateArtworkMetadata_artwork$key } from "__generated__/PrivateArtworkMetadata_artwork.graphql"
 import {
   Box,
   Clickable,

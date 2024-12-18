@@ -2,7 +2,7 @@ import {
   ActionType,
   ContextModule,
   OwnerType,
-  ClickedAuctionResultItem,
+  type ClickedAuctionResultItem,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 

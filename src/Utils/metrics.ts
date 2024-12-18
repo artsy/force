@@ -3,7 +3,7 @@ export type Metric = "in" | "cm"
 export const DEFAULT_METRIC: Metric = "cm"
 export const SUPPORTED_METRICS: Metric[] = ["cm", "in"]
 
-export const getSupportedMetric = (metric: string = ""): Metric => {
+export const getSupportedMetric = (metric = ""): Metric => {
   const metricFromParam = metric.toLowerCase() as Metric
 
   if (SUPPORTED_METRICS.includes(metricFromParam)) {

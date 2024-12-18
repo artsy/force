@@ -1,4 +1,4 @@
-import { ReviewTestQuery$rawResponse } from "__generated__/ReviewTestQuery.graphql"
+import type { ReviewTestQuery$rawResponse } from "__generated__/ReviewTestQuery.graphql"
 import {
   PrivateSaleOrderWithShippingDetails,
   BuyOrderWithArtaShippingDetails,
@@ -43,7 +43,7 @@ import {
   submitOrderWithActionRequired,
   submitOrderWithFailureCurrencyNotSupported,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/submitOrder"
-import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
+import type { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import {
   ErrorDialogs,
   getErrorDialogCopy,
@@ -311,7 +311,7 @@ describe("Review", () => {
         message: "Sorry, the work is no longer available.",
       })
 
-      expect(pushMock).toHaveBeenCalledWith(`/artwork/artworkId`)
+      expect(pushMock).toHaveBeenCalledWith("/artwork/artworkId")
     })
 
     it("shows a modal when the seller's Stripe Connect account is inactive", async () => {

@@ -6,9 +6,9 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { graphql, useFragment } from "react-relay"
-import { CollectorProfileArtistsListArtistDialog_userInterestEdge$key } from "__generated__/CollectorProfileArtistsListArtistDialog_userInterestEdge.graphql"
+import type { CollectorProfileArtistsListArtistDialog_userInterestEdge$key } from "__generated__/CollectorProfileArtistsListArtistDialog_userInterestEdge.graphql"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { CollectorProfileArtistsDeleteDialog } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsDeleteDialog"
 

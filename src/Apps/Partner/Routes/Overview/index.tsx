@@ -1,6 +1,6 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticlesRailFragmentContainer } from "Apps/Partner/Components/Overview/ArticlesRail"
-import { Overview_partner$data } from "__generated__/Overview_partner.graphql"
+import type { Overview_partner$data } from "__generated__/Overview_partner.graphql"
 import { ArtistsRailFragmentContainer } from "Apps/Partner/Components/Overview/ArtistsRail"
 import { ShowsRailFragmentContainer } from "Apps/Partner/Components/Overview/ShowsRail"
 import { AboutPartnerFragmentContainer } from "Apps/Partner/Components/Overview/AboutPartner"
@@ -53,7 +53,7 @@ const Overview: React.FC<React.PropsWithChildren<OverviewProps>> = ({
 
       <AboutPartnerFragmentContainer partner={partner} />
 
-      {location && location.coordinates && (
+      {location?.coordinates && (
         <NearbyGalleriesRailRenderer
           mt={[4, 6]}
           near={`${location.coordinates.lat},${location.coordinates.lng}`}

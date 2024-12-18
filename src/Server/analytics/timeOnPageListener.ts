@@ -6,7 +6,7 @@ import { trackEvent } from "./helpers"
 
 let interval
 
-export const timeOnPageListener = (delay: number = 15000) => {
+export const timeOnPageListener = (delay = 15000) => {
   if (interval) {
     clearInterval(interval)
   }

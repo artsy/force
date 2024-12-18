@@ -130,9 +130,8 @@ const BottomFormNextButton = () => {
       })
 
       return
-    } else {
-      await submitAndNavigateToNextStepCallback()
     }
+    await submitAndNavigateToNextStepCallback()
   }
 
   const goToNextStepCallback = useCallback(async () => {

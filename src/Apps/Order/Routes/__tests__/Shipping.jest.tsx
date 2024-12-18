@@ -23,7 +23,7 @@ import {
   saveAddressSuccess,
   updateAddressSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
-import {
+import type {
   ShippingTestQuery,
   ShippingTestQuery$rawResponse,
 } from "__generated__/ShippingTestQuery.graphql"
@@ -40,7 +40,7 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { queryByAttribute } from "@testing-library/dom"
 import { ErrorDialogMessage } from "Apps/Order/Utils/getErrorDialogCopy"
 import { within } from "@testing-library/dom"
-import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
+import { type MockEnvironment, createMockEnvironment } from "relay-test-utils"
 import { useRouter } from "System/Hooks/useRouter"
 
 jest.setTimeout(10000)

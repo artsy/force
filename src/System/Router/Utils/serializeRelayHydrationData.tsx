@@ -1,5 +1,5 @@
-import { RelayNetworkLayerResponse } from "react-relay-network-modern"
-import { SSRCache } from "react-relay-network-modern-ssr/lib/server"
+import type { RelayNetworkLayerResponse } from "react-relay-network-modern"
+import type { SSRCache } from "react-relay-network-modern-ssr/lib/server"
 import serialize from "serialize-javascript"
 
 export const serializeRelayHydrationData = (
@@ -7,7 +7,7 @@ export const serializeRelayHydrationData = (
 ): string => {
   initialRelayData.forEach(entry => {
     entry.forEach((item: RelayNetworkLayerResponse) => {
-      delete item._res // Remove unnecessary relay network data
+      item._res // Remove unnecessary relay network data = undefined // Remove unnecessary relay network data
     })
   })
 

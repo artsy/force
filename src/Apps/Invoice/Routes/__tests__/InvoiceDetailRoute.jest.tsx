@@ -1,7 +1,7 @@
 import { InvoiceDetailRoute } from "Apps/Invoice/Routes/InvoiceDetailRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { InvoiceDetailRoute_Test_Query } from "__generated__/InvoiceDetailRoute_Test_Query.graphql"
+import type { InvoiceDetailRoute_Test_Query } from "__generated__/InvoiceDetailRoute_Test_Query.graphql"
 import { MockBoot } from "DevTools/MockBoot"
 import { screen } from "@testing-library/react"
 import { useRouter } from "System/Hooks/useRouter"

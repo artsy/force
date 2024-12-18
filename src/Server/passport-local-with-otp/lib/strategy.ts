@@ -1,9 +1,9 @@
 /**
  * Module dependencies.
  */
-let passport = require("passport-strategy"),
-  util = require("util"),
-  lookup = require("./utils").lookup
+const passport = require("passport-strategy")
+const util = require("util")
+const lookup = require("./utils").lookup
 
 /**
  * `Strategy` constructor.
@@ -40,7 +40,7 @@ let passport = require("passport-strategy"),
  * @api public
  */
 function Strategy(options, verify) {
-  if (typeof options == "function") {
+  if (typeof options === "function") {
     verify = options
     options = {}
   }
@@ -71,13 +71,13 @@ util.inherits(Strategy, passport.Strategy)
  */
 Strategy.prototype.authenticate = function (req, options) {
   options = options || {}
-  let username =
+  const username =
     lookup(req.body, this._usernameField) ||
     lookup(req.query, this._usernameField)
-  let password =
+  const password =
     lookup(req.body, this._passwordField) ||
     lookup(req.query, this._passwordField)
-  let otp =
+  const otp =
     lookup(req.body, this._otpField) || lookup(req.query, this._otpField)
 
   if (!username || !password) {
@@ -88,7 +88,7 @@ Strategy.prototype.authenticate = function (req, options) {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-this-alias
-  let self = this
+  const self = this
 
   function verified(err, user, info) {
     if (err) {

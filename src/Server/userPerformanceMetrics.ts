@@ -8,7 +8,7 @@ declare let PerformancePaintTiming: any
  * `window.performance` or `null`
  */
 const perf = typeof window !== "undefined" ? window.performance : null
-const timingAvailable = perf && perf.timing
+const timingAvailable = perf?.timing
 
 /**
  * Returns a duration if both inputs are valid and start occurs before end,
@@ -24,7 +24,7 @@ const sanitizedMetrics = (start: number, end: number): number | null =>
  * https://developer.mozilla.org/en-US/docs/Web/API/Performance/mark
  */
 export function mark(markName: string) {
-  if (perf && perf.mark) {
+  if (perf?.mark) {
     perf.mark(markName)
   }
 }
@@ -44,7 +44,7 @@ export function measure(
   startMarkName?: string,
   endMarkName?: string
 ) {
-  if (perf && perf.measure) {
+  if (perf?.measure) {
     // If the start mark or end mark are specified but don't exist then then
     // measure will throw an exception.
     try {

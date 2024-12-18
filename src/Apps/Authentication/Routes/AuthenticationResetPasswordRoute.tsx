@@ -8,7 +8,7 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { Formik } from "formik"
-import React from "react"
+import type React from "react"
 import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
 import { resetPassword } from "Utils/auth"
@@ -18,7 +18,7 @@ import * as Yup from "yup"
 import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
-interface AuthenticationResetPasswordRouteProps {}
+type AuthenticationResetPasswordRouteProps = {}
 
 type Mode = "Pending" | "Loading" | "Success" | "Error"
 
@@ -38,10 +38,10 @@ export const AuthenticationResetPasswordRoute: React.FC<
   const verb = query.set_password ? "Set" : "Change"
 
   const label = {
-    ["Pending"]: `${verb} My Password`,
-    ["Loading"]: `${verb} My Password`,
-    ["Success"]: "Password Updated",
-    ["Error"]: `${verb} My Password`,
+    Pending: `${verb} My Password`,
+    Loading: `${verb} My Password`,
+    Success: "Password Updated",
+    Error: `${verb} My Password`,
   }[mode]
 
   return (

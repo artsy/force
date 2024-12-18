@@ -4,7 +4,7 @@ import {
   ResponsiveBox,
   Text,
   Image,
-  ColumnSpan,
+  type ColumnSpan,
 } from "@artsy/palette"
 
 const imageHeight = 320
@@ -49,7 +49,7 @@ export const StepsWithImage: React.FC<
                 srcSet={step.srcSet}
                 text={step.text}
                 title={step.title}
-                step={!step.step ? "0" + (index + 1) : step.step}
+                step={!step.step ? `0${index + 1}` : step.step}
               />
             </Column>
           )

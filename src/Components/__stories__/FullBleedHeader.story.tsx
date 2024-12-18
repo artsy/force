@@ -2,7 +2,7 @@ import { Flex, Text } from "@artsy/palette"
 import { States } from "storybook-states"
 import {
   FullBleedHeader,
-  FullBleedHeaderProps,
+  type FullBleedHeaderProps,
 } from "Components/FullBleedHeader/FullBleedHeader"
 
 export default {

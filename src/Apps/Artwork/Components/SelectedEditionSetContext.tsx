@@ -1,4 +1,4 @@
-import { EditionSet } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarEditionSets"
+import type { EditionSet } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarEditionSets"
 import { createContext, useContext, useState } from "react"
 
 interface SelectedEditionSetContextType {

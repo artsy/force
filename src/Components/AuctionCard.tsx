@@ -1,7 +1,7 @@
 import { Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
-import { AuctionCard_sale$data } from "__generated__/AuctionCard_sale.graphql"
+import type { AuctionCard_sale$data } from "__generated__/AuctionCard_sale.graphql"
 import { DateTime } from "luxon"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 
@@ -10,9 +10,11 @@ export const relativeTime = (timeIn, now) => {
   const abs = Math.abs
   if (abs(time.diff(now).as("days")) >= 1) {
     return `${Math.floor(time.diff(now).as("days"))}d`
-  } else if (abs(time.diff(now).as("hours")) >= 1) {
+  }
+  if (abs(time.diff(now).as("hours")) >= 1) {
     return `${Math.floor(time.diff(now).as("hours"))}h`
-  } else if (abs(time.diff(now).as("minutes")) >= 1) {
+  }
+  if (abs(time.diff(now).as("minutes")) >= 1) {
     return `${Math.floor(time.diff(now).as("minutes"))}m`
   }
   return `${Math.floor(time.diff(now).as("seconds") % 60)}s`
@@ -38,22 +40,23 @@ export const upcomingLabel = (
   const isLAI = !!liveStartAt
   if (isPreview) {
     return `Opens in ${relativeTime(startAt, now)}`
-  } else if (isClosed) {
+  }
+  if (isClosed) {
     return "Auction closed"
-  } else if (isLAI) {
+  }
+  if (isLAI) {
     if (isLiveOpen) {
       return "In progress"
-    } else if (isRegistered || isRegistrationClosed) {
-      return `Live in ${relativeTime(liveStartAt, now)}`
-    } else {
-      const dateTime = DateTime.fromISO(liveStartAt ?? "").setZone(
-        "America/New_York"
-      )
-      return `Register by ${dateTime.monthShort} ${dateTime.day}`
     }
-  } else {
-    return `Ends in ${relativeTime(endAt, now)}`
+    if (isRegistered || isRegistrationClosed) {
+      return `Live in ${relativeTime(liveStartAt, now)}`
+    }
+    const dateTime = DateTime.fromISO(liveStartAt ?? "").setZone(
+      "America/New_York"
+    )
+    return `Register by ${dateTime.monthShort} ${dateTime.day}`
   }
+  return `Ends in ${relativeTime(endAt, now)}`
 }
 
 export interface AuctionCardProps {

@@ -13,7 +13,7 @@ import {
 } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { Form, Formik } from "formik"
-import { FC } from "react"
+import type { FC } from "react"
 import { signUp } from "Utils/auth"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"

@@ -1,15 +1,15 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { AuthContextModule } from "@artsy/cohesion"
+import type { AuthContextModule } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
-import { TrendingLotsRailQuery } from "__generated__/TrendingLotsRailQuery.graphql"
-import { TrendingLotsRail_viewer$data } from "__generated__/TrendingLotsRail_viewer.graphql"
+import type { TrendingLotsRailQuery } from "__generated__/TrendingLotsRailQuery.graphql"
+import type { TrendingLotsRail_viewer$data } from "__generated__/TrendingLotsRail_viewer.graphql"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { CuratorialRailsZeroState } from "./CuritorialRailsTabBar"

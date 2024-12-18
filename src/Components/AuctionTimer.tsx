@@ -1,4 +1,4 @@
-import { AuctionTimer_sale$data } from "__generated__/AuctionTimer_sale.graphql"
+import type { AuctionTimer_sale$data } from "__generated__/AuctionTimer_sale.graphql"
 import { Timer } from "Components/Timer"
 import { DateTime } from "luxon"
 import { Component } from "react"
@@ -42,7 +42,7 @@ export class AuctionTimer extends Component<Props> {
     const dateTime = DateTime.fromISO(this.endDate!)
     const amPm = dateTime.hour >= 12 ? "pm" : "am"
     const minutes =
-      dateTime.minute < 10 ? "0" + dateTime.minute : dateTime.minute
+      dateTime.minute < 10 ? `0${dateTime.minute}` : dateTime.minute
     let hour
     if (dateTime.hour > 12) {
       hour = dateTime.hour - 12
@@ -54,17 +54,15 @@ export class AuctionTimer extends Component<Props> {
     const display = `${dateTime.monthShort} ${dateTime.day}, ${hour}:${minutes}${amPm}`
     if (this.liveStartAt) {
       return `Live ${display}`
-    } else {
-      return `Ends ${display}`
     }
+    return `Ends ${display}`
   }
 
   labelWithoutTimeRemaining() {
     if (this.liveStartAt) {
       return "In progress"
-    } else {
-      return "Bidding closed"
     }
+    return "Bidding closed"
   }
 }
 

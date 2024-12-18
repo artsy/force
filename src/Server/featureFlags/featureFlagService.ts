@@ -1,4 +1,4 @@
-import { Variant } from "unleash-client"
+import type { Variant } from "unleash-client"
 
 export type FeatureFlags = Array<string>
 
@@ -22,16 +22,15 @@ export async function createFeatureFlagService(
 
   // Check if provider has been registered with registerFeatureFlagService()
   const featureFlagClass = registeredFeatureFlagService.get(type)
-  if (typeof featureFlagClass !== undefined) {
+  if (typeof featureFlagClass !== "undefined") {
     // Instantiate a new feature flag provider instance
     const featureFlagService = new featureFlagClass!()
 
     // initialize featureFlag client
     await featureFlagService.init()
     return featureFlagService
-  } else {
-    throw new Error("FeatureFlagProvider was defined as null")
   }
+  throw new Error("FeatureFlagProvider was defined as null")
 }
 
 type ConstructorType<T> = Function & { prototype: T }

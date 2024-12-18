@@ -1,16 +1,16 @@
-import * as React from "react"
-import { BoxProps, Skeleton } from "@artsy/palette"
+import type * as React from "react"
+import { type BoxProps, Skeleton } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AuctionArtworksRail_sale$data } from "__generated__/AuctionArtworksRail_sale.graphql"
+import type { AuctionArtworksRail_sale$data } from "__generated__/AuctionArtworksRail_sale.graphql"
 import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
-  AuthContextModule,
-  ClickedArtworkGroup,
-  ContextModule,
+  type AuthContextModule,
+  type ClickedArtworkGroup,
+  type ContextModule,
   OwnerType,
-  PageOwnerType,
+  type PageOwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -22,7 +22,7 @@ import {
 } from "Components/Artwork/ShelfArtwork"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { AuctionArtworksRailQuery } from "__generated__/AuctionArtworksRailQuery.graphql"
+import type { AuctionArtworksRailQuery } from "__generated__/AuctionArtworksRailQuery.graphql"
 
 export type TabType =
   | "current"

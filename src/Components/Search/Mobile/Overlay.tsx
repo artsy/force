@@ -1,19 +1,23 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { Box, LabeledInput } from "@artsy/palette"
-import { FC, useCallback, useEffect, useRef, useState } from "react"
+import { type FC, useCallback, useEffect, useRef, useState } from "react"
 
 import {
-  PillType,
+  type PillType,
   TOP_PILL,
   SEARCH_DEBOUNCE_DELAY,
 } from "Components/Search/constants"
-import { createRefetchContainer, RelayRefetchProp, graphql } from "react-relay"
+import {
+  createRefetchContainer,
+  type RelayRefetchProp,
+  graphql,
+} from "react-relay"
 import createLogger from "Utils/logger"
 import { SearchInputPillsFragmentContainer } from "Components/Search/SearchInputPills"
 import { reportPerformanceMeasurement } from "Components/Search/utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "Components/Search/utils/shouldStartSearching"
 import { useDebounce } from "Utils/Hooks/useDebounce"
-import { Overlay_viewer$data } from "__generated__/Overlay_viewer.graphql"
+import type { Overlay_viewer$data } from "__generated__/Overlay_viewer.graphql"
 import {
   OVERLAY_CONTENT_ID,
   OverlayBase,

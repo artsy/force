@@ -1,5 +1,5 @@
 import {
-  RelayPaginationProp,
+  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
 } from "react-relay"
@@ -8,7 +8,7 @@ import { useLoadMore } from "Apps/Conversations/hooks/useLoadMore"
 import { extractNodes } from "Utils/extractNodes"
 import { ConversationsSidebarEmpty } from "Apps/Conversations/components/Sidebar/ConversationsSidebarEmpty"
 import { ConversationsSidebarItem } from "Apps/Conversations/components/Sidebar/ConversationsSidebarItem"
-import { ConversationsSidebar_viewer$data } from "__generated__/ConversationsSidebar_viewer.graphql"
+import type { ConversationsSidebar_viewer$data } from "__generated__/ConversationsSidebar_viewer.graphql"
 import { Sentinel } from "Components/Sentinal"
 import { useEffect, useState } from "react"
 import { useRouter } from "System/Hooks/useRouter"

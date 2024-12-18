@@ -7,14 +7,14 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { Environment, createFragmentContainer, graphql } from "react-relay"
+import { type Environment, createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
-import { InquiryBasicInfo_artwork$data } from "__generated__/InquiryBasicInfo_artwork.graphql"
-import { InquiryBasicInfo_me$data } from "__generated__/InquiryBasicInfo_me.graphql"
-import { InquiryBasicInfoQuery } from "__generated__/InquiryBasicInfoQuery.graphql"
+import type { InquiryBasicInfo_artwork$data } from "__generated__/InquiryBasicInfo_artwork.graphql"
+import type { InquiryBasicInfo_me$data } from "__generated__/InquiryBasicInfo_me.graphql"
+import type { InquiryBasicInfoQuery } from "__generated__/InquiryBasicInfoQuery.graphql"
 import {
-  Location,
+  type Location,
   LocationAutocompleteInput,
   normalizePlace,
 } from "Components/LocationAutocompleteInput"
@@ -24,8 +24,8 @@ import { Form, Formik } from "formik"
 import {
   ActionType,
   ContextModule,
-  EditedUserProfile,
-  EditProfileModalViewed,
+  type EditedUserProfile,
+  type EditProfileModalViewed,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"

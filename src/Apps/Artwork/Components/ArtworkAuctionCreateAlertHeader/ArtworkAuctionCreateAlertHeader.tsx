@@ -8,14 +8,14 @@ import {
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
+import type { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
-import { FC } from "react"
+import type { FC } from "react"
 import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
-import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { compact } from "lodash"
-import {
+import type {
   SavedSearchEntity,
   SavedSearchEntityCriteria,
   SearchCriteriaAttributes,
@@ -47,7 +47,7 @@ const ArtworkAuctionCreateAlertHeader: FC<
   const displayAuctionCreateAlertHeader =
     artwork.isEligibleToCreateAlert && artwork.isInAuction && isLotClosed
 
-  const artistName = artwork.artistNames ? ", " + artwork.artistNames : ""
+  const artistName = artwork.artistNames ? `, ${artwork.artistNames}` : ""
   const artistSlug = artwork.artists?.[0]?.slug
   let aggregations: Aggregations = []
   let additionalGeneIDs: string[] = []

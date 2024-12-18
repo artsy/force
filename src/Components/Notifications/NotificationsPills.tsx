@@ -1,9 +1,9 @@
 import { Flex, Pill, SkeletonBox } from "@artsy/palette"
 import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
 import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
-import { NotificationType } from "Components/Notifications/types"
+import type { NotificationType } from "Components/Notifications/types"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
-import { NotificationsPillsQuery } from "__generated__/NotificationsPillsQuery.graphql"
+import type { NotificationsPillsQuery } from "__generated__/NotificationsPillsQuery.graphql"
 import { compact, times } from "lodash"
 import { graphql } from "react-relay"
 

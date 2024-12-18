@@ -2,9 +2,9 @@ import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { SavedSearchAlertsAppPaginationContainer } from "Apps/Settings/Routes/SavedSearchAlerts/SavedSearchAlertsApp"
-import { SavedSearchAlertsApp_Test_Query } from "__generated__/SavedSearchAlertsApp_Test_Query.graphql"
+import type { SavedSearchAlertsApp_Test_Query } from "__generated__/SavedSearchAlertsApp_Test_Query.graphql"
 import { useTracking } from "react-tracking"
-import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
+import { type MockEnvironment, createMockEnvironment } from "relay-test-utils"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { MediaContextProvider } from "Utils/Responsive"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
@@ -28,7 +28,7 @@ jest.mock("System/Hooks/useRouter", () => ({
   })),
 }))
 
-let relayEnv: MockEnvironment = createMockEnvironment()
+const relayEnv: MockEnvironment = createMockEnvironment()
 
 describe("SavedSearchAlertsApp", () => {
   let breakpoint: "md" | "sm" | "xs"

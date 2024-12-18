@@ -4,7 +4,7 @@ import { redirects } from "Apps/Order/redirects"
 import { ErrorPage } from "Components/ErrorPage"
 import { Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 
 const RespondRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Respond"),

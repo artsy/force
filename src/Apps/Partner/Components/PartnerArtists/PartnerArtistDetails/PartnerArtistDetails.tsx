@@ -1,7 +1,7 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { PartnerArtistDetails_partnerArtist$data } from "__generated__/PartnerArtistDetails_partnerArtist.graphql"
-import { PartnerArtistDetailsQuery } from "__generated__/PartnerArtistDetailsQuery.graphql"
+import type { PartnerArtistDetails_partnerArtist$data } from "__generated__/PartnerArtistDetails_partnerArtist.graphql"
+import type { PartnerArtistDetailsQuery } from "__generated__/PartnerArtistDetailsQuery.graphql"
 import {
   Column,
   GridColumns,

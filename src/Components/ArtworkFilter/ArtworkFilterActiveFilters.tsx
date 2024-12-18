@@ -1,9 +1,9 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { useActiveFilterPills } from "Components/SavedSearchAlert/useActiveFilterPills"
 import { Button, Flex, Pill } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 
-export interface ArtworkFilterActiveFiltersProps {}
+export type ArtworkFilterActiveFiltersProps = {}
 
 export const ArtworkFilterActiveFilters: FC<
   React.PropsWithChildren<ArtworkFilterActiveFiltersProps>

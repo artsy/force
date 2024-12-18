@@ -5,9 +5,9 @@ import {
   Stack,
   useDidMount,
 } from "@artsy/palette"
-import { FC, Suspense } from "react"
+import { type FC, Suspense } from "react"
 import { graphql, useFragment, useLazyLoadQuery } from "react-relay"
-import { CollectorProfileArtistsListArtistsQuery } from "__generated__/CollectorProfileArtistsListArtistsQuery.graphql"
+import type { CollectorProfileArtistsListArtistsQuery } from "__generated__/CollectorProfileArtistsListArtistsQuery.graphql"
 import {
   CollectorProfileArtistsListArtist,
   CollectorProfileArtistsListArtistSkeleton,
@@ -15,11 +15,11 @@ import {
 import { compact } from "lodash"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { useRouter } from "System/Hooks/useRouter"
-import { CollectorProfileArtistsList_me$key } from "__generated__/CollectorProfileArtistsList_me.graphql"
+import type { CollectorProfileArtistsList_me$key } from "__generated__/CollectorProfileArtistsList_me.graphql"
 
 const PAGE_SIZE = 10
 
-interface CollectorProfileArtistsListProps {}
+type CollectorProfileArtistsListProps = {}
 
 export const CollectorProfileArtistsList: FC<
   React.PropsWithChildren<CollectorProfileArtistsListProps>
@@ -68,7 +68,7 @@ const CollectorProfileArtistsListArtists: FC<
     },
   } = useRouter()
 
-  const page = parseInt(query.page, 10) || 1
+  const page = Number.parseInt(query.page, 10) || 1
 
   const data = useLazyLoadQuery<CollectorProfileArtistsListArtistsQuery>(
     QUERY,

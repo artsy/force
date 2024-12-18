@@ -32,11 +32,11 @@ describe("AuctionResultsFilterContext", () => {
     )
 
     // Sets year filters to a wide range in case the data is not provided
-    expect(context.filters?.["createdAfterYear"]).toEqual(0)
-    expect(context.filters?.["createdBeforeYear"]).toEqual(10000)
-    expect(context.filters?.["allowEmptyCreatedDates"]).toEqual(true)
-    expect(context.filters?.["saleEndYear"]).toEqual(null)
-    expect(context.filters?.["saleStartYear"]).toEqual(null)
+    expect(context.filters?.createdAfterYear).toEqual(0)
+    expect(context.filters?.createdBeforeYear).toEqual(10000)
+    expect(context.filters?.allowEmptyCreatedDates).toEqual(true)
+    expect(context.filters?.saleEndYear).toEqual(null)
+    expect(context.filters?.saleStartYear).toEqual(null)
     expect(context.aggregations).toEqual([])
   })
 
@@ -230,7 +230,7 @@ describe("AuctionResultsFilterContext", () => {
 
     describe("when in staged mode", () => {
       beforeAll(() => {
-        let filters = {
+        const filters = {
           ...initialAuctionResultsFilterState?.({
             startDate: null,
             endDate: null,

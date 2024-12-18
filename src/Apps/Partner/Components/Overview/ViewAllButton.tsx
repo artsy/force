@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { RouterLink } from "System/Components/RouterLink"
 import { Text } from "@artsy/palette"
 import { useJump } from "Utils/Hooks/useJump"

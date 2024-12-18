@@ -61,7 +61,7 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
   updateSharifyAndContext(
     res,
     "THIRD_PARTIES_DISABLED",
-    req.query["disable_third_parties"] === "true"
+    req.query.disable_third_parties === "true"
   )
 
   next()

@@ -1,10 +1,10 @@
 import { Shelf, SkeletonBox } from "@artsy/palette"
 import { ArtworkListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkListItem"
-import { FC, useRef } from "react"
+import { type FC, useRef } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtworkListItemsListQuery } from "__generated__/ArtworkListItemsListQuery.graphql"
+import type { ArtworkListItemsListQuery } from "__generated__/ArtworkListItemsListQuery.graphql"
 import { times } from "lodash"
 
 export const ArtworkListItemsList: FC<

@@ -1,4 +1,4 @@
-import { Image as BaseImage, ImageProps, Box } from "@artsy/palette"
+import { Image as BaseImage, type ImageProps, Box } from "@artsy/palette"
 import { useRef, useState } from "react"
 import styled from "styled-components"
 import { isTouch } from "Utils/device"
@@ -77,7 +77,7 @@ export const MagnifyImage: React.FC<
         style={{
           ...rest.style,
           transformOrigin,
-          transform: zoomed ? `scale(${scale})` : `scale(1.0)`,
+          transform: zoomed ? `scale(${scale})` : "scale(1.0)",
           transition: `transform ${scaleDuration}s ease, opacity 0.25s`,
         }}
       />

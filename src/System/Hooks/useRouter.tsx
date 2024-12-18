@@ -1,7 +1,7 @@
 import { useContext } from "react"
-import { Match, Router } from "found"
+import type { Match, Router } from "found"
 import RouterContext from "found/RouterContext"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 import { findCurrentRoute } from "System/Router/Utils/routeUtils"
 
 export function useRouter(): {

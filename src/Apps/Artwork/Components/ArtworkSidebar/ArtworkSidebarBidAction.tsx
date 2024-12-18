@@ -4,7 +4,7 @@ import {
   Flex,
   Link,
   Select,
-  Option,
+  type Option,
   Separator,
   Spacer,
   Text,
@@ -12,18 +12,18 @@ import {
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarBidAction_artwork$data } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
-import { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSidebarBidAction_me.graphql"
+import type { ArtworkSidebarBidAction_artwork$data } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
+import type { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSidebarBidAction_me.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { TrackingProp, useTracking } from "react-tracking"
+import { type TrackingProp, useTracking } from "react-tracking"
 import { getENV } from "Utils/getENV"
 import { bidderQualifications } from "Utils/identityVerificationRequirements"
 import { compact } from "lodash"
-import { Router } from "found"
+import type { Router } from "found"
 import { useRouter } from "System/Hooks/useRouter"
 import { ActionType, ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
-import { ShowAuthDialog, withAuthDialog } from "Components/AuthDialog"
+import { type ShowAuthDialog, withAuthDialog } from "Components/AuthDialog"
 import HelpIcon from "@artsy/icons/HelpIcon"
 
 export interface ArtworkSidebarBidActionProps {
@@ -82,7 +82,7 @@ export class ArtworkSidebarBidAction extends React.Component<
   }
 
   setMaxBid = (newVal: string) => {
-    this.setState({ selectedMaxBidCents: parseInt(newVal, 10) })
+    this.setState({ selectedMaxBidCents: Number.parseInt(newVal, 10) })
   }
 
   redirectToRegister = () => {
@@ -163,8 +163,8 @@ export class ArtworkSidebarBidAction extends React.Component<
      * be 1 live sale with this work. When we run into that case, there is
      * likely design work to be done too, so we can adjust this then.
      */
-    const myLotStanding = artwork.myLotStanding && artwork.myLotStanding[0]
-    const hasMyBids = !!(myLotStanding && myLotStanding.most_recent_bid)
+    const myLotStanding = artwork.myLotStanding?.[0]
+    const hasMyBids = !!myLotStanding?.most_recent_bid
 
     const {
       registrationAttempted,
@@ -245,25 +245,22 @@ export class ArtworkSidebarBidAction extends React.Component<
             </Button>
           </>
         )
-      } else {
-        return (
-          <>
-            <Button
-              width="100%"
-              size="large"
-              onClick={() => this.redirectToLiveBidding(me)}
-            >
-              Enter live bidding
-            </Button>
-
-            <Spacer y={1} />
-
-            {userLacksIdentityVerification && (
-              <IdentityVerificationDisclaimer />
-            )}
-          </>
-        )
       }
+      return (
+        <>
+          <Button
+            width="100%"
+            size="large"
+            onClick={() => this.redirectToLiveBidding(me)}
+          >
+            Enter live bidding
+          </Button>
+
+          <Spacer y={1} />
+
+          {userLacksIdentityVerification && <IdentityVerificationDisclaimer />}
+        </>
+      )
     }
 
     if (sale.is_open) {
@@ -323,51 +320,50 @@ export class ArtworkSidebarBidAction extends React.Component<
             <IdentityVerificationDisclaimer />
           </>
         )
-      } else {
-        return (
-          <>
-            <Separator my={2} />
-
-            <Flex width="100%" flexDirection="row" alignItems="center">
-              <Text variant="sm-display" color="black100" mr={1}>
-                Place max bid
-              </Text>
-
-              <Tooltip
-                content="Set the maximum amount you would like Artsy to bid up to on your behalf"
-                placement="top"
-              >
-                <Box
-                  style={{
-                    // Vertically center
-                    lineHeight: 0,
-                  }}
-                >
-                  <HelpIcon aria-hidden title="" />
-                </Box>
-              </Tooltip>
-            </Flex>
-
-            <Spacer y={1} />
-
-            <Select
-              options={selectOptions as Option[]}
-              onSelect={this.setMaxBid}
-            />
-
-            <Spacer y={1} />
-
-            <Button
-              width="100%"
-              size="large"
-              data-test="bid"
-              onClick={() => this.redirectToBid(firstIncrement?.cents || 0)}
-            >
-              {hasMyBids ? "Increase max bid" : "Bid"}
-            </Button>
-          </>
-        )
       }
+      return (
+        <>
+          <Separator my={2} />
+
+          <Flex width="100%" flexDirection="row" alignItems="center">
+            <Text variant="sm-display" color="black100" mr={1}>
+              Place max bid
+            </Text>
+
+            <Tooltip
+              content="Set the maximum amount you would like Artsy to bid up to on your behalf"
+              placement="top"
+            >
+              <Box
+                style={{
+                  // Vertically center
+                  lineHeight: 0,
+                }}
+              >
+                <HelpIcon aria-hidden title="" />
+              </Box>
+            </Tooltip>
+          </Flex>
+
+          <Spacer y={1} />
+
+          <Select
+            options={selectOptions as Option[]}
+            onSelect={this.setMaxBid}
+          />
+
+          <Spacer y={1} />
+
+          <Button
+            width="100%"
+            size="large"
+            data-test="bid"
+            onClick={() => this.redirectToBid(firstIncrement?.cents || 0)}
+          >
+            {hasMyBids ? "Increase max bid" : "Bid"}
+          </Button>
+        </>
+      )
     }
   }
 }

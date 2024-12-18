@@ -1,6 +1,6 @@
-import { loadStripe, StripeElementsOptions } from "@stripe/stripe-js"
+import { loadStripe, type StripeElementsOptions } from "@stripe/stripe-js"
 import { Elements, ElementsConsumer } from "@stripe/react-stripe-js"
-import * as React from "react"
+import type * as React from "react"
 import { data as sd } from "sharify"
 
 export function createStripeWrapper<T>(

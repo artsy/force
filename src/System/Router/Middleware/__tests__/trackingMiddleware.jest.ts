@@ -133,7 +133,7 @@ describe("trackingMiddleware", () => {
         expect(global.analytics.page).toBeCalledWith(
           {
             path: pathToTest,
-            referrer: `http://testing.com/referrer?with=queryparams`,
+            referrer: "http://testing.com/referrer?with=queryparams",
             url: `http://testing.com${pathToTest}`,
           },
           { integrations: { Marketo: false } }

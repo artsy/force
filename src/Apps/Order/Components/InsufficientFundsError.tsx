@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { Spacer, Message, Text } from "@artsy/palette"
 
 export const InsufficientFundsError: FC<

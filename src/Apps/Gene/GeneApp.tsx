@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 
-interface GeneAppProps {}
+type GeneAppProps = {}
 
 export const GeneApp: React.FC<React.PropsWithChildren<GeneAppProps>> = ({
   children,

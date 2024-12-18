@@ -2,7 +2,7 @@ import { Column, Flex, GridColumns, Text } from "@artsy/palette"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { AddToCollectionRoute_viewer$data } from "__generated__/AddToCollectionRoute_viewer.graphql"
+import type { AddToCollectionRoute_viewer$data } from "__generated__/AddToCollectionRoute_viewer.graphql"
 import { ArtworkItem } from "./Components/ArtworkItem"
 
 interface AddToCollectionRouteProps {

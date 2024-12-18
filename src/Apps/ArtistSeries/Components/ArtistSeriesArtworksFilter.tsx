@@ -1,21 +1,25 @@
 import { OwnerType } from "@artsy/cohesion"
-import { ArtistSeriesArtworksFilter_artistSeries$data } from "__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
-import { ArtistSeriesArtworksFilterQuery } from "__generated__/ArtistSeriesArtworksFilterQuery.graphql"
+import type { ArtistSeriesArtworksFilter_artistSeries$data } from "__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
+import type { ArtistSeriesArtworksFilterQuery } from "__generated__/ArtistSeriesArtworksFilterQuery.graphql"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import { ArtworkFilterAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterAlertContextProvider"
 import {
   ArtworkFilterContextProvider,
-  SharedArtworkFilterContextProps,
+  type SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { ArtworkFilterSavedSearchAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterSavedSearchAlertContextProvider"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
-import { SavedSearchEntity } from "Components/SavedSearchAlert/types"
-import { Match, RouterState, withRouter } from "found"
-import * as React from "react"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
+import { type Match, type RouterState, withRouter } from "found"
+import type * as React from "react"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -33,7 +37,7 @@ const ArtistSeriesArtworksFilter: React.FC<
   const { match, relay, artistSeries } = props
   const { filtered_artworks, sidebar } = artistSeries
 
-  const hasFilter = filtered_artworks && filtered_artworks.id
+  const hasFilter = filtered_artworks?.id
 
   // If there was an error fetching the filter,
   // we still want to render the rest of the page.
@@ -60,7 +64,7 @@ const ArtistSeriesArtworksFilter: React.FC<
 
   return (
     <ArtworkFilterContextProvider
-      filters={match && match.location.query}
+      filters={match?.location.query}
       aggregations={
         sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
@@ -154,7 +158,7 @@ export const ArtistSeriesArtworksFilterRefetchContainer =
   `
   )
 
-interface ArtistSeriesArtworkFilterQueryRendererProps {}
+type ArtistSeriesArtworkFilterQueryRendererProps = {}
 
 export const ArtistSeriesArtworkFilterQueryRenderer: React.FC<
   React.PropsWithChildren<ArtistSeriesArtworkFilterQueryRendererProps>

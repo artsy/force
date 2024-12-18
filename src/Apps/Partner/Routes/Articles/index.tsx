@@ -1,9 +1,13 @@
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { Column, GridColumns, Spacer } from "@artsy/palette"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
-import { Articles_partner$data } from "__generated__/Articles_partner.graphql"
+import type { Articles_partner$data } from "__generated__/Articles_partner.graphql"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 import { extractNodes } from "Utils/extractNodes"

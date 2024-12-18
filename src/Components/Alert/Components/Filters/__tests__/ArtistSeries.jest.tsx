@@ -1,7 +1,7 @@
 import { screen, waitFor } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ArtistSeriesQueryRenderer } from "Components/Alert/Components/Filters/ArtistSeries"
-import { ArtistSeriesOptionsQuery$data } from "__generated__/ArtistSeriesOptionsQuery.graphql"
+import type { ArtistSeriesOptionsQuery$data } from "__generated__/ArtistSeriesOptionsQuery.graphql"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import userEvent from "@testing-library/user-event"
 

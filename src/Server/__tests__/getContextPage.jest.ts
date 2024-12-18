@@ -9,7 +9,7 @@ jest.mock("sharify", () => ({
 describe("getContextPageFromClient", () => {
   it("returns correct props", () => {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    delete window.location
+    window.location = undefined
     // @ts-ignore
     window.location = new URL("https://artsy.net/artist/test-artist")
     const page = getContextPageFromClient()
@@ -25,7 +25,7 @@ describe("getContextPageFromClient", () => {
 
   it("handles camelcasing", () => {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    delete window.location
+    window.location = undefined
     // @ts-ignore
     window.location = new URL(
       "https://artsy.net/artist-series/test-artist-series"

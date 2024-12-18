@@ -1,4 +1,4 @@
-import { CareerHighlightKind } from "Apps/Settings/Routes/Insights/Utils/getCareerHighlight"
+import type { CareerHighlightKind } from "Apps/Settings/Routes/Insights/Utils/getCareerHighlight"
 import { useRef, useState } from "react"
 
 export type CareerHighlightKindWithPromo = CareerHighlightKind | "PROMO"

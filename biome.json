@@ -18,80 +18,34 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": false,
-      "a11y": {
-        "noAccessKey": "error",
-        "noAriaUnsupportedElements": "error",
-        "noAutofocus": "error",
-        "noBlankTarget": "off",
-        "noDistractingElements": "error",
-        "noHeaderScope": "error",
-        "noInteractiveElementToNoninteractiveRole": "error",
-        "noLabelWithoutControl": "error",
-        "noNoninteractiveElementToInteractiveRole": "error",
-        "noNoninteractiveTabindex": "error",
-        "noPositiveTabindex": "error",
-        "noRedundantAlt": "error",
-        "noRedundantRoles": "error",
-        "useAltText": "error",
-        "useAnchorContent": "error",
-        "useAriaActivedescendantWithTabindex": "error",
-        "useAriaPropsForRole": "error",
-        "useFocusableInteractive": "error",
-        "useHeadingContent": "error",
-        "useHtmlLang": "error",
-        "useIframeTitle": "error",
-        "useKeyWithClickEvents": "error",
-        "useKeyWithMouseEvents": "error",
-        "useMediaCaption": "error",
-        "useValidAnchor": "error",
-        "useValidAriaProps": "error",
-        "useValidAriaRole": {
-          "level": "error",
-          "options": { "allowInvalidRoles": [], "ignoreNonDom": false }
-        },
-        "useValidAriaValues": "error",
-        "useValidLang": "error"
-      },
-      "complexity": { "noBannedTypes": "error", "noExtraBooleanCast": "off" },
+      "recommended": true,
       "correctness": {
-        "noChildrenProp": "error",
-        "noConstantCondition": "off",
-        "noEmptyPattern": "off",
-        "noInnerDeclarations": "off",
-        "noInvalidUseBeforeDeclaration": "off",
-        "noSwitchDeclarations": "off",
-        "noUndeclaredVariables": "off",
-        "noUnreachable": "off",
-        "noUnusedVariables": "off",
-        "useArrayLiterals": "off",
-        "useExhaustiveDependencies": "error",
-        "useHookAtTopLevel": "error",
-        "useJsxKeyInIterable": "error"
+        "noSwitchDeclarations": "off"
       },
-      "security": { "noDangerouslySetInnerHtmlWithChildren": "error" },
-      "style": {
-        "noArguments": "off",
-        "noDoneCallback": "error",
-        "noInferrableTypes": "off",
-        "noNamespace": "error",
-        "noNonNullAssertion": "error",
-        "noVar": "error",
-        "useBlockStatements": "off",
-        "useConst": "off"
+      "complexity": {
+        "noBannedTypes": "off",
+        "noForEach": "off",
+        "noUselessFragments": "off",
+        "noExcessiveNestedTestSuites": "off"
+      },
+      "performance": {
+        "noAccumulatingSpread": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
       },
       "suspicious": {
-        "noAsyncPromiseExecutor": "off",
-        "noCommentText": "error",
-        "noConsole": "off",
-        "noDuplicateJsxProps": "error",
-        "noEmptyBlockStatements": "off",
         "noExplicitAny": "off",
-        "noMisleadingInstantiator": "error",
-        "noPrototypeBuiltins": "off",
-        "useNamespaceKeyword": "error"
+        "noArrayIndexKey": "off",
+        "noImplicitAnyLet": "off",
+        "noAsyncPromiseExecutor": "off"
+      },
+      "style": {
+        "useNodejsImportProtocol": "off",
+        "noNonNullAssertion": "off"
       }
     },
+    "include": ["src/**/*"],
     "ignore": ["src/__generated__/**/*"]
   },
   "javascript": {

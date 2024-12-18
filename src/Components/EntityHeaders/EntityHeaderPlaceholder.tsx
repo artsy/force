@@ -1,11 +1,11 @@
 import {
-  BoxProps,
+  type BoxProps,
   Flex,
   Skeleton,
   SkeletonBox,
   SkeletonText,
 } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 
 export interface EntityHeaderPlaceholderProps extends BoxProps {
   displayAvatar?: boolean

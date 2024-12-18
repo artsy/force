@@ -1,4 +1,4 @@
-import { AuthContextModule } from "@artsy/cohesion"
+import type { AuthContextModule } from "@artsy/cohesion"
 import {
   Column,
   Flex,
@@ -13,19 +13,19 @@ import GridItem, {
 } from "Components/Artwork/GridItem"
 import { MetadataPlaceholder } from "Components/Artwork/Metadata"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
-import { Masonry, MasonryProps } from "Components/Masonry"
+import { Masonry, type MasonryProps } from "Components/Masonry"
 import { isEmpty, isEqual } from "lodash"
 import memoizeOnce from "memoize-one"
 import * as React from "react"
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
 import ReactDOM from "react-dom"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { extractNodes } from "Utils/extractNodes"
 import { Media, valuesWithBreakpointProps } from "Utils/Responsive"
-import { ExtractNodeType } from "Utils/typeSupport"
-import { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
-import { MyCollectionArtworkGrid_artworks$data } from "__generated__/MyCollectionArtworkGrid_artworks.graphql"
+import type { ExtractNodeType } from "Utils/typeSupport"
+import type { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
+import type { MyCollectionArtworkGrid_artworks$data } from "__generated__/MyCollectionArtworkGrid_artworks.graphql"
 import { withArtworkGridContext } from "./ArtworkGridContext"
 
 type Artworks =
@@ -200,7 +200,7 @@ export class ArtworkGridContainer extends React.Component<
             savedListId={this.props.savedListId}
             renderSaveButton={this.props.renderSaveButton}
             popoverContent={
-              firstP1Artwork?.id == artwork.id
+              firstP1Artwork?.id === artwork.id
                 ? this.props.popoverContent
                 : null
             }
@@ -212,7 +212,7 @@ export class ArtworkGridContainer extends React.Component<
         if (row < sectionedArtworks[column].length - 1) {
           artworkComponents.push(
             // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            <div style={spacerStyle} key={"spacer-" + row + "-" + artwork.id} />
+            <div style={spacerStyle} key={`spacer-${row}-${artwork.id}`} />
           )
         }
       }
@@ -367,21 +367,20 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
 function areSectionedArtworksEqual(current: any, previous: any) {
   if (Array.isArray(current)) {
     return isEqual(current, previous)
-  } else {
-    const currentEdges = (current as Artworks).edges
-    const previousEdges = (previous as Artworks).edges
-    return (
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      currentEdges.length === previousEdges.length && // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      currentEdges.every((e, i) => e.node.id === previousEdges[i].node.id)
-    )
   }
+  const currentEdges = (current as Artworks).edges
+  const previousEdges = (previous as Artworks).edges
+  return (
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    currentEdges.length === previousEdges.length && // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    currentEdges.every((e, i) => e.node.id === previousEdges[i].node.id)
+  )
 }
 
 export function createSectionedArtworks(
   artworksConnection: Artworks,
   columnCount: number,
-  showArtworksWithoutImages: boolean = false
+  showArtworksWithoutImages = false
 ): SectionedArtworks {
   const sectionedArtworks: SectionedArtworks = []
   const sectionRatioSums = []

@@ -9,10 +9,10 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { isEmpty, camelCase, snakeCase } from "lodash"
-import { FC } from "react"
+import type { FC } from "react"
 import { Form, Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
-import {
+import type {
   PreferencesApp_viewer$data,
   SubGroupStatus,
 } from "__generated__/PreferencesApp_viewer.graphql"
@@ -295,8 +295,7 @@ const getInitialValues = initialPreferences => {
       Object.keys(NOTIFICATION_FIELDS).includes(camelCase(preference.name))
     )
     .reduce((object, preference) => {
-      object[camelCase(preference.name)] =
-        preference.status === "SUBSCRIBED" ? true : false
+      object[camelCase(preference.name)] = preference.status === "SUBSCRIBED"
       return object
     }, {})
 }

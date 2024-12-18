@@ -7,16 +7,20 @@ import {
   Text,
   useDidMount,
 } from "@artsy/palette"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
-import { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
-import { AuctionBidRoute_artwork$data } from "__generated__/AuctionBidRoute_artwork.graphql"
-import { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
+import type { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
+import type { AuctionBidRoute_artwork$data } from "__generated__/AuctionBidRoute_artwork.graphql"
+import type { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
 import { AuctionLotInfoFragmentContainer } from "./Components/AuctionLotInfo"
 import { dropWhile } from "lodash"
 import { Form, Formik } from "formik"
 import { PricingTransparencyQueryRenderer } from "./Components/PricingTransparency"
-import { Match } from "found"
+import type { Match } from "found"
 import { useEffect } from "react"
 import { useSubmitBid } from "./useSubmitBid"
 import { AddressFormWithCreditCard } from "Apps/Auction/Components/Form/AddressFormWithCreditCard"
@@ -94,8 +98,8 @@ const AuctionBidRoute: React.FC<
         validateOnMount
         initialValues={{
           ...initialValuesForBidding,
-          agreeToTerms: requiresPaymentInformation ? false : true,
-          creditCard: requiresPaymentInformation ? false : true,
+          agreeToTerms: !requiresPaymentInformation,
+          creditCard: !requiresPaymentInformation,
           selectedBid,
         }}
         validationSchema={validationSchema}
@@ -279,12 +283,10 @@ const computeProps = ({
     if (requiresCheckbox || requiresPaymentInformation) {
       if (requiresPaymentInformation) {
         return validationSchemaForUnregisteredUsersWithoutCreditCard
-      } else {
-        return validationSchemaForUnregisteredUsersWithCreditCard
       }
-    } else {
-      return validationSchemaForRegisteredUsers
+      return validationSchemaForUnregisteredUsersWithCreditCard
     }
+    return validationSchemaForRegisteredUsers
   })()
 
   const modalWidth = requiresPaymentInformation ? ["100%", 600] : null

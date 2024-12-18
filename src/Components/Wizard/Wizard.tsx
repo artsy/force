@@ -1,9 +1,9 @@
-import { Form, Formik, FormikHelpers as FormikActions } from "formik"
+import { Form, Formik, type FormikHelpers as FormikActions } from "formik"
 import { isEmpty } from "lodash"
 import { Component } from "react"
 import * as React from "react"
-import { StepElement, StepProps, WizardRenderProps } from "./types"
-import { FormValues, WizardContext } from "./types"
+import type { StepElement, StepProps, WizardRenderProps } from "./types"
+import type { FormValues, WizardContext } from "./types"
 
 interface WizardProps {
   onComplete?: (
@@ -72,13 +72,12 @@ export class Wizard extends React.Component<
   }
 
   get steps(): StepElement[] {
-    if (!!this.props.steps) {
+    if (this.props.steps) {
       return this.props.steps
-    } else {
-      return React.Children.toArray(this.props.children) as Array<
-        React.ReactElement<StepProps>
-      >
     }
+    return React.Children.toArray(this.props.children) as Array<
+      React.ReactElement<StepProps>
+    >
   }
 
   get currentStep() {
@@ -103,7 +102,7 @@ export class Wizard extends React.Component<
   }
 
   next = (e: React.FormEvent<any> | null, values) => {
-    e && e.preventDefault()
+    e?.preventDefault()
     this.setState(state => ({
       currentStepIndex: Math.min(
         state.currentStepIndex + 1,
@@ -114,7 +113,7 @@ export class Wizard extends React.Component<
   }
 
   previous = (e: React.FormEvent<any> | null, values) => {
-    e && e.preventDefault()
+    e?.preventDefault()
     this.setState(state => ({
       currentStepIndex: Math.max(state.currentStepIndex - 1, 0),
     }))
@@ -126,7 +125,7 @@ export class Wizard extends React.Component<
   ) => void = (values, actions) => {
     const { onComplete } = this.props
     if (this.isLastStep) {
-      onComplete && onComplete(values, actions)
+      onComplete?.(values, actions)
     } else {
       actions?.setSubmitting(false)
       // If exist, call onSubmit on the current step
@@ -138,17 +137,15 @@ export class Wizard extends React.Component<
         if (result instanceof Boolean) {
           actions?.setSubmitting(false)
           return result
-        } else {
-          return (result as Promise<boolean>).then(shouldGoNext => {
-            if (shouldGoNext) {
-              actions?.setSubmitting(false)
-              this.next(null, values)
-            }
-          })
         }
-      } else {
-        this.next(null, values)
+        return (result as Promise<boolean>).then(shouldGoNext => {
+          if (shouldGoNext) {
+            actions?.setSubmitting(false)
+            this.next(null, values)
+          }
+        })
       }
+      this.next(null, values)
     }
   }
 
@@ -178,7 +175,7 @@ export class Wizard extends React.Component<
           return (
             <Form>
               <WizardContextProvider {...context}>
-                {!!this.props.steps
+                {this.props.steps
                   ? React.createElement(children as any, context)
                   : this.currentStep}
               </WizardContextProvider>

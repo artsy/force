@@ -8,9 +8,9 @@ import { followProfileMutation } from "./mutations/AuthIntentFollowProfileMutati
 import { saveArtworkMutation } from "./mutations/AuthIntentSaveArtworkMutation"
 import { createOrderMutation } from "./mutations/AuthIntentCreateOrderMutation"
 import { createOfferOrderMutation } from "./mutations/AuthIntentCreateOfferOrderMutation"
-import { Environment } from "react-relay"
+import type { Environment } from "react-relay"
 import { useDismissibleContext } from "@artsy/dismissible"
-import { SellFlowStep } from "Apps/Sell/SellFlowContext"
+import type { SellFlowStep } from "Apps/Sell/SellFlowContext"
 import { associateSubmissionMutation } from "Utils/Hooks/useAuthIntent/mutations/AuthIntentAssociateSubmissionMutation"
 
 export const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"

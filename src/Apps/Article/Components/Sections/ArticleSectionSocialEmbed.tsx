@@ -1,5 +1,5 @@
-import { FC, useEffect, useRef } from "react"
-import { ArticleSectionSocialEmbed_section$data } from "__generated__/ArticleSectionSocialEmbed_section.graphql"
+import { type FC, useEffect, useRef } from "react"
+import type { ArticleSectionSocialEmbed_section$data } from "__generated__/ArticleSectionSocialEmbed_section.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box } from "@artsy/palette"
 import styled from "styled-components"

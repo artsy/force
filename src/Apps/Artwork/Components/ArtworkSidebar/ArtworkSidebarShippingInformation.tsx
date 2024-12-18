@@ -1,10 +1,10 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { Spacer, Text } from "@artsy/palette"
-import { ArtworkSidebarShippingInformation_artwork$data } from "__generated__/ArtworkSidebarShippingInformation_artwork.graphql"
+import type { ArtworkSidebarShippingInformation_artwork$data } from "__generated__/ArtworkSidebarShippingInformation_artwork.graphql"
 
 import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
-import { ActionType, ClickedOnLearnMore } from "@artsy/cohesion"
+import { ActionType, type ClickedOnLearnMore } from "@artsy/cohesion"
 
 export interface ShippingInformationProps {
   artwork: ArtworkSidebarShippingInformation_artwork$data

@@ -86,7 +86,7 @@ describe.skip("ArtistSeriesEntity", () => {
   })
 
   it("if price_guidance is missing, NOT showing 'From $'", () => {
-    delete props.member.price_guidance
+    props.member.price_guidance = undefined
     const component = getWrapper()
     expect(component.text()).not.toMatch("From $")
   })

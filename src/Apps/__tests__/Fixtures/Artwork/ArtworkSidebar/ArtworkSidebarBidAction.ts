@@ -1,4 +1,4 @@
-import { ArtworkSidebarBidAction_Test_Query$rawResponse } from "__generated__/ArtworkSidebarBidAction_Test_Query.graphql"
+import type { ArtworkSidebarBidAction_Test_Query$rawResponse } from "__generated__/ArtworkSidebarBidAction_Test_Query.graphql"
 
 export const ArtworkFromAuctionPreview: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] =
   {

@@ -3,8 +3,8 @@ import { getTimeZone } from "Utils/getTimeZone"
 import createLogger from "Utils/logger"
 import "isomorphic-fetch"
 import { isEmpty } from "lodash"
-import RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
-import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
+import type RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
+import type RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import {
   RelayNetworkLayer,
   cacheMiddleware,
@@ -13,8 +13,8 @@ import {
   urlMiddleware,
 } from "react-relay-network-modern/node8"
 import "regenerator-runtime/runtime"
-import { Environment, INetwork, RecordSource, Store } from "relay-runtime"
-import { Environment as IEnvironment } from "react-relay"
+import { Environment, type INetwork, RecordSource, Store } from "relay-runtime"
+import type { Environment as IEnvironment } from "react-relay"
 import { metaphysicsErrorHandlerMiddleware } from "./middleware/metaphysicsErrorHandlerMiddleware"
 import { metaphysicsExtensionsLoggerMiddleware } from "./middleware/metaphysicsExtensionsLoggerMiddleware"
 import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFieldErrorHandlerMiddleware"
@@ -35,7 +35,7 @@ const isDevelopment = getENV("NODE_ENV") === "development"
 // Only log on the client during development
 const loggingEnabled = !isServer && isDevelopment
 
-const USER_AGENT = `Reaction/Migration`
+const USER_AGENT = "Reaction/Migration"
 
 interface Config {
   cache?: object

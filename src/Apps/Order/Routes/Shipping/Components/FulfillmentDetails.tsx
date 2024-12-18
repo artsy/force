@@ -1,21 +1,21 @@
-import { FulfillmentDetailsForm_order$key } from "__generated__/FulfillmentDetailsForm_order.graphql"
-import { FC, useEffect, useState } from "react"
+import type { FulfillmentDetailsForm_order$key } from "__generated__/FulfillmentDetailsForm_order.graphql"
+import { type FC, useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
-import { FormikHelpers } from "formik"
+import type { FormikHelpers } from "formik"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { FulfillmentDetailsForm } from "Apps/Order/Routes/Shipping/Components/FulfillmentDetailsForm"
 import {
   FulfillmentType,
-  FulfillmentValues,
-  ShipValues,
+  type FulfillmentValues,
+  type ShipValues,
   addressWithFallbackValues,
   getInitialShippingValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
-import { FulfillmentDetailsForm_me$key } from "__generated__/FulfillmentDetailsForm_me.graphql"
+import type { FulfillmentDetailsForm_me$key } from "__generated__/FulfillmentDetailsForm_me.graphql"
 import createLogger from "Utils/logger"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
-import { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
+import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import { useUserAddressUpdates } from "Apps/Order/Routes/Shipping/Hooks/useUserAddressUpdates"
 import { useRouter } from "System/Hooks/useRouter"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
@@ -189,22 +189,21 @@ export const FulfillmentDetails: FC<
             shippingContext.actions.setIsPerformingOperation(false)
             // TODO: handle errors array by setting field values, showing dialog, etc
             return
-          } else {
-            if (userAddressUpdateResult.actionType === "create") {
-              shippingContext.actions.setNewSavedAddressID(
-                userAddressUpdateResult.data.internalID
-              )
-            } else if (userAddressUpdateResult.actionType === "delete") {
-              shippingContext.actions.setNewSavedAddressID(null)
-            }
-            if (
-              userAddressUpdateResult.data?.internalID &&
-              shippingContext.state.shippingFormMode === "new_address"
-            ) {
-              shippingContext.actions.setNewSavedAddressID(
-                userAddressUpdateResult.data.internalID
-              )
-            }
+          }
+          if (userAddressUpdateResult.actionType === "create") {
+            shippingContext.actions.setNewSavedAddressID(
+              userAddressUpdateResult.data.internalID
+            )
+          } else if (userAddressUpdateResult.actionType === "delete") {
+            shippingContext.actions.setNewSavedAddressID(null)
+          }
+          if (
+            userAddressUpdateResult.data?.internalID &&
+            shippingContext.state.shippingFormMode === "new_address"
+          ) {
+            shippingContext.actions.setNewSavedAddressID(
+              userAddressUpdateResult.data.internalID
+            )
           }
         }
       }

@@ -1,5 +1,5 @@
 import { Message, Text } from "@artsy/palette"
-import { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
+import type { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
 import { FadeInBox } from "Components/FadeInBox"
 import { useFormikContext } from "formik"
 
@@ -12,7 +12,7 @@ export const UploadMoreMessage: React.FC<
 
   const photosCount = photos.length || 0
 
-  if (photosCount != 1 && photosCount != 2) return null
+  if (photosCount !== 1 && photosCount !== 2) return null
 
   return (
     <FadeInBox>

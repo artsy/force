@@ -6,9 +6,13 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
 import { RouterLink } from "System/Components/RouterLink"
-import { ArtworkSidebarPartnerInfo_artwork$data } from "__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
+import type { ArtworkSidebarPartnerInfo_artwork$data } from "__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
 import { themeGet } from "@styled-system/theme-get"
-import { ActionType, ClickedContactGallery, OwnerType } from "@artsy/cohesion"
+import {
+  ActionType,
+  type ClickedContactGallery,
+  OwnerType,
+} from "@artsy/cohesion"
 import { getSignalLabel } from "Utils/getSignalLabel"
 
 interface ArtworkSidebarPartnerInfoProps {

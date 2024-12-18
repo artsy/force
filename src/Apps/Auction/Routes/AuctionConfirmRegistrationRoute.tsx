@@ -1,8 +1,8 @@
 import { Button, Input, Join, ModalDialog, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
-import { AuctionConfirmRegistrationRoute_me$data } from "__generated__/AuctionConfirmRegistrationRoute_me.graphql"
-import { AuctionConfirmRegistrationRoute_sale$data } from "__generated__/AuctionConfirmRegistrationRoute_sale.graphql"
+import type { AuctionConfirmRegistrationRoute_me$data } from "__generated__/AuctionConfirmRegistrationRoute_me.graphql"
+import type { AuctionConfirmRegistrationRoute_sale$data } from "__generated__/AuctionConfirmRegistrationRoute_sale.graphql"
 import { useCreateBidder } from "Apps/Auction/Queries/useCreateBidder"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { IdentityVerificationWarning } from "Apps/Auction/Components/Form/IdentityVerificationWarning"
@@ -12,7 +12,7 @@ import { useEffect } from "react"
 import { redirectToSaleHome } from "./AuctionRegistrationRoute"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { confirmRegistrationValidationSchemas } from "Apps/Auction/Components/Form/Utils/validationSchemas"
-import { AuctionFormValues } from "Apps/Auction/Components/Form/Utils/initialValues"
+import type { AuctionFormValues } from "Apps/Auction/Components/Form/Utils/initialValues"
 import { formatError } from "Apps/Auction/Components/Form/Utils/formatError"
 
 interface AuctionConfirmRegistrationRouteProps {
@@ -200,7 +200,7 @@ const computeProps = ({ me, sale }: AuctionConfirmRegistrationRouteProps) => {
     !sale?.bidder?.qualifiedForBidding &&
     !me?.isIdentityVerified
 
-  const validationSchema = !!me.phoneNumber?.originalNumber
+  const validationSchema = me.phoneNumber?.originalNumber
     ? confirmRegistrationValidationSchemas.withoutPhoneValidation
     : confirmRegistrationValidationSchemas.withPhoneValidation
 

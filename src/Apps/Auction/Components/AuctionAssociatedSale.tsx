@@ -1,7 +1,7 @@
 import { Column, GridColumns, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
-import { AuctionAssociatedSale_sale$data } from "__generated__/AuctionAssociatedSale_sale.graphql"
+import type { AuctionAssociatedSale_sale$data } from "__generated__/AuctionAssociatedSale_sale.graphql"
 
 interface AuctionAssociatedSaleProps {
   sale: AuctionAssociatedSale_sale$data

@@ -162,7 +162,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
       // This should not happen. Check the order displayState here:
       // https://github.com/artsy/exchange/blob/master/app/models/order.rb
       // (Aside from PENDING and ABANDONED)
-      if (!!logger) {
+      if (logger) {
         logger.error(`Unhandled order state: ${displayState} in ${state} state`)
       }
       return {
@@ -230,7 +230,7 @@ export const canceledOfferOrderCopy = (order, logger?): StatusPageConfig => {
     default:
       // This should not happen. Check the cancel reasons are all accounted for:
       // https://github.com/artsy/exchange/blob/master/app/models/order.rb
-      if (!!logger) {
+      if (logger) {
         logger.error(`Unhandled cancellation reason: ${stateReason}`)
       }
 

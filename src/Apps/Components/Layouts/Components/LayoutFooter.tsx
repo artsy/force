@@ -3,7 +3,7 @@ import { Z } from "Apps/Components/constants"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { AppDownloadFooter } from "Components/AppDownloadFooter"
 import { Footer } from "Components/Footer/Footer"
-import { FC } from "react"
+import type { FC } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Media } from "Utils/Responsive"
 

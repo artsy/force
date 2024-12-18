@@ -10,19 +10,19 @@ import { CountrySelect } from "Components/CountrySelect"
 import * as React from "react"
 import { isEqual } from "lodash"
 import {
-  AddressAutocompleteSuggestion,
+  type AddressAutocompleteSuggestion,
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
   ContextModule,
-  EditedAutocompletedAddress,
+  type EditedAutocompletedAddress,
   OwnerType,
-  SelectedItemFromAddressAutoCompletion,
+  type SelectedItemFromAddressAutoCompletion,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { Address, emptyAddress } from "Components/Address/utils"
+import { type Address, emptyAddress } from "Components/Address/utils"
 
 const ENABLE_SECONDARY_SUGGESTIONS = false
 
@@ -128,7 +128,7 @@ export const AddressForm: React.FC<
 
   const getError = React.useCallback(
     (key: keyof Address) => {
-      return (touched && touched[key] && errors && errors[key]) || ""
+      return (touched?.[key] && errors && errors[key]) || ""
     },
     [errors, touched]
   )
@@ -136,9 +136,8 @@ export const AddressForm: React.FC<
   const phoneNumberInputDescription = (): string | undefined => {
     if (billing && showPhoneNumberInput) {
       return
-    } else {
-      return "Required for shipping logistics"
     }
+    return "Required for shipping logistics"
   }
 
   const onlyLocalShipping = !billing && !!domesticOnly

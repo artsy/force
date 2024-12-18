@@ -1,6 +1,6 @@
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Clickable,
   Column,
   CSSGrid,
@@ -10,8 +10,11 @@ import {
   Spinner,
   Text,
 } from "@artsy/palette"
-import { formatFileSize, Photo } from "Components/PhotoUpload/Utils/fileUtils"
-import { ComponentProps, useEffect, useState } from "react"
+import {
+  formatFileSize,
+  type Photo,
+} from "Components/PhotoUpload/Utils/fileUtils"
+import { type ComponentProps, useEffect, useState } from "react"
 import styled from "styled-components"
 import { Media } from "Utils/Responsive"
 import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
@@ -80,11 +83,14 @@ export const PhotoThumbnail: React.FC<
 
     if (photo.loading) {
       return <PhotoThumbnailLoadingState {...props} />
-    } else if (photo.errorMessage) {
+    }
+    if (photo.errorMessage) {
       return <PhotoThumbnailErrorState {...props} />
-    } else if (photo.url || photo.file) {
+    }
+    if (photo.url || photo.file) {
       return <PhotoThumbnailSuccessState onLoad={rest.onLoad} {...props} />
-    } else if (photo.geminiToken) {
+    }
+    if (photo.geminiToken) {
       return <PhotoThumbnailProcessingState {...props} />
     }
   }

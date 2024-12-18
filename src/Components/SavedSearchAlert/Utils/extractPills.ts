@@ -1,14 +1,14 @@
 import { compact, difference, find, flatten, keyBy } from "lodash"
-import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ATTRIBUTION_CLASS_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { COLOR_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { MEDIUM_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { getTimePeriodToDisplay } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { isCustomValue } from "Components/ArtworkFilter/ArtworkFilters/Utils/isCustomValue"
 import { WAYS_TO_BUY_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { DEFAULT_METRIC, Metric } from "Utils/metrics"
+import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
 import { shouldExtractValueNamesFromAggregation } from "Components/SavedSearchAlert/constants"
-import {
+import type {
   FilterPill,
   SavedSearchDefaultCriteria,
   SavedSearchEntity,

@@ -9,7 +9,7 @@ describe("CountdownTimer", () => {
         stateExpiresAt="2021-12-05T12:00:00+00:00"
         stateUpdatedAt={new Date().toISOString()}
         expiryText="until offer expires"
-        respondByText={`Respond by Dec 5, 2021 12:00 PM`}
+        respondByText={"Respond by Dec 5, 2021 12:00 PM"}
       />
     )
     expect(screen.queryByText("until offer expires")).not.toBeInTheDocument()

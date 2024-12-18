@@ -10,8 +10,8 @@ import {
 import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "Utils/getENV"
-import { ArtworkApp_artwork$data } from "__generated__/ArtworkApp_artwork.graphql"
-import { ArtworkApp_me$data } from "__generated__/ArtworkApp_me.graphql"
+import type { ArtworkApp_artwork$data } from "__generated__/ArtworkApp_artwork.graphql"
+import type { ArtworkApp_me$data } from "__generated__/ArtworkApp_me.graphql"
 import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
 import { ArtworkTopContextBarFragmentContainer } from "./Components/ArtworkTopContextBar/ArtworkTopContextBar"
 import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
@@ -25,12 +25,13 @@ import { SubmittedOrderModalQueryRenderer } from "./Components/SubmittedOrderMod
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { RecentlyViewed } from "Components/RecentlyViewed"
 import { useRouter } from "System/Hooks/useRouter"
-import { TrackingProp } from "react-tracking"
+import type { TrackingProp } from "react-tracking"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { Media } from "Utils/Responsive"
 import { UseRecordArtworkView } from "./useRecordArtworkView"
-import { Router, Match, RenderProps } from "found"
-import React, { useCallback, useEffect } from "react"
+import type { Router, Match, RenderProps } from "found"
+import type React from "react"
+import { useCallback, useEffect } from "react"
 import {
   ArtworkSidebarFragmentContainer,
   ArtworkSidebarQueryRenderer,
@@ -39,7 +40,7 @@ import { ArtworkDetailsPartnerInfoQueryRenderer } from "Apps/Artwork/Components/
 import { ArtworkAuctionCreateAlertHeaderFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertHeader"
 import { compact } from "lodash"
 import { AlertProvider } from "Components/Alert/AlertProvider"
-import { ArtworkApp_artworkResult$data } from "__generated__/ArtworkApp_artworkResult.graphql"
+import type { ArtworkApp_artworkResult$data } from "__generated__/ArtworkApp_artworkResult.graphql"
 import { ArtworkErrorApp } from "Apps/Artwork/Components/ArtworkErrorApp/ArtworkErrorApp"
 import { PrivateArtworkDetails } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkDetails"
 import { ArtworkPageBanner } from "Apps/Artwork/Components/ArtworkPageBanner"
@@ -209,7 +210,7 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
    *
    */
   useEffect(() => {
-    if (!!submittedOrderId) {
+    if (submittedOrderId) {
       // TODO: Look into using router push
       // this.props.router.replace(this.props.match.location.pathname)
       silentPush(props.match.location.pathname)
@@ -340,7 +341,7 @@ const WrappedArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
 
   // Check to see if referrer comes from link interception.
   // @see interceptLinks.ts
-  const referrer = state && state.previousHref
+  const referrer = state?.previousHref
 
   const websocketEnabled = !!sale?.extendedBiddingIntervalMinutes
 

@@ -11,7 +11,7 @@ import {
 } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
-import { FC } from "react"
+import type { FC } from "react"
 
 export const PlaceholderCards: FC<React.PropsWithChildren<unknown>> = () => {
   return (

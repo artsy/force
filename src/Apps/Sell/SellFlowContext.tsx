@@ -1,14 +1,14 @@
 import { useToasts } from "@artsy/palette"
-import {
+import type {
   ConsignmentSubmissionStateAggregation,
   CreateSubmissionMutationInput,
 } from "__generated__/CreateConsignSubmissionMutation.graphql"
-import { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
-import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
-import { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
-import { MyCollectionUpdateArtworkInput } from "__generated__/useUpdateArtworkMutation.graphql"
-import { useUpdateMyCollectionArtworkMutation$data } from "__generated__/useUpdateMyCollectionArtworkMutation.graphql"
-import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
+import type { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
+import type { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
+import type { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
+import type { MyCollectionUpdateArtworkInput } from "__generated__/useUpdateArtworkMutation.graphql"
+import type { useUpdateMyCollectionArtworkMutation$data } from "__generated__/useUpdateMyCollectionArtworkMutation.graphql"
+import type { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
 import { useUpdateMyCollectionArtwork } from "Apps/Sell/Mutations/useUpdateMyCollectionArtwork"
@@ -205,8 +205,7 @@ export const SellFlowContextProvider: React.FC<
       return
 
     router.push(
-      `/sell/submissions/${submission?.externalId}/${newStep}` +
-        testSubmissionQueryParams
+      `/sell/submissions/${submission?.externalId}/${newStep}${testSubmissionQueryParams}`
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index, isNewSubmission, submission, steps])
@@ -227,7 +226,7 @@ export const SellFlowContextProvider: React.FC<
       logger.error("Error creating submission.", err)
       sendToast({
         variant: "error",
-        message: "Something went wrong." + ` ${err?.[0]?.message} || ""`,
+        message: `Something went wrong. ${err?.[0]?.message} || ""`,
       })
       throw err
     })
@@ -252,7 +251,7 @@ export const SellFlowContextProvider: React.FC<
       logger.error("Error updating submission.", err)
       sendToast({
         variant: "error",
-        message: "Something went wrong." + ` ${err?.[0]?.message || ""}`,
+        message: `Something went wrong. ${err?.[0]?.message || ""}`,
       })
       throw err
     })
@@ -282,7 +281,7 @@ export const SellFlowContextProvider: React.FC<
         logger.error("Error updating submission's my collection artwork..", err)
         sendToast({
           variant: "error",
-          message: "Something went wrong." + ` ${err?.[0]?.message || ""}`,
+          message: `Something went wrong. ${err?.[0]?.message || ""}`,
         })
         throw err
       })

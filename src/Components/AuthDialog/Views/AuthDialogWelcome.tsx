@@ -1,16 +1,16 @@
 import * as Yup from "yup"
 import { Button, Input, Stack, Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { Form, Formik } from "formik"
 import { AuthDialogSocial } from "Components/AuthDialog/Components/AuthDialogSocial"
 import { AuthDialogDisclaimer } from "Components/AuthDialog/Views/AuthDialogDisclaimer"
 import { fetchQuery, graphql } from "react-relay"
-import { AuthDialogWelcomeQuery } from "__generated__/AuthDialogWelcomeQuery.graphql"
+import type { AuthDialogWelcomeQuery } from "__generated__/AuthDialogWelcomeQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { recaptcha } from "Utils/recaptcha"
 
-interface AuthDialogWelcomeProps {}
+type AuthDialogWelcomeProps = {}
 
 export const AuthDialogWelcome: FC<
   React.PropsWithChildren<AuthDialogWelcomeProps>

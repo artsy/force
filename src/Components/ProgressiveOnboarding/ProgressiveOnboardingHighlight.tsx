@@ -1,7 +1,7 @@
 import { Box } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { useProgressiveOnboardingTracking } from "Components/ProgressiveOnboarding/useProgressiveOnboardingTracking"
-import { FC } from "react"
+import type { FC } from "react"
 import styled, { keyframes } from "styled-components"
 import { useOnce } from "Utils/Hooks/useOnce"
 

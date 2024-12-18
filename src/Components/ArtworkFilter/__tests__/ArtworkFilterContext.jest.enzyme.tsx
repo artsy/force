@@ -98,7 +98,7 @@ describe("ArtworkFilterContext", () => {
 
     describe("staged filter changes", () => {
       beforeEach(() => {
-        let filters = {
+        const filters = {
           ...initialArtworkFilterState,
           medium: "painting",
         }

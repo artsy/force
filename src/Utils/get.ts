@@ -16,9 +16,8 @@ export function get<O, T>(
     const result = unsafeDataOperation(obj)
     if (result) {
       return result
-    } else {
-      return valueIfFailOrUndefined
     }
+    return valueIfFailOrUndefined
   } catch {
     return valueIfFailOrUndefined
   }

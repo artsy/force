@@ -1,6 +1,7 @@
 import { LabeledInput } from "@artsy/palette"
 import { FilterExpandable } from "./FilterExpandable"
-import React, { useRef, useEffect, useMemo, useState } from "react"
+import type React from "react"
+import { useRef, useEffect, useMemo, useState } from "react"
 import { debounce } from "lodash"
 import {
   useCurrentlySelectedFilters,

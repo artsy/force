@@ -1,5 +1,5 @@
 import { Join, Spacer } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { Title, Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistRelatedGeneCategoriesQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistRelatedGeneCategories"
@@ -7,7 +7,7 @@ import { ArtistCareerHighlightsQueryRenderer } from "./Components/ArtistCareerHi
 import { ArtistCurrentShowsRailQueryRenderer } from "./Components/ArtistCurrentShowsRail"
 import { ArtistRelatedArtistsRailQueryRenderer } from "./Components/ArtistRelatedArtistsRail"
 import { ArtistSeriesRailQueryRenderer } from "Components/ArtistSeriesRail/ArtistSeriesRail"
-import { ArtistOverviewRoute_artist$data } from "__generated__/ArtistOverviewRoute_artist.graphql"
+import type { ArtistOverviewRoute_artist$data } from "__generated__/ArtistOverviewRoute_artist.graphql"
 import { ArtistEditorialNewsGridQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
 import { ArtistOverviewEmpty } from "Apps/Artist/Routes/Overview/Components/ArtistOverviewEmpty"
 

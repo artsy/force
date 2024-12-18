@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react"
 import { graphql, useFragment } from "react-relay"
-import {
+import type {
   ConversationsContext_viewer$data,
   ConversationsContext_viewer$key,
 } from "__generated__/ConversationsContext_viewer.graphql"

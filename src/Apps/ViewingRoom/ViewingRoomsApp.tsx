@@ -1,9 +1,9 @@
-import * as React from "react"
+import type * as React from "react"
 import { Join, Spacer, Text } from "@artsy/palette"
 import { ViewingRoomsLatestGridFragmentContainer } from "./Components/ViewingRoomsLatestGrid"
 import { ViewingRoomsMeta } from "./Components/ViewingRoomsMeta"
-import { ViewingRoomsApp_allViewingRooms$data } from "__generated__/ViewingRoomsApp_allViewingRooms.graphql"
-import { ViewingRoomsApp_featuredViewingRooms$data } from "__generated__/ViewingRoomsApp_featuredViewingRooms.graphql"
+import type { ViewingRoomsApp_allViewingRooms$data } from "__generated__/ViewingRoomsApp_allViewingRooms.graphql"
+import type { ViewingRoomsApp_featuredViewingRooms$data } from "__generated__/ViewingRoomsApp_featuredViewingRooms.graphql"
 import { ViewingRoomsFeaturedRailFragmentContainer } from "./Components/ViewingRoomsFeaturedRail"
 import { createFragmentContainer, graphql } from "react-relay"
 

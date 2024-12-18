@@ -1,6 +1,6 @@
 import { Image } from "@artsy/palette"
 import { ArtworkListNoImage } from "./Images/ArtworkListNoImage"
-import { FC } from "react"
+import type { FC } from "react"
 import { cropped } from "Utils/resized"
 
 interface SavesEntityImageProps {

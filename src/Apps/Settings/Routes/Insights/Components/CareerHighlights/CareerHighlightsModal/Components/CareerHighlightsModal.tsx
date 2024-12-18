@@ -2,7 +2,7 @@ import {
   Clickable,
   Flex,
   ModalBase,
-  ModalBaseProps,
+  type ModalBaseProps,
   ProgressDots,
   ShelfNext,
   ShelfPrevious,

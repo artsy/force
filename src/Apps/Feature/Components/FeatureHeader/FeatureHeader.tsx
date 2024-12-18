@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FeatureHeader_feature$data } from "__generated__/FeatureHeader_feature.graphql"
+import type { FeatureHeader_feature$data } from "__generated__/FeatureHeader_feature.graphql"
 import { FeatureHeaderFullFragmentContainer as FeatureHeaderFull } from "./FeatureHeaderFull"
 import { FeatureHeaderDefaultFragmentContainer as FeatureHeaderDefault } from "./FeatureHeaderDefault"
 

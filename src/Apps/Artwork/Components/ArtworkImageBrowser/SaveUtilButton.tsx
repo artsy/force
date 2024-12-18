@@ -1,5 +1,6 @@
 import { UtilButton } from "Apps/Artwork/Components/ArtworkImageBrowser/UtilButton"
-import React, { FC } from "react"
+import type React from "react"
+import type { FC } from "react"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 import HeartFillIcon from "@artsy/icons/HeartFillIcon"
 

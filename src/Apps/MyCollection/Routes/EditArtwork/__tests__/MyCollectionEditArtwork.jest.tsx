@@ -8,9 +8,9 @@ import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { createMockEnvironment } from "relay-test-utils"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Breakpoint } from "Utils/Responsive"
-import { CleanRelayFragment } from "Utils/typeSupport"
-import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
+import type { Breakpoint } from "Utils/Responsive"
+import type { CleanRelayFragment } from "Utils/typeSupport"
+import type { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
 
 jest.mock("System/Hooks/useSystemContext")
 
@@ -125,32 +125,32 @@ describe("Edit artwork", () => {
       expect(
         screen
           .getAllByRole("combobox")
-          .find(c => c.getAttribute("name") == "category")
+          .find(c => c.getAttribute("name") === "category")
       ).toHaveValue("Drawing, Collage or other Work on Paper")
       expect(
         screen
           .getAllByRole("combobox")
-          .find(c => c.getAttribute("name") == "attributionClass")
+          .find(c => c.getAttribute("name") === "attributionClass")
       ).toHaveValue("LIMITED_EDITION")
       expect(screen.getByPlaceholderText("Your work's #")).toHaveValue(1)
       expect(screen.getByPlaceholderText("Total # in edition")).toHaveValue(2)
       expect(
         screen
           .getAllByRole("textbox")
-          .find(c => c.getAttribute("name") == "height")
+          .find(c => c.getAttribute("name") === "height")
       ).toHaveValue(8.75)
       expect(
         screen
           .getAllByRole("textbox")
-          .find(c => c.getAttribute("name") == "width")
+          .find(c => c.getAttribute("name") === "width")
       ).toHaveValue(11)
       expect(
         screen
           .getAllByRole("textbox")
-          .find(c => c.getAttribute("name") == "depth")
+          .find(c => c.getAttribute("name") === "depth")
       ).toHaveValue(2)
       expect(
-        screen.getAllByRole("radio").find(c => c.textContent == "in")
+        screen.getAllByRole("radio").find(c => c.textContent === "in")
       ).toBeChecked()
       expect(
         screen.getByPlaceholderText("Describe how you acquired the work")
@@ -161,7 +161,7 @@ describe("Edit artwork", () => {
       expect(
         screen
           .getAllByRole("textbox")
-          .find(c => c.getAttribute("name") == "confidentialNotes")
+          .find(c => c.getAttribute("name") === "confidentialNotes")
       ).toHaveValue("Secret Notes here")
     })
   })

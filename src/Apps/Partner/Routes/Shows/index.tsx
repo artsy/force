@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Shows_partner$data } from "__generated__/Shows_partner.graphql"
+import type { Shows_partner$data } from "__generated__/Shows_partner.graphql"
 import { ShowPaginatedEventsRenderer } from "Apps/Partner/Components/PartnerShows/ShowPaginatedEvents"
 import { ShowBannerFragmentContainer } from "Apps/Partner/Components/PartnerShows"
 import { useRouter } from "System/Hooks/useRouter"

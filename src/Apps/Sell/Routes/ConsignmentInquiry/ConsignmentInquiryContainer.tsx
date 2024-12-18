@@ -16,7 +16,7 @@ export const ConsignmentInquiryContainer: React.FC<
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     event.preventDefault
-    if (match.location.pathname == "/sell/inquiry/sent") {
+    if (match.location.pathname === "/sell/inquiry/sent") {
       router.go(-2)
       return
     }

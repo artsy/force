@@ -1,14 +1,18 @@
 import { useRouter } from "System/Hooks/useRouter"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
-  Aggregations,
+  type Aggregations,
   ArtworkFilterContextProvider,
-  Counts,
+  type Counts,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { SaleArtworksFilter_viewer$data } from "__generated__/SaleArtworksFilter_viewer.graphql"
+import type { SaleArtworksFilter_viewer$data } from "__generated__/SaleArtworksFilter_viewer.graphql"
 import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
 
 interface SaleArtworkFilterProps {
@@ -29,7 +33,7 @@ const SaleArtworkFilter: React.FC<
 
   return (
     <ArtworkFilterContextProvider
-      filters={match && match.location.query}
+      filters={match?.location.query}
       sortOptions={[
         { text: "Curated", value: "sale_position" },
         { text: "Price (High to Low)", value: "-has_price,-prices" },
@@ -49,7 +53,7 @@ const SaleArtworkFilter: React.FC<
         featuredKeywords={featuredKeywords}
         relayRefetchInputVariables={{
           ...getArtworkFilterInputArgs(user),
-          saleID: match && match.params.slug,
+          saleID: match?.params.slug,
         }}
         relayVariables={{
           aggregations: ["TOTAL"],

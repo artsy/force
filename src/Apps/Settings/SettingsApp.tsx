@@ -1,10 +1,11 @@
 import { Spacer, Text, useToasts } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
-import React, { useEffect } from "react"
+import type React from "react"
+import { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
-import { SettingsApp_me$data } from "__generated__/SettingsApp_me.graphql"
+import type { SettingsApp_me$data } from "__generated__/SettingsApp_me.graphql"
 import { TopContextBar } from "Components/TopContextBar"
 
 interface SettingsAppProps {
@@ -29,7 +30,7 @@ const SettingsApp: React.FC<React.PropsWithChildren<SettingsAppProps>> = ({
     sendToast({
       message: location.query.error,
       variant: "error",
-      ttl: Infinity,
+      ttl: Number.POSITIVE_INFINITY,
     })
   }, [location.query.error, sendToast])
 

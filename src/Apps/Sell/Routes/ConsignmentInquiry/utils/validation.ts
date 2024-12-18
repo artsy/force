@@ -1,6 +1,6 @@
 import * as yup from "yup"
 
-import { FormikErrors, yupToFormErrors } from "formik"
+import { type FormikErrors, yupToFormErrors } from "formik"
 
 export const consignmentInquiryValidationSchema = yup.object().shape({
   name: yup.string().label("Name").required().trim(),

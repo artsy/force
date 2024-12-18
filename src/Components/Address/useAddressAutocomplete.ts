@@ -1,5 +1,5 @@
-import { AutocompleteInputOptionType } from "@artsy/palette"
-import { Address } from "Components/Address/utils"
+import type { AutocompleteInputOptionType } from "@artsy/palette"
+import type { Address } from "Components/Address/utils"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import { useCallback, useEffect, useMemo, useState } from "react"
@@ -7,7 +7,7 @@ import { throttle, uniqBy } from "lodash"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
-  AddressAutoCompletionResult,
+  type AddressAutoCompletionResult,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
@@ -97,13 +97,11 @@ export const useAddressAutocomplete = (
         }
 
         if (selected) {
-          params["selected"] = selected
+          params.selected = selected
         }
 
         if (!apiKey) return null
-        let url =
-          "https://us-autocomplete-pro.api.smarty.com/lookup?" +
-          new URLSearchParams(params).toString()
+        const url = `https://us-autocomplete-pro.api.smarty.com/lookup?${new URLSearchParams(params).toString()}`
 
         const response = await fetch(url)
         const json = await response.json()

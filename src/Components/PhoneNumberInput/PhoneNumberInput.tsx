@@ -1,11 +1,11 @@
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Flex,
-  InputProps,
+  type InputProps,
   Input,
   Select,
-  SelectProps,
+  type SelectProps,
   Text,
 } from "@artsy/palette"
 import { countries } from "Utils/countries"

@@ -1,9 +1,9 @@
-import * as React from "react"
+import type * as React from "react"
 import { Meta, Title, Link } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "Utils/getENV"
 import { cropped } from "Utils/resized"
-import { ViewingRoomMeta_viewingRoom$data } from "__generated__/ViewingRoomMeta_viewingRoom.graphql"
+import type { ViewingRoomMeta_viewingRoom$data } from "__generated__/ViewingRoomMeta_viewingRoom.graphql"
 
 interface ViewingRoomMetaProps {
   viewingRoom: ViewingRoomMeta_viewingRoom$data

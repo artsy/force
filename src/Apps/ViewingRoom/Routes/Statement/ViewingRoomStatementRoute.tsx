@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { Column, GridColumns, Join, Separator, Spacer } from "@artsy/palette"
 import { ViewingRoomWorksFragmentContainer as ViewingRoomWorks } from "./Components/ViewingRoomWorks"
 import { ViewingRoomIntroFragmentContainer as ViewingRoomIntro } from "./Components/ViewingRoomIntro"
@@ -6,7 +6,7 @@ import { ViewingRoomPullQuoteFragmentContainer as ViewingRoomPullQuote } from ".
 import { ViewingRoomBodyFragmentContainer as ViewingRoomBody } from "./Components/ViewingRoomBody"
 import { ViewingRoomSubsectionsFragmentContainer as ViewingRoomSubsections } from "./Components/ViewingRoomSubsections"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomStatementRoute_viewingRoom$data } from "__generated__/ViewingRoomStatementRoute_viewingRoom.graphql"
+import type { ViewingRoomStatementRoute_viewingRoom$data } from "__generated__/ViewingRoomStatementRoute_viewingRoom.graphql"
 import { ViewWorksButton } from "./Components/ViewWorksButton"
 
 interface ViewingRoomStatementRouteProps {

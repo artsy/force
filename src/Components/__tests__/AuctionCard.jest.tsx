@@ -1,4 +1,4 @@
-import { AuctionCard_sale$data } from "__generated__/AuctionCard_sale.graphql"
+import type { AuctionCard_sale$data } from "__generated__/AuctionCard_sale.graphql"
 import { DateTime } from "luxon"
 import { relativeTime, upcomingLabel } from "../AuctionCard"
 

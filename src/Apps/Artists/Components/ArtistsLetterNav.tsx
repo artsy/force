@@ -1,8 +1,8 @@
-import { Box, BoxProps, Flex, Text } from "@artsy/palette"
+import { Box, type BoxProps, Flex, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import * as React from "react"
+import type * as React from "react"
 import styled from "styled-components"
-import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 
 export const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
 

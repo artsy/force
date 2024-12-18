@@ -1,6 +1,6 @@
 import { useMutation } from "Utils/Hooks/useMutation"
 import { graphql } from "react-relay"
-import { useCreateBidderPositionMutation } from "__generated__/useCreateBidderPositionMutation.graphql"
+import type { useCreateBidderPositionMutation } from "__generated__/useCreateBidderPositionMutation.graphql"
 
 export const useCreateBidderPosition = () => {
   return useMutation<useCreateBidderPositionMutation>({

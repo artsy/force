@@ -1,9 +1,9 @@
 import { fetchQuery } from "react-relay"
-import { Environment, graphql } from "react-relay"
-import { fetchFollowedArtistsByFairIdQuery } from "__generated__/fetchFollowedArtistsByFairIdQuery.graphql"
-import { fetchFollowedArtistsRawQuery } from "__generated__/fetchFollowedArtistsRawQuery.graphql"
+import { type Environment, graphql } from "react-relay"
+import type { fetchFollowedArtistsByFairIdQuery } from "__generated__/fetchFollowedArtistsByFairIdQuery.graphql"
+import type { fetchFollowedArtistsRawQuery } from "__generated__/fetchFollowedArtistsRawQuery.graphql"
 import { compact, isString } from "lodash"
-import { FollowedArtists } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type { FollowedArtists } from "Components/ArtworkFilter/ArtworkFilterContext"
 
 graphql`
   fragment fetchFollowedArtists_response on FollowArtistConnection {

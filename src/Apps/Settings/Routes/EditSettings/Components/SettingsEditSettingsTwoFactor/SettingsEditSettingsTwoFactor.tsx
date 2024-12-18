@@ -1,9 +1,9 @@
 import { Join, Spacer, Sup, Text } from "@artsy/palette"
 import { AppSecondFactorRefetchContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/AppSecondFactor"
 import { SmsSecondFactorRefetchContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/SmsSecondFactor"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SettingsEditSettingsTwoFactor_me$data } from "__generated__/SettingsEditSettingsTwoFactor_me.graphql"
+import type { SettingsEditSettingsTwoFactor_me$data } from "__generated__/SettingsEditSettingsTwoFactor_me.graphql"
 import { SettingsEditSettingsTwoFactorBackupCodesFragmentContainer } from "./SettingsEditSettingsTwoFactorBackupCodes"
 
 interface SettingsEditSettingsTwoFactorProps {

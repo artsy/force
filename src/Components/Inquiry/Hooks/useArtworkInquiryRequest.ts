@@ -1,7 +1,7 @@
-import { ActionType, SentArtworkInquiry } from "@artsy/cohesion"
+import { ActionType, type SentArtworkInquiry } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
-import { Environment, commitMutation, graphql } from "react-relay"
-import {
+import { type Environment, commitMutation, graphql } from "react-relay"
+import type {
   SubmitInquiryRequestMutationInput,
   useArtworkInquiryRequestMutation,
   useArtworkInquiryRequestMutation$data,

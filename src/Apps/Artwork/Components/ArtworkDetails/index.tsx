@@ -7,19 +7,19 @@ import {
   SkeletonText,
   StackableBorderBox,
   Tab,
-  TabInfo,
+  type TabInfo,
   Tabs,
 } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer } from "./ArtworkDetailsAboutTheWorkFromArtsy"
 import { ArtworkDetailsAdditionalInfoFragmentContainer } from "./ArtworkDetailsAdditionalInfo"
 import { ArtworkDetailsArticlesFragmentContainer } from "./ArtworkDetailsArticles"
-import { ArtworkDetails_artwork$data } from "__generated__/ArtworkDetails_artwork.graphql"
+import type { ArtworkDetails_artwork$data } from "__generated__/ArtworkDetails_artwork.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtworkDetailsQuery } from "__generated__/ArtworkDetailsQuery.graphql"
+import type { ArtworkDetailsQuery } from "__generated__/ArtworkDetailsQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 

@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { ShowArtworksEmptyStateFragmentContainer } from "Apps/Show/Components/ShowArtworksEmptyState"
-import { ShowArtworksEmptyState_Test_Query } from "__generated__/ShowArtworksEmptyState_Test_Query.graphql"
+import type { ShowArtworksEmptyState_Test_Query } from "__generated__/ShowArtworksEmptyState_Test_Query.graphql"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")

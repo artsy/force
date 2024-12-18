@@ -1,8 +1,8 @@
-import * as React from "react"
+import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
-import { Color, Flex, FlexProps, Text, THEME } from "@artsy/palette"
+import { type Color, Flex, type FlexProps, Text, THEME } from "@artsy/palette"
 import { ConversationTimeSince } from "./ConversationTimeSince"
-import {
+import type {
   ConversationOrderUpdate_event$data,
   ConversationOrderUpdate_event$key,
 } from "__generated__/ConversationOrderUpdate_event.graphql"
@@ -84,7 +84,8 @@ const getIconProps = (
         }`,
         Icon: MoneyFillIcon,
       }
-    } else if (data.offer.fromParticipant === "SELLER") {
+    }
+    if (data.offer.fromParticipant === "SELLER") {
       let message: string
 
       if (data.offer.offerAmountChanged) {
@@ -113,7 +114,8 @@ const getIconProps = (
         textColor: "black100",
         message: "Offer accepted. Payment processing",
       }
-    } else if (state === "APPROVED") {
+    }
+    if (state === "APPROVED") {
       return {
         color: "green100",
         message: `${
@@ -121,13 +123,15 @@ const getIconProps = (
         } Accepted`,
         Icon: MoneyFillIcon,
       }
-    } else if (state === "CANCELED" && reasonRejected) {
+    }
+    if (state === "CANCELED" && reasonRejected) {
       return {
         color: "red100",
-        message: `Offer Declined`,
+        message: "Offer Declined",
         Icon: MoneyFillIcon,
       }
-    } else if (state === "CANCELED" && reasonLapsed) {
+    }
+    if (state === "CANCELED" && reasonLapsed) {
       return {
         color: "red100",
         message: `${
@@ -135,10 +139,11 @@ const getIconProps = (
         } Expired`,
         Icon: MoneyFillIcon,
       }
-    } else if (orderUpdateState === "buy_submitted") {
+    }
+    if (orderUpdateState === "buy_submitted") {
       return {
         color: "black100",
-        message: `You purchased this artwork`,
+        message: "You purchased this artwork",
         Icon: MoneyFillIcon,
       }
     }

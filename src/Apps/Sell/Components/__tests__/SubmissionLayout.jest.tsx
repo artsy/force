@@ -5,7 +5,7 @@ import { useAuthDialog } from "Components/AuthDialog"
 import { render } from "DevTools/renderWithMockBoot"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
+import type { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
 import { Formik } from "formik"
 import { useTracking } from "react-tracking"
 
@@ -67,9 +67,7 @@ describe("SubmissionLayout", () => {
     expect(screen.queryByText("Back")).not.toBeInTheDocument()
     expect(screen.getByText("Continue")).toBeInTheDocument()
     expect(screen.getByText("Exit")).toBeInTheDocument()
-    expect(screen.getByTestId("exit-link").attributes["href"].value).toBe(
-      "/sell"
-    )
+    expect(screen.getByTestId("exit-link").attributes.href.value).toBe("/sell")
     expect(screen.getByRole("progressbar")).toBeInTheDocument()
 
     expect(screen.queryByText("Save & Exit")).not.toBeInTheDocument()
@@ -86,7 +84,7 @@ describe("SubmissionLayout", () => {
       )
 
       expect(screen.getByText("Exit")).toBeInTheDocument()
-      expect(screen.getByTestId("exit-link").attributes["href"].value).toBe(
+      expect(screen.getByTestId("exit-link").attributes.href.value).toBe(
         "/sell"
       )
       expect(screen.getByRole("progressbar")).toBeInTheDocument()

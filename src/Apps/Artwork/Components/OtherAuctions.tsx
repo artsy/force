@@ -1,12 +1,12 @@
 import { Column, GridColumns, Spacer } from "@artsy/palette"
-import { OtherAuctions_salesConnection$data } from "__generated__/OtherAuctions_salesConnection.graphql"
-import { OtherAuctionsQuery } from "__generated__/OtherAuctionsQuery.graphql"
+import type { OtherAuctions_salesConnection$data } from "__generated__/OtherAuctions_salesConnection.graphql"
+import type { OtherAuctionsQuery } from "__generated__/OtherAuctionsQuery.graphql"
 import { SystemContext } from "System/Contexts/SystemContext"
 import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { AuctionCardFragmentContainer } from "Components/AuctionCard"
 import { useContext } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import { Header } from "./OtherWorks/Header"
@@ -22,7 +22,7 @@ export const OtherAuctions: React.FC<
 
   return (
     <>
-      <Header title="Other auctions" buttonHref={sd.APP_URL + "/auctions"} />
+      <Header title="Other auctions" buttonHref={`${sd.APP_URL}/auctions`} />
 
       <Spacer y={4} />
 

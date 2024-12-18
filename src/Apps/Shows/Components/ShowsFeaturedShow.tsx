@@ -4,13 +4,13 @@ import {
   ResponsiveBox,
   Spacer,
   Text,
-  TextVariant,
+  type TextVariant,
 } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "System/Components/RouterLink"
-import { ShowsFeaturedShow_show$data } from "__generated__/ShowsFeaturedShow_show.graphql"
+import type { ShowsFeaturedShow_show$data } from "__generated__/ShowsFeaturedShow_show.graphql"
 import { ShowsShowDatesFragmentContainer } from "./ShowsShowDates"
 
 interface ShowsFeaturedShowProps {

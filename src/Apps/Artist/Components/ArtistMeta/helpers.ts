@@ -1,5 +1,5 @@
 import { get } from "Utils/get"
-import { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
+import type { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
 import { getENV } from "Utils/getENV"
 import { identity, pickBy } from "lodash"
 
@@ -34,8 +34,8 @@ export const imageObjectAttributes = (item: ItemWithImage) => {
     return null
   }
 
-  const thumbnailUrl = item.image && item.image.small
-  const url = item.image && item.image.large
+  const thumbnailUrl = item.image?.small
+  const url = item.image?.large
 
   return (
     thumbnailUrl && {
@@ -50,29 +50,27 @@ export const offersAttributes = (artist: ArtistMeta_artist$data) => {
   if (artist.artworks_connection) {
     const { edges } = artist.artworks_connection
 
-    const offers =
-      edges &&
-      edges
-        .map(edge => {
-          if (edge) {
-            const { node } = edge
-            const seller = sellerFromPartner(node?.partner)
-            const itemOffered = productAttributes(artist, node)
-            const availability =
-              node?.availability === "for sale" ? "InStock" : "OutOfStock"
+    const offers = edges
+      ?.map(edge => {
+        if (edge) {
+          const { node } = edge
+          const seller = sellerFromPartner(node?.partner)
+          const itemOffered = productAttributes(artist, node)
+          const availability =
+            node?.availability === "for sale" ? "InStock" : "OutOfStock"
 
-            if (!itemOffered) return null
+          if (!itemOffered) return null
 
-            return {
-              "@type": "Offer",
-              availability,
-              itemOffered,
-              priceCurrency: node?.price_currency,
-              seller,
-            }
+          return {
+            "@type": "Offer",
+            availability,
+            itemOffered,
+            priceCurrency: node?.price_currency,
+            seller,
           }
-        })
-        .filter(offer => !!offer)
+        }
+      })
+      .filter(offer => !!offer)
 
     return offers
   }

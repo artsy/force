@@ -10,7 +10,7 @@ import {
   VisuallyHidden,
 } from "@artsy/palette"
 import { Formik, Form } from "formik"
-import { FC } from "react"
+import type { FC } from "react"
 import { CountrySelect } from "Components/CountrySelect"
 import { CreditCardInput } from "Components/CreditCardInput"
 import {

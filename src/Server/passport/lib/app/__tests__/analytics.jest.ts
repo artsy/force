@@ -1,4 +1,4 @@
-let analytics = require("../analytics")
+const analytics = require("../analytics")
 
 jest.mock("sharify", () => ({
   data: {
@@ -6,10 +6,12 @@ jest.mock("sharify", () => ({
   },
 }))
 
-describe("analytics", function () {
-  let req, res, next
+describe("analytics", () => {
+  let req
+  let res
+  let next
 
-  beforeEach(function () {
+  beforeEach(() => {
     req = {
       session: {},
       body: {},
@@ -24,7 +26,7 @@ describe("analytics", function () {
     jest.resetAllMocks()
   })
 
-  it("tracks signup", function () {
+  it("tracks signup", () => {
     const spy = jest.spyOn(analytics.analytics, "track")
     analytics.trackSignup("email")(req, res, next)
     expect(spy).toHaveBeenCalledWith(
@@ -41,7 +43,7 @@ describe("analytics", function () {
     )
   })
 
-  it("tracks login", function () {
+  it("tracks login", () => {
     const spy = jest.spyOn(analytics.analytics, "track")
     analytics.trackLogin(req, res, next)
     expect(spy).toHaveBeenCalledWith(
@@ -52,7 +54,7 @@ describe("analytics", function () {
     )
   })
 
-  it("passes along modal_id and acquisition_initiative submitted fields", function () {
+  it("passes along modal_id and acquisition_initiative submitted fields", () => {
     const spy = jest.spyOn(analytics.analytics, "track")
     req.body.modal_id = "foo"
     req.body.acquisition_initiative = "bar"
@@ -73,7 +75,7 @@ describe("analytics", function () {
     )
   })
 
-  it("passes along acquisition_initiative query params for OAuth links", function () {
+  it("passes along acquisition_initiative query params for OAuth links", () => {
     const spy = jest.spyOn(analytics.analytics, "track")
     req.query.modal_id = "foo"
     req.query.acquisition_initiative = "bar"
@@ -93,7 +95,7 @@ describe("analytics", function () {
     )
   })
 
-  it("doesnt hold on to the temporary session variable", function () {
+  it("doesnt hold on to the temporary session variable", () => {
     req.body.modal_id = "foo"
     req.body.acquisition_initiative = "bar"
     analytics.setCampaign(req, res, next)

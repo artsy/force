@@ -22,7 +22,7 @@ const { denyBadLogoutLinks, logout } = require("./logout")
 const { headerLogin, trustTokenLogin } = require("./token_login")
 const addLocals = require("./locals")
 
-module.exports = function () {
+module.exports = () => {
   // Mount passport and ensure CSRF protection across GET requests
   app.use(passport.initialize(), passport.session())
   app.get("*", csrf({ cookie: true }))

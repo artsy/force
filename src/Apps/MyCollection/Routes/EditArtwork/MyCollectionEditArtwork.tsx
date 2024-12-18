@@ -14,9 +14,9 @@ import { useRouter } from "System/Hooks/useRouter"
 import { storeLocalImage } from "Utils/localImageHelpers"
 import createLogger from "Utils/logger"
 import { wait } from "Utils/wait"
-import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
+import type { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
-import { ArtworkModel } from "./Utils/artworkModel"
+import type { ArtworkModel } from "./Utils/artworkModel"
 import { MyCollectionArtworkDetailsValidationSchema } from "./Utils/artworkValidation"
 
 const logger = createLogger("MyCollectionEditArtwork.tsx")
@@ -91,7 +91,7 @@ export const MyCollectionEditArtwork: React.FC<
         pathname: `/collector-profile/my-collection/artwork/${updatedArtwork?.internalID}`,
       })
     } catch (error) {
-      logger.error(`Artwork not updated`, error)
+      logger.error("Artwork not updated", error)
 
       sendToast({
         variant: "error",

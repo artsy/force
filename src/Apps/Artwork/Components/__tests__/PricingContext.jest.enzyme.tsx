@@ -1,6 +1,6 @@
 import { Link } from "@artsy/palette"
 import { BarChart } from "@artsy/palette-charts"
-import {
+import type {
   PricingContextTestQuery$rawResponse,
   PricingContextTestQuery$data,
 } from "__generated__/PricingContextTestQuery.graphql"

@@ -1,8 +1,8 @@
-import * as React from "react"
+import type * as React from "react"
 import { Box, Text } from "@artsy/palette"
 import { Timer } from "Components/Timer"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairTimer_fair$data } from "__generated__/FairTimer_fair.graphql"
+import type { FairTimer_fair$data } from "__generated__/FairTimer_fair.graphql"
 import { useTimer } from "Utils/Hooks/useTimer"
 
 interface FairTimerProps {

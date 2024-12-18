@@ -1,4 +1,4 @@
-import { Box, BoxProps, Flex, Shelf, SkeletonText } from "@artsy/palette"
+import { Box, type BoxProps, Flex, Shelf, SkeletonText } from "@artsy/palette"
 import { ShelfArtworkPlaceholder } from "Components/Artwork/ShelfArtwork"
 
 export interface ArtworksRailPlaceholderProps extends BoxProps {

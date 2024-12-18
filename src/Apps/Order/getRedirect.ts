@@ -3,7 +3,9 @@ export interface Redirect {
   reason: string
 }
 
-export type RedirectPredicate<Arguments> = (args: Arguments) => Redirect | void
+export type RedirectPredicate<Arguments> = (
+  args: Arguments
+) => Redirect | undefined
 
 export interface RedirectRecord<Arguments> {
   path: string

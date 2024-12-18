@@ -1,5 +1,5 @@
 import { ErrorBoundary } from "System/Components/ErrorBoundary"
-import * as React from "react"
+import type * as React from "react"
 import ReactDOM from "react-dom/server"
 
 interface Props {

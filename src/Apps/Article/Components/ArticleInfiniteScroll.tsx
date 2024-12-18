@@ -13,18 +13,18 @@ import {
   Spacer,
 } from "@artsy/palette"
 import styled from "styled-components"
-import { FC, Fragment } from "react"
+import { type FC, Fragment } from "react"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { ArticleInfiniteScrollQuery } from "__generated__/ArticleInfiniteScrollQuery.graphql"
+import type { ArticleInfiniteScrollQuery } from "__generated__/ArticleInfiniteScrollQuery.graphql"
 import { ArticleBodyFragmentContainer } from "./ArticleBody"
 import { ArticleVerticalRelatedArticlesQueryRenderer } from "./ArticleVerticalRelatedArticles"
-import { ArticleInfiniteScroll_viewer$data } from "__generated__/ArticleInfiniteScroll_viewer.graphql"
+import type { ArticleInfiniteScroll_viewer$data } from "__generated__/ArticleInfiniteScroll_viewer.graphql"
 import { useMode } from "Utils/Hooks/useMode"
 import { themeGet } from "@styled-system/theme-get"
 import { ArticleVisibilityMetadataFragmentContainer } from "./ArticleVisibilityMetadata"

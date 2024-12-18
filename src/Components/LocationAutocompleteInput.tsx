@@ -1,7 +1,7 @@
 import {
   AutocompleteInput,
-  AutocompleteInputOptionType,
-  AutocompleteInputProps,
+  type AutocompleteInputOptionType,
+  type AutocompleteInputProps,
   Flex,
   Text,
 } from "@artsy/palette"
@@ -11,9 +11,9 @@ import {
   useState,
   useEffect,
   useRef,
-  MouseEvent,
-  ChangeEvent,
-  FC,
+  type MouseEvent,
+  type ChangeEvent,
+  type FC,
   useMemo,
   useCallback,
 } from "react"
@@ -173,7 +173,7 @@ export type Location = {
 
 export const normalizePlace = (
   place?: Place,
-  withCountryCode: boolean = false
+  withCountryCode = false
 ): Location => {
   if (!place) return { city: "" }
 

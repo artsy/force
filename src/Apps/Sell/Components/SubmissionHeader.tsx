@@ -1,4 +1,4 @@
-import { AuthIntent, ContextModule } from "@artsy/cohesion"
+import { type AuthIntent, ContextModule } from "@artsy/cohesion"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 import CloseIcon from "@artsy/icons/CloseIcon"

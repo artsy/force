@@ -10,9 +10,9 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
+import type { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { DateTime, LocaleOptions } from "luxon"
+import { DateTime, type LocaleOptions } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
 import { useAuthDialog } from "Components/AuthDialog"
@@ -144,7 +144,7 @@ export const ArtistAuctionResultItem: React.FC<
             <i>{title?.trim()}</i>
             {date_text &&
               date_text.replace(/\s+/g, "").length > 0 &&
-              ", " + date_text}
+              `, ${date_text}`}
           </Text>
 
           {mediumText !== "Unknown" && (

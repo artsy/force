@@ -1,6 +1,6 @@
-import { Spinner, SpinnerProps } from "@artsy/palette"
-import * as React from "react"
-import { QueryRenderer, Container as RelayContainer } from "react-relay"
+import { Spinner, type SpinnerProps } from "@artsy/palette"
+import type * as React from "react"
+import type { QueryRenderer, Container as RelayContainer } from "react-relay"
 import styled from "styled-components"
 import createLogger from "Utils/logger"
 
@@ -51,11 +51,11 @@ const handleError = error => {
   }
 
   const networkError = error as any
-  if (networkError.response && networkError.response._bodyInit) {
+  if (networkError.response?._bodyInit) {
     const body = networkError.response._bodyInit
     try {
       const data = JSON.parse(body)
-      console.error(`Metaphysics Error data:`, data)
+      console.error("Metaphysics Error data:", data)
       logger.error(data)
     } catch (e) {
       logger.error("Metaphysics Error could not be parsed.", e)
@@ -84,14 +84,14 @@ export function renderWithLoadProgress<P>(
       //       handle an error state?
       handleError(error)
       return null
-    } else if (props) {
-      return <Container {...initialProps} {...(props as any)} />
-    } else {
-      return (
-        <SpinnerContainer className={LoadingClassName} {...wrapperProps}>
-          <Spinner {...spinnerProps} />
-        </SpinnerContainer>
-      )
     }
+    if (props) {
+      return <Container {...initialProps} {...(props as any)} />
+    }
+    return (
+      <SpinnerContainer className={LoadingClassName} {...wrapperProps}>
+        <Spinner {...spinnerProps} />
+      </SpinnerContainer>
+    )
   }
 }

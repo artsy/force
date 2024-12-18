@@ -65,7 +65,6 @@ export const EmailConfirmationCTA: React.FC<
         </Button>
       </>
     )
-  } else {
-    return <>{afterSubmitContent}</>
   }
+  return <>{afterSubmitContent}</>
 }

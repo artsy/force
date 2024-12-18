@@ -7,8 +7,8 @@ import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { resized } from "Utils/resized"
-import { PartnerOfferArtwork_artwork$key } from "__generated__/PartnerOfferArtwork_artwork.graphql"
-import { FC } from "react"
+import type { PartnerOfferArtwork_artwork$key } from "__generated__/PartnerOfferArtwork_artwork.graphql"
+import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface PartnerOfferArtworkProps {
@@ -45,8 +45,7 @@ export const PartnerOfferArtwork: FC<
     (artwork.title ?? "Artwork") +
     (artwork.artistNames ? ` by ${artwork.artistNames}` : "")
   const partnerIcon = artwork.partner?.profile?.icon?.url
-  const artworkListingHref =
-    artwork.href + "?partner_offer_id=" + partnerOfferID
+  const artworkListingHref = `${artwork.href}?partner_offer_id=${partnerOfferID}`
 
   let buttonText = "Purchase"
   if (hasEnded) buttonText = "View Work"

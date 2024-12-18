@@ -1,4 +1,4 @@
-import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { isDefaultFilter } from "Components/ArtworkFilter/Utils/isDefaultFilter"
 import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import qs from "qs"
@@ -46,9 +46,8 @@ export const removeDefaultValues = (
     (acc, [key, value]: [keyof ArtworkFilters, any]) => {
       if (isDefaultFilter(key, value, options?.defaultValues)) {
         return acc
-      } else {
-        return { ...acc, [key]: value }
       }
+      return { ...acc, [key]: value }
     },
     {}
   )

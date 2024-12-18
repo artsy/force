@@ -1,5 +1,5 @@
-import { Box, BoxProps, Flex, Join, Spacer } from "@artsy/palette"
-import { FC } from "react"
+import { Box, type BoxProps, Flex, Join, Spacer } from "@artsy/palette"
+import type { FC } from "react"
 import { useArticleTracking } from "Apps/Article/useArticleTracking"
 import { getENV } from "Utils/getENV"
 import XIcon from "@artsy/icons/XIcon"
@@ -21,7 +21,7 @@ export const ArticleShare: FC<React.PropsWithChildren<ArticleShareProps>> = ({
   const description = _description ?? "Artsy Editorial"
   const url = [
     getENV("APP_URL"),
-    pathname && pathname.startsWith("/") ? pathname : `/${pathname || ""}`,
+    pathname?.startsWith("/") ? pathname : `/${pathname || ""}`,
   ].join("")
 
   return (

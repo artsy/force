@@ -2,7 +2,7 @@ import {
   initialArtworkFilterState,
   getSelectedFiltersCounts,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { MultiSelectArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import type { MultiSelectArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 
 describe("getSelectedFiltersCounts helper", () => {
   const multiSelectFilters: MultiSelectArtworkFilters = {

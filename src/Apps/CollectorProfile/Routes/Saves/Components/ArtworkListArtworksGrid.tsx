@@ -1,20 +1,24 @@
-import { createFragmentContainer, graphql, RelayRefetchProp } from "react-relay"
-import { ArtworkListArtworksGrid_me$data } from "__generated__/ArtworkListArtworksGrid_me.graphql"
+import {
+  createFragmentContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
+import type { ArtworkListArtworksGrid_me$data } from "__generated__/ArtworkListArtworksGrid_me.graphql"
 import { useTracking } from "react-tracking"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import {
   ContextModule,
-  ClickedChangePage,
+  type ClickedChangePage,
   ActionType,
   commercialFilterParamsChanged,
-  ClickedMainArtworkGrid,
+  type ClickedMainArtworkGrid,
   OwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { LoadingArea } from "Components/LoadingArea"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { ArtworkListArtworksGridHeader } from "./ArtworkListArtworksGridHeader"
 import { Spacer } from "@artsy/palette"
 import useDeepCompareEffect from "use-deep-compare-effect"

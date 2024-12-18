@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { SuggestionItemLink } from "./SuggestionItemLink"
 import { DefaultSuggestion } from "./DefaultSuggestion"
 import { Box, Pill } from "@artsy/palette"

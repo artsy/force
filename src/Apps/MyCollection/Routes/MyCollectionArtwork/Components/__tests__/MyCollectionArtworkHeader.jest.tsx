@@ -1,4 +1,4 @@
-import { MyCollectionArtworkHeaderTestQuery } from "__generated__/MyCollectionArtworkHeaderTestQuery.graphql"
+import type { MyCollectionArtworkHeaderTestQuery } from "__generated__/MyCollectionArtworkHeaderTestQuery.graphql"
 import { MyCollectionArtworkHeader } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkHeader"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
@@ -36,7 +36,7 @@ describe("MyCollectionArtworkHeader", () => {
         .find(c => c.textContent?.includes("Edit Artwork Details"))
     ).toHaveAttribute(
       "href",
-      `/collector-profile/my-collection/artworks/artwork-id/edit`
+      "/collector-profile/my-collection/artworks/artwork-id/edit"
     )
   })
 

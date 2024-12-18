@@ -1,15 +1,15 @@
 import { Skeleton } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { HomeFeaturedGalleriesRail_orderedSet$data } from "__generated__/HomeFeaturedGalleriesRail_orderedSet.graphql"
-import { HomeFeaturedGalleriesRailQuery } from "__generated__/HomeFeaturedGalleriesRailQuery.graphql"
+import type { HomeFeaturedGalleriesRail_orderedSet$data } from "__generated__/HomeFeaturedGalleriesRail_orderedSet.graphql"
+import type { HomeFeaturedGalleriesRailQuery } from "__generated__/HomeFeaturedGalleriesRailQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import {
   ActionType,
-  ClickedGalleryGroup,
+  type ClickedGalleryGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"

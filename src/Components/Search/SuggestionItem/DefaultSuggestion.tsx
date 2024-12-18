@@ -1,5 +1,5 @@
-import { FC } from "react"
-import { SuggestionItemOptionProps } from "./SuggestionItem"
+import type { FC } from "react"
+import type { SuggestionItemOptionProps } from "./SuggestionItem"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
 import { SuggestionItemPreview } from "./SuggestionItemPreview"

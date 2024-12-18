@@ -1,5 +1,5 @@
-import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
-import {
+import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type {
   SavedSearchDefaultCriteria,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"

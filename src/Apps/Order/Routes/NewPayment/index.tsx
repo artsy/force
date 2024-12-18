@@ -1,23 +1,23 @@
-import { NewPayment_me$data } from "__generated__/NewPayment_me.graphql"
-import { NewPayment_order$data } from "__generated__/NewPayment_order.graphql"
-import { NewPaymentRouteSetOrderPaymentMutation } from "__generated__/NewPaymentRouteSetOrderPaymentMutation.graphql"
+import type { NewPayment_me$data } from "__generated__/NewPayment_me.graphql"
+import type { NewPayment_order$data } from "__generated__/NewPayment_order.graphql"
+import type { NewPaymentRouteSetOrderPaymentMutation } from "__generated__/NewPaymentRouteSetOrderPaymentMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { CountdownTimer } from "Components/CountdownTimer"
-import { Router } from "found"
-import { createRef, useState, FC } from "react"
+import type { Router } from "found"
+import { createRef, useState, type FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { Button, Flex, Join, Spacer } from "@artsy/palette"
 import {
-  CreditCardPicker,
+  type CreditCardPicker,
   CreditCardPickerFragmentContainer,
 } from "Apps/Order/Components/CreditCardPicker"
-import { Dialog, injectDialog } from "Apps/Order/Dialogs"
+import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
-  CommitMutation,
+  type CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import { get } from "Utils/get"
@@ -27,7 +27,7 @@ import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { useTracking } from "react-tracking"
 import { getErrorDialogCopy } from "Apps/Order/Utils/getErrorDialogCopy"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width={["100%", "50%"]} {...props}>
@@ -150,12 +150,13 @@ export const NewPaymentRoute: FC<
         if (!orderOrError) {
           handleFixFailedPaymentError("invalid_response")
           return
-        } else if (orderOrError.error) {
+        }
+        if (orderOrError.error) {
           handleFixFailedPaymentError(orderOrError.error.code)
           return
         }
 
-        if (orderOrError.actionData && orderOrError.actionData.clientSecret) {
+        if (orderOrError.actionData?.clientSecret) {
           const scaResult = await stripe.handleCardAction(
             orderOrError.actionData.clientSecret
           )
@@ -165,27 +166,28 @@ export const NewPaymentRoute: FC<
               message: scaResult.error.message,
             })
             return
-          } else {
-            const scaOrderOrError = (
-              await fixFailedPayment({
-                input: {
-                  creditCardId,
-                  offerId: order.lastOffer?.internalID,
-                  orderId: order.internalID,
-                },
-              })
-            ).commerceFixFailedPayment?.orderOrError
+          }
+          const scaOrderOrError = (
+            await fixFailedPayment({
+              input: {
+                creditCardId,
+                offerId: order.lastOffer?.internalID,
+                orderId: order.internalID,
+              },
+            })
+          ).commerceFixFailedPayment?.orderOrError
 
-            if (!scaOrderOrError) {
-              handleFixFailedPaymentError("invalid_response")
-              return
-            } else if (scaOrderOrError.error) {
-              handleFixFailedPaymentError(scaOrderOrError.error.code)
-              return
-            } else if (scaOrderOrError.actionData) {
-              handleFixFailedPaymentError("requires_action")
-              return
-            }
+          if (!scaOrderOrError) {
+            handleFixFailedPaymentError("invalid_response")
+            return
+          }
+          if (scaOrderOrError.error) {
+            handleFixFailedPaymentError(scaOrderOrError.error.code)
+            return
+          }
+          if (scaOrderOrError.actionData) {
+            handleFixFailedPaymentError("requires_action")
+            return
           }
         }
 

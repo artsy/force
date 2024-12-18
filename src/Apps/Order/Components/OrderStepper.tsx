@@ -1,9 +1,9 @@
-import { useState, useEffect, FC } from "react"
+import { useState, useEffect, type FC } from "react"
 import { Media } from "Utils/Responsive"
 import { Box, Clickable, Step, Stepper } from "@artsy/palette"
 import { useRouter } from "System/Hooks/useRouter"
 import { createFragmentContainer, graphql } from "react-relay"
-import { OrderStepper_order$data } from "__generated__/OrderStepper_order.graphql"
+import type { OrderStepper_order$data } from "__generated__/OrderStepper_order.graphql"
 import { extractNodes } from "Utils/extractNodes"
 
 function typedArray<T extends string>(...elems: T[]): T[] {

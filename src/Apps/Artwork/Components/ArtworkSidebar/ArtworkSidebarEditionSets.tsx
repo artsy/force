@@ -5,12 +5,12 @@ import {
   Radio,
   Separator,
   Text,
-  FlexProps,
+  type FlexProps,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { ArtworkSidebarEditionSets_artwork$data } from "__generated__/ArtworkSidebarEditionSets_artwork.graphql"
-import React, { Dispatch, SetStateAction } from "react"
+import type { ArtworkSidebarEditionSets_artwork$data } from "__generated__/ArtworkSidebarEditionSets_artwork.graphql"
+import React, { type Dispatch, type SetStateAction } from "react"
 import { ArtworkSidebarSizeInfoFragmentContainer } from "./ArtworkSidebarSizeInfo"
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 
@@ -59,7 +59,7 @@ const ArtworkSidebarEditionSets: React.FC<
       </Flex>
     )
 
-    if (!!(isOfferable || isAcquireable || isInquireable)) {
+    if (isOfferable || isAcquireable || isInquireable) {
       return (
         <Row>
           <Radio
@@ -74,9 +74,8 @@ const ArtworkSidebarEditionSets: React.FC<
           />
         </Row>
       )
-    } else {
-      return <Row>{editionFragment}</Row>
     }
+    return <Row>{editionFragment}</Row>
   }
 
   return (

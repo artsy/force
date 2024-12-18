@@ -1,11 +1,11 @@
-import * as React from "react"
+import type * as React from "react"
 import { useTracking } from "react-tracking"
-import { TappedViewOffer, ActionType, OwnerType } from "@artsy/cohesion"
+import { type TappedViewOffer, ActionType, OwnerType } from "@artsy/cohesion"
 import {
   Clickable,
   Flex,
   Message,
-  MessageProps,
+  type MessageProps,
   ModalDialog,
   Text,
 } from "@artsy/palette"
@@ -14,7 +14,7 @@ import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import AlertFillIcon from "@artsy/icons/AlertFillIcon"
 import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
 import { graphql, useFragment } from "react-relay"
-import { ConversationReviewOfferCTA_conversation$key } from "__generated__/ConversationReviewOfferCTA_conversation.graphql"
+import type { ConversationReviewOfferCTA_conversation$key } from "__generated__/ConversationReviewOfferCTA_conversation.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { useState } from "react"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
@@ -73,7 +73,7 @@ export const ConversationReviewOfferCTA: React.FC<
           <IFrame
             src={`${props.modalUrl}?isModal=true`}
             data-testid="orderModalIframe"
-          ></IFrame>
+          />
         </ModalDialog>
       )}
 
@@ -161,7 +161,7 @@ const getProps = ({
     case "OFFER_ACCEPTED_CONFIRM_NEEDED": {
       return {
         variant: "warning",
-        message: `Offer Accepted - Confirm total`,
+        message: "Offer Accepted - Confirm total",
         subMessage: `The offer expires in ${remainingTime}`,
         modalUrl: `/orders/${activeOrder.internalID}/respond`,
         modalTitle: "Review Offer",
@@ -171,7 +171,7 @@ const getProps = ({
     case "OFFER_RECEIVED_CONFIRM_NEEDED": {
       return {
         variant: "warning",
-        message: `Counteroffer Received - Confirm Total`,
+        message: "Counteroffer Received - Confirm Total",
         subMessage: `The offer expires in ${remainingTime}`,
         modalUrl: `/orders/${activeOrder.internalID}/respond`,
         modalTitle: "Review Offer",
@@ -181,7 +181,7 @@ const getProps = ({
     case "PROVISIONAL_OFFER_ACCEPTED": {
       return {
         variant: "info",
-        message: `Offer Accepted`,
+        message: "Offer Accepted",
         subMessage: "Tap to view",
         modalUrl: `/orders/${activeOrder.internalID}/status`,
         modalTitle: "Offer Accepted",

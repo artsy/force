@@ -45,7 +45,7 @@ describe("errorHandler", () => {
   })
 
   it("invokes the error handler template with the right parameters (and the right status code for the page)", () => {
-    config["NODE_ENV"] = "development"
+    config.NODE_ENV = "development"
 
     errorHandlerMiddleware(
       testContext.err,
@@ -62,7 +62,7 @@ describe("errorHandler", () => {
   })
 
   it("passes undefined in production", () => {
-    config["NODE_ENV"] = "production"
+    config.NODE_ENV = "production"
 
     errorHandlerMiddleware(
       testContext.err,

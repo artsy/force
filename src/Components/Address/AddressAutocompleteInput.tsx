@@ -1,11 +1,11 @@
 import {
   AutocompleteInput,
-  AutocompleteInputOptionType,
-  AutocompleteInputProps,
+  type AutocompleteInputOptionType,
+  type AutocompleteInputProps,
   Input,
   usePrevious,
 } from "@artsy/palette"
-import { Address } from "Components/Address/utils"
+import type { Address } from "Components/Address/utils"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import { useCallback, useEffect, useReducer } from "react"
@@ -13,10 +13,10 @@ import { throttle, uniqBy } from "lodash"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
-  AddressAutoCompletionResult,
-  ContextModule,
-  PageOwnerType,
-  SelectedItemFromAddressAutoCompletion,
+  type AddressAutoCompletionResult,
+  type ContextModule,
+  type PageOwnerType,
+  type SelectedItemFromAddressAutoCompletion,
 } from "@artsy/cohesion"
 
 // NOTE: Due to the format of this key (a long string of numbers that cannot be parsed as json)
@@ -368,12 +368,10 @@ const fetchSuggestionsWithThrottle = throttle(
     }
 
     if (selected) {
-      params["selected"] = selected
+      params.selected = selected
     }
 
-    let url =
-      "https://us-autocomplete-pro.api.smarty.com/lookup?" +
-      new URLSearchParams(params).toString()
+    const url = `https://us-autocomplete-pro.api.smarty.com/lookup?${new URLSearchParams(params).toString()}`
 
     const response = await fetch(url)
     const json = await response.json()

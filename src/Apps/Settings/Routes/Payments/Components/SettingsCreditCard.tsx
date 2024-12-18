@@ -1,9 +1,9 @@
 import { Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SettingsCreditCard_creditCard$data } from "__generated__/SettingsCreditCard_creditCard.graphql"
+import type { SettingsCreditCard_creditCard$data } from "__generated__/SettingsCreditCard_creditCard.graphql"
 import { useDeleteCreditCard } from "Apps/Settings/Routes/Payments/useDeleteCreditCard"
 import { SettingsPaymentsMethod } from "./SettingsPaymentsMethod"
-import { Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
+import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 
 interface SettingsCreditCardProps {
   creditCard: SettingsCreditCard_creditCard$data

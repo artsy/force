@@ -1,12 +1,12 @@
 import {
-  AuctionResultsFilters,
+  type AuctionResultsFilters,
   initialAuctionResultsFilterState,
 } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
 import { omit } from "lodash"
 import * as React from "react"
 import { useContext, useReducer, useState } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { getSupportedMetric, Metric } from "Utils/metrics"
+import { getSupportedMetric, type Metric } from "Utils/metrics"
 
 export type Slice =
   | "SIMPLE_PRICE_HISTOGRAM"
@@ -312,7 +312,7 @@ const AuctionResultsFilterReducer = (
         filterState.createdBeforeYear = value
       }
 
-      delete state.reset
+      state.reset = undefined
 
       return {
         ...state,

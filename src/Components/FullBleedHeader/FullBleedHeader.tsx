@@ -1,5 +1,11 @@
-import { BoxProps, Flex, HTML, FullBleed, Box } from "@artsy/palette"
-import { FC, HTMLAttributes, MutableRefObject, ReactNode, useRef } from "react"
+import { type BoxProps, Flex, HTML, FullBleed, Box } from "@artsy/palette"
+import {
+  type FC,
+  type HTMLAttributes,
+  type MutableRefObject,
+  type ReactNode,
+  useRef,
+} from "react"
 import styled from "styled-components"
 import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"

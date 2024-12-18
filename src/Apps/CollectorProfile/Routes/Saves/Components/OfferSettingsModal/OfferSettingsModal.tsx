@@ -10,12 +10,12 @@ import {
 } from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
 
-import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
+import type { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 import { Formik, Form } from "formik"
 import { OfferSettingsListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsListItem"
 import { useUpdateMeCollection } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/Mutations/useUpdateMeCollection"
 import createLogger from "Utils/logger"
-import { UpdateMeCollectionInput } from "__generated__/useUpdateMeCollectionMutation.graphql"
+import type { UpdateMeCollectionInput } from "__generated__/useUpdateMeCollectionMutation.graphql"
 
 interface OfferSettingsModalProps {
   onClose: () => void
@@ -60,7 +60,7 @@ export const OfferSettingsModal: React.FC<
         rejectIf: res => {
           const result = res.updateMeCollectionsMutation?.meCollectionsOrErrors
 
-          return result && result[0].mutationError
+          return result?.[0].mutationError
         },
       })
 

@@ -1,7 +1,7 @@
-import { ReactNode } from "react"
-import { ArtsyRequest } from "Server/middleware/artsyExpress"
+import type { ReactNode } from "react"
+import type { ArtsyRequest } from "Server/middleware/artsyExpress"
 import { PassThrough, Transform } from "stream"
-import { ServerStyleSheet } from "styled-components"
+import type { ServerStyleSheet } from "styled-components"
 import { renderToStream as baseRenderToStream } from "react-streaming/server"
 
 interface RenderToStreamProps {

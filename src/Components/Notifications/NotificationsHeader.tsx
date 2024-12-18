@@ -4,10 +4,10 @@ import {
   NotificationsPills,
   NotificationsPillsPlaceholder,
 } from "Components/Notifications/NotificationsPills"
-import { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
+import type { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
 import { NotificationsContextualMenu } from "Components/Notifications/NotificationsContextualMenu"
-import { MarkAllAsReadPanelProps } from "Components/Notifications/MarkAllAsReadPanel"
-import { FC } from "react"
+import type { MarkAllAsReadPanelProps } from "Components/Notifications/MarkAllAsReadPanel"
+import type { FC } from "react"
 import styled from "styled-components"
 
 export interface NotificationsHeaderProps extends MarkAllAsReadPanelProps {

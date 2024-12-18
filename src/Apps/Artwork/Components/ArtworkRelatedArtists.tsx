@@ -10,20 +10,20 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ArtworkRelatedArtists_artwork$data } from "__generated__/ArtworkRelatedArtists_artwork.graphql"
+import type { ArtworkRelatedArtists_artwork$data } from "__generated__/ArtworkRelatedArtists_artwork.graphql"
 import { hideGrid } from "Apps/Artwork/Components/OtherWorks"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import {
-  RelayPaginationProp,
+  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
 } from "react-relay"
 import createLogger from "Utils/logger"
 import { extractNodes } from "Utils/extractNodes"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtworkRelatedArtistsQuery } from "__generated__/ArtworkRelatedArtistsQuery.graphql"
+import type { ArtworkRelatedArtistsQuery } from "__generated__/ArtworkRelatedArtistsQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import track, { useTracking } from "react-tracking"

@@ -6,9 +6,8 @@ export const ImageWithFallback = ({ Fallback, ...props }) => {
   const [useFallback, setFallback] = useState(false)
   if (useFallback) {
     return <Fallback />
-  } else {
-    return <img onError={() => setFallback(true)} alt="" {...props} />
   }
+  return <img onError={() => setFallback(true)} alt="" {...props} />
 }
 
 export const renderFallbackImage = () => {

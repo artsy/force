@@ -1,17 +1,17 @@
 import { Button, Flex, Spacer } from "@artsy/palette"
-import { Accept_order$data } from "__generated__/Accept_order.graphql"
-import { Router } from "found"
-import { FC } from "react"
+import type { Accept_order$data } from "__generated__/Accept_order.graphql"
+import type { Router } from "found"
+import type { FC } from "react"
 import { Media } from "Utils/Responsive"
 import { counterofferFlowSteps } from "Apps/Order/Components/OrderStepper"
-import { RelayProp, createFragmentContainer, graphql } from "react-relay"
-import { AcceptOfferMutation } from "__generated__/AcceptOfferMutation.graphql"
+import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
+import type { AcceptOfferMutation } from "__generated__/AcceptOfferMutation.graphql"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import { Dialog, injectDialog } from "Apps/Order/Dialogs"
+import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
-  CommitMutation,
+  type CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import { CountdownTimer } from "Components/CountdownTimer"
@@ -22,10 +22,10 @@ import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem }
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
-import { Stripe, StripeElements } from "@stripe/stripe-js"
+import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { useTracking } from "react-tracking"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 
 interface AcceptProps {
   order: Accept_order$data

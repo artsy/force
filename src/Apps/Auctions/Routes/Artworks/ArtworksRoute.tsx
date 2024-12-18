@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworksRoute_viewer$data } from "__generated__/ArtworksRoute_viewer.graphql"
+import type { ArtworksRoute_viewer$data } from "__generated__/ArtworksRoute_viewer.graphql"
 
 interface ArtworksRouteProps {
   viewer: ArtworksRoute_viewer$data

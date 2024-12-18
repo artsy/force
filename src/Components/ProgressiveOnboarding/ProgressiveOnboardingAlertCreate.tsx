@@ -1,5 +1,5 @@
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
-import { FC, ReactNode } from "react"
+import type { FC, ReactNode } from "react"
 import {
   Box,
   Button,
@@ -11,7 +11,7 @@ import {
 } from "@artsy/palette"
 import { resized } from "Utils/resized"
 import {
-  WithProgressiveOnboardingCountsProps,
+  type WithProgressiveOnboardingCountsProps,
   withProgressiveOnboardingCounts,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useSystemContext } from "System/Hooks/useSystemContext"

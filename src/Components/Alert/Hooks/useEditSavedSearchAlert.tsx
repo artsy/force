@@ -1,6 +1,6 @@
 import { useMutation } from "Utils/Hooks/useMutation"
 import { graphql } from "react-relay"
-import { useEditSavedSearchAlertMutation } from "__generated__/useEditSavedSearchAlertMutation.graphql"
+import type { useEditSavedSearchAlertMutation } from "__generated__/useEditSavedSearchAlertMutation.graphql"
 
 export const useEditSavedSearchAlert = () => {
   return useMutation<useEditSavedSearchAlertMutation>({

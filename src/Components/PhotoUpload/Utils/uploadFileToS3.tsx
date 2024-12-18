@@ -1,5 +1,5 @@
-import { AssetCredentials } from "Components/PhotoUpload/Mutations/getGeminiCredentialsForEnvironment"
-import { Photo } from "./fileUtils"
+import type { AssetCredentials } from "Components/PhotoUpload/Mutations/getGeminiCredentialsForEnvironment"
+import type { Photo } from "./fileUtils"
 
 // Fetches the artwork image and returns a file that can then be used to upload the image to S3.
 const fetchExternalFile = async (photo: Photo) => {
@@ -45,7 +45,7 @@ export const uploadFileToS3 = (
     const data = {
       acl,
       "Content-Type": photo.file.type,
-      key: geminiKey + "/${filename}", // NOTE: This form (which _looks_ like ES6 interpolation) is required by AWS
+      key: `${geminiKey}/\${filename}`, // NOTE: This form (which _looks_ like ES6 interpolation) is required by AWS
       AWSAccessKeyId: asset.credentials,
       success_action_status:
         asset.policyDocument.conditions.successActionStatus,

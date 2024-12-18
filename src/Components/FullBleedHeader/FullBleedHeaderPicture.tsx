@@ -1,7 +1,7 @@
-import { forwardRef, Ref } from "react"
+import { forwardRef, type Ref } from "react"
 import styled from "styled-components"
 import { cropped } from "Utils/resized"
-import { FullBleedHeaderProps } from "./FullBleedHeader"
+import type { FullBleedHeaderProps } from "./FullBleedHeader"
 
 type FullBleedHeaderPictureProps = Pick<
   FullBleedHeaderProps,

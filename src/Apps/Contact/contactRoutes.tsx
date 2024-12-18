@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 
 const ContactApp = loadable(
   () => import(/* webpackChunkName: "contactBundle" */ "./ContactApp"),

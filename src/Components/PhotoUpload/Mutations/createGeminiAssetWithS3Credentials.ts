@@ -1,8 +1,8 @@
-import {
+import type {
   CreateGeminiEntryForAssetInput,
   createGeminiAssetWithS3CredentialsMutation,
 } from "__generated__/createGeminiAssetWithS3CredentialsMutation.graphql"
-import { Environment } from "react-relay"
+import type { Environment } from "react-relay"
 import { commitMutation, graphql } from "react-relay"
 
 export const createGeminiAssetWithS3Credentials = (

@@ -1,5 +1,5 @@
-import { Location } from "found"
-import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import type { Location } from "found"
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 

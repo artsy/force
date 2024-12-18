@@ -1,9 +1,9 @@
 import { Avatar, Skeleton } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
-import { NavBarUserMenuAvatarQuery } from "__generated__/NavBarUserMenuAvatarQuery.graphql"
+import type { NavBarUserMenuAvatarQuery } from "__generated__/NavBarUserMenuAvatarQuery.graphql"
 
-interface NavBarUserMenuAvatarProps {}
+type NavBarUserMenuAvatarProps = {}
 
 export const NavBarUserMenuAvatar: FC<
   React.PropsWithChildren<NavBarUserMenuAvatarProps>

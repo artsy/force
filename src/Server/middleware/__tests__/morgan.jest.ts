@@ -1,7 +1,7 @@
 import { logFormat } from "../morgan"
 
 const mockUrl = jest.fn()
-let tokens = {
+const tokens = {
   status: jest.fn(),
   method: jest.fn(),
   "remote-addr": jest.fn(),
@@ -10,8 +10,8 @@ let tokens = {
   url: mockUrl,
 }
 
-let req = {} as any
-let res = {} as any
+const req = {} as any
+const res = {} as any
 
 let url: string
 

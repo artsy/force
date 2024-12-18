@@ -1,4 +1,7 @@
-import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 import { getENV } from "Utils/getENV"
 
 export const redirectPostAuth = ({
@@ -8,7 +11,7 @@ export const redirectPostAuth = ({
   req: ArtsyRequest
   res: ArtsyResponse
 }) => {
-  const redirectTo = req.query["redirectTo"] as string
+  const redirectTo = req.query.redirectTo as string
 
   const configuredAllowedHosts =
     getENV("ALLOWED_REDIRECT_HOSTS")?.split(",") || []

@@ -11,8 +11,11 @@ import redirectBack from "./redirectBack"
 import request from "superagent"
 import artsyXapp from "@artsy/xapp"
 import { parse, resolve } from "url"
-import { NextFunction } from "express"
-import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type { NextFunction } from "express"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 import { get, isFunction, isString } from "lodash"
 
 interface Req extends ArtsyRequest {
@@ -20,16 +23,16 @@ interface Req extends ArtsyRequest {
   socialProfileEmail?: string
 }
 
-export const onLocalLogin = function (
+export const onLocalLogin = (
   req: Req,
   res: ArtsyResponse,
   next: NextFunction
-) {
+) => {
   if (req.user && !req.xhr) {
     return next()
   }
 
-  passport.authenticate("local-with-otp")(req, res, function (err: any) {
+  passport.authenticate("local-with-otp")(req, res, (err: any) => {
     if (req.xhr) {
       if (err) {
         switch (true) {
@@ -61,36 +64,32 @@ export const onLocalLogin = function (
             return res.status(500).send({ success: false, error: err.message })
           }
         }
-      } else {
-        return next()
       }
-    } else {
-      if (
-        err &&
-        err.response &&
-        err.response.body &&
-        err.response.body.error_description === "invalid email or password"
-      ) {
-        return res.redirect(
-          opts.loginPagePath + "?error=Invalid email or password."
-        )
-      } else if (err) {
-        return next(err)
-      } else {
-        return next()
-      }
+      return next()
     }
+    if (
+      err?.response?.body &&
+      err.response.body.error_description === "invalid email or password"
+    ) {
+      return res.redirect(
+        `${opts.loginPagePath}?error=Invalid email or password.`
+      )
+    }
+    if (err) {
+      return next(err)
+    }
+    return next()
   })
 }
 
-export const onLocalSignup = function (
+export const onLocalSignup = (
   req: Req,
   res: ArtsyResponse,
   next: NextFunction
-) {
+) => {
   req.artsyPassportSignedUp = true
   request
-    .post(opts.ARTSY_URL + "/api/v1/user")
+    .post(`${opts.ARTSY_URL}/api/v1/user`)
     .set({
       "X-Xapp-Token": artsyXapp.token,
       "X-Forwarded-For": forwardedFor(req),
@@ -107,46 +106,37 @@ export const onLocalSignup = function (
       agreed_to_receive_emails: req.body.agreed_to_receive_emails,
       recaptcha_token: req.body.recaptcha_token,
     })
-    .end(function (err, sres) {
+    .end((err, sres) => {
       let msg = ""
       if (err && err.message === "Email is invalid.") {
         msg = "Email is invalid."
         if (req.xhr) {
           return res.status(403).send({ success: false, error: msg })
-        } else {
-          return res.redirect(opts.signupPagePath + `?error=${msg}`)
         }
-      } else if (err && req.xhr) {
-        if (
-          err &&
-          err.response &&
-          err.response.body &&
-          err.response.body.error
-        ) {
+        return res.redirect(`${opts.signupPagePath}?error=${msg}`)
+      }
+      if (err && req.xhr) {
+        if (err?.response?.body?.error) {
           msg = err.response.body.error
-        } else if (
-          err &&
-          err.response &&
-          err.response.body &&
-          err.response.body.message
-        ) {
+        } else if (err?.response?.body?.message) {
           msg = err.response.body.message
         } else if (err.message) {
           msg = err.message
         }
         return res.status(500).send({ success: false, error: msg })
-      } else if (err) {
-        return next(new Error(err))
-      } else {
-        return next()
       }
+      if (err) {
+        return next(new Error(err))
+      }
+      return next()
     })
 }
 
 type Provider = "facebook" | "apple" | "google"
 
-export const beforeSocialAuth = (provider: Provider) =>
-  function (req: Req, res: ArtsyResponse, next: NextFunction) {
+export const beforeSocialAuth =
+  (provider: Provider) =>
+  (req: Req, res: ArtsyResponse, next: NextFunction) => {
     let options
 
     req.session.redirectTo = req.query["redirect-to"]
@@ -154,9 +144,8 @@ export const beforeSocialAuth = (provider: Provider) =>
     req.session.sign_up_intent = req.query["signup-intent"]
     req.session.sign_up_referer = req.query["signup-referer"]
     // accepted_terms_of_service and agreed_to_receive_emails use underscores
-    req.session.accepted_terms_of_service =
-      req.query["accepted_terms_of_service"]
-    req.session.agreed_to_receive_emails = req.query["agreed_to_receive_emails"]
+    req.session.accepted_terms_of_service = req.query.accepted_terms_of_service
+    req.session.agreed_to_receive_emails = req.query.agreed_to_receive_emails
 
     if (provider === "apple") {
       options = {}
@@ -168,8 +157,9 @@ export const beforeSocialAuth = (provider: Provider) =>
     passport.authenticate(provider, options)(req, res, next)
   }
 
-export const afterSocialAuth = (provider: Provider) =>
-  function (req: Req, res: ArtsyResponse, next: NextFunction) {
+export const afterSocialAuth =
+  (provider: Provider) =>
+  (req: Req, res: ArtsyResponse, next: NextFunction) => {
     if (req.query.denied) {
       return next(new Error(`${provider} denied`))
     }
@@ -179,7 +169,7 @@ export const afterSocialAuth = (provider: Provider) =>
     const linkingAccount = req.user != null
     const redirectPath = req.user ? opts.settingsPagePath : opts.loginPagePath
 
-    passport.authenticate(provider)(req, res, function (err: any) {
+    passport.authenticate(provider)(req, res, (err: any) => {
       if (
         err?.response?.body?.error === "User Already Exists" &&
         req.socialProfileEmail
@@ -233,11 +223,11 @@ export const afterSocialAuth = (provider: Provider) =>
     })
   }
 
-export const ensureLoggedInOnAfterSignupPage = function (
+export const ensureLoggedInOnAfterSignupPage = (
   req: Req,
   res: ArtsyResponse,
   next: NextFunction
-) {
+) => {
   const toLogin = `${opts.loginPagePath}?redirect-to=${opts.afterSignupPagePath}`
   if (req.user == null) {
     res.redirect(toLogin)
@@ -252,11 +242,11 @@ export const onError = (
   next: NextFunction
 ) => next(err)
 
-export const ssoAndRedirectBack = function (
+export const ssoAndRedirectBack = (
   req: Req,
   res: ArtsyResponse,
   _next: NextFunction
-) {
+) => {
   if (req.xhr) {
     return res.send({
       success: true,
@@ -279,8 +269,8 @@ export const ssoAndRedirectBack = function (
     return redirectBack(req, res)
   }
 
-  delete req.session.redirectTo
-  delete req.session.skipOnboarding
+  req.session.redirectTo = undefined
+  req.session.skipOnboarding = undefined
 
   request
     .post(`${opts.ARTSY_URL}/api/v1/me/trust_token`)
@@ -288,7 +278,7 @@ export const ssoAndRedirectBack = function (
       "X-Access-Token": req.user.accessToken,
       "X-Forwarded-For": forwardedFor(req),
     })
-    .end(function (err, sres) {
+    .end((err, sres) => {
       if (err) {
         return res.redirect(parsed.href)
       }

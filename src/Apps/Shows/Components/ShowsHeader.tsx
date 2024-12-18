@@ -9,12 +9,12 @@ import {
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { uniqBy } from "lodash"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { keyframes } from "styled-components"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
-import { ShowsHeader_viewer$data } from "__generated__/ShowsHeader_viewer.graphql"
+import type { ShowsHeader_viewer$data } from "__generated__/ShowsHeader_viewer.graphql"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 
 interface ShowsHeaderProps {

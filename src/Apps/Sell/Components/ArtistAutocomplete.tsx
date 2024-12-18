@@ -1,23 +1,23 @@
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
   AutocompleteInput,
-  AutocompleteInputOptionType,
+  type AutocompleteInputOptionType,
   Box,
   Flex,
   Image,
   Text,
 } from "@artsy/palette"
-import { FormValues } from "Apps/Sell/Routes/ArtistRoute"
+import type { FormValues } from "Apps/Sell/Routes/ArtistRoute"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { extractNodes } from "Utils/extractNodes"
-import {
+import type {
   ArtistAutocomplete_SearchConnection_Query,
   ArtistAutocomplete_SearchConnection_Query$data,
 } from "__generated__/ArtistAutocomplete_SearchConnection_Query.graphql"
 import { useFormikContext } from "formik"
 import { debounce } from "lodash"
 import { useEffect, useMemo, useState } from "react"
-import { Environment, fetchQuery, graphql } from "react-relay"
+import { type Environment, fetchQuery, graphql } from "react-relay"
 
 const DEBOUNCE_DELAY = 300
 

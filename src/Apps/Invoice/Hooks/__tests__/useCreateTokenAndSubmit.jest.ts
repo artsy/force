@@ -5,7 +5,7 @@ import { useMakeInvoicePayment } from "Apps/Invoice/Hooks/useMakeInvoicePayment"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import {
   useCreateTokenAndSubmit,
-  UseCreateTokenAndSubmitProps,
+  type UseCreateTokenAndSubmitProps,
 } from "Apps/Invoice/Hooks/useCreateTokenAndSubmit"
 
 jest.mock("Components/Address/utils", () => {

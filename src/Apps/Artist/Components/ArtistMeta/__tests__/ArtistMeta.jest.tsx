@@ -55,7 +55,8 @@ describe("AdminMeta", () => {
     it("renders the default description", () => {
       renderWithRelay({ Artist: () => ({ meta: { description: null } }) })
 
-      const defaultDescription = `Artsy is the world’s largest online art marketplace. Browse over 1 million artworks by iconic and emerging artists from 4000+ galleries and top auction houses.`
+      const defaultDescription =
+        "Artsy is the world’s largest online art marketplace. Browse over 1 million artworks by iconic and emerging artists from 4000+ galleries and top auction houses."
 
       expect(
         getMetaBy({ name: "description" })?.getAttribute("content")

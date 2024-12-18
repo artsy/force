@@ -1,20 +1,20 @@
 import {
   ActionType,
-  ClickedShowGroup,
+  type ClickedShowGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
 import { Skeleton } from "@artsy/palette"
 import { compact } from "lodash"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CellShowPlaceholder } from "Components/Cells/CellShow"
 import { Rail } from "Components/Rail/Rail"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { HomeFeaturedShowsRailQuery } from "__generated__/HomeFeaturedShowsRailQuery.graphql"
-import { HomeFeaturedShowsRail_orderedSet$data } from "__generated__/HomeFeaturedShowsRail_orderedSet.graphql"
+import type { HomeFeaturedShowsRailQuery } from "__generated__/HomeFeaturedShowsRailQuery.graphql"
+import type { HomeFeaturedShowsRail_orderedSet$data } from "__generated__/HomeFeaturedShowsRail_orderedSet.graphql"
 import { HomeFeaturedShowFragmentContainer } from "./HomeFeaturedShow"
 
 interface HomeFeaturedShowsRailProps {

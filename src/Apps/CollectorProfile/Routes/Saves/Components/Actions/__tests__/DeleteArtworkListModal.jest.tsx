@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import { useMutation } from "Utils/Hooks/useMutation"
 import {
   DeleteArtworkListModal,
-  DeleteArtworkListEntity,
+  type DeleteArtworkListEntity,
 } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/DeleteArtworkListModal"
 import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools/MockBoot"

@@ -1,10 +1,10 @@
 import { Button, Join, Spacer, Text, useToasts } from "@artsy/palette"
-import { FC, useEffect } from "react"
+import { type FC, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
 import { useMode } from "Utils/Hooks/useMode"
-import {
+import type {
   AuthenticationProvider,
   SettingsEditSettingsLinkedAccounts_me$data,
 } from "__generated__/SettingsEditSettingsLinkedAccounts_me.graphql"
@@ -41,7 +41,7 @@ export const SettingsEditSettingsLinkedAccounts: FC<
         sendToast({
           variant: "error",
           message,
-          ttl: Infinity,
+          ttl: Number.POSITIVE_INFINITY,
         })
       }
     }
@@ -149,10 +149,10 @@ const SettingsEditSettingsLinkedAccountsButton: FC<
   }
 
   const action = {
-    ["Connecting"]: "Connect",
-    ["Connected"]: "Disconnect",
-    ["Disconnected"]: "Connect",
-    ["Disconnecting"]: "Connect",
+    Connecting: "Connect",
+    Connected: "Disconnect",
+    Disconnected: "Connect",
+    Disconnecting: "Connect",
   }[mode]
 
   return (

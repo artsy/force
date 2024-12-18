@@ -2,7 +2,7 @@ import loadable from "@loadable/component"
 import { getArtworkFilterInputArgs } from "Apps/Sale/Components/getArtworkFilterInputArgs"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
@@ -73,9 +73,8 @@ export const saleRoutes: RouteProps[] = [
 
       if (!isAuction) {
         return <Component {...props} />
-      } else {
-        throw new RedirectException(`/auction/${slug}`)
       }
+      throw new RedirectException(`/auction/${slug}`)
     },
   },
 ]

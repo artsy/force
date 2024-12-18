@@ -1,16 +1,16 @@
-import React from "react"
+import type React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
-  ClickedPartnerCard,
+  type ClickedPartnerCard,
   ContextModule,
   OwnerType,
-  PageOwnerType,
+  type PageOwnerType,
 } from "@artsy/cohesion"
-import { FairExhibitorCard_exhibitor$data } from "__generated__/FairExhibitorCard_exhibitor.graphql"
-import { FairExhibitorCard_fair$data } from "__generated__/FairExhibitorCard_fair.graphql"
+import type { FairExhibitorCard_exhibitor$data } from "__generated__/FairExhibitorCard_exhibitor.graphql"
+import type { FairExhibitorCard_fair$data } from "__generated__/FairExhibitorCard_fair.graphql"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 
 interface FairExhibitorCardProps {

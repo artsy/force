@@ -5,7 +5,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { AuctionRegistrationRouteFragmentContainer } from "Apps/Auction/Routes/AuctionRegistrationRoute"
-import { AuctionRegistrationRouteTestQuery } from "__generated__/AuctionRegistrationRouteTestQuery.graphql"
+import type { AuctionRegistrationRouteTestQuery } from "__generated__/AuctionRegistrationRouteTestQuery.graphql"
 import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
 
 jest.unmock("react-relay")

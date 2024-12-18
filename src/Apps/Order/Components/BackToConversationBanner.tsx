@@ -1,4 +1,4 @@
-import { BoxProps } from "@artsy/palette"
+import type { BoxProps } from "@artsy/palette"
 import { TopContextBar } from "Components/TopContextBar"
 
 interface BackToConversationBannerProps {

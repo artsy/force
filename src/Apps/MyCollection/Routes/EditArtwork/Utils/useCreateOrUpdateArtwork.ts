@@ -1,13 +1,13 @@
 import { useCreateArtwork } from "Apps/MyCollection/Routes/EditArtwork/Mutations/useCreateArtwork"
 import { useUpdateArtwork } from "Apps/MyCollection/Routes/EditArtwork/Mutations/useUpdateArtwork"
-import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
+import type { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { compact } from "lodash"
-import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
-import {
+import type { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
+import type {
   ArtworkAttributionClassType,
   MyCollectionCreateArtworkInput,
 } from "__generated__/useCreateArtworkMutation.graphql"
-import { MyCollectionUpdateArtworkInput } from "__generated__/useUpdateArtworkMutation.graphql"
+import type { MyCollectionUpdateArtworkInput } from "__generated__/useUpdateArtworkMutation.graphql"
 
 export type ArtworkInput =
   | MyCollectionCreateArtworkInput
@@ -34,15 +34,14 @@ export const useCreateOrUpdateArtwork = () => {
       })
 
       return res.myCollectionUpdateArtwork?.artworkOrError?.artwork
-    } else {
-      const res = await createArtwork({
-        variables: {
-          input: artworkInputValues as MyCollectionCreateArtworkInput,
-        },
-      })
-
-      return res.myCollectionCreateArtwork?.artworkOrError?.artworkEdge?.node
     }
+    const res = await createArtwork({
+      variables: {
+        input: artworkInputValues as MyCollectionCreateArtworkInput,
+      },
+    })
+
+    return res.myCollectionCreateArtwork?.artworkOrError?.artworkEdge?.node
   }
 
   return { createOrUpdateArtwork }
@@ -92,7 +91,7 @@ const formValuesToMutationInput = (
     metric: values.metric,
     externalImageUrls,
     pricePaidCents:
-      !values.pricePaidDollars || isNaN(Number(values.pricePaidDollars))
+      !values.pricePaidDollars || Number.isNaN(Number(values.pricePaidDollars))
         ? undefined
         : Number(values.pricePaidDollars) * 100,
     pricePaidCurrency: values.pricePaidCurrency,

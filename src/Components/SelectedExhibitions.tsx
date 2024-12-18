@@ -7,7 +7,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { SelectedExhibitions_exhibitions$data } from "__generated__/SelectedExhibitions_exhibitions.graphql"
+import type { SelectedExhibitions_exhibitions$data } from "__generated__/SelectedExhibitions_exhibitions.graphql"
 import { Link } from "found"
 import { groupBy, toPairs } from "lodash"
 import * as React from "react"
@@ -88,7 +88,7 @@ export const ExhibitionYearList: React.FC<
   return (
     <ArtworkDefinitionList term={year}>
       {exhibitions.map((exhibition, index) => (
-        <React.Fragment key={exhibition.name + "-" + index}>
+        <React.Fragment key={`${exhibition.name}-${index}`}>
           <Text variant="xs">
             {exhibition.name}
             {exhibition.partner && (

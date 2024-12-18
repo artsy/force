@@ -1,12 +1,12 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { FC, useReducer, useEffect, useState } from "react"
-import { Environment, fetchQuery, graphql } from "react-relay"
+import { type FC, useReducer, useEffect, useState } from "react"
+import { type Environment, fetchQuery, graphql } from "react-relay"
 
 import {
   AlertContext,
-  PreviewSavedSearch,
-  Settings,
-  State,
+  type PreviewSavedSearch,
+  type Settings,
+  type State,
   reducer,
 } from "Components/Alert/AlertContext"
 import { Modal } from "Components/Alert/Components/Modal/Modal"
@@ -15,19 +15,19 @@ import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { useCreateAlert } from "Components/Alert/Hooks/useCreateAlert"
 import { useEditSavedSearchAlert } from "Components/Alert/Hooks/useEditSavedSearchAlert"
 import { useAuthDialog } from "Components/AuthDialog"
-import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
-import {
+import type {
   AlertProviderPreviewQuery,
   PreviewSavedSearchAttributes,
 } from "__generated__/AlertProviderPreviewQuery.graphql"
 import { useToasts } from "@artsy/palette"
 import createLogger from "Utils/logger"
-import { DEFAULT_METRIC, Metric } from "Utils/metrics"
+import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
 
 const logger = createLogger("AlertProvider.tsx")
 interface AlertProviderProps {
@@ -98,7 +98,7 @@ export const AlertProvider: FC<React.PropsWithChildren<AlertProviderProps>> = ({
     // but NOT as an alert criterion, so we remove it.
     // (Alerts, by definition, stipulate forSale=true
     // when they are created in Gravity.)
-    delete criteria.forSale
+    criteria.forSale = undefined
 
     dispatch({ type: "SET_CRITERIA", payload: criteria })
   }, [initialCriteria, isEditMode, isAlertArtworksView])

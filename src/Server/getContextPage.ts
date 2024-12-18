@@ -1,4 +1,4 @@
-import { PageOwnerType } from "@artsy/cohesion"
+import type { PageOwnerType } from "@artsy/cohesion"
 import { pathToOwnerType } from "System/Contexts/AnalyticsContext"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
@@ -19,7 +19,7 @@ export function getContextPageFromClient(): ClientContextPage | undefined {
     return
   }
 
-  const PAGE_TYPE = window.sd && window.sd.PAGE_TYPE
+  const PAGE_TYPE = window.sd?.PAGE_TYPE
   const { pathname } = window.location
   const pageParts = pathname.split("/")
   const pageSlug = pageParts[2]

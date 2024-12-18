@@ -1,6 +1,6 @@
 import { Flex, Text } from "@artsy/palette"
 import { DateTime, Duration } from "luxon"
-import React from "react"
+import type React from "react"
 
 /**
  * Extracted out of @artsy/palette

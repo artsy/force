@@ -1,7 +1,7 @@
-import { FC, useEffect } from "react"
-import * as React from "react"
+import { type FC, useEffect } from "react"
+import type * as React from "react"
 import { sortBy } from "lodash"
-import { Checkbox, CheckboxProps, Flex } from "@artsy/palette"
+import { Checkbox, type CheckboxProps, Flex } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
@@ -104,7 +104,7 @@ export const ArtistsFilter: FC<React.PropsWithChildren<ArtistsFilterProps>> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (!(artists && artists.counts)) {
+  if (!artists?.counts) {
     return null
   }
 

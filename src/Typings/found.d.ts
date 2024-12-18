@@ -1,5 +1,5 @@
-import { RouteProps } from "System/Router/Route"
-import { Environment } from "react-relay"
+import type { RouteProps } from "System/Router/Route"
+import type { Environment } from "react-relay"
 
 /**
  * The typescript types for interfacing between found and found relay are not
@@ -32,6 +32,3 @@ declare module "found" {
     resolver: FoundRelayResolver
   }
 }
-
-// This is needed to conform to the module format, which requires to export something.
-export {}

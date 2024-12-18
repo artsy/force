@@ -20,8 +20,8 @@ describe("SystemQueryRenderer", () => {
     )
   }
 
-  let mockuseDidMount = useDidMount as jest.Mock
-  let mockUseIntersectionObserver = useIntersectionObserver as jest.Mock
+  const mockuseDidMount = useDidMount as jest.Mock
+  const mockUseIntersectionObserver = useIntersectionObserver as jest.Mock
 
   beforeAll(() => {
     mockUseIntersectionObserver.mockImplementation(() => ({

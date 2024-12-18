@@ -1,18 +1,18 @@
-import { createMockNetworkLayerTestAliasPrecendenceQuery } from "__generated__/createMockNetworkLayerTestAliasPrecendenceQuery.graphql"
-import { createMockNetworkLayerTestAliasQuery } from "__generated__/createMockNetworkLayerTestAliasQuery.graphql"
-import { createMockNetworkLayerTestMutationResultsMutation } from "__generated__/createMockNetworkLayerTestMutationResultsMutation.graphql"
-import { createMockNetworkLayerTestQuery } from "__generated__/createMockNetworkLayerTestQuery.graphql"
+import type { createMockNetworkLayerTestAliasPrecendenceQuery } from "__generated__/createMockNetworkLayerTestAliasPrecendenceQuery.graphql"
+import type { createMockNetworkLayerTestAliasQuery } from "__generated__/createMockNetworkLayerTestAliasQuery.graphql"
+import type { createMockNetworkLayerTestMutationResultsMutation } from "__generated__/createMockNetworkLayerTestMutationResultsMutation.graphql"
+import type { createMockNetworkLayerTestQuery } from "__generated__/createMockNetworkLayerTestQuery.graphql"
 import { createMockFetchQuery } from "DevTools/createMockNetworkLayer"
-import { GraphQLTaggedNode, commitMutation, graphql } from "react-relay"
+import { type GraphQLTaggedNode, commitMutation, graphql } from "react-relay"
 import {
   Environment,
   Network,
-  OperationType,
+  type OperationType,
   RecordSource,
   Store,
   fetchQuery,
 } from "relay-runtime"
-import { Environment as IEnvironment } from "react-relay"
+import type { Environment as IEnvironment } from "react-relay"
 import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
 jest.unmock("react-relay")
 

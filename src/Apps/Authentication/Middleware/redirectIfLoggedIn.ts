@@ -1,4 +1,7 @@
-import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 import { checkForRedirect } from "./checkForRedirect"
 import { isStaticAuthRoute } from "./isStaticAuthRoute"
 

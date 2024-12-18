@@ -14,7 +14,7 @@ import { BRAND_PALETTE } from "Apps/Marketing/Utils/brandPalette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
 import { resized } from "Utils/resized"
-import { FC } from "react"
+import type { FC } from "react"
 
 export const MarketingQuizCTA: FC<React.PropsWithChildren<unknown>> = () => {
   const image = resized(

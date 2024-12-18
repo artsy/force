@@ -15,13 +15,13 @@ export const userIsForcingNavigation = event =>
 
 // IE does not include leading slash in anchor.pathname
 export const slashedPathname = pathname =>
-  pathname[0] === `/` ? pathname : `/${pathname}`
+  pathname[0] === "/" ? pathname : `/${pathname}`
 
 export const navigationWasHandledElsewhere = event => event.defaultPrevented
 
 export const findClosestAnchor = node => {
   for (; node.parentNode; node = node.parentNode) {
-    if (node.nodeName.toLowerCase() === `a`) {
+    if (node.nodeName.toLowerCase() === "a") {
       return node
     }
   }
@@ -31,7 +31,7 @@ export const findClosestAnchor = node => {
 
 export const anchorsTargetIsEquivalentToSelf = anchor =>
   /* If target attribute is not present it's treated as _self */
-  anchor.hasAttribute(`target`) === false ||
+  anchor.hasAttribute("target") === false ||
   /**
    * The browser defaults to _self, but, not all browsers set
    * a.target to the string value `_self` by default
@@ -46,15 +46,15 @@ export const anchorsTargetIsEquivalentToSelf = anchor =>
    * Some browsers use the empty string to mean _self, check
    * for actual `_self`
    */
-  [`_self`, ``].indexOf(anchor.target) !== -1 ||
+  ["_self", ""].indexOf(anchor.target) !== -1 ||
   /**
    * As per https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target
    */
-  (anchor.target === `_parent` &&
+  (anchor.target === "_parent" &&
     (!anchor.ownerDocument.defaultView.parent || // Assumption: This can be falsey
       anchor.ownerDocument.defaultView.parent ===
         anchor.ownerDocument.defaultView)) ||
-  (anchor.target === `_top` &&
+  (anchor.target === "_top" &&
     (!anchor.ownerDocument.defaultView.top || // Assumption: This can be falsey
       anchor.ownerDocument.defaultView.top ===
         anchor.ownerDocument.defaultView))
@@ -64,7 +64,7 @@ export const authorIsForcingNavigation = anchor =>
    * HTML5 attribute that informs the browser to handle the
    * href as a downloadable file; let the browser handle it
    */
-  anchor.hasAttribute(`download`) === true ||
+  anchor.hasAttribute("download") === true ||
   /**
    * Let the browser handle anything that doesn't look like a
    * target="_self" anchor
@@ -78,12 +78,12 @@ export const urlsAreOnSameOrigin = (origin, destination) =>
   origin.host === destination.host
 
 export const hashShouldBeFollowed = (origin, destination) =>
-  destination.hash !== `` &&
+  destination.hash !== "" &&
   /**
    * Dynamically created anchor links (href="#my-anchor") do not always
    * have pathname on IE
    */
-  (destination.pathname === `` ||
+  (destination.pathname === "" ||
     /* Don't catch links pointed to the same page but with a hash. */
     destination.pathname === origin.pathname)
 
@@ -113,7 +113,7 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
 
   // IE clears the host value if the anchor href changed after creation, e.g.
   // in React. Creating a new anchor element to ensure host value is present
-  const destination = document.createElement(`a`)
+  const destination = document.createElement("a")
   destination.href = clickedAnchor.href
   if (clickedAnchor.href instanceof SVGAnimatedString) {
     destination.href = clickedAnchor.href.animVal
@@ -125,7 +125,7 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
   // have a location.host of 'example.com' and an destination.host of
   // 'example.com:80' Creating anchor from the location.href to normalize the
   // host value.
-  const origin = document.createElement(`a`)
+  const origin = document.createElement("a")
   origin.href = window.location.href
 
   if (urlsAreOnSameOrigin(origin, destination) === false) {
@@ -158,7 +158,7 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
 export function catchLinks(root, cb) {
   const clickHandler = routeThroughBrowserOrApp(cb)
 
-  root.addEventListener(`click`, clickHandler)
+  root.addEventListener("click", clickHandler)
 
-  return () => root.removeEventListener(`click`, clickHandler)
+  return () => root.removeEventListener("click", clickHandler)
 }

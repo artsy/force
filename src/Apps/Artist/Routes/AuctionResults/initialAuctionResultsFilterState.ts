@@ -1,4 +1,4 @@
-import { DEFAULT_METRIC, Metric } from "Utils/metrics"
+import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
 
 export interface AuctionResultsFilters {
   organizations?: string[]

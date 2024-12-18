@@ -12,7 +12,7 @@ import {
   VisuallyHidden,
 } from "@artsy/palette"
 import { Formik, Form } from "formik"
-import { FC } from "react"
+import type { FC } from "react"
 import { CountrySelect } from "Components/CountrySelect"
 import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
 import { useEditAddress } from "Apps/Settings/Routes/Shipping/useEditAddress"
@@ -127,7 +127,7 @@ export const SettingsShippingAddressForm: FC<
 
             sendToast({
               variant: "success",
-              message: `Address updated successfully.`,
+              message: "Address updated successfully.",
             })
           } else {
             // Adding new address

@@ -7,7 +7,7 @@ import {
   Text,
 } from "@artsy/palette"
 import qs from "qs"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { useTracking } from "react-tracking"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { categoryMap } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/MediumFilter"

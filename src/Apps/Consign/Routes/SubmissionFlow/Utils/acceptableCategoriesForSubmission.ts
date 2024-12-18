@@ -1,4 +1,4 @@
-import { ConsignmentSubmissionCategoryAggregation } from "__generated__/CreateConsignSubmissionMutation.graphql"
+import type { ConsignmentSubmissionCategoryAggregation } from "__generated__/CreateConsignSubmissionMutation.graphql"
 import { compact } from "lodash"
 import { categoryOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/categoryOptions"
 
@@ -37,7 +37,7 @@ export const formatCategoryValueForSubmission = (categoryValue: string) => {
   return categoryValue
     .split(/[^A-Za-z]/)
     .reduce((accumulator, current) => {
-      if (current && current.trim()) {
+      if (current?.trim()) {
         accumulator.push(current.toUpperCase())
       }
       return accumulator

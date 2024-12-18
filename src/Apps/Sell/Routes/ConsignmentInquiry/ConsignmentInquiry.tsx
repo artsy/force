@@ -1,13 +1,13 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import { SentConsignmentInquiry } from "@artsy/cohesion/dist/Schema/Events/Consignments"
+import type { SentConsignmentInquiry } from "@artsy/cohesion/dist/Schema/Events/Consignments"
 import { Button, Spacer, Text, useToasts } from "@artsy/palette"
-import { ConsignmentInquiry_me$data } from "__generated__/ConsignmentInquiry_me.graphql"
-import { ConsignmentInquiry_viewer$data } from "__generated__/ConsignmentInquiry_viewer.graphql"
-import { CreateConsignmentInquiryMutationInput } from "__generated__/useCreateConsignmentInquiryMutation.graphql"
+import type { ConsignmentInquiry_me$data } from "__generated__/ConsignmentInquiry_me.graphql"
+import type { ConsignmentInquiry_viewer$data } from "__generated__/ConsignmentInquiry_viewer.graphql"
+import type { CreateConsignmentInquiryMutationInput } from "__generated__/useCreateConsignmentInquiryMutation.graphql"
 import { validateContactInformationValidationSchema } from "Apps/MyCollection/Routes/PriceEstimate/utils/contactInformationValidationSchema"
 import {
   ConsignmentInquiryForm,
-  ConsignmentInquiryFormModel,
+  type ConsignmentInquiryFormModel,
 } from "Apps/Sell/Routes/ConsignmentInquiry/Components/ConsignmentInquiryForm"
 import { ConsignmentInquiryFormAbandonEditModal } from "Apps/Sell/Routes/ConsignmentInquiry/Components/ConsignmentInquiryFormAbandonEdit"
 import { useCreateConsignmentInquiry } from "Apps/Sell/Routes/ConsignmentInquiry/utils/useCreateConsignmentInquiry"
@@ -89,7 +89,7 @@ export const ConsignmentInquiry: React.FC<
       } ${phoneNumber.trim()}`
     }
 
-    const input: CreateConsignmentInquiryMutationInput = !!recipientEmail
+    const input: CreateConsignmentInquiryMutationInput = recipientEmail
       ? {
           email,
           message,
@@ -124,7 +124,7 @@ export const ConsignmentInquiry: React.FC<
         router.replace({ pathname: "/sell" })
 
         router.push(
-          !!recipientEmail
+          recipientEmail
             ? `/sell/inquiry/${recipientEmail}/sent`
             : "/sell/inquiry/sent"
         )

@@ -1,6 +1,6 @@
 import { ActionType } from "@artsy/cohesion"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Variant } from "unleash-client"
+import type { Variant } from "unleash-client"
 import { getENV } from "Utils/getENV"
 import { pathToOwnerType } from "System/Contexts/AnalyticsContext"
 import { useRef } from "react"

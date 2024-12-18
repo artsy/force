@@ -3,10 +3,10 @@ import { States } from "storybook-states"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   EntityHeaderGeneFragmentContainer,
-  EntityHeaderGeneProps,
+  type EntityHeaderGeneProps,
 } from "./EntityHeaderGene"
 import { EntityHeaderPlaceholder } from "./EntityHeaderPlaceholder"
-import { EntityHeaderGeneStoryQuery } from "__generated__/EntityHeaderGeneStoryQuery.graphql"
+import type { EntityHeaderGeneStoryQuery } from "__generated__/EntityHeaderGeneStoryQuery.graphql"
 
 export default {
   title: "Components/EntityHeader",

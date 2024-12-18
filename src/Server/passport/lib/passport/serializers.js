@@ -4,10 +4,10 @@
 //
 
 // TODO: Remove let added for 'rewire'
-let opts = require("../options")
+const opts = require("../options")
 // TODO: Remove let added for 'rewire'
 
-let request = require("superagent")
+const request = require("superagent")
 const async = require("async")
 const pick = require("lodash/pick")
 
@@ -25,7 +25,7 @@ module.exports.serialize = (req, user, done) =>
           .set({ "X-Access-Token": user.accessToken })
           .end(cb),
     ],
-    function (err, results) {
+    (err, results) => {
       if (err) {
         return done(err)
       }

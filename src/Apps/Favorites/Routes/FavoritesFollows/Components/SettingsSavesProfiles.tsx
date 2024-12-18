@@ -12,16 +12,16 @@ import { EntityHeaderFairFragmentContainer } from "Components/EntityHeaders/Enti
 import { EntityHeaderFairOrganizerFragmentContainer } from "Components/EntityHeaders/EntityHeaderFairOrganizer"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { SettingsSavesProfilesQuery } from "__generated__/SettingsSavesProfilesQuery.graphql"
-import { SettingsSavesProfiles_me$data } from "__generated__/SettingsSavesProfiles_me.graphql"
+import type { SettingsSavesProfilesQuery } from "__generated__/SettingsSavesProfilesQuery.graphql"
+import type { SettingsSavesProfiles_me$data } from "__generated__/SettingsSavesProfiles_me.graphql"
 
 interface SettingsSavesProfilesProps {
   me: SettingsSavesProfiles_me$data

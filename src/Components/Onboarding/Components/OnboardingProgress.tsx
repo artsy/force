@@ -1,6 +1,6 @@
 import { Box, ProgressBar } from "@artsy/palette"
 import { BackLink } from "Components/Links/BackLink"
-import { FC } from "react"
+import type { FC } from "react"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 

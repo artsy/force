@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import styled from "styled-components"
 import {
   Box,
@@ -14,7 +14,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 import { ContextModule } from "@artsy/cohesion"
 import { RouterLink } from "System/Components/RouterLink"
-import { PartnerHeader_partner$data } from "__generated__/PartnerHeader_partner.graphql"
+import type { PartnerHeader_partner$data } from "__generated__/PartnerHeader_partner.graphql"
 import { themeGet } from "@styled-system/theme-get"
 import { Jump } from "Utils/Hooks/useJump"
 import { formatFollowerCount } from "Utils/formatFollowerCount"

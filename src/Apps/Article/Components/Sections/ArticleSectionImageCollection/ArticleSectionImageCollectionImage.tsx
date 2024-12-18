@@ -1,9 +1,9 @@
 import { ResponsiveBox, Image } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleZoomButton } from "Apps/Article/Components/ArticleZoomButton"
 import { useArticleZoomGallery } from "Apps/Article/Components/ArticleZoomGallery/ArticleZoomGallery"
-import { ArticleSectionImageCollectionImage_figure$data } from "__generated__/ArticleSectionImageCollectionImage_figure.graphql"
+import type { ArticleSectionImageCollectionImage_figure$data } from "__generated__/ArticleSectionImageCollectionImage_figure.graphql"
 import { resized } from "Utils/resized"
 
 interface ArticleSectionImageCollectionImageProps {

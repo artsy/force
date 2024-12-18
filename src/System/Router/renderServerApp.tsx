@@ -1,13 +1,16 @@
-import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 import { getServerParam } from "Utils/getServerParam"
 import { renderToString } from "react-dom/server"
 import { loadAssetManifest } from "Server/manifest"
 import { ENABLE_SSR_STREAMING } from "Server/config"
 import { getENV } from "Utils/getENV"
-import { ServerAppResults } from "System/Router/serverRouter"
+import type { ServerAppResults } from "System/Router/serverRouter"
 import { getEarlyHints } from "Server/getEarlyHints"
-import { RenderToStreamResult } from "System/Router/Utils/renderToStream"
-import { buildHtmlTemplate, HTMLProps } from "html"
+import type { RenderToStreamResult } from "System/Router/Utils/renderToStream"
+import { buildHtmlTemplate, type HTMLProps } from "html"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.

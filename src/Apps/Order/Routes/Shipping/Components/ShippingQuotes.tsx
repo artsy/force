@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import {
   BorderedRadio,
   Column,
@@ -9,7 +9,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
-import { ShippingQuotes_order$key } from "__generated__/ShippingQuotes_order.graphql"
+import type { ShippingQuotes_order$key } from "__generated__/ShippingQuotes_order.graphql"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import { extractNodes } from "Utils/extractNodes"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"

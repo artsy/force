@@ -1,4 +1,4 @@
-import { AuthContextModule, ContextModule } from "@artsy/cohesion"
+import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Box, Flex, Popover, ResponsiveBox } from "@artsy/palette"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { MagnifyImage } from "Components/MagnifyImage"
@@ -6,10 +6,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { RouterLink } from "System/Components/RouterLink"
-import { LocalImage, useLocalImage } from "Utils/localImageHelpers"
+import { type LocalImage, useLocalImage } from "Utils/localImageHelpers"
 import { cropped, resized } from "Utils/resized"
 import { userIsTeam } from "Utils/user"
-import { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
+import type { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
 import Metadata from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
@@ -271,7 +271,7 @@ const LinkContainer: React.FC<
   >
 > = ({ artwork, children, disableRouterLinking, onClick, localImage, to }) => {
   const imageURL = artwork.image?.url
-  if (!!disableRouterLinking) {
+  if (disableRouterLinking) {
     return (
       <DisabledLink
         onClick={onClick}

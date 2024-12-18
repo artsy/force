@@ -1,5 +1,5 @@
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { AuthContextModule, Intent } from "@artsy/cohesion"
+import { type AuthContextModule, Intent } from "@artsy/cohesion"
 import { SaveArtwork } from "./SaveArtworkMutation"
 import { useAuthDialog } from "Components/AuthDialog"
 
@@ -65,7 +65,7 @@ export const useSaveArtwork = ({
 
         onSave?.({
           // TODO: Pass "saved" or "removed" value
-          action: !!saveArtwork?.artwork?.isSavedToAnyList
+          action: saveArtwork?.artwork?.isSavedToAnyList
             ? "Saved Artwork"
             : "Removed Artwork",
           artwork,

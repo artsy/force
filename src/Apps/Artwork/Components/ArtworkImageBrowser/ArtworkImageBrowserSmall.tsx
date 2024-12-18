@@ -2,16 +2,16 @@ import {
   ProgressDots,
   Swiper,
   SwiperCell,
-  SwiperCellProps,
+  type SwiperCellProps,
   SwiperRail,
-  SwiperRailProps,
+  type SwiperRailProps,
 } from "@artsy/palette"
 import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
 import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer"
 import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkImageBrowserSmall_artwork$data } from "__generated__/ArtworkImageBrowserSmall_artwork.graphql"
+import type { ArtworkImageBrowserSmall_artwork$data } from "__generated__/ArtworkImageBrowserSmall_artwork.graphql"
 
 interface ArtworkImageBrowserSmallProps {
   artwork: ArtworkImageBrowserSmall_artwork$data

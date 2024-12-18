@@ -2,7 +2,7 @@ import { CareerHighlightModalPromoStep } from "Apps/Settings/Routes/Insights/Com
 import { CareerHighlightModalStep } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Components/CareerHighlightModalStep"
 import { useCareerHighlightsStoriesContext } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Hooks/useCareerHighlightsStoriesContext"
 import { graphql, useLazyLoadQuery } from "react-relay"
-import { CareerHighlightsStepsQuery } from "__generated__/CareerHighlightsStepsQuery.graphql"
+import type { CareerHighlightsStepsQuery } from "__generated__/CareerHighlightsStepsQuery.graphql"
 
 export const CareerHighlightSteps = () => {
   const { current } = useCareerHighlightsStoriesContext()

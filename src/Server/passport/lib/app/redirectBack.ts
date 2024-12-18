@@ -1,4 +1,7 @@
-import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 import { sanitizeRedirect } from "Utils/sanitizeRedirect"
 
 const opts = require("../options")
@@ -19,8 +22,8 @@ export const redirectBack = (
   )
 
   if (res !== null) {
-    delete req.session.redirectTo
-    delete req.session.skipOnboarding
+    req.session.redirectTo = undefined
+    req.session.skipOnboarding = undefined
 
     res.redirect(url)
   }

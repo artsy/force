@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import {
   Button,
   Text,
@@ -12,7 +12,7 @@ import {
   Radio,
 } from "@artsy/palette"
 import {
-  ArtworkFiltersState,
+  type ArtworkFiltersState,
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
@@ -22,7 +22,7 @@ import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 import { useMode } from "Utils/Hooks/useMode"
-import { DEFAULT_METRIC, Metric } from "Utils/metrics"
+import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
 import { NumericInput } from "Components/NumericInput"
 import {
   getCustomSizeRangeInInches,
@@ -84,7 +84,7 @@ export const SizeFilter: React.FC<React.PropsWithChildren<SizeFilterProps>> = ({
         if (isOpenEnded) {
           prevCustomSize[dimension][index] = "*"
         } else {
-          const parsedValue = parseInt(value, 10)
+          const parsedValue = Number.parseInt(value, 10)
           if (prevCustomSize[dimension])
             prevCustomSize[dimension][index] = parsedValue
           else if (isMin) {
@@ -127,7 +127,7 @@ export const SizeFilter: React.FC<React.PropsWithChildren<SizeFilterProps>> = ({
     }
 
     if (reset) {
-      delete newFilters.reset
+      newFilters.reset = undefined
     }
 
     setFilters?.(newFilters, { force: false })
@@ -158,7 +158,7 @@ export const SizeFilter: React.FC<React.PropsWithChildren<SizeFilterProps>> = ({
   }
 
   useEffect(() => {
-    if (width == "*-*" || height === "*-*") {
+    if (width === "*-*" || height === "*-*") {
       setCustomSize({
         width: parseSizeRange(width, metric),
         height: parseSizeRange(height, metric),

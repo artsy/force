@@ -1,15 +1,15 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
-import { WorksForYouApp_viewerArtist$data } from "__generated__/WorksForYouApp_viewerArtist.graphql"
-import { WorksForYouApp_viewerFeed$data } from "__generated__/WorksForYouApp_viewerFeed.graphql"
-import { WorksForYouApp_viewerMe$data } from "__generated__/WorksForYouApp_viewerMe.graphql"
+import type { WorksForYouApp_viewerArtist$data } from "__generated__/WorksForYouApp_viewerArtist.graphql"
+import type { WorksForYouApp_viewerFeed$data } from "__generated__/WorksForYouApp_viewerFeed.graphql"
+import type { WorksForYouApp_viewerMe$data } from "__generated__/WorksForYouApp_viewerMe.graphql"
 import { WorksForYouFeedPaginationContainer } from "./Components/WorksForYouFeed"
 import {
   Button,
   Column,
   FilterSelect,
-  FilterSelectChangeState,
-  FilterSelectItems,
+  type FilterSelectChangeState,
+  type FilterSelectItems,
   GridColumns,
   Spacer,
   Text,
@@ -19,7 +19,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import { RouterLink } from "System/Components/RouterLink"
 import { LogInPrompt } from "Apps/Components/LogInPrompt"
-import { AuthContextModule, ContextModule } from "@artsy/cohesion"
+import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
 interface WorksForYouProps {

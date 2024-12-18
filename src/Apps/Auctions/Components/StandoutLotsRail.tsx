@@ -1,5 +1,5 @@
-import { AuthContextModule } from "@artsy/cohesion"
-import * as React from "react"
+import type { AuthContextModule } from "@artsy/cohesion"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import {
@@ -10,8 +10,8 @@ import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { extractNodes } from "Utils/extractNodes"
-import { StandoutLotsRailQuery } from "__generated__/StandoutLotsRailQuery.graphql"
-import { StandoutLotsRail_viewer$data } from "__generated__/StandoutLotsRail_viewer.graphql"
+import type { StandoutLotsRailQuery } from "__generated__/StandoutLotsRailQuery.graphql"
+import type { StandoutLotsRail_viewer$data } from "__generated__/StandoutLotsRail_viewer.graphql"
 import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 import { CuratorialRailsZeroState } from "Apps/Auctions/Components/CuritorialRailsTabBar"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -33,37 +33,36 @@ export const StandoutLotsRail: React.FC<
 
   if (artworks.length === 0) {
     return <CuratorialRailsZeroState />
-  } else {
-    return (
-      <Rail
-        title="Curators’ Picks"
-        subTitle="Works that Artsy curators love"
-        getItems={() => {
-          return artworks.map((artwork, index) => {
-            return (
-              <ShelfArtworkFragmentContainer
-                artwork={artwork}
-                key={artwork.slug}
-                contextModule={contextModule}
-                lazyLoad
-                onClick={() => {
-                  trackEvent(
-                    trackHelpers.clickedArtworkGroup(
-                      contextModule,
-                      contextPageOwnerType,
-                      artwork.internalID,
-                      artwork.slug,
-                      index
-                    )
-                  )
-                }}
-              />
-            )
-          })
-        }}
-      />
-    )
   }
+  return (
+    <Rail
+      title="Curators’ Picks"
+      subTitle="Works that Artsy curators love"
+      getItems={() => {
+        return artworks.map((artwork, index) => {
+          return (
+            <ShelfArtworkFragmentContainer
+              artwork={artwork}
+              key={artwork.slug}
+              contextModule={contextModule}
+              lazyLoad
+              onClick={() => {
+                trackEvent(
+                  trackHelpers.clickedArtworkGroup(
+                    contextModule,
+                    contextPageOwnerType,
+                    artwork.internalID,
+                    artwork.slug,
+                    index
+                  )
+                )
+              }}
+            />
+          )
+        })
+      }}
+    />
+  )
 }
 
 export const StandoutLotsRailFragmentContainer = createFragmentContainer(

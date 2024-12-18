@@ -1,18 +1,18 @@
 import { act, renderHook } from "@testing-library/react-hooks"
 import {
-  MockEnvironment,
+  type MockEnvironment,
   MockPayloadGenerator,
   createMockEnvironment,
 } from "relay-test-utils"
 import {
-  UserAddressAction,
+  type UserAddressAction,
   useUserAddressUpdates,
 } from "Apps/Order/Routes/Shipping/Hooks/useUserAddressUpdates"
 import {
   FulfillmentType,
-  FulfillmentValues,
+  type FulfillmentValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
-import { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
+import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 let mockRelayEnv: MockEnvironment
@@ -386,7 +386,7 @@ describe("useUserAddressUpdates", () => {
             }),
           })
 
-          let response = await request
+          const response = await request
 
           expect(response.errors).toEqual([
             {

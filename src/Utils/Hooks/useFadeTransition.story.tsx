@@ -1,7 +1,7 @@
 import { Button, Text } from "@artsy/palette"
 import { useState } from "react"
 import { States } from "storybook-states"
-import { UseFadeTransition, useFadeTransition } from "./useFadeTransition"
+import { type UseFadeTransition, useFadeTransition } from "./useFadeTransition"
 
 export default {
   title: "Hooks/useFadeTransition",

@@ -2,7 +2,7 @@ import { screen, fireEvent, waitFor } from "@testing-library/react"
 import { useMutation } from "Utils/Hooks/useMutation"
 import {
   EditArtworkListModal,
-  EditArtworkListEntity,
+  type EditArtworkListEntity,
 } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/EditArtworkListModal"
 import { useTracking } from "react-tracking"
 import { render } from "DevTools/renderWithMockBoot"

@@ -1,6 +1,6 @@
-import { ArtworkSummaryItem_order$data } from "__generated__/ArtworkSummaryItem_order.graphql"
-import { Omit } from "lodash"
-import * as React from "react"
+import type { ArtworkSummaryItem_order$data } from "__generated__/ArtworkSummaryItem_order.graphql"
+import type { Omit } from "lodash"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "Utils/get"
 import { getOfferItemFromOrder } from "Apps/Order/Utils/offerUtils"
@@ -8,7 +8,7 @@ import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import {
   Box,
   Flex,
-  FlexProps,
+  type FlexProps,
   Image,
   Text,
   StackableBorderBox,
@@ -33,7 +33,7 @@ const ArtworkSummaryItem: React.FC<
   const { artistNames, title, image, date } = artworkVersion || {}
   const { shippingOrigin, isUnlisted } = artwork || {}
 
-  const imageURL = image && image.resized && image.resized.url
+  const imageURL = image?.resized?.url
 
   const truncateTextStyle = {
     whiteSpace: "nowrap",

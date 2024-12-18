@@ -25,9 +25,8 @@ const calculateTime = (endTime: string, includeSeconds: boolean) => {
   }
   if (!includeSeconds) {
     return `${hours}h ${minutes}m`
-  } else {
-    return `${hours}h ${minutes}m ${seconds}s`
   }
+  return `${hours}h ${minutes}m ${seconds}s`
 }
 
 const calculateImminent = (endTime: string, imminentTime: number) =>

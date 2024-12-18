@@ -4,7 +4,7 @@ import { __ProgressiveOnboardingFollowArtist__ } from "Components/ProgressiveOnb
 import { __ProgressiveOnboardingFollowFind__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
 import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { FC, useEffect } from "react"
+import { type FC, useEffect } from "react"
 import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
 import {
   PROGRESSIVE_ONBOARDING_KEYS,

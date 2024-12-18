@@ -1,9 +1,9 @@
 import { Image, ProgressBar } from "@artsy/palette"
 import {
   PhotoThumbnail,
-  PhotoThumbnailProps,
+  type PhotoThumbnailProps,
 } from "Components/PhotoUpload/Components/PhotoThumbnail"
-import { mount, ReactWrapper } from "enzyme"
+import { mount, type ReactWrapper } from "enzyme"
 
 const deleteFn = jest.fn()
 const file = new File([new Array(10000).join(" ")], "foo.png", {
@@ -36,7 +36,7 @@ describe("PhotoThumbnail", () => {
   })
 
   it("changes state from processing to success", () => {
-    let photo = {
+    const photo = {
       id: "id",
       name: "foo.png",
       size: file.size,

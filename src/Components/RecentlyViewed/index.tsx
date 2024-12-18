@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { RecentlyViewedQueryRenderer } from "./RecentlyViewed"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 

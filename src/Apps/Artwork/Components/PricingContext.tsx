@@ -9,21 +9,24 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { BarChart, BarDescriptor } from "@artsy/palette-charts"
-import {
+import { BarChart, type BarDescriptor } from "@artsy/palette-charts"
+import type {
   AnalyticsPricingContextDimensionEnum,
   PricingContext_artwork$data,
 } from "__generated__/PricingContext_artwork.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { once } from "lodash"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import Waypoint from "react-waypoint"
-import { createCollectUrl, FilterCategory } from "./../Utils/createCollectUrl"
+import {
+  createCollectUrl,
+  type FilterCategory,
+} from "./../Utils/createCollectUrl"
 import { PricingContextModal } from "./PricingContextModal"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { PricingContextQuery } from "__generated__/PricingContextQuery.graphql"
+import type { PricingContextQuery } from "__generated__/PricingContextQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 
@@ -116,10 +119,10 @@ export const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
 
       <BarChart
         minLabel="$0"
-        maxLabel={
+        maxLabel={`${
           artwork.pricingContext.bins[artwork.pricingContext.bins.length - 1]
-            .maxPrice + "+"
-        }
+            .maxPrice
+        }+`}
         bars={artwork.pricingContext.bins.map((bin, index): BarDescriptor => {
           const isFirstBin = index === 0
           const isLastBin = artwork?.pricingContext?.bins?.length

@@ -10,12 +10,12 @@ import ArtworkGrid, {
   ArtworkGridPlaceholder,
 } from "Components/ArtworkGrid/ArtworkGrid"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
-import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { FC } from "react"
+import type { FC } from "react"
 
 import { graphql } from "react-relay"
-import {
+import type {
   SuggestedArtworksModalGridQuery,
   SuggestedArtworksModalGridQuery$data,
 } from "__generated__/SuggestedArtworksModalGridQuery.graphql"

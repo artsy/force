@@ -1,7 +1,7 @@
 import take from "lodash/take"
 import { useCallback } from "react"
 import { fetchQuery } from "react-relay"
-import { OperationType, Subscription } from "relay-runtime"
+import type { OperationType, Subscription } from "relay-runtime"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"

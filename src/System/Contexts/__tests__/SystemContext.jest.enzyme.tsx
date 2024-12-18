@@ -1,11 +1,11 @@
 import {
   SystemContextConsumer,
-  SystemContextProps,
+  type SystemContextProps,
   SystemContextProvider,
   withSystemContext,
 } from "System/Contexts/SystemContext"
 import { render } from "enzyme"
-import * as React from "react"
+import type * as React from "react"
 
 jest.mock("System/Relay/createRelaySSREnvironment", () => ({
   createRelaySSREnvironment: config => ({

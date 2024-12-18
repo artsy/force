@@ -10,7 +10,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { wait } from "Utils/wait"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
@@ -24,7 +24,7 @@ import {
   AuthModalType,
   ContextModule,
   Intent,
-  SuccessfullyLoggedIn,
+  type SuccessfullyLoggedIn,
 } from "@artsy/cohesion"
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 

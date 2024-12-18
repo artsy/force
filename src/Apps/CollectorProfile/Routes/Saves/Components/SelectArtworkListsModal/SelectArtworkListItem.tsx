@@ -1,9 +1,9 @@
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
-import { FC } from "react"
+import type { FC } from "react"
 
 import { createFragmentContainer, graphql } from "react-relay"
-import { SelectArtworkListItem_item$data } from "__generated__/SelectArtworkListItem_item.graphql"
+import type { SelectArtworkListItem_item$data } from "__generated__/SelectArtworkListItem_item.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { SavesEntityImage } from "Apps/CollectorProfile/Routes/Saves/Components/SavesEntityImage"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"

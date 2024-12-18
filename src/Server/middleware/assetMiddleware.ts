@@ -52,7 +52,6 @@ export function assetMiddleware(
 ): RequestHandler {
   if (NODE_ENV === "production") {
     return productionAssets(manifestFileName)
-  } else {
-    return developmentAssets()
   }
+  return developmentAssets()
 }

@@ -1,6 +1,6 @@
 import { Button, Message, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import * as React from "react"
+import type * as React from "react"
 
 export const CompleteWatchlistHit: React.FC<
   React.PropsWithChildren<unknown>

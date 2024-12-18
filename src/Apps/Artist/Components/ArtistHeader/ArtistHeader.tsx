@@ -4,7 +4,7 @@ import {
   Flex,
   GridColumns,
   HTML,
-  HTMLProps,
+  type HTMLProps,
   Pill,
   ReadMore,
   Spacer,
@@ -13,13 +13,13 @@ import {
 } from "@artsy/palette"
 import {
   ActionType,
-  ClickedVerifiedRepresentative,
+  type ClickedVerifiedRepresentative,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
+import type { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
 import styled from "styled-components"
 import { RouterLink } from "System/Components/RouterLink"
 import {
@@ -194,8 +194,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
                       as={RouterLink}
                       variant="profile"
                       compact={artist.verifiedRepresentatives.length > 3}
-                      {...(partner.profile?.icon &&
-                      partner.profile.icon.src1x?.src &&
+                      {...(partner.profile?.icon?.src1x?.src &&
                       partner.profile.icon.src2x?.src
                         ? {
                             src: [

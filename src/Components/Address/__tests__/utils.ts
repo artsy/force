@@ -1,6 +1,6 @@
 import { screen, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { Address } from "Components/Address/utils"
+import type { Address } from "Components/Address/utils"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { act } from "react"
 

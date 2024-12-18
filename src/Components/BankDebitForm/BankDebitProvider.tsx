@@ -1,11 +1,15 @@
-import { FC, useEffect, useState } from "react"
-import { Appearance, loadStripe, StripeError } from "@stripe/stripe-js"
+import { type FC, useEffect, useState } from "react"
+import {
+  type Appearance,
+  loadStripe,
+  type StripeError,
+} from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
 import { getENV } from "Utils/getENV"
 import { BankDebitForm } from "./BankDebitForm"
 import { CreateBankDebitSetupForOrder } from "./Mutations/CreateBankDebitSetupForOrder"
-import { BankAccountPicker_order$data } from "__generated__/BankAccountPicker_order.graphql"
-import { Payment_order$data } from "__generated__/Payment_order.graphql"
+import type { BankAccountPicker_order$data } from "__generated__/BankAccountPicker_order.graphql"
+import type { Payment_order$data } from "__generated__/Payment_order.graphql"
 import { Box, Message, Spacer, Text, useTheme } from "@artsy/palette"
 import { LoadingArea } from "Components/LoadingArea"
 import { camelCase, upperFirst } from "lodash"
@@ -160,7 +164,7 @@ export const BankDebitProvider: FC<React.PropsWithChildren<Props>> = ({
         isLoading={isStripePaymentElementLoading && !bankDebitSetupError}
       >
         {isStripePaymentElementLoading && !bankDebitSetupError && (
-          <Box height={300}></Box>
+          <Box height={300} />
         )}
         <Spacer y={2} />
         {stripeClient && (

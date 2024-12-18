@@ -5,7 +5,7 @@ import {
   ConfirmationArtworks,
   NUMBER_OF_ARTWORKS_TO_SHOW,
 } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
-import { ConfirmationArtworksGrid_Test_Query } from "__generated__/ConfirmationArtworksGrid_Test_Query.graphql"
+import type { ConfirmationArtworksGrid_Test_Query } from "__generated__/ConfirmationArtworksGrid_Test_Query.graphql"
 
 jest.unmock("react-relay")
 

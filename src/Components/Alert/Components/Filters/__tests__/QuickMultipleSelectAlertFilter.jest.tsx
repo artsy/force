@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { AlertContextProps } from "Components/Alert/AlertContext"
+import type { AlertContextProps } from "Components/Alert/AlertContext"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { QuickMultipleSelectAlertFilter } from "Components/Alert/Components/Filters/QuickMultipleSelectAlertFilter"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
@@ -114,7 +114,7 @@ function currentAlertContext(): AlertContextProps {
   } catch (error) {
     if (error.name === "TestingLibraryElementError")
       throw new Error(
-        `The currentAlertContext() helper function requires an <AlertStateInspector /> to be mounted in the current DOM.`
+        "The currentAlertContext() helper function requires an <AlertStateInspector /> to be mounted in the current DOM."
       )
   }
   return JSON.parse(contextInspector!.textContent!)

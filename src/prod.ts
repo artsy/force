@@ -12,7 +12,7 @@ console.log(chalk.green(`\n[Force] NODE_ENV=${process.env.NODE_ENV}\n`))
 
 export const app = express()
 
-const server = require(path.join(process.cwd(), `./dist/server/index.js`))
+const server = require(path.join(process.cwd(), "./dist/server/index.js"))
 
 // Mount latest force
 app.use("/", server)

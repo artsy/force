@@ -8,7 +8,7 @@ import {
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { ReactElement } from "react"
+import type { ReactElement } from "react"
 import { Media } from "Utils/Responsive"
 
 export const TextAndImageLayout: React.FC<

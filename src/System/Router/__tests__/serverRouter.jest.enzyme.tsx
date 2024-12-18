@@ -7,7 +7,7 @@ import ReactDOMServer from "react-dom/server"
 import { Title } from "react-head"
 import { graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-import { NextFunction, Request } from "express"
+import type { NextFunction, Request } from "express"
 import type { ArtsyResponse } from "Server/middleware/artsyExpress"
 import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
 import { useTracking } from "react-tracking"
@@ -61,7 +61,7 @@ jest.mock("Server/manifest", () => ({
 const defaultComponent = () => <div>hi!</div>
 
 describe("serverRouter", () => {
-  let mockFindRoutesByPath = findRoutesByPath as jest.Mock
+  const mockFindRoutesByPath = findRoutesByPath as jest.Mock
   let res: ArtsyResponse
   let req: Request
   let next: NextFunction
@@ -79,7 +79,7 @@ describe("serverRouter", () => {
       locals: { sd: {} },
     } as ArtsyResponse
 
-    let req = {
+    const req = {
       path: "/",
       url: "/",
       header: jest.fn().mockReturnValue("A random user-agent"),

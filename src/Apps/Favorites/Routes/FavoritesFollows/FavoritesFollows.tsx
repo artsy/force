@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { MetaTags } from "Components/MetaTags"
 import { SettingsSavesArtistsQueryRenderer } from "Apps/Favorites/Routes/FavoritesFollows/Components/SettingsSavesArtists"
 import { SettingsSavesCategoriesQueryRenderer } from "Apps/Favorites/Routes/FavoritesFollows/Components/SettingsSavesCategories"

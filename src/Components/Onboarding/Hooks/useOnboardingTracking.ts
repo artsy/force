@@ -2,9 +2,9 @@ import { useTracking } from "react-tracking"
 import {
   ActionType,
   ContextModule,
-  StartedOnboarding,
-  CompletedOnboarding,
-  OnboardingUserInputData,
+  type StartedOnboarding,
+  type CompletedOnboarding,
+  type OnboardingUserInputData,
 } from "@artsy/cohesion"
 import { useCallback } from "react"
 

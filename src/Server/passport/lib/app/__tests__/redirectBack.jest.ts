@@ -1,4 +1,4 @@
-import { ArtsyRequest } from "Server/middleware/artsyExpress"
+import type { ArtsyRequest } from "Server/middleware/artsyExpress"
 import redirectBack from "Server/passport/lib/app/redirectBack"
 
 describe("redirectBack", () => {

@@ -1,9 +1,9 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { Flex } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { AppToasts } from "Apps/Components/AppToasts"
 import { LayoutNav } from "Apps/Components/Layouts/Components/LayoutNav"
-import { BaseLayoutProps } from "Apps/Components/Layouts"
+import type { BaseLayoutProps } from "Apps/Components/Layouts"
 
 export const LayoutFullBleed: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
   children,

@@ -6,11 +6,11 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
 import { TopContextBar } from "Components/TopContextBar"
-import { JobApp_job$data } from "__generated__/JobApp_job.graphql"
+import type { JobApp_job$data } from "__generated__/JobApp_job.graphql"
 import { PageHTML } from "Apps/Page/Components/PageHTML"
 import { RouterLink } from "System/Components/RouterLink"
 

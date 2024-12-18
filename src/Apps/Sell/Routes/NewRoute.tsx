@@ -4,7 +4,7 @@ import { ArtistRoute } from "Apps/Sell/Routes/ArtistRoute"
 import { SellMeta } from "Apps/Sell/Routes/MarketingLanding/Components/SellMeta"
 import { SellFlowContextProvider } from "Apps/Sell/SellFlowContext"
 import { EnableRecaptcha } from "Utils/EnableRecaptcha"
-import * as React from "react"
+import type * as React from "react"
 
 export const NewRoute: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (

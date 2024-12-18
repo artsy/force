@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { DedicatedArticlesBreadcrumbs_fairOrganizer$data } from "__generated__/DedicatedArticlesBreadcrumbs_fairOrganizer.graphql"
+import type { DedicatedArticlesBreadcrumbs_fairOrganizer$data } from "__generated__/DedicatedArticlesBreadcrumbs_fairOrganizer.graphql"
 import { TopContextBar } from "Components/TopContextBar"
 
 interface DedicatedArticlesBreadcrumbsProps {

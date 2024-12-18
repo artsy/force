@@ -2,7 +2,7 @@ import { Image, Spacer, Stack, Text } from "@artsy/palette"
 import { MarketingHeader } from "./MarketingHeader"
 import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { useFeatureVariant } from "System/Hooks/useFeatureFlag"
-import { FC } from "react"
+import type { FC } from "react"
 
 export const MarketingHeaderSplitTest: FC = () => {
   const { downloadAppUrl, device } = useDeviceDetection()

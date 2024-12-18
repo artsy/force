@@ -1,7 +1,7 @@
 import { THEME } from "@artsy/palette"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import {
-  SelectedFiltersCountsLabels,
+  type SelectedFiltersCountsLabels,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 

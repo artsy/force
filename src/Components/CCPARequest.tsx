@@ -11,13 +11,13 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import createLogger from "Utils/logger"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { graphql } from "react-relay"
-import { CCPARequestMutation } from "__generated__/CCPARequestMutation.graphql"
+import type { CCPARequestMutation } from "__generated__/CCPARequestMutation.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 
 const logger = createLogger("Components/CCPARequest.tsx")

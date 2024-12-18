@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   Column,
@@ -13,7 +13,7 @@ import { ShowHeaderFragmentContainer as ShowHeader } from "./Components/ShowHead
 import { ShowAboutFragmentContainer as ShowAbout } from "./Components/ShowAbout"
 import { ShowInstallShotsFragmentContainer as ShowInstallShots } from "./Components/ShowInstallShots"
 import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "./Components/ShowViewingRoom"
-import { ShowApp_show$data } from "__generated__/ShowApp_show.graphql"
+import type { ShowApp_show$data } from "__generated__/ShowApp_show.graphql"
 import { ShowContextCardFragmentContainer as ShowContextCard } from "./Components/ShowContextCard"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { ShowArtworksEmptyStateFragmentContainer as ShowArtworksEmptyState } from "./Components/ShowArtworksEmptyState"

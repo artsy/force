@@ -12,7 +12,7 @@ import { mockLocation } from "DevTools/mockLocation"
 import { useTracking } from "react-tracking"
 import { mockStripe } from "DevTools/mockStripe"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { Router } from "found"
+import type { Router } from "found"
 import { MockBoot } from "DevTools/MockBoot"
 import { ConnectedModalDialog } from "Apps/Order/Dialogs"
 import {
@@ -138,7 +138,7 @@ describe("Accept seller offer", () => {
     })
 
     it("renders", async () => {
-      let { wrapper } = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...testOrder,
           stateExpiresAt: DateTime.fromISO(NOW)
@@ -146,11 +146,11 @@ describe("Accept seller offer", () => {
             .toString(),
         }),
       })
-      let page = new OrderAppTestPage(wrapper)
+      const page = new OrderAppTestPage(wrapper)
 
       expect(page.countdownTimer.text()).toContain("01d 04h 22m 59s left")
       expect(page.orderStepper.text()).toMatchInlineSnapshot(`"RespondReview"`)
-      expect(page.orderStepperCurrentStep).toBe(`Review`)
+      expect(page.orderStepperCurrentStep).toBe("Review")
       expect(page.transactionSummary.text()).toMatch(
         "Accept seller's offerChange"
       )
@@ -182,10 +182,10 @@ describe("Accept seller offer", () => {
 
     it("routes to status page after mutation completes", async () => {
       commitMutation.mockReturnValue(acceptOfferSuccess)
-      let { wrapper } = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
-      let page = new OrderAppTestPage(wrapper)
+      const page = new OrderAppTestPage(wrapper)
 
       await page.clickSubmit()
       expect(pushMock).toHaveBeenCalledWith(
@@ -195,20 +195,20 @@ describe("Accept seller offer", () => {
 
     it("shows the button spinner while loading the mutation", () => {
       isCommittingMutation = true
-      let { wrapper } = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
-      let page = new OrderAppTestPage(wrapper)
+      const page = new OrderAppTestPage(wrapper)
 
       expect(page.isLoading()).toBeTruthy()
     })
 
     it("shows an error modal when there is an error from the server", async () => {
       commitMutation.mockReturnValue(acceptOfferFailed)
-      let { wrapper } = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
-      let page = new OrderAppTestPage(wrapper)
+      const page = new OrderAppTestPage(wrapper)
 
       await page.clickSubmit()
       await page.expectAndDismissDefaultErrorDialog()
@@ -216,10 +216,10 @@ describe("Accept seller offer", () => {
 
     it("shows SCA modal when required", async () => {
       commitMutation.mockReturnValue(acceptOfferWithActionRequired)
-      let { wrapper } = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
-      let page = new OrderAppTestPage(wrapper)
+      const page = new OrderAppTestPage(wrapper)
       await page.clickSubmit()
 
       expect(_mockStripe().handleCardAction).toBeCalledWith("client-secret")
@@ -227,10 +227,10 @@ describe("Accept seller offer", () => {
 
     it("shows an error modal if there is a capture_failed error", async () => {
       commitMutation.mockReturnValue(acceptOfferPaymentFailed)
-      let { wrapper } = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
-      let page = new OrderAppTestPage(wrapper)
+      const page = new OrderAppTestPage(wrapper)
 
       await page.clickSubmit()
       await page.expectAndDismissErrorDialogMatching(
@@ -244,10 +244,10 @@ describe("Accept seller offer", () => {
 
     it("shows an error modal if there is a capture_failed error with insufficient_funds", async () => {
       commitMutation.mockReturnValue(acceptOfferPaymentFailedInsufficientFunds)
-      let { wrapper } = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
-      let page = new OrderAppTestPage(wrapper)
+      const page = new OrderAppTestPage(wrapper)
 
       await page.clickSubmit()
       await page.expectAndDismissErrorDialogMatching(
@@ -261,10 +261,10 @@ describe("Accept seller offer", () => {
 
     it("shows an error modal and routes the user to the artist page if there is insufficient inventory", async () => {
       commitMutation.mockReturnValue(acceptOfferInsufficientInventoryFailure)
-      let { wrapper } = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
-      let page = new OrderAppTestPage(wrapper)
+      const page = new OrderAppTestPage(wrapper)
 
       await page.clickSubmit()
       await page.expectAndDismissErrorDialogMatching(

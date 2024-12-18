@@ -1,14 +1,14 @@
 import { compact, take } from "lodash"
 import { useMemo } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   CellPartnerFragmentContainer,
   CellPartnerPlaceholder,
 } from "Components/Cells/CellPartner"
 import { Rail } from "Components/Rail/Rail"
-import { PartnersRail_partnerCategory$data } from "__generated__/PartnersRail_partnerCategory.graphql"
-import { PartnersRailQuery } from "__generated__/PartnersRailQuery.graphql"
+import type { PartnersRail_partnerCategory$data } from "__generated__/PartnersRail_partnerCategory.graphql"
+import type { PartnersRailQuery } from "__generated__/PartnersRailQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Skeleton } from "@artsy/palette"
 

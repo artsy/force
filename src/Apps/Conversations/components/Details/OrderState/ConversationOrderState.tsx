@@ -2,7 +2,7 @@ import { Flex, Text } from "@artsy/palette"
 import CloseFillIcon from "@artsy/icons/CloseFillIcon"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 import { graphql, useFragment } from "react-relay"
-import {
+import type {
   ConversationOrderState_state$key,
   CommerceOrderStateEnum,
   CommerceOrderModeEnum,

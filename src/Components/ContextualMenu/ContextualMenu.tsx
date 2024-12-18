@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react"
+import React, { type ReactElement } from "react"
 
 import MoreIcon from "@artsy/icons/MoreIcon"
 import { Clickable, Dropdown } from "@artsy/palette"
@@ -58,9 +58,8 @@ export const ContextualMenu: React.FC<
             return React.cloneElement(child, {
               onClick,
             })
-          } else {
-            return child
           }
+          return child
         })
       }}
     >

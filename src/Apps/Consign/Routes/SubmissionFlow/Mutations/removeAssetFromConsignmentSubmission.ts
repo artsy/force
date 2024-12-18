@@ -1,4 +1,4 @@
-import { removeAssetFromConsignmentSubmissionMutation } from "__generated__/removeAssetFromConsignmentSubmissionMutation.graphql"
+import type { removeAssetFromConsignmentSubmissionMutation } from "__generated__/removeAssetFromConsignmentSubmissionMutation.graphql"
 import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
 

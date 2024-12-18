@@ -5,7 +5,7 @@ const { location: originalLocation } = window
 describe("afterUpdateRedirect", () => {
   beforeAll(() => {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    delete window.location
+    window.location = undefined
   })
   afterEach(() => {
     window.location = originalLocation

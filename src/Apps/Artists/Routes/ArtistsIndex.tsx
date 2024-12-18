@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   Box,
@@ -10,8 +10,8 @@ import {
   Join,
   Spacer,
 } from "@artsy/palette"
-import { ArtistsIndex_featuredArtists$data } from "__generated__/ArtistsIndex_featuredArtists.graphql"
-import { ArtistsIndex_featuredGenes$data } from "__generated__/ArtistsIndex_featuredGenes.graphql"
+import type { ArtistsIndex_featuredArtists$data } from "__generated__/ArtistsIndex_featuredArtists.graphql"
+import type { ArtistsIndex_featuredGenes$data } from "__generated__/ArtistsIndex_featuredGenes.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 import { ArtistsIndexMeta } from "Apps/Artists/Components/ArtistsIndexMeta"
 import { ArtistsCarouselCellFragmentContainer } from "Apps/Artists/Components/ArtistsCarouselCell"
@@ -73,7 +73,7 @@ export const ArtistsIndex: React.FC<
                     featuredLink={featuredLink}
                     index={index}
                     // Improves LCP for above the fold content
-                    lazyLoad={isMobile ? true : false}
+                    lazyLoad={!!isMobile}
                   />
                 )
               })}
@@ -131,9 +131,11 @@ export const ArtistsIndex: React.FC<
                             artist={artist}
                             // LCP above the fold optimization for mobile
                             lazyLoad={
-                              isMobile && geneIndex === 0 && artistsIndex === 0
-                                ? false
-                                : true
+                              !(
+                                isMobile &&
+                                geneIndex === 0 &&
+                                artistsIndex === 0
+                              )
                             }
                           />
                         </Column>

@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { Checkbox, Flex } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
