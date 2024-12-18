@@ -1,6 +1,6 @@
 import { Shelf } from "@artsy/palette"
 import { CellArtistPlaceholder } from "Components/Cells/CellArtist"
-import * as React from "react"
+import type * as React from "react"
 
 export interface PartnerArtistsCarouselPlaceholderProps {
   count: number

@@ -1,8 +1,8 @@
 import { LoadingClassName } from "System/Relay/renderWithLoadProgress"
 import "DevTools/renderUntil"
-import { RenderUntilPredicate, mount } from "enzyme"
-import * as React from "react"
-import { MockRelayRenderer, MockRelayRendererProps } from "./MockRelayRenderer"
+import { type RenderUntilPredicate, mount } from "enzyme"
+import type * as React from "react"
+import { MockRelayRenderer, type MockRelayRendererProps } from "./MockRelayRenderer"
 
 /**
  * A {@link ReactWrapper.prototype.renderUntil} callback implementation that

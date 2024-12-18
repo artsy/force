@@ -1,6 +1,6 @@
 import { OwnerType } from "@artsy/cohesion"
-import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
-import { SavedSearchEntity } from "Components/SavedSearchAlert/types"
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import {
   parseDefaultCriteria,
   getSearchCriteriaFromFilters,

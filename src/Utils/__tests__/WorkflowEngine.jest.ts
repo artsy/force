@@ -105,7 +105,7 @@ describe("WorkflowEngine", () => {
     })
 
     describe("#next", () => {
-      it("moves through the states; making decisions and stopping at the end", function () {
+      it("moves through the states; making decisions and stopping at the end", () => {
         expect(machine.current()).toEqual("first")
         expect(machine.next()).toEqual("second")
         expect(machine.next()).toEqual("falseFirst") // Makes firstDecision

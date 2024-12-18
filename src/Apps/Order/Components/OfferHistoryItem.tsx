@@ -1,10 +1,10 @@
-import { Flex, FlexProps, Spacer, Text } from "@artsy/palette"
-import { OfferHistoryItem_order$data } from "__generated__/OfferHistoryItem_order.graphql"
+import { Flex, type FlexProps, Spacer, Text } from "@artsy/palette"
+import type { OfferHistoryItem_order$data } from "__generated__/OfferHistoryItem_order.graphql"
 import {
   StepSummaryItem,
-  StepSummaryItemProps,
+  type StepSummaryItemProps,
 } from "Components/StepSummaryItem"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RevealButton } from "./RevealButton"
 import { getOfferItemFromOrder } from "Apps/Order/Utils/offerUtils"

@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react"
+import type { FC, ReactNode } from "react"
 import { ProgressiveOnboardingAlertCreate } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
 import { isEmpty } from "lodash"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"

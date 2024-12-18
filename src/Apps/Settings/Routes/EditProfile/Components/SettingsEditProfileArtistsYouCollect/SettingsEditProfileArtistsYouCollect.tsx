@@ -1,18 +1,18 @@
 import {
   AutocompleteInput,
   Box,
-  BoxProps,
+  type BoxProps,
   Text,
   useToasts,
 } from "@artsy/palette"
 import { compact } from "lodash"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { SettingsEditProfileArtistsYouCollectAutocompleteQuery } from "__generated__/SettingsEditProfileArtistsYouCollectAutocompleteQuery.graphql"
-import { SettingsEditProfileArtistsYouCollect_me$data } from "__generated__/SettingsEditProfileArtistsYouCollect_me.graphql"
+import type { SettingsEditProfileArtistsYouCollectAutocompleteQuery } from "__generated__/SettingsEditProfileArtistsYouCollectAutocompleteQuery.graphql"
+import type { SettingsEditProfileArtistsYouCollect_me$data } from "__generated__/SettingsEditProfileArtistsYouCollect_me.graphql"
 import { SettingsEditProfileArtistsYouCollectRemoveButton } from "./SettingsEditProfileArtistsYouCollectRemoveButton"
 import { useAddArtistYouCollect } from "./useAddArtistYouCollect"
 import { useRemoveArtistYouCollect } from "./useRemoveArtistYouCollect"

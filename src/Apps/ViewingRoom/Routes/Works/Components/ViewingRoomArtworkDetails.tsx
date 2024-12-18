@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { Button, GridColumns, Column, HTML, ReadMore } from "@artsy/palette"
-import { ViewingRoomArtworkDetails_artwork$data } from "__generated__/ViewingRoomArtworkDetails_artwork.graphql"
+import type { ViewingRoomArtworkDetails_artwork$data } from "__generated__/ViewingRoomArtworkDetails_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"

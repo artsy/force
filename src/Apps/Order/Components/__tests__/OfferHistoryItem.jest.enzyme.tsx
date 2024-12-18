@@ -1,6 +1,6 @@
 import { Button } from "@artsy/palette"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import { OfferHistoryItemTestQuery$rawResponse } from "__generated__/OfferHistoryItemTestQuery.graphql"
+import type { OfferHistoryItemTestQuery$rawResponse } from "__generated__/OfferHistoryItemTestQuery.graphql"
 import {
   OfferWithTotals,
   Offers,

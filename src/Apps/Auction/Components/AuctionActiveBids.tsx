@@ -1,20 +1,24 @@
 import {
   Box,
   Button,
-  ButtonSize,
+  type ButtonSize,
   Column as BaseColumn,
-  ColumnProps,
+  type ColumnProps,
   GridColumns,
   Join,
   Separator,
   Spacer,
   Text,
 } from "@artsy/palette"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { usePoll } from "Utils/Hooks/usePoll"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
-import { AuctionActiveBids_me$data } from "__generated__/AuctionActiveBids_me.graphql"
+import type { AuctionActiveBids_me$data } from "__generated__/AuctionActiveBids_me.graphql"
 import { AuctionLotInfoFragmentContainer } from "Apps/Auction/Routes/Bid/Components/AuctionLotInfo"
 import { Media } from "Utils/Responsive"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"

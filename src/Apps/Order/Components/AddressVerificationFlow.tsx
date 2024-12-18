@@ -1,7 +1,7 @@
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AddressVerificationFlowQuery } from "__generated__/AddressVerificationFlowQuery.graphql"
-import { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
+import type { AddressVerificationFlowQuery } from "__generated__/AddressVerificationFlowQuery.graphql"
+import type { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
 import {
   BorderedRadio,
   Box,
@@ -17,11 +17,11 @@ import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import {
   ActionType,
-  ClickedCloseValidationAddressModal,
-  ClickedValidationAddressOptions,
+  type ClickedCloseValidationAddressModal,
+  type ClickedValidationAddressOptions,
   ContextModule,
   OwnerType,
-  ValidationAddressViewed,
+  type ValidationAddressViewed,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 

@@ -1,4 +1,4 @@
-import { Variant } from "unleash-client"
+import type { Variant } from "unleash-client"
 
 export type FeatureFlags = Array<string>
 

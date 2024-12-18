@@ -12,15 +12,15 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
 import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
-import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
+import type { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import {
   ArtistAutoComplete,
-  AutocompleteArtist,
+  type AutocompleteArtist,
 } from "Apps/Sell/Components/ArtistAutocomplete"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { extractNodes } from "Utils/extractNodes"
-import { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
+import type { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
 import { useFormikContext } from "formik"
 import { debounce, sortBy } from "lodash"
 import { useEffect, useMemo, useState } from "react"

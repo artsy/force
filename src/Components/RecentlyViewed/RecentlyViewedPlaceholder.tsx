@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { ShelfArtworkPlaceholder } from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail/Rail"
 

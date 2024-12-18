@@ -3,8 +3,8 @@ import { Z } from "Apps/Components/constants"
 import { NavBarSubMenu } from "./Menus"
 import { NavBarItemButton, NavBarItemUnfocusableAnchor } from "./NavBarItem"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { MenuData } from "Components/NavBar/menuData"
+import type * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import type { MenuData } from "Components/NavBar/menuData"
 
 interface NavBarDropdownPanelProps {
   href: string

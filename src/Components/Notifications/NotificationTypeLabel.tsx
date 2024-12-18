@@ -1,6 +1,6 @@
 import { Flex, Text } from "@artsy/palette"
 import { useFragment, graphql } from "react-relay"
-import {
+import type {
   NotificationTypeLabel_notification$key,
   NotificationTypesEnum,
 } from "__generated__/NotificationTypeLabel_notification.graphql"

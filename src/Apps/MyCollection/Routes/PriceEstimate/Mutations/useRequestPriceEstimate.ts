@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { useRequestPriceEstimateMutation } from "__generated__/useRequestPriceEstimateMutation.graphql"
+import type { useRequestPriceEstimateMutation } from "__generated__/useRequestPriceEstimateMutation.graphql"
 
 export const useRequestPriceEstimate = () => {
   return useMutation<useRequestPriceEstimateMutation>({

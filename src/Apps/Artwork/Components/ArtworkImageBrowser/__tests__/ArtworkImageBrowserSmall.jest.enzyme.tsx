@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ArtworkImageBrowserSmallFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowserSmall"
-import { ArtworkImageBrowserSmall_Test_Query } from "__generated__/ArtworkImageBrowserSmall_Test_Query.graphql"
+import type { ArtworkImageBrowserSmall_Test_Query } from "__generated__/ArtworkImageBrowserSmall_Test_Query.graphql"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking", () => ({

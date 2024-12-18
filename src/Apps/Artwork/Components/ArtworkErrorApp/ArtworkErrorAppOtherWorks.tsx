@@ -4,7 +4,7 @@ import { HeaderPlaceholder } from "Apps/Artwork/Components/OtherWorks/Header"
 import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { ArtworkErrorAppOtherWorksQuery } from "__generated__/ArtworkErrorAppOtherWorksQuery.graphql"
+import type { ArtworkErrorAppOtherWorksQuery } from "__generated__/ArtworkErrorAppOtherWorksQuery.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { withSystemContext } from "System/Contexts/SystemContext"
 

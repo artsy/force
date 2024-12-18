@@ -1,18 +1,18 @@
 import { Button, Flex, Text, Spacer } from "@artsy/palette"
-import { Reject_order$data } from "__generated__/Reject_order.graphql"
-import { RejectOfferMutation } from "__generated__/RejectOfferMutation.graphql"
+import type { Reject_order$data } from "__generated__/Reject_order.graphql"
+import type { RejectOfferMutation } from "__generated__/RejectOfferMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
-import { Router } from "found"
-import { FC } from "react"
+import type { Router } from "found"
+import type { FC } from "react"
 import { CountdownTimer } from "Components/CountdownTimer"
 import { StepSummaryItem } from "Components/StepSummaryItem"
 import { Media } from "Utils/Responsive"
 import { logger } from "Apps/Order/Routes/Respond"
 import { counterofferFlowSteps } from "Apps/Order/Components/OrderStepper"
-import { Dialog, injectDialog } from "Apps/Order/Dialogs"
+import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
-  CommitMutation,
+  type CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import { createFragmentContainer, graphql } from "react-relay"

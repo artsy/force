@@ -1,20 +1,20 @@
-import { Formik, FormikHelpers } from "formik"
+import { Formik, type FormikHelpers } from "formik"
 import createLogger from "Utils/logger"
 import { ModalDialog } from "@artsy/palette"
 
 import { useCreateCollection } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/Mutations/useCreateCollection"
-import { FC } from "react"
+import type { FC } from "react"
 import { useTracking } from "react-tracking"
-import { ActionType, CreatedArtworkList } from "@artsy/cohesion"
+import { ActionType, type CreatedArtworkList } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ArtworkListForm,
-  ArtworkListFormikValues,
+  type ArtworkListFormikValues,
   validationSchema,
 } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkListForm/ArtworkListForm"
 import {
   ArtworkModalHeaderInfo,
-  ArtworkModalHeaderInfoEntity,
+  type ArtworkModalHeaderInfoEntity,
 } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkModalHeaderInfo"
 
 export interface ArtworkList {

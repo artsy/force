@@ -1,4 +1,4 @@
-import { Box, Flex, FlexProps, Image, Spacer } from "@artsy/palette"
+import { Box, Flex, type FlexProps, Image, Spacer } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import {
   useDeviceDetection,

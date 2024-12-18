@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { PartnerContacts_Test_Query } from "__generated__/PartnerContacts_Test_Query.graphql"
+import type { PartnerContacts_Test_Query } from "__generated__/PartnerContacts_Test_Query.graphql"
 import { PartnerContactsFragmentContainer } from "Apps/Partner/Components/PartnerContacts/PartnerContacts"
 import { PartnerContactCard } from "Apps/Partner/Components/PartnerContacts/PartnerContactCard"
 

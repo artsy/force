@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { AuctionAppFragmentContainer } from "Apps/Auction/AuctionApp"
-import { AuctionAppTestQuery } from "__generated__/AuctionAppTestQuery.graphql"
+import type { AuctionAppTestQuery } from "__generated__/AuctionAppTestQuery.graphql"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { getENV } from "Utils/getENV"

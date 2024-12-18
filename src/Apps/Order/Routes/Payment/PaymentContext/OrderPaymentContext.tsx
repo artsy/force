@@ -1,8 +1,9 @@
-import React, { useReducer, useContext, createContext, Dispatch } from "react"
-import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
+import type React from "react"
+import { useReducer, useContext, createContext, type Dispatch } from "react"
+import type { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { orderPaymentReducer } from "./orderPaymentReducer"
 import createLogger from "Utils/logger"
-import { BankAccountSelection } from "Apps/Order/Routes/Payment/index"
+import type { BankAccountSelection } from "Apps/Order/Routes/Payment/index"
 
 const logger = createLogger("[dev: OrderPaymentContext] state:")
 

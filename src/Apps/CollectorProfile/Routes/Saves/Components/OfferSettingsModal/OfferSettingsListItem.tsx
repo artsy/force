@@ -1,12 +1,12 @@
 import { Flex, Image, Toggle, Text, Spacer } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { OfferSettingsListItem_item$data } from "__generated__/OfferSettingsListItem_item.graphql"
+import type { OfferSettingsListItem_item$data } from "__generated__/OfferSettingsListItem_item.graphql"
 import { useFormikContext } from "formik"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
-import { OfferSettingsFormModel } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsModal"
+import type { OfferSettingsFormModel } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsModal"
 import HideIcon from "@artsy/icons/HideIcon"
 
 interface OfferSettingsListItemProps {

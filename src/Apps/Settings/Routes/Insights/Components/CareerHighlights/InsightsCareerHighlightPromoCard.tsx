@@ -1,7 +1,7 @@
 import {
   Button,
   Clickable,
-  ClickableProps,
+  type ClickableProps,
   Flex,
   Image,
   ResponsiveBox,

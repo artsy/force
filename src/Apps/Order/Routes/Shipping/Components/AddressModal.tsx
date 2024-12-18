@@ -1,4 +1,4 @@
-import { useState, FC, useEffect } from "react"
+import { useState, type FC, useEffect } from "react"
 import * as Yup from "yup"
 import {
   Button,
@@ -11,20 +11,20 @@ import {
   Banner,
 } from "@artsy/palette"
 
-import { Form, Formik, FormikHelpers, useFormikContext } from "formik"
+import { Form, Formik, type FormikHelpers, useFormikContext } from "formik"
 
 import { addressWithFallbackValues } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import createLogger from "Utils/logger"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
-import { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
+import type { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import {
-  SavedAddressResult,
-  UserAddressAction,
+  type SavedAddressResult,
+  type UserAddressAction,
   useUserAddressUpdates,
 } from "Apps/Order/Routes/Shipping/Hooks/useUserAddressUpdates"
 import {
   AddressFormFields,
-  FormikContextWithAddress,
+  type FormikContextWithAddress,
   addressFormFieldsValidator,
 } from "Components/Address/AddressFormFields"
 

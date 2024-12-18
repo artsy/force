@@ -1,7 +1,7 @@
 import {
   Clickable,
   Flex,
-  FlexProps,
+  type FlexProps,
   HTML,
   Join,
   ReadMore,
@@ -9,7 +9,7 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { PrivateArtworkAdditionalInfo_artwork$key } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
+import type { PrivateArtworkAdditionalInfo_artwork$key } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"

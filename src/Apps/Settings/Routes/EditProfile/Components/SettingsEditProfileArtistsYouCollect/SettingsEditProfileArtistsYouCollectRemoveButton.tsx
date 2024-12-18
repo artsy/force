@@ -1,5 +1,5 @@
-import { Clickable, ClickableProps } from "@artsy/palette"
-import { FC, useState } from "react"
+import { Clickable, type ClickableProps } from "@artsy/palette"
+import { type FC, useState } from "react"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 

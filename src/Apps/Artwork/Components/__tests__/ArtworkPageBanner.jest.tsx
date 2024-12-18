@@ -4,8 +4,8 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
-import { DeepPartial } from "Utils/typeSupport"
-import { ArtworkPageBanner_Test_Query$rawResponse } from "__generated__/ArtworkPageBanner_Test_Query.graphql"
+import type { DeepPartial } from "Utils/typeSupport"
+import type { ArtworkPageBanner_Test_Query$rawResponse } from "__generated__/ArtworkPageBanner_Test_Query.graphql"
 import { graphql } from "react-relay"
 
 const mockUseRouter = useRouter as jest.Mock

@@ -1,4 +1,4 @@
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
 import loadable from "@loadable/component"
 

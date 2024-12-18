@@ -1,12 +1,12 @@
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { Button, Card, GridColumns, Column, Box } from "@artsy/palette"
 import {
-  RelayPaginationProp,
+  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
 } from "react-relay"
-import { ViewingRoomsLatestGrid_viewingRooms$data } from "__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
+import type { ViewingRoomsLatestGrid_viewingRooms$data } from "__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 import { cropped } from "Utils/resized"
 import { extractNodes } from "Utils/extractNodes"

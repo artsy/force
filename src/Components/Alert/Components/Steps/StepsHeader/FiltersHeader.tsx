@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { Clickable, Flex, Text } from "@artsy/palette"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"

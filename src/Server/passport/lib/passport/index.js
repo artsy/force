@@ -12,7 +12,7 @@ const callbacks = require("./callbacks")
 const { serialize, deserialize } = require("./serializers")
 const opts = require("../options")
 
-module.exports = function () {
+module.exports = () => {
   passport.serializeUser(serialize)
   passport.deserializeUser(deserialize)
   passport.use(

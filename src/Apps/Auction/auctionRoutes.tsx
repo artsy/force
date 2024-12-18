@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { Redirect } from "found"
 import { graphql } from "react-relay"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 
 const AuctionApp = loadable(

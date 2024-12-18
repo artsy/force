@@ -31,10 +31,10 @@ export const getSaleOrLotTimerInfo = (
     extendedBiddingEndAt,
   } = options
 
-  const parsedDays = parseInt(days, 10)
-  const parsedHours = parseInt(hours, 10)
-  const parsedMinutes = parseInt(minutes, 10)
-  const parsedSeconds = parseInt(seconds, 10)
+  const parsedDays = Number.parseInt(days, 10)
+  const parsedHours = Number.parseInt(hours, 10)
+  const parsedMinutes = Number.parseInt(minutes, 10)
+  const parsedSeconds = Number.parseInt(seconds, 10)
 
   let copy = ""
   let color = "blue100"

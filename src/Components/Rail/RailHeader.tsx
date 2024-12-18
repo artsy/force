@@ -1,6 +1,6 @@
 import { Box, Flex, SkeletonText, Sup, Text as BaseText } from "@artsy/palette"
 import { useRouter } from "found"
-import * as React from "react"
+import type * as React from "react"
 import { RouterLink } from "System/Components/RouterLink"
 import { getENV } from "Utils/getENV"
 import { getInternalHref } from "Utils/url"

@@ -4,7 +4,7 @@ import {
   parseTokenFromRouter,
 } from "Apps/Preferences/PreferencesApp"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { PreferencesAppTestQuery } from "__generated__/PreferencesAppTestQuery.graphql"
+import type { PreferencesAppTestQuery } from "__generated__/PreferencesAppTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -47,8 +47,8 @@ describe("PreferencesApp", () => {
       Viewer: () => ({ notificationPreferences: mockPreferences }),
     })
 
-    let saveButton = screen.getByRole("button", { name: "Save" })
-    let checkboxes = screen.getAllByRole("checkbox")
+    const saveButton = screen.getByRole("button", { name: "Save" })
+    const checkboxes = screen.getAllByRole("checkbox")
 
     expect(saveButton).toBeDisabled()
 
@@ -64,8 +64,8 @@ describe("PreferencesApp", () => {
 
     expect(screen.getByText("Subscribe to all")).toBeInTheDocument()
 
-    let checkboxes = screen.getAllByRole("checkbox")
-    let unsubscribeFromAllCheckbox = checkboxes.pop()!
+    const checkboxes = screen.getAllByRole("checkbox")
+    const unsubscribeFromAllCheckbox = checkboxes.pop()!
 
     fireEvent.click(checkboxes[3])
     fireEvent.click(checkboxes[4])
@@ -86,9 +86,9 @@ describe("PreferencesApp", () => {
 
     expect(screen.getByText("Unsubscribe from all")).toBeInTheDocument()
 
-    let checkboxes = screen.getAllByRole("checkbox")
-    let subscribeToAllCheckbox = checkboxes[0]
-    let unsubscribeFromAllCheckbox = checkboxes.pop()
+    const checkboxes = screen.getAllByRole("checkbox")
+    const subscribeToAllCheckbox = checkboxes[0]
+    const unsubscribeFromAllCheckbox = checkboxes.pop()
 
     fireEvent.click(checkboxes[3])
 
@@ -103,9 +103,9 @@ describe("PreferencesApp", () => {
 
     expect(screen.getByText("Unsubscribe from all")).toBeInTheDocument()
 
-    let checkboxes = screen.getAllByRole("checkbox")
-    let subscribeToAllCheckbox = checkboxes[0]
-    let unsubscribeFromAllCheckbox = checkboxes.pop()
+    const checkboxes = screen.getAllByRole("checkbox")
+    const subscribeToAllCheckbox = checkboxes[0]
+    const unsubscribeFromAllCheckbox = checkboxes.pop()
 
     fireEvent.click(subscribeToAllCheckbox)
 

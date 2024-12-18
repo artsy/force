@@ -1,5 +1,5 @@
 import { Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { RouterLink } from "System/Components/RouterLink"
 
 export const SettingsEditSettingsDeleteAccount: FC<

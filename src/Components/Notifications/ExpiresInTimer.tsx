@@ -2,7 +2,7 @@ import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import { Flex, Text } from "@artsy/palette"
 import { formattedTimeLeft } from "Components/Notifications/util"
 import { useTimer } from "Utils/Hooks/useTimer"
-import { FC } from "react"
+import type { FC } from "react"
 
 interface ExpiresInTimerProps {
   expiresAt?: string | null

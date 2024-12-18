@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { ColorFilter } from "./ColorFilter"
 import { MediumFilter } from "./MediumFilter"
 import { PriceRangeFilter } from "./PriceRangeFilter"

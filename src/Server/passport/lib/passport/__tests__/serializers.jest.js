@@ -10,11 +10,11 @@ jest.mock("superagent")
 
 /* eslint-disable jest/no-done-callback */
 
-describe("#serialize", function () {
+describe("#serialize", () => {
   let resolveSerialize
 
-  beforeEach(function () {
-    for (let method of ["get", "end", "set", "post", "send", "status"]) {
+  beforeEach(() => {
+    for (const method of ["get", "end", "set", "post", "send", "status"]) {
       request[method] = jest.fn().mockReturnValue(request)
     }
     resolveSerialize = () => {
@@ -23,9 +23,9 @@ describe("#serialize", function () {
     }
   })
 
-  it("only stores select data in the session", function (done) {
+  it("only stores select data in the session", (done) => {
     const user = { id: "craig", foo: "baz", bam: "bop" }
-    serialize({}, user, function (_err, data) {
+    serialize({}, user, (_err, data) => {
       expect(data.foo != null).not.toBeTruthy()
       expect(data.id).toEqual("craig")
       done()
@@ -33,18 +33,18 @@ describe("#serialize", function () {
     resolveSerialize()
   })
 
-  it("add authentications", function (done) {
+  it("add authentications", (done) => {
     const user = { id: "craig", foo: "baz", bam: "bop" }
-    serialize({}, user, function (_err, data) {
+    serialize({}, user, (_err, data) => {
       expect(data.authentications[0].provider).toEqual("facebook")
       done()
     })
     resolveSerialize()
   })
 
-  it("works when there's an error from Gravity", function (done) {
+  it("works when there's an error from Gravity", (done) => {
     const user = { id: "craig", foo: "baz", bam: "bop" }
-    serialize({}, user, function (err) {
+    serialize({}, user, (err) => {
       expect(err.message).toEqual("fail")
       done()
     })
@@ -52,7 +52,7 @@ describe("#serialize", function () {
     request.end.mock.calls[1][0](new Error("fail"), null)
   })
 
-  it("glues the user onto the request", function (done) {
+  it("glues the user onto the request", (done) => {
     const user = { id: "craig", foo: "baz", bam: "bop" }
     const req = { user: null }
     serialize(req, user, (_err, _data) => {
@@ -63,9 +63,9 @@ describe("#serialize", function () {
   })
 })
 
-describe("#deserialize", function () {
-  it("passes the user data through", function (done) {
-    deserialize({ id: "craig", name: "Craig" }, function (_err, user) {
+describe("#deserialize", () => {
+  it("passes the user data through", (done) => {
+    deserialize({ id: "craig", name: "Craig" }, (_err, user) => {
       expect(user.name).toEqual("Craig")
       done()
     })

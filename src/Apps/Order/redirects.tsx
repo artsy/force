@@ -1,9 +1,9 @@
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
 import { get } from "Utils/get"
-import { RedirectPredicate, RedirectRecord } from "./getRedirect"
+import type { RedirectPredicate, RedirectRecord } from "./getRedirect"
 
-import { redirects_order$data } from "__generated__/redirects_order.graphql"
+import type { redirects_order$data } from "__generated__/redirects_order.graphql"
 import { extractNodes } from "Utils/extractNodes"
 
 interface OrderQuery {

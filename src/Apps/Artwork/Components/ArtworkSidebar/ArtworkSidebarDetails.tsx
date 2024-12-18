@@ -1,5 +1,5 @@
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarDetails_artwork$data } from "__generated__/ArtworkSidebarDetails_artwork.graphql"
+import type { ArtworkSidebarDetails_artwork$data } from "__generated__/ArtworkSidebarDetails_artwork.graphql"
 import { Box, Spacer, Text } from "@artsy/palette"
 import { ArtworkSidebarClassificationFragmentContainer } from "./ArtworkSidebarClassification"
 import { ArtworkSidebarAuthenticityCertificateFragmentContainer } from "./ArtworkSidebarAuthenticityCertificate"

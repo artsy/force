@@ -7,10 +7,10 @@ const transitionDelayMs = 100
 const transitionDurationMs = 500
 
 enum TransitionStage {
-  Pending,
-  Transition,
-  Done,
-  Error,
+  Pending = 0,
+  Transition = 1,
+  Done = 2,
+  Error = 3,
 }
 
 interface ViewInRoomTransitionProps {

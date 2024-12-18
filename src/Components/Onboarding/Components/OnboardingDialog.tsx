@@ -1,7 +1,7 @@
 import { OnboardingModal } from "Components/Onboarding/Components/OnboardingModal"
 import { OnboardingSteps } from "Components/Onboarding/Components/OnboardingSteps"
 import { OnboardingProvider } from "Components/Onboarding/Hooks/useOnboardingContext"
-import { FC } from "react"
+import type { FC } from "react"
 
 interface OnboardingDialogProps {
   onClose(): void

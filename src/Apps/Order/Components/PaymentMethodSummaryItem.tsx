@@ -1,7 +1,7 @@
-import { PaymentMethodSummaryItem_order$data } from "__generated__/PaymentMethodSummaryItem_order.graphql"
+import type { PaymentMethodSummaryItem_order$data } from "__generated__/PaymentMethodSummaryItem_order.graphql"
 import {
   StepSummaryItem,
-  StepSummaryItemProps,
+  type StepSummaryItemProps,
 } from "Components/StepSummaryItem"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreditCardDetails } from "./CreditCardDetails"

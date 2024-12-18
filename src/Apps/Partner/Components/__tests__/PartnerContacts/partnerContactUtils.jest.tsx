@@ -3,7 +3,7 @@ import {
   getGoogleMapUrl,
   getGoogleStaticMapImageUrl,
 } from "Apps/Partner/Components/PartnerContacts/partnerContactUtils"
-import { PartnerContactMap_location$data } from "__generated__/PartnerContactMap_location.graphql"
+import type { PartnerContactMap_location$data } from "__generated__/PartnerContactMap_location.graphql"
 
 describe("PartnerContactUtils", () => {
   it.each([

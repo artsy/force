@@ -8,7 +8,7 @@ import {
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { logout } from "Utils/auth"
-import * as React from "react"
+import type * as React from "react"
 import { useTracking } from "react-tracking"
 import { NavBarMobileMenuAuthentication } from "./NavBarMobileMenuAuthentication"
 import {

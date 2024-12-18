@@ -1,7 +1,13 @@
-import { FC, memo } from "react"
+import { type FC, memo } from "react"
 import { DFPSlotsProvider } from "react-dfp"
-import { Box, BoxProps, Clickable, ResponsiveBox, Text } from "@artsy/palette"
-import { AdUnit, AdSize } from "./types"
+import {
+  Box,
+  type BoxProps,
+  Clickable,
+  ResponsiveBox,
+  Text,
+} from "@artsy/palette"
+import type { AdUnit, AdSize } from "./types"
 import { useCookieConsentManager } from "Components/CookieConsentManager/CookieConsentManagerContext"
 import { ArticleAdBaner } from "Apps/Article/Components/ArticleAd/ArticleAdBanner"
 
@@ -15,7 +21,7 @@ export const ArticleAd: FC<React.PropsWithChildren<ArticleAdProps>> = memo(
     const { isDestinationAllowed, openConsentManager, ready } =
       useCookieConsentManager()
 
-    const [width, height] = size.split("x").map(n => parseInt(n, 10))
+    const [width, height] = size.split("x").map(n => Number.parseInt(n, 10))
 
     return (
       <Box {...rest}>

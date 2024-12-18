@@ -1,9 +1,9 @@
 import { Checkbox, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { entries } from "lodash"
-import { FC } from "react"
+import type { FC } from "react"
 import { WAYS_TO_BUY_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
-import { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
+import type { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
 
 interface WayToBuy {
   selected: boolean

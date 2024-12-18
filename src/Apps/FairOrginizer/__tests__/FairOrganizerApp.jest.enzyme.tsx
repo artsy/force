@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { FairOrganizerApp_Test_Query } from "__generated__/FairOrganizerApp_Test_Query.graphql"
+import type { FairOrganizerApp_Test_Query } from "__generated__/FairOrganizerApp_Test_Query.graphql"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { FairOrganizerAppFragmentContainer } from "Apps/FairOrginizer/FairOrganizerApp"
 import { MockBoot } from "DevTools/MockBoot"

@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairHeaderImage_fair$data } from "__generated__/FairHeaderImage_fair.graphql"
+import type { FairHeaderImage_fair$data } from "__generated__/FairHeaderImage_fair.graphql"
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { BREAKPOINTS, Media } from "Utils/Responsive"
 import { FullBleed, Image, ResponsiveBox } from "@artsy/palette"

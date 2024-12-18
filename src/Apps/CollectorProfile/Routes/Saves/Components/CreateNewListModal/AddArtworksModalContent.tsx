@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import {
   Flex,
   Text,
@@ -15,10 +15,10 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
-import { AddArtworksModalContentQuery } from "__generated__/AddArtworksModalContentQuery.graphql"
-import { AddArtworksModalContent_me$data } from "__generated__/AddArtworksModalContent_me.graphql"
+import type { AddArtworksModalContentQuery } from "__generated__/AddArtworksModalContentQuery.graphql"
+import type { AddArtworksModalContent_me$data } from "__generated__/AddArtworksModalContent_me.graphql"
 import { MetadataPlaceholder } from "Components/Artwork/Metadata"
 import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 

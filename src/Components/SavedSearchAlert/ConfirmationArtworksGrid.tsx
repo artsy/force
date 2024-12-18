@@ -7,16 +7,16 @@ import {
   Text,
 } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { FC } from "react"
+import type { FC } from "react"
 import { graphql } from "react-relay"
-import {
+import type {
   ConfirmationArtworksGridQuery,
   ConfirmationArtworksGridQuery$data,
 } from "__generated__/ConfirmationArtworksGridQuery.graphql"
 import ArtworkGrid, {
   ArtworkGridPlaceholder,
 } from "Components/ArtworkGrid/ArtworkGrid"
-import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import {

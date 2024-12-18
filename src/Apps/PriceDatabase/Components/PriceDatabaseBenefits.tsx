@@ -9,8 +9,8 @@ import {
   Box,
   Spacer,
 } from "@artsy/palette"
-import { ReactElement } from "react"
-import * as React from "react"
+import type { ReactElement } from "react"
+import type * as React from "react"
 import { Media } from "Utils/Responsive"
 
 export const PriceDatabaseBenefits: React.FC<

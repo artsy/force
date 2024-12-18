@@ -1,5 +1,5 @@
 import * as Yup from "yup"
-import { FC } from "react"
+import type { FC } from "react"
 import {
   Button,
   Clickable,

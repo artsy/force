@@ -33,7 +33,7 @@ describe("ConversationCTA", () => {
 
   const mockuseTracking = useTracking as jest.Mock
   const trackingSpy = jest.fn()
-  let useSystemContext = baseUseSystemContext as jest.Mock
+  const useSystemContext = baseUseSystemContext as jest.Mock
 
   beforeAll(() => {
     mockuseTracking.mockImplementation(() => ({

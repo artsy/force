@@ -1,14 +1,14 @@
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { Flex, Text, ModalDialog, Button, useToasts } from "@artsy/palette"
 
 import { AddArtworksModalContentQueryRender } from "./AddArtworksModalContent"
 import { useAddArtworksToCollection } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/useAddArtworksToCollection"
 import createLogger from "Utils/logger"
-import { ArtworkList } from "./CreateNewListModal"
+import type { ArtworkList } from "./CreateNewListModal"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
-  AddedArtworkToArtworkList,
+  type AddedArtworkToArtworkList,
   OwnerType,
 } from "@artsy/cohesion"
 

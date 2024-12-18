@@ -6,7 +6,7 @@ import CloseIcon from "@artsy/icons/CloseIcon"
 import styled from "styled-components"
 import { extractNodes } from "Utils/extractNodes"
 import { Media } from "Utils/Responsive"
-import { ConversationDetails_conversation$key } from "__generated__/ConversationDetails_conversation.graphql"
+import type { ConversationDetails_conversation$key } from "__generated__/ConversationDetails_conversation.graphql"
 import { ConversationSupport } from "Apps/Conversations/components/Details/ConversationSupport"
 import { ConversationAttachments } from "Apps/Conversations/components/Details/ConversationAttachments"
 

@@ -1,6 +1,6 @@
 import { useMutation } from "Utils/Hooks/useMutation"
 import { graphql } from "react-relay"
-import { useDeleteCreditCardMutation } from "__generated__/useDeleteCreditCardMutation.graphql"
+import type { useDeleteCreditCardMutation } from "__generated__/useDeleteCreditCardMutation.graphql"
 
 export const useDeleteCreditCard = () => {
   return useMutation<useDeleteCreditCardMutation>({

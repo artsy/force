@@ -1,10 +1,10 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { MockBoot } from "DevTools/MockBoot"
-import { ArtworkAppTestQuery } from "__generated__/ArtworkAppTestQuery.graphql"
+import type { ArtworkAppTestQuery } from "__generated__/ArtworkAppTestQuery.graphql"
 import { ArtworkResultFragmentContainer } from "Apps/Artwork/ArtworkApp"
 import {
-  RelayMockEnvironment,
+  type RelayMockEnvironment,
   createMockEnvironment,
 } from "relay-test-utils/lib/RelayModernMockEnvironment"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"

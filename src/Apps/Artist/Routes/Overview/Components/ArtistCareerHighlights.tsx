@@ -6,10 +6,10 @@ import {
   SkeletonText,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistCareerHighlights_artist$data } from "__generated__/ArtistCareerHighlights_artist.graphql"
-import { ArtistCareerHighlightsQuery } from "__generated__/ArtistCareerHighlightsQuery.graphql"
+import type { ArtistCareerHighlights_artist$data } from "__generated__/ArtistCareerHighlights_artist.graphql"
+import type { ArtistCareerHighlightsQuery } from "__generated__/ArtistCareerHighlightsQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { FC } from "react"
+import type { FC } from "react"
 import { RailHeader } from "Components/Rail/RailHeader"
 import { ARTIST_HEADER_NUMBER_OF_INSIGHTS } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"

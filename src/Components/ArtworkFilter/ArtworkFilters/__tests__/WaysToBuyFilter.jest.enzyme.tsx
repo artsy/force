@@ -5,7 +5,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import {
   WaysToBuyFilter,
-  WaysToBuyFilterProps,
+  type WaysToBuyFilterProps,
 } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({

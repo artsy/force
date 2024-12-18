@@ -1,12 +1,12 @@
-import { Dialog } from "Apps/Order/Dialogs"
+import type { Dialog } from "Apps/Order/Dialogs"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
-import { ComputedOrderData } from "Apps/Order/Routes/Shipping/Utils/computeOrderData"
+import type { ComputedOrderData } from "Apps/Order/Routes/Shipping/Utils/computeOrderData"
 import {
   ArtaErrorDialogMessage,
   ErrorDialogs,
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
-import createLogger from "Utils/logger"
+import type createLogger from "Utils/logger"
 
 interface UseHandleExchangeErrorProps {
   dialog: Dialog

@@ -18,7 +18,7 @@ export const Default = () => {
           type="number"
           value={transitionDuration}
           onChange={event => {
-            setTransitionDuration(parseInt(event.target.value))
+            setTransitionDuration(Number.parseInt(event.target.value))
           }}
         />
 
@@ -27,7 +27,7 @@ export const Default = () => {
           type="number"
           value={idleDuration}
           onChange={event => {
-            setIdleDuration(parseInt(event.target.value))
+            setIdleDuration(Number.parseInt(event.target.value))
           }}
         />
       </Stack>

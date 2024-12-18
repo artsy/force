@@ -1,7 +1,7 @@
 import { getENV } from "Utils/getENV"
 import { useEffect } from "react"
 import Cookies from "cookies-js"
-import { useAuthDialog, ShowAuthDialog } from "Components/AuthDialog"
+import { useAuthDialog, type ShowAuthDialog } from "Components/AuthDialog"
 import { merge } from "lodash"
 
 interface UseScrollToOpenAuthModal {

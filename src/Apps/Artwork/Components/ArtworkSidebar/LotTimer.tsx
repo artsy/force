@@ -1,4 +1,4 @@
-import { LotTimer_saleArtwork$data } from "__generated__/LotTimer_saleArtwork.graphql"
+import type { LotTimer_saleArtwork$data } from "__generated__/LotTimer_saleArtwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as React from "react"
 import { Text, Spacer, Box } from "@artsy/palette"

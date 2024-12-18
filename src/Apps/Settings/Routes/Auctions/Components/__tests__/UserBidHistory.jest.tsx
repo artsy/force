@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { UserBidHistoryFragmentContainer } from "Apps/Settings/Routes/Auctions/Components/UserBidHistory"
-import { UserBidHistory_Test_Query } from "__generated__/UserBidHistory_Test_Query.graphql"
+import type { UserBidHistory_Test_Query } from "__generated__/UserBidHistory_Test_Query.graphql"
 
 jest.unmock("react-relay")
 

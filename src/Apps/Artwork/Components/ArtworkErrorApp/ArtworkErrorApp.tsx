@@ -1,6 +1,6 @@
 import { Box, Spacer, Text } from "@artsy/palette"
 import { ERROR_MESSAGES } from "Components/ErrorPage"
-import { ArtworkErrorApp_artworkError$key } from "__generated__/ArtworkErrorApp_artworkError.graphql"
+import type { ArtworkErrorApp_artworkError$key } from "__generated__/ArtworkErrorApp_artworkError.graphql"
 import { graphql, useFragment } from "react-relay"
 import { OtherWorksQueryRenderer } from "Apps/Artwork/Components/ArtworkErrorApp/ArtworkErrorAppOtherWorks"
 import { RelatedWorksQueryRenderer } from "Apps/Artwork/Components/ArtworkErrorApp/ArtworkErrorAppRelatedWorks"

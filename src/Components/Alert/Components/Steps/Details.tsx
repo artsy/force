@@ -1,13 +1,13 @@
 import { Box, Button, Flex, Join, Spacer, Text } from "@artsy/palette"
 import { Formik } from "formik"
-import { FC } from "react"
+import type { FC } from "react"
 import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
-import { SavedSearchFrequency } from "Components/SavedSearchAlert/types"
+import type { SavedSearchFrequency } from "Components/SavedSearchAlert/types"
 import { FadeInBox } from "Components/FadeInBox"
 
 export interface AlertFormikValues {

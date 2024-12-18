@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { GeneMeta_gene$data } from "__generated__/GeneMeta_gene.graphql"
+import type { GeneMeta_gene$data } from "__generated__/GeneMeta_gene.graphql"
 import { MetaTags } from "Components/MetaTags"
 
 interface GeneMetaProps {

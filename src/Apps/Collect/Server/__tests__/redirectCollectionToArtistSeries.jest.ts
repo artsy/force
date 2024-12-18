@@ -1,5 +1,8 @@
 import { redirectCollectionToArtistSeries } from "Apps/Collect/Server/redirectCollectionToArtistSeries"
-import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 
 describe("redirectCollectionToArtistSeries", () => {
   it("does not redirect for a non-migrated artist series", () => {

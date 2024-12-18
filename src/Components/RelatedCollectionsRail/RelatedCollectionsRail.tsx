@@ -1,6 +1,6 @@
-import { RelatedCollectionsRail_collections$data } from "__generated__/RelatedCollectionsRail_collections.graphql"
+import type { RelatedCollectionsRail_collections$data } from "__generated__/RelatedCollectionsRail_collections.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RelatedCollectionEntityFragmentContainer as RelatedCollectionEntity } from "./RelatedCollectionEntity"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -8,7 +8,7 @@ import { Rail } from "Components/Rail/Rail"
 import { useTracking } from "react-tracking"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { RelatedCollectionsRailQuery } from "__generated__/RelatedCollectionsRailQuery.graphql"
+import type { RelatedCollectionsRailQuery } from "__generated__/RelatedCollectionsRailQuery.graphql"
 import { Spacer } from "@artsy/palette"
 
 interface RelatedCollectionsRailProps {

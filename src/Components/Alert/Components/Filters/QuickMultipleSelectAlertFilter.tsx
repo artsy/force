@@ -6,9 +6,9 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
-import { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
+import type { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
 import { handleFieldsWithMultipleValues } from "Components/Alert/Helpers/handleFieldsWithMultipleValues"
 
 interface QuickMultipleSelectAlertFilterProps {
@@ -23,7 +23,7 @@ interface QuickMultipleSelectAlertFilterProps {
 
 export const QuickMultipleSelectAlertFilter: FC<
   React.PropsWithChildren<QuickMultipleSelectAlertFilterProps>
-> = ({ criteriaKey, description, label, options, truncate = Infinity }) => {
+> = ({ criteriaKey, description, label, options, truncate = Number.POSITIVE_INFINITY }) => {
   const { state, dispatch } = useAlertContext()
 
   const [isExpanded, setExpanded] = useState(false)

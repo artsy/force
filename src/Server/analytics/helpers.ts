@@ -88,12 +88,8 @@ const logAnalyticsCalls = () => {
   const mobileText = sd.IS_MOBILE ? "MOBILE " : ""
 
   // Log all pageviews
-  window?.analytics?.on("page", function () {
-    console.info(
-      `${mobileText}ANALYTICS PAGEVIEW: `,
-      arguments[2],
-      arguments[3]
-    )
+  window?.analytics?.on("page", (...args) => {
+    console.info(`${mobileText}ANALYTICS PAGEVIEW: `, args[2], args[3])
   })
   // Log all track calls
   window?.analytics?.on("track", (actionName: string, data?: any) => {
@@ -145,10 +141,10 @@ const trackPageLoadSpeed = () => {
       window.performance.timing &&
       sd.TRACK_PAGELOAD_PATHS
     ) {
-      window.addEventListener("load", function () {
+      window.addEventListener("load", () => {
         if (sd.TRACK_PAGELOAD_PATHS.split("|").includes(pageType)) {
-          window.setTimeout(function () {
-            let deviceType = sd.IS_MOBILE ? "mobile" : "desktop"
+          window.setTimeout(() => {
+            const deviceType = sd.IS_MOBILE ? "mobile" : "desktop"
             reportLoadTimeToVolley({ pageType, deviceType })
           }, 0)
         }

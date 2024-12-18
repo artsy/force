@@ -2,12 +2,12 @@ import { Clickable, Flex, Text } from "@artsy/palette"
 import {
   INITIAL_STEP,
   PRE_SUBMITTED_STEPS,
-  SellFlowStep,
+  type SellFlowStep,
 } from "Apps/Sell/SellFlowContext"
 import { usePreviousSubmission } from "Apps/Sell/Utils/previousSubmissionUtils"
 import { EntityHeaderSubmissionFragmentContainer } from "Components/EntityHeaders/EntityHeaderSubmission"
 import { FadeInBox } from "Components/FadeInBox"
-import { PreviousSubmissionQuery } from "__generated__/PreviousSubmissionQuery.graphql"
+import type { PreviousSubmissionQuery } from "__generated__/PreviousSubmissionQuery.graphql"
 import { useRouter } from "found"
 import { Suspense } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"

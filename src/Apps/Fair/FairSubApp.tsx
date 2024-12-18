@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairSubApp_fair$data } from "__generated__/FairSubApp_fair.graphql"
+import type { FairSubApp_fair$data } from "__generated__/FairSubApp_fair.graphql"
 import { FairMetaFragmentContainer } from "./Components/FairMeta"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { userIsAdmin } from "Utils/user"

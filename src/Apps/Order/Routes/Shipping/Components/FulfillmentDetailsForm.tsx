@@ -20,10 +20,10 @@ import {
   ADDRESS_VALIDATION_SHAPE,
   BASIC_PHONE_VALIDATION_SHAPE,
   FulfillmentType,
-  FulfillmentValues,
-  PickupValues,
-  SavedAddressType,
-  ShipValues,
+  type FulfillmentValues,
+  type PickupValues,
+  type SavedAddressType,
+  type ShipValues,
   addressWithFallbackValues,
   getInitialShippingValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
@@ -32,14 +32,14 @@ import { RouterLink } from "System/Components/RouterLink"
 import {
   useFormikContext,
   Form,
-  FormikTouched,
-  FormikErrors,
+  type FormikTouched,
+  type FormikErrors,
   Formik,
 } from "formik"
 import { pick } from "lodash"
 import { useCallback, useEffect } from "react"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
+import type { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
 import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"

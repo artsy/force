@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import {
   Box,
   Clickable,
@@ -11,7 +11,7 @@ import {
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { maxDimensionsByArea, resized } from "Utils/resized"
-import { ShowInstallShots_show$data } from "__generated__/ShowInstallShots_show.graphql"
+import type { ShowInstallShots_show$data } from "__generated__/ShowInstallShots_show.graphql"
 import { themeGet } from "@styled-system/theme-get"
 import { useCursor } from "use-cursor"
 import { useNextPrevious } from "Utils/Hooks/useNextPrevious"

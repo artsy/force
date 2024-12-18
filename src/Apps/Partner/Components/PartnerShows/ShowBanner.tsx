@@ -1,6 +1,6 @@
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Button,
   Column,
   GridColumns,
@@ -10,11 +10,11 @@ import {
   Text,
 } from "@artsy/palette"
 import { useEffect, useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "System/Components/RouterLink"
-import { ShowBanner_show$data } from "__generated__/ShowBanner_show.graphql"
+import type { ShowBanner_show$data } from "__generated__/ShowBanner_show.graphql"
 
 const STATUS_LABELS = {
   running: "current",

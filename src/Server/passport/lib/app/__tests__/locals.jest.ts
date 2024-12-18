@@ -1,17 +1,17 @@
 const locals = require("../locals")
 
-describe("locals", function () {
+describe("locals", () => {
   let req
   let res
   let next
 
-  beforeEach(function () {
+  beforeEach(() => {
     req = { query: {} }
     res = { locals: { sd: {} } }
     next = jest.fn()
   })
 
-  it("escapes the error message html", function () {
+  it("escapes the error message html", () => {
     req.query.error = "<img src=alert(hello) />"
     locals(req, res, next)
     expect(res.locals.error).toEqual("&lt;img src=alert(hello) /&gt;")

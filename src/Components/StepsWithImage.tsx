@@ -4,7 +4,7 @@ import {
   ResponsiveBox,
   Text,
   Image,
-  ColumnSpan,
+  type ColumnSpan,
 } from "@artsy/palette"
 
 const imageHeight = 320

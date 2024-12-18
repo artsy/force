@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistConsignRoute_artist$data } from "__generated__/ArtistConsignRoute_artist.graphql"
+import type { ArtistConsignRoute_artist$data } from "__generated__/ArtistConsignRoute_artist.graphql"
 import { ArtistConsignFAQFragmentContainer } from "./Components/ArtistConsignFAQ"
 import { ArtistConsignHeaderFragmentContainer } from "./Components/ArtistConsignHeader"
 import { ArtistConsignHowtoSellFragmentContainer } from "./Components/ArtistConsignHowToSell"

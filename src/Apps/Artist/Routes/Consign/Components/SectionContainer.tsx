@@ -1,5 +1,5 @@
-import { BoxProps, FullBleed } from "@artsy/palette"
-import * as React from "react"
+import { type BoxProps, FullBleed } from "@artsy/palette"
+import type * as React from "react"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 

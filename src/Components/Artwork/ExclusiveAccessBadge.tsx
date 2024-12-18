@@ -1,6 +1,6 @@
 import { Flex, Label } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
-import { ExclusiveAccessBadge_artwork$key } from "__generated__/ExclusiveAccessBadge_artwork.graphql"
+import type { ExclusiveAccessBadge_artwork$key } from "__generated__/ExclusiveAccessBadge_artwork.graphql"
 
 interface ExclusiveAccessBadgeProps {
   artwork: ExclusiveAccessBadge_artwork$key

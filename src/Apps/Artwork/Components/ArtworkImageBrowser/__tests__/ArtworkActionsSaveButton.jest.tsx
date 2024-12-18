@@ -6,7 +6,7 @@ import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { ArtworkActionsSaveButton_Test_Query } from "__generated__/ArtworkActionsSaveButton_Test_Query.graphql"
+import type { ArtworkActionsSaveButton_Test_Query } from "__generated__/ArtworkActionsSaveButton_Test_Query.graphql"
 import { fetchQuery } from "react-relay"
 import { act } from "react-dom/test-utils"
 

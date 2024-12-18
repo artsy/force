@@ -6,7 +6,7 @@ import {
   Text,
   useDidMount,
 } from "@artsy/palette"
-import { FC, useEffect, useRef } from "react"
+import { type FC, useEffect, useRef } from "react"
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { Z } from "Apps/Components/constants"
@@ -22,7 +22,7 @@ import { useRouter } from "System/Hooks/useRouter"
 
 const APP_DOWNLOAD_FOOTER_KEY = "AppDownloadFooter"
 
-interface AppDownloadFooterProps {}
+type AppDownloadFooterProps = {}
 
 export const AppDownloadFooter: FC<
   React.PropsWithChildren<AppDownloadFooterProps>

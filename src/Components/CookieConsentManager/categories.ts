@@ -1,4 +1,4 @@
-import {
+import type {
   CategoryPreferences,
   Destination,
 } from "@segment/consent-manager/types/types"

@@ -1,12 +1,12 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ArtworkSidebarCreateAlertFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCreateAlert"
-import { ArtworkSidebarCreateAlert_Test_Query } from "__generated__/ArtworkSidebarCreateAlert_Test_Query.graphql"
+import type { ArtworkSidebarCreateAlert_Test_Query } from "__generated__/ArtworkSidebarCreateAlert_Test_Query.graphql"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { AlertProvider } from "Components/Alert/AlertProvider"
-import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
+import { type MockEnvironment, createMockEnvironment } from "relay-test-utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -20,7 +20,7 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
   })),
 }))
 
-let relayEnv: MockEnvironment = createMockEnvironment()
+const relayEnv: MockEnvironment = createMockEnvironment()
 
 const { renderWithRelay } =
   setupTestWrapperTL<ArtworkSidebarCreateAlert_Test_Query>({

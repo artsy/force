@@ -1,16 +1,16 @@
 import { IdentityVerificationAppQueryResponseFixture } from "Apps/IdentityVerification/__fixtures__/routes_IdentityVerificationAppQuery"
 import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
 import {
-  FarceElementResult,
-  FarceRedirectResult,
+  type FarceElementResult,
+  type FarceRedirectResult,
   getFarceResult,
 } from "found/server"
 import { Environment, RecordSource, Store } from "relay-runtime"
-import { Environment as IEnvironment } from "react-relay"
+import type { Environment as IEnvironment } from "react-relay"
 
 import { identityVerificationRoutes } from "Apps/IdentityVerification/identityVerificationRoutes"
 
-import { identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse } from "__generated__/identityVerificationRoutes_IdentityVerificationAppQuery.graphql"
+import type { identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse } from "__generated__/identityVerificationRoutes_IdentityVerificationAppQuery.graphql"
 import { createRender } from "found"
 import { Resolver } from "found-relay"
 

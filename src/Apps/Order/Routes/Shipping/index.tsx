@@ -1,11 +1,11 @@
-import { FC, useEffect } from "react"
+import { type FC, useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
 import { Box, Flex, Spacer } from "@artsy/palette"
-import {
+import type {
   Shipping_order$data,
   Shipping_order$key,
 } from "__generated__/Shipping_order.graphql"
-import {
+import type {
   Shipping_me$data,
   Shipping_me$key,
 } from "__generated__/Shipping_me.graphql"
@@ -16,7 +16,7 @@ import {
   offerFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import { Dialog, injectDialog } from "Apps/Order/Dialogs"
+import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ShippingQuotes } from "Apps/Order/Routes/Shipping/Components/ShippingQuotes"
 import { ContextModule, OwnerType } from "@artsy/cohesion"

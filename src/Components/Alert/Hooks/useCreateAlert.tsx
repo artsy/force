@@ -1,4 +1,4 @@
-import { useCreateAlertMutation } from "__generated__/useCreateAlertMutation.graphql"
+import type { useCreateAlertMutation } from "__generated__/useCreateAlertMutation.graphql"
 import { graphql } from "react-relay"
 
 import { useMutation } from "Utils/Hooks/useMutation"

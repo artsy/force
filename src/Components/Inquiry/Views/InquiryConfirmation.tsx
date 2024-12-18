@@ -1,5 +1,5 @@
 import { Box, Button, Spacer, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { RouterLink } from "System/Components/RouterLink"
 

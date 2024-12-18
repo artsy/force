@@ -1,19 +1,19 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { FollowButton } from "./Button"
-import { FollowGeneButton_gene$data } from "__generated__/FollowGeneButton_gene.graphql"
-import { ButtonProps } from "@artsy/palette"
+import type { FollowGeneButton_gene$data } from "__generated__/FollowGeneButton_gene.graphql"
+import type { ButtonProps } from "@artsy/palette"
 import {
   Intent,
   ContextModule,
-  AuthContextModule,
+  type AuthContextModule,
   OwnerType,
 } from "@artsy/cohesion"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useFollowButtonTracking } from "./useFollowButtonTracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { FollowGeneButtonQuery } from "__generated__/FollowGeneButtonQuery.graphql"
+import type { FollowGeneButtonQuery } from "__generated__/FollowGeneButtonQuery.graphql"
 import { useAuthDialog } from "Components/AuthDialog"
 
 interface FollowGeneButtonProps extends Omit<ButtonProps, "variant"> {

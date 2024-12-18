@@ -1,5 +1,5 @@
 import { Message } from "@artsy/palette"
-import { StatusQuery$rawResponse } from "__generated__/StatusQuery.graphql"
+import type { StatusQuery$rawResponse } from "__generated__/StatusQuery.graphql"
 import {
   ArtaShippedWithTrackingIdNoTrackingUrl,
   ArtaShippedWithNoTrackingIdNoTrackingUrl,

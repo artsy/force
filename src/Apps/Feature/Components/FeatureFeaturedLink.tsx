@@ -1,8 +1,8 @@
-import * as React from "react"
+import type * as React from "react"
 import styled from "styled-components"
 import {
   Flex,
-  FlexProps,
+  type FlexProps,
   Image,
   HTML,
   ResponsiveBox,
@@ -10,8 +10,8 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
-import { FeatureFeaturedLink_featuredLink$data } from "__generated__/FeatureFeaturedLink_featuredLink.graphql"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import type { FeatureFeaturedLink_featuredLink$data } from "__generated__/FeatureFeaturedLink_featuredLink.graphql"
 import { themeGet } from "@styled-system/theme-get"
 
 export type FeaturedLinkSize = "small" | "medium" | "large" | "full"

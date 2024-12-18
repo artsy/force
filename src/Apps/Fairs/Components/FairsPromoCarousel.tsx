@@ -5,7 +5,7 @@ import {
   Clickable,
   CarouselRail,
   CarouselCell,
-  BoxProps,
+  type BoxProps,
 } from "@artsy/palette"
 
 export interface CarouselProps extends BoxProps {

@@ -1,7 +1,7 @@
 import { LabeledInput } from "@artsy/palette"
 import { debounce } from "lodash"
 import { useEffect, useMemo } from "react"
-import * as React from "react"
+import type * as React from "react"
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"

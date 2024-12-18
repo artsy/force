@@ -1,6 +1,6 @@
 import { Box, Column, GridColumns, Join, Separator, Text } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
-import { InvoicePayments_invoice$key } from "__generated__/InvoicePayments_invoice.graphql"
+import type { InvoicePayments_invoice$key } from "__generated__/InvoicePayments_invoice.graphql"
 
 interface InvoiceLineItemsProps {
   invoice: InvoicePayments_invoice$key

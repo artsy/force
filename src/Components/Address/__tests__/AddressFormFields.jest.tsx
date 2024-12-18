@@ -10,7 +10,7 @@ import {
   AddressFormFields,
   addressFormFieldsValidator,
 } from "Components/Address/AddressFormFields"
-import { Address, emptyAddress } from "Components/Address/utils"
+import { type Address, emptyAddress } from "Components/Address/utils"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { Formik } from "formik"
 import * as Yup from "yup"

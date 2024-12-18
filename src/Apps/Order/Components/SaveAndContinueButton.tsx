@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { Button } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
 

@@ -1,5 +1,5 @@
-import * as React from "react"
-import { Box, BoxProps, Image, Text } from "@artsy/palette"
+import type * as React from "react"
+import { Box, type BoxProps, Image, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { resized } from "Utils/resized"
 

@@ -1,5 +1,5 @@
-import { Image, BoxProps, ResponsiveBox } from "@artsy/palette"
-import * as React from "react"
+import { Image, type BoxProps, ResponsiveBox } from "@artsy/palette"
+import type * as React from "react"
 import { cropped } from "Utils/resized"
 import { Link } from "react-head"
 

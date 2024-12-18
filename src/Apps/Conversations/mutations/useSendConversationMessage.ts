@@ -1,5 +1,5 @@
 import { graphql, useMutation } from "react-relay"
-import { useSendConversationMessageMutation } from "__generated__/useSendConversationMessageMutation.graphql"
+import type { useSendConversationMessageMutation } from "__generated__/useSendConversationMessageMutation.graphql"
 
 export const useSendConversationMessage = () => {
   return useMutation<useSendConversationMessageMutation>(graphql`

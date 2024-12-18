@@ -1,6 +1,6 @@
-import { FC, useRef, useState } from "react"
+import { type FC, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
-import { CollectorProfileArtistsListArtist_userInterestEdge$key } from "__generated__/CollectorProfileArtistsListArtist_userInterestEdge.graphql"
+import type { CollectorProfileArtistsListArtist_userInterestEdge$key } from "__generated__/CollectorProfileArtistsListArtist_userInterestEdge.graphql"
 import {
   Box,
   Button,
@@ -18,7 +18,7 @@ import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowA
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 import styled from "styled-components"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { CollectorProfileArtistsListArtistUpdateMutation } from "__generated__/CollectorProfileArtistsListArtistUpdateMutation.graphql"
+import type { CollectorProfileArtistsListArtistUpdateMutation } from "__generated__/CollectorProfileArtistsListArtistUpdateMutation.graphql"
 import MoreIcon from "@artsy/icons/MoreIcon"
 import { Z } from "Apps/Components/constants"
 import { NavBarMenuItemButton } from "Components/NavBar/Menus/NavBarMenuItem"

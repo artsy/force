@@ -1,13 +1,13 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairFollowedArtists_fair$data } from "__generated__/FairFollowedArtists_fair.graphql"
+import type { FairFollowedArtists_fair$data } from "__generated__/FairFollowedArtists_fair.graphql"
 import {
   ActionType,
-  ClickedArtworkGroup,
+  type ClickedArtworkGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { Box, BoxProps, Shelf, Spacer, Text } from "@artsy/palette"
+import { Box, type BoxProps, Shelf, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -15,7 +15,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { FairFollowedArtistsQuery } from "__generated__/FairFollowedArtistsQuery.graphql"
+import type { FairFollowedArtistsQuery } from "__generated__/FairFollowedArtistsQuery.graphql"
 
 interface FairFollowedArtistsProps extends BoxProps {
   fair: FairFollowedArtists_fair$data

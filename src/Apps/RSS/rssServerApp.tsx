@@ -2,7 +2,7 @@ import express from "express"
 import { fetchQuery } from "react-relay"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { RSS_ARTICLES_QUERY } from "./queries/RssArticlesQuery"
-import { RssArticlesQuery } from "__generated__/RssArticlesQuery.graphql"
+import type { RssArticlesQuery } from "__generated__/RssArticlesQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
 import {

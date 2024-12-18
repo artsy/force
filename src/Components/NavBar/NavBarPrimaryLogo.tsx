@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import styled from "styled-components"
-import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import { themeGet } from "@styled-system/theme-get"
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 

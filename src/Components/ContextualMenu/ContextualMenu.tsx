@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react"
+import React, { type ReactElement } from "react"
 
 import MoreIcon from "@artsy/icons/MoreIcon"
 import { Clickable, Dropdown } from "@artsy/palette"

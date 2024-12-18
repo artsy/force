@@ -1,4 +1,4 @@
-import { ArtworkGrid_Test_Query$rawResponse } from "__generated__/ArtworkGrid_Test_Query.graphql"
+import type { ArtworkGrid_Test_Query$rawResponse } from "__generated__/ArtworkGrid_Test_Query.graphql"
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 export const ArtworksGridEdges: ArtworkGrid_Test_Query$rawResponse["artist"]["artworks_connection"]["edges"] =

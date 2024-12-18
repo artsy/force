@@ -1,5 +1,5 @@
-import { CustomRange, Numeric } from "Utils/customRangeUtils"
-import { Metric } from "Utils/metrics"
+import type { CustomRange, Numeric } from "Utils/customRangeUtils"
+import type { Metric } from "Utils/metrics"
 
 export type CustomSize = {
   height: CustomRange
@@ -39,12 +39,12 @@ const convertRangeToInches = (range: CustomRange) => {
 }
 
 export const parseSizeRange = (
-  range: string = "",
+  range = "",
   metric: Metric
 ): Numeric[] => {
   return range.split("-").map(s => {
     if (s === "*") return s
-    const value = parseFloat(s)
+    const value = Number.parseFloat(s)
 
     if (metric === "cm") {
       return convertToCentimeters(value)

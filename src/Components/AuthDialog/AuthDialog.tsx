@@ -1,12 +1,12 @@
 import { ModalDialog, Image, Box } from "@artsy/palette"
 import {
-  AuthDialogMode,
+  type AuthDialogMode,
   useAuthDialogContext,
 } from "Components/AuthDialog/AuthDialogContext"
 import { AuthDialogLogin } from "Components/AuthDialog/Views/AuthDialogLogin"
 import { AuthDialogForgotPassword } from "Components/AuthDialog/Views/AuthDialogForgotPassword"
 import { AuthDialogSignUp } from "Components/AuthDialog/Views/AuthDialogSignUp"
-import { FC, useEffect } from "react"
+import { type FC, useEffect } from "react"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { resized } from "Utils/resized"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"

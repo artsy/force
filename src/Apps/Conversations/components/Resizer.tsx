@@ -1,5 +1,5 @@
-import { FC } from "react"
-import { SplitPane, SplitPaneProps } from "react-multi-split-pane"
+import type { FC } from "react"
+import { SplitPane, type SplitPaneProps } from "react-multi-split-pane"
 import { Box } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import styled from "styled-components"

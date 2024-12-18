@@ -11,7 +11,7 @@ import { MarketingAlternatingStack } from "Apps/Marketing/Components/MarketingAl
 import { MarketingHeaderSplitTest } from "Apps/Marketing/Components/MarketingHeaderSpitTest"
 import { MetaTags } from "Components/MetaTags"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { FC } from "react"
+import type { FC } from "react"
 
 export const MarketingMeetArtAdvisorRoute: FC<
   React.PropsWithChildren<unknown>

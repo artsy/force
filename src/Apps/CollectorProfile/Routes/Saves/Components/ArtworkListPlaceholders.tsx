@@ -8,7 +8,7 @@ import {
 } from "@artsy/palette"
 import { MetadataPlaceholder } from "Components/Artwork/Metadata"
 import { times } from "lodash"
-import { FC } from "react"
+import type { FC } from "react"
 import { Media } from "Utils/Responsive"
 
 interface ArtworksRowPlaceholderProps {

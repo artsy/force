@@ -1,6 +1,6 @@
 import { GridColumns, Column, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { FC } from "react"
+import type { FC } from "react"
 import styled from "styled-components"
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 

@@ -1,5 +1,5 @@
-import { BoxProps } from "@artsy/palette"
-import { BackToFairBanner_show$data } from "__generated__/BackToFairBanner_show.graphql"
+import type { BoxProps } from "@artsy/palette"
+import type { BackToFairBanner_show$data } from "__generated__/BackToFairBanner_show.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { TopContextBar } from "Components/TopContextBar"
 import { useRouter } from "System/Hooks/useRouter"

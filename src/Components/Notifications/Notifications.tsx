@@ -2,7 +2,7 @@ import { DateTime } from "luxon"
 import { markNotificationsAsSeen } from "./Mutations/markNotificationsAsSeen"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
-import { NotificationsWrapperProps } from "./NotificationsWrapper"
+import type { NotificationsWrapperProps } from "./NotificationsWrapper"
 import { Box, Flex, Separator, Skeleton } from "@artsy/palette"
 import {
   NotificationsHeader,
@@ -13,7 +13,7 @@ import Sticky from "react-stickynode"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { useOnce } from "Utils/Hooks/useOnce"
 import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
-import { FC } from "react"
+import type { FC } from "react"
 import { NotificationsListPlaceholder } from "Components/Notifications/NotificationsListPlaceholder"
 
 const DROPDOWN_HEADER_HEIGHT = 113

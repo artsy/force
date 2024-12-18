@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { OnboardingMarketingCollectionQueryRenderer } from "Components/Onboarding/Components/OnboardingMarketingCollection"
 
 export const OnboardingCuratedArtworks: FC<

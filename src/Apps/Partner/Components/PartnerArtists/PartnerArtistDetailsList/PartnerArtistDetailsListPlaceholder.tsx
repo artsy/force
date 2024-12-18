@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { Join, Skeleton, Spacer } from "@artsy/palette"
 import { PartnerArtistDetailsPlaceholder } from "Apps/Partner/Components/PartnerArtists/PartnerArtistDetails/PartnerArtistDetailsPlaceholder"
 

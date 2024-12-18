@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import {
   Box,
   Column,
@@ -10,7 +10,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowInfo_show$data } from "__generated__/ShowInfo_show.graphql"
+import type { ShowInfo_show$data } from "__generated__/ShowInfo_show.graphql"
 import { ShowInfoLocationFragmentContainer as ShowInfoLocation } from "Apps/Show/Components/ShowInfoLocation"
 import { Media } from "Utils/Responsive"
 import { ShowHoursFragmentContainer } from "Apps/Show/Components/ShowHours"

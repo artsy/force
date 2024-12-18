@@ -3,7 +3,7 @@ import { Flex, Spacer, StackableBorderBox, Text } from "@artsy/palette"
 import { ProgressBarTimer } from "Components/ProgressBarTimer"
 import { TimeRemaining } from "Components/TimeRemaining"
 import { DateTime } from "luxon"
-import React from "react"
+import type React from "react"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 
 const FIVE_HOURS_IN_SECONDS = 60 * 60 * 5

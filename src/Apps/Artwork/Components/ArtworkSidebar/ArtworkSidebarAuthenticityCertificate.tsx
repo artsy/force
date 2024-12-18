@@ -6,7 +6,7 @@ import {
   ModalDialog,
   Button,
 } from "@artsy/palette"
-import { ArtworkSidebarAuthenticityCertificate_artwork$data } from "__generated__/ArtworkSidebarAuthenticityCertificate_artwork.graphql"
+import type { ArtworkSidebarAuthenticityCertificate_artwork$data } from "__generated__/ArtworkSidebarAuthenticityCertificate_artwork.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

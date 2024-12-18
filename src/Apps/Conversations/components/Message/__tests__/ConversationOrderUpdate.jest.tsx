@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { ConversationOrderUpdate_Test_Query } from "__generated__/ConversationOrderUpdate_Test_Query.graphql"
+import type { ConversationOrderUpdate_Test_Query } from "__generated__/ConversationOrderUpdate_Test_Query.graphql"
 import { screen } from "@testing-library/react"
 import { ConversationOrderUpdate } from "Apps/Conversations/components/Message/ConversationOrderUpdate"
 

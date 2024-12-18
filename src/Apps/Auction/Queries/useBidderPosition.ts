@@ -1,4 +1,4 @@
-import {
+import type {
   useBidderPositionQuery,
   useBidderPositionQuery$variables,
 } from "__generated__/useBidderPositionQuery.graphql"

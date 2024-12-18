@@ -8,10 +8,10 @@ import {
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
-import { CellArtistSeries_artistSeries$data } from "__generated__/CellArtistSeries_artistSeries.graphql"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import type { CellArtistSeries_artistSeries$data } from "__generated__/CellArtistSeries_artistSeries.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
-import { FC } from "react"
+import type { FC } from "react"
 
 export interface CellArtistSeriesProps extends Omit<RouterLinkProps, "to"> {
   artistSeries: CellArtistSeries_artistSeries$data

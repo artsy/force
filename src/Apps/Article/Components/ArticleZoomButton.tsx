@@ -1,5 +1,5 @@
-import { Box, Clickable, ClickableProps } from "@artsy/palette"
-import { FC } from "react"
+import { Box, Clickable, type ClickableProps } from "@artsy/palette"
+import type { FC } from "react"
 import styled from "styled-components"
 import ExpandIcon from "@artsy/icons/ExpandIcon"
 

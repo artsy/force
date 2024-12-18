@@ -1,8 +1,8 @@
 import { useToasts } from "@artsy/palette"
 import { useAddAssetToConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
-import { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
+import type { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
 import { FileDropzone } from "Components/FileUpload/FileDropzone"
-import { DropzoneFile } from "Components/FileUpload/types"
+import type { DropzoneFile } from "Components/FileUpload/types"
 import { getErrorMessage } from "Components/FileUpload/utils/getErrorMessage"
 import {
   normalizePhoto,
@@ -13,7 +13,7 @@ import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { useFormikContext } from "formik"
 import { useCallback, useEffect } from "react"
-import { FileRejection } from "react-dropzone"
+import type { FileRejection } from "react-dropzone"
 
 const logger = createLogger("Sell/UploadPhotosForm.tsx")
 

@@ -1,7 +1,7 @@
 import { sendErrorToService } from "Utils/errors"
 
 export const shouldCaptureError = (
-  environment: string = "development"
+  environment = "development"
 ): boolean => environment === "staging" || environment === "production"
 
 export default function createLogger(namespace = "") {

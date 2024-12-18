@@ -1,4 +1,4 @@
-import { Form, FormikProps } from "formik"
+import { Form, type FormikProps } from "formik"
 import * as Yup from "yup"
 
 import { Input, Spacer, Text, Flex, Button, Toggle } from "@artsy/palette"

@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ExampleArtistRoute_artist$data } from "__generated__/ExampleArtistRoute_artist.graphql"
+import type { ExampleArtistRoute_artist$data } from "__generated__/ExampleArtistRoute_artist.graphql"
 import { Box, Text } from "@artsy/palette"
 import { Title } from "react-head"
 import { Analytics } from "System/Contexts/AnalyticsContext"

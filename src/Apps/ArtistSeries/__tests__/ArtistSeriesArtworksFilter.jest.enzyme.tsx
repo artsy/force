@@ -1,7 +1,7 @@
 import { MockBoot } from "DevTools/MockBoot"
 import { ArtistSeriesArtworksFilterRefetchContainer } from "Apps/ArtistSeries/Components/ArtistSeriesArtworksFilter"
 import { graphql } from "react-relay"
-import { ArtistSeriesArtworksFilter_Query } from "__generated__/ArtistSeriesArtworksFilter_Query.graphql"
+import type { ArtistSeriesArtworksFilter_Query } from "__generated__/ArtistSeriesArtworksFilter_Query.graphql"
 import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"

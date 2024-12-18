@@ -6,9 +6,9 @@ import { uploadSubmissionPhoto } from "Components/PhotoUpload/Utils/fileUtils"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { PhotosRoute_Test_Query$rawResponse } from "__generated__/PhotosRoute_Test_Query.graphql"
+import type { PhotosRoute_Test_Query$rawResponse } from "__generated__/PhotosRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
-import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
+import { type MockEnvironment, createMockEnvironment } from "relay-test-utils"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
@@ -57,7 +57,7 @@ const submissionMock: Partial<
   ],
 }
 
-let relayEnv: MockEnvironment = createMockEnvironment()
+const relayEnv: MockEnvironment = createMockEnvironment()
 
 beforeEach(() => {
   ;(useSystemContext as jest.Mock).mockImplementation(() => {

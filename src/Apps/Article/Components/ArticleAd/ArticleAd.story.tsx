@@ -1,4 +1,4 @@
-import { ArticleAdProvider, ArticleAd, ArticleAdProps } from "./ArticleAd"
+import { ArticleAdProvider, ArticleAd, type ArticleAdProps } from "./ArticleAd"
 import { AD_SIZES } from "./types"
 import { States } from "storybook-states"
 import { track } from "react-tracking"

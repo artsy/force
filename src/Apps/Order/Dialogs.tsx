@@ -1,7 +1,7 @@
 import { Button, Text } from "@artsy/palette"
 import { ModalDialog } from "@artsy/palette"
 import { getErrorDialogCopy } from "Apps/Order/Utils/getErrorDialogCopy"
-import * as React from "react"
+import type * as React from "react"
 // TODO: Replace with normal React state
 // eslint-disable-next-line no-restricted-imports
 import { Container, Subscribe } from "unstated"

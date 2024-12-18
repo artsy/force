@@ -1,9 +1,9 @@
-import {
+import type {
   CategoryPreferences,
   Destination,
 } from "@segment/consent-manager/types/types"
 import { useCookieConsentManager } from "Components/CookieConsentManager/CookieConsentManagerContext"
-import { FC, useEffect } from "react"
+import { type FC, useEffect } from "react"
 
 interface CookieConsentManagerSetterProps {
   destinations: Destination[]

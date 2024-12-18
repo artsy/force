@@ -1,7 +1,7 @@
 import { Box } from "@artsy/palette"
 import {
   Children,
-  FC,
+  type FC,
   createContext,
   isValidElement,
   useContext,

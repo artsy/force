@@ -1,4 +1,4 @@
-import { ArtworkDetails_Test_Query } from "__generated__/ArtworkDetails_Test_Query.graphql"
+import type { ArtworkDetails_Test_Query } from "__generated__/ArtworkDetails_Test_Query.graphql"
 import { ArtworkDetailsFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails"
 import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools/MockBoot"

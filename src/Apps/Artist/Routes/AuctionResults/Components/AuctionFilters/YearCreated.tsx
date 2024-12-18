@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { Checkbox, Flex, Select, Spacer } from "@artsy/palette"
 import {
   useAuctionResultsFilterContext,
@@ -27,14 +27,14 @@ export const YearCreated: React.FC<React.PropsWithChildren<unknown>> = () => {
 
   const startOptions = options.filter(
     option =>
-      parseInt(option.value) <=
-      (createdBeforeYear || parseInt(options[options.length - 1]?.value))
+      Number.parseInt(option.value) <=
+      (createdBeforeYear || Number.parseInt(options[options.length - 1]?.value))
   )
 
   const endOptions = options.filter(
     option =>
-      parseInt(option.value) >=
-      (createdAfterYear || parseInt(options[0]?.value))
+      Number.parseInt(option.value) >=
+      (createdAfterYear || Number.parseInt(options[0]?.value))
   )
 
   return (
@@ -45,7 +45,9 @@ export const YearCreated: React.FC<React.PropsWithChildren<unknown>> = () => {
             <Select
               title="Earliest"
               options={startOptions}
-              onSelect={year => setFilter?.("createdAfterYear", parseInt(year))}
+              onSelect={year =>
+                setFilter?.("createdAfterYear", Number.parseInt(year))
+              }
               selected={(createdAfterYear || startOptions[0]?.value).toString()}
             />
             <Spacer x={1} />
@@ -54,7 +56,7 @@ export const YearCreated: React.FC<React.PropsWithChildren<unknown>> = () => {
               title="Latest"
               options={endOptions}
               onSelect={year => {
-                setFilter?.("createdBeforeYear", parseInt(year))
+                setFilter?.("createdBeforeYear", Number.parseInt(year))
               }}
               selected={(
                 createdBeforeYear || endOptions[endOptions.length - 1]?.value

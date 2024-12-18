@@ -1,6 +1,6 @@
 import { Box, THEME } from "@artsy/palette"
-import { ReactNode, useEffect, useRef, useState } from "react"
-import ReactSticky, { Props as ReactStickyProps } from "react-stickynode"
+import { type ReactNode, useEffect, useRef, useState } from "react"
+import ReactSticky, { type Props as ReactStickyProps } from "react-stickynode"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { useSticky } from "./StickyProvider"

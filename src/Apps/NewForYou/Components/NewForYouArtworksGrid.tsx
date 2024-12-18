@@ -1,8 +1,8 @@
 import { Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
-import { NewForYouArtworksGrid_viewer$data } from "__generated__/NewForYouArtworksGrid_viewer.graphql"
+import type { NewForYouArtworksGrid_viewer$data } from "__generated__/NewForYouArtworksGrid_viewer.graphql"
 
 interface NewForYouArtworksGridProps {
   viewer: NewForYouArtworksGrid_viewer$data

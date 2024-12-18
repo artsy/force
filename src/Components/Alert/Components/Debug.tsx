@@ -1,5 +1,5 @@
 import { Box, Flex, Button, Select } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 

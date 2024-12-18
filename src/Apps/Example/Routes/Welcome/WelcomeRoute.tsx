@@ -1,5 +1,5 @@
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { Button, Flex, ModalDialog, Text } from "@artsy/palette"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useTracking } from "react-tracking"

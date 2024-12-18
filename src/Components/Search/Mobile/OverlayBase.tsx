@@ -8,7 +8,7 @@ import {
   useTheme,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { FC } from "react"
+import type { FC } from "react"
 import styled from "styled-components"
 
 export const OVERLAY_CONTENT_ID = "MobileSearchOverlayContent"

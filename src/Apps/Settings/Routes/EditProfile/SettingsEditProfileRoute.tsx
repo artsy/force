@@ -1,8 +1,8 @@
 import { Column, GridColumns, Join, Separator, Text } from "@artsy/palette"
 import InfoIcon from "@artsy/icons/InfoIcon"
 import { SettingsEditProfileFieldsFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileFields"
-import { SettingsEditProfileRoute_me$data } from "__generated__/SettingsEditProfileRoute_me.graphql"
-import React from "react"
+import type { SettingsEditProfileRoute_me$data } from "__generated__/SettingsEditProfileRoute_me.graphql"
+import type React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface SettingsEditProfileRouteProps {

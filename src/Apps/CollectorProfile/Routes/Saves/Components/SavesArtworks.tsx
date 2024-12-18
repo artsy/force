@@ -1,6 +1,6 @@
 import { Box, Dropdown, Pill, Select, Stack } from "@artsy/palette"
-import { FC, useMemo, useState } from "react"
-import { CustomRangeSegment } from "Components/PriceRange/constants"
+import { type FC, useMemo, useState } from "react"
+import type { CustomRangeSegment } from "Components/PriceRange/constants"
 import { PriceRange } from "Components/PriceRange/PriceRange"
 import {
   SavesArtworksGrid,
@@ -10,9 +10,9 @@ import {
 import { ClientSuspense } from "Components/ClientSuspense"
 import { FilterQuickDropdownAnchor } from "Components/ArtworkFilter/ArtworkFiltersQuick/FilterQuick"
 import { Jump } from "Utils/Hooks/useJump"
-import { CollectionArtworkSorts } from "__generated__/SavesArtworksGridQuery.graphql"
+import type { CollectionArtworkSorts } from "__generated__/SavesArtworksGridQuery.graphql"
 import {
-  ErrorFallbackProps,
+  type ErrorFallbackProps,
   FallbackErrorBoundary,
 } from "System/Components/FallbackErrorBoundary"
 import { priceRangeToLabel } from "Components/PriceRange/Utils/priceRangeToLabel"

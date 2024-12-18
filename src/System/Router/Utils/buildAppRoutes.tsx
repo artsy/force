@@ -1,8 +1,8 @@
 import { AppShell } from "Apps/Components/AppShell"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 import { interceptLinks } from "System/Router/Utils/interceptLinks"
-import { Match, Router, withRouter } from "found"
+import { type Match, type Router, withRouter } from "found"
 import { useEffect } from "react"
 
 export function buildAppRoutes(routes: RouteProps[][]): RouteProps[] {

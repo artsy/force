@@ -1,12 +1,12 @@
-import { TransactionDetailsSummaryItem_order$data } from "__generated__/TransactionDetailsSummaryItem_order.graphql"
-import { FC } from "react"
+import type { TransactionDetailsSummaryItem_order$data } from "__generated__/TransactionDetailsSummaryItem_order.graphql"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Flex, Text, Spacer, Sup, Message, Stack } from "@artsy/palette"
 import {
   StepSummaryItem,
-  StepSummaryItemProps,
+  type StepSummaryItemProps,
 } from "Components/StepSummaryItem"
-import { Omit } from "lodash"
+import type { Omit } from "lodash"
 import { extractNodes } from "Utils/extractNodes"
 import { DownloadAppBadges } from "Components/DownloadAppBadges/DownloadAppBadges"
 import { ContextModule } from "@artsy/cohesion"

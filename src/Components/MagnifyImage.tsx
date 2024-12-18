@@ -1,4 +1,4 @@
-import { Image as BaseImage, ImageProps, Box } from "@artsy/palette"
+import { Image as BaseImage, type ImageProps, Box } from "@artsy/palette"
 import { useRef, useState } from "react"
 import styled from "styled-components"
 import { isTouch } from "Utils/device"

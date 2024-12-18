@@ -1,12 +1,12 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Flex, ModalBase, Spinner } from "@artsy/palette"
 import { once } from "lodash"
-import * as React from "react"
+import type * as React from "react"
 import { DeepZoomCloseButton } from "./DeepZoomCloseButton"
 import { DeepZoomSlider } from "./DeepZoomSlider"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { DeepZoom_image$data } from "__generated__/DeepZoom_image.graphql"
+import type { DeepZoom_image$data } from "__generated__/DeepZoom_image.graphql"
 import { useRef } from "react"
 import { useEffect } from "react"
 import { useDidMount } from "Utils/Hooks/useDidMount"
@@ -120,7 +120,7 @@ const DeepZoom: React.FC<React.PropsWithChildren<DeepZoomProps>> = ({
 
   const handleSliderChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!osdViewerRef.current) return
-    osdViewerRef.current.viewport.zoomTo(parseFloat(event.target.value))
+    osdViewerRef.current.viewport.zoomTo(Number.parseFloat(event.target.value))
   }
 
   const handleZoomInClicked = () => {

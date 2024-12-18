@@ -5,8 +5,8 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { MockPayloadGenerator } from "relay-test-utils"
-import { CleanRelayFragment } from "Utils/typeSupport"
-import { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
+import type { CleanRelayFragment } from "Utils/typeSupport"
+import type { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()

@@ -1,4 +1,4 @@
-import { ArtworkQueryFilterQuery$rawResponse } from "__generated__/ArtworkQueryFilterQuery.graphql"
+import type { ArtworkQueryFilterQuery$rawResponse } from "__generated__/ArtworkQueryFilterQuery.graphql"
 
 export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
   viewer: {

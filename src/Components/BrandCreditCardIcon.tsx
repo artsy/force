@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import VisaIcon from "@artsy/icons/VisaIcon"
 import MastercardIcon from "@artsy/icons/MastercardIcon"
 import UnknownCardIcon from "@artsy/icons/UnknownCardIcon"
@@ -8,7 +8,7 @@ import CartesBancairesIcon from "@artsy/icons/CartesBancairesIcon"
 import DinersClubIcon from "@artsy/icons/DinersClubIcon"
 import JcbIcon from "@artsy/icons/JcbIcon"
 import UnionPayIcon from "@artsy/icons/UnionPayIcon"
-import { BoxProps } from "@artsy/palette"
+import type { BoxProps } from "@artsy/palette"
 
 export type Brand =
   | "Visa"

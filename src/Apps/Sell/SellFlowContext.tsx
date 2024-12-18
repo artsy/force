@@ -1,14 +1,14 @@
 import { useToasts } from "@artsy/palette"
-import {
+import type {
   ConsignmentSubmissionStateAggregation,
   CreateSubmissionMutationInput,
 } from "__generated__/CreateConsignSubmissionMutation.graphql"
-import { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
-import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
-import { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
-import { MyCollectionUpdateArtworkInput } from "__generated__/useUpdateArtworkMutation.graphql"
-import { useUpdateMyCollectionArtworkMutation$data } from "__generated__/useUpdateMyCollectionArtworkMutation.graphql"
-import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
+import type { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
+import type { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
+import type { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
+import type { MyCollectionUpdateArtworkInput } from "__generated__/useUpdateArtworkMutation.graphql"
+import type { useUpdateMyCollectionArtworkMutation$data } from "__generated__/useUpdateMyCollectionArtworkMutation.graphql"
+import type { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
 import { useUpdateMyCollectionArtwork } from "Apps/Sell/Mutations/useUpdateMyCollectionArtwork"

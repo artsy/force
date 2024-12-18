@@ -1,9 +1,9 @@
-import { FC, useCallback, useEffect } from "react"
+import { type FC, useCallback, useEffect } from "react"
 import { Text } from "@artsy/palette"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import {
   withProgressiveOnboardingCounts,
-  WithProgressiveOnboardingCountsProps,
+  type WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useRouter } from "System/Hooks/useRouter"
 import { pathToRegexp } from "path-to-regexp"

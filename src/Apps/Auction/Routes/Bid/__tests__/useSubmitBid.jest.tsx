@@ -5,7 +5,7 @@ import { useCreateBidderPosition } from "Apps/Auction/Queries/useCreateBidderPos
 import { useRouter } from "System/Hooks/useRouter"
 import {
   useSubmitBid,
-  UseSubmitBidProps,
+  type UseSubmitBidProps,
 } from "Apps/Auction/Routes/Bid/useSubmitBid"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useToasts } from "@artsy/palette"

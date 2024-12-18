@@ -1,17 +1,17 @@
 import { useRef } from "react"
-import * as React from "react"
-import { Box, BoxProps, Flex, Text } from "@artsy/palette"
+import type * as React from "react"
+import { Box, type BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairBoothRail_show$data } from "__generated__/FairBoothRail_show.graphql"
+import type { FairBoothRail_show$data } from "__generated__/FairBoothRail_show.graphql"
 import { FairBoothRailArtworksQueryRenderer as FairBoothRailArtworks } from "./FairBoothRailArtworks"
 import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
-  ClickedArtworkGroup,
+  type ClickedArtworkGroup,
   ContextModule,
   OwnerType,
-  PageOwnerType,
+  type PageOwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {

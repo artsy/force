@@ -1,6 +1,6 @@
-import { AuthContextModule } from "@artsy/cohesion"
-import { SaveButton_artwork$data } from "__generated__/SaveButton_artwork.graphql"
-import * as React from "react"
+import type { AuthContextModule } from "@artsy/cohesion"
+import type { SaveButton_artwork$data } from "__generated__/SaveButton_artwork.graphql"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Clickable, Flex, Text } from "@artsy/palette"
 import { useSaveArtwork } from "./useSaveArtwork"
@@ -9,9 +9,9 @@ import { useState } from "react"
 import { isTouch } from "Utils/device"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 import HeartFillIcon from "@artsy/icons/HeartFillIcon"
-import { SaveArtworkToListsButton_artwork$data } from "__generated__/SaveArtworkToListsButton_artwork.graphql"
+import type { SaveArtworkToListsButton_artwork$data } from "__generated__/SaveArtworkToListsButton_artwork.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { SaveButtonQuery } from "__generated__/SaveButtonQuery.graphql"
+import type { SaveButtonQuery } from "__generated__/SaveButtonQuery.graphql"
 
 export interface SaveButtonProps {
   artwork: SaveButton_artwork$data

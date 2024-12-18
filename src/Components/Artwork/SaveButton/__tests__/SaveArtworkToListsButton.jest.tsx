@@ -7,7 +7,7 @@ import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/Sa
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { SaveArtworkToListsButton_Test_Query } from "__generated__/SaveArtworkToListsButton_Test_Query.graphql"
+import type { SaveArtworkToListsButton_Test_Query } from "__generated__/SaveArtworkToListsButton_Test_Query.graphql"
 import { fetchQuery } from "react-relay"
 import { act } from "react-dom/test-utils"
 

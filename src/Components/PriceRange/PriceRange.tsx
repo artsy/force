@@ -1,7 +1,7 @@
-import { FC, useState, FormEvent, useEffect } from "react"
+import { type FC, useState, type FormEvent, useEffect } from "react"
 import { Flex, Spacer, Box, Text, Range, usePrevious } from "@artsy/palette"
-import { Histogram, HistogramBarEntity } from "./Histogram"
-import { CustomRange, DEFAULT_RANGE } from "Components/PriceRange/constants"
+import { Histogram, type HistogramBarEntity } from "./Histogram"
+import { type CustomRange, DEFAULT_RANGE } from "Components/PriceRange/constants"
 import { NumericInput } from "Components/NumericInput"
 import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
 import { parseSliderPriceRange } from "Components/PriceRange/Utils/parseSliderPriceRange"
@@ -65,7 +65,7 @@ export const PriceRange: FC<React.PropsWithChildren<PriceRangeProps>> = ({
         }
 
         if (index === changedIndex) {
-          return parseInt(value, 10)
+          return Number.parseInt(value, 10)
         }
 
         return rangeValue

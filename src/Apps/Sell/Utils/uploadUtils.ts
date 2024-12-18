@@ -1,11 +1,11 @@
 import { normalizePhoto } from "Components/PhotoUpload/Utils/fileUtils"
 import createLogger from "Utils/logger"
-import { PhotosRoute_submission$data } from "__generated__/PhotosRoute_submission.graphql"
-import { Environment } from "react-relay"
+import type { PhotosRoute_submission$data } from "__generated__/PhotosRoute_submission.graphql"
+import type { Environment } from "react-relay"
 import { uploadFileToS3 } from "Components/PhotoUpload/Utils/uploadFileToS3"
 import { getConvectionGeminiKey } from "Components/PhotoUpload/Mutations/getConvectionGeminiKey"
 import { getGeminiCredentialsForEnvironment } from "Components/PhotoUpload/Mutations/getGeminiCredentialsForEnvironment"
-import { DropzoneFile } from "Components/FileUpload/types"
+import type { DropzoneFile } from "Components/FileUpload/types"
 
 const logger = createLogger("Sell/uploadUtils.ts")
 
@@ -40,7 +40,7 @@ export const dropzoneFileFromAsset = (asset: Asset): DropzoneFile => {
   return {
     id: asset?.id ?? "",
     assetId: asset?.id ?? "",
-    size: (asset?.size && parseInt(asset?.size, 10)) || 0,
+    size: (asset?.size && Number.parseInt(asset?.size, 10)) || 0,
     name: asset?.filename ?? "Automatically added",
     geminiToken: asset?.geminiToken ?? undefined,
     url:
@@ -57,7 +57,7 @@ export const uploadDocument = async (
   relayEnvironment: Environment,
   document: DropzoneFile,
   updateProgress: (progress: number) => void,
-  acl: string = "private"
+  acl = "private"
 ) => {
   try {
     const convectionKey = await getConvectionGeminiKey(relayEnvironment)

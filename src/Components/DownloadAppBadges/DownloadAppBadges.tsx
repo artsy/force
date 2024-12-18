@@ -1,6 +1,6 @@
-import { ContextModule } from "@artsy/cohesion"
-import { Flex, FlexProps } from "@artsy/palette"
-import React from "react"
+import type { ContextModule } from "@artsy/cohesion"
+import { Flex, type FlexProps } from "@artsy/palette"
+import type React from "react"
 import {
   Device,
   DOWNLOAD_APP_URLS,

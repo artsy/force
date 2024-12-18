@@ -1,5 +1,5 @@
 import { Flex, Input } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 
 export type PhoneNumber = string
 

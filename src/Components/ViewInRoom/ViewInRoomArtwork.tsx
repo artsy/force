@@ -1,8 +1,8 @@
 import { Image } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { ViewInRoomArtwork_artwork$data } from "__generated__/ViewInRoomArtwork_artwork.graphql"
+import type { ViewInRoomArtwork_artwork$data } from "__generated__/ViewInRoomArtwork_artwork.graphql"
 import { cmToPx } from "./util"
 
 const eyeLevelCm = 144.78 // 57"

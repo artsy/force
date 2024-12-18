@@ -1,4 +1,4 @@
-import { ArtsyRequest } from "Server/middleware/artsyExpress"
+import type { ArtsyRequest } from "Server/middleware/artsyExpress"
 import { getRedirectUrl } from "Server/middleware/hardcodedRedirects"
 
 describe("getRedirectUrl", () => {

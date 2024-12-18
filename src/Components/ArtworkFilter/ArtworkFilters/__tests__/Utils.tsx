@@ -1,14 +1,14 @@
 import {
-  RenderOptions,
+  type RenderOptions,
   render as originalRender,
   screen,
 } from "@testing-library/react"
 import {
-  ArtworkFilterContextProps,
+  type ArtworkFilterContextProps,
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { PropsWithChildren, ReactElement } from "react"
+import type { PropsWithChildren, ReactElement } from "react"
 
 /**
  * A test helper that can be used to render components that depend

@@ -1,5 +1,5 @@
 import { cloneDeep } from "lodash"
-import { FileRejection } from "react-dropzone"
+import type { FileRejection } from "react-dropzone"
 
 export const concatDropzoneErrors = (
   errors: FileRejection[],

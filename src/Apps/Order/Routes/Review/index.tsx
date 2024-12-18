@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Join, Spacer } from "@artsy/palette"
-import { Review_order$data } from "__generated__/Review_order.graphql"
-import { ReviewSubmitOfferOrderWithConversationMutation } from "__generated__/ReviewSubmitOfferOrderWithConversationMutation.graphql"
-import { ReviewSubmitOrderMutation } from "__generated__/ReviewSubmitOrderMutation.graphql"
+import type { Review_order$data } from "__generated__/Review_order.graphql"
+import type { ReviewSubmitOfferOrderWithConversationMutation } from "__generated__/ReviewSubmitOfferOrderWithConversationMutation.graphql"
+import type { ReviewSubmitOrderMutation } from "__generated__/ReviewSubmitOrderMutation.graphql"
 import { PartnerOfferTimerItem } from "Apps/Order/Components/PartnerOfferTimerItem"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
@@ -14,15 +14,15 @@ import {
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { AdditionalArtworkDetailsFragmentContainer as AdditionalArtworkDetails } from "Apps/Order/Components/AdditionalArtworkDetails"
-import { Dialog, injectDialog } from "Apps/Order/Dialogs"
+import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
-  CommitMutation,
+  type CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Router } from "found"
-import { FC } from "react"
-import { RelayProp, createFragmentContainer, graphql } from "react-relay"
+import type { Router } from "found"
+import type { FC } from "react"
+import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { get } from "Utils/get"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
@@ -40,9 +40,9 @@ import {
   ErrorDialogs,
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 import {
-  SystemContextProps,
+  type SystemContextProps,
   withSystemContext,
 } from "System/Contexts/SystemContext"
 

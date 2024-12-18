@@ -1,7 +1,7 @@
-import * as React from "react"
+import type * as React from "react"
 import { Image, ResponsiveBox } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairCard_fair$data } from "__generated__/FairCard_fair.graphql"
+import type { FairCard_fair$data } from "__generated__/FairCard_fair.graphql"
 
 interface FairHeaderImageProps {
   fair: FairCard_fair$data

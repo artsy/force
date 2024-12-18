@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { Box, Pill, Spacer } from "@artsy/palette"
 

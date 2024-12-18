@@ -1,4 +1,4 @@
-import { ArtworkConditionEnumType } from "__generated__/useUpdateArtworkMutation.graphql"
+import type { ArtworkConditionEnumType } from "__generated__/useUpdateArtworkMutation.graphql"
 
 // This type is here to make sure the condition options match the allowed values in the schema. We have to update the conditionOptions array whenever the ArtworkConditionEnumType changes.
 type ConditionOption = {

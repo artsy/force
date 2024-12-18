@@ -1,7 +1,7 @@
 import StaticContainer from "found/StaticContainer"
 import ElementsRenderer from "found/cjs/ElementsRenderer"
 import { Box } from "@artsy/palette"
-import { HttpError, Match } from "found"
+import { HttpError, type Match } from "found"
 import { getENV } from "Utils/getENV"
 import { AppShell } from "Apps/Components/AppShell"
 import { ErrorPage } from "Components/ErrorPage"

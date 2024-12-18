@@ -5,7 +5,7 @@ import { __ProgressiveOnboardingAlertCreate__ } from "Components/ProgressiveOnbo
 import { PROGRESSIVE_ONBOARDING_KEYS } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { FC } from "react"
+import type { FC } from "react"
 
 jest.mock("Components/ArtworkFilter/ArtworkFilterContext", () => ({
   useArtworkFilterContext: jest.fn(),

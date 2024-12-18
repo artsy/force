@@ -1,6 +1,6 @@
-import { Breakpoint } from "@artsy/palette"
+import type { Breakpoint } from "@artsy/palette"
 import { screen } from "@testing-library/react"
-import { MyCollectionArtworkTestQuery } from "__generated__/MyCollectionArtworkTestQuery.graphql"
+import type { MyCollectionArtworkTestQuery } from "__generated__/MyCollectionArtworkTestQuery.graphql"
 import { MyCollectionArtworkFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtwork"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"

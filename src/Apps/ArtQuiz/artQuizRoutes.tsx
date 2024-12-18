@@ -1,8 +1,8 @@
 import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
-import { ArtsyResponse } from "Server/middleware/artsyExpress"
-import { RouteProps } from "System/Router/Route"
+import type { ArtsyResponse } from "Server/middleware/artsyExpress"
+import type { RouteProps } from "System/Router/Route"
 
 const LOGIN_COPY = "Log in to take the art quiz."
 const REDIRECT_URL = `/login?redirectTo=/art-quiz&copy=${LOGIN_COPY}`

@@ -1,13 +1,13 @@
-import { AuthContextModule } from "@artsy/cohesion"
+import type { AuthContextModule } from "@artsy/cohesion"
 import { Box, Button, Image } from "@artsy/palette"
-import { NotificationArtwork_artwork$key } from "__generated__/NotificationArtwork_artwork.graphql"
+import type { NotificationArtwork_artwork$key } from "__generated__/NotificationArtwork_artwork.graphql"
 import { ExclusiveAccessBadge } from "Components/Artwork/ExclusiveAccessBadge"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import Metadata from "Components/Artwork/Metadata"
 import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
-import * as React from "react"
+import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import { resized } from "Utils/resized"
 
 export interface NotificationArtworkProps

@@ -1,5 +1,5 @@
 import { Button, MultiSelect } from "@artsy/palette"
-import { mount, ReactWrapper } from "enzyme"
+import { mount, type ReactWrapper } from "enzyme"
 import { HeadProvider } from "react-head"
 import { createMockEnvironment } from "relay-test-utils"
 import { PriceDatabaseArtistAutosuggest } from "./../Components/PriceDatabaseArtistAutosuggest"
@@ -20,7 +20,7 @@ const trackEvent = jest.fn()
 
 describe("PriceDatabaseApp", () => {
   let wrapper: ReactWrapper
-  let mockEnvironment = createMockEnvironment()
+  const mockEnvironment = createMockEnvironment()
 
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {

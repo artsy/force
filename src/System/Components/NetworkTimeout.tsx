@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { ErrorWithMetadata } from "Utils/errors"
 import createLogger from "Utils/logger"
 import { useToasts } from "@artsy/palette"

@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import {
   Box,
   Flex,
@@ -10,7 +10,7 @@ import {
 } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtistRail_artist$data } from "__generated__/ArtistRail_artist.graphql"
+import type { ArtistRail_artist$data } from "__generated__/ArtistRail_artist.graphql"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,

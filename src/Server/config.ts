@@ -125,7 +125,7 @@ export const WEBFONT_URL: any = "http://webfonts.artsy.net"
 // You can set JSON-y values for env variables as well such as "true" or
 // "['foo']" and config will attempt to JSON.parse them into non-string types.
 
-for (let key in module.exports) {
+for (const key in module.exports) {
   const val = process.env[key] || module.exports[key]
   module.exports = {
     ...module.exports,

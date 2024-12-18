@@ -1,7 +1,7 @@
 import { States } from "storybook-states"
 import {
   BrandCreditCardIcon,
-  BrandCreditCardIconProps,
+  type BrandCreditCardIconProps,
 } from "Components/BrandCreditCardIcon"
 
 export default {

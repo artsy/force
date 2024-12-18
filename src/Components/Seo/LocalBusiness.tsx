@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { StructuredData } from "./StructuredData"
 import { identity, pickBy } from "lodash"
 

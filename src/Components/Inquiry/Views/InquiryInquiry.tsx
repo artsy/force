@@ -13,11 +13,11 @@ import {
   TextArea,
 } from "@artsy/palette"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import * as React from "react"
+import type * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { InquiryInquiry_artwork$data } from "__generated__/InquiryInquiry_artwork.graphql"
-import { InquiryInquiryQuery } from "__generated__/InquiryInquiryQuery.graphql"
+import type { InquiryInquiry_artwork$data } from "__generated__/InquiryInquiry_artwork.graphql"
+import type { InquiryInquiryQuery } from "__generated__/InquiryInquiryQuery.graphql"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import { wait } from "Utils/wait"
 import {

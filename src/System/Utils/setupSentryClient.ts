@@ -4,7 +4,7 @@ import {
   dedupeIntegration,
   startBrowserTracingPageLoadSpan,
   SEMANTIC_ATTRIBUTE_SENTRY_SOURCE,
-  Span,
+  type Span,
   SEMANTIC_ATTRIBUTE_SENTRY_OP,
   SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN,
   startBrowserTracingNavigationSpan,
@@ -14,7 +14,7 @@ import {
   DENIED_URLS,
   IGNORED_ERRORS,
 } from "Server/analytics/sentryFilters"
-import { Match } from "found"
+import type { Match } from "found"
 import { getENV } from "Utils/getENV"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 

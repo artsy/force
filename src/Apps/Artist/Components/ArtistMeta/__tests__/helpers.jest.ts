@@ -1,4 +1,4 @@
-import { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
+import type { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
 import {
   offersAttributes,
   productAttributes,

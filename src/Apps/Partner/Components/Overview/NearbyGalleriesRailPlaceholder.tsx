@@ -1,4 +1,4 @@
-import { Box, BoxProps, Shelf, SkeletonText } from "@artsy/palette"
+import { Box, type BoxProps, Shelf, SkeletonText } from "@artsy/palette"
 import { CellPartnerPlaceholder } from "Components/Cells/CellPartner"
 
 export interface NearbyGalleriesRailPlaceholderProps extends BoxProps {

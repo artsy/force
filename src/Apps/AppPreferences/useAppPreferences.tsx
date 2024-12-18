@@ -1,7 +1,7 @@
 import { getENV } from "Utils/getENV"
 import {
-  FC,
-  ReactNode,
+  type FC,
+  type ReactNode,
   createContext,
   useCallback,
   useState,

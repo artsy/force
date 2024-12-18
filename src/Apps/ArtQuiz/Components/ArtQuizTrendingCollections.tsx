@@ -1,8 +1,8 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtQuizTrendingCollections_viewer$data } from "__generated__/ArtQuizTrendingCollections_viewer.graphql"
-import { ArtQuizTrendingCollectionsQuery } from "__generated__/ArtQuizTrendingCollectionsQuery.graphql"
+import type { ArtQuizTrendingCollections_viewer$data } from "__generated__/ArtQuizTrendingCollections_viewer.graphql"
+import type { ArtQuizTrendingCollectionsQuery } from "__generated__/ArtQuizTrendingCollectionsQuery.graphql"
 import { Join, Skeleton, Spacer } from "@artsy/palette"
 import {
   ArtQuizTrendingCollectionFragmentContainer,

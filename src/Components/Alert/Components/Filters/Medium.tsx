@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { MEDIUM_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { QuickMultipleSelectAlertFilter } from "Components/Alert/Components/Filters/QuickMultipleSelectAlertFilter"
 

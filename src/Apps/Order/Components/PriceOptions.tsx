@@ -6,9 +6,13 @@ import { MinPriceWarning } from "./MinPriceWarning"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { ActionType, ClickedOfferOption, PageOwnerType } from "@artsy/cohesion"
-import { PriceOptions_artwork$data } from "__generated__/PriceOptions_artwork.graphql"
-import { PriceOptions_order$data } from "__generated__/PriceOptions_order.graphql"
+import {
+  ActionType,
+  type ClickedOfferOption,
+  type PageOwnerType,
+} from "@artsy/cohesion"
+import type { PriceOptions_artwork$data } from "__generated__/PriceOptions_artwork.graphql"
+import type { PriceOptions_order$data } from "__generated__/PriceOptions_order.graphql"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { useTracking } from "react-tracking"
 import { Jump, useJump } from "Utils/Hooks/useJump"
@@ -33,7 +37,7 @@ export const PriceOptions: React.FC<
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
 
   const listPrice = artwork?.listPrice
-  const orderPrice = parseFloat(
+  const orderPrice = Number.parseFloat(
     order.lineItems?.edges?.[0]?.node?.listPrice || "0"
   )
   const formattedOrderPrice: PriceOptions_artwork$data["listPrice"] = {

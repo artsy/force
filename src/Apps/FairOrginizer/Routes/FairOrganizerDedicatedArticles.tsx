@@ -1,12 +1,16 @@
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { useEffect, useState } from "react"
-import * as React from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import type * as React from "react"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { extractNodes } from "Utils/extractNodes"
 import { DedicatedArticlesBreadcrumbsFragmentContainer as DedicatedArticlesBreadcrumbs } from "Apps/FairOrginizer/Components/DedicatedArticlesBreadcrumbs"
 import { FairOrganizerDedicatedArticlesQuery } from "./FairOrganizerDedicatedArticlesQuery"
-import { FairOrganizerDedicatedArticles_fairOrganizer$data } from "__generated__/FairOrganizerDedicatedArticles_fairOrganizer.graphql"
+import type { FairOrganizerDedicatedArticles_fairOrganizer$data } from "__generated__/FairOrganizerDedicatedArticles_fairOrganizer.graphql"
 import createLogger from "Utils/logger"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { LoadingArea } from "Components/LoadingArea"

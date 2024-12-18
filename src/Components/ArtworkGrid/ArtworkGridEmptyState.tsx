@@ -1,6 +1,6 @@
-import { Box, BoxProps, Clickable, Message } from "@artsy/palette"
+import { Box, type BoxProps, Clickable, Message } from "@artsy/palette"
 import { Sticky } from "Components/Sticky"
-import * as React from "react"
+import type * as React from "react"
 import styled from "styled-components"
 
 interface ArtworkGridEmptyStateProps extends BoxProps {

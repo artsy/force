@@ -1,8 +1,12 @@
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { Text, GridColumns, Column, Message, Spacer } from "@artsy/palette"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { FairArticles_fair$data } from "__generated__/FairArticles_fair.graphql"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
+import type { FairArticles_fair$data } from "__generated__/FairArticles_fair.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 import { LoadingArea } from "Components/LoadingArea"

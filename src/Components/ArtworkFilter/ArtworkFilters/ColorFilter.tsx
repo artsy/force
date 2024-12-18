@@ -1,6 +1,6 @@
 import { Checkbox, Box, Text, Flex } from "@artsy/palette"
 import { intersection } from "lodash"
-import * as React from "react"
+import type * as React from "react"
 import styled from "styled-components"
 import {
   SelectedFiltersCountsLabels,

@@ -4,7 +4,7 @@ import {
   Flex,
   Link,
   Select,
-  Option,
+  type Option,
   Separator,
   Spacer,
   Text,
@@ -12,18 +12,18 @@ import {
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarBidAction_artwork$data } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
-import { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSidebarBidAction_me.graphql"
+import type { ArtworkSidebarBidAction_artwork$data } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
+import type { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSidebarBidAction_me.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { TrackingProp, useTracking } from "react-tracking"
+import { type TrackingProp, useTracking } from "react-tracking"
 import { getENV } from "Utils/getENV"
 import { bidderQualifications } from "Utils/identityVerificationRequirements"
 import { compact } from "lodash"
-import { Router } from "found"
+import type { Router } from "found"
 import { useRouter } from "System/Hooks/useRouter"
 import { ActionType, ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
-import { ShowAuthDialog, withAuthDialog } from "Components/AuthDialog"
+import { type ShowAuthDialog, withAuthDialog } from "Components/AuthDialog"
 import HelpIcon from "@artsy/icons/HelpIcon"
 
 export interface ArtworkSidebarBidActionProps {
@@ -82,7 +82,7 @@ export class ArtworkSidebarBidAction extends React.Component<
   }
 
   setMaxBid = (newVal: string) => {
-    this.setState({ selectedMaxBidCents: parseInt(newVal, 10) })
+    this.setState({ selectedMaxBidCents: Number.parseInt(newVal, 10) })
   }
 
   redirectToRegister = () => {

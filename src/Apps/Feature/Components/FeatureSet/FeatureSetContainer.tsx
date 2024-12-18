@@ -1,8 +1,8 @@
-import * as React from "react"
+import type * as React from "react"
 import { CSSGrid, Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Masonry } from "Components/Masonry"
-import { FeatureSetContainer_set$data } from "__generated__/FeatureSetContainer_set.graphql"
+import type { FeatureSetContainer_set$data } from "__generated__/FeatureSetContainer_set.graphql"
 
 export interface FeatureSetContainerProps {
   set: FeatureSetContainer_set$data

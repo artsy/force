@@ -1,9 +1,9 @@
 import { CustomErrorCode } from "Components/FileUpload/types"
-import { ErrorCode, FileRejection } from "react-dropzone"
+import { ErrorCode, type FileRejection } from "react-dropzone"
 
 export const getErrorMessage = (
   fileRejection: FileRejection,
-  allowedFileFormats: string = ""
+  allowedFileFormats = ""
 ) => {
   const errorCodes = fileRejection.errors.map(e => e.code)
   let errorMessage

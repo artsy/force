@@ -1,13 +1,13 @@
 import { Box, Button } from "@artsy/palette"
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { FairsPastFairs_viewer$data } from "__generated__/FairsPastFairs_viewer.graphql"
+import type { FairsPastFairs_viewer$data } from "__generated__/FairsPastFairs_viewer.graphql"
 import { FairsFairRowFragmentContainer } from "./FairsFairRow"
 
 interface FairsPastFairsProps {

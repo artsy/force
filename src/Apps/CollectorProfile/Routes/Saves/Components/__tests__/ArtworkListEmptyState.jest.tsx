@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
-import { ArtworkListEmptyState_Test_Query } from "__generated__/ArtworkListEmptyState_Test_Query.graphql"
+import type { ArtworkListEmptyState_Test_Query } from "__generated__/ArtworkListEmptyState_Test_Query.graphql"
 import { ArtworkListEmptyStateFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkListEmptyState"
 
 jest.unmock("react-relay")

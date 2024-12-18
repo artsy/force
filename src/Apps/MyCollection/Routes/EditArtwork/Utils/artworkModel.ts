@@ -1,4 +1,4 @@
-import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
+import type { Photo } from "Components/PhotoUpload/Utils/fileUtils"
 
 export interface Location {
   city?: string | null

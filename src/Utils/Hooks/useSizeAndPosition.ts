@@ -3,7 +3,7 @@ import {
   useMutationObserver,
   useResizeObserver,
 } from "@artsy/palette"
-import { MutableRefObject, useCallback, useRef, useState } from "react"
+import { type MutableRefObject, useCallback, useRef, useState } from "react"
 
 interface Geometry {
   top: number

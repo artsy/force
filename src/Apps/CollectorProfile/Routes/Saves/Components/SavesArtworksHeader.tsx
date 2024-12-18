@@ -1,9 +1,9 @@
 import HideIcon from "@artsy/icons/HideIcon"
 import { Text, Stack, Clickable, Tooltip, SkeletonText } from "@artsy/palette"
 import { ArtworkListContextualMenu } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/ArtworkListContextualMenu"
-import { FC } from "react"
+import type { FC } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
-import { SavesArtworksHeaderQuery } from "__generated__/SavesArtworksHeaderQuery.graphql"
+import type { SavesArtworksHeaderQuery } from "__generated__/SavesArtworksHeaderQuery.graphql"
 import { ClientSuspense } from "Components/ClientSuspense"
 
 interface SavesArtworksHeaderProps {

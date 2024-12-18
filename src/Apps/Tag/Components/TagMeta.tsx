@@ -1,7 +1,7 @@
-import * as React from "react"
+import type * as React from "react"
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { TagMeta_tag$data } from "__generated__/TagMeta_tag.graphql"
+import type { TagMeta_tag$data } from "__generated__/TagMeta_tag.graphql"
 import { getENV } from "Utils/getENV"
 
 interface GeneMetaProps {

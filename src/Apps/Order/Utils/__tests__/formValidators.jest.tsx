@@ -1,4 +1,4 @@
-import { Address } from "Components/Address/utils"
+import type { Address } from "Components/Address/utils"
 import {
   validateAddress,
   validatePresence,

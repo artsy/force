@@ -1,9 +1,9 @@
-import { Breakpoint } from "@artsy/palette"
+import type { Breakpoint } from "@artsy/palette"
 import { graphql } from "react-relay"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { AuctionActiveBidsRefetchContainer } from "Apps/Auction/Components/AuctionActiveBids"
-import { AuctionActiveBidsTestQuery } from "__generated__/AuctionActiveBidsTestQuery.graphql"
+import type { AuctionActiveBidsTestQuery } from "__generated__/AuctionActiveBidsTestQuery.graphql"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useRouter } from "System/Hooks/useRouter"
 

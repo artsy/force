@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { InsightsCareerHighlightRailFragmentContainer } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/InsightsCareerHighlightRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { InsightsCareerHighlightRailTestQuery } from "__generated__/InsightsCareerHighlightRailTestQuery.graphql"
+import type { InsightsCareerHighlightRailTestQuery } from "__generated__/InsightsCareerHighlightRailTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

@@ -1,4 +1,7 @@
-import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 import { getENV } from "Utils/getENV"
 
 export const redirectPostAuth = ({

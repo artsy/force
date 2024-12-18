@@ -1,5 +1,5 @@
 import { Spacer, Text, Join, Box, Pill } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { OnboardingFigure } from "Components/Onboarding/Components/OnboardingFigure"
 import { OnboardingQuestionPanel } from "Components/Onboarding/Components/OnboardingQuestionPanel"
 import {

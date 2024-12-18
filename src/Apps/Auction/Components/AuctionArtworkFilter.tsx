@@ -1,7 +1,11 @@
 import { useRouter } from "System/Hooks/useRouter"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { ArtworkFilter } from "Components/ArtworkFilter"
 import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
+import { ArtworkFilter } from "Components/ArtworkFilter"
+import type {
   Aggregations,
   Counts,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
@@ -10,7 +14,7 @@ import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilt
 import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { AuctionArtworkFilter_viewer$data } from "__generated__/AuctionArtworkFilter_viewer.graphql"
+import type { AuctionArtworkFilter_viewer$data } from "__generated__/AuctionArtworkFilter_viewer.graphql"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
 import { Join, Spacer } from "@artsy/palette"
 import { ColorFilter } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
@@ -21,7 +25,7 @@ import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFil
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
-import { AuctionArtworkFilterQuery } from "__generated__/AuctionArtworkFilterQuery.graphql"
+import type { AuctionArtworkFilterQuery } from "__generated__/AuctionArtworkFilterQuery.graphql"
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface AuctionArtworkFilterProps {
@@ -120,7 +124,7 @@ export const AuctionArtworkFilterRefetchContainer = createRefetchContainer(
   `
 )
 
-interface AuctionArtworkFilterQueryRendererProps {}
+type AuctionArtworkFilterQueryRendererProps = {}
 
 export const AuctionArtworkFilterQueryRenderer: React.FC<
   React.PropsWithChildren<AuctionArtworkFilterQueryRendererProps>

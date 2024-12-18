@@ -1,6 +1,6 @@
 import { useMutation } from "Utils/Hooks/useMutation"
 import { graphql } from "react-relay"
-import { useMakeInvoicePaymentMutation } from "__generated__/useMakeInvoicePaymentMutation.graphql"
+import type { useMakeInvoicePaymentMutation } from "__generated__/useMakeInvoicePaymentMutation.graphql"
 
 export const useMakeInvoicePayment = () => {
   return useMutation<useMakeInvoicePaymentMutation>({

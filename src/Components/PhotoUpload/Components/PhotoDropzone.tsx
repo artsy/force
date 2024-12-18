@@ -1,10 +1,11 @@
-import { Box, BoxProps, Button, Text } from "@artsy/palette"
+import { Box, type BoxProps, Button, Text } from "@artsy/palette"
 import { concatDropzoneErrors } from "Components/FileUpload/utils/concatDropzoneErrors"
 import { validateTotalMaxSize } from "Components/FileUpload/utils/validateTotalMaxSize"
-import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
+import type { Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { Media } from "Utils/Responsive"
-import React, { useEffect, useRef, useState } from "react"
-import { FileRejection, useDropzone } from "react-dropzone"
+import type React from "react"
+import { useEffect, useRef, useState } from "react"
+import { type FileRejection, useDropzone } from "react-dropzone"
 
 export interface PhotoDropzoneProps extends BoxProps {
   allPhotos: Photo[]

@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { States } from "storybook-states"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArticleHeroFragmentContainer } from "./ArticleHero"
-import { ArticleHeroStoryQuery } from "__generated__/ArticleHeroStoryQuery.graphql"
+import type { ArticleHeroStoryQuery } from "__generated__/ArticleHeroStoryQuery.graphql"
 
 export default {
   title: "Components/Article/ArticleHero",

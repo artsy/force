@@ -5,7 +5,7 @@ import { useAuthDialog } from "Components/AuthDialog"
 import { render } from "DevTools/renderWithMockBoot"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
+import type { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
 import { Formik } from "formik"
 import { useTracking } from "react-tracking"
 

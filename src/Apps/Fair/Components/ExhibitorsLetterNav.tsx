@@ -1,13 +1,13 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   Text,
   Flex,
   HorizontalOverflow,
   Clickable,
-  BoxProps,
+  type BoxProps,
 } from "@artsy/palette"
-import { ExhibitorsLetterNav_fair$data } from "__generated__/ExhibitorsLetterNav_fair.graphql"
+import type { ExhibitorsLetterNav_fair$data } from "__generated__/ExhibitorsLetterNav_fair.graphql"
 import { getExhibitorSectionId } from "Apps/Fair/Utils/getExhibitorSectionId"
 import { useJump } from "Utils/Hooks/useJump"
 import { Media } from "Utils/Responsive"

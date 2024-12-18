@@ -1,7 +1,7 @@
 /* eslint-disable jest/no-standalone-expect */
 import { BorderedRadio, Button } from "@artsy/palette"
 import { Stepper } from "@artsy/palette"
-import { ReactWrapper } from "enzyme"
+import type { ReactWrapper } from "enzyme"
 import { ArtworkSummaryItemFragmentContainer } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"

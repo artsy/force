@@ -3,10 +3,10 @@ import { States } from "storybook-states"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   EntityHeaderArtistFragmentContainer,
-  EntityHeaderArtistProps,
+  type EntityHeaderArtistProps,
 } from "./EntityHeaderArtist"
 import { EntityHeaderPlaceholder } from "./EntityHeaderPlaceholder"
-import { EntityHeaderArtistStoryQuery } from "__generated__/EntityHeaderArtistStoryQuery.graphql"
+import type { EntityHeaderArtistStoryQuery } from "__generated__/EntityHeaderArtistStoryQuery.graphql"
 
 export default {
   title: "Components/EntityHeader",

@@ -1,10 +1,10 @@
-import * as React from "react"
+import type * as React from "react"
 import styled from "styled-components"
 import { Media } from "Utils/Responsive"
 import {
   Box,
   boxMixin,
-  BoxProps,
+  type BoxProps,
   Clickable,
   Column,
   Dropdown,
@@ -19,7 +19,7 @@ import {
 } from "@artsy/palette"
 import { useCCPARequest } from "Components/CCPARequest"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
-import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import XIcon from "@artsy/icons/XIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
 import WeChatIcon from "@artsy/icons/WeChatIcon"

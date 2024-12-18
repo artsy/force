@@ -1,4 +1,4 @@
-import { ArtworkMeta_artwork$key } from "__generated__/ArtworkMeta_artwork.graphql"
+import type { ArtworkMeta_artwork$key } from "__generated__/ArtworkMeta_artwork.graphql"
 import { Link, Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/SeoDataForArtwork"

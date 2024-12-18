@@ -6,20 +6,20 @@
 
 const extend = require("lodash/extend")
 // TODO: Remove let added for 'rewire'
-let request = require("superagent")
+const request = require("superagent")
 // TODO: Remove let added for 'rewire'
-let opts = require("../options")
+const opts = require("../options")
 const artsyXapp = require("@artsy/xapp")
 const ip = require("ip")
 
-const resolveIPv4 = function (ipAddress) {
+const resolveIPv4 = (ipAddress) => {
   if (ip.isV6Format(ipAddress) != null && ipAddress.indexOf("::ffff") >= 0) {
     return ipAddress.split("::ffff:")[1]
   }
   return ipAddress
 }
 
-const resolveProxies = function (req) {
+const resolveProxies = (req) => {
   const ipAddress = resolveIPv4(req.connection.remoteAddress)
   if (req && req.headers && req.headers["x-forwarded-for"]) {
     return req.headers["x-forwarded-for"] + ", " + ipAddress
@@ -27,7 +27,7 @@ const resolveProxies = function (req) {
   return ipAddress
 }
 
-module.exports.local = function (req, username, password, otp, done) {
+module.exports.local = (req, username, password, otp, done) => {
   const payload = {
     client_id: opts.ARTSY_ID,
     client_secret: opts.ARTSY_SECRET,
@@ -52,7 +52,7 @@ module.exports.local = function (req, username, password, otp, done) {
   post.end(onAccessToken(req, done))
 }
 
-module.exports.facebook = function (req, token, refreshToken, profile, done) {
+module.exports.facebook = (req, token, refreshToken, profile, done) => {
   if (profile && profile.emails && profile.emails[0]) {
     req.socialProfileEmail = profile.emails[0].value
   } else {
@@ -95,13 +95,13 @@ module.exports.facebook = function (req, token, refreshToken, profile, done) {
   }
 }
 
-module.exports.google = function (
+module.exports.google = (
   req,
   accessToken,
   refreshToken,
   profile,
   done
-) {
+) => {
   // Link Google account
   if (req.user) {
     return request
@@ -139,14 +139,14 @@ module.exports.google = function (
   }
 }
 
-module.exports.apple = function (
+module.exports.apple = (
   req,
   idToken,
   decodedIdToken,
   accessToken,
   refreshToken,
   done
-) {
+) => {
   const user = req.appleProfile
 
   let displayName = null
@@ -199,7 +199,7 @@ module.exports.apple = function (
 }
 
 const onAccessToken = (req, done, params) =>
-  function (err, res) {
+  (err, res) => {
     // Treat bad responses from Gravity as errors and get the most relavent
     // error message.
     let msg
@@ -256,7 +256,7 @@ const onAccessToken = (req, done, params) =>
         .set({ "User-Agent": req.get("user-agent") })
         .set({ "X-Xapp-Token": artsyXapp.token })
         .set({ Referer: req.get("referer") })
-        .end(function (err) {
+        .end((err) => {
           if (err) {
             return done(err)
           }

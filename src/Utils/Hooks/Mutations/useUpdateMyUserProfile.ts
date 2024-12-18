@@ -1,7 +1,7 @@
-import { Environment } from "react-relay"
+import type { Environment } from "react-relay"
 import { commitMutation, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import {
+import type {
   useUpdateMyUserProfileMutation,
   UpdateMyProfileInput,
 } from "__generated__/useUpdateMyUserProfileMutation.graphql"

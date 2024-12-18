@@ -3,10 +3,10 @@ import { States } from "storybook-states"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   CellShowFragmentContainer,
-  CellShowProps,
+  type CellShowProps,
   CellShowPlaceholder,
 } from "./CellShow"
-import { CellShowStoryQuery } from "__generated__/CellShowStoryQuery.graphql"
+import type { CellShowStoryQuery } from "__generated__/CellShowStoryQuery.graphql"
 
 export default {
   title: "Components/Cell",

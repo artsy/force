@@ -1,14 +1,14 @@
-import { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
+import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import {
   FulfillmentType,
-  PickupValues,
-  ShippingAddressFormValues,
+  type PickupValues,
+  type ShippingAddressFormValues,
   addressWithFallbackValues,
   matchAddressFields,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"
-import { ShippingContext_order$data } from "__generated__/ShippingContext_order.graphql"
+import type { ShippingContext_order$data } from "__generated__/ShippingContext_order.graphql"
 
 export interface ComputedOrderData {
   internalID: string

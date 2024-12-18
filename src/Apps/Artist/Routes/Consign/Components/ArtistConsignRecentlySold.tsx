@@ -1,6 +1,6 @@
 import { Text, Spacer, Shelf } from "@artsy/palette"
-import * as React from "react"
-import { ArtistConsignRecentlySold_artist$data } from "__generated__/ArtistConsignRecentlySold_artist.graphql"
+import type * as React from "react"
+import type { ArtistConsignRecentlySold_artist$data } from "__generated__/ArtistConsignRecentlySold_artist.graphql"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"

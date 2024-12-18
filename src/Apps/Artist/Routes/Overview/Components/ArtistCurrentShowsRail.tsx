@@ -6,8 +6,8 @@ import { useTracking } from "react-tracking"
 import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtistCurrentShowsRail_artist$data } from "__generated__/ArtistCurrentShowsRail_artist.graphql"
-import { ArtistCurrentShowsRailQuery } from "__generated__/ArtistCurrentShowsRailQuery.graphql"
+import type { ArtistCurrentShowsRail_artist$data } from "__generated__/ArtistCurrentShowsRail_artist.graphql"
+import type { ArtistCurrentShowsRailQuery } from "__generated__/ArtistCurrentShowsRailQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   CellShowFragmentContainer,

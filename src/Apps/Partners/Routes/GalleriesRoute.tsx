@@ -8,10 +8,10 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
-import { GalleriesRoute_viewer$data } from "__generated__/GalleriesRoute_viewer.graphql"
+import type { GalleriesRoute_viewer$data } from "__generated__/GalleriesRoute_viewer.graphql"
 import { PartnersFilters } from "Apps/Partners/Components/PartnersFilters"
 import { PartnersFeaturedCarouselFragmentContainer } from "Apps/Partners/Components/PartnersFeaturedCarousel"
 import { PartnersFilteredCellsQueryRenderer } from "Apps/Partners/Components/PartnersFilteredCells"

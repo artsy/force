@@ -1,5 +1,5 @@
 import { Join, ModalDialog, Spacer } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { SuggestedArtworksModalHeader } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksModalHeader"
 import { SuggestedArtworksModalGridQueryRenderer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksModalGrid"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"

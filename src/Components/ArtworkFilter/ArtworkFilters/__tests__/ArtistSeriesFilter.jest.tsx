@@ -4,7 +4,7 @@ import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
-import { ArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type { ArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtistSeriesFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistSeriesFilter"
 
 const artworkFilterContext: Partial<ArtworkFilterContextProps> = {

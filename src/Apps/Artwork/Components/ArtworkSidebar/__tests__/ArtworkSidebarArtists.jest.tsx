@@ -1,7 +1,7 @@
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { ArtworkSidebarArtistsFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarArtists"
-import { ArtworkSidebarArtists_Test_Query } from "__generated__/ArtworkSidebarArtists_Test_Query.graphql"
+import type { ArtworkSidebarArtists_Test_Query } from "__generated__/ArtworkSidebarArtists_Test_Query.graphql"
 import { fireEvent, screen } from "@testing-library/react"
 
 jest.unmock("react-relay")

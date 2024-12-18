@@ -1,5 +1,5 @@
-import { BoxProps, FullBleed, Image, ResponsiveBox } from "@artsy/palette"
-import { FC } from "react"
+import { type BoxProps, FullBleed, Image, ResponsiveBox } from "@artsy/palette"
+import type { FC } from "react"
 import { maxDimensionsByArea, resized } from "Utils/resized"
 import { Link } from "react-head"
 import { getENV } from "Utils/getENV"

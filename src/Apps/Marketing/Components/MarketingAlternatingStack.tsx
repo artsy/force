@@ -8,7 +8,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { FC, Fragment } from "react"
+import { type FC, Fragment } from "react"
 import { RouterLink } from "System/Components/RouterLink"
 import { cropped } from "Utils/resized"
 

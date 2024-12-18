@@ -1,7 +1,7 @@
-import { Flex, Text, RadioProps, BoxProps } from "@artsy/palette"
-import * as React from "react"
+import { Flex, Text, type RadioProps, type BoxProps } from "@artsy/palette"
+import type * as React from "react"
 import styled from "styled-components"
-import { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
+import type { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 
 interface SavedAddressItemProps extends BoxProps {
   address: SavedAddressType

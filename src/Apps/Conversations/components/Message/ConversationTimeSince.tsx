@@ -1,5 +1,5 @@
-import * as React from "react"
-import { Box, BoxProps, Text } from "@artsy/palette"
+import type * as React from "react"
+import { Box, type BoxProps, Text } from "@artsy/palette"
 import {
   exactDate,
   relativeDate,

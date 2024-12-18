@@ -1,4 +1,4 @@
-import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 
 export const MIN_PRICE = 50
 export const MAX_PRICE = 50000

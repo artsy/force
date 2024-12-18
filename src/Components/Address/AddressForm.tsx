@@ -10,19 +10,19 @@ import { CountrySelect } from "Components/CountrySelect"
 import * as React from "react"
 import { isEqual } from "lodash"
 import {
-  AddressAutocompleteSuggestion,
+  type AddressAutocompleteSuggestion,
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
   ContextModule,
-  EditedAutocompletedAddress,
+  type EditedAutocompletedAddress,
   OwnerType,
-  SelectedItemFromAddressAutoCompletion,
+  type SelectedItemFromAddressAutoCompletion,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { Address, emptyAddress } from "Components/Address/utils"
+import { type Address, emptyAddress } from "Components/Address/utils"
 
 const ENABLE_SECONDARY_SUGGESTIONS = false
 

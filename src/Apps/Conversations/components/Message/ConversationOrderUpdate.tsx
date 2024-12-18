@@ -1,8 +1,8 @@
-import * as React from "react"
+import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
-import { Color, Flex, FlexProps, Text, THEME } from "@artsy/palette"
+import { type Color, Flex, type FlexProps, Text, THEME } from "@artsy/palette"
 import { ConversationTimeSince } from "./ConversationTimeSince"
-import {
+import type {
   ConversationOrderUpdate_event$data,
   ConversationOrderUpdate_event$key,
 } from "__generated__/ConversationOrderUpdate_event.graphql"

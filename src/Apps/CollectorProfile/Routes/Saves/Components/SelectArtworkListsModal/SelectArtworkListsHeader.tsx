@@ -4,7 +4,7 @@ import {
   ModalKey,
   useManageArtworkForSavesContext,
 } from "Components/Artwork/ManageArtworkForSaves"
-import { FC } from "react"
+import type { FC } from "react"
 
 export const SelectArtworkListsHeader: FC<
   React.PropsWithChildren<unknown>

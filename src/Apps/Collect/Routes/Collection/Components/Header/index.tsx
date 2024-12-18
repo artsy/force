@@ -7,9 +7,9 @@ import {
   Spacer,
   ReadMore,
 } from "@artsy/palette"
-import { Header_collection$data } from "__generated__/Header_collection.graphql"
+import type { Header_collection$data } from "__generated__/Header_collection.graphql"
 import { Link } from "found"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { slugify } from "underscore.string"
 

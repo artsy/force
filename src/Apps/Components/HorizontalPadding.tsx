@@ -1,4 +1,4 @@
-import { Box, BoxProps } from "@artsy/palette"
+import { Box, type BoxProps } from "@artsy/palette"
 import styled from "styled-components"
 
 export interface HorizontalPaddingProps extends BoxProps {}

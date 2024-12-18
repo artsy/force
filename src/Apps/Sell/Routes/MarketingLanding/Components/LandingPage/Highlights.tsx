@@ -1,5 +1,5 @@
 import { Box, Column, GridColumns, Text } from "@artsy/palette"
-import { ReactElement } from "react"
+import type { ReactElement } from "react"
 
 const reasons = [
   {

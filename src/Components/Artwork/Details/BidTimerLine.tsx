@@ -4,7 +4,7 @@ import { useTimer } from "Utils/Hooks/useTimer"
 import { Text } from "@artsy/palette"
 import { DateTime } from "luxon"
 import { graphql, useFragment } from "react-relay"
-import { BidTimerLine_artwork$key } from "__generated__/BidTimerLine_artwork.graphql"
+import type { BidTimerLine_artwork$key } from "__generated__/BidTimerLine_artwork.graphql"
 import { useState } from "react"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 

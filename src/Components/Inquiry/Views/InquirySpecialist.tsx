@@ -8,12 +8,12 @@ import {
   TextArea,
   useToasts,
 } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { wait } from "Utils/wait"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import {
-  InquiryState,
+  type InquiryState,
   useInquiryContext,
 } from "Components/Inquiry/Hooks/useInquiryContext"
 import { logger } from "Components/Inquiry/util"

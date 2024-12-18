@@ -1,8 +1,8 @@
-import React from "react"
+import type React from "react"
 import { Column, GridColumns } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairExhibitorsGroup_exhibitorsGroup$data } from "__generated__/FairExhibitorsGroup_exhibitorsGroup.graphql"
-import { FairExhibitorsGroup_fair$data } from "__generated__/FairExhibitorsGroup_fair.graphql"
+import type { FairExhibitorsGroup_exhibitorsGroup$data } from "__generated__/FairExhibitorsGroup_exhibitorsGroup.graphql"
+import type { FairExhibitorsGroup_fair$data } from "__generated__/FairExhibitorsGroup_fair.graphql"
 import { FairExhibitorCardFragmentContainer as FairExhibitorCard } from "./FairExhibitorCard"
 import { Jump } from "Utils/Hooks/useJump"
 

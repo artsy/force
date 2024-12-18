@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { DedicatedArticlesBreadcrumbs_Test_Query } from "__generated__/DedicatedArticlesBreadcrumbs_Test_Query.graphql"
+import type { DedicatedArticlesBreadcrumbs_Test_Query } from "__generated__/DedicatedArticlesBreadcrumbs_Test_Query.graphql"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { DedicatedArticlesBreadcrumbsFragmentContainer } from "Apps/FairOrginizer/Components/DedicatedArticlesBreadcrumbs"
 

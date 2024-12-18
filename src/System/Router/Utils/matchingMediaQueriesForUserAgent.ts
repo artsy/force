@@ -1,6 +1,6 @@
 import { findDevice } from "@artsy/detect-responsive-traits"
 import {
-  MatchingMediaQueries,
+  type MatchingMediaQueries,
   findBreakpointAtWidth,
   findBreakpointsForWidths,
 } from "Utils/Responsive"

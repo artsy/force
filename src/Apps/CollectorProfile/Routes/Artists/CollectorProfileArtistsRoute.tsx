@@ -1,7 +1,7 @@
 import AddIcon from "@artsy/icons/AddIcon"
 import { Box, Button, Clickable, LabeledInput, Stack } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
-import { FC, useRef, useState } from "react"
+import { type FC, useRef, useState } from "react"
 import { CollectorProfileArtistsList } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsList"
 import { CollectorProfileArtistsAddDialog } from "Components/CollectorProfile/CollectorProfileArtistsAddDialog"
 import { CollectorProfileArtistsListHeader } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsListHeader"
@@ -10,7 +10,7 @@ import CloseIcon from "@artsy/icons/CloseIcon"
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { useRouter } from "System/Hooks/useRouter"
 
-interface CollectorProfileArtistsRouteProps {}
+type CollectorProfileArtistsRouteProps = {}
 
 export const CollectorProfileArtistsRoute: FC<
   React.PropsWithChildren<CollectorProfileArtistsRouteProps>

@@ -1,4 +1,4 @@
-import { AuctionFormValues } from "Apps/Auction/Components/Form/Utils/initialValues"
+import type { AuctionFormValues } from "Apps/Auction/Components/Form/Utils/initialValues"
 import { useFormikContext } from "formik"
 
 export const useAuctionFormContext = () => {

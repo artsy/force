@@ -1,15 +1,15 @@
 import {
   ActionType,
-  AddCollectedArtwork,
+  type AddCollectedArtwork,
   ContextModule,
-  DeleteCollectedArtwork,
-  EditCollectedArtwork,
-  MyColectionAddNewArtistName,
-  MyCollectionAddArtworkDetails,
-  MyCollectionSelectArtistFromSearch,
-  MyCollectionSelectArtworkFromGrid,
+  type DeleteCollectedArtwork,
+  type EditCollectedArtwork,
+  type MyColectionAddNewArtistName,
+  type MyCollectionAddArtworkDetails,
+  type MyCollectionSelectArtistFromSearch,
+  type MyCollectionSelectArtworkFromGrid,
   OwnerType,
-  SaveCollectedArtwork,
+  type SaveCollectedArtwork,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 

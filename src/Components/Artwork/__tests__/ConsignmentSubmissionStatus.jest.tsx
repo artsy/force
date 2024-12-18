@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react"
-import { ConsignmentSubmissionStatusTestQuery } from "__generated__/ConsignmentSubmissionStatusTestQuery.graphql"
+import type { ConsignmentSubmissionStatusTestQuery } from "__generated__/ConsignmentSubmissionStatusTestQuery.graphql"
 import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork/ConsignmentSubmissionStatus"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"

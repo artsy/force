@@ -1,7 +1,7 @@
 import {
   ActionType,
   ContextModule,
-  EditedUserProfile,
+  type EditedUserProfile,
   OwnerType,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"

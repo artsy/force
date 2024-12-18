@@ -6,7 +6,7 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { InvoiceDetailRoute_invoice$key } from "__generated__/InvoiceDetailRoute_invoice.graphql"
+import type { InvoiceDetailRoute_invoice$key } from "__generated__/InvoiceDetailRoute_invoice.graphql"
 import { InvoiceLineItems } from "Apps/Invoice/Components/InvoiceLineItems"
 import { InvoicePayments } from "Apps/Invoice/Components/InvoicePayments"
 import { graphql, useFragment } from "react-relay"

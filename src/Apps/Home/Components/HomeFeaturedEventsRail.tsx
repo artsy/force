@@ -1,6 +1,6 @@
 import {
   ActionType,
-  ClickedPromoSpace,
+  type ClickedPromoSpace,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
@@ -14,12 +14,12 @@ import {
   Stack,
 } from "@artsy/palette"
 import { compact, take } from "lodash"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
-import { HomeFeaturedEventsRail_orderedSet$data } from "__generated__/HomeFeaturedEventsRail_orderedSet.graphql"
+import type { HomeFeaturedEventsRail_orderedSet$data } from "__generated__/HomeFeaturedEventsRail_orderedSet.graphql"
 import { getInternalHref } from "Utils/url"
 
 interface HomeFeaturedEventsRailProps {

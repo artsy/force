@@ -1,7 +1,7 @@
 import * as lifecycle from "Server/passport/lib/app/lifecycle"
 import options from "Server/passport/lib/options"
 // eslint-disable-next-line no-restricted-imports
-import request, { SuperAgentRequest } from "superagent"
+import request, { type SuperAgentRequest } from "superagent"
 import passport from "passport"
 
 jest.mock("Server/passport/lib/options", () => ({
@@ -45,7 +45,7 @@ describe("lifecycle", () => {
       status: jest.fn().mockReturnValue({ send }),
     }
 
-    for (let method of ["get", "end", "set", "post", "send", "status"]) {
+    for (const method of ["get", "end", "set", "post", "send", "status"]) {
       ;(request as unknown as SuperAgentRequest)[method] = jest
         .fn()
         .mockReturnValue(request as unknown as SuperAgentRequest)

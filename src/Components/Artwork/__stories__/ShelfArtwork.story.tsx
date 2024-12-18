@@ -2,7 +2,7 @@ import { States } from "storybook-states"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
-  ShelfArtworkProps,
+  type ShelfArtworkProps,
 } from "Components/Artwork/ShelfArtwork"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { graphql } from "react-relay"

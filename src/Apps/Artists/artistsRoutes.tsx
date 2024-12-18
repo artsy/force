@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import { graphql } from "react-relay"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 
 const ArtistsApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistsApp"),
@@ -63,7 +63,7 @@ export const artistsRoutes: RouteProps[] = [
           return {
             ...params,
             ...props,
-            page: parseInt(props.location.query.page, 10) || 1,
+            page: Number.parseInt(props.location.query.page, 10) || 1,
             size: 100,
           }
         },

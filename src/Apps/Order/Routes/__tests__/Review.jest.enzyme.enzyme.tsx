@@ -1,4 +1,4 @@
-import { ReviewTestQuery$rawResponse } from "__generated__/ReviewTestQuery.graphql"
+import type { ReviewTestQuery$rawResponse } from "__generated__/ReviewTestQuery.graphql"
 import {
   PrivateSaleOrderWithShippingDetails,
   BuyOrderWithArtaShippingDetails,
@@ -43,7 +43,7 @@ import {
   submitOrderWithActionRequired,
   submitOrderWithFailureCurrencyNotSupported,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/submitOrder"
-import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
+import type { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import {
   ErrorDialogs,
   getErrorDialogCopy,

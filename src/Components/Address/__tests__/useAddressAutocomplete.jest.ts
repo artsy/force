@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react-hooks"
 import {
-  AddressAutocompleteSuggestion,
+  type AddressAutocompleteSuggestion,
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"

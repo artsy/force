@@ -3,7 +3,7 @@ import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import FilterIcon from "@artsy/icons/FilterIcon"
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Button,
   Flex,
   FullBleed,

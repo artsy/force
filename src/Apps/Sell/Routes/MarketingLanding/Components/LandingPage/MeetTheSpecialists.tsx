@@ -18,8 +18,8 @@ import { useTracking } from "react-tracking"
 import styled from "styled-components"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { createFragmentContainer, graphql } from "react-relay"
-import { MeetTheSpecialistsQuery } from "__generated__/MeetTheSpecialistsQuery.graphql"
-import { MeetTheSpecialists_staticContent$data } from "__generated__/MeetTheSpecialists_staticContent.graphql"
+import type { MeetTheSpecialistsQuery } from "__generated__/MeetTheSpecialistsQuery.graphql"
+import type { MeetTheSpecialists_staticContent$data } from "__generated__/MeetTheSpecialists_staticContent.graphql"
 
 export const CARD_WIDTH = 404
 export const CARD_HEIGHT = 610

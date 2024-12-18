@@ -1,5 +1,5 @@
 import { Flex, Image, ResponsiveBox } from "@artsy/palette"
-import { AuctionResultImage_auctionResult$key } from "__generated__/AuctionResultImage_auctionResult.graphql"
+import type { AuctionResultImage_auctionResult$key } from "__generated__/AuctionResultImage_auctionResult.graphql"
 import { graphql, useFragment } from "react-relay"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
 

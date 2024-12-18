@@ -1,4 +1,4 @@
-import { Environment } from "react-relay"
+import type { Environment } from "react-relay"
 
 // TODO: Replace with `useMutation`
 export type AuthIntentMutation = (
