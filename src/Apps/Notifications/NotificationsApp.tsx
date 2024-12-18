@@ -1,6 +1,6 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box, Column, FullBleed, GridColumns } from "@artsy/palette"
-import { NotificationsApp_me$data } from "__generated__/NotificationsApp_me.graphql"
+import type { NotificationsApp_me$data } from "__generated__/NotificationsApp_me.graphql"
 import {
   DESKTOP_HEIGHT,
   MIN_LIST_WIDTH,

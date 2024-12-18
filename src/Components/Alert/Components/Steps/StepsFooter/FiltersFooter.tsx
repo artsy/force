@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { Button } from "@artsy/palette/dist/elements/Button"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 

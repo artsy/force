@@ -7,17 +7,17 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { FC, Suspense } from "react"
+import { type FC, Suspense } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
-import { CompleteProfileInformationDialogQuery } from "__generated__/CompleteProfileInformationDialogQuery.graphql"
+import type { CompleteProfileInformationDialogQuery } from "__generated__/CompleteProfileInformationDialogQuery.graphql"
 import { Form, Formik } from "formik"
 import {
-  Location,
+  type Location,
   LocationAutocompleteInput,
   normalizePlace,
 } from "Components/LocationAutocompleteInput"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import { ActionType, ContextModule, EditedUserProfile } from "@artsy/cohesion"
+import { ActionType, ContextModule, type EditedUserProfile } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 

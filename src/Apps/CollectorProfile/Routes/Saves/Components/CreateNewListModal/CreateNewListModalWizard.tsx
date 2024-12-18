@@ -1,5 +1,5 @@
-import { FC, useState } from "react"
-import { CreateNewListModal, ArtworkList } from "./CreateNewListModal"
+import { type FC, useState } from "react"
+import { CreateNewListModal, type ArtworkList } from "./CreateNewListModal"
 import { AddArtworksModal } from "./AddArtworksModal"
 
 export interface CreateNewListModalWizardProps {

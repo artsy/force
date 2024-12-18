@@ -6,7 +6,7 @@ import { AuctionConfirmRegistrationRouteFragmentContainer } from "Apps/Auction/R
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { redirectToSaleHome } from "Apps/Auction/Routes/AuctionRegistrationRoute"
-import { AuctionConfirmRegistrationRouteTestQuery } from "__generated__/AuctionConfirmRegistrationRouteTestQuery.graphql"
+import type { AuctionConfirmRegistrationRouteTestQuery } from "__generated__/AuctionConfirmRegistrationRouteTestQuery.graphql"
 import { useCreateBidder } from "Apps/Auction/Queries/useCreateBidder"
 
 jest.unmock("react-relay")

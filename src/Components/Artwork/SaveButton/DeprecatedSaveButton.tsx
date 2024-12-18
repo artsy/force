@@ -1,6 +1,6 @@
-import { AuthContextModule } from "@artsy/cohesion"
-import { DeprecatedSaveButton_artwork$data } from "__generated__/DeprecatedSaveButton_artwork.graphql"
-import * as React from "react"
+import type { AuthContextModule } from "@artsy/cohesion"
+import type { DeprecatedSaveButton_artwork$data } from "__generated__/DeprecatedSaveButton_artwork.graphql"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
 import { Flex, Clickable } from "@artsy/palette"
@@ -11,7 +11,7 @@ import { useTracking } from "react-tracking"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { DeprecatedSaveButtonQuery } from "__generated__/DeprecatedSaveButtonQuery.graphql"
+import type { DeprecatedSaveButtonQuery } from "__generated__/DeprecatedSaveButtonQuery.graphql"
 
 export interface DeprecatedSaveButtonProps {
   artwork: DeprecatedSaveButton_artwork$data

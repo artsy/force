@@ -10,7 +10,7 @@ import {
 } from "Apps/__tests__/Fixtures/aggregations"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { SaleArtworks_Test_Query } from "__generated__/SaleArtworks_Test_Query.graphql"
+import type { SaleArtworks_Test_Query } from "__generated__/SaleArtworks_Test_Query.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

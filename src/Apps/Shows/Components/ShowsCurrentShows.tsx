@@ -1,16 +1,16 @@
 import { Box, Button, Join, Separator } from "@artsy/palette"
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { ShowsCurrentShowsQuery } from "__generated__/ShowsCurrentShowsQuery.graphql"
-import { ShowsCurrentShows_viewer$data } from "__generated__/ShowsCurrentShows_viewer.graphql"
+import type { ShowsCurrentShowsQuery } from "__generated__/ShowsCurrentShowsQuery.graphql"
+import type { ShowsCurrentShows_viewer$data } from "__generated__/ShowsCurrentShows_viewer.graphql"
 import {
   ShowsCurrentShowFragmentContainer,
   ShowsCurrentShowPlaceholder,

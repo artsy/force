@@ -2,20 +2,20 @@ import { Box, Skeleton } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   ActionType,
-  ClickedArtistSeriesGroup,
+  type ClickedArtistSeriesGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
 import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtistSeriesRail_artist$data } from "__generated__/ArtistSeriesRail_artist.graphql"
-import { ArtistSeriesRailQuery } from "__generated__/ArtistSeriesRailQuery.graphql"
+import type { ArtistSeriesRail_artist$data } from "__generated__/ArtistSeriesRail_artist.graphql"
+import type { ArtistSeriesRailQuery } from "__generated__/ArtistSeriesRailQuery.graphql"
 import {
   CellArtistSeriesFragmentContainer,
   CellArtistSeriesPlaceholder,
 } from "Components/Cells/CellArtistSeries"
-import { FC } from "react"
+import type { FC } from "react"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 

@@ -7,8 +7,8 @@ import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { resized } from "Utils/resized"
-import { PartnerOfferArtwork_artwork$key } from "__generated__/PartnerOfferArtwork_artwork.graphql"
-import { FC } from "react"
+import type { PartnerOfferArtwork_artwork$key } from "__generated__/PartnerOfferArtwork_artwork.graphql"
+import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface PartnerOfferArtworkProps {

@@ -1,9 +1,9 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { Skeleton } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { MarketingTrendingArtistsRail_viewer$data } from "__generated__/MarketingTrendingArtistsRail_viewer.graphql"
-import { MarketingTrendingArtistsRailQuery } from "__generated__/MarketingTrendingArtistsRailQuery.graphql"
+import type { MarketingTrendingArtistsRail_viewer$data } from "__generated__/MarketingTrendingArtistsRail_viewer.graphql"
+import type { MarketingTrendingArtistsRailQuery } from "__generated__/MarketingTrendingArtistsRailQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { Rail } from "Components/Rail/Rail"
 import {

@@ -1,8 +1,8 @@
-import * as React from "react"
+import type * as React from "react"
 import { useTracking } from "react-tracking"
-import { ActionType, ClickedAppDownload, ContextModule } from "@artsy/cohesion"
+import { ActionType, type ClickedAppDownload, type ContextModule } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { Link, LinkProps } from "@artsy/palette"
+import { Link, type LinkProps } from "@artsy/palette"
 import { Device } from "Utils/Hooks/useDeviceDetection"
 
 // SVGs are referenced as files because:

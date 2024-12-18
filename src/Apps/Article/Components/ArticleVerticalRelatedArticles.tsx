@@ -1,8 +1,8 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArticleVerticalRelatedArticles_article$data } from "__generated__/ArticleVerticalRelatedArticles_article.graphql"
-import { ArticleVerticalRelatedArticlesQuery } from "__generated__/ArticleVerticalRelatedArticlesQuery.graphql"
+import type { ArticleVerticalRelatedArticles_article$data } from "__generated__/ArticleVerticalRelatedArticles_article.graphql"
+import type { ArticleVerticalRelatedArticlesQuery } from "__generated__/ArticleVerticalRelatedArticlesQuery.graphql"
 import { Shelf, Skeleton, SkeletonText, Text } from "@artsy/palette"
 import {
   CellArticleFragmentContainer,

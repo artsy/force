@@ -1,4 +1,4 @@
-import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { urlFragmentFromState } from "Components/ArtworkFilter/Utils/urlFragmentFromState"
 

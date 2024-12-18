@@ -1,6 +1,6 @@
 import {
   ActionType,
-  ClickedChangePage,
+  type ClickedChangePage,
   ContextModule,
   commercialFilterParamsChanged,
 } from "@artsy/cohesion"
@@ -8,7 +8,7 @@ import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import FilterIcon from "@artsy/icons/FilterIcon"
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Button,
   Clickable,
   Flex,
@@ -29,14 +29,15 @@ import { Jump, useJump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
 import { isEqual } from "lodash"
-import React, { useMemo, useState } from "react"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import type React from "react"
+import { useMemo, useState } from "react"
+import { type RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { ArtworkFilterArtworkGridRefetchContainer as ArtworkFilterArtworkGrid } from "./ArtworkFilterArtworkGrid"
 import {
   ArtworkFilterContextProvider,
-  SharedArtworkFilterContextProps,
+  type SharedArtworkFilterContextProps,
   useArtworkFilterContext,
 } from "./ArtworkFilterContext"
 import { ArtworkFilterMobileOverlay } from "./ArtworkFilterMobileOverlay"

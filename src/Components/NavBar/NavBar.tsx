@@ -3,7 +3,7 @@ import CloseIcon from "@artsy/icons/CloseIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import * as React from "react"
+import type * as React from "react"
 import { useEffect, useState } from "react"
 import {
   NavBarMobileMenu,

@@ -1,5 +1,5 @@
 import { Checkbox, Flex } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,

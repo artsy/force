@@ -1,15 +1,15 @@
 import { Box, Button, Spacer, Text } from "@artsy/palette"
 
 import { MetaTags } from "Components/MetaTags"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
-import { NewWorksFromGalleriesYouFollowApp_me$data } from "__generated__/NewWorksFromGalleriesYouFollowApp_me.graphql"
+import type { NewWorksFromGalleriesYouFollowApp_me$data } from "__generated__/NewWorksFromGalleriesYouFollowApp_me.graphql"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
-import { ContextModule, AuthContextModule } from "@artsy/cohesion"
+import { ContextModule, type AuthContextModule } from "@artsy/cohesion"
 import { LogInPrompt } from "Apps/Components/LogInPrompt"
 
 export interface NewWorksFromGalleriesYouFollowAppProps {

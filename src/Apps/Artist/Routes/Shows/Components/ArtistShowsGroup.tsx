@@ -1,8 +1,12 @@
 import { Text, GridColumns, Column, Spacer } from "@artsy/palette"
-import * as React from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import type * as React from "react"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtistShowsGroup_artist$data } from "__generated__/ArtistShowsGroup_artist.graphql"
+import type { ArtistShowsGroup_artist$data } from "__generated__/ArtistShowsGroup_artist.graphql"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { CellShowFragmentContainer } from "Components/Cells/CellShow"
 import { useState } from "react"

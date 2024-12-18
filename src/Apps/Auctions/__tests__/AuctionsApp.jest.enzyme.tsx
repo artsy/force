@@ -26,7 +26,7 @@ describe("AuctionsApp", () => {
   }
 
   const useTracking = baseUseTracking as jest.Mock
-  let useSystemContext = baseUseSystemContext as jest.Mock
+  const useSystemContext = baseUseSystemContext as jest.Mock
   const trackEvent = jest.fn()
 
   beforeAll(() => {

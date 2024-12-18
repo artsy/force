@@ -1,13 +1,13 @@
 import * as React from "react"
 import { Box, Separator } from "@artsy/palette"
-import { SearchResultsArtists_viewer$data } from "__generated__/SearchResultsArtists_viewer.graphql"
+import type { SearchResultsArtists_viewer$data } from "__generated__/SearchResultsArtists_viewer.graphql"
 import { GenericSearchResultItem } from "Apps/Search/Components/GenericSearchResultItem"
 import { ZeroState } from "Apps/Search/Components/ZeroState"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
-import { RouterState, withRouter } from "found"
+import { type RouterState, withRouter } from "found"
 import qs from "qs"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import { type RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
 export interface Props extends RouterState {
   viewer: SearchResultsArtists_viewer$data
@@ -31,7 +31,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
     super(props)
 
     const page = this.getQueryParam("page")
-    this.state = { isLoading: false, page: (page && parseInt(page, 10)) || 1 }
+    this.state = { isLoading: false, page: (page && Number.parseInt(page, 10)) || 1 }
   }
 
   toggleLoading = (isLoading: boolean): void => {

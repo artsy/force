@@ -1,11 +1,11 @@
-import { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
+import type { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
 import { MockBoot } from "DevTools/MockBoot"
 import { graphql } from "react-relay"
 import GridItem, { ArtworkGridItem } from "Components/Artwork/GridItem"
 import { ArtworkGridFixture } from "./ArtworkGridFixture"
 import ArtworkGrid, {
   ArtworkGridContainer,
-  ArtworkGridContainerState,
+  type ArtworkGridContainerState,
   createSectionedArtworks,
 } from "Components/ArtworkGrid/ArtworkGrid"
 import {

@@ -6,10 +6,10 @@ import {
   Text,
   Separator,
 } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowsIndex_featuredShows$data } from "__generated__/ShowsIndex_featuredShows.graphql"
-import { ShowsIndex_viewer$data } from "__generated__/ShowsIndex_viewer.graphql"
+import type { ShowsIndex_featuredShows$data } from "__generated__/ShowsIndex_featuredShows.graphql"
+import type { ShowsIndex_viewer$data } from "__generated__/ShowsIndex_viewer.graphql"
 import { ShowsFeaturedShowFragmentContainer } from "Apps/Shows/Components/ShowsFeaturedShow"
 import { ShowsHeaderFragmentContainer } from "Apps/Shows/Components/ShowsHeader"
 import { ShowsMeta } from "Apps/Shows/Components/ShowsMeta"

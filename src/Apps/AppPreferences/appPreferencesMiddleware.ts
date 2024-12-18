@@ -1,8 +1,11 @@
 import { getAppPreferences } from "Apps/AppPreferences/appPreferencesServerRoutes"
 import { APP_PREFERENCES_SHARIFY_KEY } from "Apps/AppPreferences/useAppPreferences"
-import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 import { updateSharifyAndContext } from "Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
-import { NextFunction } from "express"
+import type { NextFunction } from "express"
 
 export const appPreferencesMiddleware = async (
   req: ArtsyRequest,

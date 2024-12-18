@@ -1,10 +1,10 @@
-import { AuthContextModule, Intent } from "@artsy/cohesion"
+import { type AuthContextModule, Intent } from "@artsy/cohesion"
 import { useManageArtworkForSavesContext } from "Components/Artwork/ManageArtworkForSaves"
 import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
 import { useAuthDialog } from "Components/AuthDialog"
 import { fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useSaveArtworkToListsArtworkListInclusionQuery } from "__generated__/useSaveArtworkToListsArtworkListInclusionQuery.graphql"
+import type { useSaveArtworkToListsArtworkListInclusionQuery } from "__generated__/useSaveArtworkToListsArtworkListInclusionQuery.graphql"
 
 type Artwork = {
   internalID: string
@@ -29,10 +29,10 @@ export interface SaveArtworkToListsOptions {
 }
 
 export enum ResultAction {
-  SavedToDefaultList,
-  RemovedFromDefaultList,
-  SelectingListsForArtwork,
-  ShowingAuthDialog,
+  SavedToDefaultList = 0,
+  RemovedFromDefaultList = 1,
+  SelectingListsForArtwork = 2,
+  ShowingAuthDialog = 3,
 }
 
 export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {

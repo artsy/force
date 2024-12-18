@@ -12,16 +12,16 @@ import {
   ArtistRailFragmentContainer,
   ARTIST_RAIL_PLACEHOLDER,
 } from "Components/ArtistRail"
-import { FC, Fragment, useState } from "react"
+import { type FC, Fragment, useState } from "react"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { SettingsSavesArtistsQuery } from "__generated__/SettingsSavesArtistsQuery.graphql"
-import { SettingsSavesArtists_me$data } from "__generated__/SettingsSavesArtists_me.graphql"
+import type { SettingsSavesArtistsQuery } from "__generated__/SettingsSavesArtistsQuery.graphql"
+import type { SettingsSavesArtists_me$data } from "__generated__/SettingsSavesArtists_me.graphql"
 
 interface SettingsSavesArtistsProps {
   me: SettingsSavesArtists_me$data

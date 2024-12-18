@@ -1,5 +1,5 @@
-import { ArtistSeriesRail_collectionGroup$data } from "__generated__/ArtistSeriesRail_collectionGroup.graphql"
-import * as React from "react"
+import type { ArtistSeriesRail_collectionGroup$data } from "__generated__/ArtistSeriesRail_collectionGroup.graphql"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesRailContainer as ArtistSeriesEntity } from "./ArtistSeriesEntity"
 import { Rail } from "Components/Rail/Rail"

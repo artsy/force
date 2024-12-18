@@ -1,11 +1,11 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { MyBids_me$data } from "__generated__/MyBids_me.graphql"
+import type { MyBids_me$data } from "__generated__/MyBids_me.graphql"
 import { MyBidsBidHeaderFragmentContainer } from "./MyBidsBidHeader"
 import { MyBidsBidItemFragmentContainer } from "./MyBidsBidItem"
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Button,
   Join,
   Separator,
@@ -20,7 +20,7 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { MyBidsQuery } from "__generated__/MyBidsQuery.graphql"
+import type { MyBidsQuery } from "__generated__/MyBidsQuery.graphql"
 
 interface MyBidsProps {
   me: MyBids_me$data

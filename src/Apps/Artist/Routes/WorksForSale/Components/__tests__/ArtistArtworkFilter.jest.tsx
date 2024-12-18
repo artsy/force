@@ -1,4 +1,4 @@
-import { ArtistArtworkFilterTestQuery } from "__generated__/ArtistArtworkFilterTestQuery.graphql"
+import type { ArtistArtworkFilterTestQuery } from "__generated__/ArtistArtworkFilterTestQuery.graphql"
 import { ArtistArtworkFilterRefetchContainer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"

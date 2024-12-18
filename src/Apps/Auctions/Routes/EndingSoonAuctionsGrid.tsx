@@ -1,12 +1,12 @@
 import { Box, Button, Text } from "@artsy/palette"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
-import { EndingSoonAuctionsGrid_viewer$data } from "__generated__/EndingSoonAuctionsGrid_viewer.graphql"
+import type { EndingSoonAuctionsGrid_viewer$data } from "__generated__/EndingSoonAuctionsGrid_viewer.graphql"
 import { extractNodes } from "Utils/extractNodes"
 
 interface EndingSoonAuctionsGridProps {

@@ -2,7 +2,7 @@ const pick = require("lodash/pick")
 const { escapeHTML } = require("underscore.string")
 const opts = require("../options")
 
-module.exports = function (req, res, next) {
+module.exports = (req, res, next) => {
   if (req.user) {
     res.locals.user = req.user
     if (res.locals.sd != null) {

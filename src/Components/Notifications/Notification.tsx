@@ -6,7 +6,7 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
-import {
+import type {
   NotificationQuery,
   NotificationTypesEnum,
 } from "__generated__/NotificationQuery.graphql"

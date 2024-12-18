@@ -1,9 +1,9 @@
-import { Environment } from "react-relay"
+import type { Environment } from "react-relay"
 import { createGeminiAssetWithS3Credentials } from "Components/PhotoUpload/Mutations/createGeminiAssetWithS3Credentials"
 import { getConvectionGeminiKey } from "Components/PhotoUpload/Mutations/getConvectionGeminiKey"
 import { getGeminiCredentialsForEnvironment } from "Components/PhotoUpload/Mutations/getGeminiCredentialsForEnvironment"
 import {
-  Photo,
+  type Photo,
   uploadSubmissionPhoto,
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { uploadFileToS3 } from "Components/PhotoUpload/Utils/uploadFileToS3"
@@ -36,12 +36,12 @@ jest.mock("../Utils/uploadFileToS3", () => ({
 }))
 
 describe("fileUtils", () => {
-  let relayEnvironment = {} as Environment
+  const relayEnvironment = {} as Environment
   let photo: Photo
-  let submission = {
+  const submission = {
     id: "1",
   }
-  let updateProgress = jest.fn()
+  const updateProgress = jest.fn()
 
   beforeEach(() => {
     ;(getGeminiCredentialsForEnvironment as jest.Mock).mockClear()

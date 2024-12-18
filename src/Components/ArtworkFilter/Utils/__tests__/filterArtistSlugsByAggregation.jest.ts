@@ -1,4 +1,4 @@
-import { Aggregations } from "../../ArtworkFilterContext"
+import type { Aggregations } from "../../ArtworkFilterContext"
 import { filterArtistSlugsByAggregation } from "../filterArtistSlugsByAggregation"
 
 describe("filterArtistSlugsByAggregation", () => {

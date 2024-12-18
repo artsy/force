@@ -1,9 +1,9 @@
 import { Text, Spacer, GridColumns, Column } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
-import { PressApp_page$data } from "__generated__/PressApp_page.graphql"
+import type { PressApp_page$data } from "__generated__/PressApp_page.graphql"
 import { PageHTML } from "Apps/Page/Components/PageHTML"
 import { RouterLink } from "System/Components/RouterLink"
 

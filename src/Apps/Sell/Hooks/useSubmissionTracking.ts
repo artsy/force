@@ -2,9 +2,9 @@ import {
   ActionType,
   ContextModule,
   OwnerType,
-  PageOwnerType,
+  type PageOwnerType,
 } from "@artsy/cohesion"
-import { SellFlowStep } from "Apps/Sell/SellFlowContext"
+import type { SellFlowStep } from "Apps/Sell/SellFlowContext"
 import { useTracking } from "react-tracking"
 
 export const useSubmissionTracking = () => {

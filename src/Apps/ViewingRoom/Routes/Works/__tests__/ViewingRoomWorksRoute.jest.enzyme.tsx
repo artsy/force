@@ -2,8 +2,8 @@ import { useTracking } from "react-tracking"
 import { renderRelayTree } from "DevTools/renderRelayTree"
 import { MockBoot } from "DevTools/MockBoot"
 import { graphql } from "react-relay"
-import { ViewingRoomWorksRoute_Test_Query$rawResponse } from "__generated__/ViewingRoomWorksRoute_Test_Query.graphql"
-import { Breakpoint } from "@artsy/palette"
+import type { ViewingRoomWorksRoute_Test_Query$rawResponse } from "__generated__/ViewingRoomWorksRoute_Test_Query.graphql"
+import type { Breakpoint } from "@artsy/palette"
 import { ViewingRoomWorksRouteFragmentContainer } from "Apps/ViewingRoom/Routes/Works/ViewingRoomWorksRoute"
 
 jest.unmock("react-relay")

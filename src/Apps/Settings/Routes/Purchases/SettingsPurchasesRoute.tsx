@@ -1,5 +1,5 @@
-import React from "react"
-import { SettingsPurchasesRoute_me$data } from "__generated__/SettingsPurchasesRoute_me.graphql"
+import type React from "react"
+import type { SettingsPurchasesRoute_me$data } from "__generated__/SettingsPurchasesRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsPurchasesFragmentContainer } from "./Components/SettingsPurchases"
 

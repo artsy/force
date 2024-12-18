@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { FairOrganizerFollowButton_Test_Query } from "__generated__/FairOrganizerFollowButton_Test_Query.graphql"
+import type { FairOrganizerFollowButton_Test_Query } from "__generated__/FairOrganizerFollowButton_Test_Query.graphql"
 import { FairOrganizerFollowButtonFragmentContainer } from "Apps/FairOrginizer/Components/FairOrganizerFollowButton"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { fairOrganizerFollowMutation } from "Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation"

@@ -1,5 +1,5 @@
-import { FC, ReactNode, createContext, useMemo } from "react"
-import { OwnerType, PageOwnerType } from "@artsy/cohesion"
+import { type FC, type ReactNode, createContext, useMemo } from "react"
+import { OwnerType, type PageOwnerType } from "@artsy/cohesion"
 import { camelCase } from "lodash"
 import { getENV } from "Utils/getENV"
 

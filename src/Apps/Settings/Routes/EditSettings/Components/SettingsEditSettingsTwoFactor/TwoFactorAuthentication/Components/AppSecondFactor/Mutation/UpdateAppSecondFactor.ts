@@ -1,9 +1,9 @@
-import {
+import type {
   UpdateAppSecondFactorInput,
   UpdateAppSecondFactorMutation,
   UpdateAppSecondFactorMutation$data,
 } from "__generated__/UpdateAppSecondFactorMutation.graphql"
-import { Environment, commitMutation, graphql } from "react-relay"
+import { type Environment, commitMutation, graphql } from "react-relay"
 
 export const UpdateAppSecondFactor = (
   environment: Environment,

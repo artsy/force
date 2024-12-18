@@ -1,5 +1,5 @@
-import { FC, useState } from "react"
-import { StripeError } from "@stripe/stripe-js"
+import { type FC, useState } from "react"
+import type { StripeError } from "@stripe/stripe-js"
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 import { Checkbox, Clickable, Flex, Tooltip, Spacer } from "@artsy/palette"

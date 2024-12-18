@@ -5,24 +5,24 @@ import {
   Flex,
   RadioGroup,
   Spacer,
-  TextAreaChange,
+  type TextAreaChange,
 } from "@artsy/palette"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import { Respond_order$data } from "__generated__/Respond_order.graphql"
-import { RespondCounterOfferMutation } from "__generated__/RespondCounterOfferMutation.graphql"
+import type { Respond_order$data } from "__generated__/Respond_order.graphql"
+import type { RespondCounterOfferMutation } from "__generated__/RespondCounterOfferMutation.graphql"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
 import { OfferNote } from "Apps/Order/Components/OfferNote"
 import { RevealButton } from "Apps/Order/Components/RevealButton"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import { Dialog, injectDialog } from "Apps/Order/Dialogs"
+import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
-  CommitMutation,
+  type CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { CountdownTimer } from "Components/CountdownTimer"
-import { Match, Router, RouterState } from "found"
-import { FC, useState } from "react"
+import type { Match, Router, RouterState } from "found"
+import { type FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"

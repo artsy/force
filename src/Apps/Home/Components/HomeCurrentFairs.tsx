@@ -10,17 +10,17 @@ import {
   GridColumns,
   Column,
 } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { RouterLink } from "System/Components/RouterLink"
-import { HomeCurrentFairs_viewer$data } from "__generated__/HomeCurrentFairs_viewer.graphql"
-import { HomeCurrentFairsQuery } from "__generated__/HomeCurrentFairsQuery.graphql"
+import type { HomeCurrentFairs_viewer$data } from "__generated__/HomeCurrentFairs_viewer.graphql"
+import type { HomeCurrentFairsQuery } from "__generated__/HomeCurrentFairsQuery.graphql"
 import {
   ActionType,
-  ClickedFairGroup,
+  type ClickedFairGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"

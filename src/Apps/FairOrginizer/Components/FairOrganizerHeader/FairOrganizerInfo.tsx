@@ -1,7 +1,7 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { InfoSection } from "Components/InfoSection"
-import { FairOrganizerInfo_fairOrganizer$data } from "__generated__/FairOrganizerInfo_fairOrganizer.graphql"
+import type { FairOrganizerInfo_fairOrganizer$data } from "__generated__/FairOrganizerInfo_fairOrganizer.graphql"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 

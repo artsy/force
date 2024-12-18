@@ -1,5 +1,5 @@
 import { BorderBox, Box, Join, Spacer } from "@artsy/palette"
-import { ArtistMarketInsights_artist$data } from "__generated__/ArtistMarketInsights_artist.graphql"
+import type { ArtistMarketInsights_artist$data } from "__generated__/ArtistMarketInsights_artist.graphql"
 import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"

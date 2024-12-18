@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react"
+import { type FC, useEffect, useRef } from "react"
 import { isEqual, omit } from "lodash"
 import styled from "styled-components"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"

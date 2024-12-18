@@ -1,5 +1,5 @@
-import { FC, useRef } from "react"
-import { Button, ButtonProps } from "@artsy/palette"
+import { type FC, useRef } from "react"
+import { Button, type ButtonProps } from "@artsy/palette"
 import ChevronSmallDownIcon from "@artsy/icons/ChevronSmallDownIcon"
 
 interface LatestMessagesFlyOutProps {

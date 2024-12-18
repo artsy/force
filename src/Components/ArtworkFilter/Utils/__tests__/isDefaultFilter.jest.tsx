@@ -1,5 +1,5 @@
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { isDefaultFilter } from "Components/ArtworkFilter/Utils/isDefaultFilter"
 
 describe("isDefaultFilter", () => {

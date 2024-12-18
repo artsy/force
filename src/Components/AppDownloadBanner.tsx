@@ -1,10 +1,10 @@
 import { Box, Text } from "@artsy/palette"
-import { FC, useEffect } from "react"
+import { type FC, useEffect } from "react"
 import ChevronSmallRightIcon from "@artsy/icons/ChevronSmallRightIcon"
 import { useCursor } from "use-cursor"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { useTracking } from "react-tracking"
-import { ActionType, ClickedDownloadAppHeader } from "@artsy/cohesion"
+import { ActionType, type ClickedDownloadAppHeader } from "@artsy/cohesion"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 

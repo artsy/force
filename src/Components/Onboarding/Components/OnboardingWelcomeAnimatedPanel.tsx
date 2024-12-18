@@ -1,5 +1,5 @@
 import { Box, Flex, Image, ResponsiveBox } from "@artsy/palette"
-import { FC, forwardRef } from "react"
+import { type FC, forwardRef } from "react"
 import styled, { keyframes } from "styled-components"
 import { cropped } from "Utils/resized"
 

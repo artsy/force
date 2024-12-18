@@ -1,13 +1,13 @@
-import { SearchResultsArtworks_viewer$data } from "__generated__/SearchResultsArtworks_viewer.graphql"
+import type { SearchResultsArtworks_viewer$data } from "__generated__/SearchResultsArtworks_viewer.graphql"
 import { SearchResultsArtworksFilters } from "Apps/Search/Components/SearchResultsArtworksFilters"
 import { ZeroState } from "Apps/Search/Components/ZeroState"
 import { ArtworkFilter } from "Components/ArtworkFilter"
-import {
+import type {
   Counts,
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import * as React from "react"
+import type * as React from "react"
 import { useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"

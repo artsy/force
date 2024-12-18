@@ -3,7 +3,7 @@ import { useMutation } from "Utils/Hooks/useMutation"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { render } from "DevTools/renderWithMockBoot"
 import { OfferSettingsModal } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsModal"
-import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
+import type { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 import { createMockEnvironment } from "relay-test-utils"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 

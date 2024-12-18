@@ -1,5 +1,5 @@
-import { ModalBase, ModalBaseProps, useTheme } from "@artsy/palette"
-import * as React from "react"
+import { ModalBase, type ModalBaseProps, useTheme } from "@artsy/palette"
+import type * as React from "react"
 import styled from "styled-components"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 

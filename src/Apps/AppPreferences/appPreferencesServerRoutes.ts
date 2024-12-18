@@ -1,10 +1,13 @@
 import {
-  AppPreferences,
+  type AppPreferences,
   appPreferencesSchema,
   DEFAULT_PREFERENCES,
 } from "Apps/AppPreferences/useAppPreferences"
 import { Router } from "express"
-import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 
 const APP_PREFERENCES_COOKIE_NAME = "APP_PREFERENCES"
 const APP_PREFERENCES_COOKIE_CONFIGURATION = {

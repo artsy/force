@@ -1,4 +1,4 @@
-import { AuthContextModule } from "@artsy/cohesion"
+import type { AuthContextModule } from "@artsy/cohesion"
 import { Clickable, Message, Spacer } from "@artsy/palette"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useSystemContext } from "System/Hooks/useSystemContext"

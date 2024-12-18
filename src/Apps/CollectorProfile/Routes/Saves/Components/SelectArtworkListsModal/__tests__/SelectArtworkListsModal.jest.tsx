@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
-import {
+import type {
   SelectArtworkListsModal_Test_Query,
   SelectArtworkListsModal_Test_Query$data,
 } from "__generated__/SelectArtworkListsModal_Test_Query.graphql"
@@ -13,7 +13,7 @@ import {
 import { useTracking } from "react-tracking"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
-import { FC } from "react"
+import type { FC } from "react"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { MockBoot } from "DevTools/MockBoot"
 

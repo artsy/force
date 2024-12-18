@@ -1,6 +1,6 @@
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { AuctionDetailsFragmentContainer } from "Apps/Auction/Components/AuctionDetails/AuctionDetails"
-import { AuctionDetailsTestQuery } from "__generated__/AuctionDetailsTestQuery.graphql"
+import type { AuctionDetailsTestQuery } from "__generated__/AuctionDetailsTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 

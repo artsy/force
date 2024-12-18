@@ -1,4 +1,4 @@
-import { BackToFairBanner_Test_Query } from "__generated__/BackToFairBanner_Test_Query.graphql"
+import type { BackToFairBanner_Test_Query } from "__generated__/BackToFairBanner_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { BackToFairBannerFragmentContainer } from "Apps/Show/Components/BackToFairBanner"

@@ -8,9 +8,9 @@ import {
   Stack,
 } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { graphql } from "react-relay"
-import {
+import type {
   SuggestedArtworksShelfQuery,
   SuggestedArtworksShelfQuery$data,
 } from "__generated__/SuggestedArtworksShelfQuery.graphql"
@@ -18,7 +18,7 @@ import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
-import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { extractNodes } from "Utils/extractNodes"
 import { ArtworkAuctionCreateAlertTooltip } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
 import { SuggestedArtworksModal } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksModal"

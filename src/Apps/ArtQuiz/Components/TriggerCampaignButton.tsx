@@ -1,5 +1,5 @@
 import { Button, useToasts } from "@artsy/palette"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"

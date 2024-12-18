@@ -7,11 +7,11 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
-import { FC, useMemo, useState } from "react"
+import { type FC, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArticleZoomGallery_article$data } from "__generated__/ArticleZoomGallery_article.graphql"
-import { ArticleZoomGalleryQuery } from "__generated__/ArticleZoomGalleryQuery.graphql"
+import type { ArticleZoomGallery_article$data } from "__generated__/ArticleZoomGallery_article.graphql"
+import type { ArticleZoomGalleryQuery } from "__generated__/ArticleZoomGalleryQuery.graphql"
 import { useCursor } from "use-cursor"
 import { compact } from "lodash"
 import styled, { css } from "styled-components"

@@ -1,5 +1,5 @@
-import { ArtworkTopContextBar_artwork$data } from "__generated__/ArtworkTopContextBar_artwork.graphql"
-import * as React from "react"
+import type { ArtworkTopContextBar_artwork$data } from "__generated__/ArtworkTopContextBar_artwork.graphql"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box } from "@artsy/palette"
 import { TopContextBar } from "Components/TopContextBar"

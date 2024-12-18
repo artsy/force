@@ -1,4 +1,4 @@
-import { Box, Flex, FlexProps } from "@artsy/palette"
+import { Box, Flex, type FlexProps } from "@artsy/palette"
 
 const BAR_WIDTH = 2
 const BAR_ROUNDNESS = 10

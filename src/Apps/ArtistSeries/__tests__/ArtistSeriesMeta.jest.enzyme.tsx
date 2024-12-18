@@ -2,7 +2,7 @@ import { renderRelayTree } from "DevTools/renderRelayTree"
 import { MockBoot } from "DevTools/MockBoot"
 import { ArtistSeriesMetaFragmentContainer } from "Apps/ArtistSeries/Components/ArtistSeriesMeta"
 import { graphql } from "react-relay"
-import { ArtistSeriesMeta_TestQuery$rawResponse } from "__generated__/ArtistSeriesMeta_TestQuery.graphql"
+import type { ArtistSeriesMeta_TestQuery$rawResponse } from "__generated__/ArtistSeriesMeta_TestQuery.graphql"
 
 jest.unmock("react-relay")
 

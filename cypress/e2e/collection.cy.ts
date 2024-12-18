@@ -28,7 +28,10 @@ describe("/collection/:id (a collection hub)", () => {
       )
 
     cy.get("h1").should("contain", "Contemporary")
-    artworkGridRenders()
+
+    cy.wait(1000).then(() => {
+      artworkGridRenders()
+    })
   })
 })
 

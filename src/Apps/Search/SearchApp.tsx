@@ -6,13 +6,13 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { SearchApp_viewer$data } from "__generated__/SearchApp_viewer.graphql"
+import type { SearchApp_viewer$data } from "__generated__/SearchApp_viewer.graphql"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "Apps/Search/Components/NavigationTabs"
 import { SearchMeta } from "Apps/Search/Components/SearchMeta"
 import { RecentlyViewed } from "Components/RecentlyViewed"
 import { Sticky } from "Components/Sticky"
-import React from "react"
+import type React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
 import { ZeroState } from "./Components/ZeroState"

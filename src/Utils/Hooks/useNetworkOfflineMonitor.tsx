@@ -15,7 +15,7 @@ export const useNetworkOfflineMonitor = () => {
         description:
           "You are currently offline. Please check your internet connection.",
         variant: "message",
-        ttl: Infinity,
+        ttl: Number.POSITIVE_INFINITY,
       })
 
       toastID.current = id

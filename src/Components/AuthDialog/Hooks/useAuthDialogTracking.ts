@@ -1,11 +1,11 @@
 import {
   ActionType,
-  AuthImpression,
+  type AuthImpression,
   AuthModalType,
-  CreatedAccount,
+  type CreatedAccount,
   Intent,
-  ResetYourPassword,
-  SuccessfullyLoggedIn,
+  type ResetYourPassword,
+  type SuccessfullyLoggedIn,
 } from "@artsy/cohesion"
 import {
   AUTH_MODAL_TYPES,

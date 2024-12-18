@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { SIDEBAR_FETCH_PAGE_SIZE } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
 import { RedirectException } from "found"

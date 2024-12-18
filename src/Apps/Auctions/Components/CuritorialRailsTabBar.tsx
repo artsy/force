@@ -1,5 +1,5 @@
 import { Spacer, Tab, Tabs, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { AuctionsZeroState } from "./AuctionsZeroState"
 import { StandoutLotsRailQueryRenderer } from "./StandoutLotsRail"
 import { TrendingLotsRailQueryRenderer } from "./TrendingLotsRail"

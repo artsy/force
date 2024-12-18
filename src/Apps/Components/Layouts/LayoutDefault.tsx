@@ -1,11 +1,11 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { Flex, Spacer } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { AppToasts } from "Apps/Components/AppToasts"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { LayoutFooter } from "Apps/Components/Layouts/Components/LayoutFooter"
 import { LayoutNav } from "Apps/Components/Layouts/Components/LayoutNav"
-import { BaseLayoutProps } from "Apps/Components/Layouts"
+import type { BaseLayoutProps } from "Apps/Components/Layouts"
 
 export const LayoutDefault: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
   children,

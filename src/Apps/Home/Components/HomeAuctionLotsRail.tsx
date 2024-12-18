@@ -1,11 +1,11 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Shelf, Skeleton } from "@artsy/palette"
-import { HomeAuctionLotsRail_viewer$data } from "__generated__/HomeAuctionLotsRail_viewer.graphql"
-import { HomeAuctionLotsRailQuery } from "__generated__/HomeAuctionLotsRailQuery.graphql"
+import type { HomeAuctionLotsRail_viewer$data } from "__generated__/HomeAuctionLotsRail_viewer.graphql"
+import type { HomeAuctionLotsRailQuery } from "__generated__/HomeAuctionLotsRailQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import {
   ShelfArtworkFragmentContainer,
@@ -13,8 +13,8 @@ import {
 } from "Components/Artwork/ShelfArtwork"
 import {
   ActionType,
-  AuthContextModule,
-  ClickedArtworkGroup,
+  type AuthContextModule,
+  type ClickedArtworkGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"

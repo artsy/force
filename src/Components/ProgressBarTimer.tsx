@@ -1,7 +1,7 @@
 import { ProgressBar } from "@artsy/palette"
-import { Color } from "@artsy/palette-tokens"
+import type { Color } from "@artsy/palette-tokens"
 import { DateTime } from "luxon"
-import React from "react"
+import type React from "react"
 
 interface ProgressBarTimerProps {
   currentTime: string | DateTime

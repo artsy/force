@@ -1,5 +1,5 @@
 import { Media } from "Utils/Responsive"
-import { FC, ReactNode } from "react"
+import type { FC, ReactNode } from "react"
 import { HeroCarouselLarge } from "./HeroCarouselLarge"
 import { HeroCarouselSmall } from "./HeroCarouselSmall"
 

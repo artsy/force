@@ -7,7 +7,7 @@ import {
   Text,
 } from "@artsy/palette"
 
-import { MyCollectionArtworkSWASectionSubmitted_submissionState$key } from "__generated__/MyCollectionArtworkSWASectionSubmitted_submissionState.graphql"
+import type { MyCollectionArtworkSWASectionSubmitted_submissionState$key } from "__generated__/MyCollectionArtworkSWASectionSubmitted_submissionState.graphql"
 
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"

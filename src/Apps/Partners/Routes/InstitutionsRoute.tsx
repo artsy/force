@@ -8,12 +8,12 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
-import { InstitutionsRoute_viewer$data } from "__generated__/InstitutionsRoute_viewer.graphql"
+import type { InstitutionsRoute_viewer$data } from "__generated__/InstitutionsRoute_viewer.graphql"
 import { PartnersFeaturedCarouselFragmentContainer } from "Apps/Partners/Components/PartnersFeaturedCarousel"
 import { PartnersFilteredCellsQueryRenderer } from "Apps/Partners/Components/PartnersFilteredCells"
 import { PartnersFilters } from "Apps/Partners/Components/PartnersFilters"

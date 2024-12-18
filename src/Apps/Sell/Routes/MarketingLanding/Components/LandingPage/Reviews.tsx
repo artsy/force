@@ -1,6 +1,6 @@
 import { Avatar, Box, Flex, Text } from "@artsy/palette"
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
-import React from "react"
+import type React from "react"
 
 interface ReviewsData {
   reviewText: string

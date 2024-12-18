@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 
 export enum Device {
-  iPhone,
-  Android,
-  Unknown,
+  iPhone = 0,
+  Android = 1,
+  Unknown = 2,
 }
 
 export const DOWNLOAD_APP_URLS = {

@@ -1,9 +1,9 @@
-import { Form, Formik, FormikHelpers as FormikActions } from "formik"
+import { Form, Formik, type FormikHelpers as FormikActions } from "formik"
 import { isEmpty } from "lodash"
 import { Component } from "react"
 import * as React from "react"
-import { StepElement, StepProps, WizardRenderProps } from "./types"
-import { FormValues, WizardContext } from "./types"
+import type { StepElement, StepProps, WizardRenderProps } from "./types"
+import type { FormValues, WizardContext } from "./types"
 
 interface WizardProps {
   onComplete?: (

@@ -1,7 +1,7 @@
 import { Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { States } from "storybook-states"
-import { HeroCarousel, HeroCarouselProps } from "./HeroCarousel"
+import { HeroCarousel, type HeroCarouselProps } from "./HeroCarousel"
 
 export default {
   title: "Components/HeroCarousel",

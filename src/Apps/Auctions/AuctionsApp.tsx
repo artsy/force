@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { AuctionsMeta } from "./Components/AuctionsMeta"
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { RecentlyViewed } from "Components/RecentlyViewed"

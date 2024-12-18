@@ -1,8 +1,8 @@
 import { Button, Flex } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { FC } from "react"
+import type { FC } from "react"
 import { graphql } from "react-relay"
-import {
+import type {
   ConfirmationStepFooterQuery,
   ConfirmationStepFooterQuery$data,
 } from "__generated__/ConfirmationStepFooterQuery.graphql"

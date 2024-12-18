@@ -1,5 +1,5 @@
 import { Flex, Box, Button } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { OnboardingProgress } from "./OnboardingProgress"
 
 interface OnboardingQuestionPanelProps {

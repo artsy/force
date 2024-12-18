@@ -1,8 +1,8 @@
-import { mount, ReactWrapper } from "enzyme"
+import { mount, type ReactWrapper } from "enzyme"
 import {
   LocationAutocompleteInput,
   normalizePlace,
-  Place,
+  type Place,
 } from "Components/LocationAutocompleteInput"
 import { Input } from "@artsy/palette"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
@@ -25,7 +25,7 @@ const setupGoogleMapsMock = () => {
   global.window.google = { maps: { Geocoder, places: { AutocompleteService } } }
 }
 
-let defaultValue = "Minsk, Belarus"
+const defaultValue = "Minsk, Belarus"
 const mockOnChange = jest.fn()
 
 const inputSelector = "input[data-testid='autocomplete-location']"

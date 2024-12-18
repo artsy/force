@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { MetaTags } from "Components/MetaTags"
 
 const TITLE = "Art Gallery Shows and Museum Exhibitions | Artsy"

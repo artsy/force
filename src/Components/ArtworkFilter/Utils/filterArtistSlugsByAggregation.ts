@@ -1,4 +1,4 @@
-import { Aggregations } from "../ArtworkFilterContext"
+import type { Aggregations } from "../ArtworkFilterContext"
 
 export const filterArtistSlugsByAggregation = (
   slugs: string[],

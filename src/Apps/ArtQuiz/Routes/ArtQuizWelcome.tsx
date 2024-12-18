@@ -1,6 +1,6 @@
 import { Flex, Text, Spacer, Button, FullBleed, Box } from "@artsy/palette"
 import { SplitLayout } from "Components/SplitLayout"
-import { FC } from "react"
+import type { FC } from "react"
 import { RouterLink } from "System/Components/RouterLink"
 
 import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"

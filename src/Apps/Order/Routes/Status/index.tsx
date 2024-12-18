@@ -1,7 +1,7 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Title } from "react-head"
-import { Match } from "found"
+import type { Match } from "found"
 import {
   Button,
   Flex,
@@ -21,7 +21,7 @@ import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/
 import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Status_order$data } from "__generated__/Status_order.graphql"
+import type { Status_order$data } from "__generated__/Status_order.graphql"
 import {
   getStatusCopy,
   continueToInboxText,

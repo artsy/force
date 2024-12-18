@@ -1,5 +1,5 @@
-import { OtherCollectionsRail_collectionGroup$data } from "__generated__/OtherCollectionsRail_collectionGroup.graphql"
-import * as React from "react"
+import type { OtherCollectionsRail_collectionGroup$data } from "__generated__/OtherCollectionsRail_collectionGroup.graphql"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { OtherCollectionsRailsContainer as OtherCollectionEntity } from "./OtherCollectionEntity"
 import { Rail } from "Components/Rail/Rail"

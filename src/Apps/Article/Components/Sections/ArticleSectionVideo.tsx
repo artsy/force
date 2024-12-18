@@ -1,5 +1,5 @@
-import { FC } from "react"
-import { ArticleSectionVideo_section$data } from "__generated__/ArticleSectionVideo_section.graphql"
+import type { FC } from "react"
+import type { ArticleSectionVideo_section$data } from "__generated__/ArticleSectionVideo_section.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Clickable, Image, ResponsiveBox, Text } from "@artsy/palette"
 import styled from "styled-components"

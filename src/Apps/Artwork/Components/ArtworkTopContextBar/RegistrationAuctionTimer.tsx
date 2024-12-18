@@ -1,7 +1,7 @@
 import { Flex, Text } from "@artsy/palette"
 import { Timer } from "Components/Timer"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RegistrationAuctionTimer_sale$data } from "__generated__/RegistrationAuctionTimer_sale.graphql"
+import type { RegistrationAuctionTimer_sale$data } from "__generated__/RegistrationAuctionTimer_sale.graphql"
 
 interface RegistrationAuctionTimerProps {
   sale: RegistrationAuctionTimer_sale$data

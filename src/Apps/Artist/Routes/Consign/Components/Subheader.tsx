@@ -1,5 +1,5 @@
-import { Text, TextProps } from "@artsy/palette"
-import * as React from "react"
+import { Text, type TextProps } from "@artsy/palette"
+import type * as React from "react"
 
 interface SubheaderProps extends TextProps {
   children: React.ReactNode

@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import {
   InquiryContextContextQueryRenderer,
   InquiryProvider,
@@ -7,7 +7,7 @@ import {
 import { InquiryBackdrop } from "./Components/InquiryBackdrop"
 import { Box, Clickable, useTheme } from "@artsy/palette"
 import CloseIcon from "@artsy/icons/CloseIcon"
-import { SKIPPABLE_VIEWS, View } from "Components/Inquiry/config"
+import { SKIPPABLE_VIEWS, type View } from "Components/Inquiry/config"
 
 interface InquiryProps {
   artworkID: string

@@ -5,7 +5,7 @@ export const analytics = sd.SEGMENT_WRITE_KEY
   ? new Analytics(sd.SEGMENT_WRITE_KEY)
   : null
 
-module.exports.setCampaign = function (req, _res, next) {
+module.exports.setCampaign = (req, _res, next) => {
   if (!sd.SEGMENT_WRITE_KEY) {
     return next()
   }
@@ -18,7 +18,7 @@ module.exports.setCampaign = function (req, _res, next) {
 }
 
 module.exports.trackSignup = service =>
-  function (req, _res, next) {
+  (req, _res, next) => {
     const { acquisitionInitiative, modalId } = req.session
 
     delete req.session.acquisitionInitiative
@@ -42,7 +42,7 @@ module.exports.trackSignup = service =>
     next()
   }
 
-module.exports.trackLogin = function (req, _res, next) {
+module.exports.trackLogin = (req, _res, next) => {
   if (!sd.SEGMENT_WRITE_KEY) {
     return next()
   }

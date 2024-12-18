@@ -1,9 +1,9 @@
 import { Pill, Spacer, Flex, HorizontalOverflow } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { extractNodes } from "Utils/extractNodes"
-import { StickyNav_geneFamiliesConnection$data } from "__generated__/StickyNav_geneFamiliesConnection.graphql"
+import type { StickyNav_geneFamiliesConnection$data } from "__generated__/StickyNav_geneFamiliesConnection.graphql"
 import { useJump } from "Utils/Hooks/useJump"
 
 interface StickyNavProps {

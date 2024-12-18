@@ -1,4 +1,7 @@
-import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 import { isStaticAuthRoute } from "./isStaticAuthRoute"
 import { sanitizeRedirect } from "Utils/sanitizeRedirect"
 
@@ -11,7 +14,7 @@ export const checkForRedirect = ({
 }) => {
   const { parse } = require("url")
 
-  let referrer = parse(req.get("Referrer") || "").path || "/"
+  const referrer = parse(req.get("Referrer") || "").path || "/"
 
   const isStaticAuth = isStaticAuthRoute({ req })
 

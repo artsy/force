@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { PartnerApp_Test_Query } from "__generated__/PartnerApp_Test_Query.graphql"
+import type { PartnerApp_Test_Query } from "__generated__/PartnerApp_Test_Query.graphql"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { PartnerAppFragmentContainer } from "Apps/Partner/PartnerApp"
 import { PartnerHeaderImageFragmentContainer } from "Apps/Partner/Components/PartnerHeader/PartnerHeaderImage"

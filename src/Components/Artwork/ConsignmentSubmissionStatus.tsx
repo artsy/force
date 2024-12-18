@@ -1,6 +1,6 @@
 import AlertFillIcon from "@artsy/icons/AlertFillIcon"
 import { Flex, Text } from "@artsy/palette"
-import { ConsignmentSubmissionStatus_artwork$data } from "__generated__/ConsignmentSubmissionStatus_artwork.graphql"
+import type { ConsignmentSubmissionStatus_artwork$data } from "__generated__/ConsignmentSubmissionStatus_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface ConsignmentSubmissionStatusProps {

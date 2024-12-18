@@ -1,6 +1,6 @@
 import { Button, Flex } from "@artsy/palette"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 
 export const RevealButton: FC<
   React.PropsWithChildren<{

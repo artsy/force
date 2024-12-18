@@ -1,4 +1,4 @@
-import { Metric } from "Utils/metrics"
+import type { Metric } from "Utils/metrics"
 
 /**
  * A list of filters that support multiple selections

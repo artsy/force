@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react"
 import { ArtworkSidebarPrivateArtwork } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPrivateArtwork"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { ArtworkSidebarPrivateArtworkQuery } from "__generated__/ArtworkSidebarPrivateArtworkQuery.graphql"
+import type { ArtworkSidebarPrivateArtworkQuery } from "__generated__/ArtworkSidebarPrivateArtworkQuery.graphql"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useFeatureFlag", () => {

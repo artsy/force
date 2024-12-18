@@ -1,5 +1,5 @@
 import { Flex, Join, Separator, Spacer } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { ConfirmationArtworksGridQueryRenderer } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
 import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"

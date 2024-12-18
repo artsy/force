@@ -1,8 +1,8 @@
-import * as React from "react"
+import type * as React from "react"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "Utils/getENV"
-import { ArtistConsignMeta_artist$data } from "__generated__/ArtistConsignMeta_artist.graphql"
+import type { ArtistConsignMeta_artist$data } from "__generated__/ArtistConsignMeta_artist.graphql"
 import { get } from "Utils/get"
 import { MetaTags } from "Components/MetaTags"
 

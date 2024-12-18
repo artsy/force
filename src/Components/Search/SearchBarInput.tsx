@@ -1,17 +1,17 @@
 import { AutocompleteInput, useDidMount, useUpdateEffect } from "@artsy/palette"
-import { ChangeEvent, FC, useEffect, useRef, useState } from "react"
+import { type ChangeEvent, type FC, useEffect, useRef, useState } from "react"
 
 import { graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import {
+import type {
   SearchBarInputSuggestQuery,
   SearchEntity,
 } from "__generated__/SearchBarInputSuggestQuery.graphql"
 import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
-import { PillType, TOP_PILL, SEARCH_DEBOUNCE_DELAY } from "./constants"
+import { type PillType, TOP_PILL, SEARCH_DEBOUNCE_DELAY } from "./constants"
 import {
   SuggestionItem,
-  SuggestionItemOptionProps,
+  type SuggestionItemOptionProps,
 } from "./SuggestionItem/SuggestionItem"
 import { useTracking } from "react-tracking"
 import { StaticSearchContainer } from "./StaticSearchContainer"

@@ -1,6 +1,6 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { SaleAgreementListItem } from "Apps/SaleAgreements/Components/SaleAgreementsListItem"
-import { SaleAgreementsFilter_viewer$data } from "__generated__/SaleAgreementsFilter_viewer.graphql"
+import type { SaleAgreementsFilter_viewer$data } from "__generated__/SaleAgreementsFilter_viewer.graphql"
 import { sortBy } from "lodash"
 
 export interface SaleAgreementsListProps {

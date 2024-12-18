@@ -2,8 +2,8 @@ import { createGeminiAssetWithS3Credentials } from "Components/PhotoUpload/Mutat
 import { getConvectionGeminiKey } from "Components/PhotoUpload/Mutations/getConvectionGeminiKey"
 import { getGeminiCredentialsForEnvironment } from "Components/PhotoUpload/Mutations/getGeminiCredentialsForEnvironment"
 import createLogger from "Utils/logger"
-import { ErrorCode, FileRejection } from "react-dropzone"
-import { Environment } from "react-relay"
+import { ErrorCode, type FileRejection } from "react-dropzone"
+import type { Environment } from "react-relay"
 import { v1 as uuid } from "uuid"
 import { uploadFileToS3 } from "./uploadFileToS3"
 
@@ -103,7 +103,7 @@ export const uploadSubmissionPhoto = async (
   relayEnvironment: Environment,
   photo: Photo,
   updateProgress: (progress: number) => void,
-  acl: string = "private"
+  acl = "private"
 ) => {
   try {
     const convectionKey = await getConvectionGeminiKey(relayEnvironment)
@@ -151,7 +151,7 @@ export const uploadPhotoToS3 = async (
   relayEnvironment: Environment,
   photo: Photo,
   updateProgress: (progress: number) => void,
-  acl: string = "private"
+  acl = "private"
 ) => {
   const convectionKey = await getConvectionGeminiKey(relayEnvironment)
 

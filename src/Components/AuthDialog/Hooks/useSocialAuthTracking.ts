@@ -4,7 +4,7 @@ import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialog
 import { useEffect } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useRouter } from "System/Hooks/useRouter"
-import { AuthDialogAnalytics } from "Components/AuthDialog/AuthDialogContext"
+import type { AuthDialogAnalytics } from "Components/AuthDialog/AuthDialogContext"
 
 const USE_SOCIAL_AUTH_TRACKING_KEY = "useSocialAuthTracking"
 

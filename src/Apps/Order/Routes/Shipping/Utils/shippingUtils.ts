@@ -1,6 +1,6 @@
 import * as Yup from "yup"
-import { AddressVerifiedBy } from "Apps/Order/Components/AddressVerificationFlow"
-import { ShippingContext_me$data } from "__generated__/ShippingContext_me.graphql"
+import type { AddressVerifiedBy } from "Apps/Order/Components/AddressVerificationFlow"
+import type { ShippingContext_me$data } from "__generated__/ShippingContext_me.graphql"
 import { pick, omitBy, isNil, isEqual } from "lodash"
 import { postalCodeValidator } from "Components/Address/utils"
 

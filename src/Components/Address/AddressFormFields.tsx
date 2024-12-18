@@ -2,7 +2,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { Column, GridColumns, Input } from "@artsy/palette"
 import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
 import {
-  Address,
+  type Address,
   basicPhoneValidator,
   yupAddressValidator,
 } from "Components/Address/utils"

@@ -2,10 +2,10 @@ import { MockBoot } from "DevTools/MockBoot"
 import { mount } from "enzyme"
 import * as React from "react"
 import { act } from "react-dom/test-utils"
-import { GraphQLTaggedNode, QueryRenderer } from "react-relay"
-import { OperationType } from "relay-runtime"
+import { type GraphQLTaggedNode, QueryRenderer } from "react-relay"
+import type { OperationType } from "relay-runtime"
 import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
-import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
+import type { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 
 type SetupTestWrapper<T extends OperationType> = {
   Component: React.ComponentType<React.PropsWithChildren<T["response"]>>

@@ -1,7 +1,7 @@
 import { ConnectionHandler, graphql } from "react-relay"
-import { RecordSourceSelectorProxy } from "relay-runtime"
+import type { RecordSourceSelectorProxy } from "relay-runtime"
 import { useMutation } from "Utils/Hooks/useMutation"
-import {
+import type {
   useCreateCollectionMutation,
   useCreateCollectionMutation$data,
 } from "__generated__/useCreateCollectionMutation.graphql"

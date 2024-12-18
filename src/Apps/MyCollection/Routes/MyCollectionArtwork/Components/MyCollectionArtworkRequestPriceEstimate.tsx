@@ -1,6 +1,6 @@
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 import { Box, Button, Flex, Separator, Text } from "@artsy/palette"
-import { MyCollectionArtworkRequestPriceEstimate_artwork$key } from "__generated__/MyCollectionArtworkRequestPriceEstimate_artwork.graphql"
+import type { MyCollectionArtworkRequestPriceEstimate_artwork$key } from "__generated__/MyCollectionArtworkRequestPriceEstimate_artwork.graphql"
 import { graphql, useFragment } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 

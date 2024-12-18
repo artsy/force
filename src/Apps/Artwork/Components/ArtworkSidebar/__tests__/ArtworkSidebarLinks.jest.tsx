@@ -2,7 +2,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { ArtworkSidebarLinksFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarLinks"
 import { fireEvent, screen } from "@testing-library/react"
-import { ArtworkSidebarLinks_Test_Query } from "__generated__/ArtworkSidebarLinks_Test_Query.graphql"
+import type { ArtworkSidebarLinks_Test_Query } from "__generated__/ArtworkSidebarLinks_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")

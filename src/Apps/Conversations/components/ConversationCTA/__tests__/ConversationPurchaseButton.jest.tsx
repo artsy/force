@@ -85,7 +85,7 @@ describe("ConversationPurchaseOfferButton", () => {
     jest.clearAllMocks()
   })
 
-  let mockResolvers = {}
+  const mockResolvers = {}
 
   describe("without a partner offer", () => {
     beforeEach(() => {

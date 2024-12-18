@@ -1,4 +1,4 @@
-import { Expandable, ExpandableProps } from "@artsy/palette"
+import { Expandable, type ExpandableProps } from "@artsy/palette"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 

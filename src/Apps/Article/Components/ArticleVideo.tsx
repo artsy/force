@@ -1,7 +1,7 @@
 import {
   Box,
   boxMixin,
-  BoxProps,
+  type BoxProps,
   Clickable,
   Column,
   Flex,
@@ -13,16 +13,16 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
-import { ResponsiveValue, variant } from "styled-system"
+import { type ResponsiveValue, variant } from "styled-system"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArticleAd } from "./ArticleAd/ArticleAd"
 import { ArticleShare } from "Components/ArticleShare"
 import { useMode } from "Utils/Hooks/useMode"
-import { ArticleVideo_article$data } from "__generated__/ArticleVideo_article.graphql"
+import type { ArticleVideo_article$data } from "__generated__/ArticleVideo_article.graphql"
 import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
 import { RouterLink } from "System/Components/RouterLink"
 import { ArticleSeriesItemFragmentContainer } from "./ArticleSeriesItem"

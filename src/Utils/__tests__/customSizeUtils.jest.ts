@@ -1,5 +1,5 @@
 import {
-  CustomSize,
+  type CustomSize,
   SIZES_IN_CENTIMETERS,
   SIZES_IN_INCHES,
   getCustomSizeRangeInInches,

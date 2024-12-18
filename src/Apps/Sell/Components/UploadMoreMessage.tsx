@@ -1,5 +1,5 @@
 import { Message, Text } from "@artsy/palette"
-import { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
+import type { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
 import { FadeInBox } from "Components/FadeInBox"
 import { useFormikContext } from "formik"
 

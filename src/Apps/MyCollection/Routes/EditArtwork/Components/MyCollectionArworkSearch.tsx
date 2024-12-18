@@ -4,7 +4,7 @@ import { Masonry } from "Components/Masonry"
 import { Fragment } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { MyCollectionArworkSearchQuery } from "__generated__/MyCollectionArworkSearchQuery.graphql"
+import type { MyCollectionArworkSearchQuery } from "__generated__/MyCollectionArworkSearchQuery.graphql"
 
 interface MyCollectionArworkSearchProps {
   artistId: string

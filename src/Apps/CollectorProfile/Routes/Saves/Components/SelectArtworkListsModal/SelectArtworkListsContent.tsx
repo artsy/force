@@ -1,9 +1,9 @@
 import { Box, Join, Spacer } from "@artsy/palette"
-import { ExtractNodeType } from "Utils/typeSupport"
+import type { ExtractNodeType } from "Utils/typeSupport"
 import { SelectArtworkListItemFragmentContainer } from "./SelectArtworkListItem"
 import { SelectArtworkListsPlaceholder } from "./SelectArtworkListsPlaceholders"
-import { SelectArtworkListsModal_me$data } from "__generated__/SelectArtworkListsModal_me.graphql"
-import { FC } from "react"
+import type { SelectArtworkListsModal_me$data } from "__generated__/SelectArtworkListsModal_me.graphql"
+import type { FC } from "react"
 
 // FIXME: Do not do this. Use a fragment container instead.
 type ArtworkListEntity = ExtractNodeType<

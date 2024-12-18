@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react"
-import { AuctionResultTestQuery } from "__generated__/AuctionResultTestQuery.graphql"
+import type { AuctionResultTestQuery } from "__generated__/AuctionResultTestQuery.graphql"
 import { AuctionResultFragmentContainer } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResult"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"

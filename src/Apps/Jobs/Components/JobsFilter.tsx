@@ -8,9 +8,9 @@ import {
   Flex,
 } from "@artsy/palette"
 import { uniq } from "lodash"
-import { FC, Fragment, useMemo, useState } from "react"
+import { type FC, Fragment, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { JobsFilter_viewer$data } from "__generated__/JobsFilter_viewer.graphql"
+import type { JobsFilter_viewer$data } from "__generated__/JobsFilter_viewer.graphql"
 import { JobLinkFragmentContainer } from "./JobLink"
 
 export const LEADGEN_LOCATION = "Don't See Your Dream Job?"

@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { getENV } from "Utils/getENV"
 import { useAppendStylesheet } from "./Hooks/useAppendStylesheet"
 import { useLoadScript } from "./Hooks/useLoadScript"

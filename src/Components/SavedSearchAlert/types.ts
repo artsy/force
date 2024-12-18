@@ -1,4 +1,4 @@
-import { PageOwnerType } from "@artsy/cohesion"
+import type { PageOwnerType } from "@artsy/cohesion"
 
 export interface SearchCriteriaAttributes {
   artistID?: string | null

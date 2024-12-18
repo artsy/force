@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 import { getENV } from "Utils/getENV"
-import { RouteRenderArgs } from "found"
+import type { RouteRenderArgs } from "found"
 import { graphql } from "react-relay"
 
 const IntroRoute = loadable(

@@ -1,15 +1,15 @@
 import {
   AutocompleteInput,
-  AutocompleteInputOptionType,
+  type AutocompleteInputOptionType,
   Sup,
   Text,
 } from "@artsy/palette"
-import { FC, useMemo, useState } from "react"
+import { type FC, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { PartnersSpecialtyAutocomplete_viewer$data } from "__generated__/PartnersSpecialtyAutocomplete_viewer.graphql"
-import { PartnersSpecialtyAutocompleteQuery } from "__generated__/PartnersSpecialtyAutocompleteQuery.graphql"
+import type { PartnersSpecialtyAutocomplete_viewer$data } from "__generated__/PartnersSpecialtyAutocomplete_viewer.graphql"
+import type { PartnersSpecialtyAutocompleteQuery } from "__generated__/PartnersSpecialtyAutocompleteQuery.graphql"
 import { useRouter } from "System/Hooks/useRouter"
 import { compact, omit } from "lodash"
 

@@ -1,7 +1,7 @@
 import { Column, GridColumns, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { TagApp_tag$data } from "__generated__/TagApp_tag.graphql"
+import type { TagApp_tag$data } from "__generated__/TagApp_tag.graphql"
 import { TagMetaFragmentContainer } from "./Components/TagMeta"
 import { TagArtworkFilterQueryRenderer } from "./Components/TagArtworkFilter"
 

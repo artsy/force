@@ -1,4 +1,4 @@
-import { AnalyticsPricingContextDimensionEnum } from "__generated__/PricingContext_artwork.graphql"
+import type { AnalyticsPricingContextDimensionEnum } from "__generated__/PricingContext_artwork.graphql"
 import { stringify } from "qs"
 
 export const createCollectUrl = ({

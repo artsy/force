@@ -1,6 +1,6 @@
 import {
   ActionType,
-  ClickedArtistGroup,
+  type ClickedArtistGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
@@ -11,13 +11,13 @@ import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtistRelatedArtistsRail_artist$data } from "__generated__/ArtistRelatedArtistsRail_artist.graphql"
-import { ArtistRelatedArtistsRailQuery } from "__generated__/ArtistRelatedArtistsRailQuery.graphql"
+import type { ArtistRelatedArtistsRail_artist$data } from "__generated__/ArtistRelatedArtistsRail_artist.graphql"
+import type { ArtistRelatedArtistsRailQuery } from "__generated__/ArtistRelatedArtistsRailQuery.graphql"
 import {
   CellArtistFragmentContainer,
   CellArtistPlaceholder,
 } from "Components/Cells/CellArtist"
-import { FC } from "react"
+import type { FC } from "react"
 
 interface ArtistRelatedArtistsRailProps {
   artist: ArtistRelatedArtistsRail_artist$data

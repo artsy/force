@@ -1,6 +1,6 @@
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Column,
   Flex,
   GridColumns,

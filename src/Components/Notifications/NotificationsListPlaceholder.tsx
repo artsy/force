@@ -7,7 +7,7 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { times } from "lodash"
-import { FC } from "react"
+import type { FC } from "react"
 
 interface NotificationItemPlaceholderProps {
   index: number

@@ -21,18 +21,22 @@ import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
-import { ArtistAuctionResults_artist$data } from "__generated__/ArtistAuctionResults_artist.graphql"
+import type { ArtistAuctionResults_artist$data } from "__generated__/ArtistAuctionResults_artist.graphql"
 import { isEqual } from "lodash"
-import * as React from "react"
+import type * as React from "react"
 import { useContext, useState } from "react"
 import { Title, Meta } from "react-head"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 import { useTracking } from "react-tracking"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { ArtistAuctionResultItemFragmentContainer } from "./ArtistAuctionResultItem"
 import {
   AuctionResultsFilterContextProvider,
-  SharedAuctionResultsFilterContextProps,
+  type SharedAuctionResultsFilterContextProps,
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
 } from "./AuctionResultsFilterContext"
@@ -44,7 +48,7 @@ import { SortSelect } from "./Components/SortSelect"
 import { TableSidebar } from "./Components/TableSidebar"
 import { ArtistAuctionResultsEmptyState } from "./Components/ArtistAuctionResultsEmptyState"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
-import { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
+import type { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
 import { SystemContext } from "System/Contexts/SystemContext"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
@@ -125,8 +129,8 @@ const AuctionResultsContainer: React.FC<
   const endAt = lotsByCreatedYear?.[lotsByCreatedYear.length - 1]?.value || null
 
   const auctionResultsFilterResetState = initialAuctionResultsFilterState({
-    startDate: startAt ? parseInt(startAt) : null,
-    endDate: endAt ? parseInt(endAt) : null,
+    startDate: startAt ? Number.parseInt(startAt) : null,
+    endDate: endAt ? Number.parseInt(endAt) : null,
   })
 
   // Is current filter state different from the default (reset) state?
@@ -387,8 +391,8 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         aggregations={
           props.aggregations as SharedAuctionResultsFilterContextProps["aggregations"]
         }
-        earliestCreatedYear={startAt ? parseInt(startAt) : null}
-        latestCreatedYear={endAt ? parseInt(endAt) : null}
+        earliestCreatedYear={startAt ? Number.parseInt(startAt) : null}
+        latestCreatedYear={endAt ? Number.parseInt(endAt) : null}
         userPreferredMetric={userPreferences?.metric}
         filters={filters}
         onChange={filterState =>

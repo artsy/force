@@ -1,8 +1,8 @@
 import { Box } from "@artsy/palette"
-import { AdUnit } from "Apps/Article/Components/ArticleAd/types"
+import type { AdUnit } from "Apps/Article/Components/ArticleAd/types"
 import { useArticleTracking } from "Apps/Article/useArticleTracking"
 import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
-import { FC } from "react"
+import type { FC } from "react"
 import { AdSlot } from "react-dfp"
 
 interface ArticleAdBanerProps {

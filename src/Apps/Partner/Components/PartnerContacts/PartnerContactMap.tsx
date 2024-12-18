@@ -1,11 +1,11 @@
-import * as React from "react"
+import type * as React from "react"
 import styled from "styled-components"
 import { Image, ResponsiveBox } from "@artsy/palette"
 import {
   getGoogleMapUrl,
   getGoogleStaticMapImageUrl,
 } from "./partnerContactUtils"
-import { PartnerContactMap_location$data } from "__generated__/PartnerContactMap_location.graphql"
+import type { PartnerContactMap_location$data } from "__generated__/PartnerContactMap_location.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 

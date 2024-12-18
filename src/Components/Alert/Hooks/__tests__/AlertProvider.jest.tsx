@@ -1,4 +1,4 @@
-import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
+import { type MockEnvironment, createMockEnvironment } from "relay-test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { graphql } from "react-relay"
@@ -24,10 +24,10 @@ jest.mock("System/Hooks/useFeatureFlag", () => ({
 jest.mock("System/Hooks/useSystemContext")
 
 describe("AlertProvider", () => {
-  let relayEnv: MockEnvironment = createMockEnvironment()
-  let mockUseAuthDialog: jest.Mock = useAuthDialog as jest.Mock
-  let mockUseTracking: jest.Mock = useTracking as jest.Mock
-  let mockUseSystemContext: jest.Mock = useSystemContext as jest.Mock
+  const relayEnv: MockEnvironment = createMockEnvironment()
+  const mockUseAuthDialog: jest.Mock = useAuthDialog as jest.Mock
+  const mockUseTracking: jest.Mock = useTracking as jest.Mock
+  const mockUseSystemContext: jest.Mock = useSystemContext as jest.Mock
 
   const { renderWithRelay } = setupTestWrapperTL({
     Component: ({ artist }: any) => (

@@ -1,7 +1,7 @@
-import { Box, BoxProps, Input, PhoneInput } from "@artsy/palette"
+import { Box, type BoxProps, Input, PhoneInput } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ContactInformationForm_me$data } from "__generated__/ContactInformationForm_me.graphql"
+import type { ContactInformationForm_me$data } from "__generated__/ContactInformationForm_me.graphql"
 import { countries } from "Utils/countries"
 
 export interface ContactInformationFormModel {

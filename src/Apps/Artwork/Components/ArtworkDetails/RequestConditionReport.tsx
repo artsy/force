@@ -1,19 +1,19 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Button, ModalDialog, Text, useToasts } from "@artsy/palette"
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { commitMutation, createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import createLogger from "Utils/logger"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { RequestConditionReport_artwork$data } from "__generated__/RequestConditionReport_artwork.graphql"
-import { RequestConditionReport_me$data } from "__generated__/RequestConditionReport_me.graphql"
-import {
+import type { RequestConditionReport_artwork$data } from "__generated__/RequestConditionReport_artwork.graphql"
+import type { RequestConditionReport_me$data } from "__generated__/RequestConditionReport_me.graphql"
+import type {
   RequestConditionReportMutation,
   RequestConditionReportMutation$data,
 } from "__generated__/RequestConditionReportMutation.graphql"
-import { RequestConditionReportQuery } from "__generated__/RequestConditionReportQuery.graphql"
+import type { RequestConditionReportQuery } from "__generated__/RequestConditionReportQuery.graphql"
 import track, { useTracking } from "react-tracking"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"

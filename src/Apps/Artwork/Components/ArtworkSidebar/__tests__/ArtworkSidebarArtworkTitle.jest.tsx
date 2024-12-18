@@ -1,6 +1,6 @@
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { ArtworkSidebarArtworkTitle_Test_Query } from "__generated__/ArtworkSidebarArtworkTitle_Test_Query.graphql"
+import type { ArtworkSidebarArtworkTitle_Test_Query } from "__generated__/ArtworkSidebarArtworkTitle_Test_Query.graphql"
 import { screen } from "@testing-library/react"
 import { ArtworkSidebarArtworkTitleFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarArtworkTitle"
 

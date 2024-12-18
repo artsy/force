@@ -1,4 +1,4 @@
-import { Flex, FlexProps } from "@artsy/palette"
+import { Flex, type FlexProps } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import styled from "styled-components"
 

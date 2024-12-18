@@ -4,10 +4,10 @@ import {
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { DEFAULT_METRIC } from "Utils/metrics"
-import { FilterPill } from "./types"
+import type { FilterPill } from "./types"
 import { extractPillsFromCriteria } from "./Utils/extractPills"
 import { getAllowedSearchCriteria } from "./Utils/savedSearchCriteria"
-import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 
 export const useActiveFilterPills = (defaultPills: FilterPill[] = []) => {
   const { aggregations, setFilter, filters } = useArtworkFilterContext()

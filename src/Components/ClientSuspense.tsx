@@ -1,5 +1,5 @@
 import { useDidMount } from "@artsy/palette"
-import { FC, ReactNode, Suspense } from "react"
+import { type FC, type ReactNode, Suspense } from "react"
 
 interface ClientSuspenseProps {
   fallback: NonNullable<ReactNode>

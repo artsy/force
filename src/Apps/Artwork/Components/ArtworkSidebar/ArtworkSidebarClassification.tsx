@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { ArtworkSidebarClassification_artwork$data } from "__generated__/ArtworkSidebarClassification_artwork.graphql"
+import type { ArtworkSidebarClassification_artwork$data } from "__generated__/ArtworkSidebarClassification_artwork.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { Clickable, Flex, Text } from "@artsy/palette"

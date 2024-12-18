@@ -1,4 +1,4 @@
-import { Breakpoint } from "@artsy/palette"
+import type { Breakpoint } from "@artsy/palette"
 import { screen } from "@testing-library/react"
 import { CollectorProfileHeaderFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/CollectorProfileHeader"
 import { MockBoot } from "DevTools/MockBoot"

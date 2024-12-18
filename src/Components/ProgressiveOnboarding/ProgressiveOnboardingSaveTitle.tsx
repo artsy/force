@@ -1,9 +1,9 @@
-import { FC, useCallback } from "react"
+import { type FC, useCallback } from "react"
 import { Text } from "@artsy/palette"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import {
   withProgressiveOnboardingCounts,
-  WithProgressiveOnboardingCountsProps,
+  type WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useDismissibleContext } from "@artsy/dismissible"
 import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"

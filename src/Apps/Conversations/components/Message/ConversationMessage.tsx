@@ -2,11 +2,11 @@ import { graphql, useFragment } from "react-relay"
 import { Box, Spacer, Text } from "@artsy/palette"
 import { isSameMinute } from "date-fns"
 import React from "react"
-import {
+import type {
   ConversationMessage_message$data,
   ConversationMessage_message$key,
 } from "__generated__/ConversationMessage_message.graphql"
-import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
+import type { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 import { useScrollPagination } from "Apps/Conversations/hooks/useScrollPagination"
 import Linkify from "react-linkify"
 import { ConversationMessageBubble } from "Apps/Conversations/components/Message/ConversationMessageBubble"

@@ -7,14 +7,14 @@ import {
   Text,
   Spacer,
 } from "@artsy/palette"
-import { CreateAppSecondFactorMutation$data } from "__generated__/CreateAppSecondFactorMutation.graphql"
+import type { CreateAppSecondFactorMutation$data } from "__generated__/CreateAppSecondFactorMutation.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Formik, FormikHelpers as FormikActions, FormikProps } from "formik"
+import { Formik, type FormikHelpers as FormikActions, type FormikProps } from "formik"
 import QRCode from "qrcode.react"
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import * as Yup from "yup"
-import { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
+import type { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
 import { EnableSecondFactor } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/Mutation/EnableSecondFactor"
 import { UpdateAppSecondFactor } from "./Mutation/UpdateAppSecondFactor"
 import { BackupSecondFactorReminder } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/BackupSecondFactorReminder"

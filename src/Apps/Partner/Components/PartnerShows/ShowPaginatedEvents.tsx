@@ -1,13 +1,17 @@
 import { Text, Column, GridColumns, Spacer } from "@artsy/palette"
 import { useState } from "react"
-import * as React from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import type * as React from "react"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { LoadingArea } from "Components/LoadingArea"
 import { useRouter } from "System/Hooks/useRouter"
-import { ShowPaginatedEventsRendererQuery } from "__generated__/ShowPaginatedEventsRendererQuery.graphql"
-import { ShowPaginatedEvents_partner$data } from "__generated__/ShowPaginatedEvents_partner.graphql"
-import { EventStatus } from "__generated__/ShowPaginatedEventsRendererQuery.graphql"
+import type { ShowPaginatedEventsRendererQuery } from "__generated__/ShowPaginatedEventsRendererQuery.graphql"
+import type { ShowPaginatedEvents_partner$data } from "__generated__/ShowPaginatedEvents_partner.graphql"
+import type { EventStatus } from "__generated__/ShowPaginatedEventsRendererQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Jump } from "Utils/Hooks/useJump"
 import { extractNodes } from "Utils/extractNodes"

@@ -1,5 +1,5 @@
-import * as React from "react"
-import { BoxProps, Clickable, Flex, Text } from "@artsy/palette"
+import type * as React from "react"
+import { type BoxProps, Clickable, Flex, Text } from "@artsy/palette"
 interface ArtworkDefinitionListProps extends BoxProps {
   term: string
   children: React.ReactNode

@@ -1,5 +1,5 @@
 import { Box, Join, Spacer } from "@artsy/palette"
-import { MyCollectionArtworkInsights_artwork$key } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
+import type { MyCollectionArtworkInsights_artwork$key } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
 import { MyCollectionArtworkRequestPriceEstimate } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkRequestPriceEstimate"
 import { MyCollectionArtworkSubmitForSale } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSubmitForSale"
 import { MyCollectionArtworkSWASectionSubmitted } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASectionSubmitted"

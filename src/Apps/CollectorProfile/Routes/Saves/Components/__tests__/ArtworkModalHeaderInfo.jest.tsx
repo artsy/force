@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import {
   ArtworkModalHeaderInfo,
-  ArtworkModalHeaderInfoEntity,
+  type ArtworkModalHeaderInfoEntity,
 } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkModalHeaderInfo"
 
 describe("ArtworkModalHeaderInfo", () => {

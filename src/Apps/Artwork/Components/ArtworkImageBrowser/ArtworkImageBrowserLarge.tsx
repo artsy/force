@@ -11,13 +11,13 @@ import { themeGet } from "@styled-system/theme-get"
 import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
 import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer"
 import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { isTouch } from "Utils/device"
 import { useDetectActivity } from "Utils/Hooks/useDetectActivity"
 import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
-import { ArtworkImageBrowserLarge_artwork$data } from "__generated__/ArtworkImageBrowserLarge_artwork.graphql"
+import type { ArtworkImageBrowserLarge_artwork$data } from "__generated__/ArtworkImageBrowserLarge_artwork.graphql"
 
 interface ArtworkImageBrowserLargeProps {
   artwork: ArtworkImageBrowserLarge_artwork$data

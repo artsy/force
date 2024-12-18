@@ -1,8 +1,8 @@
-import * as React from "react"
-import { Breakpoint } from "Utils/Responsive"
-import { createMockEnvironment } from "relay-test-utils"
+import type * as React from "react"
+import type { Breakpoint } from "Utils/Responsive"
+import type { createMockEnvironment } from "relay-test-utils"
 import {
-  ClientContext,
+  type ClientContext,
   getClientAppContext,
 } from "System/Router/Utils/clientAppContext"
 import { Boot } from "System/Boot"

@@ -1,6 +1,6 @@
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Button,
   Column,
   Flex,

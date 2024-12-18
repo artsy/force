@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { useVerifyIDMutation } from "__generated__/useVerifyIDMutation.graphql"
+import type { useVerifyIDMutation } from "__generated__/useVerifyIDMutation.graphql"
 
 export const useVerifyID = () => {
   return useMutation<useVerifyIDMutation>({

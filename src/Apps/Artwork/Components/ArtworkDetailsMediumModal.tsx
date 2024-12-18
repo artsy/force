@@ -1,7 +1,7 @@
 import { Button, ModalDialog, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkDetailsMediumModal_artwork$data } from "__generated__/ArtworkDetailsMediumModal_artwork.graphql"
+import type { ArtworkDetailsMediumModal_artwork$data } from "__generated__/ArtworkDetailsMediumModal_artwork.graphql"
 
 interface ArtworkDetailsMediumModalProps {
   artwork: ArtworkDetailsMediumModal_artwork$data

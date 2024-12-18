@@ -4,23 +4,21 @@ const chai = require("chai")
 const Strategy = require("../lib/strategy")
 
 // FIXME:
-describe.skip("Strategy", function () {
-  describe("failing authentication", function () {
-    const strategy = new Strategy(function (username, password, otp, done) {
-      return done(null, false)
-    })
+describe.skip("Strategy", () => {
+  describe("failing authentication", () => {
+    const strategy = new Strategy((username, password, otp, done) => done(null, false))
 
     let info
 
     // eslint-disable-next-line jest/no-done-callback
-    beforeAll(function (done) {
+    beforeAll((done) => {
       chai.passport
         .use(strategy)
-        .fail(function (i) {
+        .fail((i) => {
           info = i
           done()
         })
-        .request(function (req) {
+        .request((req) => {
           req.body = {}
           req.body.username = "johndoe"
           req.body.password = "secret"
@@ -29,27 +27,25 @@ describe.skip("Strategy", function () {
         .authenticate()
     })
 
-    it("should fail", function () {
+    it("should fail", () => {
       expect(info).toBeUndefined()
     })
   })
 
-  describe("failing authentication with info", function () {
-    const strategy = new Strategy(function (username, password, otp, done) {
-      return done(null, false, { message: "authentication failed" })
-    })
+  describe("failing authentication with info", () => {
+    const strategy = new Strategy((username, password, otp, done) => done(null, false, { message: "authentication failed" }))
 
     let info
 
     // eslint-disable-next-line jest/no-done-callback
-    beforeAll(function (done) {
+    beforeAll((done) => {
       chai.passport
         .use(strategy)
-        .fail(function (i) {
+        .fail((i) => {
           info = i
           done()
         })
-        .request(function (req) {
+        .request((req) => {
           req.body = {}
           req.body.username = "johndoe"
           req.body.password = "secret"
@@ -58,7 +54,7 @@ describe.skip("Strategy", function () {
         .authenticate()
     })
 
-    it("should fail", function () {
+    it("should fail", () => {
       expect(info.message).toEqual("authentication failed")
     })
   })

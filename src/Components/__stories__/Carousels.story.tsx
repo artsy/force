@@ -6,7 +6,7 @@ import {
   Tabs,
   Tab,
   Swiper,
-  SwiperProps,
+  type SwiperProps,
   CarouselBar,
   splitBoxProps,
   SwiperRail,

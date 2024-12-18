@@ -11,8 +11,8 @@ import redirectBack from "./redirectBack"
 import request from "superagent"
 import artsyXapp from "@artsy/xapp"
 import { parse, resolve } from "url"
-import { NextFunction } from "express"
-import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type { NextFunction } from "express"
+import type { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import { get, isFunction, isString } from "lodash"
 
 interface Req extends ArtsyRequest {
@@ -20,16 +20,16 @@ interface Req extends ArtsyRequest {
   socialProfileEmail?: string
 }
 
-export const onLocalLogin = function (
+export const onLocalLogin = (
   req: Req,
   res: ArtsyResponse,
   next: NextFunction
-) {
+) => {
   if (req.user && !req.xhr) {
     return next()
   }
 
-  passport.authenticate("local-with-otp")(req, res, function (err: any) {
+  passport.authenticate("local-with-otp")(req, res, (err: any) => {
     if (req.xhr) {
       if (err) {
         switch (true) {
@@ -83,11 +83,11 @@ export const onLocalLogin = function (
   })
 }
 
-export const onLocalSignup = function (
+export const onLocalSignup = (
   req: Req,
   res: ArtsyResponse,
   next: NextFunction
-) {
+) => {
   req.artsyPassportSignedUp = true
   request
     .post(opts.ARTSY_URL + "/api/v1/user")
@@ -107,7 +107,7 @@ export const onLocalSignup = function (
       agreed_to_receive_emails: req.body.agreed_to_receive_emails,
       recaptcha_token: req.body.recaptcha_token,
     })
-    .end(function (err, sres) {
+    .end((err, sres) => {
       let msg = ""
       if (err && err.message === "Email is invalid.") {
         msg = "Email is invalid."
@@ -146,7 +146,7 @@ export const onLocalSignup = function (
 type Provider = "facebook" | "apple" | "google"
 
 export const beforeSocialAuth = (provider: Provider) =>
-  function (req: Req, res: ArtsyResponse, next: NextFunction) {
+  (req: Req, res: ArtsyResponse, next: NextFunction) => {
     let options
 
     req.session.redirectTo = req.query["redirect-to"]
@@ -169,7 +169,7 @@ export const beforeSocialAuth = (provider: Provider) =>
   }
 
 export const afterSocialAuth = (provider: Provider) =>
-  function (req: Req, res: ArtsyResponse, next: NextFunction) {
+  (req: Req, res: ArtsyResponse, next: NextFunction) => {
     if (req.query.denied) {
       return next(new Error(`${provider} denied`))
     }
@@ -179,7 +179,7 @@ export const afterSocialAuth = (provider: Provider) =>
     const linkingAccount = req.user != null
     const redirectPath = req.user ? opts.settingsPagePath : opts.loginPagePath
 
-    passport.authenticate(provider)(req, res, function (err: any) {
+    passport.authenticate(provider)(req, res, (err: any) => {
       if (
         err?.response?.body?.error === "User Already Exists" &&
         req.socialProfileEmail
@@ -233,11 +233,11 @@ export const afterSocialAuth = (provider: Provider) =>
     })
   }
 
-export const ensureLoggedInOnAfterSignupPage = function (
+export const ensureLoggedInOnAfterSignupPage = (
   req: Req,
   res: ArtsyResponse,
   next: NextFunction
-) {
+) => {
   const toLogin = `${opts.loginPagePath}?redirect-to=${opts.afterSignupPagePath}`
   if (req.user == null) {
     res.redirect(toLogin)
@@ -252,11 +252,11 @@ export const onError = (
   next: NextFunction
 ) => next(err)
 
-export const ssoAndRedirectBack = function (
+export const ssoAndRedirectBack = (
   req: Req,
   res: ArtsyResponse,
   _next: NextFunction
-) {
+) => {
   if (req.xhr) {
     return res.send({
       success: true,
@@ -288,7 +288,7 @@ export const ssoAndRedirectBack = function (
       "X-Access-Token": req.user.accessToken,
       "X-Forwarded-For": forwardedFor(req),
     })
-    .end(function (err, sres) {
+    .end((err, sres) => {
       if (err) {
         return res.redirect(parsed.href)
       }

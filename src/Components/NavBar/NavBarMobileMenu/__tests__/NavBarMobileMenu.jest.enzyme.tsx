@@ -4,7 +4,7 @@ import { mount } from "enzyme"
 import { NavBarMobileMenu } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenu"
 import { NavBarMobileMenuTransition } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuTransition"
 import { NavBarMobileSubMenuBack } from "Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenu"
-import { FeatureFlags } from "System/Hooks/useFeatureFlag"
+import type { FeatureFlags } from "System/Hooks/useFeatureFlag"
 import { logout } from "Utils/auth"
 
 jest.mock("react-tracking")
@@ -105,7 +105,7 @@ describe("NavBarMobileMenu", () => {
     it("renders the account subnav when logged in", () => {
       const linkContainer = getMobileMenuLinkContainer("notAdmin")
       const mobileSubmenuLinks = linkContainer.first().children()
-      let linkText = mobileSubmenuLinks.last().text()
+      const linkText = mobileSubmenuLinks.last().text()
 
       expect(linkText).toContain("Get the app")
     })

@@ -1,4 +1,4 @@
-import { Select, SelectProps } from "@artsy/palette"
+import { Select, type SelectProps } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 

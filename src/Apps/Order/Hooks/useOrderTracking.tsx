@@ -1,17 +1,17 @@
 import {
   ActionType,
-  ClickedAddNewShippingAddress,
-  ClickedSelectShippingOption,
-  ClickedShippingAddress,
+  type ClickedAddNewShippingAddress,
+  type ClickedSelectShippingOption,
+  type ClickedShippingAddress,
   ContextModule,
-  ErrorMessageViewed,
+  type ErrorMessageViewed,
   OwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useMemo } from "react"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
-import { FulfillmentType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
+import type { FulfillmentType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 
 export const useOrderTracking = () => {
   const { trackEvent } = useTracking()

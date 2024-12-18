@@ -1,15 +1,15 @@
-import { Address } from "Components/Address/utils"
+import type { Address } from "Components/Address/utils"
 import { isEmpty } from "lodash"
 
 export const validatePresence = (value: string): string | null => {
-  if (value == undefined || isEmpty(value.trim())) {
+  if (value == null || isEmpty(value.trim())) {
     return "This field is required"
   }
   return null
 }
 
 export const validatePostalCode = (postalCode: string, countryCode: string) => {
-  let postalCodeRegex: RegExp =
+  const postalCodeRegex: RegExp =
     countryCode === "US"
       ? /^([0-9]{5})(?:[-\s]*([0-9]{4}))?$/
       : /^([A-Z][0-9][A-Z])\s*([0-9][A-Z][0-9])$/
@@ -52,7 +52,7 @@ export const validateAddress = (address: Address) => {
 export const validatePhoneNumber = (phoneNumber: string) => {
   let error: string | null = null
 
-  if (phoneNumber == undefined || isEmpty(phoneNumber.trim())) {
+  if (phoneNumber == null || isEmpty(phoneNumber.trim())) {
     error = "This field is required"
   }
 

@@ -1,13 +1,13 @@
 import { Box, Button, Column, GridColumns, Text } from "@artsy/palette"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 import { extractNodes } from "Utils/extractNodes"
-import { ChannelArticles_channel$data } from "__generated__/ChannelArticles_channel.graphql"
+import type { ChannelArticles_channel$data } from "__generated__/ChannelArticles_channel.graphql"
 
 interface ChannelArticlesProps {
   channel: ChannelArticles_channel$data

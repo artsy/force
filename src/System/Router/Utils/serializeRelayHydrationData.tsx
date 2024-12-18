@@ -1,5 +1,5 @@
-import { RelayNetworkLayerResponse } from "react-relay-network-modern"
-import { SSRCache } from "react-relay-network-modern-ssr/lib/server"
+import type { RelayNetworkLayerResponse } from "react-relay-network-modern"
+import type { SSRCache } from "react-relay-network-modern-ssr/lib/server"
 import serialize from "serialize-javascript"
 
 export const serializeRelayHydrationData = (

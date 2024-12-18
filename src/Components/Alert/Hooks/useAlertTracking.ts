@@ -1,13 +1,13 @@
 import {
   ActionType,
-  ClickedAddFilters,
-  ClickedArtworkGroup,
-  ClickedCreateAlert,
+  type ClickedAddFilters,
+  type ClickedArtworkGroup,
+  type ClickedCreateAlert,
   ContextModule,
-  DeletedSavedSearch,
+  type DeletedSavedSearch,
   OwnerType,
-  ScreenOwnerType,
-  ToggledSavedSearch,
+  type ScreenOwnerType,
+  type ToggledSavedSearch,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 

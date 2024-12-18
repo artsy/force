@@ -1,6 +1,6 @@
 import {
   ActionType,
-  ClickedArtworkGroup,
+  type ClickedArtworkGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
@@ -13,8 +13,8 @@ import {
 import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { HomeEmergingPicksArtworksRail_viewer$data } from "__generated__/HomeEmergingPicksArtworksRail_viewer.graphql"
-import { HomeEmergingPicksArtworksRailQuery } from "__generated__/HomeEmergingPicksArtworksRailQuery.graphql"
+import type { HomeEmergingPicksArtworksRail_viewer$data } from "__generated__/HomeEmergingPicksArtworksRail_viewer.graphql"
+import type { HomeEmergingPicksArtworksRailQuery } from "__generated__/HomeEmergingPicksArtworksRailQuery.graphql"
 import { useTracking } from "react-tracking"
 import { getSignalLabel } from "Utils/getSignalLabel"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"

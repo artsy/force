@@ -1,7 +1,7 @@
 import { Box } from "@artsy/palette"
 import { States } from "storybook-states"
 import { AppContainer } from "Apps/Components/AppContainer"
-import { TopContextBar, TopContextBarProps } from "../TopContextBar"
+import { TopContextBar, type TopContextBarProps } from "../TopContextBar"
 
 const SRC =
   "https://d32dm0rphc51dk.cloudfront.net/oLqZ0aVqFninjVCnbYmyAA/normalized.jpg"

@@ -1,4 +1,4 @@
-import { CounterTestQuery$rawResponse } from "__generated__/CounterTestQuery.graphql"
+import type { CounterTestQuery$rawResponse } from "__generated__/CounterTestQuery.graphql"
 import {
   OfferOrderWithShippingDetails,
   OfferWithTotals,
@@ -118,10 +118,10 @@ describe("Submit Pending Counter Offer", () => {
     })
 
     it("renders", () => {
-      let { wrapper } = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => commerceOrder,
       })
-      let page = new OrderAppTestPage(wrapper)
+      const page = new OrderAppTestPage(wrapper)
 
       expect(page.countdownTimer.text()).toContain("01d 04h 22m 59s left")
       expect(page.orderStepper.text()).toMatchInlineSnapshot(`"RespondReview"`)
@@ -150,10 +150,10 @@ describe("Submit Pending Counter Offer", () => {
 
     it("loading given isCommitingMutation", async () => {
       isCommittingMutation = true
-      let { wrapper } = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
-      let page = new OrderAppTestPage(wrapper)
+      const page = new OrderAppTestPage(wrapper)
 
       expect(page.isLoading()).toBeTruthy()
     })
@@ -170,10 +170,10 @@ describe("Submit Pending Counter Offer", () => {
 
     it("routes to status page after mutation completes", async () => {
       mockCommitMutation.mockResolvedValue(submitPendingOfferSuccess)
-      let { wrapper } = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => commerceOrder,
       })
-      let page = new OrderAppTestPage(wrapper)
+      const page = new OrderAppTestPage(wrapper)
 
       await page.clickSubmit()
       expect(pushMock).toHaveBeenCalledWith(
@@ -183,10 +183,10 @@ describe("Submit Pending Counter Offer", () => {
 
     it("shows an error modal with proper error when there is insufficient inventory", async () => {
       mockCommitMutation.mockReturnValue(insufficientInventoryResponse)
-      let { wrapper } = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => commerceOrder,
       })
-      let page = new OrderAppTestPage(wrapper)
+      const page = new OrderAppTestPage(wrapper)
 
       await page.clickSubmit()
       expect(mockShowErrorDialog).toHaveBeenCalledWith({
@@ -197,10 +197,10 @@ describe("Submit Pending Counter Offer", () => {
 
     it("shows generic error modal when there is an error from the server", async () => {
       mockCommitMutation.mockReturnValue(submitPendingOfferFailed)
-      let { wrapper } = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => commerceOrder,
       })
-      let page = new OrderAppTestPage(wrapper)
+      const page = new OrderAppTestPage(wrapper)
 
       await page.clickSubmit()
       expect(mockShowErrorDialog).toHaveBeenCalledWith()
@@ -208,10 +208,10 @@ describe("Submit Pending Counter Offer", () => {
 
     it("shows an error modal when there is a network error", async () => {
       mockCommitMutation.mockRejectedValue({})
-      let { wrapper } = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => commerceOrder,
       })
-      let page = new OrderAppTestPage(wrapper)
+      const page = new OrderAppTestPage(wrapper)
 
       await page.clickSubmit()
       expect(mockShowErrorDialog).toHaveBeenCalledWith()

@@ -1,4 +1,4 @@
-import { AuthIntent, ContextModule, Intent } from "@artsy/cohesion"
+import { type AuthIntent, ContextModule, Intent } from "@artsy/cohesion"
 import {
   Button,
   Checkbox,
@@ -9,11 +9,11 @@ import {
   Text,
 } from "@artsy/palette"
 import {
-  AuthDialogMode,
+  type AuthDialogMode,
   AUTH_DIALOG_MODES,
 } from "Components/AuthDialog/AuthDialogContext"
 import { useAuthDialog } from "Components/AuthDialog"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { Title } from "react-head"
 import { merge } from "lodash"
 

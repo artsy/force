@@ -1,8 +1,11 @@
 import { SystemContext } from "System/Contexts/SystemContext"
 import { useContext } from "react"
 import * as React from "react"
-import { Environment, commitMutation as relayCommitMutation } from "react-relay"
-import { MutationConfig, MutationParameters } from "relay-runtime"
+import {
+  type Environment,
+  commitMutation as relayCommitMutation,
+} from "react-relay"
+import type { MutationConfig, MutationParameters } from "relay-runtime"
 
 interface OperationBase {
   variables: object

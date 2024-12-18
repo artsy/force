@@ -1,6 +1,6 @@
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Button,
   Clickable,
   Flex,
@@ -8,10 +8,10 @@ import {
   Separator,
   Text,
 } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSharePanel_artwork$data } from "__generated__/ArtworkSharePanel_artwork.graphql"
+import type { ArtworkSharePanel_artwork$data } from "__generated__/ArtworkSharePanel_artwork.graphql"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { RouterLink } from "System/Components/RouterLink"

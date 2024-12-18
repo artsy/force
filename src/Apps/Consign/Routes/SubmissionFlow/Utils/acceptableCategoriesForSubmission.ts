@@ -1,4 +1,4 @@
-import { ConsignmentSubmissionCategoryAggregation } from "__generated__/CreateConsignSubmissionMutation.graphql"
+import type { ConsignmentSubmissionCategoryAggregation } from "__generated__/CreateConsignSubmissionMutation.graphql"
 import { compact } from "lodash"
 import { categoryOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/categoryOptions"
 

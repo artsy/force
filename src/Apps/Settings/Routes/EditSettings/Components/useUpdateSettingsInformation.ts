@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { useUpdateSettingsInformationMutation } from "__generated__/useUpdateSettingsInformationMutation.graphql"
+import type { useUpdateSettingsInformationMutation } from "__generated__/useUpdateSettingsInformationMutation.graphql"
 
 export const useUpdateSettingsInformation = () => {
   return useMutation<useUpdateSettingsInformationMutation>({

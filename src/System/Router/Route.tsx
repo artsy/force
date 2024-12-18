@@ -1,11 +1,11 @@
-import { LayoutVariant } from "Apps/Components/Layouts"
-import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
-import { ClientContext } from "System/Router/Utils/clientAppContext"
-import { RemoveIndex } from "Utils/typeSupport"
-import { NextFunction } from "express"
-import { Location, Match, RouteObjectBase } from "found"
-import { FetchPolicy, GraphQLTaggedNode } from "react-relay"
-import { CacheConfig } from "relay-runtime"
+import type { LayoutVariant } from "Apps/Components/Layouts"
+import type { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type { ClientContext } from "System/Router/Utils/clientAppContext"
+import type { RemoveIndex } from "Utils/typeSupport"
+import type { NextFunction } from "express"
+import type { Location, Match, RouteObjectBase } from "found"
+import type { FetchPolicy, GraphQLTaggedNode } from "react-relay"
+import type { CacheConfig } from "relay-runtime"
 
 interface Route extends RouteObjectBase {
   children?: RouteProps[]

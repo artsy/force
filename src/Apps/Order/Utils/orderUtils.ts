@@ -1,4 +1,4 @@
-import {
+import type {
   CommercePaymentMethodEnum,
   Payment_order$data,
 } from "__generated__/Payment_order.graphql"

@@ -1,5 +1,5 @@
 import { Button, Flex, Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 
 interface SelectArtworkListsFooterProps {
   selectedArtworkListsCount: number

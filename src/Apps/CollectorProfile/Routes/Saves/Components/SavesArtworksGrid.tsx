@@ -1,10 +1,10 @@
-import { FC, Fragment } from "react"
+import { type FC, Fragment } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
-import {
+import type {
   CollectionArtworkSorts,
   SavesArtworksGridQuery,
 } from "__generated__/SavesArtworksGridQuery.graphql"
-import { CustomRangeSegment } from "Components/PriceRange/constants"
+import type { CustomRangeSegment } from "Components/PriceRange/constants"
 import { Masonry } from "Components/Masonry"
 import { extractNodes } from "Utils/extractNodes"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"

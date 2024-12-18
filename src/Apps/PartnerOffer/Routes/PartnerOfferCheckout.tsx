@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect } from "react"
+import { type FC, useCallback, useEffect } from "react"
 import { usePartnerOfferCheckoutMutation } from "./Mutations/UsePartnerOfferCheckoutMutation"
 import { useRouter } from "System/Hooks/useRouter"
 import { LoadingArea } from "Components/LoadingArea"
@@ -24,7 +24,7 @@ export const PartnerOfferCheckout: FC<
         })
 
         let redirectUrl = "/"
-        let orderOrError =
+        const orderOrError =
           response.commerceCreatePartnerOfferOrder?.orderOrError
 
         if (orderOrError?.error) {

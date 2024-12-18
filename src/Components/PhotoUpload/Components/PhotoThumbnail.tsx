@@ -1,6 +1,6 @@
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Clickable,
   Column,
   CSSGrid,
@@ -10,8 +10,8 @@ import {
   Spinner,
   Text,
 } from "@artsy/palette"
-import { formatFileSize, Photo } from "Components/PhotoUpload/Utils/fileUtils"
-import { ComponentProps, useEffect, useState } from "react"
+import { formatFileSize, type Photo } from "Components/PhotoUpload/Utils/fileUtils"
+import { type ComponentProps, useEffect, useState } from "react"
 import styled from "styled-components"
 import { Media } from "Utils/Responsive"
 import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"

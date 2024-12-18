@@ -1,5 +1,5 @@
 import { ModalDialog } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { CollectorProfileArtistsAdd } from "Components/CollectorProfile/CollectorProfileArtistsAdd"
 
 interface CollectorProfileArtistsAddDialogProps {

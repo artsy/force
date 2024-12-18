@@ -11,7 +11,7 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import { MyCollectionArtworkArtistMarket_marketPriceInsights$data } from "__generated__/MyCollectionArtworkArtistMarket_marketPriceInsights.graphql"
+import type { MyCollectionArtworkArtistMarket_marketPriceInsights$data } from "__generated__/MyCollectionArtworkArtistMarket_marketPriceInsights.graphql"
 import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"

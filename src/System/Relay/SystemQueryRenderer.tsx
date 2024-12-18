@@ -1,18 +1,18 @@
-import * as React from "react"
+import type * as React from "react"
 import {
-  Environment,
-  FetchPolicy,
+  type Environment,
+  type FetchPolicy,
   QueryRenderer,
-  QueryRendererProps,
+  type QueryRendererProps,
 } from "react-relay"
-import { CacheConfig, OperationType } from "relay-runtime"
+import type { CacheConfig, OperationType } from "relay-runtime"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import {
-  JSXElementConstructor,
-  ReactElement,
+  type JSXElementConstructor,
+  type ReactElement,
   cloneElement,
   useState,
 } from "react"

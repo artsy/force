@@ -9,7 +9,7 @@ export const allowedFilters = (
 
     // Coerce integers
     if (INTEGER_INPUT_ARGS.includes(key)) {
-      obj[key] = parseInt(filterParams[key], 10) || 1
+      obj[key] = Number.parseInt(filterParams[key], 10) || 1
       return obj
     }
 

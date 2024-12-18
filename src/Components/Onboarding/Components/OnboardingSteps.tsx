@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import {
   VIEW_CURATED_ARTWORKS,
   VIEW_WELCOME,
@@ -25,7 +25,7 @@ import { OnboardingFollowGalleries } from "Components/Onboarding/Views/Onboardin
 import { OnboardingThankYou } from "Components/Onboarding/Views/OnboardingThankYou"
 import { useRouter } from "System/Hooks/useRouter"
 
-interface OnboardingStepsProps {}
+type OnboardingStepsProps = {}
 
 export const OnboardingSteps: FC<
   React.PropsWithChildren<OnboardingStepsProps>

@@ -2,7 +2,7 @@ import { FilterSelect } from "@artsy/palette"
 import { FilterExpandable } from "./FilterExpandable"
 import {
   useFilterSelectResults,
-  UseFilterSelectResultsProps,
+  type UseFilterSelectResultsProps,
 } from "./Utils/useFilterSelectResults"
 
 interface ResultsFilterProps extends UseFilterSelectResultsProps {

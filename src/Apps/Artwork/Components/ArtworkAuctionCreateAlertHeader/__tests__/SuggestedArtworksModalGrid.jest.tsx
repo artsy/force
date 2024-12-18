@@ -1,10 +1,10 @@
 import { OwnerType } from "@artsy/cohesion"
 import { SuggestedArtworksModalGrid } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksModalGrid"
 import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
-import { SavedSearchEntity } from "Components/SavedSearchAlert/types"
+import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { SuggestedArtworksModalGrid_Test_Query } from "__generated__/SuggestedArtworksModalGrid_Test_Query.graphql"
+import type { SuggestedArtworksModalGrid_Test_Query } from "__generated__/SuggestedArtworksModalGrid_Test_Query.graphql"
 import { screen, waitFor } from "@testing-library/react"
 
 jest.unmock("react-relay")

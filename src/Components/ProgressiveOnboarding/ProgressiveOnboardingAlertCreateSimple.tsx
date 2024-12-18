@@ -1,8 +1,8 @@
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
-import { FC } from "react"
+import type { FC } from "react"
 import { Text } from "@artsy/palette"
 import {
-  WithProgressiveOnboardingCountsProps,
+  type WithProgressiveOnboardingCountsProps,
   withProgressiveOnboardingCounts,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useSystemContext } from "System/Hooks/useSystemContext"

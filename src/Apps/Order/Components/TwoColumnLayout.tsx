@@ -1,5 +1,5 @@
 import { Box, Column, Flex, GridColumns, Spacer } from "@artsy/palette"
-import { Children, FC, ReactNode } from "react"
+import { Children, type FC, type ReactNode } from "react"
 import { Media } from "Utils/Responsive"
 
 const CONTENT_SPAN = 7

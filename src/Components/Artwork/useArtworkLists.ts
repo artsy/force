@@ -1,6 +1,6 @@
 import { useToasts } from "@artsy/palette"
 import {
-  SaveArtworkToListsOptions,
+  type SaveArtworkToListsOptions,
   ResultAction,
   useSaveArtworkToLists,
 } from "Components/Artwork/SaveButton/useSaveArtworkToLists"
@@ -8,7 +8,7 @@ import { useEffect } from "react"
 import { fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
-import { useArtworkListsArtworkSaveStatesQuery } from "__generated__/useArtworkListsArtworkSaveStatesQuery.graphql"
+import type { useArtworkListsArtworkSaveStatesQuery } from "__generated__/useArtworkListsArtworkSaveStatesQuery.graphql"
 
 export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
   const { artwork } = options

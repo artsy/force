@@ -1,4 +1,4 @@
-import { mount } from "enzyme"
+import type { mount } from "enzyme"
 
 export const fill = (
   wrapper: ReturnType<typeof mount>,

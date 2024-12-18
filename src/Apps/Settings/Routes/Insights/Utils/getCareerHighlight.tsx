@@ -1,4 +1,4 @@
-import { ComponentProps, FC, Fragment } from "react"
+import { type ComponentProps, type FC, Fragment } from "react"
 import PersonIcon from "@artsy/icons/PersonIcon"
 import PublicationIcon from "@artsy/icons/PublicationIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
@@ -17,7 +17,7 @@ export const getCareerHighlight = (
   type: CareerHighlightKind,
   count: number
 ) => {
-  let label: string = ""
+  let label = ""
   let Icon: FC<React.PropsWithChildren<ComponentProps<typeof PersonIcon>>> =
     Fragment
 

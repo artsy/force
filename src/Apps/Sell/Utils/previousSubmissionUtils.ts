@@ -1,4 +1,4 @@
-import { ALL_STEPS, SellFlowStep } from "Apps/Sell/SellFlowContext"
+import { ALL_STEPS, type SellFlowStep } from "Apps/Sell/SellFlowContext"
 import createLogger from "Utils/logger"
 import { useEffect, useState } from "react"
 import * as Yup from "yup"

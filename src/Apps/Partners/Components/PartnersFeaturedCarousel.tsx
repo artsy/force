@@ -1,9 +1,9 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
 import { extractNodes } from "Utils/extractNodes"
 import { useStableShuffle } from "Utils/Hooks/useStableShuffle"
-import { PartnersFeaturedCarousel_viewer$data } from "__generated__/PartnersFeaturedCarousel_viewer.graphql"
+import type { PartnersFeaturedCarousel_viewer$data } from "__generated__/PartnersFeaturedCarousel_viewer.graphql"
 import { PartnersFeaturedCarouselCellFragmentContainer } from "./PartnersFeaturedCarouselCell"
 
 interface PartnersFeaturedCarouselProps {

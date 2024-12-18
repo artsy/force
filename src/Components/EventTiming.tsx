@@ -1,5 +1,5 @@
-import * as React from "react"
-import { Text, TextProps } from "@artsy/palette"
+import type * as React from "react"
+import { Text, type TextProps } from "@artsy/palette"
 import { useEventTiming } from "Utils/Hooks/useEventTiming"
 
 interface EventTimingProps extends TextProps {

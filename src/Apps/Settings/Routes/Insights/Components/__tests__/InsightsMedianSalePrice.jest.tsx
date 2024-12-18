@@ -3,7 +3,7 @@ import { InsightsMedianSalePriceFragmentContainer } from "Apps/Settings/Routes/I
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { InsightsMedianSalePriceTestQuery } from "__generated__/InsightsMedianSalePriceTestQuery.graphql"
+import type { InsightsMedianSalePriceTestQuery } from "__generated__/InsightsMedianSalePriceTestQuery.graphql"
 
 jest.unmock("react-relay")
 

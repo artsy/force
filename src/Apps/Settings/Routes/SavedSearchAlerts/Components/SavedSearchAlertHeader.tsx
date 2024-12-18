@@ -1,5 +1,5 @@
-import { Flex, Option, Select, Text } from "@artsy/palette"
-import { FC } from "react"
+import { Flex, type Option, Select, Text } from "@artsy/palette"
+import type { FC } from "react"
 
 interface SavedSearchAlertHeaderProps {
   selected: string

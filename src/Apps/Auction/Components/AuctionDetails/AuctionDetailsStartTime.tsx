@@ -1,9 +1,9 @@
-import { FC } from "react"
-import { SkeletonText, Text, TextProps } from "@artsy/palette"
+import type { FC } from "react"
+import { SkeletonText, Text, type TextProps } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { AuctionDetailsStartTimeQuery } from "__generated__/AuctionDetailsStartTimeQuery.graphql"
-import { AuctionDetailsStartTime_sale$data } from "__generated__/AuctionDetailsStartTime_sale.graphql"
+import type { AuctionDetailsStartTimeQuery } from "__generated__/AuctionDetailsStartTimeQuery.graphql"
+import type { AuctionDetailsStartTime_sale$data } from "__generated__/AuctionDetailsStartTime_sale.graphql"
 
 interface AuctionDetailsStartTimeProps extends TextProps {
   sale: AuctionDetailsStartTime_sale$data

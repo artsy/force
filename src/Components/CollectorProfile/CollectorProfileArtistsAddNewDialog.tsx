@@ -1,8 +1,8 @@
 import { Button, Input, ModalDialog, Stack, useToasts } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { CollectorProfileArtistsAddNewDialogCreateArtistMutation } from "__generated__/CollectorProfileArtistsAddNewDialogCreateArtistMutation.graphql"
+import type { CollectorProfileArtistsAddNewDialogCreateArtistMutation } from "__generated__/CollectorProfileArtistsAddNewDialogCreateArtistMutation.graphql"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
 

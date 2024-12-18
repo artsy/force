@@ -1,6 +1,6 @@
-import { FC, Suspense } from "react"
+import { type FC, Suspense } from "react"
 import { QuickMultipleSelectAlertFilter } from "Components/Alert/Components/Filters/QuickMultipleSelectAlertFilter"
-import { ArtistSeriesOptionsQuery } from "__generated__/ArtistSeriesOptionsQuery.graphql"
+import type { ArtistSeriesOptionsQuery } from "__generated__/ArtistSeriesOptionsQuery.graphql"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import {

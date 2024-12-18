@@ -1,5 +1,5 @@
 import { Spacer, StackableBorderBox, Text } from "@artsy/palette"
-import { InvoicePaymentRoute_invoice$key } from "__generated__/InvoicePaymentRoute_invoice.graphql"
+import type { InvoicePaymentRoute_invoice$key } from "__generated__/InvoicePaymentRoute_invoice.graphql"
 import { InvoicePaymentForm } from "Apps/Invoice/Components/InvoicePaymentForm"
 import { CreditCardInputProvider } from "Components/CreditCardInput"
 import { graphql, useFragment } from "react-relay"

@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { EntityHeaderFairOrganizerFragmentContainer_Test_Query } from "__generated__/EntityHeaderFairOrganizerFragmentContainer_Test_Query.graphql"
+import type { EntityHeaderFairOrganizerFragmentContainer_Test_Query } from "__generated__/EntityHeaderFairOrganizerFragmentContainer_Test_Query.graphql"
 import { screen } from "@testing-library/react"
 import { EntityHeaderFairOrganizerFragmentContainer } from "Components/EntityHeaders/EntityHeaderFairOrganizer"
 

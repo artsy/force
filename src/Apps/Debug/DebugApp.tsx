@@ -1,5 +1,5 @@
 import { Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { Title } from "react-head"
 
 export const DebugApp: React.FC<React.PropsWithChildren<{}>> = () => {

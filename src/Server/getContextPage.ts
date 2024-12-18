@@ -1,4 +1,4 @@
-import { PageOwnerType } from "@artsy/cohesion"
+import type { PageOwnerType } from "@artsy/cohesion"
 import { pathToOwnerType } from "System/Contexts/AnalyticsContext"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"

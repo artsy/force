@@ -7,7 +7,7 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { FC, useReducer, useState } from "react"
+import { type FC, useReducer, useState } from "react"
 import { MetaTags } from "Components/MetaTags"
 
 export const AdminCacheManagementRoute: FC<

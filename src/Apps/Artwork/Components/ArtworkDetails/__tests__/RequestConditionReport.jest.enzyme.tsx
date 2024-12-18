@@ -8,7 +8,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import {
   createMockEnvironment,
   MockPayloadGenerator,
-  MockEnvironment,
+  type MockEnvironment,
 } from "relay-test-utils"
 import { useTracking } from "react-tracking"
 import { useAuthDialog } from "Components/AuthDialog"
@@ -41,7 +41,7 @@ describe("RequestConditionReport", () => {
     slug: "artwork-slug",
     saleArtwork: { internalID: "sale-artwork-id" },
   }
-  let relayEnv: MockEnvironment = createMockEnvironment()
+  const relayEnv: MockEnvironment = createMockEnvironment()
   let trackEvent: jest.Mock
 
   const { getWrapper } = setupTestWrapper({
@@ -95,7 +95,7 @@ describe("RequestConditionReport", () => {
       {},
       relayEnv
     )
-    let page = new RequestConditionReportTestPage(wrapper)
+    const page = new RequestConditionReportTestPage(wrapper)
 
     await page.clickRequestConditionReportButton()
 
@@ -121,7 +121,7 @@ describe("RequestConditionReport", () => {
       {},
       relayEnv
     )
-    let page = new RequestConditionReportTestPage(wrapper)
+    const page = new RequestConditionReportTestPage(wrapper)
 
     await page.clickRequestConditionReportButton()
 
@@ -150,7 +150,7 @@ describe("RequestConditionReport", () => {
         {},
         relayEnv
       )
-      let page = new RequestConditionReportTestPage(wrapper)
+      const page = new RequestConditionReportTestPage(wrapper)
 
       await page.clickLogInButton()
 

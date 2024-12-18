@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { WorkflowEngine } from "Utils/WorkflowEngine"
-import { Context } from "./Hooks/useInquiryContext"
+import type { Context } from "./Hooks/useInquiryContext"
 import { Visited } from "./Visited"
 import { InquiryAccount } from "./Views/InquiryAccount"
 import { InquiryBasicInfoQueryRenderer } from "./Views/InquiryBasicInfo"

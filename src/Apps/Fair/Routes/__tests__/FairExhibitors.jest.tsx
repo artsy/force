@@ -1,4 +1,4 @@
-import { FairExhibitors_Test_Query } from "__generated__/FairExhibitors_Test_Query.graphql"
+import type { FairExhibitors_Test_Query } from "__generated__/FairExhibitors_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { FairExhibitorsFragmentContainer } from "Apps/Fair/Routes/FairExhibitors"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"

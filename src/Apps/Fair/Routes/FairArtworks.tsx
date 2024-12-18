@@ -1,13 +1,17 @@
-import { FairArtworks_fair$data } from "__generated__/FairArtworks_fair.graphql"
+import type { FairArtworks_fair$data } from "__generated__/FairArtworks_fair.graphql"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
-  Counts,
-  SharedArtworkFilterContextProps,
+  type Counts,
+  type SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import * as React from "react"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import type * as React from "react"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
@@ -29,7 +33,7 @@ import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitial
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
-import { FairArtworksFilterQuery } from "__generated__/FairArtworksFilterQuery.graphql"
+import type { FairArtworksFilterQuery } from "__generated__/FairArtworksFilterQuery.graphql"
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair$data
@@ -154,7 +158,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
   `
 )
 
-interface FairArtworkFilterQueryRendererProps {}
+type FairArtworkFilterQueryRendererProps = {}
 
 export const FairArtworksQueryRenderer: React.FC<
   React.PropsWithChildren<FairArtworkFilterQueryRendererProps>
@@ -196,7 +200,7 @@ export const FairArtworksQueryRenderer: React.FC<
 const initializeVariablesWithFilterState = (params, props) => {
   const initialFilterState = getInitialFilterState(props.location?.query ?? {})
 
-  let aggregations: string[] = [
+  const aggregations: string[] = [
     "TOTAL",
     "MAJOR_PERIOD",
     "ARTIST",

@@ -4,11 +4,11 @@ const chai = require("chai")
 const Strategy = require("../lib/strategy")
 
 // FIXME:
-describe.skip("Strategy", function () {
-  describe("passing request to verify callback", function () {
+describe.skip("Strategy", () => {
+  describe("passing request to verify callback", () => {
     const strategy = new Strategy(
       { passReqToCallback: true },
-      function (req, username, password, otp, done) {
+      (req, username, password, otp, done) => {
         if (username == "johndoe" && password == "secret") {
           return done(
             null,
@@ -23,15 +23,15 @@ describe.skip("Strategy", function () {
     let user, info
 
     // eslint-disable-next-line jest/no-done-callback
-    beforeAll(function (done) {
+    beforeAll((done) => {
       chai.passport
         .use(strategy)
-        .success(function (u, i) {
+        .success((u, i) => {
           user = u
           info = i
           done()
         })
-        .request(function (req) {
+        .request((req) => {
           req.headers["x-foo"] = "hello"
 
           req.body = {}
@@ -41,15 +41,15 @@ describe.skip("Strategy", function () {
         .authenticate()
     })
 
-    it("should supply user", function () {
+    it("should supply user", () => {
       expect(user.id).toEqual("1234")
     })
 
-    it("should supply info", function () {
+    it("should supply info", () => {
       expect(info.scope).toEqual("read")
     })
 
-    it("should supply request header in info", function () {
+    it("should supply request header in info", () => {
       expect(info.foo).toEqual("hello")
     })
   })

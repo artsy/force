@@ -1,5 +1,5 @@
 import { Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { FiltersHeader } from "Components/Alert/Components/Steps/StepsHeader/FiltersHeader"
 import { ConfirmationHeader } from "Components/Alert/Components/Steps/StepsHeader/ConfirmationHeader"

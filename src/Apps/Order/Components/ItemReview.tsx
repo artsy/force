@@ -1,9 +1,9 @@
-import * as React from "react"
+import type * as React from "react"
 
 import { BorderBox, Flex, Text, Image } from "@artsy/palette"
-import { ItemReview_lineItem$data } from "__generated__/ItemReview_lineItem.graphql"
+import type { ItemReview_lineItem$data } from "__generated__/ItemReview_lineItem.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import { CommerceOrderSourceEnum } from "__generated__/orderRoutes_OrderQuery.graphql"
+import type { CommerceOrderSourceEnum } from "__generated__/orderRoutes_OrderQuery.graphql"
 
 interface ItemReviewProps {
   lineItem: ItemReview_lineItem$data

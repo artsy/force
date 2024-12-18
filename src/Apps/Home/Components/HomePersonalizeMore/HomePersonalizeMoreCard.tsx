@@ -1,6 +1,6 @@
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Button,
   Flex,
   Image,
@@ -8,7 +8,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { RouterLink } from "System/Components/RouterLink"
 import { cropped } from "Utils/resized"
 

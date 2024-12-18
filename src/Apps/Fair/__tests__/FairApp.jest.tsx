@@ -1,7 +1,7 @@
 import { MockBoot } from "DevTools/MockBoot"
 import { FairAppFragmentContainer } from "Apps/Fair/FairApp"
 import { graphql } from "react-relay"
-import { FairApp_Test_Query } from "__generated__/FairApp_Test_Query.graphql"
+import type { FairApp_Test_Query } from "__generated__/FairApp_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"

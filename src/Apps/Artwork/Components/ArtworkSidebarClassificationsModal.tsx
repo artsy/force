@@ -10,8 +10,8 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtworkSidebarClassificationsModalQuery } from "__generated__/ArtworkSidebarClassificationsModalQuery.graphql"
-import { ArtworkSidebarClassificationsModal_viewer$data } from "__generated__/ArtworkSidebarClassificationsModal_viewer.graphql"
+import type { ArtworkSidebarClassificationsModalQuery } from "__generated__/ArtworkSidebarClassificationsModalQuery.graphql"
+import type { ArtworkSidebarClassificationsModal_viewer$data } from "__generated__/ArtworkSidebarClassificationsModal_viewer.graphql"
 
 const ARTWORK_CLASSIFICATIONS_PLACEHOLDER = [...new Array(3)].map((_, i) => {
   return (

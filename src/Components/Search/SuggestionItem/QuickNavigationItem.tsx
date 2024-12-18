@@ -1,10 +1,10 @@
-import { Pill, PillProps } from "@artsy/palette"
+import { Pill, type PillProps } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import { FC } from "react"
+import type { FC } from "react"
 import {
   ActionType,
   ContextModule,
-  SelectedSearchSuggestionQuickNavigationItem,
+  type SelectedSearchSuggestionQuickNavigationItem,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 

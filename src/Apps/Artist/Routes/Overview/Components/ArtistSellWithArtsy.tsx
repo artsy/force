@@ -1,7 +1,7 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistSellWithArtsy_artist$data } from "__generated__/ArtistSellWithArtsy_artist.graphql"
-import { ArtistSellWithArtsyQuery } from "__generated__/ArtistSellWithArtsyQuery.graphql"
+import type { ArtistSellWithArtsy_artist$data } from "__generated__/ArtistSellWithArtsy_artist.graphql"
+import type { ArtistSellWithArtsyQuery } from "__generated__/ArtistSellWithArtsyQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   Box,

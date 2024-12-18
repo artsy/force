@@ -1,4 +1,4 @@
-import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { isDefaultFilter } from "Components/ArtworkFilter/Utils/isDefaultFilter"
 import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import qs from "qs"

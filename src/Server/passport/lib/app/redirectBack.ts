@@ -1,4 +1,4 @@
-import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import { sanitizeRedirect } from "Utils/sanitizeRedirect"
 
 const opts = require("../options")

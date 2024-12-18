@@ -1,4 +1,4 @@
-import { FormikErrors, yupToFormErrors } from "formik"
+import { type FormikErrors, yupToFormErrors } from "formik"
 import * as yup from "yup"
 
 export const contactInformationValidationSchema = yup.object().shape({

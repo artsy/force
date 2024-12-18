@@ -1,9 +1,9 @@
-import { ArtQuizCard, Mode } from "Apps/ArtQuiz/Components/ArtQuizCard"
+import { ArtQuizCard, type Mode } from "Apps/ArtQuiz/Components/ArtQuizCard"
 import { FullscreenBox } from "Components/FullscreenBox"
-import { FC } from "react"
+import type { FC } from "react"
 import { Image } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtQuizArtworksCard_artwork$data } from "__generated__/ArtQuizArtworksCard_artwork.graphql"
+import type { ArtQuizArtworksCard_artwork$data } from "__generated__/ArtQuizArtworksCard_artwork.graphql"
 import { ArtQuizArtworksCardMetadataFragmentContainer } from "Apps/ArtQuiz/Components/ArtQuizArtworksCardMetadata"
 
 interface ArtQuizArtworksCardProps {

@@ -1,6 +1,6 @@
 import { Flex, Separator, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarCreateAlert_artwork$data } from "__generated__/ArtworkSidebarCreateAlert_artwork.graphql"
+import type { ArtworkSidebarCreateAlert_artwork$data } from "__generated__/ArtworkSidebarCreateAlert_artwork.graphql"
 
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 

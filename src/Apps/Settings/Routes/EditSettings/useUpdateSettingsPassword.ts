@@ -1,6 +1,6 @@
 import { commitMutation, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import {
+import type {
   useUpdateSettingsPasswordMutation,
   UpdateMyPasswordMutationInput,
   useUpdateSettingsPasswordMutation$data,

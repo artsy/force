@@ -1,7 +1,7 @@
 import { Box, Flex, Image, Spacer } from "@artsy/palette"
 import { ArtworkListNoImage } from "./ArtworkListNoImage"
 import { prepareImageURLs } from "Apps/CollectorProfile/Routes/Saves/Utils/prepareImageURLs"
-import { FC } from "react"
+import type { FC } from "react"
 import { cropped } from "Utils/resized"
 import { ArtworkListImageBorder } from "Apps/CollectorProfile/Routes/Saves/Components/Images/ArtworkListImageBorder"
 

@@ -1,5 +1,5 @@
-import { timeQuery } from "__generated__/timeQuery.graphql"
-import { Environment, fetchQuery, graphql } from "react-relay"
+import type { timeQuery } from "__generated__/timeQuery.graphql"
+import { type Environment, fetchQuery, graphql } from "react-relay"
 
 const getLocalTimestampInMilliSeconds = () => {
   return Date.now()

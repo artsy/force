@@ -1,5 +1,6 @@
-import { BoxProps, Button, Flex, Spacer } from "@artsy/palette"
-import React, { useEffect } from "react"
+import { type BoxProps, Button, Flex, Spacer } from "@artsy/palette"
+import type React from "react"
+import { useEffect } from "react"
 import { useMode } from "Utils/Hooks/useMode"
 
 interface SettingsEditSettingsTwoFactorBackupCodesActionsProps

@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistConsignSellArt_artist$data } from "__generated__/ArtistConsignSellArt_artist.graphql"
+import type { ArtistConsignSellArt_artist$data } from "__generated__/ArtistConsignSellArt_artist.graphql"
 import { Button, Spacer, Text } from "@artsy/palette"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"

@@ -1,5 +1,5 @@
-import { Environment, commitMutation, graphql } from "react-relay"
-import {
+import { type Environment, commitMutation, graphql } from "react-relay"
+import type {
   useUpdateCollectorProfileMutation,
   UpdateCollectorProfileInput,
 } from "__generated__/useUpdateCollectorProfileMutation.graphql"

@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { NavBarUserMenu } from "./Menus"
 import { Dropdown, Flex, useDidMount } from "@artsy/palette"
 import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
@@ -6,7 +6,7 @@ import PersonIcon from "@artsy/icons/PersonIcon"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import { graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import {
+import type {
   NavBarLoggedInActionsQuery,
   NavBarLoggedInActionsQuery$data,
 } from "__generated__/NavBarLoggedInActionsQuery.graphql"

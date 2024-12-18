@@ -1,8 +1,8 @@
 import {
   Children,
-  FC,
+  type FC,
   forwardRef,
-  ForwardRefExoticComponent,
+  type ForwardRefExoticComponent,
   useState,
 } from "react"
 import {
@@ -10,9 +10,9 @@ import {
   Spacer,
   Swiper,
   SwiperCell,
-  SwiperCellProps,
+  type SwiperCellProps,
   SwiperRail,
-  SwiperRailProps,
+  type SwiperRailProps,
 } from "@artsy/palette"
 
 interface HeroCarouselSmallProps {

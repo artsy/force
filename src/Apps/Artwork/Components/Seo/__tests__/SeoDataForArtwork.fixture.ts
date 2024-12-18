@@ -1,4 +1,4 @@
-import { SeoDataForArtwork_Test_Query$rawResponse } from "__generated__/SeoDataForArtwork_Test_Query.graphql"
+import type { SeoDataForArtwork_Test_Query$rawResponse } from "__generated__/SeoDataForArtwork_Test_Query.graphql"
 
 export const SeoDataForArtworkFixture: SeoDataForArtwork_Test_Query$rawResponse["artwork"] =
   {

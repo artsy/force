@@ -1,5 +1,5 @@
-import { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
-import * as React from "react"
+import type { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistAuctionResultsRefetchContainer } from "./ArtistAuctionResults"
 

@@ -1,5 +1,5 @@
 import { createElement, Component } from "react"
-import { StepProps } from "./types"
+import type { StepProps } from "./types"
 
 /**
  * Step within a Wizard.

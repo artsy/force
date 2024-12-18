@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   FullBleedHeader,
@@ -17,7 +17,7 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
-import { ArticleHero_article$data } from "__generated__/ArticleHero_article.graphql"
+import type { ArticleHero_article$data } from "__generated__/ArticleHero_article.graphql"
 import styled from "styled-components"
 import { CENTERED_LAYOUT_COLUMNS } from "./ArticleBody"
 

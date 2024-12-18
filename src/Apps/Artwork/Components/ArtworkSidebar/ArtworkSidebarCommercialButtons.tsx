@@ -1,7 +1,7 @@
 import { graphql, useFragment } from "react-relay"
 import {
   ArtworkSidebarEditionSetFragmentContainer,
-  EditionSet,
+  type EditionSet,
 } from "./ArtworkSidebarEditionSets"
 import {
   Box,
@@ -21,15 +21,15 @@ import { useInquiry } from "Components/Inquiry/useInquiry"
 import { ErrorWithMetadata } from "Utils/errors"
 import { logger } from "@sentry/utils"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { ArtworkSidebarCommercialButtons_artwork$key } from "__generated__/ArtworkSidebarCommercialButtons_artwork.graphql"
-import { ArtworkSidebarCommercialButtons_me$key } from "__generated__/ArtworkSidebarCommercialButtons_me.graphql"
-import { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
-import { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOfferOrderMutation.graphql"
+import type { ArtworkSidebarCommercialButtons_artwork$key } from "__generated__/ArtworkSidebarCommercialButtons_artwork.graphql"
+import type { ArtworkSidebarCommercialButtons_me$key } from "__generated__/ArtworkSidebarCommercialButtons_me.graphql"
+import type { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
+import type { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOfferOrderMutation.graphql"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
-  ClickedBuyNow,
-  ClickedContactGallery,
+  type ClickedBuyNow,
+  type ClickedContactGallery,
   ContextModule,
   Intent,
   OwnerType,
@@ -44,7 +44,7 @@ import { useMutation } from "Utils/Hooks/useMutation"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { extractNodes } from "Utils/extractNodes"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
-import { ResponsiveValue } from "styled-system"
+import type { ResponsiveValue } from "styled-system"
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 import { getSignalLabel } from "Utils/getSignalLabel"
 
@@ -160,7 +160,8 @@ export const ArtworkSidebarCommercialButtons: React.FC<
       })
 
       let redirectUrl = "/"
-      let orderOrError = response.commerceCreatePartnerOfferOrder?.orderOrError
+      const orderOrError =
+        response.commerceCreatePartnerOfferOrder?.orderOrError
 
       if (orderOrError?.error) {
         const errorCode = orderOrError.error.code

@@ -1,5 +1,5 @@
-import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
-import { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
+import type { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import type { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
 
 export const handleFieldsWithMultipleValues = ({
   selectedValue,

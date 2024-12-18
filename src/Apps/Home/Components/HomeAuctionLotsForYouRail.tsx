@@ -1,5 +1,5 @@
 import { Shelf, Skeleton } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
@@ -10,14 +10,14 @@ import {
 } from "Components/Artwork/ShelfArtwork"
 import {
   ActionType,
-  AuthContextModule,
-  ClickedArtworkGroup,
+  type AuthContextModule,
+  type ClickedArtworkGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
 
-import { HomeAuctionLotsForYouRail_artworksForUser$data } from "__generated__/HomeAuctionLotsForYouRail_artworksForUser.graphql"
-import { HomeAuctionLotsForYouRailQuery } from "__generated__/HomeAuctionLotsForYouRailQuery.graphql"
+import type { HomeAuctionLotsForYouRail_artworksForUser$data } from "__generated__/HomeAuctionLotsForYouRail_artworksForUser.graphql"
+import type { HomeAuctionLotsForYouRailQuery } from "__generated__/HomeAuctionLotsForYouRailQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 
 interface HomeAuctionLotsForYouRailProps {

@@ -1,4 +1,4 @@
-import { ArtworkSidebarCurrentBidInfo_artwork$data } from "__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
+import type { ArtworkSidebarCurrentBidInfo_artwork$data } from "__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"

@@ -1,6 +1,6 @@
 import { commitMutation, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useRemoveArtistYouCollectMutation } from "__generated__/useRemoveArtistYouCollectMutation.graphql"
+import type { useRemoveArtistYouCollectMutation } from "__generated__/useRemoveArtistYouCollectMutation.graphql"
 
 export const useRemoveArtistYouCollect = () => {
   const { relayEnvironment } = useSystemContext()

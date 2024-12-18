@@ -1,11 +1,11 @@
-import * as React from "react"
+import type * as React from "react"
 import { useTracking } from "react-tracking"
-import { TappedViewOffer, ActionType, OwnerType } from "@artsy/cohesion"
+import { type TappedViewOffer, ActionType, OwnerType } from "@artsy/cohesion"
 import {
   Clickable,
   Flex,
   Message,
-  MessageProps,
+  type MessageProps,
   ModalDialog,
   Text,
 } from "@artsy/palette"
@@ -14,7 +14,7 @@ import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import AlertFillIcon from "@artsy/icons/AlertFillIcon"
 import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
 import { graphql, useFragment } from "react-relay"
-import { ConversationReviewOfferCTA_conversation$key } from "__generated__/ConversationReviewOfferCTA_conversation.graphql"
+import type { ConversationReviewOfferCTA_conversation$key } from "__generated__/ConversationReviewOfferCTA_conversation.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { useState } from "react"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"

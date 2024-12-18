@@ -7,10 +7,10 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
-import { ArticlesIndexArticle_article$data } from "__generated__/ArticlesIndexArticle_article.graphql"
+import type { ArticlesIndexArticle_article$data } from "__generated__/ArticlesIndexArticle_article.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 import { ArticleShare } from "Components/ArticleShare"
-import React from "react"
+import type React from "react"
 
 interface ArticlesIndexArticleProps {
   article: ArticlesIndexArticle_article$data

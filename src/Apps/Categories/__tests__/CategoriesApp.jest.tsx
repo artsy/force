@@ -3,7 +3,7 @@ import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
 import { CategoriesAppFragmentContainer } from "Apps/Categories/CategoriesApp"
-import { CategoriesApp_Test_Query } from "__generated__/CategoriesApp_Test_Query.graphql"
+import type { CategoriesApp_Test_Query } from "__generated__/CategoriesApp_Test_Query.graphql"
 
 jest.unmock("react-relay")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({

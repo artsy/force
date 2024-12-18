@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { Spacer, Box } from "@artsy/palette"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { Debug } from "Components/Alert/Components/Debug"

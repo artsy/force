@@ -7,7 +7,7 @@ import {
   Column,
 } from "@artsy/palette"
 import {
-  ClickedArticleGroup,
+  type ClickedArticleGroup,
   ActionType,
   ContextModule,
   OwnerType,
@@ -26,9 +26,9 @@ import { extractNodes } from "Utils/extractNodes"
 import { take } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { ArtistEditorialNewsGrid_artist$data } from "__generated__/ArtistEditorialNewsGrid_artist.graphql"
-import { ArtistEditorialNewsGridQuery } from "__generated__/ArtistEditorialNewsGridQuery.graphql"
-import { FC } from "react"
+import type { ArtistEditorialNewsGrid_artist$data } from "__generated__/ArtistEditorialNewsGrid_artist.graphql"
+import type { ArtistEditorialNewsGridQuery } from "__generated__/ArtistEditorialNewsGridQuery.graphql"
+import type { FC } from "react"
 
 const ARTICLE_COUNT = 6
 

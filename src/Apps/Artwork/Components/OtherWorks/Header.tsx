@@ -1,6 +1,6 @@
 import { Flex, SkeletonText, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import * as React from "react"
+import type * as React from "react"
 
 interface HeaderProps {
   buttonHref?: string

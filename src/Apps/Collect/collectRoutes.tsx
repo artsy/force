@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"

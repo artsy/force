@@ -3,20 +3,20 @@ import { useCreateSavedAddress } from "Apps/Order/Routes/Shipping/Mutations/useC
 import { useDeleteSavedAddress } from "Apps/Order/Routes/Shipping/Mutations/useDeleteSavedAddress"
 import { useUpdateSavedAddress } from "Apps/Order/Routes/Shipping/Mutations/useUpdateSavedAddress"
 import { useUpdateUserDefaultAddress } from "Apps/Order/Routes/Shipping/Mutations/useUpdateUserDefaultAddress"
-import { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
+import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import {
   FulfillmentType,
-  FulfillmentValues,
-  SavedAddressType,
-  ShipValues,
+  type FulfillmentValues,
+  type SavedAddressType,
+  type ShipValues,
   addressWithFallbackValues,
   getAddressByID,
   matchAddressFields,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import createLogger from "Utils/logger"
-import { useCreateSavedAddressMutation$data } from "__generated__/useCreateSavedAddressMutation.graphql"
-import { useDeleteSavedAddressMutation$data } from "__generated__/useDeleteSavedAddressMutation.graphql"
-import { useUpdateSavedAddressMutation$data } from "__generated__/useUpdateSavedAddressMutation.graphql"
+import type { useCreateSavedAddressMutation$data } from "__generated__/useCreateSavedAddressMutation.graphql"
+import type { useDeleteSavedAddressMutation$data } from "__generated__/useDeleteSavedAddressMutation.graphql"
+import type { useUpdateSavedAddressMutation$data } from "__generated__/useUpdateSavedAddressMutation.graphql"
 
 const logger = createLogger(
   "Order/Routes/Shipping/Hooks/useHandleUserAddressUpdates.tsx"

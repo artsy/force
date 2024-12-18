@@ -1,5 +1,5 @@
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import { validatePhoneNumberQuery } from "__generated__/validatePhoneNumberQuery.graphql"
+import type { validatePhoneNumberQuery } from "__generated__/validatePhoneNumberQuery.graphql"
 import { debounce } from "lodash"
 import { useCallback, useEffect, useState } from "react"
 import { fetchQuery, graphql } from "react-relay"

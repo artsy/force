@@ -3,7 +3,7 @@ import { SaveButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveB
 import { useAuthDialog } from "Components/AuthDialog/useAuthDialog"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { SaveButtonTestQuery } from "__generated__/SaveButtonTestQuery.graphql"
+import type { SaveButtonTestQuery } from "__generated__/SaveButtonTestQuery.graphql"
 
 jest.unmock("react-relay")
 

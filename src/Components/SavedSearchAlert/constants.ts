@@ -1,5 +1,5 @@
-import { Slice } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { SavedSearchFrequency } from "./types"
+import type { Slice } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type { SavedSearchFrequency } from "./types"
 
 export const shouldExtractValueNamesFromAggregation = [
   "additionalGeneIDs",

@@ -1,6 +1,6 @@
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { Radio, RadioGroup, Spacer } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 
 export const ArtworkFilterExpandableSort: FC<

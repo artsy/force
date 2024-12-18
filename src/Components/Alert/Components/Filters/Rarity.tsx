@@ -1,6 +1,6 @@
 import { QuickMultipleSelectAlertFilter } from "Components/Alert/Components/Filters/QuickMultipleSelectAlertFilter"
 import { ATTRIBUTION_CLASS_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
-import { FC } from "react"
+import type { FC } from "react"
 
 export const Rarity: FC<React.PropsWithChildren<unknown>> = () => {
   return (

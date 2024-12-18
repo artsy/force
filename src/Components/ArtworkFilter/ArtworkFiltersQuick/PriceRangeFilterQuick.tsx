@@ -1,7 +1,7 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { PriceRange } from "Components/PriceRange/PriceRange"
-import { Dropdown, DropdownProps } from "@artsy/palette"
+import { Dropdown, type DropdownProps } from "@artsy/palette"
 import {
   FilterQuickDropdownAnchor,
   FilterQuickDropdownPanel,

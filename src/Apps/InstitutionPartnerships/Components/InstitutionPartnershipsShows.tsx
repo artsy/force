@@ -1,8 +1,8 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { InstitutionPartnershipsShows_orderedSet$data } from "__generated__/InstitutionPartnershipsShows_orderedSet.graphql"
-import { InstitutionPartnershipsShowsQuery } from "__generated__/InstitutionPartnershipsShowsQuery.graphql"
+import type { InstitutionPartnershipsShows_orderedSet$data } from "__generated__/InstitutionPartnershipsShows_orderedSet.graphql"
+import type { InstitutionPartnershipsShowsQuery } from "__generated__/InstitutionPartnershipsShowsQuery.graphql"
 import {
   CellShowFragmentContainer,
   CellShowPlaceholder,

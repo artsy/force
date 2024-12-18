@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "Apps/Show/Components/ShowViewingRoom"
-import { ShowViewingRoom_Test_Query } from "__generated__/ShowViewingRoom_Test_Query.graphql"
+import type { ShowViewingRoom_Test_Query } from "__generated__/ShowViewingRoom_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"

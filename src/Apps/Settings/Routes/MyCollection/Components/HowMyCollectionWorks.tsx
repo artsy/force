@@ -1,6 +1,6 @@
 import {
   StepsWithImage,
-  StepsWithImageDataType,
+  type StepsWithImageDataType,
 } from "Components/StepsWithImage"
 import { resized } from "Utils/resized"
 

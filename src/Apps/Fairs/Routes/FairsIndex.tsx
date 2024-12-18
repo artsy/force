@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
@@ -17,8 +17,8 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
-import { FairsIndex_featuredFairs$data } from "__generated__/FairsIndex_featuredFairs.graphql"
-import { FairsIndex_viewer$data } from "__generated__/FairsIndex_viewer.graphql"
+import type { FairsIndex_featuredFairs$data } from "__generated__/FairsIndex_featuredFairs.graphql"
+import type { FairsIndex_viewer$data } from "__generated__/FairsIndex_viewer.graphql"
 import { FairsFairBannerFragmentContainer } from "Apps/Fairs/Components/FairsFairBanner"
 import { FairsFairRowFragmentContainer } from "Apps/Fairs/Components/FairsFairRow"
 import { FairsPhonePromo } from "Apps/Fairs/Components/FairsPhonePromo"
