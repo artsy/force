@@ -67,7 +67,9 @@ describe("SubmissionLayout", () => {
     expect(screen.queryByText("Back")).not.toBeInTheDocument()
     expect(screen.getByText("Continue")).toBeInTheDocument()
     expect(screen.getByText("Exit")).toBeInTheDocument()
-    expect(screen.getByTestId("exit-link").attributes.href.value).toBe("/sell")
+    expect(screen.getByTestId("exit-link").attributes["href"].value).toBe(
+      "/sell"
+    )
     expect(screen.getByRole("progressbar")).toBeInTheDocument()
 
     expect(screen.queryByText("Save & Exit")).not.toBeInTheDocument()
@@ -84,7 +86,7 @@ describe("SubmissionLayout", () => {
       )
 
       expect(screen.getByText("Exit")).toBeInTheDocument()
-      expect(screen.getByTestId("exit-link").attributes.href.value).toBe(
+      expect(screen.getByTestId("exit-link").attributes["href"].value).toBe(
         "/sell"
       )
       expect(screen.getByRole("progressbar")).toBeInTheDocument()

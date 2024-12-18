@@ -24,9 +24,11 @@
       },
       "complexity": {
         "noBannedTypes": "off",
+        "noExcessiveNestedTestSuites": "off",
         "noForEach": "off",
         "noUselessFragments": "off",
-        "noExcessiveNestedTestSuites": "off"
+        "useLiteralKeys": "off",
+        "useOptionalChain": "off"
       },
       "performance": {
         "noAccumulatingSpread": "off"
@@ -34,15 +36,16 @@
       "security": {
         "noDangerouslySetInnerHtml": "off"
       },
-      "suspicious": {
-        "noExplicitAny": "off",
-        "noArrayIndexKey": "off",
-        "noImplicitAnyLet": "off",
-        "noAsyncPromiseExecutor": "off"
-      },
       "style": {
-        "useNodejsImportProtocol": "off",
-        "noNonNullAssertion": "off"
+        "noArguments": "off",
+        "noNonNullAssertion": "off",
+        "useNodejsImportProtocol": "off"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "off",
+        "noAsyncPromiseExecutor": "off",
+        "noExplicitAny": "off",
+        "noImplicitAnyLet": "off"
       }
     },
     "include": ["src/**/*"],

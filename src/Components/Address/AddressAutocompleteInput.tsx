@@ -1,4 +1,11 @@
 import {
+  ActionType,
+  type AddressAutoCompletionResult,
+  type ContextModule,
+  type PageOwnerType,
+  type SelectedItemFromAddressAutoCompletion,
+} from "@artsy/cohesion"
+import {
   AutocompleteInput,
   type AutocompleteInputOptionType,
   type AutocompleteInputProps,
@@ -8,16 +15,9 @@ import {
 import type { Address } from "Components/Address/utils"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { getENV } from "Utils/getENV"
-import { useCallback, useEffect, useReducer } from "react"
 import { throttle, uniqBy } from "lodash"
+import { useCallback, useEffect, useReducer } from "react"
 import { useTracking } from "react-tracking"
-import {
-  ActionType,
-  type AddressAutoCompletionResult,
-  type ContextModule,
-  type PageOwnerType,
-  type SelectedItemFromAddressAutoCompletion,
-} from "@artsy/cohesion"
 
 // NOTE: Due to the format of this key (a long string of numbers that cannot be parsed as json)
 // This key must be set in the env as a json string like SMARTY_EMBEDDED_KEY_JSON={ "key": "xxxxxxxxxxxxxxxxxx" }
@@ -293,6 +293,7 @@ export const AddressAutocompleteInput = ({
   const serializedOptions = JSON.stringify(autocompleteOptions)
   const serializedPreviousOptions = JSON.stringify(previousOptions)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: migration
   useEffect(() => {
     if (
       serviceAvailability?.enabled &&
@@ -303,7 +304,6 @@ export const AddressAutocompleteInput = ({
         providerSuggestions.length
       )
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [serviceAvailability, serializedOptions, serializedPreviousOptions])
 
   if (definitelyDisabled) {
@@ -368,7 +368,7 @@ const fetchSuggestionsWithThrottle = throttle(
     }
 
     if (selected) {
-      params.selected = selected
+      params["selected"] = selected
     }
 
     const url = `https://us-autocomplete-pro.api.smarty.com/lookup?${new URLSearchParams(params).toString()}`

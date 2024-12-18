@@ -1,12 +1,12 @@
+import { subscribeToInAppMessagesByPath } from "Server/analytics/brazeMessagingIntegration"
 import { getContextPageFromClient } from "Server/getContextPage"
 import { reportLoadTimeToVolley } from "Server/volley"
+import { getClientParam } from "Utils/getClientParam"
 import { extend, omit, pick } from "lodash"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
-import { trackTimeOnPage } from "./timeOnPageListener"
 import { setAnalyticsClientReferrerOptions } from "./setAnalyticsClientReferrerOptions"
-import { subscribeToInAppMessagesByPath } from "Server/analytics/brazeMessagingIntegration"
-import { getClientParam } from "Utils/getClientParam"
+import { trackTimeOnPage } from "./timeOnPageListener"
 const Events = require("../../Utils/Events").default
 
 /**
@@ -88,12 +88,8 @@ const logAnalyticsCalls = () => {
   const mobileText = sd.IS_MOBILE ? "MOBILE " : ""
 
   // Log all pageviews
-  window?.analytics?.on("page", () => {
-    console.info(
-      `${mobileText}ANALYTICS PAGEVIEW: `,
-      arguments[2],
-      arguments[3]
-    )
+  window?.analytics?.on("page", (...args) => {
+    console.info(`${mobileText}ANALYTICS PAGEVIEW: `, args[2], args[3])
   })
   // Log all track calls
   window?.analytics?.on("track", (actionName: string, data?: any) => {
@@ -140,7 +136,11 @@ const trackPageLoadSpeed = () => {
   if (contextPage) {
     const { pageType } = contextPage
 
-    if (window.performance?.timing && sd.TRACK_PAGELOAD_PATHS) {
+    if (
+      window.performance &&
+      window.performance.timing &&
+      sd.TRACK_PAGELOAD_PATHS
+    ) {
       window.addEventListener("load", () => {
         if (sd.TRACK_PAGELOAD_PATHS.split("|").includes(pageType)) {
           window.setTimeout(() => {

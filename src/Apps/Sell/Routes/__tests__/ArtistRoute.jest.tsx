@@ -84,7 +84,7 @@ describe("ArtistRoute", () => {
     it("navigates to the artist not eligible page if the artist is not eligible", async () => {
       renderWithRelay({})
 
-      expect(screen.getByText("Learn more.").attributes.href.value).toBe(
+      expect(screen.getByText("Learn more.").attributes["href"].value).toBe(
         "https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell"
       )
     })
