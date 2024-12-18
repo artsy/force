@@ -27,7 +27,6 @@ import { RecentlyViewed } from "Components/RecentlyViewed"
 import { useRouter } from "System/Hooks/useRouter"
 import { TrackingProp } from "react-tracking"
 import { Analytics } from "System/Contexts/AnalyticsContext"
-import { useRouteComplete } from "Utils/Hooks/useRouteComplete"
 import { Media } from "Utils/Responsive"
 import { UseRecordArtworkView } from "./useRecordArtworkView"
 import { Router, Match, RenderProps } from "found"
@@ -56,7 +55,6 @@ export interface Props {
   tracking?: TrackingProp
   referrer: string
   routerPathname: string
-  shouldTrackPageView: boolean
   router: Router
   match: Match
 }
@@ -68,10 +66,9 @@ interface BelowTheFoldArtworkDetailsProps {
   slug: ArtworkApp_artwork$data["slug"]
 }
 
-const BelowTheFoldArtworkDetails: React.FC<React.PropsWithChildren<BelowTheFoldArtworkDetailsProps>> = ({
-  artists,
-  slug,
-}) => (
+const BelowTheFoldArtworkDetails: React.FC<React.PropsWithChildren<
+  BelowTheFoldArtworkDetailsProps
+>> = ({ artists, slug }) => (
   <>
     <Spacer y={6} />
     <Join separator={<Spacer y={2} />}>
@@ -92,7 +89,7 @@ const BelowTheFoldArtworkDetails: React.FC<React.PropsWithChildren<BelowTheFoldA
 )
 
 export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
-  const { artwork, me, referrer, tracking, shouldTrackPageView } = props
+  const { artwork, me, referrer, tracking } = props
   const { match, silentPush, silentReplace } = useRouter()
   const { showAuthDialog } = useAuthDialog()
   const isMobile = !!getENV("IS_MOBILE")
@@ -221,13 +218,6 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => {
-    if (shouldTrackPageView) {
-      track()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shouldTrackPageView])
-
   if (match?.location?.query?.creating_order) {
     return (
       <>
@@ -351,7 +341,6 @@ const WrappedArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
   // Check to see if referrer comes from link interception.
   // @see interceptLinks.ts
   const referrer = state && state.previousHref
-  const { isComplete } = useRouteComplete()
 
   const websocketEnabled = !!sale?.extendedBiddingIntervalMinutes
 
@@ -378,7 +367,6 @@ const WrappedArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
             {...props}
             routerPathname={pathname}
             referrer={referrer}
-            shouldTrackPageView={isComplete}
           />
         </AlertProvider>
       </WebsocketContextProvider>
@@ -457,7 +445,9 @@ interface ArtworkResultProps extends RenderProps {
   me: ArtworkApp_me$data
 }
 
-const ArtworkResult: React.FC<React.PropsWithChildren<ArtworkResultProps>> = props => {
+const ArtworkResult: React.FC<React.PropsWithChildren<
+  ArtworkResultProps
+>> = props => {
   const { artworkResult, ...rest } = props
   const { __typename } = artworkResult
 
