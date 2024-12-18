@@ -1,24 +1,39 @@
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { Text } from "@artsy/palette"
-import { graphql, useFragment } from "react-relay"
-import { PrimaryLabelLine_artwork$key } from "__generated__/PrimaryLabelLine_artwork.graphql"
+import { graphql, createFragmentContainer } from "react-relay"
+import { PrimaryLabelLine_artwork$data } from "__generated__/PrimaryLabelLine_artwork.graphql"
+import { FC, useEffect } from "react"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { PrimaryLabelLineQuery } from "__generated__/PrimaryLabelLineQuery.graphql"
 
 interface PrimaryLabelLineProps {
-  artwork: PrimaryLabelLine_artwork$key
+  label: string | null | undefined
+  artwork?: PrimaryLabelLine_artwork$data
 }
 
-export const PrimaryLabelLine: React.FC<React.PropsWithChildren<PrimaryLabelLineProps>> = ({
-  artwork,
-}) => {
-  const data = useFragment(primaryLabelLineFragment, artwork)
-  const primaryLabel = data.collectorSignals?.primaryLabel
-  const { hideSignals } = useArtworkGridContext()
+export const PrimaryLabelLine: React.FC<React.PropsWithChildren<
+  PrimaryLabelLineProps
+>> = ({ label, artwork }) => {
+  const { hideSignals, updateSignals } = useArtworkGridContext()
+  const partnerOffer = artwork?.collectorSignals?.partnerOffer
 
-  if (!primaryLabel) {
-    return null
-  }
+  useEffect(() => {
+    if (updateSignals && artwork) {
+      const signals: string[] = []
 
-  if (primaryLabel === "PARTNER_OFFER") {
+      if (partnerOffer) {
+        signals.push("PARTNER_OFFER")
+      }
+
+      if (label) {
+        signals.push(label)
+      }
+
+      updateSignals(artwork.internalID, signals)
+    }
+  }, [updateSignals, partnerOffer, label, artwork])
+
+  if (!!partnerOffer) {
     return (
       <Text
         variant="xs"
@@ -27,6 +42,7 @@ export const PrimaryLabelLine: React.FC<React.PropsWithChildren<PrimaryLabelLine
         px={0.5}
         alignSelf="flex-start"
         borderRadius={3}
+        my="1px"
         style={{ whiteSpace: "nowrap" }}
       >
         Limited-Time Offer
@@ -34,7 +50,7 @@ export const PrimaryLabelLine: React.FC<React.PropsWithChildren<PrimaryLabelLine
     )
   }
 
-  if (primaryLabel === "INCREASED_INTEREST" && !hideSignals) {
+  if (label === "INCREASED_INTEREST" && !hideSignals) {
     return (
       <Text
         variant="xs"
@@ -52,7 +68,7 @@ export const PrimaryLabelLine: React.FC<React.PropsWithChildren<PrimaryLabelLine
     )
   }
 
-  if (primaryLabel === "CURATORS_PICK" && !hideSignals) {
+  if (label === "CURATORS_PICK" && !hideSignals) {
     return (
       <Text
         variant="xs"
@@ -73,10 +89,59 @@ export const PrimaryLabelLine: React.FC<React.PropsWithChildren<PrimaryLabelLine
   return null
 }
 
-const primaryLabelLineFragment = graphql`
-  fragment PrimaryLabelLine_artwork on Artwork {
-    collectorSignals {
-      primaryLabel
-    }
+export const PrimaryLabelLineFragmentContainer = createFragmentContainer(
+  PrimaryLabelLine,
+  {
+    artwork: graphql`
+      fragment PrimaryLabelLine_artwork on Artwork {
+        internalID
+        collectorSignals {
+          primaryLabel
+          partnerOffer {
+            endAt
+            priceWithDiscount {
+              display
+            }
+          }
+        }
+      }
+    `,
   }
-`
+)
+
+interface PrimaryLabelLineQueryRendererProps {
+  id: string
+  label: string | null | undefined
+}
+
+export const PrimaryLabelLineQueryRenderer: FC<PrimaryLabelLineQueryRendererProps> = ({
+  id,
+  label,
+}) => {
+  return (
+    <SystemQueryRenderer<PrimaryLabelLineQuery>
+      lazyLoad
+      query={graphql`
+        query PrimaryLabelLineQuery($id: String!) {
+          artwork(id: $id) {
+            ...PrimaryLabelLine_artwork
+          }
+        }
+      `}
+      placeholder={<PrimaryLabelLine label={label} />}
+      variables={{ id }}
+      render={({ error, props }) => {
+        if (error || !props?.artwork) {
+          return <PrimaryLabelLine label={label} />
+        }
+
+        return (
+          <PrimaryLabelLineFragmentContainer
+            label={label}
+            artwork={props.artwork}
+          />
+        )
+      }}
+    />
+  )
+}

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7d6bf1d1ff23991f50e5301ffcdfc530>>
+ * @generated SignedSource<<65e6f5a34917c3937319613b598e1210>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,8 +13,15 @@ export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_
 import { FragmentRefs } from "relay-runtime";
 export type PrimaryLabelLine_artwork$data = {
   readonly collectorSignals: {
+    readonly partnerOffer: {
+      readonly endAt: string | null | undefined;
+      readonly priceWithDiscount: {
+        readonly display: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
     readonly primaryLabel: LabelSignalEnum | null | undefined;
   } | null | undefined;
+  readonly internalID: string;
   readonly " $fragmentType": "PrimaryLabelLine_artwork";
 };
 export type PrimaryLabelLine_artwork$key = {
@@ -31,6 +38,13 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "CollectorSignals",
       "kind": "LinkedField",
       "name": "collectorSignals",
@@ -42,6 +56,42 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "primaryLabel",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PartnerOfferToCollector",
+          "kind": "LinkedField",
+          "name": "partnerOffer",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endAt",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Money",
+              "kind": "LinkedField",
+              "name": "priceWithDiscount",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "display",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -51,6 +101,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "c5cd8670ae27924ffc259da488c784da";
+(node as any).hash = "0371de683dd83b88cbf9c4f6d5bd8faf";
 
 export default node;

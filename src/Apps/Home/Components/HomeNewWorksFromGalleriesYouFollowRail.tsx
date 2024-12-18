@@ -20,15 +20,17 @@ import {
 } from "@artsy/cohesion"
 import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { getSignalLabel } from "Utils/getSignalLabel"
 
 interface HomeNewWorksFromGalleriesYouFollowRailProps {
   newWorksFromGalleriesYouFollowConnection: HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data
 }
 
-const HomeNewWorksFromGalleriesYouFollowRail: React.FC<React.PropsWithChildren<HomeNewWorksFromGalleriesYouFollowRailProps>> = ({
-  newWorksFromGalleriesYouFollowConnection,
-}) => {
+const HomeNewWorksFromGalleriesYouFollowRail: React.FC<React.PropsWithChildren<
+  HomeNewWorksFromGalleriesYouFollowRailProps
+>> = ({ newWorksFromGalleriesYouFollowConnection }) => {
+  const { signals } = useArtworkGridContext()
   const { trackEvent } = useTracking()
   const {
     contextPageOwnerId,
@@ -75,9 +77,9 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<React.PropsWithChildren<H
                 destination_page_owner_id: artwork.internalID,
                 destination_page_owner_slug: artwork.slug,
                 type: "thumbnail",
-                signal_label: artwork.collectorSignals
-                  ? getSignalLabel(artwork.collectorSignals)
-                  : "",
+                signal_label: getSignalLabel(
+                  signals?.[artwork.internalID] ?? []
+                ),
                 signal_bid_count:
                   artwork.collectorSignals?.auction?.bidCount ?? undefined,
                 signal_lot_watcher_count:
@@ -117,7 +119,9 @@ export const HomeNewWorksFromGalleriesYouFollowRailFragmentContainer = createFra
   }
 )
 
-export const HomeNewWorksFromGalleriesYouFollowRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeNewWorksFromGalleriesYouFollowRailQueryRenderer: React.FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   const { relayEnvironment } = useSystemContext()
 
   const { user } = useSystemContext()

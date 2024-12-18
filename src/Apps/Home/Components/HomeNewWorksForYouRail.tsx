@@ -17,18 +17,20 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { getSignalLabel } from "Utils/getSignalLabel"
 
 interface HomeNewWorksForYouRailProps {
   artworksForUser: HomeNewWorksForYouRail_artworksForUser$data
 }
 
-const HomeNewWorksForYouRail: React.FC<React.PropsWithChildren<HomeNewWorksForYouRailProps>> = ({
-  artworksForUser,
-}) => {
+const HomeNewWorksForYouRail: React.FC<React.PropsWithChildren<
+  HomeNewWorksForYouRailProps
+>> = ({ artworksForUser }) => {
+  const { signals } = useArtworkGridContext()
   const { trackEvent } = useTracking()
-
   const artworks = extractNodes(artworksForUser)
+
   if (!artworks || artworks?.length === 0) {
     return null
   }
@@ -55,15 +57,16 @@ const HomeNewWorksForYouRail: React.FC<React.PropsWithChildren<HomeNewWorksForYo
                 destination_page_owner_slug: artwork.slug,
                 destination_page_owner_type: OwnerType.artwork,
                 type: "thumbnail",
-                signal_label: artwork.collectorSignals
-                  ? getSignalLabel(artwork.collectorSignals)
-                  : "",
+                signal_label: getSignalLabel(
+                  signals?.[artwork.internalID] ?? []
+                ),
                 signal_bid_count:
                   artwork.collectorSignals?.auction?.bidCount ?? undefined,
                 signal_lot_watcher_count:
                   artwork.collectorSignals?.auction?.lotWatcherCount ??
                   undefined,
               }
+
               trackEvent(trackingEvent)
             }}
           />
@@ -107,7 +110,9 @@ export const HomeNewWorksForYouRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const HomeNewWorksForYouRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeNewWorksForYouRailQueryRenderer: React.FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

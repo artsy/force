@@ -12,15 +12,19 @@ import {
 import { extractNodes } from "Utils/extractNodes"
 import { Rail } from "Components/Rail/Rail"
 import { getSignalLabel } from "Utils/getSignalLabel"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface Props {
   artwork: ArtistSeriesArtworkRail_artwork$data
 }
 
-export const ArtistSeriesArtworkRail: React.FC<React.PropsWithChildren<Props>> = ({ artwork }) => {
+export const ArtistSeriesArtworkRail: React.FC<React.PropsWithChildren<
+  Props
+>> = ({ artwork }) => {
   const { trackEvent } = useTracking()
   const { artistSeriesConnection } = artwork
   const nodes = extractNodes(artistSeriesConnection)
+  const { signals } = useArtworkGridContext()
 
   if (nodes.length === 0) {
     return null
@@ -71,9 +75,9 @@ export const ArtistSeriesArtworkRail: React.FC<React.PropsWithChildren<Props>> =
                   destination_page_owner_slug: artwork.slug,
                   horizontal_slide_position: index,
                   type: "thumbnail",
-                  signal_label: artwork.collectorSignals
-                    ? getSignalLabel(artwork.collectorSignals)
-                    : "",
+                  signal_label: getSignalLabel(
+                    signals?.[artwork.internalID] ?? []
+                  ),
                   signal_bid_count:
                     artwork.collectorSignals?.auction?.bidCount ?? undefined,
                   signal_lot_watcher_count:

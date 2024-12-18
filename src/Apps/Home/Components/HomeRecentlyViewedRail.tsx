@@ -16,16 +16,18 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { getSignalLabel } from "Utils/getSignalLabel"
 
 interface HomeRecentlyViewedRailProps {
   homePage: HomeRecentlyViewedRail_homePage$data
 }
 
-const HomeRecentlyViewedRail: React.FC<React.PropsWithChildren<HomeRecentlyViewedRailProps>> = ({
-  homePage,
-}) => {
+const HomeRecentlyViewedRail: React.FC<React.PropsWithChildren<
+  HomeRecentlyViewedRailProps
+>> = ({ homePage }) => {
   const { trackEvent } = useTracking()
+  const { signals } = useArtworkGridContext()
 
   const results = homePage.artworkModule?.results
   if (!results || results?.length === 0) {
@@ -54,9 +56,9 @@ const HomeRecentlyViewedRail: React.FC<React.PropsWithChildren<HomeRecentlyViewe
                 destination_page_owner_slug: artwork.slug,
                 destination_page_owner_type: OwnerType.artwork,
                 type: "thumbnail",
-                signal_label: artwork.collectorSignals
-                  ? getSignalLabel(artwork.collectorSignals)
-                  : "",
+                signal_label: getSignalLabel(
+                  signals?.[artwork.internalID] ?? []
+                ),
                 signal_bid_count:
                   artwork.collectorSignals?.auction?.bidCount ?? undefined,
                 signal_lot_watcher_count:
@@ -106,7 +108,9 @@ export const HomeRecentlyViewedRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const HomeRecentlyViewedRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeRecentlyViewedRailQueryRenderer: React.FC<React.PropsWithChildren<
+  unknown
+>> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

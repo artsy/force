@@ -8,11 +8,13 @@ import {
   ClickedActivityPanelNotificationItem,
   ClickedActivityPanelTab,
 } from "@artsy/cohesion/dist/Schema/Events/ActivityPanel"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useTracking } from "react-tracking"
-import { CollectorSignals, getSignalLabel } from "Utils/getSignalLabel"
+import { getSignalLabel } from "Utils/getSignalLabel"
 
 export const useNotificationsTracking = () => {
   const { trackEvent } = useTracking()
+  const { signals } = useArtworkGridContext()
 
   const tracking = {
     clickedActivityPanelNotificationItem: (notificationType: string) => {
@@ -42,18 +44,14 @@ export const useNotificationsTracking = () => {
 
       trackEvent(event)
     },
-    clickBuyNow: (
-      artworkID: string,
-      artworkSlug: string,
-      collectorSignals?: CollectorSignals
-    ) => {
+    clickBuyNow: (artworkID: string, artworkSlug: string) => {
       const event: ClickedBuyNow = {
         action: ActionType.clickedBuyNow,
         context_owner_type: OwnerType.notification,
         context_owner_id: artworkID,
         context_owner_slug: artworkSlug,
         flow: "Partner Offer",
-        signal_label: collectorSignals ? getSignalLabel(collectorSignals) : "",
+        signal_label: getSignalLabel(signals?.[artworkID] ?? []),
       }
 
       trackEvent(event)
