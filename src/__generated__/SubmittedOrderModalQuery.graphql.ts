@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dbce47cbb45db6daa1a8bf53e6cf3457>>
+ * @generated SignedSource<<c3ddd141c0e63de1d63b980ff0c4ed20>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type SubmittedOrderModalQuery$variables = {
 };
 export type SubmittedOrderModalQuery$data = {
   readonly submittedOrder: {
+    readonly impulseConversationId: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"SubmittedOrderModal_submittedOrder">;
   } | null | undefined;
 };
@@ -37,7 +38,14 @@ v1 = [
     "name": "id",
     "variableName": "orderId"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "impulseConversationId",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -57,7 +65,8 @@ return {
             "args": null,
             "kind": "FragmentSpread",
             "name": "SubmittedOrderModal_submittedOrder"
-          }
+          },
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
@@ -103,6 +112,7 @@ return {
             "name": "stateExpiresAt",
             "storageKey": "stateExpiresAt(format:\"MMM D\")"
           },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -116,16 +126,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cbe9dd80a69d5b0f4bbe57cf87a31c04",
+    "cacheID": "9e16052ca5e02190f9995a01c9b1c83d",
     "id": null,
     "metadata": {},
     "name": "SubmittedOrderModalQuery",
     "operationKind": "query",
-    "text": "query SubmittedOrderModalQuery(\n  $orderId: ID!\n) {\n  submittedOrder: commerceOrder(id: $orderId) {\n    __typename\n    ...SubmittedOrderModal_submittedOrder\n    id\n  }\n}\n\nfragment SubmittedOrderModal_submittedOrder on CommerceOrder {\n  __isCommerceOrder: __typename\n  stateExpiresAt(format: \"MMM D\")\n}\n"
+    "text": "query SubmittedOrderModalQuery(\n  $orderId: ID!\n) {\n  submittedOrder: commerceOrder(id: $orderId) {\n    __typename\n    ...SubmittedOrderModal_submittedOrder\n    impulseConversationId\n    id\n  }\n}\n\nfragment SubmittedOrderModal_submittedOrder on CommerceOrder {\n  __isCommerceOrder: __typename\n  stateExpiresAt(format: \"MMM D\")\n  impulseConversationId\n}\n"
   }
 };
 })();
 
-(node as any).hash = "cca4549f309c54f7c8f3655e1c6ca730";
+(node as any).hash = "2e9856bda0da465ce5cc03349f7e38ce";
 
 export default node;

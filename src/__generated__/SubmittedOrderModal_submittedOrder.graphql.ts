@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef06ae01a06a844cbc872458a29370bf>>
+ * @generated SignedSource<<06c2a887c7da70b5afa9c9be258e4666>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SubmittedOrderModal_submittedOrder$data = {
+  readonly impulseConversationId: string | null | undefined;
   readonly stateExpiresAt: string | null | undefined;
   readonly " $fragmentType": "SubmittedOrderModal_submittedOrder";
 };
@@ -37,12 +38,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "stateExpiresAt",
       "storageKey": "stateExpiresAt(format:\"MMM D\")"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "impulseConversationId",
+      "storageKey": null
     }
   ],
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
 
-(node as any).hash = "5bedd1fb7819d00faa9db23ee7653eb2";
+(node as any).hash = "3ee8ecf521df52e72908c1805d634071";
 
 export default node;
