@@ -11,9 +11,9 @@ interface FairOrganizerLatestArticlesProps {
   fairOrganizer: FairOrganizerLatestArticles_fairOrganizer$data
 }
 
-export const FairOrganizerLatestArticles: React.FC<React.PropsWithChildren<FairOrganizerLatestArticlesProps>> = ({
-  fairOrganizer,
-}) => {
+export const FairOrganizerLatestArticles: React.FC<
+  React.PropsWithChildren<FairOrganizerLatestArticlesProps>
+> = ({ fairOrganizer }) => {
   const { articlesConnection, name, slug } = fairOrganizer
   const articles = extractNodes(articlesConnection)
 
@@ -71,9 +71,8 @@ export const FairOrganizerLatestArticles: React.FC<React.PropsWithChildren<FairO
   )
 }
 
-export const FairOrganizerLatestArticlesFragmentContainer = createFragmentContainer(
-  FairOrganizerLatestArticles,
-  {
+export const FairOrganizerLatestArticlesFragmentContainer =
+  createFragmentContainer(FairOrganizerLatestArticles, {
     fairOrganizer: graphql`
       fragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {
         name
@@ -89,5 +88,4 @@ export const FairOrganizerLatestArticlesFragmentContainer = createFragmentContai
         }
       }
     `,
-  }
-)
+  })

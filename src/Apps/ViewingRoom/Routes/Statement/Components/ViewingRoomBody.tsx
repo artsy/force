@@ -7,9 +7,9 @@ interface ViewingRoomBodyProps {
   viewingRoom: ViewingRoomBody_viewingRoom$data
 }
 
-const ViewingRoomBody: React.FC<React.PropsWithChildren<ViewingRoomBodyProps>> = ({
-  viewingRoom: { body },
-}) => {
+const ViewingRoomBody: React.FC<
+  React.PropsWithChildren<ViewingRoomBodyProps>
+> = ({ viewingRoom: { body } }) => {
   if (!body) {
     return null
   }

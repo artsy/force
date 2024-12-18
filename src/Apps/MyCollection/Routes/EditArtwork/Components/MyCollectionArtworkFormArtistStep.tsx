@@ -30,17 +30,15 @@ interface MyCollectionArtworkFormArtistStepProps {
   me: MyCollectionArtworkFormArtistStep_me$key
 }
 
-export const MyCollectionArtworkFormArtistStep: React.FC<React.PropsWithChildren<MyCollectionArtworkFormArtistStepProps>> = ({
-  me: meProp,
-}) => {
+export const MyCollectionArtworkFormArtistStep: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkFormArtistStepProps>
+> = ({ me: meProp }) => {
   const me = useFragment(MyCollectionArtworkFormArtistStepFragment, meProp)
 
   const { onBack, onNext, onSkip } = useMyCollectionArtworkFormContext()
   const { setFieldValue, setValues } = useFormikContext<ArtworkModel>()
-  const {
-    trackSelectArtist,
-    trackSkipArtistSelection,
-  } = useMyCollectionTracking()
+  const { trackSelectArtist, trackSkipArtistSelection } =
+    useMyCollectionTracking()
 
   const collectedArtists = sortBy(
     extractNodes(me?.myCollectionInfo?.collectedArtistsConnection),
@@ -84,9 +82,10 @@ export const MyCollectionArtworkFormArtistStep: React.FC<React.PropsWithChildren
     onSkip?.()
   }
 
-  const handleArtistNotFound = useMemo(() => debounce(setArtistNotFound, 200), [
-    setArtistNotFound,
-  ])
+  const handleArtistNotFound = useMemo(
+    () => debounce(setArtistNotFound, 200),
+    [setArtistNotFound]
+  )
 
   // Stop the invocation of the debounced function after unmounting
   useEffect(() => handleArtistNotFound.cancel, [handleArtistNotFound])

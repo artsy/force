@@ -23,7 +23,9 @@ interface TagArtworkFilterProps {
   relay: RelayRefetchProp
 }
 
-const TagArtworkFilter: React.FC<React.PropsWithChildren<TagArtworkFilterProps>> = ({ tag, relay }) => {
+const TagArtworkFilter: React.FC<
+  React.PropsWithChildren<TagArtworkFilterProps>
+> = ({ tag, relay }) => {
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
   const { sidebar } = tag
@@ -104,7 +106,9 @@ export const TagArtworkFilterRefetchContainer = createRefetchContainer(
 
 interface TagArtworkFilterQueryRendererProps {}
 
-export const TagArtworkFilterQueryRenderer: React.FC<React.PropsWithChildren<TagArtworkFilterQueryRendererProps>> = rest => {
+export const TagArtworkFilterQueryRenderer: React.FC<
+  React.PropsWithChildren<TagArtworkFilterQueryRendererProps>
+> = rest => {
   const { relayEnvironment } = useSystemContext()
   const { match } = useRouter()
 

@@ -13,9 +13,9 @@ interface PartnersLocationAutocompleteProps {
   viewer: PartnersLocationAutocomplete_viewer$data
 }
 
-const PartnersLocationAutocomplete: FC<React.PropsWithChildren<PartnersLocationAutocompleteProps>> = ({
-  viewer: { featuredCities, allCities },
-}) => {
+const PartnersLocationAutocomplete: FC<
+  React.PropsWithChildren<PartnersLocationAutocompleteProps>
+> = ({ viewer: { featuredCities, allCities } }) => {
   const { router, match } = useRouter()
 
   const [options, setOptions] = useState([...featuredCities])
@@ -34,7 +34,7 @@ const PartnersLocationAutocomplete: FC<React.PropsWithChildren<PartnersLocationA
     setOptions(filtered)
   }
 
-  const handleSelect = (option: typeof options[number]) => {
+  const handleSelect = (option: (typeof options)[number]) => {
     if (option.value === "all") {
       router.push({
         pathname: match.location.pathname,
@@ -98,7 +98,9 @@ const PartnersLocationAutocomplete: FC<React.PropsWithChildren<PartnersLocationA
   )
 }
 
-const PartnersLocationAutocompletePlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const PartnersLocationAutocompletePlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <AutocompleteInput
       options={[{ text: "Loading...", value: "all" }]}
@@ -108,9 +110,8 @@ const PartnersLocationAutocompletePlaceholder: FC<React.PropsWithChildren<unknow
   )
 }
 
-export const PartnersLocationAutocompleteFragmentContainer = createFragmentContainer(
-  PartnersLocationAutocomplete,
-  {
+export const PartnersLocationAutocompleteFragmentContainer =
+  createFragmentContainer(PartnersLocationAutocomplete, {
     viewer: graphql`
       fragment PartnersLocationAutocomplete_viewer on Viewer {
         featuredCities: cities(featured: true) {
@@ -133,10 +134,11 @@ export const PartnersLocationAutocompleteFragmentContainer = createFragmentConta
         }
       }
     `,
-  }
-)
+  })
 
-export const PartnersLocationAutocompleteQueryRenderer: FC<React.PropsWithChildren<unknown>> = () => {
+export const PartnersLocationAutocompleteQueryRenderer: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

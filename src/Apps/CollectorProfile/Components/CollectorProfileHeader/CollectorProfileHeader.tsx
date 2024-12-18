@@ -13,9 +13,9 @@ interface CollectorProfileHeaderProps {
   me: CollectorProfileHeader_me$data
 }
 
-const CollectorProfileHeader: React.FC<React.PropsWithChildren<CollectorProfileHeaderProps>> = ({
-  me,
-}) => {
+const CollectorProfileHeader: React.FC<
+  React.PropsWithChildren<CollectorProfileHeaderProps>
+> = ({ me }) => {
   const collectorProfile = me.collectorProfile
   const hasBadge = !!(
     collectorProfile?.confirmedBuyerAt || collectorProfile?.isIdentityVerified

@@ -23,21 +23,19 @@ interface NotificationPreferencesProps {
   viewer?: NotificationPreferences_viewer$data
 }
 
-export const NotificationPreferences: FC<React.PropsWithChildren<NotificationPreferencesProps>> = ({
-  mode,
-  viewer,
-}) => {
+export const NotificationPreferences: FC<
+  React.PropsWithChildren<NotificationPreferencesProps>
+> = ({ mode, viewer }) => {
   const { setFieldValue, values } = useFormikContext<AlertFormikValues>()
 
-  const areCustomAlertsEmailNotificationsEnabled = viewer?.notificationPreferences?.some(
-    preference => {
+  const areCustomAlertsEmailNotificationsEnabled =
+    viewer?.notificationPreferences?.some(preference => {
       return (
         preference.channel === "email" &&
         preference.name === "custom_alerts" &&
         preference.status === "SUBSCRIBED"
       )
-    }
-  )
+    })
 
   const showEmailPreferenceWarning =
     values.email && !areCustomAlertsEmailNotificationsEnabled
@@ -98,9 +96,9 @@ interface NotificationPreferencesQueryRendererProps {
   mode: AlertFormMode
 }
 
-export const NotificationPreferencesQueryRenderer: React.FC<React.PropsWithChildren<NotificationPreferencesQueryRendererProps>> = ({
-  mode,
-}) => {
+export const NotificationPreferencesQueryRenderer: React.FC<
+  React.PropsWithChildren<NotificationPreferencesQueryRendererProps>
+> = ({ mode }) => {
   return (
     <SystemQueryRenderer<NotificationPreferencesQuery>
       // lazyLoad

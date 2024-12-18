@@ -19,7 +19,9 @@ interface OrderStateProps {
   order: ConversationOrderState_state$key
 }
 
-export const ConversationOrderState: React.FC<React.PropsWithChildren<OrderStateProps>> = ({ order }) => {
+export const ConversationOrderState: React.FC<
+  React.PropsWithChildren<OrderStateProps>
+> = ({ order }) => {
   const data = useFragment(
     graphql`
       fragment ConversationOrderState_state on CommerceOrder {
@@ -97,18 +99,30 @@ export const ConversationOrderState: React.FC<React.PropsWithChildren<OrderState
       return <ConversationStatusWithCounter order={data} status="offer" />
     // counter offers
     case "COUNTER_OFFER_SELLER":
-      return <ConversationStatusWithCounter order={data} status="sellerCounteroffer" />
+      return (
+        <ConversationStatusWithCounter
+          order={data}
+          status="sellerCounteroffer"
+        />
+      )
     case "COUNTER_OFFER_BUYER":
-      return <ConversationStatusWithCounter order={data} status="buyerCounteroffer" />
+      return (
+        <ConversationStatusWithCounter
+          order={data}
+          status="buyerCounteroffer"
+        />
+      )
   }
 
   return null
 }
 
-const Status: React.FC<React.PropsWithChildren<{
-  text: string
-  fill: "green100" | "red100"
-}>> = ({ text, fill }) => {
+const Status: React.FC<
+  React.PropsWithChildren<{
+    text: string
+    fill: "green100" | "red100"
+  }>
+> = ({ text, fill }) => {
   return (
     <Flex alignItems="center">
       {fill === "green100" ? (

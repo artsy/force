@@ -21,13 +21,8 @@ export interface AlertFormikValues {
 export const Details: FC<React.PropsWithChildren<unknown>> = () => {
   const { clickedAddFilters } = useAlertTracking()
 
-  const {
-    onComplete,
-    dispatch,
-    goToFilters,
-    state,
-    createAlertError,
-  } = useAlertContext()
+  const { onComplete, dispatch, goToFilters, state, createAlertError } =
+    useAlertContext()
 
   return (
     <Formik<AlertFormikValues>

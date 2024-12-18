@@ -16,7 +16,10 @@ export interface PastAuctionsProps {
   relay: RelayPaginationProp
 }
 
-const PastAuctions: React.FC<React.PropsWithChildren<PastAuctionsProps>> = ({ viewer, relay }) => {
+const PastAuctions: React.FC<React.PropsWithChildren<PastAuctionsProps>> = ({
+  viewer,
+  relay,
+}) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleClick = () => {

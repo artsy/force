@@ -11,7 +11,9 @@ const logger = createLogger(
 )
 
 // TODO: Rewrite
-export const EmailConfirmationLinkExpired: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const EmailConfirmationLinkExpired: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const [afterSubmitContent, setAfterSubmitContent] = React.useState<
     string | null
   >(null)

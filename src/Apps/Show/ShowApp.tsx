@@ -25,7 +25,9 @@ interface ShowAppProps {
   show: ShowApp_show$data
 }
 
-export const ShowApp: React.FC<React.PropsWithChildren<ShowAppProps>> = ({ show }) => {
+export const ShowApp: React.FC<React.PropsWithChildren<ShowAppProps>> = ({
+  show,
+}) => {
   const hasViewingRoom = (show.viewingRoomsConnection?.edges?.length ?? 0) > 0
   const hasAbout = !!show.about
   const hasWideHeader =

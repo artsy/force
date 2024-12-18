@@ -25,9 +25,9 @@ interface CookieConsentManagerProps {
   children: ReactNode
 }
 
-export const CookieConsentManager: FC<React.PropsWithChildren<CookieConsentManagerProps>> = ({
-  children,
-}) => {
+export const CookieConsentManager: FC<
+  React.PropsWithChildren<CookieConsentManagerProps>
+> = ({ children }) => {
   const isMounted = useDidMount()
 
   const { isEigen } = useSystemContext()

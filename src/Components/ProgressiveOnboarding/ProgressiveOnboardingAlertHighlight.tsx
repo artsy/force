@@ -10,10 +10,9 @@ interface ProgressiveOnboardingAlertHighlightProps {
   position: ProgressiveOnboardingHighlightPosition
 }
 
-export const ProgressiveOnboardingAlertHighlight: FC<React.PropsWithChildren<ProgressiveOnboardingAlertHighlightProps>> = ({
-  children,
-  position,
-}) => {
+export const ProgressiveOnboardingAlertHighlight: FC<
+  React.PropsWithChildren<ProgressiveOnboardingAlertHighlightProps>
+> = ({ children, position }) => {
   const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayable =

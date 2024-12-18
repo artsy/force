@@ -30,9 +30,9 @@ interface CollectorProfileArtistsListArtistProps {
   userInterestEdge: CollectorProfileArtistsListArtist_userInterestEdge$key
 }
 
-export const CollectorProfileArtistsListArtist: FC<React.PropsWithChildren<
-  CollectorProfileArtistsListArtistProps
->> = ({ userInterestEdge }) => {
+export const CollectorProfileArtistsListArtist: FC<
+  React.PropsWithChildren<CollectorProfileArtistsListArtistProps>
+> = ({ userInterestEdge }) => {
   const [mode, setMode] = useState<"Idle" | "Open" | "Delete">("Idle")
 
   const { sendToast } = useToasts()
@@ -41,19 +41,18 @@ export const CollectorProfileArtistsListArtist: FC<React.PropsWithChildren<
 
   const { node: artist } = userInterest || {}
 
-  const { submitMutation } = useMutation<
-    CollectorProfileArtistsListArtistUpdateMutation
-  >({
-    mutation: MUTATION,
-    optimisticResponse: {
-      updateUserInterest: {
-        userInterestEdge: {
-          id: userInterest.id,
-          private: !userInterest.private,
+  const { submitMutation } =
+    useMutation<CollectorProfileArtistsListArtistUpdateMutation>({
+      mutation: MUTATION,
+      optimisticResponse: {
+        updateUserInterest: {
+          userInterestEdge: {
+            id: userInterest.id,
+            private: !userInterest.private,
+          } as any,
         } as any,
-      } as any,
-    },
-  })
+      },
+    })
 
   const handleToggle = async () => {
     try {
@@ -201,9 +200,9 @@ export const CollectorProfileArtistsListArtist: FC<React.PropsWithChildren<
   )
 }
 
-export const CollectorProfileArtistsListArtistSkeleton: FC<React.PropsWithChildren<
-  unknown
->> = () => {
+export const CollectorProfileArtistsListArtistSkeleton: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <>
       <Media greaterThan="xs">

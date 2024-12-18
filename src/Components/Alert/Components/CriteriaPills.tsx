@@ -66,9 +66,9 @@ export const CriteriaPills: FC<React.PropsWithChildren<CriteriaPillsProps>> = ({
   )
 }
 
-export const CriteriaPillsPlaceholder: FC<React.PropsWithChildren<
-  unknown
->> = () => {
+export const CriteriaPillsPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Flex flexDirection="row">
       <SkeletonBox width={150} height={30} mr={1} />

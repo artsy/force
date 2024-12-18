@@ -37,6 +37,7 @@ export const Pagination: React.FC<React.PropsWithChildren<PaginationProps>> = ({
 }) => {
   const { jumpTo } = useJump({ offset })
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const getHref = __getHref__ ?? useComputeHref()
 
   if (pageCursors?.around.length === 1) {
@@ -82,8 +83,8 @@ export const Pagination: React.FC<React.PropsWithChildren<PaginationProps>> = ({
 
   return (
     // FIXME: Should not have external margin
-    (<PaginationBase mt={6} {...paginationProps} {...rest} />)
-  );
+    <PaginationBase mt={6} {...paginationProps} {...rest} />
+  )
 }
 
 export const PaginationFragmentContainer = createFragmentContainer(Pagination, {

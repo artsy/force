@@ -6,10 +6,11 @@ import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCol
 import { Sticky } from "Components/Sticky"
 import { RouterLink } from "System/Components/RouterLink"
 
-export const InsightsHeader: React.FC<React.PropsWithChildren<unknown>> = () => {
-  const {
-    addCollectedArtwork: trackAddCollectedArtwork,
-  } = useMyCollectionTracking()
+export const InsightsHeader: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
+  const { addCollectedArtwork: trackAddCollectedArtwork } =
+    useMyCollectionTracking()
 
   const { theme } = useTheme()
 

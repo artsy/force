@@ -143,10 +143,10 @@ describe("routeUtils", () => {
   describe("findCurrentRoute", () => {
     const getMatch = (config: Partial<Match>) => ({
       routes: [],
-      router: ({} as unknown) as Router,
+      router: {} as unknown as Router,
       context: {},
       routeIndices: [0],
-      location: ({} as unknown) as Location,
+      location: {} as unknown as Location,
       params: {},
       ...config,
     })

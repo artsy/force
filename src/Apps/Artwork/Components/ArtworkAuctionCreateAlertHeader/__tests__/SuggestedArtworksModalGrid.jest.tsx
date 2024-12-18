@@ -33,25 +33,24 @@ describe("SuggestedArtworksModalGrid", () => {
     attributionClass: ["unique"],
   }
 
-  const { renderWithRelay } = setupTestWrapperTL<
-    SuggestedArtworksModalGrid_Test_Query
-  >({
-    Component: props => {
-      return (
-        <SavedSearchAlertContextProvider
-          entity={savedSearchEntity}
-          criteria={criteria}
-          aggregations={[]}
-          artistSlug="bansky"
-        >
-          <SuggestedArtworksModalGrid
-            onClose={() => {}}
-            artworksConnection={props.artworksConnection}
-          />
-        </SavedSearchAlertContextProvider>
-      )
-    },
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<SuggestedArtworksModalGrid_Test_Query>({
+      Component: props => {
+        return (
+          <SavedSearchAlertContextProvider
+            entity={savedSearchEntity}
+            criteria={criteria}
+            aggregations={[]}
+            artistSlug="bansky"
+          >
+            <SuggestedArtworksModalGrid
+              onClose={() => {}}
+              artworksConnection={props.artworksConnection}
+            />
+          </SavedSearchAlertContextProvider>
+        )
+      },
+      query: graphql`
       query SuggestedArtworksModalGrid_Test_Query @relay_test_operation {
         artworksConnection(first: 10, sort: "-published_at", forSale: true) {
           counts {
@@ -61,7 +60,7 @@ describe("SuggestedArtworksModalGrid", () => {
         }
       }
     `,
-  })
+    })
 
   it("renders artwork grid and explore more button", async () => {
     renderWithRelay({

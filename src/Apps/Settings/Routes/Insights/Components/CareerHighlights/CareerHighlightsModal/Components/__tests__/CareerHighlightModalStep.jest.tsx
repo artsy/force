@@ -7,21 +7,20 @@ import { screen } from "@testing-library/react"
 jest.unmock("react-relay")
 
 describe("CareerHighlightModalStep", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    CareerHighlightModalStepTestQuery
-  >({
-    Component: ({ me }) => {
-      if (me?.myCollectionInfo?.BIENNIAL)
-        return (
-          <CareerHighlightModalStep
-            careerHighlight={me.myCollectionInfo.BIENNIAL}
-            kind="BIENNIAL"
-          />
-        )
+  const { renderWithRelay } =
+    setupTestWrapperTL<CareerHighlightModalStepTestQuery>({
+      Component: ({ me }) => {
+        if (me?.myCollectionInfo?.BIENNIAL)
+          return (
+            <CareerHighlightModalStep
+              careerHighlight={me.myCollectionInfo.BIENNIAL}
+              kind="BIENNIAL"
+            />
+          )
 
-      return null
-    },
-    query: graphql`
+        return null
+      },
+      query: graphql`
       query CareerHighlightModalStepTestQuery @relay_test_operation {
         me {
           myCollectionInfo {
@@ -32,7 +31,7 @@ describe("CareerHighlightModalStep", () => {
         }
       }
     `,
-  })
+    })
 
   it("renders the career highlights data", () => {
     renderWithRelay(mockResolver)

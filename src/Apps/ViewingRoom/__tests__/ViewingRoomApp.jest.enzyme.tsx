@@ -366,29 +366,30 @@ const DraftViewingRoomAppFixture: ViewingRoomApp_DraftTest_Query$rawResponse = {
   },
 }
 
-const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_Query$rawResponse = {
-  viewingRoom: {
-    internalID: "example",
-    href: "/viewing-room/example",
-    pullQuote: "Example pull quote",
-    distanceToClose: null,
-    distanceToOpen: "8 days",
-    image: {
-      imageURLs: {
-        normalized:
-          "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_Query$rawResponse =
+  {
+    viewingRoom: {
+      internalID: "example",
+      href: "/viewing-room/example",
+      pullQuote: "Example pull quote",
+      distanceToClose: null,
+      distanceToOpen: "8 days",
+      image: {
+        imageURLs: {
+          normalized:
+            "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+        },
       },
+      partner: {
+        href: "/partner-demo-gg",
+        id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
+        internalID: "12345",
+        name: "Subscription Demo GG",
+      },
+      status: "scheduled",
+      title: "Guy Yanai",
     },
-    partner: {
-      href: "/partner-demo-gg",
-      id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
-      internalID: "12345",
-      name: "Subscription Demo GG",
-    },
-    status: "scheduled",
-    title: "Guy Yanai",
-  },
-}
+  }
 
 const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_Query$rawResponse = {
   viewingRoom: {
@@ -414,50 +415,52 @@ const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_Query$rawResponse = {
   },
 }
 
-const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_Query$rawResponse = {
-  viewingRoom: {
-    internalID: "example",
-    href: "/viewing-room/example",
-    pullQuote: "Example pull quote",
-    distanceToClose: null,
-    distanceToOpen: null,
-    image: {
-      imageURLs: {
-        normalized:
-          "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_Query$rawResponse =
+  {
+    viewingRoom: {
+      internalID: "example",
+      href: "/viewing-room/example",
+      pullQuote: "Example pull quote",
+      distanceToClose: null,
+      distanceToOpen: null,
+      image: {
+        imageURLs: {
+          normalized:
+            "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+        },
       },
+      partner: {
+        href: "/partner-demo-gg",
+        id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
+        internalID: "212121",
+        name: "Subscription Demo GG",
+      },
+      status: "closed",
+      title: "Guy Yanai",
     },
-    partner: {
-      href: "/partner-demo-gg",
-      id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
-      internalID: "212121",
-      name: "Subscription Demo GG",
-    },
-    status: "closed",
-    title: "Guy Yanai",
-  },
-}
+  }
 
-const LoggedOutViewingRoomAppFixture: ViewingRoomApp_LoggedOutTest_Query$rawResponse = {
-  viewingRoom: {
-    internalID: "example",
-    href: "/viewing-room/example",
-    pullQuote: "Example pull quote",
-    distanceToClose: "1 month",
-    distanceToOpen: null,
-    image: {
-      imageURLs: {
-        normalized:
-          "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+const LoggedOutViewingRoomAppFixture: ViewingRoomApp_LoggedOutTest_Query$rawResponse =
+  {
+    viewingRoom: {
+      internalID: "example",
+      href: "/viewing-room/example",
+      pullQuote: "Example pull quote",
+      distanceToClose: "1 month",
+      distanceToOpen: null,
+      image: {
+        imageURLs: {
+          normalized:
+            "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+        },
       },
+      partner: {
+        href: "/partner-demo-gg",
+        id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
+        internalID: "123123123",
+        name: "Subscription Demo GG",
+      },
+      status: "live",
+      title: "Guy Yanai",
     },
-    partner: {
-      href: "/partner-demo-gg",
-      id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
-      internalID: "123123123",
-      name: "Subscription Demo GG",
-    },
-    status: "live",
-    title: "Guy Yanai",
-  },
-}
+  }

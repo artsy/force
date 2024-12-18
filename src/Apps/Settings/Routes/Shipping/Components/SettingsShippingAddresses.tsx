@@ -13,9 +13,9 @@ interface SettingsShippingAddressesProps {
 
 type Mode = "Pending" | "Adding"
 
-export const SettingsShippingAddresses: FC<React.PropsWithChildren<SettingsShippingAddressesProps>> = ({
-  me,
-}) => {
+export const SettingsShippingAddresses: FC<
+  React.PropsWithChildren<SettingsShippingAddressesProps>
+> = ({ me }) => {
   const addresses = extractNodes(me.addresses)
 
   const [mode, setMode] = useMode<Mode>("Pending")
@@ -61,9 +61,8 @@ export const SettingsShippingAddresses: FC<React.PropsWithChildren<SettingsShipp
   )
 }
 
-export const SettingsShippingAddressesFragmentContainer = createFragmentContainer(
-  SettingsShippingAddresses,
-  {
+export const SettingsShippingAddressesFragmentContainer =
+  createFragmentContainer(SettingsShippingAddresses, {
     me: graphql`
       fragment SettingsShippingAddresses_me on Me {
         addresses: addressConnection {
@@ -76,5 +75,4 @@ export const SettingsShippingAddressesFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })

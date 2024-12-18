@@ -11,10 +11,9 @@ interface InsightsCareerHighlightRailProps {
   showProgress?: boolean
 }
 
-const InsightsCareerHighlightRail: React.FC<React.PropsWithChildren<InsightsCareerHighlightRailProps>> = ({
-  me,
-  showProgress = true,
-}) => {
+const InsightsCareerHighlightRail: React.FC<
+  React.PropsWithChildren<InsightsCareerHighlightRailProps>
+> = ({ me, showProgress = true }) => {
   const { myCollectionInfo } = me
   const careerHighlights = Object.entries(
     myCollectionInfo?.artistInsightsCount || {}
@@ -60,9 +59,8 @@ const InsightsCareerHighlightRail: React.FC<React.PropsWithChildren<InsightsCare
   )
 }
 
-export const InsightsCareerHighlightRailFragmentContainer = createFragmentContainer(
-  InsightsCareerHighlightRail,
-  {
+export const InsightsCareerHighlightRailFragmentContainer =
+  createFragmentContainer(InsightsCareerHighlightRail, {
     me: graphql`
       fragment InsightsCareerHighlightRail_me on Me {
         myCollectionInfo {
@@ -76,5 +74,4 @@ export const InsightsCareerHighlightRailFragmentContainer = createFragmentContai
         }
       }
     `,
-  }
-)
+  })

@@ -6,9 +6,9 @@ export interface ArtworkLocationFilterProps {
   expanded?: boolean
 }
 
-export const ArtworkLocationFilter: React.FC<React.PropsWithChildren<ArtworkLocationFilterProps>> = ({
-  expanded,
-}) => {
+export const ArtworkLocationFilter: React.FC<
+  React.PropsWithChildren<ArtworkLocationFilterProps>
+> = ({ expanded }) => {
   return (
     <ResultsFilter
       expanded={expanded}

@@ -11,29 +11,28 @@ jest.unmock("react-relay")
 
 jest.mock("react-tracking")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  PrivateArtworkAdditionalInfo_Test_Query
->({
-  Component: ({ artwork }) => {
-    return (
-      <MockBoot>
-        <AnalyticsCombinedContextProvider
-          contextPageOwnerId="example-artwork-id"
-          path="/artwork/example-artwork-slug"
-        >
-          <PrivateArtworkAdditionalInfo artwork={artwork!} />
-        </AnalyticsCombinedContextProvider>
-      </MockBoot>
-    )
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<PrivateArtworkAdditionalInfo_Test_Query>({
+    Component: ({ artwork }) => {
+      return (
+        <MockBoot>
+          <AnalyticsCombinedContextProvider
+            contextPageOwnerId="example-artwork-id"
+            path="/artwork/example-artwork-slug"
+          >
+            <PrivateArtworkAdditionalInfo artwork={artwork!} />
+          </AnalyticsCombinedContextProvider>
+        </MockBoot>
+      )
+    },
+    query: graphql`
     query PrivateArtworkAdditionalInfo_Test_Query @relay_test_operation {
       artwork(id: "xxx") {
         ...PrivateArtworkAdditionalInfo_artwork
       }
     }
   `,
-})
+  })
 
 describe("PrivateArtworkAdditionalInfo", () => {
   const trackEvent = jest.fn()

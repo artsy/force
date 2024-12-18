@@ -19,10 +19,9 @@ export interface FeatureHeaderFullProps extends BoxProps {
   feature: FeatureHeaderFull_feature$data
 }
 
-export const FeatureHeaderFull: React.FC<React.PropsWithChildren<FeatureHeaderFullProps>> = ({
-  feature: { name, subheadline, fullImage: image },
-  ...rest
-}) => {
+export const FeatureHeaderFull: React.FC<
+  React.PropsWithChildren<FeatureHeaderFullProps>
+> = ({ feature: { name, subheadline, fullImage: image }, ...rest }) => {
   const hasImage = !!image?.url
   return (
     <Box {...rest}>

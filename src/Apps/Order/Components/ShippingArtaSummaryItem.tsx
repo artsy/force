@@ -13,7 +13,9 @@ interface ShippingArtaSummaryItemProps {
   order: ShippingArtaSummaryItem_order$data
 }
 
-const ShippingArtaSummaryItem: React.FC<React.PropsWithChildren<ShippingArtaSummaryItemProps & StepSummaryItemProps>> = ({ order: { requestedFulfillment, lineItems }, ...others }) => {
+const ShippingArtaSummaryItem: React.FC<
+  React.PropsWithChildren<ShippingArtaSummaryItemProps & StepSummaryItemProps>
+> = ({ order: { requestedFulfillment, lineItems }, ...others }) => {
   const shippingQuote = lineItems?.edges?.[0]?.node?.selectedShippingQuote
 
   if (

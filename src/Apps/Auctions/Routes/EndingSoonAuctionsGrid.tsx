@@ -14,10 +14,9 @@ interface EndingSoonAuctionsGridProps {
   relay: RelayPaginationProp
 }
 
-export const EndingSoonAuctionsGrid: FC<React.PropsWithChildren<EndingSoonAuctionsGridProps>> = ({
-  viewer,
-  relay,
-}) => {
+export const EndingSoonAuctionsGrid: FC<
+  React.PropsWithChildren<EndingSoonAuctionsGridProps>
+> = ({ viewer, relay }) => {
   const [isLoading, setIsLoading] = useState(false)
   const nodes = extractNodes(viewer.saleArtworksConnection)
 
@@ -61,10 +60,11 @@ export const EndingSoonAuctionsGrid: FC<React.PropsWithChildren<EndingSoonAuctio
   )
 }
 
-export const EndingSoonAuctionsGridPaginationContainer = createPaginationContainer(
-  EndingSoonAuctionsGrid,
-  {
-    viewer: graphql`
+export const EndingSoonAuctionsGridPaginationContainer =
+  createPaginationContainer(
+    EndingSoonAuctionsGrid,
+    {
+      viewer: graphql`
       fragment EndingSoonAuctionsGrid_viewer on Viewer
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 10 }
@@ -90,23 +90,23 @@ export const EndingSoonAuctionsGridPaginationContainer = createPaginationContain
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return {
-        ...prevVars,
-        count: totalCount,
-      }
     },
-    getVariables(props, { count, cursor }, fragmentVariables) {
-      return {
-        ...fragmentVariables,
-        count,
-        after: cursor,
-      }
-    },
-    query: graphql`
+    {
+      direction: "forward",
+      getFragmentVariables(prevVars, totalCount) {
+        return {
+          ...prevVars,
+          count: totalCount,
+        }
+      },
+      getVariables(props, { count, cursor }, fragmentVariables) {
+        return {
+          ...fragmentVariables,
+          count,
+          after: cursor,
+        }
+      },
+      query: graphql`
       query EndingSoonAuctionsGridQuery($first: Int!, $after: String) {
         viewer {
           ...EndingSoonAuctionsGrid_viewer
@@ -114,5 +114,5 @@ export const EndingSoonAuctionsGridPaginationContainer = createPaginationContain
         }
       }
     `,
-  }
-)
+    }
+  )

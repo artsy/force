@@ -20,9 +20,9 @@ interface ArtistRelatedGeneCategoriesProps {
   artist: ArtistRelatedGeneCategories_artist$data
 }
 
-const ArtistRelatedGeneCategories: FC<React.PropsWithChildren<ArtistRelatedGeneCategoriesProps>> = ({
-  artist,
-}) => {
+const ArtistRelatedGeneCategories: FC<
+  React.PropsWithChildren<ArtistRelatedGeneCategoriesProps>
+> = ({ artist }) => {
   const genes = extractNodes(artist.related?.genes)
 
   const pills = useMemo(
@@ -62,9 +62,8 @@ const ArtistRelatedGeneCategories: FC<React.PropsWithChildren<ArtistRelatedGeneC
   )
 }
 
-export const ArtistRelatedGeneCategoriesFragmentContainer = createFragmentContainer(
-  ArtistRelatedGeneCategories,
-  {
+export const ArtistRelatedGeneCategoriesFragmentContainer =
+  createFragmentContainer(ArtistRelatedGeneCategories, {
     artist: graphql`
       fragment ArtistRelatedGeneCategories_artist on Artist {
         related {
@@ -80,12 +79,11 @@ export const ArtistRelatedGeneCategoriesFragmentContainer = createFragmentContai
         }
       }
     `,
-  }
-)
+  })
 
-export const ArtistRelatedGeneCategoriesQueryRenderer: FC<React.PropsWithChildren<{ slug: string }>> = ({
-  slug,
-}) => {
+export const ArtistRelatedGeneCategoriesQueryRenderer: FC<
+  React.PropsWithChildren<{ slug: string }>
+> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

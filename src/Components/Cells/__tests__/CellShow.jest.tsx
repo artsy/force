@@ -6,18 +6,17 @@ import { CellShowFragmentContainer } from "Components/Cells/CellShow"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  CellShowFragmentContainer_Test_Query
->({
-  Component: CellShowFragmentContainer,
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<CellShowFragmentContainer_Test_Query>({
+    Component: CellShowFragmentContainer,
+    query: graphql`
     query CellShowFragmentContainer_Test_Query @relay_test_operation {
       show(id: "example") {
         ...CellShow_show
       }
     }
   `,
-})
+  })
 
 describe("CellShow", () => {
   it("renders the component", () => {

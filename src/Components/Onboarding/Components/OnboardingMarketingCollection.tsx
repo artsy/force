@@ -15,10 +15,9 @@ interface OnboardingMarketingCollectionProps {
   description: JSX.Element
 }
 
-const OnboardingMarketingCollection: FC<React.PropsWithChildren<OnboardingMarketingCollectionProps>> = ({
-  marketingCollection,
-  description,
-}) => {
+const OnboardingMarketingCollection: FC<
+  React.PropsWithChildren<OnboardingMarketingCollectionProps>
+> = ({ marketingCollection, description }) => {
   const artworks = extractNodes(marketingCollection.artworks)
 
   return (
@@ -54,9 +53,8 @@ const OnboardingMarketingCollection: FC<React.PropsWithChildren<OnboardingMarket
   )
 }
 
-export const OnboardingMarketingCollectionFragmentContainer = createFragmentContainer(
-  OnboardingMarketingCollection,
-  {
+export const OnboardingMarketingCollectionFragmentContainer =
+  createFragmentContainer(OnboardingMarketingCollection, {
     marketingCollection: graphql`
       fragment OnboardingMarketingCollection_marketingCollection on MarketingCollection {
         title
@@ -74,18 +72,16 @@ export const OnboardingMarketingCollectionFragmentContainer = createFragmentCont
         }
       }
     `,
-  }
-)
+  })
 
 interface OnboardingMarketingCollectionQueryRendererProps {
   slug: string
   description: JSX.Element
 }
 
-export const OnboardingMarketingCollectionQueryRenderer: FC<React.PropsWithChildren<OnboardingMarketingCollectionQueryRendererProps>> = ({
-  slug,
-  description,
-}) => {
+export const OnboardingMarketingCollectionQueryRenderer: FC<
+  React.PropsWithChildren<OnboardingMarketingCollectionQueryRendererProps>
+> = ({ slug, description }) => {
   const { onComplete } = useOnboardingContext()
 
   // If a user has arrived to the marketing collection artwork grid page,

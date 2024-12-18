@@ -19,10 +19,9 @@ interface AddArtworksModalProps {
 
 const logger = createLogger("AddArtworksModal")
 
-export const AddArtworksModal: FC<React.PropsWithChildren<AddArtworksModalProps>> = ({
-  artworkList,
-  onComplete,
-}) => {
+export const AddArtworksModal: FC<
+  React.PropsWithChildren<AddArtworksModalProps>
+> = ({ artworkList, onComplete }) => {
   const [selectedArtworkIds, setSelectedArtworkIds] = useState<string[]>([])
 
   const { sendToast } = useToasts()

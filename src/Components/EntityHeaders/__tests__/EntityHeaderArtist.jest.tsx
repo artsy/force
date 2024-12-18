@@ -15,12 +15,11 @@ const QUERY = graphql`
 `
 
 describe("EntityHeaderArtist", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    EntityHeaderArtistFragmentContainer_Test_Query
-  >({
-    Component: EntityHeaderArtistFragmentContainer,
-    query: QUERY,
-  })
+  const { renderWithRelay } =
+    setupTestWrapperTL<EntityHeaderArtistFragmentContainer_Test_Query>({
+      Component: EntityHeaderArtistFragmentContainer,
+      query: QUERY,
+    })
 
   it("renders the component", () => {
     renderWithRelay({
@@ -44,20 +43,19 @@ describe("EntityHeaderArtist", () => {
   })
 
   describe("displayCounts", () => {
-    const { renderWithRelay } = setupTestWrapperTL<
-      EntityHeaderArtistFragmentContainer_Test_Query
-    >({
-      Component: props => {
-        if (!props.artist) return null
-        return (
-          <EntityHeaderArtistFragmentContainer
-            artist={props.artist}
-            displayCounts
-          />
-        )
-      },
-      query: QUERY,
-    })
+    const { renderWithRelay } =
+      setupTestWrapperTL<EntityHeaderArtistFragmentContainer_Test_Query>({
+        Component: props => {
+          if (!props.artist) return null
+          return (
+            <EntityHeaderArtistFragmentContainer
+              artist={props.artist}
+              displayCounts
+            />
+          )
+        },
+        query: QUERY,
+      })
 
     it("displays the counts", () => {
       renderWithRelay({

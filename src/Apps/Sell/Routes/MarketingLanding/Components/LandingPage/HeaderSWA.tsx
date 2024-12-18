@@ -14,10 +14,8 @@ import { Media } from "Utils/Responsive"
 import { resized } from "Utils/resized"
 
 export const HeaderSWA = () => {
-  const {
-    trackStartSellingClick,
-    trackGetInTouchClick,
-  } = useMarketingLandingTracking()
+  const { trackStartSellingClick, trackGetInTouchClick } =
+    useMarketingLandingTracking()
 
   const image = resized(
     "https://files.artsy.net/images/content-card-swa-landing-page.jpg",

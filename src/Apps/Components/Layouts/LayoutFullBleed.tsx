@@ -5,7 +5,9 @@ import { AppToasts } from "Apps/Components/AppToasts"
 import { LayoutNav } from "Apps/Components/Layouts/Components/LayoutNav"
 import { BaseLayoutProps } from "Apps/Components/Layouts"
 
-export const LayoutFullBleed: FC<React.PropsWithChildren<BaseLayoutProps>> = ({ children }) => {
+export const LayoutFullBleed: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
+  children,
+}) => {
   return (
     <>
       <AppToasts />

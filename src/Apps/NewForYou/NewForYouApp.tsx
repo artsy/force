@@ -11,7 +11,9 @@ interface NewForYouAppProps {
   viewer: NewForYouApp_viewer$data
 }
 
-export const NewForYouApp: FC<React.PropsWithChildren<NewForYouAppProps>> = ({ viewer }) => {
+export const NewForYouApp: FC<React.PropsWithChildren<NewForYouAppProps>> = ({
+  viewer,
+}) => {
   return (
     <>
       <MetaTags title="New For You" />

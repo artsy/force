@@ -20,9 +20,9 @@ import { graphql, useLazyLoadQuery } from "react-relay"
 interface SuggestedFiltersProps {
   transitionToFiltersAndTrack: () => void
 }
-export const SuggestedFilters: React.FC<React.PropsWithChildren<SuggestedFiltersProps>> = ({
-  transitionToFiltersAndTrack,
-}) => {
+export const SuggestedFilters: React.FC<
+  React.PropsWithChildren<SuggestedFiltersProps>
+> = ({ transitionToFiltersAndTrack }) => {
   const { state, dispatch } = useAlertContext()
 
   const { artistIDs } = state.criteria
@@ -91,7 +91,8 @@ export const SuggestedFilters: React.FC<React.PropsWithChildren<SuggestedFilters
                     handleFieldsWithMultipleValues({
                       selectedValue:
                         state.criteria[suggestedFilter.field] || [],
-                      criteriaKey: suggestedFilter.field as SearchCriteriaAttributeKeys,
+                      criteriaKey:
+                        suggestedFilter.field as SearchCriteriaAttributeKeys,
                       selected: true,
                       value: suggestedFilter.value,
                       dispatch,
@@ -138,7 +139,9 @@ const suggestedFiltersFetchQuery = graphql`
   }
 `
 
-export const SugggestedFiltersQueryRenderer: React.FC<React.PropsWithChildren<SuggestedFiltersProps>> = props => {
+export const SugggestedFiltersQueryRenderer: React.FC<
+  React.PropsWithChildren<SuggestedFiltersProps>
+> = props => {
   return (
     <Suspense fallback={<SuggestedFiltersPlaceholder />}>
       <SuggestedFilters {...props} />
@@ -146,7 +149,9 @@ export const SugggestedFiltersQueryRenderer: React.FC<React.PropsWithChildren<Su
   )
 }
 
-const SuggestedFiltersPlaceholder: React.FC<React.PropsWithChildren<unknown>> = () => {
+const SuggestedFiltersPlaceholder: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton>
       <SkeletonText variant="xs" mb={2}>

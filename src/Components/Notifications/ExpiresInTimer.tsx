@@ -9,14 +9,15 @@ interface ExpiresInTimerProps {
   available?: boolean | null
 }
 
-const WatchIcon: FC<React.PropsWithChildren<{ fill?: string }>> = ({ fill = "red100" }) => {
+const WatchIcon: FC<React.PropsWithChildren<{ fill?: string }>> = ({
+  fill = "red100",
+}) => {
   return <StopwatchIcon fill={fill} height={15} width={15} mr="2px" ml="-2px" />
 }
 
-export const ExpiresInTimer: FC<React.PropsWithChildren<ExpiresInTimerProps>> = ({
-  expiresAt = "",
-  available = false,
-}) => {
+export const ExpiresInTimer: FC<
+  React.PropsWithChildren<ExpiresInTimerProps>
+> = ({ expiresAt = "", available = false }) => {
   const { hasEnded, time } = useTimer(expiresAt ?? "")
 
   if (!available) {

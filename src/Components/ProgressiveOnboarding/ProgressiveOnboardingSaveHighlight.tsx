@@ -15,10 +15,9 @@ interface ProgressiveOnboardingSaveHighlightProps {
   position: ProgressiveOnboardingHighlightPosition
 }
 
-export const ProgressiveOnboardingSaveHighlight: FC<React.PropsWithChildren<ProgressiveOnboardingSaveHighlightProps>> = ({
-  children,
-  position,
-}) => {
+export const ProgressiveOnboardingSaveHighlight: FC<
+  React.PropsWithChildren<ProgressiveOnboardingSaveHighlightProps>
+> = ({ children, position }) => {
   const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayable =

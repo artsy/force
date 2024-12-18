@@ -12,11 +12,9 @@ interface ArticleSectionTextProps {
   isLast: boolean
 }
 
-const ArticleSectionText: FC<React.PropsWithChildren<ArticleSectionTextProps>> = ({
-  section,
-  isFirst,
-  isLast,
-}) => {
+const ArticleSectionText: FC<
+  React.PropsWithChildren<ArticleSectionTextProps>
+> = ({ section, isFirst, isLast }) => {
   const HTML = useMemo(() => {
     switch (true) {
       case isFirst:

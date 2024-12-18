@@ -8,9 +8,9 @@ interface ArtworkListEmptyStateProps {
   me: ArtworkListEmptyState_me$data
 }
 
-export const ArtworkListEmptyState: FC<React.PropsWithChildren<ArtworkListEmptyStateProps>> = ({
-  me,
-}) => {
+export const ArtworkListEmptyState: FC<
+  React.PropsWithChildren<ArtworkListEmptyStateProps>
+> = ({ me }) => {
   const savedArtworksCount = me.savedArtworksArtworkList?.artworksCount ?? 0
   const isDefaultArtworkList = me.artworkList?.default ?? false
   const text = getText(isDefaultArtworkList, savedArtworksCount)

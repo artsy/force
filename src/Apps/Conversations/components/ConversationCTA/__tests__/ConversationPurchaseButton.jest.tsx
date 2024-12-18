@@ -61,7 +61,8 @@ describe("ConversationPurchaseOfferButton", () => {
   const mockUseConversationsContext = useConversationsContext as jest.Mock
   const mockuseTracking = useTracking as jest.Mock
   const mockMakeInquiryOrderMutation = useMakeInquiryOrder as jest.Mock
-  const mockPartnerOfferCheckoutMutation = usePartnerOfferCheckoutMutation as jest.Mock
+  const mockPartnerOfferCheckoutMutation =
+    usePartnerOfferCheckoutMutation as jest.Mock
   let createInquiryOrderMutationSpy
   let createPartnerOfferOrderMutationSpy
 

@@ -7,9 +7,9 @@ interface DedicatedArticlesBreadcrumbsProps {
   fairOrganizer: DedicatedArticlesBreadcrumbs_fairOrganizer$data
 }
 
-export const DedicatedArticlesBreadcrumbs: React.FC<React.PropsWithChildren<DedicatedArticlesBreadcrumbsProps>> = ({
-  fairOrganizer,
-}) => {
+export const DedicatedArticlesBreadcrumbs: React.FC<
+  React.PropsWithChildren<DedicatedArticlesBreadcrumbsProps>
+> = ({ fairOrganizer }) => {
   const { name, slug, profile } = fairOrganizer
 
   return (
@@ -23,9 +23,8 @@ export const DedicatedArticlesBreadcrumbs: React.FC<React.PropsWithChildren<Dedi
   )
 }
 
-export const DedicatedArticlesBreadcrumbsFragmentContainer = createFragmentContainer(
-  DedicatedArticlesBreadcrumbs,
-  {
+export const DedicatedArticlesBreadcrumbsFragmentContainer =
+  createFragmentContainer(DedicatedArticlesBreadcrumbs, {
     fairOrganizer: graphql`
       fragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {
         slug
@@ -37,5 +36,4 @@ export const DedicatedArticlesBreadcrumbsFragmentContainer = createFragmentConta
         }
       }
     `,
-  }
-)
+  })

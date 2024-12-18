@@ -20,7 +20,9 @@ const logger = createLogger("Sell/UploadPhotosForm.tsx")
 const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/heic"]
 const ALLOWED_MIME_TYPES_HUMINIZED = "JPG, PNG or HEIC files"
 
-export const UploadPhotosForm: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const UploadPhotosForm: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const { submitMutation: addAsset } = useAddAssetToConsignmentSubmission()
   const { setFieldValue, values } = useFormikContext<PhotosFormValues>()

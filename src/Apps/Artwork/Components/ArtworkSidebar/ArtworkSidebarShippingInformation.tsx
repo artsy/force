@@ -10,7 +10,9 @@ export interface ShippingInformationProps {
   artwork: ArtworkSidebarShippingInformation_artwork$data
 }
 
-const ArtworkSidebarShippingInformation: React.FC<React.PropsWithChildren<ShippingInformationProps>> = ({
+const ArtworkSidebarShippingInformation: React.FC<
+  React.PropsWithChildren<ShippingInformationProps>
+> = ({
   artwork: {
     isUnlisted,
     priceIncludesTaxDisplay,
@@ -100,9 +102,8 @@ const ArtworkSidebarShippingInformation: React.FC<React.PropsWithChildren<Shippi
   )
 }
 
-export const ArtworkSidebarShippingInformationFragmentContainer = createFragmentContainer(
-  ArtworkSidebarShippingInformation,
-  {
+export const ArtworkSidebarShippingInformationFragmentContainer =
+  createFragmentContainer(ArtworkSidebarShippingInformation, {
     artwork: graphql`
       fragment ArtworkSidebarShippingInformation_artwork on Artwork {
         isUnlisted
@@ -118,5 +119,4 @@ export const ArtworkSidebarShippingInformationFragmentContainer = createFragment
         }
       }
     `,
-  }
-)
+  })

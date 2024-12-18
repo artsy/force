@@ -13,9 +13,9 @@ interface ArticleVerticalRelatedArticlesProps {
   article: ArticleVerticalRelatedArticles_article$data
 }
 
-const ArticleVerticalRelatedArticles: FC<React.PropsWithChildren<ArticleVerticalRelatedArticlesProps>> = ({
-  article,
-}) => {
+const ArticleVerticalRelatedArticles: FC<
+  React.PropsWithChildren<ArticleVerticalRelatedArticlesProps>
+> = ({ article }) => {
   if (article.verticalRelatedArticles.length === 0) return null
 
   return (
@@ -38,9 +38,8 @@ const ArticleVerticalRelatedArticles: FC<React.PropsWithChildren<ArticleVertical
   )
 }
 
-export const ArticleVerticalRelatedArticlesFragmentContainer = createFragmentContainer(
-  ArticleVerticalRelatedArticles,
-  {
+export const ArticleVerticalRelatedArticlesFragmentContainer =
+  createFragmentContainer(ArticleVerticalRelatedArticles, {
     article: graphql`
       fragment ArticleVerticalRelatedArticles_article on Article {
         vertical
@@ -50,16 +49,15 @@ export const ArticleVerticalRelatedArticlesFragmentContainer = createFragmentCon
         }
       }
     `,
-  }
-)
+  })
 
 interface ArticleVerticalRelatedArticlesQueryRendererProps {
   id: string
 }
 
-export const ArticleVerticalRelatedArticlesQueryRenderer: FC<React.PropsWithChildren<ArticleVerticalRelatedArticlesQueryRendererProps>> = ({
-  id,
-}) => {
+export const ArticleVerticalRelatedArticlesQueryRenderer: FC<
+  React.PropsWithChildren<ArticleVerticalRelatedArticlesQueryRendererProps>
+> = ({ id }) => {
   return (
     <SystemQueryRenderer<ArticleVerticalRelatedArticlesQuery>
       lazyLoad
@@ -92,7 +90,9 @@ export const ArticleVerticalRelatedArticlesQueryRenderer: FC<React.PropsWithChil
   )
 }
 
-const ArticleVerticalRelatedArticlesPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const ArticleVerticalRelatedArticlesPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton>
       <SkeletonText variant="lg-display" mb={4}>

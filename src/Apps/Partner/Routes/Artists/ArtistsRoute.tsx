@@ -15,10 +15,9 @@ export interface ArtistsRouteProps {
   match: Match
 }
 
-export const ArtistsRoute: React.FC<React.PropsWithChildren<ArtistsRouteProps>> = ({
-  partner,
-  match,
-}) => {
+export const ArtistsRoute: React.FC<
+  React.PropsWithChildren<ArtistsRouteProps>
+> = ({ partner, match }) => {
   const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
 
   const { isLoaded } = usePartnerArtistsLoadingContext()

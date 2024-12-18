@@ -16,9 +16,9 @@ interface FairHeaderImageProps {
   fair: FairHeaderImage_fair$data
 }
 
-export const FairHeaderImage: React.FC<React.PropsWithChildren<FairHeaderImageProps>> = ({
-  fair: { image },
-}) => {
+export const FairHeaderImage: React.FC<
+  React.PropsWithChildren<FairHeaderImageProps>
+> = ({ fair: { image } }) => {
   if (!image?.url) {
     return null
   }

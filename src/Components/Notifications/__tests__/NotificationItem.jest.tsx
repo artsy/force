@@ -51,7 +51,7 @@ describe("NotificationItem", () => {
       Notification: () => notification,
     })
 
-    expect(screen.getAllByRole("img")).toHaveLength(4)
+    expect(screen.getAllByRole("presentation")).toHaveLength(4)
   })
 
   describe("the remaining artworks count", () => {

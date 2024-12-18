@@ -19,8 +19,7 @@ export const CellArticle = () => {
         { id: "artsy-editorial-10-artists-must-see-museum-2022" },
         { id: "artsy-editorial-10-artists-must-see-museum-2022", mode: "GRID" },
         {
-          id:
-            "artsy-editorial-legacy-marina-abramovics-the-artist-present-lives-new-generations-artists",
+          id: "artsy-editorial-legacy-marina-abramovics-the-artist-present-lives-new-generations-artists",
         },
         { id: "artsy-editorial-9-standout-lots-artsy-week", mode: "GRID" },
       ]}

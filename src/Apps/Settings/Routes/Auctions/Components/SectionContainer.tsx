@@ -6,10 +6,9 @@ interface SectionContainerProps {
   children?: React.ReactNode
 }
 
-export const SectionContainer: React.FC<React.PropsWithChildren<SectionContainerProps>> = ({
-  children,
-  title,
-}) => {
+export const SectionContainer: React.FC<
+  React.PropsWithChildren<SectionContainerProps>
+> = ({ children, title }) => {
   const hasChildren = !!React.Children.count(children)
 
   return (

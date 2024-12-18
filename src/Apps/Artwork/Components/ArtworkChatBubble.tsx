@@ -10,16 +10,11 @@ interface ArtworkChatBubbleProps {
   artwork: ArtworkChatBubble_artwork$data
 }
 
-const ArtworkChatBubble: FC<React.PropsWithChildren<
-  ArtworkChatBubbleProps
->> = ({ artwork }) => {
-  const {
-    isAcquireable,
-    isInquireable,
-    isOfferable,
-    listPrice,
-    saleArtwork,
-  } = artwork
+const ArtworkChatBubble: FC<
+  React.PropsWithChildren<ArtworkChatBubbleProps>
+> = ({ artwork }) => {
+  const { isAcquireable, isInquireable, isOfferable, listPrice, saleArtwork } =
+    artwork
 
   const price = useMemo(() => {
     if (!listPrice) return null

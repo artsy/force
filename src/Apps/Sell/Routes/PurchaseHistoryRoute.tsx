@@ -40,7 +40,9 @@ interface PurchaseHistoryRouteProps {
   submission: PurchaseHistoryRoute_submission$key
 }
 
-export const PurchaseHistoryRoute: React.FC<React.PropsWithChildren<PurchaseHistoryRouteProps>> = props => {
+export const PurchaseHistoryRoute: React.FC<
+  React.PropsWithChildren<PurchaseHistoryRouteProps>
+> = props => {
   const { actions } = useSellFlowContext()
   const submission = useFragment(FRAGMENT, props.submission)
 

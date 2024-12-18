@@ -10,9 +10,9 @@ interface ArtworkSidebarCollectorSignalProps {
   artwork: ArtworkSidebarCollectorSignal_artwork$key
 }
 
-export const ArtworkSidebarCollectorSignal: React.FC<React.PropsWithChildren<ArtworkSidebarCollectorSignalProps>> = ({
-  artwork,
-}) => {
+export const ArtworkSidebarCollectorSignal: React.FC<
+  React.PropsWithChildren<ArtworkSidebarCollectorSignalProps>
+> = ({ artwork }) => {
   const data = useFragment(artworkSidebarCollectorSignalFragment, artwork)
 
   const isShowingNow = data.collectorSignals?.runningShow ?? false

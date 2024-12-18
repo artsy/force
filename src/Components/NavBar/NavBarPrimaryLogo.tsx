@@ -4,10 +4,9 @@ import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
 import { themeGet } from "@styled-system/theme-get"
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 
-export const NavBarPrimaryLogo: React.FC<React.PropsWithChildren<Omit<
-  RouterLinkProps,
-  "to" | "ref"
->>> = props => {
+export const NavBarPrimaryLogo: React.FC<
+  React.PropsWithChildren<Omit<RouterLinkProps, "to" | "ref">>
+> = props => {
   return (
     <HitArea to="/" {...props} aria-label="Artsy">
       <ArtsyMarkIcon height={40} width={40} />

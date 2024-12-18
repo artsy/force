@@ -8,9 +8,9 @@ interface Props {
   collectionGroup: FeaturedCollectionsRails_collectionGroup$data
 }
 
-export const FeaturedCollectionsRails: React.FC<React.PropsWithChildren<Props>> = ({
-  collectionGroup: { members, name },
-}) => {
+export const FeaturedCollectionsRails: React.FC<
+  React.PropsWithChildren<Props>
+> = ({ collectionGroup: { members, name } }) => {
   return (
     <Rail
       title={name}

@@ -86,16 +86,12 @@ type RTLRenderResult = RenderResult<
 
 type RenderWithRelay = RTLRenderResult & {
   env: MockEnvironment
-  mockResolveLastOperation: (
-    mockResolvers: MockResolvers
-  ) => {
+  mockResolveLastOperation: (mockResolvers: MockResolvers) => {
     operation: OperationDescriptor
     operationName: string
     operationVariables: Variables
   }
-  mockRejectLastOperation: (
-    error: Error
-  ) => {
+  mockRejectLastOperation: (error: Error) => {
     operation: OperationDescriptor
     operationName: string
     operationVariables: Variables

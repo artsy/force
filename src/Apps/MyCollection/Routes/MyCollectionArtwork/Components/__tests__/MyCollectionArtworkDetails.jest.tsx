@@ -7,23 +7,22 @@ import { graphql } from "react-relay"
 jest.unmock("react-relay")
 
 describe("MyCollectionArtworkDetails", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    MyCollectionArtworkDetailsTestQuery
-  >({
-    Component: props => {
-      if (props?.artwork) {
-        return <MyCollectionArtworkDetails {...(props as any)} />
-      }
-      return null
-    },
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<MyCollectionArtworkDetailsTestQuery>({
+      Component: props => {
+        if (props?.artwork) {
+          return <MyCollectionArtworkDetails {...(props as any)} />
+        }
+        return null
+      },
+      query: graphql`
       query MyCollectionArtworkDetailsTestQuery @relay_test_operation {
         artwork(id: "foo") {
           ...MyCollectionArtworkDetails_artwork
         }
       }
     `,
-  })
+    })
 
   describe("for artwork with metadata", () => {
     beforeEach(() => {

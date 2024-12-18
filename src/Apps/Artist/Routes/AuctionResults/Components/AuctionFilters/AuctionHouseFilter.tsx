@@ -15,9 +15,9 @@ export const auctionHouseMap = [
   { displayName: "Artsy Auction", name: "Artsy Auction" },
 ]
 
-export const AuctionHouseFilter: React.FC<React.PropsWithChildren<
-  unknown
->> = () => {
+export const AuctionHouseFilter: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { setFilter } = useAuctionResultsFilterContext()
   const { organizations = [] } = useCurrentlySelectedFiltersForAuctionResults()
 

@@ -27,7 +27,9 @@ interface FollowProfileButtonProps extends Omit<ButtonProps, "variant"> {
   profile: FollowProfileButton_profile$data
 }
 
-const FollowProfileButton: React.FC<React.PropsWithChildren<FollowProfileButtonProps>> = ({
+const FollowProfileButton: React.FC<
+  React.PropsWithChildren<FollowProfileButtonProps>
+> = ({
   contextModule = ContextModule.partnerHeader,
   me,
   onFollow,
@@ -172,10 +174,9 @@ interface FollowProfileButtonQueryRendererProps
   id: string
 }
 
-export const FollowProfileButtonQueryRenderer: React.FC<React.PropsWithChildren<FollowProfileButtonQueryRendererProps>> = ({
-  id,
-  ...rest
-}) => {
+export const FollowProfileButtonQueryRenderer: React.FC<
+  React.PropsWithChildren<FollowProfileButtonQueryRendererProps>
+> = ({ id, ...rest }) => {
   const { isLoggedIn } = useSystemContext()
 
   return (

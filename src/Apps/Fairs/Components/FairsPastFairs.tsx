@@ -15,10 +15,9 @@ interface FairsPastFairsProps {
   relay: RelayPaginationProp
 }
 
-export const FairsPastFairs: React.FC<React.PropsWithChildren<FairsPastFairsProps>> = ({
-  viewer,
-  relay,
-}) => {
+export const FairsPastFairs: React.FC<
+  React.PropsWithChildren<FairsPastFairsProps>
+> = ({ viewer, relay }) => {
   const closedFairs = extractNodes(viewer.pastFairs)
 
   const [isLoading, setIsLoading] = useState(false)

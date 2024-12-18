@@ -10,11 +10,9 @@ interface AuctionLotInfoProps extends BoxProps {
   relay: RelayProp
 }
 
-const AuctionLotInfo: React.FC<React.PropsWithChildren<AuctionLotInfoProps>> = ({
-  hideLotInfo = false,
-  saleArtwork,
-  ...rest
-}) => {
+const AuctionLotInfo: React.FC<
+  React.PropsWithChildren<AuctionLotInfoProps>
+> = ({ hideLotInfo = false, saleArtwork, ...rest }) => {
   const artwork = saleArtwork.artwork
   const bidCount = saleArtwork.counts?.bidderPositions
 

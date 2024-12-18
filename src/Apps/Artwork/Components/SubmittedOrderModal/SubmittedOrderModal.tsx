@@ -14,9 +14,9 @@ interface SubmittedOrderModalProps {
   submittedOrder: SubmittedOrderModal_submittedOrder$data
 }
 
-const SubmittedOrderModal: FC<React.PropsWithChildren<
-  SubmittedOrderModalProps
->> = ({ submittedOrder }) => {
+const SubmittedOrderModal: FC<
+  React.PropsWithChildren<SubmittedOrderModalProps>
+> = ({ submittedOrder }) => {
   const [isOpen, setIsOpen] = useState(true)
   const linkUrl = submittedOrder.impulseConversationId
     ? `/user/conversations/${submittedOrder.impulseConversationId}`
@@ -57,9 +57,11 @@ export const SubmittedOrderModalFragmentContainer = createFragmentContainer(
   }
 )
 
-export const SubmittedOrderModalQueryRenderer: FC<React.PropsWithChildren<{
-  orderId: string
-}>> = ({ orderId }) => {
+export const SubmittedOrderModalQueryRenderer: FC<
+  React.PropsWithChildren<{
+    orderId: string
+  }>
+> = ({ orderId }) => {
   return (
     <SystemQueryRenderer<SubmittedOrderModalQuery>
       variables={{ orderId }}

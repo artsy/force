@@ -23,7 +23,9 @@ interface AuctionDetailsProps {
   me: AuctionDetails_me$data
 }
 
-const AuctionDetails: React.FC<React.PropsWithChildren<AuctionDetailsProps>> = ({ sale, me }) => {
+const AuctionDetails: React.FC<
+  React.PropsWithChildren<AuctionDetailsProps>
+> = ({ sale, me }) => {
   const liveAuctionUrl = `${getENV("PREDICTION_URL")}/${sale.slug}`
 
   const startDate = sale.liveStartAt || sale.startAt

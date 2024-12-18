@@ -19,9 +19,9 @@ export interface AttributionClassFilterProps {
   expanded?: boolean
 }
 
-export const AttributionClassFilter: React.FC<React.PropsWithChildren<AttributionClassFilterProps>> = ({
-  expanded,
-}) => {
+export const AttributionClassFilter: React.FC<
+  React.PropsWithChildren<AttributionClassFilterProps>
+> = ({ expanded }) => {
   const { setFilter } = useArtworkFilterContext()
   const { attributionClass = [] } = useCurrentlySelectedFilters()
 

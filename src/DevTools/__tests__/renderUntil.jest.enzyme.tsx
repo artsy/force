@@ -53,12 +53,15 @@ describe("renderUntil", () => {
   describe("deprecated usage", () => {
     it("yields an enzyme wrapper to the `until` block until it returns true", async () => {
       const states = []
-      await renderUntil(wrapper => {
-        const text = wrapper.find("div").text()
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        states.push(text)
-        return text !== "Loading"
-      }, <Component />)
+      await renderUntil(
+        wrapper => {
+          const text = wrapper.find("div").text()
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+          states.push(text)
+          return text !== "Loading"
+        },
+        <Component />
+      )
       expect(states).toEqual(["Loading", "ohai"])
     })
 

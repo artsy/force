@@ -10,9 +10,11 @@ import { CurrencyFilter } from "./CurrencyFilter"
 import { KeywordFilter } from "./KeywordFilter"
 import { SaleEndYearFilter } from "./SaleEndYearFilter"
 
-export const AuctionFilters: React.FC<React.PropsWithChildren<{
-  showUpcomingAuctionResults: boolean
-}>> = ({ showUpcomingAuctionResults }) => {
+export const AuctionFilters: React.FC<
+  React.PropsWithChildren<{
+    showUpcomingAuctionResults: boolean
+  }>
+> = ({ showUpcomingAuctionResults }) => {
   return (
     <>
       {showUpcomingAuctionResults && (

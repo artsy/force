@@ -13,19 +13,15 @@ interface FeaturedCollectionRailEntityProps {
   index: number
 }
 
-export const FeaturedCollectionRailEntity: FC<React.PropsWithChildren<FeaturedCollectionRailEntityProps>> = ({
-  index,
-  member,
-}) => {
+export const FeaturedCollectionRailEntity: FC<
+  React.PropsWithChildren<FeaturedCollectionRailEntityProps>
+> = ({ index, member }) => {
   const { description, priceGuidance, slug, id, thumbnailImage, title } = member
 
   const { trackEvent } = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const handleClick = () => {
     trackEvent(
@@ -93,9 +89,8 @@ export const FeaturedCollectionRailEntity: FC<React.PropsWithChildren<FeaturedCo
   )
 }
 
-export const FeaturedCollectionRailEntityFragmentContainer = createFragmentContainer(
-  FeaturedCollectionRailEntity,
-  {
+export const FeaturedCollectionRailEntityFragmentContainer =
+  createFragmentContainer(FeaturedCollectionRailEntity, {
     member: graphql`
       fragment FeaturedCollectionRailEntity_member on MarketingCollection {
         id
@@ -113,5 +108,4 @@ export const FeaturedCollectionRailEntityFragmentContainer = createFragmentConta
         }
       }
     `,
-  }
-)
+  })

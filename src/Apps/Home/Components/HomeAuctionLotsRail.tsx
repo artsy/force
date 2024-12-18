@@ -23,9 +23,9 @@ interface HomeAuctionLotsRailProps {
   viewer: HomeAuctionLotsRail_viewer$data
 }
 
-const HomeAuctionLotsRail: React.FC<React.PropsWithChildren<HomeAuctionLotsRailProps>> = ({
-  viewer,
-}) => {
+const HomeAuctionLotsRail: React.FC<
+  React.PropsWithChildren<HomeAuctionLotsRailProps>
+> = ({ viewer }) => {
   const { trackEvent } = useTracking()
   const contextModule = ContextModule.topAuctionLotsRail as AuthContextModule
 
@@ -97,7 +97,9 @@ export const HomeAuctionLotsRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const HomeAuctionLotsRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeAuctionLotsRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

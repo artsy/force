@@ -72,8 +72,8 @@ export const computeOrderData = (
   const availableShippingCountries = !lockShippingCountryTo
     ? ALL_COUNTRY_CODES
     : lockShippingCountryTo === "EU"
-    ? EU_COUNTRY_CODES
-    : [lockShippingCountryTo]
+      ? EU_COUNTRY_CODES
+      : [lockShippingCountryTo]
 
   // todo: Should this be moved into shippingContext.actions? It relies on several
   // intermediate values we don't expose.

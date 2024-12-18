@@ -18,13 +18,11 @@ interface ArticleSectionImageSetProps {
   section: ArticleSectionImageSet_section$data
 }
 
-const ArticleSectionImageSet: FC<React.PropsWithChildren<ArticleSectionImageSetProps>> = ({
-  section,
-}) => {
-  const {
-    showArticleZoomGallery,
-    articleZoomGalleryComponent,
-  } = useArticleZoomGallery()
+const ArticleSectionImageSet: FC<
+  React.PropsWithChildren<ArticleSectionImageSetProps>
+> = ({ section }) => {
+  const { showArticleZoomGallery, articleZoomGalleryComponent } =
+    useArticleZoomGallery()
 
   const { theme } = useTheme()
 

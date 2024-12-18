@@ -21,17 +21,13 @@ interface FairFollowedArtistsProps extends BoxProps {
   fair: FairFollowedArtists_fair$data
 }
 
-export const FairFollowedArtists: React.FC<React.PropsWithChildren<FairFollowedArtistsProps>> = ({
-  fair,
-  ...rest
-}) => {
+export const FairFollowedArtists: React.FC<
+  React.PropsWithChildren<FairFollowedArtistsProps>
+> = ({ fair, ...rest }) => {
   const tracking = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const tappedViewTrackingData: ClickedArtworkGroup = {
     context_module: ContextModule.worksByArtistsYouFollowRail,
@@ -142,9 +138,9 @@ interface FairFollowedArtistsQueryRendererProps {
   id: string
 }
 
-export const FairFollowedArtistsQueryRenderer: React.FC<React.PropsWithChildren<FairFollowedArtistsQueryRendererProps>> = ({
-  id,
-}) => {
+export const FairFollowedArtistsQueryRenderer: React.FC<
+  React.PropsWithChildren<FairFollowedArtistsQueryRendererProps>
+> = ({ id }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

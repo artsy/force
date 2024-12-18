@@ -19,7 +19,9 @@ import {
 } from "@artsy/palette"
 import { useMemo } from "react"
 
-const PricingTransparency: React.FC<React.PropsWithChildren<PricingTransparencyQuery$data>> = props => {
+const PricingTransparency: React.FC<
+  React.PropsWithChildren<PricingTransparencyQuery$data>
+> = props => {
   const calculatedCost = props.artwork?.saleArtwork?.calculatedCost
 
   return (

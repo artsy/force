@@ -10,10 +10,9 @@ interface ArtworkFilterMobileOverlayProps {
   onClose: () => void
 }
 
-export const ArtworkFilterMobileOverlay: React.FC<React.PropsWithChildren<ArtworkFilterMobileOverlayProps>> = ({
-  children,
-  onClose,
-}) => {
+export const ArtworkFilterMobileOverlay: React.FC<
+  React.PropsWithChildren<ArtworkFilterMobileOverlayProps>
+> = ({ children, onClose }) => {
   const filterContext = useArtworkFilterContext()
 
   const contentRef = useRef<HTMLDivElement | null>(null)

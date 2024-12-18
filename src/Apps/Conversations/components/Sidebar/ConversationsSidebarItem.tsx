@@ -14,10 +14,9 @@ interface ConversationsSidebarItemProps {
   index: number
 }
 
-export const ConversationsSidebarItem: React.FC<React.PropsWithChildren<ConversationsSidebarItemProps>> = ({
-  conversation,
-  index,
-}) => {
+export const ConversationsSidebarItem: React.FC<
+  React.PropsWithChildren<ConversationsSidebarItemProps>
+> = ({ conversation, index }) => {
   const data = useFragment(FRAGMENT, conversation)
   const { match } = useRouter()
   const { trackEvent } = useTracking()
@@ -50,8 +49,8 @@ export const ConversationsSidebarItem: React.FC<React.PropsWithChildren<Conversa
     orders.length === 0
       ? "Inquiry"
       : orders[0].__typename === "CommerceBuyOrder"
-      ? "Order"
-      : "Offer"
+        ? "Order"
+        : "Offer"
 
   return (
     <StackableBorderBox

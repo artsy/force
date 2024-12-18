@@ -5,10 +5,8 @@ import { useMarketingLandingTracking } from "Apps/Sell/Routes/MarketingLanding/U
 import { RouterLink } from "System/Components/RouterLink"
 
 export const SWAStickyFooter = () => {
-  const {
-    trackStartSellingClick,
-    trackGetInTouchClick,
-  } = useMarketingLandingTracking()
+  const { trackStartSellingClick, trackGetInTouchClick } =
+    useMarketingLandingTracking()
   const { theme } = useTheme()
 
   const getInTouchRoute = "/sell/inquiry"

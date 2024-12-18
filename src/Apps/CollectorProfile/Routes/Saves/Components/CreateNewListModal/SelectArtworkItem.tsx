@@ -9,9 +9,9 @@ interface SelectArtworkItemProps {
 
 const ICON_SIZE = 24
 
-export const SelectArtworkItem: FC<React.PropsWithChildren<SelectArtworkItemProps>> = ({
-  isSelected,
-}) => {
+export const SelectArtworkItem: FC<
+  React.PropsWithChildren<SelectArtworkItemProps>
+> = ({ isSelected }) => {
   return (
     <Box width={ICON_SIZE} height={ICON_SIZE}>
       {isSelected ? (

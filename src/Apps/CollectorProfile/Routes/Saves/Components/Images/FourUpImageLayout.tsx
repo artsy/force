@@ -17,9 +17,9 @@ const LARGE_IMAGE_SIZE = 100
 const SMALL_IMAGE_SIZE = 58
 const IMAGE_OFFSET = "2px"
 
-export const FourUpImageLayout: FC<React.PropsWithChildren<FourUpImageLayoutProps>> = ({
-  imageURLs,
-}) => {
+export const FourUpImageLayout: FC<
+  React.PropsWithChildren<FourUpImageLayoutProps>
+> = ({ imageURLs }) => {
   const preparedImageURLs = prepareImageURLs(imageURLs)
 
   return (

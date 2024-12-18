@@ -14,20 +14,16 @@ interface PartnerOfferCreatedNotificationProps {
   notification: PartnerOfferCreatedNotification_notification$key
 }
 
-export const PartnerOfferCreatedNotification: FC<React.PropsWithChildren<PartnerOfferCreatedNotificationProps>> = ({
-  notification,
-}) => {
+export const PartnerOfferCreatedNotification: FC<
+  React.PropsWithChildren<PartnerOfferCreatedNotificationProps>
+> = ({ notification }) => {
   const notificationData = useFragment(
     PartnerOfferCreatedNotificationFragment,
     notification
   )
 
-  const {
-    headline,
-    item,
-    targetHref,
-    offerArtworksConnection,
-  } = notificationData
+  const { headline, item, targetHref, offerArtworksConnection } =
+    notificationData
 
   const partnerOffer = item?.partnerOffer
   const artwork = extractNodes(offerArtworksConnection)[0]

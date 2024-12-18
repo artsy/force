@@ -7,7 +7,9 @@ interface ArticleSectionEmbedProps {
   section: ArticleSectionEmbed_section$data
 }
 
-const ArticleSectionEmbed: FC<React.PropsWithChildren<ArticleSectionEmbedProps>> = ({ section }) => {
+const ArticleSectionEmbed: FC<
+  React.PropsWithChildren<ArticleSectionEmbedProps>
+> = ({ section }) => {
   const { Container } = useMemo(() => {
     switch (section._layout) {
       case "FILLWIDTH":

@@ -12,11 +12,9 @@ interface ArtworkFilterAlertContextProviderProps {
  * A component to wrap `AlertProvider` in order to omit the `criteria` prop,
  * which is inferred from the filter context.
  */
-export const ArtworkFilterAlertContextProvider: FC<React.PropsWithChildren<ArtworkFilterAlertContextProviderProps>> = ({
-  children,
-  initialCriteria,
-  ...rest
-}) => {
+export const ArtworkFilterAlertContextProvider: FC<
+  React.PropsWithChildren<ArtworkFilterAlertContextProviderProps>
+> = ({ children, initialCriteria, ...rest }) => {
   const filters = useCurrentlySelectedFilters()
   const allowedFilters = getAllowedSearchCriteria(filters)
 

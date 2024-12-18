@@ -97,13 +97,9 @@ interface InquiryProviderProps {
   onClose(): void
 }
 
-export const InquiryProvider: React.FC<React.PropsWithChildren<InquiryProviderProps>> = ({
-  artworkID,
-  askSpecialist,
-  children,
-  enableCreateAlert,
-  onClose,
-}) => {
+export const InquiryProvider: React.FC<
+  React.PropsWithChildren<InquiryProviderProps>
+> = ({ artworkID, askSpecialist, children, enableCreateAlert, onClose }) => {
   /**
    * We store the data concerning the decisions inside of a ref instead of state.
    * The engine gets set as a ref and state would be stale otherwise. We don't use
@@ -202,10 +198,9 @@ interface InquiryContextContextProps {
   me: useInquiryContext_me$data | null | undefined
 }
 
-const InquiryContextContext: React.FC<React.PropsWithChildren<InquiryContextContextProps>> = ({
-  me,
-  children,
-}) => {
+const InquiryContextContext: React.FC<
+  React.PropsWithChildren<InquiryContextContextProps>
+> = ({ me, children }) => {
   const { setContext } = useInquiryContext()
 
   useEffect(() => {
@@ -241,7 +236,9 @@ const InquiryContextContextFragmentContainer = createFragmentContainer(
   }
 )
 
-export const InquiryContextContextQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+export const InquiryContextContextQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

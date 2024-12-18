@@ -18,16 +18,13 @@ export interface FairBoothRailArtworksProps {
   fair: FairEditorialRailArticles_fair$data
 }
 
-const FairEditorialRailArticles: React.FC<React.PropsWithChildren<FairBoothRailArtworksProps>> = ({
-  fair,
-}) => {
+const FairEditorialRailArticles: React.FC<
+  React.PropsWithChildren<FairBoothRailArtworksProps>
+> = ({ fair }) => {
   const tracking = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const articles = extractNodes(fair.articlesConnection)
 
@@ -75,9 +72,8 @@ const FairEditorialRailArticles: React.FC<React.PropsWithChildren<FairBoothRailA
   )
 }
 
-export const FairEditorialRailArticlesFragmentContainer = createFragmentContainer(
-  FairEditorialRailArticles,
-  {
+export const FairEditorialRailArticlesFragmentContainer =
+  createFragmentContainer(FairEditorialRailArticles, {
     fair: graphql`
       fragment FairEditorialRailArticles_fair on Fair {
         href
@@ -93,5 +89,4 @@ export const FairEditorialRailArticlesFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })

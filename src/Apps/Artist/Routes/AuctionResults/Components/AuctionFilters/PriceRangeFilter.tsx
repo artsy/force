@@ -14,11 +14,8 @@ import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 
 export const PriceRangeFilter: FC<React.PropsWithChildren<unknown>> = () => {
   const { setFilter, aggregations } = useAuctionResultsFilterContext()
-  const {
-    priceRange,
-    includeEstimateRange,
-    includeUnknownPrices,
-  } = useCurrentlySelectedFiltersForAuctionResults()
+  const { priceRange, includeEstimateRange, includeUnknownPrices } =
+    useCurrentlySelectedFiltersForAuctionResults()
   const bars = aggregationsToHistogram(aggregations as Aggregations)
 
   const handlePriceRangeUpdate = (updatedRange: CustomRange) => {

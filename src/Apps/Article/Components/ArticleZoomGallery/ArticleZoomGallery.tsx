@@ -31,11 +31,9 @@ interface ArticleZoomGalleryProps {
   onClose: () => void
 }
 
-const ArticleZoomGallery: FC<React.PropsWithChildren<ArticleZoomGalleryProps>> = ({
-  article,
-  figureId,
-  onClose,
-}) => {
+const ArticleZoomGallery: FC<
+  React.PropsWithChildren<ArticleZoomGalleryProps>
+> = ({ article, figureId, onClose }) => {
   // Flattens out all figures from the sections into a single array
   const figures = useMemo(() => {
     return compact(
@@ -206,7 +204,9 @@ export const ArticleZoomGalleryFragmentContainer = createFragmentContainer(
   }
 )
 
-const ArticleZoomGalleryPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const ArticleZoomGalleryPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { theme } = useTheme()
   return (
     <ModalBase bg={theme.effects.backdrop}>
@@ -229,11 +229,9 @@ interface ArticleZoomGalleryRefetchContainerProps {
   onClose: () => void
 }
 
-export const ArticleZoomGalleryRefetchContainer: FC<React.PropsWithChildren<ArticleZoomGalleryRefetchContainerProps>> = ({
-  id,
-  figureId,
-  onClose,
-}) => {
+export const ArticleZoomGalleryRefetchContainer: FC<
+  React.PropsWithChildren<ArticleZoomGalleryRefetchContainerProps>
+> = ({ id, figureId, onClose }) => {
   return (
     <SystemQueryRenderer<ArticleZoomGalleryQuery>
       query={ARTICLE_ZOOM_GALLERY_QUERY}
@@ -264,10 +262,8 @@ export const ArticleZoomGalleryRefetchContainer: FC<React.PropsWithChildren<Arti
 export const useArticleZoomGallery = () => {
   const { articleId } = useArticleContext()
 
-  const [
-    isArticleZoomGalleryVisible,
-    setIsArticleZoomGalleryVisible,
-  ] = useState(false)
+  const [isArticleZoomGalleryVisible, setIsArticleZoomGalleryVisible] =
+    useState(false)
 
   const [figureId, setFigureId] = useState<string | undefined>()
 

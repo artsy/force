@@ -7,9 +7,9 @@ import { ConversationOrderInformation_order$key } from "__generated__/Conversati
 interface OrderInformationProps {
   order: ConversationOrderInformation_order$key
 }
-export const ConversationOrderInformation: React.FC<React.PropsWithChildren<OrderInformationProps>> = ({
-  order,
-}) => {
+export const ConversationOrderInformation: React.FC<
+  React.PropsWithChildren<OrderInformationProps>
+> = ({ order }) => {
   const data = useFragment(
     graphql`
       fragment ConversationOrderInformation_order on CommerceOrder {

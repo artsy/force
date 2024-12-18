@@ -12,11 +12,9 @@ interface InsightsCareerHighlightCardProps {
   onClick(): void
 }
 
-export const InsightsCareerHighlightCard: React.FC<React.PropsWithChildren<InsightsCareerHighlightCardProps>> = ({
-  count,
-  kind,
-  onClick,
-}) => {
+export const InsightsCareerHighlightCard: React.FC<
+  React.PropsWithChildren<InsightsCareerHighlightCardProps>
+> = ({ count, kind, onClick }) => {
   const { label, Icon } = getCareerHighlight(kind, count)
 
   return (

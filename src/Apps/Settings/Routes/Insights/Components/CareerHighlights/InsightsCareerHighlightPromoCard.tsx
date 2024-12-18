@@ -13,9 +13,11 @@ import { RouterLink } from "System/Components/RouterLink"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 
-export const InsightsCareerHighlightPromoCard: React.FC<React.PropsWithChildren<{
-  onClick?(): void
-}>> = ({ onClick }) => {
+export const InsightsCareerHighlightPromoCard: React.FC<
+  React.PropsWithChildren<{
+    onClick?(): void
+  }>
+> = ({ onClick }) => {
   const { src: dSrc, srcSet: dSrcSet } = resized(
     "https://files.artsy.net/images/CareerHighlightPromoImage.png",
     {

@@ -11,21 +11,14 @@ export interface ModalDialogContentProps
   footer?: React.ReactNode
 }
 
-export const ModalContent: React.FC<React.PropsWithChildren<ModalDialogContentProps>> = ({
-  children,
-  header,
-  footer,
-  onClose,
-}) => {
-  const {
-    sentinel: topSentinel,
-    isSentinelVisible: isAtTop,
-  } = useSentinelVisibility()
+export const ModalContent: React.FC<
+  React.PropsWithChildren<ModalDialogContentProps>
+> = ({ children, header, footer, onClose }) => {
+  const { sentinel: topSentinel, isSentinelVisible: isAtTop } =
+    useSentinelVisibility()
 
-  const {
-    sentinel: bottomSentinel,
-    isSentinelVisible: isAtBottom,
-  } = useSentinelVisibility()
+  const { sentinel: bottomSentinel, isSentinelVisible: isAtBottom } =
+    useSentinelVisibility()
 
   const { theme } = useTheme()
 

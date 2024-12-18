@@ -18,9 +18,9 @@ interface AppShellProps {
   match?: Match
 }
 
-export const AppShell: React.FC<React.PropsWithChildren<
-  AppShellProps
->> = props => {
+export const AppShell: React.FC<
+  React.PropsWithChildren<AppShellProps>
+> = props => {
   useSetupAuth()
 
   const { onboardingComponent } = useOnboardingModal()

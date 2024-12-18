@@ -24,7 +24,9 @@ import { useCallback, useEffect, useState } from "react"
 const HEADER_HEIGHT = 40
 const logger = createLogger("BottomFormNavigation.tsx")
 
-export const SubmissionHeader: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const SubmissionHeader: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const {
     router: { push: routerPush },
   } = useRouter()
@@ -33,9 +35,8 @@ export const SubmissionHeader: React.FC<React.PropsWithChildren<unknown>> = () =
   const { isLoggedIn } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
   const { value, clearValue } = useAuthIntent()
-  const {
-    submitMutation: associateSubmissionMutation,
-  } = useAssociateSubmission()
+  const { submitMutation: associateSubmissionMutation } =
+    useAssociateSubmission()
   const context = useSellFlowContext()
   const formik = useFormikContext()
   const { isLastStep, submission, step } = context?.state || {}
@@ -204,15 +205,14 @@ export const SubmissionHeader: React.FC<React.PropsWithChildren<unknown>> = () =
   )
 }
 
-const HeaderArtsyLogo: React.FC<React.PropsWithChildren<{ withExitConfirmation }>> = ({
-  withExitConfirmation,
-}) => {
+const HeaderArtsyLogo: React.FC<
+  React.PropsWithChildren<{ withExitConfirmation }>
+> = ({ withExitConfirmation }) => {
   const { router } = useRouter()
   const { isLoggedIn } = useSystemContext()
 
-  const [showExitConfirmationModal, setShowExitConfirmationModal] = useState(
-    false
-  )
+  const [showExitConfirmationModal, setShowExitConfirmationModal] =
+    useState(false)
 
   const handleClick = () => {
     withExitConfirmation

@@ -35,16 +35,12 @@ interface ArtworkListArtworksGridProps {
  * In the future we plan to use the `BaseArtworkFilter` and `ArtworkFilterArtworkGrid` components
  * when filter support is added.
  */
-const ArtworkListArtworksGrid: FC<React.PropsWithChildren<ArtworkListArtworksGridProps>> = ({
-  relayRefetch,
-  me,
-}) => {
+const ArtworkListArtworksGrid: FC<
+  React.PropsWithChildren<ArtworkListArtworksGridProps>
+> = ({ relayRefetch, me }) => {
   const { trackEvent } = useTracking()
-  const {
-    contextPageOwnerType,
-    contextPageOwnerSlug,
-    contextPageOwnerId,
-  } = useAnalyticsContext()
+  const { contextPageOwnerType, contextPageOwnerSlug, contextPageOwnerId } =
+    useAnalyticsContext()
   const context = useArtworkFilterContext()
   const filters = context.filters ?? {}
   const [fetching, setFetching] = useState(false)

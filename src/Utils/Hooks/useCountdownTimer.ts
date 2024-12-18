@@ -67,9 +67,8 @@ export const useCountdownTimer = ({
   includeSeconds = false,
   imminentTime = 5,
 }: TimerProps) => {
-  const [remainingTime, setRemainingTime] = useState<RemainingTime>(
-    "Calculating time"
-  )
+  const [remainingTime, setRemainingTime] =
+    useState<RemainingTime>("Calculating time")
   const [isImminent, setIsImminent] = useState<boolean>(false)
   const [percentComplete, setPercentComplete] = useState<number>(0)
 

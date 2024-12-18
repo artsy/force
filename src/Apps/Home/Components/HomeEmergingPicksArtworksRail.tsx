@@ -23,9 +23,9 @@ interface HomeEmergingPicksArtworksRailProps {
   viewer: HomeEmergingPicksArtworksRail_viewer$data
 }
 
-export const HomeEmergingPicksArtworksRail: React.FC<React.PropsWithChildren<
-  HomeEmergingPicksArtworksRailProps
->> = ({ viewer }) => {
+export const HomeEmergingPicksArtworksRail: React.FC<
+  React.PropsWithChildren<HomeEmergingPicksArtworksRailProps>
+> = ({ viewer }) => {
   const { trackEvent } = useTracking()
 
   const artworks = extractNodes(viewer.artworksConnection)
@@ -90,9 +90,8 @@ export const HomeEmergingPicksArtworksRail: React.FC<React.PropsWithChildren<
   )
 }
 
-export const HomeEmergingPicksArtworksRailFragmentContainer = createFragmentContainer(
-  HomeEmergingPicksArtworksRail,
-  {
+export const HomeEmergingPicksArtworksRailFragmentContainer =
+  createFragmentContainer(HomeEmergingPicksArtworksRail, {
     viewer: graphql`
       fragment HomeEmergingPicksArtworksRail_viewer on Viewer {
         artworksConnection(
@@ -118,12 +117,11 @@ export const HomeEmergingPicksArtworksRailFragmentContainer = createFragmentCont
         }
       }
     `,
-  }
-)
+  })
 
-export const HomeEmergingPicksArtworksRailQueryRenderer: React.FC<React.PropsWithChildren<
-  unknown
->> = () => {
+export const HomeEmergingPicksArtworksRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <SystemQueryRenderer<HomeEmergingPicksArtworksRailQuery>
       placeholder={PLACEHOLDER}

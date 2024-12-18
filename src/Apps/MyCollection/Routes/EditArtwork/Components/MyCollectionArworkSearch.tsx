@@ -13,12 +13,9 @@ interface MyCollectionArworkSearchProps {
   query?: string | null
 }
 
-export const MyCollectionArworkSearch: React.FC<React.PropsWithChildren<MyCollectionArworkSearchProps>> = ({
-  artistId,
-  onClick,
-  onSkip,
-  query,
-}) => {
+export const MyCollectionArworkSearch: React.FC<
+  React.PropsWithChildren<MyCollectionArworkSearchProps>
+> = ({ artistId, onClick, onSkip, query }) => {
   const input = query ? { keyword: query } : null
 
   const data = useLazyLoadQuery<MyCollectionArworkSearchQuery>(
@@ -111,10 +108,12 @@ export const MyCollectionArworkSearch: React.FC<React.PropsWithChildren<MyCollec
   )
 }
 
-const NoResults: React.FC<React.PropsWithChildren<{
-  onSkip: () => void
-  query?: string | null
-}>> = ({ onSkip, query }) => {
+const NoResults: React.FC<
+  React.PropsWithChildren<{
+    onSkip: () => void
+    query?: string | null
+  }>
+> = ({ onSkip, query }) => {
   return (
     <Box my={4}>
       <Text variant={["xs", "sm-display"]} flexWrap="wrap">

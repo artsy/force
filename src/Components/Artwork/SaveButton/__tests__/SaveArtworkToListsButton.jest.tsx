@@ -34,35 +34,34 @@ describe("SaveArtworkToListsButton", () => {
     mockSaveArtwork.mockImplementation(() => ({}))
   })
 
-  const { renderWithRelay } = setupTestWrapperTL<
-    SaveArtworkToListsButton_Test_Query
-  >({
-    Component: props => {
-      if (!props.artwork) {
-        return null
-      }
+  const { renderWithRelay } =
+    setupTestWrapperTL<SaveArtworkToListsButton_Test_Query>({
+      Component: props => {
+        if (!props.artwork) {
+          return null
+        }
 
-      return (
-        <MockBoot context={{ user: { id: "percy-z" } }}>
-          <AppToasts />
+        return (
+          <MockBoot context={{ user: { id: "percy-z" } }}>
+            <AppToasts />
 
-          <ManageArtworkForSavesProvider savedListId={savedListId}>
-            <SaveArtworkToListsButtonFragmentContainer
-              artwork={props.artwork}
-              contextModule={ContextModule.artworkGrid}
-            />
-          </ManageArtworkForSavesProvider>
-        </MockBoot>
-      )
-    },
-    query: graphql`
+            <ManageArtworkForSavesProvider savedListId={savedListId}>
+              <SaveArtworkToListsButtonFragmentContainer
+                artwork={props.artwork}
+                contextModule={ContextModule.artworkGrid}
+              />
+            </ManageArtworkForSavesProvider>
+          </MockBoot>
+        )
+      },
+      query: graphql`
       query SaveArtworkToListsButton_Test_Query @relay_test_operation {
         artwork(id: "artworkID") {
           ...SaveArtworkToListsButton_artwork
         }
       }
     `,
-  })
+    })
 
   it("should display `Save` label", () => {
     renderWithRelay({

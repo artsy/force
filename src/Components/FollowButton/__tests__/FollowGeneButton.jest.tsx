@@ -70,7 +70,6 @@ describe("FollowGeneButton", () => {
 
     it("opens the auth modal", () => {
       const showAuthDialog = jest.fn()
-
       ;(useAuthDialog as jest.Mock).mockImplementation(() => {
         return { showAuthDialog }
       })

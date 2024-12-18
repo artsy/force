@@ -265,14 +265,15 @@ export class ArtworkGridContainer extends React.Component<
     }
 
     const columnBreakpointProps = this.columnBreakpointProps(columnCount)
-    const sectionedArtworksForAllBreakpoints = this.sectionedArtworksForAllBreakpoints(
-      this.props.artworks,
-      columnBreakpointProps.map(([n]) => n)
-    )
+    const sectionedArtworksForAllBreakpoints =
+      this.sectionedArtworksForAllBreakpoints(
+        this.props.artworks,
+        columnBreakpointProps.map(([n]) => n)
+      )
 
     return columnBreakpointProps.map(([count, props], i) => (
       // We always create all Media instances, so using i as key is fine.
-      (<Media {...props} key={i}>
+      <Media {...props} key={i}>
         {/*
         FIXME: REACT_18_MIGRATION
         @ts-ignore */}
@@ -287,8 +288,8 @@ export class ArtworkGridContainer extends React.Component<
             </InnerContainer>
           )
         }}
-      </Media>)
-    ));
+      </Media>
+    ))
   }
 
   render() {
@@ -371,9 +372,9 @@ function areSectionedArtworksEqual(current: any, previous: any) {
     const previousEdges = (previous as Artworks).edges
     return (
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      (currentEdges.length === previousEdges.length && // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      currentEdges.every((e, i) => e.node.id === previousEdges[i].node.id))
-    );
+      currentEdges.length === previousEdges.length && // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      currentEdges.every((e, i) => e.node.id === previousEdges[i].node.id)
+    )
   }
 }
 
@@ -445,16 +446,14 @@ interface ArtworkGridPlaceholderProps extends MasonryProps {
   amount?: number
 }
 
-export const ArtworkGridPlaceholder: React.FC<React.PropsWithChildren<ArtworkGridPlaceholderProps>> = ({
-  amount = 20,
-  ...rest
-}) => {
+export const ArtworkGridPlaceholder: React.FC<
+  React.PropsWithChildren<ArtworkGridPlaceholderProps>
+> = ({ amount = 20, ...rest }) => {
   return (
     <Masonry {...rest}>
       {[...new Array(amount)].map((_, i) => {
-        const [width, height] = PLACEHOLDER_DIMENSIONS[
-          i % PLACEHOLDER_DIMENSIONS.length
-        ]
+        const [width, height] =
+          PLACEHOLDER_DIMENSIONS[i % PLACEHOLDER_DIMENSIONS.length]
 
         return (
           <div key={i}>

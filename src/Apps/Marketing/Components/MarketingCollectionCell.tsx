@@ -9,11 +9,9 @@ interface MarketingCollectionCellProps {
   src: string
 }
 
-export const MarketingCollectionCell: FC<React.PropsWithChildren<MarketingCollectionCellProps>> = ({
-  title,
-  href,
-  src,
-}) => {
+export const MarketingCollectionCell: FC<
+  React.PropsWithChildren<MarketingCollectionCellProps>
+> = ({ title, href, src }) => {
   const image = cropped(src, { width: 400, height: 300 })
 
   return (

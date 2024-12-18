@@ -12,9 +12,9 @@ interface ArtworkPublishedNotificationProps {
   notification: ArtworkPublishedNotification_notification$key
 }
 
-export const ArtworkPublishedNotification: FC<React.PropsWithChildren<ArtworkPublishedNotificationProps>> = ({
-  notification,
-}) => {
+export const ArtworkPublishedNotification: FC<
+  React.PropsWithChildren<ArtworkPublishedNotificationProps>
+> = ({ notification }) => {
   const notificationData = useFragment(
     ArtworkPublishedNotificationFragment,
     notification

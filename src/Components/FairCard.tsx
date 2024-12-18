@@ -8,9 +8,9 @@ interface FairHeaderImageProps {
 }
 
 // TODO: Remove
-export const FairCard: React.FC<React.PropsWithChildren<FairHeaderImageProps>> = ({
-  fair: { name, image },
-}) => {
+export const FairCard: React.FC<
+  React.PropsWithChildren<FairHeaderImageProps>
+> = ({ fair: { name, image } }) => {
   return (
     <ResponsiveBox
       aspectWidth={3}

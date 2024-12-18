@@ -10,7 +10,9 @@ import {
 import { FC, useReducer, useState } from "react"
 import { MetaTags } from "Components/MetaTags"
 
-export const AdminCacheManagementRoute: FC<React.PropsWithChildren<unknown>> = () => {
+export const AdminCacheManagementRoute: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { sendToast } = useToasts()
 
   const [state, dispatch] = useReducer(reducer, {

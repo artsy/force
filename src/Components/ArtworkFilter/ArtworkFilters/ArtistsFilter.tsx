@@ -19,12 +19,16 @@ export interface ArtistsFilterProps {
   user?: User
 }
 
-const ArtistItem: React.FC<React.PropsWithChildren<{
-  slug: string
-  name: string
-  followedArtistSlugs: string[]
-  isFollowedArtistCheckboxSelected: boolean
-} & CheckboxProps>> = ({
+const ArtistItem: React.FC<
+  React.PropsWithChildren<
+    {
+      slug: string
+      name: string
+      followedArtistSlugs: string[]
+      isFollowedArtistCheckboxSelected: boolean
+    } & CheckboxProps
+  >
+> = ({
   slug,
   name,
   followedArtistSlugs,
@@ -65,7 +69,10 @@ const ArtistItem: React.FC<React.PropsWithChildren<{
   )
 }
 
-export const ArtistsFilter: FC<React.PropsWithChildren<ArtistsFilterProps>> = ({ expanded, fairID }) => {
+export const ArtistsFilter: FC<React.PropsWithChildren<ArtistsFilterProps>> = ({
+  expanded,
+  fairID,
+}) => {
   const { relayEnvironment, user } = useSystemContext()
 
   const {
@@ -77,10 +84,8 @@ export const ArtistsFilter: FC<React.PropsWithChildren<ArtistsFilterProps>> = ({
 
   const artists = aggregations?.find(agg => agg.slice === "ARTIST")
 
-  const {
-    artistIDs = [],
-    includeArtworksByFollowedArtists,
-  } = useCurrentlySelectedFilters()
+  const { artistIDs = [], includeArtworksByFollowedArtists } =
+    useCurrentlySelectedFilters()
 
   const followedArtistSlugs = followedArtists.map(({ slug }) => slug)
 

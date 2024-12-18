@@ -1,15 +1,18 @@
-import { loadStripe, StripeElementsOptions } from '@stripe/stripe-js';
+import { loadStripe, StripeElementsOptions } from "@stripe/stripe-js"
 import { Elements, ElementsConsumer } from "@stripe/react-stripe-js"
-import * as React from "react";
+import * as React from "react"
 import { data as sd } from "sharify"
 
-export function createStripeWrapper<T>(Component: React.FC<React.PropsWithChildren<T>>, stripeElementsOptions?: StripeElementsOptions): React.FC<React.PropsWithChildren<T>> {
+export function createStripeWrapper<T>(
+  Component: React.FC<React.PropsWithChildren<T>>,
+  stripeElementsOptions?: StripeElementsOptions
+): React.FC<React.PropsWithChildren<T>> {
   return props => {
-    const stripePromise = loadStripe(sd.STRIPE_PUBLISHABLE_KEY);
+    const stripePromise = loadStripe(sd.STRIPE_PUBLISHABLE_KEY)
     return (
       <Elements stripe={stripePromise} options={stripeElementsOptions}>
         <ElementsConsumer>
-          {(ctx) => (
+          {ctx => (
             <Component stripe={ctx.stripe} elements={ctx.elements} {...props} />
           )}
         </ElementsConsumer>

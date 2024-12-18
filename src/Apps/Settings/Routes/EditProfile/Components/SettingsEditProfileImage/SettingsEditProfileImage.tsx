@@ -27,10 +27,9 @@ interface SettingsEditProfileImageProps {
   relay: RelayRefetchProp
 }
 
-const SettingsEditProfileImage: FC<React.PropsWithChildren<SettingsEditProfileImageProps>> = ({
-  me,
-  relay,
-}) => {
+const SettingsEditProfileImage: FC<
+  React.PropsWithChildren<SettingsEditProfileImageProps>
+> = ({ me, relay }) => {
   const { sendToast } = useToasts()
 
   const [mode, setMode] = useState<"Idle" | "Uploading">("Idle")

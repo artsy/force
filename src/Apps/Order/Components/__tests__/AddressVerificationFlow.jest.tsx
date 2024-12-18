@@ -48,11 +48,10 @@ beforeAll(() => {
   }))
 })
 
-const { renderWithRelay } = setupTestWrapperTL<
-  AddressVerificationFlow_Test_Query
->({
-  Component: AddressVerificationFlowFragmentContainer,
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<AddressVerificationFlow_Test_Query>({
+    Component: AddressVerificationFlowFragmentContainer,
+    query: graphql`
     query AddressVerificationFlow_Test_Query($address: VerifyAddressInput!)
       @relay_test_operation {
       verifyAddress(input: $address) {
@@ -60,8 +59,8 @@ const { renderWithRelay } = setupTestWrapperTL<
       }
     }
   `,
-  variables: { address: mockInputAddress },
-})
+    variables: { address: mockInputAddress },
+  })
 
 type SuccessType = Extract<
   AddressVerificationFlow_verifyAddress$data["verifyAddressOrError"],

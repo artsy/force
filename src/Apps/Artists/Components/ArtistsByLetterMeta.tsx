@@ -5,7 +5,9 @@ import { getENV } from "Utils/getENV"
 
 const TITLE = "Modern and Contemporary Artists"
 
-export const ArtistsByLetterMeta: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const ArtistsByLetterMeta: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const {
     match: { params },
   } = useRouter()

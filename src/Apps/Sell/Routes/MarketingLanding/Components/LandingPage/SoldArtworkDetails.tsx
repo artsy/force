@@ -9,9 +9,9 @@ interface SoldArtworkDetailsProps {
   contextModule?: AuthContextModule
 }
 
-const ArtistLine: React.FC<React.PropsWithChildren<SoldArtworkDetailsProps>> = ({
-  artwork: { cultural_maker, artists },
-}) => {
+const ArtistLine: React.FC<
+  React.PropsWithChildren<SoldArtworkDetailsProps>
+> = ({ artwork: { cultural_maker, artists } }) => {
   if (cultural_maker) {
     return (
       <Text variant={["sm-display", "lg-display"]} overflowEllipsis>
@@ -51,7 +51,9 @@ const TitleLine: React.FC<React.PropsWithChildren<SoldArtworkDetailsProps>> = ({
   )
 }
 
-const SoldArtworkDetails: React.FC<React.PropsWithChildren<SoldArtworkDetailsProps>> = ({ artwork }) => {
+const SoldArtworkDetails: React.FC<
+  React.PropsWithChildren<SoldArtworkDetailsProps>
+> = ({ artwork }) => {
   return (
     <Box maxWidth="100%" my={1}>
       <ArtistLine artwork={artwork} />

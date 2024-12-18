@@ -7,7 +7,9 @@ interface GeneMetaProps {
   gene: GeneMeta_gene$data
 }
 
-const GeneMeta: React.FC<React.PropsWithChildren<GeneMetaProps>> = ({ gene }) => {
+const GeneMeta: React.FC<React.PropsWithChildren<GeneMetaProps>> = ({
+  gene,
+}) => {
   const fallbackDescription = `Explore ${gene.name} art on Artsy. Browse works by size, price, and medium.`
   const title = `${gene.displayName || gene.name} | Artsy`
 

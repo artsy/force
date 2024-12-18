@@ -231,8 +231,7 @@ export const collectorProfileRoutes: RouteProps[] = [
     `,
   },
   {
-    path:
-      "/collector-profile/my-collection/artwork/:artworkID/price-estimate/success",
+    path: "/collector-profile/my-collection/artwork/:artworkID/price-estimate/success",
     layout: "ContainerOnly",
     getComponent: () => PriceEstimateConfirmation,
     onPreloadJS: () => {

@@ -23,17 +23,16 @@ interface SettingsEditSettingsTwoFactorBackupCodesProps {
 
 type Mode = "Pending" | "Show" | "Creating"
 
-export const SettingsEditSettingsTwoFactorBackupCodes: FC<React.PropsWithChildren<SettingsEditSettingsTwoFactorBackupCodesProps>> = ({
-  me,
-}) => {
+export const SettingsEditSettingsTwoFactorBackupCodes: FC<
+  React.PropsWithChildren<SettingsEditSettingsTwoFactorBackupCodesProps>
+> = ({ me }) => {
   const [mode, setMode] = useMode<Mode>("Pending")
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const { sendToast } = useToasts()
 
-  const {
-    submitCreateSettingsBackupSecondFactors,
-  } = useCreateSettingsBackupSecondFactors()
+  const { submitCreateSettingsBackupSecondFactors } =
+    useCreateSettingsBackupSecondFactors()
 
   const handleGenerate = async (
     password: CreateBackupSecondFactorsInput["password"]
@@ -147,9 +146,8 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<React.PropsWithChildre
   )
 }
 
-export const SettingsEditSettingsTwoFactorBackupCodesFragmentContainer = createFragmentContainer(
-  SettingsEditSettingsTwoFactorBackupCodes,
-  {
+export const SettingsEditSettingsTwoFactorBackupCodesFragmentContainer =
+  createFragmentContainer(SettingsEditSettingsTwoFactorBackupCodes, {
     me: graphql`
       fragment SettingsEditSettingsTwoFactorBackupCodes_me on Me {
         backupSecondFactors: secondFactors(kinds: [backup]) {
@@ -159,5 +157,4 @@ export const SettingsEditSettingsTwoFactorBackupCodesFragmentContainer = createF
         }
       }
     `,
-  }
-)
+  })

@@ -11,10 +11,9 @@ interface DefaultSuggestionProps {
   query: string
 }
 
-export const DefaultSuggestion: FC<React.PropsWithChildren<DefaultSuggestionProps>> = ({
-  option,
-  query,
-}) => {
+export const DefaultSuggestion: FC<
+  React.PropsWithChildren<DefaultSuggestionProps>
+> = ({ option, query }) => {
   const matches = match(option.text, query)
   const parts = parse(option.text, matches)
   const partTags = parts.map(({ highlight, text }, index) =>

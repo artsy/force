@@ -8,9 +8,9 @@ interface SuggestedArtworksModalProps {
   onClose: () => void
 }
 
-export const SuggestedArtworksModal: FC<React.PropsWithChildren<SuggestedArtworksModalProps>> = ({
-  onClose,
-}) => {
+export const SuggestedArtworksModal: FC<
+  React.PropsWithChildren<SuggestedArtworksModalProps>
+> = ({ onClose }) => {
   const { criteria, entity } = useSavedSearchAlertContext()
   const artistName = entity.defaultCriteria?.artistIDs?.[0].displayValue ?? ""
 

@@ -14,9 +14,9 @@ interface AuctionResultProps {
   auctionResult: AuctionResult_auctionResult$data
 }
 
-export const AuctionResult: React.FC<React.PropsWithChildren<AuctionResultProps>> = ({
-  auctionResult,
-}) => {
+export const AuctionResult: React.FC<
+  React.PropsWithChildren<AuctionResultProps>
+> = ({ auctionResult }) => {
   const { comparableAuctionResults, title, artist, internalID } = auctionResult
 
   const results = extractNodes(comparableAuctionResults)

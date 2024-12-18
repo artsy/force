@@ -8,9 +8,9 @@ interface ArtworkSidebarCreateAlertProps {
   artwork: ArtworkSidebarCreateAlert_artwork$data
 }
 
-export const ArtworkSidebarCreateAlert: React.FC<React.PropsWithChildren<ArtworkSidebarCreateAlertProps>> = ({
-  artwork,
-}) => {
+export const ArtworkSidebarCreateAlert: React.FC<
+  React.PropsWithChildren<ArtworkSidebarCreateAlertProps>
+> = ({ artwork }) => {
   if (!artwork.isEligibleToCreateAlert) return null
 
   return (
@@ -32,13 +32,11 @@ export const ArtworkSidebarCreateAlert: React.FC<React.PropsWithChildren<Artwork
   )
 }
 
-export const ArtworkSidebarCreateAlertFragmentContainer = createFragmentContainer(
-  ArtworkSidebarCreateAlert,
-  {
+export const ArtworkSidebarCreateAlertFragmentContainer =
+  createFragmentContainer(ArtworkSidebarCreateAlert, {
     artwork: graphql`
       fragment ArtworkSidebarCreateAlert_artwork on Artwork {
         isEligibleToCreateAlert
       }
     `,
-  }
-)
+  })

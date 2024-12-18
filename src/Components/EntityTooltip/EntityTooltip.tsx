@@ -6,14 +6,17 @@ import { EntityTooltipGeneQueryRenderer } from "./EntityTooltipGene"
 import { EntityTooltipPartnerQueryRenderer } from "./EntityTooltipPartner"
 
 const SUPPORTED_ENTITIES = ["artist", "partner", "gene"] as const
-export type Entity = typeof SUPPORTED_ENTITIES[number]
+export type Entity = (typeof SUPPORTED_ENTITIES)[number]
 
 interface EntityTooltipProps {
   entity: Entity
   id: string
 }
 
-export const EntityTooltip: FC<React.PropsWithChildren<EntityTooltipProps>> = ({ entity, id }) => {
+export const EntityTooltip: FC<React.PropsWithChildren<EntityTooltipProps>> = ({
+  entity,
+  id,
+}) => {
   switch (entity) {
     case "artist":
       return <EntityTooltipArtistQueryRenderer id={id} />

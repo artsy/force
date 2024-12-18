@@ -17,10 +17,9 @@ const KEY = PROGRESSIVE_ONBOARDING.saveArtwork
 interface ProgressiveOnboardingSaveArtworkProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingSaveArtwork__: FC<React.PropsWithChildren<ProgressiveOnboardingSaveArtworkProps>> = ({
-  counts,
-  children,
-}) => {
+export const __ProgressiveOnboardingSaveArtwork__: FC<
+  React.PropsWithChildren<ProgressiveOnboardingSaveArtworkProps>
+> = ({ counts, children }) => {
   const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayble =

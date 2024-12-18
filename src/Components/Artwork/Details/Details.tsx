@@ -48,10 +48,12 @@ const StyledConditionalLink = styled(RouterLink)`
   }
 `
 
-const ConditionalLink: React.FC<React.PropsWithChildren<{ includeLinks: boolean } & RouterLinkProps>> = ({ includeLinks, children, ...rest }) => {
-  const LinkComponent = (includeLinks
-    ? StyledConditionalLink
-    : "span") as React.FC<React.PropsWithChildren<RouterLinkProps>>
+const ConditionalLink: React.FC<
+  React.PropsWithChildren<{ includeLinks: boolean } & RouterLinkProps>
+> = ({ includeLinks, children, ...rest }) => {
+  const LinkComponent = (
+    includeLinks ? StyledConditionalLink : "span"
+  ) as React.FC<React.PropsWithChildren<RouterLinkProps>>
   return <LinkComponent {...rest}>{children}</LinkComponent>
 }
 
@@ -150,7 +152,9 @@ const PartnerLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   return null
 }
 
-const SaleInfoLine: React.FC<React.PropsWithChildren<SaleInfoLineProps>> = props => {
+const SaleInfoLine: React.FC<
+  React.PropsWithChildren<SaleInfoLineProps>
+> = props => {
   const { showActivePartnerOffer } = props
   const { lotClosesAt } = props.artwork.collectorSignals?.auction ?? {}
   const { liveBiddingStarted } = props.artwork.collectorSignals?.auction ?? {}
@@ -213,7 +217,9 @@ const HighDemandInfo = () => {
 
 const NBSP = " "
 
-const SaleMessage: React.FC<React.PropsWithChildren<SaleMessageProps>> = props => {
+const SaleMessage: React.FC<
+  React.PropsWithChildren<SaleMessageProps>
+> = props => {
   const {
     artwork: { sale, sale_message, sale_artwork, collectorSignals },
     showActivePartnerOffer,
@@ -256,9 +262,9 @@ const BidInfo: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   )
 }
 
-const ActivePartnerOfferTimer: React.FC<React.PropsWithChildren<DetailsProps>> = ({
-  artwork: { collectorSignals },
-}) => {
+const ActivePartnerOfferTimer: React.FC<
+  React.PropsWithChildren<DetailsProps>
+> = ({ artwork: { collectorSignals } }) => {
   const SEPARATOR = <>&nbsp;</>
   const { endAt } = collectorSignals?.partnerOffer ?? {}
   const { time } = useTimer(endAt ?? "")
@@ -292,17 +298,14 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   renderSaveButton,
   ...rest
 }) => {
-  const {
-    isAuctionArtwork,
-    hideLotLabel,
-    saveOnlyToDefaultList,
-  } = useArtworkGridContext()
+  const { isAuctionArtwork, hideLotLabel, saveOnlyToDefaultList } =
+    useArtworkGridContext()
 
   const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
   const isHighDemand =
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
-  const isConsignmentSubmission = !!rest?.artwork.consignmentSubmission
-    ?.internalID
+  const isConsignmentSubmission =
+    !!rest?.artwork.consignmentSubmission?.internalID
 
   const showHighDemandInfo =
     !!isP1Artist &&
@@ -496,11 +499,9 @@ type DetailsPlaceholderProps = Pick<
   "hidePartnerName" | "hideArtistName" | "hideSaleInfo"
 >
 
-export const DetailsPlaceholder: React.FC<React.PropsWithChildren<DetailsPlaceholderProps>> = ({
-  hideArtistName,
-  hidePartnerName,
-  hideSaleInfo,
-}) => {
+export const DetailsPlaceholder: React.FC<
+  React.PropsWithChildren<DetailsPlaceholderProps>
+> = ({ hideArtistName, hidePartnerName, hideSaleInfo }) => {
   return (
     <>
       {!hideArtistName && (

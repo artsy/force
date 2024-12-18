@@ -8,33 +8,32 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
+import { ReaderFragment } from "relay-runtime"
+import { FragmentRefs } from "relay-runtime"
 export type ArtistsRoute_partner$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"PartnerArtists_partner">;
-  readonly " $fragmentType": "ArtistsRoute_partner";
-};
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerArtists_partner">
+  readonly " $fragmentType": "ArtistsRoute_partner"
+}
 export type ArtistsRoute_partner$key = {
-  readonly " $data"?: ArtistsRoute_partner$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistsRoute_partner">;
-};
+  readonly " $data"?: ArtistsRoute_partner$data
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistsRoute_partner">
+}
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
-  "kind": "Fragment",
-  "metadata": null,
-  "name": "ArtistsRoute_partner",
-  "selections": [
+  argumentDefinitions: [],
+  kind: "Fragment",
+  metadata: null,
+  name: "ArtistsRoute_partner",
+  selections: [
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "PartnerArtists_partner"
-    }
+      args: null,
+      kind: "FragmentSpread",
+      name: "PartnerArtists_partner",
+    },
   ],
-  "type": "Partner",
-  "abstractKey": null
-};
+  type: "Partner",
+  abstractKey: null,
+}
+;(node as any).hash = "eedf6b5906161ff447a026210485105c"
 
-(node as any).hash = "eedf6b5906161ff447a026210485105c";
-
-export default node;
+export default node

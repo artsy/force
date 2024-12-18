@@ -28,7 +28,9 @@ interface SettingsSavesArtistsProps {
   relay: RelayPaginationProp
 }
 
-const SettingsSavesArtists: FC<React.PropsWithChildren<SettingsSavesArtistsProps>> = ({ me, relay }) => {
+const SettingsSavesArtists: FC<
+  React.PropsWithChildren<SettingsSavesArtistsProps>
+> = ({ me, relay }) => {
   const [loading, setLoading] = useState(false)
 
   const connection = me.followsAndSaves?.artistsConnection
@@ -89,10 +91,11 @@ export const SETTINGS_SAVES_ARTISTS_QUERY = graphql`
   }
 `
 
-export const SettingsSavesArtistsPaginationContainer = createPaginationContainer(
-  SettingsSavesArtists,
-  {
-    me: graphql`
+export const SettingsSavesArtistsPaginationContainer =
+  createPaginationContainer(
+    SettingsSavesArtists,
+    {
+      me: graphql`
       fragment SettingsSavesArtists_me on Me
         @argumentDefinitions(after: { type: "String" }) {
         followsAndSaves {
@@ -111,18 +114,18 @@ export const SettingsSavesArtistsPaginationContainer = createPaginationContainer
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return { ...prevVars, totalCount }
     },
-    getVariables(_, { cursor: after }, fragmentVariables) {
-      return { ...fragmentVariables, after }
-    },
-    query: SETTINGS_SAVES_ARTISTS_QUERY,
-  }
-)
+    {
+      direction: "forward",
+      getFragmentVariables(prevVars, totalCount) {
+        return { ...prevVars, totalCount }
+      },
+      getVariables(_, { cursor: after }, fragmentVariables) {
+        return { ...fragmentVariables, after }
+      },
+      query: SETTINGS_SAVES_ARTISTS_QUERY,
+    }
+  )
 
 const SETTINGS_SAVES_ARTISTS_PLACEHOLDER = (
   <>

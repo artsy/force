@@ -3,7 +3,10 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { TimePeriodFilter, TimePeriodFilterProps } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
+import {
+  TimePeriodFilter,
+  TimePeriodFilterProps,
+} from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

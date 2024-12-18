@@ -45,7 +45,9 @@ interface AppSecondFactorModalProps {
   password: string
 }
 
-export const AppSecondFactorModal: React.FC<React.PropsWithChildren<AppSecondFactorModalProps>> = props => {
+export const AppSecondFactorModal: React.FC<
+  React.PropsWithChildren<AppSecondFactorModalProps>
+> = props => {
   const { secondFactor, password, onComplete } = props
   const { relayEnvironment } = useSystemContext()
 
@@ -248,7 +250,9 @@ interface OnCompleteRedirectModalProps {
   show: boolean
 }
 
-export const OnCompleteRedirectModal: React.FC<React.PropsWithChildren<OnCompleteRedirectModalProps>> = props => {
+export const OnCompleteRedirectModal: React.FC<
+  React.PropsWithChildren<OnCompleteRedirectModalProps>
+> = props => {
   const { onClick, redirectTo, show } = props
 
   if (!show) return null

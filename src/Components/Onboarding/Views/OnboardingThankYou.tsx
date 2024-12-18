@@ -10,10 +10,9 @@ interface OnboardingThankYouProps {
 
 const AUTOCLOSE_DELAY = 5000
 
-export const OnboardingThankYou: FC<React.PropsWithChildren<OnboardingThankYouProps>> = ({
-  autoClose,
-  message,
-}) => {
+export const OnboardingThankYou: FC<
+  React.PropsWithChildren<OnboardingThankYouProps>
+> = ({ autoClose, message }) => {
   const { register } = useOnboardingFadeTransition({ next: () => {} })
   const { onComplete, onClose } = useOnboardingContext()
 

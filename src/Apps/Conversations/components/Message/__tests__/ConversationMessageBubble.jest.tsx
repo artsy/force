@@ -40,7 +40,7 @@ describe("ConversationMessageBubble", () => {
     expect(screen.getByText("test message")).toBeInTheDocument()
     expect(screen.getByText("• 11:00AM")).toBeInTheDocument()
     expect(screen.getByText("Gumball")).toBeInTheDocument()
-    expect(screen.getByRole("img")).toHaveAttribute(
+    expect(screen.getByRole("presentation")).toHaveAttribute(
       "src",
       "https://images.com/gumbal.webp"
     )

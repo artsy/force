@@ -82,18 +82,16 @@ describe("AuctionResults", () => {
   describe("trigger auth modal for filtering and pagination", () => {
     const mockUseAuthDialog = useAuthDialog as jest.Mock
 
-    it("calls auth modal for 1st pagination but not for 2nd", () => {
+    it("calls auth modal for 1st pagination but not for 2nd", async () => {
       const showAuthDialog = jest.fn()
       mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
 
       renderWithRelay(mockedResolver)
-      const navigation = screen.getByRole("navigation")
-      const links = within(navigation).getAllByRole("link")
-      expect(links).toHaveLength(6)
 
-      fireEvent.click(links[2])
-      expect(showAuthDialog).toHaveBeenCalledTimes(1)
-      fireEvent.click(links[3])
+      const links = screen.getAllByRole("link")
+      expect(links).toHaveLength(10)
+
+      fireEvent.click(links[4])
       expect(showAuthDialog).toHaveBeenCalledTimes(1)
     })
 
@@ -138,9 +136,8 @@ describe("AuctionResults", () => {
       expect(screen.getByText("Past Auctions")).toBeInTheDocument()
       expect(screen.getByText("5 results")).toBeInTheDocument()
 
-      const navigation = screen.getByRole("navigation")
-      const links = within(navigation).getAllByRole("link")
-      expect(links).toHaveLength(6)
+      const links = screen.getAllByRole("link")
+      expect(links).toHaveLength(10)
 
       const sortSelect = screen.getAllByRole("combobox")[0]
       const options = within(sortSelect).getAllByRole("option")
@@ -148,7 +145,7 @@ describe("AuctionResults", () => {
       expect(options[1]).toHaveTextContent("Estimate")
       expect(options[2]).toHaveTextContent("Sale price")
 
-      expect(screen.getAllByRole("img")).toHaveLength(10)
+      expect(screen.getAllByRole("presentation")).toHaveLength(10)
     })
 
     describe("For Logged in users", () => {
@@ -555,8 +552,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/xACxJ_uIHApai3JP9odtZg/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/xACxJ_uIHApai3JP9odtZg/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/xACxJ_uIHApai3JP9odtZg/thumbnail.jpg",
                   width: 100,
@@ -594,8 +590,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/lmY_wowdeGi__ZtKVHV8Dw/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/lmY_wowdeGi__ZtKVHV8Dw/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/lmY_wowdeGi__ZtKVHV8Dw/thumbnail.jpg",
                   width: 100,
@@ -633,8 +628,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/AI6P5qi0Xq7Efs9d6HMt4A/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/AI6P5qi0Xq7Efs9d6HMt4A/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/AI6P5qi0Xq7Efs9d6HMt4A/thumbnail.jpg",
                   width: 100,
@@ -672,8 +666,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/B3EtIMtH8XnDmt1KBD6VhQ/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/B3EtIMtH8XnDmt1KBD6VhQ/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/B3EtIMtH8XnDmt1KBD6VhQ/thumbnail.jpg",
                   width: 100,
@@ -711,8 +704,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/rLyB6jNe0lQ8fF6EEQ61wg/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/rLyB6jNe0lQ8fF6EEQ61wg/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/rLyB6jNe0lQ8fF6EEQ61wg/thumbnail.jpg",
                   width: 100,
@@ -750,8 +742,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/46t-8KytTjCwYPw17E7U6w/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/46t-8KytTjCwYPw17E7U6w/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/46t-8KytTjCwYPw17E7U6w/thumbnail.jpg",
                   width: 100,
@@ -789,8 +780,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/eivcrcx7PVnvmKZzOQosXA/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/eivcrcx7PVnvmKZzOQosXA/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/eivcrcx7PVnvmKZzOQosXA/thumbnail.jpg",
                   width: 100,
@@ -828,8 +818,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/-ZlQnxE8T8MsVRGjSSwaXw/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/-ZlQnxE8T8MsVRGjSSwaXw/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/-ZlQnxE8T8MsVRGjSSwaXw/thumbnail.jpg",
                   width: 100,
@@ -867,8 +856,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/3nGESp60mCg0xygJ4bvjcA/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/3nGESp60mCg0xygJ4bvjcA/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/3nGESp60mCg0xygJ4bvjcA/thumbnail.jpg",
                   width: 100,
@@ -906,8 +894,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/Db93v-hdsJjCV6XHFUfn2g/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/Db93v-hdsJjCV6XHFUfn2g/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/Db93v-hdsJjCV6XHFUfn2g/thumbnail.jpg",
                   width: 100,

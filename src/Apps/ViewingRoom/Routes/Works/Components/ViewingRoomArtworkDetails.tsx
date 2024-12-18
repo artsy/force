@@ -12,10 +12,9 @@ interface ViewingRoomArtworkDetailsProps {
   artwork: ViewingRoomArtworkDetails_artwork$data
 }
 
-export const ViewingRoomArtworkDetails: React.FC<React.PropsWithChildren<ViewingRoomArtworkDetailsProps>> = ({
-  artwork,
-  artwork: { href, additionalInformation },
-}) => {
+export const ViewingRoomArtworkDetails: React.FC<
+  React.PropsWithChildren<ViewingRoomArtworkDetailsProps>
+> = ({ artwork, artwork: { href, additionalInformation } }) => {
   const { trackEvent } = useTracking()
 
   return (
@@ -66,9 +65,8 @@ export const ViewingRoomArtworkDetails: React.FC<React.PropsWithChildren<Viewing
   )
 }
 
-export const ViewingRoomArtworkDetailsFragmentContainer = createFragmentContainer(
-  ViewingRoomArtworkDetails,
-  {
+export const ViewingRoomArtworkDetailsFragmentContainer =
+  createFragmentContainer(ViewingRoomArtworkDetails, {
     artwork: graphql`
       fragment ViewingRoomArtworkDetails_artwork on Artwork {
         ...Details_artwork
@@ -77,5 +75,4 @@ export const ViewingRoomArtworkDetailsFragmentContainer = createFragmentContaine
         href
       }
     `,
-  }
-)
+  })

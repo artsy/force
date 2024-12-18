@@ -16,9 +16,9 @@ interface SettingsEditSettingsTwoFactorBackupCodesDialogProps {
   me?: SettingsEditSettingsTwoFactorBackupCodesDialog_me$data | null
 }
 
-const SettingsEditSettingsTwoFactorBackupCodesDialog: FC<React.PropsWithChildren<SettingsEditSettingsTwoFactorBackupCodesDialogProps>> = ({
-  me,
-}) => {
+const SettingsEditSettingsTwoFactorBackupCodesDialog: FC<
+  React.PropsWithChildren<SettingsEditSettingsTwoFactorBackupCodesDialogProps>
+> = ({ me }) => {
   return (
     <>
       <Text variant="sm" color="black60">
@@ -66,9 +66,8 @@ const SettingsEditSettingsTwoFactorBackupCodesDialog: FC<React.PropsWithChildren
   )
 }
 
-const SettingsEditSettingsTwoFactorBackupCodesDialogFragmentContainer = createFragmentContainer(
-  SettingsEditSettingsTwoFactorBackupCodesDialog,
-  {
+const SettingsEditSettingsTwoFactorBackupCodesDialogFragmentContainer =
+  createFragmentContainer(SettingsEditSettingsTwoFactorBackupCodesDialog, {
     me: graphql`
       fragment SettingsEditSettingsTwoFactorBackupCodesDialog_me on Me {
         backupSecondFactors: secondFactors(kinds: [backup]) {
@@ -78,34 +77,34 @@ const SettingsEditSettingsTwoFactorBackupCodesDialogFragmentContainer = createFr
         }
       }
     `,
-  }
-)
+  })
 
-export const SettingsEditSettingsTwoFactorBackupCodesDialogQueryRenderer = () => {
-  return (
-    <SystemQueryRenderer<SettingsEditSettingsTwoFactorBackupCodesDialogQuery>
-      placeholder={
-        <SettingsEditSettingsTwoFactorBackupCodesDialogFragmentContainer />
-      }
-      query={graphql`
+export const SettingsEditSettingsTwoFactorBackupCodesDialogQueryRenderer =
+  () => {
+    return (
+      <SystemQueryRenderer<SettingsEditSettingsTwoFactorBackupCodesDialogQuery>
+        placeholder={
+          <SettingsEditSettingsTwoFactorBackupCodesDialogFragmentContainer />
+        }
+        query={graphql`
         query SettingsEditSettingsTwoFactorBackupCodesDialogQuery {
           me {
             ...SettingsEditSettingsTwoFactorBackupCodesDialog_me
           }
         }
       `}
-      render={({ error, props }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
+        render={({ error, props }) => {
+          if (error) {
+            console.error(error)
+            return null
+          }
 
-        return (
-          <SettingsEditSettingsTwoFactorBackupCodesDialogFragmentContainer
-            me={props?.me}
-          />
-        )
-      }}
-    />
-  )
-}
+          return (
+            <SettingsEditSettingsTwoFactorBackupCodesDialogFragmentContainer
+              me={props?.me}
+            />
+          )
+        }}
+      />
+    )
+  }

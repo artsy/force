@@ -15,11 +15,9 @@ interface ConversationPurchaseButtonProps extends BoxProps {
   partnerOffer: { internalID: string } | null
 }
 
-export const ConversationPurchaseButton: React.FC<React.PropsWithChildren<ConversationPurchaseButtonProps>> = ({
-  conversation,
-  partnerOffer,
-  ...boxProps
-}) => {
+export const ConversationPurchaseButton: React.FC<
+  React.PropsWithChildren<ConversationPurchaseButtonProps>
+> = ({ conversation, partnerOffer, ...boxProps }) => {
   const tracking = useTracking()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { router } = useRouter()
@@ -27,10 +25,8 @@ export const ConversationPurchaseButton: React.FC<React.PropsWithChildren<Conver
   const partnerOfferCheckout = usePartnerOfferCheckoutMutation()
   const { sendToast } = useToasts()
 
-  const {
-    showSelectEditionSetModal,
-    isConfirmModalVisible,
-  } = useConversationsContext()
+  const { showSelectEditionSetModal, isConfirmModalVisible } =
+    useConversationsContext()
 
   const data = useConversationPurchaseButtonData(conversation)
 

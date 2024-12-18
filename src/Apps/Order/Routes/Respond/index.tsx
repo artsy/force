@@ -66,9 +66,8 @@ export const RespondRoute: FC<React.PropsWithChildren<RespondProps>> = ({
   const [offerValue, setOfferValue] = useState(0)
   const [responseOption, setResponseOption] = useState<ResponseOptions>(null)
   const [lowSpeedBumpEncountered, setLowSpeedBumpEncountered] = useState(false)
-  const [highSpeedBumpEncountered, setHighSpeedBumpEncountered] = useState(
-    false
-  )
+  const [highSpeedBumpEncountered, setHighSpeedBumpEncountered] =
+    useState(false)
   const [offerNoteValue, setOfferNoteValue] = useState<TextAreaChange>({
     exceedsCharacterLimit: false,
     value: "",

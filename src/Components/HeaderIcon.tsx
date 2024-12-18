@@ -8,7 +8,10 @@ export interface HeaderIconProps extends Omit<BoxProps, "maxWidth"> {
   src: string
 }
 
-export const HeaderIcon: React.FC<React.PropsWithChildren<HeaderIconProps>> = ({ src, ...rest }) => {
+export const HeaderIcon: React.FC<React.PropsWithChildren<HeaderIconProps>> = ({
+  src,
+  ...rest
+}) => {
   const img = cropped(src, { width: 200, height: 200 })
 
   return (

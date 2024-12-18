@@ -14,9 +14,9 @@ interface ArtworkErrorAppProps {
 
 const HEADLINE_404 = "The artwork you were looking for isn’t available."
 
-export const ArtworkErrorApp: React.FC<React.PropsWithChildren<ArtworkErrorAppProps>> = ({
-  artworkError,
-}) => {
+export const ArtworkErrorApp: React.FC<
+  React.PropsWithChildren<ArtworkErrorAppProps>
+> = ({ artworkError }) => {
   const data = useFragment(ArtworkErrorAppFragment, artworkError)
 
   const { artwork, requestError } = data
@@ -24,7 +24,7 @@ export const ArtworkErrorApp: React.FC<React.PropsWithChildren<ArtworkErrorAppPr
   const headline =
     statusCode === 404
       ? HEADLINE_404
-      : ERROR_MESSAGES[statusCode] ?? "Internal Error"
+      : (ERROR_MESSAGES[statusCode] ?? "Internal Error")
 
   const artworkSlug = artwork?.slug
 

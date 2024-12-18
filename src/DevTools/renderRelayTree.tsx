@@ -93,7 +93,7 @@ const RelayFinishedLoading: RenderUntilPredicate<any, any, any> = tree =>
 export function renderRelayTree<
   P = {},
   S = {},
-  C extends React.Component = React.Component
+  C extends React.Component = React.Component,
 >(
   params: MockRelayRendererProps<any> & {
     renderUntil?: RenderUntilPredicate<P, S, C>

@@ -10,9 +10,9 @@ interface ReviewOrderButtonProps {
   order: ReviewOrderButton_order$key
 }
 
-export const ReviewOrderButton: React.FC<React.PropsWithChildren<ReviewOrderButtonProps>> = ({
-  order,
-}) => {
+export const ReviewOrderButton: React.FC<
+  React.PropsWithChildren<ReviewOrderButtonProps>
+> = ({ order }) => {
   const { match } = useRouter()
   const { trackEvent } = useTracking()
 

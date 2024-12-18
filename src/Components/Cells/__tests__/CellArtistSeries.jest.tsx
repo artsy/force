@@ -6,18 +6,17 @@ import { CellArtistSeriesFragmentContainer } from "Components/Cells/CellArtistSe
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  CellArtistSeriesFragmentContainer_Test_Query
->({
-  Component: CellArtistSeriesFragmentContainer,
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<CellArtistSeriesFragmentContainer_Test_Query>({
+    Component: CellArtistSeriesFragmentContainer,
+    query: graphql`
     query CellArtistSeriesFragmentContainer_Test_Query @relay_test_operation {
       artistSeries(id: "example") {
         ...CellArtistSeries_artistSeries
       }
     }
   `,
-})
+  })
 
 describe("CellArtistSeries", () => {
   it("renders the component", () => {

@@ -10,9 +10,9 @@ interface ArtworkSidebarLinksProps {
   artwork: ArtworkSidebarLinks_artwork$data
 }
 
-const ArtworkSidebarLinks: React.FC<React.PropsWithChildren<ArtworkSidebarLinksProps>> = ({
-  artwork,
-}) => {
+const ArtworkSidebarLinks: React.FC<
+  React.PropsWithChildren<ArtworkSidebarLinksProps>
+> = ({ artwork }) => {
   const tracking = useTracking()
   const { sale, isInAuction, isUnlisted } = artwork
 

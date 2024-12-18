@@ -21,7 +21,9 @@ interface CategoryRailProps {
   category: CategoryRail_category$data
 }
 
-const CategoryRail: FC<React.PropsWithChildren<CategoryRailProps>> = ({ category }) => {
+const CategoryRail: FC<React.PropsWithChildren<CategoryRailProps>> = ({
+  category,
+}) => {
   if (!category || !category.name) return null
 
   const artworks = extractNodes(category.filterArtworks)

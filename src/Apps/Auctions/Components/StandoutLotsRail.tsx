@@ -22,12 +22,13 @@ export interface StandoutLotsRailProps {
   viewer: StandoutLotsRail_viewer$data
 }
 
-export const StandoutLotsRail: React.FC<React.PropsWithChildren<StandoutLotsRailProps>> = ({
-  viewer,
-}) => {
+export const StandoutLotsRail: React.FC<
+  React.PropsWithChildren<StandoutLotsRailProps>
+> = ({ viewer }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
-  const contextModule = tabTypeToContextModuleMap.standoutLots as AuthContextModule
+  const contextModule =
+    tabTypeToContextModuleMap.standoutLots as AuthContextModule
   const artworks = extractNodes(viewer.standoutLotsRailConnection)
 
   if (artworks.length === 0) {
@@ -88,7 +89,9 @@ export const StandoutLotsRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const StandoutLotsRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const StandoutLotsRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

@@ -11,14 +11,11 @@ interface ArticleSectionImageCollectionImageProps {
   targetWidth: number
 }
 
-const ArticleSectionImageCollectionImage: FC<React.PropsWithChildren<ArticleSectionImageCollectionImageProps>> = ({
-  figure,
-  targetWidth,
-}) => {
-  const {
-    articleZoomGalleryComponent,
-    showArticleZoomGallery,
-  } = useArticleZoomGallery()
+const ArticleSectionImageCollectionImage: FC<
+  React.PropsWithChildren<ArticleSectionImageCollectionImageProps>
+> = ({ figure, targetWidth }) => {
+  const { articleZoomGalleryComponent, showArticleZoomGallery } =
+    useArticleZoomGallery()
 
   const handleClick = () => {
     if (!figure.id) return
@@ -55,9 +52,8 @@ const ArticleSectionImageCollectionImage: FC<React.PropsWithChildren<ArticleSect
   )
 }
 
-export const ArticleSectionImageCollectionImageFragmentContainer = createFragmentContainer(
-  ArticleSectionImageCollectionImage,
-  {
+export const ArticleSectionImageCollectionImageFragmentContainer =
+  createFragmentContainer(ArticleSectionImageCollectionImage, {
     figure: graphql`
       fragment ArticleSectionImageCollectionImage_figure on ArticleSectionImageCollectionFigure {
         ... on ArticleImageSection {
@@ -87,5 +83,4 @@ export const ArticleSectionImageCollectionImageFragmentContainer = createFragmen
         }
       }
     `,
-  }
-)
+  })

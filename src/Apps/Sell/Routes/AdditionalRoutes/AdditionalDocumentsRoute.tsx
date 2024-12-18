@@ -41,7 +41,9 @@ interface AdditionalDocumentsRouteProps {
   submission: AdditionalDocumentsRoute_submission$key
 }
 
-export const AdditionalDocumentsRoute: React.FC<React.PropsWithChildren<AdditionalDocumentsRouteProps>> = props => {
+export const AdditionalDocumentsRoute: React.FC<
+  React.PropsWithChildren<AdditionalDocumentsRouteProps>
+> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
   const {
     actions: { setLoading },

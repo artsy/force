@@ -14,10 +14,9 @@ interface ChannelArticlesProps {
   relay: RelayPaginationProp
 }
 
-export const ChannelArticles: FC<React.PropsWithChildren<ChannelArticlesProps>> = ({
-  channel,
-  relay,
-}) => {
+export const ChannelArticles: FC<
+  React.PropsWithChildren<ChannelArticlesProps>
+> = ({ channel, relay }) => {
   const [loading, setLoading] = useState(false)
 
   const articles = extractNodes(channel.articlesConnection)

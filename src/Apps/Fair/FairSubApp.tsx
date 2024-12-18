@@ -11,7 +11,10 @@ interface FairAppProps {
   fair: FairSubApp_fair$data
 }
 
-const FairApp: React.FC<React.PropsWithChildren<FairAppProps>> = ({ children, fair }) => {
+const FairApp: React.FC<React.PropsWithChildren<FairAppProps>> = ({
+  children,
+  fair,
+}) => {
   const { user } = useSystemContext()
 
   // If a fair's profile is inaccessible, that means it's private, which in turn means

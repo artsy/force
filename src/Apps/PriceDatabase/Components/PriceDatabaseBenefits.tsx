@@ -13,7 +13,9 @@ import { ReactElement } from "react"
 import * as React from "react"
 import { Media } from "Utils/Responsive"
 
-export const PriceDatabaseBenefits: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const PriceDatabaseBenefits: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Flex flexDirection="column">
       <GridColumns gridRowGap={[2, 0]}>
@@ -88,12 +90,14 @@ export const PriceDatabaseBenefits: React.FC<React.PropsWithChildren<unknown>> =
   )
 }
 
-const Section: React.FC<React.PropsWithChildren<{
-  title: string
-  text: string
-  jsx: ReactElement
-  jsxPosition?: "left" | "right"
-}>> = ({ title, text, jsx, jsxPosition = "left" }) => {
+const Section: React.FC<
+  React.PropsWithChildren<{
+    title: string
+    text: string
+    jsx: ReactElement
+    jsxPosition?: "left" | "right"
+  }>
+> = ({ title, text, jsx, jsxPosition = "left" }) => {
   return (
     <>
       <Media lessThan="md">
@@ -135,14 +139,16 @@ const Section: React.FC<React.PropsWithChildren<{
   )
 }
 
-const SectionImage: React.FC<React.PropsWithChildren<{
-  src: string
-  srcSet: string
-  alt: string
-  artistName?: string
-  artworkName?: string
-  artworkCopyright?: string
-}>> = ({ src, srcSet, alt, artistName, artworkName, artworkCopyright }) => {
+const SectionImage: React.FC<
+  React.PropsWithChildren<{
+    src: string
+    srcSet: string
+    alt: string
+    artistName?: string
+    artworkName?: string
+    artworkCopyright?: string
+  }>
+> = ({ src, srcSet, alt, artistName, artworkName, artworkCopyright }) => {
   return (
     <ResponsiveBox
       aspectWidth={800}

@@ -9,7 +9,9 @@ interface ShowsMetaProps {
   cityName?: string
 }
 
-export const ShowsMeta: React.FC<React.PropsWithChildren<ShowsMetaProps>> = ({ cityName }) => {
+export const ShowsMeta: React.FC<React.PropsWithChildren<ShowsMetaProps>> = ({
+  cityName,
+}) => {
   const title = cityName ? `${cityName} ${TITLE}` : TITLE
   const description = cityName
     ? `Explore shows in ${cityName} on Artsy. ${DESCRIPTION}`

@@ -59,8 +59,8 @@ export const useAuthDialogOptions = () => {
         kind: "submission",
         objectId: query.submissionId,
       }
-    : ((query.afterSignUpAction as unknown) as AfterAuthAction) ||
-      ((query.afterAuthAction as unknown) as AfterAuthAction)
+    : (query.afterSignUpAction as unknown as AfterAuthAction) ||
+      (query.afterAuthAction as unknown as AfterAuthAction)
 
   useEffect(() => {
     dispatch({

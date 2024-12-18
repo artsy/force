@@ -6,11 +6,9 @@ interface ArtworkItemProps {
   onClick: (artwork: any) => void
 }
 
-export const ArtworkItem: React.FC<React.PropsWithChildren<ArtworkItemProps>> = ({
-  artwork,
-  mode = "add",
-  onClick,
-}) => {
+export const ArtworkItem: React.FC<
+  React.PropsWithChildren<ArtworkItemProps>
+> = ({ artwork, mode = "add", onClick }) => {
   return (
     <Box m={2} mb={4} maxWidth={200}>
       {artwork.image?.cropped && (

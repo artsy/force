@@ -6,8 +6,7 @@ export default {
 }
 
 const IMAGE = {
-  src:
-    "https://d32dm0rphc51dk.cloudfront.net/A5jM8w6hQQtGN-i7MTnl7w/normalized.jpg",
+  src: "https://d32dm0rphc51dk.cloudfront.net/A5jM8w6hQQtGN-i7MTnl7w/normalized.jpg",
   width: 5139,
   height: 7709,
 }

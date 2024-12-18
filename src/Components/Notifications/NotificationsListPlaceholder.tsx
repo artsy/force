@@ -13,9 +13,9 @@ interface NotificationItemPlaceholderProps {
   index: number
 }
 
-const NotificationItemPlaceholder: FC<React.PropsWithChildren<NotificationItemPlaceholderProps>> = ({
-  index,
-}) => {
+const NotificationItemPlaceholder: FC<
+  React.PropsWithChildren<NotificationItemPlaceholderProps>
+> = ({ index }) => {
   const numberOfImages = [2, 1, 3, 4, 3, 2][index % 6]
 
   return (

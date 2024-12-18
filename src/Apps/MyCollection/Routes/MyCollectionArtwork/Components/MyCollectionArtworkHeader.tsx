@@ -10,10 +10,11 @@ interface MyCollectionArtworkHeaderProps {
   artwork: MyCollectionArtworkHeader_artwork$key
 }
 
-export const MyCollectionArtworkHeader: React.FC<React.PropsWithChildren<MyCollectionArtworkHeaderProps>> = props => {
-  const {
-    editCollectedArtwork: trackEditCollectedArtwork,
-  } = useMyCollectionTracking()
+export const MyCollectionArtworkHeader: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkHeaderProps>
+> = props => {
+  const { editCollectedArtwork: trackEditCollectedArtwork } =
+    useMyCollectionTracking()
 
   const artwork = useFragment(FRAGMENT, props.artwork)
   const showEditCTA = !artwork.consignmentSubmission?.internalID

@@ -2,7 +2,9 @@ import { Box, Spacer, Text } from "@artsy/palette"
 import { SearchInputContainer } from "Components/Search/SearchInputContainer"
 import { useState, useCallback } from "react"
 
-export const MyCollectionInsightsSelectArtistModal: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const MyCollectionInsightsSelectArtistModal: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const [query, setQuery] = useState("")
 
   const handleChange = useCallback(event => {

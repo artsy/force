@@ -7,10 +7,9 @@ interface ShowLocationHoursProps extends BoxProps {
   location: ShowLocationHours_location$data
 }
 
-export const ShowLocationHours: React.FC<React.PropsWithChildren<ShowLocationHoursProps>> = ({
-  location: { openingHours },
-  ...rest
-}) => {
+export const ShowLocationHours: React.FC<
+  React.PropsWithChildren<ShowLocationHoursProps>
+> = ({ location: { openingHours }, ...rest }) => {
   if (!openingHours?.text && !openingHours?.schedules) {
     return null
   }

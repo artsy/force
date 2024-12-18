@@ -6,20 +6,19 @@ import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  ArtworkSidebarDetails_Test_Query
->({
-  Component: ({ artwork }) => {
-    return <ArtworkSidebarDetailsFragmentContainer artwork={artwork!} />
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<ArtworkSidebarDetails_Test_Query>({
+    Component: ({ artwork }) => {
+      return <ArtworkSidebarDetailsFragmentContainer artwork={artwork!} />
+    },
+    query: graphql`
     query ArtworkSidebarDetails_Test_Query @relay_test_operation {
       artwork(id: "josef-albers-homage-to-the-square-85") {
         ...ArtworkSidebarDetails_artwork
       }
     }
   `,
-})
+  })
 
 describe("ArtworkSidebarDetails", () => {
   it("renders the correct fields with edition and frame included", () => {

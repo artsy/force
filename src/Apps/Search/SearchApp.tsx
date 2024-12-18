@@ -23,10 +23,9 @@ export interface SearchAppProps {
   viewer: SearchApp_viewer$data
 }
 
-const TotalResults: React.FC<React.PropsWithChildren<{ count: number; term: string }>> = ({
-  count,
-  term,
-}) => {
+const TotalResults: React.FC<
+  React.PropsWithChildren<{ count: number; term: string }>
+> = ({ count, term }) => {
   return (
     <>
       <Text variant={["lg-display", "xl"]}>
@@ -41,7 +40,10 @@ const TotalResults: React.FC<React.PropsWithChildren<{ count: number; term: stri
   )
 }
 
-export const SearchApp: React.FC<React.PropsWithChildren<SearchAppProps>> = ({ viewer, children }) => {
+export const SearchApp: React.FC<React.PropsWithChildren<SearchAppProps>> = ({
+  viewer,
+  children,
+}) => {
   const {
     match: { location },
   } = useRouter()
@@ -50,8 +52,9 @@ export const SearchApp: React.FC<React.PropsWithChildren<SearchAppProps>> = ({ v
   const { aggregations } = searchConnection ?? {}
 
   const term = query.term
-  const typeAggregation = aggregations?.find(agg => agg?.slice === "TYPE")
-    ?.counts
+  const typeAggregation = aggregations?.find(
+    agg => agg?.slice === "TYPE"
+  )?.counts
 
   const artworkCount = artworksConnection?.counts?.total ?? 0
   const countWithoutArtworks =

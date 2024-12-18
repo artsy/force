@@ -145,9 +145,8 @@ const SalePriceEstimatePerformance = ({ value }: { value: number }) => {
   )
 }
 
-export const MyCollectionArtworkArtistMarketFragmentContainer = createFragmentContainer(
-  MyCollectionArtworkArtistMarket,
-  {
+export const MyCollectionArtworkArtistMarketFragmentContainer =
+  createFragmentContainer(MyCollectionArtworkArtistMarket, {
     marketPriceInsights: graphql`
       fragment MyCollectionArtworkArtistMarket_marketPriceInsights on ArtworkPriceInsights {
         annualLotsSold
@@ -157,5 +156,4 @@ export const MyCollectionArtworkArtistMarketFragmentContainer = createFragmentCo
         sellThroughRate
       }
     `,
-  }
-)
+  })

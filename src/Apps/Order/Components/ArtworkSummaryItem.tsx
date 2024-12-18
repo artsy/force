@@ -20,7 +20,9 @@ export interface ArtworkSummaryItemProps extends Omit<FlexProps, "order"> {
   className?: string
 }
 
-const ArtworkSummaryItem: React.FC<React.PropsWithChildren<ArtworkSummaryItemProps>> = ({
+const ArtworkSummaryItem: React.FC<
+  React.PropsWithChildren<ArtworkSummaryItemProps>
+> = ({
   order: { lineItems, currencyCode, mode, sellerDetails, source },
   ...others
 }) => {

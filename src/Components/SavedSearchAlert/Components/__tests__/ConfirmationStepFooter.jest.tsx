@@ -8,11 +8,10 @@ import { NUMBER_OF_ARTWORKS_TO_SHOW } from "Components/SavedSearchAlert/Confirma
 jest.unmock("react-relay")
 
 describe("ConfirmationStepFooter", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    ConfirmationStepFooter_Test_Query
-  >({
-    Component: ConfirmationStepFooter,
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<ConfirmationStepFooter_Test_Query>({
+      Component: ConfirmationStepFooter,
+      query: graphql`
       query ConfirmationStepFooter_Test_Query($alertID: String!)
         @relay_test_operation {
         me {
@@ -23,7 +22,7 @@ describe("ConfirmationStepFooter", () => {
         }
       }
     `,
-  })
+    })
 
   const renderComponent = (artworksCount: number) => {
     renderWithRelay(
@@ -31,8 +30,7 @@ describe("ConfirmationStepFooter", () => {
         Me: () => ({
           internalID: "1234",
           alert: {
-            href:
-              "/artist/banksy?sort=-published_at&attribution_class%5B0%5D=unique&additional_gene_ids%5B0%5D=prints&for_sale=true&search_criteria_id=289e87de-97e7-4c36-87aa-9fcd479b46b7",
+            href: "/artist/banksy?sort=-published_at&attribution_class%5B0%5D=unique&additional_gene_ids%5B0%5D=prints&for_sale=true&search_criteria_id=289e87de-97e7-4c36-87aa-9fcd479b46b7",
           },
         }),
       },

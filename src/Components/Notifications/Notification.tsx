@@ -127,9 +127,9 @@ const Notification: React.FC<React.PropsWithChildren<NotificationProps>> = ({
   }
 }
 
-export const NotificationQueryRenderer: React.FC<React.PropsWithChildren<
-  unknown
->> = props => {
+export const NotificationQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = props => {
   const { state } = useNotificationsContext()
 
   if (!state.currentNotificationId) {

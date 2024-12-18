@@ -17,10 +17,9 @@ export interface NewWorksFromGalleriesYouFollowAppProps {
   relay: RelayPaginationProp
 }
 
-const NewWorksFromGalleriesYouFollowApp: FC<React.PropsWithChildren<NewWorksFromGalleriesYouFollowAppProps>> = ({
-  me,
-  relay,
-}) => {
+const NewWorksFromGalleriesYouFollowApp: FC<
+  React.PropsWithChildren<NewWorksFromGalleriesYouFollowAppProps>
+> = ({ me, relay }) => {
   const [isLoading, setLoading] = useState(false)
 
   const handleLoadMore = () => {
@@ -83,10 +82,11 @@ const NewWorksFromGalleriesYouFollowApp: FC<React.PropsWithChildren<NewWorksFrom
   )
 }
 
-export const NewWorksFromGalleriesYouFollowAppPaginationContainer = createPaginationContainer(
-  NewWorksFromGalleriesYouFollowApp,
-  {
-    me: graphql`
+export const NewWorksFromGalleriesYouFollowAppPaginationContainer =
+  createPaginationContainer(
+    NewWorksFromGalleriesYouFollowApp,
+    {
+      me: graphql`
       fragment NewWorksFromGalleriesYouFollowApp_me on Me
         @argumentDefinitions(
           count: { type: "Int", defaultValue: 25 }
@@ -106,23 +106,23 @@ export const NewWorksFromGalleriesYouFollowAppPaginationContainer = createPagina
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return {
-        ...prevVars,
-        count: totalCount,
-      }
     },
-    getVariables(_props, { count, cursor }, fragmentVariables) {
-      return {
-        ...fragmentVariables,
-        count,
-        cursor,
-      }
-    },
-    query: graphql`
+    {
+      direction: "forward",
+      getFragmentVariables(prevVars, totalCount) {
+        return {
+          ...prevVars,
+          count: totalCount,
+        }
+      },
+      getVariables(_props, { count, cursor }, fragmentVariables) {
+        return {
+          ...fragmentVariables,
+          count,
+          cursor,
+        }
+      },
+      query: graphql`
       query NewWorksFromGalleriesYouFollowAppQuery(
         $count: Int!
         $cursor: String
@@ -133,5 +133,5 @@ export const NewWorksFromGalleriesYouFollowAppPaginationContainer = createPagina
         }
       }
     `,
-  }
-)
+    }
+  )

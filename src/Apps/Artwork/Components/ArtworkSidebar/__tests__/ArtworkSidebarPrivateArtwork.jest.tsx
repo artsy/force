@@ -12,20 +12,19 @@ jest.mock("System/Hooks/useFeatureFlag", () => {
 })
 
 describe("ArtworkSidebarPrivateArtwork", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    ArtworkSidebarPrivateArtworkQuery
-  >({
-    Component: props => (
-      <ArtworkSidebarPrivateArtwork artwork={props.artwork!} />
-    ),
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<ArtworkSidebarPrivateArtworkQuery>({
+      Component: props => (
+        <ArtworkSidebarPrivateArtwork artwork={props.artwork!} />
+      ),
+      query: graphql`
       query ArtworkSidebarPrivateArtworkQuery {
         artwork(id: "foo") {
           ...ArtworkSidebarPrivateArtwork_artwork
         }
       }
     `,
-  })
+    })
 
   it("displays partner name", async () => {
     renderWithRelay({

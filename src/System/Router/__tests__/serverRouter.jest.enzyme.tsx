@@ -79,11 +79,11 @@ describe("serverRouter", () => {
       locals: { sd: {} },
     } as ArtsyResponse
 
-    let req = ({
+    let req = {
       path: "/",
       url: "/",
       header: jest.fn().mockReturnValue("A random user-agent"),
-    } as unknown) as Request
+    } as unknown as Request
 
     options = {
       res,
@@ -280,8 +280,9 @@ describe("serverRouter", () => {
       createRelaySSREnvironment: jest.fn(),
     }))
 
-    const createRelaySSREnvironment = require("System/Relay/createRelaySSREnvironment")
-      .createRelaySSREnvironment as jest.Mock
+    const createRelaySSREnvironment =
+      require("System/Relay/createRelaySSREnvironment")
+        .createRelaySSREnvironment as jest.Mock
 
     beforeAll(() => {
       // @ts-ignore

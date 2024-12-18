@@ -95,7 +95,7 @@ beforeEach(() => {
       },
     },
   }
-  mockShippingContext = ({
+  mockShippingContext = {
     actions: {
       setFulfillmentDetailsFormikContext: jest.fn(),
       goBackToFulfillmentDetails: jest.fn(),
@@ -108,7 +108,7 @@ beforeEach(() => {
     state: {
       shippingFormMode: "saved_addresses",
     },
-  } as unknown) as ShippingContextProps
+  } as unknown as ShippingContextProps
 
   HTMLElement.prototype.scrollIntoView = mockScrollIntoView
 })

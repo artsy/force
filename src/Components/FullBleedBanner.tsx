@@ -3,7 +3,10 @@ import { FC } from "react"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 
-export const FullBleedBanner: FC<React.PropsWithChildren<BannerProps>> = ({ variant, ...rest }) => {
+export const FullBleedBanner: FC<React.PropsWithChildren<BannerProps>> = ({
+  variant,
+  ...rest
+}) => {
   const scheme = BANNER_VARIANTS[variant ?? "defaultLight"]
 
   return (

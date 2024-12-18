@@ -6,10 +6,9 @@ interface ClientSuspenseProps {
   children: ReactNode
 }
 
-export const ClientSuspense: FC<React.PropsWithChildren<ClientSuspenseProps>> = ({
-  fallback,
-  children,
-}) => {
+export const ClientSuspense: FC<
+  React.PropsWithChildren<ClientSuspenseProps>
+> = ({ fallback, children }) => {
   const isMounted = useDidMount()
 
   return (

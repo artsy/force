@@ -8,89 +8,94 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_DeleteAccountRouteQuery$variables = Record<PropertyKey, never>;
+import { ConcreteRequest } from "relay-runtime"
+import { FragmentRefs } from "relay-runtime"
+export type settingsRoutes_DeleteAccountRouteQuery$variables = Record<
+  PropertyKey,
+  never
+>
 export type settingsRoutes_DeleteAccountRouteQuery$data = {
-  readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"DeleteAccountRoute_me">;
-  } | null | undefined;
-};
+  readonly me:
+    | {
+        readonly " $fragmentSpreads": FragmentRefs<"DeleteAccountRoute_me">
+      }
+    | null
+    | undefined
+}
 export type settingsRoutes_DeleteAccountRouteQuery = {
-  response: settingsRoutes_DeleteAccountRouteQuery$data;
-  variables: settingsRoutes_DeleteAccountRouteQuery$variables;
-};
+  response: settingsRoutes_DeleteAccountRouteQuery$data
+  variables: settingsRoutes_DeleteAccountRouteQuery$variables
+}
 
 const node: ConcreteRequest = {
-  "fragment": {
-    "argumentDefinitions": [],
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "settingsRoutes_DeleteAccountRouteQuery",
-    "selections": [
+  fragment: {
+    argumentDefinitions: [],
+    kind: "Fragment",
+    metadata: null,
+    name: "settingsRoutes_DeleteAccountRouteQuery",
+    selections: [
       {
-        "alias": null,
-        "args": null,
-        "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
-        "plural": false,
-        "selections": [
+        alias: null,
+        args: null,
+        concreteType: "Me",
+        kind: "LinkedField",
+        name: "me",
+        plural: false,
+        selections: [
           {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "DeleteAccountRoute_me"
-          }
+            args: null,
+            kind: "FragmentSpread",
+            name: "DeleteAccountRoute_me",
+          },
         ],
-        "storageKey": null
-      }
+        storageKey: null,
+      },
     ],
-    "type": "Query",
-    "abstractKey": null
+    type: "Query",
+    abstractKey: null,
   },
-  "kind": "Request",
-  "operation": {
-    "argumentDefinitions": [],
-    "kind": "Operation",
-    "name": "settingsRoutes_DeleteAccountRouteQuery",
-    "selections": [
+  kind: "Request",
+  operation: {
+    argumentDefinitions: [],
+    kind: "Operation",
+    name: "settingsRoutes_DeleteAccountRouteQuery",
+    selections: [
       {
-        "alias": null,
-        "args": null,
-        "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
-        "plural": false,
-        "selections": [
+        alias: null,
+        args: null,
+        concreteType: "Me",
+        kind: "LinkedField",
+        name: "me",
+        plural: false,
+        selections: [
           {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "hasPassword",
-            "storageKey": null
+            alias: null,
+            args: null,
+            kind: "ScalarField",
+            name: "hasPassword",
+            storageKey: null,
           },
           {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+            alias: null,
+            args: null,
+            kind: "ScalarField",
+            name: "id",
+            storageKey: null,
+          },
         ],
-        "storageKey": null
-      }
-    ]
+        storageKey: null,
+      },
+    ],
   },
-  "params": {
-    "cacheID": "1838aefbc22504b484439724d1b52b4e",
-    "id": null,
-    "metadata": {},
-    "name": "settingsRoutes_DeleteAccountRouteQuery",
-    "operationKind": "query",
-    "text": "query settingsRoutes_DeleteAccountRouteQuery {\n  me {\n    ...DeleteAccountRoute_me\n    id\n  }\n}\n\nfragment DeleteAccountRoute_me on Me {\n  hasPassword\n}\n"
-  }
-};
+  params: {
+    cacheID: "1838aefbc22504b484439724d1b52b4e",
+    id: null,
+    metadata: {},
+    name: "settingsRoutes_DeleteAccountRouteQuery",
+    operationKind: "query",
+    text: "query settingsRoutes_DeleteAccountRouteQuery {\n  me {\n    ...DeleteAccountRoute_me\n    id\n  }\n}\n\nfragment DeleteAccountRoute_me on Me {\n  hasPassword\n}\n",
+  },
+}
+;(node as any).hash = "c54bb2421e59e40f01d0a70e9f8bca56"
 
-(node as any).hash = "c54bb2421e59e40f01d0a70e9f8bca56";
-
-export default node;
+export default node

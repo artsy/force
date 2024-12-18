@@ -7,9 +7,9 @@ interface ViewingRoomPullQuoteProps {
   viewingRoom: ViewingRoomPullQuote_viewingRoom$data
 }
 
-const ViewingRoomPullQuote: React.FC<React.PropsWithChildren<ViewingRoomPullQuoteProps>> = ({
-  viewingRoom: { pullQuote },
-}) => {
+const ViewingRoomPullQuote: React.FC<
+  React.PropsWithChildren<ViewingRoomPullQuoteProps>
+> = ({ viewingRoom: { pullQuote } }) => {
   if (!pullQuote) {
     return null
   }

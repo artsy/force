@@ -122,11 +122,10 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
       // We are unsaving an artwork, so first let's check if it's saved to any custom lists.
       // If so, we want to open the modal.
       // Else, we can unsave it from the default list.
-      const data = await fetchQuery<
-        useSaveArtworkToListsArtworkListInclusionQuery
-      >(
-        relayEnvironment,
-        graphql`
+      const data =
+        await fetchQuery<useSaveArtworkToListsArtworkListInclusionQuery>(
+          relayEnvironment,
+          graphql`
           query useSaveArtworkToListsArtworkListInclusionQuery(
             $artworkID: String!
           ) {
@@ -135,8 +134,8 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
             }
           }
         `,
-        { artworkID: artwork.internalID }
-      ).toPromise()
+          { artworkID: artwork.internalID }
+        ).toPromise()
 
       if (data?.artwork?.isSavedToList) {
         openSelectListsForArtworkModal()

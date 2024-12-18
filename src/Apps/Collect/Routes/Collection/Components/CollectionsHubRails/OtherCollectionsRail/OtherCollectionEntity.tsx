@@ -13,16 +13,12 @@ export interface CollectionProps {
   itemNumber: number
 }
 
-export const OtherCollectionEntity: React.FC<React.PropsWithChildren<CollectionProps>> = ({
-  itemNumber,
-  member: { id, slug, thumbnail, title },
-}) => {
+export const OtherCollectionEntity: React.FC<
+  React.PropsWithChildren<CollectionProps>
+> = ({ itemNumber, member: { id, slug, thumbnail, title } }) => {
   const { trackEvent } = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const handleClick = () => {
     trackEvent(

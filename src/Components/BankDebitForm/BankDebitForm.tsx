@@ -18,7 +18,10 @@ interface Props {
   onError: (error: Error | StripeError) => void
 }
 
-export const BankDebitForm: FC<React.PropsWithChildren<Props>> = ({ order, onError }) => {
+export const BankDebitForm: FC<React.PropsWithChildren<Props>> = ({
+  order,
+  onError,
+}) => {
   const {
     selectedPaymentMethod,
     bankAccountHasInsufficientFunds,

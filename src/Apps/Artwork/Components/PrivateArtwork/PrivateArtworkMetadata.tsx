@@ -18,9 +18,9 @@ interface PrivateArtworkMetadataProps {
   artwork: PrivateArtworkMetadata_artwork$key
 }
 
-export const PrivateArtworkMetadata: React.FC<React.PropsWithChildren<PrivateArtworkMetadataProps>> = ({
-  artwork,
-}) => {
+export const PrivateArtworkMetadata: React.FC<
+  React.PropsWithChildren<PrivateArtworkMetadataProps>
+> = ({ artwork }) => {
   const data = useFragment(
     graphql`
       fragment PrivateArtworkMetadata_artwork on Artwork {
@@ -100,11 +100,9 @@ interface MetadataDetailItemProps {
   expanded?: boolean
 }
 
-const MetadataDetailItem: React.FC<React.PropsWithChildren<MetadataDetailItemProps>> = ({
-  title,
-  children,
-  expanded = false,
-}) => {
+const MetadataDetailItem: React.FC<
+  React.PropsWithChildren<MetadataDetailItemProps>
+> = ({ title, children, expanded = false }) => {
   const [isExpanded, setIsExpanded] = useState(expanded)
   const { trackEvent } = useTracking()
 

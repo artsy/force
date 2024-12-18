@@ -36,9 +36,9 @@ interface ArtistEditorialNewsGridProps {
   artist: ArtistEditorialNewsGrid_artist$data
 }
 
-const ArtistEditorialNewsGrid: FC<React.PropsWithChildren<ArtistEditorialNewsGridProps>> = ({
-  artist,
-}) => {
+const ArtistEditorialNewsGrid: FC<
+  React.PropsWithChildren<ArtistEditorialNewsGridProps>
+> = ({ artist }) => {
   const { trackEvent } = useTracking()
 
   const articles = extractNodes(artist.articlesConnection)
@@ -232,9 +232,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtistEditorialNewsGridQueryRenderer: FC<React.PropsWithChildren<{
-  id: string
-}>> = ({ id }) => {
+export const ArtistEditorialNewsGridQueryRenderer: FC<
+  React.PropsWithChildren<{
+    id: string
+  }>
+> = ({ id }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

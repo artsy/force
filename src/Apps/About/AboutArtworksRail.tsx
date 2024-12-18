@@ -14,7 +14,9 @@ interface AboutArtworksRailProps {
   marketingCollection: AboutArtworksRail_marketingCollection$data
 }
 
-export const AboutArtworksRail: React.FC<React.PropsWithChildren<AboutArtworksRailProps>> = props => {
+export const AboutArtworksRail: React.FC<
+  React.PropsWithChildren<AboutArtworksRailProps>
+> = props => {
   const artworks = extractNodes(props.marketingCollection.artworksConnection)
 
   if (artworks.length === 0) {
@@ -58,7 +60,9 @@ export const AboutArtworksRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const AboutArtworksRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const AboutArtworksRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <SystemQueryRenderer<AboutArtworksRailQuery>
       lazyLoad

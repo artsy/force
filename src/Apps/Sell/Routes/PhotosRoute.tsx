@@ -58,7 +58,9 @@ interface PhotosRouteProps {
   submission: PhotosRoute_submission$key
 }
 
-export const PhotosRoute: React.FC<React.PropsWithChildren<PhotosRouteProps>> = props => {
+export const PhotosRoute: React.FC<
+  React.PropsWithChildren<PhotosRouteProps>
+> = props => {
   const {
     actions: { setLoading },
   } = useSellFlowContext()

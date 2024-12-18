@@ -9,9 +9,9 @@ interface MyCollectionArtworkComparablesProps {
   artwork: MyCollectionArtworkComparables_artwork$data
 }
 
-const MyCollectionArtworkComparables: React.FC<React.PropsWithChildren<MyCollectionArtworkComparablesProps>> = ({
-  artwork,
-}) => {
+const MyCollectionArtworkComparables: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkComparablesProps>
+> = ({ artwork }) => {
   if (!artwork.auctionResult) {
     return null
   }
@@ -53,9 +53,8 @@ const MyCollectionArtworkComparables: React.FC<React.PropsWithChildren<MyCollect
   )
 }
 
-export const MyCollectionArtworkComparablesFragmentContainer = createFragmentContainer(
-  MyCollectionArtworkComparables,
-  {
+export const MyCollectionArtworkComparablesFragmentContainer =
+  createFragmentContainer(MyCollectionArtworkComparables, {
     artwork: graphql`
       fragment MyCollectionArtworkComparables_artwork on Artwork {
         auctionResult: comparableAuctionResults(first: 6) @optionalField {
@@ -73,5 +72,4 @@ export const MyCollectionArtworkComparablesFragmentContainer = createFragmentCon
         }
       }
     `,
-  }
-)
+  })

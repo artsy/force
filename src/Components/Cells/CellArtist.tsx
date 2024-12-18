@@ -87,10 +87,9 @@ type CellArtistPlaceholderProps = Pick<
   "mode" | "displayCounts"
 >
 
-export const CellArtistPlaceholder: FC<React.PropsWithChildren<CellArtistPlaceholderProps>> = ({
-  mode = "RAIL",
-  displayCounts,
-}) => {
+export const CellArtistPlaceholder: FC<
+  React.PropsWithChildren<CellArtistPlaceholderProps>
+> = ({ mode = "RAIL", displayCounts }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
 
   return (

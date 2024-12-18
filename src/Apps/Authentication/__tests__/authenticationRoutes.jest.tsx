@@ -159,9 +159,8 @@ describe("authenticationRoutes", () => {
         })
 
         it("redirects if no reset_password_token is found", () => {
-          const { res, onServerSideRender } = renderServerRoute(
-            "/reset_password"
-          )
+          const { res, onServerSideRender } =
+            renderServerRoute("/reset_password")
           onServerSideRender()
           expect(res.redirect).toHaveBeenCalledWith("/")
           expect(mockSetReferer).toHaveBeenCalled()

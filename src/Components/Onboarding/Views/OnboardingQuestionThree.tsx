@@ -19,7 +19,9 @@ import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingC
 import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
 
-export const OnboardingQuestionThree: FC<React.PropsWithChildren<unknown>> = () => {
+export const OnboardingQuestionThree: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { state, dispatch, next } = useOnboardingContext()
   const { register, loading, handleNext } = useOnboardingFadeTransition({
     next,

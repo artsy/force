@@ -17,13 +17,12 @@ interface ImagePreviewItemProps {
   photo: DropzoneFile
 }
 
-export const ImagePreviewItem: React.FC<React.PropsWithChildren<ImagePreviewItemProps>> = ({
-  photo,
-}) => {
+export const ImagePreviewItem: React.FC<
+  React.PropsWithChildren<ImagePreviewItemProps>
+> = ({ photo }) => {
   const { isLoggedIn } = useSystemContext()
-  const {
-    submitMutation: removeAsset,
-  } = useRemoveAssetFromConsignmentSubmission()
+  const { submitMutation: removeAsset } =
+    useRemoveAssetFromConsignmentSubmission()
   const { setFieldValue, values } = useFormikContext<PhotosFormValues>()
   const [photoSrc, setPhotoSrc] = useState<string>(photo.url || "")
   const [isProcessing, setIsProcessing] = useState(

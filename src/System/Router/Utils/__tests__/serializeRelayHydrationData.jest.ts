@@ -10,7 +10,7 @@ describe("serializeRelayHydrationData", () => {
   })
 
   it("should serialize the relay data correctly", () => {
-    const mockData = ([
+    const mockData = [
       [
         {
           id: 1,
@@ -23,7 +23,7 @@ describe("serializeRelayHydrationData", () => {
           data: "value2",
         },
       ],
-    ] as unknown) as SSRCache
+    ] as unknown as SSRCache
 
     mockSerialize.mockImplementation((data, options) => JSON.stringify(data))
 
@@ -55,7 +55,7 @@ describe("serializeRelayHydrationData", () => {
   })
 
   it("should return an empty serialized array when an error occurs", () => {
-    const mockData = ([
+    const mockData = [
       [
         {
           id: 1,
@@ -63,7 +63,7 @@ describe("serializeRelayHydrationData", () => {
           data: "value1",
         },
       ],
-    ] as unknown) as SSRCache
+    ] as unknown as SSRCache
 
     mockSerialize.mockImplementation(() => {
       throw new Error("Serialization Error")

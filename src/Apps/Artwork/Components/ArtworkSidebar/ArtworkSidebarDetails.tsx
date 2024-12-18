@@ -9,17 +9,11 @@ interface ArtworkSidebarDetailsProps {
   artwork: ArtworkSidebarDetails_artwork$data
 }
 
-const ArtworkSidebarDetails: React.FC<React.PropsWithChildren<ArtworkSidebarDetailsProps>> = ({
-  artwork,
-}) => {
-  const {
-    medium,
-    dimensions,
-    framed,
-    editionOf,
-    editionSets,
-    isUnlisted,
-  } = artwork
+const ArtworkSidebarDetails: React.FC<
+  React.PropsWithChildren<ArtworkSidebarDetailsProps>
+> = ({ artwork }) => {
+  const { medium, dimensions, framed, editionOf, editionSets, isUnlisted } =
+    artwork
 
   const dimensionsPresent = dimensions =>
     /\d/.test(dimensions?.in) || /\d/.test(dimensions?.cm)

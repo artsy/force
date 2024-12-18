@@ -6,13 +6,8 @@ import { OnboardingModal } from "./OnboardingModal"
 import { OnboardingSteps } from "./OnboardingSteps"
 
 export const OnboardingDebug: FC<React.PropsWithChildren<unknown>> = () => {
-  const {
-    state,
-    current,
-    progress,
-    dispatch,
-    workflowEngine,
-  } = useOnboardingContext()
+  const { state, current, progress, dispatch, workflowEngine } =
+    useOnboardingContext()
 
   const [mode, setMode] = useMode<"Resting" | "Modal">("Resting")
   return (

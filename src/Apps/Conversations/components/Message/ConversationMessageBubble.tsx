@@ -22,7 +22,9 @@ type ConversationMessageBubbleProps = {
   time?: string
 }
 
-export const ConversationMessageBubble: FC<React.PropsWithChildren<ConversationMessageBubbleProps>> = ({
+export const ConversationMessageBubble: FC<
+  React.PropsWithChildren<ConversationMessageBubbleProps>
+> = ({
   avatarUrl,
   children,
   fromViewer,

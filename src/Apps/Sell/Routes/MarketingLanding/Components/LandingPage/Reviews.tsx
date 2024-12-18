@@ -45,7 +45,9 @@ export const Reviews: React.FC<React.PropsWithChildren<unknown>> = () => {
   )
 }
 
-const ListItem: React.FC<React.PropsWithChildren<{ review: ReviewsData }>> = ({ review }) => {
+const ListItem: React.FC<React.PropsWithChildren<{ review: ReviewsData }>> = ({
+  review,
+}) => {
   const { reviewText, image, reviewerName, galery } = review
   return (
     <Flex alignItems="center" flexDirection="column">

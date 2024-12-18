@@ -57,9 +57,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const OtherWorksQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const OtherWorksQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

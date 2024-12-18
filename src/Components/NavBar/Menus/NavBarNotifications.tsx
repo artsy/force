@@ -15,10 +15,9 @@ interface NavBarNotificationsProps {
   onHide: () => void
 }
 
-export const NavBarNotifications: React.FC<React.PropsWithChildren<NavBarNotificationsProps>> = ({
-  onHide,
-  ...rest
-}) => {
+export const NavBarNotifications: React.FC<
+  React.PropsWithChildren<NavBarNotificationsProps>
+> = ({ onHide, ...rest }) => {
   return (
     <Box width={420}>
       <Notifications

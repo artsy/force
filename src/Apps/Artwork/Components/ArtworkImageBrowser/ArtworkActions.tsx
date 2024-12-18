@@ -24,9 +24,9 @@ interface ArtworkActionsProps {
   selectRoomViewableFigure(): void
 }
 
-export const ArtworkActions: React.FC<React.PropsWithChildren<
-  ArtworkActionsProps
->> = ({ artwork, selectRoomViewableFigure }) => {
+export const ArtworkActions: React.FC<
+  React.PropsWithChildren<ArtworkActionsProps>
+> = ({ artwork, selectRoomViewableFigure }) => {
   const { user } = useSystemContext()
   const isAdmin = userIsAdmin(user)
   const isTeam = userIsTeam(user)
@@ -42,11 +42,8 @@ export const ArtworkActions: React.FC<React.PropsWithChildren<
     })
   }
 
-  const {
-    showViewInRoom,
-    hideViewInRoom,
-    isViewInRoomVisible,
-  } = useViewInRoom()
+  const { showViewInRoom, hideViewInRoom, isViewInRoomVisible } =
+    useViewInRoom()
 
   const ViewInRoomButton = (
     <UtilButton

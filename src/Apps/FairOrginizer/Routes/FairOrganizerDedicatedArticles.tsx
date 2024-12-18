@@ -21,10 +21,9 @@ interface FairOrganizerDedicatedArticlesProps {
   relay: RelayRefetchProp
 }
 
-export const FairOrganizerDedicatedArticles: React.FC<React.PropsWithChildren<FairOrganizerDedicatedArticlesProps>> = ({
-  fairOrganizer,
-  relay,
-}) => {
+export const FairOrganizerDedicatedArticles: React.FC<
+  React.PropsWithChildren<FairOrganizerDedicatedArticlesProps>
+> = ({ fairOrganizer, relay }) => {
   const { name, slug, articlesConnection } = fairOrganizer
   const {
     pageInfo: { hasNextPage },
@@ -106,10 +105,11 @@ export const FairOrganizerDedicatedArticles: React.FC<React.PropsWithChildren<Fa
   )
 }
 
-export const FairOrganizerDedicatedArticlesFragmentContainer = createRefetchContainer(
-  FairOrganizerDedicatedArticles,
-  {
-    fairOrganizer: graphql`
+export const FairOrganizerDedicatedArticlesFragmentContainer =
+  createRefetchContainer(
+    FairOrganizerDedicatedArticles,
+    {
+      fairOrganizer: graphql`
       fragment FairOrganizerDedicatedArticles_fairOrganizer on FairOrganizer
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 16 }
@@ -139,6 +139,6 @@ export const FairOrganizerDedicatedArticlesFragmentContainer = createRefetchCont
         ...DedicatedArticlesBreadcrumbs_fairOrganizer
       }
     `,
-  },
-  FairOrganizerDedicatedArticlesQuery
-)
+    },
+    FairOrganizerDedicatedArticlesQuery
+  )

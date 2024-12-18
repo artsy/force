@@ -6,9 +6,9 @@ import {
   DOWNLOAD_APP_URLS,
 } from "Utils/Hooks/useDeviceDetection"
 
-export const DownloadAppBadgesDark: React.FC<React.PropsWithChildren<FlexProps>> = ({
-  justifyContent,
-}) => {
+export const DownloadAppBadgesDark: React.FC<
+  React.PropsWithChildren<FlexProps>
+> = ({ justifyContent }) => {
   const { device: deviceOS } = useDeviceDetection()
 
   if (deviceOS === Device.Unknown) {

@@ -17,7 +17,9 @@ export interface RecentlyViewedProps {
   me: RecentlyViewed_me$data
 }
 
-export const RecentlyViewed: React.FC<React.PropsWithChildren<RecentlyViewedProps>> = ({ me }) => {
+export const RecentlyViewed: React.FC<
+  React.PropsWithChildren<RecentlyViewedProps>
+> = ({ me }) => {
   const tracking = useTracking()
 
   if (!me) return null

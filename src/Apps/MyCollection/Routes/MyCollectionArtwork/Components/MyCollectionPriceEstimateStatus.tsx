@@ -1,7 +1,9 @@
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 import { Flex, Text } from "@artsy/palette"
 
-export const MyCollectionPriceEstimateStatus: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const MyCollectionPriceEstimateStatus: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Flex alignItems="center" flexDirection="row" mb={2} mt={2}>
       <CheckmarkStrokeIcon />

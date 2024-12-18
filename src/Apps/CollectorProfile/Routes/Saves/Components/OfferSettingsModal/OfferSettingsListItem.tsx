@@ -13,14 +13,15 @@ interface OfferSettingsListItemProps {
   item: OfferSettingsListItem_item$data
 }
 
-export const OfferSettingsListItem: FC<React.PropsWithChildren<OfferSettingsListItemProps>> = props => {
+export const OfferSettingsListItem: FC<
+  React.PropsWithChildren<OfferSettingsListItemProps>
+> = props => {
   const { item } = props
   const artworkNodes = extractNodes(item.artworksConnection)
   const imageURL = artworkNodes[0]?.image?.resized?.src ?? null
   const totalArtworks = item.artworksCount ?? 0
-  const { values, setFieldValue, isSubmitting } = useFormikContext<
-    OfferSettingsFormModel
-  >()
+  const { values, setFieldValue, isSubmitting } =
+    useFormikContext<OfferSettingsFormModel>()
 
   return (
     <Flex justifyContent="space-between">

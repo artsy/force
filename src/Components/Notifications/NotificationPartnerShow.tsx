@@ -15,12 +15,9 @@ export interface NotificationShowProps
   onClick?: () => void
 }
 
-export const NotificationPartnerShow: React.FC<React.PropsWithChildren<NotificationShowProps>> = ({
-  show: showProp,
-  contextModule,
-  onClick,
-  ...rest
-}) => {
+export const NotificationPartnerShow: React.FC<
+  React.PropsWithChildren<NotificationShowProps>
+> = ({ show: showProp, contextModule, onClick, ...rest }) => {
   const show = useFragment(notificationShowFragment, showProp)
 
   const image = show?.coverImage?.cropped

@@ -123,9 +123,8 @@ export class CreditCardPicker extends React.Component<
       this.setState({ isCreatingStripeToken: true })
       const stripeBillingAddress = this.getStripeBillingAddress()
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const cardNumberElement = this.props.elements.getElement(
-        CardNumberElement
-      )!
+      const cardNumberElement =
+        this.props.elements.getElement(CardNumberElement)!
       return await this.props.stripe.createToken(
         cardNumberElement,
         stripeBillingAddress
@@ -379,9 +378,9 @@ export class CreditCardPicker extends React.Component<
       this.props.order.requestedFulfillment,
       (o, s) => (isNull(s) ? o : s)
     )
-    const selectedBillingAddress = (this.needsAddress()
-      ? this.state.address
-      : shippingAddress) as Address
+    const selectedBillingAddress = (
+      this.needsAddress() ? this.state.address : shippingAddress
+    ) as Address
     const {
       name,
       addressLine1,
@@ -457,11 +456,13 @@ export class CreditCardPicker extends React.Component<
 // Our mess of HOC wrappers is not amenable to ref forwarding, so to expose a
 // ref to the CreditCardPicker instance (for getCreditCardId) we'll add an
 // `innerRef` prop which gets sneakily injected here
-const CreditCardPickerWithInnerRef: React.FC<React.PropsWithChildren<
-  CreditCardPickerProps & {
-    innerRef: React.RefObject<CreditCardPicker>
-  }
->> = ({ innerRef, ...props }) => {
+const CreditCardPickerWithInnerRef: React.FC<
+  React.PropsWithChildren<
+    CreditCardPickerProps & {
+      innerRef: React.RefObject<CreditCardPicker>
+    }
+  >
+> = ({ innerRef, ...props }) => {
   const tracking = useTracking()
 
   return (

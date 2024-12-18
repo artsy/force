@@ -17,9 +17,9 @@ export const AVAILABILITY = {
   sold: "https://schema.org/OutOfStock",
 }
 
-export const SeoDataForArtwork: React.FC<React.PropsWithChildren<
-  SeoDataForArtworkProps
->> = ({ artwork }) => {
+export const SeoDataForArtwork: React.FC<
+  React.PropsWithChildren<SeoDataForArtworkProps>
+> = ({ artwork }) => {
   const artistsName = artwork.artistNames
 
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION

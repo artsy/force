@@ -36,21 +36,16 @@ interface LocationAutocompleteInputProps
   onSelect?: (place?: Place) => void
 }
 
-export const LocationAutocompleteInput: FC<React.PropsWithChildren<LocationAutocompleteInputProps>> = ({
-  onChange,
-  onClick,
-  onClose,
-  onSelect,
-  ...rest
-}) => {
+export const LocationAutocompleteInput: FC<
+  React.PropsWithChildren<LocationAutocompleteInputProps>
+> = ({ onChange, onClick, onClose, onSelect, ...rest }) => {
   const [suggestions, setSuggestions] = useState<
     Array<AutocompleteInputOptionType>
   >([])
   const [ready, setReady] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const autocompleteServiceRef = useRef<google.maps.places.AutocompleteService | null>(
-    null
-  )
+  const autocompleteServiceRef =
+    useRef<google.maps.places.AutocompleteService | null>(null)
   const geocoderRef = useRef<google.maps.Geocoder | null>(null)
 
   useEffect(() => {
@@ -66,7 +61,8 @@ export const LocationAutocompleteInput: FC<React.PropsWithChildren<LocationAutoc
 
   useEffect(() => {
     if (typeof google === "undefined" || !ready) return
-    autocompleteServiceRef.current = new google.maps.places.AutocompleteService()
+    autocompleteServiceRef.current =
+      new google.maps.places.AutocompleteService()
     geocoderRef.current = new google.maps.Geocoder()
   }, [ready])
 

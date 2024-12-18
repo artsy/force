@@ -13,7 +13,10 @@ interface ArtworksRailProps extends BoxProps {
   partner: ArtworksRail_partner$data
 }
 
-const ArtworksRail: React.FC<React.PropsWithChildren<ArtworksRailProps>> = ({ partner, ...rest }) => {
+const ArtworksRail: React.FC<React.PropsWithChildren<ArtworksRailProps>> = ({
+  partner,
+  ...rest
+}) => {
   if (
     !partner ||
     !partner.filterArtworksConnection?.edges ||
@@ -72,9 +75,13 @@ const ArtworksRailFragmentContainer = createFragmentContainer(ArtworksRail, {
   `,
 })
 
-export const ArtworksRailRenderer: React.FC<React.PropsWithChildren<{
-  partnerId: string
-} & Omit<ArtworksRailProps, "partner">>> = ({ partnerId, ...rest }) => {
+export const ArtworksRailRenderer: React.FC<
+  React.PropsWithChildren<
+    {
+      partnerId: string
+    } & Omit<ArtworksRailProps, "partner">
+  >
+> = ({ partnerId, ...rest }) => {
   return (
     <SystemQueryRenderer<ArtworksRailRendererQuery>
       lazyLoad

@@ -29,10 +29,9 @@ interface SuggestedArtworksModalGridProps {
   onClose: () => void
 }
 
-export const SuggestedArtworksModalGrid: FC<React.PropsWithChildren<SuggestedArtworksModalGridProps>> = ({
-  artworksConnection,
-  onClose,
-}) => {
+export const SuggestedArtworksModalGrid: FC<
+  React.PropsWithChildren<SuggestedArtworksModalGridProps>
+> = ({ artworksConnection, onClose }) => {
   const artworksCount = artworksConnection?.counts?.total ?? 0
 
   if (artworksCount === 0) {
@@ -77,7 +76,9 @@ interface SuggestedArtworksModalGridQueryRendererProps
   onClose: () => void
 }
 
-export const SuggestedArtworksModalGridQueryRenderer: FC<React.PropsWithChildren<SuggestedArtworksModalGridQueryRendererProps>> = props => {
+export const SuggestedArtworksModalGridQueryRenderer: FC<
+  React.PropsWithChildren<SuggestedArtworksModalGridQueryRendererProps>
+> = props => {
   const { onClose, ...inputProps } = props
 
   return (

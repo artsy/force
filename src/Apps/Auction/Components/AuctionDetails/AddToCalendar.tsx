@@ -14,9 +14,9 @@ export interface AddToCalendarProps {
   liveAuctionUrl?: string
 }
 
-export const AddToCalendar: React.FC<React.PropsWithChildren<
-  AddToCalendarProps
->> = props => {
+export const AddToCalendar: React.FC<
+  React.PropsWithChildren<AddToCalendarProps>
+> = props => {
   return (
     <Dropdown
       dropdown={<AddToCalendarLinks {...props} />}
@@ -39,9 +39,9 @@ export const AddToCalendar: React.FC<React.PropsWithChildren<
   )
 }
 
-export const AddToCalendarLinks: React.FC<React.PropsWithChildren<
-  AddToCalendarProps
->> = props => {
+export const AddToCalendarLinks: React.FC<
+  React.PropsWithChildren<AddToCalendarProps>
+> = props => {
   const googleUrl = generateGoogleCalendarUrl(props)
   const icsUrl = generateIcsCalendarUrl(props)
 

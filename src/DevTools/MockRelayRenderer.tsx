@@ -148,12 +148,8 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
   }
 
   getRelayNetwork() {
-    const {
-      mockResolvers,
-      mockData,
-      mockMutationResults,
-      mockNetwork,
-    } = this.props
+    const { mockResolvers, mockData, mockMutationResults, mockNetwork } =
+      this.props
 
     if (mockNetwork) {
       if (mockResolvers || mockData || mockMutationResults) {

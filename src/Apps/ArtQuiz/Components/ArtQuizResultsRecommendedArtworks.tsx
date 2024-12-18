@@ -13,9 +13,9 @@ interface ArtQuizResultsRecommendedArtworksProps {
   me: ArtQuizResultsRecommendedArtworks_me$data
 }
 
-const ArtQuizResultsRecommendedArtworks: FC<React.PropsWithChildren<ArtQuizResultsRecommendedArtworksProps>> = ({
-  me,
-}) => {
+const ArtQuizResultsRecommendedArtworks: FC<
+  React.PropsWithChildren<ArtQuizResultsRecommendedArtworksProps>
+> = ({ me }) => {
   const artworks = useStableShuffle({ items: [...me.quiz.recommendedArtworks] })
 
   if (artworks.shuffled.length === 0) {
@@ -38,9 +38,8 @@ const ArtQuizResultsRecommendedArtworks: FC<React.PropsWithChildren<ArtQuizResul
   )
 }
 
-export const ArtQuizResultsRecommendedArtworksFragmentContainer = createFragmentContainer(
-  ArtQuizResultsRecommendedArtworks,
-  {
+export const ArtQuizResultsRecommendedArtworksFragmentContainer =
+  createFragmentContainer(ArtQuizResultsRecommendedArtworks, {
     me: graphql`
       fragment ArtQuizResultsRecommendedArtworks_me on Me {
         quiz {
@@ -51,14 +50,17 @@ export const ArtQuizResultsRecommendedArtworksFragmentContainer = createFragment
         }
       }
     `,
-  }
-)
+  })
 
-const ArtQuizResultsRecommendedArtworksPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const ArtQuizResultsRecommendedArtworksPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return <ArtworkGridPlaceholder columnCount={[2, 3, 4]} amount={16} />
 }
 
-export const ArtQuizResultsRecommendedArtworksQueryRenderer: FC<React.PropsWithChildren<unknown>> = () => {
+export const ArtQuizResultsRecommendedArtworksQueryRenderer: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <SystemQueryRenderer<ArtQuizResultsRecommendedArtworksQuery>
       query={graphql`

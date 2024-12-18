@@ -138,7 +138,6 @@ describe("RequestConditionReport", () => {
       })
 
       const showAuthDialog = jest.fn()
-
       ;(useAuthDialog as jest.Mock).mockImplementation(() => {
         return { showAuthDialog }
       })

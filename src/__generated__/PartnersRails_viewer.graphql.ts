@@ -8,78 +8,84 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
+import { ReaderFragment } from "relay-runtime"
+import { FragmentRefs } from "relay-runtime"
 export type PartnersRails_viewer$data = {
-  readonly partnerCategories: ReadonlyArray<{
-    readonly name: string | null | undefined;
-    readonly slug: string;
-  } | null | undefined> | null | undefined;
-  readonly " $fragmentType": "PartnersRails_viewer";
-};
+  readonly partnerCategories:
+    | ReadonlyArray<
+        | {
+            readonly name: string | null | undefined
+            readonly slug: string
+          }
+        | null
+        | undefined
+      >
+    | null
+    | undefined
+  readonly " $fragmentType": "PartnersRails_viewer"
+}
 export type PartnersRails_viewer$key = {
-  readonly " $data"?: PartnersRails_viewer$data;
-  readonly " $fragmentSpreads": FragmentRefs<"PartnersRails_viewer">;
-};
+  readonly " $data"?: PartnersRails_viewer$data
+  readonly " $fragmentSpreads": FragmentRefs<"PartnersRails_viewer">
+}
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
+  argumentDefinitions: [
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "categoryType"
-    }
+      defaultValue: null,
+      kind: "LocalArgument",
+      name: "categoryType",
+    },
   ],
-  "kind": "Fragment",
-  "metadata": null,
-  "name": "PartnersRails_viewer",
-  "selections": [
+  kind: "Fragment",
+  metadata: null,
+  name: "PartnersRails_viewer",
+  selections: [
     {
-      "alias": null,
-      "args": [
+      alias: null,
+      args: [
         {
-          "kind": "Variable",
-          "name": "categoryType",
-          "variableName": "categoryType"
+          kind: "Variable",
+          name: "categoryType",
+          variableName: "categoryType",
         },
         {
-          "kind": "Literal",
-          "name": "internal",
-          "value": false
+          kind: "Literal",
+          name: "internal",
+          value: false,
         },
         {
-          "kind": "Literal",
-          "name": "size",
-          "value": 50
-        }
+          kind: "Literal",
+          name: "size",
+          value: 50,
+        },
       ],
-      "concreteType": "PartnerCategory",
-      "kind": "LinkedField",
-      "name": "partnerCategories",
-      "plural": true,
-      "selections": [
+      concreteType: "PartnerCategory",
+      kind: "LinkedField",
+      name: "partnerCategories",
+      plural: true,
+      selections: [
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
+          alias: null,
+          args: null,
+          kind: "ScalarField",
+          name: "name",
+          storageKey: null,
         },
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "slug",
-          "storageKey": null
-        }
+          alias: null,
+          args: null,
+          kind: "ScalarField",
+          name: "slug",
+          storageKey: null,
+        },
       ],
-      "storageKey": null
-    }
+      storageKey: null,
+    },
   ],
-  "type": "Viewer",
-  "abstractKey": null
-};
+  type: "Viewer",
+  abstractKey: null,
+}
+;(node as any).hash = "a3259e523fac60ce40f3e3986e92bcc3"
 
-(node as any).hash = "a3259e523fac60ce40f3e3986e92bcc3";
-
-export default node;
+export default node

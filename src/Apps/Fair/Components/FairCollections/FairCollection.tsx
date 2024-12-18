@@ -29,17 +29,13 @@ interface FairCollectionProps {
   carouselIndex: number // needed for analytics
 }
 
-export const FairCollection: React.FC<React.PropsWithChildren<FairCollectionProps>> = ({
-  collection,
-  carouselIndex,
-}) => {
+export const FairCollection: React.FC<
+  React.PropsWithChildren<FairCollectionProps>
+> = ({ collection, carouselIndex }) => {
   const tracking = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const collectionTrackingData: ClickedCollectionGroup = {
     context_module: ContextModule.curatedHighlightsRail,

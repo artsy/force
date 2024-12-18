@@ -66,9 +66,9 @@ interface BelowTheFoldArtworkDetailsProps {
   slug: ArtworkApp_artwork$data["slug"]
 }
 
-const BelowTheFoldArtworkDetails: React.FC<React.PropsWithChildren<
-  BelowTheFoldArtworkDetailsProps
->> = ({ artists, slug }) => (
+const BelowTheFoldArtworkDetails: React.FC<
+  React.PropsWithChildren<BelowTheFoldArtworkDetailsProps>
+> = ({ artists, slug }) => (
   <>
     <Spacer y={6} />
     <Join separator={<Spacer y={2} />}>
@@ -445,9 +445,9 @@ interface ArtworkResultProps extends RenderProps {
   me: ArtworkApp_me$data
 }
 
-const ArtworkResult: React.FC<React.PropsWithChildren<
-  ArtworkResultProps
->> = props => {
+const ArtworkResult: React.FC<
+  React.PropsWithChildren<ArtworkResultProps>
+> = props => {
   const { artworkResult, ...rest } = props
   const { __typename } = artworkResult
 

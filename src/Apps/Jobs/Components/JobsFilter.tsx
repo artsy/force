@@ -36,11 +36,14 @@ const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({
 
   const departments = useMemo(() => {
     // Jobs grouped by department
-    return viewer.jobs.reduce((acc, job) => {
-      acc[job.departmentName] = acc[job.departmentName] || []
-      acc[job.departmentName].push(job)
-      return acc
-    }, {} as Record<string, any[]>)
+    return viewer.jobs.reduce(
+      (acc, job) => {
+        acc[job.departmentName] = acc[job.departmentName] || []
+        acc[job.departmentName].push(job)
+        return acc
+      },
+      {} as Record<string, any[]>
+    )
   }, [viewer.jobs])
 
   const [selection, setSelection] = useState<string[]>([])

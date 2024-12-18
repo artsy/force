@@ -25,9 +25,8 @@ export const MyCollectionArtworkDetailsValidationSchema = yup.object().shape({
     .of(yup.object().test("newPhotos", value => value.url)),
 })
 
-export const MyCollectionArtworkDetailsValidationSchemaWithoutPersonalArtist = yup
-  .object()
-  .shape({
+export const MyCollectionArtworkDetailsValidationSchemaWithoutPersonalArtist =
+  yup.object().shape({
     artistId: yup
       .string()
       .required(

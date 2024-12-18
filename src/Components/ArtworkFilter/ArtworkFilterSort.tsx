@@ -15,7 +15,9 @@ import { themeGet } from "@styled-system/theme-get"
 interface ArtworkFilterSortProps
   extends Omit<DropdownProps, "dropdown" | "children"> {}
 
-export const ArtworkFilterSort: FC<React.PropsWithChildren<ArtworkFilterSortProps>> = props => {
+export const ArtworkFilterSort: FC<
+  React.PropsWithChildren<ArtworkFilterSortProps>
+> = props => {
   const { sortOptions, filters, setFilter } = useArtworkFilterContext()
 
   const activeSort = sortOptions?.find(({ value }) => {

@@ -12,7 +12,9 @@ require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(
 
 const getTimerText = timerComponent =>
   // eslint-disable-next-line testing-library/await-async-query
-  timerComponent.root.findAllByType(Text)[0].props.children.join("")
+  timerComponent.root
+    .findAllByType(Text)[0]
+    .props.children.join("")
 
 describe("when the end date is set", () => {
   it("formats the remaining time in '00d  00h  00m  00s'", () => {

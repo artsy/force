@@ -45,8 +45,7 @@ describe("login", () => {
     })
 
     expect(mockFetch).toBeCalledWith("https://www.artsy.net/login", {
-      body:
-        '{"email":"example@example.com","password":"secret","otp_attempt":"code","otpRequired":true,"session_id":"session_id"}',
+      body: '{"email":"example@example.com","password":"secret","otp_attempt":"code","otpRequired":true,"session_id":"session_id"}',
       credentials: "same-origin",
       headers: {
         Accept: "application/json",
@@ -130,8 +129,7 @@ describe("resetPassword", () => {
     expect(mockFetch).toBeCalledWith(
       "https://api.artsy.net/api/v1/users/reset_password",
       {
-        body:
-          '{"password":"secret","password_confirmation":"secret","reset_password_token":"token"}',
+        body: '{"password":"secret","password_confirmation":"secret","reset_password_token":"token"}',
         credentials: "same-origin",
         headers: {
           Accept: "application/json",
@@ -167,8 +165,7 @@ describe("signUp", () => {
     })
 
     expect(mockFetch).toBeCalledWith("https://www.artsy.net/signup", {
-      body:
-        '{"agreed_to_receive_emails":true,"accepted_terms_of_service":true,"email":"example@example.com","name":"Example Example","password":"secret","recaptcha_token":"EXAMPLE_RECAPTCHA_KEY","session_id":"session_id"}',
+      body: '{"agreed_to_receive_emails":true,"accepted_terms_of_service":true,"email":"example@example.com","name":"Example Example","password":"secret","recaptcha_token":"EXAMPLE_RECAPTCHA_KEY","session_id":"session_id"}',
       credentials: "same-origin",
       headers: {
         Accept: "application/json",

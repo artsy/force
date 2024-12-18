@@ -16,8 +16,7 @@ export const HomeHeroUnitLoggedOut: React.FC<{ index: number }> = ({
   const variants: Record<string, Omit<HomeHeroUnitBaseProps, "index">> = {
     control: {
       title: "The art world online",
-      body:
-        "Artsy is the world’s leading platform to discover, buy, and manage the art you love.",
+      body: "Artsy is the world’s leading platform to discover, buy, and manage the art you love.",
       imageUrl: "https://files.artsy.net/images/01_Artsy_App-Download-HP.jpg",
       link: {
         desktop: {

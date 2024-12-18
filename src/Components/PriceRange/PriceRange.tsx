@@ -56,23 +56,23 @@ export const PriceRange: FC<React.PropsWithChildren<PriceRangeProps>> = ({
     updateRange(convertedRange)
   }
 
-  const handleInputValueChange = (changedIndex: number) => ({
-    currentTarget: { value },
-  }: FormEvent<HTMLInputElement>) => {
-    const nextRange = localRange.map((rangeValue, index) => {
-      if (index === changedIndex && (value === "" || value === "0")) {
-        return "*"
-      }
+  const handleInputValueChange =
+    (changedIndex: number) =>
+    ({ currentTarget: { value } }: FormEvent<HTMLInputElement>) => {
+      const nextRange = localRange.map((rangeValue, index) => {
+        if (index === changedIndex && (value === "" || value === "0")) {
+          return "*"
+        }
 
-      if (index === changedIndex) {
-        return parseInt(value, 10)
-      }
+        if (index === changedIndex) {
+          return parseInt(value, 10)
+        }
 
-      return rangeValue
-    })
+        return rangeValue
+      })
 
-    updateRange(nextRange)
-  }
+      updateRange(nextRange)
+    }
 
   return (
     <>

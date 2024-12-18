@@ -3,7 +3,9 @@ import { useRouter } from "System/Hooks/useRouter"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { Jump } from "Utils/Hooks/useJump"
 
-export const ViewingRoomTabBar: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const ViewingRoomTabBar: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const {
     match: {
       params: { slug },

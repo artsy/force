@@ -27,7 +27,9 @@ interface RequestConditionReportProps {
   me: RequestConditionReport_me$data | null | undefined
 }
 
-export const RequestConditionReport: React.FC<React.PropsWithChildren<RequestConditionReportProps>> = props => {
+export const RequestConditionReport: React.FC<
+  React.PropsWithChildren<RequestConditionReportProps>
+> = props => {
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const { trackEvent } = useTracking()
 
@@ -153,11 +155,13 @@ export const RequestConditionReport: React.FC<React.PropsWithChildren<RequestCon
   )
 }
 
-const RequestedConditionReportModal: React.FC<React.PropsWithChildren<{
-  onClose(): void
-  show: boolean
-  email: string
-}>> = ({ onClose, show, email }) => {
+const RequestedConditionReportModal: React.FC<
+  React.PropsWithChildren<{
+    onClose(): void
+    show: boolean
+    email: string
+  }>
+> = ({ onClose, show, email }) => {
   if (!show) return null
 
   return (
@@ -186,23 +190,25 @@ const RequestedConditionReportModal: React.FC<React.PropsWithChildren<{
   )
 }
 
-const TrackingWrappedRequestConditionReport: React.FC<React.PropsWithChildren<RequestConditionReportProps>> = track(
-  props => {
-    return {
-      context_page: DeprecatedAnalyticsSchema.PageName.ArtworkPage,
-      context_module:
-        DeprecatedAnalyticsSchema.ContextModule.AboutTheWorkCondition,
-      context_page_owner_id: props.artwork.internalID,
-      context_page_owner_slug: props.artwork.slug,
-      context_page_owner_type: "Artwork",
-      sale_artwork_id: props.artwork.saleArtwork?.internalID,
-    }
+const TrackingWrappedRequestConditionReport: React.FC<
+  React.PropsWithChildren<RequestConditionReportProps>
+> = track(props => {
+  return {
+    context_page: DeprecatedAnalyticsSchema.PageName.ArtworkPage,
+    context_module:
+      DeprecatedAnalyticsSchema.ContextModule.AboutTheWorkCondition,
+    context_page_owner_id: props.artwork.internalID,
+    context_page_owner_slug: props.artwork.slug,
+    context_page_owner_type: "Artwork",
+    sale_artwork_id: props.artwork.saleArtwork?.internalID,
   }
-)(RequestConditionReport)
+})(RequestConditionReport)
 
-export const RequestConditionReportQueryRenderer: React.FC<React.PropsWithChildren<{
-  artworkID: string
-}>> = ({ artworkID }) => {
+export const RequestConditionReportQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    artworkID: string
+  }>
+> = ({ artworkID }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

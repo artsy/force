@@ -10,9 +10,9 @@ interface CollectionsAppProps {
   marketingCategories: Collections_marketingCategories$data
 }
 
-export const CollectionsApp: React.FC<React.PropsWithChildren<CollectionsAppProps>> = ({
-  marketingCategories,
-}) => {
+export const CollectionsApp: React.FC<
+  React.PropsWithChildren<CollectionsAppProps>
+> = ({ marketingCategories }) => {
   const sorted = [...(marketingCategories ?? [])].sort((a, b) =>
     a.name.localeCompare(b.name)
   )

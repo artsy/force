@@ -3,14 +3,11 @@ import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
 
 import { RouterLink } from "System/Components/RouterLink"
 
-export const ConditionsOfSaleCheckbox: React.FC<React.PropsWithChildren<unknown>> = () => {
-  const {
-    values,
-    touched,
-    errors,
-    setFieldTouched,
-    setFieldValue,
-  } = useAuctionFormContext()
+export const ConditionsOfSaleCheckbox: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
+  const { values, touched, errors, setFieldTouched, setFieldValue } =
+    useAuctionFormContext()
 
   const showErrorMessage = !!(touched.agreeToTerms && errors.agreeToTerms)
 

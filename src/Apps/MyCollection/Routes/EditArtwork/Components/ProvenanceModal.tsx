@@ -5,10 +5,9 @@ interface ProvenanceModalProps {
   onClose(): void
 }
 
-export const ProvenanceModal: React.FC<React.PropsWithChildren<ProvenanceModalProps>> = ({
-  show,
-  onClose,
-}) => {
+export const ProvenanceModal: React.FC<
+  React.PropsWithChildren<ProvenanceModalProps>
+> = ({ show, onClose }) => {
   if (!show) return null
 
   return (

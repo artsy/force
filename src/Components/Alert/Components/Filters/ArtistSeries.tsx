@@ -69,7 +69,9 @@ export const ArtistSeries: FC<React.PropsWithChildren<unknown>> = () => {
   )
 }
 
-export const ArtistSeriesQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = props => {
+export const ArtistSeriesQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = props => {
   return (
     <Suspense fallback={<ArtistSeriesPlaceholder />}>
       <ArtistSeries {...props} />
@@ -77,7 +79,9 @@ export const ArtistSeriesQueryRenderer: React.FC<React.PropsWithChildren<unknown
   )
 }
 
-const ArtistSeriesPlaceholder: React.FC<React.PropsWithChildren<unknown>> = () => {
+const ArtistSeriesPlaceholder: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton>
       <SkeletonText variant="xs" mb={2}>

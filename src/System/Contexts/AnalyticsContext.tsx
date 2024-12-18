@@ -13,7 +13,7 @@ export const AnalyticsInferredContext = createContext<{
   contextPageOwnerType: PageOwnerType
   contextPageOwnerSlug?: string
 }>({
-  contextPageOwnerType: (undefined as any) as PageOwnerType,
+  contextPageOwnerType: undefined as any as PageOwnerType,
 })
 
 interface AnalyticsProps {
@@ -44,18 +44,20 @@ interface AnalyticsContextProviderProps {
  * Wraps `AppShell` and updates on route changes.
  * Pulls out the `contextPageOwnerType` and `contextPageOwnerSlug` from the route.
  */
-export const AnalyticsContextProvider: FC<React.PropsWithChildren<AnalyticsContextProviderProps>> = ({
-  children,
-  path,
-}) => {
-  const [_type, contextPageOwnerSlug] = useMemo(() => tokenize(path ?? ""), [
-    path,
-  ])
+export const AnalyticsContextProvider: FC<
+  React.PropsWithChildren<AnalyticsContextProviderProps>
+> = ({ children, path }) => {
+  const [_type, contextPageOwnerSlug] = useMemo(
+    () => tokenize(path ?? ""),
+    [path]
+  )
 
   const contextPageOwnerType = useMemo(() => {
-    const ownerType = (path
-      ? pathToOwnerType(path) || formatType(_type) // Fallback for unsupported routes
-      : "Unknown") as PageOwnerType
+    const ownerType = (
+      path
+        ? pathToOwnerType(path) || formatType(_type) // Fallback for unsupported routes
+        : "Unknown"
+    ) as PageOwnerType
 
     if (!Object.values(OwnerType).includes(ownerType) && SHOW_ANALYTICS_CALLS) {
       console.warn(
@@ -74,7 +76,9 @@ export const AnalyticsContextProvider: FC<React.PropsWithChildren<AnalyticsConte
   )
 }
 
-export const AnalyticsCombinedContextProvider: FC<React.PropsWithChildren<AnalyticsProps & AnalyticsContextProviderProps>> = ({ children, contextPageOwnerId, path }) => {
+export const AnalyticsCombinedContextProvider: FC<
+  React.PropsWithChildren<AnalyticsProps & AnalyticsContextProviderProps>
+> = ({ children, contextPageOwnerId, path }) => {
   return (
     <Analytics contextPageOwnerId={contextPageOwnerId}>
       <AnalyticsContextProvider path={path}>

@@ -10,7 +10,9 @@ const ArtworkListVisibilityContext = createContext<ArtworkListVisibility>({
   setTouched: (_value: boolean) => {},
 })
 
-export const ArtworkListVisibilityProvider: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+export const ArtworkListVisibilityProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const [touched, setTouched] = useState(false)
 
   return (

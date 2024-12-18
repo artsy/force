@@ -70,7 +70,9 @@ const CellArtistSeries: FC<React.PropsWithChildren<CellArtistSeriesProps>> = ({
   )
 }
 
-export const CellArtistSeriesPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+export const CellArtistSeriesPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Box width={DEFAULT_CELL_WIDTH}>
       <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">

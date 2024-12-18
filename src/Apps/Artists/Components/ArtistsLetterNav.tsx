@@ -8,9 +8,9 @@ export const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
 
 interface ArtistsLetterNavProps extends BoxProps {}
 
-export const ArtistsLetterNav: React.FC<React.PropsWithChildren<ArtistsLetterNavProps>> = ({
-  ...rest
-}) => {
+export const ArtistsLetterNav: React.FC<
+  React.PropsWithChildren<ArtistsLetterNavProps>
+> = ({ ...rest }) => {
   return (
     <Flex flexWrap="wrap" justifyContent={["flex-start", "flex-end"]} {...rest}>
       {LETTERS.map((letter, i) => {

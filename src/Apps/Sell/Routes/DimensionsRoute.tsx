@@ -46,7 +46,9 @@ interface DimensionsRouteProps {
   submission: DimensionsRoute_submission$key
 }
 
-export const DimensionsRoute: React.FC<React.PropsWithChildren<DimensionsRouteProps>> = props => {
+export const DimensionsRoute: React.FC<
+  React.PropsWithChildren<DimensionsRouteProps>
+> = props => {
   const { actions } = useSellFlowContext()
   const submission = useFragment(FRAGMENT, props.submission)
   const { userPreferences } = useSystemContext()

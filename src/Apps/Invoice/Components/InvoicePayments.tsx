@@ -6,9 +6,9 @@ interface InvoiceLineItemsProps {
   invoice: InvoicePayments_invoice$key
 }
 
-export const InvoicePayments: React.FC<React.PropsWithChildren<InvoiceLineItemsProps>> = ({
-  invoice,
-}) => {
+export const InvoicePayments: React.FC<
+  React.PropsWithChildren<InvoiceLineItemsProps>
+> = ({ invoice }) => {
   const data = useFragment(InvoicePaymentsFragment, invoice)
 
   return (

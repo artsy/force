@@ -10,7 +10,9 @@ interface Props {
   artist: ArtistMeta_artist$data
 }
 
-export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({ artist }) => {
+export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
+  artist,
+}) => {
   const alternateNames = artist?.alternateNames || []
 
   return (

@@ -10,10 +10,9 @@ interface ConversationMessageArtworkProps extends FlexProps {
   item: ConversationMessageArtwork_item$key
 }
 
-export const ConversationMessageArtwork: React.FC<React.PropsWithChildren<ConversationMessageArtworkProps>> = ({
-  item,
-  ...flexProps
-}) => {
+export const ConversationMessageArtwork: React.FC<
+  React.PropsWithChildren<ConversationMessageArtworkProps>
+> = ({ item, ...flexProps }) => {
   const data = useFragment(FRAGMENT, item)
 
   if (!data) {

@@ -9,9 +9,9 @@ interface ArticleZoomGalleryCaptionProps {
   figure: ArticleZoomGalleryCaption_figure$data
 }
 
-const ArticleZoomGalleryCaption: FC<React.PropsWithChildren<ArticleZoomGalleryCaptionProps>> = ({
-  figure,
-}) => {
+const ArticleZoomGalleryCaption: FC<
+  React.PropsWithChildren<ArticleZoomGalleryCaptionProps>
+> = ({ figure }) => {
   switch (figure.__typename) {
     case "Artwork":
       return (
@@ -71,9 +71,8 @@ const ArticleZoomGalleryCaption: FC<React.PropsWithChildren<ArticleZoomGalleryCa
   }
 }
 
-export const ArticleZoomGalleryCaptionFragmentContainer = createFragmentContainer(
-  ArticleZoomGalleryCaption,
-  {
+export const ArticleZoomGalleryCaptionFragmentContainer =
+  createFragmentContainer(ArticleZoomGalleryCaption, {
     figure: graphql`
       fragment ArticleZoomGalleryCaption_figure on ArticleSectionImageCollectionFigure {
         __typename
@@ -96,5 +95,4 @@ export const ArticleZoomGalleryCaptionFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })

@@ -50,10 +50,9 @@ interface RefetchVariables {
   sort?: string
 }
 
-export const SavedSearchAlertsApp: React.FC<React.PropsWithChildren<SavedSearchAlertsAppProps>> = ({
-  me,
-  relay,
-}) => {
+export const SavedSearchAlertsApp: React.FC<
+  React.PropsWithChildren<SavedSearchAlertsAppProps>
+> = ({ me, relay }) => {
   const { relayEnvironment } = useSystemContext()
   const { sendToast } = useToasts()
   const { trackEvent } = useTracking()
@@ -67,10 +66,8 @@ export const SavedSearchAlertsApp: React.FC<React.PropsWithChildren<SavedSearchA
   const sm = __internal__useMatchMedia(THEME.mediaQueries.sm)
   const isMobile = xs || sm
 
-  const [
-    editAlertEntity,
-    setEditAlertEntity,
-  ] = useState<EditAlertEntity | null>(null)
+  const [editAlertEntity, setEditAlertEntity] =
+    useState<EditAlertEntity | null>(null)
 
   const [viewOption, setViewOption] = useState<"EDIT" | "ARTWORKS" | null>(null)
 
@@ -393,10 +390,11 @@ export const SavedSearchAlertsApp: React.FC<React.PropsWithChildren<SavedSearchA
   )
 }
 
-export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer(
-  SavedSearchAlertsApp,
-  {
-    me: graphql`
+export const SavedSearchAlertsAppPaginationContainer =
+  createPaginationContainer(
+    SavedSearchAlertsApp,
+    {
+      me: graphql`
       fragment SavedSearchAlertsApp_me on Me
         @argumentDefinitions(
           after: { type: "String" }
@@ -425,20 +423,20 @@ export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return { ...prevVars, totalCount }
     },
-    getVariables(_, { count, cursor }, fragmentVariables) {
-      return {
-        ...fragmentVariables,
-        count,
-        after: cursor,
-      }
-    },
-    query: graphql`
+    {
+      direction: "forward",
+      getFragmentVariables(prevVars, totalCount) {
+        return { ...prevVars, totalCount }
+      },
+      getVariables(_, { count, cursor }, fragmentVariables) {
+        return {
+          ...fragmentVariables,
+          count,
+          after: cursor,
+        }
+      },
+      query: graphql`
       query SavedSearchAlertsAppRefetchQuery(
         $after: String
         $count: Int!
@@ -450,5 +448,5 @@ export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer
         }
       }
     `,
-  }
-)
+    }
+  )

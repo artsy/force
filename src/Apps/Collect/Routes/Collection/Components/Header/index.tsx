@@ -17,9 +17,9 @@ export interface CollectionHeaderProps {
   collection: Header_collection$data
 }
 
-export const CollectionHeader: React.FC<React.PropsWithChildren<CollectionHeaderProps>> = ({
-  collection,
-}) => {
+export const CollectionHeader: React.FC<
+  React.PropsWithChildren<CollectionHeaderProps>
+> = ({ collection }) => {
   return (
     <>
       <GridColumns mt={4} as="header" gridRowGap={[2, 0]}>

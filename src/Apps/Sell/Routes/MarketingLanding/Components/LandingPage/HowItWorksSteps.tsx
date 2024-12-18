@@ -10,30 +10,28 @@ const reasons = [
   {
     index: "01",
     title: "Submit your artwork",
-    text:
-      "Enter the artist’s name on the submission page. If the artist is in our database, you’ll be able to upload images and artwork details.",
+    text: "Enter the artist’s name on the submission page. If the artist is in our database, you’ll be able to upload images and artwork details.",
   },
   {
     index: "02",
     title: "Meet your expert",
-    text:
-      "One of our specialists will review your submission and determine the best sales option.",
+    text: "One of our specialists will review your submission and determine the best sales option.",
   },
   {
     index: "03",
     title: "Get a sales option",
-    text:
-      "Review your tailored sales strategy and price estimate. We’ll select the best way to sell your work—either at auction, through private sale, or a direct listing on Artsy.",
+    text: "Review your tailored sales strategy and price estimate. We’ll select the best way to sell your work—either at auction, through private sale, or a direct listing on Artsy.",
   },
   {
     index: "04",
     title: "Sell your work",
-    text:
-      "Keep your work until it sells, then let our team handle the logistics. No costly presale insurance, shipping, or handling fees.",
+    text: "Keep your work until it sells, then let our team handle the logistics. No costly presale insurance, shipping, or handling fees.",
   },
 ]
 
-export const HowItWorksSteps: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HowItWorksSteps: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { user, isLoggedIn } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
@@ -105,7 +103,11 @@ interface RowItemProps {
   title: string
   text: string
 }
-const RowItem: React.FC<React.PropsWithChildren<RowItemProps>> = ({ index, title, text }) => {
+const RowItem: React.FC<React.PropsWithChildren<RowItemProps>> = ({
+  index,
+  title,
+  text,
+}) => {
   return (
     <Column span={3} mb={[2, 0]}>
       <Text mt={[0.5, 0]} variant={["lg-display", "xl", "xxl"]}>

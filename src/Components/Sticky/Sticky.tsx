@@ -37,14 +37,10 @@ export const Sticky = ({
   withoutHeaderOffset?: boolean
   children: ReactNode | (({ stuck }: { stuck: boolean }) => ReactNode)
 }) => {
-  const {
-    offsetTop,
-    registerSticky,
-    deregisterSticky,
-    updateSticky,
-  } = useSticky({
-    id,
-  })
+  const { offsetTop, registerSticky, deregisterSticky, updateSticky } =
+    useSticky({
+      id,
+    })
 
   const { desktop, mobile } = useNavBarHeight()
 

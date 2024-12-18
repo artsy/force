@@ -26,9 +26,9 @@ const DEFAULT_CITIES = [
   { text: "Online Exclusive", value: "online" },
 ]
 
-export const ShowsHeader: React.FC<React.PropsWithChildren<ShowsHeaderProps>> = ({
-  viewer: { featuredCities, allCities },
-}) => {
+export const ShowsHeader: React.FC<
+  React.PropsWithChildren<ShowsHeaderProps>
+> = ({ viewer: { featuredCities, allCities } }) => {
   const { router } = useRouter()
   const isMounted = useDidMount()
 
@@ -39,7 +39,7 @@ export const ShowsHeader: React.FC<React.PropsWithChildren<ShowsHeaderProps>> = 
   const options = uniqBy([...DEFAULT_CITIES, ...allCities], city => city.value)
 
   return (
-    (<Box p={0} border="1px solid" borderColor="black10">
+    <Box p={0} border="1px solid" borderColor="black10">
       <GridColumns width="100%">
         <Column span={10} display={["none", "block"]}>
           <HorizontalOverflow height="100%" p={2} data-test="cities-rail">
@@ -79,12 +79,12 @@ export const ShowsHeader: React.FC<React.PropsWithChildren<ShowsHeaderProps>> = 
             </SelectContainer>
           ) : (
             // Placeholder for SSR render
-            (<Box height={50} />)
+            <Box height={50} />
           )}
         </Column>
       </GridColumns>
-    </Box>)
-  );
+    </Box>
+  )
 }
 
 export const ShowsHeaderFragmentContainer = createFragmentContainer(

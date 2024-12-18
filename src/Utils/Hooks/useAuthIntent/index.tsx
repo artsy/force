@@ -178,7 +178,9 @@ const AuthIntentContext = createContext<{
   setValue: (_value: AfterAuthAction | null) => null,
 })
 
-export const AuthIntentProvider: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+export const AuthIntentProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const [value, setValue] = useState<AfterAuthAction | null>(null)
 
   return (

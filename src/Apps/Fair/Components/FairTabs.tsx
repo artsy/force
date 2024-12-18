@@ -20,41 +20,40 @@ interface FairTabsProps {
 const FairTabs: FC<React.PropsWithChildren<FairTabsProps>> = ({ fair }) => {
   const tracking = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const lastClickedTab = useRef(ContextModule.fairInfo)
 
   const { jumpTo } = useJump()
 
-  const handleClick = ({
-    destinationPath,
-    subject,
-    contextModule,
-  }: {
-    destinationPath: string
-    subject: string
-    contextModule: ContextModule
-  }) => () => {
-    jumpTo("FairTabs")
-
-    const trackingData: ClickedNavigationTab = {
-      action: ActionType.clickedNavigationTab,
-      context_module: lastClickedTab.current,
-      context_page_owner_id: contextPageOwnerId,
-      context_page_owner_slug: contextPageOwnerSlug,
-      context_page_owner_type: contextPageOwnerType as PageOwnerType,
-      destination_path: destinationPath,
+  const handleClick =
+    ({
+      destinationPath,
       subject,
+      contextModule,
+    }: {
+      destinationPath: string
+      subject: string
+      contextModule: ContextModule
+    }) =>
+    () => {
+      jumpTo("FairTabs")
+
+      const trackingData: ClickedNavigationTab = {
+        action: ActionType.clickedNavigationTab,
+        context_module: lastClickedTab.current,
+        context_page_owner_id: contextPageOwnerId,
+        context_page_owner_slug: contextPageOwnerSlug,
+        context_page_owner_type: contextPageOwnerType as PageOwnerType,
+        destination_path: destinationPath,
+        subject,
+      }
+
+      lastClickedTab.current = contextModule
+
+      tracking.trackEvent(trackingData)
     }
-
-    lastClickedTab.current = contextModule
-
-    tracking.trackEvent(trackingData)
-  }
 
   const fairHref = fair.href ?? ""
   const artworkCount = fair.counts?.artworks ?? 0

@@ -10,10 +10,9 @@ interface SuggestedArtworksModalFooterProps {
   onClose: () => void
 }
 
-export const SuggestedArtworksModalFooter: FC<React.PropsWithChildren<SuggestedArtworksModalFooterProps>> = ({
-  artworksCount,
-  onClose,
-}) => {
+export const SuggestedArtworksModalFooter: FC<
+  React.PropsWithChildren<SuggestedArtworksModalFooterProps>
+> = ({ artworksCount, onClose }) => {
   const { criteriaHref } = useSavedSearchAlertContext()
 
   if (artworksCount <= NUMBER_OF_ARTWORKS_TO_SHOW) return null

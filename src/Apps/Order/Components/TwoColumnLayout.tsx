@@ -39,11 +39,9 @@ export interface TwoColumnLayoutProps {
   noRowGap?: boolean
 }
 
-export const TwoColumnLayout: FC<React.PropsWithChildren<TwoColumnLayoutProps>> = ({
-  Content,
-  Sidebar,
-  noRowGap,
-}) => (
+export const TwoColumnLayout: FC<
+  React.PropsWithChildren<TwoColumnLayoutProps>
+> = ({ Content, Sidebar, noRowGap }) => (
   <GridColumns gridRowGap={noRowGap ? 0 : undefined}>
     <Column span={[12, CONTENT_SPAN]}>{Content}</Column>
     <Column display={["none", "block"]} span={1} />

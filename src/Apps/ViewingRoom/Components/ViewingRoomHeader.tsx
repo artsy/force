@@ -12,7 +12,9 @@ interface ViewingRoomHeaderProps {
   viewingRoom: ViewingRoomHeader_viewingRoom$data
 }
 
-const ViewingRoomHeader: React.FC<React.PropsWithChildren<ViewingRoomHeaderProps>> = props => {
+const ViewingRoomHeader: React.FC<
+  React.PropsWithChildren<ViewingRoomHeaderProps>
+> = props => {
   return (
     <>
       <Media greaterThanOrEqual="sm">
@@ -49,9 +51,9 @@ export const ViewingRoomHeaderFragmentContainer = createFragmentContainer(
   }
 )
 
-const ViewingRoomHeaderLarge: React.FC<React.PropsWithChildren<ViewingRoomHeaderProps>> = ({
-  viewingRoom,
-}) => {
+const ViewingRoomHeaderLarge: React.FC<
+  React.PropsWithChildren<ViewingRoomHeaderProps>
+> = ({ viewingRoom }) => {
   const { desktop } = useNavBarHeight()
 
   const src = viewingRoom.image?.imageURLs?.normalized
@@ -117,9 +119,9 @@ const ViewingRoomHeaderLarge: React.FC<React.PropsWithChildren<ViewingRoomHeader
   )
 }
 
-const ViewingRoomHeaderSmall: React.FC<React.PropsWithChildren<ViewingRoomHeaderProps>> = ({
-  viewingRoom,
-}) => {
+const ViewingRoomHeaderSmall: React.FC<
+  React.PropsWithChildren<ViewingRoomHeaderProps>
+> = ({ viewingRoom }) => {
   const { mobile } = useNavBarHeight()
 
   const src = viewingRoom.image?.imageURLs?.normalized

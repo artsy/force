@@ -3,7 +3,10 @@ import {
   Aggregations,
   ArtworkFilterContextProvider,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { PartnersFilter, PartnersFilterProps } from "Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
+import {
+  PartnersFilter,
+  PartnersFilterProps,
+} from "Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

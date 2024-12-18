@@ -179,12 +179,9 @@ interface NotificationItemWrapperProps {
   onClick: () => void
 }
 
-export const NotificationItemWrapper: FC<React.PropsWithChildren<NotificationItemWrapperProps>> = ({
-  item,
-  mode,
-  children,
-  onClick,
-}) => {
+export const NotificationItemWrapper: FC<
+  React.PropsWithChildren<NotificationItemWrapperProps>
+> = ({ item, mode, children, onClick }) => {
   const {
     state: { currentNotificationId },
   } = useNotificationsContext()

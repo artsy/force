@@ -19,15 +19,13 @@ interface MyCollectionArtworkFormImagesProps {
   isEditing?: boolean
 }
 
-export const MyCollectionArtworkFormImages: React.FC<React.PropsWithChildren<MyCollectionArtworkFormImagesProps>> = ({
-  isEditing = false,
-}) => {
+export const MyCollectionArtworkFormImages: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkFormImagesProps>
+> = ({ isEditing = false }) => {
   const [errors, setErrors] = useState<Array<FileRejection>>([])
 
-  const {
-    addLocalImage,
-    removeLocalImage,
-  } = useMyCollectionArtworkFormContext()
+  const { addLocalImage, removeLocalImage } =
+    useMyCollectionArtworkFormContext()
   const { relayEnvironment } = useSystemContext()
   const { values, setFieldValue } = useFormikContext<ArtworkModel>()
 

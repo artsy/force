@@ -34,9 +34,9 @@ export interface BootProps extends React.PropsWithChildren {
 
 const { GlobalStyles } = injectGlobalStyles()
 
-export const Boot: React.FC<React.PropsWithChildren<
-  React.PropsWithChildren<BootProps>
->> = track(undefined, {
+export const Boot: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<BootProps>>
+> = track(undefined, {
   dispatch: Events.postEvent,
 })((props: BootProps) => {
   /**
@@ -97,9 +97,11 @@ export const Boot: React.FC<React.PropsWithChildren<
   )
 })
 
-const EnvironmentProvider: FC<React.PropsWithChildren<{
-  environment: Environment
-}>> = ({ children, environment }) => {
+const EnvironmentProvider: FC<
+  React.PropsWithChildren<{
+    environment: Environment
+  }>
+> = ({ children, environment }) => {
   if (process.env.NODE_ENV === "test") return <>{children}</>
 
   return (

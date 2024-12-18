@@ -21,13 +21,9 @@ const LockIconPositioner = styled(Flex)`
   right: 0;
 `
 
-export const StepSummaryItem: React.FC<React.PropsWithChildren<StepSummaryItemProps>> = ({
-  title,
-  onChange,
-  children,
-  locked,
-  ...others
-}) => {
+export const StepSummaryItem: React.FC<
+  React.PropsWithChildren<StepSummaryItemProps>
+> = ({ title, onChange, children, locked, ...others }) => {
   const showHeading = title || (onChange && !locked)
 
   return (

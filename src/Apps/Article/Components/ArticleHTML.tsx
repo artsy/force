@@ -9,7 +9,10 @@ interface ArticleHTMLProps extends BoxProps {
   children: string
 }
 
-export const ArticleHTML: FC<React.PropsWithChildren<ArticleHTMLProps>> = ({ children, ...rest }) => {
+export const ArticleHTML: FC<React.PropsWithChildren<ArticleHTMLProps>> = ({
+  children,
+  ...rest
+}) => {
   // Looks for links and if they are internal and a supported entity type,
   // inserts the relevant tooltip.
   const transform = (node: Element, i: number) => {

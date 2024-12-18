@@ -88,31 +88,28 @@ enum AddressSuggestionRadioButton {
   user_address = "What you entered",
 }
 
-const AddressVerificationFlow: React.FC<React.PropsWithChildren<AddressVerificationFlowProps>> = ({
-  verificationInput,
-  verifyAddress,
-  onChosenAddress,
-  onClose,
-}) => {
+const AddressVerificationFlow: React.FC<
+  React.PropsWithChildren<AddressVerificationFlowProps>
+> = ({ verificationInput, verifyAddress, onChosenAddress, onClose }) => {
   const [showModal, setShowModal] = useState(false)
 
   let verificationPath: VerificationPath
   let addressOptions: AddressOption[] = []
 
-  const {
-    trackViewedModal,
-    trackClosedModal,
-    trackSelectedAddress,
-  } = useAddressVerificationTracking()
+  const { trackViewedModal, trackClosedModal, trackSelectedAddress } =
+    useAddressVerificationTracking()
 
   const error = (verifyAddress.verifyAddressOrError as VerifyAddressErrorType)
     ?.mutationError
-  const suggestedAddresses = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
-    ?.suggestedAddresses
-  const inputAddress = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
-    ?.inputAddress
-  const verificationStatus = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
-    ?.verificationStatus
+  const suggestedAddresses = (
+    verifyAddress.verifyAddressOrError as VerifyAddressSuccessType
+  )?.suggestedAddresses
+  const inputAddress = (
+    verifyAddress.verifyAddressOrError as VerifyAddressSuccessType
+  )?.inputAddress
+  const verificationStatus = (
+    verifyAddress.verifyAddressOrError as VerifyAddressSuccessType
+  )?.verificationStatus
 
   const hasError = Boolean(error)
 
@@ -405,14 +402,16 @@ export const AddressVerificationFlowFragmentContainer = createFragmentContainer(
   }
 )
 
-export const AddressVerificationFlowQueryRenderer: React.FC<React.PropsWithChildren<{
-  address: AddressValues
-  onChosenAddress: (
-    verifiedBy: AddressVerifiedBy,
+export const AddressVerificationFlowQueryRenderer: React.FC<
+  React.PropsWithChildren<{
     address: AddressValues
-  ) => void
-  onClose: () => void
-}>> = ({ address, onChosenAddress, onClose }) => {
+    onChosenAddress: (
+      verifiedBy: AddressVerifiedBy,
+      address: AddressValues
+    ) => void
+    onClose: () => void
+  }>
+> = ({ address, onChosenAddress, onClose }) => {
   return (
     <SystemQueryRenderer<AddressVerificationFlowQuery>
       variables={{ address }}

@@ -23,9 +23,9 @@ export interface ConversationReviewOfferCTAProps {
   conversation: ConversationReviewOfferCTA_conversation$key
 }
 
-export const ConversationReviewOfferCTA: React.FC<React.PropsWithChildren<ConversationReviewOfferCTAProps>> = ({
-  conversation,
-}) => {
+export const ConversationReviewOfferCTA: React.FC<
+  React.PropsWithChildren<ConversationReviewOfferCTAProps>
+> = ({ conversation }) => {
   const data = useFragment(FRAGMENT, conversation)
   const activeOrder = extractNodes(data.activeOrders)[0]
   const [showOrderModal, setShowOrderModal] = useState(false)

@@ -35,10 +35,9 @@ interface ArticleInfiniteScrollProps {
   relay: RelayPaginationProp
 }
 
-export const ArticleInfiniteScroll: FC<React.PropsWithChildren<ArticleInfiniteScrollProps>> = ({
-  viewer,
-  relay,
-}) => {
+export const ArticleInfiniteScroll: FC<
+  React.PropsWithChildren<ArticleInfiniteScrollProps>
+> = ({ viewer, relay }) => {
   const articles = extractNodes(viewer.articlesConnection)
 
   const [mode, setMode] = useMode<"Pending" | "Loading">("Pending")
@@ -99,10 +98,11 @@ const ARTICLE_NEXT_QUERY = graphql`
   }
 `
 
-export const ArticleInfiniteScrollPaginationContainer = createPaginationContainer(
-  ArticleInfiniteScroll,
-  {
-    viewer: graphql`
+export const ArticleInfiniteScrollPaginationContainer =
+  createPaginationContainer(
+    ArticleInfiniteScroll,
+    {
+      viewer: graphql`
       fragment ArticleInfiniteScroll_viewer on Viewer
         @argumentDefinitions(
           after: { type: "String" }
@@ -127,32 +127,31 @@ export const ArticleInfiniteScrollPaginationContainer = createPaginationContaine
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return { ...prevVars, count: totalCount }
     },
-    getVariables(_props, { count, cursor }, fragmentVariables) {
-      return { ...fragmentVariables, count, after: cursor }
-    },
-    query: ARTICLE_NEXT_QUERY,
-  }
-)
+    {
+      direction: "forward",
+      getFragmentVariables(prevVars, totalCount) {
+        return { ...prevVars, count: totalCount }
+      },
+      getVariables(_props, { count, cursor }, fragmentVariables) {
+        return { ...fragmentVariables, count, after: cursor }
+      },
+      query: ARTICLE_NEXT_QUERY,
+    }
+  )
 
 interface ArticleInfiniteScrollQueryRendererProps {
   articleID: string
   channelID: string
 }
 
-export const ArticleInfiniteScrollQueryRenderer: FC<React.PropsWithChildren<ArticleInfiniteScrollQueryRendererProps>> = ({
-  articleID,
-  channelID,
-}) => {
+export const ArticleInfiniteScrollQueryRenderer: FC<
+  React.PropsWithChildren<ArticleInfiniteScrollQueryRendererProps>
+> = ({ articleID, channelID }) => {
   return (
     // Disable scroll anchoring for infinite article scroll
     // https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-anchor/Guide_to_scroll_anchoring
-    (<div style={{ overflowAnchor: "none" }}>
+    <div style={{ overflowAnchor: "none" }}>
       <SystemQueryRenderer<ArticleInfiniteScrollQuery>
         lazyLoad
         placeholder={<ArticleInfiniteScrollPlaceholder />}
@@ -173,11 +172,13 @@ export const ArticleInfiniteScrollQueryRenderer: FC<React.PropsWithChildren<Arti
           )
         }}
       />
-    </div>)
-  );
+    </div>
+  )
 }
 
-const ArticleInfiniteScrollPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const ArticleInfiniteScrollPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <>
       <FullBleed bg="black5" p={1}>

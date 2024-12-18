@@ -112,9 +112,9 @@ export const UtilButton = React.forwardRef(
   }
 )
 
-const UtilButtonInnerText: React.FC<React.PropsWithChildren<
-  UtilButtonInnerTextProps
->> = ({ label, longestLabel, ...rest }) => {
+const UtilButtonInnerText: React.FC<
+  React.PropsWithChildren<UtilButtonInnerTextProps>
+> = ({ label, longestLabel, ...rest }) => {
   if (!label) {
     return null
   }

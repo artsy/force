@@ -17,7 +17,9 @@ export type FullBleedHeaderProps = BoxProps &
     relativeTo?: MutableRefObject<HTMLElement | null>
   }
 
-export const FullBleedHeader: FC<React.PropsWithChildren<FullBleedHeaderProps>> = ({
+export const FullBleedHeader: FC<
+  React.PropsWithChildren<FullBleedHeaderProps>
+> = ({
   src,
   children,
   caption,

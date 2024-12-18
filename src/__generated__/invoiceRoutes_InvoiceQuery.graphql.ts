@@ -8,120 +8,122 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
+import { ConcreteRequest } from "relay-runtime"
+import { FragmentRefs } from "relay-runtime"
 export type invoiceRoutes_InvoiceQuery$variables = {
-  token: string;
-};
+  token: string
+}
 export type invoiceRoutes_InvoiceQuery$data = {
-  readonly invoice: {
-    readonly " $fragmentSpreads": FragmentRefs<"InvoiceApp_invoice">;
-  } | null | undefined;
-};
+  readonly invoice:
+    | {
+        readonly " $fragmentSpreads": FragmentRefs<"InvoiceApp_invoice">
+      }
+    | null
+    | undefined
+}
 export type invoiceRoutes_InvoiceQuery = {
-  response: invoiceRoutes_InvoiceQuery$data;
-  variables: invoiceRoutes_InvoiceQuery$variables;
-};
+  response: invoiceRoutes_InvoiceQuery$data
+  variables: invoiceRoutes_InvoiceQuery$variables
+}
 
-const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "token"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
-    "name": "token",
-    "variableName": "token"
-  }
-];
-return {
-  "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "invoiceRoutes_InvoiceQuery",
-    "selections": [
+const node: ConcreteRequest = (function () {
+  var v0 = [
       {
-        "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "Invoice",
-        "kind": "LinkedField",
-        "name": "invoice",
-        "plural": false,
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "InvoiceApp_invoice"
-          }
-        ],
-        "storageKey": null
-      }
+        defaultValue: null,
+        kind: "LocalArgument",
+        name: "token",
+      },
     ],
-    "type": "Query",
-    "abstractKey": null
-  },
-  "kind": "Request",
-  "operation": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Operation",
-    "name": "invoiceRoutes_InvoiceQuery",
-    "selections": [
+    v1 = [
       {
-        "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "Invoice",
-        "kind": "LinkedField",
-        "name": "invoice",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "number",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "format",
-                "value": "MMM D, YYYY"
-              }
-            ],
-            "kind": "ScalarField",
-            "name": "readyAt",
-            "storageKey": "readyAt(format:\"MMM D, YYYY\")"
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
+        kind: "Variable",
+        name: "token",
+        variableName: "token",
+      },
     ]
-  },
-  "params": {
-    "cacheID": "b34dab2604f8f34105035285a3dc36ad",
-    "id": null,
-    "metadata": {},
-    "name": "invoiceRoutes_InvoiceQuery",
-    "operationKind": "query",
-    "text": "query invoiceRoutes_InvoiceQuery(\n  $token: String!\n) {\n  invoice(token: $token) {\n    ...InvoiceApp_invoice\n    id\n  }\n}\n\nfragment InvoiceApp_invoice on Invoice {\n  number\n  readyAt(format: \"MMM D, YYYY\")\n}\n"
+  return {
+    fragment: {
+      argumentDefinitions: v0 /*: any*/,
+      kind: "Fragment",
+      metadata: null,
+      name: "invoiceRoutes_InvoiceQuery",
+      selections: [
+        {
+          alias: null,
+          args: v1 /*: any*/,
+          concreteType: "Invoice",
+          kind: "LinkedField",
+          name: "invoice",
+          plural: false,
+          selections: [
+            {
+              args: null,
+              kind: "FragmentSpread",
+              name: "InvoiceApp_invoice",
+            },
+          ],
+          storageKey: null,
+        },
+      ],
+      type: "Query",
+      abstractKey: null,
+    },
+    kind: "Request",
+    operation: {
+      argumentDefinitions: v0 /*: any*/,
+      kind: "Operation",
+      name: "invoiceRoutes_InvoiceQuery",
+      selections: [
+        {
+          alias: null,
+          args: v1 /*: any*/,
+          concreteType: "Invoice",
+          kind: "LinkedField",
+          name: "invoice",
+          plural: false,
+          selections: [
+            {
+              alias: null,
+              args: null,
+              kind: "ScalarField",
+              name: "number",
+              storageKey: null,
+            },
+            {
+              alias: null,
+              args: [
+                {
+                  kind: "Literal",
+                  name: "format",
+                  value: "MMM D, YYYY",
+                },
+              ],
+              kind: "ScalarField",
+              name: "readyAt",
+              storageKey: 'readyAt(format:"MMM D, YYYY")',
+            },
+            {
+              alias: null,
+              args: null,
+              kind: "ScalarField",
+              name: "id",
+              storageKey: null,
+            },
+          ],
+          storageKey: null,
+        },
+      ],
+    },
+    params: {
+      cacheID: "b34dab2604f8f34105035285a3dc36ad",
+      id: null,
+      metadata: {},
+      name: "invoiceRoutes_InvoiceQuery",
+      operationKind: "query",
+      text: 'query invoiceRoutes_InvoiceQuery(\n  $token: String!\n) {\n  invoice(token: $token) {\n    ...InvoiceApp_invoice\n    id\n  }\n}\n\nfragment InvoiceApp_invoice on Invoice {\n  number\n  readyAt(format: "MMM D, YYYY")\n}\n',
+    },
   }
-};
-})();
+})()
+;(node as any).hash = "22f7db6b7486ac49dafcd58802edaf42"
 
-(node as any).hash = "22f7db6b7486ac49dafcd58802edaf42";
-
-export default node;
+export default node

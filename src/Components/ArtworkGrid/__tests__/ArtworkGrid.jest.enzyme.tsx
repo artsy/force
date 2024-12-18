@@ -25,30 +25,8 @@ describe("ArtworkGrid", () => {
   describe("state", () => {
     describe("concerning column layout", () => {
       const aspectRatios = [
-        1.23,
-        0.74,
-        0.75,
-        1.06,
-        0.73,
-        1.28,
-        0.77,
-        1.37,
-        1.37,
-        0.75,
-        0.74,
-        0.73,
-        0.78,
-        0.71,
-        0.75,
-        1.34,
-        1.2,
-        0.71,
-        1.27,
-        0.73,
-        0.75,
-        0.8,
-        0.8,
-        1.36,
+        1.23, 0.74, 0.75, 1.06, 0.73, 1.28, 0.77, 1.37, 1.37, 0.75, 0.74, 0.73,
+        0.78, 0.71, 0.75, 1.34, 1.2, 0.71, 1.27, 0.73, 0.75, 0.8, 0.8, 1.36,
       ]
 
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -154,9 +132,8 @@ describe("ArtworkGrid", () => {
       })
       const artworkGridContainer = await wrapper.find(ArtworkGridContainer)
 
-      const {
-        interval,
-      } = artworkGridContainer.state() as ArtworkGridContainerState
+      const { interval } =
+        artworkGridContainer.state() as ArtworkGridContainerState
       expect(interval).toBeGreaterThan(0)
     })
 

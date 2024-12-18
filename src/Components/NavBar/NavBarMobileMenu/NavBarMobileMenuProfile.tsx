@@ -9,10 +9,9 @@ interface NavBarMobileMenuProfileProps {
   onNavButtonClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
-export const NavBarMobileMenuProfile: FC<React.PropsWithChildren<NavBarMobileMenuProfileProps>> = ({
-  onClose,
-  onNavButtonClick,
-}) => {
+export const NavBarMobileMenuProfile: FC<
+  React.PropsWithChildren<NavBarMobileMenuProfileProps>
+> = ({ onClose, onNavButtonClick }) => {
   return (
     <ModalBase dialogProps={{ width: "100%", height: "100%", bg: "white100" }}>
       <Text variant="sm-display" width="100%" onClick={onNavButtonClick}>

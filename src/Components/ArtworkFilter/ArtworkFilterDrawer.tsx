@@ -8,11 +8,9 @@ interface ArtworkFilterDrawerProps {
   onClose: () => void
 }
 
-export const ArtworkFilterDrawer: FC<React.PropsWithChildren<ArtworkFilterDrawerProps>> = ({
-  children,
-  open,
-  onClose,
-}) => {
+export const ArtworkFilterDrawer: FC<
+  React.PropsWithChildren<ArtworkFilterDrawerProps>
+> = ({ children, open, onClose }) => {
   return (
     <Drawer zIndex={Z.dropdown} open={open} onClose={onClose} anchor="left">
       <Box p={2} minWidth={375} position="relative">

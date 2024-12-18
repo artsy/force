@@ -7,17 +7,15 @@ export interface SaleAgreementsListProps {
   saleAgreements: NonNullable<
     NonNullable<
       NonNullable<
-        NonNullable<
-          SaleAgreementsFilter_viewer$data
-        >["saleAgreementsConnection"]
+        NonNullable<SaleAgreementsFilter_viewer$data>["saleAgreementsConnection"]
       >["edges"]
     >[0]
   >["node"][]
 }
 
-export const SaleAgreementsList: FC<React.PropsWithChildren<SaleAgreementsListProps>> = ({
-  saleAgreements,
-}) => {
+export const SaleAgreementsList: FC<
+  React.PropsWithChildren<SaleAgreementsListProps>
+> = ({ saleAgreements }) => {
   const sortedSaleAgreements = sortBy(saleAgreements, ["sale.name"])
 
   return (

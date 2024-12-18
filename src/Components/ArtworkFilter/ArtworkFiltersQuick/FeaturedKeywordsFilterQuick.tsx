@@ -6,7 +6,9 @@ export interface FeaturedKeywordsFilterQuickProps {
   featuredKeywords: readonly string[] | null | undefined
 }
 
-export const FeaturedKeywordsFilterQuick: FC<React.PropsWithChildren<FeaturedKeywordsFilterQuickProps>> = props => {
+export const FeaturedKeywordsFilterQuick: FC<
+  React.PropsWithChildren<FeaturedKeywordsFilterQuickProps>
+> = props => {
   const { filters, setFilter } = useArtworkFilterContext()
 
   const toggleKeyword = keyword => {

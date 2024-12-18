@@ -6,10 +6,9 @@ interface UnlistedBannerModalProps {
   onClose(): void
 }
 
-export const UnlistedBannerModal: React.FC<React.PropsWithChildren<UnlistedBannerModalProps>> = ({
-  show,
-  onClose,
-}) => {
+export const UnlistedBannerModal: React.FC<
+  React.PropsWithChildren<UnlistedBannerModalProps>
+> = ({ show, onClose }) => {
   if (!show) return null
 
   return (

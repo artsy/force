@@ -22,12 +22,9 @@ interface ArtworkImageBrowserSmallProps {
   maxHeight: number
 }
 
-const ArtworkImageBrowserSmall: React.FC<React.PropsWithChildren<ArtworkImageBrowserSmallProps>> = ({
-  artwork,
-  activeIndex,
-  setActiveIndex,
-  maxHeight,
-}) => {
+const ArtworkImageBrowserSmall: React.FC<
+  React.PropsWithChildren<ArtworkImageBrowserSmallProps>
+> = ({ artwork, activeIndex, setActiveIndex, maxHeight }) => {
   const figures = artwork.figures
   const activeFigure = figures[activeIndex]
 
@@ -120,9 +117,8 @@ const Rail: React.FC<React.PropsWithChildren<SwiperRailProps>> = props => {
   return <SwiperRail {...props} display="block" />
 }
 
-export const ArtworkImageBrowserSmallFragmentContainer = createFragmentContainer(
-  ArtworkImageBrowserSmall,
-  {
+export const ArtworkImageBrowserSmallFragmentContainer =
+  createFragmentContainer(ArtworkImageBrowserSmall, {
     artwork: graphql`
       fragment ArtworkImageBrowserSmall_artwork on Artwork
         @argumentDefinitions(
@@ -146,5 +142,4 @@ export const ArtworkImageBrowserSmallFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })

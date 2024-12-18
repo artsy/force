@@ -10,9 +10,9 @@ interface SettingsAuctionsRouteProps {
   me: SettingsAuctionsRoute_me$data
 }
 
-const SettingsAuctionsRoute: React.FC<React.PropsWithChildren<SettingsAuctionsRouteProps>> = ({
-  me,
-}) => {
+const SettingsAuctionsRoute: React.FC<
+  React.PropsWithChildren<SettingsAuctionsRouteProps>
+> = ({ me }) => {
   return (
     <Join separator={<Separator my={4} />}>
       <UserActiveBidsFragmentContainer me={me} />

@@ -11,10 +11,9 @@ interface MyCollectionArtworkFormHeaderProps {
   NextButton?: ReactNode
   onBackClick: () => void
 }
-export const MyCollectionArtworkFormHeader: React.FC<React.PropsWithChildren<MyCollectionArtworkFormHeaderProps>> = ({
-  NextButton,
-  onBackClick,
-}) => {
+export const MyCollectionArtworkFormHeader: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkFormHeaderProps>
+> = ({ NextButton, onBackClick }) => {
   const { theme } = useTheme()
   return (
     <>

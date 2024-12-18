@@ -17,7 +17,7 @@ describe("handlePartnerOverview", () => {
   beforeEach(() => {
     jest.resetModules()
 
-    res = ({
+    res = {
       locals: {
         profile: {
           owner: {
@@ -27,7 +27,7 @@ describe("handlePartnerOverview", () => {
         },
       },
       redirect: jest.fn(),
-    } as unknown) as ResWithProfile
+    } as unknown as ResWithProfile
 
     next = jest.fn()
   })
@@ -48,11 +48,11 @@ describe("handlePartnerOverview", () => {
   ])(
     "redirects %s to %s",
     (route: string, result: string, path: string, params: any) => {
-      req = ({
+      req = {
         route: { path: route },
         path,
         params,
-      } as unknown) as Request
+      } as unknown as Request
 
       handlePartnerOverview(req, res, next)
 
@@ -69,7 +69,7 @@ describe("handlePartnerWorks", () => {
   beforeEach(() => {
     jest.resetModules()
 
-    res = ({
+    res = {
       locals: {
         profile: {
           owner: {
@@ -79,7 +79,7 @@ describe("handlePartnerWorks", () => {
         },
       },
       redirect: jest.fn(),
-    } as unknown) as ResWithProfile
+    } as unknown as ResWithProfile
 
     next = jest.fn()
   })
@@ -100,11 +100,11 @@ describe("handlePartnerWorks", () => {
   ])(
     "redirects %s to %s",
     (route: string, result: string, path: string, params: any) => {
-      req = ({
+      req = {
         route: { path: route },
         path,
         params,
-      } as unknown) as Request
+      } as unknown as Request
 
       handlePartnerWorks(req, res, next)
 
@@ -121,7 +121,7 @@ describe("handlePartnerArtist", () => {
   beforeEach(() => {
     jest.resetModules()
 
-    res = ({
+    res = {
       locals: {
         profile: {
           owner: {
@@ -131,7 +131,7 @@ describe("handlePartnerArtist", () => {
         },
       },
       redirect: jest.fn(),
-    } as unknown) as ResWithProfile
+    } as unknown as ResWithProfile
 
     next = jest.fn()
   })
@@ -146,11 +146,11 @@ describe("handlePartnerArtist", () => {
   ])(
     "redirects %s to %s",
     (route: string, result: string, path: string, params: any) => {
-      req = ({
+      req = {
         route: { path: route },
         path,
         params,
-      } as unknown) as Request
+      } as unknown as Request
 
       handlePartnerArtist(req, res, next)
 
@@ -167,7 +167,7 @@ describe("handlePartnerFallbackRedirect", () => {
   beforeEach(() => {
     jest.resetModules()
 
-    res = ({
+    res = {
       locals: {
         profile: {
           owner: {
@@ -177,7 +177,7 @@ describe("handlePartnerFallbackRedirect", () => {
         },
       },
       redirect: jest.fn(),
-    } as unknown) as ResWithProfile
+    } as unknown as ResWithProfile
 
     next = jest.fn()
   })
@@ -223,11 +223,11 @@ describe("handlePartnerFallbackRedirect", () => {
   ])(
     "redirects %s to %s",
     (route: string, result: string, path: string, params: any) => {
-      req = ({
+      req = {
         route: { path: route },
         path,
         params,
-      } as unknown) as Request
+      } as unknown as Request
 
       handlePartnerGenericRedirect(req, res, next)
 
@@ -236,7 +236,7 @@ describe("handlePartnerFallbackRedirect", () => {
   )
 
   it("does not redirect is not a partner", () => {
-    res = ({
+    res = {
       locals: {
         profile: {
           owner: {
@@ -246,7 +246,7 @@ describe("handlePartnerFallbackRedirect", () => {
         },
       },
       redirect: jest.fn(),
-    } as unknown) as ResWithProfile
+    } as unknown as ResWithProfile
 
     handlePartnerGenericRedirect(req, res, next)
 
@@ -263,12 +263,12 @@ describe("handleFairArtworks", () => {
   beforeEach(() => {
     jest.resetModules()
 
-    req = ({
+    req = {
       params: { id: "big-expo" },
       route: "/:id",
-    } as unknown) as Request
+    } as unknown as Request
 
-    res = ({
+    res = {
       locals: {
         profile: {
           owner: {
@@ -278,7 +278,7 @@ describe("handleFairArtworks", () => {
         },
       },
       redirect: jest.fn(),
-    } as unknown) as ResWithProfile
+    } as unknown as ResWithProfile
 
     next = jest.fn()
   })
@@ -305,12 +305,12 @@ describe("handleFair", () => {
   beforeEach(() => {
     jest.resetModules()
 
-    req = ({
+    req = {
       params: { id: "big-expo" },
       route: "/:id",
-    } as unknown) as Request
+    } as unknown as Request
 
-    res = ({
+    res = {
       locals: {
         profile: {
           owner: {
@@ -320,7 +320,7 @@ describe("handleFair", () => {
         },
       },
       redirect: jest.fn(),
-    } as unknown) as ResWithProfile
+    } as unknown as ResWithProfile
 
     next = jest.fn()
   })

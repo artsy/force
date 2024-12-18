@@ -57,9 +57,9 @@ interface SettingsEditProfileFieldsProps {
   me: SettingsEditProfileFields_me$data
 }
 
-const SettingsEditProfileFields: React.FC<React.PropsWithChildren<SettingsEditProfileFieldsProps>> = ({
-  me,
-}) => {
+const SettingsEditProfileFields: React.FC<
+  React.PropsWithChildren<SettingsEditProfileFieldsProps>
+> = ({ me }) => {
   const { sendToast } = useToasts()
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
   const { submitMutation: submitVerifyIDMutation } = useVerifyID()
@@ -349,9 +349,8 @@ const SettingsEditProfileFields: React.FC<React.PropsWithChildren<SettingsEditPr
   )
 }
 
-export const SettingsEditProfileFieldsFragmentContainer = createFragmentContainer(
-  SettingsEditProfileFields,
-  {
+export const SettingsEditProfileFieldsFragmentContainer =
+  createFragmentContainer(SettingsEditProfileFields, {
     me: graphql`
       fragment SettingsEditProfileFields_me on Me {
         ...SettingsEditProfileImage_me
@@ -372,5 +371,4 @@ export const SettingsEditProfileFieldsFragmentContainer = createFragmentContaine
         canRequestEmailConfirmation
       }
     `,
-  }
-)
+  })

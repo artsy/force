@@ -17,10 +17,9 @@ interface ConversationCTAProps extends FlexProps {
   conversation: ConversationCTA_conversation$key
 }
 
-export const ConversationCTA: React.FC<React.PropsWithChildren<ConversationCTAProps>> = ({
-  conversation,
-  ...flexProps
-}) => {
+export const ConversationCTA: React.FC<
+  React.PropsWithChildren<ConversationCTAProps>
+> = ({ conversation, ...flexProps }) => {
   const data = useFragment(FRAGMENT, conversation)
   const { findPartnerOffer } = useConversationsContext()
 

@@ -12,12 +12,11 @@ interface ArticleSectionVideoProps {
   section: ArticleSectionVideo_section$data
 }
 
-const ArticleSectionVideo: FC<React.PropsWithChildren<ArticleSectionVideoProps>> = ({ section }) => {
-  const {
-    isDestinationAllowed,
-    openConsentManager,
-    ready,
-  } = useCookieConsentManager()
+const ArticleSectionVideo: FC<
+  React.PropsWithChildren<ArticleSectionVideoProps>
+> = ({ section }) => {
+  const { isDestinationAllowed, openConsentManager, ready } =
+    useCookieConsentManager()
 
   const { clickedPlayVideo } = useArticleTracking()
 

@@ -13,7 +13,9 @@ interface ArtistSeriesAppProps {
   artistSeries: ArtistSeriesApp_artistSeries$data
 }
 
-const ArtistSeriesApp: React.FC<React.PropsWithChildren<ArtistSeriesAppProps>> = ({ artistSeries }) => {
+const ArtistSeriesApp: React.FC<
+  React.PropsWithChildren<ArtistSeriesAppProps>
+> = ({ artistSeries }) => {
   const { railArtist, internalID } = artistSeries
 
   return (

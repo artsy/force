@@ -14,11 +14,9 @@ interface ProgressiveOnboardingHighlightProps {
   position: ProgressiveOnboardingHighlightPosition
 }
 
-export const ProgressiveOnboardingHighlight: FC<React.PropsWithChildren<ProgressiveOnboardingHighlightProps>> = ({
-  children,
-  name,
-  position,
-}) => {
+export const ProgressiveOnboardingHighlight: FC<
+  React.PropsWithChildren<ProgressiveOnboardingHighlightProps>
+> = ({ children, name, position }) => {
   const { trackEvent } = useProgressiveOnboardingTracking({ name })
 
   useOnce(trackEvent)

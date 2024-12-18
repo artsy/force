@@ -6,9 +6,9 @@ export interface FrameWithRecentlyViewedProps {
   name?: string
 }
 
-export const FrameWithRecentlyViewed: React.FC<React.PropsWithChildren<FrameWithRecentlyViewedProps>> = ({
-  children,
-}) => {
+export const FrameWithRecentlyViewed: React.FC<
+  React.PropsWithChildren<FrameWithRecentlyViewedProps>
+> = ({ children }) => {
   return (
     <Flex flexDirection="column">
       {children}

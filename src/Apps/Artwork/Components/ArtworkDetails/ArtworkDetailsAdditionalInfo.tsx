@@ -30,15 +30,11 @@ export interface ArtworkDetailsAdditionalInfoProps extends FlexProps {
   artwork: ArtworkDetailsAdditionalInfo_artwork$data
 }
 
-export const ArtworkDetailsAdditionalInfo: React.FC<React.PropsWithChildren<ArtworkDetailsAdditionalInfoProps>> = ({
-  artwork,
-  ...flexProps
-}) => {
-  const {
-    listItems,
-    openConditionModal,
-    setOpenConditionModal,
-  } = useArtworkDetailsAdditionalInfoFields({ artwork })
+export const ArtworkDetailsAdditionalInfo: React.FC<
+  React.PropsWithChildren<ArtworkDetailsAdditionalInfoProps>
+> = ({ artwork, ...flexProps }) => {
+  const { listItems, openConditionModal, setOpenConditionModal } =
+    useArtworkDetailsAdditionalInfoFields({ artwork })
 
   const displayItems = listItems.filter(i => i.value != null && i.value !== "")
 
@@ -116,11 +112,8 @@ export const useArtworkDetailsAdditionalInfoFields = ({
   )
 
   const { trackEvent } = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const [openMediumModal, setOpenMediumModal] = useState(false)
   const [openRarityModal, setOpenRarityModal] = useState(false)
@@ -251,9 +244,8 @@ export const useArtworkDetailsAdditionalInfoFields = ({
   }
 }
 
-export const ArtworkDetailsAdditionalInfoFragmentContainer = createFragmentContainer(
-  ArtworkDetailsAdditionalInfo,
-  {
+export const ArtworkDetailsAdditionalInfoFragmentContainer =
+  createFragmentContainer(ArtworkDetailsAdditionalInfo, {
     artwork: graphql`
       fragment ArtworkDetailsAdditionalInfo_artwork on Artwork {
         category
@@ -294,5 +286,4 @@ export const ArtworkDetailsAdditionalInfoFragmentContainer = createFragmentConta
         ...ArtworkDetailsMediumModal_artwork
       }
     `,
-  }
-)
+  })

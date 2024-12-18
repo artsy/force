@@ -51,15 +51,19 @@ interface ArtistRouteProps {
   submission: ArtistRoute_submission$key
 }
 
-export const ArtistRouteFragmentContainer: React.FC<React.PropsWithChildren<ArtistRouteProps>> = props => {
+export const ArtistRouteFragmentContainer: React.FC<
+  React.PropsWithChildren<ArtistRouteProps>
+> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
 
   return <ArtistRoute submission={submission} />
 }
 
-export const ArtistRoute: React.FC<React.PropsWithChildren<{
-  submission?: ArtistRoute_submission$data
-}>> = ({ submission }) => {
+export const ArtistRoute: React.FC<
+  React.PropsWithChildren<{
+    submission?: ArtistRoute_submission$data
+  }>
+> = ({ submission }) => {
   const { router } = useRouter()
   const { actions } = useSellFlowContext()
   const { sendToast } = useToasts()

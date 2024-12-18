@@ -8,11 +8,9 @@ interface CollectorProfileArtistsAddDialogProps {
   title: string
 }
 
-export const CollectorProfileArtistsAddDialog: FC<React.PropsWithChildren<CollectorProfileArtistsAddDialogProps>> = ({
-  onClose,
-  onSuccess,
-  title,
-}) => {
+export const CollectorProfileArtistsAddDialog: FC<
+  React.PropsWithChildren<CollectorProfileArtistsAddDialogProps>
+> = ({ onClose, onSuccess, title }) => {
   return (
     <>
       <ModalDialog

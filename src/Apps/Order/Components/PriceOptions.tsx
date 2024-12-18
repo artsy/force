@@ -26,13 +26,9 @@ export interface PriceOptionsProps {
   order: PriceOptions_order$data
 }
 
-export const PriceOptions: React.FC<React.PropsWithChildren<PriceOptionsProps>> = ({
-  onChange,
-  onFocus,
-  showError,
-  artwork,
-  order,
-}) => {
+export const PriceOptions: React.FC<
+  React.PropsWithChildren<PriceOptionsProps>
+> = ({ onChange, onFocus, showError, artwork, order }) => {
   const tracking = useTracking()
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
 
@@ -50,14 +46,11 @@ export const PriceOptions: React.FC<React.PropsWithChildren<PriceOptionsProps>> 
     artwork?.isPriceRange,
     isPartnerOfferOrder
   )
-  const {
-    lastOffer,
-    selectedPriceOption,
-    selectedPriceValue,
-  } = getInitialOfferState(
-    priceOptions,
-    Number(order?.myLastOffer?.amountCents || 0) / 100
-  )
+  const { lastOffer, selectedPriceOption, selectedPriceValue } =
+    getInitialOfferState(
+      priceOptions,
+      Number(order?.myLastOffer?.amountCents || 0) / 100
+    )
   const { device } = useDeviceDetection()
 
   const [customValue, setCustomValue] = useState<number | undefined>(lastOffer)

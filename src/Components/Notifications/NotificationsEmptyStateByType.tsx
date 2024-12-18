@@ -31,9 +31,9 @@ const emptyStateByType: Record<
   offers: {},
 }
 
-export const NotificationsEmptyStateByType: React.FC<React.PropsWithChildren<NotificationsEmptyStateByTypeProps>> = ({
-  type,
-}) => {
+export const NotificationsEmptyStateByType: React.FC<
+  React.PropsWithChildren<NotificationsEmptyStateByTypeProps>
+> = ({ type }) => {
   const state = emptyStateByType[type]
 
   return (

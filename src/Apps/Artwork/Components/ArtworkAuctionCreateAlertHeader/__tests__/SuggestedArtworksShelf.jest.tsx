@@ -33,24 +33,23 @@ describe("SuggestedArtworksShelf", () => {
     attributionClass: ["unique"],
   }
 
-  const { renderWithRelay } = setupTestWrapperTL<
-    SuggestedArtworksShelf_Test_Query
-  >({
-    Component: props => {
-      return (
-        <SavedSearchAlertContextProvider
-          entity={savedSearchEntity}
-          criteria={criteria}
-          aggregations={[]}
-          artistSlug="bansky"
-        >
-          <SuggestedArtworksShelf
-            artworksConnection={props.artworksConnection}
-          />
-        </SavedSearchAlertContextProvider>
-      )
-    },
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<SuggestedArtworksShelf_Test_Query>({
+      Component: props => {
+        return (
+          <SavedSearchAlertContextProvider
+            entity={savedSearchEntity}
+            criteria={criteria}
+            aggregations={[]}
+            artistSlug="bansky"
+          >
+            <SuggestedArtworksShelf
+              artworksConnection={props.artworksConnection}
+            />
+          </SavedSearchAlertContextProvider>
+        )
+      },
+      query: graphql`
       query SuggestedArtworksShelf_Test_Query @relay_test_operation {
         artworksConnection(first: 5, sort: "-published_at", forSale: true) {
           counts {
@@ -65,7 +64,7 @@ describe("SuggestedArtworksShelf", () => {
         }
       }
     `,
-  })
+    })
 
   it("renders SuggestedArtworkShelf", async () => {
     renderWithRelay({

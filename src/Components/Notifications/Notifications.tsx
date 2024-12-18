@@ -30,11 +30,9 @@ interface NotificationsProps extends NotificationsWrapperProps {
   onHide?: () => void
 }
 
-export const Notifications: React.FC<React.PropsWithChildren<NotificationsProps>> = ({
-  mode,
-  onHide,
-  unreadCounts,
-}) => {
+export const Notifications: React.FC<
+  React.PropsWithChildren<NotificationsProps>
+> = ({ mode, onHide, unreadCounts }) => {
   const { relayEnvironment } = useSystemContext()
 
   const markAsSeen = async () => {
@@ -111,9 +109,9 @@ interface NotificationsDropdownPlaceholderProps {
   onHide(): void
 }
 
-export const NotificationsDropdownPlaceholder: FC<React.PropsWithChildren<NotificationsDropdownPlaceholderProps>> = ({
-  onHide,
-}) => {
+export const NotificationsDropdownPlaceholder: FC<
+  React.PropsWithChildren<NotificationsDropdownPlaceholderProps>
+> = ({ onHide }) => {
   return (
     <Skeleton>
       <NotificationsHeaderPlaceholder onHide={onHide} />

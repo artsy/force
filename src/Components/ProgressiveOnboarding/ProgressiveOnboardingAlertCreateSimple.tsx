@@ -14,10 +14,9 @@ const KEY = PROGRESSIVE_ONBOARDING.alertCreate
 interface ProgressiveOnboardingAlertCreateSimpleProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingAlertCreateSimple__: FC<React.PropsWithChildren<ProgressiveOnboardingAlertCreateSimpleProps>> = ({
-  children,
-  counts,
-}) => {
+export const __ProgressiveOnboardingAlertCreateSimple__: FC<
+  React.PropsWithChildren<ProgressiveOnboardingAlertCreateSimpleProps>
+> = ({ children, counts }) => {
   const { isLoggedIn } = useSystemContext()
 
   const { dismiss, isDismissed } = useDismissibleContext()
@@ -53,6 +52,5 @@ export const __ProgressiveOnboardingAlertCreateSimple__: FC<React.PropsWithChild
   )
 }
 
-export const ProgressiveOnboardingAlertCreateSimple = withProgressiveOnboardingCounts(
-  __ProgressiveOnboardingAlertCreateSimple__
-)
+export const ProgressiveOnboardingAlertCreateSimple =
+  withProgressiveOnboardingCounts(__ProgressiveOnboardingAlertCreateSimple__)

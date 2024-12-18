@@ -18,24 +18,21 @@ type NotificationsContextType = {
   setCurrentNotificationFilterType: (type: NotificationType) => void
 }
 
-const NotificationsContext = createContext<NotificationsContextType>(({
+const NotificationsContext = createContext<NotificationsContextType>({
   state: DEFAULT_STATE,
-} as unknown) as NotificationsContextType)
+} as unknown as NotificationsContextType)
 
 interface NotificationsContextProviderProps {
   id?: string | null
 }
 
-export const NotificationsContextProvider: FC<React.PropsWithChildren<NotificationsContextProviderProps>> = ({
-  children,
-  id = null,
-}) => {
+export const NotificationsContextProvider: FC<
+  React.PropsWithChildren<NotificationsContextProviderProps>
+> = ({ children, id = null }) => {
   const { match } = useRouter()
   const [currentNotificationId, setCurrentNotificationId] = useState(id)
-  const [
-    currentNotificationFilterType,
-    setCurrentNotificationFilterType,
-  ] = useState<NotificationType>("all")
+  const [currentNotificationFilterType, setCurrentNotificationFilterType] =
+    useState<NotificationType>("all")
 
   useEffect(() => {
     if (!match.params.notificationId) return

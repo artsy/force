@@ -16,28 +16,17 @@ export interface RelatedCollectionEntityProps {
   slideIndex: number
 }
 
-export const RelatedCollectionEntity: React.FC<React.PropsWithChildren<RelatedCollectionEntityProps>> = ({
-  lazyLoad,
-  collection,
-  slideIndex,
-}) => {
-  const {
-    artworksConnection,
-    headerImage,
-    priceGuidance,
-    id,
-    slug,
-    title,
-  } = collection
+export const RelatedCollectionEntity: React.FC<
+  React.PropsWithChildren<RelatedCollectionEntityProps>
+> = ({ lazyLoad, collection, slideIndex }) => {
+  const { artworksConnection, headerImage, priceGuidance, id, slug, title } =
+    collection
 
   const artworks = extractNodes(artworksConnection)
 
   const { trackEvent } = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const onLinkClick = () => {
     trackEvent(

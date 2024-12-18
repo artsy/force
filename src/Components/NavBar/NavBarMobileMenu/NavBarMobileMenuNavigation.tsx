@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import * as React from "react";
+import { useContext, useState } from "react"
+import * as React from "react"
 
 export const NavBarMobileMenuNavigationContext = React.createContext<{
   path: string[]
@@ -11,7 +11,9 @@ export const NavBarMobileMenuNavigationContext = React.createContext<{
   pop: () => {},
 })
 
-export const NavBarMobileMenuNavigationProvider: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+export const NavBarMobileMenuNavigationProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const [path, setPath] = useState<string[]>([])
 
   const push = (entry: string) => {

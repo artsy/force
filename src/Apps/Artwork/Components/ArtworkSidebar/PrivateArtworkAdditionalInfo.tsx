@@ -24,17 +24,13 @@ export interface PrivateArtworkAdditionalInfoProps extends FlexProps {
   artwork: PrivateArtworkAdditionalInfo_artwork$key
 }
 
-export const PrivateArtworkAdditionalInfo: React.FC<React.PropsWithChildren<PrivateArtworkAdditionalInfoProps>> = ({
-  artwork,
-  ...flexProps
-}) => {
+export const PrivateArtworkAdditionalInfo: React.FC<
+  React.PropsWithChildren<PrivateArtworkAdditionalInfoProps>
+> = ({ artwork, ...flexProps }) => {
   const data = useFragment(privateArtworkAdditionalInfoFragment, artwork)
 
-  const {
-    listItems,
-    openConditionModal,
-    setOpenConditionModal,
-  } = useArtworkDetailsAdditionalInfoFields({ artwork: data })
+  const { listItems, openConditionModal, setOpenConditionModal } =
+    useArtworkDetailsAdditionalInfoFields({ artwork: data })
 
   const itemsToRemove = ["Materials", "Size", "Rarity", "Frame"]
 

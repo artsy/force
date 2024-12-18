@@ -20,11 +20,9 @@ interface HeroCarouselSmallProps {
   onChange?: (index) => void
 }
 
-export const HeroCarouselSmall: FC<React.PropsWithChildren<HeroCarouselSmallProps>> = ({
-  children,
-  progressbarVariant,
-  onChange,
-}) => {
+export const HeroCarouselSmall: FC<
+  React.PropsWithChildren<HeroCarouselSmallProps>
+> = ({ children, progressbarVariant, onChange }) => {
   const length = Children.count(children)
 
   const [index, setIndex] = useState(0)

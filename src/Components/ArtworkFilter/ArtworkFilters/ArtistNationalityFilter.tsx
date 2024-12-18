@@ -6,9 +6,9 @@ export interface ArtistNationalityFilterProps {
   expanded?: boolean
 }
 
-export const ArtistNationalityFilter: React.FC<React.PropsWithChildren<ArtistNationalityFilterProps>> = ({
-  expanded,
-}) => {
+export const ArtistNationalityFilter: React.FC<
+  React.PropsWithChildren<ArtistNationalityFilterProps>
+> = ({ expanded }) => {
   return (
     <ResultsFilter
       expanded={expanded}

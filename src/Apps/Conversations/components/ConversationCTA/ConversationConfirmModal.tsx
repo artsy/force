@@ -29,11 +29,9 @@ interface ConversationConfirmModalProps {
   partnerOffer: { internalID: string } | null
 }
 
-export const ConversationConfirmModal: React.FC<React.PropsWithChildren<ConversationConfirmModalProps>> = ({
-  artwork,
-  conversation,
-  partnerOffer,
-}) => {
+export const ConversationConfirmModal: React.FC<
+  React.PropsWithChildren<ConversationConfirmModalProps>
+> = ({ artwork, conversation, partnerOffer }) => {
   const data = useFragment(FRAGMENT, artwork)
 
   const {

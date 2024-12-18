@@ -9,21 +9,20 @@ jest.unmock("react-relay")
 jest.mock("System/Hooks/useSystemContext")
 
 describe("ArtistAuctionResultItem", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    ArtistAuctionResultItemTestQuery
-  >({
-    Component: (props: any) => {
-      const result = props.artist?.auctionResultsConnection?.edges?.[0]?.node
+  const { renderWithRelay } =
+    setupTestWrapperTL<ArtistAuctionResultItemTestQuery>({
+      Component: (props: any) => {
+        const result = props.artist?.auctionResultsConnection?.edges?.[0]?.node
 
-      return (
-        <ArtistAuctionResultItemFragmentContainer
-          auctionResult={result}
-          filtersAtDefault={false}
-          {...props}
-        />
-      )
-    },
-    query: graphql`
+        return (
+          <ArtistAuctionResultItemFragmentContainer
+            auctionResult={result}
+            filtersAtDefault={false}
+            {...props}
+          />
+        )
+      },
+      query: graphql`
       query ArtistAuctionResultItemTestQuery {
         artist(id: "andy-warhol") {
           auctionResultsConnection(first: 1) {
@@ -36,7 +35,7 @@ describe("ArtistAuctionResultItem", () => {
         }
       }
     `,
-  })
+    })
 
   beforeEach(() => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({ user: null }))

@@ -12,11 +12,9 @@ interface PartnerViewingRoomsProps {
   pastViewingRooms: PartnerViewingRooms_pastViewingRooms$data
 }
 
-export const PartnerViewingRooms: React.FC<React.PropsWithChildren<PartnerViewingRoomsProps>> = ({
-  currentViewingRooms,
-  upcomingViewingRooms,
-  pastViewingRooms,
-}) => {
+export const PartnerViewingRooms: React.FC<
+  React.PropsWithChildren<PartnerViewingRoomsProps>
+> = ({ currentViewingRooms, upcomingViewingRooms, pastViewingRooms }) => {
   return (
     <>
       <Spacer y={4} />

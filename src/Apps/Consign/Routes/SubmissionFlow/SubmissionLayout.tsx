@@ -5,7 +5,9 @@ import { Spacer } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
-export const SubmissionLayout: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+export const SubmissionLayout: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   return (
     <>
       <EnableRecaptcha />

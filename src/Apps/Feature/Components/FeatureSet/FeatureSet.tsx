@@ -14,7 +14,10 @@ interface FeatureSetProps extends Omit<BoxProps, "color"> {
 
 const SUPPORTED_ITEM_TYPES = ["FeaturedLink", "Artwork"]
 
-export const FeatureSet: React.FC<React.PropsWithChildren<FeatureSetProps>> = ({ set, ...rest }) => {
+export const FeatureSet: React.FC<React.PropsWithChildren<FeatureSetProps>> = ({
+  set,
+  ...rest
+}) => {
   const orderedItems = extractNodes(set.orderedItems)
   const count = orderedItems.length
   const size = useMemo(() => {

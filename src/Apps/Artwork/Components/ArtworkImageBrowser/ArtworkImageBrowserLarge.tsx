@@ -28,14 +28,9 @@ interface ArtworkImageBrowserLargeProps {
   maxHeight: number
 }
 
-const ArtworkImageBrowserLarge: React.FC<React.PropsWithChildren<ArtworkImageBrowserLargeProps>> = ({
-  artwork,
-  activeIndex,
-  onNext,
-  onPrev,
-  onChange,
-  maxHeight,
-}) => {
+const ArtworkImageBrowserLarge: React.FC<
+  React.PropsWithChildren<ArtworkImageBrowserLargeProps>
+> = ({ artwork, activeIndex, onNext, onPrev, onChange, maxHeight }) => {
   const { figures } = artwork
 
   const activeFigure = figures[activeIndex]
@@ -143,9 +138,8 @@ const ArtworkImageBrowserLarge: React.FC<React.PropsWithChildren<ArtworkImageBro
   )
 }
 
-export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer(
-  ArtworkImageBrowserLarge,
-  {
+export const ArtworkImageBrowserLargeFragmentContainer =
+  createFragmentContainer(ArtworkImageBrowserLarge, {
     artwork: graphql`
       fragment ArtworkImageBrowserLarge_artwork on Artwork
         @argumentDefinitions(
@@ -169,8 +163,7 @@ export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })
 
 const NextPrevious = styled(Clickable)`
   position: absolute;

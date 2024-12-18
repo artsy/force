@@ -19,7 +19,9 @@ interface ArtworkFiltersQuickProps
   featuredKeywords: readonly string[] | null | undefined
 }
 
-export const ArtworkFiltersQuick: FC<React.PropsWithChildren<ArtworkFiltersQuickProps>> = props => {
+export const ArtworkFiltersQuick: FC<
+  React.PropsWithChildren<ArtworkFiltersQuickProps>
+> = props => {
   return (
     <>
       <FilterQuick

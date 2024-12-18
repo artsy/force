@@ -72,7 +72,9 @@ export interface BankAccountSelection {
   id?: string
 }
 
-export const PaymentRoute: FC<React.PropsWithChildren<PaymentRouteProps>> = props => {
+export const PaymentRoute: FC<
+  React.PropsWithChildren<PaymentRouteProps>
+> = props => {
   const { order, me } = props
   const { trackEvent } = useTracking()
   const { match } = useRouter()

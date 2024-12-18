@@ -10,10 +10,9 @@ interface AuctionFAQsDialogProps {
   viewer: AuctionFAQsDialog_viewer$data
 }
 
-const AuctionFAQsDialog: React.FC<React.PropsWithChildren<AuctionFAQsDialogProps>> = ({
-  onClose,
-  viewer,
-}) => {
+const AuctionFAQsDialog: React.FC<
+  React.PropsWithChildren<AuctionFAQsDialogProps>
+> = ({ onClose, viewer }) => {
   const { theme } = useTheme()
   return (
     <Box

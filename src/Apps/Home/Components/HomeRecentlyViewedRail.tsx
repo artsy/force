@@ -22,9 +22,9 @@ interface HomeRecentlyViewedRailProps {
   homePage: HomeRecentlyViewedRail_homePage$data
 }
 
-const HomeRecentlyViewedRail: React.FC<React.PropsWithChildren<HomeRecentlyViewedRailProps>> = ({
-  homePage,
-}) => {
+const HomeRecentlyViewedRail: React.FC<
+  React.PropsWithChildren<HomeRecentlyViewedRailProps>
+> = ({ homePage }) => {
   const { trackEvent } = useTracking()
 
   const results = homePage.artworkModule?.results
@@ -106,7 +106,9 @@ export const HomeRecentlyViewedRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const HomeRecentlyViewedRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeRecentlyViewedRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

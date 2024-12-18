@@ -9,11 +9,9 @@ interface ArtworkDetailsMediumModalProps {
   onClose(): void
 }
 
-export const ArtworkDetailsMediumModal: React.FC<React.PropsWithChildren<ArtworkDetailsMediumModalProps>> = ({
-  artwork,
-  show,
-  onClose,
-}) => {
+export const ArtworkDetailsMediumModal: React.FC<
+  React.PropsWithChildren<ArtworkDetailsMediumModalProps>
+> = ({ artwork, show, onClose }) => {
   if (!show || !artwork.mediumType) return null
 
   return (
@@ -31,9 +29,8 @@ export const ArtworkDetailsMediumModal: React.FC<React.PropsWithChildren<Artwork
   )
 }
 
-export const ArtworkDetailsMediumModalFragmentContainer = createFragmentContainer(
-  ArtworkDetailsMediumModal,
-  {
+export const ArtworkDetailsMediumModalFragmentContainer =
+  createFragmentContainer(ArtworkDetailsMediumModal, {
     artwork: graphql`
       fragment ArtworkDetailsMediumModal_artwork on Artwork {
         mediumType {
@@ -42,5 +39,4 @@ export const ArtworkDetailsMediumModalFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })

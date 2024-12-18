@@ -22,9 +22,11 @@ const INITIAL_COUNTS = {
 }
 
 export const withProgressiveOnboardingCounts = <
-  T extends WithProgressiveOnboardingCountsProps
+  T extends WithProgressiveOnboardingCountsProps,
 >(
-  Component: ComponentType<React.PropsWithChildren<T & WithProgressiveOnboardingCountsProps>>
+  Component: ComponentType<
+    React.PropsWithChildren<T & WithProgressiveOnboardingCountsProps>
+  >
 ): ComponentType<React.PropsWithChildren<Omit<T, "counts">>> => {
   return (props: T) => {
     const { isLoggedIn } = useSystemContext()

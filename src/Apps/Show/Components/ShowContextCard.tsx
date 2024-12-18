@@ -40,7 +40,9 @@ const CARD_IMAGE_WIDTHS = [
   CARD_SMALL_IMAGE_WIDTH,
 ]
 
-export const ShowContextCard: React.FC<React.PropsWithChildren<Props>> = ({ show }) => {
+export const ShowContextCard: React.FC<React.PropsWithChildren<Props>> = ({
+  show,
+}) => {
   const { isFairBooth, fair, partner } = show
 
   return isFairBooth ? (
@@ -50,12 +52,11 @@ export const ShowContextCard: React.FC<React.PropsWithChildren<Props>> = ({ show
   )
 }
 
-const FairInfo: React.FC<React.PropsWithChildren<{ fair: Props["show"]["fair"] }>> = ({ fair }) => {
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+const FairInfo: React.FC<
+  React.PropsWithChildren<{ fair: Props["show"]["fair"] }>
+> = ({ fair }) => {
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const tracking = useTracking()
 
@@ -100,14 +101,11 @@ const FairInfo: React.FC<React.PropsWithChildren<{ fair: Props["show"]["fair"] }
   )
 }
 
-const PartnerInfo: React.FC<React.PropsWithChildren<{ partner: Props["show"]["partner"] }>> = ({
-  partner,
-}) => {
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+const PartnerInfo: React.FC<
+  React.PropsWithChildren<{ partner: Props["show"]["partner"] }>
+> = ({ partner }) => {
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const tracking = useTracking()
 

@@ -10,10 +10,9 @@ interface AuthenticationInlineDialogProviderProps {
   mode: AuthDialogMode
 }
 
-export const AuthenticationInlineDialogProvider: FC<React.PropsWithChildren<AuthenticationInlineDialogProviderProps>> = ({
-  children,
-  mode,
-}) => {
+export const AuthenticationInlineDialogProvider: FC<
+  React.PropsWithChildren<AuthenticationInlineDialogProviderProps>
+> = ({ children, mode }) => {
   const [state, dispatch] = useReducer(reducer, { ...INITIAL_STATE, mode })
 
   return (

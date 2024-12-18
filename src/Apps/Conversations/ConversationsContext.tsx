@@ -14,10 +14,10 @@ interface ConversationsContextProps {
   hideSelectEditionSetModal: () => void
 }
 
-const ConversationsContext = createContext<ConversationsContextProps>(({
+const ConversationsContext = createContext<ConversationsContextProps>({
   isConfirmModalVisible: false,
   isCreatingOfferOrder: false,
-} as unknown) as ConversationsContextProps)
+} as unknown as ConversationsContextProps)
 
 interface ConversationsProviderProps {
   viewer: ConversationsContext_viewer$key
@@ -35,10 +35,9 @@ type PartnerOffer = NonNullable<
   >["node"]
 >
 
-export const ConversationsProvider: React.FC<React.PropsWithChildren<ConversationsProviderProps>> = ({
-  children,
-  viewer,
-}) => {
+export const ConversationsProvider: React.FC<
+  React.PropsWithChildren<ConversationsProviderProps>
+> = ({ children, viewer }) => {
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false)
   const [isCreatingOfferOrder, setCreatingOfferOrder] = useState(false)
   const { me } = useFragment(VIEWER_FRAGMENT, viewer)

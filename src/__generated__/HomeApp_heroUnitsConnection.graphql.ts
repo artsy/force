@@ -8,33 +8,32 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
+import { ReaderFragment } from "relay-runtime"
+import { FragmentRefs } from "relay-runtime"
 export type HomeApp_heroUnitsConnection$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"HomeHeroUnits_heroUnits">;
-  readonly " $fragmentType": "HomeApp_heroUnitsConnection";
-};
+  readonly " $fragmentSpreads": FragmentRefs<"HomeHeroUnits_heroUnits">
+  readonly " $fragmentType": "HomeApp_heroUnitsConnection"
+}
 export type HomeApp_heroUnitsConnection$key = {
-  readonly " $data"?: HomeApp_heroUnitsConnection$data;
-  readonly " $fragmentSpreads": FragmentRefs<"HomeApp_heroUnitsConnection">;
-};
+  readonly " $data"?: HomeApp_heroUnitsConnection$data
+  readonly " $fragmentSpreads": FragmentRefs<"HomeApp_heroUnitsConnection">
+}
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
-  "kind": "Fragment",
-  "metadata": null,
-  "name": "HomeApp_heroUnitsConnection",
-  "selections": [
+  argumentDefinitions: [],
+  kind: "Fragment",
+  metadata: null,
+  name: "HomeApp_heroUnitsConnection",
+  selections: [
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "HomeHeroUnits_heroUnits"
-    }
+      args: null,
+      kind: "FragmentSpread",
+      name: "HomeHeroUnits_heroUnits",
+    },
   ],
-  "type": "HeroUnitConnection",
-  "abstractKey": null
-};
+  type: "HeroUnitConnection",
+  abstractKey: null,
+}
+;(node as any).hash = "fbd2d764b807d5397771d7aefc78b6d1"
 
-(node as any).hash = "fbd2d764b807d5397771d7aefc78b6d1";
-
-export default node;
+export default node

@@ -12,9 +12,9 @@ interface ArtworkModalHeaderInfoProps {
   artwork: ArtworkModalHeaderInfoEntity
 }
 
-export const ArtworkModalHeaderInfo: FC<React.PropsWithChildren<ArtworkModalHeaderInfoProps>> = ({
-  artwork,
-}) => {
+export const ArtworkModalHeaderInfo: FC<
+  React.PropsWithChildren<ArtworkModalHeaderInfoProps>
+> = ({ artwork }) => {
   const getArtistNames = () => {
     if (!artwork.artistNames) {
       return "Artist Unavailable"

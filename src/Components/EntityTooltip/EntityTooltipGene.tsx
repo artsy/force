@@ -21,14 +21,13 @@ interface EntityTooltipGeneProps {
   gene: EntityTooltipGene_gene$data
 }
 
-const EntityTooltipGene: FC<React.PropsWithChildren<EntityTooltipGeneProps>> = ({ gene }) => {
+const EntityTooltipGene: FC<
+  React.PropsWithChildren<EntityTooltipGeneProps>
+> = ({ gene }) => {
   const { trackEvent } = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const handleClick = () => {
     const payload: ClickedTooltip = {
@@ -106,7 +105,9 @@ const EntityTooltipGeneFragmentContainer = createFragmentContainer(
   }
 )
 
-const EntityTooltipGenePlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const EntityTooltipGenePlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton p={2} width={300}>
       <SkeletonBox width={260} height={146} />
@@ -125,9 +126,9 @@ interface EntityTooltipGeneQueryRendererProps {
   id: string
 }
 
-export const EntityTooltipGeneQueryRenderer: FC<React.PropsWithChildren<EntityTooltipGeneQueryRendererProps>> = ({
-  id,
-}) => {
+export const EntityTooltipGeneQueryRenderer: FC<
+  React.PropsWithChildren<EntityTooltipGeneQueryRendererProps>
+> = ({ id }) => {
   return (
     <SystemQueryRenderer<EntityTooltipGeneQuery>
       variables={{ id }}

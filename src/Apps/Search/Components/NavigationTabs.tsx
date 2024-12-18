@@ -114,18 +114,19 @@ interface NavigationTabProps {
   count: number
 }
 
-const NavigationTab: FC<React.PropsWithChildren<NavigationTabProps>> = ({ count, term, tab: _tab }) => {
+const NavigationTab: FC<React.PropsWithChildren<NavigationTabProps>> = ({
+  count,
+  term,
+  tab: _tab,
+}) => {
   const tab = TABS[_tab]
   const to = `/search${tab.path}?term=${encodeURIComponent(term)}`
   const selected = useIsRouteActive(to)
 
   const { trackEvent } = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   return (
     <Pill
@@ -154,11 +155,9 @@ const NavigationTab: FC<React.PropsWithChildren<NavigationTabProps>> = ({ count,
   )
 }
 
-export const NavigationTabs: FC<React.PropsWithChildren<NavigationTabsProps>> = ({
-  term,
-  artworkCount,
-  searchableConnection,
-}) => {
+export const NavigationTabs: FC<
+  React.PropsWithChildren<NavigationTabsProps>
+> = ({ term, artworkCount, searchableConnection }) => {
   const counts = useMemo(() => {
     return compact(
       searchableConnection.aggregations?.find(agg => agg?.slice === "TYPE")

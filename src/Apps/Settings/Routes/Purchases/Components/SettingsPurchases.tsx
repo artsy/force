@@ -14,10 +14,9 @@ export interface SettingsPurchasesProps {
   relay: RelayRefetchProp
 }
 
-const SettingsPurchases: FC<React.PropsWithChildren<SettingsPurchasesProps>> = ({
-  me,
-  relay,
-}: SettingsPurchasesProps) => {
+const SettingsPurchases: FC<
+  React.PropsWithChildren<SettingsPurchasesProps>
+> = ({ me, relay }: SettingsPurchasesProps) => {
   const [loading, setLoading] = useState(false)
 
   const orders = extractNodes(me.orders)

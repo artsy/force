@@ -1,4 +1,3 @@
-
 /** Utility Types (credit: https://github.com/krzkaczor/ts-essentials) */
 
 export type Primitive =
@@ -17,16 +16,16 @@ export type Primitive =
 export type DeepPartial<T> = T extends Primitive
   ? T
   : T extends Function
-  ? T
-  : T extends Date
-  ? T
-  : T extends Map<infer K, infer V>
-  ? DeepPartialMap<K, V>
-  : T extends Set<infer U>
-  ? DeepPartialSet<U>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
-  : Partial<T>
+    ? T
+    : T extends Date
+      ? T
+      : T extends Map<infer K, infer V>
+        ? DeepPartialMap<K, V>
+        : T extends Set<infer U>
+          ? DeepPartialSet<U>
+          : T extends {}
+            ? { [K in keyof T]?: DeepPartial<T[K]> }
+            : Partial<T>
 interface DeepPartialSet<ItemType> extends Set<DeepPartial<ItemType>> {}
 interface DeepPartialMap<KeyType, ValueType>
   extends Map<DeepPartial<KeyType>, DeepPartial<ValueType>> {}
@@ -51,8 +50,12 @@ export type CleanRelayFragment<T> = Omit<
 >
 
 export type RemoveIndex<T> = {
-  [P in keyof T as string extends P ? never : number extends P ? never : P]: T[P]
-};
+  [P in keyof T as string extends P
+    ? never
+    : number extends P
+      ? never
+      : P]: T[P]
+}
 
 export type ExtractNodeType<T> = T extends { edges: any }
   ? NonNullable<

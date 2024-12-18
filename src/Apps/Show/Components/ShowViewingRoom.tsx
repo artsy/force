@@ -19,10 +19,9 @@ interface ShowViewingRoomProps extends BoxProps {
   show: ShowViewingRoom_show$data
 }
 
-export const ShowViewingRoom: React.FC<React.PropsWithChildren<ShowViewingRoomProps>> = ({
-  show,
-  ...rest
-}) => {
+export const ShowViewingRoom: React.FC<
+  React.PropsWithChildren<ShowViewingRoomProps>
+> = ({ show, ...rest }) => {
   const [viewingRoom] = extractNodes(show.viewingRoomsConnection)
 
   const image = cropped(viewingRoom.image?.imageURLs?.normalized!, {
@@ -31,11 +30,8 @@ export const ShowViewingRoom: React.FC<React.PropsWithChildren<ShowViewingRoomPr
   })
 
   const tracking = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const handleClick = () => {
     const payload: ClickedViewingRoomCard = {

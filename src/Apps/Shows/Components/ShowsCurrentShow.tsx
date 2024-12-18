@@ -21,7 +21,9 @@ interface ShowsCurrentShowProps {
   show: ShowsCurrentShow_show$data
 }
 
-const ShowsCurrentShow: React.FC<React.PropsWithChildren<ShowsCurrentShowProps>> = ({ show }) => {
+const ShowsCurrentShow: React.FC<
+  React.PropsWithChildren<ShowsCurrentShowProps>
+> = ({ show }) => {
   const artworks = extractNodes(show.artworksConnection)
   const count = show.artworksConnection?.totalCount ?? 0
   const remaining = count - 15
@@ -111,7 +113,9 @@ export const ShowsCurrentShowFragmentContainer = createFragmentContainer(
   }
 )
 
-export const ShowsCurrentShowPlaceholder: React.FC<React.PropsWithChildren<unknown>> = () => (
+export const ShowsCurrentShowPlaceholder: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => (
   <Skeleton>
     <SkeletonText variant="lg-display">Partner Name</SkeletonText>
 

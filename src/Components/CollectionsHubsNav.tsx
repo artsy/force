@@ -12,7 +12,9 @@ interface CollectionsHubsNavProps {
 }
 
 // TODO: Move this into collect app
-export const CollectionsHubsNav: FC<React.PropsWithChildren<CollectionsHubsNavProps>> = props => {
+export const CollectionsHubsNav: FC<
+  React.PropsWithChildren<CollectionsHubsNavProps>
+> = props => {
   const { trackEvent } = useTracking()
 
   return (

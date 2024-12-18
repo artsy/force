@@ -158,10 +158,8 @@ describe("AddressModal", () => {
 
     await userEvent.click(screen.getByText("Delete"))
 
-    const {
-      operationName,
-      operationVariables,
-    } = await mockResolveLastOperation({})
+    const { operationName, operationVariables } =
+      await mockResolveLastOperation({})
 
     expect(operationName).toBe("useDeleteSavedAddressMutation")
 

@@ -26,10 +26,9 @@ interface ViewInRoomRoomProps extends BoxProps {
   onMount(): void
 }
 
-export const ViewInRoomRoom: React.FC<React.PropsWithChildren<ViewInRoomRoomProps>> = ({
-  onMount,
-  ...rest
-}) => {
+export const ViewInRoomRoom: React.FC<
+  React.PropsWithChildren<ViewInRoomRoomProps>
+> = ({ onMount, ...rest }) => {
   const ref = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {

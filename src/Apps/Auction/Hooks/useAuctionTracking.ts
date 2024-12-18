@@ -14,11 +14,8 @@ import {
 
 export const useAuctionTracking = () => {
   const { trackEvent } = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const tracking = {
     addToCalendar: ({ subject }: { subject: AddToCalendar["subject"] }) => {

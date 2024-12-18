@@ -11,9 +11,9 @@ interface HomeHeroUnitsProps {
   heroUnits: HomeHeroUnits_heroUnits$data
 }
 
-export const HomeHeroUnits: React.FC<React.PropsWithChildren<
-  HomeHeroUnitsProps
->> = ({ heroUnits }) => {
+export const HomeHeroUnits: React.FC<
+  React.PropsWithChildren<HomeHeroUnitsProps>
+> = ({ heroUnits }) => {
   const { isLoggedIn } = useSystemContext()
   const nodes = extractNodes(heroUnits)
 

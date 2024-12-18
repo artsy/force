@@ -21,10 +21,9 @@ interface CareerHighlightModalStepProps {
   kind: CareerHighlightKindWithPromo | (string & {})
 }
 
-export const CareerHighlightModalStep: React.FC<React.PropsWithChildren<CareerHighlightModalStepProps>> = ({
-  careerHighlight,
-  kind,
-}) => {
+export const CareerHighlightModalStep: React.FC<
+  React.PropsWithChildren<CareerHighlightModalStepProps>
+> = ({ careerHighlight, kind }) => {
   const careerHighlights = useFragment(careerHighlightFragment, careerHighlight)
   const count = careerHighlights.length
   const { Icon, label } = getCareerHighlight(kind as CareerHighlightKind, count)

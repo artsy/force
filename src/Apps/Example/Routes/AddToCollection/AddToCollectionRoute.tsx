@@ -9,7 +9,9 @@ interface AddToCollectionRouteProps {
   viewer: AddToCollectionRoute_viewer$data
 }
 
-const AddToCollectionRoute: React.FC<React.PropsWithChildren<AddToCollectionRouteProps>> = props => {
+const AddToCollectionRoute: React.FC<
+  React.PropsWithChildren<AddToCollectionRouteProps>
+> = props => {
   const artworks = extractNodes(props.viewer.artworksConnection)
 
   // Left column artworks

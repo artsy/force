@@ -35,16 +35,13 @@ interface InquiryInquiryProps {
   artwork: InquiryInquiry_artwork$data
 }
 
-const InquiryInquiry: React.FC<React.PropsWithChildren<InquiryInquiryProps>> = ({ artwork }) => {
+const InquiryInquiry: React.FC<
+  React.PropsWithChildren<InquiryInquiryProps>
+> = ({ artwork }) => {
   const { user } = useSystemContext()
 
-  const {
-    next,
-    setInquiry,
-    inquiry,
-    artworkID,
-    setContext,
-  } = useInquiryContext()
+  const { next, setInquiry, inquiry, artworkID, setContext } =
+    useInquiryContext()
 
   const [mode, setMode] = useState<Mode>("Pending")
 
@@ -233,7 +230,9 @@ const InquiryInquiryFragmentContainer = createFragmentContainer(
   }
 )
 
-export const InquiryInquiryPlaceholder: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const InquiryInquiryPlaceholder: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton>
       <SkeletonText variant="lg-display" mr={4}>
@@ -285,7 +284,9 @@ export const InquiryInquiryPlaceholder: React.FC<React.PropsWithChildren<unknown
   )
 }
 
-export const InquiryInquiryQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const InquiryInquiryQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
   const { artworkID } = useInquiryContext()
 

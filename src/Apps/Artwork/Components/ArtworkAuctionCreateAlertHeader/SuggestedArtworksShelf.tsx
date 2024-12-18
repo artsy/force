@@ -29,9 +29,9 @@ interface SuggestedArtworksShelfProps {
   artworksConnection: SuggestedArtworksShelfQuery$data["artworksConnection"]
 }
 
-export const SuggestedArtworksShelf: FC<React.PropsWithChildren<
-  SuggestedArtworksShelfProps
->> = ({ artworksConnection }) => {
+export const SuggestedArtworksShelf: FC<
+  React.PropsWithChildren<SuggestedArtworksShelfProps>
+> = ({ artworksConnection }) => {
   const artworks = extractNodes(artworksConnection)
   const suggestedArtworksCount = artworksConnection?.counts?.total ?? 0
   const displaySuggestedArtworksSection = suggestedArtworksCount > 0
@@ -81,9 +81,9 @@ export const SuggestedArtworksShelf: FC<React.PropsWithChildren<
   )
 }
 
-export const SuggestedArtworksShelfQueryRenderer: FC<React.PropsWithChildren<
-  SearchCriteriaAttributes
->> = props => {
+export const SuggestedArtworksShelfQueryRenderer: FC<
+  React.PropsWithChildren<SearchCriteriaAttributes>
+> = props => {
   return (
     <SystemQueryRenderer<SuggestedArtworksShelfQuery>
       placeholder={<SuggestedArtworksShelfPlaceholder />}
@@ -130,9 +130,9 @@ export const SuggestedArtworksShelfQueryRenderer: FC<React.PropsWithChildren<
   )
 }
 
-const SuggestedArtworksShelfPlaceholder: FC<React.PropsWithChildren<
-  unknown
->> = () => {
+const SuggestedArtworksShelfPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton>
       <GridColumns>

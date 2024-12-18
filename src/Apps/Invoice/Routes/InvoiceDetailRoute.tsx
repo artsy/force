@@ -17,9 +17,9 @@ interface InvoiceDetailRouteProps {
   invoice: InvoiceDetailRoute_invoice$key
 }
 
-export const InvoiceDetailRoute: React.FC<React.PropsWithChildren<InvoiceDetailRouteProps>> = ({
-  invoice,
-}) => {
+export const InvoiceDetailRoute: React.FC<
+  React.PropsWithChildren<InvoiceDetailRouteProps>
+> = ({ invoice }) => {
   const data = useFragment(InvoiceDetailRouteFragment, invoice)
 
   const { name, email, state, payments, externalNote, remaining } = data

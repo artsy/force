@@ -18,11 +18,9 @@ interface CollectorProfileArtistsListArtistDialogProps {
   onToggle: () => void
 }
 
-export const CollectorProfileArtistsListArtistDialog: FC<React.PropsWithChildren<CollectorProfileArtistsListArtistDialogProps>> = ({
-  userInterestEdge,
-  onClose,
-  onToggle,
-}) => {
+export const CollectorProfileArtistsListArtistDialog: FC<
+  React.PropsWithChildren<CollectorProfileArtistsListArtistDialogProps>
+> = ({ userInterestEdge, onClose, onToggle }) => {
   const [mode, setMode] = useState<"Idle" | "Delete">("Idle")
 
   const userInterest = useFragment(FRAGMENT, userInterestEdge)

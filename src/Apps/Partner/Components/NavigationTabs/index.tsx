@@ -10,7 +10,9 @@ interface NavigationTabsProps {
   partner: NavigationTabs_partner$data
 }
 
-export const NavigationTabs: React.FC<React.PropsWithChildren<NavigationTabsProps>> = ({ partner }) => {
+export const NavigationTabs: React.FC<
+  React.PropsWithChildren<NavigationTabsProps>
+> = ({ partner }) => {
   const {
     slug,
     locations,

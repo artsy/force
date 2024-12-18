@@ -9,7 +9,9 @@ interface ArtistShowsRouteProps {
   viewer: ArtistShowsRoute_viewer$data
 }
 
-const ArtistShowsRoute: React.FC<React.PropsWithChildren<ArtistShowsRouteProps>> = ({ viewer }) => {
+const ArtistShowsRoute: React.FC<
+  React.PropsWithChildren<ArtistShowsRouteProps>
+> = ({ viewer }) => {
   if (!viewer.artist) return null
 
   const hasCurrentShows = viewer.artist.currentShowsCount?.totalCount ?? 0 > 0

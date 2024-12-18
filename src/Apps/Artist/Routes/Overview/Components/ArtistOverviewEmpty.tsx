@@ -1,7 +1,9 @@
 import { Text, GridColumns, Column } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 
-export const ArtistOverviewEmpty: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const ArtistOverviewEmpty: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <GridColumns gridRowGap={2}>
       <Column span={6} start={4}>

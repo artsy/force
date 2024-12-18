@@ -5,7 +5,10 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { MaterialsFilter, MaterialsFilterProps } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
+import {
+  MaterialsFilter,
+  MaterialsFilterProps,
+} from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

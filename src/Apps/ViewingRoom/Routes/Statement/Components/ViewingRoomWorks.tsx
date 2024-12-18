@@ -11,7 +11,9 @@ interface ViewingRoomWorksProps {
   viewingRoom: ViewingRoomWorks_viewingRoom$data
 }
 
-const ViewingRoomWorks: React.FC<React.PropsWithChildren<ViewingRoomWorksProps>> = ({ viewingRoom }) => {
+const ViewingRoomWorks: React.FC<
+  React.PropsWithChildren<ViewingRoomWorksProps>
+> = ({ viewingRoom }) => {
   const artworks = extractNodes(viewingRoom.artworksConnection)
 
   const {

@@ -10,9 +10,9 @@ interface PrivateArtworkDetailsProps {
   artwork: PrivateArtworkDetails_artwork$key
 }
 
-export const PrivateArtworkDetails: React.FC<React.PropsWithChildren<PrivateArtworkDetailsProps>> = ({
-  artwork,
-}) => {
+export const PrivateArtworkDetails: React.FC<
+  React.PropsWithChildren<PrivateArtworkDetailsProps>
+> = ({ artwork }) => {
   const data = useFragment(
     graphql`
       fragment PrivateArtworkDetails_artwork on Artwork {

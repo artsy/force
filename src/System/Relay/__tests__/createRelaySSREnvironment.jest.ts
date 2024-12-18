@@ -2,10 +2,10 @@ import { QueryResponseCache } from "relay-runtime"
 import { hydrateCacheFromSSR } from "System/Relay/createRelaySSREnvironment"
 
 describe("#hydrateCacheFromSSR", () => {
-  const relayResponseCache = (new QueryResponseCache({
+  const relayResponseCache = new QueryResponseCache({
     size: 250,
     ttl: 1000,
-  }) as any) as { _responses: Map<any, any> }
+  }) as any as { _responses: Map<any, any> }
 
   it("does not update cache if no ssr data", () => {
     window.__RELAY_HYDRATION_DATA__

@@ -50,7 +50,7 @@ beforeEach(() => {
     },
   }
 
-  mockShippingContext = ({
+  mockShippingContext = {
     state: {
       mode: "saved_addresses",
     },
@@ -63,7 +63,7 @@ beforeEach(() => {
     meData: {
       addressList: [],
     },
-  } as unknown) as ShippingContextProps
+  } as unknown as ShippingContextProps
 })
 
 const resolveMostRecentOperation = async (resolvers: any) => {

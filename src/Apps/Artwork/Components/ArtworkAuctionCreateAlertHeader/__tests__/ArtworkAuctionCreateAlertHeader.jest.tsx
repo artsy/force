@@ -6,22 +6,21 @@ import { ArtworkAuctionCreateAlertHeader_Test_Query } from "__generated__/Artwor
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  ArtworkAuctionCreateAlertHeader_Test_Query
->({
-  Component: ({ artwork }) => {
-    return (
-      <ArtworkAuctionCreateAlertHeaderFragmentContainer artwork={artwork!} />
-    )
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<ArtworkAuctionCreateAlertHeader_Test_Query>({
+    Component: ({ artwork }) => {
+      return (
+        <ArtworkAuctionCreateAlertHeaderFragmentContainer artwork={artwork!} />
+      )
+    },
+    query: graphql`
     query ArtworkAuctionCreateAlertHeader_Test_Query @relay_test_operation {
       artwork(id: "emily-ludwig-shaffer-untitled-3") {
         ...ArtworkAuctionCreateAlertHeader_artwork
       }
     }
   `,
-})
+  })
 
 describe("ArtworkAuctionCreateAlertHeader", () => {
   it("displays when the auction is closed", () => {

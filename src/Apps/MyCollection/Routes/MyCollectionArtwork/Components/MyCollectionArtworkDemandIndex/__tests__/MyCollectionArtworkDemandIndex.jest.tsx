@@ -8,22 +8,21 @@ import { MyCollectionArtworkDemandIndexFragmentContainer } from ".."
 jest.unmock("react-relay")
 
 describe("MyCollectionArtworkDemandIndex", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    MyCollectionArtworkDemandIndexTestQuery
-  >({
-    Component: props => {
-      if (props.artwork?.marketPriceInsights) {
-        return (
-          <MockBoot>
-            <MyCollectionArtworkDemandIndexFragmentContainer
-              marketPriceInsights={props.artwork.marketPriceInsights}
-            />
-          </MockBoot>
-        )
-      }
-      return null
-    },
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<MyCollectionArtworkDemandIndexTestQuery>({
+      Component: props => {
+        if (props.artwork?.marketPriceInsights) {
+          return (
+            <MockBoot>
+              <MyCollectionArtworkDemandIndexFragmentContainer
+                marketPriceInsights={props.artwork.marketPriceInsights}
+              />
+            </MockBoot>
+          )
+        }
+        return null
+      },
+      query: graphql`
       query MyCollectionArtworkDemandIndexTestQuery @relay_test_operation {
         artwork(id: "artwork-ID") {
           marketPriceInsights {
@@ -32,7 +31,7 @@ describe("MyCollectionArtworkDemandIndex", () => {
         }
       }
     `,
-  })
+    })
 
   describe("when there is no demand rank", () => {
     it("renders nothing", () => {

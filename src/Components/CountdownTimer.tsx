@@ -19,12 +19,9 @@ export interface CountdownTimerProps {
  * Extracted out of @artsy/palette
  * @deprecated Use `useTimer` instead
  */
-export const CountdownTimer: React.FC<React.PropsWithChildren<CountdownTimerProps>> = ({
-  action,
-  note,
-  countdownEnd,
-  countdownStart,
-}) => {
+export const CountdownTimer: React.FC<
+  React.PropsWithChildren<CountdownTimerProps>
+> = ({ action, note, countdownEnd, countdownStart }) => {
   const currentTime = useCurrentTime({ syncWithServer: true })
   const endDateTime = DateTime.fromISO(countdownEnd).toLocal()
 

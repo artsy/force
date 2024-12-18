@@ -22,14 +22,9 @@ interface ShowEventsProps {
   paramsPage: number
 }
 
-const ShowPaginatedEvents: React.FC<React.PropsWithChildren<ShowEventsProps>> = ({
-  eventTitle,
-  relay,
-  partner,
-  scrollTo,
-  offset,
-  paramsPage,
-}) => {
+const ShowPaginatedEvents: React.FC<
+  React.PropsWithChildren<ShowEventsProps>
+> = ({ eventTitle, relay, partner, scrollTo, offset, paramsPage }) => {
   const {
     match: { location },
     router,
@@ -189,13 +184,9 @@ interface ShowPaginatedEventsRendererProps {
   page?: number
 }
 
-export const ShowPaginatedEventsRenderer: React.FC<React.PropsWithChildren<ShowPaginatedEventsRendererProps>> = ({
-  partnerId,
-  first,
-  status,
-  page,
-  ...rest
-}) => {
+export const ShowPaginatedEventsRenderer: React.FC<
+  React.PropsWithChildren<ShowPaginatedEventsRendererProps>
+> = ({ partnerId, first, status, page, ...rest }) => {
   return (
     <SystemQueryRenderer<ShowPaginatedEventsRendererQuery>
       query={graphql`

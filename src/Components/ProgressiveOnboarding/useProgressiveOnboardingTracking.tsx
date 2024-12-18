@@ -12,11 +12,8 @@ export const useProgressiveOnboardingTracking = ({
 }: UseProgressiveOnboardingTracking) => {
   const analytics = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const trackEvent = useCallback(() => {
     if (

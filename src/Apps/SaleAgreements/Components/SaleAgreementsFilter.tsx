@@ -9,9 +9,9 @@ interface SaleAgreementsFilterProps {
   viewer: SaleAgreementsFilter_viewer$key
 }
 
-export const SaleAgreementsFilter: FC<React.PropsWithChildren<SaleAgreementsFilterProps>> = ({
-  viewer,
-}) => {
+export const SaleAgreementsFilter: FC<
+  React.PropsWithChildren<SaleAgreementsFilterProps>
+> = ({ viewer }) => {
   const data = useFragment(saleAgreementsFilterFragment, viewer)
   const saleAgreements = extractNodes(data.saleAgreementsConnection)
 

@@ -43,7 +43,9 @@ export const ConversationsSidebarSkeleton = () => {
   )
 }
 
-const ConversationSkeleton: React.FC<React.PropsWithChildren<{ index: number }>> = ({ index }) => {
+const ConversationSkeleton: React.FC<
+  React.PropsWithChildren<{ index: number }>
+> = ({ index }) => {
   const borderTop = index !== 0 ? {} : { borderTop: 0 }
 
   return (

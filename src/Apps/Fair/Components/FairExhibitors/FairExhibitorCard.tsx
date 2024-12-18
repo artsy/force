@@ -18,17 +18,13 @@ interface FairExhibitorCardProps {
   fair: FairExhibitorCard_fair$data
 }
 
-export const FairExhibitorCard: React.FC<React.PropsWithChildren<FairExhibitorCardProps>> = ({
-  exhibitor,
-  fair,
-}) => {
+export const FairExhibitorCard: React.FC<
+  React.PropsWithChildren<FairExhibitorCardProps>
+> = ({ exhibitor, fair }) => {
   const tracking = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   if (!exhibitor.partner) return null
 

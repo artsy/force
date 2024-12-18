@@ -45,9 +45,9 @@ interface DetailsRouteProps {
   submission: DetailsRoute_submission$key
 }
 
-export const DetailsRoute: React.FC<React.PropsWithChildren<
-  DetailsRouteProps
->> = props => {
+export const DetailsRoute: React.FC<
+  React.PropsWithChildren<DetailsRouteProps>
+> = props => {
   const { actions } = useSellFlowContext()
   const submission = useFragment(FRAGMENT, props.submission)
 

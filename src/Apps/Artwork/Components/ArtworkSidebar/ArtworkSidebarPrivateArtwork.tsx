@@ -9,9 +9,9 @@ interface ArtworkSidebarPrivateArtworkProps {
   artwork: ArtworkSidebarPrivateArtwork_artwork$key
 }
 
-export const ArtworkSidebarPrivateArtwork: React.FC<React.PropsWithChildren<ArtworkSidebarPrivateArtworkProps>> = ({
-  artwork,
-}) => {
+export const ArtworkSidebarPrivateArtwork: React.FC<
+  React.PropsWithChildren<ArtworkSidebarPrivateArtworkProps>
+> = ({ artwork }) => {
   const { trackEvent } = useTracking()
 
   const data = useFragment(

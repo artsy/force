@@ -26,15 +26,12 @@ interface HomeNewWorksFromGalleriesYouFollowRailProps {
   newWorksFromGalleriesYouFollowConnection: HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data
 }
 
-const HomeNewWorksFromGalleriesYouFollowRail: React.FC<React.PropsWithChildren<HomeNewWorksFromGalleriesYouFollowRailProps>> = ({
-  newWorksFromGalleriesYouFollowConnection,
-}) => {
+const HomeNewWorksFromGalleriesYouFollowRail: React.FC<
+  React.PropsWithChildren<HomeNewWorksFromGalleriesYouFollowRailProps>
+> = ({ newWorksFromGalleriesYouFollowConnection }) => {
   const { trackEvent } = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const artworks = extractNodes(newWorksFromGalleriesYouFollowConnection)
 
@@ -93,9 +90,8 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<React.PropsWithChildren<H
   )
 }
 
-export const HomeNewWorksFromGalleriesYouFollowRailFragmentContainer = createFragmentContainer(
-  HomeNewWorksFromGalleriesYouFollowRail,
-  {
+export const HomeNewWorksFromGalleriesYouFollowRailFragmentContainer =
+  createFragmentContainer(HomeNewWorksFromGalleriesYouFollowRail, {
     newWorksFromGalleriesYouFollowConnection: graphql`
       fragment HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection on ArtworkConnection {
         edges {
@@ -114,10 +110,11 @@ export const HomeNewWorksFromGalleriesYouFollowRailFragmentContainer = createFra
         }
       }
     `,
-  }
-)
+  })
 
-export const HomeNewWorksFromGalleriesYouFollowRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeNewWorksFromGalleriesYouFollowRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   const { user } = useSystemContext()

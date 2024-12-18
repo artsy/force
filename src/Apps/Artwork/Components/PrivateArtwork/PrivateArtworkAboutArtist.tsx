@@ -22,9 +22,9 @@ interface PrivateArtworkAboutArtistProps {
   artwork: PrivateArtworkAboutArtist_artwork$key
 }
 
-export const PrivateArtworkAboutArtist: React.FC<React.PropsWithChildren<
-  PrivateArtworkAboutArtistProps
->> = ({ artwork }) => {
+export const PrivateArtworkAboutArtist: React.FC<
+  React.PropsWithChildren<PrivateArtworkAboutArtistProps>
+> = ({ artwork }) => {
   const { trackEvent } = useTracking()
 
   const data = useFragment(

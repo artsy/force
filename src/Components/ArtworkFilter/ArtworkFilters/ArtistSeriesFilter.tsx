@@ -7,10 +7,9 @@ export interface ArtistSeriesFilterProps {
   label?: string
 }
 
-export const ArtistSeriesFilter: React.FC<React.PropsWithChildren<ArtistSeriesFilterProps>> = ({
-  expanded,
-  label = "Artist Series",
-}) => {
+export const ArtistSeriesFilter: React.FC<
+  React.PropsWithChildren<ArtistSeriesFilterProps>
+> = ({ expanded, label = "Artist Series" }) => {
   return (
     <>
       <ResultsFilter

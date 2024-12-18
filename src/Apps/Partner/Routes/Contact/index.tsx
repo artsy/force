@@ -8,7 +8,9 @@ export interface ContactRouteProps {
   partner: Contact_partner$data
 }
 
-export const ContactRoute: React.FC<React.PropsWithChildren<ContactRouteProps>> = ({ partner }) => {
+export const ContactRoute: React.FC<
+  React.PropsWithChildren<ContactRouteProps>
+> = ({ partner }) => {
   return (
     <Box mt={[4, 6]}>
       <Text variant="lg-display">Locations</Text>

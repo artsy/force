@@ -44,7 +44,10 @@ export interface StatusProps {
   match: Match
 }
 
-export const StatusRoute: FC<React.PropsWithChildren<StatusProps>> = ({ order, match }) => {
+export const StatusRoute: FC<React.PropsWithChildren<StatusProps>> = ({
+  order,
+  match,
+}) => {
   const { isEigen } = useSystemContext()
 
   const flowName = order.mode === "OFFER" ? "Offer" : "Order"
@@ -56,8 +59,8 @@ export const StatusRoute: FC<React.PropsWithChildren<StatusProps>> = ({ order, m
   const shouldContinueToInbox =
     isEigen && isSubmittedOffer && order.source === "artwork_page"
   const conversationId = match.location.query.backToConversationId
-  const shouldDisplayBackToConversationLink = !!match.location.query
-    .backToConversationId
+  const shouldDisplayBackToConversationLink =
+    !!match.location.query.backToConversationId
 
   const {
     title,

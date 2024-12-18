@@ -8,9 +8,9 @@ interface ConversationArtworkProps {
   conversation: ConversationArtwork_conversation$key
 }
 
-export const ConversationArtwork: React.FC<React.PropsWithChildren<ConversationArtworkProps>> = ({
-  conversation,
-}) => {
+export const ConversationArtwork: React.FC<
+  React.PropsWithChildren<ConversationArtworkProps>
+> = ({ conversation }) => {
   const { trackEvent } = useTracking()
 
   const data = useFragment(

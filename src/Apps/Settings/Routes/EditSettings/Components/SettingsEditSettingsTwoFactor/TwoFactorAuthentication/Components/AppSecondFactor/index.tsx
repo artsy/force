@@ -31,17 +31,15 @@ interface AppSecondFactorProps {
 }
 
 // TODO: This needs to be rebuilt from scratch
-export const AppSecondFactor: React.FC<React.PropsWithChildren<AppSecondFactorProps>> = ({
-  me,
-  relay,
-}) => {
+export const AppSecondFactor: React.FC<
+  React.PropsWithChildren<AppSecondFactorProps>
+> = ({ me, relay }) => {
   const [showConfirmDisable, setShowConfirmDisable] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [showSetupModal, setShowSetupModal] = useState(false)
   const [showCompleteModal, setShowCompleteModal] = useState(false)
-  const [showCompleteRedirectModal, setShowCompleteRedirectModal] = useState(
-    false
-  )
+  const [showCompleteRedirectModal, setShowCompleteRedirectModal] =
+    useState(false)
   const [stagedSecondFactor, setStagedSecondFactor] = useState(null)
   const [passwordConfirmation, setPasswordConfirmation] = useState("")
   const [isDisabling] = useState(false) // ???

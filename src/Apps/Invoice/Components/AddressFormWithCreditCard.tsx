@@ -8,16 +8,11 @@ export interface AddressFormValues {
   address: Address
   creditCard?: boolean
 }
-export const AddressFormWithCreditCard: React.FC<React.PropsWithChildren<
-  unknown
->> = () => {
-  const {
-    setFieldValue,
-    setFieldTouched,
-    setFieldError,
-    errors,
-    touched,
-  } = useFormContext()
+export const AddressFormWithCreditCard: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
+  const { setFieldValue, setFieldTouched, setFieldError, errors, touched } =
+    useFormContext()
 
   return (
     <Join separator={<Spacer y={2} />}>

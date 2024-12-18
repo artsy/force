@@ -23,9 +23,9 @@ interface ArticleSectionImageCollectionProps {
   section: ArticleSectionImageCollection_section$data
 }
 
-const ArticleSectionImageCollection: FC<React.PropsWithChildren<ArticleSectionImageCollectionProps>> = ({
-  section,
-}) => {
+const ArticleSectionImageCollection: FC<
+  React.PropsWithChildren<ArticleSectionImageCollectionProps>
+> = ({ section }) => {
   const { Container, Caption, targetWidth } = useMemo(() => {
     switch (section.layout) {
       case "FILLWIDTH":
@@ -86,7 +86,9 @@ const ArticleSectionImageCollection: FC<React.PropsWithChildren<ArticleSectionIm
   )
 }
 
-const FullBleedCaption: FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+const FullBleedCaption: FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   return (
     <HorizontalPadding>
       <GridColumns>
@@ -96,9 +98,8 @@ const FullBleedCaption: FC<React.PropsWithChildren<unknown>> = ({ children }) =>
   )
 }
 
-export const ArticleSectionImageCollectionFragmentContainer = createFragmentContainer(
-  ArticleSectionImageCollection,
-  {
+export const ArticleSectionImageCollectionFragmentContainer =
+  createFragmentContainer(ArticleSectionImageCollection, {
     section: graphql`
       fragment ArticleSectionImageCollection_section on ArticleSectionImageCollection {
         layout
@@ -109,5 +110,4 @@ export const ArticleSectionImageCollectionFragmentContainer = createFragmentCont
         }
       }
     `,
-  }
-)
+  })

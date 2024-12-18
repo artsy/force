@@ -54,10 +54,9 @@ const checkIfArtworkIsOnLoanOrPermanentCollection = (
   }
 }
 
-export const ArtworkSidebar: React.FC<React.PropsWithChildren<ArtworkSidebarProps>> = ({
-  artwork,
-  me,
-}) => {
+export const ArtworkSidebar: React.FC<
+  React.PropsWithChildren<ArtworkSidebarProps>
+> = ({ artwork, me }) => {
   const {
     isSold,
     isAcquireable,
@@ -317,10 +316,9 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtworkSidebarQueryRenderer: React.FC<ArtworkSidebarQueryRendererProps> = ({
-  artworkID,
-  ...rest
-}) => {
+export const ArtworkSidebarQueryRenderer: React.FC<
+  ArtworkSidebarQueryRendererProps
+> = ({ artworkID, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

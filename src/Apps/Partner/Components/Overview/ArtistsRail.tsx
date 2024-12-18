@@ -10,7 +10,10 @@ interface ArtistsRailProps extends BoxProps {
   partner: ArtistsRail_partner$data
 }
 
-const ArtistsRail: React.FC<React.PropsWithChildren<ArtistsRailProps>> = ({ partner, ...rest }) => {
+const ArtistsRail: React.FC<React.PropsWithChildren<ArtistsRailProps>> = ({
+  partner,
+  ...rest
+}) => {
   if (!partner) {
     return null
   }

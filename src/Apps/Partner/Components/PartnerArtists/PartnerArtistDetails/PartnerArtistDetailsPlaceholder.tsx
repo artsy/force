@@ -7,7 +7,9 @@ import {
 } from "@artsy/palette"
 import { ShelfArtworkPlaceholder } from "Components/Artwork/ShelfArtwork"
 
-export const PartnerArtistDetailsPlaceholder: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const PartnerArtistDetailsPlaceholder: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <GridColumns gridRowGap={[2, 4]}>
       <Column span={6}>

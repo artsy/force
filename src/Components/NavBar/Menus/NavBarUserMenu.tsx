@@ -29,7 +29,9 @@ import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 
 interface NavBarUserMenuProps extends BoxProps {}
 
-export const NavBarUserMenu: React.FC<React.PropsWithChildren<NavBarUserMenuProps>> = props => {
+export const NavBarUserMenu: React.FC<
+  React.PropsWithChildren<NavBarUserMenuProps>
+> = props => {
   const { trackEvent } = useTracking()
 
   const { user } = useSystemContext()

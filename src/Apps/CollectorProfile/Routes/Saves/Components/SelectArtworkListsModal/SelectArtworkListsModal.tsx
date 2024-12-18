@@ -30,9 +30,9 @@ export interface SelectArtworkListsModalProps {
 
 type ArtworkListById = Record<string, ResultListEntity>
 
-export const SelectArtworkListsModal: React.FC<React.PropsWithChildren<SelectArtworkListsModalProps>> = ({
-  me,
-}) => {
+export const SelectArtworkListsModal: React.FC<
+  React.PropsWithChildren<SelectArtworkListsModalProps>
+> = ({ me }) => {
   const { state, dispatch, reset, onSave } = useManageArtworkForSavesContext()
   const analytics = useAnalyticsContext()
   const { trackEvent } = useTracking()
@@ -92,7 +92,7 @@ export const SelectArtworkListsModal: React.FC<React.PropsWithChildren<SelectArt
     }
   }
 
-  const handleArtworkListPress = (artworkList: typeof artworkLists[0]) => {
+  const handleArtworkListPress = (artworkList: (typeof artworkLists)[0]) => {
     dispatch({
       type: "ADD_OR_REMOVE_LIST_ID",
       payload: {
@@ -156,7 +156,9 @@ export const SelectArtworkListsModal: React.FC<React.PropsWithChildren<SelectArt
     }
   }
 
-  const checkIsArtworkListSelected = (artworkList: typeof artworkLists[0]) => {
+  const checkIsArtworkListSelected = (
+    artworkList: (typeof artworkLists)[0]
+  ) => {
     /**
      * User added artwork to the previously unselected artwork list
      * So we have to display the artwork list as *selected*
@@ -241,7 +243,9 @@ export const SelectArtworkListsModalFragmentContainer = createFragmentContainer(
   }
 )
 
-export const SelectArtworkListsModalQueryRender: FC<React.PropsWithChildren<unknown>> = () => {
+export const SelectArtworkListsModalQueryRender: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { state } = useManageArtworkForSavesContext()
 
   return (

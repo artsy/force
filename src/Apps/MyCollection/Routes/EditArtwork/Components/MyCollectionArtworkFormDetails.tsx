@@ -29,19 +29,16 @@ import { useFormikContext } from "formik"
 import { useState } from "react"
 import { ProvenanceModal } from "./ProvenanceModal"
 
-export const MyCollectionArtworkFormDetails: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const MyCollectionArtworkFormDetails: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { sendToast } = useToasts()
 
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
 
-  const {
-    values,
-    handleChange,
-    setFieldValue,
-    setFieldTouched,
-    handleBlur,
-  } = useFormikContext<ArtworkModel>()
+  const { values, handleChange, setFieldValue, setFieldTouched, handleBlur } =
+    useFormikContext<ArtworkModel>()
 
   const isLimitedEdition = values.attributionClass === "LIMITED_EDITION"
 

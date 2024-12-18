@@ -17,11 +17,9 @@ interface SelectArtworkListItemProps {
   onClick: () => void
 }
 
-const SelectArtworkListItem: FC<React.PropsWithChildren<SelectArtworkListItemProps>> = ({
-  isSelected,
-  item,
-  onClick,
-}) => {
+const SelectArtworkListItem: FC<
+  React.PropsWithChildren<SelectArtworkListItemProps>
+> = ({ isSelected, item, onClick }) => {
   const nodes = extractNodes(item.artworksConnection)
   const imageURL = nodes[0]?.image?.url ?? null
 

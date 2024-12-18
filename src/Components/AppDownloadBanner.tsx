@@ -26,17 +26,13 @@ export interface AppDownloadBannerProps {
   idleDuration?: number
 }
 
-export const AppDownloadBanner: FC<React.PropsWithChildren<AppDownloadBannerProps>> = ({
-  transitionDuration = 1500,
-  idleDuration = 4000,
-}) => {
+export const AppDownloadBanner: FC<
+  React.PropsWithChildren<AppDownloadBannerProps>
+> = ({ transitionDuration = 1500, idleDuration = 4000 }) => {
   const { downloadAppUrl } = useDeviceDetection()
   const { user } = useSystemContext()
-  const {
-    contextPageOwnerType,
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-  } = useAnalyticsContext()
+  const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
+    useAnalyticsContext()
 
   const { index, handleNext } = useCursor({ max: TEXTS.length })
   const { trackEvent } = useTracking()

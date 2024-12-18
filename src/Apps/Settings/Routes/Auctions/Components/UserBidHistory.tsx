@@ -9,9 +9,9 @@ interface UserBidHistoryProps {
   me: UserBidHistory_me$data
 }
 
-export const UserBidHistory: React.FC<React.PropsWithChildren<UserBidHistoryProps>> = ({
-  me: { inactiveLotStandings: lotStandings },
-}) => {
+export const UserBidHistory: React.FC<
+  React.PropsWithChildren<UserBidHistoryProps>
+> = ({ me: { inactiveLotStandings: lotStandings } }) => {
   if (!lotStandings || lotStandings.length === 0) {
     return <SectionContainer title="Bid History"></SectionContainer>
   }

@@ -24,16 +24,13 @@ export interface FairBoothRailArtworksProps {
   show: FairBoothRailArtworks_show$data
 }
 
-const FairBoothRailArtworks: React.FC<React.PropsWithChildren<FairBoothRailArtworksProps>> = ({
-  show,
-}) => {
+const FairBoothRailArtworks: React.FC<
+  React.PropsWithChildren<FairBoothRailArtworksProps>
+> = ({ show }) => {
   const tracking = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const clickedFairArtworkData = ({
     artworkID,
@@ -108,9 +105,11 @@ export const FairBoothRailArtworksFragmentContainer = createFragmentContainer(
   }
 )
 
-export const FairBoothRailArtworksQueryRenderer: React.FC<React.PropsWithChildren<{
-  id: string
-}>> = ({ id, ...rest }) => {
+export const FairBoothRailArtworksQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    id: string
+  }>
+> = ({ id, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

@@ -8,7 +8,9 @@ interface FairAboutProps {
   fair: FairAbout_fair$data
 }
 
-const FairAbout: React.FC<React.PropsWithChildren<FairAboutProps>> = ({ fair }) => {
+const FairAbout: React.FC<React.PropsWithChildren<FairAboutProps>> = ({
+  fair,
+}) => {
   const { about } = fair
 
   return (

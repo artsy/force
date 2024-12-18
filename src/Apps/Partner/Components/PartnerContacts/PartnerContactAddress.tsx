@@ -8,9 +8,9 @@ export interface PartnerContactAddressProps {
   location: PartnerContactAddress_location$data
 }
 
-export const PartnerContactAddress: React.FC<React.PropsWithChildren<PartnerContactAddressProps>> = ({
-  location,
-}) => {
+export const PartnerContactAddress: React.FC<
+  React.PropsWithChildren<PartnerContactAddressProps>
+> = ({ location }) => {
   const addressLines = getContactAddressLines(location)
 
   return (

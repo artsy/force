@@ -25,10 +25,9 @@ interface ProgressiveOnboardingAlertCreateProps
   children: (actions: { onSkip(): void }) => ReactNode
 }
 
-export const __ProgressiveOnboardingAlertCreate__: FC<React.PropsWithChildren<ProgressiveOnboardingAlertCreateProps>> = ({
-  children,
-  counts,
-}) => {
+export const __ProgressiveOnboardingAlertCreate__: FC<
+  React.PropsWithChildren<ProgressiveOnboardingAlertCreateProps>
+> = ({ children, counts }) => {
   const { isLoggedIn } = useSystemContext()
 
   const { dismiss, isDismissed } = useDismissibleContext()

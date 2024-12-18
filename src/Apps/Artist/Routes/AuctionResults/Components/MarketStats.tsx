@@ -35,10 +35,10 @@ export const MarketStats: FC<React.PropsWithChildren<MarketStatsProps>> = ({
 
   const priceInsights = extractNodes(priceInsightsConnection)
 
-  useEffect(() => onRendered?.(priceInsights.length > 0), [
-    onRendered,
-    priceInsights,
-  ])
+  useEffect(
+    () => onRendered?.(priceInsights.length > 0),
+    [onRendered, priceInsights]
+  )
 
   const [selectedPriceInsight, setSelectedPriceInsight] = useState(
     priceInsights[0]
@@ -151,7 +151,9 @@ interface MarketStatsSignalProps {
   children: number
 }
 
-const MarketStatsSignal: FC<React.PropsWithChildren<MarketStatsSignalProps>> = ({ children }) => {
+const MarketStatsSignal: FC<
+  React.PropsWithChildren<MarketStatsSignalProps>
+> = ({ children }) => {
   switch (true) {
     case children > 0:
       return (
@@ -208,11 +210,9 @@ interface MarketStatsFigureProps {
   loading?: boolean
 }
 
-const MarketStatsFigure: FC<React.PropsWithChildren<MarketStatsFigureProps>> = ({
-  loading = false,
-  label,
-  value,
-}) => {
+const MarketStatsFigure: FC<
+  React.PropsWithChildren<MarketStatsFigureProps>
+> = ({ loading = false, label, value }) => {
   const Component = loading ? SkeletonText : Text
 
   return (
@@ -298,10 +298,12 @@ export const MarketStatsFragmentContainer = createFragmentContainer(
   }
 )
 
-export const MarketStatsQueryRenderer: FC<React.PropsWithChildren<{
-  id: string
-  onRendered?: (visible: boolean) => void
-}>> = ({ id, onRendered }) => {
+export const MarketStatsQueryRenderer: FC<
+  React.PropsWithChildren<{
+    id: string
+    onRendered?: (visible: boolean) => void
+  }>
+> = ({ id, onRendered }) => {
   const [hasRendered, setHasRendered] = useState(false)
 
   const onRender = (visible: boolean) => {

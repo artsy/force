@@ -8,12 +8,9 @@ interface OnboardingQuestionPanelProps {
   onNext(): void
 }
 
-export const OnboardingQuestionPanel: FC<React.PropsWithChildren<OnboardingQuestionPanelProps>> = ({
-  disabled,
-  loading,
-  onNext,
-  children,
-}) => {
+export const OnboardingQuestionPanel: FC<
+  React.PropsWithChildren<OnboardingQuestionPanelProps>
+> = ({ disabled, loading, onNext, children }) => {
   return (
     <Flex
       flexDirection="column"

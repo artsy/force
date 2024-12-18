@@ -37,10 +37,9 @@ interface ArtistsByLetterProps {
   relay: RelayRefetchProp
 }
 
-export const ArtistsByLetter: React.FC<React.PropsWithChildren<ArtistsByLetterProps>> = ({
-  relay,
-  viewer,
-}) => {
+export const ArtistsByLetter: React.FC<
+  React.PropsWithChildren<ArtistsByLetterProps>
+> = ({ relay, viewer }) => {
   const {
     match: { params, location },
     router,

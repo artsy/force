@@ -23,9 +23,9 @@ interface DeleteAccountRouteProps {
   me: DeleteAccountRoute_me$data
 }
 
-export const DeleteAccountRoute: FC<React.PropsWithChildren<DeleteAccountRouteProps>> = ({
-  me: { hasPassword },
-}) => {
+export const DeleteAccountRoute: FC<
+  React.PropsWithChildren<DeleteAccountRouteProps>
+> = ({ me: { hasPassword } }) => {
   const { sendToast } = useToasts()
   const { submitMutation } = useDeleteAccount()
 

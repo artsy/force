@@ -15,7 +15,9 @@ interface ViewInRoomArtworkProps {
   artwork: ViewInRoomArtwork_artwork$data
 }
 
-const ViewInRoomArtwork: React.FC<React.PropsWithChildren<ViewInRoomArtworkProps>> = ({ artwork }) => {
+const ViewInRoomArtwork: React.FC<
+  React.PropsWithChildren<ViewInRoomArtworkProps>
+> = ({ artwork }) => {
   const image = artwork.image?.resized
 
   if (

@@ -12,7 +12,9 @@ interface MyCollectionArtworkAboutTabProps {
   artwork: MyCollectionArtworkAboutTab_artwork$key
 }
 
-export const MyCollectionArtworkAboutTab: FC<React.PropsWithChildren<MyCollectionArtworkAboutTabProps>> = props => {
+export const MyCollectionArtworkAboutTab: FC<
+  React.PropsWithChildren<MyCollectionArtworkAboutTabProps>
+> = props => {
   const artwork = useFragment(FRAGMENT, props.artwork)
 
   const submission = artwork.consignmentSubmission

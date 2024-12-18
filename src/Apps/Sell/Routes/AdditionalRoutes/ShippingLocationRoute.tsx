@@ -72,7 +72,9 @@ interface ShippingLocationRouteProps {
   submission: ShippingLocationRoute_submission$key
 }
 
-export const ShippingLocationRoute: React.FC<React.PropsWithChildren<ShippingLocationRouteProps>> = props => {
+export const ShippingLocationRoute: React.FC<
+  React.PropsWithChildren<ShippingLocationRouteProps>
+> = props => {
   const { actions } = useSellFlowContext()
 
   const submission = useFragment(SUBMISSION_FRAGMENT, props.submission)

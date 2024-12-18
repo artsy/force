@@ -17,16 +17,9 @@ interface GenericSearchResultItemProps {
   id: string
 }
 
-export const GenericSearchResultItem: React.FC<React.PropsWithChildren<GenericSearchResultItemProps>> = ({
-  imageUrl,
-  name,
-  description,
-  href,
-  entityType,
-  term,
-  index,
-  id,
-}) => {
+export const GenericSearchResultItem: React.FC<
+  React.PropsWithChildren<GenericSearchResultItemProps>
+> = ({ imageUrl, name, description, href, entityType, term, index, id }) => {
   const tracking = useTracking()
 
   const translateEntityType = (anEntityType: string) => {

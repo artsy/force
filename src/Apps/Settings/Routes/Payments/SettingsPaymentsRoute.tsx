@@ -7,9 +7,9 @@ interface SettingsPaymentsRouteProps {
   me: SettingsPaymentsRoute_me$data
 }
 
-const SettingsPaymentsRoute: React.FC<React.PropsWithChildren<SettingsPaymentsRouteProps>> = ({
-  me,
-}) => {
+const SettingsPaymentsRoute: React.FC<
+  React.PropsWithChildren<SettingsPaymentsRouteProps>
+> = ({ me }) => {
   return <SettingsPaymentsMethodsFragmentContainer me={me} />
 }
 

@@ -10,18 +10,17 @@ jest.mock("Components/FollowButton/FollowProfileButton", () => ({
   FollowProfileButtonQueryRenderer: () => null,
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<
-  CellPartnerFragmentContainer_Test_Query
->({
-  Component: CellPartnerFragmentContainer,
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<CellPartnerFragmentContainer_Test_Query>({
+    Component: CellPartnerFragmentContainer,
+    query: graphql`
     query CellPartnerFragmentContainer_Test_Query @relay_test_operation {
       partner(id: "example") {
         ...CellPartner_partner
       }
     }
   `,
-})
+  })
 
 describe("CellPartner", () => {
   it("renders the component", () => {

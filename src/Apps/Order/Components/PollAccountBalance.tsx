@@ -25,7 +25,9 @@ interface PollAccountBalanceProps {
   orderCurrencyCode: string
 }
 
-const PollAccountBalance: FC<React.PropsWithChildren<PollAccountBalanceProps>> = ({
+const PollAccountBalance: FC<
+  React.PropsWithChildren<PollAccountBalanceProps>
+> = ({
   relay,
   setupIntentId,
   bankAccountId,
@@ -117,12 +119,9 @@ interface PollAccountBalanceQueryRendererProps {
   orderCurrencyCode: string
 }
 
-export const PollAccountBalanceQueryRenderer: FC<React.PropsWithChildren<PollAccountBalanceQueryRendererProps>> = ({
-  setupIntentId,
-  bankAccountId,
-  onError,
-  ...rest
-}) => {
+export const PollAccountBalanceQueryRenderer: FC<
+  React.PropsWithChildren<PollAccountBalanceQueryRendererProps>
+> = ({ setupIntentId, bankAccountId, onError, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
   if (!setupIntentId && !bankAccountId) return null
 

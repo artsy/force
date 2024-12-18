@@ -60,9 +60,9 @@ interface PhoneNumberRouteProps {
   me: PhoneNumberRoute_me$key
 }
 
-export const PhoneNumberRoute: React.FC<React.PropsWithChildren<
-  PhoneNumberRouteProps
->> = props => {
+export const PhoneNumberRoute: React.FC<
+  React.PropsWithChildren<PhoneNumberRouteProps>
+> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
   const me = useFragment(FRAGMENT_ME, props.me)
 

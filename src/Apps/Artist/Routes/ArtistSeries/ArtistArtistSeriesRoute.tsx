@@ -11,9 +11,9 @@ interface ArtistArtistSeriesRouteProps {
   artist: ArtistArtistSeriesRoute_artist$data
 }
 
-const ArtistArtistSeriesRoute: FC<React.PropsWithChildren<ArtistArtistSeriesRouteProps>> = ({
-  artist,
-}) => {
+const ArtistArtistSeriesRoute: FC<
+  React.PropsWithChildren<ArtistArtistSeriesRouteProps>
+> = ({ artist }) => {
   const artistSeries = extractNodes(artist.artistSeriesConnection)
 
   if (artistSeries.length === 0) {

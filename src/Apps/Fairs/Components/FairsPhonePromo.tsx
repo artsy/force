@@ -3,7 +3,9 @@ import { Box, BoxProps, Image, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { resized } from "Utils/resized"
 
-export const FairsPhonePromo: React.FC<React.PropsWithChildren<BoxProps>> = props => {
+export const FairsPhonePromo: React.FC<
+  React.PropsWithChildren<BoxProps>
+> = props => {
   const img = resized(
     "https://files.artsy.net/images/fair-iphone-promo-large.jpg",
     { width: 155, height: 223 }

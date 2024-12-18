@@ -17,10 +17,9 @@ interface SaveArtworkToListsButtonProps {
   contextModule: AuthContextModule
 }
 
-const SaveArtworkToListsButton: FC<React.PropsWithChildren<SaveArtworkToListsButtonProps>> = ({
-  artwork,
-  contextModule,
-}) => {
+const SaveArtworkToListsButton: FC<
+  React.PropsWithChildren<SaveArtworkToListsButtonProps>
+> = ({ artwork, contextModule }) => {
   const tracking = useTracking()
 
   const { saveArtworkToLists } = useArtworkLists({
@@ -81,9 +80,8 @@ const SaveArtworkToListsButton: FC<React.PropsWithChildren<SaveArtworkToListsBut
   )
 }
 
-export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer(
-  SaveArtworkToListsButton,
-  {
+export const SaveArtworkToListsButtonFragmentContainer =
+  createFragmentContainer(SaveArtworkToListsButton, {
     artwork: graphql`
       fragment SaveArtworkToListsButton_artwork on Artwork {
         id
@@ -106,8 +104,7 @@ export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })
 
 const labelByResultAction = {
   [ResultAction.SavedToDefaultList]: "Saved Artwork",
@@ -119,10 +116,9 @@ interface SaveArtworkToListsButtonQueryRendererProps
   id: string
 }
 
-export const SaveArtworkToListsButtonQueryRenderer: FC<React.PropsWithChildren<SaveArtworkToListsButtonQueryRendererProps>> = ({
-  id,
-  contextModule,
-}) => {
+export const SaveArtworkToListsButtonQueryRenderer: FC<
+  React.PropsWithChildren<SaveArtworkToListsButtonQueryRendererProps>
+> = ({ id, contextModule }) => {
   return (
     <SystemQueryRenderer<SaveArtworkToListsButtonQuery>
       lazyLoad

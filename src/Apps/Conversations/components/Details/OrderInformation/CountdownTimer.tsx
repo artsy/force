@@ -8,7 +8,9 @@ interface CountdownTimerProps {
   respondByText: string
 }
 
-export const CountdownTimer: React.FC<React.PropsWithChildren<CountdownTimerProps>> = ({
+export const CountdownTimer: React.FC<
+  React.PropsWithChildren<CountdownTimerProps>
+> = ({
   stateExpiresAt,
   stateUpdatedAt,
   expiryText,

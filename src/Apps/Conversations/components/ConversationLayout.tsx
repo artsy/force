@@ -14,7 +14,9 @@ export interface ConversationsLayoutProps {
   renderDetails: () => JSX.Element | null
 }
 
-export const ConversationsLayout: React.FC<React.PropsWithChildren<ConversationsLayoutProps>> = props => {
+export const ConversationsLayout: React.FC<
+  React.PropsWithChildren<ConversationsLayoutProps>
+> = props => {
   return (
     <>
       <Media greaterThan="xs">
@@ -27,11 +29,9 @@ export const ConversationsLayout: React.FC<React.PropsWithChildren<Conversations
   )
 }
 
-export const DesktopLayout: React.FC<React.PropsWithChildren<ConversationsLayoutProps>> = ({
-  renderSidebar,
-  renderMessages,
-  renderDetails,
-}) => {
+export const DesktopLayout: React.FC<
+  React.PropsWithChildren<ConversationsLayoutProps>
+> = ({ renderSidebar, renderMessages, renderDetails }) => {
   return (
     <>
       <Flex display={["none", "flex"]}>
@@ -87,11 +87,9 @@ export const DesktopLayout: React.FC<React.PropsWithChildren<ConversationsLayout
   )
 }
 
-export const MobileLayout: React.FC<React.PropsWithChildren<ConversationsLayoutProps>> = ({
-  renderSidebar,
-  renderMessages,
-  renderDetails,
-}) => {
+export const MobileLayout: React.FC<
+  React.PropsWithChildren<ConversationsLayoutProps>
+> = ({ renderSidebar, renderMessages, renderDetails }) => {
   const { currentColumn } = useMobileLayoutActions()
 
   return (

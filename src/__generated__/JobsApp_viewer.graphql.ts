@@ -8,33 +8,32 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
+import { ReaderFragment } from "relay-runtime"
+import { FragmentRefs } from "relay-runtime"
 export type JobsApp_viewer$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"JobsFilter_viewer">;
-  readonly " $fragmentType": "JobsApp_viewer";
-};
+  readonly " $fragmentSpreads": FragmentRefs<"JobsFilter_viewer">
+  readonly " $fragmentType": "JobsApp_viewer"
+}
 export type JobsApp_viewer$key = {
-  readonly " $data"?: JobsApp_viewer$data;
-  readonly " $fragmentSpreads": FragmentRefs<"JobsApp_viewer">;
-};
+  readonly " $data"?: JobsApp_viewer$data
+  readonly " $fragmentSpreads": FragmentRefs<"JobsApp_viewer">
+}
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
-  "kind": "Fragment",
-  "metadata": null,
-  "name": "JobsApp_viewer",
-  "selections": [
+  argumentDefinitions: [],
+  kind: "Fragment",
+  metadata: null,
+  name: "JobsApp_viewer",
+  selections: [
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "JobsFilter_viewer"
-    }
+      args: null,
+      kind: "FragmentSpread",
+      name: "JobsFilter_viewer",
+    },
   ],
-  "type": "Viewer",
-  "abstractKey": null
-};
+  type: "Viewer",
+  abstractKey: null,
+}
+;(node as any).hash = "9f8ac2fe7c98208cbcde0bf6bf403191"
 
-(node as any).hash = "9f8ac2fe7c98208cbcde0bf6bf403191";
-
-export default node;
+export default node

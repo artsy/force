@@ -19,12 +19,17 @@ interface ArtworkImageBrowserProps {
   isMyCollectionArtwork?: boolean
 }
 
-export const ArtworkImageBrowser: React.FC<React.PropsWithChildren<
-  ArtworkImageBrowserProps
->> = ({ artwork, isMyCollectionArtwork }) => {
+export const ArtworkImageBrowser: React.FC<
+  React.PropsWithChildren<ArtworkImageBrowserProps>
+> = ({ artwork, isMyCollectionArtwork }) => {
   const { figures } = artwork
 
-  const { index: activeIndex, handleNext, handlePrev, setCursor } = useCursor({
+  const {
+    index: activeIndex,
+    handleNext,
+    handlePrev,
+    setCursor,
+  } = useCursor({
     max: figures.length,
   })
 

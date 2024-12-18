@@ -10,9 +10,9 @@ interface ShowsAllCitiesProps {
   viewer: ShowsAllCities_viewer$data
 }
 
-export const ShowsAllCities: React.FC<React.PropsWithChildren<ShowsAllCitiesProps>> = ({
-  viewer: { cities },
-}) => {
+export const ShowsAllCities: React.FC<
+  React.PropsWithChildren<ShowsAllCitiesProps>
+> = ({ viewer: { cities } }) => {
   return (
     <>
       <ShowsMeta />

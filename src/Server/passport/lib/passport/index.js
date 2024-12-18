@@ -6,8 +6,8 @@ const passport = require("passport")
 const FacebookStrategy = require("passport-facebook").Strategy
 const AppleStrategy = require("passport-apple")
 const GoogleStrategy = require("passport-google-oauth20").Strategy
-const LocalWithOtpStrategy = require("Server/passport-local-with-otp/lib")
-  .Strategy
+const LocalWithOtpStrategy =
+  require("Server/passport-local-with-otp/lib").Strategy
 const callbacks = require("./callbacks")
 const { serialize, deserialize } = require("./serializers")
 const opts = require("../options")

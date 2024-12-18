@@ -8,7 +8,9 @@ interface ArticleNewsSourceProps {
   article: ArticleNewsSource_article$data
 }
 
-const ArticleNewsSource: FC<React.PropsWithChildren<ArticleNewsSourceProps>> = ({ article }) => {
+const ArticleNewsSource: FC<
+  React.PropsWithChildren<ArticleNewsSourceProps>
+> = ({ article }) => {
   const { clickedExternalNewsSource } = useArticleTracking()
 
   return (

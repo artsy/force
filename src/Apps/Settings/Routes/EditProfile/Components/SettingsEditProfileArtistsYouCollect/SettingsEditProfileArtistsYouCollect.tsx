@@ -21,9 +21,9 @@ interface SettingsEditProfileArtistsYouCollectProps {
   me: SettingsEditProfileArtistsYouCollect_me$data
 }
 
-export const SettingsEditProfileArtistsYouCollect: FC<React.PropsWithChildren<SettingsEditProfileArtistsYouCollectProps>> = ({
-  me,
-}) => {
+export const SettingsEditProfileArtistsYouCollect: FC<
+  React.PropsWithChildren<SettingsEditProfileArtistsYouCollectProps>
+> = ({ me }) => {
   const userInterests = compact(me.collectorProfile?.userInterests)
 
   const { submitAddArtistYouCollect } = useAddArtistYouCollect()
@@ -113,9 +113,8 @@ export const SettingsEditProfileArtistsYouCollect: FC<React.PropsWithChildren<Se
   )
 }
 
-export const SettingsEditProfileArtistsYouCollectFragmentContainer = createFragmentContainer(
-  SettingsEditProfileArtistsYouCollect,
-  {
+export const SettingsEditProfileArtistsYouCollectFragmentContainer =
+  createFragmentContainer(SettingsEditProfileArtistsYouCollect, {
     me: graphql`
       fragment SettingsEditProfileArtistsYouCollect_me on Me {
         collectorProfile {
@@ -134,18 +133,16 @@ export const SettingsEditProfileArtistsYouCollectFragmentContainer = createFragm
         }
       }
     `,
-  }
-)
+  })
 
 interface SettingsEditProfileArtistsYouCollectAutocompleteInputProps
   extends BoxProps {
   onSelect(option: { text: string; value: string }): void
 }
 
-const SettingsEditProfileArtistsYouCollectAutocompleteInput: FC<React.PropsWithChildren<SettingsEditProfileArtistsYouCollectAutocompleteInputProps>> = ({
-  onSelect,
-  ...rest
-}) => {
+const SettingsEditProfileArtistsYouCollectAutocompleteInput: FC<
+  React.PropsWithChildren<SettingsEditProfileArtistsYouCollectAutocompleteInputProps>
+> = ({ onSelect, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
   const [term, setTerm] = useState("")
 

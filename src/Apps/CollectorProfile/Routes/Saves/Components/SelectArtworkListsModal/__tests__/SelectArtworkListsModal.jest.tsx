@@ -20,9 +20,9 @@ import { MockBoot } from "DevTools/MockBoot"
 jest.unmock("react-relay")
 jest.mock("Utils/Hooks/useMutation")
 
-const TestComponent: FC<React.PropsWithChildren<
-  SelectArtworkListsModal_Test_Query$data
->> = props => {
+const TestComponent: FC<
+  React.PropsWithChildren<SelectArtworkListsModal_Test_Query$data>
+> = props => {
   const { state } = useManageArtworkForSavesContext()
 
   // Modal is not displayed in the ManageArtworkForSaves component if artwork is null
@@ -33,31 +33,30 @@ const TestComponent: FC<React.PropsWithChildren<
   return <SelectArtworkListsModalFragmentContainer {...props} />
 }
 
-const { renderWithRelay } = setupTestWrapperTL<
-  SelectArtworkListsModal_Test_Query
->({
-  Component: props => {
-    return (
-      <MockBoot>
-        <AnalyticsCombinedContextProvider
-          contextPageOwnerId="page-owner-id"
-          path="/artist/page-owner-slug"
-        >
-          <ManageArtworkForSavesProvider artwork={artwork}>
-            <TestComponent {...props} />
-          </ManageArtworkForSavesProvider>
-        </AnalyticsCombinedContextProvider>
-      </MockBoot>
-    )
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<SelectArtworkListsModal_Test_Query>({
+    Component: props => {
+      return (
+        <MockBoot>
+          <AnalyticsCombinedContextProvider
+            contextPageOwnerId="page-owner-id"
+            path="/artist/page-owner-slug"
+          >
+            <ManageArtworkForSavesProvider artwork={artwork}>
+              <TestComponent {...props} />
+            </ManageArtworkForSavesProvider>
+          </AnalyticsCombinedContextProvider>
+        </MockBoot>
+      )
+    },
+    query: graphql`
     query SelectArtworkListsModal_Test_Query @relay_test_operation {
       me {
         ...SelectArtworkListsModal_me @arguments(artworkID: "artworkID")
       }
     }
   `,
-})
+  })
 
 describe("SelectArtworkListsModal", () => {
   const mockUseMutation = useMutation as jest.Mock

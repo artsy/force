@@ -14,7 +14,9 @@ interface FormValues {
   myCollectionArtworkID: string
 }
 
-export const NewFromMyCollectionRoute: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const NewFromMyCollectionRoute: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const initialValues: FormValues = {
     myCollectionArtworkID: "",
   }

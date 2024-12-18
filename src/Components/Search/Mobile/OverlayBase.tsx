@@ -23,10 +23,8 @@ export const OverlayBase: FC<React.PropsWithChildren<OverlayBaseProps>> = ({
   children,
   onClose,
 }) => {
-  const {
-    sentinel: topSentinel,
-    isSentinelVisible: isAtTop,
-  } = useSentinelVisibility()
+  const { sentinel: topSentinel, isSentinelVisible: isAtTop } =
+    useSentinelVisibility()
 
   const { theme } = useTheme()
 

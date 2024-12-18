@@ -9,9 +9,9 @@ interface ConversationAttachmentsProps {
   conversation: ConversationAttachments_conversation$key
 }
 
-export const ConversationAttachments: React.FC<React.PropsWithChildren<ConversationAttachmentsProps>> = ({
-  conversation,
-}) => {
+export const ConversationAttachments: React.FC<
+  React.PropsWithChildren<ConversationAttachmentsProps>
+> = ({ conversation }) => {
   const data = useFragment(
     graphql`
       fragment ConversationAttachments_conversation on Conversation {

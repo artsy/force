@@ -49,17 +49,15 @@ export interface ConsignmentInquiryProps {
   viewer: ConsignmentInquiry_viewer$data
 }
 
-export const ConsignmentInquiry: React.FC<React.PropsWithChildren<ConsignmentInquiryProps>> = ({
-  me,
-  viewer,
-}) => {
+export const ConsignmentInquiry: React.FC<
+  React.PropsWithChildren<ConsignmentInquiryProps>
+> = ({ me, viewer }) => {
   const [showExitModal, setShowExitModal] = useState(false)
   const { trackEvent } = useTracking()
   const { router, match } = useRouter()
   const { sendToast } = useToasts()
-  const {
-    submitMutation: createConsignmentInquiry,
-  } = useCreateConsignmentInquiry()
+  const { submitMutation: createConsignmentInquiry } =
+    useCreateConsignmentInquiry()
 
   const initialValue = getContactInformationFormInitialValues(me)
   const initialErrors = validateContactInformationValidationSchema(

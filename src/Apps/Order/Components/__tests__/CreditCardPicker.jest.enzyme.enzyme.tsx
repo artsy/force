@@ -83,9 +83,9 @@ const fillAddressForm = (component: any, address: Address) => {
 
 class CreditCardPickerTestPage extends RootTestPage {
   getCreditCardId: CreditCardPicker["getCreditCardId"] = async () => {
-    const result = (this.find(
-      CreditCardPicker
-    ).instance() as any).getCreditCardId()
+    const result = (
+      this.find(CreditCardPicker).instance() as any
+    ).getCreditCardId()
     await this.update()
     return result
   }

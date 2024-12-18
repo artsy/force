@@ -59,7 +59,7 @@ describe("OfferSettingsModal", () => {
   it("calls the mutation when the Save button is clicked", async () => {
     render(
       <OfferSettingsModal
-        me={(mockedMe as unknown) as CollectorProfileSavesRoute_me$data}
+        me={mockedMe as unknown as CollectorProfileSavesRoute_me$data}
         onClose={onClose}
       />
     )
@@ -86,7 +86,7 @@ describe("OfferSettingsModal", () => {
   })
 })
 
-const mockedMe = ({
+const mockedMe = {
   customArtworkLists: {
     edges: [
       {
@@ -112,4 +112,4 @@ const mockedMe = ({
     internalID: "saved-artworks",
     shareableWithPartners: false,
   },
-} as unknown) as CollectorProfileSavesRoute_me$data
+} as unknown as CollectorProfileSavesRoute_me$data

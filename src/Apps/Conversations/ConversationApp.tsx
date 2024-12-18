@@ -18,10 +18,9 @@ interface ConversationRouteProps {
   viewer: ConversationApp_viewer$data
 }
 
-const ConversationApp: React.FC<React.PropsWithChildren<ConversationRouteProps>> = ({
-  viewer,
-  conversation,
-}) => {
+const ConversationApp: React.FC<
+  React.PropsWithChildren<ConversationRouteProps>
+> = ({ viewer, conversation }) => {
   const { goToConversation } = useMobileLayoutActions()
 
   if (!conversation) {

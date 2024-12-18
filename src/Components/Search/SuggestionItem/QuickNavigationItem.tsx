@@ -17,13 +17,9 @@ interface QuickNavigationItemProps {
   onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
 }
 
-export const QuickNavigationItem: FC<React.PropsWithChildren<QuickNavigationItemProps & PillProps>> = ({
-  label,
-  to,
-  onClick,
-  onMouseDown,
-  ...rest
-}) => {
+export const QuickNavigationItem: FC<
+  React.PropsWithChildren<QuickNavigationItemProps & PillProps>
+> = ({ label, to, onClick, onMouseDown, ...rest }) => {
   const { trackEvent } = useTracking()
 
   const handleClick = (

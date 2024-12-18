@@ -2,10 +2,12 @@ import { Button, Flex } from "@artsy/palette"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { FC, useState } from "react"
 
-export const RevealButton: FC<React.PropsWithChildren<{
-  buttonLabel: string
-  align?: "left" | "right"
-}>> = ({ align, children, buttonLabel }) => {
+export const RevealButton: FC<
+  React.PropsWithChildren<{
+    buttonLabel: string
+    align?: "left" | "right"
+  }>
+> = ({ align, children, buttonLabel }) => {
   const [showing, setShowing] = useState(false)
 
   return (

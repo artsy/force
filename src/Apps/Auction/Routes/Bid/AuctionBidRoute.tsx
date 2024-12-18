@@ -36,12 +36,9 @@ interface AuctionBidRouteProps {
   sale: AuctionBidRoute_sale$data
 }
 
-const AuctionBidRoute: React.FC<React.PropsWithChildren<AuctionBidRouteProps>> = ({
-  artwork,
-  me,
-  relay,
-  sale,
-}) => {
+const AuctionBidRoute: React.FC<
+  React.PropsWithChildren<AuctionBidRouteProps>
+> = ({ artwork, me, relay, sale }) => {
   const { match, router } = useRouter()
   const { tracking } = useAuctionTracking()
 
@@ -173,10 +170,10 @@ export const AuctionBidRouteFragmentContainer = createRefetchContainer(
   (props: AuctionBidRouteProps) => {
     return (
       // Wrap the provider down here as we need it for our hooks
-      (<CreditCardInputProvider>
+      <CreditCardInputProvider>
         <AuctionBidRoute {...props} />
-      </CreditCardInputProvider>)
-    );
+      </CreditCardInputProvider>
+    )
   },
   {
     sale: graphql`

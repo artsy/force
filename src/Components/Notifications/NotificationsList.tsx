@@ -36,12 +36,9 @@ interface NotificationsListProps {
   type: NotificationType
 }
 
-export const NotificationsList: React.FC<React.PropsWithChildren<NotificationsListProps>> = ({
-  mode,
-  viewer,
-  relay,
-  type,
-}) => {
+export const NotificationsList: React.FC<
+  React.PropsWithChildren<NotificationsListProps>
+> = ({ mode, viewer, relay, type }) => {
   const { router, match } = useRouter()
   const [loading, setLoading] = useState(false)
 
@@ -187,10 +184,9 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
   }
 )
 
-export const NotificationsListQueryRenderer: React.FC<React.PropsWithChildren<NotificationsListQueryRendererProps>> = ({
-  mode,
-  type,
-}) => {
+export const NotificationsListQueryRenderer: React.FC<
+  React.PropsWithChildren<NotificationsListQueryRendererProps>
+> = ({ mode, type }) => {
   const { relayEnvironment } = useContext(SystemContext)
   const { state } = useNotificationsContext()
 

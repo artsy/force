@@ -20,10 +20,9 @@ interface CollectionsCategoryProps {
   category: CollectionsCategory_category$data
 }
 
-export const CollectionsCategory: React.FC<React.PropsWithChildren<CollectionsCategoryProps>> = ({
-  category,
-  category: { collections },
-}) => {
+export const CollectionsCategory: React.FC<
+  React.PropsWithChildren<CollectionsCategoryProps>
+> = ({ category, category: { collections } }) => {
   const [showAll, toggleShowAll] = useState(false)
 
   const sortedCollections = [...collections].sort((a, b) =>

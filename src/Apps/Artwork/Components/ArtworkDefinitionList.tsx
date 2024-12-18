@@ -6,12 +6,9 @@ interface ArtworkDefinitionListProps extends BoxProps {
   onTitleClick?: () => void
 }
 
-export const ArtworkDefinitionList: React.FC<React.PropsWithChildren<ArtworkDefinitionListProps>> = ({
-  term,
-  children,
-  onTitleClick,
-  ...rest
-}) => {
+export const ArtworkDefinitionList: React.FC<
+  React.PropsWithChildren<ArtworkDefinitionListProps>
+> = ({ term, children, onTitleClick, ...rest }) => {
   return (
     <Flex as="dl" flexDirection={["column", "row"]} {...rest}>
       {onTitleClick ? (

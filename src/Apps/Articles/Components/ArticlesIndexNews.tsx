@@ -8,7 +8,9 @@ interface ArticlesIndexNewsProps {
   viewer: ArticlesIndexNews_viewer$data
 }
 
-const ArticlesIndexNews: FC<React.PropsWithChildren<ArticlesIndexNewsProps>> = ({ viewer }) => {
+const ArticlesIndexNews: FC<
+  React.PropsWithChildren<ArticlesIndexNewsProps>
+> = ({ viewer }) => {
   const date = new Date().toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",

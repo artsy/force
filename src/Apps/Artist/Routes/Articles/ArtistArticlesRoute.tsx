@@ -15,10 +15,9 @@ interface ArtistArticlesRouteProps {
   relay: RelayRefetchProp
 }
 
-const ArtistArticlesRoute: React.FC<React.PropsWithChildren<ArtistArticlesRouteProps>> = ({
-  artist,
-  relay,
-}) => {
+const ArtistArticlesRoute: React.FC<
+  React.PropsWithChildren<ArtistArticlesRouteProps>
+> = ({ artist, relay }) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const articles = extractNodes(artist.articlesConnection)

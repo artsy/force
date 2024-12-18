@@ -33,17 +33,17 @@
     "docker:electron": "yarn docker --target electron-runner -t force:electron",
     "docker:force": "yarn docker -t force",
     "docker:clean": "docker rmi force force:builder force:electron",
+    "format-and-lint-project": "yarn biome format --write src",
+    "format-and-lint": "yarn biome format --write",
     "jest": "node_modules/.bin/jest --config jest.config.js",
     "jest:debug": "node --inspect node_modules/.bin/jest --runInBand",
     "jest-enzyme": "node_modules/.bin/jest --config jest.legacy.config.js",
-    "lint": "eslint --cache --cache-location '.cache/eslint/' --ext ts,tsx",
+    "lint": "yarn format-and-lint",
     "local-palette-dev": "./scripts/yalc-link-local-palette",
     "local-palette-dev:stop": "./scripts/yalc-unlink-local-palette",
     "open-consent-modal": "open http://localhost:5000?otreset=false&otpreview=true&otgeo=gb",
     "pre-deploy": "yarn publish-assets",
     "prepare": "patch-package",
-    "prettier-project": "yarn run prettier-write 'src/**/*.{ts,tsx,js,jsx}'",
-    "prettier-write": "yarn run prettier --write",
     "publish-assets": "node scripts/uploadToS3.js",
     "publish-assets:local": "yarn clean && yarn build:client:prod && yarn publish-assets",
     "relay": "relay-compiler",
@@ -189,6 +189,7 @@
     "yup": "0.32.6"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@graphql-inspector/core": "1.14.0",
     "@graphql-tools/jest-transform": "^2.0.0",
     "@loadable/webpack-plugin": "5.15.2",
@@ -206,6 +207,7 @@
     "@swc/plugin-loadable-components": "^4.0.1",
     "@swc/plugin-relay": "^5.0.1",
     "@swc/plugin-styled-components": "^5.0.0",
+    "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
     "@testing-library/react-hooks": "^8.0.1",
@@ -243,8 +245,6 @@
     "@types/testing-library__react": "^10.2.0",
     "@types/underscore.string": "0.0.32",
     "@types/yup": "^0.29.13",
-    "@typescript-eslint/eslint-plugin": "2.30.0",
-    "@typescript-eslint/parser": "4.18.0",
     "@wojtekmaj/enzyme-adapter-react-17": "0.6.6",
     "chai": "4.0.0",
     "chai-passport-strategy": "^3.0.0",
@@ -252,15 +252,6 @@
     "cypress": "10.7.0",
     "danger": "^10.9.0",
     "enzyme": "3.11.0",
-    "eslint": "6.8.0",
-    "eslint-config-prettier": "6.11.0",
-    "eslint-plugin-jest": "24.1.3",
-    "eslint-plugin-jest-dom": "^3.9.0",
-    "eslint-plugin-no-relative-import-paths": "^1.4.0",
-    "eslint-plugin-react": "7.34.2",
-    "eslint-plugin-react-hooks": "4.0.4",
-    "eslint-plugin-styled-components-a11y": "0.0.16",
-    "eslint-plugin-testing-library": "^4.6.0",
     "fresnel-17": "npm:@artsy/fresnel@6",
     "husky": "3.0.5",
     "jest": "^29.5.0",
@@ -298,33 +289,15 @@
   },
   "lint-staged": {
     "*": "yarn detect-secrets:hook",
-    "*.@(md)": [
-      "yarn prettier-write"
-    ],
-    "*.@(js|jsx|ts|tsx)": [
-      "yarn lint --fix",
-      "yarn prettier-write"
-    ]
+    "*.@(md)": ["yarn format-and-lint"],
+    "*.@(js|jsx|ts|tsx)": ["yarn format-and-lint"]
   },
   "nyc": {
     "check-coverage": true,
     "report-dir": "./.nyc_output/",
-    "reporter": [
-      "lcov",
-      "text-summary"
-    ],
-    "extension": [
-      ".js"
-    ],
+    "reporter": ["lcov", "text-summary"],
+    "extension": [".js"],
     "lines": 0
-  },
-  "prettier": {
-    "arrowParens": "avoid",
-    "bracketSpacing": true,
-    "printWidth": 80,
-    "semi": false,
-    "singleQuote": false,
-    "trailingComma": "es5"
   },
   "pull-lock": {
     "yarn.lock": "yarn install"

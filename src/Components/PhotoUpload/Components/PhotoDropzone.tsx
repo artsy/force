@@ -17,13 +17,9 @@ export interface PhotoDropzoneProps extends BoxProps {
  * @deprecated Deprecated - prefer using FileDropzone, which is a more generic version of this component
  * Also probably safe to remove this component entirely when cleaning up old sell flow
  */
-export const PhotoDropzone: React.FC<React.PropsWithChildren<PhotoDropzoneProps>> = ({
-  allPhotos,
-  maxTotalSize,
-  onDrop,
-  onReject,
-  ...rest
-}) => {
+export const PhotoDropzone: React.FC<
+  React.PropsWithChildren<PhotoDropzoneProps>
+> = ({ allPhotos, maxTotalSize, onDrop, onReject, ...rest }) => {
   const [customErrors, setCustomErrors] = useState<Array<FileRejection>>([])
   const buttonRef = useRef<HTMLButtonElement | null>(null)
 

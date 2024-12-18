@@ -28,15 +28,9 @@ interface SavesArtworksGridProps {
   sort: CollectionArtworkSorts
 }
 
-export const SavesArtworksGrid: FC<React.PropsWithChildren<SavesArtworksGridProps>> = ({
-  id,
-  onClearFilters,
-  onPage,
-  page,
-  priceMax,
-  priceMin,
-  sort,
-}) => {
+export const SavesArtworksGrid: FC<
+  React.PropsWithChildren<SavesArtworksGridProps>
+> = ({ id, onClearFilters, onPage, page, priceMax, priceMin, sort }) => {
   const { me } = useLazyLoadQuery<SavesArtworksGridQuery>(QUERY, {
     id,
     page,
@@ -120,7 +114,9 @@ const QUERY = graphql`
   }
 `
 
-export const SavesArtworksGridPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+export const SavesArtworksGridPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Stack gap={4}>
       <ArtworkGridPlaceholder amount={30} columnCount={[2, 3, 4]} />
@@ -134,9 +130,9 @@ interface SavesArtworksGridEmptyStateProps {
   onClearFilters: () => void
 }
 
-export const SavesArtworksGridEmptyState: FC<React.PropsWithChildren<SavesArtworksGridEmptyStateProps>> = ({
-  onClearFilters,
-}) => {
+export const SavesArtworksGridEmptyState: FC<
+  React.PropsWithChildren<SavesArtworksGridEmptyStateProps>
+> = ({ onClearFilters }) => {
   return (
     <Message>
       There aren‘t any works available that meet the following criteria at this

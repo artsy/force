@@ -7,8 +7,9 @@ jest.mock("Components/ConfirmPasswordModal/Mutations/ConfirmPassword", () => ({
   ConfirmPassword: jest.fn(),
 }))
 
-const ConfirmPassword = require("Components/ConfirmPasswordModal/Mutations/ConfirmPassword")
-  .ConfirmPassword as jest.Mock
+const ConfirmPassword =
+  require("Components/ConfirmPasswordModal/Mutations/ConfirmPassword")
+    .ConfirmPassword as jest.Mock
 
 describe("ConfirmPasswordModal", () => {
   let onCancel

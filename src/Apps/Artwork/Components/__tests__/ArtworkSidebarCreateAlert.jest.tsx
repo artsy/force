@@ -22,24 +22,23 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
 
 let relayEnv: MockEnvironment = createMockEnvironment()
 
-const { renderWithRelay } = setupTestWrapperTL<
-  ArtworkSidebarCreateAlert_Test_Query
->({
-  Component: (props: any) => {
-    return (
-      <AlertProvider>
-        <ArtworkSidebarCreateAlertFragmentContainer artwork={props.artwork} />
-      </AlertProvider>
-    )
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<ArtworkSidebarCreateAlert_Test_Query>({
+    Component: (props: any) => {
+      return (
+        <AlertProvider>
+          <ArtworkSidebarCreateAlertFragmentContainer artwork={props.artwork} />
+        </AlertProvider>
+      )
+    },
+    query: graphql`
     query ArtworkSidebarCreateAlert_Test_Query @relay_test_operation {
       artwork(id: "test-artwork-id") {
         ...ArtworkSidebarCreateAlert_artwork
       }
     }
   `,
-})
+  })
 
 describe("ArtworkSidebarCreateAlert", () => {
   const mockuseTracking = useTracking as jest.Mock

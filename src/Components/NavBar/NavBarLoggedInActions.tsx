@@ -25,9 +25,9 @@ import { FallbackErrorBoundary } from "System/Components/FallbackErrorBoundary"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
-export const NavBarLoggedInActions: React.FC<React.PropsWithChildren<
-  Partial<NavBarLoggedInActionsQuery$data>
->> = ({ me }) => {
+export const NavBarLoggedInActions: React.FC<
+  React.PropsWithChildren<Partial<NavBarLoggedInActionsQuery$data>>
+> = ({ me }) => {
   const { trackEvent } = useTracking()
   const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
   const unreadConversationCount = me?.unreadConversationCount ?? 0
@@ -147,7 +147,9 @@ export const NavBarLoggedInActions: React.FC<React.PropsWithChildren<
   )
 }
 
-export const NavBarLoggedInActionsQueryRenderer: React.FC<React.PropsWithChildren<{}>> = () => {
+export const NavBarLoggedInActionsQueryRenderer: React.FC<
+  React.PropsWithChildren<{}>
+> = () => {
   const { relayEnvironment, user } = useSystemContext()
 
   const isClient = useDidMount()

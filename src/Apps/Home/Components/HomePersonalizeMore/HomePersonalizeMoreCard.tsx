@@ -20,14 +20,9 @@ interface HomePersonalizeMoreCardProps extends BoxProps {
   href: string
 }
 
-export const HomePersonalizeMoreCard: FC<React.PropsWithChildren<HomePersonalizeMoreCardProps>> = ({
-  src,
-  title,
-  subtitle,
-  label,
-  href,
-  ...rest
-}) => {
+export const HomePersonalizeMoreCard: FC<
+  React.PropsWithChildren<HomePersonalizeMoreCardProps>
+> = ({ src, title, subtitle, label, href, ...rest }) => {
   const image = cropped(src, { width: 880, height: 400 })
 
   return (

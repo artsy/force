@@ -13,10 +13,9 @@ interface AuctionDetailsStartTimeProps extends TextProps {
  * Because we set timezone to UTC on the server, any SSR rendered datetime will be in UTC.
  * To render the local timezone we need to fetch and render client-side.
  */
-const AuctionDetailsStartTime: FC<React.PropsWithChildren<AuctionDetailsStartTimeProps>> = ({
-  sale,
-  ...rest
-}) => {
+const AuctionDetailsStartTime: FC<
+  React.PropsWithChildren<AuctionDetailsStartTimeProps>
+> = ({ sale, ...rest }) => {
   if (!sale.cascadingEndTime) {
     return null
   }
@@ -41,7 +40,9 @@ const AuctionDetailsStartTimeFragmentContainer = createFragmentContainer(
   }
 )
 
-const AuctionDetailsStartTimePlaceholder: FC<React.PropsWithChildren<TextProps>> = props => {
+const AuctionDetailsStartTimePlaceholder: FC<
+  React.PropsWithChildren<TextProps>
+> = props => {
   return (
     <SkeletonText variant={["lg-display", "xl"]} {...props}>
       Starts Jan 00 at 12:00pm UTC
@@ -53,10 +54,9 @@ interface AuctionDetailsStartTimeQueryRendererProps extends TextProps {
   id: string
 }
 
-export const AuctionDetailsStartTimeQueryRenderer: FC<React.PropsWithChildren<AuctionDetailsStartTimeQueryRendererProps>> = ({
-  id,
-  ...rest
-}) => {
+export const AuctionDetailsStartTimeQueryRenderer: FC<
+  React.PropsWithChildren<AuctionDetailsStartTimeQueryRendererProps>
+> = ({ id, ...rest }) => {
   return (
     <SystemQueryRenderer<AuctionDetailsStartTimeQuery>
       variables={{ id }}

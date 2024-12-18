@@ -11,10 +11,9 @@ const SORT_OPTIONS: Option[] = [
   { value: "NAME_ASC", text: "Name (A-Z)" },
 ]
 
-export const SavedSearchAlertHeader: FC<React.PropsWithChildren<SavedSearchAlertHeaderProps>> = ({
-  selected,
-  onSortSelect,
-}) => {
+export const SavedSearchAlertHeader: FC<
+  React.PropsWithChildren<SavedSearchAlertHeaderProps>
+> = ({ selected, onSortSelect }) => {
   return (
     <Flex
       flexDirection={["column", "row"]}

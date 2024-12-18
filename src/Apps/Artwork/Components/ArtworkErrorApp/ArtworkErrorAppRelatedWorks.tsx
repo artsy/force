@@ -16,7 +16,9 @@ interface RelatedWorksProps {
   artwork: ArtworkErrorAppRelatedWorks_artwork$key
 }
 
-const RelatedWorks: React.FC<React.PropsWithChildren<RelatedWorksProps>> = ({ artwork }) => {
+const RelatedWorks: React.FC<React.PropsWithChildren<RelatedWorksProps>> = ({
+  artwork,
+}) => {
   const data = useFragment(RelatedWorksFragment, artwork)
 
   const artworksConnection = data.layer?.artworksConnection
@@ -66,9 +68,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const RelatedWorksQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const RelatedWorksQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

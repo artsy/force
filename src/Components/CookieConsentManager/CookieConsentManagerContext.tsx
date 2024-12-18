@@ -42,10 +42,9 @@ interface CookieConsentManagerProviderProps {
   children: ReactNode
 }
 
-export const CookieConsentManagerProvider: FC<React.PropsWithChildren<CookieConsentManagerProviderProps>> = ({
-  children,
-  openConsentManager,
-}) => {
+export const CookieConsentManagerProvider: FC<
+  React.PropsWithChildren<CookieConsentManagerProviderProps>
+> = ({ children, openConsentManager }) => {
   const [destinations, setDestinations] = useState<Destination[]>([])
   const [preferences, setPreferences] = useState<CategoryPreferences>(
     DEFAULT_OPT_IN_PREFERENCES

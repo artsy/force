@@ -10,9 +10,13 @@ import { RevealButton } from "./RevealButton"
 import { getOfferItemFromOrder } from "Apps/Order/Utils/offerUtils"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 
-const OfferHistoryItem: React.FC<React.PropsWithChildren<{
-  order: OfferHistoryItem_order$data
-} & StepSummaryItemProps>> = ({ order: { currencyCode, lastOffer, lineItems, offers }, ...others }) => {
+const OfferHistoryItem: React.FC<
+  React.PropsWithChildren<
+    {
+      order: OfferHistoryItem_order$data
+    } & StepSummaryItemProps
+  >
+> = ({ order: { currencyCode, lastOffer, lineItems, offers }, ...others }) => {
   const offerItem = getOfferItemFromOrder(lineItems)
   const previousOffers = offers?.edges?.filter(
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -86,7 +90,10 @@ const OfferHistoryItem: React.FC<React.PropsWithChildren<{
   )
 }
 
-const Row: React.FC<React.PropsWithChildren<FlexProps>> = ({ children, ...others }) => (
+const Row: React.FC<React.PropsWithChildren<FlexProps>> = ({
+  children,
+  ...others
+}) => (
   <Flex justifyContent="space-between" alignItems="baseline" {...others}>
     {children}
   </Flex>

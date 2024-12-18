@@ -72,9 +72,9 @@ const CellPartner: React.FC<React.PropsWithChildren<CellPartnerProps>> = ({
 
 type CellPartnerPlaceholderProps = Pick<CellPartnerProps, "mode">
 
-export const CellPartnerPlaceholder: React.FC<React.PropsWithChildren<CellPartnerPlaceholderProps>> = ({
-  mode = "RAIL",
-}) => {
+export const CellPartnerPlaceholder: React.FC<
+  React.PropsWithChildren<CellPartnerPlaceholderProps>
+> = ({ mode = "RAIL" }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
 
   return (

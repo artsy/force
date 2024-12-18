@@ -13,9 +13,9 @@ interface InstitutionPartnershipsProfilesProps {
   orderedSet: InstitutionPartnershipsProfiles_orderedSet$data
 }
 
-const InstitutionPartnershipsProfiles: FC<React.PropsWithChildren<InstitutionPartnershipsProfilesProps>> = ({
-  orderedSet,
-}) => {
+const InstitutionPartnershipsProfiles: FC<
+  React.PropsWithChildren<InstitutionPartnershipsProfilesProps>
+> = ({ orderedSet }) => {
   const profiles = orderedSet.items
 
   if (!profiles || profiles.length === 0) return null
@@ -40,9 +40,8 @@ const InstitutionPartnershipsProfiles: FC<React.PropsWithChildren<InstitutionPar
   )
 }
 
-const InstitutionPartnershipsProfilesFragmentContainer = createFragmentContainer(
-  InstitutionPartnershipsProfiles,
-  {
+const InstitutionPartnershipsProfilesFragmentContainer =
+  createFragmentContainer(InstitutionPartnershipsProfiles, {
     orderedSet: graphql`
       fragment InstitutionPartnershipsProfiles_orderedSet on OrderedSet {
         items {
@@ -57,10 +56,11 @@ const InstitutionPartnershipsProfilesFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })
 
-const InstitutionPartnershipsProfilesPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const InstitutionPartnershipsProfilesPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <GridColumns gridRowGap={4}>
       {[...new Array(8)].map((_, i) => {
@@ -74,7 +74,9 @@ const InstitutionPartnershipsProfilesPlaceholder: FC<React.PropsWithChildren<unk
   )
 }
 
-export const InstitutionPartnershipsProfilesQueryRenderer: FC<React.PropsWithChildren<unknown>> = () => {
+export const InstitutionPartnershipsProfilesQueryRenderer: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <SystemQueryRenderer<InstitutionPartnershipsProfilesQuery>
       lazyLoad

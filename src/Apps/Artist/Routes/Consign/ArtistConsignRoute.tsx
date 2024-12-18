@@ -16,7 +16,9 @@ export interface ConsignRouteProps {
   artist: ArtistConsignRoute_artist$data
 }
 
-const ArtistConsignRoute: React.FC<React.PropsWithChildren<ConsignRouteProps>> = ({ artist }) => {
+const ArtistConsignRoute: React.FC<
+  React.PropsWithChildren<ConsignRouteProps>
+> = ({ artist }) => {
   return (
     <>
       {/* Offset needed to combat the spacer that exists in the Artist page layout */}

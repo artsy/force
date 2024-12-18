@@ -10,20 +10,19 @@ jest.unmock("react-relay")
 jest.mock("Apps/Settings/Routes/Payments/useDeleteBankAccount")
 jest.mock("Apps/Settings/Routes/Payments/useDeleteCreditCard")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  SettingsPaymentsRoute_Test_Query
->({
-  Component: ({ me }) => {
-    return <SettingsPaymentsRouteFragmentContainer me={me as any} />
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<SettingsPaymentsRoute_Test_Query>({
+    Component: ({ me }) => {
+      return <SettingsPaymentsRouteFragmentContainer me={me as any} />
+    },
+    query: graphql`
     query SettingsPaymentsRoute_Test_Query @relay_test_operation {
       me {
         ...SettingsPaymentsRoute_me
       }
     }
   `,
-})
+  })
 
 const mockUseDeleteBankAccount = useDeleteBankAccount as jest.Mock
 const mockUseDeleteCreditCard = useDeleteCreditCard as jest.Mock

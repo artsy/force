@@ -26,9 +26,9 @@ interface ConversationReplyFormValues {
 
 const TEXT_AREA_MIN_HEIGHT = "50px"
 
-export const ConversationReply: FC<React.PropsWithChildren<ConversationReplyProps>> = ({
-  conversation,
-}) => {
+export const ConversationReply: FC<
+  React.PropsWithChildren<ConversationReplyProps>
+> = ({ conversation }) => {
   const { user } = useSystemContext()
   const { match } = useRouter()
   const { trackEvent } = useTracking()

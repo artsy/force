@@ -31,18 +31,16 @@ interface SmsSecondFactorProps {
 }
 
 // TODO: This needs to be rebuilt from scratch
-export const SmsSecondFactor: React.FC<React.PropsWithChildren<SmsSecondFactorProps>> = ({
-  me,
-  relay,
-}) => {
+export const SmsSecondFactor: React.FC<
+  React.PropsWithChildren<SmsSecondFactorProps>
+> = ({ me, relay }) => {
   const { relayEnvironment } = useSystemContext()
   const [showConfirmDisable, setShowConfirmDisable] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [showSetupModal, setShowSetupModal] = useState(false)
   const [showCompleteModal, setShowCompleteModal] = useState(false)
-  const [showCompleteRedirectModal, setShowCompleteRedirectModal] = useState(
-    false
-  )
+  const [showCompleteRedirectModal, setShowCompleteRedirectModal] =
+    useState(false)
   const [isDisabling] = useState(false) // ???
   const [isCreating, setCreating] = useState(false)
   const [passwordConfirmation, setPasswordConfirmation] = useState("")

@@ -11,7 +11,9 @@ interface ArtQuizWelcomeProps {
   onStartQuiz: () => void
 }
 
-export const ArtQuizWelcome: FC<React.PropsWithChildren<ArtQuizWelcomeProps>> = ({ onStartQuiz }) => {
+export const ArtQuizWelcome: FC<
+  React.PropsWithChildren<ArtQuizWelcomeProps>
+> = ({ onStartQuiz }) => {
   return (
     <ArtQuizFullScreen>
       <FullBleed height="100%">

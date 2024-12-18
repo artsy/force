@@ -25,10 +25,9 @@ interface PartnerArtworkFilterProps {
   relay: RelayRefetchProp
 }
 
-export const Artworks: React.FC<React.PropsWithChildren<PartnerArtworkFilterProps>> = ({
-  partner,
-  relay,
-}) => {
+export const Artworks: React.FC<
+  React.PropsWithChildren<PartnerArtworkFilterProps>
+> = ({ partner, relay }) => {
   const { sidebar } = partner
   const { match } = useRouter()
   const filters = match?.location?.query ?? {}
@@ -121,7 +120,9 @@ export const ArtworksRefetchContainer = createRefetchContainer(
 
 interface PartnerArtworkFilterQueryRendererProps {}
 
-export const PartnerArtworksQueryRenderer: React.FC<React.PropsWithChildren<PartnerArtworkFilterQueryRendererProps>> = rest => {
+export const PartnerArtworksQueryRenderer: React.FC<
+  React.PropsWithChildren<PartnerArtworkFilterQueryRendererProps>
+> = rest => {
   const { relayEnvironment } = useSystemContext()
   const { match } = useRouter()
 

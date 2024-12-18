@@ -36,7 +36,9 @@ interface FairArtworksFilterProps {
   relay: RelayRefetchProp
 }
 
-const FairArtworksFilter: React.FC<React.PropsWithChildren<FairArtworksFilterProps>> = props => {
+const FairArtworksFilter: React.FC<
+  React.PropsWithChildren<FairArtworksFilterProps>
+> = props => {
   const { relay, fair } = props
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
@@ -154,7 +156,9 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
 
 interface FairArtworkFilterQueryRendererProps {}
 
-export const FairArtworksQueryRenderer: React.FC<React.PropsWithChildren<FairArtworkFilterQueryRendererProps>> = rest => {
+export const FairArtworksQueryRenderer: React.FC<
+  React.PropsWithChildren<FairArtworkFilterQueryRendererProps>
+> = rest => {
   const { relayEnvironment } = useSystemContext()
   const { match } = useRouter()
 

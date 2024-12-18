@@ -6,7 +6,10 @@ import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import React from "react"
 export type AlertModalProps = ModalBaseProps
 
-export const Modal: React.FC<React.PropsWithChildren<AlertModalProps>> = ({ children, onClose }) => {
+export const Modal: React.FC<React.PropsWithChildren<AlertModalProps>> = ({
+  children,
+  onClose,
+}) => {
   const isMounted = useDidMount()
   const { current } = useAlertContext()
 

@@ -25,9 +25,9 @@ export interface MyCollectionEditArtworkProps {
   artwork?: MyCollectionEditArtwork_artwork$data
 }
 
-export const MyCollectionEditArtwork: React.FC<React.PropsWithChildren<MyCollectionEditArtworkProps>> = ({
-  artwork,
-}) => {
+export const MyCollectionEditArtwork: React.FC<
+  React.PropsWithChildren<MyCollectionEditArtworkProps>
+> = ({ artwork }) => {
   const { localImages, addLocalImage, removeLocalImage } = useLocalImageState()
 
   const { router } = useRouter()

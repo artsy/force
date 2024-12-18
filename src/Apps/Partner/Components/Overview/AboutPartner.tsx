@@ -9,7 +9,9 @@ export interface AboutPartnerProps {
   partner: AboutPartner_partner$data
 }
 
-export const AboutPartner: React.FC<React.PropsWithChildren<AboutPartnerProps>> = ({
+export const AboutPartner: React.FC<
+  React.PropsWithChildren<AboutPartnerProps>
+> = ({
   partner: { profile, website, displayFullPartnerPage, slug, internalID },
 }) => {
   const tracking = useTracking()

@@ -8,9 +8,9 @@ import { Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 interface SettingsCreditCardProps {
   creditCard: SettingsCreditCard_creditCard$data
 }
-const SettingsCreditCard: React.FC<React.PropsWithChildren<SettingsCreditCardProps>> = ({
-  creditCard,
-}) => {
+const SettingsCreditCard: React.FC<
+  React.PropsWithChildren<SettingsCreditCardProps>
+> = ({ creditCard }) => {
   const {
     internalID,
     brand,

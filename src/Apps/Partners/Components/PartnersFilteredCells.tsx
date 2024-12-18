@@ -28,10 +28,9 @@ interface PartnersFilteredCellsProps {
   relay: RelayPaginationProp
 }
 
-const PartnersFilteredCells: FC<React.PropsWithChildren<PartnersFilteredCellsProps>> = ({
-  viewer,
-  relay,
-}) => {
+const PartnersFilteredCells: FC<
+  React.PropsWithChildren<PartnersFilteredCellsProps>
+> = ({ viewer, relay }) => {
   const [loading, setLoading] = useState(false)
 
   const partners = extractNodes(viewer.partnersConnection)
@@ -149,7 +148,9 @@ const PartnersFilteredCellsPaginationContainer = createPaginationContainer(
   }
 )
 
-const PartnersFilteredCellsPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const PartnersFilteredCellsPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton>
       <SkeletonText variant="lg-display" mb={4}>
@@ -175,11 +176,9 @@ interface PartnersFilteredCellsQueryRendererProps {
   type: "INSTITUTION" | "GALLERY"
 }
 
-export const PartnersFilteredCellsQueryRenderer: FC<React.PropsWithChildren<PartnersFilteredCellsQueryRendererProps>> = ({
-  near,
-  category,
-  type,
-}) => {
+export const PartnersFilteredCellsQueryRenderer: FC<
+  React.PropsWithChildren<PartnersFilteredCellsQueryRendererProps>
+> = ({ near, category, type }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

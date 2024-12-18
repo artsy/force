@@ -9,7 +9,9 @@ import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
 import { CuritorialRailsTabBar } from "Apps/Auctions/Components/CuritorialRailsTabBar"
 
-export const AuctionsApp: React.FC<React.PropsWithChildren<unknown>> = props => {
+export const AuctionsApp: React.FC<
+  React.PropsWithChildren<unknown>
+> = props => {
   const { children } = props
 
   // FIXME: Remove once new filter launches
