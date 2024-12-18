@@ -207,6 +207,7 @@
     "@swc/plugin-loadable-components": "^4.0.1",
     "@swc/plugin-relay": "^5.0.1",
     "@swc/plugin-styled-components": "^5.0.0",
+    "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
     "@testing-library/react-hooks": "^8.0.1",

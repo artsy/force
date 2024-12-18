@@ -80,9 +80,11 @@ describe("Meta", () => {
     nationality: "Swedish",
   }
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  type ArtworkMeta =
-    ArtistMeta_artist["artworks_connection"]["edges"][number]["node"]
+  type ArtworkMeta = NonNullable<
+    NonNullable<
+      NonNullable<ArtistMeta_artist$data["artworks_connection"]>["edges"]
+    >[number]
+  >["node"]
 
   const artistWithArtworkOverrides = (
     artwork: Partial<ArtworkMeta>
@@ -92,9 +94,9 @@ describe("Meta", () => {
       artworks_connection: {
         edges: [
           {
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             node: {
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              ...artist.artworks_connection.edges[0].node,
+              ...artist.artworks_connection?.edges?.[0]?.node,
               ...artwork,
             },
           },
