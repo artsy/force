@@ -79,7 +79,6 @@ export const CollectorProfileArtistsAdd: FC<React.PropsWithChildren<
           category: "COLLECTED_BEFORE" as UserInterestCategory,
           interestId,
           interestType: "ARTIST" as UserInterestInterestType,
-          private: false,
         }
       })
 
