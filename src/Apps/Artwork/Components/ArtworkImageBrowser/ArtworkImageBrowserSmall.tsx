@@ -5,33 +5,33 @@ import {
   SwiperCellProps,
   SwiperRail,
   SwiperRailProps,
-} from "@artsy/palette";
-import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox";
-import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer";
-import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom";
-import * as React from "react";
-import { createFragmentContainer, graphql } from "react-relay";
-import { ArtworkImageBrowserSmall_artwork$data } from "__generated__/ArtworkImageBrowserSmall_artwork.graphql";
+} from "@artsy/palette"
+import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
+import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer"
+import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
+import * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ArtworkImageBrowserSmall_artwork$data } from "__generated__/ArtworkImageBrowserSmall_artwork.graphql"
 
 interface ArtworkImageBrowserSmallProps {
-  artwork: ArtworkImageBrowserSmall_artwork$data;
+  artwork: ArtworkImageBrowserSmall_artwork$data
   /** Index of the currently active artwork */
-  activeIndex: number;
+  activeIndex: number
   /** Update the currently active artwork (on swipe change) */
-  setActiveIndex(index: number): void;
-  maxHeight: number;
+  setActiveIndex(index: number): void
+  maxHeight: number
 }
 
-const ArtworkImageBrowserSmall: React.FC<React.PropsWithChildren<
-  ArtworkImageBrowserSmallProps
->> = ({ artwork, activeIndex, setActiveIndex, maxHeight }) => {
-  const figures = artwork.figures;
-  const activeFigure = figures[activeIndex];
+const ArtworkImageBrowserSmall: React.FC<
+  React.PropsWithChildren<ArtworkImageBrowserSmallProps>
+> = ({ artwork, activeIndex, setActiveIndex, maxHeight }) => {
+  const figures = artwork.figures
+  const activeFigure = figures[activeIndex]
 
-  const { isDeepZoomVisible, showDeepZoom, hideDeepZoom } = useDeepZoom();
+  const { isDeepZoomVisible, showDeepZoom, hideDeepZoom } = useDeepZoom()
 
   if (figures.length === 0) {
-    return null;
+    return null
   }
 
   return (
@@ -67,7 +67,7 @@ const ArtworkImageBrowserSmall: React.FC<React.PropsWithChildren<
                       : undefined
                   }
                 />
-              );
+              )
             case "Video":
               return (
                 <ArtworkVideoPlayerFragmentContainer
@@ -77,9 +77,9 @@ const ArtworkImageBrowserSmall: React.FC<React.PropsWithChildren<
                   artwork={artwork}
                   maxHeight={maxHeight}
                 />
-              );
+              )
             default:
-              return null;
+              return null
           }
         })}
       </Swiper>
@@ -93,8 +93,8 @@ const ArtworkImageBrowserSmall: React.FC<React.PropsWithChildren<
         />
       )}
     </>
-  );
-};
+  )
+}
 
 const Cell: React.ForwardRefExoticComponent<SwiperCellProps> = React.forwardRef(
   (props, ref) => {
@@ -109,17 +109,16 @@ const Cell: React.ForwardRefExoticComponent<SwiperCellProps> = React.forwardRef(
         alignItems="center"
         pr={0}
       />
-    );
+    )
   }
-);
+)
 
-const Rail: React.FC<React.PropsWithChildren<SwiperRailProps>> = (props) => {
-  return <SwiperRail {...props} display="block" />;
-};
+const Rail: React.FC<React.PropsWithChildren<SwiperRailProps>> = props => {
+  return <SwiperRail {...props} display="block" />
+}
 
-export const ArtworkImageBrowserSmallFragmentContainer = createFragmentContainer(
-  ArtworkImageBrowserSmall,
-  {
+export const ArtworkImageBrowserSmallFragmentContainer =
+  createFragmentContainer(ArtworkImageBrowserSmall, {
     artwork: graphql`
       fragment ArtworkImageBrowserSmall_artwork on Artwork
         @argumentDefinitions(
@@ -143,5 +142,4 @@ export const ArtworkImageBrowserSmallFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-);
+  })

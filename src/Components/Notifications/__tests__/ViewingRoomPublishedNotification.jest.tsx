@@ -1,25 +1,24 @@
-import { screen } from "@testing-library/react";
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL";
-import { graphql } from "react-relay";
-import { ViewingRoomPublishedNotification } from "Components/Notifications/ViewingRoomPublishedNotification";
-import { ViewingRoomPublishedNotification_test_Query } from "__generated__/ViewingRoomPublishedNotification_test_Query.graphql";
+import { screen } from "@testing-library/react"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { graphql } from "react-relay"
+import { ViewingRoomPublishedNotification } from "Components/Notifications/ViewingRoomPublishedNotification"
+import { ViewingRoomPublishedNotification_test_Query } from "__generated__/ViewingRoomPublishedNotification_test_Query.graphql"
 
-jest.unmock("react-relay");
-jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }));
+jest.unmock("react-relay")
+jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
 
-const { renderWithRelay } = setupTestWrapperTL<
-  ViewingRoomPublishedNotification_test_Query
->({
-  Component: (props) => {
-    const notification = props.notificationsConnection?.edges?.[0]?.node;
+const { renderWithRelay } =
+  setupTestWrapperTL<ViewingRoomPublishedNotification_test_Query>({
+    Component: props => {
+      const notification = props.notificationsConnection?.edges?.[0]?.node
 
-    if (notification) {
-      return <ViewingRoomPublishedNotification notification={notification} />;
-    }
+      if (notification) {
+        return <ViewingRoomPublishedNotification notification={notification} />
+      }
 
-    return null;
-  },
-  query: graphql`
+      return null
+    },
+    query: graphql`
     query ViewingRoomPublishedNotification_test_Query @relay_test_operation {
       notificationsConnection(first: 1) {
         edges {
@@ -30,43 +29,43 @@ const { renderWithRelay } = setupTestWrapperTL<
       }
     }
   `,
-});
+  })
 
 describe("ViewingRoomPublishedNotification", () => {
   it("renders viewing rooms", () => {
     renderWithRelay({
       Notification: () => notification,
-    });
+    })
 
     // first viewing room
-    expect(screen.getByText(viewingRooms[0].node.title)).toBeInTheDocument();
+    expect(screen.getByText(viewingRooms[0].node.title)).toBeInTheDocument()
     expect(
       screen.getByText(viewingRooms[0].node.introStatement)
-    ).toBeInTheDocument();
+    ).toBeInTheDocument()
     expect(screen.getAllByTestId("view-works-button")[0]).toHaveAttribute(
       "href",
       viewingRooms[0].node.href
-    );
+    )
     expect(screen.getAllByRole("presentation")[0]).toHaveAttribute(
       "src",
       `undefined?quality=80&resize_to=width&src=${viewingRooms[0].node.image.imageURLs.normalized}&width=600`
-    );
+    )
 
     // second viewing room
-    expect(screen.getByText(viewingRooms[1].node.title)).toBeInTheDocument();
+    expect(screen.getByText(viewingRooms[1].node.title)).toBeInTheDocument()
     expect(
       screen.getByText(viewingRooms[1].node.introStatement)
-    ).toBeInTheDocument();
+    ).toBeInTheDocument()
     expect(screen.getAllByTestId("view-works-button")[1]).toHaveAttribute(
       "href",
       viewingRooms[1].node.href
-    );
+    )
     expect(screen.getAllByRole("presentation")[1]).toHaveAttribute(
       "src",
       `undefined?quality=80&resize_to=width&src=${viewingRooms[1].node.image.imageURLs.normalized}&width=600`
-    );
-  });
-});
+    )
+  })
+})
 
 const viewingRooms = [
   {
@@ -99,7 +98,7 @@ const viewingRooms = [
       },
     },
   },
-];
+]
 
 const notification = {
   title: "Institute of Contemporary Art",
@@ -121,4 +120,4 @@ const notification = {
       edges: viewingRooms,
     },
   },
-};
+}

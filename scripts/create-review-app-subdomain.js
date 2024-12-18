@@ -33,7 +33,6 @@ async function addCnameRecord() {
     )
   }
 }
-
 ;(async () => {
   try {
     await addCnameRecord()

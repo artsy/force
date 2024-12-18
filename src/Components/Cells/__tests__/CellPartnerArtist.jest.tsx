@@ -1,20 +1,19 @@
-import { graphql } from "react-relay";
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL";
-import { CellPartnerArtistFragmentContainer_Test_Query } from "__generated__/CellPartnerArtistFragmentContainer_Test_Query.graphql";
-import { screen } from "@testing-library/react";
-import { CellPartnerArtistFragmentContainer } from "Components/Cells/CellPartnerArtist";
+import { graphql } from "react-relay"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { CellPartnerArtistFragmentContainer_Test_Query } from "__generated__/CellPartnerArtistFragmentContainer_Test_Query.graphql"
+import { screen } from "@testing-library/react"
+import { CellPartnerArtistFragmentContainer } from "Components/Cells/CellPartnerArtist"
 
-jest.unmock("react-relay");
+jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  CellPartnerArtistFragmentContainer_Test_Query
->({
-  Component: (props) => (
-    <CellPartnerArtistFragmentContainer
-      artistPartnerEdge={props.partner?.artistsConnection?.edges![0]!}
-    />
-  ),
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<CellPartnerArtistFragmentContainer_Test_Query>({
+    Component: props => (
+      <CellPartnerArtistFragmentContainer
+        artistPartnerEdge={props.partner?.artistsConnection?.edges![0]!}
+      />
+    ),
+    query: graphql`
     query CellPartnerArtistFragmentContainer_Test_Query @relay_test_operation {
       partner(id: "foo") {
         artistsConnection {
@@ -25,7 +24,7 @@ const { renderWithRelay } = setupTestWrapperTL<
       }
     }
   `,
-});
+  })
 
 describe("CellPartnerArtist", () => {
   it("renders the image from the partner artist level not the artist level", () => {
@@ -45,11 +44,11 @@ describe("CellPartnerArtist", () => {
           },
         },
       }),
-    });
-    const displayedImage = screen.getByRole("presentation") as HTMLImageElement;
-    expect(displayedImage.src).toContain("https://example.com/right_image.jpg");
+    })
+    const displayedImage = screen.getByRole("presentation") as HTMLImageElement
+    expect(displayedImage.src).toContain("https://example.com/right_image.jpg")
     expect(displayedImage.src).not.toContain(
       "https://example.com/wrong_image.jpg"
-    );
-  });
-});
+    )
+  })
+})

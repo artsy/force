@@ -8,8 +8,6 @@
     "yarn": "1.x.x"
   },
   "scripts": {
-    "biome-project": "yarn biome format --write src",
-    "biome-write": "yarn biome format --write",
     "build": "yarn rsbuild build -m production",
     "build:client:dev": "yarn rsbuild build --environment client -m development",
     "build:client:prod": "yarn rsbuild build --environment client -m production",
@@ -35,10 +33,12 @@
     "docker:electron": "yarn docker --target electron-runner -t force:electron",
     "docker:force": "yarn docker -t force",
     "docker:clean": "docker rmi force force:builder force:electron",
+    "format-and-lint-project": "yarn biome format --write src",
+    "format-and-lint": "yarn biome format --write",
     "jest": "node_modules/.bin/jest --config jest.config.js",
     "jest:debug": "node --inspect node_modules/.bin/jest --runInBand",
     "jest-enzyme": "node_modules/.bin/jest --config jest.legacy.config.js",
-    "lint": "yarn biome",
+    "lint": "yarn format-and-lint",
     "local-palette-dev": "./scripts/yalc-link-local-palette",
     "local-palette-dev:stop": "./scripts/yalc-unlink-local-palette",
     "open-consent-modal": "open http://localhost:5000?otreset=false&otpreview=true&otgeo=gb",
@@ -289,23 +289,14 @@
   },
   "lint-staged": {
     "*": "yarn detect-secrets:hook",
-    "*.@(md)": [
-      "yarn biome-write"
-    ],
-    "*.@(js|jsx|ts|tsx)": [
-      "yarn biome-write"
-    ]
+    "*.@(md)": ["yarn format-and-lint"],
+    "*.@(js|jsx|ts|tsx)": ["yarn format-and-lint"]
   },
   "nyc": {
     "check-coverage": true,
     "report-dir": "./.nyc_output/",
-    "reporter": [
-      "lcov",
-      "text-summary"
-    ],
-    "extension": [
-      ".js"
-    ],
+    "reporter": ["lcov", "text-summary"],
+    "extension": [".js"],
     "lines": 0
   },
   "pull-lock": {

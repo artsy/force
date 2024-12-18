@@ -1,64 +1,64 @@
-import { act, fireEvent, screen, within } from "@testing-library/react";
-import { AuctionResultsRouteFragmentContainer as AuctionResultsRoute } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultsRoute";
-import { MockBoot } from "DevTools/MockBoot";
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL";
-import { graphql } from "react-relay";
-import { useTracking } from "react-tracking";
-import { ArtistAuctionResults_Test_Query$rawResponse } from "__generated__/ArtistAuctionResults_Test_Query.graphql";
-import { MockPayloadGenerator } from "relay-test-utils";
-import { useSystemContext } from "System/Hooks/useSystemContext";
-import { useRouter } from "System/Hooks/useRouter";
-import { useAuthDialog } from "Components/AuthDialog";
+import { act, fireEvent, screen, within } from "@testing-library/react"
+import { AuctionResultsRouteFragmentContainer as AuctionResultsRoute } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultsRoute"
+import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { ArtistAuctionResults_Test_Query$rawResponse } from "__generated__/ArtistAuctionResults_Test_Query.graphql"
+import { MockPayloadGenerator } from "relay-test-utils"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useRouter } from "System/Hooks/useRouter"
+import { useAuthDialog } from "Components/AuthDialog"
 
-jest.unmock("react-relay");
-jest.mock("react-tracking");
-jest.mock("Components/Pagination/useComputeHref");
+jest.unmock("react-relay")
+jest.mock("react-tracking")
+jest.mock("Components/Pagination/useComputeHref")
 jest.mock("System/Router/Utils/catchLinks", () => ({
   userIsForcingNavigation: () => false,
-}));
-jest.mock("System/Hooks/useSystemContext");
+}))
+jest.mock("System/Hooks/useSystemContext")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
-}));
+}))
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
-}));
+}))
 jest.mock("Components/AuthDialog/useAuthDialog", () => ({
   useAuthDialog: jest.fn().mockReturnValue({ showAuthDialog: jest.fn() }),
-}));
+}))
 
 describe("AuctionResults", () => {
-  let breakpoint;
-  const trackEvent = jest.fn();
+  let breakpoint
+  const trackEvent = jest.fn()
   const mockedResolver = {
     Artist: () => ({
       ...AuctionResultsFixture.artist,
     }),
-  };
+  }
 
   beforeAll(() => {
-    (useRouter as jest.Mock).mockImplementation(() => ({
+    ;(useRouter as jest.Mock).mockImplementation(() => ({
       match: {
         location: {
           query: {},
         },
       },
-    }));
-    (useTracking as jest.Mock).mockImplementation(() => {
+    }))
+    ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
-      };
-    });
-    (useSystemContext as jest.Mock).mockImplementation(() => ({}));
-  });
+      }
+    })
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({}))
+  })
 
   afterEach(() => {
-    trackEvent.mockReset();
-  });
+    trackEvent.mockReset()
+  })
 
   afterAll(() => {
-    jest.resetAllMocks();
-  });
+    jest.resetAllMocks()
+  })
 
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => (
@@ -77,120 +77,120 @@ describe("AuctionResults", () => {
     variables: {
       artistID: "pablo-picasso",
     },
-  });
+  })
 
   describe("trigger auth modal for filtering and pagination", () => {
-    const mockUseAuthDialog = useAuthDialog as jest.Mock;
+    const mockUseAuthDialog = useAuthDialog as jest.Mock
 
     it("calls auth modal for 1st pagination but not for 2nd", async () => {
-      const showAuthDialog = jest.fn();
-      mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }));
+      const showAuthDialog = jest.fn()
+      mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
 
-      renderWithRelay(mockedResolver);
+      renderWithRelay(mockedResolver)
 
-      const links = screen.getAllByRole("link");
-      expect(links).toHaveLength(10);
+      const links = screen.getAllByRole("link")
+      expect(links).toHaveLength(10)
 
-      fireEvent.click(links[4]);
-      expect(showAuthDialog).toHaveBeenCalledTimes(1);
-    });
+      fireEvent.click(links[4])
+      expect(showAuthDialog).toHaveBeenCalledTimes(1)
+    })
 
     it("calls auth modal for 1st category selection but not for 2nd", () => {
-      const showAuthDialog = jest.fn();
-      mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }));
+      const showAuthDialog = jest.fn()
+      mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
 
-      let operationVariables;
-      const { env } = renderWithRelay(mockedResolver);
+      let operationVariables
+      const { env } = renderWithRelay(mockedResolver)
 
-      const checkboxes = screen.getAllByRole("checkbox");
-      fireEvent.click(checkboxes[2]);
+      const checkboxes = screen.getAllByRole("checkbox")
+      fireEvent.click(checkboxes[2])
       act(() => {
-        env.mock.resolveMostRecentOperation((operation) => {
-          operationVariables = operation.request.variables;
-          return MockPayloadGenerator.generate(operation, mockedResolver);
-        });
-      });
+        env.mock.resolveMostRecentOperation(operation => {
+          operationVariables = operation.request.variables
+          return MockPayloadGenerator.generate(operation, mockedResolver)
+        })
+      })
 
-      expect(operationVariables.categories).toContain("Work on Paper");
-      expect(showAuthDialog).toHaveBeenCalledTimes(1);
+      expect(operationVariables.categories).toContain("Work on Paper")
+      expect(showAuthDialog).toHaveBeenCalledTimes(1)
 
-      fireEvent.click(checkboxes[3]);
+      fireEvent.click(checkboxes[3])
       act(() => {
-        env.mock.resolveMostRecentOperation((operation) => {
-          operationVariables = operation.request.variables;
-          return MockPayloadGenerator.generate(operation, mockedResolver);
-        });
-      });
+        env.mock.resolveMostRecentOperation(operation => {
+          operationVariables = operation.request.variables
+          return MockPayloadGenerator.generate(operation, mockedResolver)
+        })
+      })
 
-      expect(showAuthDialog).toHaveBeenCalledTimes(1);
-      expect(operationVariables.categories).toContain("Sculpture");
-    });
-  });
+      expect(showAuthDialog).toHaveBeenCalledTimes(1)
+      expect(operationVariables.categories).toContain("Sculpture")
+    })
+  })
 
   describe("general behavior", () => {
     it("renders proper elements", () => {
-      renderWithRelay(mockedResolver);
+      renderWithRelay(mockedResolver)
 
-      expect(screen.getByText("Upcoming Auctions")).toBeInTheDocument();
-      expect(screen.getByText("2 results")).toBeInTheDocument();
-      expect(screen.getByText("Past Auctions")).toBeInTheDocument();
-      expect(screen.getByText("5 results")).toBeInTheDocument();
+      expect(screen.getByText("Upcoming Auctions")).toBeInTheDocument()
+      expect(screen.getByText("2 results")).toBeInTheDocument()
+      expect(screen.getByText("Past Auctions")).toBeInTheDocument()
+      expect(screen.getByText("5 results")).toBeInTheDocument()
 
-      const links = screen.getAllByRole("link");
-      expect(links).toHaveLength(10);
+      const links = screen.getAllByRole("link")
+      expect(links).toHaveLength(10)
 
-      const sortSelect = screen.getAllByRole("combobox")[0];
-      const options = within(sortSelect).getAllByRole("option");
-      expect(options[0]).toHaveTextContent("Sale Date (Most recent)");
-      expect(options[1]).toHaveTextContent("Estimate");
-      expect(options[2]).toHaveTextContent("Sale price");
+      const sortSelect = screen.getAllByRole("combobox")[0]
+      const options = within(sortSelect).getAllByRole("option")
+      expect(options[0]).toHaveTextContent("Sale Date (Most recent)")
+      expect(options[1]).toHaveTextContent("Estimate")
+      expect(options[2]).toHaveTextContent("Sale price")
 
-      expect(screen.getAllByRole("presentation")).toHaveLength(10);
-    });
+      expect(screen.getAllByRole("presentation")).toHaveLength(10)
+    })
 
     describe("For Logged in users", () => {
       beforeEach(() => {
-        (useSystemContext as jest.Mock).mockImplementation(() => ({
+        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
           user: { name: "Logged In", email: "loggedin@example.com" },
-        }));
-      });
+        }))
+      })
 
       it("renders either price, awaiting results, bought in, or price not available", () => {
-        renderWithRelay(mockedResolver);
+        renderWithRelay(mockedResolver)
 
-        expect(screen.getAllByText("$20,000")).toHaveLength(2);
-        expect(screen.getAllByText("Awaiting results")).toHaveLength(2);
-        expect(screen.getAllByText("Bought In")).toHaveLength(2);
-      });
+        expect(screen.getAllByText("$20,000")).toHaveLength(2)
+        expect(screen.getAllByText("Awaiting results")).toHaveLength(2)
+        expect(screen.getAllByText("Bought In")).toHaveLength(2)
+      })
 
       it("renders price in original currency and in USD only if currency is not USD", () => {
         renderWithRelay({
           Artist: () => ({
             ...AuctionResultsFixture.artist,
           }),
-        });
+        })
 
-        expect(screen.getAllByText("€12,000 • $15,000")).toHaveLength(2);
-        expect(screen.getAllByText("$20,000")).toHaveLength(2);
-      });
-    });
+        expect(screen.getAllByText("€12,000 • $15,000")).toHaveLength(2)
+        expect(screen.getAllByText("$20,000")).toHaveLength(2)
+      })
+    })
 
     describe("For Logged Out users", () => {
       beforeEach(() => {
-        (useSystemContext as jest.Mock).mockImplementation(() => ({
+        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
           user: null,
-        }));
-      });
+        }))
+      })
       it('Shows "Sign Up to see estimate/price" in place of price for unauthenticated users', () => {
-        renderWithRelay(mockedResolver);
-        expect(screen.getAllByText("Sign up to see estimate")).toHaveLength(4);
-        expect(screen.getAllByText("Sign up to see price")).toHaveLength(16);
-      });
-    });
+        renderWithRelay(mockedResolver)
+        expect(screen.getAllByText("Sign up to see estimate")).toHaveLength(4)
+        expect(screen.getAllByText("Sign up to see price")).toHaveLength(16)
+      })
+    })
 
     describe("sets filters from URL query", () => {
       beforeAll(async () => {
-        (useRouter as jest.Mock).mockImplementation(() => ({
+        ;(useRouter as jest.Mock).mockImplementation(() => ({
           match: {
             location: {
               query: {
@@ -202,121 +202,119 @@ describe("AuctionResults", () => {
               },
             },
           },
-        }));
-      });
+        }))
+      })
 
       afterAll(() => {
-        (useRouter as jest.Mock).mockImplementation(() => ({
+        ;(useRouter as jest.Mock).mockImplementation(() => ({
           match: {
             location: {
               query: {},
             },
           },
-        }));
-      });
+        }))
+      })
 
       it("sets filters from query", () => {
-        renderWithRelay(mockedResolver);
+        renderWithRelay(mockedResolver)
 
         const checkedCheckboxes = screen.getAllByRole("checkbox", {
           checked: true,
-        });
+        })
 
         const radioElements = screen.getAllByRole("radio", {
           checked: true,
-        });
+        })
 
-        expect(checkedCheckboxes).toHaveLength(10);
-        expect(checkedCheckboxes[0]).toHaveTextContent(
-          "Hide upcoming auctions"
-        );
-        expect(checkedCheckboxes[1]).toHaveTextContent("Painting");
-        expect(checkedCheckboxes[2]).toHaveTextContent("Small (under 40cm)");
-        expect(checkedCheckboxes[3]).toHaveTextContent("Large (over 100cm)");
+        expect(checkedCheckboxes).toHaveLength(10)
+        expect(checkedCheckboxes[0]).toHaveTextContent("Hide upcoming auctions")
+        expect(checkedCheckboxes[1]).toHaveTextContent("Painting")
+        expect(checkedCheckboxes[2]).toHaveTextContent("Small (under 40cm)")
+        expect(checkedCheckboxes[3]).toHaveTextContent("Large (over 100cm)")
         expect(checkedCheckboxes[4]).toHaveTextContent(
           "Include unspecified dates"
-        );
+        )
         expect(checkedCheckboxes[5]).toHaveTextContent(
           "Include unknown and unavailable prices"
-        );
+        )
         expect(checkedCheckboxes[6]).toHaveTextContent(
           "Include unspecified sale dates"
-        );
-        expect(checkedCheckboxes[7]).toHaveTextContent("Phillips");
-        expect(checkedCheckboxes[8]).toHaveTextContent("Bonhams");
-        expect(checkedCheckboxes[9]).toHaveTextContent("Artsy Auction");
+        )
+        expect(checkedCheckboxes[7]).toHaveTextContent("Phillips")
+        expect(checkedCheckboxes[8]).toHaveTextContent("Bonhams")
+        expect(checkedCheckboxes[9]).toHaveTextContent("Artsy Auction")
 
-        expect(radioElements).toHaveLength(2);
-        expect(radioElements[0]).toHaveTextContent("cm");
-        expect(radioElements[1]).toHaveTextContent("USD");
-      });
-    });
+        expect(radioElements).toHaveLength(2)
+        expect(radioElements[0]).toHaveTextContent("cm")
+        expect(radioElements[1]).toHaveTextContent("USD")
+      })
+    })
 
     describe("user interactions", () => {
       describe("pagination", () => {
         // FIXME: SWC_COMPILER_MIGRATION
         it.skip("triggers relay refetch with after, and re-shows sign up to see price", async () => {
-          const { env } = renderWithRelay(mockedResolver);
-          let operationVariables;
+          const { env } = renderWithRelay(mockedResolver)
+          let operationVariables
 
-          const navigation = screen.getByRole("navigation");
-          const checkboxes = screen.getAllByRole("checkbox");
-          fireEvent.click(checkboxes[1]);
-          fireEvent.click(within(navigation).getAllByRole("link")[1]);
+          const navigation = screen.getByRole("navigation")
+          const checkboxes = screen.getAllByRole("checkbox")
+          fireEvent.click(checkboxes[1])
+          fireEvent.click(within(navigation).getAllByRole("link")[1])
 
           act(() => {
-            env.mock.resolveMostRecentOperation((operation) => {
-              operationVariables = operation.request.variables;
-              return MockPayloadGenerator.generate(operation, mockedResolver);
-            });
-          });
+            env.mock.resolveMostRecentOperation(operation => {
+              operationVariables = operation.request.variables
+              return MockPayloadGenerator.generate(operation, mockedResolver)
+            })
+          })
 
-          expect(screen.getAllByText("Sign up to see price")).toHaveLength(10);
+          expect(screen.getAllByText("Sign up to see price")).toHaveLength(10)
           expect(
             operationVariables.categories.includes("Work on Paper")
-          ).toBeTruthy();
-          expect(operationVariables.after).toBe("cursor2");
-        });
-      });
+          ).toBeTruthy()
+          expect(operationVariables.after).toBe("cursor2")
+        })
+      })
 
       describe("filters", () => {
         describe("medium filter", () => {
           it("triggers relay refetch with medium list, and re-shows sign up to see price", () => {
-            const { env } = renderWithRelay(mockedResolver);
+            const { env } = renderWithRelay(mockedResolver)
 
-            const checkboxes = screen.getAllByRole("checkbox");
-            fireEvent.click(checkboxes[2]);
+            const checkboxes = screen.getAllByRole("checkbox")
+            fireEvent.click(checkboxes[2])
             act(() => {
-              env.mock.resolveMostRecentOperation((operation) => {
-                return MockPayloadGenerator.generate(operation, mockedResolver);
-              });
-            });
+              env.mock.resolveMostRecentOperation(operation => {
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
 
-            fireEvent.click(checkboxes[3]);
+            fireEvent.click(checkboxes[3])
             act(() => {
-              env.mock.resolveMostRecentOperation((operation) => {
-                return MockPayloadGenerator.generate(operation, mockedResolver);
-              });
-            });
+              env.mock.resolveMostRecentOperation(operation => {
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
 
-            fireEvent.click(checkboxes[4]);
+            fireEvent.click(checkboxes[4])
             act(() => {
-              env.mock.resolveMostRecentOperation((operation) => {
-                return MockPayloadGenerator.generate(operation, mockedResolver);
-              });
-            });
+              env.mock.resolveMostRecentOperation(operation => {
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
 
-            expect(trackEvent).toHaveBeenCalledTimes(3);
+            expect(trackEvent).toHaveBeenCalledTimes(3)
             expect(trackEvent.mock.calls[0][0]).toMatchObject({
               action_type: "Auction results filter params changed",
               context_page: "Artist Auction Results",
               // `changed` & `current` supplied as JSON blobs
-            });
+            })
 
-            const { changed, current } = trackEvent.mock.calls[0][0];
+            const { changed, current } = trackEvent.mock.calls[0][0]
             expect(JSON.parse(changed)).toMatchObject({
               categories: ["Work on Paper"],
-            });
+            })
             expect(JSON.parse(current)).toMatchObject({
               categories: ["Work on Paper"],
               organizations: [],
@@ -328,163 +326,159 @@ describe("AuctionResults", () => {
               allowEmptyCreatedDates: true,
               createdAfterYear: 1979,
               createdBeforeYear: 1991,
-            });
-          });
-        });
+            })
+          })
+        })
 
         describe("keyword filter", () => {
           // FIXME: SWC_COMPILER_MIGRATION
           it.skip("triggers relay refetch with keyword filter, and re-shows sign up to see price", () => {
-            renderWithRelay(mockedResolver);
+            renderWithRelay(mockedResolver)
             fireEvent.change(screen.getByRole("textbox"), {
               target: { value: "test-keyword" },
-            });
+            })
 
-            expect(screen.getAllByText("Sign up to see price")).toHaveLength(
-              10
-            );
-          });
-        });
+            expect(screen.getAllByText("Sign up to see price")).toHaveLength(10)
+          })
+        })
 
         describe("auction house filter", () => {
           it("triggers relay refetch with organization list, and re-shows sign up to see price", () => {
-            let operationVariables;
-            const { env } = renderWithRelay(mockedResolver);
+            let operationVariables
+            const { env } = renderWithRelay(mockedResolver)
 
             fireEvent.click(
               screen.getAllByText("Christie's", { exact: false })[0]
-            );
+            )
             act(() => {
-              env.mock.resolveMostRecentOperation((operation) => {
-                operationVariables = operation.request.variables;
-                return MockPayloadGenerator.generate(operation, mockedResolver);
-              });
-            });
-            expect(operationVariables.organizations).toContain("Christie's");
+              env.mock.resolveMostRecentOperation(operation => {
+                operationVariables = operation.request.variables
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+            expect(operationVariables.organizations).toContain("Christie's")
 
             fireEvent.click(
               screen.getAllByText("Phillips", { exact: false })[0]
-            );
+            )
             act(() => {
-              env.mock.resolveMostRecentOperation((operation) => {
-                operationVariables = operation.request.variables;
-                return MockPayloadGenerator.generate(operation, mockedResolver);
-              });
-            });
-            expect(operationVariables.organizations).toContain("Phillips");
+              env.mock.resolveMostRecentOperation(operation => {
+                operationVariables = operation.request.variables
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+            expect(operationVariables.organizations).toContain("Phillips")
 
             fireEvent.click(
               screen.getAllByText("Christie's", { exact: false })[0]
-            );
+            )
             act(() => {
-              env.mock.resolveMostRecentOperation((operation) => {
-                operationVariables = operation.request.variables;
-                return MockPayloadGenerator.generate(operation, mockedResolver);
-              });
-            });
-            expect(operationVariables.organizations).not.toContain(
-              "Christie's"
-            );
-            expect(operationVariables.organizations).toContain("Phillips");
-          });
-        });
+              env.mock.resolveMostRecentOperation(operation => {
+                operationVariables = operation.request.variables
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+            expect(operationVariables.organizations).not.toContain("Christie's")
+            expect(operationVariables.organizations).toContain("Phillips")
+          })
+        })
         describe("size filter", () => {
           it("triggers relay refetch with size list and tracks events, and re-shows sign up to see price", () => {
-            let operationVariables;
-            const { env } = renderWithRelay(mockedResolver);
+            let operationVariables
+            const { env } = renderWithRelay(mockedResolver)
 
-            fireEvent.click(screen.getByText("Medium (40 – 100cm)"));
+            fireEvent.click(screen.getByText("Medium (40 – 100cm)"))
             act(() => {
-              env.mock.resolveMostRecentOperation((operation) => {
-                operationVariables = operation.request.variables;
-                return MockPayloadGenerator.generate(operation, mockedResolver);
-              });
-            });
-            expect(operationVariables.sizes).toContain("MEDIUM");
+              env.mock.resolveMostRecentOperation(operation => {
+                operationVariables = operation.request.variables
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+            expect(operationVariables.sizes).toContain("MEDIUM")
 
-            fireEvent.click(screen.getByText("Large (over 100cm)"));
+            fireEvent.click(screen.getByText("Large (over 100cm)"))
             act(() => {
-              env.mock.resolveMostRecentOperation((operation) => {
-                operationVariables = operation.request.variables;
-                return MockPayloadGenerator.generate(operation, mockedResolver);
-              });
-            });
-            expect(operationVariables.sizes).toContain("MEDIUM");
-            expect(operationVariables.sizes).toContain("LARGE");
+              env.mock.resolveMostRecentOperation(operation => {
+                operationVariables = operation.request.variables
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+            expect(operationVariables.sizes).toContain("MEDIUM")
+            expect(operationVariables.sizes).toContain("LARGE")
 
-            fireEvent.click(screen.getByText("Medium (40 – 100cm)"));
+            fireEvent.click(screen.getByText("Medium (40 – 100cm)"))
             act(() => {
-              env.mock.resolveMostRecentOperation((operation) => {
-                operationVariables = operation.request.variables;
-                return MockPayloadGenerator.generate(operation, mockedResolver);
-              });
-            });
-            expect(operationVariables.sizes).not.toContain("MEDIUM");
-            expect(operationVariables.sizes).toContain("LARGE");
-          });
-        });
+              env.mock.resolveMostRecentOperation(operation => {
+                operationVariables = operation.request.variables
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+            expect(operationVariables.sizes).not.toContain("MEDIUM")
+            expect(operationVariables.sizes).toContain("LARGE")
+          })
+        })
 
         describe("year created filter", () => {
           it("triggers relay refetch with created years and tracks events, and re-shows sign up to see price", () => {
-            let operationVariables;
-            const { env } = renderWithRelay(mockedResolver);
+            let operationVariables
+            const { env } = renderWithRelay(mockedResolver)
 
-            const comboboxes = screen.getAllByRole("combobox");
-            fireEvent.change(comboboxes[1], { target: { value: "1979" } });
-            fireEvent.change(comboboxes[2], { target: { value: "1980" } });
+            const comboboxes = screen.getAllByRole("combobox")
+            fireEvent.change(comboboxes[1], { target: { value: "1979" } })
+            fireEvent.change(comboboxes[2], { target: { value: "1980" } })
             act(() => {
-              env.mock.resolveMostRecentOperation((operation) => {
-                operationVariables = operation.request.variables;
-                return MockPayloadGenerator.generate(operation, mockedResolver);
-              });
-            });
+              env.mock.resolveMostRecentOperation(operation => {
+                operationVariables = operation.request.variables
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
 
-            expect(operationVariables.createdAfterYear).toBe(1979);
-            expect(operationVariables.createdBeforeYear).toBe(1980);
-          });
-        });
+            expect(operationVariables.createdAfterYear).toBe(1979)
+            expect(operationVariables.createdBeforeYear).toBe(1980)
+          })
+        })
 
         describe("hide upcoming filter", () => {
           it("triggers relay refetch with state", () => {
-            let operationVariables;
-            const { env } = renderWithRelay(mockedResolver);
+            let operationVariables
+            const { env } = renderWithRelay(mockedResolver)
 
-            const checkboxes = screen.getAllByRole("checkbox");
-            fireEvent.click(checkboxes[0]);
+            const checkboxes = screen.getAllByRole("checkbox")
+            fireEvent.click(checkboxes[0])
             act(() => {
-              env.mock.resolveMostRecentOperation((operation) => {
-                operationVariables = operation.request.variables;
-                return MockPayloadGenerator.generate(operation, mockedResolver);
-              });
-            });
+              env.mock.resolveMostRecentOperation(operation => {
+                operationVariables = operation.request.variables
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
 
-            expect(operationVariables.state).toBe("PAST");
-          });
-        });
-      });
+            expect(operationVariables.state).toBe("PAST")
+          })
+        })
+      })
 
       describe("sort", () => {
         it("triggers relay refetch with correct params, and re-shows sign up to see price", () => {
-          let operationVariables;
-          const { env } = renderWithRelay(mockedResolver);
+          let operationVariables
+          const { env } = renderWithRelay(mockedResolver)
 
-          const comboboxes = screen.getAllByRole("combobox");
+          const comboboxes = screen.getAllByRole("combobox")
           fireEvent.change(comboboxes[0], {
             target: { value: "ESTIMATE_AND_DATE_DESC" },
-          });
+          })
           act(() => {
-            env.mock.resolveMostRecentOperation((operation) => {
-              operationVariables = operation.request.variables;
-              return MockPayloadGenerator.generate(operation, mockedResolver);
-            });
-          });
+            env.mock.resolveMostRecentOperation(operation => {
+              operationVariables = operation.request.variables
+              return MockPayloadGenerator.generate(operation, mockedResolver)
+            })
+          })
 
-          expect(operationVariables.sort).toBe("ESTIMATE_AND_DATE_DESC");
-        });
-      });
-    });
-  });
-});
+          expect(operationVariables.sort).toBe("ESTIMATE_AND_DATE_DESC")
+        })
+      })
+    })
+  })
+})
 
 // FIXME: Should not be using fixtures
 const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
@@ -558,8 +552,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/xACxJ_uIHApai3JP9odtZg/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/xACxJ_uIHApai3JP9odtZg/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/xACxJ_uIHApai3JP9odtZg/thumbnail.jpg",
                   width: 100,
@@ -597,8 +590,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/lmY_wowdeGi__ZtKVHV8Dw/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/lmY_wowdeGi__ZtKVHV8Dw/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/lmY_wowdeGi__ZtKVHV8Dw/thumbnail.jpg",
                   width: 100,
@@ -636,8 +628,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/AI6P5qi0Xq7Efs9d6HMt4A/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/AI6P5qi0Xq7Efs9d6HMt4A/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/AI6P5qi0Xq7Efs9d6HMt4A/thumbnail.jpg",
                   width: 100,
@@ -675,8 +666,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/B3EtIMtH8XnDmt1KBD6VhQ/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/B3EtIMtH8XnDmt1KBD6VhQ/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/B3EtIMtH8XnDmt1KBD6VhQ/thumbnail.jpg",
                   width: 100,
@@ -714,8 +704,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/rLyB6jNe0lQ8fF6EEQ61wg/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/rLyB6jNe0lQ8fF6EEQ61wg/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/rLyB6jNe0lQ8fF6EEQ61wg/thumbnail.jpg",
                   width: 100,
@@ -753,8 +742,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/46t-8KytTjCwYPw17E7U6w/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/46t-8KytTjCwYPw17E7U6w/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/46t-8KytTjCwYPw17E7U6w/thumbnail.jpg",
                   width: 100,
@@ -792,8 +780,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/eivcrcx7PVnvmKZzOQosXA/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/eivcrcx7PVnvmKZzOQosXA/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/eivcrcx7PVnvmKZzOQosXA/thumbnail.jpg",
                   width: 100,
@@ -831,8 +818,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/-ZlQnxE8T8MsVRGjSSwaXw/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/-ZlQnxE8T8MsVRGjSSwaXw/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/-ZlQnxE8T8MsVRGjSSwaXw/thumbnail.jpg",
                   width: 100,
@@ -870,8 +856,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/3nGESp60mCg0xygJ4bvjcA/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/3nGESp60mCg0xygJ4bvjcA/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/3nGESp60mCg0xygJ4bvjcA/thumbnail.jpg",
                   width: 100,
@@ -909,8 +894,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/Db93v-hdsJjCV6XHFUfn2g/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/Db93v-hdsJjCV6XHFUfn2g/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/Db93v-hdsJjCV6XHFUfn2g/thumbnail.jpg",
                   width: 100,
@@ -941,4 +925,4 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
       ],
     },
   },
-};
+}

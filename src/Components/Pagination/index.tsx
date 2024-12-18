@@ -1,28 +1,28 @@
-import * as React from "react";
-import { createFragmentContainer, graphql } from "react-relay";
-import { Pagination_pageCursors$data } from "__generated__/Pagination_pageCursors.graphql";
-import { CommercePagination_pageCursors$data } from "__generated__/CommercePagination_pageCursors.graphql";
+import * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { Pagination_pageCursors$data } from "__generated__/Pagination_pageCursors.graphql"
+import { CommercePagination_pageCursors$data } from "__generated__/CommercePagination_pageCursors.graphql"
 import {
   Pagination as PaginationBase,
   PaginationProps as BasePaginationProps,
   BoxProps,
-} from "@artsy/palette";
-import { useComputeHref } from "./useComputeHref";
-import { userIsForcingNavigation } from "System/Router/Utils/catchLinks";
-import { useJump } from "Utils/Hooks/useJump";
+} from "@artsy/palette"
+import { useComputeHref } from "./useComputeHref"
+import { userIsForcingNavigation } from "System/Router/Utils/catchLinks"
+import { useJump } from "Utils/Hooks/useJump"
 
 export interface PaginationProps
   extends Pick<BasePaginationProps, "getHref">,
     BoxProps {
-  hasNextPage: boolean;
+  hasNextPage: boolean
   // TODO: Hacks around stitching. See if we can transform the schema to make this unnecessary.
   pageCursors?:
     | Pagination_pageCursors$data
-    | CommercePagination_pageCursors$data;
-  scrollTo?: string;
-  offset?: number;
-  onClick?: (cursor: string, page: number) => void;
-  onNext?: (page: number) => void;
+    | CommercePagination_pageCursors$data
+  scrollTo?: string
+  offset?: number
+  onClick?: (cursor: string, page: number) => void
+  onNext?: (page: number) => void
 }
 
 export const Pagination: React.FC<React.PropsWithChildren<PaginationProps>> = ({
@@ -30,18 +30,18 @@ export const Pagination: React.FC<React.PropsWithChildren<PaginationProps>> = ({
   pageCursors,
   scrollTo = null,
   getHref: __getHref__,
-  onClick = (_cursor) => ({}),
+  onClick = _cursor => ({}),
   onNext = () => ({}),
   offset,
   ...rest
 }) => {
-  const { jumpTo } = useJump({ offset });
+  const { jumpTo } = useJump({ offset })
 
   // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
-  const getHref = __getHref__ ?? useComputeHref();
+  const getHref = __getHref__ ?? useComputeHref()
 
   if (pageCursors?.around.length === 1) {
-    return null;
+    return null
   }
 
   const handleClick = (
@@ -49,28 +49,28 @@ export const Pagination: React.FC<React.PropsWithChildren<PaginationProps>> = ({
     page: number,
     event: React.MouseEvent
   ) => {
-    if (userIsForcingNavigation(event)) return;
+    if (userIsForcingNavigation(event)) return
 
-    event.preventDefault();
+    event.preventDefault()
 
-    onClick(cursor, page);
+    onClick(cursor, page)
 
-    if (!scrollTo) return;
+    if (!scrollTo) return
 
-    jumpTo(scrollTo, { offset });
-  };
+    jumpTo(scrollTo, { offset })
+  }
 
   const handleNext = (event: React.MouseEvent, page: number) => {
-    if (userIsForcingNavigation(event)) return;
+    if (userIsForcingNavigation(event)) return
 
-    event.preventDefault();
+    event.preventDefault()
 
-    onNext(page);
+    onNext(page)
 
-    if (!scrollTo) return;
+    if (!scrollTo) return
 
-    jumpTo(scrollTo, { offset });
-  };
+    jumpTo(scrollTo, { offset })
+  }
 
   const paginationProps: BasePaginationProps = {
     getHref,
@@ -79,13 +79,13 @@ export const Pagination: React.FC<React.PropsWithChildren<PaginationProps>> = ({
     onNext: handleNext,
     // FIXME:
     pageCursors: pageCursors as any,
-  };
+  }
 
   return (
     // FIXME: Should not have external margin
     <PaginationBase mt={6} {...paginationProps} {...rest} />
-  );
-};
+  )
+}
 
 export const PaginationFragmentContainer = createFragmentContainer(Pagination, {
   pageCursors: graphql`
@@ -111,4 +111,4 @@ export const PaginationFragmentContainer = createFragmentContainer(Pagination, {
       }
     }
   `,
-});
+})
