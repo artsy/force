@@ -17,7 +17,7 @@ export const HomeHeroUnitLoggedOut: React.FC<{ index: number }> = ({
     control: {
       title: "The art world online",
       body:
-        "Artsy is the world’s leading platform to discover, buy, and manage the art you love",
+        "Artsy is the world’s leading platform to discover, buy, and manage the art you love.",
       imageUrl: "https://files.artsy.net/images/01_Artsy_App-Download-HP.jpg",
       link: {
         desktop: {
@@ -33,7 +33,7 @@ export const HomeHeroUnitLoggedOut: React.FC<{ index: number }> = ({
     },
     experiment: {
       title: "Your guide to the art world",
-      body: "Artsy makes it easy to discover artists and artworks you’ll love",
+      body: "Artsy makes it easy to discover artists and artworks you’ll love.",
       imageUrl: "https://files.artsy.net/images/02_Artsy_App-Download-HP.jpg",
       link: {
         desktop: {
