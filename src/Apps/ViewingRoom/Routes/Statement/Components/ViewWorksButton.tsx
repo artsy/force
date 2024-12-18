@@ -10,9 +10,9 @@ interface ViewWorksButtonProps {
   artworksCount: number
 }
 
-export const ViewWorksButton: React.FC<React.PropsWithChildren<ViewWorksButtonProps>> = ({
-  artworksCount,
-}) => {
+export const ViewWorksButton: React.FC<
+  React.PropsWithChildren<ViewWorksButtonProps>
+> = ({ artworksCount }) => {
   const tracking = useTracking()
 
   const { jumpTo } = useJump({ offset: 20 })

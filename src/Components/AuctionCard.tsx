@@ -60,7 +60,9 @@ export interface AuctionCardProps {
   sale: AuctionCard_sale$data
 }
 
-export const AuctionCard: React.FC<React.PropsWithChildren<AuctionCardProps>> = ({ sale }) => {
+export const AuctionCard: React.FC<
+  React.PropsWithChildren<AuctionCardProps>
+> = ({ sale }) => {
   if (!sale) return null
 
   const statusLabel = upcomingLabel(sale)

@@ -25,10 +25,9 @@ interface ArtworkSharePanelProps extends BoxProps {
   artwork: ArtworkSharePanel_artwork$data
 }
 
-export const ArtworkSharePanel: React.FC<React.PropsWithChildren<ArtworkSharePanelProps>> = ({
-  artwork: { href, artworkMeta, images },
-  ...rest
-}) => {
+export const ArtworkSharePanel: React.FC<
+  React.PropsWithChildren<ArtworkSharePanelProps>
+> = ({ artwork: { href, artworkMeta, images }, ...rest }) => {
   const [copyState, setCopyState] = useState({
     copyLabelText: "Copy",
     copyLocked: false,
@@ -53,31 +52,31 @@ export const ArtworkSharePanel: React.FC<React.PropsWithChildren<ArtworkSharePan
     }
   }
 
-  const openShareModal = ({ service, url }) => (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    event.preventDefault()
+  const openShareModal =
+    ({ service, url }) =>
+    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      event.preventDefault()
 
-    // Extracted from https://github.com/artsy/force/blob/master/src/desktop/components/share/view.coffee#L19
-    const wLeft = window.screenLeft || window.screenX
-    const wTop = window.screenTop || window.screenY
-    const width = 750
-    const height = 400
-    const left = wLeft + window.innerWidth / 2 - width / 2 || 0
-    const top = wTop + window.innerHeight / 2 - height / 2 || 0
+      // Extracted from https://github.com/artsy/force/blob/master/src/desktop/components/share/view.coffee#L19
+      const wLeft = window.screenLeft || window.screenX
+      const wTop = window.screenTop || window.screenY
+      const width = 750
+      const height = 400
+      const left = wLeft + window.innerWidth / 2 - width / 2 || 0
+      const top = wTop + window.innerHeight / 2 - height / 2 || 0
 
-    const options = Object.entries({
-      status: 1,
-      width,
-      height,
-      top,
-      left,
-    })
-      .map(([key, value]) => `${key}=${value}`)
-      .join(",")
+      const options = Object.entries({
+        status: 1,
+        width,
+        height,
+        top,
+        left,
+      })
+        .map(([key, value]) => `${key}=${value}`)
+        .join(",")
 
-    window.open(url, service, options)
-  }
+      window.open(url, service, options)
+    }
 
   const share = artworkMeta?.share ?? ""
   const shareImageUrl = (images && images[0]?.url) ?? "https://www.artsy.net"
@@ -215,19 +214,21 @@ const ICONS = {
   ),
 }
 
-const ShareButton: React.FC<React.PropsWithChildren<{
-  service: string
-  label: string
-  message: string
-  url: string
-  onClick({
-    service,
-    url,
-  }: {
+const ShareButton: React.FC<
+  React.PropsWithChildren<{
     service: string
+    label: string
+    message: string
     url: string
-  }): (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
-}>> = ({ service, label, message, url, onClick, ...rest }) => {
+    onClick({
+      service,
+      url,
+    }: {
+      service: string
+      url: string
+    }): (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  }>
+> = ({ service, label, message, url, onClick, ...rest }) => {
   return (
     <Clickable
       display="flex"

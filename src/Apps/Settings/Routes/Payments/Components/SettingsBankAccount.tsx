@@ -9,9 +9,9 @@ interface SettingsBankAccountProps {
   bankAccount: SettingsBankAccount_bankAccount$data
 }
 
-const SettingsBankAccount: React.FC<React.PropsWithChildren<SettingsBankAccountProps>> = ({
-  bankAccount,
-}) => {
+const SettingsBankAccount: React.FC<
+  React.PropsWithChildren<SettingsBankAccountProps>
+> = ({ bankAccount }) => {
   const { internalID, last4 } = bankAccount
   const { submitMutation } = useDeleteBankAccount()
 

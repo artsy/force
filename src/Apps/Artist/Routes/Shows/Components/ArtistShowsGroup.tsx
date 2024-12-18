@@ -17,13 +17,9 @@ interface ArtistShowsGroupProps {
   status: string
 }
 
-const ArtistShowsGroup: React.FC<React.PropsWithChildren<ArtistShowsGroupProps>> = ({
-  artist,
-  relay,
-  sort,
-  status,
-  title,
-}) => {
+const ArtistShowsGroup: React.FC<
+  React.PropsWithChildren<ArtistShowsGroupProps>
+> = ({ artist, relay, sort, status, title }) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleNext = (page: number) => {

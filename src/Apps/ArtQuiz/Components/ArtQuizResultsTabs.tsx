@@ -5,7 +5,9 @@ import { ArtQuizResultsRecommendedArtworksQueryRenderer } from "Apps/ArtQuiz/Com
 import { TriggerCampaignButton } from "Apps/ArtQuiz/Components/TriggerCampaignButton"
 import { FC } from "react"
 
-export const ArtQuizResultsTabs: FC<React.PropsWithChildren<unknown>> = ({}) => {
+export const ArtQuizResultsTabs: FC<
+  React.PropsWithChildren<unknown>
+> = ({}) => {
   return (
     <>
       <Spacer y={[4, 6]} />

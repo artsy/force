@@ -9,7 +9,9 @@ import {
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 
-export const MyCollectionBenefits: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const MyCollectionBenefits: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const infos = [
     {
       title: "Create a private record of your artworks",

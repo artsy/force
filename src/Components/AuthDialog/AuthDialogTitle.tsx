@@ -10,11 +10,9 @@ interface AuthDialogTitleProps extends BoxProps {
   onClose?: () => void
 }
 
-export const AuthDialogTitle: FC<React.PropsWithChildren<AuthDialogTitleProps>> = ({
-  title,
-  onClose,
-  ...rest
-}) => {
+export const AuthDialogTitle: FC<
+  React.PropsWithChildren<AuthDialogTitleProps>
+> = ({ title, onClose, ...rest }) => {
   const {
     dispatch,
     state: { mode },

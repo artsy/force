@@ -28,10 +28,9 @@ interface SettingsSavesProfilesProps {
   relay: RelayPaginationProp
 }
 
-const SettingsSavesProfiles: FC<React.PropsWithChildren<SettingsSavesProfilesProps>> = ({
-  me,
-  relay,
-}) => {
+const SettingsSavesProfiles: FC<
+  React.PropsWithChildren<SettingsSavesProfilesProps>
+> = ({ me, relay }) => {
   const [loading, setLoading] = useState(false)
 
   const connection = me.followsAndSaves?.profilesConnection
@@ -121,10 +120,11 @@ export const SETTINGS_SAVES_PROFILES_QUERY = graphql`
   }
 `
 
-export const SettingsSavesProfilesPaginationContainer = createPaginationContainer(
-  SettingsSavesProfiles,
-  {
-    me: graphql`
+export const SettingsSavesProfilesPaginationContainer =
+  createPaginationContainer(
+    SettingsSavesProfiles,
+    {
+      me: graphql`
       fragment SettingsSavesProfiles_me on Me
         @argumentDefinitions(after: { type: "String" }) {
         followsAndSaves {
@@ -162,18 +162,18 @@ export const SettingsSavesProfilesPaginationContainer = createPaginationContaine
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return { ...prevVars, totalCount }
     },
-    getVariables(_, { cursor: after }, fragmentVariables) {
-      return { ...fragmentVariables, after }
-    },
-    query: SETTINGS_SAVES_PROFILES_QUERY,
-  }
-)
+    {
+      direction: "forward",
+      getFragmentVariables(prevVars, totalCount) {
+        return { ...prevVars, totalCount }
+      },
+      getVariables(_, { cursor: after }, fragmentVariables) {
+        return { ...fragmentVariables, after }
+      },
+      query: SETTINGS_SAVES_PROFILES_QUERY,
+    }
+  )
 
 const SETTINGS_SAVES_PROFILES_PLACEHOLDER = (
   <>

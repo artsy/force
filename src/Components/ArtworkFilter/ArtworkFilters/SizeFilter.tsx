@@ -44,7 +44,9 @@ export interface SizeFilterProps {
   expanded?: boolean
 }
 
-export const SizeFilter: React.FC<React.PropsWithChildren<SizeFilterProps>> = ({ expanded }) => {
+export const SizeFilter: React.FC<React.PropsWithChildren<SizeFilterProps>> = ({
+  expanded,
+}) => {
   const { setFilters } = useArtworkFilterContext()
   const selectedFilters = useCurrentlySelectedFilters()
   const {
@@ -72,29 +74,29 @@ export const SizeFilter: React.FC<React.PropsWithChildren<SizeFilterProps>> = ({
   const predefinedSizes = getPredefinedSizesByMetric(metric)
   const metricLabel = metric.toLowerCase()
 
-  const handleInputChange = (dimension: "height" | "width", index: number) => ({
-    currentTarget: { value },
-  }: React.FormEvent<HTMLInputElement>) => {
-    const isOpenEnded = value === "" || value === "0"
-    const isMin = index === 0
+  const handleInputChange =
+    (dimension: "height" | "width", index: number) =>
+    ({ currentTarget: { value } }: React.FormEvent<HTMLInputElement>) => {
+      const isOpenEnded = value === "" || value === "0"
+      const isMin = index === 0
 
-    setCustomSize(prevCustomSize => {
-      if (isOpenEnded) {
-        prevCustomSize[dimension][index] = "*"
-      } else {
-        const parsedValue = parseInt(value, 10)
-        if (prevCustomSize[dimension])
-          prevCustomSize[dimension][index] = parsedValue
-        else if (isMin) {
-          prevCustomSize[dimension] = [parsedValue, "*"]
+      setCustomSize(prevCustomSize => {
+        if (isOpenEnded) {
+          prevCustomSize[dimension][index] = "*"
         } else {
-          prevCustomSize[dimension] = ["*", parsedValue]
+          const parsedValue = parseInt(value, 10)
+          if (prevCustomSize[dimension])
+            prevCustomSize[dimension][index] = parsedValue
+          else if (isMin) {
+            prevCustomSize[dimension] = [parsedValue, "*"]
+          } else {
+            prevCustomSize[dimension] = ["*", parsedValue]
+          }
         }
-      }
 
-      return { ...prevCustomSize }
-    })
-  }
+        return { ...prevCustomSize }
+      })
+    }
 
   const toggleSizeSelection = (selected: boolean, name: string) => {
     let updatedValues = sizes

@@ -21,19 +21,13 @@ interface DownloadAppBadgeProps extends LinkProps {
   downloadAppUrl: string
 }
 
-export const DownloadAppBadge: React.FC<React.PropsWithChildren<DownloadAppBadgeProps>> = ({
-  contextModule,
-  device,
-  downloadAppUrl,
-  ...rest
-}) => {
+export const DownloadAppBadge: React.FC<
+  React.PropsWithChildren<DownloadAppBadgeProps>
+> = ({ contextModule, device, downloadAppUrl, ...rest }) => {
   const tracking = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const handleClick = () => {
     const clickedAppDownload: ClickedAppDownload = {

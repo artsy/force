@@ -12,17 +12,16 @@ interface OrderQuery {
 
 type OrderPredicate = RedirectPredicate<OrderQuery>
 
-const goToStatusIf = (
-  pred: (order: redirects_order$data) => boolean,
-  reason
-): OrderPredicate => ({ order }) => {
-  if (pred(order)) {
-    return {
-      path: `/orders/${order.internalID}/status`,
-      reason,
+const goToStatusIf =
+  (pred: (order: redirects_order$data) => boolean, reason): OrderPredicate =>
+  ({ order }) => {
+    if (pred(order)) {
+      return {
+        path: `/orders/${order.internalID}/status`,
+        reason,
+      }
     }
   }
-}
 
 const goToArtworkIfOrderWasAbandoned: OrderPredicate = ({ order }) => {
   if (order.state === "ABANDONED") {

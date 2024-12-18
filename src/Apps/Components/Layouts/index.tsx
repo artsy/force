@@ -27,7 +27,10 @@ export const LAYOUTS = {
 
 export type LayoutVariant = keyof typeof LAYOUTS
 
-export const Layout: FC<React.PropsWithChildren<LayoutProps>> = ({ variant = "Default", children }) => {
+export const Layout: FC<React.PropsWithChildren<LayoutProps>> = ({
+  variant = "Default",
+  children,
+}) => {
   const { match } = useRouter()
 
   const isFetching = !match.elements

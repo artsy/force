@@ -39,11 +39,9 @@ interface AlertArtworksProps {
   onEditAlertClick: () => void
 }
 
-export const AlertArtworks: React.FC<React.PropsWithChildren<AlertArtworksProps>> = ({
-  alert,
-  onCloseClick,
-  onEditAlertClick,
-}) => {
+export const AlertArtworks: React.FC<
+  React.PropsWithChildren<AlertArtworksProps>
+> = ({ alert, onCloseClick, onEditAlertClick }) => {
   const { jumpTo } = useJump()
 
   if (!alert || !alert.artworksConnection)
@@ -195,9 +193,8 @@ interface SavedSearchAlertsArtworksQueryRendererProps {
   onEditAlertClick: () => void
 }
 
-export const SavedSearchAlertsArtworksFragmentContainer = createFragmentContainer(
-  AlertArtworks,
-  {
+export const SavedSearchAlertsArtworksFragmentContainer =
+  createFragmentContainer(AlertArtworks, {
     alert: graphql`
       fragment SavedSearchAlertsArtworks_alert on Alert {
         internalID
@@ -221,14 +218,11 @@ export const SavedSearchAlertsArtworksFragmentContainer = createFragmentContaine
         priceRange
       }
     `,
-  }
-)
+  })
 
-export const SavedSearchAlertsArtworksQueryRenderer: React.FC<React.PropsWithChildren<SavedSearchAlertsArtworksQueryRendererProps>> = ({
-  editAlertEntity,
-  onCloseClick,
-  onEditAlertClick,
-}) => {
+export const SavedSearchAlertsArtworksQueryRenderer: React.FC<
+  React.PropsWithChildren<SavedSearchAlertsArtworksQueryRendererProps>
+> = ({ editAlertEntity, onCloseClick, onEditAlertClick }) => {
   return (
     <SystemQueryRenderer<SavedSearchAlertsArtworksQuery>
       query={graphql`
@@ -269,7 +263,7 @@ export const SavedSearchAlertsArtworksQueryRenderer: React.FC<React.PropsWithChi
         return (
           <AlertProvider
             initialCriteria={getAllowedSearchCriteria(
-              (props.me.alert as unknown) as SearchCriteriaAttributes
+              props.me.alert as unknown as SearchCriteriaAttributes
             )}
             alertID={props.me.alert.internalID}
             isAlertArtworksView
@@ -286,7 +280,9 @@ export const SavedSearchAlertsArtworksQueryRenderer: React.FC<React.PropsWithChi
   )
 }
 
-const SavedSearchAlertsArtworksPlaseholderContext: React.FC<React.PropsWithChildren<unknown>> = () => {
+const SavedSearchAlertsArtworksPlaseholderContext: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Join separator={<Spacer y={2} />}>
       <CriteriaPillsPlaceholder />
@@ -307,9 +303,11 @@ const SavedSearchAlertsArtworksPlaseholderContext: React.FC<React.PropsWithChild
   )
 }
 
-const SavedSearchAlertsArtworksPlaseholder: React.FC<React.PropsWithChildren<{
-  onCloseClick?: () => void
-}>> = ({ onCloseClick }) => {
+const SavedSearchAlertsArtworksPlaseholder: React.FC<
+  React.PropsWithChildren<{
+    onCloseClick?: () => void
+  }>
+> = ({ onCloseClick }) => {
   return (
     <>
       <Media greaterThanOrEqual="md">

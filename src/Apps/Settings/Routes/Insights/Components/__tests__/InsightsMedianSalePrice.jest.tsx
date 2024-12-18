@@ -19,18 +19,17 @@ jest.mock("System/Hooks/useRouter", () => ({
 }))
 
 describe("InsightsMedianSalePrice", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    InsightsMedianSalePriceTestQuery
-  >({
-    Component: InsightsMedianSalePriceFragmentContainer,
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<InsightsMedianSalePriceTestQuery>({
+      Component: InsightsMedianSalePriceFragmentContainer,
+      query: graphql`
       query InsightsMedianSalePriceTestQuery @relay_test_operation {
         me {
           ...InsightsMedianSalePrice_me
         }
       }
     `,
-  })
+    })
 
   beforeAll(() => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({

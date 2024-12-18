@@ -11,11 +11,9 @@ interface CollectorProfileArtistsAddResultProps {
   onSelect: (selected: boolean) => void
 }
 
-export const CollectorProfileArtistsAddResult: FC<React.PropsWithChildren<CollectorProfileArtistsAddResultProps>> = ({
-  artist: _artist,
-  selected,
-  onSelect,
-}) => {
+export const CollectorProfileArtistsAddResult: FC<
+  React.PropsWithChildren<CollectorProfileArtistsAddResultProps>
+> = ({ artist: _artist, selected, onSelect }) => {
   const artist = useFragment(FRAGMENT, _artist)
   return (
     <EntityHeaderArtistFragmentContainer

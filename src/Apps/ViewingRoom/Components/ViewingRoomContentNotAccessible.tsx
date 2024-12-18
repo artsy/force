@@ -9,9 +9,9 @@ interface ViewingRoomContentNotAccessibleProps {
   viewingRoom: ViewingRoomContentNotAccessible_viewingRoom$data
 }
 
-const ViewingRoomContentNotAccessible: React.FC<React.PropsWithChildren<ViewingRoomContentNotAccessibleProps>> = ({
-  viewingRoom,
-}) => {
+const ViewingRoomContentNotAccessible: React.FC<
+  React.PropsWithChildren<ViewingRoomContentNotAccessibleProps>
+> = ({ viewingRoom }) => {
   const infoText =
     viewingRoom.status === "scheduled"
       ? "This viewing room is not yet open."
@@ -42,9 +42,8 @@ const ViewingRoomContentNotAccessible: React.FC<React.PropsWithChildren<ViewingR
   )
 }
 
-export const ViewingRoomContentNotAccessibleFragmentContainer = createFragmentContainer(
-  ViewingRoomContentNotAccessible,
-  {
+export const ViewingRoomContentNotAccessibleFragmentContainer =
+  createFragmentContainer(ViewingRoomContentNotAccessible, {
     viewingRoom: graphql`
       fragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {
         status
@@ -53,5 +52,4 @@ export const ViewingRoomContentNotAccessibleFragmentContainer = createFragmentCo
         }
       }
     `,
-  }
-)
+  })

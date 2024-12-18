@@ -9,7 +9,10 @@ interface ShowsRailProps extends BoxProps {
   partner: ShowsRail_partner$data
 }
 
-const ShowsRail: React.FC<React.PropsWithChildren<ShowsRailProps>> = ({ partner, ...rest }) => {
+const ShowsRail: React.FC<React.PropsWithChildren<ShowsRailProps>> = ({
+  partner,
+  ...rest
+}) => {
   if (
     !partner?.showsConnection?.edges ||
     partner.showsConnection.edges.length === 0

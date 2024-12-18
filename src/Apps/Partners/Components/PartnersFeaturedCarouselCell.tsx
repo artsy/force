@@ -11,10 +11,9 @@ interface PartnersFeaturedCarouselCellProps {
   lazyLoad?: boolean
 }
 
-const PartnersFeaturedCarouselCell: FC<React.PropsWithChildren<PartnersFeaturedCarouselCellProps>> = ({
-  profile,
-  lazyLoad = true,
-}) => {
+const PartnersFeaturedCarouselCell: FC<
+  React.PropsWithChildren<PartnersFeaturedCarouselCellProps>
+> = ({ profile, lazyLoad = true }) => {
   const partner = profile.owner
 
   if (!partner) return null
@@ -105,9 +104,8 @@ const PartnersFeaturedCarouselCell: FC<React.PropsWithChildren<PartnersFeaturedC
   )
 }
 
-export const PartnersFeaturedCarouselCellFragmentContainer = createFragmentContainer(
-  PartnersFeaturedCarouselCell,
-  {
+export const PartnersFeaturedCarouselCellFragmentContainer =
+  createFragmentContainer(PartnersFeaturedCarouselCell, {
     profile: graphql`
       fragment PartnersFeaturedCarouselCell_profile on Profile {
         internalID
@@ -141,5 +139,4 @@ export const PartnersFeaturedCarouselCellFragmentContainer = createFragmentConta
         }
       }
     `,
-  }
-)
+  })

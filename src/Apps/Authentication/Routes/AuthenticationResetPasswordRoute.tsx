@@ -23,7 +23,9 @@ interface AuthenticationResetPasswordRouteProps {}
 type Mode = "Pending" | "Loading" | "Success" | "Error"
 
 // TODO: Clean up
-export const AuthenticationResetPasswordRoute: React.FC<React.PropsWithChildren<AuthenticationResetPasswordRouteProps>> = () => {
+export const AuthenticationResetPasswordRoute: React.FC<
+  React.PropsWithChildren<AuthenticationResetPasswordRouteProps>
+> = () => {
   const { match } = useRouter()
 
   const query = match?.location?.query ?? {}

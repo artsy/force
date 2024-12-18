@@ -69,13 +69,9 @@ export const Metadata: React.FC<React.PropsWithChildren<MetadataProps>> = ({
   )
 }
 
-const LinkContainer: React.FC<React.PropsWithChildren<Omit<MetadataProps, "children">>> = ({
-  artwork,
-  disableRouterLinking,
-  mt,
-  to,
-  ...rest
-}) => {
+const LinkContainer: React.FC<
+  React.PropsWithChildren<Omit<MetadataProps, "children">>
+> = ({ artwork, disableRouterLinking, mt, to, ...rest }) => {
   if (!!disableRouterLinking) {
     return <DisabledLink mt={mt}>{rest.children}</DisabledLink>
   }
@@ -127,13 +123,9 @@ type MetadataPlaceholderProps = Pick<
 > &
   BoxProps
 
-export const MetadataPlaceholder: React.FC<React.PropsWithChildren<MetadataPlaceholderProps>> = ({
-  mt = 1,
-  hidePartnerName,
-  hideArtistName,
-  hideSaleInfo,
-  ...rest
-}) => {
+export const MetadataPlaceholder: React.FC<
+  React.PropsWithChildren<MetadataPlaceholderProps>
+> = ({ mt = 1, hidePartnerName, hideArtistName, hideSaleInfo, ...rest }) => {
   return (
     <Box mt={mt} {...rest}>
       <DetailsPlaceholder

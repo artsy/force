@@ -7,10 +7,9 @@ interface LatestMessagesFlyOutProps {
   onClick: ButtonProps["onClick"]
 }
 
-export const LatestMessagesFlyOut: FC<React.PropsWithChildren<LatestMessagesFlyOutProps>> = ({
-  visible,
-  onClick,
-}) => {
+export const LatestMessagesFlyOut: FC<
+  React.PropsWithChildren<LatestMessagesFlyOutProps>
+> = ({ visible, onClick }) => {
   const buttonRef = useRef<HTMLButtonElement | null>(null)
 
   return (

@@ -7,18 +7,16 @@ import { useSetPaymentByStripeIntent } from "Apps/Order/Mutations/useSetPaymentB
  * pulls necessary params from Stripe redirect URL and sets payment by intentId
  */
 export function useStripePaymentBySetupIntentId(orderId: string) {
-  const {
-    submitMutation: setPaymentByStripeIntentMutation,
-  } = useSetPaymentByStripeIntent()
+  const { submitMutation: setPaymentByStripeIntentMutation } =
+    useSetPaymentByStripeIntent()
   const { match } = useRouter()
 
   const [isProcessingRedirect, setIsProcessingRedirect] = useState(false)
   const [stripeSetupIntentId, setStripeSetupIntentId] = useState<null | string>(
     null
   )
-  const [isPaymentSetupSuccessful, setIsPaymentSetupSuccessful] = useState(
-    false
-  )
+  const [isPaymentSetupSuccessful, setIsPaymentSetupSuccessful] =
+    useState(false)
   const [paymentSetupError, setPaymentSetupError] = useState<null | object>(
     null
   )

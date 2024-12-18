@@ -12,9 +12,9 @@ interface ArtQuizTrendingCollectionProps {
   collection: ArtQuizTrendingCollection_collection$data
 }
 
-const ArtQuizTrendingCollection: FC<React.PropsWithChildren<ArtQuizTrendingCollectionProps>> = ({
-  collection,
-}) => {
+const ArtQuizTrendingCollection: FC<
+  React.PropsWithChildren<ArtQuizTrendingCollectionProps>
+> = ({ collection }) => {
   const artworks = extractNodes(collection.artworksConnection)
 
   if (artworks.length === 0) return null
@@ -47,7 +47,9 @@ const ArtQuizTrendingCollection: FC<React.PropsWithChildren<ArtQuizTrendingColle
   )
 }
 
-export const ArtQuizTrendingCollectionPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+export const ArtQuizTrendingCollectionPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <>
       <SkeletonText variant="lg-display">Example Collection Title</SkeletonText>
@@ -67,9 +69,8 @@ export const ArtQuizTrendingCollectionPlaceholder: FC<React.PropsWithChildren<un
   )
 }
 
-export const ArtQuizTrendingCollectionFragmentContainer = createFragmentContainer(
-  ArtQuizTrendingCollection,
-  {
+export const ArtQuizTrendingCollectionFragmentContainer =
+  createFragmentContainer(ArtQuizTrendingCollection, {
     collection: graphql`
       fragment ArtQuizTrendingCollection_collection on MarketingCollection {
         title
@@ -84,5 +85,4 @@ export const ArtQuizTrendingCollectionFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })

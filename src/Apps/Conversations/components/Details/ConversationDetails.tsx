@@ -15,10 +15,9 @@ interface ConversationDetailsProps {
   onClose?: () => void
 }
 
-export const ConversationDetails: React.FC<React.PropsWithChildren<ConversationDetailsProps>> = ({
-  conversation,
-  onClose,
-}) => {
+export const ConversationDetails: React.FC<
+  React.PropsWithChildren<ConversationDetailsProps>
+> = ({ conversation, onClose }) => {
   const data = useFragment(
     graphql`
       fragment ConversationDetails_conversation on Conversation {

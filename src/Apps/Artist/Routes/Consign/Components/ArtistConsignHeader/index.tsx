@@ -20,9 +20,9 @@ interface ArtistConsignHeaderProps {
   artist: ArtistConsignHeader_artist$data
 }
 
-export const ArtistConsignHeader: React.FC<React.PropsWithChildren<ArtistConsignHeaderProps>> = ({
-  artist,
-}) => {
+export const ArtistConsignHeader: React.FC<
+  React.PropsWithChildren<ArtistConsignHeaderProps>
+> = ({ artist }) => {
   const tracking = useTracking()
 
   const [leftArtwork, rightArtwork] = extractNodes(

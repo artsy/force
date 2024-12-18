@@ -10,7 +10,9 @@ interface NotificationArtworkListProps {
   artworksConnection?: NotificationArtworkList_artworksConnection$key | null
 }
 
-export const NotificationArtworkList: FC<React.PropsWithChildren<NotificationArtworkListProps>> = props => {
+export const NotificationArtworkList: FC<
+  React.PropsWithChildren<NotificationArtworkListProps>
+> = props => {
   const artworksConnection = useFragment(
     notificationArtworkListFragment,
     props.artworksConnection

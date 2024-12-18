@@ -5,7 +5,9 @@ import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { BaseLayoutProps } from "Apps/Components/Layouts"
 import { LayoutMain } from "Apps/Components/Layouts/Components/LayoutMain"
 
-export const LayoutContainerOnly: FC<React.PropsWithChildren<BaseLayoutProps>> = ({ children }) => {
+export const LayoutContainerOnly: FC<
+  React.PropsWithChildren<BaseLayoutProps>
+> = ({ children }) => {
   return (
     <>
       <AppToasts />

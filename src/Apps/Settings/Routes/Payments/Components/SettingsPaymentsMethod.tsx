@@ -8,11 +8,9 @@ interface SettingsPaymentsMethodProps {
 
 type Mode = "Pending" | "Deleting"
 
-export const SettingsPaymentsMethod: React.FC<React.PropsWithChildren<SettingsPaymentsMethodProps>> = ({
-  children,
-  successDeleteMessage,
-  onDelete,
-}) => {
+export const SettingsPaymentsMethod: React.FC<
+  React.PropsWithChildren<SettingsPaymentsMethodProps>
+> = ({ children, successDeleteMessage, onDelete }) => {
   const [mode, setMode] = useMode<Mode>("Pending")
 
   const { sendToast } = useToasts()

@@ -99,7 +99,7 @@ describe("Saved Addresses", () => {
       active: true,
       onSelect: jest.fn(),
     }
-    mockShippingContext = ({
+    mockShippingContext = {
       meData: {
         addressList: basicAddressList,
       },
@@ -116,7 +116,7 @@ describe("Saved Addresses", () => {
         setIsPerformingOperation: jest.fn(),
         setSelectedSavedAddressID: jest.fn(),
       },
-    } as unknown) as ShippingContextProps
+    } as unknown as ShippingContextProps
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent,
     }))

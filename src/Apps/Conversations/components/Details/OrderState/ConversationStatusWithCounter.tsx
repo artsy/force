@@ -10,10 +10,9 @@ interface ConversationStatusWithCounterProps {
   status: "offer" | "buy" | "buyerCounteroffer" | "sellerCounteroffer"
 }
 
-export const ConversationStatusWithCounter: React.FC<React.PropsWithChildren<ConversationStatusWithCounterProps>> = ({
-  order,
-  status,
-}) => {
+export const ConversationStatusWithCounter: React.FC<
+  React.PropsWithChildren<ConversationStatusWithCounterProps>
+> = ({ order, status }) => {
   const data = useFragment(
     graphql`
       fragment ConversationStatusWithCounter_order on CommerceOrder {

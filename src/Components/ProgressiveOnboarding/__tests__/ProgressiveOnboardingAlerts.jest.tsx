@@ -45,7 +45,8 @@ const Example: FC<React.PropsWithChildren<unknown>> = () => {
 describe("ProgressiveOnboarding: Alerts", () => {
   // FIXME:
 
-  const mockWithProgressiveOnboardingCounts = withProgressiveOnboardingCounts as jest.Mock
+  const mockWithProgressiveOnboardingCounts =
+    withProgressiveOnboardingCounts as jest.Mock
   const mockUseArtworkFilterContext = useArtworkFilterContext as jest.Mock
 
   const alertCreateText = "Hunting for a particular artwork?"

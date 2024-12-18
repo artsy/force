@@ -20,7 +20,9 @@ export interface ShippingQuotesProps {
   order: ShippingQuotes_order$key
 }
 
-export const ShippingQuotes: React.FC<React.PropsWithChildren<ShippingQuotesProps>> = ({ order }) => {
+export const ShippingQuotes: React.FC<
+  React.PropsWithChildren<ShippingQuotesProps>
+> = ({ order }) => {
   const shippingContext = useShippingContext()
   const orderTracking = useOrderTracking()
   const { orderData } = shippingContext

@@ -26,9 +26,9 @@ interface ArtistSeriesArtworksFilterProps {
   match?: Match
 }
 
-const ArtistSeriesArtworksFilter: React.FC<React.PropsWithChildren<
-  ArtistSeriesArtworksFilterProps & RouterState
->> = props => {
+const ArtistSeriesArtworksFilter: React.FC<
+  React.PropsWithChildren<ArtistSeriesArtworksFilterProps & RouterState>
+> = props => {
   const { userPreferences } = useSystemContext()
   const { match, relay, artistSeries } = props
   const { filtered_artworks, sidebar } = artistSeries
@@ -99,12 +99,13 @@ const ArtistSeriesArtworksFilter: React.FC<React.PropsWithChildren<
   )
 }
 
-export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer(
-  withRouter<ArtistSeriesArtworksFilterProps & RouterState>(
-    ArtistSeriesArtworksFilter
-  ),
-  {
-    artistSeries: graphql`
+export const ArtistSeriesArtworksFilterRefetchContainer =
+  createRefetchContainer(
+    withRouter<ArtistSeriesArtworksFilterProps & RouterState>(
+      ArtistSeriesArtworksFilter
+    ),
+    {
+      artistSeries: graphql`
       fragment ArtistSeriesArtworksFilter_artistSeries on ArtistSeries
         @argumentDefinitions(
           input: { type: "FilterArtworksInput" }
@@ -140,8 +141,8 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
         title
       }
     `,
-  },
-  graphql`
+    },
+    graphql`
     query ArtistSeriesArtworksFilterRefetchQuery(
       $input: FilterArtworksInput
       $slug: ID!
@@ -151,13 +152,13 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
       }
     }
   `
-)
+  )
 
 interface ArtistSeriesArtworkFilterQueryRendererProps {}
 
-export const ArtistSeriesArtworkFilterQueryRenderer: React.FC<React.PropsWithChildren<
-  ArtistSeriesArtworkFilterQueryRendererProps
->> = rest => {
+export const ArtistSeriesArtworkFilterQueryRenderer: React.FC<
+  React.PropsWithChildren<ArtistSeriesArtworkFilterQueryRendererProps>
+> = rest => {
   const { relayEnvironment } = useSystemContext()
   const { match } = useRouter()
 

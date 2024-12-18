@@ -22,9 +22,9 @@ interface SettingsEditProfileAboutYouProps {
   me: SettingsEditProfileAboutYou_me$data
 }
 
-const SettingsEditProfileAboutYou: FC<React.PropsWithChildren<SettingsEditProfileAboutYouProps>> = ({
-  me,
-}) => {
+const SettingsEditProfileAboutYou: FC<
+  React.PropsWithChildren<SettingsEditProfileAboutYouProps>
+> = ({ me }) => {
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
   const { sendToast } = useToasts()
 
@@ -147,9 +147,8 @@ const SettingsEditProfileAboutYou: FC<React.PropsWithChildren<SettingsEditProfil
   )
 }
 
-export const SettingsEditProfileAboutYouFragmentContainer = createFragmentContainer(
-  SettingsEditProfileAboutYou,
-  {
+export const SettingsEditProfileAboutYouFragmentContainer =
+  createFragmentContainer(SettingsEditProfileAboutYou, {
     me: graphql`
       fragment SettingsEditProfileAboutYou_me on Me {
         location {
@@ -162,8 +161,7 @@ export const SettingsEditProfileAboutYouFragmentContainer = createFragmentContai
         priceRangeMax
       }
     `,
-  }
-)
+  })
 
 export const PRICE_BUCKETS = [
   { text: "Select a price range", value: "" },

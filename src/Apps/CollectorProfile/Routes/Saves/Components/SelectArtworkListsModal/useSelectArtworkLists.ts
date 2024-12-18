@@ -12,9 +12,7 @@ interface Counts {
 
 type Response = NonNullable<
   NonNullable<
-    NonNullable<
-      useSelectArtworkListsMutation$data
-    >["artworksCollectionsBatchUpdate"]
+    NonNullable<useSelectArtworkListsMutation$data>["artworksCollectionsBatchUpdate"]
   >["responseOrError"]
 >
 type ListEntity =

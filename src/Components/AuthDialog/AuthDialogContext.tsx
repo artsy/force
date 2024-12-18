@@ -20,7 +20,7 @@ export const AUTH_DIALOG_MODES = [
   "ForgotPassword",
 ] as const
 
-export type AuthDialogMode = typeof AUTH_DIALOG_MODES[number]
+export type AuthDialogMode = (typeof AUTH_DIALOG_MODES)[number]
 
 export const AUTH_MODAL_TYPES: Record<AuthDialogMode, AuthModalType> = {
   ForgotPassword: AuthModalType.forgot,
@@ -130,9 +130,9 @@ export const reducer = (state: State, action: Action): State => {
   }
 }
 
-export const AuthDialogProvider: FC<React.PropsWithChildren<
-  Omit<AuthDialogProps, "onClose">
->> = ({ children }) => {
+export const AuthDialogProvider: FC<
+  React.PropsWithChildren<Omit<AuthDialogProps, "onClose">>
+> = ({ children }) => {
   const { isLoggedIn } = useSystemContext()
   const { sendToast } = useToasts()
 

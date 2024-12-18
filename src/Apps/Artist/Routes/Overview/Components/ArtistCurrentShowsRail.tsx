@@ -18,15 +18,12 @@ interface ArtistCurrentShowsRailProps {
   artist: ArtistCurrentShowsRail_artist$data
 }
 
-const ArtistCurrentShowsRail: React.FC<React.PropsWithChildren<ArtistCurrentShowsRailProps>> = ({
-  artist,
-}) => {
+const ArtistCurrentShowsRail: React.FC<
+  React.PropsWithChildren<ArtistCurrentShowsRailProps>
+> = ({ artist }) => {
   const tracking = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const shows = extractNodes(artist.showsConnection)
 
@@ -124,9 +121,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtistCurrentShowsRailQueryRenderer: React.FC<React.PropsWithChildren<{
-  id: string
-}>> = ({ id }) => {
+export const ArtistCurrentShowsRailQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    id: string
+  }>
+> = ({ id }) => {
   return (
     <SystemQueryRenderer<ArtistCurrentShowsRailQuery>
       lazyLoad

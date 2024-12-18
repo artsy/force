@@ -6,20 +6,19 @@ import { AuctionWorksByFollowedArtistsRailTestQuery } from "__generated__/Auctio
 jest.unmock("react-relay")
 
 describe("AuctionWorksByFollowedArtistsRail", () => {
-  const { getWrapper } = setupTestWrapper<
-    AuctionWorksByFollowedArtistsRailTestQuery
-  >({
-    Component: (props: any) => {
-      return <AuctionWorksByFollowedArtistsRailFragmentContainer {...props} />
-    },
-    query: graphql`
+  const { getWrapper } =
+    setupTestWrapper<AuctionWorksByFollowedArtistsRailTestQuery>({
+      Component: (props: any) => {
+        return <AuctionWorksByFollowedArtistsRailFragmentContainer {...props} />
+      },
+      query: graphql`
       query AuctionWorksByFollowedArtistsRailTestQuery {
         viewer {
           ...AuctionWorksByFollowedArtistsRail_viewer
         }
       }
     `,
-  })
+    })
 
   it("renders correct components", () => {
     const { wrapper } = getWrapper()

@@ -67,11 +67,13 @@ export interface ShippingContextProps {
 
 export const ShippingContext = createContext<ShippingContextProps>({} as any)
 
-export const ShippingContextProvider: FC<React.PropsWithChildren<{
-  order: ShippingContext_order$key
-  me: ShippingContext_me$key
-  dialog: ShippingProps["dialog"]
-}>> = props => {
+export const ShippingContextProvider: FC<
+  React.PropsWithChildren<{
+    order: ShippingContext_order$key
+    me: ShippingContext_me$key
+    dialog: ShippingProps["dialog"]
+  }>
+> = props => {
   const orderFragmentData = useFragment(ORDER_FRAGMENT, props.order)
   const meFragmentData = useFragment(ME_FRAGMENT, props.me)
   const meData = useMemo(
@@ -90,7 +92,7 @@ export const ShippingContextProvider: FC<React.PropsWithChildren<{
    * shipping quote steps (and duplicated in the sidebar)
    * we need to hack some formik values UP from the fulfillment details form.
    */
-  const fulfillmentFormikRef = useRef<FormikProps<FulfillmentValues>>(({
+  const fulfillmentFormikRef = useRef<FormikProps<FulfillmentValues>>({
     // Used to submit the form
     submitForm: () => Promise.reject(new Error("form not loaded")),
     // Used to disable the button
@@ -102,7 +104,7 @@ export const ShippingContextProvider: FC<React.PropsWithChildren<{
         saveAddress: false,
       },
     },
-  } as unknown) as FormikProps<FulfillmentValues>)
+  } as unknown as FormikProps<FulfillmentValues>)
 
   const initialState: State = {
     fulfillmentDetailsFormikContext: fulfillmentFormikRef.current,

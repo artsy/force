@@ -17,9 +17,9 @@ interface ArtworkActionsWatchLotButtonProps {
   onClick: () => void
 }
 
-const ArtworkActionsWatchLotButton: FC<React.PropsWithChildren<
-  ArtworkActionsWatchLotButtonProps
->> = ({ isSaved, artwork, canShowRegistrationPopover = true, onClick }) => {
+const ArtworkActionsWatchLotButton: FC<
+  React.PropsWithChildren<ArtworkActionsWatchLotButtonProps>
+> = ({ isSaved, artwork, canShowRegistrationPopover = true, onClick }) => {
   const { isLoggedIn } = useSystemContext()
   const [popoverVisible, setPopoverVisible] = useState(false)
 
@@ -83,9 +83,9 @@ const ArtworkActionsWatchLotButton: FC<React.PropsWithChildren<
             ref={anchorRef}
             name="heart"
             Icon={
-              ((isSaved
+              (isSaved
                 ? FilledIcon
-                : HeartStrokeIcon) as unknown) as React.ReactNode
+                : HeartStrokeIcon) as unknown as React.ReactNode
             }
             label={isSaved ? "Watching lot" : "Watch lot"}
             onClick={handleButtonClick}
@@ -98,9 +98,8 @@ const ArtworkActionsWatchLotButton: FC<React.PropsWithChildren<
 
 const FilledIcon = () => <HeartFillIcon fill="blue100" />
 
-export const ArtworkActionsWatchLotButtonFragmentContainer = createFragmentContainer(
-  ArtworkActionsWatchLotButton,
-  {
+export const ArtworkActionsWatchLotButtonFragmentContainer =
+  createFragmentContainer(ArtworkActionsWatchLotButton, {
     artwork: graphql`
       fragment ArtworkActionsWatchLotButton_artwork on Artwork {
         sale {
@@ -114,5 +113,4 @@ export const ArtworkActionsWatchLotButtonFragmentContainer = createFragmentConta
         ...ArtworkAuctionRegistrationPanel_artwork
       }
     `,
-  }
-)
+  })

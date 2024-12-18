@@ -71,7 +71,9 @@ interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
  * doesn't `extend Viewer`, the BaseArtworkFilter can be imported below. See
  * `Apps/Collection` for an example, which queries Kaws for data.
  */
-export const ArtworkFilter: React.FC<React.PropsWithChildren<ArtworkFilterProps>> = ({
+export const ArtworkFilter: React.FC<
+  React.PropsWithChildren<ArtworkFilterProps>
+> = ({
   aggregations,
   counts,
   filters,
@@ -99,9 +101,13 @@ export const ArtworkFilter: React.FC<React.PropsWithChildren<ArtworkFilterProps>
   )
 }
 
-export const BaseArtworkFilter: React.FC<React.PropsWithChildren<Omit<ArtworkFilterProps, keyof SharedArtworkFilterContextProps> & {
-  relay: RelayRefetchProp
-}>> = ({
+export const BaseArtworkFilter: React.FC<
+  React.PropsWithChildren<
+    Omit<ArtworkFilterProps, keyof SharedArtworkFilterContextProps> & {
+      relay: RelayRefetchProp
+    }
+  >
+> = ({
   children,
   Filters,
   offset,
@@ -114,11 +120,8 @@ export const BaseArtworkFilter: React.FC<React.PropsWithChildren<Omit<ArtworkFil
 }) => {
   const tracking = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const [isLoading, setIsLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)

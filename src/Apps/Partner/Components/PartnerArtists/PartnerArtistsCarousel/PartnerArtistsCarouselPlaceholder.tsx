@@ -6,9 +6,9 @@ export interface PartnerArtistsCarouselPlaceholderProps {
   count: number
 }
 
-export const PartnerArtistsCarouselPlaceholder: React.FC<React.PropsWithChildren<PartnerArtistsCarouselPlaceholderProps>> = ({
-  count,
-}) => {
+export const PartnerArtistsCarouselPlaceholder: React.FC<
+  React.PropsWithChildren<PartnerArtistsCarouselPlaceholderProps>
+> = ({ count }) => {
   return (
     <Shelf alignItems="flex-start">
       {[...Array(count)].map((_, i) => {

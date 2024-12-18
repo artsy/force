@@ -122,7 +122,8 @@ describe("AuctionBidRoute", () => {
     }))
 
     // Hack to get around mocking Formik
-    ;(mockFormik as React.FC<React.PropsWithChildren<unknown>>).displayName = "Formik"
+    ;(mockFormik as React.FC<React.PropsWithChildren<unknown>>).displayName =
+      "Formik"
     mockFormik.mockImplementation(({ children }) => {
       return children(defaultFormikProps)
     })
@@ -165,7 +166,6 @@ describe("AuctionBidRoute", () => {
         hasQualifiedCreditCards: true,
       }),
     })
-
     ;(wrapper.find("ModalDialog").props() as any).onClose()
     expect(spy).toHaveBeenCalledWith("/auction/sale-slug")
   })

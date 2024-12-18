@@ -18,12 +18,11 @@ export interface TimePeriodFilterProps {
 export const getTimePeriodToDisplay = period =>
   isNaN(period) ? period : `${period}s`
 
-export const TimePeriodFilter: FC<React.PropsWithChildren<TimePeriodFilterProps>> = ({ expanded }) => {
-  const {
-    aggregations,
-    selectedFiltersCounts,
-    ...filterContext
-  } = useArtworkFilterContext()
+export const TimePeriodFilter: FC<
+  React.PropsWithChildren<TimePeriodFilterProps>
+> = ({ expanded }) => {
+  const { aggregations, selectedFiltersCounts, ...filterContext } =
+    useArtworkFilterContext()
   const { majorPeriods = [] } = useCurrentlySelectedFilters()
   const timePeriods = aggregations?.find(agg => agg.slice === "MAJOR_PERIOD")
 

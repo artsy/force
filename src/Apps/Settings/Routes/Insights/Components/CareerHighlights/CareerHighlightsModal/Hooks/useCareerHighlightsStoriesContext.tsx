@@ -28,12 +28,9 @@ interface CareerHighlightsStoriesProviderProps {
   pageIndex?: number
 }
 
-export const CareerHighlightsStoriesProvider: React.FC<React.PropsWithChildren<CareerHighlightsStoriesProviderProps>> = ({
-  children,
-  onClose,
-  careerHighlights,
-  pageIndex,
-}) => {
+export const CareerHighlightsStoriesProvider: React.FC<
+  React.PropsWithChildren<CareerHighlightsStoriesProviderProps>
+> = ({ children, onClose, careerHighlights, pageIndex }) => {
   const { back, current, index, next, total } = useCareerHighlightConfig({
     availableCareerHighlights: careerHighlights,
     onClose,

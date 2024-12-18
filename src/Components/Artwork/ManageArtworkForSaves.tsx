@@ -85,9 +85,10 @@ export const INITIAL_STATE: State = {
   recentlyAddedList: null,
 }
 
-export const ManageArtworkForSaves = createContext<
-  ManageArtworkForSavesContextState
->((null as unknown) as ManageArtworkForSavesContextState)
+export const ManageArtworkForSaves =
+  createContext<ManageArtworkForSavesContextState>(
+    null as unknown as ManageArtworkForSavesContextState
+  )
 
 export const useManageArtworkForSavesContext = () => {
   return useContext(ManageArtworkForSaves)
@@ -98,11 +99,9 @@ export const useManageArtworkForSavesContext = () => {
  * If `savedListId` was passed, it means the user is on the artwork lists page
  * In this case, whether the artwork is saved or not will depend on the local state (not on the status received from backend)
  */
-export const ManageArtworkForSavesProvider: FC<React.PropsWithChildren<ProviderProps>> = ({
-  children,
-  savedListId,
-  artwork,
-}) => {
+export const ManageArtworkForSavesProvider: FC<
+  React.PropsWithChildren<ProviderProps>
+> = ({ children, savedListId, artwork }) => {
   const [isSavedToList, setIsSavedToList] = useState(!!savedListId)
   const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,

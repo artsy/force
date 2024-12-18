@@ -14,9 +14,9 @@ interface ArtQuizRecommendedArtistsProps {
   me: ArtQuizRecommendedArtists_me$data
 }
 
-const ArtQuizRecommendedArtists: FC<React.PropsWithChildren<ArtQuizRecommendedArtistsProps>> = ({
-  me,
-}) => {
+const ArtQuizRecommendedArtists: FC<
+  React.PropsWithChildren<ArtQuizRecommendedArtistsProps>
+> = ({ me }) => {
   const likedArtists = compact(
     uniq(me.quiz.savedArtworks.map(artwork => artwork.artist))
   )

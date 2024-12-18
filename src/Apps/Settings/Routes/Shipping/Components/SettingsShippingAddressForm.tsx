@@ -75,10 +75,9 @@ interface SettingsShippingAddressFormProps {
   }
 }
 
-export const SettingsShippingAddressForm: FC<React.PropsWithChildren<SettingsShippingAddressFormProps>> = ({
-  onClose,
-  address,
-}) => {
+export const SettingsShippingAddressForm: FC<
+  React.PropsWithChildren<SettingsShippingAddressFormProps>
+> = ({ onClose, address }) => {
   const { submitMutation: submitAddAddress } = useAddAddress()
   const { submitMutation: submitEditAddress } = useEditAddress()
   const { submitMutation: submitSetDefaultAddress } = useSetDefaultAddress()

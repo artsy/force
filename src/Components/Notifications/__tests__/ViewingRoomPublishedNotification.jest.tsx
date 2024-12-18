@@ -7,19 +7,18 @@ import { ViewingRoomPublishedNotification_test_Query } from "__generated__/Viewi
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
 
-const { renderWithRelay } = setupTestWrapperTL<
-  ViewingRoomPublishedNotification_test_Query
->({
-  Component: props => {
-    const notification = props.notificationsConnection?.edges?.[0]?.node
+const { renderWithRelay } =
+  setupTestWrapperTL<ViewingRoomPublishedNotification_test_Query>({
+    Component: props => {
+      const notification = props.notificationsConnection?.edges?.[0]?.node
 
-    if (notification) {
-      return <ViewingRoomPublishedNotification notification={notification} />
-    }
+      if (notification) {
+        return <ViewingRoomPublishedNotification notification={notification} />
+      }
 
-    return null
-  },
-  query: graphql`
+      return null
+    },
+    query: graphql`
     query ViewingRoomPublishedNotification_test_Query @relay_test_operation {
       notificationsConnection(first: 1) {
         edges {
@@ -30,7 +29,7 @@ const { renderWithRelay } = setupTestWrapperTL<
       }
     }
   `,
-})
+  })
 
 describe("ViewingRoomPublishedNotification", () => {
   it("renders viewing rooms", () => {

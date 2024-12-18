@@ -7,18 +7,17 @@ import { FairOrganizerPastEventsRailFragmentContainer as FairOrganizerPastEvents
 jest.unmock("react-relay")
 
 describe("FairOrganizerPastEventsRail", () => {
-  const { getWrapper } = setupTestWrapper<
-    FairOrganizerPastEventsRail_Test_Query
-  >({
-    Component: FairOrganizerPastEventsRail,
-    query: graphql`
+  const { getWrapper } =
+    setupTestWrapper<FairOrganizerPastEventsRail_Test_Query>({
+      Component: FairOrganizerPastEventsRail,
+      query: graphql`
       query FairOrganizerPastEventsRail_Test_Query @relay_test_operation {
         fairOrganizer(id: "the-armory-show") {
           ...FairOrganizerPastEventsRail_fairOrganizer
         }
       }
     `,
-  })
+    })
 
   it("renders correctly", () => {
     const { wrapper } = getWrapper({

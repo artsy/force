@@ -10,9 +10,9 @@ export interface PartnerArtistListProps {
   partner: PartnerArtistList_partner$data
 }
 
-export const PartnerArtistList: React.FC<React.PropsWithChildren<PartnerArtistListProps>> = ({
-  partner,
-}) => {
+export const PartnerArtistList: React.FC<
+  React.PropsWithChildren<PartnerArtistListProps>
+> = ({ partner }) => {
   if (
     !partner.allArtistsConnection?.edges ||
     (partner.allArtistsConnection.edges.length ?? 0) === 0

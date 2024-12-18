@@ -160,8 +160,9 @@ export const OfferRoute: FC<React.PropsWithChildren<OfferRouteProps>> = ({
     const showPriceOptions =
       (artwork?.editionSets?.length ?? 0) < 2 && !!hasPrice
     const isPriceHidden = isNil(artworkPrice) || artworkPrice === ""
-    const isRangeOffer = getOfferItemFromOrder(order.lineItems)
-      ?.displayPriceRange
+    const isRangeOffer = getOfferItemFromOrder(
+      order.lineItems
+    )?.displayPriceRange
 
     if (
       !isPriceHidden &&

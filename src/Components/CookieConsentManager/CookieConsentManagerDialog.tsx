@@ -39,13 +39,9 @@ interface CookieConsentManagerDialogProps {
   ) => void
 }
 
-export const CookieConsentManagerDialog: FC<React.PropsWithChildren<CookieConsentManagerDialogProps>> = ({
-  destinations,
-  onClose,
-  preferences,
-  setPreferences,
-  saveConsent,
-}) => {
+export const CookieConsentManagerDialog: FC<
+  React.PropsWithChildren<CookieConsentManagerDialogProps>
+> = ({ destinations, onClose, preferences, setPreferences, saveConsent }) => {
   const { trackEvent } = useTracking()
 
   const [mode, setMode] = useMode<"Idle" | "Allowing" | "Rejecting" | "Saving">(

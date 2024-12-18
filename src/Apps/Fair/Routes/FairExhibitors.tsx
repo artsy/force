@@ -11,7 +11,9 @@ interface FairExhibitorsProps {
   fair: FairExhibitors_fair$data
 }
 
-const FairExhibitors: React.FC<React.PropsWithChildren<FairExhibitorsProps>> = ({ fair }) => {
+const FairExhibitors: React.FC<
+  React.PropsWithChildren<FairExhibitorsProps>
+> = ({ fair }) => {
   const { match } = useRouter()
 
   const { focused_exhibitor: focusedExhibitorID } = match.location.query

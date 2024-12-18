@@ -7,9 +7,9 @@ import { Rail } from "Components/Rail/Rail"
 export interface ArtistSeriesRailProps {
   collectionGroup: ArtistSeriesRail_collectionGroup$data
 }
-export const ArtistSeriesRail: React.FC<React.PropsWithChildren<ArtistSeriesRailProps>> = ({
-  collectionGroup: { members, name },
-}) => {
+export const ArtistSeriesRail: React.FC<
+  React.PropsWithChildren<ArtistSeriesRailProps>
+> = ({ collectionGroup: { members, name } }) => {
   return (
     <Rail
       title={name}

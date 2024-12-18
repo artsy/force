@@ -36,15 +36,14 @@ interface AppPreferencesProviderProps {
 
 export const APP_PREFERENCES_SHARIFY_KEY = "APP_PREFERENCES"
 
-export const AppPreferencesProvider: FC<React.PropsWithChildren<AppPreferencesProviderProps>> = ({
-  children,
-}) => {
+export const AppPreferencesProvider: FC<
+  React.PropsWithChildren<AppPreferencesProviderProps>
+> = ({ children }) => {
   const initialPreferences =
     getENV(APP_PREFERENCES_SHARIFY_KEY) || DEFAULT_PREFERENCES
 
-  const [preferences, setPreferences] = useState<AppPreferences>(
-    initialPreferences
-  )
+  const [preferences, setPreferences] =
+    useState<AppPreferences>(initialPreferences)
 
   const isProcessing = useRef(false)
   const queue = useRef<(() => Promise<any>)[]>([])

@@ -28,10 +28,9 @@ export interface FulfillmentDetailsProps {
   order: FulfillmentDetailsForm_order$key
 }
 
-export const FulfillmentDetails: FC<React.PropsWithChildren<FulfillmentDetailsProps>> = ({
-  me,
-  order,
-}) => {
+export const FulfillmentDetails: FC<
+  React.PropsWithChildren<FulfillmentDetailsProps>
+> = ({ me, order }) => {
   const meData = useFragment(ME_FRAGMENT, me)
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const { router } = useRouter()
@@ -56,9 +55,10 @@ export const FulfillmentDetails: FC<React.PropsWithChildren<FulfillmentDetailsPr
     shippingContext.orderData
   )
 
-  const availableFulfillmentTypes: FulfillmentType[] = firstArtwork.pickupAvailable
-    ? [FulfillmentType.PICKUP, FulfillmentType.SHIP]
-    : [FulfillmentType.SHIP]
+  const availableFulfillmentTypes: FulfillmentType[] =
+    firstArtwork.pickupAvailable
+      ? [FulfillmentType.PICKUP, FulfillmentType.SHIP]
+      : [FulfillmentType.SHIP]
 
   /**
    * Effects
@@ -180,9 +180,8 @@ export const FulfillmentDetails: FC<React.PropsWithChildren<FulfillmentDetailsPr
         values.fulfillmentType === FulfillmentType.SHIP &&
         shippingContext.state.shippingFormMode === "new_address"
       ) {
-        const userAddressUpdateResult = await handleNewUserAddressUpdates(
-          values
-        )
+        const userAddressUpdateResult =
+          await handleNewUserAddressUpdates(values)
 
         if (userAddressUpdateResult) {
           if (userAddressUpdateResult.errors) {
@@ -210,9 +209,8 @@ export const FulfillmentDetails: FC<React.PropsWithChildren<FulfillmentDetailsPr
         }
       }
 
-      const saveFulfillmentDetailsResult = await handleSaveFulfillmentDetails(
-        values
-      )
+      const saveFulfillmentDetailsResult =
+        await handleSaveFulfillmentDetails(values)
 
       if (saveFulfillmentDetailsResult.data) {
         const requiresShippingQuotes =

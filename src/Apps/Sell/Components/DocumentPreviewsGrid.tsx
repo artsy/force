@@ -3,7 +3,9 @@ import { DocumentPreviewItem } from "Apps/Sell/Components/DocumentPreviewItem"
 import { DocumentsFormValues } from "Apps/Sell/Routes/AdditionalRoutes/AdditionalDocumentsRoute"
 import { useFormikContext } from "formik"
 
-export const DocumentPreviewsGrid: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const DocumentPreviewsGrid: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const {
     values: { documents },
   } = useFormikContext<DocumentsFormValues>()

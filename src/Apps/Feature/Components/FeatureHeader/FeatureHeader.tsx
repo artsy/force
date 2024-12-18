@@ -8,7 +8,9 @@ export interface FeatureHeaderProps {
   feature: FeatureHeader_feature$data
 }
 
-export const FeatureHeader: React.FC<React.PropsWithChildren<FeatureHeaderProps>> = ({ feature }) => {
+export const FeatureHeader: React.FC<
+  React.PropsWithChildren<FeatureHeaderProps>
+> = ({ feature }) => {
   if (feature.layout === "FULL") {
     return <FeatureHeaderFull feature={feature} />
   }

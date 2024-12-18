@@ -42,8 +42,8 @@ export const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
     (artwork.listPrice?.__typename === "PriceRange"
       ? artwork.listPrice?.maxPrice?.minor || artwork.listPrice?.minPrice?.minor
       : artwork.listPrice?.__typename === "Money"
-      ? artwork.listPrice?.minor
-      : 0) ?? 0
+        ? artwork.listPrice?.minor
+        : 0) ?? 0
 
   const artworkFallsBeforeFirstBin =
     priceCents < artwork.pricingContext.bins[0].minPriceCents
@@ -120,46 +120,41 @@ export const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
           artwork.pricingContext.bins[artwork.pricingContext.bins.length - 1]
             .maxPrice + "+"
         }
-        bars={artwork.pricingContext.bins.map(
-          (bin, index): BarDescriptor => {
-            const isFirstBin = index === 0
-            const isLastBin = artwork?.pricingContext?.bins?.length
-              ? index === artwork.pricingContext.bins.length - 1
-              : true
+        bars={artwork.pricingContext.bins.map((bin, index): BarDescriptor => {
+          const isFirstBin = index === 0
+          const isLastBin = artwork?.pricingContext?.bins?.length
+            ? index === artwork.pricingContext.bins.length - 1
+            : true
 
-            const title = isLastBin
-              ? `${bin.minPrice}+`
-              : `${isFirstBin ? "$0" : bin.minPrice}–${bin.maxPrice}`
-            const artworkFallsInThisBin =
-              (isFirstBin && artworkFallsBeforeFirstBin) ||
-              (isLastBin && artworkFallsAfterLastBin) ||
-              (priceCents >= bin.minPriceCents &&
-                priceCents < bin.maxPriceCents)
+          const title = isLastBin
+            ? `${bin.minPrice}+`
+            : `${isFirstBin ? "$0" : bin.minPrice}–${bin.maxPrice}`
+          const artworkFallsInThisBin =
+            (isFirstBin && artworkFallsBeforeFirstBin) ||
+            (isLastBin && artworkFallsAfterLastBin) ||
+            (priceCents >= bin.minPriceCents && priceCents < bin.maxPriceCents)
 
-            const binValue =
-              artworkFallsInThisBin && bin.numArtworks === 0
-                ? 1
-                : bin.numArtworks
-            const labelSuffix = binValue === 1 ? " work" : " works"
+          const binValue =
+            artworkFallsInThisBin && bin.numArtworks === 0 ? 1 : bin.numArtworks
+          const labelSuffix = binValue === 1 ? " work" : " works"
 
-            return {
-              value: binValue,
-              label: {
-                title,
-                description: binValue + labelSuffix,
-                noPadding: false,
-              },
-              onHover: handleBarChartHover,
-              highlightLabel: artworkFallsInThisBin
-                ? {
-                    title,
-                    description: "This work",
-                    noPadding: false,
-                  }
-                : undefined,
-            }
+          return {
+            value: binValue,
+            label: {
+              title,
+              description: binValue + labelSuffix,
+              noPadding: false,
+            },
+            onHover: handleBarChartHover,
+            highlightLabel: artworkFallsInThisBin
+              ? {
+                  title,
+                  description: "This work",
+                  noPadding: false,
+                }
+              : undefined,
           }
-        )}
+        })}
       />
     </BorderBox>
   )
@@ -221,9 +216,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const PricingContextQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const PricingContextQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

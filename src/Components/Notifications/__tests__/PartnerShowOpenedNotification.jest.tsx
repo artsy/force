@@ -7,19 +7,18 @@ import { PartnerShowOpenedNotification_test_Query } from "__generated__/PartnerS
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
 
-const { renderWithRelay } = setupTestWrapperTL<
-  PartnerShowOpenedNotification_test_Query
->({
-  Component: props => {
-    const notification = props.notificationsConnection?.edges?.[0]?.node
+const { renderWithRelay } =
+  setupTestWrapperTL<PartnerShowOpenedNotification_test_Query>({
+    Component: props => {
+      const notification = props.notificationsConnection?.edges?.[0]?.node
 
-    if (notification) {
-      return <PartnerShowOpenedNotification notification={notification} />
-    }
+      if (notification) {
+        return <PartnerShowOpenedNotification notification={notification} />
+      }
 
-    return null
-  },
-  query: graphql`
+      return null
+    },
+    query: graphql`
     query PartnerShowOpenedNotification_test_Query @relay_test_operation {
       notificationsConnection(first: 1) {
         edges {
@@ -30,7 +29,7 @@ const { renderWithRelay } = setupTestWrapperTL<
       }
     }
   `,
-})
+  })
 
 describe("PartnerShowOpenedNotification", () => {
   it("renders the notification", () => {

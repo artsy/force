@@ -13,11 +13,9 @@ export interface CreateAlertButtonProps extends ButtonProps {
   renderButton?: (props: RenderButtonProps) => JSX.Element
 }
 
-export const CreateAlertButton: FC<React.PropsWithChildren<CreateAlertButtonProps>> = ({
-  onClick,
-  renderButton,
-  ...buttonProps
-}) => {
+export const CreateAlertButton: FC<
+  React.PropsWithChildren<CreateAlertButtonProps>
+> = ({ onClick, renderButton, ...buttonProps }) => {
   const { clickedCreateAlert } = useAlertTracking()
   const { dispatch } = useAlertContext()
 

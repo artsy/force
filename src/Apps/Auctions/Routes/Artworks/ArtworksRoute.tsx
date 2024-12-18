@@ -6,7 +6,9 @@ interface ArtworksRouteProps {
   viewer: ArtworksRoute_viewer$data
 }
 
-const ArtworksRoute: React.FC<React.PropsWithChildren<ArtworksRouteProps>> = () => {
+const ArtworksRoute: React.FC<
+  React.PropsWithChildren<ArtworksRouteProps>
+> = () => {
   return <>Artworks route</>
 }
 

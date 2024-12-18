@@ -19,9 +19,9 @@ interface SettingsEditSettingsLinkedAccountsProps {
 
 const providerNames = ["Apple", "Facebook", "Google"]
 
-export const SettingsEditSettingsLinkedAccounts: FC<React.PropsWithChildren<SettingsEditSettingsLinkedAccountsProps>> = ({
-  me,
-}) => {
+export const SettingsEditSettingsLinkedAccounts: FC<
+  React.PropsWithChildren<SettingsEditSettingsLinkedAccountsProps>
+> = ({ me }) => {
   const { match } = useRouter()
   const { sendToast } = useToasts()
 
@@ -79,9 +79,8 @@ export const SettingsEditSettingsLinkedAccounts: FC<React.PropsWithChildren<Sett
   )
 }
 
-export const SettingsEditSettingsLinkedAccountsFragmentContainer = createFragmentContainer(
-  SettingsEditSettingsLinkedAccounts,
-  {
+export const SettingsEditSettingsLinkedAccountsFragmentContainer =
+  createFragmentContainer(SettingsEditSettingsLinkedAccounts, {
     me: graphql`
       fragment SettingsEditSettingsLinkedAccounts_me on Me {
         authentications {
@@ -89,8 +88,7 @@ export const SettingsEditSettingsLinkedAccountsFragmentContainer = createFragmen
         }
       }
     `,
-  }
-)
+  })
 
 interface SettingsEditSettingsLinkedAccountsButtonProps {
   Icon: React.FunctionComponent<React.PropsWithChildren<any>>
@@ -101,12 +99,9 @@ interface SettingsEditSettingsLinkedAccountsButtonProps {
 
 type Mode = "Disconnected" | "Connecting" | "Connected" | "Disconnecting"
 
-const SettingsEditSettingsLinkedAccountsButton: FC<React.PropsWithChildren<SettingsEditSettingsLinkedAccountsButtonProps>> = ({
-  Icon,
-  me,
-  href,
-  provider,
-}) => {
+const SettingsEditSettingsLinkedAccountsButton: FC<
+  React.PropsWithChildren<SettingsEditSettingsLinkedAccountsButtonProps>
+> = ({ Icon, me, href, provider }) => {
   const isConnected = me.authentications.find(
     authentication => authentication.provider === provider
   )

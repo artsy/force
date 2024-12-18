@@ -15,9 +15,9 @@ interface ArtworkArtistSeriesProps {
   artwork: ArtworkArtistSeries_artwork$data
 }
 
-const ArtworkArtistSeries: React.FC<React.PropsWithChildren<ArtworkArtistSeriesProps>> = ({
-  artwork,
-}) => {
+const ArtworkArtistSeries: React.FC<
+  React.PropsWithChildren<ArtworkArtistSeriesProps>
+> = ({ artwork }) => {
   const artworkArtistSeries = (artwork?.seriesForCounts?.edges ?? [])[0]?.node
   const artistArtistSeries = (artwork?.seriesArtist?.artistSeriesConnection
     ?.edges ?? [])[0]?.node
@@ -104,9 +104,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtworkArtistSeriesQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const ArtworkArtistSeriesQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

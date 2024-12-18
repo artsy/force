@@ -33,15 +33,13 @@ export const HowMyCollectionWorks = () => {
     },
     {
       title: "Check for insights",
-      text:
-        "Get free insights into the markets and careers of the artists in your collection.",
+      text: "Get free insights into the markets and careers of the artists in your collection.",
       src: howItWorksImage1.src,
       srcSet: howItWorksImage1.srcSet,
     },
     {
       title: "Sell with Ease",
-      text:
-        "Our team of experts will give you a free price estimate on eligible artworks and find you the right buyer.",
+      text: "Our team of experts will give you a free price estimate on eligible artworks and find you the right buyer.",
       src: howItWorksImage3.src,
       srcSet: howItWorksImage3.srcSet,
     },

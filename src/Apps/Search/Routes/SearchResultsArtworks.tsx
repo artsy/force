@@ -19,7 +19,9 @@ interface SearchResultsRouteProps {
   viewer: SearchResultsArtworks_viewer$data
 }
 
-export const SearchResultsArtworksRoute: React.FC<React.PropsWithChildren<SearchResultsRouteProps>> = props => {
+export const SearchResultsArtworksRoute: React.FC<
+  React.PropsWithChildren<SearchResultsRouteProps>
+> = props => {
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
   const [searchFilterKey, setSearchFilterKey] = useState(
@@ -65,9 +67,8 @@ export const SearchResultsArtworksRoute: React.FC<React.PropsWithChildren<Search
   )
 }
 
-export const SearchResultsArtworksRouteFragmentContainer = createFragmentContainer(
-  SearchResultsArtworksRoute,
-  {
+export const SearchResultsArtworksRouteFragmentContainer =
+  createFragmentContainer(SearchResultsArtworksRoute, {
     viewer: graphql`
       fragment SearchResultsArtworks_viewer on Viewer
         @argumentDefinitions(
@@ -91,5 +92,4 @@ export const SearchResultsArtworksRouteFragmentContainer = createFragmentContain
         ...ArtworkFilter_viewer @arguments(input: $input)
       }
     `,
-  }
-)
+  })

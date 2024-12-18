@@ -28,7 +28,9 @@ export interface TransactionDetailsSummaryItemProps
   showOrderNumberHeader?: boolean
 }
 
-export const TransactionDetailsSummaryItem: FC<React.PropsWithChildren<TransactionDetailsSummaryItemProps>> = ({
+export const TransactionDetailsSummaryItem: FC<
+  React.PropsWithChildren<TransactionDetailsSummaryItemProps>
+> = ({
   showOfferNote,
   offerOverride,
   order,
@@ -63,28 +65,30 @@ export const TransactionDetailsSummaryItem: FC<React.PropsWithChildren<Transacti
     const isBuyerOffer =
       offerOverride != null || !offer || offer.fromParticipant === "BUYER"
 
-    return (<>
-      <Entry
-        label={isBuyerOffer ? "Your offer" : "Seller's offer"}
-        value={
-          appendCurrencySymbol(offerOverride, currency) ||
-          (offer && appendCurrencySymbol(offer.amount, currency)) ||
-          "—"
-        }
-        data-test="offer"
-      />
-      {offerContextPrice === "LAST_OFFER" ? (
-        // show last offer
-        (<SecondaryEntry
-          label={
-            order.lastOffer?.fromParticipant === "SELLER"
-              ? "Seller's offer"
-              : "Your offer"
+    return (
+      <>
+        <Entry
+          label={isBuyerOffer ? "Your offer" : "Seller's offer"}
+          value={
+            appendCurrencySymbol(offerOverride, currency) ||
+            (offer && appendCurrencySymbol(offer.amount, currency)) ||
+            "—"
           }
-          value={appendCurrencySymbol(order.lastOffer?.amount, currency)}
-        />)
-      ) : null}
-    </>);
+          data-test="offer"
+        />
+        {offerContextPrice === "LAST_OFFER" ? (
+          // show last offer
+          <SecondaryEntry
+            label={
+              order.lastOffer?.fromParticipant === "SELLER"
+                ? "Seller's offer"
+                : "Your offer"
+            }
+            value={appendCurrencySymbol(order.lastOffer?.amount, currency)}
+          />
+        ) : null}
+      </>
+    )
   }
 
   const getOffer = ():
@@ -336,7 +340,12 @@ interface EntryProps extends SecondaryEntryProps {
   source?: string
 }
 
-const Entry: React.FC<React.PropsWithChildren<EntryProps>> = ({ label, value, final, source }) => (
+const Entry: React.FC<React.PropsWithChildren<EntryProps>> = ({
+  label,
+  value,
+  final,
+  source,
+}) => (
   <Flex justifyContent="space-between" alignItems="baseline">
     <div>
       <Text variant="sm" color={getLabelColor(final, source)}>
@@ -355,7 +364,9 @@ const Entry: React.FC<React.PropsWithChildren<EntryProps>> = ({ label, value, fi
   </Flex>
 )
 
-const SecondaryEntry: React.FC<React.PropsWithChildren<SecondaryEntryProps>> = ({ label, value }) => (
+const SecondaryEntry: React.FC<
+  React.PropsWithChildren<SecondaryEntryProps>
+> = ({ label, value }) => (
   <Flex justifyContent="space-between" alignItems="baseline">
     <Text variant="xs" color="black60">
       {label}
@@ -394,9 +405,8 @@ graphql`
   }
 `
 
-export const TransactionDetailsSummaryItemFragmentContainer = createFragmentContainer(
-  withSystemContext(TransactionDetailsSummaryItem),
-  {
+export const TransactionDetailsSummaryItemFragmentContainer =
+  createFragmentContainer(withSystemContext(TransactionDetailsSummaryItem), {
     order: graphql`
       fragment TransactionDetailsSummaryItem_order on CommerceOrder {
         __typename
@@ -442,5 +452,4 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
         }
       }
     `,
-  }
-)
+  })

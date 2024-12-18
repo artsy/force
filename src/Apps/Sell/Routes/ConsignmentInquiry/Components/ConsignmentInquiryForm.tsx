@@ -10,15 +10,11 @@ export interface ConsignmentInquiryFormModel {
   message: string
 }
 
-export const ConsignmentInquiryForm: React.FC<React.PropsWithChildren<{}>> = ({ ...rest }) => {
-  const {
-    values,
-    handleChange,
-    handleBlur,
-    touched,
-    errors,
-    setFieldValue,
-  } = useFormikContext<ConsignmentInquiryFormModel>()
+export const ConsignmentInquiryForm: React.FC<React.PropsWithChildren<{}>> = ({
+  ...rest
+}) => {
+  const { values, handleChange, handleBlur, touched, errors, setFieldValue } =
+    useFormikContext<ConsignmentInquiryFormModel>()
 
   return (
     <Box>

@@ -7,9 +7,9 @@ interface PartnerHeaderImageProps {
   profile: PartnerHeaderImage_profile$data
 }
 
-export const PartnerHeaderImage: React.FC<React.PropsWithChildren<PartnerHeaderImageProps>> = ({
-  profile,
-}) => {
+export const PartnerHeaderImage: React.FC<
+  React.PropsWithChildren<PartnerHeaderImageProps>
+> = ({ profile }) => {
   if (!profile || !profile.image?.url) return null
   return <FullBleedHeader src={profile.image.url} />
 }

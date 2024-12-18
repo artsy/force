@@ -14,30 +14,29 @@ jest.mock("react-tracking")
 
 jest.mock("Apps/Artwork/Components/SelectedEditionSetContext")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  ArtworkDetailsAdditionalInfo_Test_Query
->({
-  Component: props => {
-    return (
-      <MockBoot>
-        <AnalyticsCombinedContextProvider
-          contextPageOwnerId="example-artwork-id"
-          path="/artwork/example-artwork-slug"
-        >
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-          <ArtworkDetailsAdditionalInfoFragmentContainer {...props} />
-        </AnalyticsCombinedContextProvider>
-      </MockBoot>
-    )
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<ArtworkDetailsAdditionalInfo_Test_Query>({
+    Component: props => {
+      return (
+        <MockBoot>
+          <AnalyticsCombinedContextProvider
+            contextPageOwnerId="example-artwork-id"
+            path="/artwork/example-artwork-slug"
+          >
+            {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
+            <ArtworkDetailsAdditionalInfoFragmentContainer {...props} />
+          </AnalyticsCombinedContextProvider>
+        </MockBoot>
+      )
+    },
+    query: graphql`
     query ArtworkDetailsAdditionalInfo_Test_Query @relay_test_operation {
       artwork(id: "xxx") {
         ...ArtworkDetailsAdditionalInfo_artwork
       }
     }
   `,
-})
+  })
 
 describe("ArtworkDetailsAdditionalInfo", () => {
   const trackEvent = jest.fn()

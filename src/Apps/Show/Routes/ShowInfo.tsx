@@ -99,9 +99,9 @@ export const ShowInfo: React.FC<React.PropsWithChildren<ShowInfoProps>> = ({
   )
 }
 
-const EventList: React.FC<React.PropsWithChildren<{ events: ShowInfoProps["show"]["events"] }>> = ({
-  events,
-}) => {
+const EventList: React.FC<
+  React.PropsWithChildren<{ events: ShowInfoProps["show"]["events"] }>
+> = ({ events }) => {
   if (!events?.length) return null
 
   return (

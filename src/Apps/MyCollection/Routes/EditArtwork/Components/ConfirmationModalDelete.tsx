@@ -5,10 +5,9 @@ interface ConfirmationModalProps {
   handleDelete: () => void
 }
 
-export const ConfirmationModalDelete: React.FC<React.PropsWithChildren<ConfirmationModalProps>> = ({
-  onClose,
-  handleDelete,
-}) => {
+export const ConfirmationModalDelete: React.FC<
+  React.PropsWithChildren<ConfirmationModalProps>
+> = ({ onClose, handleDelete }) => {
   return (
     <ModalDialog
       title="Delete this artwork?"

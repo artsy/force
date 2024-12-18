@@ -10,9 +10,9 @@ interface UserRegistrationAuctionsProps {
   me: UserRegistrationAuctions_me$data
 }
 
-export const UserRegistrationAuctions: React.FC<React.PropsWithChildren<UserRegistrationAuctionsProps>> = ({
-  me,
-}) => {
+export const UserRegistrationAuctions: React.FC<
+  React.PropsWithChildren<UserRegistrationAuctionsProps>
+> = ({ me }) => {
   const saleRegistrations = extractNodes(me?.saleRegistrationsConnection)
 
   if (!saleRegistrations) {
@@ -64,9 +64,8 @@ export const UserRegistrationAuctions: React.FC<React.PropsWithChildren<UserRegi
   )
 }
 
-export const UserRegistrationAuctionsFragmentContainer = createFragmentContainer(
-  UserRegistrationAuctions,
-  {
+export const UserRegistrationAuctionsFragmentContainer =
+  createFragmentContainer(UserRegistrationAuctions, {
     me: graphql`
       fragment UserRegistrationAuctions_me on Me {
         saleRegistrationsConnection(
@@ -92,5 +91,4 @@ export const UserRegistrationAuctionsFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })

@@ -40,12 +40,9 @@ const SORTS = [
 
 const ARTWORKS_PER_SCROLL = 30
 
-export const AddArtworksModalContent: FC<React.PropsWithChildren<AddArtworksModalContentProps>> = ({
-  me,
-  relay,
-  selectedArtworkIds,
-  onArtworkClick,
-}) => {
+export const AddArtworksModalContent: FC<
+  React.PropsWithChildren<AddArtworksModalContentProps>
+> = ({ me, relay, selectedArtworkIds, onArtworkClick }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingNextPage, setIsLoadingNextPage] = useState(false)
   const [sort, setSort] = useState(SORTS[0].value)
@@ -183,7 +180,9 @@ const AddArtworksModalContentPaginationContainer = createPaginationContainer(
   }
 )
 
-export const AddArtworksModalContentQueryRender: FC<React.PropsWithChildren<AddArtworksModalContentQueryRenderProps>> = props => {
+export const AddArtworksModalContentQueryRender: FC<
+  React.PropsWithChildren<AddArtworksModalContentQueryRenderProps>
+> = props => {
   return (
     <SystemQueryRenderer<AddArtworksModalContentQuery>
       placeholder={<ContentPlaceholder />}

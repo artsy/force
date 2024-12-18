@@ -11,9 +11,9 @@ interface SettingsAuctionsLotStandingProps {
   lotStanding: SettingsAuctionsLotStanding_lotStanding$data
 }
 
-const SettingsAuctionsLotStanding: FC<React.PropsWithChildren<SettingsAuctionsLotStandingProps>> = ({
-  lotStanding,
-}) => {
+const SettingsAuctionsLotStanding: FC<
+  React.PropsWithChildren<SettingsAuctionsLotStandingProps>
+> = ({ lotStanding }) => {
   if (!lotStanding) return null
 
   const { saleArtwork, isLeadingBidder } = lotStanding
@@ -105,9 +105,8 @@ const SettingsAuctionsLotStanding: FC<React.PropsWithChildren<SettingsAuctionsLo
   )
 }
 
-export const SettingsAuctionsLotStandingFragmentContainer = createFragmentContainer(
-  SettingsAuctionsLotStanding,
-  {
+export const SettingsAuctionsLotStandingFragmentContainer =
+  createFragmentContainer(SettingsAuctionsLotStanding, {
     lotStanding: graphql`
       fragment SettingsAuctionsLotStanding_lotStanding on LotStanding {
         isLeadingBidder
@@ -129,5 +128,4 @@ export const SettingsAuctionsLotStandingFragmentContainer = createFragmentContai
         }
       }
     `,
-  }
-)
+  })

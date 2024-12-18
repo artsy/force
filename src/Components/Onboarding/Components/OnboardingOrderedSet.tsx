@@ -17,9 +17,9 @@ interface OnboardingOrderedSetProps {
   orderedSet: OnboardingOrderedSet_orderedSet$data
 }
 
-export const OnboardingOrderedSet: FC<React.PropsWithChildren<OnboardingOrderedSetProps>> = ({
-  orderedSet,
-}) => {
+export const OnboardingOrderedSet: FC<
+  React.PropsWithChildren<OnboardingOrderedSetProps>
+> = ({ orderedSet }) => {
   const { dispatch } = useOnboardingContext()
   const nodes = extractNodes(orderedSet.orderedItemsConnection)
 
@@ -119,9 +119,9 @@ interface OnboardingOrderedSetQueryRendererProps {
   id: string
 }
 
-export const OnboardingOrderedSetQueryRenderer: FC<React.PropsWithChildren<OnboardingOrderedSetQueryRendererProps>> = ({
-  id,
-}) => {
+export const OnboardingOrderedSetQueryRenderer: FC<
+  React.PropsWithChildren<OnboardingOrderedSetQueryRendererProps>
+> = ({ id }) => {
   return (
     <SystemQueryRenderer<OnboardingOrderedSetQuery>
       query={graphql`

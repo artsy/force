@@ -194,8 +194,7 @@ const IdentityVerificationApp: React.FC<React.PropsWithChildren<Props>> = ({
               <Text variant="sm">
                 • You will have to enable permissions for your camera to take a
                 photo of your ID and yourself.
-                <br />
-                • All four corners of your ID must be captured.
+                <br />• All four corners of your ID must be captured.
                 <br />• Artsy can not accept emails of your personal documents,
                 they must be submitted to our secure identity verification
                 partner during this process.

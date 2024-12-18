@@ -23,9 +23,9 @@ interface HomeFeaturedGalleriesRailProps {
   orderedSet: HomeFeaturedGalleriesRail_orderedSet$data
 }
 
-const HomeFeaturedGalleriesRail: React.FC<React.PropsWithChildren<HomeFeaturedGalleriesRailProps>> = ({
-  orderedSet,
-}) => {
+const HomeFeaturedGalleriesRail: React.FC<
+  React.PropsWithChildren<HomeFeaturedGalleriesRailProps>
+> = ({ orderedSet }) => {
   const { trackEvent } = useTracking()
 
   const nodes = extractNodes(orderedSet.orderedItemsConnection)
@@ -94,9 +94,8 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const HomeFeaturedGalleriesRailFragmentContainer = createFragmentContainer(
-  HomeFeaturedGalleriesRail,
-  {
+export const HomeFeaturedGalleriesRailFragmentContainer =
+  createFragmentContainer(HomeFeaturedGalleriesRail, {
     orderedSet: graphql`
       fragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {
         orderedItemsConnection(first: 20) {
@@ -117,10 +116,11 @@ export const HomeFeaturedGalleriesRailFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })
 
-export const HomeFeaturedGalleriesRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeFeaturedGalleriesRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

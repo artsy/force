@@ -16,11 +16,8 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 export const useAlertTracking = () => {
   const { trackEvent } = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   if (!contextPageOwnerId || !contextPageOwnerSlug || !contextPageOwnerType) {
     console.warn("Missing analytics context")

@@ -21,13 +21,9 @@ interface QuickMultipleSelectAlertFilterProps {
   truncate?: number
 }
 
-export const QuickMultipleSelectAlertFilter: FC<React.PropsWithChildren<QuickMultipleSelectAlertFilterProps>> = ({
-  criteriaKey,
-  description,
-  label,
-  options,
-  truncate = Infinity,
-}) => {
+export const QuickMultipleSelectAlertFilter: FC<
+  React.PropsWithChildren<QuickMultipleSelectAlertFilterProps>
+> = ({ criteriaKey, description, label, options, truncate = Infinity }) => {
   const { state, dispatch } = useAlertContext()
 
   const [isExpanded, setExpanded] = useState(false)
@@ -62,9 +58,9 @@ export const QuickMultipleSelectAlertFilter: FC<React.PropsWithChildren<QuickMul
             <Column span={6} key={index}>
               <Checkbox
                 onSelect={selected => toggleSelection(selected, value)}
-                selected={(state.criteria[criteriaKey] as
-                  | string[]
-                  | null)?.includes(value)}
+                selected={(
+                  state.criteria[criteriaKey] as string[] | null
+                )?.includes(value)}
               >
                 {name}
               </Checkbox>

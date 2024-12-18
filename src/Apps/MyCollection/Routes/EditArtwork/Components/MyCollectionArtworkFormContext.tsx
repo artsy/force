@@ -9,20 +9,18 @@ interface MyCollectionArtworkFormContextProps {
   removeLocalImage: (photoID: string) => void
 }
 
-export const MyCollectionArtworkFormContext = createContext<
-  MyCollectionArtworkFormContextProps
->({
-  onBack: () => {},
-  onNext: () => {},
-  onSkip: () => {},
-  addLocalImage: () => {},
-  removeLocalImage: () => {},
-})
+export const MyCollectionArtworkFormContext =
+  createContext<MyCollectionArtworkFormContextProps>({
+    onBack: () => {},
+    onNext: () => {},
+    onSkip: () => {},
+    addLocalImage: () => {},
+    removeLocalImage: () => {},
+  })
 
-export const MyCollectionArtworkFormContextProvider: React.FC<React.PropsWithChildren<MyCollectionArtworkFormContextProps>> = ({
-  children,
-  ...rest
-}) => {
+export const MyCollectionArtworkFormContextProvider: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkFormContextProps>
+> = ({ children, ...rest }) => {
   return (
     <MyCollectionArtworkFormContext.Provider value={rest}>
       {children}

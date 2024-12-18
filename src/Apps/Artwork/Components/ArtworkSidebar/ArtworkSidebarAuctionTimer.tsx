@@ -10,9 +10,9 @@ interface ArtworkSidebarAuctionTimerProps {
   artwork: ArtworkSidebarAuctionTimer_artwork$data
 }
 
-export const ArtworkSidebarAuctionTimer: React.FC<React.PropsWithChildren<ArtworkSidebarAuctionTimerProps>> = ({
-  artwork,
-}) => {
+export const ArtworkSidebarAuctionTimer: React.FC<
+  React.PropsWithChildren<ArtworkSidebarAuctionTimerProps>
+> = ({ artwork }) => {
   const { sale, saleArtwork } = artwork
 
   return (
@@ -35,9 +35,8 @@ export const ArtworkSidebarAuctionTimer: React.FC<React.PropsWithChildren<Artwor
   )
 }
 
-export const ArtworkSidebarAuctionTimerFragmentContainer = createFragmentContainer(
-  ArtworkSidebarAuctionTimer,
-  {
+export const ArtworkSidebarAuctionTimerFragmentContainer =
+  createFragmentContainer(ArtworkSidebarAuctionTimer, {
     artwork: graphql`
       fragment ArtworkSidebarAuctionTimer_artwork on Artwork {
         internalID
@@ -54,5 +53,4 @@ export const ArtworkSidebarAuctionTimerFragmentContainer = createFragmentContain
         }
       }
     `,
-  }
-)
+  })

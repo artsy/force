@@ -139,9 +139,9 @@ const ClearAllButton: React.FC<React.PropsWithChildren<unknown>> = () => {
  * components that are visible to the user.)
  */
 
-const ArtworkFilterContextInspector: React.FC<React.PropsWithChildren<
-  unknown
->> = () => {
+const ArtworkFilterContextInspector: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const artworkFilterContext = useArtworkFilterContext()
 
   return (

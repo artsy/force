@@ -3,11 +3,9 @@ import { themeGet } from "@styled-system/theme-get"
 import * as React from "react"
 import styled from "styled-components"
 
-export const Page: React.FC<React.PropsWithChildren<BoxProps & { title?: string }>> = ({
-  children,
-  title = "",
-  ...rest
-}) => {
+export const Page: React.FC<
+  React.PropsWithChildren<BoxProps & { title?: string }>
+> = ({ children, title = "", ...rest }) => {
   return (
     <AppContainer {...rest} py={2} px={4}>
       {children}

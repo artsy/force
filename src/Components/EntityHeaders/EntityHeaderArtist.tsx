@@ -18,7 +18,9 @@ export interface EntityHeaderArtistProps extends BoxProps {
   onFollow?(): void
 }
 
-const EntityHeaderArtist: FC<React.PropsWithChildren<EntityHeaderArtistProps>> = ({
+const EntityHeaderArtist: FC<
+  React.PropsWithChildren<EntityHeaderArtistProps>
+> = ({
   artist,
   displayAvatar = true,
   displayCounts = false,

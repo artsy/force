@@ -32,12 +32,9 @@ interface SaveButtonBaseProps {
 const BTN_HEIGHT = 18
 const BTN_WIDTH = 18
 
-export const SaveButtonBase: React.FC<React.PropsWithChildren<SaveButtonBaseProps>> = ({
-  isSaved,
-  onClick,
-  artwork,
-  testID = "saveButton",
-}) => {
+export const SaveButtonBase: React.FC<
+  React.PropsWithChildren<SaveButtonBaseProps>
+> = ({ isSaved, onClick, artwork, testID = "saveButton" }) => {
   const [isHovered, setIsHovered] = useState(false)
   const title = isSaved ? "Unsave" : "Save"
   const { lotWatcherCount, lotClosesAt } =
@@ -169,10 +166,9 @@ interface SaveButtonQueryRendererProps
   id: string
 }
 
-export const SaveButtonQueryRenderer: React.FC<React.PropsWithChildren<SaveButtonQueryRendererProps>> = ({
-  id,
-  contextModule,
-}) => {
+export const SaveButtonQueryRenderer: React.FC<
+  React.PropsWithChildren<SaveButtonQueryRendererProps>
+> = ({ id, contextModule }) => {
   const placeholderArtwork = {
     collectorSignals: null,
   }

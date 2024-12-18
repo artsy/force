@@ -10,10 +10,9 @@ interface SaveAndContinueButtonProps {
   width?: ButtonProps["width"]
 }
 
-export const SaveAndContinueButton: React.FC<React.PropsWithChildren<SaveAndContinueButtonProps>> = ({
-  order,
-  width,
-}) => {
+export const SaveAndContinueButton: React.FC<
+  React.PropsWithChildren<SaveAndContinueButtonProps>
+> = ({ order, width }) => {
   const data = useFragment(
     graphql`
       fragment SaveAndContinueButton_order on CommerceOrder {

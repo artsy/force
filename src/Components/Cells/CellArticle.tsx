@@ -102,10 +102,9 @@ export const CellArticleFragmentContainer = createFragmentContainer(
 
 type CellArticlePlaceholderProps = Pick<CellArticleProps, "mode"> & BoxProps
 
-export const CellArticlePlaceholder: FC<React.PropsWithChildren<CellArticlePlaceholderProps>> = ({
-  mode = "RAIL",
-  ...rest
-}) => {
+export const CellArticlePlaceholder: FC<
+  React.PropsWithChildren<CellArticlePlaceholderProps>
+> = ({ mode = "RAIL", ...rest }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
 
   return (

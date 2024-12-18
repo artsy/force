@@ -46,9 +46,9 @@ describe("lifecycle", () => {
     }
 
     for (let method of ["get", "end", "set", "post", "send", "status"]) {
-      ;((request as unknown) as SuperAgentRequest)[
-        method
-      ] = jest.fn().mockReturnValue((request as unknown) as SuperAgentRequest)
+      ;(request as unknown as SuperAgentRequest)[method] = jest
+        .fn()
+        .mockReturnValue(request as unknown as SuperAgentRequest)
     }
   })
 
@@ -171,7 +171,7 @@ describe("lifecycle", () => {
         },
       }
       lifecycle.onLocalSignup(req, res, next)
-      ;((request as unknown) as any).end.mock.calls[0][0](err)
+      ;(request as unknown as any).end.mock.calls[0][0](err)
       expect(send).toHaveBeenCalledWith({
         error:
           "Password must include at least one lowercase letter, one uppercase letter, and one digit.",
@@ -183,7 +183,7 @@ describe("lifecycle", () => {
       req.body.recaptcha_token = "recaptcha_token"
       lifecycle.onLocalSignup(req, res, next)
       expect(
-        ((request as unknown) as SuperAgentRequest).send
+        (request as unknown as SuperAgentRequest).send
       ).toHaveBeenCalledWith(
         expect.objectContaining({ recaptcha_token: "recaptcha_token" })
       )
@@ -193,7 +193,7 @@ describe("lifecycle", () => {
       req.get.mockReturnValue("foo-agent")
       lifecycle.onLocalSignup(req, res, next)
       expect(
-        ((request as unknown) as SuperAgentRequest).set
+        (request as unknown as SuperAgentRequest).set
       ).toHaveBeenCalledWith(
         expect.objectContaining({ "User-Agent": "foo-agent" })
       )
@@ -303,9 +303,8 @@ describe("lifecycle", () => {
       expect(request.post).toHaveBeenCalledWith(
         expect.stringContaining("me/trust_token")
       )
-      const endCallback = (((request as unknown) as jest.Mocked<
-        SuperAgentRequest
-      >).end.mock.calls[0][0] as unknown) as (err: any, res: any) => void
+      const endCallback = (request as unknown as jest.Mocked<SuperAgentRequest>)
+        .end.mock.calls[0][0] as unknown as (err: any, res: any) => void
       if (endCallback) {
         endCallback(null, { body: { trust_token: "foo-trust-token" } })
       }

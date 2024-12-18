@@ -11,10 +11,9 @@ interface ArticleVisibilityMetadataProps {
 /**
  * Updates article URL and title when the article is in view
  */
-const ArticleVisibilityMetadata: FC<React.PropsWithChildren<ArticleVisibilityMetadataProps>> = ({
-  article,
-  children,
-}) => {
+const ArticleVisibilityMetadata: FC<
+  React.PropsWithChildren<ArticleVisibilityMetadataProps>
+> = ({ article, children }) => {
   const { silentReplace } = useRouter()
   const { ref } = useIntersectionObserver({
     once: false,
@@ -30,9 +29,8 @@ const ArticleVisibilityMetadata: FC<React.PropsWithChildren<ArticleVisibilityMet
   return <div ref={ref as any}>{children}</div>
 }
 
-export const ArticleVisibilityMetadataFragmentContainer = createFragmentContainer(
-  ArticleVisibilityMetadata,
-  {
+export const ArticleVisibilityMetadataFragmentContainer =
+  createFragmentContainer(ArticleVisibilityMetadata, {
     article: graphql`
       fragment ArticleVisibilityMetadata_article on Article {
         title
@@ -40,5 +38,4 @@ export const ArticleVisibilityMetadataFragmentContainer = createFragmentContaine
         href
       }
     `,
-  }
-)
+  })

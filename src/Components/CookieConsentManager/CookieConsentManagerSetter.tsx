@@ -16,10 +16,9 @@ interface CookieConsentManagerSetterProps {
  * save the destinations and preferences to the context, which sits above the
  * `ConsentManagerBuilder` in the component tree.
  */
-export const CookieConsentManagerSetter: FC<React.PropsWithChildren<CookieConsentManagerSetterProps>> = ({
-  destinations,
-  preferences,
-}) => {
+export const CookieConsentManagerSetter: FC<
+  React.PropsWithChildren<CookieConsentManagerSetterProps>
+> = ({ destinations, preferences }) => {
   const { setDestinations, setPreferences } = useCookieConsentManager()
 
   useEffect(() => {

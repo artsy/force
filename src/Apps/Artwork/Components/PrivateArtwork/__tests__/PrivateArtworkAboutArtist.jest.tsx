@@ -7,18 +7,19 @@ import { PrivateArtworkAboutArtistQuery } from "__generated__/PrivateArtworkAbou
 jest.unmock("react-relay")
 
 describe("ArtworkSidebarPrivateArtwork", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    PrivateArtworkAboutArtistQuery
-  >({
-    Component: props => <PrivateArtworkAboutArtist artwork={props.artwork!} />,
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<PrivateArtworkAboutArtistQuery>({
+      Component: props => (
+        <PrivateArtworkAboutArtist artwork={props.artwork!} />
+      ),
+      query: graphql`
       query PrivateArtworkAboutArtistQuery {
         artwork(id: "foo") {
           ...PrivateArtworkAboutArtist_artwork
         }
       }
     `,
-  })
+    })
 
   it("renders correctly", () => {
     renderWithRelay({

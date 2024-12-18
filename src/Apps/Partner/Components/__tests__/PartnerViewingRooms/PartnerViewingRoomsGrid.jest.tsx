@@ -6,25 +6,24 @@ import { PartnerViewingRoomsGrid_Test_Query } from "__generated__/PartnerViewing
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  PartnerViewingRoomsGrid_Test_Query
->({
-  Component: ({ viewingRoomsConnection }) => {
-    return (
-      <PartnerViewingRoomsGridFragmentContainer
-        viewingRoomsConnection={viewingRoomsConnection!}
-        sectionTitle="Current Viewing Rooms"
-      />
-    )
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<PartnerViewingRoomsGrid_Test_Query>({
+    Component: ({ viewingRoomsConnection }) => {
+      return (
+        <PartnerViewingRoomsGridFragmentContainer
+          viewingRoomsConnection={viewingRoomsConnection!}
+          sectionTitle="Current Viewing Rooms"
+        />
+      )
+    },
+    query: graphql`
     query PartnerViewingRoomsGrid_Test_Query @relay_test_operation {
       viewingRoomsConnection: partner(id: "white-cube") {
         ...PartnerViewingRoomsGrid_viewingRoomsConnection
       }
     }
   `,
-})
+  })
 
 describe("PartnerViewingRoomsGrid", () => {
   it("renders list of VRs", () => {

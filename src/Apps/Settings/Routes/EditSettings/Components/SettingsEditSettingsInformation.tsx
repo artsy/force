@@ -25,9 +25,9 @@ interface SettingsEditSettingsInformationProps {
   me: SettingsEditSettingsInformation_me$data
 }
 
-export const SettingsEditSettingsInformation: React.FC<React.PropsWithChildren<SettingsEditSettingsInformationProps>> = ({
-  me,
-}) => {
+export const SettingsEditSettingsInformation: React.FC<
+  React.PropsWithChildren<SettingsEditSettingsInformationProps>
+> = ({ me }) => {
   const { sendToast } = useToasts()
   const { submitMutation } = useUpdateSettingsInformation()
   const phoneNumber = me.phoneNumber?.display ?? me.phoneNumber?.originalNumber
@@ -256,9 +256,8 @@ export const SettingsEditSettingsInformation: React.FC<React.PropsWithChildren<S
   )
 }
 
-export const SettingsEditSettingsInformationFragmentContainer = createFragmentContainer(
-  SettingsEditSettingsInformation,
-  {
+export const SettingsEditSettingsInformationFragmentContainer =
+  createFragmentContainer(SettingsEditSettingsInformation, {
     me: graphql`
       fragment SettingsEditSettingsInformation_me on Me {
         email
@@ -274,5 +273,4 @@ export const SettingsEditSettingsInformationFragmentContainer = createFragmentCo
         priceRangeMax
       }
     `,
-  }
-)
+  })

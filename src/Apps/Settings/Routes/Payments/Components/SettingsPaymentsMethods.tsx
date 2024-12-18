@@ -17,7 +17,9 @@ interface SettingsPaymentsMethodsProps {
 
 type Mode = "Pending" | "Adding"
 
-const SettingsPaymentsMethods: FC<React.PropsWithChildren<SettingsPaymentsMethodsProps>> = ({ me }) => {
+const SettingsPaymentsMethods: FC<
+  React.PropsWithChildren<SettingsPaymentsMethodsProps>
+> = ({ me }) => {
   const creditCards = extractNodes(me.creditCards)
   const bankAccounts = extractNodes(me.bankAccounts)
 

@@ -15,12 +15,11 @@ const QUERY = graphql`
 `
 
 describe("EntityHeaderFair", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    EntityHeaderFairFragmentContainer_Test_Query
-  >({
-    Component: EntityHeaderFairFragmentContainer,
-    query: QUERY,
-  })
+  const { renderWithRelay } =
+    setupTestWrapperTL<EntityHeaderFairFragmentContainer_Test_Query>({
+      Component: EntityHeaderFairFragmentContainer,
+      query: QUERY,
+    })
 
   it("renders the component", () => {
     renderWithRelay({

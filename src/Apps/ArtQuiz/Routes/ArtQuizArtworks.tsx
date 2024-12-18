@@ -33,7 +33,9 @@ interface ArtQuizArtworksProps {
   me: ArtQuizArtworks_me$data
 }
 
-export const ArtQuizArtworks: FC<React.PropsWithChildren<ArtQuizArtworksProps>> = ({ me }) => {
+export const ArtQuizArtworks: FC<
+  React.PropsWithChildren<ArtQuizArtworksProps>
+> = ({ me }) => {
   const { submitMutation: submitDislike } = useDislikeArtwork()
   const { submitMutation: submitSave } = useSaveArtwork()
   const { submitMutation: submitUpdate } = useUpdateQuiz()

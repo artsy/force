@@ -7,7 +7,9 @@ interface AuctionMetaProps {
   sale: AuctionMeta_sale$data
 }
 
-const AuctionMeta: React.FC<React.PropsWithChildren<AuctionMetaProps>> = props => {
+const AuctionMeta: React.FC<
+  React.PropsWithChildren<AuctionMetaProps>
+> = props => {
   const { sale } = props
   const title = `${sale.name} | Artsy`
   const description = truncate(sale.description ?? "", {

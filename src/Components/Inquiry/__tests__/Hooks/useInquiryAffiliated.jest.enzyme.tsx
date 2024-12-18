@@ -1,5 +1,8 @@
 import { mount } from "enzyme"
-import { useInquiryAffiliated, Mode } from "Components/Inquiry/Hooks/useInquiryAffiliated"
+import {
+  useInquiryAffiliated,
+  Mode,
+} from "Components/Inquiry/Hooks/useInquiryAffiliated"
 import { useUpdateCollectorProfile } from "Components/Inquiry/Hooks/useUpdateCollectorProfile"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
@@ -9,13 +12,8 @@ jest.mock("../../Hooks/useInquiryContext")
 
 describe("useInquiryAffiliated", () => {
   const Wrapper = () => {
-    const {
-      handleSelect,
-      handleRemove,
-      handleSave,
-      selection,
-      mode,
-    } = useInquiryAffiliated()
+    const { handleSelect, handleRemove, handleSave, selection, mode } =
+      useInquiryAffiliated()
 
     const { submitUpdateCollectorProfile } = useUpdateCollectorProfile()
 

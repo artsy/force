@@ -29,12 +29,9 @@ interface ConversationMessageProps {
   >["formattedFirstMessage"]
 }
 
-export const ConversationMessage: React.FC<React.PropsWithChildren<ConversationMessageProps>> = ({
-  messageIndex,
-  message,
-  messages,
-  formattedFirstMessage,
-}) => {
+export const ConversationMessage: React.FC<
+  React.PropsWithChildren<ConversationMessageProps>
+> = ({ messageIndex, message, messages, formattedFirstMessage }) => {
   const { appendElementRef } = useScrollPagination()
 
   const data = useFragment(FRAGMENT, message)
@@ -156,10 +153,12 @@ const FRAGMENT = graphql`
   }
 `
 
-const Message: React.FC<React.PropsWithChildren<{
-  data: NonNullable<ConversationMessage_message$data>
-  formattedFirstMessage: string | null | undefined
-}>> = ({ data, formattedFirstMessage }) => {
+const Message: React.FC<
+  React.PropsWithChildren<{
+    data: NonNullable<ConversationMessage_message$data>
+    formattedFirstMessage: string | null | undefined
+  }>
+> = ({ data, formattedFirstMessage }) => {
   // react-linkify v1.0.0-alpha with @types v1.0.1 - adding `properties` still doesn't work.
   // This is a workaround to specify target for now.(same as in Force v1.0.0-alpha, in Message.tsx)
   // https://github.com/tasti/react-linkify/issues/78#issuecomment-514754050

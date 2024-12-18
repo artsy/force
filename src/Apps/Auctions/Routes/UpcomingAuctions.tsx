@@ -16,10 +16,9 @@ export interface UpcomingAuctionsProps {
   relay: RelayPaginationProp
 }
 
-const UpcomingAuctions: React.FC<React.PropsWithChildren<UpcomingAuctionsProps>> = ({
-  viewer,
-  relay,
-}) => {
+const UpcomingAuctions: React.FC<
+  React.PropsWithChildren<UpcomingAuctionsProps>
+> = ({ viewer, relay }) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleClick = () => {

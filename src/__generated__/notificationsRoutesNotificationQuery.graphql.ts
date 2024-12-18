@@ -8,89 +8,94 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
-export type notificationsRoutesNotificationQuery$variables = Record<PropertyKey, never>;
+import { ConcreteRequest } from "relay-runtime"
+import { FragmentRefs } from "relay-runtime"
+export type notificationsRoutesNotificationQuery$variables = Record<
+  PropertyKey,
+  never
+>
 export type notificationsRoutesNotificationQuery$data = {
-  readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"NotificationsApp_me">;
-  } | null | undefined;
-};
+  readonly me:
+    | {
+        readonly " $fragmentSpreads": FragmentRefs<"NotificationsApp_me">
+      }
+    | null
+    | undefined
+}
 export type notificationsRoutesNotificationQuery = {
-  response: notificationsRoutesNotificationQuery$data;
-  variables: notificationsRoutesNotificationQuery$variables;
-};
+  response: notificationsRoutesNotificationQuery$data
+  variables: notificationsRoutesNotificationQuery$variables
+}
 
 const node: ConcreteRequest = {
-  "fragment": {
-    "argumentDefinitions": [],
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "notificationsRoutesNotificationQuery",
-    "selections": [
+  fragment: {
+    argumentDefinitions: [],
+    kind: "Fragment",
+    metadata: null,
+    name: "notificationsRoutesNotificationQuery",
+    selections: [
       {
-        "alias": null,
-        "args": null,
-        "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
-        "plural": false,
-        "selections": [
+        alias: null,
+        args: null,
+        concreteType: "Me",
+        kind: "LinkedField",
+        name: "me",
+        plural: false,
+        selections: [
           {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "NotificationsApp_me"
-          }
+            args: null,
+            kind: "FragmentSpread",
+            name: "NotificationsApp_me",
+          },
         ],
-        "storageKey": null
-      }
+        storageKey: null,
+      },
     ],
-    "type": "Query",
-    "abstractKey": null
+    type: "Query",
+    abstractKey: null,
   },
-  "kind": "Request",
-  "operation": {
-    "argumentDefinitions": [],
-    "kind": "Operation",
-    "name": "notificationsRoutesNotificationQuery",
-    "selections": [
+  kind: "Request",
+  operation: {
+    argumentDefinitions: [],
+    kind: "Operation",
+    name: "notificationsRoutesNotificationQuery",
+    selections: [
       {
-        "alias": null,
-        "args": null,
-        "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
-        "plural": false,
-        "selections": [
+        alias: null,
+        args: null,
+        concreteType: "Me",
+        kind: "LinkedField",
+        name: "me",
+        plural: false,
+        selections: [
           {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "unreadNotificationsCount",
-            "storageKey": null
+            alias: null,
+            args: null,
+            kind: "ScalarField",
+            name: "unreadNotificationsCount",
+            storageKey: null,
           },
           {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+            alias: null,
+            args: null,
+            kind: "ScalarField",
+            name: "id",
+            storageKey: null,
+          },
         ],
-        "storageKey": null
-      }
-    ]
+        storageKey: null,
+      },
+    ],
   },
-  "params": {
-    "cacheID": "d5cb685c05ec202e795271ea5bc225f7",
-    "id": null,
-    "metadata": {},
-    "name": "notificationsRoutesNotificationQuery",
-    "operationKind": "query",
-    "text": "query notificationsRoutesNotificationQuery {\n  me {\n    ...NotificationsApp_me\n    id\n  }\n}\n\nfragment NotificationsApp_me on Me {\n  unreadNotificationsCount\n}\n"
-  }
-};
+  params: {
+    cacheID: "d5cb685c05ec202e795271ea5bc225f7",
+    id: null,
+    metadata: {},
+    name: "notificationsRoutesNotificationQuery",
+    operationKind: "query",
+    text: "query notificationsRoutesNotificationQuery {\n  me {\n    ...NotificationsApp_me\n    id\n  }\n}\n\nfragment NotificationsApp_me on Me {\n  unreadNotificationsCount\n}\n",
+  },
+}
+;(node as any).hash = "4b25572db1fc5773e8cfeb61d82e6408"
 
-(node as any).hash = "4b25572db1fc5773e8cfeb61d82e6408";
-
-export default node;
+export default node

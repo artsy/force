@@ -6,22 +6,19 @@ const Strategy = require("../lib/strategy")
 // FIXME:
 describe.skip("Strategy", function () {
   describe("passing request to verify callback", function () {
-    const strategy = new Strategy({ passReqToCallback: true }, function (
-      req,
-      username,
-      password,
-      otp,
-      done
-    ) {
-      if (username == "johndoe" && password == "secret") {
-        return done(
-          null,
-          { id: "1234" },
-          { scope: "read", foo: req.headers["x-foo"] }
-        )
+    const strategy = new Strategy(
+      { passReqToCallback: true },
+      function (req, username, password, otp, done) {
+        if (username == "johndoe" && password == "secret") {
+          return done(
+            null,
+            { id: "1234" },
+            { scope: "read", foo: req.headers["x-foo"] }
+          )
+        }
+        return done(null, false)
       }
-      return done(null, false)
-    })
+    )
 
     let user, info
 

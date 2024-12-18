@@ -19,10 +19,9 @@ interface CookieConsentBannerProps {
   onAccept: () => void
 }
 
-export const CookieConsentBanner: FC<React.PropsWithChildren<CookieConsentBannerProps>> = ({
-  onManage,
-  onAccept,
-}) => {
+export const CookieConsentBanner: FC<
+  React.PropsWithChildren<CookieConsentBannerProps>
+> = ({ onManage, onAccept }) => {
   const { theme } = useTheme()
 
   return (

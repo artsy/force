@@ -7,9 +7,9 @@ import { Rail } from "Components/Rail/Rail"
 interface OtherCollectionsRailProps {
   collectionGroup: OtherCollectionsRail_collectionGroup$data
 }
-export const OtherCollectionsRail: React.FC<React.PropsWithChildren<OtherCollectionsRailProps>> = ({
-  collectionGroup: { name, members },
-}) => {
+export const OtherCollectionsRail: React.FC<
+  React.PropsWithChildren<OtherCollectionsRailProps>
+> = ({ collectionGroup: { name, members } }) => {
   return (
     <Rail
       title={name}
@@ -29,7 +29,9 @@ export const OtherCollectionsRail: React.FC<React.PropsWithChildren<OtherCollect
 }
 
 export const OtherCollectionsRailsContainer = createFragmentContainer(
-  OtherCollectionsRail as React.FC<React.PropsWithChildren<OtherCollectionsRailProps>>,
+  OtherCollectionsRail as React.FC<
+    React.PropsWithChildren<OtherCollectionsRailProps>
+  >,
   {
     collectionGroup: graphql`
       fragment OtherCollectionsRail_collectionGroup on MarketingCollectionGroup {

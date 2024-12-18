@@ -8,33 +8,32 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
+import { ReaderFragment } from "relay-runtime"
+import { FragmentRefs } from "relay-runtime"
 export type WorksForYouApp_viewerFeed$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"WorksForYouFeed_viewer">;
-  readonly " $fragmentType": "WorksForYouApp_viewerFeed";
-};
+  readonly " $fragmentSpreads": FragmentRefs<"WorksForYouFeed_viewer">
+  readonly " $fragmentType": "WorksForYouApp_viewerFeed"
+}
 export type WorksForYouApp_viewerFeed$key = {
-  readonly " $data"?: WorksForYouApp_viewerFeed$data;
-  readonly " $fragmentSpreads": FragmentRefs<"WorksForYouApp_viewerFeed">;
-};
+  readonly " $data"?: WorksForYouApp_viewerFeed$data
+  readonly " $fragmentSpreads": FragmentRefs<"WorksForYouApp_viewerFeed">
+}
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
-  "kind": "Fragment",
-  "metadata": null,
-  "name": "WorksForYouApp_viewerFeed",
-  "selections": [
+  argumentDefinitions: [],
+  kind: "Fragment",
+  metadata: null,
+  name: "WorksForYouApp_viewerFeed",
+  selections: [
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "WorksForYouFeed_viewer"
-    }
+      args: null,
+      kind: "FragmentSpread",
+      name: "WorksForYouFeed_viewer",
+    },
   ],
-  "type": "Viewer",
-  "abstractKey": null
-};
+  type: "Viewer",
+  abstractKey: null,
+}
+;(node as any).hash = "f6f656402068f13654b3f0f3b471229b"
 
-(node as any).hash = "f6f656402068f13654b3f0f3b471229b";
-
-export default node;
+export default node

@@ -11,18 +11,17 @@ jest.mock("Utils/Hooks/useStableShuffle", () => ({
   useStableShuffle: ({ items }) => ({ shuffled: items }),
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<
-  PartnersFeaturedCarousel_Test_Query
->({
-  Component: PartnersFeaturedCarouselFragmentContainer,
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<PartnersFeaturedCarousel_Test_Query>({
+    Component: PartnersFeaturedCarouselFragmentContainer,
+    query: graphql`
     query PartnersFeaturedCarousel_Test_Query @relay_test_operation {
       viewer {
         ...PartnersFeaturedCarousel_viewer @arguments(id: "example")
       }
     }
   `,
-})
+  })
 
 describe("PartnersFeaturedCarousel", () => {
   const mockUseRouter = useRouter as jest.Mock

@@ -5,10 +5,9 @@ import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 
 interface SectionContainerProps extends BoxProps {}
 
-export const SectionContainer: React.FC<React.PropsWithChildren<SectionContainerProps>> = ({
-  children,
-  ...rest
-}) => {
+export const SectionContainer: React.FC<
+  React.PropsWithChildren<SectionContainerProps>
+> = ({ children, ...rest }) => {
   return (
     <FullBleed overflow="hidden" textAlign="center" py={6} {...rest}>
       <AppContainer>

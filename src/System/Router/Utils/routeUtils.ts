@@ -78,9 +78,7 @@ interface FindRoutesByPathProps {
   path: string
 }
 
-export function findRoutesByPath({
-  path,
-}: FindRoutesByPathProps): Array<{
+export function findRoutesByPath({ path }: FindRoutesByPathProps): Array<{
   route: RouteProps
   match: MatchResult<any>
 }> {

@@ -24,9 +24,9 @@ interface SettingsEditSettingsPasswordProps {
 
 type Mode = "Pending" | "Active"
 
-export const SettingsEditSettingsPassword: FC<React.PropsWithChildren<SettingsEditSettingsPasswordProps>> = ({
-  me: { hasPassword },
-}) => {
+export const SettingsEditSettingsPassword: FC<
+  React.PropsWithChildren<SettingsEditSettingsPasswordProps>
+> = ({ me: { hasPassword } }) => {
   const [mode, setMode] = useMode<Mode>("Pending")
   const { sendToast } = useToasts()
   const { submitUpdateSettingsPassword } = useUpdateSettingsPassword()
@@ -198,13 +198,11 @@ export const SettingsEditSettingsPassword: FC<React.PropsWithChildren<SettingsEd
   )
 }
 
-export const SettingsEditSettingsPasswordFragmentContainer = createFragmentContainer(
-  SettingsEditSettingsPassword,
-  {
+export const SettingsEditSettingsPasswordFragmentContainer =
+  createFragmentContainer(SettingsEditSettingsPassword, {
     me: graphql`
       fragment SettingsEditSettingsPassword_me on Me {
         hasPassword
       }
     `,
-  }
-)
+  })

@@ -5,20 +5,21 @@ import { DedicatedArticlesBreadcrumbsFragmentContainer } from "Apps/FairOrginize
 
 jest.unmock("react-relay")
 
-const { getWrapper } = setupTestWrapper<
-  DedicatedArticlesBreadcrumbs_Test_Query
->({
-  Component: props => {
-    return <DedicatedArticlesBreadcrumbsFragmentContainer {...(props as any)} />
-  },
-  query: graphql`
+const { getWrapper } =
+  setupTestWrapper<DedicatedArticlesBreadcrumbs_Test_Query>({
+    Component: props => {
+      return (
+        <DedicatedArticlesBreadcrumbsFragmentContainer {...(props as any)} />
+      )
+    },
+    query: graphql`
     query DedicatedArticlesBreadcrumbs_Test_Query @relay_test_operation {
       fairOrganizer(id: "example") {
         ...DedicatedArticlesBreadcrumbs_fairOrganizer
       }
     }
   `,
-})
+  })
 
 describe("DedicatedArticlesBreadcrumbs", () => {
   it("renders proper router link", () => {

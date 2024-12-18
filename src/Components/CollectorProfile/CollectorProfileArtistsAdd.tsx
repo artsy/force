@@ -35,9 +35,9 @@ interface CollectorProfileArtistsAddProps {
   relayEnvironment?: Environment | null
 }
 
-export const CollectorProfileArtistsAdd: FC<React.PropsWithChildren<
-  CollectorProfileArtistsAddProps
->> = ({ description, onCancel, onSuccess, relayEnvironment }) => {
+export const CollectorProfileArtistsAdd: FC<
+  React.PropsWithChildren<CollectorProfileArtistsAddProps>
+> = ({ description, onCancel, onSuccess, relayEnvironment }) => {
   const [query, setQuery] = useState("")
 
   const { debouncedValue: debouncedQuery } = useDebouncedValue({
@@ -66,9 +66,11 @@ export const CollectorProfileArtistsAdd: FC<React.PropsWithChildren<
 
   const [mode, setMode] = useState<"Idle" | "Adding" | "New">("Idle")
 
-  const { submitMutation } = useMutation<
-    CollectorProfileArtistsAddCreateUserInterestsMutation
-  >({ mutation: MUTATION, relayEnvironment })
+  const { submitMutation } =
+    useMutation<CollectorProfileArtistsAddCreateUserInterestsMutation>({
+      mutation: MUTATION,
+      relayEnvironment,
+    })
 
   const handleAdd = async () => {
     setMode("Adding")

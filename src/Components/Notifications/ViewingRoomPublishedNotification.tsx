@@ -13,9 +13,9 @@ interface ViewingRoomPublishedNotificationProps {
   notification: ViewingRoomPublishedNotification_notification$key
 }
 
-export const ViewingRoomPublishedNotification: FC<React.PropsWithChildren<ViewingRoomPublishedNotificationProps>> = ({
-  notification,
-}) => {
+export const ViewingRoomPublishedNotification: FC<
+  React.PropsWithChildren<ViewingRoomPublishedNotificationProps>
+> = ({ notification }) => {
   const notificationData = useFragment(
     ViewingRoomPublishedNotificationFragment,
     notification

@@ -26,7 +26,9 @@ export interface Props {
   showArtistName?: boolean
 }
 
-export const ArtistAuctionResultItem: React.FC<React.PropsWithChildren<Props>> = props => {
+export const ArtistAuctionResultItem: React.FC<
+  React.PropsWithChildren<Props>
+> = props => {
   const { user } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
 
@@ -69,7 +71,7 @@ export const ArtistAuctionResultItem: React.FC<React.PropsWithChildren<Props>> =
   }
 
   return (
-    (<RouterLink
+    <RouterLink
       to={`/auction-result/${internalID}`}
       textDecoration="none"
       display="block"
@@ -179,8 +181,8 @@ export const ArtistAuctionResultItem: React.FC<React.PropsWithChildren<Props>> =
           <ArtistAuctionResultItemPrice {...props} />
         </Column>
       </GridColumns>
-    </RouterLink>)
-  );
+    </RouterLink>
+  )
 }
 
 export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
@@ -231,7 +233,9 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
   }
 )
 
-const ArtistAuctionResultItemPrice: React.FC<React.PropsWithChildren<Props>> = props => {
+const ArtistAuctionResultItemPrice: React.FC<
+  React.PropsWithChildren<Props>
+> = props => {
   const {
     salePrice,
     salePriceUSD,

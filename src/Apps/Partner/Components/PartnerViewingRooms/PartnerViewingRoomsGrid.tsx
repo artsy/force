@@ -18,11 +18,9 @@ interface PartnerViewingRoomsGridProps {
 
 export const PAGE_SIZE = 12
 
-const PartnerViewingRoomsGrid: React.FC<React.PropsWithChildren<PartnerViewingRoomsGridProps>> = ({
-  sectionTitle,
-  viewingRoomsConnection,
-  relay,
-}) => {
+const PartnerViewingRoomsGrid: React.FC<
+  React.PropsWithChildren<PartnerViewingRoomsGridProps>
+> = ({ sectionTitle, viewingRoomsConnection, relay }) => {
   const [loading, setLoading] = useState(false)
 
   const viewingRoomNodes = extractNodes(
@@ -74,10 +72,11 @@ const PartnerViewingRoomsGrid: React.FC<React.PropsWithChildren<PartnerViewingRo
   )
 }
 
-export const PartnerViewingRoomsGridFragmentContainer = createPaginationContainer(
-  PartnerViewingRoomsGrid,
-  {
-    viewingRoomsConnection: graphql`
+export const PartnerViewingRoomsGridFragmentContainer =
+  createPaginationContainer(
+    PartnerViewingRoomsGrid,
+    {
+      viewingRoomsConnection: graphql`
       fragment PartnerViewingRoomsGrid_viewingRoomsConnection on Partner
         @argumentDefinitions(
           count: { type: "Int" }
@@ -98,26 +97,26 @@ export const PartnerViewingRoomsGridFragmentContainer = createPaginationContaine
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getConnectionFromProps(props) {
-      return props.viewingRoomsConnection.viewingRoomsConnection
     },
-    getFragmentVariables(prevVars, totalCount) {
-      return {
-        ...prevVars,
-        count: totalCount,
-      }
-    },
-    getVariables(_props, { count, cursor }, fragmentVariables) {
-      return {
-        ...fragmentVariables,
-        count,
-        after: cursor,
-      }
-    },
-    query: graphql`
+    {
+      direction: "forward",
+      getConnectionFromProps(props) {
+        return props.viewingRoomsConnection.viewingRoomsConnection
+      },
+      getFragmentVariables(prevVars, totalCount) {
+        return {
+          ...prevVars,
+          count: totalCount,
+        }
+      },
+      getVariables(_props, { count, cursor }, fragmentVariables) {
+        return {
+          ...fragmentVariables,
+          count,
+          after: cursor,
+        }
+      },
+      query: graphql`
       query PartnerViewingRoomsGrid_ViewingRoomsQuery(
         $count: Int!
         $after: String
@@ -130,5 +129,5 @@ export const PartnerViewingRoomsGridFragmentContainer = createPaginationContaine
         }
       }
     `,
-  }
-)
+    }
+  )

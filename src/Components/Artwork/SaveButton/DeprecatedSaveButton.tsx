@@ -18,10 +18,9 @@ export interface DeprecatedSaveButtonProps {
   contextModule: AuthContextModule
 }
 
-export const DeprecatedSaveButton: React.FC<React.PropsWithChildren<DeprecatedSaveButtonProps>> = ({
-  artwork,
-  contextModule,
-}) => {
+export const DeprecatedSaveButton: React.FC<
+  React.PropsWithChildren<DeprecatedSaveButtonProps>
+> = ({ artwork, contextModule }) => {
   const tracking = useTracking()
   const [isHovered, setIsHovered] = useState(false)
 
@@ -135,10 +134,9 @@ interface DeprecatedSaveButtonQueryRendererProps
   id: string
 }
 
-export const DeprecatedSaveButtonQueryRenderer: React.FC<React.PropsWithChildren<DeprecatedSaveButtonQueryRendererProps>> = ({
-  id,
-  contextModule,
-}) => {
+export const DeprecatedSaveButtonQueryRenderer: React.FC<
+  React.PropsWithChildren<DeprecatedSaveButtonQueryRendererProps>
+> = ({ id, contextModule }) => {
   return (
     <SystemQueryRenderer<DeprecatedSaveButtonQuery>
       lazyLoad

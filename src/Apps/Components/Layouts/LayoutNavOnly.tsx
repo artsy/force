@@ -6,7 +6,9 @@ import { LayoutNav } from "Apps/Components/Layouts/Components/LayoutNav"
 import { BaseLayoutProps } from "Apps/Components/Layouts"
 import { LayoutMain } from "Apps/Components/Layouts/Components/LayoutMain"
 
-export const LayoutNavOnly: FC<React.PropsWithChildren<BaseLayoutProps>> = ({ children }) => {
+export const LayoutNavOnly: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
+  children,
+}) => {
   return (
     <>
       <AppToasts />

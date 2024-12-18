@@ -8,9 +8,9 @@ interface OnboardingProgressProps {
   preview?: boolean
 }
 
-export const OnboardingProgress: FC<React.PropsWithChildren<OnboardingProgressProps>> = ({
-  preview = false,
-}) => {
+export const OnboardingProgress: FC<
+  React.PropsWithChildren<OnboardingProgressProps>
+> = ({ preview = false }) => {
   const { back, progress, workflowEngine } = useOnboardingContext()
 
   const nextProgress = progress + 100 / workflowEngine.total()

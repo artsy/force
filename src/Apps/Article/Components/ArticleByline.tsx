@@ -8,7 +8,9 @@ interface ArticleBylineProps {
   article: ArticleByline_article$data
 }
 
-const ArticleByline: FC<React.PropsWithChildren<ArticleBylineProps>> = ({ article }) => {
+const ArticleByline: FC<React.PropsWithChildren<ArticleBylineProps>> = ({
+  article,
+}) => {
   if (article.authors.length === 0) {
     return (
       <Text

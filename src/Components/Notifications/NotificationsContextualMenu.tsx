@@ -8,10 +8,9 @@ interface NotificationsContextualMenuProps {
   unreadCounts: number
 }
 
-export const NotificationsContextualMenu: React.FC<React.PropsWithChildren<NotificationsContextualMenuProps>> = ({
-  onHide,
-  unreadCounts,
-}) => {
+export const NotificationsContextualMenu: React.FC<
+  React.PropsWithChildren<NotificationsContextualMenuProps>
+> = ({ onHide, unreadCounts }) => {
   return (
     <ContextualMenu placement="bottom-start" zIndex={Z.dropdown}>
       <ContextualMenuItem p={0}>

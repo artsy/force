@@ -5,7 +5,9 @@ interface BackToConversationBannerProps {
   conversationId: string
 }
 
-export const BackToConversationBanner: React.FC<React.PropsWithChildren<BackToConversationBannerProps & BoxProps>> = ({ conversationId }) => {
+export const BackToConversationBanner: React.FC<
+  React.PropsWithChildren<BackToConversationBannerProps & BoxProps>
+> = ({ conversationId }) => {
   const link = `/user/conversations/${conversationId}`
 
   return (

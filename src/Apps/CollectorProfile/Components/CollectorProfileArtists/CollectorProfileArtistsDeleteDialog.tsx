@@ -11,18 +11,15 @@ interface CollectorProfileArtistsDeleteDialogProps {
   onClose: () => void
 }
 
-export const CollectorProfileArtistsDeleteDialog: FC<React.PropsWithChildren<CollectorProfileArtistsDeleteDialogProps>> = ({
-  id,
-  name,
-  onClose,
-}) => {
+export const CollectorProfileArtistsDeleteDialog: FC<
+  React.PropsWithChildren<CollectorProfileArtistsDeleteDialogProps>
+> = ({ id, name, onClose }) => {
   const { router } = useRouter()
 
-  const { submitMutation } = useMutation<
-    CollectorProfileArtistsDeleteDialogMutation
-  >({
-    mutation: MUTATION,
-  })
+  const { submitMutation } =
+    useMutation<CollectorProfileArtistsDeleteDialogMutation>({
+      mutation: MUTATION,
+    })
 
   const { sendToast } = useToasts()
 

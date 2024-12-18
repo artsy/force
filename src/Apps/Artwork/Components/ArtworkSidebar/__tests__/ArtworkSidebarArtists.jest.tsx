@@ -6,20 +6,19 @@ import { fireEvent, screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  ArtworkSidebarArtists_Test_Query
->({
-  Component: ({ artwork }) => {
-    return <ArtworkSidebarArtistsFragmentContainer artwork={artwork!} />
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<ArtworkSidebarArtists_Test_Query>({
+    Component: ({ artwork }) => {
+      return <ArtworkSidebarArtistsFragmentContainer artwork={artwork!} />
+    },
+    query: graphql`
     query ArtworkSidebarArtists_Test_Query @relay_test_operation {
       artwork(id: "josef-albers-homage-to-the-square-85") {
         ...ArtworkSidebarArtists_artwork
       }
     }
   `,
-})
+  })
 
 describe("ArtworkSidebarArtists", () => {
   it("renders correctly when artwork has one artist", () => {

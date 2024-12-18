@@ -40,7 +40,9 @@ export const WAYS_TO_BUY_OPTIONS = {
   },
 }
 
-export const WaysToBuyFilter: FC<React.PropsWithChildren<WaysToBuyFilterProps>> = ({ expanded }) => {
+export const WaysToBuyFilter: FC<
+  React.PropsWithChildren<WaysToBuyFilterProps>
+> = ({ expanded }) => {
   const filterContext = useArtworkFilterContext()
   const currentSelectedFilters = useCurrentlySelectedFilters()
 

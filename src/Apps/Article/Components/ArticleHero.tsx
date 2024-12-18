@@ -26,7 +26,10 @@ interface ArticleHeroProps {
   fixed?: boolean
 }
 
-const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({ article, fixed = true }) => {
+const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
+  article,
+  fixed = true,
+}) => {
   const height = useFullBleedHeaderHeight()
 
   const { theme } = useTheme()
@@ -96,7 +99,7 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({ article, f
               <Box
                 display="block"
                 width="100%"
-                height={(height as unknown) as string}
+                height={height as unknown as string}
                 style={{ objectFit: "cover" }}
                 as="video"
                 src={article.hero.media as string}

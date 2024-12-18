@@ -35,12 +35,9 @@ interface ArtworkSidebarClassificationsModalProps {
   showDisclaimer?: boolean
 }
 
-const ArtworkSidebarClassificationsModal: React.FC<React.PropsWithChildren<ArtworkSidebarClassificationsModalProps>> = ({
-  viewer,
-  show,
-  onClose,
-  showDisclaimer = true,
-}) => {
+const ArtworkSidebarClassificationsModal: React.FC<
+  React.PropsWithChildren<ArtworkSidebarClassificationsModalProps>
+> = ({ viewer, show, onClose, showDisclaimer = true }) => {
   if (!show) return null
 
   return (
@@ -83,9 +80,8 @@ const ArtworkSidebarClassificationsModal: React.FC<React.PropsWithChildren<Artwo
   )
 }
 
-export const ArtworkSidebarClassificationsModalFragmentContainer = createFragmentContainer(
-  ArtworkSidebarClassificationsModal,
-  {
+export const ArtworkSidebarClassificationsModalFragmentContainer =
+  createFragmentContainer(ArtworkSidebarClassificationsModal, {
     viewer: graphql`
       fragment ArtworkSidebarClassificationsModal_viewer on Viewer {
         artworkAttributionClasses {
@@ -95,8 +91,7 @@ export const ArtworkSidebarClassificationsModalFragmentContainer = createFragmen
         }
       }
     `,
-  }
-)
+  })
 
 export const ARTWORK_SIDEBAR_CLASSIFICATIONS_MODAL_QUERY = graphql`
   query ArtworkSidebarClassificationsModalQuery {
@@ -106,10 +101,11 @@ export const ARTWORK_SIDEBAR_CLASSIFICATIONS_MODAL_QUERY = graphql`
   }
 `
 
-export const ArtworkSidebarClassificationsModalQueryRenderer: React.FC<React.PropsWithChildren<Omit<
-  ArtworkSidebarClassificationsModalProps,
-  "viewer"
->>> = rest => {
+export const ArtworkSidebarClassificationsModalQueryRenderer: React.FC<
+  React.PropsWithChildren<
+    Omit<ArtworkSidebarClassificationsModalProps, "viewer">
+  >
+> = rest => {
   const { relayEnvironment } = useSystemContext()
 
   return (

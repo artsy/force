@@ -6,9 +6,9 @@ export interface PartnerArtistDetailsListPlaceholderProps {
   count: number
 }
 
-export const PartnerArtistDetailsListPlaceholder: React.FC<React.PropsWithChildren<PartnerArtistDetailsListPlaceholderProps>> = ({
-  count,
-}) => {
+export const PartnerArtistDetailsListPlaceholder: React.FC<
+  React.PropsWithChildren<PartnerArtistDetailsListPlaceholderProps>
+> = ({ count }) => {
   return (
     <Skeleton>
       <Join separator={<Spacer y={4} />}>

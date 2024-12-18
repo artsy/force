@@ -17,7 +17,10 @@ interface ArticlesProps {
   relay: RelayRefetchProp
 }
 
-const Articles: React.FC<React.PropsWithChildren<ArticlesProps>> = ({ partner, relay }) => {
+const Articles: React.FC<React.PropsWithChildren<ArticlesProps>> = ({
+  partner,
+  relay,
+}) => {
   const {
     match: { location },
     router,

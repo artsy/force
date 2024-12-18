@@ -7,9 +7,9 @@ interface ShowArtworksEmptyStateProps {
   show: ShowArtworksEmptyState_show$data
 }
 
-export const ShowArtworksEmptyState: React.FC<React.PropsWithChildren<ShowArtworksEmptyStateProps>> = ({
-  show,
-}) => {
+export const ShowArtworksEmptyState: React.FC<
+  React.PropsWithChildren<ShowArtworksEmptyStateProps>
+> = ({ show }) => {
   const message = [
     `This ${
       show.isFairBooth ? "fair booth" : "show"

@@ -12,7 +12,9 @@ import {
 } from "@artsy/cohesion"
 import { trackEvent } from "Server/analytics/helpers"
 
-export const HomeAuctionLotsTabBar: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeAuctionLotsTabBar: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { user } = useSystemContext()
 
   return (

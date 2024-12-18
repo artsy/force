@@ -15,10 +15,9 @@ interface NewsIndexArticlesProps {
   relay: RelayPaginationProp
 }
 
-export const NewsIndexArticles: FC<React.PropsWithChildren<NewsIndexArticlesProps>> = ({
-  viewer,
-  relay,
-}) => {
+export const NewsIndexArticles: FC<
+  React.PropsWithChildren<NewsIndexArticlesProps>
+> = ({ viewer, relay }) => {
   const [loading, setLoading] = useState(false)
 
   const articles = extractNodes(viewer.articlesConnection)

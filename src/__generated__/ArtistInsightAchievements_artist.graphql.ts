@@ -8,41 +8,41 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
+import { ReaderFragment } from "relay-runtime"
+import { FragmentRefs } from "relay-runtime"
 export type ArtistInsightAchievements_artist$data = {
   readonly insightAchievements: ReadonlyArray<{
-    readonly entities: ReadonlyArray<string>;
-    readonly label: string;
-  }>;
-  readonly slug: string;
-  readonly " $fragmentType": "ArtistInsightAchievements_artist";
-};
+    readonly entities: ReadonlyArray<string>
+    readonly label: string
+  }>
+  readonly slug: string
+  readonly " $fragmentType": "ArtistInsightAchievements_artist"
+}
 export type ArtistInsightAchievements_artist$key = {
-  readonly " $data"?: ArtistInsightAchievements_artist$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistInsightAchievements_artist">;
-};
+  readonly " $data"?: ArtistInsightAchievements_artist$data
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistInsightAchievements_artist">
+}
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
-  "kind": "Fragment",
-  "metadata": null,
-  "name": "ArtistInsightAchievements_artist",
-  "selections": [
+  argumentDefinitions: [],
+  kind: "Fragment",
+  metadata: null,
+  name: "ArtistInsightAchievements_artist",
+  selections: [
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
+      alias: null,
+      args: null,
+      kind: "ScalarField",
+      name: "slug",
+      storageKey: null,
     },
     {
-      "alias": "insightAchievements",
-      "args": [
+      alias: "insightAchievements",
+      args: [
         {
-          "kind": "Literal",
-          "name": "kind",
-          "value": [
+          kind: "Literal",
+          name: "kind",
+          value: [
             "SOLO_SHOW",
             "GROUP_SHOW",
             "COLLECTED",
@@ -50,37 +50,37 @@ const node: ReaderFragment = {
             "BIENNIAL",
             "AWARDS",
             "PRIVATE_COLLECTIONS",
-            "RESIDENCIES"
-          ]
-        }
+            "RESIDENCIES",
+          ],
+        },
       ],
-      "concreteType": "ArtistInsight",
-      "kind": "LinkedField",
-      "name": "insights",
-      "plural": true,
-      "selections": [
+      concreteType: "ArtistInsight",
+      kind: "LinkedField",
+      name: "insights",
+      plural: true,
+      selections: [
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "label",
-          "storageKey": null
+          alias: null,
+          args: null,
+          kind: "ScalarField",
+          name: "label",
+          storageKey: null,
         },
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "entities",
-          "storageKey": null
-        }
+          alias: null,
+          args: null,
+          kind: "ScalarField",
+          name: "entities",
+          storageKey: null,
+        },
       ],
-      "storageKey": "insights(kind:[\"SOLO_SHOW\",\"GROUP_SHOW\",\"COLLECTED\",\"REVIEWED\",\"BIENNIAL\",\"AWARDS\",\"PRIVATE_COLLECTIONS\",\"RESIDENCIES\"])"
-    }
+      storageKey:
+        'insights(kind:["SOLO_SHOW","GROUP_SHOW","COLLECTED","REVIEWED","BIENNIAL","AWARDS","PRIVATE_COLLECTIONS","RESIDENCIES"])',
+    },
   ],
-  "type": "Artist",
-  "abstractKey": null
-};
+  type: "Artist",
+  abstractKey: null,
+}
+;(node as any).hash = "5c9bb50ff959c7b6df088c3dd2b50b10"
 
-(node as any).hash = "5c9bb50ff959c7b6df088c3dd2b50b10";
-
-export default node;
+export default node

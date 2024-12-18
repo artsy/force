@@ -20,9 +20,9 @@ interface MarketingHeaderProps {
   children?: React.ReactNode
 }
 
-export const MarketingHeader: FC<React.PropsWithChildren<
-  MarketingHeaderProps
->> = ({ title, subtitle, src, accentColor, children }) => {
+export const MarketingHeader: FC<
+  React.PropsWithChildren<MarketingHeaderProps>
+> = ({ title, subtitle, src, accentColor, children }) => {
   const height = useFullBleedHeaderHeight()
 
   const images = {

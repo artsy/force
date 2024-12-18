@@ -8,10 +8,9 @@ interface SavesEntityImageProps {
   size?: number
 }
 
-export const SavesEntityImage: FC<React.PropsWithChildren<SavesEntityImageProps>> = ({
-  url,
-  size = 60,
-}) => {
+export const SavesEntityImage: FC<
+  React.PropsWithChildren<SavesEntityImageProps>
+> = ({ url, size = 60 }) => {
   if (url === null) {
     return <ArtworkListNoImage width={size} height={size} />
   }

@@ -14,9 +14,9 @@ export interface ArtworkDetailsAboutTheWorkFromArtsyProps {
   artwork: ArtworkDetailsAboutTheWorkFromArtsy_artwork$data
 }
 
-const ArtworkDetailsAboutTheWorkFromArtsy: React.FC<ArtworkDetailsAboutTheWorkFromArtsyProps> = ({
-  artwork,
-}) => {
+const ArtworkDetailsAboutTheWorkFromArtsy: React.FC<
+  ArtworkDetailsAboutTheWorkFromArtsyProps
+> = ({ artwork }) => {
   const tracking = useTracking()
 
   const trackReadMoreClick = () => {
@@ -86,14 +86,12 @@ const ArtworkDetailsAboutTheWorkFromArtsy: React.FC<ArtworkDetailsAboutTheWorkFr
   )
 }
 
-export const ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer = createFragmentContainer(
-  ArtworkDetailsAboutTheWorkFromArtsy,
-  {
+export const ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer =
+  createFragmentContainer(ArtworkDetailsAboutTheWorkFromArtsy, {
     artwork: graphql`
       fragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {
         description(format: HTML)
         additionalInformation(format: HTML)
       }
     `,
-  }
-)
+  })

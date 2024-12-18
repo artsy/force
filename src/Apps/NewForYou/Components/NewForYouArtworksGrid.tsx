@@ -8,9 +8,9 @@ interface NewForYouArtworksGridProps {
   viewer: NewForYouArtworksGrid_viewer$data
 }
 
-export const NewForYouArtworksGrid: FC<React.PropsWithChildren<NewForYouArtworksGridProps>> = ({
-  viewer,
-}) => {
+export const NewForYouArtworksGrid: FC<
+  React.PropsWithChildren<NewForYouArtworksGridProps>
+> = ({ viewer }) => {
   return (
     <>
       {viewer.artworksForUser &&

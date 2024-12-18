@@ -9,9 +9,9 @@ interface ArtistWorksForSaleEmptyProps {
   artist: ArtistWorksForSaleEmpty_artist$data
 }
 
-const ArtistWorksForSaleEmpty: FC<React.PropsWithChildren<ArtistWorksForSaleEmptyProps>> = ({
-  artist,
-}) => {
+const ArtistWorksForSaleEmpty: FC<
+  React.PropsWithChildren<ArtistWorksForSaleEmptyProps>
+> = ({ artist }) => {
   return (
     <>
       <Spacer y={[2, 0]} />

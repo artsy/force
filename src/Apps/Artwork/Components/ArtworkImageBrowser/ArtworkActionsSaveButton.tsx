@@ -14,9 +14,9 @@ interface ArtworkActionsSaveButtonProps {
   artwork: ArtworkActionsSaveButton_artwork$data
 }
 
-export const ArtworkActionsSaveButton: FC<React.PropsWithChildren<ArtworkActionsSaveButtonProps>> = ({
-  artwork,
-}) => {
+export const ArtworkActionsSaveButton: FC<
+  React.PropsWithChildren<ArtworkActionsSaveButtonProps>
+> = ({ artwork }) => {
   const { isAuction, isClosed } = artwork.sale ?? {}
   const isOpenOrUpcomingSale = isAuction && !isClosed
 
@@ -67,9 +67,8 @@ export const ArtworkActionsSaveButton: FC<React.PropsWithChildren<ArtworkActions
   )
 }
 
-export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer(
-  ArtworkActionsSaveButton,
-  {
+export const ArtworkActionsSaveButtonFragmentContainer =
+  createFragmentContainer(ArtworkActionsSaveButton, {
     artwork: graphql`
       fragment ArtworkActionsSaveButton_artwork on Artwork {
         id
@@ -95,5 +94,4 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
         ...ArtworkActionsWatchLotButton_artwork
       }
     `,
-  }
-)
+  })

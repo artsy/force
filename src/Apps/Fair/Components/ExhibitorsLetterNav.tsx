@@ -18,9 +18,9 @@ interface ExhibitorsLetterNavProps {
   fair: ExhibitorsLetterNav_fair$data
 }
 
-export const ExhibitorsLetterNav: React.FC<React.PropsWithChildren<ExhibitorsLetterNavProps>> = ({
-  fair,
-}) => {
+export const ExhibitorsLetterNav: React.FC<
+  React.PropsWithChildren<ExhibitorsLetterNavProps>
+> = ({ fair }) => {
   const letters = fair?.exhibitorsGroupedByName?.map(group => group?.letter)
 
   return (
@@ -76,7 +76,11 @@ interface LetterProps extends BoxProps {
   isEnabled: boolean
 }
 
-const Letter: React.FC<React.PropsWithChildren<LetterProps>> = ({ letter, isEnabled, ...rest }) => {
+const Letter: React.FC<React.PropsWithChildren<LetterProps>> = ({
+  letter,
+  isEnabled,
+  ...rest
+}) => {
   const { jumpTo } = useJump({ offset: 10 })
 
   const sectionLabel =

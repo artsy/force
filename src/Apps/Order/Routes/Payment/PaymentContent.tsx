@@ -44,10 +44,8 @@ export interface Props {
 export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
   const { commitMutation, onSetPayment, me, order, CreditCardPicker } = props
   const creditCards = extractNodes(me.creditCards)
-  const {
-    selectedPaymentMethod,
-    setSelectedPaymentMethod,
-  } = useOrderPaymentContext()
+  const { selectedPaymentMethod, setSelectedPaymentMethod } =
+    useOrderPaymentContext()
 
   const tracking = useTracking()
   const previousPaymentMethod = useRef<string | null>(null)

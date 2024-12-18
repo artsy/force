@@ -152,10 +152,13 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
   }
 }
 
-export const SearchResultsArtistsRouteFragmentContainer = createRefetchContainer(
-  withRouter(SearchResultsArtistsRoute) as React.ComponentType<React.PropsWithChildren<Props>>,
-  {
-    viewer: graphql`
+export const SearchResultsArtistsRouteFragmentContainer =
+  createRefetchContainer(
+    withRouter(SearchResultsArtistsRoute) as React.ComponentType<
+      React.PropsWithChildren<Props>
+    >,
+    {
+      viewer: graphql`
       fragment SearchResultsArtists_viewer on Viewer
         @argumentDefinitions(
           term: { type: "String!", defaultValue: "" }
@@ -193,8 +196,8 @@ export const SearchResultsArtistsRouteFragmentContainer = createRefetchContainer
         }
       }
     `,
-  },
-  graphql`
+    },
+    graphql`
     query SearchResultsArtistsQuery($first: Int, $term: String!, $page: Int) {
       viewer {
         ...SearchResultsArtists_viewer
@@ -202,4 +205,4 @@ export const SearchResultsArtistsRouteFragmentContainer = createRefetchContainer
       }
     }
   `
-)
+  )

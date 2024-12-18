@@ -13,7 +13,9 @@ export interface EntityHeaderFairOrganizerProps extends BoxProps {
   FollowButton?: JSX.Element
 }
 
-const EntityHeaderFairOrganizer: FC<React.PropsWithChildren<EntityHeaderFairOrganizerProps>> = ({
+const EntityHeaderFairOrganizer: FC<
+  React.PropsWithChildren<EntityHeaderFairOrganizerProps>
+> = ({
   fairOrganizer,
   displayAvatar = true,
   displayLink = true,
@@ -75,9 +77,8 @@ const EntityHeaderFairOrganizer: FC<React.PropsWithChildren<EntityHeaderFairOrga
   )
 }
 
-export const EntityHeaderFairOrganizerFragmentContainer = createFragmentContainer(
-  EntityHeaderFairOrganizer,
-  {
+export const EntityHeaderFairOrganizerFragmentContainer =
+  createFragmentContainer(EntityHeaderFairOrganizer, {
     fairOrganizer: graphql`
       fragment EntityHeaderFairOrganizer_fairOrganizer on FairOrganizer {
         internalID
@@ -99,5 +100,4 @@ export const EntityHeaderFairOrganizerFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })

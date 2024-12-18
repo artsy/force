@@ -15,9 +15,9 @@ interface ArtistWorksForSaleRouteProps {
   artist: ArtistWorksForSaleRoute_artist$data
 }
 
-const ArtistWorksForSaleRoute: React.FC<React.PropsWithChildren<
-  ArtistWorksForSaleRouteProps
->> = ({ artist }) => {
+const ArtistWorksForSaleRoute: React.FC<
+  React.PropsWithChildren<ArtistWorksForSaleRouteProps>
+> = ({ artist }) => {
   const { title, description } = artist.meta
   const { match } = useRouter()
   const isPrefetched = !!match.location.state?.isPrefetched

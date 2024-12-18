@@ -8,7 +8,9 @@ import { themeGet } from "@styled-system/theme-get"
 
 interface AuthDialogDisclaimerProps {}
 
-export const AuthDialogDisclaimer: FC<React.PropsWithChildren<AuthDialogDisclaimerProps>> = props => {
+export const AuthDialogDisclaimer: FC<
+  React.PropsWithChildren<AuthDialogDisclaimerProps>
+> = props => {
   const { loading, isAutomaticallySubscribed } = useCountryCode()
 
   if (loading) {
@@ -60,7 +62,9 @@ export const AuthDialogDisclaimer: FC<React.PropsWithChildren<AuthDialogDisclaim
   )
 }
 
-export const AuthDialogDisclaimerSkeleton: FC<React.PropsWithChildren<unknown>> = () => {
+export const AuthDialogDisclaimerSkeleton: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Stack gap={1}>
       <SkeletonText

@@ -210,7 +210,6 @@ describe("RegisterButton", () => {
 
     it("opens auth modal if no me", () => {
       const showAuthDialog = jest.fn()
-
       ;(useAuthDialog as jest.Mock).mockImplementation(() => {
         return { showAuthDialog }
       })
@@ -227,7 +226,6 @@ describe("RegisterButton", () => {
           isRegistrationClosed: false,
         }),
       })
-
       ;(wrapper.find("ButtonAction").props() as any).onClick()
 
       expect(showAuthDialog).toHaveBeenCalledWith({
@@ -263,7 +261,6 @@ describe("RegisterButton", () => {
           isRegistrationClosed: false,
         }),
       })
-
       ;(wrapper.find("ButtonAction").props() as any).onClick()
       expect(spy).toHaveBeenCalledWith("/auction/sale-slug/register")
     })
@@ -289,7 +286,6 @@ describe("RegisterButton", () => {
           isRegistrationClosed: false,
         }),
       })
-
       ;(wrapper.find("ButtonAction").props() as any).onClick()
       expect(spy).toHaveBeenCalledWith(
         "/auction/sale-slug/confirm-registration"
@@ -315,7 +311,6 @@ describe("RegisterButton", () => {
           liveURLIfOpen: "live-url",
         }),
       })
-
       ;(wrapper.find("ButtonAction").props() as any).onClick()
       expect(registerSpy).toHaveBeenCalled()
       expect(enterLiveAuctionSpy).toHaveBeenCalledWith({ url: "live-url" })
@@ -349,7 +344,6 @@ describe("RegisterButton", () => {
           bidder: null,
         }),
       })
-
       ;(wrapper.find("ButtonAction").props() as any).onClick()
       expect(spy).toHaveBeenCalledWith({
         auctionSlug: "sale-slug",
@@ -379,7 +373,6 @@ describe("RegisterButton", () => {
           isRegistrationClosed: false,
         }),
       })
-
       ;(wrapper.find("ButtonAction").props() as any).onClick()
       expect(spy).toHaveBeenCalled()
     })

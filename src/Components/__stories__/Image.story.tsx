@@ -22,32 +22,27 @@ const MAX_DIMENSIONS = { width: 600, height: 600 }
 
 const IMAGES = [
   {
-    src:
-      "https://d32dm0rphc51dk.cloudfront.net/OS1wdHd6B9g_JMSH-iL5og/normalized.jpg",
+    src: "https://d32dm0rphc51dk.cloudfront.net/OS1wdHd6B9g_JMSH-iL5og/normalized.jpg",
     width: 600,
     height: 456.5,
   },
   {
-    src:
-      "https://d32dm0rphc51dk.cloudfront.net/3zr41Kid4jba5PLiBNaXLg/normalized.jpg",
+    src: "https://d32dm0rphc51dk.cloudfront.net/3zr41Kid4jba5PLiBNaXLg/normalized.jpg",
     width: 433,
     height: 600,
   },
   {
-    src:
-      "https://d32dm0rphc51dk.cloudfront.net/A5jM8w6hQQtGN-i7MTnl7w/normalized.jpg",
+    src: "https://d32dm0rphc51dk.cloudfront.net/A5jM8w6hQQtGN-i7MTnl7w/normalized.jpg",
     width: 399,
     height: 600,
   },
   {
-    src:
-      "https://d32dm0rphc51dk.cloudfront.net/2YIFhcqGdH3vpZzZIFpeEg/normalized.jpg",
+    src: "https://d32dm0rphc51dk.cloudfront.net/2YIFhcqGdH3vpZzZIFpeEg/normalized.jpg",
     width: 430,
     height: 599,
   },
   {
-    src:
-      "https://d32dm0rphc51dk.cloudfront.net/3YymHBmJkVa0LrKciF4TAg/normalized.jpg",
+    src: "https://d32dm0rphc51dk.cloudfront.net/3YymHBmJkVa0LrKciF4TAg/normalized.jpg",
     width: 400,
     height: 600,
   },
@@ -76,7 +71,7 @@ const Detail = ({
   quality,
   width,
   height,
-}: typeof IMAGES[number] & { quality: number }) => {
+}: (typeof IMAGES)[number] & { quality: number }) => {
   const [show, setShow] = useState(false)
 
   const { theme } = useTheme()

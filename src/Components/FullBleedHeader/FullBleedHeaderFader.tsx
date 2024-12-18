@@ -10,10 +10,9 @@ interface FullBleedHeaderFaderProps {
   figures: FullBleedHeaderProps[]
 }
 
-export const FullBleedHeaderFader: FC<React.PropsWithChildren<FullBleedHeaderFaderProps>> = ({
-  figures,
-  children,
-}) => {
+export const FullBleedHeaderFader: FC<
+  React.PropsWithChildren<FullBleedHeaderFaderProps>
+> = ({ figures, children }) => {
   const [mode, setMode] = useMode<"Resting" | "Transitioning">("Resting")
 
   const { index, cursor, handleNext } = useCursor({ max: figures.length })

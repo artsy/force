@@ -35,22 +35,21 @@ describe("SavedSearchAlertsApp", () => {
   const trackEvent = jest.fn()
   const mockuseSystemContext = useSystemContext as jest.Mock
 
-  const { renderWithRelay } = setupTestWrapperTL<
-    SavedSearchAlertsApp_Test_Query
-  >({
-    Component: ({ me }) => (
-      <MediaContextProvider onlyMatch={[breakpoint]}>
-        <SavedSearchAlertsAppPaginationContainer me={me!} />
-      </MediaContextProvider>
-    ),
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<SavedSearchAlertsApp_Test_Query>({
+      Component: ({ me }) => (
+        <MediaContextProvider onlyMatch={[breakpoint]}>
+          <SavedSearchAlertsAppPaginationContainer me={me!} />
+        </MediaContextProvider>
+      ),
+      query: graphql`
       query SavedSearchAlertsApp_Test_Query @raw_response_type {
         me {
           ...SavedSearchAlertsApp_me
         }
       }
     `,
-  })
+    })
 
   beforeAll(() => {
     const mockTracking = useTracking as jest.Mock

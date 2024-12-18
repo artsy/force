@@ -9,11 +9,9 @@ interface MinPriceWarningProps {
   orderID: string
 }
 
-export const MinPriceWarning: React.FC<React.PropsWithChildren<MinPriceWarningProps>> = ({
-  isPriceRange,
-  minPrice,
-  orderID,
-}) => {
+export const MinPriceWarning: React.FC<
+  React.PropsWithChildren<MinPriceWarningProps>
+> = ({ isPriceRange, minPrice, orderID }) => {
   const tracking = useTracking()
   useEffect(() => {
     tracking.trackEvent({

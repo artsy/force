@@ -18,9 +18,9 @@ interface SoldRecentlyOnArtsyProps {
   recentlySoldArtworks: SoldRecentlyOnArtsy_recentlySoldArtworks$data
 }
 
-export const SoldRecentlyOnArtsy: React.FC<React.PropsWithChildren<SoldRecentlyOnArtsyProps>> = ({
-  recentlySoldArtworks,
-}) => {
+export const SoldRecentlyOnArtsy: React.FC<
+  React.PropsWithChildren<SoldRecentlyOnArtsyProps>
+> = ({ recentlySoldArtworks }) => {
   const tracking = useTracking()
 
   if (!recentlySoldArtworks) {
@@ -176,7 +176,9 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const SoldRecentlyOnArtsyQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const SoldRecentlyOnArtsyQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <SystemQueryRenderer<SoldRecentlyOnArtsyQuery>
       lazyLoad

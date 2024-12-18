@@ -8,9 +8,9 @@ export interface FeatureHeaderDefaultProps {
   feature: FeatureHeaderDefault_feature$data
 }
 
-export const FeatureHeaderDefault: React.FC<React.PropsWithChildren<FeatureHeaderDefaultProps>> = ({
-  feature: { name, subheadline, defaultImage: image },
-}) => {
+export const FeatureHeaderDefault: React.FC<
+  React.PropsWithChildren<FeatureHeaderDefaultProps>
+> = ({ feature: { name, subheadline, defaultImage: image } }) => {
   const height = useFullBleedHeaderHeight()
 
   return (

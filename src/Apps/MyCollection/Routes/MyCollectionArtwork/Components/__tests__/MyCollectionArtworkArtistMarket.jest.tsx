@@ -7,20 +7,19 @@ import { MyCollectionArtworkArtistMarketFragmentContainer } from "Apps/MyCollect
 jest.unmock("react-relay")
 
 describe("MyCollectionArtworkArtistMarket", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    MyCollectionArtworkArtistMarket_Test_Query
-  >({
-    Component: props => {
-      if (props?.artwork?.marketPriceInsights) {
-        return (
-          <MyCollectionArtworkArtistMarketFragmentContainer
-            marketPriceInsights={props.artwork.marketPriceInsights}
-          />
-        )
-      }
-      return null
-    },
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<MyCollectionArtworkArtistMarket_Test_Query>({
+      Component: props => {
+        if (props?.artwork?.marketPriceInsights) {
+          return (
+            <MyCollectionArtworkArtistMarketFragmentContainer
+              marketPriceInsights={props.artwork.marketPriceInsights}
+            />
+          )
+        }
+        return null
+      },
+      query: graphql`
       query MyCollectionArtworkArtistMarket_Test_Query @relay_test_operation {
         artwork(id: "foo") {
           marketPriceInsights {
@@ -29,7 +28,7 @@ describe("MyCollectionArtworkArtistMarket", () => {
         }
       }
     `,
-  })
+    })
 
   it("renders the market price insights for an artwork", () => {
     renderWithRelay(mockResolvers)

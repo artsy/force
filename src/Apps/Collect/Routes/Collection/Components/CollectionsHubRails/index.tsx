@@ -12,9 +12,9 @@ interface CollectionsHubRailsProps {
   linkedCollections: CollectionsHubRails_linkedCollections$data
 }
 
-export const CollectionsHubRails: React.FC<React.PropsWithChildren<CollectionsHubRailsProps>> = ({
-  linkedCollections,
-}) => {
+export const CollectionsHubRails: React.FC<
+  React.PropsWithChildren<CollectionsHubRailsProps>
+> = ({ linkedCollections }) => {
   const showCollectionHubs = linkedCollections.length > 0
 
   if (!showCollectionHubs) {
@@ -73,9 +73,11 @@ export const CollectionsHubRailsContainer = createFragmentContainer(
   }
 )
 
-export const CollectionsHubRailsQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const CollectionsHubRailsQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   return (
     <SystemQueryRenderer<CollectionsHubRailsQuery>
       query={graphql`

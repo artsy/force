@@ -55,7 +55,9 @@ const SavedSearchAlertContext = createContext<SavedSearchAlertContextProps>({
   criteriaHref: () => null,
 })
 
-export const SavedSearchAlertContextProvider: React.FC<React.PropsWithChildren<SavedSearchAlertContextProviderProps>> = ({
+export const SavedSearchAlertContextProvider: React.FC<
+  React.PropsWithChildren<SavedSearchAlertContextProviderProps>
+> = ({
   entity,
   aggregations,
   criteria: criteriaFromArgument,

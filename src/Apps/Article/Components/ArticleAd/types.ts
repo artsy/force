@@ -15,8 +15,8 @@ export const AD_UNITS = [
   "Mobile_TopLeaderboard",
 ] as const
 
-export type AdUnit = typeof AD_UNITS[number]
+export type AdUnit = (typeof AD_UNITS)[number]
 
 export const AD_SIZES = ["300x50", "300x250", "970x250"] as const
 
-export type AdSize = typeof AD_SIZES[number]
+export type AdSize = (typeof AD_SIZES)[number]

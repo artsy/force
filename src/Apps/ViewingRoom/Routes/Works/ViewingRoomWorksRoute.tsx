@@ -20,7 +20,9 @@ interface WorksRouteProps {
   viewingRoom: ViewingRoomWorksRoute_viewingRoom$data
 }
 
-const ViewingRoomWorksRoute: React.FC<React.PropsWithChildren<WorksRouteProps>> = ({ viewingRoom }) => {
+const ViewingRoomWorksRoute: React.FC<
+  React.PropsWithChildren<WorksRouteProps>
+> = ({ viewingRoom }) => {
   const artworks = extractNodes(viewingRoom.artworksConnection)
 
   return (

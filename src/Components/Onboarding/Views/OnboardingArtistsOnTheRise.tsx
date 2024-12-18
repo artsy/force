@@ -1,7 +1,9 @@
 import { FC } from "react"
 import { OnboardingMarketingCollectionQueryRenderer } from "Components/Onboarding/Components/OnboardingMarketingCollection"
 
-export const OnboardingArtistsOnTheRise: FC<React.PropsWithChildren<unknown>> = () => {
+export const OnboardingArtistsOnTheRise: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <OnboardingMarketingCollectionQueryRenderer
       slug="artists-on-the-rise"

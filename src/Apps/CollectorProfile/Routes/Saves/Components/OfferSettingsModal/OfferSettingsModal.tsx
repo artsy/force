@@ -30,10 +30,9 @@ interface OfferSettingsFormikValues extends Array<OfferSettingsFormModel> {}
 
 const logger = createLogger("OfferSettingsModal")
 
-export const OfferSettingsModal: React.FC<React.PropsWithChildren<OfferSettingsModalProps>> = ({
-  onClose,
-  me,
-}) => {
+export const OfferSettingsModal: React.FC<
+  React.PropsWithChildren<OfferSettingsModalProps>
+> = ({ onClose, me }) => {
   const customArtworkLists = extractNodes(me.customArtworkLists)
   const savedArtworksArtworkList = me?.savedArtworksArtworkList
   const artworkLists = savedArtworksArtworkList
@@ -50,12 +49,12 @@ export const OfferSettingsModal: React.FC<React.PropsWithChildren<OfferSettingsM
       await submitMutation({
         variables: {
           input: {
-            attributes: (Object.entries(formikValues).map(
+            attributes: Object.entries(formikValues).map(
               ([id, shareableWithPartners]) => ({
                 id,
                 shareableWithPartners,
               })
-            ) as unknown) as UpdateMeCollectionInput[],
+            ) as unknown as UpdateMeCollectionInput[],
           },
         },
         rejectIf: res => {

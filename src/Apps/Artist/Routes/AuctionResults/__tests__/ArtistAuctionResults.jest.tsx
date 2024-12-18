@@ -555,8 +555,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/xACxJ_uIHApai3JP9odtZg/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/xACxJ_uIHApai3JP9odtZg/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/xACxJ_uIHApai3JP9odtZg/thumbnail.jpg",
                   width: 100,
@@ -594,8 +593,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/lmY_wowdeGi__ZtKVHV8Dw/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/lmY_wowdeGi__ZtKVHV8Dw/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/lmY_wowdeGi__ZtKVHV8Dw/thumbnail.jpg",
                   width: 100,
@@ -633,8 +631,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/AI6P5qi0Xq7Efs9d6HMt4A/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/AI6P5qi0Xq7Efs9d6HMt4A/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/AI6P5qi0Xq7Efs9d6HMt4A/thumbnail.jpg",
                   width: 100,
@@ -672,8 +669,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/B3EtIMtH8XnDmt1KBD6VhQ/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/B3EtIMtH8XnDmt1KBD6VhQ/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/B3EtIMtH8XnDmt1KBD6VhQ/thumbnail.jpg",
                   width: 100,
@@ -711,8 +707,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/rLyB6jNe0lQ8fF6EEQ61wg/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/rLyB6jNe0lQ8fF6EEQ61wg/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/rLyB6jNe0lQ8fF6EEQ61wg/thumbnail.jpg",
                   width: 100,
@@ -750,8 +745,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/46t-8KytTjCwYPw17E7U6w/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/46t-8KytTjCwYPw17E7U6w/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/46t-8KytTjCwYPw17E7U6w/thumbnail.jpg",
                   width: 100,
@@ -789,8 +783,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/eivcrcx7PVnvmKZzOQosXA/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/eivcrcx7PVnvmKZzOQosXA/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/eivcrcx7PVnvmKZzOQosXA/thumbnail.jpg",
                   width: 100,
@@ -828,8 +821,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/-ZlQnxE8T8MsVRGjSSwaXw/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/-ZlQnxE8T8MsVRGjSSwaXw/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/-ZlQnxE8T8MsVRGjSSwaXw/thumbnail.jpg",
                   width: 100,
@@ -867,8 +859,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/3nGESp60mCg0xygJ4bvjcA/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/3nGESp60mCg0xygJ4bvjcA/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/3nGESp60mCg0xygJ4bvjcA/thumbnail.jpg",
                   width: 100,
@@ -906,8 +897,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             images: {
               thumbnail: {
                 cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/Db93v-hdsJjCV6XHFUfn2g/thumbnail.jpg",
+                  src: "https://d32dm0rphc51dk.cloudfront.net/Db93v-hdsJjCV6XHFUfn2g/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/Db93v-hdsJjCV6XHFUfn2g/thumbnail.jpg",
                   width: 100,

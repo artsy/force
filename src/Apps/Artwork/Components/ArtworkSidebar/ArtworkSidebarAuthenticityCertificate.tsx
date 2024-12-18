@@ -17,9 +17,9 @@ interface ArtworkSidebarAuthenticityCertificateProps {
   artwork: ArtworkSidebarAuthenticityCertificate_artwork$data
 }
 
-export const ArtworkSidebarAuthenticityCertificate: React.FC<React.PropsWithChildren<ArtworkSidebarAuthenticityCertificateProps>> = ({
-  artwork,
-}) => {
+export const ArtworkSidebarAuthenticityCertificate: React.FC<
+  React.PropsWithChildren<ArtworkSidebarAuthenticityCertificateProps>
+> = ({ artwork }) => {
   const [isShowingModal, setIsShowingModal] = useState(false)
 
   const handleClose = () => {
@@ -97,14 +97,12 @@ export const ArtworkSidebarAuthenticityCertificate: React.FC<React.PropsWithChil
   )
 }
 
-export const ArtworkSidebarAuthenticityCertificateFragmentContainer = createFragmentContainer(
-  ArtworkSidebarAuthenticityCertificate,
-  {
+export const ArtworkSidebarAuthenticityCertificateFragmentContainer =
+  createFragmentContainer(ArtworkSidebarAuthenticityCertificate, {
     artwork: graphql`
       fragment ArtworkSidebarAuthenticityCertificate_artwork on Artwork {
         hasCertificateOfAuthenticity
         isBiddable
       }
     `,
-  }
-)
+  })

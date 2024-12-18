@@ -23,7 +23,9 @@ import {
 
 type Mode = "Resetting" | "Error" | "Done"
 
-export const InquiryResetPassword: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const InquiryResetPassword: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { inquiry, setInquiry } = useInquiryContext()
   const { navigateTo } = useInquiryAccountContext()
 
@@ -57,12 +59,11 @@ export const InquiryResetPassword: React.FC<React.PropsWithChildren<unknown>> = 
     }
   }
 
-  const handleInputChange = name => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setInquiry(prevState => ({ ...prevState, [name]: event.target.value }))
-    setState(prevState => ({ ...prevState, [name]: event.target.value }))
-  }
+  const handleInputChange =
+    name => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setInquiry(prevState => ({ ...prevState, [name]: event.target.value }))
+      setState(prevState => ({ ...prevState, [name]: event.target.value }))
+    }
 
   const message = {
     ["Done"]: `We've sent a link to reset your password if an account is associated with this email.`,

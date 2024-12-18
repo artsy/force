@@ -11,10 +11,9 @@ interface ArtQuizArtworksCardProps {
   artwork: ArtQuizArtworksCard_artwork$data
 }
 
-const ArtQuizArtworksCard: FC<React.PropsWithChildren<ArtQuizArtworksCardProps>> = ({
-  mode,
-  artwork,
-}) => {
+const ArtQuizArtworksCard: FC<
+  React.PropsWithChildren<ArtQuizArtworksCardProps>
+> = ({ mode, artwork }) => {
   const image = artwork?.image?.resized
 
   if (!image) return null

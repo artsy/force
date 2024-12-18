@@ -7,9 +7,9 @@ interface ArtworkSidebarEstimatedValueProps {
   artwork: ArtworkSidebarEstimatedValue_artwork$data
 }
 
-const ArtworkSidebarEstimatedValue: React.FC<React.PropsWithChildren<ArtworkSidebarEstimatedValueProps>> = ({
-  artwork,
-}) => {
+const ArtworkSidebarEstimatedValue: React.FC<
+  React.PropsWithChildren<ArtworkSidebarEstimatedValueProps>
+> = ({ artwork }) => {
   const { saleArtwork, sale } = artwork
   if (!!sale?.isClosed || !saleArtwork?.estimate) {
     return null
@@ -22,9 +22,8 @@ const ArtworkSidebarEstimatedValue: React.FC<React.PropsWithChildren<ArtworkSide
   )
 }
 
-export const ArtworkSidebarEstimatedValueFragmentContainer = createFragmentContainer(
-  ArtworkSidebarEstimatedValue,
-  {
+export const ArtworkSidebarEstimatedValueFragmentContainer =
+  createFragmentContainer(ArtworkSidebarEstimatedValue, {
     artwork: graphql`
       fragment ArtworkSidebarEstimatedValue_artwork on Artwork {
         saleArtwork {
@@ -35,5 +34,4 @@ export const ArtworkSidebarEstimatedValueFragmentContainer = createFragmentConta
         }
       }
     `,
-  }
-)
+  })

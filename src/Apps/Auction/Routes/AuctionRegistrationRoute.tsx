@@ -24,10 +24,9 @@ export interface AuctionRegistrationRouteProps {
   sale: AuctionRegistrationRoute_sale$data
 }
 
-const AuctionRegistrationRoute: React.FC<React.PropsWithChildren<AuctionRegistrationRouteProps>> = ({
-  me,
-  sale,
-}) => {
+const AuctionRegistrationRoute: React.FC<
+  React.PropsWithChildren<AuctionRegistrationRouteProps>
+> = ({ me, sale }) => {
   const { tracking } = useAuctionTracking()
   const { router } = useRouter()
   const { needsIdentityVerification } = computeProps({ sale, me })
@@ -102,24 +101,25 @@ const AuctionRegistrationRoute: React.FC<React.PropsWithChildren<AuctionRegistra
   )
 }
 
-export const AuctionRegistrationRouteFragmentContainer = createFragmentContainer(
-  (props: AuctionRegistrationRouteProps) => {
-    return (
-      // Wrap the provider down here as we need it for our hooks
-      (<CreditCardInputProvider>
-        <AuctionRegistrationRoute {...props} />
-      </CreditCardInputProvider>)
-    );
-  },
-  {
-    me: graphql`
+export const AuctionRegistrationRouteFragmentContainer =
+  createFragmentContainer(
+    (props: AuctionRegistrationRouteProps) => {
+      return (
+        // Wrap the provider down here as we need it for our hooks
+        <CreditCardInputProvider>
+          <AuctionRegistrationRoute {...props} />
+        </CreditCardInputProvider>
+      )
+    },
+    {
+      me: graphql`
       fragment AuctionRegistrationRoute_me on Me {
         internalID
         isIdentityVerified
         hasQualifiedCreditCards
       }
     `,
-    sale: graphql`
+      sale: graphql`
       fragment AuctionRegistrationRoute_sale on Sale {
         slug
         name
@@ -133,8 +133,8 @@ export const AuctionRegistrationRouteFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+    }
+  )
 
 const computeProps = ({ sale, me }: AuctionRegistrationRouteProps) => {
   const needsIdentityVerification =

@@ -10,24 +10,23 @@ jest.mock("System/Hooks/useSystemContext")
 jest.unmock("react-relay")
 
 describe("MyCollectionArtworkImageBrowser", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    MyCollectionArtworkImageBrowserTestQuery
-  >({
-    Component: (props: any) => {
-      return (
-        <MockBoot>
-          <MyCollectionArtworkImageBrowser {...props} />
-        </MockBoot>
-      )
-    },
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<MyCollectionArtworkImageBrowserTestQuery>({
+      Component: (props: any) => {
+        return (
+          <MockBoot>
+            <MyCollectionArtworkImageBrowser {...props} />
+          </MockBoot>
+        )
+      },
+      query: graphql`
       query MyCollectionArtworkImageBrowserTestQuery @relay_test_operation {
         artwork(id: "artwork-id") {
           ...MyCollectionArtworkImageBrowser_artwork
         }
       }
     `,
-  })
+    })
 
   describe("when there are images", () => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => {

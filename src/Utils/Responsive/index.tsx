@@ -29,5 +29,5 @@ export const valuesWithBreakpointProps = ReactionMedia.valuesWithBreakpointProps
 
 // TODO: Simplify this hideous typing.
 export type MatchingMediaQueries = Array<
-  "hover" | "notHover" | typeof SortedBreakpoints[0]
+  "hover" | "notHover" | (typeof SortedBreakpoints)[0]
 >

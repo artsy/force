@@ -17,9 +17,9 @@ interface MobileSearchBarProps {
   onClose: () => void
 }
 
-export const MobileSearchBar: FC<React.PropsWithChildren<
-  MobileSearchBarProps
->> = ({ viewer, onClose }) => {
+export const MobileSearchBar: FC<
+  React.PropsWithChildren<MobileSearchBarProps>
+> = ({ viewer, onClose }) => {
   const [overlayDisplayed, setOverlayDisplayed] = useState(false)
 
   const displayOverlay = () => {
@@ -51,9 +51,9 @@ interface MobileSearchBarQueryRendererProps {
   onClose: () => void
 }
 
-export const MobileSearchBarQueryRenderer: FC<React.PropsWithChildren<
-  MobileSearchBarQueryRendererProps
->> = props => {
+export const MobileSearchBarQueryRenderer: FC<
+  React.PropsWithChildren<MobileSearchBarQueryRendererProps>
+> = props => {
   const { relayEnvironment, searchQuery = "" } = useSystemContext()
   const isClient = useDidMount()
 

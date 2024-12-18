@@ -10,10 +10,9 @@ export interface AdditionalArtworkDetailsProps
   order: AdditionalArtworkDetails_order$data
 }
 
-const AdditionalArtworkDetails: React.FC<React.PropsWithChildren<AdditionalArtworkDetailsProps>> = ({
-  order: { artworkDetails, lineItems },
-  ...others
-}) => {
+const AdditionalArtworkDetails: React.FC<
+  React.PropsWithChildren<AdditionalArtworkDetailsProps>
+> = ({ order: { artworkDetails, lineItems }, ...others }) => {
   const artworkVersion = extractNodes(lineItems)[0]?.artworkVersion
 
   return (
@@ -41,9 +40,8 @@ const AdditionalArtworkDetails: React.FC<React.PropsWithChildren<AdditionalArtwo
   )
 }
 
-export const AdditionalArtworkDetailsFragmentContainer = createFragmentContainer(
-  AdditionalArtworkDetails,
-  {
+export const AdditionalArtworkDetailsFragmentContainer =
+  createFragmentContainer(AdditionalArtworkDetails, {
     order: graphql`
       fragment AdditionalArtworkDetails_order on CommerceOrder {
         artworkDetails
@@ -59,5 +57,4 @@ export const AdditionalArtworkDetailsFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })

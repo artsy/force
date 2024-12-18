@@ -15,10 +15,9 @@ interface MyCollectionArtworkGridProps {
   onLoadMore: () => void
 }
 
-const MyCollectionArtworksGrid: FC<React.PropsWithChildren<MyCollectionArtworkGridProps>> = ({
-  artworks,
-  onLoadMore,
-}) => {
+const MyCollectionArtworksGrid: FC<
+  React.PropsWithChildren<MyCollectionArtworkGridProps>
+> = ({ artworks, onLoadMore }) => {
   const enablePostApprovalSubmissionFlow = useFeatureFlag(
     "onyx_post_approval_submission_flow"
   )

@@ -28,22 +28,17 @@ interface MyCollectionCreateArtworkProps {
   me: MyCollectionCreateArtwork_me$data
 }
 
-export const MyCollectionCreateArtwork: React.FC<React.PropsWithChildren<MyCollectionCreateArtworkProps>> = ({
-  me,
-}) => {
-  const {
-    localImages,
-    addLocalImage,
-    clearLocalImages,
-    removeLocalImage,
-  } = useLocalImageState()
+export const MyCollectionCreateArtwork: React.FC<
+  React.PropsWithChildren<MyCollectionCreateArtworkProps>
+> = ({ me }) => {
+  const { localImages, addLocalImage, clearLocalImages, removeLocalImage } =
+    useLocalImageState()
 
   const { router } = useRouter()
   const { sendToast } = useToasts()
   const { createOrUpdateArtwork } = useCreateOrUpdateArtwork()
-  const {
-    saveCollectedArtwork: trackSaveCollectedArtwork,
-  } = useMyCollectionTracking()
+  const { saveCollectedArtwork: trackSaveCollectedArtwork } =
+    useMyCollectionTracking()
 
   const initialStep = "artist-select"
 
@@ -154,13 +149,11 @@ export const MyCollectionCreateArtwork: React.FC<React.PropsWithChildren<MyColle
   )
 }
 
-export const MyCollectionCreateArtworkFragmentContainer = createFragmentContainer(
-  MyCollectionCreateArtwork,
-  {
+export const MyCollectionCreateArtworkFragmentContainer =
+  createFragmentContainer(MyCollectionCreateArtwork, {
     me: graphql`
       fragment MyCollectionCreateArtwork_me on Me {
         ...MyCollectionArtworkFormArtistStep_me
       }
     `,
-  }
-)
+  })

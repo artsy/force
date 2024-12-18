@@ -26,10 +26,9 @@ interface ArtistsIndexProps {
   featuredGenes: ArtistsIndex_featuredGenes$data | null
 }
 
-export const ArtistsIndex: React.FC<React.PropsWithChildren<ArtistsIndexProps>> = ({
-  featuredArtists,
-  featuredGenes,
-}) => {
+export const ArtistsIndex: React.FC<
+  React.PropsWithChildren<ArtistsIndexProps>
+> = ({ featuredArtists, featuredGenes }) => {
   const [featuredArtistsSet] = featuredArtists ?? []
   const [featuredGenesSet] = featuredGenes ?? []
 

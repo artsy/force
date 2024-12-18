@@ -13,10 +13,9 @@ interface ViewingRoomWorksArtworkProps {
   artwork: ViewingRoomWorksArtwork_artwork$data
 }
 
-const ViewingRoomWorksArtwork: React.FC<React.PropsWithChildren<ViewingRoomWorksArtworkProps>> = ({
-  to,
-  artwork,
-}) => {
+const ViewingRoomWorksArtwork: React.FC<
+  React.PropsWithChildren<ViewingRoomWorksArtworkProps>
+> = ({ to, artwork }) => {
   const tracking = useTracking()
 
   const { jumpTo } = useJump({ offset: 20 })

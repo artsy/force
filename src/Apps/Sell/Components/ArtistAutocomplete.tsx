@@ -38,16 +38,18 @@ interface ArtistAutocompleteOption extends AutocompleteInputOptionType {
   option: AutocompleteArtist
 }
 
-export const ArtistAutoComplete: React.FC<React.PropsWithChildren<{
-  onArtistNotFound?: (notFound: boolean) => void
-  onError: () => void
-  onChange?: (value: string) => void
-  onSelect: (artist: AutocompleteArtist | null) => void
-  placeholder?: string
-  showChevronIcon?: boolean
-  required?: boolean
-  title?: string
-}>> = ({
+export const ArtistAutoComplete: React.FC<
+  React.PropsWithChildren<{
+    onArtistNotFound?: (notFound: boolean) => void
+    onError: () => void
+    onChange?: (value: string) => void
+    onSelect: (artist: AutocompleteArtist | null) => void
+    placeholder?: string
+    showChevronIcon?: boolean
+    required?: boolean
+    title?: string
+  }>
+> = ({
   onArtistNotFound,
   onError,
   onChange,
@@ -63,13 +65,8 @@ export const ArtistAutoComplete: React.FC<React.PropsWithChildren<{
   const [isError, setIsError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const { relayEnvironment } = useSystemContext()
-  const {
-    values,
-    setFieldValue,
-    errors,
-    touched,
-    setFieldTouched,
-  } = useFormikContext<FormValues>()
+  const { values, setFieldValue, errors, touched, setFieldTouched } =
+    useFormikContext<FormValues>()
 
   const [artistNotFoundMessage, setArtistNotFoundMessage] = useState<string>("")
 

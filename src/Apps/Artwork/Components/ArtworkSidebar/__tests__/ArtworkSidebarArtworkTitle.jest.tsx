@@ -6,20 +6,19 @@ import { ArtworkSidebarArtworkTitleFragmentContainer } from "Apps/Artwork/Compon
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  ArtworkSidebarArtworkTitle_Test_Query
->({
-  Component: ({ artwork }) => {
-    return <ArtworkSidebarArtworkTitleFragmentContainer artwork={artwork!} />
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<ArtworkSidebarArtworkTitle_Test_Query>({
+    Component: ({ artwork }) => {
+      return <ArtworkSidebarArtworkTitleFragmentContainer artwork={artwork!} />
+    },
+    query: graphql`
     query ArtworkSidebarArtworkTitle_Test_Query @relay_test_operation {
       artwork(id: "josef-albers-homage-to-the-square-85") {
         ...ArtworkSidebarArtworkTitle_artwork
       }
     }
   `,
-})
+  })
 
 describe("ArtworkSidebarArtworkTitle", () => {
   describe("artwork has a year", () => {

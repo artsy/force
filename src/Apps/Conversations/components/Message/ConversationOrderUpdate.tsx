@@ -13,10 +13,9 @@ export interface OrderUpdateProps extends FlexProps {
   event: ConversationOrderUpdate_event$key
 }
 
-export const ConversationOrderUpdate: React.FC<React.PropsWithChildren<OrderUpdateProps>> = ({
-  event,
-  ...flexProps
-}) => {
+export const ConversationOrderUpdate: React.FC<
+  React.PropsWithChildren<OrderUpdateProps>
+> = ({ event, ...flexProps }) => {
   const data = useFragment(FRAGMENT, event)
 
   const { color, textColor, message, Icon } = getIconProps(data)

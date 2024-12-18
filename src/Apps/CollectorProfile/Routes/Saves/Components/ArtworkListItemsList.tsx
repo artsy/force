@@ -7,7 +7,9 @@ import { extractNodes } from "Utils/extractNodes"
 import { ArtworkListItemsListQuery } from "__generated__/ArtworkListItemsListQuery.graphql"
 import { times } from "lodash"
 
-export const ArtworkListItemsList: FC<React.PropsWithChildren<unknown>> = () => {
+export const ArtworkListItemsList: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { me } = useLazyLoadQuery<ArtworkListItemsListQuery>(query, {})
 
   const {
@@ -94,7 +96,9 @@ const query = graphql`
   }
 `
 
-export const ArtworkListItemsListPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+export const ArtworkListItemsListPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Shelf>
       {times(3).map((_, index) => (

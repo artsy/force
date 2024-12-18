@@ -8,18 +8,17 @@ import { useRouter } from "System/Hooks/useRouter"
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  PartnersLocationAutocomplete_Test_Query
->({
-  Component: PartnersLocationAutocompleteFragmentContainer,
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<PartnersLocationAutocomplete_Test_Query>({
+    Component: PartnersLocationAutocompleteFragmentContainer,
+    query: graphql`
     query PartnersLocationAutocomplete_Test_Query @relay_test_operation {
       viewer {
         ...PartnersLocationAutocomplete_viewer
       }
     }
   `,
-})
+  })
 
 describe("PartnersLocationAutocomplete", () => {
   const mockUseRouter = useRouter as jest.Mock

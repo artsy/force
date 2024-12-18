@@ -6,7 +6,9 @@ interface AuctionsRouteProps {
   viewer: AuctionsRoute_viewer$data
 }
 
-const AuctionsRoute: React.FC<React.PropsWithChildren<AuctionsRouteProps>> = () => {
+const AuctionsRoute: React.FC<
+  React.PropsWithChildren<AuctionsRouteProps>
+> = () => {
   return <>Auctions route</>
 }
 

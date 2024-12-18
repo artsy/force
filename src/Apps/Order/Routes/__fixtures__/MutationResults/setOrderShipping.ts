@@ -56,8 +56,7 @@ export const settingOrderArtaShipmentDestinationCouldNotBeGeocodedFailure = {
       error: {
         type: "arta",
         code: "destination_could_not_be_geocoded",
-        data:
-          '{"status":422,"errors":{"destination":["could not be geocoded"]}}',
+        data: '{"status":422,"errors":{"destination":["could not be geocoded"]}}',
       },
     },
   },

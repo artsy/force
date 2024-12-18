@@ -14,12 +14,9 @@ export interface NotificationViewingRoomProps
   onClick?: () => void
 }
 
-export const NotificationViewingRoom: React.FC<React.PropsWithChildren<NotificationViewingRoomProps>> = ({
-  viewingRoom: viewingRoomProp,
-  contextModule,
-  onClick,
-  ...rest
-}) => {
+export const NotificationViewingRoom: React.FC<
+  React.PropsWithChildren<NotificationViewingRoomProps>
+> = ({ viewingRoom: viewingRoomProp, contextModule, onClick, ...rest }) => {
   const viewingRoom = useFragment(
     notificationViewingRoomFragment,
     viewingRoomProp

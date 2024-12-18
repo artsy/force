@@ -120,14 +120,14 @@ const FulfillmentDetailsFormLayout = (
 
   // Wrapper for change handlers that sets the stage to fulfillment_details
   // when the user edits an address field
-  const withBackToFulfillmentDetails = <F extends (...args: any[]) => void>(
-    cb: F
-  ) => (...args: Parameters<F>) => {
-    if (addressFormMode === "new_address") {
-      shippingContext.actions.goBackToFulfillmentDetails()
+  const withBackToFulfillmentDetails =
+    <F extends (...args: any[]) => void>(cb: F) =>
+    (...args: Parameters<F>) => {
+      if (addressFormMode === "new_address") {
+        shippingContext.actions.goBackToFulfillmentDetails()
+      }
+      cb(...args)
     }
-    cb(...args)
-  }
 
   const handleCloseVerification = async () => {
     await setFieldValue("meta.addressVerifiedBy", AddressVerifiedBy.USER)

@@ -96,13 +96,14 @@ const ArtistSeriesMetaFixture: ArtistSeriesMeta_TestQuery$rawResponse = {
   },
 }
 
-const ArtistSeriesMetaFixtureNoArtist: ArtistSeriesMeta_TestQuery$rawResponse = {
-  artistSeries: {
-    id: "123",
-    title: "Squashes",
-    description:
-      "Squashes are a lot like pumpkins except that they don't belong to any particular holiday. The most independent gourd, they always remain in style throughout the year.",
-    slug: "squashes",
-    artists: [],
-  },
-}
+const ArtistSeriesMetaFixtureNoArtist: ArtistSeriesMeta_TestQuery$rawResponse =
+  {
+    artistSeries: {
+      id: "123",
+      title: "Squashes",
+      description:
+        "Squashes are a lot like pumpkins except that they don't belong to any particular holiday. The most independent gourd, they always remain in style throughout the year.",
+      slug: "squashes",
+      artists: [],
+    },
+  }

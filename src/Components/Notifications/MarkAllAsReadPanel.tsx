@@ -12,9 +12,9 @@ export interface MarkAllAsReadPanelProps {
   unreadCounts: number
 }
 
-export const MarkAllAsReadPanel: React.FC<React.PropsWithChildren<MarkAllAsReadPanelProps>> = ({
-  unreadCounts,
-}) => {
+export const MarkAllAsReadPanel: React.FC<
+  React.PropsWithChildren<MarkAllAsReadPanelProps>
+> = ({ unreadCounts }) => {
   const { relayEnvironment } = useSystemContext()
 
   const hasUnreadNotifications = unreadCounts > 0

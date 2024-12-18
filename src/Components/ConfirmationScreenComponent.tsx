@@ -2,13 +2,15 @@ import { Text, Flex, Button } from "@artsy/palette"
 import React, { ReactElement } from "react"
 import { RouterLink } from "System/Components/RouterLink"
 
-export const ConfirmationScreenComponent: React.FC<React.PropsWithChildren<{
-  title: string
-  subtitle?: string
-  customSubtitle?: ReactElement
-  buttonText?: string
-  routerLink?: string
-}>> = ({ title, subtitle, customSubtitle, buttonText, routerLink }) => {
+export const ConfirmationScreenComponent: React.FC<
+  React.PropsWithChildren<{
+    title: string
+    subtitle?: string
+    customSubtitle?: ReactElement
+    buttonText?: string
+    routerLink?: string
+  }>
+> = ({ title, subtitle, customSubtitle, buttonText, routerLink }) => {
   return (
     <>
       <Text variant="lg" mt={4}>

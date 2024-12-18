@@ -143,9 +143,11 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
     )
 
     if (currentPill) {
-      const nextPill = (direction === "left"
-        ? currentPill.previousElementSibling
-        : currentPill.nextElementSibling) as HTMLElement
+      const nextPill = (
+        direction === "left"
+          ? currentPill.previousElementSibling
+          : currentPill.nextElementSibling
+      ) as HTMLElement
       let scrollBy = nextPill.offsetWidth + GRADIENT_BG_WIDTH
       scrollBy = direction == "left" ? -scrollBy : scrollBy
 

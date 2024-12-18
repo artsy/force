@@ -42,9 +42,8 @@ export const useCreateTokenAndSubmit = ({
   const elements = useElements()
   const { tracking } = useAuctionTracking()
 
-  const {
-    submitMutation: submitAddCreditCardAndUpdateProfileMutation,
-  } = useAddCreditCardAndUpdateProfile()
+  const { submitMutation: submitAddCreditCardAndUpdateProfileMutation } =
+    useAddCreditCardAndUpdateProfile()
   const { submitMutation: createBidder } = useCreateBidder()
   const { refreshUserData } = useRefreshUserData()
 

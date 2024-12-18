@@ -22,9 +22,9 @@ const StaticMapImage = styled(Image)`
 const aspectWidth = 2
 const imageHeight = 300
 
-export const PartnerContactMap: React.FC<React.PropsWithChildren<PartnerContactMapProps>> = ({
-  location,
-}) => {
+export const PartnerContactMap: React.FC<
+  React.PropsWithChildren<PartnerContactMapProps>
+> = ({ location }) => {
   const mapUrl = getGoogleMapUrl(location)
   const mapImageUrl = getGoogleStaticMapImageUrl(
     location,

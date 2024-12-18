@@ -31,12 +31,9 @@ interface HeroCarouselLargeProps {
   onChange?: (index) => void
 }
 
-export const HeroCarouselLarge: React.FC<React.PropsWithChildren<HeroCarouselLargeProps>> = ({
-  children,
-  fullBleed = true,
-  progressbarVariant,
-  onChange,
-}) => {
+export const HeroCarouselLarge: React.FC<
+  React.PropsWithChildren<HeroCarouselLargeProps>
+> = ({ children, fullBleed = true, progressbarVariant, onChange }) => {
   const length = Children.count(children)
 
   const {

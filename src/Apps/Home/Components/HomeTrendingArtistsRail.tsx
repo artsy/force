@@ -23,9 +23,9 @@ interface HomeTrendingArtistsRailProps {
   viewer: HomeTrendingArtistsRail_viewer$data
 }
 
-const HomeTrendingArtistsRail: React.FC<React.PropsWithChildren<HomeTrendingArtistsRailProps>> = ({
-  viewer,
-}) => {
+const HomeTrendingArtistsRail: React.FC<
+  React.PropsWithChildren<HomeTrendingArtistsRailProps>
+> = ({ viewer }) => {
   const { trackEvent } = useTracking()
 
   const artists = extractNodes(viewer.curatedTrendingArtists)
@@ -110,7 +110,9 @@ export const HomeTrendingArtistsRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const HomeTrendingArtistsRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeTrendingArtistsRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

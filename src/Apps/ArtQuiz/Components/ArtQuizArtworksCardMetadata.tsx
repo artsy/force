@@ -14,10 +14,9 @@ interface ArtQuizArtworksCardMetadataProps extends BoxProps {
   artwork: ArtQuizArtworksCardMetadata_artwork$data
 }
 
-const ArtQuizArtworksCardMetadata: FC<React.PropsWithChildren<ArtQuizArtworksCardMetadataProps>> = ({
-  artwork,
-  ...rest
-}) => {
+const ArtQuizArtworksCardMetadata: FC<
+  React.PropsWithChildren<ArtQuizArtworksCardMetadataProps>
+> = ({ artwork, ...rest }) => {
   const backgroundRgba = hexToRgba(artwork.dominantColors[0] ?? "#ffffff")
   const foregroundRgba = getContrastTIQ(backgroundRgba)
   const textShadowRgba = adjustAlpha(getContrastTIQ(foregroundRgba), 0.5)
@@ -55,9 +54,8 @@ const ArtQuizArtworksCardMetadata: FC<React.PropsWithChildren<ArtQuizArtworksCar
   )
 }
 
-export const ArtQuizArtworksCardMetadataFragmentContainer = createFragmentContainer(
-  ArtQuizArtworksCardMetadata,
-  {
+export const ArtQuizArtworksCardMetadataFragmentContainer =
+  createFragmentContainer(ArtQuizArtworksCardMetadata, {
     artwork: graphql`
       fragment ArtQuizArtworksCardMetadata_artwork on Artwork {
         title
@@ -72,5 +70,4 @@ export const ArtQuizArtworksCardMetadataFragmentContainer = createFragmentContai
         }
       }
     `,
-  }
-)
+  })

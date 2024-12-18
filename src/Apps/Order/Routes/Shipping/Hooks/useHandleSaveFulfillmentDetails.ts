@@ -65,9 +65,10 @@ export const useHandleSaveFulfillmentDetails = () => {
           },
         }
       } else {
-        requiresArtsyShippingToDestination = shippingContext.orderData.requiresArtsyShippingTo(
-          values.attributes.country
-        )
+        requiresArtsyShippingToDestination =
+          shippingContext.orderData.requiresArtsyShippingTo(
+            values.attributes.country
+          )
 
         const { phoneNumber, ...addressValues } = values.attributes
 

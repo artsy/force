@@ -7,9 +7,9 @@ interface ConsignmentSubmissionStatusProps {
   artwork: ConsignmentSubmissionStatus_artwork$data
 }
 
-const ConsignmentSubmissionStatus: React.FC<React.PropsWithChildren<ConsignmentSubmissionStatusProps>> = ({
-  artwork,
-}) => {
+const ConsignmentSubmissionStatus: React.FC<
+  React.PropsWithChildren<ConsignmentSubmissionStatusProps>
+> = ({ artwork }) => {
   const submission = artwork.consignmentSubmission
 
   if (!submission) return null
@@ -37,9 +37,8 @@ const ConsignmentSubmissionStatus: React.FC<React.PropsWithChildren<ConsignmentS
   )
 }
 
-export const ConsignmentSubmissionStatusFragmentContainer = createFragmentContainer(
-  ConsignmentSubmissionStatus,
-  {
+export const ConsignmentSubmissionStatusFragmentContainer =
+  createFragmentContainer(ConsignmentSubmissionStatus, {
     artwork: graphql`
       fragment ConsignmentSubmissionStatus_artwork on Artwork {
         internalID
@@ -53,5 +52,4 @@ export const ConsignmentSubmissionStatusFragmentContainer = createFragmentContai
         }
       }
     `,
-  }
-)
+  })

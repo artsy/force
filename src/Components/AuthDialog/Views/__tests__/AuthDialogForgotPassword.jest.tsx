@@ -26,7 +26,6 @@ describe("AuthDialogForgotPassword", () => {
     render(<AuthDialogForgotPassword />)
 
     const forgotPasswordMock = jest.fn().mockReturnValue(Promise.resolve())
-
     ;(forgotPassword as jest.Mock).mockImplementationOnce(forgotPasswordMock)
 
     const input = screen.getByPlaceholderText("Enter your email address")
@@ -67,7 +66,6 @@ describe("AuthDialogForgotPassword", () => {
     const forgotPasswordMock = jest
       .fn()
       .mockReturnValue(Promise.reject(new Error("An error occurred")))
-
     ;(forgotPassword as jest.Mock).mockImplementationOnce(forgotPasswordMock)
 
     const input = screen.getByPlaceholderText("Enter your email address")

@@ -15,9 +15,9 @@ interface ArtistOverviewRouteProps {
   artist: ArtistOverviewRoute_artist$data
 }
 
-const ArtistOverviewRoute: React.FC<React.PropsWithChildren<ArtistOverviewRouteProps>> = ({
-  artist,
-}) => {
+const ArtistOverviewRoute: React.FC<
+  React.PropsWithChildren<ArtistOverviewRouteProps>
+> = ({ artist }) => {
   const { title, description } = artist.meta
 
   const hasCareerHighlights = artist.insights.length > 0

@@ -29,24 +29,23 @@ jest.mock("Utils/Hooks/useStableShuffle", () => ({
   useStableShuffle: ({ items }) => ({ shuffled: items }),
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<
-  GalleriesRouteFragmentContainer_Test_Query
->({
-  Component: ({ viewer }) => {
-    return (
-      <MockBoot>
-        <GalleriesRouteFragmentContainer viewer={viewer!} />
-      </MockBoot>
-    )
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<GalleriesRouteFragmentContainer_Test_Query>({
+    Component: ({ viewer }) => {
+      return (
+        <MockBoot>
+          <GalleriesRouteFragmentContainer viewer={viewer!} />
+        </MockBoot>
+      )
+    },
+    query: graphql`
     query GalleriesRouteFragmentContainer_Test_Query @relay_test_operation {
       viewer {
         ...GalleriesRoute_viewer
       }
     }
   `,
-})
+  })
 
 describe("GalleriesRoute", () => {
   const mockTracking = useTracking as jest.Mock

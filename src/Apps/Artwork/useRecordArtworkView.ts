@@ -54,7 +54,9 @@ export const useRecordArtworkView = () => {
 /**
  * Component wrapper to enable hook usage in a class component
  */
-export const UseRecordArtworkView: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const UseRecordArtworkView: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   useRecordArtworkView()
   return null
 }

@@ -33,9 +33,9 @@ const StyledPartnerLink = styled(RouterLink)`
   }
 `
 
-const ArtworkSidebarPartnerInfo: React.FC<React.PropsWithChildren<ArtworkSidebarPartnerInfoProps>> = ({
-  artwork,
-}) => {
+const ArtworkSidebarPartnerInfo: React.FC<
+  React.PropsWithChildren<ArtworkSidebarPartnerInfoProps>
+> = ({ artwork }) => {
   const {
     internalID,
     partner,
@@ -149,9 +149,8 @@ const PartnerName: React.FC<React.PropsWithChildren<PartnerNameProps>> = ({
   )
 }
 
-export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContainer(
-  ArtworkSidebarPartnerInfo,
-  {
+export const ArtworkSidebarPartnerInfoFragmentContainer =
+  createFragmentContainer(ArtworkSidebarPartnerInfo, {
     artwork: graphql`
       fragment ArtworkSidebarPartnerInfo_artwork on Artwork {
         internalID
@@ -173,5 +172,4 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })

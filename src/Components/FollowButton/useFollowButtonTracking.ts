@@ -32,11 +32,8 @@ export const useFollowButtonTracking = ({
   ownerSlug,
   contextModule,
 }: UseFollowButtonTracking) => {
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const { trackEvent } = useTracking()
 

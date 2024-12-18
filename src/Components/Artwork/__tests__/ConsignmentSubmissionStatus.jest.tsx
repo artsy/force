@@ -7,25 +7,24 @@ import { graphql } from "react-relay"
 jest.unmock("react-relay")
 
 describe("ConsignmentSubmissionStatus", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    ConsignmentSubmissionStatusTestQuery
-  >({
-    Component: props => {
-      if (props.artwork) {
-        return (
-          <ConsignmentSubmissionStatusFragmentContainer {...(props as any)} />
-        )
-      }
-      return null
-    },
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<ConsignmentSubmissionStatusTestQuery>({
+      Component: props => {
+        if (props.artwork) {
+          return (
+            <ConsignmentSubmissionStatusFragmentContainer {...(props as any)} />
+          )
+        }
+        return null
+      },
+      query: graphql`
       query ConsignmentSubmissionStatusTestQuery @relay_test_operation {
         artwork(id: "artwork-id") {
           ...ConsignmentSubmissionStatus_artwork
         }
       }
     `,
-  })
+    })
 
   it("displayas submission status when Approved", () => {
     renderWithRelay({

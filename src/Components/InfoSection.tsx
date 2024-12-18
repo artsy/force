@@ -13,11 +13,9 @@ interface InfoSectionProps {
   type?: "html" | "text"
 }
 
-export const InfoSection: React.FC<React.PropsWithChildren<InfoSectionProps>> = ({
-  label,
-  info,
-  type,
-}) => {
+export const InfoSection: React.FC<
+  React.PropsWithChildren<InfoSectionProps>
+> = ({ label, info, type }) => {
   const Info = () => {
     switch (type) {
       case "html": {

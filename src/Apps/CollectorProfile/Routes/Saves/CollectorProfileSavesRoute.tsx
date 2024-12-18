@@ -26,9 +26,9 @@ interface CollectorProfileSavesRouteProps {
   me: CollectorProfileSavesRoute_me$data
 }
 
-const CollectorProfileSavesRoute: FC<React.PropsWithChildren<CollectorProfileSavesRouteProps>> = ({
-  me,
-}) => {
+const CollectorProfileSavesRoute: FC<
+  React.PropsWithChildren<CollectorProfileSavesRouteProps>
+> = ({ me }) => {
   const {
     match: { params },
   } = useRouter()
@@ -125,7 +125,9 @@ const CollectorProfileSavesRoute: FC<React.PropsWithChildren<CollectorProfileSav
   )
 }
 
-const PageWrapper: FC<React.PropsWithChildren<CollectorProfileSavesRouteProps>> = props => {
+const PageWrapper: FC<
+  React.PropsWithChildren<CollectorProfileSavesRouteProps>
+> = props => {
   const { match } = useRouter()
 
   return (
@@ -135,9 +137,8 @@ const PageWrapper: FC<React.PropsWithChildren<CollectorProfileSavesRouteProps>> 
   )
 }
 
-export const CollectorProfileSavesRouteFragmentContainer = createFragmentContainer(
-  PageWrapper,
-  {
+export const CollectorProfileSavesRouteFragmentContainer =
+  createFragmentContainer(PageWrapper, {
     me: graphql`
       fragment CollectorProfileSavesRoute_me on Me {
         savedArtworksArtworkList: collection(id: "saved-artwork") {
@@ -173,5 +174,4 @@ export const CollectorProfileSavesRouteFragmentContainer = createFragmentContain
         }
       }
     `,
-  }
-)
+  })

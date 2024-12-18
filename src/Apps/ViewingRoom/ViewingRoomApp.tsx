@@ -17,10 +17,9 @@ interface ViewingRoomAppProps {
   viewingRoom: ViewingRoomApp_viewingRoom$data
 }
 
-const ViewingRoomApp: React.FC<React.PropsWithChildren<ViewingRoomAppProps>> = ({
-  children,
-  viewingRoom,
-}) => {
+const ViewingRoomApp: React.FC<
+  React.PropsWithChildren<ViewingRoomAppProps>
+> = ({ children, viewingRoom }) => {
   const { user } = useContext(SystemContext)
 
   const isPreviewable =

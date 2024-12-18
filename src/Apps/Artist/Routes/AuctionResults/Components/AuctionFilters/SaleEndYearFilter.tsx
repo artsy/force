@@ -7,13 +7,12 @@ import {
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
 
-export const SaleEndYearFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const SaleEndYearFilter: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { setFilter, aggregations } = useAuctionResultsFilterContext()
-  const {
-    saleEndYear,
-    saleStartYear,
-    allowUnspecifiedSaleDates,
-  } = useCurrentlySelectedFiltersForAuctionResults()
+  const { saleEndYear, saleStartYear, allowUnspecifiedSaleDates } =
+    useCurrentlySelectedFiltersForAuctionResults()
 
   const options = (
     aggregations

@@ -14,14 +14,11 @@ interface CompleteProfileCollectionDialogProps {
   onClose: () => void
 }
 
-export const CompleteProfileCollectionDialog: FC<React.PropsWithChildren<CompleteProfileCollectionDialogProps>> = ({
-  onClose,
-}) => {
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+export const CompleteProfileCollectionDialog: FC<
+  React.PropsWithChildren<CompleteProfileCollectionDialogProps>
+> = ({ onClose }) => {
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
   const { trackEvent } = useTracking()
 
   const handleSuccess = () => {
@@ -32,14 +29,15 @@ export const CompleteProfileCollectionDialog: FC<React.PropsWithChildren<Complet
       platform: "web",
     }
 
-    const tappedMyCollectionAddArtworkArtist: TappedMyCollectionAddArtworkArtist = {
-      action: ActionType.tappedMyCollectionAddArtworkArtist,
-      context_screen: OwnerType.myCollectionAddArtworkArtist, // FIXME: Should probably be ContextModule?
-      context_module: ContextModule.myCollectionAddArtworkAddArtist,
-      context_screen_owner_id: contextPageOwnerId,
-      context_screen_owner_slug: contextPageOwnerSlug,
-      platform: "web",
-    }
+    const tappedMyCollectionAddArtworkArtist: TappedMyCollectionAddArtworkArtist =
+      {
+        action: ActionType.tappedMyCollectionAddArtworkArtist,
+        context_screen: OwnerType.myCollectionAddArtworkArtist, // FIXME: Should probably be ContextModule?
+        context_module: ContextModule.myCollectionAddArtworkAddArtist,
+        context_screen_owner_id: contextPageOwnerId,
+        context_screen_owner_slug: contextPageOwnerSlug,
+        platform: "web",
+      }
 
     trackEvent(editedUserProfile)
     trackEvent(tappedMyCollectionAddArtworkArtist)

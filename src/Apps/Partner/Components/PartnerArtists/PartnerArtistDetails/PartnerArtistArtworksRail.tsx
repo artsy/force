@@ -11,11 +11,9 @@ export interface PartnerArtistArtworksRailProps {
   artistId: string
 }
 
-export const PartnerArtistArtworksRail: React.FC<React.PropsWithChildren<PartnerArtistArtworksRailProps>> = ({
-  partnerArtist,
-  partnerId,
-  artistId,
-}) => {
+export const PartnerArtistArtworksRail: React.FC<
+  React.PropsWithChildren<PartnerArtistArtworksRailProps>
+> = ({ partnerArtist, partnerId, artistId }) => {
   if (!partnerArtist.artworksConnection) return null
 
   const artworks = extractNodes(partnerArtist.artworksConnection)

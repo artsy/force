@@ -12,10 +12,9 @@ interface NearbyGalleriesRailProps extends BoxProps {
   partners: NearbyGalleriesRail_partners$data
 }
 
-const NearbyGalleriesRail: React.FC<React.PropsWithChildren<NearbyGalleriesRailProps>> = ({
-  partners,
-  ...rest
-}) => {
+const NearbyGalleriesRail: React.FC<
+  React.PropsWithChildren<NearbyGalleriesRailProps>
+> = ({ partners, ...rest }) => {
   if (!partners || partners.length === 0) {
     return null
   }
@@ -57,9 +56,13 @@ const NearbyGalleriesRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const NearbyGalleriesRailRenderer: React.FC<React.PropsWithChildren<{
-  near: string
-} & Omit<NearbyGalleriesRailProps, "partners">>> = ({ near, ...rest }) => {
+export const NearbyGalleriesRailRenderer: React.FC<
+  React.PropsWithChildren<
+    {
+      near: string
+    } & Omit<NearbyGalleriesRailProps, "partners">
+  >
+> = ({ near, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

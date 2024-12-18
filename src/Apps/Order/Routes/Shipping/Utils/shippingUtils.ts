@@ -157,9 +157,8 @@ export const getInitialShippingValues = (
 
   // The default ship-to address should be the first one that
   // can be shipped-to, preferring the default address if it exists.
-  const attributesFromDefaultAddress: ShipValues["attributes"] = addressWithFallbackValues(
-    defaultUserAddress
-  )
+  const attributesFromDefaultAddress: ShipValues["attributes"] =
+    addressWithFallbackValues(defaultUserAddress)
   if (defaultUserAddress) {
     return {
       fulfillmentType: FulfillmentType.SHIP,
@@ -172,9 +171,8 @@ export const getInitialShippingValues = (
   }
 
   // The user doesn't have a valid ship-to address, so we'll return empty values.
-  const initialFulfillmentValues: ShipValues["attributes"] = addressWithFallbackValues(
-    { country: defaultCountry }
-  )
+  const initialFulfillmentValues: ShipValues["attributes"] =
+    addressWithFallbackValues({ country: defaultCountry })
 
   return {
     fulfillmentType: FulfillmentType.SHIP,

@@ -11,9 +11,9 @@ interface AlertNotificationProps {
   notification: AlertNotification_notification$key
 }
 
-export const AlertNotification: FC<React.PropsWithChildren<AlertNotificationProps>> = ({
-  notification,
-}) => {
+export const AlertNotification: FC<
+  React.PropsWithChildren<AlertNotificationProps>
+> = ({ notification }) => {
   const notificationData = useFragment(AlertNotificationFragment, notification)
 
   const { artworksConnection, headline, item } = notificationData

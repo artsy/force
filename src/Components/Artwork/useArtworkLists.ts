@@ -16,10 +16,8 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
   const { relayEnvironment } = useSystemContext()
 
   const { value, clearValue } = useAuthIntent()
-  const {
-    saveArtworkToLists: saveToLists,
-    openSelectListsForArtworkModal,
-  } = useSaveArtworkToLists(options)
+  const { saveArtworkToLists: saveToLists, openSelectListsForArtworkModal } =
+    useSaveArtworkToLists(options)
 
   useEffect(() => {
     if (

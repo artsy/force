@@ -11,7 +11,9 @@ interface GeneFamilyProps {
   geneFamily: GeneFamily_geneFamily$data
 }
 
-export const GeneFamily: React.FC<React.PropsWithChildren<GeneFamilyProps>> = ({ geneFamily }) => {
+export const GeneFamily: React.FC<React.PropsWithChildren<GeneFamilyProps>> = ({
+  geneFamily,
+}) => {
   const { name, genes } = geneFamily
 
   if (!genes) {

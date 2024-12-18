@@ -80,9 +80,9 @@ export const FlashBannerFragmentContainer = createFragmentContainer(
   }
 )
 
-export const FlashBannerQueryRenderer: FC<React.PropsWithChildren<
-  unknown
->> = () => {
+export const FlashBannerQueryRenderer: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { user } = useSystemContext()
 
   if (!user) {

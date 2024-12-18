@@ -16,18 +16,17 @@ import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useOnce } from "Utils/Hooks/useOnce"
 
-export const InquiryArtistsInCollection: FC<React.PropsWithChildren<unknown>> = () => {
+export const InquiryArtistsInCollection: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { next, relayEnvironment, context } = useInquiryContext()
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({
     relayEnvironment: relayEnvironment.current as Environment,
   })
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
   const { trackEvent } = useTracking()
 
   useOnce(() => {
@@ -55,14 +54,15 @@ export const InquiryArtistsInCollection: FC<React.PropsWithChildren<unknown>> = 
       platform: "web",
     }
 
-    const tappedMyCollectionAddArtworkArtist: TappedMyCollectionAddArtworkArtist = {
-      action: ActionType.tappedMyCollectionAddArtworkArtist,
-      context_screen: OwnerType.myCollectionAddArtworkArtist, // FIXME: Should probably be ContextModule?
-      context_module: ContextModule.myCollectionAddArtworkAddArtist,
-      context_screen_owner_id: contextPageOwnerId,
-      context_screen_owner_slug: contextPageOwnerSlug,
-      platform: "web",
-    }
+    const tappedMyCollectionAddArtworkArtist: TappedMyCollectionAddArtworkArtist =
+      {
+        action: ActionType.tappedMyCollectionAddArtworkArtist,
+        context_screen: OwnerType.myCollectionAddArtworkArtist, // FIXME: Should probably be ContextModule?
+        context_module: ContextModule.myCollectionAddArtworkAddArtist,
+        context_screen_owner_id: contextPageOwnerId,
+        context_screen_owner_slug: contextPageOwnerSlug,
+        platform: "web",
+      }
 
     trackEvent(editedUserProfile)
     trackEvent(tappedMyCollectionAddArtworkArtist)

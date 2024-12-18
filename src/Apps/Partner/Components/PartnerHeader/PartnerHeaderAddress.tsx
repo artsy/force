@@ -11,7 +11,9 @@ export const TextWithNoWrap = styled.span`
     white-space: normal;
   `};
 `
-export const PartnerHeaderAddress: React.FC<React.PropsWithChildren<PartnerHeader_partner$data["locations"]>> = ({ edges }) => {
+export const PartnerHeaderAddress: React.FC<
+  React.PropsWithChildren<PartnerHeader_partner$data["locations"]>
+> = ({ edges }) => {
   const cities = uniq(compact(edges?.map(edge => edge?.node?.city?.trim())))
   if (!cities || cities.length === 0) return null
 

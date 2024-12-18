@@ -7,10 +7,9 @@ interface InfiniteScrollSentinelProps {
   once?: boolean
 }
 
-export const InfiniteScrollSentinel: FC<React.PropsWithChildren<InfiniteScrollSentinelProps>> = ({
-  onNext,
-  once = true,
-}) => {
+export const InfiniteScrollSentinel: FC<
+  React.PropsWithChildren<InfiniteScrollSentinelProps>
+> = ({ onNext, once = true }) => {
   const { ref } = useIntersectionObserver({
     onIntersection: onNext,
     once: once,

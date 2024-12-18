@@ -7,14 +7,16 @@ interface MyCollectionArtworkTitleProps {
   artwork: MyCollectionArtworkTitle_artwork$key
 }
 
-export const MyCollectionArtworkTitle: React.FC<React.PropsWithChildren<MyCollectionArtworkTitleProps>> = props => {
+export const MyCollectionArtworkTitle: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkTitleProps>
+> = props => {
   const { artistNames, date, title, artist } = useFragment(
     FRAGMENT,
     props.artwork
   )
 
   return (
-    (<Box mb={[4, 2]}>
+    <Box mb={[4, 2]}>
       <Text as="h1" variant="lg-display">
         {artist?.isPersonalArtist ? (
           artistNames
@@ -32,8 +34,8 @@ export const MyCollectionArtworkTitle: React.FC<React.PropsWithChildren<MyCollec
         <i>{title?.trim()}</i>
         {date && date.replace(/\s+/g, "").length > 0 && ", " + date}
       </Text>
-    </Box>)
-  );
+    </Box>
+  )
 }
 
 const FRAGMENT = graphql`

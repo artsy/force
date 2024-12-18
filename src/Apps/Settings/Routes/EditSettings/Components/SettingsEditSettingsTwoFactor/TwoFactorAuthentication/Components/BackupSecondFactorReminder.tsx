@@ -7,7 +7,9 @@ interface BackupSecondFactorReminderProps extends BorderBoxProps {
   factorTypeName: string
 }
 
-export const BackupSecondFactorReminder: React.FC<React.PropsWithChildren<BackupSecondFactorReminderProps>> = props => {
+export const BackupSecondFactorReminder: React.FC<
+  React.PropsWithChildren<BackupSecondFactorReminderProps>
+> = props => {
   const { backupSecondFactors, factorTypeName } = props
 
   return (

@@ -14,11 +14,8 @@ interface Options<T> {
 export const getSelectedArtworkListIds = <T extends ArtworkListEntity>(
   options: Options<T>
 ) => {
-  const {
-    artworkLists,
-    addToArtworkListIDs,
-    removeFromArtworkListIDs,
-  } = options
+  const { artworkLists, addToArtworkListIDs, removeFromArtworkListIDs } =
+    options
   const selectedByDefault = artworkLists.filter(node => node.isSavedArtwork)
   const selectedIdsByDefault = selectedByDefault.map(node => node.internalID)
   const selectedArtworkListIds = difference(

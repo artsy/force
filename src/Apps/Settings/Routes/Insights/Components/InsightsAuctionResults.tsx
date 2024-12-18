@@ -8,9 +8,9 @@ interface InsightsAuctionResultsProps {
   me: InsightsAuctionResults_me$data
 }
 
-const InsightsAuctionResults: React.FC<React.PropsWithChildren<InsightsAuctionResultsProps>> = ({
-  me,
-}) => {
+const InsightsAuctionResults: React.FC<
+  React.PropsWithChildren<InsightsAuctionResultsProps>
+> = ({ me }) => {
   const auctionResults = extractNodes(me.myCollectionAuctionResults)
 
   if (!auctionResults.length) {

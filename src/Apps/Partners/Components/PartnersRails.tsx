@@ -15,7 +15,10 @@ interface PartnersRailsProps {
   type: "INSTITUTION" | "GALLERY"
 }
 
-const PartnersRails: FC<React.PropsWithChildren<PartnersRailsProps>> = ({ viewer, type }) => {
+const PartnersRails: FC<React.PropsWithChildren<PartnersRailsProps>> = ({
+  viewer,
+  type,
+}) => {
   const categories = shuffle(compact(viewer.partnerCategories))
 
   return (
@@ -77,9 +80,9 @@ interface PartnersRailsQueryRendererProps {
   type: "INSTITUTION" | "GALLERY"
 }
 
-export const PartnersRailsQueryRenderer: FC<React.PropsWithChildren<PartnersRailsQueryRendererProps>> = ({
-  type,
-}) => {
+export const PartnersRailsQueryRenderer: FC<
+  React.PropsWithChildren<PartnersRailsQueryRendererProps>
+> = ({ type }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

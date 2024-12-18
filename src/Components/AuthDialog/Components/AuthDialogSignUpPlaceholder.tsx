@@ -9,7 +9,9 @@ import {
 } from "@artsy/palette"
 import { FC } from "react"
 
-export const AuthDialogSignUpPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+export const AuthDialogSignUpPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton>
       <Join separator={<Spacer y={2} />}>
@@ -61,7 +63,10 @@ export const AuthDialogSignUpPlaceholder: FC<React.PropsWithChildren<unknown>> =
   )
 }
 
-const SkeletonInput: FC<React.PropsWithChildren<{ name: string }>> = ({ name, children }) => {
+const SkeletonInput: FC<React.PropsWithChildren<{ name: string }>> = ({
+  name,
+  children,
+}) => {
   return (
     <Box>
       <SkeletonText variant="xs">{name}</SkeletonText>

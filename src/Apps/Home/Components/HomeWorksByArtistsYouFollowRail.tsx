@@ -22,9 +22,9 @@ interface HomeWorksByArtistsYouFollowRailProps {
   homePage: HomeWorksByArtistsYouFollowRail_homePage$data
 }
 
-const HomeWorksByArtistsYouFollowRail: React.FC<React.PropsWithChildren<HomeWorksByArtistsYouFollowRailProps>> = ({
-  homePage,
-}) => {
+const HomeWorksByArtistsYouFollowRail: React.FC<
+  React.PropsWithChildren<HomeWorksByArtistsYouFollowRailProps>
+> = ({ homePage }) => {
   const { trackEvent } = useTracking()
 
   const results = homePage.artworkModule?.results
@@ -82,9 +82,8 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const HomeWorksByArtistsYouFollowRailFragmentContainer = createFragmentContainer(
-  HomeWorksByArtistsYouFollowRail,
-  {
+export const HomeWorksByArtistsYouFollowRailFragmentContainer =
+  createFragmentContainer(HomeWorksByArtistsYouFollowRail, {
     homePage: graphql`
       fragment HomeWorksByArtistsYouFollowRail_homePage on HomePage {
         artworkModule(key: FOLLOWED_ARTISTS) {
@@ -103,10 +102,11 @@ export const HomeWorksByArtistsYouFollowRailFragmentContainer = createFragmentCo
         }
       }
     `,
-  }
-)
+  })
 
-export const HomeWorksByArtistsYouFollowRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeWorksByArtistsYouFollowRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

@@ -26,7 +26,9 @@ const ALLOWED_MIME_TYPES = [
 const ALLOWED_MIME_TYPES_HUMINIZED =
   "images (JPG, PNG or HEIC) or PDF or Microsoft Office files"
 
-export const UploadDocumentsForm: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const UploadDocumentsForm: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const { submitMutation: addAsset } = useAddAssetToConsignmentSubmission()
   const { setFieldValue, values } = useFormikContext<DocumentsFormValues>()

@@ -21,9 +21,9 @@ interface HomeFeaturedShowsRailProps {
   orderedSet: HomeFeaturedShowsRail_orderedSet$data
 }
 
-const HomeFeaturedShowsRail: React.FC<React.PropsWithChildren<HomeFeaturedShowsRailProps>> = ({
-  orderedSet,
-}) => {
+const HomeFeaturedShowsRail: React.FC<
+  React.PropsWithChildren<HomeFeaturedShowsRailProps>
+> = ({ orderedSet }) => {
   const { trackEvent } = useTracking()
 
   const shows = compact(orderedSet.items).flatMap(item =>
@@ -98,7 +98,9 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const HomeFeaturedShowsRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeFeaturedShowsRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

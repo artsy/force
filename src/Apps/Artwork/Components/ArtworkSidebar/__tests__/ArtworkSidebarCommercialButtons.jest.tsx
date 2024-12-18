@@ -32,20 +32,19 @@ describe("ArtworkSidebarCommercialButtons", () => {
   let mockEnvironment
   const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 
-  const { renderWithRelay } = setupTestWrapperTL<
-    ArtworkSidebarCommercialButtons_Test_Query
-  >({
-    Component: ({ artwork, me }) => {
-      return (
-        <MockBoot relayEnvironment={mockEnvironment} context={{ user }}>
-          <ToastsProvider>
-            <Toasts />
-            <ArtworkSidebarCommercialButtons artwork={artwork!} me={me!} />
-          </ToastsProvider>
-        </MockBoot>
-      )
-    },
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<ArtworkSidebarCommercialButtons_Test_Query>({
+      Component: ({ artwork, me }) => {
+        return (
+          <MockBoot relayEnvironment={mockEnvironment} context={{ user }}>
+            <ToastsProvider>
+              <Toasts />
+              <ArtworkSidebarCommercialButtons artwork={artwork!} me={me!} />
+            </ToastsProvider>
+          </MockBoot>
+        )
+      },
+      query: graphql`
       query ArtworkSidebarCommercialButtons_Test_Query @relay_test_operation {
         artwork(id: "josef-albers-homage-to-the-square-85") {
           ...ArtworkSidebarCommercialButtons_artwork
@@ -56,7 +55,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
         }
       }
     `,
-  })
+    })
 
   beforeEach(() => {
     mockEnvironment = createMockEnvironment()

@@ -17,7 +17,9 @@ export interface AuthDialogProps {
   onClose: () => void
 }
 
-export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({ onClose }) => {
+export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({
+  onClose,
+}) => {
   useRecaptcha()
 
   const {
@@ -83,8 +85,7 @@ export const DEFAULT_TITLES: Record<AuthDialogMode, string> = {
 const IMAGE = {
   width: 900,
   height: 2030,
-  src:
-    "https://files.artsy.net/images/2x_Evergreen-Artist-Page-Sign-Up-Modal.jpg",
+  src: "https://files.artsy.net/images/2x_Evergreen-Artist-Page-Sign-Up-Modal.jpg",
 }
 
 const AuthDialogLeftPanel: FC<React.PropsWithChildren<unknown>> = () => {

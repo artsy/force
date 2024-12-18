@@ -183,9 +183,9 @@ const OrderActionButton: FC<OrderActionButtonProps> = ({
   }
 }
 
-const SettingsPurchasesRow: FC<React.PropsWithChildren<
-  SettingsPurchasesRowProps
->> = ({ order }) => {
+const SettingsPurchasesRow: FC<
+  React.PropsWithChildren<SettingsPurchasesRowProps>
+> = ({ order }) => {
   const [lineItem] = extractNodes(order?.lineItems)
   const { artwork, artworkVersion, fulfillments } = lineItem
   const { requestedFulfillment, buyerAction } = order
@@ -471,9 +471,9 @@ export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
   }
 )
 
-export const SettingsPurchasesRowPlaceholder: FC<React.PropsWithChildren<
-  unknown
->> = () => {
+export const SettingsPurchasesRowPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton>
       <Box border="1px solid" borderColor="black10">

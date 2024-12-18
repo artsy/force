@@ -36,9 +36,9 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   onPopoverDismiss?: () => void
 }
 
-export const ArtworkGridItem: React.FC<React.PropsWithChildren<
-  ArtworkGridItemProps
->> = ({
+export const ArtworkGridItem: React.FC<
+  React.PropsWithChildren<ArtworkGridItemProps>
+> = ({
   artwork,
   contextModule,
   disableRouterLinking,
@@ -158,11 +158,13 @@ export const ArtworkGridItem: React.FC<React.PropsWithChildren<
   )
 }
 
-const ArtworkGridItemImage: React.FC<React.PropsWithChildren<
-  Pick<ArtworkGridItemProps, "artwork" | "lazyLoad"> & {
-    localImage: LocalImage | null
-  }
->> = ({ artwork, lazyLoad, localImage }) => {
+const ArtworkGridItemImage: React.FC<
+  React.PropsWithChildren<
+    Pick<ArtworkGridItemProps, "artwork" | "lazyLoad"> & {
+      localImage: LocalImage | null
+    }
+  >
+> = ({ artwork, lazyLoad, localImage }) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
 
@@ -260,12 +262,14 @@ const DisabledLink = styled(Box)`
   left: 0;
 `
 
-const LinkContainer: React.FC<React.PropsWithChildren<
-  Pick<ArtworkGridItemProps, "artwork" | "disableRouterLinking" | "to"> & {
-    localImage: LocalImage | null
-    onClick: () => void
-  }
->> = ({ artwork, children, disableRouterLinking, onClick, localImage, to }) => {
+const LinkContainer: React.FC<
+  React.PropsWithChildren<
+    Pick<ArtworkGridItemProps, "artwork" | "disableRouterLinking" | "to"> & {
+      localImage: LocalImage | null
+      onClick: () => void
+    }
+  >
+> = ({ artwork, children, disableRouterLinking, onClick, localImage, to }) => {
   const imageURL = artwork.image?.url
   if (!!disableRouterLinking) {
     return (

@@ -8,9 +8,9 @@ interface ArtworkAuctionRegistrationPanelProps {
   artwork: ArtworkAuctionRegistrationPanel_artwork$data
 }
 
-const ArtworkAuctionRegistrationPanel: React.FC<React.PropsWithChildren<ArtworkAuctionRegistrationPanelProps>> = ({
-  artwork,
-}) => {
+const ArtworkAuctionRegistrationPanel: React.FC<
+  React.PropsWithChildren<ArtworkAuctionRegistrationPanelProps>
+> = ({ artwork }) => {
   const isCountingDown = !!artwork.sale?.registrationEndsAt
   const href = `/auction-registration/${artwork.sale?.slug}`
   const title = isCountingDown
@@ -74,9 +74,8 @@ const ArtworkAuctionRegistrationPanel: React.FC<React.PropsWithChildren<ArtworkA
   )
 }
 
-export const ArtworkAuctionRegistrationPanelFragmentContainer = createFragmentContainer(
-  ArtworkAuctionRegistrationPanel,
-  {
+export const ArtworkAuctionRegistrationPanelFragmentContainer =
+  createFragmentContainer(ArtworkAuctionRegistrationPanel, {
     artwork: graphql`
       fragment ArtworkAuctionRegistrationPanel_artwork on Artwork {
         sale {
@@ -86,5 +85,4 @@ export const ArtworkAuctionRegistrationPanelFragmentContainer = createFragmentCo
         }
       }
     `,
-  }
-)
+  })

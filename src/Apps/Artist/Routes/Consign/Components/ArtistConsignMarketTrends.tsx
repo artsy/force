@@ -12,7 +12,9 @@ interface ArtistConsignMarketTrendsProps {
   artist: ArtistConsignMarketTrends_artist$data
 }
 
-export const ArtistConsignMarketTrends: React.FC<React.PropsWithChildren<ArtistConsignMarketTrendsProps>> = props => {
+export const ArtistConsignMarketTrends: React.FC<
+  React.PropsWithChildren<ArtistConsignMarketTrendsProps>
+> = props => {
   const tracking = useTracking()
 
   const {
@@ -70,11 +72,9 @@ export const ArtistConsignMarketTrends: React.FC<React.PropsWithChildren<ArtistC
   )
 }
 
-const Statistic: React.FC<React.PropsWithChildren<{ top: string; middle: string; bottom: string }>> = ({
-  top,
-  middle,
-  bottom,
-}) => {
+const Statistic: React.FC<
+  React.PropsWithChildren<{ top: string; middle: string; bottom: string }>
+> = ({ top, middle, bottom }) => {
   return (
     <Column span={4} textAlign="center">
       <Text variant="lg-display" color="white100">
@@ -92,9 +92,8 @@ const Statistic: React.FC<React.PropsWithChildren<{ top: string; middle: string;
   )
 }
 
-export const ArtistConsignMarketTrendsFragmentContainer = createFragmentContainer(
-  ArtistConsignMarketTrends,
-  {
+export const ArtistConsignMarketTrendsFragmentContainer =
+  createFragmentContainer(ArtistConsignMarketTrends, {
     artist: graphql`
       fragment ArtistConsignMarketTrends_artist on Artist {
         href
@@ -109,5 +108,4 @@ export const ArtistConsignMarketTrendsFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })

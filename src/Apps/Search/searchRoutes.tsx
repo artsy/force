@@ -124,12 +124,10 @@ export const searchRoutes: RouteProps[] = [
           SearchResultsArtworks.preload()
         },
         prepareVariables: (params, { location, context }) => {
-          const {
-            aggregations: sourceAggregations,
-            ...other
-          } = prepareVariables(params, {
-            location,
-          })
+          const { aggregations: sourceAggregations, ...other } =
+            prepareVariables(params, {
+              location,
+            })
           const input: Record<string, any> = {
             ...allowedFilters(other),
             first: 30,

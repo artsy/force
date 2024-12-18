@@ -7,10 +7,9 @@ export interface PartnersFilterProps {
   label?: string
 }
 
-export const PartnersFilter: React.FC<React.PropsWithChildren<PartnersFilterProps>> = ({
-  expanded,
-  label = "Galleries and Institutions",
-}) => {
+export const PartnersFilter: React.FC<
+  React.PropsWithChildren<PartnersFilterProps>
+> = ({ expanded, label = "Galleries and Institutions" }) => {
   return (
     <ResultsFilter
       expanded={expanded}

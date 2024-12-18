@@ -11,10 +11,9 @@ interface FairExhibitorsGroupProps {
   fair: FairExhibitorsGroup_fair$data
 }
 
-export const FairExhibitorsGroup: React.FC<React.PropsWithChildren<FairExhibitorsGroupProps>> = ({
-  exhibitorsGroup: { exhibitors },
-  fair,
-}) => {
+export const FairExhibitorsGroup: React.FC<
+  React.PropsWithChildren<FairExhibitorsGroupProps>
+> = ({ exhibitorsGroup: { exhibitors }, fair }) => {
   return (
     <GridColumns position="relative" gridRowGap={4} gridColumnGap={[0, 6]}>
       {exhibitors?.map(exhibitor => {

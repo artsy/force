@@ -18,10 +18,9 @@ interface ShowsFeaturedShowProps {
   size: "large" | "small"
 }
 
-const ShowsFeaturedShow: React.FC<React.PropsWithChildren<ShowsFeaturedShowProps>> = ({
-  show,
-  size,
-}) => {
+const ShowsFeaturedShow: React.FC<
+  React.PropsWithChildren<ShowsFeaturedShowProps>
+> = ({ show, size }) => {
   const variants = {
     large: {
       primary: "xl" as TextVariant,

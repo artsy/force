@@ -10,7 +10,9 @@ interface ArtistConsignMetaProps {
   artist: ArtistConsignMeta_artist$data
 }
 
-export const ArtistConsignMeta: React.FC<React.PropsWithChildren<ArtistConsignMetaProps>> = props => {
+export const ArtistConsignMeta: React.FC<
+  React.PropsWithChildren<ArtistConsignMetaProps>
+> = props => {
   const {
     artist: { name, href, targetSupply },
   } = props

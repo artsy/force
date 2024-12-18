@@ -26,14 +26,9 @@ interface ConfirmPasswordModalProps {
   title?: string
 }
 
-export const ConfirmPasswordModal: FC<React.PropsWithChildren<ConfirmPasswordModalProps>> = ({
-  buttonText,
-  onCancel,
-  onConfirm,
-  show,
-  subTitle,
-  title,
-}) => {
+export const ConfirmPasswordModal: FC<
+  React.PropsWithChildren<ConfirmPasswordModalProps>
+> = ({ buttonText, onCancel, onConfirm, show, subTitle, title }) => {
   const { relayEnvironment } = useSystemContext()
 
   if (!show) {

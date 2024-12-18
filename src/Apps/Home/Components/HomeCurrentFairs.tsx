@@ -29,7 +29,9 @@ interface HomeCurrentFairsProps {
   viewer: HomeCurrentFairs_viewer$data
 }
 
-const HomeCurrentFairs: React.FC<React.PropsWithChildren<HomeCurrentFairsProps>> = ({ viewer }) => {
+const HomeCurrentFairs: React.FC<
+  React.PropsWithChildren<HomeCurrentFairsProps>
+> = ({ viewer }) => {
   const { trackEvent } = useTracking()
 
   if (!viewer.fairs?.length) {
@@ -95,7 +97,9 @@ const HomeCurrentFairs: React.FC<React.PropsWithChildren<HomeCurrentFairsProps>>
   )
 }
 
-const HomeCurrentFairsContainer: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+const HomeCurrentFairsContainer: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const { trackEvent } = useTracking()
   return (
     <>
@@ -200,7 +204,9 @@ export const HomeCurrentFairsFragmentContainer = createFragmentContainer(
   }
 )
 
-export const HomeCurrentFairsQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeCurrentFairsQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

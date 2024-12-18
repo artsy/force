@@ -16,16 +16,15 @@ export class ErrorWithMetadata extends Error {
   }
 }
 
-export const reportErrorWithScope = (
-  error: Error | ErrorWithMetadata
-) => scope => {
-  if (error instanceof ErrorWithMetadata) {
-    Object.entries(error.metadata).forEach(([key, value]) => {
-      scope.setExtra(key, value)
-    })
+export const reportErrorWithScope =
+  (error: Error | ErrorWithMetadata) => scope => {
+    if (error instanceof ErrorWithMetadata) {
+      Object.entries(error.metadata).forEach(([key, value]) => {
+        scope.setExtra(key, value)
+      })
+    }
+    captureException(error)
   }
-  captureException(error)
-}
 
 export const sendErrorToService = (error: Error | ErrorWithMetadata) => {
   withScope(reportErrorWithScope(error))

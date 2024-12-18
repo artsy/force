@@ -10,9 +10,9 @@ interface SettingsEditSettingsTwoFactorProps {
   me: SettingsEditSettingsTwoFactor_me$data
 }
 
-export const SettingsEditSettingsTwoFactor: React.FC<React.PropsWithChildren<SettingsEditSettingsTwoFactorProps>> = ({
-  me,
-}) => {
+export const SettingsEditSettingsTwoFactor: React.FC<
+  React.PropsWithChildren<SettingsEditSettingsTwoFactorProps>
+> = ({ me }) => {
   return (
     <>
       <Text variant={["md", "lg"]} mb={4}>
@@ -38,9 +38,8 @@ export const SettingsEditSettingsTwoFactor: React.FC<React.PropsWithChildren<Set
   )
 }
 
-export const SettingsEditSettingsTwoFactorFragmentContainer = createFragmentContainer(
-  SettingsEditSettingsTwoFactor,
-  {
+export const SettingsEditSettingsTwoFactorFragmentContainer =
+  createFragmentContainer(SettingsEditSettingsTwoFactor, {
     me: graphql`
       fragment SettingsEditSettingsTwoFactor_me on Me {
         hasSecondFactorEnabled
@@ -49,5 +48,4 @@ export const SettingsEditSettingsTwoFactorFragmentContainer = createFragmentCont
         ...SettingsEditSettingsTwoFactorBackupCodes_me
       }
     `,
-  }
-)
+  })

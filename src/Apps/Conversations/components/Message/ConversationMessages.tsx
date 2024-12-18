@@ -35,15 +35,13 @@ interface ConversationMessagesProps {
   relay: RelayPaginationProp
 }
 
-export const ConversationMessages: FC<React.PropsWithChildren<ConversationMessagesProps>> = ({
-  conversation,
-  relay,
-}) => {
+export const ConversationMessages: FC<
+  React.PropsWithChildren<ConversationMessagesProps>
+> = ({ conversation, relay }) => {
   const [isFetchingAllMessages, startFetchAllTransition] = useState(false)
   const [isFetchingLoadMoreMessages, startLoadMoreTransition] = useState(false)
-  const [showLatestMessagesFlyOut, setShowLatestMessagesFlyOut] = useState(
-    false
-  )
+  const [showLatestMessagesFlyOut, setShowLatestMessagesFlyOut] =
+    useState(false)
 
   const autoScrollToBottomRef = useRef<HTMLDivElement>(null)
 
@@ -214,10 +212,11 @@ export const ConversationMessages: FC<React.PropsWithChildren<ConversationMessag
   )
 }
 
-export const ConversationMessagesPaginationContainer = createPaginationContainer(
-  ConversationMessages,
-  {
-    conversation: graphql`
+export const ConversationMessagesPaginationContainer =
+  createPaginationContainer(
+    ConversationMessages,
+    {
+      conversation: graphql`
       fragment ConversationMessages_conversation on Conversation
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 15 }
@@ -308,16 +307,16 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return { ...prevVars, totalCount }
     },
-    getVariables(_, { cursor: after }, fragmentVariables) {
-      return { ...fragmentVariables, after }
-    },
-    query: graphql`
+    {
+      direction: "forward",
+      getFragmentVariables(prevVars, totalCount) {
+        return { ...prevVars, totalCount }
+      },
+      getVariables(_, { cursor: after }, fragmentVariables) {
+        return { ...fragmentVariables, after }
+      },
+      query: graphql`
       query ConversationMessagesPaginationQuery(
         $conversationId: String!
         $first: Int!
@@ -329,8 +328,8 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
         }
       }
     `,
-  }
-)
+    }
+  )
 
 interface UseAutoScrollToBottomProps {
   messages: any[]
@@ -369,7 +368,9 @@ const useAutoScrollToBottom = ({
   return { triggerAutoScroll }
 }
 
-const LoadingSpinner: React.FC<React.PropsWithChildren<BoxProps>> = boxProps => (
+const LoadingSpinner: React.FC<
+  React.PropsWithChildren<BoxProps>
+> = boxProps => (
   <Box position="relative" {...boxProps} data-testid="LoadingSpinner">
     <Spinner />
   </Box>
@@ -380,10 +381,9 @@ const LatestMessagesSentinel = Sentinel
 const TopLoadingSpinner = LoadingSpinner
 const AutoScrollToBottom = Box
 
-const BottomLoadingSpinner: React.FC<React.PropsWithChildren<BoxProps & { visible: boolean }>> = ({
-  visible,
-  ...boxProps
-}) => {
+const BottomLoadingSpinner: React.FC<
+  React.PropsWithChildren<BoxProps & { visible: boolean }>
+> = ({ visible, ...boxProps }) => {
   return (
     <SpinnerWrapper className={visible ? "active" : ""}>
       <Box position="relative" {...boxProps} data-testid="LoadingSpinner">

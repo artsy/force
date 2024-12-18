@@ -9,11 +9,8 @@ import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
 
 export const YearCreated: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { setFilter, aggregations } = useAuctionResultsFilterContext()
-  const {
-    createdAfterYear,
-    createdBeforeYear,
-    allowEmptyCreatedDates,
-  } = useCurrentlySelectedFiltersForAuctionResults()
+  const { createdAfterYear, createdBeforeYear, allowEmptyCreatedDates } =
+    useCurrentlySelectedFiltersForAuctionResults()
 
   const options = (
     aggregations

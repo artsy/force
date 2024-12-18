@@ -7,7 +7,9 @@ interface PartnersFiltersProps {
   type: "INSTITUTION" | "GALLERY"
 }
 
-export const PartnersFilters: React.FC<React.PropsWithChildren<PartnersFiltersProps>> = ({ type }) => {
+export const PartnersFilters: React.FC<
+  React.PropsWithChildren<PartnersFiltersProps>
+> = ({ type }) => {
   return (
     <GridColumns>
       <Column span={4}>

@@ -7,9 +7,9 @@ interface PageLoadingBarProps {
   loadingState: "resting" | "loading" | "complete"
 }
 
-export const PageLoadingBar: React.FC<React.PropsWithChildren<PageLoadingBarProps>> = ({
-  loadingState = "resting",
-}) => {
+export const PageLoadingBar: React.FC<
+  React.PropsWithChildren<PageLoadingBarProps>
+> = ({ loadingState = "resting" }) => {
   const firstMount = useRef(true)
   const [isComplete, setIsComplete] = useState(false)
   const [loading, setLoading] = useState(loadingState)

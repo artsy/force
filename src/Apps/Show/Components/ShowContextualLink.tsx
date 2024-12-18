@@ -9,7 +9,9 @@ interface Props {
   show: ShowContextualLink_show$data
 }
 
-export const ShowContextualLink: React.FC<React.PropsWithChildren<Props>> = ({ show }) => {
+export const ShowContextualLink: React.FC<React.PropsWithChildren<Props>> = ({
+  show,
+}) => {
   return (
     <>
       <Media at="xs">
@@ -24,7 +26,9 @@ export const ShowContextualLink: React.FC<React.PropsWithChildren<Props>> = ({ s
   )
 }
 
-export const ContextualLink: React.FC<React.PropsWithChildren<Props>> = ({ show }) => {
+export const ContextualLink: React.FC<React.PropsWithChildren<Props>> = ({
+  show,
+}) => {
   const { isFairBooth, partner, fair } = show
 
   if (!partner && !fair) return null

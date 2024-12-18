@@ -34,13 +34,13 @@ interface Props {
   artwork: MyCollectionArtworkSWASubmissionStatus_artwork$key
 }
 
-export const MyCollectionArtworkSWASubmissionStatus: React.FC<React.PropsWithChildren<Props>> = props => {
+export const MyCollectionArtworkSWASubmissionStatus: React.FC<
+  React.PropsWithChildren<Props>
+> = props => {
   const { trackEvent } = useTracking()
   const { testSubmissionState } = useTestSubmissionState()
-  const [
-    isSubmissionStatusModalOpen,
-    setIsSubmissionStatusModalOpen,
-  ] = useState(false)
+  const [isSubmissionStatusModalOpen, setIsSubmissionStatusModalOpen] =
+    useState(false)
 
   const artwork = useFragment(submissionStatusFragment, props.artwork)
 
@@ -223,10 +223,8 @@ const useGetButtonURL = (
   artwork: MyCollectionArtworkSWASubmissionStatus_artwork$data
 ): string | null => {
   const { submissionID, step } = usePreviousSubmission()
-  const {
-    testSubmissionQueryParams,
-    testSubmissionState,
-  } = useTestSubmissionState()
+  const { testSubmissionQueryParams, testSubmissionState } =
+    useTestSubmissionState()
 
   const submission = artwork.consignmentSubmission
 

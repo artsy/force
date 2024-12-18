@@ -20,9 +20,9 @@ type RailHeaderTitleProps = Pick<
   "title" | "viewAllHref" | "viewAllOnClick"
 >
 
-export const RailHeaderTitle: React.FC<React.PropsWithChildren<
-  RailHeaderTitleProps
->> = ({ viewAllHref, viewAllOnClick, title }) => {
+export const RailHeaderTitle: React.FC<
+  React.PropsWithChildren<RailHeaderTitleProps>
+> = ({ viewAllHref, viewAllOnClick, title }) => {
   if (!viewAllHref) return <>{title}</>
 
   const href = getInternalHref(viewAllHref)

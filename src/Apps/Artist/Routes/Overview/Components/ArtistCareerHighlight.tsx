@@ -8,12 +8,12 @@ interface ArtistCareerHighlightProps {
   insight: ArtistCareerHighlight_insight$data
 }
 
-export const ArtistCareerHighlight: FC<React.PropsWithChildren<ArtistCareerHighlightProps>> = ({
-  insight,
-}) => {
+export const ArtistCareerHighlight: FC<
+  React.PropsWithChildren<ArtistCareerHighlightProps>
+> = ({ insight }) => {
   if (!insight?.description && !insight?.entities?.length) return null
   return (
-    (<Expandable label={insight.label} pb={1}>
+    <Expandable label={insight.label} pb={1}>
       <Description
         variant="sm"
         color="black60"
@@ -30,8 +30,8 @@ export const ArtistCareerHighlight: FC<React.PropsWithChildren<ArtistCareerHighl
                 .replace(/,\s([^,]+)$/, ", and $1"),
             })}
       />
-    </Expandable>)
-  );
+    </Expandable>
+  )
 }
 
 export const ArtistCareerHighlightFragmentContainer = createFragmentContainer(

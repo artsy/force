@@ -26,12 +26,14 @@ const { renderWithRelay } = setupTestWrapperTL({
 const mockConfirmPasswordMutation = ConfirmPassword as jest.Mock
 
 describe("TwoFactorAuthentication", () => {
-  const mockUseCreateSettingsBackupSecondFactors = useCreateSettingsBackupSecondFactors as jest.Mock
+  const mockUseCreateSettingsBackupSecondFactors =
+    useCreateSettingsBackupSecondFactors as jest.Mock
   const mockSubmitCreateSettingsBackupSecondFactors = jest.fn()
 
   beforeEach(() => {
     mockUseCreateSettingsBackupSecondFactors.mockImplementation(() => ({
-      submitCreateSettingsBackupSecondFactors: mockSubmitCreateSettingsBackupSecondFactors,
+      submitCreateSettingsBackupSecondFactors:
+        mockSubmitCreateSettingsBackupSecondFactors,
     }))
   })
 

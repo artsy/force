@@ -82,8 +82,8 @@ export const Pagination: React.FC<React.PropsWithChildren<PaginationProps>> = ({
 
   return (
     // FIXME: Should not have external margin
-    (<PaginationBase mt={6} {...paginationProps} {...rest} />)
-  );
+    <PaginationBase mt={6} {...paginationProps} {...rest} />
+  )
 }
 
 export const PaginationFragmentContainer = createFragmentContainer(Pagination, {

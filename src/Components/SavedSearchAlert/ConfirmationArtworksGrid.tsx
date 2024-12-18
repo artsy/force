@@ -33,11 +33,9 @@ interface ConfirmationArtworksProps {
   onClose: () => void
 }
 
-export const ConfirmationArtworks: FC<React.PropsWithChildren<ConfirmationArtworksProps>> = ({
-  artworksConnection,
-  alertID,
-  onClose,
-}) => {
+export const ConfirmationArtworks: FC<
+  React.PropsWithChildren<ConfirmationArtworksProps>
+> = ({ artworksConnection, alertID, onClose }) => {
   const { clickedArtworkGroup } = useAlertTracking()
   const artworksCount = artworksConnection?.counts?.total ?? 0
 
@@ -112,7 +110,9 @@ interface ConfirmationArtworksGridQueryRendererProps
   excludeArtworkIDs?: string[]
 }
 
-export const ConfirmationArtworksGridQueryRenderer: FC<React.PropsWithChildren<ConfirmationArtworksGridQueryRendererProps>> = props => {
+export const ConfirmationArtworksGridQueryRenderer: FC<
+  React.PropsWithChildren<ConfirmationArtworksGridQueryRendererProps>
+> = props => {
   const { onClose, excludeArtworkIDs, alertID, ...inputProps } = props
 
   return (

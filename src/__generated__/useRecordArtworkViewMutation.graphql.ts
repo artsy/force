@@ -8,88 +8,90 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from 'relay-runtime';
+import { ConcreteRequest } from "relay-runtime"
 export type useRecordArtworkViewMutation$variables = {
-  artworkID: string;
-};
+  artworkID: string
+}
 export type useRecordArtworkViewMutation$data = {
-  readonly recordArtworkView: {
-    readonly artwork_id: string;
-  } | null | undefined;
-};
+  readonly recordArtworkView:
+    | {
+        readonly artwork_id: string
+      }
+    | null
+    | undefined
+}
 export type useRecordArtworkViewMutation = {
-  response: useRecordArtworkViewMutation$data;
-  variables: useRecordArtworkViewMutation$variables;
-};
+  response: useRecordArtworkViewMutation$data
+  variables: useRecordArtworkViewMutation$variables
+}
 
-const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "artworkID"
-  }
-],
-v1 = [
-  {
-    "alias": null,
-    "args": [
+const node: ConcreteRequest = (function () {
+  var v0 = [
       {
-        "fields": [
+        defaultValue: null,
+        kind: "LocalArgument",
+        name: "artworkID",
+      },
+    ],
+    v1 = [
+      {
+        alias: null,
+        args: [
           {
-            "kind": "Variable",
-            "name": "artwork_id",
-            "variableName": "artworkID"
-          }
+            fields: [
+              {
+                kind: "Variable",
+                name: "artwork_id",
+                variableName: "artworkID",
+              },
+            ],
+            kind: "ObjectValue",
+            name: "input",
+          },
         ],
-        "kind": "ObjectValue",
-        "name": "input"
-      }
-    ],
-    "concreteType": "RecordArtworkViewPayload",
-    "kind": "LinkedField",
-    "name": "recordArtworkView",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "artwork_id",
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+        concreteType: "RecordArtworkViewPayload",
+        kind: "LinkedField",
+        name: "recordArtworkView",
+        plural: false,
+        selections: [
+          {
+            alias: null,
+            args: null,
+            kind: "ScalarField",
+            name: "artwork_id",
+            storageKey: null,
+          },
+        ],
+        storageKey: null,
+      },
+    ]
+  return {
+    fragment: {
+      argumentDefinitions: v0 /*: any*/,
+      kind: "Fragment",
+      metadata: null,
+      name: "useRecordArtworkViewMutation",
+      selections: v1 /*: any*/,
+      type: "Mutation",
+      abstractKey: null,
+    },
+    kind: "Request",
+    operation: {
+      argumentDefinitions: v0 /*: any*/,
+      kind: "Operation",
+      name: "useRecordArtworkViewMutation",
+      selections: v1 /*: any*/,
+    },
+    params: {
+      cacheID: "1878a771aa159ee5adf200a2f061815d",
+      id: null,
+      metadata: {},
+      name: "useRecordArtworkViewMutation",
+      operationKind: "mutation",
+      text: "mutation useRecordArtworkViewMutation(\n  $artworkID: String!\n) {\n  recordArtworkView(input: {artwork_id: $artworkID}) {\n    artwork_id\n  }\n}\n",
+    },
   }
-];
-return {
-  "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "useRecordArtworkViewMutation",
-    "selections": (v1/*: any*/),
-    "type": "Mutation",
-    "abstractKey": null
-  },
-  "kind": "Request",
-  "operation": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Operation",
-    "name": "useRecordArtworkViewMutation",
-    "selections": (v1/*: any*/)
-  },
-  "params": {
-    "cacheID": "1878a771aa159ee5adf200a2f061815d",
-    "id": null,
-    "metadata": {},
-    "name": "useRecordArtworkViewMutation",
-    "operationKind": "mutation",
-    "text": "mutation useRecordArtworkViewMutation(\n  $artworkID: String!\n) {\n  recordArtworkView(input: {artwork_id: $artworkID}) {\n    artwork_id\n  }\n}\n"
-  }
-};
-})();
+})()
+;(node as any).hash = "72efc43f89c40e5d308f495b42ff8f26"
 
-(node as any).hash = "72efc43f89c40e5d308f495b42ff8f26";
-
-export default node;
+export default node

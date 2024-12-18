@@ -23,7 +23,9 @@ interface Props {
   data: Array<StepsWithImageDataType>
 }
 
-export const StepsWithImage: React.FC<React.PropsWithChildren<Props>> = props => {
+export const StepsWithImage: React.FC<
+  React.PropsWithChildren<Props>
+> = props => {
   const { data, sectionTitle } = props
   if (!data.length) {
     return null

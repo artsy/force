@@ -18,7 +18,11 @@ interface ArtistCVGroupProps {
   title: string
 }
 
-const ArtistCVGroup: FC<React.PropsWithChildren<ArtistCVGroupProps>> = ({ artist, relay, title }) => {
+const ArtistCVGroup: FC<React.PropsWithChildren<ArtistCVGroupProps>> = ({
+  artist,
+  relay,
+  title,
+}) => {
   const [isLoading, setIsLoading] = useState(false)
   const hasMore = artist.showsConnection?.pageInfo.hasNextPage
 

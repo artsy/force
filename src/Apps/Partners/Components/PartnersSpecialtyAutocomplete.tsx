@@ -17,9 +17,9 @@ interface PartnersSpecialtyAutocompleteProps {
   viewer: PartnersSpecialtyAutocomplete_viewer$data
 }
 
-const PartnersSpecialtyAutocomplete: FC<React.PropsWithChildren<PartnersSpecialtyAutocompleteProps>> = ({
-  viewer: { allOptions, filterPartners },
-}) => {
+const PartnersSpecialtyAutocomplete: FC<
+  React.PropsWithChildren<PartnersSpecialtyAutocompleteProps>
+> = ({ viewer: { allOptions, filterPartners } }) => {
   const specialties = useMemo(() => {
     return compact(filterPartners?.aggregations?.[0]?.counts)
   }, [filterPartners])
@@ -76,7 +76,7 @@ const PartnersSpecialtyAutocomplete: FC<React.PropsWithChildren<PartnersSpecialt
   }, [all, match.location.query])
 
   return (
-    <AutocompleteInput<typeof options[number]>
+    <AutocompleteInput<(typeof options)[number]>
       options={[
         {
           text: `All Specialties`,
@@ -101,7 +101,9 @@ const PartnersSpecialtyAutocomplete: FC<React.PropsWithChildren<PartnersSpecialt
   )
 }
 
-const PartnersSpecialtyAutocompletePlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const PartnersSpecialtyAutocompletePlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <AutocompleteInput
       options={[{ text: "Loading...", value: "all" }]}
@@ -111,9 +113,8 @@ const PartnersSpecialtyAutocompletePlaceholder: FC<React.PropsWithChildren<unkno
   )
 }
 
-export const PartnersSpecialtyAutocompleteFragmentContainer = createFragmentContainer(
-  PartnersSpecialtyAutocomplete,
-  {
+export const PartnersSpecialtyAutocompleteFragmentContainer =
+  createFragmentContainer(PartnersSpecialtyAutocomplete, {
     viewer: graphql`
       fragment PartnersSpecialtyAutocomplete_viewer on Viewer
         @argumentDefinitions(
@@ -153,16 +154,15 @@ export const PartnersSpecialtyAutocompleteFragmentContainer = createFragmentCont
         }
       }
     `,
-  }
-)
+  })
 
 interface PartnersSpecialtyAutocompleteQueryRendererProps {
   type: "GALLERY" | "INSTITUTION"
 }
 
-export const PartnersSpecialtyAutocompleteQueryRenderer: FC<React.PropsWithChildren<PartnersSpecialtyAutocompleteQueryRendererProps>> = ({
-  type,
-}) => {
+export const PartnersSpecialtyAutocompleteQueryRenderer: FC<
+  React.PropsWithChildren<PartnersSpecialtyAutocompleteQueryRendererProps>
+> = ({ type }) => {
   const { relayEnvironment } = useSystemContext()
   const { match } = useRouter()
 

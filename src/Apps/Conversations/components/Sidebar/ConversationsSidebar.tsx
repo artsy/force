@@ -20,15 +20,13 @@ interface ConversationsSidebarProps {
   relay: RelayPaginationProp
 }
 
-export const ConversationsSidebar: React.FC<React.PropsWithChildren<ConversationsSidebarProps>> = ({
-  viewer,
-  relay,
-}) => {
+export const ConversationsSidebar: React.FC<
+  React.PropsWithChildren<ConversationsSidebarProps>
+> = ({ viewer, relay }) => {
   const { match } = useRouter()
 
-  const [enableSilentSidebarRefetch, setEnableSilentSidebarRefetch] = useState(
-    true
-  )
+  const [enableSilentSidebarRefetch, setEnableSilentSidebarRefetch] =
+    useState(true)
 
   const { loadMore, shouldLoadMore } = useLoadMore({
     pageSize: SIDEBAR_FETCH_PAGE_SIZE,
@@ -145,10 +143,11 @@ export const ConversationsSidebar: React.FC<React.PropsWithChildren<Conversation
   )
 }
 
-export const ConversationsSidebarPaginationContainer = createPaginationContainer(
-  ConversationsSidebar,
-  {
-    viewer: graphql`
+export const ConversationsSidebarPaginationContainer =
+  createPaginationContainer(
+    ConversationsSidebar,
+    {
+      viewer: graphql`
       fragment ConversationsSidebar_viewer on Viewer
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 10 }
@@ -169,16 +168,16 @@ export const ConversationsSidebarPaginationContainer = createPaginationContainer
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return { ...prevVars, totalCount }
     },
-    getVariables(_, { cursor: after }, fragmentVariables) {
-      return { ...fragmentVariables, after }
-    },
-    query: graphql`
+    {
+      direction: "forward",
+      getFragmentVariables(prevVars, totalCount) {
+        return { ...prevVars, totalCount }
+      },
+      getVariables(_, { cursor: after }, fragmentVariables) {
+        return { ...fragmentVariables, after }
+      },
+      query: graphql`
       query ConversationsSidebarPaginationQuery($first: Int!, $after: String) {
         viewer {
           ...ConversationsSidebar_viewer
@@ -186,5 +185,5 @@ export const ConversationsSidebarPaginationContainer = createPaginationContainer
         }
       }
     `,
-  }
-)
+    }
+  )

@@ -170,11 +170,13 @@ export const AddressModal: FC<React.PropsWithChildren<AddressModalProps>> = ({
   )
 }
 
-const AddressModalForm: FC<React.PropsWithChildren<{
-  onClose: () => void
-  addressModalAction: AddressModalProps["addressModalAction"]
-  onDeleteAddress: (address: SavedAddressType) => Promise<SavedAddressResult>
-}>> = ({ addressModalAction, onClose, onDeleteAddress }) => {
+const AddressModalForm: FC<
+  React.PropsWithChildren<{
+    onClose: () => void
+    addressModalAction: AddressModalProps["addressModalAction"]
+    onDeleteAddress: (address: SavedAddressType) => Promise<SavedAddressResult>
+  }>
+> = ({ addressModalAction, onClose, onDeleteAddress }) => {
   const shippingContext = useShippingContext()
   const formikContext = useFormikContext<FormValues>()
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false)

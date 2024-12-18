@@ -9,7 +9,8 @@ jest.mock("Apps/Order/Mutations/useSetPaymentByStripeIntentMutation")
 
 describe("useStripePaymentBySetupIntentId", () => {
   const mockUseRouter = useRouter as jest.Mock
-  const mockUseSetPaymentByStripeIntent = useSetPaymentByStripeIntent as jest.Mock
+  const mockUseSetPaymentByStripeIntent =
+    useSetPaymentByStripeIntent as jest.Mock
 
   let mockOrderOrError
 

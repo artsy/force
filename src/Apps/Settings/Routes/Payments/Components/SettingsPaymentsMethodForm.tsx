@@ -45,9 +45,9 @@ interface SettingsPaymentsMethodFormProps {
   onClose(): void
 }
 
-export const SettingsPaymentsMethodForm: FC<React.PropsWithChildren<SettingsPaymentsMethodFormProps>> = ({
-  onClose,
-}) => {
+export const SettingsPaymentsMethodForm: FC<
+  React.PropsWithChildren<SettingsPaymentsMethodFormProps>
+> = ({ onClose }) => {
   const { sendToast } = useToasts()
 
   const stripe = useStripe()

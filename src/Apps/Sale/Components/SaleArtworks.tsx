@@ -17,12 +17,9 @@ interface SaleArtworkFilterProps {
   featuredKeywords?: readonly string[]
 }
 
-const SaleArtworkFilter: React.FC<React.PropsWithChildren<SaleArtworkFilterProps>> = ({
-  relay,
-  viewer,
-  featuredKeywords,
-  ...rest
-}) => {
+const SaleArtworkFilter: React.FC<
+  React.PropsWithChildren<SaleArtworkFilterProps>
+> = ({ relay, viewer, featuredKeywords, ...rest }) => {
   const { user, userPreferences } = useSystemContext()
   const { match } = useRouter()
 

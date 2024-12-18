@@ -21,15 +21,12 @@ const initialValues = {
   data: {} as ReceivedData,
 }
 
-export const WebsocketContext = createContext<WebsocketContextProps>(
-  initialValues
-)
+export const WebsocketContext =
+  createContext<WebsocketContextProps>(initialValues)
 
-export const WebsocketContextProvider: React.FC<React.PropsWithChildren<WebsocketContextProviderProps>> = ({
-  channelInfo,
-  enabled,
-  children,
-}) => {
+export const WebsocketContextProvider: React.FC<
+  React.PropsWithChildren<WebsocketContextProviderProps>
+> = ({ channelInfo, enabled, children }) => {
   const [receivedData, setReceivedData] = useState(initialValues)
   const xapp_token = getENV("ARTSY_XAPP_TOKEN")
   useEffect(() => {

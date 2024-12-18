@@ -14,12 +14,9 @@ interface ProgressBarTimerProps {
  * Extracted out of @artsy/palette
  * @deprecated Add a `progress` field to the return of `useTimer` instead
  */
-export const ProgressBarTimer: React.FC<React.PropsWithChildren<ProgressBarTimerProps>> = ({
-  currentTime,
-  countdownStart,
-  countdownEnd,
-  highlight = "brand",
-}) => {
+export const ProgressBarTimer: React.FC<
+  React.PropsWithChildren<ProgressBarTimerProps>
+> = ({ currentTime, countdownStart, countdownEnd, highlight = "brand" }) => {
   const secondsRemaining = DateTime.fromISO(countdownEnd).diff(
     DateTime.fromISO(currentTime.toString()),
     "seconds"

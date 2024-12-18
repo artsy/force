@@ -28,12 +28,12 @@ describe("OfferSettingsListItem", () => {
   })
 
   it("renders the placeholder when the artwork image is not available", () => {
-    const item = ({
+    const item = {
       ...mockItem,
       artworksConnection: {
         edges: [{ node: { image: null } }],
       },
-    } as unknown) as OfferSettingsListItem_item$data
+    } as unknown as OfferSettingsListItem_item$data
 
     render(<OfferSettingsListItem item={item} />)
 
@@ -51,11 +51,11 @@ describe("OfferSettingsListItem", () => {
   })
 })
 
-const mockItem = ({
+const mockItem = {
   name: "Test Artwork",
   internalID: "123",
   artworksCount: 5,
   artworksConnection: {
     edges: [{ node: { image: { resized: { src: "test.jpg" } } } }],
   },
-} as unknown) as OfferSettingsListItem_item$data
+} as unknown as OfferSettingsListItem_item$data

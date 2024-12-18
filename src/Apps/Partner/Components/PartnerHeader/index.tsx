@@ -31,7 +31,9 @@ export const HeaderImage = styled(Image)`
   object-fit: contain;
 `
 
-export const PartnerHeader: React.FC<React.PropsWithChildren<PartnerHeaderProps>> = ({ partner }) => {
+export const PartnerHeader: React.FC<
+  React.PropsWithChildren<PartnerHeaderProps>
+> = ({ partner }) => {
   const hasLocations = (partner.locations?.totalCount ?? 0) > 0
   // TODO: Remove after page migration.
   const partnerUrl = `/partner/${partner.slug}`

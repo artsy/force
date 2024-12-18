@@ -1,7 +1,9 @@
-import * as React from "react";
+import * as React from "react"
 import { Meta, Title } from "react-head"
 
-export const ViewingRoomsMeta: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const ViewingRoomsMeta: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <>
       <Title>Artsy Viewing Rooms</Title>

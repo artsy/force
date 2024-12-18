@@ -8,145 +8,157 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
+import { ReaderFragment } from "relay-runtime"
+import { FragmentRefs } from "relay-runtime"
 export type FairArticles_fair$data = {
-  readonly articlesConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
-      } | null | undefined;
-    } | null | undefined> | null | undefined;
-    readonly pageCursors: {
-      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
-    };
-    readonly pageInfo: {
-      readonly hasNextPage: boolean;
-    };
-  } | null | undefined;
-  readonly slug: string;
-  readonly " $fragmentType": "FairArticles_fair";
-};
+  readonly articlesConnection:
+    | {
+        readonly edges:
+          | ReadonlyArray<
+              | {
+                  readonly node:
+                    | {
+                        readonly internalID: string
+                        readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">
+                      }
+                    | null
+                    | undefined
+                }
+              | null
+              | undefined
+            >
+          | null
+          | undefined
+        readonly pageCursors: {
+          readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">
+        }
+        readonly pageInfo: {
+          readonly hasNextPage: boolean
+        }
+      }
+    | null
+    | undefined
+  readonly slug: string
+  readonly " $fragmentType": "FairArticles_fair"
+}
 export type FairArticles_fair$key = {
-  readonly " $data"?: FairArticles_fair$data;
-  readonly " $fragmentSpreads": FragmentRefs<"FairArticles_fair">;
-};
+  readonly " $data"?: FairArticles_fair$data
+  readonly " $fragmentSpreads": FragmentRefs<"FairArticles_fair">
+}
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
+  argumentDefinitions: [
     {
-      "defaultValue": 1,
-      "kind": "LocalArgument",
-      "name": "page"
-    }
+      defaultValue: 1,
+      kind: "LocalArgument",
+      name: "page",
+    },
   ],
-  "kind": "Fragment",
-  "metadata": null,
-  "name": "FairArticles_fair",
-  "selections": [
+  kind: "Fragment",
+  metadata: null,
+  name: "FairArticles_fair",
+  selections: [
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
+      alias: null,
+      args: null,
+      kind: "ScalarField",
+      name: "slug",
+      storageKey: null,
     },
     {
-      "alias": null,
-      "args": [
+      alias: null,
+      args: [
         {
-          "kind": "Variable",
-          "name": "page",
-          "variableName": "page"
+          kind: "Variable",
+          name: "page",
+          variableName: "page",
         },
         {
-          "kind": "Literal",
-          "name": "size",
-          "value": 12
-        }
+          kind: "Literal",
+          name: "size",
+          value: 12,
+        },
       ],
-      "concreteType": "ArticleConnection",
-      "kind": "LinkedField",
-      "name": "articlesConnection",
-      "plural": false,
-      "selections": [
+      concreteType: "ArticleConnection",
+      kind: "LinkedField",
+      name: "articlesConnection",
+      plural: false,
+      selections: [
         {
-          "alias": null,
-          "args": null,
-          "concreteType": "PageInfo",
-          "kind": "LinkedField",
-          "name": "pageInfo",
-          "plural": false,
-          "selections": [
+          alias: null,
+          args: null,
+          concreteType: "PageInfo",
+          kind: "LinkedField",
+          name: "pageInfo",
+          plural: false,
+          selections: [
             {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "hasNextPage",
-              "storageKey": null
-            }
+              alias: null,
+              args: null,
+              kind: "ScalarField",
+              name: "hasNextPage",
+              storageKey: null,
+            },
           ],
-          "storageKey": null
+          storageKey: null,
         },
         {
-          "alias": null,
-          "args": null,
-          "concreteType": "PageCursors",
-          "kind": "LinkedField",
-          "name": "pageCursors",
-          "plural": false,
-          "selections": [
+          alias: null,
+          args: null,
+          concreteType: "PageCursors",
+          kind: "LinkedField",
+          name: "pageCursors",
+          plural: false,
+          selections: [
             {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "Pagination_pageCursors"
-            }
+              args: null,
+              kind: "FragmentSpread",
+              name: "Pagination_pageCursors",
+            },
           ],
-          "storageKey": null
+          storageKey: null,
         },
         {
-          "alias": null,
-          "args": null,
-          "concreteType": "ArticleEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
+          alias: null,
+          args: null,
+          concreteType: "ArticleEdge",
+          kind: "LinkedField",
+          name: "edges",
+          plural: true,
+          selections: [
             {
-              "alias": null,
-              "args": null,
-              "concreteType": "Article",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
+              alias: null,
+              args: null,
+              concreteType: "Article",
+              kind: "LinkedField",
+              name: "node",
+              plural: false,
+              selections: [
                 {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "CellArticle_article"
+                  args: null,
+                  kind: "FragmentSpread",
+                  name: "CellArticle_article",
                 },
                 {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                }
+                  alias: null,
+                  args: null,
+                  kind: "ScalarField",
+                  name: "internalID",
+                  storageKey: null,
+                },
               ],
-              "storageKey": null
-            }
+              storageKey: null,
+            },
           ],
-          "storageKey": null
-        }
+          storageKey: null,
+        },
       ],
-      "storageKey": null
-    }
+      storageKey: null,
+    },
   ],
-  "type": "Fair",
-  "abstractKey": null
-};
+  type: "Fair",
+  abstractKey: null,
+}
+;(node as any).hash = "d71b8800705bb0b0ea82fe1aac4758c5"
 
-(node as any).hash = "d71b8800705bb0b0ea82fe1aac4758c5";
-
-export default node;
+export default node

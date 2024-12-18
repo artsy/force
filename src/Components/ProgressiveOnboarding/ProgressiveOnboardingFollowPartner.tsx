@@ -18,10 +18,9 @@ const KEY = PROGRESSIVE_ONBOARDING.followPartner
 interface ProgressiveOnboardingFollowPartnerProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingFollowPartner__: FC<React.PropsWithChildren<ProgressiveOnboardingFollowPartnerProps>> = ({
-  counts,
-  children,
-}) => {
+export const __ProgressiveOnboardingFollowPartner__: FC<
+  React.PropsWithChildren<ProgressiveOnboardingFollowPartnerProps>
+> = ({ counts, children }) => {
   const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayable =
@@ -74,6 +73,5 @@ export const __ProgressiveOnboardingFollowPartner__: FC<React.PropsWithChildren<
   )
 }
 
-export const ProgressiveOnboardingFollowPartner = withProgressiveOnboardingCounts(
-  __ProgressiveOnboardingFollowPartner__
-)
+export const ProgressiveOnboardingFollowPartner =
+  withProgressiveOnboardingCounts(__ProgressiveOnboardingFollowPartner__)

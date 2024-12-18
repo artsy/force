@@ -28,7 +28,8 @@ describe("FairOrganizerFollowButton", () => {
   )
 
   const mockUseSystemContext = useSystemContext as jest.Mock
-  const mockFairOrganizerFollowMutation = fairOrganizerFollowMutation as jest.Mock
+  const mockFairOrganizerFollowMutation =
+    fairOrganizerFollowMutation as jest.Mock
   const mockUseAuthDialog = useAuthDialog as jest.Mock
 
   beforeAll(() => {

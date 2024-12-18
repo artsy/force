@@ -17,11 +17,9 @@ interface RelatedCollectionsRailProps {
   lazyLoadImages?: boolean
 }
 
-export const RelatedCollectionsRail: React.FC<React.PropsWithChildren<RelatedCollectionsRailProps>> = ({
-  title,
-  lazyLoadImages,
-  collections,
-}) => {
+export const RelatedCollectionsRail: React.FC<
+  React.PropsWithChildren<RelatedCollectionsRailProps>
+> = ({ title, lazyLoadImages, collections }) => {
   const { trackEvent } = useTracking()
 
   const collectionsWithArtworks = collections.filter(collection =>
@@ -73,7 +71,9 @@ export const RelatedCollectionsRail: React.FC<React.PropsWithChildren<RelatedCol
 }
 
 export const RelatedCollectionsRailFragmentContainer = createFragmentContainer(
-  RelatedCollectionsRail as React.FC<React.PropsWithChildren<RelatedCollectionsRailProps>>,
+  RelatedCollectionsRail as React.FC<
+    React.PropsWithChildren<RelatedCollectionsRailProps>
+  >,
   {
     collections: graphql`
       fragment RelatedCollectionsRail_collections on MarketingCollection
@@ -97,9 +97,11 @@ export const RelatedCollectionsRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const RelatedCollectionsRailQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const RelatedCollectionsRailQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   return (
     <SystemQueryRenderer<RelatedCollectionsRailQuery>
       lazyLoad

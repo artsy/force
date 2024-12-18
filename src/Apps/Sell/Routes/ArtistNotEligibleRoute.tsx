@@ -22,7 +22,9 @@ interface ArtistNotEligibleRouteProps {
   artist: ArtistNotEligibleRoute_artist$key
 }
 
-export const ArtistNotEligibleRoute: React.FC<React.PropsWithChildren<ArtistNotEligibleRouteProps>> = props => {
+export const ArtistNotEligibleRoute: React.FC<
+  React.PropsWithChildren<ArtistNotEligibleRouteProps>
+> = props => {
   const artist = useFragment(FRAGMENT, props.artist)
   const { showAuthDialog } = useAuthDialog()
   const { router } = useRouter()

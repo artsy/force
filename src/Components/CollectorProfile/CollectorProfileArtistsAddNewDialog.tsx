@@ -12,14 +12,13 @@ interface CollectorProfileArtistsAddNewDialogProps {
   onAdd: (artistID: string) => void
 }
 
-export const CollectorProfileArtistsAddNewDialog: FC<React.PropsWithChildren<CollectorProfileArtistsAddNewDialogProps>> = ({
-  name,
-  onClose,
-  onAdd,
-}) => {
-  const { submitMutation } = useMutation<
-    CollectorProfileArtistsAddNewDialogCreateArtistMutation
-  >({ mutation: MUTATION })
+export const CollectorProfileArtistsAddNewDialog: FC<
+  React.PropsWithChildren<CollectorProfileArtistsAddNewDialogProps>
+> = ({ name, onClose, onAdd }) => {
+  const { submitMutation } =
+    useMutation<CollectorProfileArtistsAddNewDialogCreateArtistMutation>({
+      mutation: MUTATION,
+    })
 
   const { sendToast } = useToasts()
 

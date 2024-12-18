@@ -11,9 +11,9 @@ interface SaleAgreementRouteProps {
   saleAgreement: SaleAgreementRoute_saleAgreement$key
 }
 
-export const SaleAgreementRoute: FC<React.PropsWithChildren<SaleAgreementRouteProps>> = ({
-  saleAgreement,
-}) => {
+export const SaleAgreementRoute: FC<
+  React.PropsWithChildren<SaleAgreementRouteProps>
+> = ({ saleAgreement }) => {
   const data = useFragment(saleAgreementFragment, saleAgreement)
   const showSupplementalCosPage = useFeatureFlag("sapphire_supplemental-cos")
 

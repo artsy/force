@@ -10,7 +10,9 @@ interface SavesArtworksHeaderProps {
   id: string
 }
 
-const SavesArtworksHeader: FC<React.PropsWithChildren<SavesArtworksHeaderProps>> = ({ id }) => {
+const SavesArtworksHeader: FC<
+  React.PropsWithChildren<SavesArtworksHeaderProps>
+> = ({ id }) => {
   const { me } = useLazyLoadQuery<SavesArtworksHeaderQuery>(QUERY, {
     id,
   })
@@ -57,11 +59,15 @@ const SavesArtworksHeader: FC<React.PropsWithChildren<SavesArtworksHeaderProps>>
   )
 }
 
-const SavesArtworksHeaderSkeleton: FC<React.PropsWithChildren<unknown>> = () => {
+const SavesArtworksHeaderSkeleton: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return <SkeletonText variant="lg">Loading...</SkeletonText>
 }
 
-export const SavesArtworksHeaderQueryRenderer: FC<React.PropsWithChildren<SavesArtworksHeaderProps>> = props => {
+export const SavesArtworksHeaderQueryRenderer: FC<
+  React.PropsWithChildren<SavesArtworksHeaderProps>
+> = props => {
   return (
     <ClientSuspense fallback={<SavesArtworksHeaderSkeleton />}>
       <SavesArtworksHeader {...props} />

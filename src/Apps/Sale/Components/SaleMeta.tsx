@@ -7,7 +7,9 @@ interface SaleMetaProps {
   sale: SaleMeta_sale$data
 }
 
-export const SaleMeta: React.FC<React.PropsWithChildren<SaleMetaProps>> = props => {
+export const SaleMeta: React.FC<
+  React.PropsWithChildren<SaleMetaProps>
+> = props => {
   const { sale } = props
   const title = `${sale.name} | Artsy`
   const description = truncate(sale.description ?? "", {

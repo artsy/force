@@ -20,11 +20,11 @@ import { Suspense, useCallback, useState } from "react"
 
 interface MyCollectionArtworkFormArtworkStepProps {}
 
-export const MyCollectionArtworkFormArtworkStep: React.FC<React.PropsWithChildren<MyCollectionArtworkFormArtworkStepProps>> = () => {
-  const {
-    trackSelectArtwork,
-    trackSkipArtworkSelection,
-  } = useMyCollectionTracking()
+export const MyCollectionArtworkFormArtworkStep: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkFormArtworkStepProps>
+> = () => {
+  const { trackSelectArtwork, trackSkipArtworkSelection } =
+    useMyCollectionTracking()
   const { onBack, onNext, onSkip } = useMyCollectionArtworkFormContext()
   const [query, setQuery] = useState("")
   const trimmedQuery = query?.trimStart()

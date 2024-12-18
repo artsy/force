@@ -27,17 +27,13 @@ interface FairBoothRailProps extends BoxProps {
   show: FairBoothRail_show$data
 }
 
-export const FairBoothRail: React.FC<React.PropsWithChildren<FairBoothRailProps>> = ({
-  show,
-  ...rest
-}) => {
+export const FairBoothRail: React.FC<
+  React.PropsWithChildren<FairBoothRailProps>
+> = ({ show, ...rest }) => {
   const ref = useRef<HTMLDivElement | null>(null)
   const tracking = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
   const { filters } = useBoothsFilterContext()
   const { match } = useRouter()
   let link: string | null = null

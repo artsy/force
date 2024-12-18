@@ -11,10 +11,9 @@ export interface EntityHeaderPlaceholderProps extends BoxProps {
   displayAvatar?: boolean
 }
 
-export const EntityHeaderPlaceholder: FC<React.PropsWithChildren<EntityHeaderPlaceholderProps>> = ({
-  displayAvatar = true,
-  ...rest
-}) => {
+export const EntityHeaderPlaceholder: FC<
+  React.PropsWithChildren<EntityHeaderPlaceholderProps>
+> = ({ displayAvatar = true, ...rest }) => {
   return (
     <Skeleton display="flex" {...rest}>
       {displayAvatar && (

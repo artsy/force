@@ -9,9 +9,9 @@ interface AuctionWorksByFollowedArtistsRailProps {
   viewer: AuctionWorksByFollowedArtistsRail_viewer$data
 }
 
-const AuctionWorksByFollowedArtistsRail: React.FC<React.PropsWithChildren<AuctionWorksByFollowedArtistsRailProps>> = ({
-  viewer,
-}) => {
+const AuctionWorksByFollowedArtistsRail: React.FC<
+  React.PropsWithChildren<AuctionWorksByFollowedArtistsRailProps>
+> = ({ viewer }) => {
   const nodes = extractNodes(viewer.saleArtworksConnection)
 
   if (nodes.length === 0) {
@@ -42,9 +42,8 @@ const AuctionWorksByFollowedArtistsRail: React.FC<React.PropsWithChildren<Auctio
   )
 }
 
-export const AuctionWorksByFollowedArtistsRailFragmentContainer = createFragmentContainer(
-  AuctionWorksByFollowedArtistsRail,
-  {
+export const AuctionWorksByFollowedArtistsRailFragmentContainer =
+  createFragmentContainer(AuctionWorksByFollowedArtistsRail, {
     viewer: graphql`
       fragment AuctionWorksByFollowedArtistsRail_viewer on Viewer
         @argumentDefinitions(saleID: { type: "String" }) {
@@ -62,5 +61,4 @@ export const AuctionWorksByFollowedArtistsRailFragmentContainer = createFragment
         }
       }
     `,
-  }
-)
+  })

@@ -13,11 +13,9 @@ interface SuggestionItemProps {
   selectedPill: PillType
 }
 
-export const SearchBarFooter: FC<React.PropsWithChildren<SuggestionItemProps>> = ({
-  href,
-  query,
-  selectedPill,
-}) => {
+export const SearchBarFooter: FC<
+  React.PropsWithChildren<SuggestionItemProps>
+> = ({ href, query, selectedPill }) => {
   const tracking = useTracking()
 
   const handleClick = () => {

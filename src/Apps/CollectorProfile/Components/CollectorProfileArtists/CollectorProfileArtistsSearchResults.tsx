@@ -12,9 +12,9 @@ interface CollectorProfileArtistsSearchResultsProps {
   term: string
 }
 
-export const CollectorProfileArtistsSearchResults: FC<React.PropsWithChildren<CollectorProfileArtistsSearchResultsProps>> = ({
-  term,
-}) => {
+export const CollectorProfileArtistsSearchResults: FC<
+  React.PropsWithChildren<CollectorProfileArtistsSearchResultsProps>
+> = ({ term }) => {
   return (
     <Suspense fallback={<CollectorProfileArtistsListPlaceholder />}>
       <CollectorProfileArtistsSearchResultsArtists term={term} />
@@ -25,9 +25,9 @@ export const CollectorProfileArtistsSearchResults: FC<React.PropsWithChildren<Co
 interface CollectorProfileArtistsSearchResultsArtistsProps
   extends CollectorProfileArtistsSearchResultsProps {}
 
-const CollectorProfileArtistsSearchResultsArtists: FC<React.PropsWithChildren<CollectorProfileArtistsSearchResultsArtistsProps>> = ({
-  term,
-}) => {
+const CollectorProfileArtistsSearchResultsArtists: FC<
+  React.PropsWithChildren<CollectorProfileArtistsSearchResultsArtistsProps>
+> = ({ term }) => {
   const { me } = useLazyLoadQuery<CollectorProfileArtistsSearchResultsQuery>(
     QUERY,
     {}
@@ -61,7 +61,9 @@ const CollectorProfileArtistsSearchResultsArtists: FC<React.PropsWithChildren<Co
   )
 }
 
-const CollectorProfileArtistsListPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const CollectorProfileArtistsListPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <>
       {new Array(5).fill(null).map((_, i) => {

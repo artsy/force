@@ -9,7 +9,9 @@ import { AuthDialogMode } from "Components/AuthDialog/AuthDialogContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { AuthDialogTitle } from "Components/AuthDialog/AuthDialogTitle"
 
-const AuthenticationInlineDialogContents: FC<React.PropsWithChildren<unknown>> = () => {
+const AuthenticationInlineDialogContents: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   useRecaptcha()
   const { title, pageTitle, description } = useAuthDialogOptions()
 
@@ -74,9 +76,9 @@ interface AuthenticationInlineDialogProps {
   mode: AuthDialogMode
 }
 
-export const AuthenticationInlineDialog: FC<React.PropsWithChildren<AuthenticationInlineDialogProps>> = ({
-  mode,
-}) => {
+export const AuthenticationInlineDialog: FC<
+  React.PropsWithChildren<AuthenticationInlineDialogProps>
+> = ({ mode }) => {
   return (
     <AuthenticationInlineDialogProvider mode={mode}>
       <AuthenticationInlineDialogContents />

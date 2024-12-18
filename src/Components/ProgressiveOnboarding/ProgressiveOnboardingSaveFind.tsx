@@ -17,10 +17,9 @@ const ALERTS = {
 interface ProgressiveOnboardingSaveFindProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingSaveFind__: FC<React.PropsWithChildren<ProgressiveOnboardingSaveFindProps>> = ({
-  children,
-  counts,
-}) => {
+export const __ProgressiveOnboardingSaveFind__: FC<
+  React.PropsWithChildren<ProgressiveOnboardingSaveFindProps>
+> = ({ children, counts }) => {
   const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayable =

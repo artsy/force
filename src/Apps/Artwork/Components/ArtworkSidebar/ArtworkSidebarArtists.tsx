@@ -19,9 +19,9 @@ const StyledArtistLink = styled(RouterLink)`
   }
 `
 
-export const ArtworkSidebarArtists: React.FC<React.PropsWithChildren<ArtistsProps>> = ({
-  artwork: { artists, culturalMaker },
-}) => {
+export const ArtworkSidebarArtists: React.FC<
+  React.PropsWithChildren<ArtistsProps>
+> = ({ artwork: { artists, culturalMaker } }) => {
   if (!artists) return null
 
   const showMoreText = `${artists.length - ARTISTS_TO_DISPLAY} more`

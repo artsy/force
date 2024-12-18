@@ -19,7 +19,10 @@ interface FlatGridItemProps {
   onClick?: () => void
 }
 
-const FlatGridItem: React.FC<React.PropsWithChildren<FlatGridItemProps>> = ({ artwork, onClick }) => {
+const FlatGridItem: React.FC<React.PropsWithChildren<FlatGridItemProps>> = ({
+  artwork,
+  onClick,
+}) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
   const { containerProps, isSaveButtonVisible } = useSaveButton({

@@ -19,10 +19,9 @@ const KEY = PROGRESSIVE_ONBOARDING.followArtist
 interface ProgressiveOnboardingFollowArtistProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingFollowArtist__: FC<React.PropsWithChildren<ProgressiveOnboardingFollowArtistProps>> = ({
-  counts,
-  children,
-}) => {
+export const __ProgressiveOnboardingFollowArtist__: FC<
+  React.PropsWithChildren<ProgressiveOnboardingFollowArtistProps>
+> = ({ counts, children }) => {
   const router = useRouter()
   const { isLoggedIn } = useSystemContext()
 
@@ -83,6 +82,5 @@ export const __ProgressiveOnboardingFollowArtist__: FC<React.PropsWithChildren<P
   )
 }
 
-export const ProgressiveOnboardingFollowArtist = withProgressiveOnboardingCounts(
-  __ProgressiveOnboardingFollowArtist__
-)
+export const ProgressiveOnboardingFollowArtist =
+  withProgressiveOnboardingCounts(__ProgressiveOnboardingFollowArtist__)

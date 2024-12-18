@@ -17,7 +17,8 @@ jest.mock("Components/ArtworkFilter/Utils/useFilterLabelCountByKey", () => ({
 
 describe("useFilterSelectResults", () => {
   const mockUseArtworkFilterContext = useArtworkFilterContext as jest.Mock
-  const mockUseCurrentlySelectedFilters = useCurrentlySelectedFilters as jest.Mock
+  const mockUseCurrentlySelectedFilters =
+    useCurrentlySelectedFilters as jest.Mock
 
   const spy = jest.fn()
   const aggregations: Aggregation[] = [
@@ -45,16 +46,13 @@ describe("useFilterSelectResults", () => {
       artistIDs: [],
     }))
 
-    const {
-      handleFilterSelectChange,
-      items,
-      labelWithCount,
-    } = useFilterSelectResults({
-      facetName: "artistIDs",
-      filtersCountKey: SelectedFiltersCountsLabels.artistIDs,
-      label: "Artists",
-      slice: "ARTIST",
-    })
+    const { handleFilterSelectChange, items, labelWithCount } =
+      useFilterSelectResults({
+        facetName: "artistIDs",
+        filtersCountKey: SelectedFiltersCountsLabels.artistIDs,
+        label: "Artists",
+        slice: "ARTIST",
+      })
 
     expect(items).toStrictEqual([
       { count: 10, label: "Name", name: "Name", value: "value" },

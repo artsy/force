@@ -85,10 +85,9 @@ const CellShow: FC<React.PropsWithChildren<CellShowProps>> = ({
 
 type CellShowPlaceholderProps = Pick<CellShowProps, "mode" | "displayKind">
 
-export const CellShowPlaceholder: FC<React.PropsWithChildren<CellShowPlaceholderProps>> = ({
-  mode = "RAIL",
-  displayKind = false,
-}) => {
+export const CellShowPlaceholder: FC<
+  React.PropsWithChildren<CellShowPlaceholderProps>
+> = ({ mode = "RAIL", displayKind = false }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
 
   return (
@@ -121,7 +120,9 @@ interface CellShowStatusProps {
   endAt: string
 }
 
-export const CellShowStatus: FC<React.PropsWithChildren<CellShowStatusProps>> = ({ startAt, endAt }) => {
+export const CellShowStatus: FC<
+  React.PropsWithChildren<CellShowStatusProps>
+> = ({ startAt, endAt }) => {
   const { formattedTime: status } = useEventTiming({
     currentTime: useCurrentTime({ syncWithServer: true }),
     startAt,

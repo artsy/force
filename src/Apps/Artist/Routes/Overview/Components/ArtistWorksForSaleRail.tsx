@@ -20,15 +20,12 @@ interface ArtistWorksForSaleRailProps {
   artist: ArtistWorksForSaleRail_artist$data
 }
 
-const ArtistWorksForSaleRail: React.FC<React.PropsWithChildren<ArtistWorksForSaleRailProps>> = ({
-  artist,
-}) => {
+const ArtistWorksForSaleRail: React.FC<
+  React.PropsWithChildren<ArtistWorksForSaleRailProps>
+> = ({ artist }) => {
   const tracking = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const { jumpTo } = useJump({ offset: 20 })
 
@@ -126,9 +123,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtistWorksForSaleRailQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const ArtistWorksForSaleRailQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

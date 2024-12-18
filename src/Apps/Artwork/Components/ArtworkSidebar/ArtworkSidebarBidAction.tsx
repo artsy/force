@@ -38,9 +38,11 @@ export interface ArtworkSidebarBidActionState {
   selectedMaxBidCents: number
 }
 
-const RegisterToBidButton: React.FC<React.PropsWithChildren<{
-  onClick: () => void
-}>> = ({ onClick }) => {
+const RegisterToBidButton: React.FC<
+  React.PropsWithChildren<{
+    onClick: () => void
+  }>
+> = ({ onClick }) => {
   return (
     <Button width="100%" size="large" mt={1} onClick={onClick} data-test="bid">
       Register to bid
@@ -48,9 +50,11 @@ const RegisterToBidButton: React.FC<React.PropsWithChildren<{
   )
 }
 
-const VerifyIdentityButton: React.FC<React.PropsWithChildren<{
-  id: string
-}>> = ({ id }) => (
+const VerifyIdentityButton: React.FC<
+  React.PropsWithChildren<{
+    id: string
+  }>
+> = ({ id }) => (
   <a href={`/identity-verification/${id}`}>
     <Button width="100%" size="large">
       Verify identity
@@ -58,9 +62,9 @@ const VerifyIdentityButton: React.FC<React.PropsWithChildren<{
   </a>
 )
 
-const IdentityVerificationDisclaimer: React.FC<React.PropsWithChildren<
-  unknown
->> = () => {
+const IdentityVerificationDisclaimer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Text variant="sm-display" color="black60" textAlign="center">
       Identity verification required to bid.{" "}

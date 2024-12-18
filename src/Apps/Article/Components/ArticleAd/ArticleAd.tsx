@@ -10,57 +10,58 @@ export interface ArticleAdProps extends BoxProps {
   size: AdSize
 }
 
-export const ArticleAd: FC<React.PropsWithChildren<ArticleAdProps>> = memo(({ unit, size, ...rest }) => {
-  const {
-    isDestinationAllowed,
-    openConsentManager,
-    ready,
-  } = useCookieConsentManager()
+export const ArticleAd: FC<React.PropsWithChildren<ArticleAdProps>> = memo(
+  ({ unit, size, ...rest }) => {
+    const { isDestinationAllowed, openConsentManager, ready } =
+      useCookieConsentManager()
 
-  const [width, height] = size.split("x").map(n => parseInt(n, 10))
+    const [width, height] = size.split("x").map(n => parseInt(n, 10))
 
-  return (
-    <Box {...rest}>
-      <ResponsiveBox
-        aspectWidth={width}
-        aspectHeight={height}
-        maxWidth={width}
-        maxHeight={height}
-        mx="auto"
-        bg="black10"
-      >
-        {ready && (
-          <>
-            {isDestinationAllowed("Google Ads") ? (
-              <ArticleAdBaner unit={unit} width={width} height={height} />
-            ) : (
-              <Clickable
-                width="100%"
-                height="100%"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                p={2}
-                color="black60"
-                onClick={openConsentManager}
-              >
-                <Text variant="xs">Manage Cookies</Text>
-              </Clickable>
-            )}
-          </>
-        )}
-      </ResponsiveBox>
+    return (
+      <Box {...rest}>
+        <ResponsiveBox
+          aspectWidth={width}
+          aspectHeight={height}
+          maxWidth={width}
+          maxHeight={height}
+          mx="auto"
+          bg="black10"
+        >
+          {ready && (
+            <>
+              {isDestinationAllowed("Google Ads") ? (
+                <ArticleAdBaner unit={unit} width={width} height={height} />
+              ) : (
+                <Clickable
+                  width="100%"
+                  height="100%"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  p={2}
+                  color="black60"
+                  onClick={openConsentManager}
+                >
+                  <Text variant="xs">Manage Cookies</Text>
+                </Clickable>
+              )}
+            </>
+          )}
+        </ResponsiveBox>
 
-      <Text variant="xs" textAlign="center" mx="auto" mt={1} color="black30">
-        Advertisement
-      </Text>
-    </Box>
-  )
-})
+        <Text variant="xs" textAlign="center" mx="auto" mt={1} color="black30">
+          Advertisement
+        </Text>
+      </Box>
+    )
+  }
+)
 
 ArticleAd.displayName = "ArticleAd"
 
-export const ArticleAdProvider: FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+export const ArticleAdProvider: FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   return (
     <DFPSlotsProvider dfpNetworkId="21805539690">{children}</DFPSlotsProvider>
   )

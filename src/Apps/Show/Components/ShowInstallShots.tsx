@@ -24,10 +24,9 @@ interface ShowInstallShotsProps {
   show: ShowInstallShots_show$data
 }
 
-export const ShowInstallShots: FC<React.PropsWithChildren<ShowInstallShotsProps>> = ({
-  show,
-  ...rest
-}) => {
+export const ShowInstallShots: FC<
+  React.PropsWithChildren<ShowInstallShotsProps>
+> = ({ show, ...rest }) => {
   const { theme } = useTheme()
 
   const [mode, setMode] = useState<"Idle" | "Zoom">("Idle")

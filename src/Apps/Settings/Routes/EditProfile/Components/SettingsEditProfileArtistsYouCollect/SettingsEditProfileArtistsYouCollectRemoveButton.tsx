@@ -3,7 +3,9 @@ import { FC, useState } from "react"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 
-export const SettingsEditProfileArtistsYouCollectRemoveButton: FC<React.PropsWithChildren<ClickableProps>> = props => {
+export const SettingsEditProfileArtistsYouCollectRemoveButton: FC<
+  React.PropsWithChildren<ClickableProps>
+> = props => {
   const [hovered, setHovered] = useState(false)
 
   return (

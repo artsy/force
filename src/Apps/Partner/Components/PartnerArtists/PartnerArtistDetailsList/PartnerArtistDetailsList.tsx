@@ -19,10 +19,9 @@ export interface PartnerArtistDetailsListProps {
 
 const PAGE_SIZE = 10
 
-export const PartnerArtistDetailsList: React.FC<React.PropsWithChildren<PartnerArtistDetailsListProps>> = ({
-  partner,
-  relay,
-}) => {
+export const PartnerArtistDetailsList: React.FC<
+  React.PropsWithChildren<PartnerArtistDetailsListProps>
+> = ({ partner, relay }) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const containerRef = useRef<HTMLDivElement | null>()
@@ -101,10 +100,11 @@ export const ARTISTS_DETAILS_QUERY = graphql`
   }
 `
 
-export const PartnerArtistDetailsListPaginationContainer = createPaginationContainer(
-  PartnerArtistDetailsList,
-  {
-    partner: graphql`
+export const PartnerArtistDetailsListPaginationContainer =
+  createPaginationContainer(
+    PartnerArtistDetailsList,
+    {
+      partner: graphql`
       fragment PartnerArtistDetailsList_partner on Partner
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 10 }
@@ -128,23 +128,25 @@ export const PartnerArtistDetailsListPaginationContainer = createPaginationConta
         }
       }
     `,
-  },
-  {
-    query: ARTISTS_DETAILS_QUERY,
-    direction: "forward",
-    getVariables(
-      { partner: { slug: partnerId } },
-      { cursor: after },
-      { first }
-    ) {
-      return { partnerId, after, first }
     },
-  }
-)
+    {
+      query: ARTISTS_DETAILS_QUERY,
+      direction: "forward",
+      getVariables(
+        { partner: { slug: partnerId } },
+        { cursor: after },
+        { first }
+      ) {
+        return { partnerId, after, first }
+      },
+    }
+  )
 
-export const PartnerArtistDetailsListRenderer: React.FC<React.PropsWithChildren<{
-  partnerId: string
-}>> = ({ partnerId, ...rest }) => {
+export const PartnerArtistDetailsListRenderer: React.FC<
+  React.PropsWithChildren<{
+    partnerId: string
+  }>
+> = ({ partnerId, ...rest }) => {
   return (
     <SystemQueryRenderer<PartnerArtistDetailsListQuery>
       lazyLoad

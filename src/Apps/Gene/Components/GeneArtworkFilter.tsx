@@ -23,10 +23,9 @@ interface GeneArtworkFilterProps {
   relay: RelayRefetchProp
 }
 
-const GeneArtworkFilter: React.FC<React.PropsWithChildren<GeneArtworkFilterProps>> = ({
-  gene,
-  relay,
-}) => {
+const GeneArtworkFilter: React.FC<
+  React.PropsWithChildren<GeneArtworkFilterProps>
+> = ({ gene, relay }) => {
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
   const { sidebar } = gene
@@ -107,7 +106,9 @@ export const GeneArtworkFilterRefetchContainer = createRefetchContainer(
 
 interface GeneArtworkFilterQueryRendererProps {}
 
-export const GeneArtworkFilterQueryRenderer: React.FC<React.PropsWithChildren<GeneArtworkFilterQueryRendererProps>> = rest => {
+export const GeneArtworkFilterQueryRenderer: React.FC<
+  React.PropsWithChildren<GeneArtworkFilterQueryRendererProps>
+> = rest => {
   const { relayEnvironment } = useSystemContext()
   const { match } = useRouter()
 

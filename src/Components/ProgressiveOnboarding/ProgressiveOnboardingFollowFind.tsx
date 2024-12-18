@@ -12,10 +12,9 @@ import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progres
 interface ProgressiveOnboardingFollowFindProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingFollowFind__: FC<React.PropsWithChildren<ProgressiveOnboardingFollowFindProps>> = ({
-  children,
-  counts,
-}) => {
+export const __ProgressiveOnboardingFollowFind__: FC<
+  React.PropsWithChildren<ProgressiveOnboardingFollowFindProps>
+> = ({ children, counts }) => {
   const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayable =

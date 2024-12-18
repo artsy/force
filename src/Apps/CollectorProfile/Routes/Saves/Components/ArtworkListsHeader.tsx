@@ -15,10 +15,9 @@ interface ArtworkListsHeaderProps {
   me: CollectorProfileSavesRoute_me$data
 }
 
-export const ArtworkListsHeader: FC<React.PropsWithChildren<ArtworkListsHeaderProps>> = ({
-  savedArtworksCount,
-  me,
-}) => {
+export const ArtworkListsHeader: FC<
+  React.PropsWithChildren<ArtworkListsHeaderProps>
+> = ({ savedArtworksCount, me }) => {
   const { sendToast } = useToasts()
   const [createModalIsOpened, setCreateModalIsOpened] = useState(false)
   const [editModalIsOpened, setEditModalIsOpened] = useState(false)

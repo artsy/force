@@ -8,9 +8,9 @@ interface AuctionCurrentAuctionsRailProps {
   viewer: AuctionCurrentAuctionsRail_viewer$data
 }
 
-const AuctionCurrentAuctionsRail: React.FC<React.PropsWithChildren<AuctionCurrentAuctionsRailProps>> = ({
-  viewer,
-}) => {
+const AuctionCurrentAuctionsRail: React.FC<
+  React.PropsWithChildren<AuctionCurrentAuctionsRailProps>
+> = ({ viewer }) => {
   const nodes = extractNodes(viewer.salesConnection)
 
   if (nodes.length === 0) {
@@ -34,9 +34,8 @@ const AuctionCurrentAuctionsRail: React.FC<React.PropsWithChildren<AuctionCurren
   )
 }
 
-export const AuctionCurrentAuctionsRailFragmentContainer = createFragmentContainer(
-  AuctionCurrentAuctionsRail,
-  {
+export const AuctionCurrentAuctionsRailFragmentContainer =
+  createFragmentContainer(AuctionCurrentAuctionsRail, {
     viewer: graphql`
       fragment AuctionCurrentAuctionsRail_viewer on Viewer {
         salesConnection(
@@ -53,5 +52,4 @@ export const AuctionCurrentAuctionsRailFragmentContainer = createFragmentContain
         }
       }
     `,
-  }
-)
+  })

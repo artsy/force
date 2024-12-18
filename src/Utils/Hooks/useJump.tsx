@@ -61,7 +61,10 @@ interface JumpProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "id"> {
  * calculate the correct offset to compensate for stuck elements. The `id` is used
  * for both the DOM element ID (namespaced) as well as the Sticky context ID.
  */
-export const Jump: FC<React.PropsWithChildren<JumpProps>> = ({ id, ...rest }) => {
+export const Jump: FC<React.PropsWithChildren<JumpProps>> = ({
+  id,
+  ...rest
+}) => {
   const { registerSticky, deregisterSticky } = useSticky({ id })
 
   useEffect(() => {

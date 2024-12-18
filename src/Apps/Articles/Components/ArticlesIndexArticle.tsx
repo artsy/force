@@ -17,9 +17,9 @@ interface ArticlesIndexArticleProps {
   lazyLoad?: boolean
 }
 
-const ArticlesIndexArticle: React.FC<React.PropsWithChildren<
-  ArticlesIndexArticleProps
->> = ({ article, lazyLoad = true }) => {
+const ArticlesIndexArticle: React.FC<
+  React.PropsWithChildren<ArticlesIndexArticleProps>
+> = ({ article, lazyLoad = true }) => {
   const image = article.thumbnailImage?.cropped
 
   return (

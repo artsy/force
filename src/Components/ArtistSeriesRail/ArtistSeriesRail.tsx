@@ -32,11 +32,8 @@ const ArtistSeriesRail: FC<React.PropsWithChildren<ArtistSeriesProps>> = ({
 }) => {
   const { trackEvent } = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   if (!artist) return null
 
@@ -116,10 +113,12 @@ const ArtistSeriesRailPlaceholder = () => {
   )
 }
 
-export const ArtistSeriesRailQueryRenderer: FC<React.PropsWithChildren<{
-  id: string
-  title?: string
-}>> = ({ id, title }) => {
+export const ArtistSeriesRailQueryRenderer: FC<
+  React.PropsWithChildren<{
+    id: string
+    title?: string
+  }>
+> = ({ id, title }) => {
   return (
     <Box data-test="ArtistSeriesRailQueryRenderer">
       <SystemQueryRenderer<ArtistSeriesRailQuery>

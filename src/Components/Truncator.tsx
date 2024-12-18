@@ -48,7 +48,9 @@ export const Truncator: React.FC<React.PropsWithChildren<Props>> = ({
   )
 }
 
-const TruncatorWrapper: React.FC<React.PropsWithChildren<{ unsafeHTML: string }>> = ({ unsafeHTML }) => {
+const TruncatorWrapper: React.FC<
+  React.PropsWithChildren<{ unsafeHTML: string }>
+> = ({ unsafeHTML }) => {
   return (
     <div
       dangerouslySetInnerHTML={{

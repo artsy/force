@@ -33,9 +33,9 @@ interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
 }
 
-const ArtworkAuctionCreateAlertHeader: FC<React.PropsWithChildren<
-  ArtworkAuctionCreateAlertHeaderProps
->> = ({ artwork }) => {
+const ArtworkAuctionCreateAlertHeader: FC<
+  React.PropsWithChildren<ArtworkAuctionCreateAlertHeaderProps>
+> = ({ artwork }) => {
   const biddingEndAt =
     artwork?.saleArtwork?.extendedBiddingEndAt ?? artwork?.saleArtwork?.endAt
   const { hasEnded } = useTimer(
@@ -170,9 +170,8 @@ const ArtworkAuctionCreateAlertHeader: FC<React.PropsWithChildren<
     </SavedSearchAlertContextProvider>
   )
 }
-export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentContainer(
-  ArtworkAuctionCreateAlertHeader,
-  {
+export const ArtworkAuctionCreateAlertHeaderFragmentContainer =
+  createFragmentContainer(ArtworkAuctionCreateAlertHeader, {
     artwork: graphql`
       fragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {
         slug
@@ -210,5 +209,4 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
         }
       }
     `,
-  }
-)
+  })

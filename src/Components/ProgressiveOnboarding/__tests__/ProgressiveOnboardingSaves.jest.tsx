@@ -51,7 +51,8 @@ const Example: FC<React.PropsWithChildren<unknown>> = () => {
 }
 
 describe("ProgressiveOnboarding: Saves", () => {
-  const mockWithProgressiveOnboardingCounts = withProgressiveOnboardingCounts as jest.Mock
+  const mockWithProgressiveOnboardingCounts =
+    withProgressiveOnboardingCounts as jest.Mock
 
   const saveArtworkText = "Like what you see?"
   const saveFindText = "Find and edit all your Saves here."

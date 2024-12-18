@@ -5,9 +5,9 @@ interface NotificationsListScrollSentinelProps {
   onNext(): void
 }
 
-export const NotificationsListScrollSentinel: React.FC<React.PropsWithChildren<NotificationsListScrollSentinelProps>> = ({
-  onNext,
-}) => {
+export const NotificationsListScrollSentinel: React.FC<
+  React.PropsWithChildren<NotificationsListScrollSentinelProps>
+> = ({ onNext }) => {
   const { ref } = useIntersectionObserver({
     onIntersection: onNext,
     once: false,

@@ -18,7 +18,9 @@ interface SelectArtworkListsContentProps {
   onArtworkListPress: (artworkList: ArtworkListEntity) => void
 }
 
-export const SelectArtworkListsContent: FC<React.PropsWithChildren<SelectArtworkListsContentProps>> = ({
+export const SelectArtworkListsContent: FC<
+  React.PropsWithChildren<SelectArtworkListsContentProps>
+> = ({
   isFetching,
   artworkLists,
   checkIsArtworkListSelected,

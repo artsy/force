@@ -23,20 +23,19 @@ describe("ArtworkSidebarLinks", () => {
     trackEvent.mockClear()
   })
 
-  const { renderWithRelay } = setupTestWrapperTL<
-    ArtworkSidebarLinks_Test_Query
-  >({
-    Component: ({ artwork }) => (
-      <ArtworkSidebarLinksFragmentContainer artwork={artwork!} />
-    ),
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<ArtworkSidebarLinks_Test_Query>({
+      Component: ({ artwork }) => (
+        <ArtworkSidebarLinksFragmentContainer artwork={artwork!} />
+      ),
+      query: graphql`
       query ArtworkSidebarLinks_Test_Query @relay_test_operation {
         artwork(id: "josef-albers-homage-to-the-square-85") {
           ...ArtworkSidebarLinks_artwork
         }
       }
     `,
-  })
+    })
 
   it("renders sell with Artsy Section", () => {
     renderWithRelay({})

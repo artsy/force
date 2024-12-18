@@ -18,10 +18,9 @@ interface OnboardingSearchResultsProps {
   term: string
 }
 
-const OnboardingSearchResults: FC<React.PropsWithChildren<OnboardingSearchResultsProps>> = ({
-  term,
-  viewer,
-}) => {
+const OnboardingSearchResults: FC<
+  React.PropsWithChildren<OnboardingSearchResultsProps>
+> = ({ term, viewer }) => {
   const { dispatch } = useOnboardingContext()
   const nodes = extractNodes(viewer.matchConnection)
 
@@ -136,10 +135,9 @@ const PLACEHOLDER = (
   </Join>
 )
 
-export const OnboardingSearchResultsQueryRenderer: FC<React.PropsWithChildren<OnboardingOrderedSetQueryRendererProps>> = ({
-  term,
-  entities,
-}) => {
+export const OnboardingSearchResultsQueryRenderer: FC<
+  React.PropsWithChildren<OnboardingOrderedSetQueryRendererProps>
+> = ({ term, entities }) => {
   return (
     <SystemQueryRenderer<OnboardingSearchResultsQuery>
       query={graphql`

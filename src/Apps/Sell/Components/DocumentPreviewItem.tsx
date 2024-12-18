@@ -17,13 +17,12 @@ interface DocumentPreviewItemProps {
   document: DropzoneFile
 }
 
-export const DocumentPreviewItem: React.FC<React.PropsWithChildren<DocumentPreviewItemProps>> = ({
-  document,
-}) => {
+export const DocumentPreviewItem: React.FC<
+  React.PropsWithChildren<DocumentPreviewItemProps>
+> = ({ document }) => {
   const { isLoggedIn } = useSystemContext()
-  const {
-    submitMutation: removeAsset,
-  } = useRemoveAssetFromConsignmentSubmission()
+  const { submitMutation: removeAsset } =
+    useRemoveAssetFromConsignmentSubmission()
   const { setFieldValue, values } = useFormikContext<DocumentsFormValues>()
 
   const handleDocumentDelete = (document: DropzoneFile) => {

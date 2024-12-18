@@ -47,7 +47,9 @@ export interface AddressFormProps {
   tabIndex?: number
 }
 
-export const AddressForm: React.FC<React.PropsWithChildren<AddressFormProps>> = ({
+export const AddressForm: React.FC<
+  React.PropsWithChildren<AddressFormProps>
+> = ({
   onChange,
   value,
   billing,
@@ -88,26 +90,25 @@ export const AddressForm: React.FC<React.PropsWithChildren<AddressFormProps>> = 
 
   const [key, setKey] = React.useState<keyof Address>()
 
-  const changeEventHandler = (key: keyof Address) => (
-    ev: React.FormEvent<HTMLInputElement>
-  ) => {
-    const shouldFetch = autocomplete.enabled && key === "addressLine1"
-    if (shouldFetch) {
-      fetchForAutocomplete({ search: ev.currentTarget.value })
-    }
-    setKey(key)
-    onChangeValue(key, ev.currentTarget.value)
+  const changeEventHandler =
+    (key: keyof Address) => (ev: React.FormEvent<HTMLInputElement>) => {
+      const shouldFetch = autocomplete.enabled && key === "addressLine1"
+      if (shouldFetch) {
+        fetchForAutocomplete({ search: ev.currentTarget.value })
+      }
+      setKey(key)
+      onChangeValue(key, ev.currentTarget.value)
 
-    if (
-      selectedAddressOption.option &&
-      !selectedAddressOption.edited &&
-      key !== "name" &&
-      key !== "phoneNumber"
-    ) {
-      trackAutoCompleteEdit(key)
-      setSelectedAddressOption({ ...selectedAddressOption, edited: true })
+      if (
+        selectedAddressOption.option &&
+        !selectedAddressOption.edited &&
+        key !== "name" &&
+        key !== "phoneNumber"
+      ) {
+        trackAutoCompleteEdit(key)
+        setSelectedAddressOption({ ...selectedAddressOption, edited: true })
+      }
     }
-  }
 
   const changeValueHandler = (key: keyof Address) => (value: string) => {
     setKey(key)

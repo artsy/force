@@ -7,7 +7,9 @@ import { useRouter } from "found"
  * state. This component will prevent rerenders when the route changes, signalled
  * by `match.elements` being undefined per the router.
  */
-export const LazyArtworkGrid: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+export const LazyArtworkGrid: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const { match } = useRouter()
 
   return (

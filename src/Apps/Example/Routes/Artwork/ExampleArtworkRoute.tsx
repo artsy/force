@@ -11,9 +11,9 @@ export interface ExampleArtworkRouteProps {
   artwork: ExampleArtworkRoute_artwork$data
 }
 
-const ExampleArtworkRoute: React.FC<React.PropsWithChildren<ExampleArtworkRouteProps>> = ({
-  artwork,
-}) => {
+const ExampleArtworkRoute: React.FC<
+  React.PropsWithChildren<ExampleArtworkRouteProps>
+> = ({ artwork }) => {
   const artists = extractNodes(artwork.artist?.related?.artistsConnection)
 
   return (
@@ -51,7 +51,9 @@ const ExampleArtworkRoute: React.FC<React.PropsWithChildren<ExampleArtworkRouteP
 /**
  * Routes with :slugs require Analytics to provide the corresponding internalID
  */
-const TrackingWrappedExampleArtworkRoute: React.FC<React.PropsWithChildren<ExampleArtworkRouteProps>> = props => {
+const TrackingWrappedExampleArtworkRoute: React.FC<
+  React.PropsWithChildren<ExampleArtworkRouteProps>
+> = props => {
   const {
     artwork: { internalID },
   } = props

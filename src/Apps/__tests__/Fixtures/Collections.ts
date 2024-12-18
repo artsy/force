@@ -15,8 +15,7 @@ export const CollectionsRailFixture = [
             title: "Flag",
             image: {
               resized: {
-                url:
-                  "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg",
+                url: "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg",
               },
             },
           },
@@ -29,8 +28,7 @@ export const CollectionsRailFixture = [
             title: "Flag (Moratorium)",
             image: {
               resized: {
-                url:
-                  "https://d32dm0rphc51dk.cloudfront.net/Jyhryk2bLDdkpNflvWO0Lg/small.jpg",
+                url: "https://d32dm0rphc51dk.cloudfront.net/Jyhryk2bLDdkpNflvWO0Lg/small.jpg",
               },
             },
           },
@@ -43,8 +41,7 @@ export const CollectionsRailFixture = [
             title: "Flag I",
             image: {
               resized: {
-                url:
-                  "https://d32dm0rphc51dk.cloudfront.net/gM-IwaZ9C24Y_RQTRW6F5A/small.jpg",
+                url: "https://d32dm0rphc51dk.cloudfront.net/gM-IwaZ9C24Y_RQTRW6F5A/small.jpg",
               },
             },
           },
@@ -67,8 +64,7 @@ export const CollectionsRailFixture = [
             title: "Community Chest: Go To Jail",
             image: {
               resized: {
-                url:
-                  "https://d32dm0rphc51dk.cloudfront.net/DSa-4s-zRJEwW6mZRgDoxQ/small.jpg",
+                url: "https://d32dm0rphc51dk.cloudfront.net/DSa-4s-zRJEwW6mZRgDoxQ/small.jpg",
               },
             },
           },
@@ -81,8 +77,7 @@ export const CollectionsRailFixture = [
             title: "DJ Monopoly",
             image: {
               resized: {
-                url:
-                  "https://d32dm0rphc51dk.cloudfront.net/L0wx7i69h96MUFq9EgOpBQ/small.jpg",
+                url: "https://d32dm0rphc51dk.cloudfront.net/L0wx7i69h96MUFq9EgOpBQ/small.jpg",
               },
             },
           },
@@ -95,8 +90,7 @@ export const CollectionsRailFixture = [
             title: "Keith Haring 1982 Dolphin lithograph",
             image: {
               resized: {
-                url:
-                  "https://d32dm0rphc51dk.cloudfront.net/ZZodXz8Y7v7h0VWlQnZQCw/small.jpg",
+                url: "https://d32dm0rphc51dk.cloudfront.net/ZZodXz8Y7v7h0VWlQnZQCw/small.jpg",
               },
             },
           },
@@ -121,8 +115,7 @@ export const CollectionsRailFixture = [
             title: "Untitled",
             image: {
               resized: {
-                url:
-                  "https://d32dm0rphc51dk.cloudfront.net/VzteQ4joB2Iwjek9kPUrGg/small.jpg",
+                url: "https://d32dm0rphc51dk.cloudfront.net/VzteQ4joB2Iwjek9kPUrGg/small.jpg",
               },
             },
           },
@@ -135,8 +128,7 @@ export const CollectionsRailFixture = [
             title: "P8",
             image: {
               resized: {
-                url:
-                  "https://d32dm0rphc51dk.cloudfront.net/ZN_qyzZgvHz-DRMFW-Wrcw/small.jpg",
+                url: "https://d32dm0rphc51dk.cloudfront.net/ZN_qyzZgvHz-DRMFW-Wrcw/small.jpg",
               },
             },
           },
@@ -149,8 +141,7 @@ export const CollectionsRailFixture = [
             title: "Monsters",
             image: {
               resized: {
-                url:
-                  "https://d32dm0rphc51dk.cloudfront.net/0vJm9FeXzxzZJpBC-A-4ig/small.jpg",
+                url: "https://d32dm0rphc51dk.cloudfront.net/0vJm9FeXzxzZJpBC-A-4ig/small.jpg",
               },
             },
           },
@@ -173,8 +164,7 @@ export const CollectionsRailFixture = [
             title: "Migratory Bird I",
             image: {
               resized: {
-                url:
-                  "https://d32dm0rphc51dk.cloudfront.net/_67k2lYpopsd-UK6LOD61g/small.jpg",
+                url: "https://d32dm0rphc51dk.cloudfront.net/_67k2lYpopsd-UK6LOD61g/small.jpg",
               },
             },
           },
@@ -187,8 +177,7 @@ export const CollectionsRailFixture = [
             title: "Bacchanale",
             image: {
               resized: {
-                url:
-                  "https://d32dm0rphc51dk.cloudfront.net/mepJj80_m4NiWUJviymyBw/small.jpg",
+                url: "https://d32dm0rphc51dk.cloudfront.net/mepJj80_m4NiWUJviymyBw/small.jpg",
               },
             },
           },
@@ -201,8 +190,7 @@ export const CollectionsRailFixture = [
             title: "Mitered Squares-Apricot ",
             image: {
               resized: {
-                url:
-                  "https://d32dm0rphc51dk.cloudfront.net/CbgUJdNK5lWvhKzziYgx7w/small.jpg",
+                url: "https://d32dm0rphc51dk.cloudfront.net/CbgUJdNK5lWvhKzziYgx7w/small.jpg",
               },
             },
           },
@@ -233,8 +221,7 @@ export const CollectionsHubLinkedCollections = {
                   },
                   title: "A great flag from Jasper",
                   image: {
-                    url:
-                      "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg",
+                    url: "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg",
                   },
                 },
               },
@@ -245,8 +232,7 @@ export const CollectionsHubLinkedCollections = {
                   },
                   title: "Back to 2046",
                   image: {
-                    url:
-                      "https://d32dm0rp11hc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg",
+                    url: "https://d32dm0rp11hc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg",
                   },
                 },
               },
@@ -257,8 +243,7 @@ export const CollectionsHubLinkedCollections = {
                   },
                   title: "An Apple",
                   image: {
-                    url:
-                      "https://d32142dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg",
+                    url: "https://d32142dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg",
                   },
                 },
               },

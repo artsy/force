@@ -12,9 +12,9 @@ interface ViewingRoomsFeaturedRailProps {
   featuredViewingRooms: ViewingRoomsFeaturedRail_featuredViewingRooms$data
 }
 
-export const ViewingRoomsFeaturedRail: React.FC<React.PropsWithChildren<ViewingRoomsFeaturedRailProps>> = ({
-  featuredViewingRooms,
-}) => {
+export const ViewingRoomsFeaturedRail: React.FC<
+  React.PropsWithChildren<ViewingRoomsFeaturedRailProps>
+> = ({ featuredViewingRooms }) => {
   const viewingRooms = extractNodes(featuredViewingRooms)
   const { shuffled } = useStableShuffle({ items: viewingRooms })
 
@@ -61,9 +61,8 @@ export const ViewingRoomsFeaturedRail: React.FC<React.PropsWithChildren<ViewingR
     </Shelf>
   )
 }
-export const ViewingRoomsFeaturedRailFragmentContainer = createFragmentContainer(
-  ViewingRoomsFeaturedRail,
-  {
+export const ViewingRoomsFeaturedRailFragmentContainer =
+  createFragmentContainer(ViewingRoomsFeaturedRail, {
     featuredViewingRooms: graphql`
       fragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomsConnection {
         edges {
@@ -85,5 +84,4 @@ export const ViewingRoomsFeaturedRailFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })

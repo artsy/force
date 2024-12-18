@@ -28,9 +28,9 @@ export interface SearchBarInputProps {
   searchTerm: string
 }
 
-export const SearchBarInput: FC<React.PropsWithChildren<
-  SearchBarInputProps
->> = ({ searchTerm }) => {
+export const SearchBarInput: FC<
+  React.PropsWithChildren<SearchBarInputProps>
+> = ({ searchTerm }) => {
   const tracking = useTracking()
 
   const isClient = useDidMount()

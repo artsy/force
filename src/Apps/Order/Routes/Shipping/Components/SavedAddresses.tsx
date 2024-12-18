@@ -24,27 +24,27 @@ export interface SavedAddressesProps {
   onSelect: (address: SavedAddressType) => void
 }
 
-export const SavedAddresses: FC<React.PropsWithChildren<SavedAddressesProps>> = props => {
+export const SavedAddresses: FC<
+  React.PropsWithChildren<SavedAddressesProps>
+> = props => {
   const logger = createLogger("SavedAddresses.tsx")
 
   const shippingContext = useShippingContext()
   const orderTracking = useOrderTracking()
   const formikContext = useFormikContext<FulfillmentValues>()
 
-  const [
-    addressModalAction,
-    setAddressModalAction,
-  ] = useState<AddressModalAction | null>(null)
+  const [addressModalAction, setAddressModalAction] =
+    useState<AddressModalAction | null>(null)
 
   const { addressList } = shippingContext.meData
 
   const savedAddressOnOrder = shippingContext.orderData.savedFulfillmentDetails
     ?.selectedSavedAddressID
-    ? getAddressByID(
+    ? (getAddressByID(
         addressList,
         shippingContext.orderData.savedFulfillmentDetails
           ?.selectedSavedAddressID
-      ) ?? null
+      ) ?? null)
     : null
 
   const selectAndSubmitAddress = (address: SavedAddressType) => {

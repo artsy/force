@@ -47,9 +47,8 @@ export const PaymentMethodSummaryItem = ({
   )
 }
 
-export const PaymentMethodSummaryItemFragmentContainer = createFragmentContainer(
-  PaymentMethodSummaryItem,
-  {
+export const PaymentMethodSummaryItemFragmentContainer =
+  createFragmentContainer(PaymentMethodSummaryItem, {
     order: graphql`
       fragment PaymentMethodSummaryItem_order on CommerceOrder {
         source
@@ -70,5 +69,4 @@ export const PaymentMethodSummaryItemFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })

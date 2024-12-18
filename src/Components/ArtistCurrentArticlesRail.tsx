@@ -18,16 +18,12 @@ interface ArtistCurrentArticlesRailProps {
   artworkId?: string
 }
 
-const ArtistCurrentArticlesRail: React.FC<React.PropsWithChildren<ArtistCurrentArticlesRailProps>> = ({
-  artist,
-  artworkId,
-}) => {
+const ArtistCurrentArticlesRail: React.FC<
+  React.PropsWithChildren<ArtistCurrentArticlesRailProps>
+> = ({ artist, artworkId }) => {
   const tracking = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const articles = extractNodes(artist.articlesConnection)
 
@@ -89,9 +85,8 @@ const ArtistCurrentArticlesRail: React.FC<React.PropsWithChildren<ArtistCurrentA
   )
 }
 
-export const ArtistCurrentArticlesRailFragmentContainer = createFragmentContainer(
-  ArtistCurrentArticlesRail,
-  {
+export const ArtistCurrentArticlesRailFragmentContainer =
+  createFragmentContainer(ArtistCurrentArticlesRail, {
     artist: graphql`
       fragment ArtistCurrentArticlesRail_artist on Artist {
         internalID
@@ -109,8 +104,7 @@ export const ArtistCurrentArticlesRailFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })
 
 const PLACEHOLDER = (
   <Skeleton>
@@ -132,10 +126,12 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtistCurrentArticlesRailQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-  artworkId?: string
-}>> = ({ slug, artworkId }) => {
+export const ArtistCurrentArticlesRailQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+    artworkId?: string
+  }>
+> = ({ slug, artworkId }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

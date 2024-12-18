@@ -25,10 +25,9 @@ export interface BrandCreditCardIconProps extends BoxProps {
   type: Brand
 }
 
-export const BrandCreditCardIcon: FC<React.PropsWithChildren<BrandCreditCardIconProps>> = ({
-  type,
-  ...rest
-}) => {
+export const BrandCreditCardIcon: FC<
+  React.PropsWithChildren<BrandCreditCardIconProps>
+> = ({ type, ...rest }) => {
   switch (type) {
     case "Visa":
       return <VisaIcon {...rest} />

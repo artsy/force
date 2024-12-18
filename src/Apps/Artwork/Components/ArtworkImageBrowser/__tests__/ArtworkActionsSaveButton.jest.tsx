@@ -34,34 +34,33 @@ describe("ArtworkActionsSaveButton", () => {
     mockSaveArtwork.mockImplementation(() => ({}))
   })
 
-  const { renderWithRelay } = setupTestWrapperTL<
-    ArtworkActionsSaveButton_Test_Query
-  >({
-    Component: props => {
-      if (!props.artwork) {
-        return null
-      }
+  const { renderWithRelay } =
+    setupTestWrapperTL<ArtworkActionsSaveButton_Test_Query>({
+      Component: props => {
+        if (!props.artwork) {
+          return null
+        }
 
-      return (
-        <MockBoot context={{ user: { id: "percy-z" } }}>
-          <AppToasts />
+        return (
+          <MockBoot context={{ user: { id: "percy-z" } }}>
+            <AppToasts />
 
-          <ManageArtworkForSavesProvider>
-            <ArtworkActionsSaveButtonFragmentContainer
-              artwork={props.artwork}
-            />
-          </ManageArtworkForSavesProvider>
-        </MockBoot>
-      )
-    },
-    query: graphql`
+            <ManageArtworkForSavesProvider>
+              <ArtworkActionsSaveButtonFragmentContainer
+                artwork={props.artwork}
+              />
+            </ManageArtworkForSavesProvider>
+          </MockBoot>
+        )
+      },
+      query: graphql`
       query ArtworkActionsSaveButton_Test_Query @relay_test_operation {
         artwork(id: "artworkID") {
           ...ArtworkActionsSaveButton_artwork
         }
       }
     `,
-  })
+    })
 
   it("should display `Save` label", () => {
     renderWithRelay({

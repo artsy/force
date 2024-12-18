@@ -20,7 +20,9 @@ interface PhoneNumberInputProps extends BoxProps {
   selectProps: Omit<SelectProps, "options">
 }
 
-export const PhoneNumberInput: React.FC<React.PropsWithChildren<PhoneNumberInputProps>> = ({
+export const PhoneNumberInput: React.FC<
+  React.PropsWithChildren<PhoneNumberInputProps>
+> = ({
   title = "Phone number",
   required,
   error,

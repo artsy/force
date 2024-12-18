@@ -21,7 +21,9 @@ interface NotificationsAppProps {
   me: NotificationsApp_me$data
 }
 
-const NotificationsApp: React.FC<React.PropsWithChildren<NotificationsAppProps>> = ({ me }) => {
+const NotificationsApp: React.FC<
+  React.PropsWithChildren<NotificationsAppProps>
+> = ({ me }) => {
   const { match } = useRouter()
   const { showAuthDialog } = useAuthDialog()
   const { isLoggedIn } = useSystemContext()

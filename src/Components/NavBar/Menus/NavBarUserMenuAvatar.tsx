@@ -5,7 +5,9 @@ import { NavBarUserMenuAvatarQuery } from "__generated__/NavBarUserMenuAvatarQue
 
 interface NavBarUserMenuAvatarProps {}
 
-export const NavBarUserMenuAvatar: FC<React.PropsWithChildren<NavBarUserMenuAvatarProps>> = () => {
+export const NavBarUserMenuAvatar: FC<
+  React.PropsWithChildren<NavBarUserMenuAvatarProps>
+> = () => {
   const { me } = useLazyLoadQuery<NavBarUserMenuAvatarQuery>(
     QUERY,
     {},
@@ -27,7 +29,9 @@ export const NavBarUserMenuAvatar: FC<React.PropsWithChildren<NavBarUserMenuAvat
   )
 }
 
-export const NavBarUserMenuAvatarSkeleton: FC<React.PropsWithChildren<unknown>> = () => {
+export const NavBarUserMenuAvatarSkeleton: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton>
       <Avatar size="xs" bg="black10" border="1px solid" borderColor="black10" />

@@ -8,7 +8,7 @@
     "yarn": "1.x.x"
   },
   "scripts": {
-    "biome-project": "yarn biome format --write 'src/**/*.{ts,tsx,js,jsx}'",
+    "biome-project": "yarn biome format --write src",
     "biome-write": "yarn biome format --write",
     "build": "yarn rsbuild build -m production",
     "build:client:dev": "yarn rsbuild build --environment client -m development",

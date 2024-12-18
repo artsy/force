@@ -11,18 +11,17 @@ jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter")
 jest.mock("found")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  CollectorProfileSavesRoute_Test_Query
->({
-  Component: CollectorProfileSavesRouteFragmentContainer,
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<CollectorProfileSavesRoute_Test_Query>({
+    Component: CollectorProfileSavesRouteFragmentContainer,
+    query: graphql`
     query CollectorProfileSavesRoute_Test_Query @relay_test_operation {
       me {
         ...CollectorProfileSavesRoute_me
       }
     }
   `,
-})
+  })
 
 describe("CollectorProfileSavesRoute", () => {
   const mockUseRouter = useRouter as jest.Mock

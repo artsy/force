@@ -34,7 +34,8 @@ describe("useCreateTokenAndSubmit", () => {
   const mockUseAuctionTracking = useAuctionTracking as jest.Mock
   const mockUseElements = useElements as jest.Mock
   const mockUseStripe = useStripe as jest.Mock
-  const mockUseAddCreditCardAndUpdateProfile = useAddCreditCardAndUpdateProfile as jest.Mock
+  const mockUseAddCreditCardAndUpdateProfile =
+    useAddCreditCardAndUpdateProfile as jest.Mock
   const mockUseCreateBidder = useCreateBidder as jest.Mock
   const mockUseRefreshUserData = useRefreshUserData as jest.Mock
 
@@ -49,13 +50,13 @@ describe("useCreateTokenAndSubmit", () => {
     setSubmitting: jest.fn(),
   }
 
-  const props = ({
+  const props = {
     me: {},
     sale: {
       slug: "test-sale",
     },
     onSuccess: jest.fn(),
-  } as unknown) as UseCreateTokenAndSubmitProps
+  } as unknown as UseCreateTokenAndSubmitProps
 
   const setupHook = async () => {
     const { result } = renderHook(() => useCreateTokenAndSubmit(props))

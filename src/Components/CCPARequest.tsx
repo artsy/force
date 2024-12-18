@@ -26,7 +26,9 @@ interface CCPARequestProps {
   onClose: () => void
 }
 
-export const CCPARequest: FC<React.PropsWithChildren<CCPARequestProps>> = ({ onClose }) => {
+export const CCPARequest: FC<React.PropsWithChildren<CCPARequestProps>> = ({
+  onClose,
+}) => {
   const { user } = useSystemContext()
 
   const { submitMutation } = useMutation<CCPARequestMutation>({

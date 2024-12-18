@@ -5,10 +5,12 @@ import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResult
 import { Box, Button, Clickable, Flex, ModalBase, Text } from "@artsy/palette"
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
 
-export const AuctionFilterMobileActionSheet: FC<React.PropsWithChildren<{
-  children: JSX.Element
-  onClose: () => void
-}>> = ({ children, onClose }) => {
+export const AuctionFilterMobileActionSheet: FC<
+  React.PropsWithChildren<{
+    children: JSX.Element
+    onClose: () => void
+  }>
+> = ({ children, onClose }) => {
   const filterContext = useAuctionResultsFilterContext()
 
   const contentRef = useRef<HTMLDivElement | null>(null)

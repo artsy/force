@@ -7,10 +7,9 @@ export interface FeatureSetMetaProps extends BoxProps {
   set: FeatureSetMeta_set$data
 }
 
-export const FeatureSetMeta: React.FC<React.PropsWithChildren<FeatureSetMetaProps>> = ({
-  set,
-  ...rest
-}) => {
+export const FeatureSetMeta: React.FC<
+  React.PropsWithChildren<FeatureSetMetaProps>
+> = ({ set, ...rest }) => {
   return (
     <Box {...rest}>
       <Join separator={<Spacer y={4} />}>

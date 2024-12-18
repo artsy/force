@@ -113,16 +113,16 @@ export const InquirySignUp: React.FC<React.PropsWithChildren<unknown>> = () => {
     }
   }
 
-  const handleInputChange = (name: keyof InquirySignUpState) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (name === "email") {
-      setInquiry(prevState => ({ ...prevState, [name]: event.target.value }))
-    }
+  const handleInputChange =
+    (name: keyof InquirySignUpState) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (name === "email") {
+        setInquiry(prevState => ({ ...prevState, [name]: event.target.value }))
+      }
 
-    setState(prevState => ({ ...prevState, [name]: event.target.value }))
-    mode === "Error" && setMode("Pending")
-  }
+      setState(prevState => ({ ...prevState, [name]: event.target.value }))
+      mode === "Error" && setMode("Pending")
+    }
 
   return (
     <>

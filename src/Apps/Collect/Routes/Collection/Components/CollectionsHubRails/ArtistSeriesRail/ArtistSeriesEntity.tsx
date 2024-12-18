@@ -19,28 +19,18 @@ export interface ArtistSeriesEntityProps {
   itemNumber: number
 }
 
-export const ArtistSeriesEntity: React.FC<React.PropsWithChildren<ArtistSeriesEntityProps>> = ({
-  member,
-  itemNumber,
-}) => {
-  const {
-    headerImage,
-    artworksConnection,
-    priceGuidance,
-    slug,
-    id,
-    title,
-  } = member
+export const ArtistSeriesEntity: React.FC<
+  React.PropsWithChildren<ArtistSeriesEntityProps>
+> = ({ member, itemNumber }) => {
+  const { headerImage, artworksConnection, priceGuidance, slug, id, title } =
+    member
 
   const artworks = extractNodes(artworksConnection)
 
   const { trackEvent } = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const handleLinkClick = () => {
     if (!contextPageOwnerType) return null
@@ -124,7 +114,9 @@ export const ArtistSeriesEntity: React.FC<React.PropsWithChildren<ArtistSeriesEn
 }
 
 export const ArtistSeriesRailContainer = createFragmentContainer(
-  ArtistSeriesEntity as React.FC<React.PropsWithChildren<ArtistSeriesEntityProps>>,
+  ArtistSeriesEntity as React.FC<
+    React.PropsWithChildren<ArtistSeriesEntityProps>
+  >,
   {
     member: graphql`
       fragment ArtistSeriesEntity_member on MarketingCollection {

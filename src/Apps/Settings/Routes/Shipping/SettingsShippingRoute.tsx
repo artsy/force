@@ -7,9 +7,9 @@ interface SettingsShippingRouteProps {
   me: SettingsShippingRoute_me$data
 }
 
-const SettingsShippingRoute: React.FC<React.PropsWithChildren<SettingsShippingRouteProps>> = ({
-  me,
-}) => {
+const SettingsShippingRoute: React.FC<
+  React.PropsWithChildren<SettingsShippingRouteProps>
+> = ({ me }) => {
   return (
     <>
       <SettingsShippingAddressesFragmentContainer me={me} />

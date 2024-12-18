@@ -7,10 +7,9 @@ interface Props {
   orderSource?: string | null
 }
 
-export const ConditionsOfSaleDisclaimer: React.FC<React.PropsWithChildren<Props>> = ({
-  textProps,
-  orderSource,
-}) => {
+export const ConditionsOfSaleDisclaimer: React.FC<
+  React.PropsWithChildren<Props>
+> = ({ textProps, orderSource }) => {
   if (orderSource === "private_sale") {
     return (
       <Text variant="sm" color="black60" {...textProps}>

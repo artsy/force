@@ -9,9 +9,9 @@ interface ArtworkSidebarSizeInfoProps {
   piece: ArtworkSidebarSizeInfo_piece$data
 }
 
-const ArtworkSidebarSizeInfo: React.FC<React.PropsWithChildren<ArtworkSidebarSizeInfoProps>> = ({
-  piece,
-}) => {
+const ArtworkSidebarSizeInfo: React.FC<
+  React.PropsWithChildren<ArtworkSidebarSizeInfoProps>
+> = ({ piece }) => {
   const { dimensions, editionOf } = piece
 
   const {

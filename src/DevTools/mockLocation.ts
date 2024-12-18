@@ -13,5 +13,5 @@ export const mockLocation = (options: Partial<Location> = {}) => {
 }
 
 export const resetMockLocation = () => {
-  (window.location.assign as any).mockReset();
+  ;(window.location.assign as any).mockReset()
 }

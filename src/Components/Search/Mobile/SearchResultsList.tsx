@@ -32,13 +32,9 @@ interface SearchResultsListProps {
 
 const ENTITIES_PER_SCROLL = 10
 
-const SearchResultsList: FC<React.PropsWithChildren<SearchResultsListProps>> = ({
-  relay,
-  viewer,
-  query,
-  selectedPill,
-  onClose,
-}) => {
+const SearchResultsList: FC<
+  React.PropsWithChildren<SearchResultsListProps>
+> = ({ relay, viewer, query, selectedPill, onClose }) => {
   const tracking = useTracking()
   const options = extractNodes(viewer.searchConnection)
 

@@ -12,7 +12,9 @@ import { useRouter } from "System/Hooks/useRouter"
 
 interface CollectorProfileArtistsRouteProps {}
 
-export const CollectorProfileArtistsRoute: FC<React.PropsWithChildren<CollectorProfileArtistsRouteProps>> = () => {
+export const CollectorProfileArtistsRoute: FC<
+  React.PropsWithChildren<CollectorProfileArtistsRouteProps>
+> = () => {
   const { router } = useRouter()
 
   const [mode, setMode] = useState<"Idle" | "Add">("Idle")

@@ -9,22 +9,21 @@ jest.unmock("react-relay")
 const mockBalanceCheckComplete = jest.fn()
 mockBalanceCheckComplete.mockImplementation(arg => arg)
 
-const { renderWithRelay } = setupTestWrapperTL<
-  PollAccountBalanceQuery_Test_Query
->({
-  Component: ({ commerceBankAccountBalance }) => {
-    return (
-      <PollAccountBalanceRefetchContainer
-        setupIntentId={"setupIntentId"}
-        bankAccountId={"bankAccountId"}
-        commerceBankAccountBalance={commerceBankAccountBalance}
-        onBalanceCheckComplete={mockBalanceCheckComplete}
-        buyerTotalCents={100}
-        orderCurrencyCode={"USD"}
-      />
-    )
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<PollAccountBalanceQuery_Test_Query>({
+    Component: ({ commerceBankAccountBalance }) => {
+      return (
+        <PollAccountBalanceRefetchContainer
+          setupIntentId={"setupIntentId"}
+          bankAccountId={"bankAccountId"}
+          commerceBankAccountBalance={commerceBankAccountBalance}
+          onBalanceCheckComplete={mockBalanceCheckComplete}
+          buyerTotalCents={100}
+          orderCurrencyCode={"USD"}
+        />
+      )
+    },
+    query: graphql`
     query PollAccountBalanceQuery_Test_Query($setupIntentId: ID!)
       @relay_test_operation {
       commerceBankAccountBalance(setupIntentId: $setupIntentId) {
@@ -32,7 +31,7 @@ const { renderWithRelay } = setupTestWrapperTL<
       }
     }
   `,
-})
+  })
 
 describe("Poll account balance", () => {
   it("renders placeholder", () => {

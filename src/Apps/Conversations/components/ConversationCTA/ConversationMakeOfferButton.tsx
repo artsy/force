@@ -12,20 +12,17 @@ interface ConversationMakeOfferButtonProps extends BoxProps {
   conversation: useConversationPurchaseButtonData_conversation$key
 }
 
-export const ConversationMakeOfferButton: React.FC<React.PropsWithChildren<ConversationMakeOfferButtonProps>> = ({
-  conversation,
-  ...boxProps
-}) => {
+export const ConversationMakeOfferButton: React.FC<
+  React.PropsWithChildren<ConversationMakeOfferButtonProps>
+> = ({ conversation, ...boxProps }) => {
   const tracking = useTracking()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { router } = useRouter()
   const { submitMutation } = useMakeInquiryOffer()
   const { sendToast } = useToasts()
 
-  const {
-    showSelectEditionSetModal,
-    isConfirmModalVisible,
-  } = useConversationsContext()
+  const { showSelectEditionSetModal, isConfirmModalVisible } =
+    useConversationsContext()
 
   const data = useConversationPurchaseButtonData(conversation)
 

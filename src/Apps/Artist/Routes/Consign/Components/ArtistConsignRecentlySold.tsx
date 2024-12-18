@@ -12,9 +12,9 @@ interface ArtistConsignRecentlySoldProps {
   artist: ArtistConsignRecentlySold_artist$data
 }
 
-export const ArtistConsignRecentlySold: React.FC<React.PropsWithChildren<ArtistConsignRecentlySoldProps>> = ({
-  artist,
-}) => {
+export const ArtistConsignRecentlySold: React.FC<
+  React.PropsWithChildren<ArtistConsignRecentlySoldProps>
+> = ({ artist }) => {
   const artworks = extractNodes(
     artist.targetSupply?.microfunnel?.artworksConnection
   )
@@ -50,9 +50,8 @@ export const ArtistConsignRecentlySold: React.FC<React.PropsWithChildren<ArtistC
   )
 }
 
-export const ArtistConsignRecentlySoldFragmentContainer = createFragmentContainer(
-  ArtistConsignRecentlySold,
-  {
+export const ArtistConsignRecentlySoldFragmentContainer =
+  createFragmentContainer(ArtistConsignRecentlySold, {
     artist: graphql`
       fragment ArtistConsignRecentlySold_artist on Artist {
         name
@@ -71,5 +70,4 @@ export const ArtistConsignRecentlySoldFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })

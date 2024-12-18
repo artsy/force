@@ -21,10 +21,9 @@ interface ShowsCurrentShowsProps {
   relay: RelayPaginationProp
 }
 
-const ShowsCurrentShows: React.FC<React.PropsWithChildren<ShowsCurrentShowsProps>> = ({
-  viewer,
-  relay,
-}) => {
+const ShowsCurrentShows: React.FC<
+  React.PropsWithChildren<ShowsCurrentShowsProps>
+> = ({ viewer, relay }) => {
   const shows = extractNodes(viewer.showsConnection)
 
   const [loading, setLoading] = useState(false)
@@ -129,7 +128,9 @@ const SHOWS_CURRENT_SHOWS_PLACEHOLDER = (
   </Join>
 )
 
-export const ShowsCurrentShowsQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const ShowsCurrentShowsQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

@@ -7,7 +7,9 @@ interface LogInPromptProps {
   contextModule: AuthContextModule
 }
 
-export const LogInPrompt: React.FC<React.PropsWithChildren<LogInPromptProps>> = ({ contextModule }) => {
+export const LogInPrompt: React.FC<
+  React.PropsWithChildren<LogInPromptProps>
+> = ({ contextModule }) => {
   const { isLoggedIn } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
 

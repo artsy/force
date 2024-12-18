@@ -9,10 +9,9 @@ interface MyCollectionArtworkRequestPriceEstimateProps {
   ctaColor?: "primaryBlack" | "secondaryNeutral" | null
 }
 
-export const MyCollectionArtworkRequestPriceEstimate: React.FC<React.PropsWithChildren<MyCollectionArtworkRequestPriceEstimateProps>> = ({
-  ctaColor = "primaryBlack",
-  ...props
-}) => {
+export const MyCollectionArtworkRequestPriceEstimate: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkRequestPriceEstimateProps>
+> = ({ ctaColor = "primaryBlack", ...props }) => {
   const artwork = useFragment(FRAGMENT, props.artwork)
   if (artwork.hasPriceEstimateRequest) {
     return (

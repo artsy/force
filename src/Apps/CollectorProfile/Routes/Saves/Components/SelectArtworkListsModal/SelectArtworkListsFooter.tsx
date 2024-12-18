@@ -8,12 +8,9 @@ interface SelectArtworkListsFooterProps {
   onSaveClick: () => void
 }
 
-export const SelectArtworkListsFooter: FC<React.PropsWithChildren<SelectArtworkListsFooterProps>> = ({
-  selectedArtworkListsCount,
-  hasChanges,
-  isSaving,
-  onSaveClick,
-}) => {
+export const SelectArtworkListsFooter: FC<
+  React.PropsWithChildren<SelectArtworkListsFooterProps>
+> = ({ selectedArtworkListsCount, hasChanges, isSaving, onSaveClick }) => {
   return (
     <Flex
       flexDirection="row"

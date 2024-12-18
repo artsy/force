@@ -24,10 +24,9 @@ interface EditArtworkListModalProps {
 
 const logger = createLogger("EditArtworkListModal")
 
-export const EditArtworkListModal: React.FC<React.PropsWithChildren<EditArtworkListModalProps>> = ({
-  artworkList,
-  onClose,
-}) => {
+export const EditArtworkListModal: React.FC<
+  React.PropsWithChildren<EditArtworkListModalProps>
+> = ({ artworkList, onClose }) => {
   const { trackEvent } = useTracking()
 
   const initialValues: ArtworkListFormikValues = {

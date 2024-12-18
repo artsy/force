@@ -37,9 +37,9 @@ const ARTICLE_COUNT = 6
 interface HomeFeaturedMarketNewsProps {
   articles: HomeFeaturedMarketNews_articles$data
 }
-const HomeFeaturedMarketNews: React.FC<React.PropsWithChildren<HomeFeaturedMarketNewsProps>> = ({
-  articles,
-}) => {
+const HomeFeaturedMarketNews: React.FC<
+  React.PropsWithChildren<HomeFeaturedMarketNewsProps>
+> = ({ articles }) => {
   const { trackEvent } = useTracking()
   const [firstArticle, ...restOfArticles] = articles
   const truncatedRestOfArticles = take(restOfArticles, ARTICLE_COUNT)
@@ -119,7 +119,9 @@ const HomeFeaturedMarketNews: React.FC<React.PropsWithChildren<HomeFeaturedMarke
   )
 }
 
-const HomeFeaturedMarketNewsContainer: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+const HomeFeaturedMarketNewsContainer: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const { trackEvent } = useTracking()
 
   return (
@@ -224,7 +226,9 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const HomeFeaturedMarketNewsQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeFeaturedMarketNewsQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

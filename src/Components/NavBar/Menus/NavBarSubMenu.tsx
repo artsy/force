@@ -16,9 +16,9 @@ interface NavBarSubMenuProps {
 }
 
 /** Component for full-width sub-menus (Artworks, Artists) */
-export const NavBarSubMenu: React.FC<React.PropsWithChildren<
-  NavBarSubMenuProps
->> = ({ menu, contextModule, onClick }) => {
+export const NavBarSubMenu: React.FC<
+  React.PropsWithChildren<NavBarSubMenuProps>
+> = ({ menu, contextModule, onClick }) => {
   const { trackEvent } = useTracking()
 
   const handleClick = (

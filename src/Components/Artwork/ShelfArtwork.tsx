@@ -154,7 +154,9 @@ interface ShelfArtworkPlaceholderProps
   index: number
 }
 
-export const ShelfArtworkPlaceholder: React.FC<React.PropsWithChildren<ShelfArtworkPlaceholderProps>> = ({
+export const ShelfArtworkPlaceholder: React.FC<
+  React.PropsWithChildren<ShelfArtworkPlaceholderProps>
+> = ({
   index,
   hideSaleInfo,
   area = DEFAULT_AREA,

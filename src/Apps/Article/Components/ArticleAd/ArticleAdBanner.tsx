@@ -11,11 +11,9 @@ interface ArticleAdBanerProps {
   height: number
 }
 
-export const ArticleAdBaner: FC<React.PropsWithChildren<ArticleAdBanerProps>> = ({
-  unit,
-  width,
-  height,
-}) => {
+export const ArticleAdBaner: FC<
+  React.PropsWithChildren<ArticleAdBanerProps>
+> = ({ unit, width, height }) => {
   const { displayedAd } = useArticleTracking()
 
   // Since ads are iframed we have to calculate a value to use to scale them via transform.

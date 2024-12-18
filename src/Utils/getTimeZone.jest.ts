@@ -4,7 +4,8 @@ import { DateTime } from "luxon"
 describe("getTimeZone", () => {
   describe("When Intl is available", () => {
     beforeAll(() => {
-      const originalDateResolvedOptions = new Intl.DateTimeFormat().resolvedOptions()
+      const originalDateResolvedOptions =
+        new Intl.DateTimeFormat().resolvedOptions()
       jest
         .spyOn(Intl.DateTimeFormat.prototype, "resolvedOptions")
         .mockReturnValue({
@@ -23,7 +24,8 @@ describe("getTimeZone", () => {
 
   describe("When Intl is not available", () => {
     beforeAll(() => {
-      const originalDateResolvedOptions = new Intl.DateTimeFormat().resolvedOptions()
+      const originalDateResolvedOptions =
+        new Intl.DateTimeFormat().resolvedOptions()
       jest
         .spyOn(Intl.DateTimeFormat.prototype, "resolvedOptions")
         .mockReturnValue({

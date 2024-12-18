@@ -65,11 +65,10 @@ export const useAddressAutocomplete = (
   const { trackEvent } = useTracking()
   const { contextPageOwnerId } = useAnalyticsContext()
 
-  const [serviceAvailability, setServiceAvailability] = useState<
-    ServiceAvailability
-  >({
-    loaded: false,
-  })
+  const [serviceAvailability, setServiceAvailability] =
+    useState<ServiceAvailability>({
+      loaded: false,
+    })
 
   const { enabled: isAddressAutocompleteEnabled } = serviceAvailability
 

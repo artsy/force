@@ -9,9 +9,9 @@ interface ExampleArtworkFilterProps {
   viewer: ExampleArtworkFilterRoute_viewer$data
 }
 
-const ExampleArtworkFilterRoute: React.FC<React.PropsWithChildren<ExampleArtworkFilterProps>> = ({
-  viewer,
-}) => {
+const ExampleArtworkFilterRoute: React.FC<
+  React.PropsWithChildren<ExampleArtworkFilterProps>
+> = ({ viewer }) => {
   const { match } = useRouter()
 
   return (

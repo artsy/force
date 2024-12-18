@@ -58,7 +58,9 @@ export type WithInquiryProps = ReturnType<typeof useInquiry> & UseInquiryProps
 export function withInquiry<T extends WithInquiryProps = WithInquiryProps>(
   WrappedComponent: React.ComponentType<React.PropsWithChildren<T>>
 ) {
-  const ComponentWithInquiry: React.FC<React.PropsWithChildren<Omit<T, keyof WithInquiryProps> & UseInquiryProps>> = props => {
+  const ComponentWithInquiry: React.FC<
+    React.PropsWithChildren<Omit<T, keyof WithInquiryProps> & UseInquiryProps>
+  > = props => {
     const { artworkID, ...rest } = props
     const inquiry = useInquiry({ artworkID })
 

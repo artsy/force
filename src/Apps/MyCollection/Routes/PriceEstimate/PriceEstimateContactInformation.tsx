@@ -45,10 +45,9 @@ export interface PriceEstimateContactInformationProps {
   me: PriceEstimateContactInformation_me$data
 }
 
-export const PriceEstimateContactInformation: React.FC<React.PropsWithChildren<PriceEstimateContactInformationProps>> = ({
-  artwork,
-  me,
-}) => {
+export const PriceEstimateContactInformation: React.FC<
+  React.PropsWithChildren<PriceEstimateContactInformationProps>
+> = ({ artwork, me }) => {
   const { sendToast } = useToasts()
   const { router } = useRouter()
   const { trackEvent } = useTracking()
@@ -183,9 +182,8 @@ export const PriceEstimateContactInformation: React.FC<React.PropsWithChildren<P
   )
 }
 
-export const PriceEstimateContactInformationFragmentContainer = createFragmentContainer(
-  PriceEstimateContactInformation,
-  {
+export const PriceEstimateContactInformationFragmentContainer =
+  createFragmentContainer(PriceEstimateContactInformation, {
     me: graphql`
       fragment PriceEstimateContactInformation_me on Me {
         internalID
@@ -204,5 +202,4 @@ export const PriceEstimateContactInformationFragmentContainer = createFragmentCo
         slug
       }
     `,
-  }
-)
+  })

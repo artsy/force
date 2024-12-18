@@ -12,15 +12,13 @@ export const MarketingHeaderSplitTest: FC = () => {
       title: "The art world online",
       subtitle:
         "Artsy is the world's leading platform to discover, buy, and manage the art you love",
-      src:
-        "https://files.artsy.net/images/01_Artsy_App-Download-Landing-Page.jpg",
+      src: "https://files.artsy.net/images/01_Artsy_App-Download-Landing-Page.jpg",
     },
     experiment: {
       title: "Your guide to the art world",
       subtitle:
         "Artsy makes it easy to discover artists and artworks you'll love",
-      src:
-        "https://files.artsy.net/images/02_Artsy_App-Download-Landing-Page.jpg",
+      src: "https://files.artsy.net/images/02_Artsy_App-Download-Landing-Page.jpg",
     },
   }
 

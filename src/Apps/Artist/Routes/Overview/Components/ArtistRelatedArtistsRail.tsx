@@ -23,16 +23,13 @@ interface ArtistRelatedArtistsRailProps {
   artist: ArtistRelatedArtistsRail_artist$data
 }
 
-const ArtistRelatedArtistsRail: FC<React.PropsWithChildren<ArtistRelatedArtistsRailProps>> = ({
-  artist,
-}) => {
+const ArtistRelatedArtistsRail: FC<
+  React.PropsWithChildren<ArtistRelatedArtistsRailProps>
+> = ({ artist }) => {
   const tracking = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const relatedArtists = extractNodes(artist.related?.artistsConnection)
 
@@ -77,9 +74,8 @@ const ArtistRelatedArtistsRail: FC<React.PropsWithChildren<ArtistRelatedArtistsR
   )
 }
 
-export const ArtistRelatedArtistsRailFragmentContainer = createFragmentContainer(
-  ArtistRelatedArtistsRail,
-  {
+export const ArtistRelatedArtistsRailFragmentContainer =
+  createFragmentContainer(ArtistRelatedArtistsRail, {
     artist: graphql`
       fragment ArtistRelatedArtistsRail_artist on Artist {
         related {
@@ -96,8 +92,7 @@ export const ArtistRelatedArtistsRailFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })
 
 const PLACEHOLDER = (
   <Skeleton>
@@ -113,9 +108,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtistRelatedArtistsRailQueryRenderer: FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const ArtistRelatedArtistsRailQueryRenderer: FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   return (
     <SystemQueryRenderer<ArtistRelatedArtistsRailQuery>
       lazyLoad

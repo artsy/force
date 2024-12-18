@@ -2,7 +2,9 @@ import { Separator, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 
-export const MyCollectionArtworkSWAHelpSection: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const MyCollectionArtworkSWAHelpSection: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Media greaterThanOrEqual="sm">
       <Separator my={4} />

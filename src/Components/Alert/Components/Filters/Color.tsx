@@ -12,11 +12,11 @@ import { themeGet } from "@styled-system/theme-get"
 import { COLOR_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 
-type ColorOption = typeof COLOR_OPTIONS[number]
+type ColorOption = (typeof COLOR_OPTIONS)[number]
 
-const ColorFilterOption: React.FC<React.PropsWithChildren<{ colorOption: ColorOption }>> = ({
-  colorOption,
-}) => {
+const ColorFilterOption: React.FC<
+  React.PropsWithChildren<{ colorOption: ColorOption }>
+> = ({ colorOption }) => {
   const { state, dispatch } = useAlertContext()
   const { name, value, hex } = colorOption
 

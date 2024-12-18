@@ -15,9 +15,9 @@ type Props = {
   relay: RelayRefetchProp
 }
 
-export const ArtworkSidebarAuctionPolling: React.FC<React.PropsWithChildren<
-  Props
->> = ({ artwork, relay, me }) => {
+export const ArtworkSidebarAuctionPolling: React.FC<
+  React.PropsWithChildren<Props>
+> = ({ artwork, relay, me }) => {
   const { sale, saleArtwork } = artwork
   const isClosed = !!sale?.isClosed
   const currentBidDisplay = saleArtwork?.currentBid?.display
@@ -65,10 +65,11 @@ export const ArtworkSidebarAuctionPolling: React.FC<React.PropsWithChildren<
   )
 }
 
-export const ArtworkSidebarAuctionPollingRefetchContainer = createRefetchContainer(
-  ArtworkSidebarAuctionPolling,
-  {
-    artwork: graphql`
+export const ArtworkSidebarAuctionPollingRefetchContainer =
+  createRefetchContainer(
+    ArtworkSidebarAuctionPolling,
+    {
+      artwork: graphql`
       fragment ArtworkSidebarAuctionInfoPolling_artwork on Artwork {
         internalID
         sale {
@@ -83,13 +84,13 @@ export const ArtworkSidebarAuctionPollingRefetchContainer = createRefetchContain
         ...ArtworkSidebarBidAction_artwork
       }
     `,
-    me: graphql`
+      me: graphql`
       fragment ArtworkSidebarAuctionInfoPolling_me on Me {
         ...ArtworkSidebarBidAction_me
       }
     `,
-  },
-  graphql`
+    },
+    graphql`
     query ArtworkSidebarAuctionInfoPollingQuery($artworkID: String!) {
       artwork(id: $artworkID) {
         internalID
@@ -102,4 +103,4 @@ export const ArtworkSidebarAuctionPollingRefetchContainer = createRefetchContain
       }
     }
   `
-)
+  )

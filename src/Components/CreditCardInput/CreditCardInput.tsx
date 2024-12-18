@@ -38,12 +38,9 @@ interface CreditCardInputProps extends BoxProps {
  * A Stripe credit card input that mimics style of V3 Palette Input.
  * Parent element must be wrapped with `CreditaCardInputProvider`.
  */
-export const CreditCardInput: React.FC<React.PropsWithChildren<CreditCardInputProps>> = ({
-  error,
-  onChange,
-  required,
-  ...rest
-}) => {
+export const CreditCardInput: React.FC<
+  React.PropsWithChildren<CreditCardInputProps>
+> = ({ error, onChange, required, ...rest }) => {
   const { theme } = useTheme()
 
   const stripeBaseStyle: StripeElementStyleVariant = {

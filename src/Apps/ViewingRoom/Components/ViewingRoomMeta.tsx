@@ -9,7 +9,9 @@ interface ViewingRoomMetaProps {
   viewingRoom: ViewingRoomMeta_viewingRoom$data
 }
 
-const ViewingRoomMeta: React.FC<React.PropsWithChildren<ViewingRoomMetaProps>> = ({ viewingRoom }) => {
+const ViewingRoomMeta: React.FC<
+  React.PropsWithChildren<ViewingRoomMetaProps>
+> = ({ viewingRoom }) => {
   const title = `${viewingRoom.title} | Artsy`
   const href = `${getENV("APP_URL")}${viewingRoom.href}`
   const description = viewingRoom.pullQuote

@@ -32,9 +32,8 @@ type OrderPaymentActionsPayload = {
   [OrderPaymentActions.SET_IS_STRIPE_PAYMENT_ELEMENT_LOADING]: boolean
 }
 
-export type OrderPaymentAction = ActionMap<
-  OrderPaymentActionsPayload
->[keyof ActionMap<OrderPaymentActionsPayload>]
+export type OrderPaymentAction =
+  ActionMap<OrderPaymentActionsPayload>[keyof ActionMap<OrderPaymentActionsPayload>]
 
 type ActionMap<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
@@ -89,7 +88,9 @@ const OrderPaymentContext = createContext<{
  * Provider
  */
 
-export const OrderPaymentContextProvider: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+export const OrderPaymentContextProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const [state, dispatch] = useReducer(
     orderPaymentReducer,
     initialOrderPaymentState

@@ -8,7 +8,9 @@ import { Spacer } from "@artsy/palette"
 import { BaseLayoutProps } from "Apps/Components/Layouts"
 import { LayoutMain } from "Apps/Components/Layouts/Components/LayoutMain"
 
-export const LayoutLogoOnly: FC<React.PropsWithChildren<BaseLayoutProps>> = ({ children }) => {
+export const LayoutLogoOnly: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
+  children,
+}) => {
   return (
     <>
       <AppToasts />

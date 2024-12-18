@@ -14,10 +14,9 @@ interface ArticlesIndexArticlesProps {
   relay: RelayPaginationProp
 }
 
-export const ArticlesIndexArticles: FC<React.PropsWithChildren<ArticlesIndexArticlesProps>> = ({
-  viewer,
-  relay,
-}) => {
+export const ArticlesIndexArticles: FC<
+  React.PropsWithChildren<ArticlesIndexArticlesProps>
+> = ({ viewer, relay }) => {
   const [loading, setLoading] = useState(false)
 
   const articles = extractNodes(viewer.articlesConnection)
@@ -71,10 +70,11 @@ export const ARTICLES_INDEX_ARTICLES_QUERY = graphql`
   }
 `
 
-export const ArticlesIndexArticlesPaginationContainer = createPaginationContainer(
-  ArticlesIndexArticles,
-  {
-    viewer: graphql`
+export const ArticlesIndexArticlesPaginationContainer =
+  createPaginationContainer(
+    ArticlesIndexArticles,
+    {
+      viewer: graphql`
       fragment ArticlesIndexArticles_viewer on Viewer
         @argumentDefinitions(after: { type: "String" }) {
         articlesConnection(
@@ -92,15 +92,15 @@ export const ArticlesIndexArticlesPaginationContainer = createPaginationContaine
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return { ...prevVars, totalCount }
     },
-    getVariables(_, { cursor: after }, fragmentVariables) {
-      return { ...fragmentVariables, after }
-    },
-    query: ARTICLES_INDEX_ARTICLES_QUERY,
-  }
-)
+    {
+      direction: "forward",
+      getFragmentVariables(prevVars, totalCount) {
+        return { ...prevVars, totalCount }
+      },
+      getVariables(_, { cursor: after }, fragmentVariables) {
+        return { ...fragmentVariables, after }
+      },
+      query: ARTICLES_INDEX_ARTICLES_QUERY,
+    }
+  )

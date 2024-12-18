@@ -16,19 +16,11 @@ export interface ContactInformationFormProps extends BoxProps {
   optionalPhoneNumber?: boolean
 }
 
-export const ContactInformationForm: React.FC<React.PropsWithChildren<ContactInformationFormProps>> = ({
-  me,
-  optionalPhoneNumber = false,
-  ...rest
-}) => {
-  const {
-    values,
-    handleChange,
-    handleBlur,
-    touched,
-    errors,
-    setFieldValue,
-  } = useFormikContext<ContactInformationFormModel>()
+export const ContactInformationForm: React.FC<
+  React.PropsWithChildren<ContactInformationFormProps>
+> = ({ me, optionalPhoneNumber = false, ...rest }) => {
+  const { values, handleChange, handleBlur, touched, errors, setFieldValue } =
+    useFormikContext<ContactInformationFormModel>()
 
   return (
     <Box {...rest}>

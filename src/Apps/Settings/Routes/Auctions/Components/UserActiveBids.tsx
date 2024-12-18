@@ -9,9 +9,9 @@ interface UserActiveBidsProps {
   me: UserActiveBids_me$data
 }
 
-export const UserActiveBids: React.FC<React.PropsWithChildren<UserActiveBidsProps>> = ({
-  me: { activeLotStandings: lotStandings },
-}) => {
+export const UserActiveBids: React.FC<
+  React.PropsWithChildren<UserActiveBidsProps>
+> = ({ me: { activeLotStandings: lotStandings } }) => {
   if (!lotStandings || lotStandings.length === 0) {
     return <SectionContainer title="Active Bids"></SectionContainer>
   }

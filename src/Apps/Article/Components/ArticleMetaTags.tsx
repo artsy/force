@@ -8,7 +8,9 @@ interface ArticleMetaTagsProps {
   article: ArticleMetaTags_article$data
 }
 
-const ArticleMetaTags: FC<React.PropsWithChildren<ArticleMetaTagsProps>> = ({ article }) => {
+const ArticleMetaTags: FC<React.PropsWithChildren<ArticleMetaTagsProps>> = ({
+  article,
+}) => {
   return (
     <>
       <MetaTags

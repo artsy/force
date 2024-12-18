@@ -57,11 +57,9 @@ interface ArtworkSidebarCommercialButtonsProps {
 
 const THE_PAST = new Date(0).toISOString()
 
-export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<ArtworkSidebarCommercialButtonsProps>> = ({
-  showPrice = true,
-  showButtonActions = true,
-  ...props
-}) => {
+export const ArtworkSidebarCommercialButtons: React.FC<
+  React.PropsWithChildren<ArtworkSidebarCommercialButtonsProps>
+> = ({ showPrice = true, showButtonActions = true, ...props }) => {
   const { theme } = useTheme()
 
   const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
@@ -92,10 +90,8 @@ export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<A
   const createOrder = useCreateOrderMutation()
   const createOfferOrder = useCreateOfferOrderMutation()
 
-  const [
-    isCommitingCreateOrderMutation,
-    setIsCommitingCreateOrderMutation,
-  ] = useState(false)
+  const [isCommitingCreateOrderMutation, setIsCommitingCreateOrderMutation] =
+    useState(false)
 
   const [
     isCommittingCreateOfferOrderMutation,
@@ -329,9 +325,8 @@ export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<A
   const [selectedEditionSet, setSelectedEditionSet] = useState(
     firstAvailableEcommerceEditionSet()
   )
-  const {
-    setSelectedEditionSet: setSelectedEditionSetInContext,
-  } = useSelectedEditionSetContext()
+  const { setSelectedEditionSet: setSelectedEditionSetInContext } =
+    useSelectedEditionSetContext()
 
   useEffect(() => {
     setSelectedEditionSet(firstAvailableEcommerceEditionSet())
@@ -506,7 +501,9 @@ interface SaleMessageProps {
   saleMessage: string | null | undefined
 }
 
-const SaleMessage: React.FC<React.PropsWithChildren<SaleMessageProps>> = ({ saleMessage }) => {
+const SaleMessage: React.FC<React.PropsWithChildren<SaleMessageProps>> = ({
+  saleMessage,
+}) => {
   if (!saleMessage) {
     return null
   }
@@ -572,10 +569,9 @@ const OfferDisplay: React.FC<React.PropsWithChildren<OfferDisplayProps>> = ({
   )
 }
 
-const ErrorToast: React.FC<React.PropsWithChildren<{ onClose(): void; show: boolean }>> = ({
-  show,
-  onClose,
-}) => {
+const ErrorToast: React.FC<
+  React.PropsWithChildren<{ onClose(): void; show: boolean }>
+> = ({ show, onClose }) => {
   const { sendToast } = useToasts()
 
   useEffect(() => {

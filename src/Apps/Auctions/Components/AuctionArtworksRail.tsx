@@ -36,11 +36,9 @@ interface AuctionArtworksRailProps extends BoxProps {
   tabType: TabType
 }
 
-export const AuctionArtworksRail: React.FC<React.PropsWithChildren<AuctionArtworksRailProps>> = ({
-  sale,
-  tabType,
-  ...rest
-}) => {
+export const AuctionArtworksRail: React.FC<
+  React.PropsWithChildren<AuctionArtworksRailProps>
+> = ({ sale, tabType, ...rest }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
   const contextModule = tabTypeToContextModuleMap[tabType] as AuthContextModule

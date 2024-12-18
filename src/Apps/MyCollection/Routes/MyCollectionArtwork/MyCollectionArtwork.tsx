@@ -22,9 +22,9 @@ interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork$data
 }
 
-const MyCollectionArtwork: React.FC<React.PropsWithChildren<MyCollectionArtworkProps>> = ({
-  artwork,
-}) => {
+const MyCollectionArtwork: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkProps>
+> = ({ artwork }) => {
   const enablePostApprovalSubmissionFlow = useFeatureFlag(
     "onyx_post_approval_submission_flow"
   )

@@ -16,10 +16,9 @@ interface Props {
   onClose: () => void
 }
 
-export const DeleteArtworkListModal: React.FC<React.PropsWithChildren<Props>> = ({
-  artworkList,
-  onClose,
-}) => {
+export const DeleteArtworkListModal: React.FC<
+  React.PropsWithChildren<Props>
+> = ({ artworkList, onClose }) => {
   const { router } = useRouter()
   const { trackEvent } = useTracking()
 

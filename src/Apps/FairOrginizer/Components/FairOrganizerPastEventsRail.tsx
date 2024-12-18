@@ -9,7 +9,9 @@ interface FairOrganizerPastEventsRailProps {
   fairOrganizer: FairOrganizerPastEventsRail_fairOrganizer$data
 }
 
-export const FairOrganizerPastEventsRail: React.FC<React.PropsWithChildren<FairOrganizerPastEventsRailProps>> = props => {
+export const FairOrganizerPastEventsRail: React.FC<
+  React.PropsWithChildren<FairOrganizerPastEventsRailProps>
+> = props => {
   const { fairOrganizer } = props
   const pastFairs = extractNodes(fairOrganizer.pastFairs)
 
@@ -29,9 +31,8 @@ export const FairOrganizerPastEventsRail: React.FC<React.PropsWithChildren<FairO
   )
 }
 
-export const FairOrganizerPastEventsRailFragmentContainer = createFragmentContainer(
-  FairOrganizerPastEventsRail,
-  {
+export const FairOrganizerPastEventsRailFragmentContainer =
+  createFragmentContainer(FairOrganizerPastEventsRail, {
     fairOrganizer: graphql`
       fragment FairOrganizerPastEventsRail_fairOrganizer on FairOrganizer {
         pastFairs: fairsConnection(
@@ -49,5 +50,4 @@ export const FairOrganizerPastEventsRailFragmentContainer = createFragmentContai
         }
       }
     `,
-  }
-)
+  })

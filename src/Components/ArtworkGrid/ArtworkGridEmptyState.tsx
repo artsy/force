@@ -7,10 +7,9 @@ interface ArtworkGridEmptyStateProps extends BoxProps {
   onClearFilters?: () => void
 }
 
-export const ArtworkGridEmptyState: React.FC<React.PropsWithChildren<ArtworkGridEmptyStateProps>> = ({
-  onClearFilters,
-  ...rest
-}) => (
+export const ArtworkGridEmptyState: React.FC<
+  React.PropsWithChildren<ArtworkGridEmptyStateProps>
+> = ({ onClearFilters, ...rest }) => (
   <Box width="100%" {...rest}>
     <Sticky>
       {({ stuck }) => {

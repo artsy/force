@@ -21,7 +21,9 @@ interface ArtistRailProps {
   artist: ArtistRail_artist$data
 }
 
-const ArtistRail: FC<React.PropsWithChildren<ArtistRailProps>> = ({ artist }) => {
+const ArtistRail: FC<React.PropsWithChildren<ArtistRailProps>> = ({
+  artist,
+}) => {
   if (!artist || !artist.name) return null
 
   const artworks = extractNodes(artist.artworksConnection)

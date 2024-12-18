@@ -12,7 +12,8 @@ jest.mock("Utils/time")
 import { renderUntil } from "DevTools/renderUntil"
 import { getOffsetBetweenGravityClock } from "Utils/time"
 
-const mockGetOffsetBetweenGravityClock = getOffsetBetweenGravityClock as jest.Mock
+const mockGetOffsetBetweenGravityClock =
+  getOffsetBetweenGravityClock as jest.Mock
 const realSetInterval = global.setInterval
 
 const defaultProps: ExtractProps<typeof CountdownTimer> = {

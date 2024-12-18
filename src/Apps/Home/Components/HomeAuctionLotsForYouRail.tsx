@@ -24,9 +24,9 @@ interface HomeAuctionLotsForYouRailProps {
   artworksForUser: HomeAuctionLotsForYouRail_artworksForUser$data
 }
 
-const HomeAuctionLotsForYouRail: React.FC<React.PropsWithChildren<HomeAuctionLotsForYouRailProps>> = ({
-  artworksForUser,
-}) => {
+const HomeAuctionLotsForYouRail: React.FC<
+  React.PropsWithChildren<HomeAuctionLotsForYouRailProps>
+> = ({ artworksForUser }) => {
   const { trackEvent } = useTracking()
   const contextModule = ContextModule.lotsForYouRail as AuthContextModule
 
@@ -78,9 +78,8 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const HomeAuctionLotsForYouRailFragmentContainer = createFragmentContainer(
-  HomeAuctionLotsForYouRail,
-  {
+export const HomeAuctionLotsForYouRailFragmentContainer =
+  createFragmentContainer(HomeAuctionLotsForYouRail, {
     artworksForUser: graphql`
       fragment HomeAuctionLotsForYouRail_artworksForUser on ArtworkConnection {
         edges {
@@ -92,10 +91,11 @@ export const HomeAuctionLotsForYouRailFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })
 
-export const HomeAuctionLotsForYouRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeAuctionLotsForYouRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

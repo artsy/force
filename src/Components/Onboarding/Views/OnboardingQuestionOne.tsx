@@ -14,7 +14,9 @@ import { OnboardingQuestionOneMutation } from "__generated__/OnboardingQuestionO
 import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
 
-export const OnboardingQuestionOne: FC<React.PropsWithChildren<unknown>> = () => {
+export const OnboardingQuestionOne: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { next, dispatch, state } = useOnboardingContext()
   const {
     register,

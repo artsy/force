@@ -10,9 +10,9 @@ interface PartnersFeaturedCarouselProps {
   viewer: PartnersFeaturedCarousel_viewer$data
 }
 
-const PartnersFeaturedCarousel: FC<React.PropsWithChildren<PartnersFeaturedCarouselProps>> = ({
-  viewer,
-}) => {
+const PartnersFeaturedCarousel: FC<
+  React.PropsWithChildren<PartnersFeaturedCarouselProps>
+> = ({ viewer }) => {
   const profiles = extractNodes(viewer.orderedSet?.orderedItemsConnection)
   const { shuffled } = useStableShuffle({ items: profiles })
 
@@ -32,9 +32,8 @@ const PartnersFeaturedCarousel: FC<React.PropsWithChildren<PartnersFeaturedCarou
   )
 }
 
-export const PartnersFeaturedCarouselFragmentContainer = createFragmentContainer(
-  PartnersFeaturedCarousel,
-  {
+export const PartnersFeaturedCarouselFragmentContainer =
+  createFragmentContainer(PartnersFeaturedCarousel, {
     viewer: graphql`
       fragment PartnersFeaturedCarousel_viewer on Viewer
         @argumentDefinitions(id: { type: "String!" }) {
@@ -52,5 +51,4 @@ export const PartnersFeaturedCarouselFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })

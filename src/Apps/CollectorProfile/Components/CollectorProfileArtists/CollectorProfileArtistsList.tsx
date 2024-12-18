@@ -21,9 +21,9 @@ const PAGE_SIZE = 10
 
 interface CollectorProfileArtistsListProps {}
 
-export const CollectorProfileArtistsList: FC<React.PropsWithChildren<CollectorProfileArtistsListProps>> = ({
-  children,
-}) => {
+export const CollectorProfileArtistsList: FC<
+  React.PropsWithChildren<CollectorProfileArtistsListProps>
+> = ({ children }) => {
   const isMounted = useDidMount()
 
   return (
@@ -39,7 +39,9 @@ export const CollectorProfileArtistsList: FC<React.PropsWithChildren<CollectorPr
   )
 }
 
-const CollectorProfileArtistsListPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const CollectorProfileArtistsListPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Stack gap={2}>
       <Box>
@@ -53,11 +55,15 @@ const CollectorProfileArtistsListPlaceholder: FC<React.PropsWithChildren<unknown
   )
 }
 
-const CollectorProfileArtistsListArtists: FC<React.PropsWithChildren<unknown>> = () => {
+const CollectorProfileArtistsListArtists: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const {
     router,
     match,
-    match: { location: { query } } = {
+    match: {
+      location: { query },
+    } = {
       location: { query: { page: "1" } },
     },
   } = useRouter()

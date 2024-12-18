@@ -7,9 +7,7 @@ export interface ArtworkSidebarAuctionPartnerInfoProps {
   artwork: ArtworkSidebarAuctionPartnerInfo_artwork$data
 }
 
-export class ArtworkSidebarAuctionPartnerInfo extends Component<
-  ArtworkSidebarAuctionPartnerInfoProps
-> {
+export class ArtworkSidebarAuctionPartnerInfo extends Component<ArtworkSidebarAuctionPartnerInfoProps> {
   render() {
     const { partner, sale_artwork, sale } = this.props.artwork
 
@@ -31,9 +29,8 @@ export class ArtworkSidebarAuctionPartnerInfo extends Component<
   }
 }
 
-export const ArtworkSidebarAuctionPartnerInfoFragmentContainer = createFragmentContainer(
-  ArtworkSidebarAuctionPartnerInfo,
-  {
+export const ArtworkSidebarAuctionPartnerInfoFragmentContainer =
+  createFragmentContainer(ArtworkSidebarAuctionPartnerInfo, {
     artwork: graphql`
       fragment ArtworkSidebarAuctionPartnerInfo_artwork on Artwork {
         partner {
@@ -48,5 +45,4 @@ export const ArtworkSidebarAuctionPartnerInfoFragmentContainer = createFragmentC
         }
       }
     `,
-  }
-)
+  })

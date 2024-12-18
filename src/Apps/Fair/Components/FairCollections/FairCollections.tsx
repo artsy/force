@@ -8,10 +8,9 @@ interface FairCollectionsProps extends BoxProps {
   fair: FairCollections_fair$data
 }
 
-export const FairCollections: React.FC<React.PropsWithChildren<FairCollectionsProps>> = ({
-  fair,
-  ...rest
-}) => {
+export const FairCollections: React.FC<
+  React.PropsWithChildren<FairCollectionsProps>
+> = ({ fair, ...rest }) => {
   return (
     <Box {...rest}>
       <Text variant="lg">Curated Highlights</Text>

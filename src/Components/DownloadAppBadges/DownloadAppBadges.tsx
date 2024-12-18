@@ -12,10 +12,9 @@ interface DownloadAppBadgesProps extends FlexProps {
   contextModule: ContextModule
 }
 
-export const DownloadAppBadges: React.FC<React.PropsWithChildren<DownloadAppBadgesProps>> = ({
-  contextModule,
-  ...rest
-}) => {
+export const DownloadAppBadges: React.FC<
+  React.PropsWithChildren<DownloadAppBadgesProps>
+> = ({ contextModule, ...rest }) => {
   const { device, downloadAppUrl } = useDeviceDetection()
 
   if (device === Device.Unknown) {

@@ -21,10 +21,11 @@ export interface MyCollectionRouteProps {
   relay: RelayPaginationProp
 }
 
-const MyCollectionRoute: FC<React.PropsWithChildren<MyCollectionRouteProps>> = ({ me, relay }) => {
-  const {
-    addCollectedArtwork: trackAddCollectedArtwork,
-  } = useMyCollectionTracking()
+const MyCollectionRoute: FC<
+  React.PropsWithChildren<MyCollectionRouteProps>
+> = ({ me, relay }) => {
+  const { addCollectedArtwork: trackAddCollectedArtwork } =
+    useMyCollectionTracking()
   const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {

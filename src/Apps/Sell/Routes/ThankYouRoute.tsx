@@ -20,7 +20,9 @@ interface ThankYouRouteProps {
   submission: ThankYouRoute_submission$key
 }
 
-export const ThankYouRoute: React.FC<React.PropsWithChildren<ThankYouRouteProps>> = props => {
+export const ThankYouRoute: React.FC<
+  React.PropsWithChildren<ThankYouRouteProps>
+> = props => {
   const {
     state: { step },
   } = useSellFlowContext()
@@ -29,10 +31,8 @@ export const ThankYouRoute: React.FC<React.PropsWithChildren<ThankYouRouteProps>
     props.submission
   )
 
-  const {
-    trackTappedSubmitAnotherWork,
-    trackTappedViewArtworkInMyCollection,
-  } = useSubmissionTracking()
+  const { trackTappedSubmitAnotherWork, trackTappedViewArtworkInMyCollection } =
+    useSubmissionTracking()
 
   const isSubmitted = state === "SUBMITTED"
 

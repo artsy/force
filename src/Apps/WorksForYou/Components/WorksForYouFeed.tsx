@@ -15,10 +15,9 @@ interface WorksForYouFeedProps {
   relay: RelayPaginationProp
 }
 
-export const WorksForYouFeed: React.FC<React.PropsWithChildren<WorksForYouFeedProps>> = ({
-  viewer,
-  relay,
-}) => {
+export const WorksForYouFeed: React.FC<
+  React.PropsWithChildren<WorksForYouFeedProps>
+> = ({ viewer, relay }) => {
   const { user } = useSystemContext()
   const [loading, setLoading] = useState(false)
 

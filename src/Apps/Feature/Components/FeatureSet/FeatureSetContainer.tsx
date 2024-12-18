@@ -8,10 +8,9 @@ export interface FeatureSetContainerProps {
   set: FeatureSetContainer_set$data
 }
 
-export const FeatureSetContainer: React.FC<React.PropsWithChildren<FeatureSetContainerProps>> = ({
-  set,
-  children,
-}) => {
+export const FeatureSetContainer: React.FC<
+  React.PropsWithChildren<FeatureSetContainerProps>
+> = ({ set, children }) => {
   const count = set?.orderedItems?.edges?.length ?? 0
 
   if (set.layout === "FULL") {

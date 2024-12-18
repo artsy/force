@@ -11,16 +11,11 @@ import { usePriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/Pri
 export interface PriceRangeFilterQuickProps
   extends Omit<DropdownProps, "dropdown" | "children"> {}
 
-export const PriceRangeFilterQuick: FC<React.PropsWithChildren<
-  PriceRangeFilterQuickProps
->> = props => {
-  const {
-    count,
-    filters,
-    range,
-    histogram,
-    onPriceRangeUpdate,
-  } = usePriceRangeFilter()
+export const PriceRangeFilterQuick: FC<
+  React.PropsWithChildren<PriceRangeFilterQuickProps>
+> = props => {
+  const { count, filters, range, histogram, onPriceRangeUpdate } =
+    usePriceRangeFilter()
 
   const handleClear = () => {
     filters.setFilter("priceRange", initialArtworkFilterState.priceRange)

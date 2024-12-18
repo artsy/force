@@ -41,7 +41,7 @@ describe("useSubmitBid", () => {
     setSubmitting: jest.fn(),
   }
 
-  const defaultProps = ({
+  const defaultProps = {
     artwork: {
       slug: "artwork-slug",
       internalID: "artworkID",
@@ -55,7 +55,7 @@ describe("useSubmitBid", () => {
       slug: "test-sale",
     },
     onSuccess: jest.fn(),
-  } as unknown) as UseSubmitBidProps
+  } as unknown as UseSubmitBidProps
 
   const defaultBidderPosition = {
     position: {

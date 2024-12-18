@@ -36,8 +36,7 @@ describe("Meta", () => {
               currencyCode: "USD",
             },
             price_currency: "USD",
-            href:
-              "/artwork/robert-rauschenberg-25-years-studio-1993-signed-by-the-big-8-contemporary-artists-gemini-gel",
+            href: "/artwork/robert-rauschenberg-25-years-studio-1993-signed-by-the-big-8-contemporary-artists-gemini-gel",
             image: {
               large:
                 "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/large.jpg",
@@ -82,7 +81,8 @@ describe("Meta", () => {
   }
 
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  type ArtworkMeta = ArtistMeta_artist["artworks_connection"]["edges"][number]["node"]
+  type ArtworkMeta =
+    ArtistMeta_artist["artworks_connection"]["edges"][number]["node"]
 
   const artistWithArtworkOverrides = (
     artwork: Partial<ArtworkMeta>
@@ -129,11 +129,9 @@ describe("Meta", () => {
                 "@type": "ImageObject",
                 thumbnailUrl:
                   "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/small.jpg",
-                url:
-                  "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/large.jpg",
+                url: "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/large.jpg",
               },
-              name:
-                "'25 Years Studio',  1993, SIGNED by the BIG-8 Contemporary Artists, Gemini G.E.L.",
+              name: "'25 Years Studio',  1993, SIGNED by the BIG-8 Contemporary Artists, Gemini G.E.L.",
               offers: {
                 "@type": "Offer",
                 availability: "InStock",
@@ -141,8 +139,7 @@ describe("Meta", () => {
                 priceCurrency: "USD",
               },
               productionDate: "1993",
-              url:
-                "https://www.artsy-test.net/artwork/robert-rauschenberg-25-years-studio-1993-signed-by-the-big-8-contemporary-artists-gemini-gel",
+              url: "https://www.artsy-test.net/artwork/robert-rauschenberg-25-years-studio-1993-signed-by-the-big-8-contemporary-artists-gemini-gel",
             },
             priceCurrency: "USD",
             seller: {
@@ -152,8 +149,7 @@ describe("Meta", () => {
                 "@type": "ImageObject",
                 thumbnailUrl:
                   "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
-                url:
-                  "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
+                url: "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
               },
               name: "VINCE fine arts/ephemera",
               url: "https://www.artsy-test.net/vince-fine-arts-slash-ephemera",
@@ -191,11 +187,9 @@ describe("Meta", () => {
               "@type": "ImageObject",
               thumbnailUrl:
                 "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/small.jpg",
-              url:
-                "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/large.jpg",
+              url: "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/large.jpg",
             },
-            name:
-              "'25 Years Studio',  1993, SIGNED by the BIG-8 Contemporary Artists, Gemini G.E.L.",
+            name: "'25 Years Studio',  1993, SIGNED by the BIG-8 Contemporary Artists, Gemini G.E.L.",
             offers: {
               "@type": "Offer",
               availability: "InStock",
@@ -203,8 +197,7 @@ describe("Meta", () => {
               priceCurrency: "USD",
             },
             productionDate: "1993",
-            url:
-              "https://www.artsy-test.net/artwork/robert-rauschenberg-25-years-studio-1993-signed-by-the-big-8-contemporary-artists-gemini-gel",
+            url: "https://www.artsy-test.net/artwork/robert-rauschenberg-25-years-studio-1993-signed-by-the-big-8-contemporary-artists-gemini-gel",
           },
           priceCurrency: "USD",
           seller: {
@@ -214,8 +207,7 @@ describe("Meta", () => {
               "@type": "ImageObject",
               thumbnailUrl:
                 "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
-              url:
-                "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
+              url: "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
             },
             name: "VINCE fine arts/ephemera",
             url: "https://www.artsy-test.net/vince-fine-arts-slash-ephemera",
@@ -240,11 +232,9 @@ describe("Meta", () => {
           "@type": "ImageObject",
           thumbnailUrl:
             "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/small.jpg",
-          url:
-            "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/large.jpg",
+          url: "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/large.jpg",
         },
-        name:
-          "'25 Years Studio',  1993, SIGNED by the BIG-8 Contemporary Artists, Gemini G.E.L.",
+        name: "'25 Years Studio',  1993, SIGNED by the BIG-8 Contemporary Artists, Gemini G.E.L.",
         offers: {
           "@type": "Offer",
           availability: "InStock",
@@ -252,8 +242,7 @@ describe("Meta", () => {
           priceCurrency: "USD",
         },
         productionDate: "1993",
-        url:
-          "https://www.artsy-test.net/artwork/robert-rauschenberg-25-years-studio-1993-signed-by-the-big-8-contemporary-artists-gemini-gel",
+        url: "https://www.artsy-test.net/artwork/robert-rauschenberg-25-years-studio-1993-signed-by-the-big-8-contemporary-artists-gemini-gel",
       })
     })
 
@@ -341,8 +330,7 @@ describe("Meta", () => {
           "@type": "ImageObject",
           thumbnailUrl:
             "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
-          url:
-            "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
+          url: "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
         },
         name: "VINCE fine arts/ephemera",
         url: "https://www.artsy-test.net/vince-fine-arts-slash-ephemera",

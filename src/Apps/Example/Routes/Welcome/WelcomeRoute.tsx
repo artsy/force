@@ -7,11 +7,8 @@ import { ContextModule, clickedShowMore } from "@artsy/cohesion"
 
 export const WelcomeRoute: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { trackEvent } = useTracking()
-  const {
-    contextPageOwnerType,
-    contextPageOwnerSlug,
-    contextPageOwnerId,
-  } = useAnalyticsContext()
+  const { contextPageOwnerType, contextPageOwnerSlug, contextPageOwnerId } =
+    useAnalyticsContext()
 
   const [showDialog, setShowDialog] = useState(false)
 

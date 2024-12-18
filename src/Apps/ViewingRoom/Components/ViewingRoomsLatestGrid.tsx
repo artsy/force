@@ -19,7 +19,9 @@ export interface ViewingRoomsLatestGridProps {
 
 export const PAGE_SIZE = 12
 
-export const ViewingRoomsLatestGrid: React.FC<React.PropsWithChildren<ViewingRoomsLatestGridProps>> = props => {
+export const ViewingRoomsLatestGrid: React.FC<
+  React.PropsWithChildren<ViewingRoomsLatestGridProps>
+> = props => {
   const [loading, setLoading] = useState(false)
 
   const hasMore = props.relay.hasMore()
@@ -98,10 +100,11 @@ export const ViewingRoomsLatestGrid: React.FC<React.PropsWithChildren<ViewingRoo
   )
 }
 
-export const ViewingRoomsLatestGridFragmentContainer = createPaginationContainer(
-  ViewingRoomsLatestGrid,
-  {
-    viewingRooms: graphql`
+export const ViewingRoomsLatestGridFragmentContainer =
+  createPaginationContainer(
+    ViewingRoomsLatestGrid,
+    {
+      viewingRooms: graphql`
       fragment ViewingRoomsLatestGrid_viewingRooms on Viewer
         @argumentDefinitions(
           count: { type: "Int" }
@@ -129,28 +132,28 @@ export const ViewingRoomsLatestGridFragmentContainer = createPaginationContainer
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getConnectionFromProps(props) {
-      return props.viewingRooms.viewingRoomsConnection
     },
-    getFragmentVariables(prevVars, totalCount) {
-      return {
-        ...prevVars,
-        count: totalCount,
-      }
-    },
-    getVariables(props, { count, cursor }, fragmentVariables) {
-      return {
-        // in most cases, for variables other than connection filters like
-        // `first`, `after`, etc. you may want to use the previous values.
-        ...fragmentVariables,
-        count,
-        after: cursor,
-      }
-    },
-    query: graphql`
+    {
+      direction: "forward",
+      getConnectionFromProps(props) {
+        return props.viewingRooms.viewingRoomsConnection
+      },
+      getFragmentVariables(prevVars, totalCount) {
+        return {
+          ...prevVars,
+          count: totalCount,
+        }
+      },
+      getVariables(props, { count, cursor }, fragmentVariables) {
+        return {
+          // in most cases, for variables other than connection filters like
+          // `first`, `after`, etc. you may want to use the previous values.
+          ...fragmentVariables,
+          count,
+          after: cursor,
+        }
+      },
+      query: graphql`
       query ViewingRoomsLatestGrid_ViewingRoomsAppQuery(
         $count: Int!
         $after: String
@@ -161,5 +164,5 @@ export const ViewingRoomsLatestGridFragmentContainer = createPaginationContainer
         }
       }
     `,
-  }
-)
+    }
+  )

@@ -24,16 +24,15 @@ const APP_DOWNLOAD_FOOTER_KEY = "AppDownloadFooter"
 
 interface AppDownloadFooterProps {}
 
-export const AppDownloadFooter: FC<React.PropsWithChildren<AppDownloadFooterProps>> = () => {
+export const AppDownloadFooter: FC<
+  React.PropsWithChildren<AppDownloadFooterProps>
+> = () => {
   const isMounted = useDidMount()
 
   const { user } = useSystemContext()
 
-  const {
-    contextPageOwnerType,
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-  } = useAnalyticsContext()
+  const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
+    useAnalyticsContext()
   const { trackEvent } = useTracking()
 
   const ref = useRef<HTMLDivElement | null>(null)

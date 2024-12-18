@@ -6,15 +6,14 @@ import { CellPartnerArtistFragmentContainer } from "Components/Cells/CellPartner
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  CellPartnerArtistFragmentContainer_Test_Query
->({
-  Component: props => (
-    <CellPartnerArtistFragmentContainer
-      artistPartnerEdge={props.partner?.artistsConnection?.edges![0]!}
-    />
-  ),
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<CellPartnerArtistFragmentContainer_Test_Query>({
+    Component: props => (
+      <CellPartnerArtistFragmentContainer
+        artistPartnerEdge={props.partner?.artistsConnection?.edges![0]!}
+      />
+    ),
+    query: graphql`
     query CellPartnerArtistFragmentContainer_Test_Query @relay_test_operation {
       partner(id: "foo") {
         artistsConnection {
@@ -25,7 +24,7 @@ const { renderWithRelay } = setupTestWrapperTL<
       }
     }
   `,
-})
+  })
 
 describe("CellPartnerArtist", () => {
   it("renders the image from the partner artist level not the artist level", () => {

@@ -6,18 +6,17 @@ import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  AuctionBuyersPremiumDialog_Test_Query
->({
-  Component: AuctionBuyersPremiumDialogFragmentContainer,
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<AuctionBuyersPremiumDialog_Test_Query>({
+    Component: AuctionBuyersPremiumDialogFragmentContainer,
+    query: graphql`
     query AuctionBuyersPremiumDialog_Test_Query @relay_test_operation {
       sale(id: "example") {
         ...AuctionBuyersPremiumDialog_sale
       }
     }
   `,
-})
+  })
 
 describe("AuctionBuyersPremiumDialog", () => {
   describe("one point", () => {

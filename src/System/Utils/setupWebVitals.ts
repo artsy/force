@@ -13,7 +13,7 @@ export const setupWebVitals = () => {
     ["INP", onINP],
   ] as const
 
-  const log = ([type, onVital]: typeof VITALS[0]) => {
+  const log = ([type, onVital]: (typeof VITALS)[0]) => {
     onVital(
       (metric: Metric) => {
         console.log(`[web-vitals] ${type}`, metric)
