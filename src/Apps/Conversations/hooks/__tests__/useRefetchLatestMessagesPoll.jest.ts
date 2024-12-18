@@ -79,6 +79,6 @@ describe("useRefetchLatestMessagesPoll", () => {
 
     expect(onRefetch).not.toHaveBeenCalled()
 
-    process.env.NEXT_PUBLIC_ENABLE_MESSAGE_AUTO_REFRESH = undefined
+    delete process.env.NEXT_PUBLIC_ENABLE_MESSAGE_AUTO_REFRESH
   })
 })

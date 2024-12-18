@@ -1,10 +1,10 @@
-import { CollectionsHubLinkedCollections } from "Apps/__tests__/Fixtures/Collections"
-import { useTracking } from "react-tracking"
-import { mount } from "enzyme"
-import { ArtistSeriesEntity } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/ArtistSeriesRail/ArtistSeriesEntity"
-import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { Image } from "@artsy/palette"
+import { ArtistSeriesEntity } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/ArtistSeriesRail/ArtistSeriesEntity"
+import { CollectionsHubLinkedCollections } from "Apps/__tests__/Fixtures/Collections"
 import { RouterLink } from "System/Components/RouterLink"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
+import { mount } from "enzyme"
+import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 jest.mock("found", () => ({
@@ -86,7 +86,7 @@ describe.skip("ArtistSeriesEntity", () => {
   })
 
   it("if price_guidance is missing, NOT showing 'From $'", () => {
-    props.member.price_guidance = undefined
+    delete props.member.price_guidance
     const component = getWrapper()
     expect(component.text()).not.toMatch("From $")
   })

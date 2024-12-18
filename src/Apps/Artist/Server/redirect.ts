@@ -7,7 +7,7 @@ export function redirectWithCanonicalParams({ req, res }) {
   }
 
   // else remove the offending sort, causing fallback to default sort
-  req.query.sort = undefined
+  delete req.query.sort
 
   const sanitizedQuerystring = stringify(req.query)
   const sanitizedPath = [req.path, sanitizedQuerystring].join("?")

@@ -1,6 +1,6 @@
+import Adapter from "@wojtekmaj/enzyme-adapter-react-17"
 import chalk from "chalk"
 import Enzyme from "enzyme"
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17"
 import "regenerator-runtime/runtime"
 import { format } from "util"
 import "@testing-library/jest-dom"
@@ -130,7 +130,8 @@ if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
             // }
 
             if (
-              args[0]?.includes &&
+              args[0] &&
+              args[0].includes &&
               !args[0].includes(
                 "Warning: An update to %s inside a test was not wrapped in act"
               ) &&

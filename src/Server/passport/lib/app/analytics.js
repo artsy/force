@@ -20,8 +20,8 @@ module.exports.setCampaign = (req, _res, next) => {
 module.exports.trackSignup = service => (req, _res, next) => {
   const { acquisitionInitiative, modalId } = req.session
 
-  req.session.acquisitionInitiative = undefined
-  req.session.modalId = undefined
+  delete req.session.acquisitionInitiative
+  delete req.session.modalId
 
   if (!sd.SEGMENT_WRITE_KEY) {
     return next()

@@ -1,5 +1,5 @@
-import type { SSRCache } from "react-relay-network-modern-ssr/lib/server"
 import { serializeRelayHydrationData } from "System/Router/Utils/serializeRelayHydrationData"
+import type { SSRCache } from "react-relay-network-modern-ssr/lib/server"
 import mockSerialize from "serialize-javascript"
 
 jest.mock("serialize-javascript", () => jest.fn())
@@ -36,8 +36,10 @@ describe("serializeRelayHydrationData", () => {
     })
 
     expect(result).toBe(JSON.stringify(JSON.stringify(mockData)))
-    expect(mockData[0][0]).not.toHaveProperty("_res")
-    expect(mockData[0][1]).not.toHaveProperty("_res")
+    // @ts-ignore
+    expect(mockData[0][0]._res).toBeUndefined()
+    // @ts-ignore
+    expect(mockData[0][1]._res).toBeUndefined()
   })
 
   it("should handle empty data gracefully", () => {

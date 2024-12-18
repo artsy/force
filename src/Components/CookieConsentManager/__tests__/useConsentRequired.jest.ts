@@ -1,11 +1,11 @@
 import { renderHook } from "@testing-library/react-hooks"
-import { useConsentRequired } from "Components/CookieConsentManager/useConsentRequired"
-import { getTimeZone } from "Utils/getTimeZone"
-import { getENV } from "Utils/getENV"
 import {
   DEFAULT_OPT_IN_PREFERENCES,
   DEFAULT_OPT_OUT_PREFERENCES,
 } from "Components/CookieConsentManager/categories"
+import { useConsentRequired } from "Components/CookieConsentManager/useConsentRequired"
+import { getENV } from "Utils/getENV"
+import { getTimeZone } from "Utils/getTimeZone"
 
 jest.mock("Utils/getTimeZone")
 jest.mock("Utils/getENV")
@@ -118,7 +118,7 @@ describe("useConsentRequired", () => {
     it("should return restrictive defaults when Intl is undefined", () => {
       const originalIntl = global.Intl
       // @ts-ignore
-      global.Intl = undefined
+      delete global.Intl
 
       const { result } = renderHook(() => useConsentRequired())
 

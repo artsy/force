@@ -22,8 +22,8 @@ export const redirectBack = (
   )
 
   if (res !== null) {
-    req.session.redirectTo = undefined
-    req.session.skipOnboarding = undefined
+    delete req.session.redirectTo
+    delete req.session.skipOnboarding
 
     res.redirect(url)
   }

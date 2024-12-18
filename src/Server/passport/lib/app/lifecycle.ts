@@ -3,20 +3,20 @@
  * logging in or signing up.
  */
 
-import forwardedFor from "./forwarded_for"
-import opts from "Server/passport/lib/options"
-import passport from "passport"
-import redirectBack from "./redirectBack"
-// eslint-disable-next-line no-restricted-imports
-import request from "superagent"
-import artsyXapp from "@artsy/xapp"
 import { parse, resolve } from "url"
-import type { NextFunction } from "express"
+import artsyXapp from "@artsy/xapp"
 import type {
   ArtsyRequest,
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
+import opts from "Server/passport/lib/options"
+import type { NextFunction } from "express"
 import { get, isFunction, isString } from "lodash"
+import passport from "passport"
+// eslint-disable-next-line no-restricted-imports
+import request from "superagent"
+import forwardedFor from "./forwarded_for"
+import redirectBack from "./redirectBack"
 
 interface Req extends ArtsyRequest {
   artsyPassportSignedUp?: boolean
@@ -269,8 +269,8 @@ export const ssoAndRedirectBack = (
     return redirectBack(req, res)
   }
 
-  req.session.redirectTo = undefined
-  req.session.skipOnboarding = undefined
+  delete req.session.redirectTo
+  delete req.session.skipOnboarding
 
   request
     .post(`${opts.ARTSY_URL}/api/v1/me/trust_token`)

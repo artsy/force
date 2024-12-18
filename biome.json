@@ -31,7 +31,8 @@
         "useOptionalChain": "off"
       },
       "performance": {
-        "noAccumulatingSpread": "off"
+        "noAccumulatingSpread": "off",
+        "noDelete": "off"
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"

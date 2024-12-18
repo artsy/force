@@ -7,7 +7,7 @@ export const serializeRelayHydrationData = (
 ): string => {
   initialRelayData.forEach(entry => {
     entry.forEach((item: RelayNetworkLayerResponse) => {
-      item._res // Remove unnecessary relay network data = undefined // Remove unnecessary relay network data
+      item._res = undefined // Remove unnecessary relay network data
     })
   })
 

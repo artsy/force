@@ -1,15 +1,15 @@
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
+import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import type { SortOptions } from "Components/SortFilter"
+import { DEFAULT_METRIC, type Metric, getSupportedMetric } from "Utils/metrics"
 import { isArray, omit } from "lodash"
 import { useContext, useReducer, useState } from "react"
 import * as React from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import type { SortOptions } from "Components/SortFilter"
 import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
 import { rangeToTuple } from "./Utils/rangeToTuple"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
-import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { DEFAULT_METRIC, getSupportedMetric, type Metric } from "Utils/metrics"
-import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 
 /**
  * Initial filter state
@@ -493,7 +493,7 @@ const artworkFilterReducer = (
         }
       })
 
-      state.reset = undefined
+      delete state.reset
 
       return {
         ...state,
