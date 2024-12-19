@@ -1,13 +1,13 @@
+import CloseIcon from "@artsy/icons/CloseIcon"
+import { Box, Clickable, useTheme } from "@artsy/palette"
+import { SKIPPABLE_VIEWS, type View } from "Components/Inquiry/config"
 import type * as React from "react"
+import { InquiryBackdrop } from "./Components/InquiryBackdrop"
 import {
   InquiryContextContextQueryRenderer,
   InquiryProvider,
   useInquiryContext,
 } from "./Hooks/useInquiryContext"
-import { InquiryBackdrop } from "./Components/InquiryBackdrop"
-import { Box, Clickable, useTheme } from "@artsy/palette"
-import CloseIcon from "@artsy/icons/CloseIcon"
-import { SKIPPABLE_VIEWS, type View } from "Components/Inquiry/config"
 
 interface InquiryProps {
   artworkID: string

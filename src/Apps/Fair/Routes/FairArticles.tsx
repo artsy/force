@@ -1,17 +1,17 @@
-import { useState } from "react"
-import type * as React from "react"
-import { Text, GridColumns, Column, Message, Spacer } from "@artsy/palette"
-import {
-  createRefetchContainer,
-  graphql,
-  type RelayRefetchProp,
-} from "react-relay"
-import type { FairArticles_fair$data } from "__generated__/FairArticles_fair.graphql"
-import { extractNodes } from "Utils/extractNodes"
+import { Column, GridColumns, Message, Spacer, Text } from "@artsy/palette"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 import { LoadingArea } from "Components/LoadingArea"
-import { Jump } from "Utils/Hooks/useJump"
 import { PaginationFragmentContainer } from "Components/Pagination"
+import { Jump } from "Utils/Hooks/useJump"
+import { extractNodes } from "Utils/extractNodes"
+import type { FairArticles_fair$data } from "__generated__/FairArticles_fair.graphql"
+import { useState } from "react"
+import type * as React from "react"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 
 interface FairArticlesProps {
   fair: FairArticles_fair$data

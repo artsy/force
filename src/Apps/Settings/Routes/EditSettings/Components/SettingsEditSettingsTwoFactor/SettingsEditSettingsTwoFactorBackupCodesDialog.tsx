@@ -5,11 +5,11 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { SettingsEditSettingsTwoFactorBackupCodesDialogQuery } from "__generated__/SettingsEditSettingsTwoFactorBackupCodesDialogQuery.graphql"
 import type { SettingsEditSettingsTwoFactorBackupCodesDialog_me$data } from "__generated__/SettingsEditSettingsTwoFactorBackupCodesDialog_me.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsEditSettingsTwoFactorBackupCodesActions } from "./SettingsEditSettingsTwoFactorBackupCodesActions"
 
 interface SettingsEditSettingsTwoFactorBackupCodesDialogProps {

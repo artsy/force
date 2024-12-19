@@ -1,23 +1,23 @@
 import { Message } from "@artsy/palette"
-import type { StatusQuery$rawResponse } from "__generated__/StatusQuery.graphql"
+import { TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
+import { StatusFragmentContainer } from "Apps/Order/Routes/Status"
 import {
-  ArtaShippedWithTrackingIdNoTrackingUrl,
   ArtaShippedWithNoTrackingIdNoTrackingUrl,
+  ArtaShippedWithTrackingIdNoTrackingUrl,
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
+  CreditCardPaymentDetails,
   OfferOrderPickup,
   OfferOrderWithShippingDetails,
   OfferOrderWithShippingDetailsAndNote,
-  CreditCardPaymentDetails,
 } from "Apps/__tests__/Fixtures/Order"
-import { TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import { expectOne } from "DevTools/RootTestPage"
-import { graphql } from "react-relay"
-import { StatusFragmentContainer } from "Apps/Order/Routes/Status"
-import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools/MockBoot"
+import { expectOne } from "DevTools/RootTestPage"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { StatusQuery$rawResponse } from "__generated__/StatusQuery.graphql"
 import { Title } from "react-head"
+import { graphql } from "react-relay"
+import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 
 jest.unmock("react-relay")
 

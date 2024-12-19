@@ -1,7 +1,7 @@
 import { Box, Image } from "@artsy/palette"
+import { wait } from "Utils/wait"
 import { useLayoutEffect } from "react"
 import { useState } from "react"
-import { wait } from "Utils/wait"
 
 const transitionDelayMs = 100
 const transitionDurationMs = 500

@@ -1,10 +1,10 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Clickable, Flex, Spacer, Sup, Text } from "@artsy/palette"
-import type { SavedSearchAlertListItem_item$data } from "__generated__/SavedSearchAlertListItem_item.graphql"
 import type { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
+import { useJump } from "Utils/Hooks/useJump"
+import type { SavedSearchAlertListItem_item$data } from "__generated__/SavedSearchAlertListItem_item.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useJump } from "Utils/Hooks/useJump"
 
 export type SavedSearchAlertListItemVariant = "active" | "inactive"
 

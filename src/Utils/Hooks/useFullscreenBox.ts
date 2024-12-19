@@ -1,6 +1,6 @@
+import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
 import { scale } from "proportional-scale"
 import { useEffect, useState } from "react"
-import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
 
 interface UseFullscreenBox {
   aspectWidth: number

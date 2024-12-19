@@ -1,47 +1,47 @@
-/* eslint-disable jest/no-disabled-tests */
-import { cloneDeep, merge } from "lodash"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { MockBoot } from "DevTools/MockBoot"
+import { queryByAttribute } from "@testing-library/dom"
+import { within } from "@testing-library/dom"
+import { screen, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { ShippingRouteWithDialog } from "Apps/Order/Routes/Shipping"
-import { graphql } from "react-relay"
-import {
-  UntouchedBuyOrder,
-  UntouchedOfferOrder,
-  UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
-  UntouchedBuyOrderWithArtsyShippingDomesticFromGermany,
-  UntouchedBuyOrderWithShippingQuotes,
-  UntouchedBuyOrderWithArtsyShippingInternationalFromUS,
-  UntouchedBuyOrderWithArtsyShippingInternationalFromGermany,
-  BuyOrderWithArtaShippingDetails,
-} from "Apps/__tests__/Fixtures/Order"
-import {
-  settingOrderShipmentSuccess,
-  settingOrderArtaShipmentSuccess,
-  selectShippingQuoteSuccess,
-} from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
 import {
   saveAddressSuccess,
   updateAddressSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
-import type {
-  ShippingTestQuery,
-  ShippingTestQuery$rawResponse,
-} from "__generated__/ShippingTestQuery.graphql"
-import { screen, waitFor } from "@testing-library/react"
-import { useTracking } from "react-tracking"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import {
+  selectShippingQuoteSuccess,
+  settingOrderArtaShipmentSuccess,
+  settingOrderShipmentSuccess,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
+import { ErrorDialogMessage } from "Apps/Order/Utils/getErrorDialogCopy"
+import {
+  BuyOrderWithArtaShippingDetails,
+  UntouchedBuyOrder,
+  UntouchedBuyOrderWithArtsyShippingDomesticFromGermany,
+  UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+  UntouchedBuyOrderWithArtsyShippingInternationalFromGermany,
+  UntouchedBuyOrderWithArtsyShippingInternationalFromUS,
+  UntouchedBuyOrderWithShippingQuotes,
+  UntouchedOfferOrder,
+} from "Apps/__tests__/Fixtures/Order"
 import {
   clickSaveAddress,
   fillAddressForm,
   validAddress,
 } from "Components/__tests__/Utils/addressForm2"
-import userEvent from "@testing-library/user-event"
+import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { queryByAttribute } from "@testing-library/dom"
-import { ErrorDialogMessage } from "Apps/Order/Utils/getErrorDialogCopy"
-import { within } from "@testing-library/dom"
-import { type MockEnvironment, createMockEnvironment } from "relay-test-utils"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
+import type {
+  ShippingTestQuery,
+  ShippingTestQuery$rawResponse,
+} from "__generated__/ShippingTestQuery.graphql"
+/* eslint-disable jest/no-disabled-tests */
+import { cloneDeep, merge } from "lodash"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { type MockEnvironment, createMockEnvironment } from "relay-test-utils"
 
 jest.setTimeout(10000)
 

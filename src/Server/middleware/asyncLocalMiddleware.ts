@@ -1,5 +1,5 @@
-import type { NextFunction } from "express"
 import { getAsyncLocalStorage } from "Server/asyncLocalWrapper"
+import type { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
 // Installs an async local store into the callback chain.

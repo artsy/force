@@ -1,9 +1,9 @@
 import { Text } from "@artsy/palette"
-import type { ShippingSummaryItem_order$data } from "__generated__/ShippingSummaryItem_order.graphql"
 import {
   StepSummaryItem,
   type StepSummaryItemProps,
 } from "Components/StepSummaryItem"
+import type { ShippingSummaryItem_order$data } from "__generated__/ShippingSummaryItem_order.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShippingAddressFragmentContainer as ShippingAddress } from "./ShippingAddress"
 

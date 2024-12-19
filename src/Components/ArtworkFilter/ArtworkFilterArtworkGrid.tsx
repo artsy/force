@@ -1,19 +1,19 @@
-import type * as React from "react"
-import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
-import type { ArtworkFilterArtworkGrid_filtered_artworks$data } from "__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useTracking } from "react-tracking"
-import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
-import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
-import { useArtworkFilterContext } from "./ArtworkFilterContext"
 import {
   ActionType,
   type ClickedMainArtworkGrid,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { LoadingArea } from "Components/LoadingArea"
+import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { ArtworkFilterArtworkGrid_filtered_artworks$data } from "__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
+import type * as React from "react"
+import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { useArtworkFilterContext } from "./ArtworkFilterContext"
 
 interface ArtworkFilterArtworkGridProps {
   columnCount: number[]

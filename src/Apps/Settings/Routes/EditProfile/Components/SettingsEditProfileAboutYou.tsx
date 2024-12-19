@@ -12,11 +12,11 @@ import {
   LocationAutocompleteInput,
   normalizePlace,
 } from "Components/LocationAutocompleteInput"
+import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import type { SettingsEditProfileAboutYou_me$data } from "__generated__/SettingsEditProfileAboutYou_me.graphql"
 import { Formik } from "formik"
 import { type FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import type { SettingsEditProfileAboutYou_me$data } from "__generated__/SettingsEditProfileAboutYou_me.graphql"
 
 interface SettingsEditProfileAboutYouProps {
   me: SettingsEditProfileAboutYou_me$data

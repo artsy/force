@@ -2,8 +2,8 @@ import { Box } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { NavBar } from "Components/NavBar/NavBar"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
-import type { FC } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { FC } from "react"
 
 export const LayoutNav: FC<React.PropsWithChildren<unknown>> = () => {
   const { isEigen } = useSystemContext()

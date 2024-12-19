@@ -3,8 +3,8 @@ import { Spacer, Text } from "@artsy/palette"
 import { EndingSoonAuctionsGridPaginationContainer } from "Apps/Auctions/Routes/EndingSoonAuctionsGrid"
 import { LogInPrompt } from "Apps/Components/LogInPrompt"
 import { MetaTags } from "Components/MetaTags"
-import { createFragmentContainer, graphql } from "react-relay"
 import type { EndingSoonAuctions_viewer$data } from "__generated__/EndingSoonAuctions_viewer.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface EndingSoonAuctionsProps {
   viewer: EndingSoonAuctions_viewer$data

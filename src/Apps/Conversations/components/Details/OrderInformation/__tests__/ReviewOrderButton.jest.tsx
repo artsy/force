@@ -1,9 +1,9 @@
 import { fireEvent, screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ReviewOrderButton } from "Apps/Conversations/components/Details/OrderInformation/ReviewOrderButton"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ReviewOrderButtonTestQuery } from "__generated__/ReviewOrderButtonTestQuery.graphql"
-import { useTracking } from "react-tracking"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

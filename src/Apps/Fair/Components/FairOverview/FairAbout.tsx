@@ -1,8 +1,8 @@
-import type * as React from "react"
 import { Column, GridColumns, HTML, ReadMore, Text } from "@artsy/palette"
-import { FairTimerFragmentContainer as FairTimer } from "./FairTimer"
-import { createFragmentContainer, graphql } from "react-relay"
 import type { FairAbout_fair$data } from "__generated__/FairAbout_fair.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { FairTimerFragmentContainer as FairTimer } from "./FairTimer"
 
 interface FairAboutProps {
   fair: FairAbout_fair$data

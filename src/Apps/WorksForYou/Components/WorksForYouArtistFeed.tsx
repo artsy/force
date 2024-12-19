@@ -1,13 +1,13 @@
 import { Box, Button, EntityHeader, Spacer } from "@artsy/palette"
-import { useState } from "react"
-import {
-  createPaginationContainer,
-  graphql,
-  type RelayPaginationProp,
-} from "react-relay"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { WorksForYouArtistFeed_viewer$data } from "__generated__/WorksForYouArtistFeed_viewer.graphql"
+import { useState } from "react"
+import {
+  type RelayPaginationProp,
+  createPaginationContainer,
+  graphql,
+} from "react-relay"
 
 interface WorksForYouArtistFeedProps {
   relay: RelayPaginationProp

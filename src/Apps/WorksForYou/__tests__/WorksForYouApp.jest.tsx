@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/react"
-import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { WorksForYouAppFragmentContainer } from "Apps/WorksForYou/WorksForYouApp"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("Components/MetaTags", () => ({

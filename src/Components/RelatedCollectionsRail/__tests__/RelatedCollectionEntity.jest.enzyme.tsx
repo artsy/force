@@ -1,9 +1,9 @@
 import { CollectionsRailFixture } from "Apps/__tests__/Fixtures/Collections"
-import { mount } from "enzyme"
 import { RelatedCollectionEntity } from "Components/RelatedCollectionsRail/RelatedCollectionEntity"
-import { useTracking } from "react-tracking"
-import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { RouterLink } from "System/Components/RouterLink"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
+import { mount } from "enzyme"
+import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 

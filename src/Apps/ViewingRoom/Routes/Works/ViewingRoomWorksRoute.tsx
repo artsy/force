@@ -1,4 +1,3 @@
-import * as React from "react"
 import {
   Box,
   Column,
@@ -9,12 +8,13 @@ import {
   Shelf,
   Spacer,
 } from "@artsy/palette"
-import { ViewingRoomArtworkDetailsFragmentContainer as ViewingRoomArtworkDetails } from "./Components/ViewingRoomArtworkDetails"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ViewingRoomWorksRoute_viewingRoom$data } from "__generated__/ViewingRoomWorksRoute_viewingRoom.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import { compact } from "lodash"
 import { Media } from "Utils/Responsive"
+import { extractNodes } from "Utils/extractNodes"
+import type { ViewingRoomWorksRoute_viewingRoom$data } from "__generated__/ViewingRoomWorksRoute_viewingRoom.graphql"
+import { compact } from "lodash"
+import * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ViewingRoomArtworkDetailsFragmentContainer as ViewingRoomArtworkDetails } from "./Components/ViewingRoomArtworkDetails"
 
 interface WorksRouteProps {
   viewingRoom: ViewingRoomWorksRoute_viewingRoom$data

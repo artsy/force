@@ -1,14 +1,14 @@
-import type * as React from "react"
 import { Box, Button, Column, GridColumns, Text } from "@artsy/palette"
+import { ViewingRoomCardFragmentContainer } from "Apps/Partner/Components/PartnerViewingRooms/ViewingRoomCard"
+import { extractNodes } from "Utils/extractNodes"
+import type { PartnerViewingRoomsGrid_viewingRoomsConnection$data } from "__generated__/PartnerViewingRoomsGrid_viewingRoomsConnection.graphql"
+import type * as React from "react"
+import { useState } from "react"
 import {
   type RelayPaginationProp,
   createPaginationContainer,
   graphql,
 } from "react-relay"
-import type { PartnerViewingRoomsGrid_viewingRoomsConnection$data } from "__generated__/PartnerViewingRoomsGrid_viewingRoomsConnection.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import { ViewingRoomCardFragmentContainer } from "Apps/Partner/Components/PartnerViewingRooms/ViewingRoomCard"
-import { useState } from "react"
 
 interface PartnerViewingRoomsGridProps {
   relay: RelayPaginationProp

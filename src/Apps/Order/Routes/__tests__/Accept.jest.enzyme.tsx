@@ -1,30 +1,30 @@
+import { ConnectedModalDialog } from "Apps/Order/Dialogs"
+import { AcceptFragmentContainer } from "Apps/Order/Routes/Accept"
+import {
+  acceptOfferFailed,
+  acceptOfferInsufficientInventoryFailure,
+  acceptOfferPaymentFailed,
+  acceptOfferPaymentFailedInsufficientFunds,
+  acceptOfferSuccess,
+  acceptOfferWithActionRequired,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/acceptOffer"
 import {
   Buyer,
   OfferOrderWithShippingDetails,
   OfferWithTotals,
   Offers,
 } from "Apps/__tests__/Fixtures/Order"
-import { DateTime } from "luxon"
-import { graphql, commitMutation as _commitMutation } from "react-relay"
-import { AcceptFragmentContainer } from "Apps/Order/Routes/Accept"
-import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
+import { MockBoot } from "DevTools/MockBoot"
 import { mockLocation } from "DevTools/mockLocation"
-import { useTracking } from "react-tracking"
 import { mockStripe } from "DevTools/mockStripe"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import type { Router } from "found"
-import { MockBoot } from "DevTools/MockBoot"
-import { ConnectedModalDialog } from "Apps/Order/Dialogs"
-import {
-  acceptOfferSuccess,
-  acceptOfferFailed,
-  acceptOfferPaymentFailed,
-  acceptOfferPaymentFailedInsufficientFunds,
-  acceptOfferInsufficientInventoryFailure,
-  acceptOfferWithActionRequired,
-} from "Apps/Order/Routes/__fixtures__/MutationResults/acceptOffer"
+import { DateTime } from "luxon"
+import { commitMutation as _commitMutation, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 // eslint-disable-next-line no-restricted-imports
 import { Provider } from "unstated"
+import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 
 jest.unmock("react-relay")
 

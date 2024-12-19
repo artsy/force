@@ -1,10 +1,10 @@
 import { ContextModule } from "@artsy/cohesion"
-import { mount } from "enzyme"
-import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import {
   AddToCalendar,
   AddToCalendarLinks,
 } from "Apps/Auction/Components/AuctionDetails/AddToCalendar"
+import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
+import { mount } from "enzyme"
 
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")
 

@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react"
-import { useRouter } from "System/Hooks/useRouter"
 import { useSetPaymentByStripeIntent } from "Apps/Order/Mutations/useSetPaymentByStripeIntentMutation"
+import { useRouter } from "System/Hooks/useRouter"
+import { useEffect, useState } from "react"
 
 /*
  * Hook to handle Stripe redirect for newly-linked bank account

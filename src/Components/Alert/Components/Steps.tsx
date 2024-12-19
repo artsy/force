@@ -1,8 +1,8 @@
-import type { FC } from "react"
 import { Confirmation } from "Components/Alert/Components/Steps/Confirmation"
 import { Details } from "Components/Alert/Components/Steps/Details"
 import { Filters } from "Components/Alert/Components/Steps/Filters"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import type { FC } from "react"
 
 export const Steps: FC<React.PropsWithChildren<unknown>> = () => {
   const { current } = useAlertContext()

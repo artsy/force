@@ -1,9 +1,9 @@
 import { Column, Flex, Join, Spacer, Text } from "@artsy/palette"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
-import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import type { MyCollectionArtworkAuctionResults_artist$data } from "__generated__/MyCollectionArtworkAuctionResults_artist.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface MyCollectionArtworkAuctionResultsProps {
   artist: MyCollectionArtworkAuctionResults_artist$data

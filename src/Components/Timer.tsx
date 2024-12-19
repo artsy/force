@@ -1,6 +1,6 @@
-import type * as React from "react"
 import { Flex, type FlexProps, Text, type TextProps } from "@artsy/palette"
 import { useTimer } from "Utils/Hooks/useTimer"
+import type * as React from "react"
 
 const SEPARATOR = <>&nbsp;&nbsp;</>
 

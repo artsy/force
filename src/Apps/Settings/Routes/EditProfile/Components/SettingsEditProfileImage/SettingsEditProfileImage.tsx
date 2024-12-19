@@ -8,23 +8,23 @@ import {
   Tooltip,
   useToasts,
 } from "@artsy/palette"
-import { type ChangeEvent, type FC, useState } from "react"
-import {
-  createRefetchContainer,
-  graphql,
-  type RelayRefetchProp,
-} from "react-relay"
-import styled from "styled-components"
-import type { SettingsEditProfileImage_me$data } from "__generated__/SettingsEditProfileImage_me.graphql"
-import { Media } from "Utils/Responsive"
 import {
   normalizePhoto,
   uploadPhotoToS3,
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
-import type { SettingsEditProfileImageMutation } from "__generated__/SettingsEditProfileImageMutation.graphql"
 import { usePoll } from "Utils/Hooks/usePoll"
+import { Media } from "Utils/Responsive"
+import type { SettingsEditProfileImageMutation } from "__generated__/SettingsEditProfileImageMutation.graphql"
+import type { SettingsEditProfileImage_me$data } from "__generated__/SettingsEditProfileImage_me.graphql"
+import { type ChangeEvent, type FC, useState } from "react"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
+import styled from "styled-components"
 
 interface SettingsEditProfileImageProps {
   me: SettingsEditProfileImage_me$data

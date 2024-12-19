@@ -1,3 +1,5 @@
+import { ContextModule } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Skeleton,
   SkeletonBox,
@@ -5,22 +7,20 @@ import {
   Spacer,
   StackableBorderBox,
 } from "@artsy/palette"
-import type { ArtistInfo_artist$data } from "__generated__/ArtistInfo_artist.graphql"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ArtistBioFragmentContainer } from "Components/ArtistBio"
 import { ArtistMarketInsightsFragmentContainer } from "Components/ArtistMarketInsights"
+import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { SelectedExhibitionFragmentContainer } from "Components/SelectedExhibitions"
-import { ContextModule } from "@artsy/cohesion"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ArtistInfoQuery } from "__generated__/ArtistInfoQuery.graphql"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useTracking } from "react-tracking"
-import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
+import type { ArtistInfo_artist$data } from "__generated__/ArtistInfo_artist.graphql"
 import { compact } from "lodash"
-import { RouterLink } from "System/Components/RouterLink"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ArtistInfoProps {
   artist: ArtistInfo_artist$data

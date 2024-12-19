@@ -1,11 +1,11 @@
 import {
   Box,
-  Text,
-  GridColumns,
-  Column,
   Button,
-  ProgressDots,
+  Column,
   FullBleed,
+  GridColumns,
+  ProgressDots,
+  Text,
 } from "@artsy/palette"
 import { Page } from "./Components/Page"
 

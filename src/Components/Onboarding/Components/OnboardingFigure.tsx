@@ -1,6 +1,6 @@
-import { forwardRef } from "react"
 import { Flex, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { resized } from "Utils/resized"
+import { forwardRef } from "react"
 
 interface OnboardingFigureProps {
   src: string

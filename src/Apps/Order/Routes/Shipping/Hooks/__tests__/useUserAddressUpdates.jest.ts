@@ -1,19 +1,19 @@
 import { act, renderHook } from "@testing-library/react-hooks"
 import {
-  type MockEnvironment,
-  MockPayloadGenerator,
-  createMockEnvironment,
-} from "relay-test-utils"
-import {
   type UserAddressAction,
   useUserAddressUpdates,
 } from "Apps/Order/Routes/Shipping/Hooks/useUserAddressUpdates"
+import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import {
   FulfillmentType,
   type FulfillmentValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
-import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import {
+  type MockEnvironment,
+  MockPayloadGenerator,
+  createMockEnvironment,
+} from "relay-test-utils"
 
 let mockRelayEnv: MockEnvironment
 let values: FulfillmentValues

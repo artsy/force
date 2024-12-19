@@ -1,10 +1,10 @@
 import {
   Button,
   EntityHeader,
-  omit,
   Spacer,
   Spinner,
   Text,
+  omit,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"

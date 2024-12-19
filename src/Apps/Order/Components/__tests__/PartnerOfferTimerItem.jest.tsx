@@ -1,8 +1,8 @@
-import { graphql } from "react-relay"
-import { PartnerOfferTimerItem } from "Apps/Order/Components/PartnerOfferTimerItem"
 import { screen } from "@testing-library/react"
-import { DateTime } from "luxon"
+import { PartnerOfferTimerItem } from "Apps/Order/Components/PartnerOfferTimerItem"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { DateTime } from "luxon"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

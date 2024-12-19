@@ -1,5 +1,5 @@
-import cookies from "cookies-js"
 import { COOKIE_CONSENT_MANAGER_COOKIE_NAME } from "Components/CookieConsentManager/CookieConsentManager"
+import cookies from "cookies-js"
 
 export const setServerSideCookie = () => {
   // Wait for cookie to be set

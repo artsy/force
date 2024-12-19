@@ -1,22 +1,22 @@
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 import {
-  Spacer,
   Button,
   Flex,
   Join,
-  Text,
   PasswordInput,
+  Spacer,
+  Text,
   useToasts,
 } from "@artsy/palette"
-import { Formik } from "formik"
-import type React from "react"
+import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
+import { useMode } from "Utils/Hooks/useMode"
 import { resetPassword } from "Utils/auth"
 import { getENV } from "Utils/getENV"
-import { useMode } from "Utils/Hooks/useMode"
+import { Formik } from "formik"
+import type React from "react"
 import * as Yup from "yup"
-import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
-import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
 type AuthenticationResetPasswordRouteProps = {}
 

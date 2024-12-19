@@ -1,9 +1,9 @@
-import { SystemContextProvider } from "System/Contexts/SystemContext"
-import { useTracking } from "react-tracking"
-import { mount } from "enzyme"
+import { useAuthDialog } from "Components/AuthDialog"
 import { NavBar } from "Components/NavBar/NavBar"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer as NavBarMobileMenuNotificationsIndicator } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
-import { useAuthDialog } from "Components/AuthDialog"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
+import { mount } from "enzyme"
+import { useTracking } from "react-tracking"
 
 jest.mock("Components/Search/SearchBar", () => {
   return {

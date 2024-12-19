@@ -1,11 +1,11 @@
-import type * as React from "react"
-import { graphql, useFragment } from "react-relay"
-import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
-import type { NotificationViewingRoom_viewingRoom$key } from "__generated__/NotificationViewingRoom_viewingRoom.graphql"
 import type { AuthContextModule } from "@artsy/cohesion"
 import { Box, Button, Image, Spacer, Text } from "@artsy/palette"
-import { resized } from "Utils/resized"
 import { NOTIFICATION_MAX_WIDTH } from "Components/Notifications/Notification"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import { resized } from "Utils/resized"
+import type { NotificationViewingRoom_viewingRoom$key } from "__generated__/NotificationViewingRoom_viewingRoom.graphql"
+import type * as React from "react"
+import { graphql, useFragment } from "react-relay"
 
 export interface NotificationViewingRoomProps
   extends Omit<RouterLinkProps, "to" | "width"> {

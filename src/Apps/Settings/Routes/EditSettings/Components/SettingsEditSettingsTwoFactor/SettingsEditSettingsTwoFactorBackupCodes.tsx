@@ -9,11 +9,11 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
-import { type FC, useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { useMode } from "Utils/Hooks/useMode"
 import type { SettingsEditSettingsTwoFactorBackupCodes_me$data } from "__generated__/SettingsEditSettingsTwoFactorBackupCodes_me.graphql"
 import type { CreateBackupSecondFactorsInput } from "__generated__/useCreateSettingsBackupSecondFactorsMutation.graphql"
+import { type FC, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsEditSettingsTwoFactorBackupCodesDialogQueryRenderer } from "./SettingsEditSettingsTwoFactorBackupCodesDialog"
 import { useCreateSettingsBackupSecondFactors } from "./useCreateSettingsBackupSecondFactorsMutation"
 

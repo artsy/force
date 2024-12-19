@@ -1,15 +1,15 @@
-import type { FC } from "react"
 import { Skeleton } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { MarketingTrendingArtistsRail_viewer$data } from "__generated__/MarketingTrendingArtistsRail_viewer.graphql"
-import type { MarketingTrendingArtistsRailQuery } from "__generated__/MarketingTrendingArtistsRailQuery.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import { Rail } from "Components/Rail/Rail"
 import {
   CellArtistFragmentContainer,
   CellArtistPlaceholder,
 } from "Components/Cells/CellArtist"
+import { Rail } from "Components/Rail/Rail"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
+import type { MarketingTrendingArtistsRailQuery } from "__generated__/MarketingTrendingArtistsRailQuery.graphql"
+import type { MarketingTrendingArtistsRail_viewer$data } from "__generated__/MarketingTrendingArtistsRail_viewer.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface MarketingTrendingArtistsRailProps {
   viewer: MarketingTrendingArtistsRail_viewer$data

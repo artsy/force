@@ -1,6 +1,6 @@
-import { useEffect } from "react"
 import { useFadeTransition } from "Utils/Hooks/useFadeTransition"
 import { wait } from "Utils/wait"
+import { useEffect } from "react"
 
 interface UseOnboardingFadeTransition {
   next(): void

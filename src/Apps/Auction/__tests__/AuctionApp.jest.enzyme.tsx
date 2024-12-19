@@ -1,11 +1,11 @@
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { AuctionAppFragmentContainer } from "Apps/Auction/AuctionApp"
-import type { AuctionAppTestQuery } from "__generated__/AuctionAppTestQuery.graphql"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { getENV } from "Utils/getENV"
 import { MockBoot } from "DevTools/MockBoot"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { getENV } from "Utils/getENV"
+import type { AuctionAppTestQuery } from "__generated__/AuctionAppTestQuery.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")

@@ -1,9 +1,9 @@
 import { Join, Message, Spacer } from "@artsy/palette"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import type { ArtistShowsRoute_viewer$data } from "__generated__/ArtistShowsRoute_viewer.graphql"
-import { ArtistShowsGroupRefetchContainer } from "./Components/ArtistShowsGroup"
+import type * as React from "react"
 import { Title } from "react-head"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ArtistShowsGroupRefetchContainer } from "./Components/ArtistShowsGroup"
 
 interface ArtistShowsRouteProps {
   viewer: ArtistShowsRoute_viewer$data

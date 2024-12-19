@@ -1,5 +1,5 @@
-import type { MyCollectionArtworkMeta_artwork$key } from "__generated__/MyCollectionArtworkMeta_artwork.graphql"
 import { MetaTags } from "Components/MetaTags"
+import type { MyCollectionArtworkMeta_artwork$key } from "__generated__/MyCollectionArtworkMeta_artwork.graphql"
 import { graphql, useFragment } from "react-relay"
 
 interface MyCollectionArtworkMetaProps {

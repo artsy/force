@@ -1,7 +1,7 @@
-import { graphql } from "react-relay"
-import { DateTime } from "luxon"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { FairOrganizerHeaderFragmentContainer } from "Apps/FairOrginizer/Components/FairOrganizerHeader/FairOrganizerHeader"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { DateTime } from "luxon"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

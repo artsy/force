@@ -1,19 +1,19 @@
-import type { TransactionDetailsSummaryItem_order$data } from "__generated__/TransactionDetailsSummaryItem_order.graphql"
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { Flex, Text, Spacer, Sup, Message, Stack } from "@artsy/palette"
+import { ContextModule } from "@artsy/cohesion"
+import { Flex, Message, Spacer, Stack, Sup, Text } from "@artsy/palette"
+import { shippingQuoteDisplayNames } from "Apps/Order/Routes/Shipping/Components/ShippingQuotes"
+import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
+import { DownloadAppBadges } from "Components/DownloadAppBadges/DownloadAppBadges"
 import {
   StepSummaryItem,
   type StepSummaryItemProps,
 } from "Components/StepSummaryItem"
-import type { Omit } from "lodash"
-import { extractNodes } from "Utils/extractNodes"
-import { DownloadAppBadges } from "Components/DownloadAppBadges/DownloadAppBadges"
-import { ContextModule } from "@artsy/cohesion"
-import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
-import { shippingQuoteDisplayNames } from "Apps/Order/Routes/Shipping/Components/ShippingQuotes"
 import { RouterLink } from "System/Components/RouterLink"
 import { withSystemContext } from "System/Contexts/SystemContext"
+import { extractNodes } from "Utils/extractNodes"
+import type { TransactionDetailsSummaryItem_order$data } from "__generated__/TransactionDetailsSummaryItem_order.graphql"
+import type { Omit } from "lodash"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {

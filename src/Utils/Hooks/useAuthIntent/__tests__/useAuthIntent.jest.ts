@@ -1,11 +1,11 @@
-import { createMockEnvironment } from "relay-test-utils"
 import { isValid, runAuthIntent } from "Utils/Hooks/useAuthIntent/index"
-import Cookies from "cookies-js"
-import { followGeneMutation } from "Utils/Hooks/useAuthIntent/mutations/AuthIntentFollowGeneMutation"
+import { associateSubmissionMutation } from "Utils/Hooks/useAuthIntent/mutations/AuthIntentAssociateSubmissionMutation"
 import { followArtistMutation } from "Utils/Hooks/useAuthIntent/mutations/AuthIntentFollowArtistMutation"
+import { followGeneMutation } from "Utils/Hooks/useAuthIntent/mutations/AuthIntentFollowGeneMutation"
 import { followProfileMutation } from "Utils/Hooks/useAuthIntent/mutations/AuthIntentFollowProfileMutation"
 import { saveArtworkMutation } from "Utils/Hooks/useAuthIntent/mutations/AuthIntentSaveArtworkMutation"
-import { associateSubmissionMutation } from "Utils/Hooks/useAuthIntent/mutations/AuthIntentAssociateSubmissionMutation"
+import Cookies from "cookies-js"
+import { createMockEnvironment } from "relay-test-utils"
 
 jest.mock("cookies-js", () => ({
   get: jest.fn(),

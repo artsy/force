@@ -6,8 +6,8 @@ import type {
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
 
-import type { AlertProviderPreviewQuery } from "__generated__/AlertProviderPreviewQuery.graphql"
 import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
+import type { AlertProviderPreviewQuery } from "__generated__/AlertProviderPreviewQuery.graphql"
 
 export type Settings = {
   details: string

@@ -1,12 +1,12 @@
-import { Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { useTracking } from "react-tracking"
+import { Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import type { ArtistConsignMarketTrends_artist$data } from "__generated__/ArtistConsignMarketTrends_artist.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
-import type { ArtistConsignMarketTrends_artist$data } from "__generated__/ArtistConsignMarketTrends_artist.graphql"
 
 interface ArtistConsignMarketTrendsProps {
   artist: ArtistConsignMarketTrends_artist$data

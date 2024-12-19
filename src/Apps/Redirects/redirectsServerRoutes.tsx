@@ -1,10 +1,10 @@
-import { Router, type Response, type Request, type NextFunction } from "express"
-import { fetchQuery } from "react-relay"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import { REDIRECTS_SHORTCUTS_QUERY } from "./queries/RedirectsShortcutsQuery"
-import type { RedirectsShortcutsQuery } from "__generated__/RedirectsShortcutsQuery.graphql"
-import { REDIRECTS_PROFILE_QUERY } from "./queries/RedirectsProfileQuery"
 import type { RedirectsProfileQuery } from "__generated__/RedirectsProfileQuery.graphql"
+import type { RedirectsShortcutsQuery } from "__generated__/RedirectsShortcutsQuery.graphql"
+import { type NextFunction, type Request, type Response, Router } from "express"
+import { fetchQuery } from "react-relay"
+import { REDIRECTS_PROFILE_QUERY } from "./queries/RedirectsProfileQuery"
+import { REDIRECTS_SHORTCUTS_QUERY } from "./queries/RedirectsShortcutsQuery"
 
 const redirectsServerRoutes = Router()
 

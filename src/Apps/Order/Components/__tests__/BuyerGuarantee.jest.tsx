@@ -1,8 +1,8 @@
 import { ContextModule } from "@artsy/cohesion"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { useTracking } from "react-tracking"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
+import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 

@@ -1,7 +1,7 @@
-import { mount } from "enzyme"
-import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
-import { WaysToBuy } from "Components/Alert/Components/Filters/WaysToBuy"
 import { AlertProvider } from "Components/Alert/AlertProvider"
+import { WaysToBuy } from "Components/Alert/Components/Filters/WaysToBuy"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import { mount } from "enzyme"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

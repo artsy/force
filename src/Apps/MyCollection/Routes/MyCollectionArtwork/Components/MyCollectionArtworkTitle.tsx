@@ -1,7 +1,7 @@
 import { Box, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type { MyCollectionArtworkTitle_artwork$key } from "__generated__/MyCollectionArtworkTitle_artwork.graphql"
 import { graphql, useFragment } from "react-relay"
-import { RouterLink } from "System/Components/RouterLink"
 
 interface MyCollectionArtworkTitleProps {
   artwork: MyCollectionArtworkTitle_artwork$key

@@ -1,6 +1,6 @@
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
 import type { InsightsOverview_info$data } from "__generated__/InsightsOverview_info.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface InsightsOverviewProps {
   info: InsightsOverview_info$data

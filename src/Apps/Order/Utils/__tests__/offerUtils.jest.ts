@@ -1,7 +1,7 @@
 import {
-  lastOfferNote,
   getInitialOfferState,
   getOfferPriceOptions,
+  lastOfferNote,
 } from "Apps/Order/Utils/offerUtils"
 
 describe("offer utils", () => {

@@ -1,7 +1,7 @@
-import { mount } from "enzyme"
 import { InquiryResetPassword } from "Components/Inquiry/Views/InquiryResetPassword"
-import { useTracking } from "react-tracking"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { mount } from "enzyme"
+import { useTracking } from "react-tracking"
 
 jest.mock("../../Hooks/useInquiryContext", () => ({
   useInquiryContext: () => ({

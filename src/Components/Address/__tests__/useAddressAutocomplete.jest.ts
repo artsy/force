@@ -1,3 +1,4 @@
+import { waitFor } from "@testing-library/react"
 import { act, renderHook } from "@testing-library/react-hooks"
 import {
   type AddressAutocompleteSuggestion,
@@ -5,7 +6,6 @@ import {
 } from "Components/Address/useAddressAutocomplete"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { getENV } from "Utils/getENV"
-import { waitFor } from "@testing-library/react"
 import { throttle } from "lodash"
 import { useTracking } from "react-tracking"
 

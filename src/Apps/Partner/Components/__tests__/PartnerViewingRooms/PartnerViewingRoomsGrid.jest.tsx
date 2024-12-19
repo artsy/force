@@ -1,8 +1,8 @@
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 import { PartnerViewingRoomsGridFragmentContainer } from "Apps/Partner/Components/PartnerViewingRooms/PartnerViewingRoomsGrid"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { PartnerViewingRoomsGrid_Test_Query } from "__generated__/PartnerViewingRoomsGrid_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

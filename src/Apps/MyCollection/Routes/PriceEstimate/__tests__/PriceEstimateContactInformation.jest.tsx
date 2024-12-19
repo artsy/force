@@ -3,9 +3,9 @@ import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { PriceEstimateContactInformationFragmentContainer } from "Apps/MyCollection/Routes/PriceEstimate/PriceEstimateContactInformation"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { SystemContextProvider } from "System/Contexts/SystemContext"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

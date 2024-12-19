@@ -1,28 +1,28 @@
 import {
-  Column,
-  GridColumns,
-  Text,
-  Spacer,
-  Input,
-  AutocompleteInput,
-} from "@artsy/palette"
-import { CountrySelect } from "Components/CountrySelect"
-import * as React from "react"
-import { isEqual } from "lodash"
-import {
-  type AddressAutocompleteSuggestion,
-  useAddressAutocomplete,
-} from "Components/Address/useAddressAutocomplete"
-import { useTracking } from "react-tracking"
-import {
   ActionType,
   ContextModule,
   type EditedAutocompletedAddress,
   OwnerType,
   type SelectedItemFromAddressAutoCompletion,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import {
+  AutocompleteInput,
+  Column,
+  GridColumns,
+  Input,
+  Spacer,
+  Text,
+} from "@artsy/palette"
+import {
+  type AddressAutocompleteSuggestion,
+  useAddressAutocomplete,
+} from "Components/Address/useAddressAutocomplete"
 import { type Address, emptyAddress } from "Components/Address/utils"
+import { CountrySelect } from "Components/CountrySelect"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { isEqual } from "lodash"
+import * as React from "react"
+import { useTracking } from "react-tracking"
 
 const ENABLE_SECONDARY_SUGGESTIONS = false
 

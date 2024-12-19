@@ -1,14 +1,14 @@
-import * as Yup from "yup"
 import { Button, Input, Stack, Text } from "@artsy/palette"
-import type { FC } from "react"
-import { Form, Formik } from "formik"
+import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { AuthDialogSocial } from "Components/AuthDialog/Components/AuthDialogSocial"
 import { AuthDialogDisclaimer } from "Components/AuthDialog/Views/AuthDialogDisclaimer"
-import { fetchQuery, graphql } from "react-relay"
-import type { AuthDialogWelcomeQuery } from "__generated__/AuthDialogWelcomeQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { recaptcha } from "Utils/recaptcha"
+import type { AuthDialogWelcomeQuery } from "__generated__/AuthDialogWelcomeQuery.graphql"
+import { Form, Formik } from "formik"
+import type { FC } from "react"
+import { fetchQuery, graphql } from "react-relay"
+import * as Yup from "yup"
 
 type AuthDialogWelcomeProps = {}
 

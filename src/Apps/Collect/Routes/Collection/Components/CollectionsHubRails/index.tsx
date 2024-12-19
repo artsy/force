@@ -1,12 +1,12 @@
 import { Join, Spacer } from "@artsy/palette"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { CollectionsHubRailsQuery } from "__generated__/CollectionsHubRailsQuery.graphql"
+import type { CollectionsHubRails_linkedCollections$data } from "__generated__/CollectionsHubRails_linkedCollections.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { CollectionsHubRails_linkedCollections$data } from "__generated__/CollectionsHubRails_linkedCollections.graphql"
-import type { CollectionsHubRailsQuery } from "__generated__/CollectionsHubRailsQuery.graphql"
 import { ArtistSeriesRailContainer as ArtistSeriesRail } from "./ArtistSeriesRail"
 import { FeaturedCollectionsRailsContainer as FeaturedCollectionsRails } from "./FeaturedCollectionsRails"
 import { OtherCollectionsRailsContainer as OtherCollectionsRail } from "./OtherCollectionsRail"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 
 interface CollectionsHubRailsProps {
   linkedCollections: CollectionsHubRails_linkedCollections$data

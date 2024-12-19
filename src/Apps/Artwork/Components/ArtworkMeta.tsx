@@ -1,10 +1,10 @@
+import { useRouter } from "System/Hooks/useRouter"
+import { getENV } from "Utils/getENV"
 import type { ArtworkMeta_artwork$key } from "__generated__/ArtworkMeta_artwork.graphql"
 import { Link, Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
-import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/SeoDataForArtwork"
 import { ArtworkChatBubbleFragmentContainer } from "./ArtworkChatBubble"
-import { getENV } from "Utils/getENV"
-import { useRouter } from "System/Hooks/useRouter"
+import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/SeoDataForArtwork"
 
 interface ArtworkMetaProps {
   artwork: ArtworkMeta_artwork$key

@@ -1,8 +1,8 @@
 import { type BoxProps, FullBleed, Image, ResponsiveBox } from "@artsy/palette"
-import type { FC } from "react"
-import { maxDimensionsByArea, resized } from "Utils/resized"
-import { Link } from "react-head"
 import { getENV } from "Utils/getENV"
+import { maxDimensionsByArea, resized } from "Utils/resized"
+import type { FC } from "react"
+import { Link } from "react-head"
 
 const MOBILE_SIZE = {
   width: 350,

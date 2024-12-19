@@ -1,8 +1,8 @@
-import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
+import { ConversationOrderInformation } from "Apps/Conversations/components/Details/OrderInformation/ConversationOrderInformation"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { OrderInformationTestQuery } from "__generated__/OrderInformationTestQuery.graphql"
-import { ConversationOrderInformation } from "Apps/Conversations/components/Details/OrderInformation/ConversationOrderInformation"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

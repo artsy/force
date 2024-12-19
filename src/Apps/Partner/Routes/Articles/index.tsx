@@ -1,18 +1,18 @@
+import { Column, GridColumns, Spacer } from "@artsy/palette"
+import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
+import { LoadingArea } from "Components/LoadingArea"
+import { PaginationFragmentContainer } from "Components/Pagination"
+import { useRouter } from "System/Hooks/useRouter"
+import { Jump } from "Utils/Hooks/useJump"
+import { extractNodes } from "Utils/extractNodes"
+import type { Articles_partner$data } from "__generated__/Articles_partner.graphql"
 import { useState } from "react"
 import type * as React from "react"
-import { Column, GridColumns, Spacer } from "@artsy/palette"
 import {
+  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
-import { useRouter } from "System/Hooks/useRouter"
-import type { Articles_partner$data } from "__generated__/Articles_partner.graphql"
-import { PaginationFragmentContainer } from "Components/Pagination"
-import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
-import { extractNodes } from "Utils/extractNodes"
-import { Jump } from "Utils/Hooks/useJump"
-import { LoadingArea } from "Components/LoadingArea"
 
 const PAGE_SIZE = 18
 

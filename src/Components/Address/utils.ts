@@ -1,5 +1,5 @@
-import { validatePhoneNumber } from "Components/PhoneNumberInput"
 import type { CreateTokenCardData } from "@stripe/stripe-js"
+import { validatePhoneNumber } from "Components/PhoneNumberInput"
 import * as Yup from "yup"
 
 export interface Address {

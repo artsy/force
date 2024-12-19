@@ -1,30 +1,30 @@
 import {
-  Join,
-  Spacer,
   Column,
   GridColumns,
-  Text,
-  Sup,
+  Join,
   Message,
+  Spacer,
+  Sup,
+  Text,
 } from "@artsy/palette"
+import { ShowsFeaturedShowFragmentContainer } from "Apps/Shows/Components/ShowsFeaturedShow"
+import { ShowsHeaderFragmentContainer } from "Apps/Shows/Components/ShowsHeader"
+import { ShowsMeta } from "Apps/Shows/Components/ShowsMeta"
+import { PaginationFragmentContainer } from "Components/Pagination"
+import { useRouter } from "System/Hooks/useRouter"
+import { Jump, useJump } from "Utils/Hooks/useJump"
+import { extractNodes } from "Utils/extractNodes"
+import type { ShowsCity_city$data } from "__generated__/ShowsCity_city.graphql"
+import type { ShowsCity_viewer$data } from "__generated__/ShowsCity_viewer.graphql"
+import { DateTime } from "luxon"
 import { useMemo, useState } from "react"
 import type * as React from "react"
 import {
+  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
-import { ShowsHeaderFragmentContainer } from "Apps/Shows/Components/ShowsHeader"
-import type { ShowsCity_viewer$data } from "__generated__/ShowsCity_viewer.graphql"
-import type { ShowsCity_city$data } from "__generated__/ShowsCity_city.graphql"
-import { ShowsMeta } from "Apps/Shows/Components/ShowsMeta"
-import { ShowsFeaturedShowFragmentContainer } from "Apps/Shows/Components/ShowsFeaturedShow"
-import { DateTime } from "luxon"
-import { extractNodes } from "Utils/extractNodes"
 import type { FragmentRefs } from "relay-runtime"
-import { PaginationFragmentContainer } from "Components/Pagination"
-import { Jump, useJump } from "Utils/Hooks/useJump"
-import { useRouter } from "System/Hooks/useRouter"
 
 interface ShowsCityProps {
   viewer: ShowsCity_viewer$data

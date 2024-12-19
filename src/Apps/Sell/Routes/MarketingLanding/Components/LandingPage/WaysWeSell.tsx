@@ -1,18 +1,18 @@
-import type React from "react"
 import {
-  Text,
-  Image,
   Box,
-  Shelf,
-  GridColumns,
   Column,
   FullBleed,
-  Stack,
+  GridColumns,
+  Image,
   ResponsiveBox,
+  Shelf,
+  Stack,
+  Text,
 } from "@artsy/palette"
-import { resized } from "Utils/resized"
-import { Media } from "Utils/Responsive"
 import { AppContainer } from "Apps/Components/AppContainer"
+import { Media } from "Utils/Responsive"
+import { resized } from "Utils/resized"
+import type React from "react"
 
 interface ShelfItemProps {
   image: {

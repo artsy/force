@@ -1,11 +1,11 @@
-import { Text, Spacer, Column, GridColumns, Message } from "@artsy/palette"
+import { Column, GridColumns, Message, Spacer, Text } from "@artsy/palette"
+import { CellArtistSeriesFragmentContainer } from "Components/Cells/CellArtistSeries"
+import { Jump } from "Utils/Hooks/useJump"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistArtistSeriesRoute_artist$data } from "__generated__/ArtistArtistSeriesRoute_artist.graphql"
-import { createFragmentContainer, graphql } from "react-relay"
-import { Title, Meta } from "react-head"
-import { Jump } from "Utils/Hooks/useJump"
-import { CellArtistSeriesFragmentContainer } from "Components/Cells/CellArtistSeries"
 import type { FC } from "react"
+import { Meta, Title } from "react-head"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtistArtistSeriesRouteProps {
   artist: ArtistArtistSeriesRoute_artist$data

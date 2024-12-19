@@ -1,4 +1,4 @@
-import type { FC } from "react"
+import { ActionType, type ClickedTooltip } from "@artsy/cohesion"
 import {
   Box,
   Image,
@@ -7,15 +7,15 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import { EntityHeaderGeneFragmentContainer } from "Components/EntityHeaders/EntityHeaderGene"
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { EntityTooltipGeneQuery } from "__generated__/EntityTooltipGeneQuery.graphql"
 import type { EntityTooltipGene_gene$data } from "__generated__/EntityTooltipGene_gene.graphql"
-import { RouterLink } from "System/Components/RouterLink"
-import { EntityHeaderGeneFragmentContainer } from "Components/EntityHeaders/EntityHeaderGene"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { ActionType, type ClickedTooltip } from "@artsy/cohesion"
 
 interface EntityTooltipGeneProps {
   gene: EntityTooltipGene_gene$data

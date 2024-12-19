@@ -2,9 +2,9 @@ import { type AuthContextModule, Intent } from "@artsy/cohesion"
 import { useManageArtworkForSavesContext } from "Components/Artwork/ManageArtworkForSaves"
 import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
 import { useAuthDialog } from "Components/AuthDialog"
-import { fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { useSaveArtworkToListsArtworkListInclusionQuery } from "__generated__/useSaveArtworkToListsArtworkListInclusionQuery.graphql"
+import { fetchQuery, graphql } from "react-relay"
 
 type Artwork = {
   internalID: string

@@ -1,4 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Box,
   Button,
@@ -10,9 +11,14 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import type { ArtworkRelatedArtists_artwork$data } from "__generated__/ArtworkRelatedArtists_artwork.graphql"
 import { hideGrid } from "Apps/Artwork/Components/OtherWorks"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
+import createLogger from "Utils/logger"
+import type { ArtworkRelatedArtistsQuery } from "__generated__/ArtworkRelatedArtistsQuery.graphql"
+import type { ArtworkRelatedArtists_artwork$data } from "__generated__/ArtworkRelatedArtists_artwork.graphql"
 import { useState } from "react"
 import type * as React from "react"
 import {
@@ -20,12 +26,6 @@ import {
   createPaginationContainer,
   graphql,
 } from "react-relay"
-import createLogger from "Utils/logger"
-import { extractNodes } from "Utils/extractNodes"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { ArtworkRelatedArtistsQuery } from "__generated__/ArtworkRelatedArtistsQuery.graphql"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import track, { useTracking } from "react-tracking"
 
 const logger = createLogger("ArtworkRelatedArtists.tsx")

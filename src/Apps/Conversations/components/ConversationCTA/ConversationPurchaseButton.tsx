@@ -1,14 +1,14 @@
+import { ActionType, type ClickedBuyNow, OwnerType } from "@artsy/cohesion"
 import { Box, type BoxProps, Button, useToasts } from "@artsy/palette"
-import { useMakeInquiryOrder } from "Apps/Conversations/mutations/useMakeInquiryOrderMutation"
-import { useState } from "react"
-import { useRouter } from "System/Hooks/useRouter"
-import { useTracking } from "react-tracking"
-import { ActionType, OwnerType, type ClickedBuyNow } from "@artsy/cohesion"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { useConversationPurchaseButtonData } from "Apps/Conversations/components/ConversationCTA/useConversationPurchaseButtonData"
-import type { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
+import { useMakeInquiryOrder } from "Apps/Conversations/mutations/useMakeInquiryOrderMutation"
 import { usePartnerOfferCheckoutMutation } from "Apps/PartnerOffer/Routes/Mutations/UsePartnerOfferCheckoutMutation"
+import { useRouter } from "System/Hooks/useRouter"
 import { ErrorWithMetadata } from "Utils/errors"
+import type { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
+import { useState } from "react"
+import { useTracking } from "react-tracking"
 
 interface ConversationPurchaseButtonProps extends BoxProps {
   conversation: useConversationPurchaseButtonData_conversation$key

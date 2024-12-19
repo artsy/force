@@ -1,9 +1,9 @@
-import { renderRelayTree } from "DevTools/renderRelayTree"
-import { MockBoot } from "DevTools/MockBoot"
-import { ViewingRoomsAppFragmentContainer } from "Apps/ViewingRoom/ViewingRoomsApp"
-import { graphql } from "react-relay"
-import type { ViewingRoomsApp_Test_Query$rawResponse } from "__generated__/ViewingRoomsApp_Test_Query.graphql"
 import type { Breakpoint } from "@artsy/palette"
+import { ViewingRoomsAppFragmentContainer } from "Apps/ViewingRoom/ViewingRoomsApp"
+import { MockBoot } from "DevTools/MockBoot"
+import { renderRelayTree } from "DevTools/renderRelayTree"
+import type { ViewingRoomsApp_Test_Query$rawResponse } from "__generated__/ViewingRoomsApp_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({

@@ -1,3 +1,4 @@
+import CloseIcon from "@artsy/icons/CloseIcon"
 import {
   Box,
   Clickable,
@@ -7,14 +8,13 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
-import { compact } from "lodash"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { AuctionBuyersPremiumDialogQuery } from "__generated__/AuctionBuyersPremiumDialogQuery.graphql"
 import type { AuctionBuyersPremiumDialog_sale$data } from "__generated__/AuctionBuyersPremiumDialog_sale.graphql"
-import CloseIcon from "@artsy/icons/CloseIcon"
+import { compact } from "lodash"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface AuctionBuyersPremiumDialogProps {
   onClose(): void

@@ -1,7 +1,7 @@
 import { Box, Image } from "@artsy/palette"
+import { resized } from "Utils/resized"
 import type * as React from "react"
 import { Link } from "react-head"
-import { resized } from "Utils/resized"
 
 interface ArtworkLightboxPlaceholderProps {
   src: string

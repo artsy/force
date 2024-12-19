@@ -1,11 +1,11 @@
-import { Box, type BoxProps, Button, useToasts } from "@artsy/palette"
-import { useMakeInquiryOffer } from "Apps/Conversations/mutations/useMakeInquiryOfferMutation"
-import { useState } from "react"
-import { useRouter } from "System/Hooks/useRouter"
 import { ActionType, OwnerType, type TappedMakeOffer } from "@artsy/cohesion"
-import type { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
-import { useConversationPurchaseButtonData } from "Apps/Conversations/components/ConversationCTA/useConversationPurchaseButtonData"
+import { Box, type BoxProps, Button, useToasts } from "@artsy/palette"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
+import { useConversationPurchaseButtonData } from "Apps/Conversations/components/ConversationCTA/useConversationPurchaseButtonData"
+import { useMakeInquiryOffer } from "Apps/Conversations/mutations/useMakeInquiryOfferMutation"
+import { useRouter } from "System/Hooks/useRouter"
+import type { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
+import { useState } from "react"
 import { useTracking } from "react-tracking"
 
 interface ConversationMakeOfferButtonProps extends BoxProps {

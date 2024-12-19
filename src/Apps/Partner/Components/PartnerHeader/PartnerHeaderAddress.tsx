@@ -1,8 +1,8 @@
-import * as React from "react"
-import styled from "styled-components"
-import { compact, uniq } from "lodash"
 import { media } from "@artsy/palette"
 import type { PartnerHeader_partner$data } from "__generated__/PartnerHeader_partner.graphql"
+import { compact, uniq } from "lodash"
+import * as React from "react"
+import styled from "styled-components"
 
 export const TextWithNoWrap = styled.span`
   white-space: nowrap;

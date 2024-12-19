@@ -1,25 +1,25 @@
-import type * as React from "react"
-import styled from "styled-components"
+import { ContextModule } from "@artsy/cohesion"
 import {
   Box,
-  Text,
-  Image,
-  GridColumns,
   Column,
   Flex,
+  GridColumns,
+  Image,
   Stack,
+  Text,
 } from "@artsy/palette"
-import { PartnerHeaderAddress } from "./PartnerHeaderAddress"
-import { createFragmentContainer, graphql } from "react-relay"
-import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
-import { ContextModule } from "@artsy/cohesion"
-import { RouterLink } from "System/Components/RouterLink"
-import type { PartnerHeader_partner$data } from "__generated__/PartnerHeader_partner.graphql"
 import { themeGet } from "@styled-system/theme-get"
+import { FollowButtonInlineCount } from "Components/FollowButton/Button"
+import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
+import { ProgressiveOnboardingFollowPartner } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowPartner"
+import { RouterLink } from "System/Components/RouterLink"
 import { Jump } from "Utils/Hooks/useJump"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
-import { FollowButtonInlineCount } from "Components/FollowButton/Button"
-import { ProgressiveOnboardingFollowPartner } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowPartner"
+import type { PartnerHeader_partner$data } from "__generated__/PartnerHeader_partner.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
+import { PartnerHeaderAddress } from "./PartnerHeaderAddress"
 
 export interface PartnerHeaderProps {
   partner: PartnerHeader_partner$data

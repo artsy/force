@@ -1,16 +1,16 @@
 import {
   Column,
   GridColumns,
-  ResponsiveBox,
-  Text,
   Image,
+  ResponsiveBox,
   Spacer,
+  Text,
 } from "@artsy/palette"
-import { graphql, createFragmentContainer } from "react-relay"
-import type { ArticlesIndexArticle_article$data } from "__generated__/ArticlesIndexArticle_article.graphql"
-import { RouterLink } from "System/Components/RouterLink"
 import { ArticleShare } from "Components/ArticleShare"
+import { RouterLink } from "System/Components/RouterLink"
+import type { ArticlesIndexArticle_article$data } from "__generated__/ArticlesIndexArticle_article.graphql"
 import type React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArticlesIndexArticleProps {
   article: ArticlesIndexArticle_article$data

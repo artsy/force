@@ -1,10 +1,10 @@
+import { MetaTags } from "Components/MetaTags"
+import { get } from "Utils/get"
+import { getENV } from "Utils/getENV"
+import type { ArtistConsignMeta_artist$data } from "__generated__/ArtistConsignMeta_artist.graphql"
 import type * as React from "react"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { getENV } from "Utils/getENV"
-import type { ArtistConsignMeta_artist$data } from "__generated__/ArtistConsignMeta_artist.graphql"
-import { get } from "Utils/get"
-import { MetaTags } from "Components/MetaTags"
 
 interface ArtistConsignMetaProps {
   artist: ArtistConsignMeta_artist$data

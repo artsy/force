@@ -1,8 +1,8 @@
-import Cookies from "cookies-js"
-import { useEffect } from "react"
-import { getENV } from "Utils/getENV"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { useAuthDialog } from "Components/AuthDialog"
+import { getENV } from "Utils/getENV"
+import Cookies from "cookies-js"
+import { useEffect } from "react"
 
 const KEY = "artist-page-signup-dismissed"
 

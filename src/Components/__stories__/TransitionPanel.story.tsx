@@ -1,4 +1,4 @@
-import { Text, Box, Button, ModalDialog, Stack } from "@artsy/palette"
+import { Box, Button, ModalDialog, Stack, Text } from "@artsy/palette"
 import {
   TransitionPanelProvider,
   useTransitionPanel,

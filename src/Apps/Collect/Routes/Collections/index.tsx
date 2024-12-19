@@ -1,10 +1,10 @@
 import { Box, Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
-import type { Collections_marketingCategories$data } from "__generated__/Collections_marketingCategories.graphql"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
+import { MetaTags } from "Components/MetaTags"
+import { RouterLink } from "System/Components/RouterLink"
+import type { Collections_marketingCategories$data } from "__generated__/Collections_marketingCategories.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CollectionsCategoryFragmentContainer } from "./Components/CollectionsCategory"
-import { RouterLink } from "System/Components/RouterLink"
-import { MetaTags } from "Components/MetaTags"
 
 interface CollectionsAppProps {
   marketingCategories: Collections_marketingCategories$data

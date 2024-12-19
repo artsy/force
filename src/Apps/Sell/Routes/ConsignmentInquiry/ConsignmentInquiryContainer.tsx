@@ -1,11 +1,11 @@
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
+import { Spacer } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { MetaTags } from "Components/MetaTags"
-import { EnableRecaptcha } from "Utils/EnableRecaptcha"
-import { Spacer } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
-import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
+import { EnableRecaptcha } from "Utils/EnableRecaptcha"
 
 export const ConsignmentInquiryContainer: React.FC<
   React.PropsWithChildren<unknown>

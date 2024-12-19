@@ -1,8 +1,8 @@
+import HelpIcon from "@artsy/icons/HelpIcon"
 import { Button } from "@artsy/palette"
-import { mockTracking } from "DevTools/mockTracking"
 import { PricingContextModal } from "Apps/Artwork/Components/PricingContextModal"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import HelpIcon from "@artsy/icons/HelpIcon"
+import { mockTracking } from "DevTools/mockTracking"
 import { mount } from "DevTools/mountWithMockBoot"
 
 jest.unmock("react-relay")

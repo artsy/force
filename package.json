@@ -79,7 +79,7 @@
     "@artsy/img": "1.0.3",
     "@artsy/multienv": "^1.2.0",
     "@artsy/palette": "^40.1.0",
-    "@artsy/palette-charts": "^39.2.0",
+    "@artsy/palette-charts": "^39.2.1",
     "@artsy/react-html-parser": "^3.0.2",
     "@artsy/xapp": "2.0.0",
     "@loadable/component": "5.15.2",
@@ -289,14 +289,23 @@
   },
   "lint-staged": {
     "*": "yarn detect-secrets:hook",
-    "*.@(md)": ["yarn format"],
-    "*.@(js|jsx|ts|tsx)": ["yarn format"]
+    "*.@(md)": [
+      "yarn format"
+    ],
+    "*.@(js|jsx|ts|tsx)": [
+      "yarn format"
+    ]
   },
   "nyc": {
     "check-coverage": true,
     "report-dir": "./.nyc_output/",
-    "reporter": ["lcov", "text-summary"],
-    "extension": [".js"],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "extension": [
+      ".js"
+    ],
     "lines": 0
   },
   "pull-lock": {

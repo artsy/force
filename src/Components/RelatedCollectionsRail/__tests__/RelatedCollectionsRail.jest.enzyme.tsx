@@ -1,14 +1,14 @@
 import { CollectionsRailFixture } from "Apps/__tests__/Fixtures/Collections"
 import { mount } from "enzyme"
 import "jest-styled-components"
-import { clone, drop } from "lodash"
-// eslint-disable-next-line no-restricted-imports
-import Waypoint from "react-waypoint"
+import { paginateCarousel } from "@artsy/palette"
 import { RelatedCollectionEntity } from "Components/RelatedCollectionsRail/RelatedCollectionEntity"
 import { RelatedCollectionsRail } from "Components/RelatedCollectionsRail/RelatedCollectionsRail"
-import { paginateCarousel } from "@artsy/palette"
-import { useTracking } from "react-tracking"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
+import { clone, drop } from "lodash"
+import { useTracking } from "react-tracking"
+// eslint-disable-next-line no-restricted-imports
+import Waypoint from "react-waypoint"
 
 jest.mock("react-tracking")
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")

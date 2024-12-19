@@ -2,22 +2,22 @@ import {
   type AuthContextModule,
   type FollowedArgs,
   type FollowedArtist,
-  followedArtist,
   type FollowedGene,
-  followedGene,
   type FollowedPartner,
-  followedPartner,
   OwnerType,
   type UnfollowedArtist,
-  unfollowedArtist,
   type UnfollowedGene,
-  unfollowedGene,
   type UnfollowedPartner,
+  followedArtist,
+  followedGene,
+  followedPartner,
+  unfollowedArtist,
+  unfollowedGene,
   unfollowedPartner,
 } from "@artsy/cohesion"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useCallback } from "react"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 interface UseFollowButtonTracking {
   ownerType: OwnerType

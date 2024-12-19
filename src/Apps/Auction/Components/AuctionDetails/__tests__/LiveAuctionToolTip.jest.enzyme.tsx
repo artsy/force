@@ -1,5 +1,5 @@
-import { mount } from "enzyme"
 import { LiveAuctionToolTip } from "Apps/Auction/Components/AuctionDetails/LiveAuctionToolTip"
+import { mount } from "enzyme"
 
 describe("LiveAuctionToolTip", () => {
   const getWrapper = props => {

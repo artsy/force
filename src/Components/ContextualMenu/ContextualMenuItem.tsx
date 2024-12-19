@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
-import { themeGet } from "@styled-system/theme-get"
 import { Clickable, type ClickableProps, Separator } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 
 interface ContextualMenuItemProps extends ClickableProps {
   children: React.ReactNode

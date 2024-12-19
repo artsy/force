@@ -1,14 +1,14 @@
 import { Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
-import type { AuctionResult_auctionResult$data } from "__generated__/AuctionResult_auctionResult.graphql"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { AuctionResultImage } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultImage"
 import { AuctionResultMetaData } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultMetaData"
 import { AuctionResultPrice } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultPrice"
 import { AuctionResultTitleInfo } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultTitleInfo"
 import { MetaTags } from "Components/MetaTags"
-import { createFragmentContainer, graphql } from "react-relay"
-import { extractNodes } from "Utils/extractNodes"
 import { TopContextBar } from "Components/TopContextBar"
+import { extractNodes } from "Utils/extractNodes"
+import type { AuctionResult_auctionResult$data } from "__generated__/AuctionResult_auctionResult.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface AuctionResultProps {
   auctionResult: AuctionResult_auctionResult$data

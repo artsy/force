@@ -1,4 +1,4 @@
-import type { FC } from "react"
+import { ActionType, type ClickedTooltip } from "@artsy/cohesion"
 import {
   Box,
   Image,
@@ -7,15 +7,15 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { EntityTooltipPartnerQuery } from "__generated__/EntityTooltipPartnerQuery.graphql"
 import type { EntityTooltipPartner_partner$data } from "__generated__/EntityTooltipPartner_partner.graphql"
-import { RouterLink } from "System/Components/RouterLink"
-import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { ActionType, type ClickedTooltip } from "@artsy/cohesion"
 
 interface EntityTooltipPartnerProps {
   partner: EntityTooltipPartner_partner$data

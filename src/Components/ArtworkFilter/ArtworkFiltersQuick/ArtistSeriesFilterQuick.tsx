@@ -1,7 +1,7 @@
-import type { FC } from "react"
-import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { DropdownProps } from "@artsy/palette"
+import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { FilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/FilterQuick"
+import type { FC } from "react"
 
 export interface ArtistSeriesFilterQuickProps
   extends Omit<DropdownProps, "dropdown" | "children"> {}

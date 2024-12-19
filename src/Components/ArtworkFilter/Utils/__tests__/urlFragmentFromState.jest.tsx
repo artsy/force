@@ -1,5 +1,5 @@
-import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { urlFragmentFromState } from "Components/ArtworkFilter/Utils/urlFragmentFromState"
 
 describe("urlFragmentFromState", () => {

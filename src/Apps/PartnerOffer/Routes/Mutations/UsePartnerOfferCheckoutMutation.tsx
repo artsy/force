@@ -1,6 +1,6 @@
-import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
 import type { UsePartnerOfferCheckoutMutation } from "__generated__/UsePartnerOfferCheckoutMutation.graphql"
+import { graphql } from "react-relay"
 
 export const usePartnerOfferCheckoutMutation = () => {
   return useMutation<UsePartnerOfferCheckoutMutation>({

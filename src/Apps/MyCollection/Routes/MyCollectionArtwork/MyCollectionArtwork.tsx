@@ -1,5 +1,4 @@
 import { Box, Column, GridColumns, Spacer, Tab, Tabs } from "@artsy/palette"
-import type { MyCollectionArtwork_artwork$data } from "__generated__/MyCollectionArtwork_artwork.graphql"
 import { MyCollectionArtworkAboutTab } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkAboutTab"
 import { MyCollectionArtworkDetails } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetails"
 import { MyCollectionArtworkHeader } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkHeader"
@@ -8,15 +7,16 @@ import { MyCollectionArtworkSWASubmissionStatus } from "Apps/MyCollection/Routes
 import { MyCollectionArtworkTitle } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkTitle"
 import { MyCollectionPriceEstimateStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionPriceEstimateStatus"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrentArticlesRail"
-import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { Media } from "Utils/Responsive"
+import type { MyCollectionArtwork_artwork$data } from "__generated__/MyCollectionArtwork_artwork.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 import { MyCollectionArtworkImageBrowser } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkInsights } from "./Components/MyCollectionArtworkInsights"
 import { MyCollectionArtworkMeta } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkRequestPriceEstimate } from "./Components/MyCollectionArtworkRequestPriceEstimate"
-import { MyCollectionArtworkSubmitForSale } from "./Components/MyCollectionArtworkSubmitForSale"
 import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
+import { MyCollectionArtworkSubmitForSale } from "./Components/MyCollectionArtworkSubmitForSale"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork$data

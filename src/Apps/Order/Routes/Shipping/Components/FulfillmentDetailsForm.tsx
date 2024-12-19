@@ -1,21 +1,25 @@
-import * as Yup from "yup"
 import {
-  usePrevious,
-  RadioGroup,
   BorderedRadio,
-  Spacer,
-  GridColumns,
-  Column,
-  Input,
   Checkbox,
+  Column,
+  GridColumns,
+  Input,
+  RadioGroup,
+  Spacer,
   Text,
+  usePrevious,
 } from "@artsy/palette"
 import {
-  AddressVerifiedBy,
   AddressVerificationFlowQueryRenderer,
+  AddressVerifiedBy,
 } from "Apps/Order/Components/AddressVerificationFlow"
+import * as Yup from "yup"
 
+import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { Collapse } from "Apps/Order/Components/Collapse"
+import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { SavedAddresses } from "Apps/Order/Routes/Shipping/Components/SavedAddresses"
+import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import {
   ADDRESS_VALIDATION_SHAPE,
   BASIC_PHONE_VALIDATION_SHAPE,
@@ -27,25 +31,21 @@ import {
   addressWithFallbackValues,
   getInitialShippingValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
+import { ScrollToFieldError } from "Apps/Order/Utils/scrollToFieldError"
+import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
 import { CountrySelect } from "Components/CountrySelect"
 import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import type { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
 import {
-  useFormikContext,
   Form,
-  type FormikTouched,
-  type FormikErrors,
   Formik,
+  type FormikErrors,
+  type FormikTouched,
+  useFormikContext,
 } from "formik"
 import { pick } from "lodash"
 import { useCallback, useEffect } from "react"
-import { Collapse } from "Apps/Order/Components/Collapse"
-import type { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
-import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
-import { ScrollToFieldError } from "Apps/Order/Utils/scrollToFieldError"
-import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 
 export interface FulfillmentDetailsFormProps
   extends FulfillmentDetailsFormLayoutProps {

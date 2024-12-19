@@ -1,12 +1,12 @@
+import { usePartnerArtistsLoadingContext } from "Apps/Partner/Utils/PartnerArtistsLoadingContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { PartnerArtistsQuery } from "__generated__/PartnerArtistsQuery.graphql"
+import type { PartnerArtists_partner$data } from "__generated__/PartnerArtists_partner.graphql"
 import { useEffect } from "react"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { PartnerArtists_partner$data } from "__generated__/PartnerArtists_partner.graphql"
-import type { PartnerArtistsQuery } from "__generated__/PartnerArtistsQuery.graphql"
-import { usePartnerArtistsLoadingContext } from "Apps/Partner/Utils/PartnerArtistsLoadingContext"
-import { PartnerArtistListPlaceholder } from "./PartnerArtistListPlaceholder"
 import { PartnerArtistListFragmentContainer } from "./PartnerArtistList"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { PartnerArtistListPlaceholder } from "./PartnerArtistListPlaceholder"
 
 export interface PartnerArtistsProps {
   partner: PartnerArtists_partner$data

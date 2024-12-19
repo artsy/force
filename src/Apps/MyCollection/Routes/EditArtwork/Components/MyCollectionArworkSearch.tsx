@@ -1,10 +1,10 @@
 import { Box, Button, Clickable, Spacer, Text } from "@artsy/palette"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { Masonry } from "Components/Masonry"
-import { Fragment } from "react"
-import { graphql, useLazyLoadQuery } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import type { MyCollectionArworkSearchQuery } from "__generated__/MyCollectionArworkSearchQuery.graphql"
+import { Fragment } from "react"
+import { graphql, useLazyLoadQuery } from "react-relay"
 
 interface MyCollectionArworkSearchProps {
   artistId: string

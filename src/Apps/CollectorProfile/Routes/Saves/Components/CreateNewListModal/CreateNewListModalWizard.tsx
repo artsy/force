@@ -1,6 +1,6 @@
 import { type FC, useState } from "react"
-import { CreateNewListModal, type ArtworkList } from "./CreateNewListModal"
 import { AddArtworksModal } from "./AddArtworksModal"
+import { type ArtworkList, CreateNewListModal } from "./CreateNewListModal"
 
 export interface CreateNewListModalWizardProps {
   onComplete: (artworkList: ArtworkList) => void

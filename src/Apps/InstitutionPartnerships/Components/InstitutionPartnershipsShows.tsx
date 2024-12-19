@@ -1,13 +1,13 @@
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { InstitutionPartnershipsShows_orderedSet$data } from "__generated__/InstitutionPartnershipsShows_orderedSet.graphql"
-import type { InstitutionPartnershipsShowsQuery } from "__generated__/InstitutionPartnershipsShowsQuery.graphql"
+import { Column, GridColumns } from "@artsy/palette"
 import {
   CellShowFragmentContainer,
   CellShowPlaceholder,
 } from "Components/Cells/CellShow"
-import { Column, GridColumns } from "@artsy/palette"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { InstitutionPartnershipsShowsQuery } from "__generated__/InstitutionPartnershipsShowsQuery.graphql"
+import type { InstitutionPartnershipsShows_orderedSet$data } from "__generated__/InstitutionPartnershipsShows_orderedSet.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface InstitutionPartnershipsShowsProps {
   orderedSet: InstitutionPartnershipsShows_orderedSet$data

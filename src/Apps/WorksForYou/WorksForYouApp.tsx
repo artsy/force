@@ -1,9 +1,4 @@
-import { createFragmentContainer, graphql } from "react-relay"
-import { MetaTags } from "Components/MetaTags"
-import type { WorksForYouApp_viewerArtist$data } from "__generated__/WorksForYouApp_viewerArtist.graphql"
-import type { WorksForYouApp_viewerFeed$data } from "__generated__/WorksForYouApp_viewerFeed.graphql"
-import type { WorksForYouApp_viewerMe$data } from "__generated__/WorksForYouApp_viewerMe.graphql"
-import { WorksForYouFeedPaginationContainer } from "./Components/WorksForYouFeed"
+import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
 import {
   Button,
   Column,
@@ -14,13 +9,18 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { WorksForYouArtistFeedPaginationContainer } from "./Components/WorksForYouArtistFeed"
-import { useRouter } from "System/Hooks/useRouter"
-import { extractNodes } from "Utils/extractNodes"
-import { RouterLink } from "System/Components/RouterLink"
 import { LogInPrompt } from "Apps/Components/LogInPrompt"
-import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
+import { MetaTags } from "Components/MetaTags"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { extractNodes } from "Utils/extractNodes"
+import type { WorksForYouApp_viewerArtist$data } from "__generated__/WorksForYouApp_viewerArtist.graphql"
+import type { WorksForYouApp_viewerFeed$data } from "__generated__/WorksForYouApp_viewerFeed.graphql"
+import type { WorksForYouApp_viewerMe$data } from "__generated__/WorksForYouApp_viewerMe.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
+import { WorksForYouArtistFeedPaginationContainer } from "./Components/WorksForYouArtistFeed"
+import { WorksForYouFeedPaginationContainer } from "./Components/WorksForYouFeed"
 
 interface WorksForYouProps {
   viewerArtist: WorksForYouApp_viewerArtist$data

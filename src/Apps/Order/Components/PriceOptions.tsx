@@ -1,26 +1,26 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { BorderedRadio, Flex, RadioGroup, Text } from "@artsy/palette"
-import { useEffect, useState } from "react"
-import { OfferInput } from "Apps/Order/Components/OfferInput"
-import { MinPriceWarning } from "./MinPriceWarning"
-import { compact } from "lodash"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ActionType,
   type ClickedOfferOption,
   type PageOwnerType,
 } from "@artsy/cohesion"
-import type { PriceOptions_artwork$data } from "__generated__/PriceOptions_artwork.graphql"
-import type { PriceOptions_order$data } from "__generated__/PriceOptions_order.graphql"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { BorderedRadio, Flex, RadioGroup, Text } from "@artsy/palette"
+import { OfferInput } from "Apps/Order/Components/OfferInput"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
-import { useTracking } from "react-tracking"
-import { Jump, useJump } from "Utils/Hooks/useJump"
 import {
   getInitialOfferState,
   getOfferPriceOptions,
 } from "Apps/Order/Utils/offerUtils"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
+import { Jump, useJump } from "Utils/Hooks/useJump"
+import type { PriceOptions_artwork$data } from "__generated__/PriceOptions_artwork.graphql"
+import type { PriceOptions_order$data } from "__generated__/PriceOptions_order.graphql"
+import { compact } from "lodash"
+import { useEffect, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { MinPriceWarning } from "./MinPriceWarning"
 
 export interface PriceOptionsProps {
   onChange: (value: number) => void

@@ -1,18 +1,18 @@
-import { Spacer, Text, Box, Join, Pill } from "@artsy/palette"
-import type { FC } from "react"
-import { graphql } from "react-relay"
-import { useMutation } from "Utils/Hooks/useMutation"
+import { Box, Join, Pill, Spacer, Text } from "@artsy/palette"
 import { OnboardingFigure } from "Components/Onboarding/Components/OnboardingFigure"
 import { OnboardingQuestionPanel } from "Components/Onboarding/Components/OnboardingQuestionPanel"
+import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
+import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
+import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import {
   OPTION_NO_IM_JUST_STARTING_OUT,
   OPTION_YES_I_LOVE_COLLECTING_ART,
 } from "Components/Onboarding/config"
-import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
-import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
-import type { OnboardingQuestionOneMutation } from "__generated__/OnboardingQuestionOneMutation.graphql"
-import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
+import { useMutation } from "Utils/Hooks/useMutation"
+import type { OnboardingQuestionOneMutation } from "__generated__/OnboardingQuestionOneMutation.graphql"
+import type { FC } from "react"
+import { graphql } from "react-relay"
 
 export const OnboardingQuestionOne: FC<
   React.PropsWithChildren<unknown>

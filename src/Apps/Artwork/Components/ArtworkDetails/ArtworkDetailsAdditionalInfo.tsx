@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Clickable,
@@ -10,21 +11,20 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
+import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
+import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
+import { ArtworkDetailsMediumModalFragmentContainer } from "Apps/Artwork/Components/ArtworkDetailsMediumModal"
+import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
+import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
+import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { ArtworkDetailsAdditionalInfo_artwork$data } from "__generated__/ArtworkDetailsAdditionalInfo_artwork.graphql"
+import type { PrivateArtworkAdditionalInfo_artwork$data } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
 import { useState } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RequestConditionReportQueryRenderer } from "./RequestConditionReport"
-import { ArtworkDetailsMediumModalFragmentContainer } from "Apps/Artwork/Components/ArtworkDetailsMediumModal"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { ContextModule } from "@artsy/cohesion"
-import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
 import { useTracking } from "react-tracking"
-import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
-import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
-import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
-import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
-import type { PrivateArtworkAdditionalInfo_artwork$data } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
+import { RequestConditionReportQueryRenderer } from "./RequestConditionReport"
 
 export interface ArtworkDetailsAdditionalInfoProps extends FlexProps {
   artwork: ArtworkDetailsAdditionalInfo_artwork$data

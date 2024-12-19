@@ -1,16 +1,16 @@
+import { Box, Button, Card, Column, GridColumns } from "@artsy/palette"
+import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
+import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
+import { cropped } from "Utils/resized"
+import type { ViewingRoomsLatestGrid_viewingRooms$data } from "__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
 import { useState } from "react"
 import type * as React from "react"
-import { Button, Card, GridColumns, Column, Box } from "@artsy/palette"
 import {
   type RelayPaginationProp,
   createPaginationContainer,
   graphql,
 } from "react-relay"
-import type { ViewingRoomsLatestGrid_viewingRooms$data } from "__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
-import { RouterLink } from "System/Components/RouterLink"
-import { cropped } from "Utils/resized"
-import { extractNodes } from "Utils/extractNodes"
-import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
 
 export interface ViewingRoomsLatestGridProps {
   relay: RelayPaginationProp

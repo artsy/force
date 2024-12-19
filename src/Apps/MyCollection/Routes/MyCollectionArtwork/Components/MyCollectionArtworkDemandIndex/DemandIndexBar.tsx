@@ -1,7 +1,7 @@
 import { Box, Flex } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import styled from "styled-components"
 import { TriangleDownIcon } from "./TriangleDownIcon"
-import { themeGet } from "@styled-system/theme-get"
 
 export const DemandIndexBar: React.FC<
   React.PropsWithChildren<{ progress: number }>

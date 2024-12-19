@@ -1,4 +1,6 @@
-import type { ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse } from "__generated__/ArtworkSidebarCurrentBidInfo_Test_Query.graphql"
+import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
+import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
+import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCurrentBidInfo"
 import {
   AuctionPreview,
   AuctionPreviewNoStartingBid,
@@ -14,12 +16,10 @@ import {
   OpenAuctionReserveNotMetIncreasingOwnBid,
   OpenAuctionReserveNotMetWithBids,
 } from "Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarCurrentBidInfo"
-import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCurrentBidInfo"
-import { renderRelayTree } from "DevTools/renderRelayTree"
-import { graphql } from "react-relay"
 import { mockTracking } from "DevTools/mockTracking"
-import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
-import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
+import { renderRelayTree } from "DevTools/renderRelayTree"
+import type { ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse } from "__generated__/ArtworkSidebarCurrentBidInfo_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")

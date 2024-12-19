@@ -1,22 +1,22 @@
-import { Button, Flex, Text, Spacer } from "@artsy/palette"
-import type { Reject_order$data } from "__generated__/Reject_order.graphql"
-import type { RejectOfferMutation } from "__generated__/RejectOfferMutation.graphql"
+import { Button, Flex, Spacer, Text } from "@artsy/palette"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
-import type { Router } from "found"
-import type { FC } from "react"
-import { CountdownTimer } from "Components/CountdownTimer"
-import { StepSummaryItem } from "Components/StepSummaryItem"
-import { Media } from "Utils/Responsive"
-import { logger } from "Apps/Order/Routes/Respond"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { counterofferFlowSteps } from "Apps/Order/Components/OrderStepper"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
+import { logger } from "Apps/Order/Routes/Respond"
 import {
   type CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
+import { CountdownTimer } from "Components/CountdownTimer"
+import { StepSummaryItem } from "Components/StepSummaryItem"
+import { Media } from "Utils/Responsive"
+import type { RejectOfferMutation } from "__generated__/RejectOfferMutation.graphql"
+import type { Reject_order$data } from "__generated__/Reject_order.graphql"
+import type { Router } from "found"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 
 interface RejectProps {
   order: Reject_order$data

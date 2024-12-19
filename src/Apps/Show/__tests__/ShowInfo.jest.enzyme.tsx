@@ -1,6 +1,6 @@
-import { graphql } from "react-relay"
 import { ShowInfoFragmentContainer } from "Apps/Show/Routes/ShowInfo"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

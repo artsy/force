@@ -1,7 +1,7 @@
-import { screen, render, fireEvent, act, waitFor } from "@testing-library/react"
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { AddressForm } from "Components/Address/AddressForm"
-import { type FC, useState } from "react"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { type FC, useState } from "react"
 
 jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),

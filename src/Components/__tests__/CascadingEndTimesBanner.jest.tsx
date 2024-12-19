@@ -1,7 +1,7 @@
-import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
 import { screen } from "@testing-library/react"
+import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

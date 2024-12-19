@@ -1,5 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Spacer } from "@artsy/palette"
+import { getENV } from "Utils/getENV"
 import type { ArtworkImageBrowser_artwork$data } from "__generated__/ArtworkImageBrowser_artwork.graphql"
 import { scale } from "proportional-scale"
 import type * as React from "react"
@@ -9,7 +10,6 @@ import { useCursor } from "use-cursor"
 import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActions"
 import { ArtworkImageBrowserLargeFragmentContainer } from "./ArtworkImageBrowserLarge"
 import { ArtworkImageBrowserSmallFragmentContainer } from "./ArtworkImageBrowserSmall"
-import { getENV } from "Utils/getENV"
 
 // Dimension used to scale both images and videos
 export const MAX_DIMENSION = 800

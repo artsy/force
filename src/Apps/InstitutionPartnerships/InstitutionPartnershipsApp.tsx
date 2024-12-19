@@ -11,10 +11,10 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import type { FC } from "react"
 import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Components/RouterLink"
 import { cropped, resized } from "Utils/resized"
+import type { FC } from "react"
 import { InstitutionPartnershipsHero } from "./Components/InstitutionPartnershipsHero"
 import { InstitutionPartnershipsProfilesQueryRenderer } from "./Components/InstitutionPartnershipsProfiles"
 import { InstitutionPartnershipsShowsQueryRenderer } from "./Components/InstitutionPartnershipsShows"

@@ -1,8 +1,8 @@
+import { FeaturedCollectionRailEntityFragmentContainer } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/FeaturedCollectionsRails/FeaturedCollectionRailEntity"
+import { Rail } from "Components/Rail/Rail"
 import type { FeaturedCollectionsRails_collectionGroup$data } from "__generated__/FeaturedCollectionsRails_collectionGroup.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Rail } from "Components/Rail/Rail"
-import { FeaturedCollectionRailEntityFragmentContainer } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/FeaturedCollectionsRails/FeaturedCollectionRailEntity"
 
 interface Props {
   collectionGroup: FeaturedCollectionsRails_collectionGroup$data

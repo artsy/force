@@ -7,16 +7,16 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
+import { SaleDetailTimerFragmentContainer } from "Apps/Auction/Components/AuctionDetails/SaleDetailTimer"
+import { RegisterButtonFragmentContainer } from "Apps/Auction/Components/RegisterButton"
+import { getENV } from "Utils/getENV"
+import type { AuctionDetails_me$data } from "__generated__/AuctionDetails_me.graphql"
+import type { AuctionDetails_sale$data } from "__generated__/AuctionDetails_sale.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AddToCalendar } from "./AddToCalendar"
-import { formatIsoDateNoZoneOffset } from "./helpers"
-import type { AuctionDetails_sale$data } from "__generated__/AuctionDetails_sale.graphql"
-import type { AuctionDetails_me$data } from "__generated__/AuctionDetails_me.graphql"
-import { AuctionInfoSidebarFragmentContainer } from "./AuctionInfoSidebar"
-import { RegisterButtonFragmentContainer } from "Apps/Auction/Components/RegisterButton"
-import { SaleDetailTimerFragmentContainer } from "Apps/Auction/Components/AuctionDetails/SaleDetailTimer"
-import { getENV } from "Utils/getENV"
 import { AuctionDetailsStartTimeQueryRenderer } from "./AuctionDetailsStartTime"
+import { AuctionInfoSidebarFragmentContainer } from "./AuctionInfoSidebar"
+import { formatIsoDateNoZoneOffset } from "./helpers"
 
 interface AuctionDetailsProps {
   sale: AuctionDetails_sale$data

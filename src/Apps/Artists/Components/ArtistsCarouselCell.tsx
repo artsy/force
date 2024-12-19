@@ -1,10 +1,10 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Image, Text } from "@artsy/palette"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
+import { RouterLink } from "System/Components/RouterLink"
+import type { ArtistsCarouselCell_featuredLink$data } from "__generated__/ArtistsCarouselCell_featuredLink.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Components/RouterLink"
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import type { ArtistsCarouselCell_featuredLink$data } from "__generated__/ArtistsCarouselCell_featuredLink.graphql"
 
 interface ArtistsCarouselCellProps {
   featuredLink: ArtistsCarouselCell_featuredLink$data

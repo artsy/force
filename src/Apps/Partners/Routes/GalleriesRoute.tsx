@@ -8,15 +8,15 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { MetaTags } from "Components/MetaTags"
-import type { GalleriesRoute_viewer$data } from "__generated__/GalleriesRoute_viewer.graphql"
-import { PartnersFilters } from "Apps/Partners/Components/PartnersFilters"
 import { PartnersFeaturedCarouselFragmentContainer } from "Apps/Partners/Components/PartnersFeaturedCarousel"
 import { PartnersFilteredCellsQueryRenderer } from "Apps/Partners/Components/PartnersFilteredCells"
+import { PartnersFilters } from "Apps/Partners/Components/PartnersFilters"
 import { PartnersRailsQueryRenderer } from "Apps/Partners/Components/PartnersRails"
+import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
+import type { GalleriesRoute_viewer$data } from "__generated__/GalleriesRoute_viewer.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface GalleriesRouteProps {
   viewer: GalleriesRoute_viewer$data

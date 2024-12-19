@@ -1,10 +1,10 @@
-import { mount } from "enzyme"
 import {
   type AuctionResultsFilterContextProps,
   AuctionResultsFilterContextProvider,
   useAuctionResultsFilterContext,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { SizeFilter } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/SizeFilter"
+import { mount } from "enzyme"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

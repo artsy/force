@@ -1,5 +1,4 @@
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtQuizArtworks_me$data } from "__generated__/ArtQuizArtworks_me.graphql"
+import { ContextModule } from "@artsy/cohesion"
 import {
   Clickable,
   Flex,
@@ -13,21 +12,22 @@ import {
   type ArtQuizButtonRef,
 } from "Apps/ArtQuiz/Components/ArtQuizButton"
 import { Mode, useArtQuizCards } from "Apps/ArtQuiz/Components/ArtQuizCard"
-import { useSwipe } from "Apps/ArtQuiz/Hooks/useSwipe"
+import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
+import { ArtQuizResultsLoader } from "Apps/ArtQuiz/Components/ArtQuizResultsLoader"
 import { useDislikeArtwork } from "Apps/ArtQuiz/Hooks/useDislikeArtwork"
-import { type FC, useCallback, useRef, useState } from "react"
+import { useSaveArtwork } from "Apps/ArtQuiz/Hooks/useSaveArtwork"
+import { useSwipe } from "Apps/ArtQuiz/Hooks/useSwipe"
+import { useUpdateQuiz } from "Apps/ArtQuiz/Hooks/useUpdateQuiz"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
-import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
-import { useUpdateQuiz } from "Apps/ArtQuiz/Hooks/useUpdateQuiz"
-import { useSaveArtwork } from "Apps/ArtQuiz/Hooks/useSaveArtwork"
-import { ArtQuizResultsLoader } from "Apps/ArtQuiz/Components/ArtQuizResultsLoader"
+import type { ArtQuizArtworks_me$data } from "__generated__/ArtQuizArtworks_me.graphql"
+import { type FC, useCallback, useRef, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { ContextModule } from "@artsy/cohesion"
 
-import { compact } from "lodash"
-import { ArtQuizArtworksCardFragmentContainer } from "Apps/ArtQuiz/Components/ArtQuizArtworksCard"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
+import { ArtQuizArtworksCardFragmentContainer } from "Apps/ArtQuiz/Components/ArtQuizArtworksCard"
+import { compact } from "lodash"
 
 interface ArtQuizArtworksProps {
   me: ArtQuizArtworks_me$data

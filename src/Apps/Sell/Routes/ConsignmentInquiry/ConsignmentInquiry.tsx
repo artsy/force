@@ -1,9 +1,6 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import type { SentConsignmentInquiry } from "@artsy/cohesion/dist/Schema/Events/Consignments"
 import { Button, Spacer, Text, useToasts } from "@artsy/palette"
-import type { ConsignmentInquiry_me$data } from "__generated__/ConsignmentInquiry_me.graphql"
-import type { ConsignmentInquiry_viewer$data } from "__generated__/ConsignmentInquiry_viewer.graphql"
-import type { CreateConsignmentInquiryMutationInput } from "__generated__/useCreateConsignmentInquiryMutation.graphql"
 import { validateContactInformationValidationSchema } from "Apps/MyCollection/Routes/PriceEstimate/utils/contactInformationValidationSchema"
 import {
   ConsignmentInquiryForm,
@@ -13,15 +10,18 @@ import { ConsignmentInquiryFormAbandonEditModal } from "Apps/Sell/Routes/Consign
 import { useCreateConsignmentInquiry } from "Apps/Sell/Routes/ConsignmentInquiry/utils/useCreateConsignmentInquiry"
 import { consignmentInquiryValidationSchema } from "Apps/Sell/Routes/ConsignmentInquiry/utils/validation"
 import { TopContextBar } from "Components/TopContextBar"
-import { Form, Formik } from "formik"
-import { useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { COUNTRY_CODES } from "Utils/countries"
 import createLogger from "Utils/logger"
 import { recaptcha } from "Utils/recaptcha"
+import type { ConsignmentInquiry_me$data } from "__generated__/ConsignmentInquiry_me.graphql"
+import type { ConsignmentInquiry_viewer$data } from "__generated__/ConsignmentInquiry_viewer.graphql"
+import type { CreateConsignmentInquiryMutationInput } from "__generated__/useCreateConsignmentInquiryMutation.graphql"
+import { Form, Formik } from "formik"
+import { useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 const logger = createLogger("ConsignmentInquiry/ConsignmentInquiry.tsx")
 

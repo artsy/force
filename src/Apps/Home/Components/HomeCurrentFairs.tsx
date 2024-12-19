@@ -1,29 +1,29 @@
 import {
-  Image,
-  Text,
-  Flex,
-  Spacer,
-  Skeleton,
-  SkeletonText,
-  SkeletonBox,
-  ResponsiveBox,
-  GridColumns,
-  Column,
-} from "@artsy/palette"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useTracking } from "react-tracking"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { RouterLink } from "System/Components/RouterLink"
-import type { HomeCurrentFairs_viewer$data } from "__generated__/HomeCurrentFairs_viewer.graphql"
-import type { HomeCurrentFairsQuery } from "__generated__/HomeCurrentFairsQuery.graphql"
-import {
   ActionType,
   type ClickedFairGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import {
+  Column,
+  Flex,
+  GridColumns,
+  Image,
+  ResponsiveBox,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+  Text,
+} from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { HomeCurrentFairsQuery } from "__generated__/HomeCurrentFairsQuery.graphql"
+import type { HomeCurrentFairs_viewer$data } from "__generated__/HomeCurrentFairs_viewer.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface HomeCurrentFairsProps {
   viewer: HomeCurrentFairs_viewer$data

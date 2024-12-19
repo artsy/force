@@ -5,17 +5,17 @@ import {
   Stack,
   useDidMount,
 } from "@artsy/palette"
-import { type FC, Suspense } from "react"
-import { graphql, useFragment, useLazyLoadQuery } from "react-relay"
-import type { CollectorProfileArtistsListArtistsQuery } from "__generated__/CollectorProfileArtistsListArtistsQuery.graphql"
 import {
   CollectorProfileArtistsListArtist,
   CollectorProfileArtistsListArtistSkeleton,
 } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsListArtist"
-import { compact } from "lodash"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { useRouter } from "System/Hooks/useRouter"
+import type { CollectorProfileArtistsListArtistsQuery } from "__generated__/CollectorProfileArtistsListArtistsQuery.graphql"
 import type { CollectorProfileArtistsList_me$key } from "__generated__/CollectorProfileArtistsList_me.graphql"
+import { compact } from "lodash"
+import { type FC, Suspense } from "react"
+import { graphql, useFragment, useLazyLoadQuery } from "react-relay"
 
 const PAGE_SIZE = 10
 

@@ -1,8 +1,8 @@
 import "./Server/loadenv"
-import express from "express"
-import { createRsbuild, loadConfig, logger } from "@rsbuild/core"
-import { createReloadable } from "@artsy/express-reloadable"
 import { execSync } from "child_process"
+import { createReloadable } from "@artsy/express-reloadable"
+import { createRsbuild, loadConfig, logger } from "@rsbuild/core"
+import express from "express"
 
 export async function startDevServer() {
   // Wait for multienv to load envs

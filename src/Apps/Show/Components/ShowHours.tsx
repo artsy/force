@@ -1,8 +1,8 @@
 import type { BoxProps } from "@artsy/palette"
+import type { ShowHours_show$data } from "__generated__/ShowHours_show.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowLocationHoursFragmentContainer } from "./ShowLocationHours"
-import type { ShowHours_show$data } from "__generated__/ShowHours_show.graphql"
 
 export interface ShowHoursProps extends BoxProps {
   show: ShowHours_show$data

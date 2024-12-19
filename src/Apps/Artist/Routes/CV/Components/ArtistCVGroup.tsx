@@ -1,14 +1,14 @@
-import { groupBy } from "lodash"
+import { Box, Button, Column, GridColumns, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistCVGroup_artist$data } from "__generated__/ArtistCVGroup_artist.graphql"
-import { Text, Box, GridColumns, Column, Button } from "@artsy/palette"
+import { groupBy } from "lodash"
+import { type FC, Fragment, useState } from "react"
 import {
+  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
-  type RelayPaginationProp,
 } from "react-relay"
-import { useState, Fragment, type FC } from "react"
 
 const REFETCH_PAGE_SIZE = 10
 

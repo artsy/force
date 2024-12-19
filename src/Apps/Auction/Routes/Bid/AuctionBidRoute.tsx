@@ -7,31 +7,31 @@ import {
   Text,
   useDidMount,
 } from "@artsy/palette"
-import {
-  createRefetchContainer,
-  graphql,
-  type RelayRefetchProp,
-} from "react-relay"
-import { useRouter } from "System/Hooks/useRouter"
-import type { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
-import type { AuctionBidRoute_artwork$data } from "__generated__/AuctionBidRoute_artwork.graphql"
-import type { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
-import { AuctionLotInfoFragmentContainer } from "./Components/AuctionLotInfo"
-import { dropWhile } from "lodash"
-import { Form, Formik } from "formik"
-import { PricingTransparencyQueryRenderer } from "./Components/PricingTransparency"
-import type { Match } from "found"
-import { useEffect } from "react"
-import { useSubmitBid } from "./useSubmitBid"
+import { ArtworkSidebarAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer"
 import { AddressFormWithCreditCard } from "Apps/Auction/Components/Form/AddressFormWithCreditCard"
 import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
-import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import { CreditCardInputProvider } from "Components/CreditCardInput"
 import { ErrorStatus } from "Apps/Auction/Components/Form/ErrorStatus"
-import { ArtworkSidebarAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer"
-import { biddingValidationSchemas } from "Apps/Auction/Components/Form/Utils/validationSchemas"
 import { getSelectedBid } from "Apps/Auction/Components/Form/Utils/getSelectedBid"
 import { initialValuesForBidding } from "Apps/Auction/Components/Form/Utils/initialValues"
+import { biddingValidationSchemas } from "Apps/Auction/Components/Form/Utils/validationSchemas"
+import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
+import { CreditCardInputProvider } from "Components/CreditCardInput"
+import { useRouter } from "System/Hooks/useRouter"
+import type { AuctionBidRoute_artwork$data } from "__generated__/AuctionBidRoute_artwork.graphql"
+import type { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
+import type { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
+import { Form, Formik } from "formik"
+import type { Match } from "found"
+import { dropWhile } from "lodash"
+import { useEffect } from "react"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
+import { AuctionLotInfoFragmentContainer } from "./Components/AuctionLotInfo"
+import { PricingTransparencyQueryRenderer } from "./Components/PricingTransparency"
+import { useSubmitBid } from "./useSubmitBid"
 
 interface AuctionBidRouteProps {
   artwork: AuctionBidRoute_artwork$data

@@ -1,6 +1,6 @@
 import { TextArea, type TextAreaChange } from "@artsy/palette"
-import type * as React from "react"
 import { useInquiry } from "Components/Inquiry/useInquiry"
+import type * as React from "react"
 
 export const OfferNote: React.FC<
   React.PropsWithChildren<{

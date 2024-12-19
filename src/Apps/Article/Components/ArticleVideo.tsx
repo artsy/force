@@ -1,6 +1,5 @@
 import {
   Box,
-  boxMixin,
   type BoxProps,
   Clickable,
   Column,
@@ -11,24 +10,25 @@ import {
   Image,
   Spacer,
   Text,
+  boxMixin,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { useArticleTracking } from "Apps/Article/useArticleTracking"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { ArticleShare } from "Components/ArticleShare"
+import { useFullBleedHeaderHeight } from "Components/FullBleedHeader/FullBleedHeader"
+import { RouterLink } from "System/Components/RouterLink"
+import { useMode } from "Utils/Hooks/useMode"
+import type { ArticleVideo_article$data } from "__generated__/ArticleVideo_article.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
 import { type ResponsiveValue, variant } from "styled-system"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArticleAd } from "./ArticleAd/ArticleAd"
-import { ArticleShare } from "Components/ArticleShare"
-import { useMode } from "Utils/Hooks/useMode"
-import type { ArticleVideo_article$data } from "__generated__/ArticleVideo_article.graphql"
-import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
-import { RouterLink } from "System/Components/RouterLink"
-import { ArticleSeriesItemFragmentContainer } from "./ArticleSeriesItem"
 import { ArticleHTML } from "./ArticleHTML"
-import { useArticleTracking } from "Apps/Article/useArticleTracking"
-import { useFullBleedHeaderHeight } from "Components/FullBleedHeader/FullBleedHeader"
+import { ArticleSeriesItemFragmentContainer } from "./ArticleSeriesItem"
+import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
 
 interface ArticleVideoProps {
   article: ArticleVideo_article$data

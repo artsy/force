@@ -1,14 +1,14 @@
-import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
-  type Impression,
   ActionType,
-  ContextModule,
-  type ClickedExternalNewsSource,
-  type ClickedSponsorLink,
   type ClickedArticleShare,
+  type ClickedExternalNewsSource,
   type ClickedPlayVideo,
+  type ClickedSponsorLink,
+  ContextModule,
+  type Impression,
 } from "@artsy/cohesion"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useTracking } from "react-tracking"
 
 export const useArticleTracking = () => {
   const { trackEvent } = useTracking()

@@ -1,10 +1,10 @@
+import { ActionType } from "@artsy/cohesion"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Flex, Text } from "@artsy/palette"
 import type { FC } from "react"
 import { useTracking } from "react-tracking"
-import { ActionType } from "@artsy/cohesion"
-import { SuggestionItemLink } from "./SuggestionItem/SuggestionItemLink"
 import { Highlight } from "./SuggestionItem/Highlight"
+import { SuggestionItemLink } from "./SuggestionItem/SuggestionItemLink"
 import type { PillType } from "./constants"
 
 interface SuggestionItemProps {

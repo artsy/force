@@ -1,7 +1,3 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { SaleApp_sale$data } from "__generated__/SaleApp_sale.graphql"
-import type { SaleApp_viewer$data } from "__generated__/SaleApp_viewer.graphql"
 import {
   Box,
   Flex,
@@ -11,10 +7,14 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { SaleMetaFragmentContainer } from "Apps/Sale/Components/SaleMeta"
-import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { AuctionDetailsStartTimeQueryRenderer } from "Apps/Auction/Components/AuctionDetails/AuctionDetailsStartTime"
 import { SaleArtworkFilterRefetchContainer } from "Apps/Sale/Components/SaleArtworks"
+import { SaleMetaFragmentContainer } from "Apps/Sale/Components/SaleMeta"
+import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
+import type { SaleApp_sale$data } from "__generated__/SaleApp_sale.graphql"
+import type { SaleApp_viewer$data } from "__generated__/SaleApp_viewer.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface SaleAppProps {
   sale: SaleApp_sale$data

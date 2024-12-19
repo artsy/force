@@ -1,13 +1,13 @@
 import { AutocompleteInput, Box, Text } from "@artsy/palette"
-import { type FC, useMemo, useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { filterCities } from "Apps/Partners/Utils/filterUtils"
+import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { PartnersLocationAutocomplete_viewer$data } from "__generated__/PartnersLocationAutocomplete_viewer.graphql"
 import type { PartnersLocationAutocompleteQuery } from "__generated__/PartnersLocationAutocompleteQuery.graphql"
-import { useRouter } from "System/Hooks/useRouter"
+import type { PartnersLocationAutocomplete_viewer$data } from "__generated__/PartnersLocationAutocomplete_viewer.graphql"
 import { omit } from "lodash"
-import { filterCities } from "Apps/Partners/Utils/filterUtils"
+import { type FC, useMemo, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface PartnersLocationAutocompleteProps {
   viewer: PartnersLocationAutocomplete_viewer$data

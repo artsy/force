@@ -1,16 +1,16 @@
-import { type FC, useState, type FormEvent, useEffect } from "react"
-import { Flex, Spacer, Box, Text, Range, usePrevious } from "@artsy/palette"
-import { Histogram, type HistogramBarEntity } from "./Histogram"
+import { Box, Flex, Range, Spacer, Text, usePrevious } from "@artsy/palette"
+import { NumericInput } from "Components/NumericInput"
+import { convertToFilterFormatRange } from "Components/PriceRange/Utils/convertToFilterFormatRange"
+import { getPriceValue } from "Components/PriceRange/Utils/getPriceValue"
+import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
+import { parseSliderPriceRange } from "Components/PriceRange/Utils/parseSliderPriceRange"
 import {
   type CustomRange,
   DEFAULT_RANGE,
 } from "Components/PriceRange/constants"
-import { NumericInput } from "Components/NumericInput"
-import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
-import { parseSliderPriceRange } from "Components/PriceRange/Utils/parseSliderPriceRange"
-import { convertToFilterFormatRange } from "Components/PriceRange/Utils/convertToFilterFormatRange"
-import { getPriceValue } from "Components/PriceRange/Utils/getPriceValue"
+import { type FC, type FormEvent, useEffect, useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
+import { Histogram, type HistogramBarEntity } from "./Histogram"
 
 interface PriceRangeProps {
   priceRange: string

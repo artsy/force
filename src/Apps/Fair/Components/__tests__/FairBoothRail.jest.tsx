@@ -1,12 +1,12 @@
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { FairBoothRailFragmentContainer } from "Apps/Fair/Components/FairBoothRail"
-import { graphql } from "react-relay"
-import type { FairBoothRail_Test_Query } from "__generated__/FairBoothRail_Test_Query.graphql"
-import { BoothFilterContextProvider } from "Apps/Fair/Components/BoothFilterContext"
 import { fireEvent, screen } from "@testing-library/react"
+import { BoothFilterContextProvider } from "Apps/Fair/Components/BoothFilterContext"
+import { FairBoothRailFragmentContainer } from "Apps/Fair/Components/FairBoothRail"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
-import { useTracking } from "react-tracking"
 import { useRouter } from "System/Hooks/useRouter"
+import type { FairBoothRail_Test_Query } from "__generated__/FairBoothRail_Test_Query.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

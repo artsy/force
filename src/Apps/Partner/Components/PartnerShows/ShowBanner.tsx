@@ -5,16 +5,16 @@ import {
   Column,
   GridColumns,
   Image,
-  media,
   ReadMore,
   Text,
+  media,
 } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import type { ShowBanner_show$data } from "__generated__/ShowBanner_show.graphql"
 import { useEffect, useState } from "react"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { RouterLink } from "System/Components/RouterLink"
-import type { ShowBanner_show$data } from "__generated__/ShowBanner_show.graphql"
 
 const STATUS_LABELS = {
   running: "current",

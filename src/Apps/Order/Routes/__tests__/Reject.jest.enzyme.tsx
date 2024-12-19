@@ -1,16 +1,16 @@
-import type { RejectTestQuery$rawResponse } from "__generated__/RejectTestQuery.graphql"
-import { OfferOrderWithShippingDetails } from "Apps/__tests__/Fixtures/Order"
-import { StepSummaryItem } from "Components/StepSummaryItem"
-import { DateTime } from "luxon"
-import { graphql } from "react-relay"
+import { RejectFragmentContainer } from "Apps/Order/Routes/Reject"
 import {
   rejectOfferFailed,
   rejectOfferSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/rejectOffer"
-import { RejectFragmentContainer } from "Apps/Order/Routes/Reject"
-import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { OfferOrderWithShippingDetails } from "Apps/__tests__/Fixtures/Order"
+import { StepSummaryItem } from "Components/StepSummaryItem"
 import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { RejectTestQuery$rawResponse } from "__generated__/RejectTestQuery.graphql"
+import { DateTime } from "luxon"
+import { graphql } from "react-relay"
+import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 
 jest.mock("Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"

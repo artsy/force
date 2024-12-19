@@ -1,10 +1,10 @@
-import type { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
 import {
   offersAttributes,
   productAttributes,
   sellerFromPartner,
   structuredDataAttributes,
 } from "Apps/Artist/Components/ArtistMeta/helpers"
+import type { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
 
 jest.mock("sharify", () => ({
   data: {

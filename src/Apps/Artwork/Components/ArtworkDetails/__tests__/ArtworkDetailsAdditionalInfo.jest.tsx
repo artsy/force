@@ -1,12 +1,12 @@
+import { fireEvent, screen } from "@testing-library/react"
+import { ArtworkDetailsAdditionalInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsAdditionalInfo"
+import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
+import type { ArtworkDetailsAdditionalInfo_Test_Query } from "__generated__/ArtworkDetailsAdditionalInfo_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { MockBoot } from "DevTools/MockBoot"
-import type { ArtworkDetailsAdditionalInfo_Test_Query } from "__generated__/ArtworkDetailsAdditionalInfo_Test_Query.graphql"
-import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
-import { ArtworkDetailsAdditionalInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsAdditionalInfo"
-import { fireEvent, screen } from "@testing-library/react"
-import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 
 jest.unmock("react-relay")
 

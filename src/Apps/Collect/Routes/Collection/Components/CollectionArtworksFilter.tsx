@@ -1,35 +1,35 @@
-import type * as React from "react"
-import {
-  type RelayRefetchProp,
-  createRefetchContainer,
-  graphql,
-} from "react-relay"
+import { Join, Spacer } from "@artsy/palette"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
   type Counts,
   type SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { usePathnameComplete } from "Utils/Hooks/usePathnameComplete"
-import { useRouter } from "System/Hooks/useRouter"
-import type { CollectionArtworksFilter_collection$data } from "__generated__/CollectionArtworksFilter_collection.graphql"
+import { ArtistNationalityFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
+import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
+import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
+import { AttributionClassFilter } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
+import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
 import { ColorFilter } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
+import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
+import { PartnersFilter } from "Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
 import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { AttributionClassFilter } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
-import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
-import { ArtistNationalityFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
-import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
-import { PartnersFilter } from "Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
-import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Join, Spacer } from "@artsy/palette"
-import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import { usePathnameComplete } from "Utils/Hooks/usePathnameComplete"
+import type { CollectionArtworksFilter_collection$data } from "__generated__/CollectionArtworksFilter_collection.graphql"
+import type * as React from "react"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 
 interface CollectionArtworksFilterProps {
   relay: RelayRefetchProp

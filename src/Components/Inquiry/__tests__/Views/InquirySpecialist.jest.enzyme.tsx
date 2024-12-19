@@ -1,13 +1,13 @@
-import { mount } from "enzyme"
-import { InquirySpecialist } from "Components/Inquiry/Views/InquirySpecialist"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import {
   DEFAULT_MESSAGE,
   useInquiryContext,
 } from "Components/Inquiry/Hooks/useInquiryContext"
+import { InquirySpecialist } from "Components/Inquiry/Views/InquirySpecialist"
 import { fill } from "Components/Inquiry/__tests__/util"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { mount } from "enzyme"
 
 jest.mock("../../Hooks/useArtworkInquiryRequest")
 jest.mock("../../Hooks/useInquiryContext")

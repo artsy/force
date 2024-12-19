@@ -1,14 +1,14 @@
 import { Box, type BoxProps, Text } from "@artsy/palette"
-import { compact } from "lodash"
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import {
+  adjustAlpha,
   getContrastTIQ,
   hexToRgba,
   stringifyRgba,
-  adjustAlpha,
 } from "Utils/color"
 import type { ArtQuizArtworksCardMetadata_artwork$data } from "__generated__/ArtQuizArtworksCardMetadata_artwork.graphql"
+import { compact } from "lodash"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtQuizArtworksCardMetadataProps extends BoxProps {
   artwork: ArtQuizArtworksCardMetadata_artwork$data

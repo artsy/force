@@ -1,19 +1,19 @@
-import { useRouter } from "System/Hooks/useRouter"
-import {
-  createRefetchContainer,
-  graphql,
-  type RelayRefetchProp,
-} from "react-relay"
+import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   type Aggregations,
   ArtworkFilterContextProvider,
   type Counts,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { SaleArtworksFilter_viewer$data } from "__generated__/SaleArtworksFilter_viewer.graphql"
-import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 
 interface SaleArtworkFilterProps {
   relay: RelayRefetchProp

@@ -7,14 +7,14 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
 import { RouterLink } from "System/Components/RouterLink"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { NotificationPreferencesQuery } from "__generated__/NotificationPreferencesQuery.graphql"
+import type { NotificationPreferences_viewer$data } from "__generated__/NotificationPreferences_viewer.graphql"
+import { useFormikContext } from "formik"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { NotificationPreferences_viewer$data } from "__generated__/NotificationPreferences_viewer.graphql"
-import type { NotificationPreferencesQuery } from "__generated__/NotificationPreferencesQuery.graphql"
-import type { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
-import { useFormikContext } from "formik"
 
 type AlertFormMode = "create" | "edit"
 

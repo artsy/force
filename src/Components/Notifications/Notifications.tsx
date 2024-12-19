@@ -1,20 +1,20 @@
-import { DateTime } from "luxon"
-import { markNotificationsAsSeen } from "./Mutations/markNotificationsAsSeen"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import createLogger from "Utils/logger"
-import type { NotificationsWrapperProps } from "./NotificationsWrapper"
 import { Box, Flex, Separator, Skeleton } from "@artsy/palette"
+import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
+import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
 import {
   NotificationsHeader,
   NotificationsHeaderPlaceholder,
 } from "Components/Notifications/NotificationsHeader"
 import { NotificationsListQueryRenderer } from "Components/Notifications/NotificationsList"
-import Sticky from "react-stickynode"
-import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
-import { useOnce } from "Utils/Hooks/useOnce"
-import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
-import type { FC } from "react"
 import { NotificationsListPlaceholder } from "Components/Notifications/NotificationsListPlaceholder"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useOnce } from "Utils/Hooks/useOnce"
+import createLogger from "Utils/logger"
+import { DateTime } from "luxon"
+import type { FC } from "react"
+import Sticky from "react-stickynode"
+import { markNotificationsAsSeen } from "./Mutations/markNotificationsAsSeen"
+import type { NotificationsWrapperProps } from "./NotificationsWrapper"
 
 const DROPDOWN_HEADER_HEIGHT = 113
 const VERTICAL_OFFSET = 10

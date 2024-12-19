@@ -1,9 +1,9 @@
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
+import { Spacer } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { MetaTags } from "Components/MetaTags"
-import { EnableRecaptcha } from "Utils/EnableRecaptcha"
-import { Spacer } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
+import { EnableRecaptcha } from "Utils/EnableRecaptcha"
 
 export const SubmissionLayout: React.FC<React.PropsWithChildren<unknown>> = ({
   children,

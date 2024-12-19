@@ -1,4 +1,3 @@
-import { MetaTags } from "Components/MetaTags"
 import {
   Avatar,
   Box,
@@ -13,9 +12,10 @@ import {
   Text,
 } from "@artsy/palette"
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
-import { cropped, resized } from "Utils/resized"
-import { Media } from "Utils/Responsive"
+import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Components/RouterLink"
+import { Media } from "Utils/Responsive"
+import { cropped, resized } from "Utils/resized"
 
 export const ArtAppraisalsApp: React.FC<
   React.PropsWithChildren<unknown>

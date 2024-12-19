@@ -1,9 +1,9 @@
 import { screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
-import type { NotificationItem_test_Query } from "__generated__/NotificationItem_test_Query.graphql"
-import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
 import { SUPPORTED_NOTIFICATION_TYPES } from "Components/Notifications/Notification"
+import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { NotificationItem_test_Query } from "__generated__/NotificationItem_test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))

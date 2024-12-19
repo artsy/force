@@ -8,17 +8,17 @@ import {
   TextArea,
   useToasts,
 } from "@artsy/palette"
-import type * as React from "react"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { wait } from "Utils/wait"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import {
   type InquiryState,
   useInquiryContext,
 } from "Components/Inquiry/Hooks/useInquiryContext"
 import { logger } from "Components/Inquiry/util"
-import { useMode } from "Utils/Hooks/useMode"
 import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useMode } from "Utils/Hooks/useMode"
+import { wait } from "Utils/wait"
+import type * as React from "react"
 
 type Mode = "Pending" | "Sending" | "Error" | "Success"
 

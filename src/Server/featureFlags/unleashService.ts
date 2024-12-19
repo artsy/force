@@ -1,10 +1,10 @@
-import { startUnleash, type Unleash } from "unleash-client"
 import {
+  NODE_ENV,
   UNLEASH_API,
   UNLEASH_APP_NAME,
   UNLEASH_SERVER_KEY,
-  NODE_ENV,
 } from "Server/config"
+import { type Unleash, startUnleash } from "unleash-client"
 import type { FeatureFlagService } from "./featureFlagService"
 
 // Pass in as argument to registerFeatureFlagProvideder() when using unleash as feature flag service

@@ -3,8 +3,8 @@ const serializers = require("../serializers")
 const { serialize, deserialize } = serializers
 
 import options from "Server/passport/lib/options"
-import request from "superagent"
 import passport from "passport"
+import request from "superagent"
 
 jest.mock("superagent")
 

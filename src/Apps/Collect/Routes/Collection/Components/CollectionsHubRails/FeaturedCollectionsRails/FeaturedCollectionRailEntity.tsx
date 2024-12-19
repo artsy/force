@@ -1,12 +1,12 @@
-import { type FC, useMemo } from "react"
-import { ReadMore, Text, Image, Box, Spacer } from "@artsy/palette"
-import { useTracking } from "react-tracking"
-import { RouterLink } from "System/Components/RouterLink"
-import currency from "currency.js"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
+import { Box, Image, ReadMore, Spacer, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { createFragmentContainer, graphql } from "react-relay"
 import type { FeaturedCollectionRailEntity_member$data } from "__generated__/FeaturedCollectionRailEntity_member.graphql"
+import currency from "currency.js"
+import { type FC, useMemo } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface FeaturedCollectionRailEntityProps {
   member: FeaturedCollectionRailEntity_member$data

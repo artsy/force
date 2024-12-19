@@ -1,10 +1,10 @@
 import { ActionType, ContextModule, Intent } from "@artsy/cohesion"
 import { Button, Column, GridColumns, Text } from "@artsy/palette"
 import { useAuthDialog } from "Components/AuthDialog"
-import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useTracking } from "react-tracking"
 
 const reasons = [
   {

@@ -1,10 +1,10 @@
-import type * as React from "react"
 import { Box, type BoxProps, Image, ResponsiveBox, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 import { RouterLink } from "System/Components/RouterLink"
 import type { FairsFairBanner_fair$data } from "__generated__/FairsFairBanner_fair.graphql"
-import { themeGet } from "@styled-system/theme-get"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
 
 interface FairsFairBannerProps extends BoxProps {
   fair: FairsFairBanner_fair$data

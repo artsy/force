@@ -1,20 +1,20 @@
-import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useSystemContext } from "System/Hooks/useSystemContext"
+import { ContextModule, OwnerType, clickedEntityGroup } from "@artsy/cohesion"
+import { Box, Skeleton } from "@artsy/palette"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
-import { extractNodes } from "Utils/extractNodes"
-import type { ArtistWorksForSaleRail_artist$data } from "__generated__/ArtistWorksForSaleRail_artist.graphql"
-import type { ArtistWorksForSaleRailQuery } from "__generated__/ArtistWorksForSaleRailQuery.graphql"
 import { Rail } from "Components/Rail/Rail"
-import { Box, Skeleton } from "@artsy/palette"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useJump } from "Utils/Hooks/useJump"
+import { extractNodes } from "Utils/extractNodes"
+import type { ArtistWorksForSaleRailQuery } from "__generated__/ArtistWorksForSaleRailQuery.graphql"
+import type { ArtistWorksForSaleRail_artist$data } from "__generated__/ArtistWorksForSaleRail_artist.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ArtistWorksForSaleRailProps {
   artist: ArtistWorksForSaleRail_artist$data

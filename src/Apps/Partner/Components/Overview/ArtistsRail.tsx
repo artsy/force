@@ -1,10 +1,10 @@
-import type * as React from "react"
 import { Box, type BoxProps, Flex, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtistsRail_partner$data } from "__generated__/ArtistsRail_partner.graphql"
-import { ViewAllButton } from "./ViewAllButton"
-import { PartnerArtistsCarouselRenderer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistsCarousel/PartnerArtistsCarousel"
 import { PartnerArtistsQueryRenderer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistList/PartnerArtists"
+import { PartnerArtistsCarouselRenderer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistsCarousel/PartnerArtistsCarousel"
+import type { ArtistsRail_partner$data } from "__generated__/ArtistsRail_partner.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ViewAllButton } from "./ViewAllButton"
 
 interface ArtistsRailProps extends BoxProps {
   partner: ArtistsRail_partner$data

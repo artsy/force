@@ -1,23 +1,23 @@
 import { Button, Join, ModalDialog, Spacer } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { AuctionRegistrationRoute_me$data } from "__generated__/AuctionRegistrationRoute_me.graphql"
-import type { AuctionRegistrationRoute_sale$data } from "__generated__/AuctionRegistrationRoute_sale.graphql"
-import { Form, Formik } from "formik"
-import { CreditCardInputProvider } from "Components/CreditCardInput"
-import { useRouter } from "System/Hooks/useRouter"
-import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
-import { useEffect } from "react"
-import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
 import { AddressFormWithCreditCard } from "Apps/Auction/Components/Form/AddressFormWithCreditCard"
-import { IdentityVerificationWarning } from "Apps/Auction/Components/Form/IdentityVerificationWarning"
-import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
+import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
 import { ErrorStatus } from "Apps/Auction/Components/Form/ErrorStatus"
-import type { AuctionConfirmRegistrationRoute_sale$data } from "__generated__/AuctionConfirmRegistrationRoute_sale.graphql"
+import { IdentityVerificationWarning } from "Apps/Auction/Components/Form/IdentityVerificationWarning"
 import {
   type AuctionFormValues,
   initialValuesForRegistration,
 } from "Apps/Auction/Components/Form/Utils/initialValues"
 import { registrationValidationSchema } from "Apps/Auction/Components/Form/Utils/validationSchemas"
+import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
+import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
+import { CreditCardInputProvider } from "Components/CreditCardInput"
+import { useRouter } from "System/Hooks/useRouter"
+import type { AuctionConfirmRegistrationRoute_sale$data } from "__generated__/AuctionConfirmRegistrationRoute_sale.graphql"
+import type { AuctionRegistrationRoute_me$data } from "__generated__/AuctionRegistrationRoute_me.graphql"
+import type { AuctionRegistrationRoute_sale$data } from "__generated__/AuctionRegistrationRoute_sale.graphql"
+import { Form, Formik } from "formik"
+import { useEffect } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface AuctionRegistrationRouteProps {
   me: AuctionRegistrationRoute_me$data

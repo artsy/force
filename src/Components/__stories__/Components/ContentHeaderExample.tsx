@@ -1,6 +1,6 @@
 import { Box, type BoxProps, Flex, Text } from "@artsy/palette"
-import type * as React from "react"
 import { RouterLink } from "System/Components/RouterLink"
+import type * as React from "react"
 
 export const ContentHeaderExample: React.FC<
   React.PropsWithChildren<BoxProps>

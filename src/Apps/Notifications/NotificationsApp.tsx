@@ -1,6 +1,5 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box, Column, FullBleed, GridColumns } from "@artsy/palette"
-import type { NotificationsApp_me$data } from "__generated__/NotificationsApp_me.graphql"
 import {
   DESKTOP_HEIGHT,
   MIN_LIST_WIDTH,
@@ -10,12 +9,13 @@ import { MetaTags } from "Components/MetaTags"
 import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
 import { NotificationQueryRenderer } from "Components/Notifications/Notification"
 import { Notifications } from "Components/Notifications/Notifications"
-import { useRouter } from "found"
-import { useEffect, useRef } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useOnce } from "Utils/Hooks/useOnce"
 import { Media } from "Utils/Responsive"
+import type { NotificationsApp_me$data } from "__generated__/NotificationsApp_me.graphql"
+import { useRouter } from "found"
+import { useEffect, useRef } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface NotificationsAppProps {
   me: NotificationsApp_me$data

@@ -1,11 +1,11 @@
-import { type FC, Fragment } from "react"
-import { Button, Column, Image, Flex, Text, Box } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Components/RouterLink"
-import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
-import type { SettingsAuctionsLotStanding_lotStanding$data } from "__generated__/SettingsAuctionsLotStanding_lotStanding.graphql"
-import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
 import ChevronCircleDownIcon from "@artsy/icons/ChevronCircleDownIcon"
+import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
+import { Box, Button, Column, Flex, Image, Text } from "@artsy/palette"
+import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
+import { RouterLink } from "System/Components/RouterLink"
+import type { SettingsAuctionsLotStanding_lotStanding$data } from "__generated__/SettingsAuctionsLotStanding_lotStanding.graphql"
+import { type FC, Fragment } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface SettingsAuctionsLotStandingProps {
   lotStanding: SettingsAuctionsLotStanding_lotStanding$data

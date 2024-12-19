@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState } from "react"
 import { getENV } from "Utils/getENV"
+import { createContext, useEffect, useState } from "react"
 
 interface ReceivedData {
   [key: string]: string

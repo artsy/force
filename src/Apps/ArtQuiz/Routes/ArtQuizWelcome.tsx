@@ -1,11 +1,11 @@
-import { Flex, Text, Spacer, Button, FullBleed, Box } from "@artsy/palette"
+import { Box, Button, Flex, FullBleed, Spacer, Text } from "@artsy/palette"
 import { SplitLayout } from "Components/SplitLayout"
-import type { FC } from "react"
 import { RouterLink } from "System/Components/RouterLink"
+import type { FC } from "react"
 
-import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
-import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
+import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
+import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
 
 interface ArtQuizWelcomeProps {
   onStartQuiz: () => void

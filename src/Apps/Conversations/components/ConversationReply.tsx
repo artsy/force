@@ -1,20 +1,20 @@
+import { sentConversationMessage } from "@artsy/cohesion"
+import { Button, Flex, TextArea, useToasts } from "@artsy/palette"
+import { ConversationCTA } from "Apps/Conversations/components/ConversationCTA/ConversationCTA"
+import { useSendConversationMessage } from "Apps/Conversations/mutations/useSendConversationMessage"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { ConversationReply_conversation$key } from "__generated__/ConversationReply_conversation.graphql"
+import type { useSendConversationMessageMutation$data } from "__generated__/useSendConversationMessageMutation.graphql"
+import { type FormikHelpers, useFormik } from "formik"
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { useEffect, useState, type FC, useRef } from "react"
-import { useFormik, type FormikHelpers } from "formik"
-import * as Yup from "yup"
-import { Button, Flex, TextArea, useToasts } from "@artsy/palette"
+import { type FC, useEffect, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
-import { sentConversationMessage } from "@artsy/cohesion"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useRouter } from "System/Hooks/useRouter"
-import { useSendConversationMessage } from "Apps/Conversations/mutations/useSendConversationMessage"
-import type { useSendConversationMessageMutation$data } from "__generated__/useSendConversationMessageMutation.graphql"
-import type { ConversationReply_conversation$key } from "__generated__/ConversationReply_conversation.graphql"
-import { ConversationCTA } from "Apps/Conversations/components/ConversationCTA/ConversationCTA"
+import * as Yup from "yup"
 
 interface ConversationReplyProps {
   conversation: ConversationReply_conversation$key

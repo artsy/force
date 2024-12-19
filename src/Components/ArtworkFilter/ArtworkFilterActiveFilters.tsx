@@ -1,7 +1,7 @@
-import type { FC } from "react"
-import { useActiveFilterPills } from "Components/SavedSearchAlert/useActiveFilterPills"
 import { Button, Flex, Pill } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { useActiveFilterPills } from "Components/SavedSearchAlert/useActiveFilterPills"
+import type { FC } from "react"
 
 export type ArtworkFilterActiveFiltersProps = {}
 

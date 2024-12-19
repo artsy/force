@@ -1,14 +1,14 @@
 import { Button, Flex } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { FC } from "react"
-import { graphql } from "react-relay"
 import type {
   ConfirmationStepFooterQuery,
   ConfirmationStepFooterQuery$data,
 } from "__generated__/ConfirmationStepFooterQuery.graphql"
+import type { FC } from "react"
+import { graphql } from "react-relay"
 
-import { RouterLink } from "System/Components/RouterLink"
 import { NUMBER_OF_ARTWORKS_TO_SHOW } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface ConfirmationStepFooterProps {
   artworksCount: number

@@ -1,6 +1,6 @@
 import { Box, useDidMount } from "@artsy/palette"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { SystemContext } from "System/Contexts/SystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { NavBarMobileMenuNotificationsQuery } from "__generated__/NavBarMobileMenuNotificationsQuery.graphql"
 import type { NavBarMobileMenuNotifications_me$data } from "__generated__/NavBarMobileMenuNotifications_me.graphql"
 import { useContext } from "react"

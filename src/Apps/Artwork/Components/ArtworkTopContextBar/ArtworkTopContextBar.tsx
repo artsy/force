@@ -1,9 +1,9 @@
+import { Box } from "@artsy/palette"
+import { RegistrationAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/RegistrationAuctionTimer"
+import { TopContextBar } from "Components/TopContextBar"
 import type { ArtworkTopContextBar_artwork$data } from "__generated__/ArtworkTopContextBar_artwork.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Box } from "@artsy/palette"
-import { TopContextBar } from "Components/TopContextBar"
-import { RegistrationAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/RegistrationAuctionTimer"
 
 export interface ArtworkTopContextBarProps {
   artwork: ArtworkTopContextBar_artwork$data

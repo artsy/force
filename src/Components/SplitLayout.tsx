@@ -1,6 +1,6 @@
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 import { Box, type BoxProps, Flex } from "@artsy/palette"
 import type { FC } from "react"
-import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
 interface SplitLayoutProps {
   left: JSX.Element

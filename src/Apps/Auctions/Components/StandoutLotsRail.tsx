@@ -1,22 +1,22 @@
 import type { AuthContextModule } from "@artsy/cohesion"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
+import { Skeleton } from "@artsy/palette"
+import { CuratorialRailsZeroState } from "Apps/Auctions/Components/CuritorialRailsTabBar"
+import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { extractNodes } from "Utils/extractNodes"
 import type { StandoutLotsRailQuery } from "__generated__/StandoutLotsRailQuery.graphql"
 import type { StandoutLotsRail_viewer$data } from "__generated__/StandoutLotsRail_viewer.graphql"
-import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
-import { CuratorialRailsZeroState } from "Apps/Auctions/Components/CuritorialRailsTabBar"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Skeleton } from "@artsy/palette"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 export interface StandoutLotsRailProps {
   viewer: StandoutLotsRail_viewer$data

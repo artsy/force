@@ -1,8 +1,8 @@
-import type { FC } from "react"
-import { SuggestionItemLink } from "./SuggestionItemLink"
-import { DefaultSuggestion } from "./DefaultSuggestion"
 import { Box, Pill } from "@artsy/palette"
 import { QuickNavigationItem } from "Components/Search/SuggestionItem/QuickNavigationItem"
+import type { FC } from "react"
+import { DefaultSuggestion } from "./DefaultSuggestion"
+import { SuggestionItemLink } from "./SuggestionItemLink"
 
 export interface SuggestionItemOptionProps {
   text: string

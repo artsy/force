@@ -1,19 +1,19 @@
 import {
-  Join,
   Column,
   GridColumns,
+  Join,
+  Separator,
   Spacer,
   Text,
-  Separator,
 } from "@artsy/palette"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ShowsIndex_featuredShows$data } from "__generated__/ShowsIndex_featuredShows.graphql"
-import type { ShowsIndex_viewer$data } from "__generated__/ShowsIndex_viewer.graphql"
+import { ShowsCurrentShowsQueryRenderer } from "Apps/Shows/Components/ShowsCurrentShows"
 import { ShowsFeaturedShowFragmentContainer } from "Apps/Shows/Components/ShowsFeaturedShow"
 import { ShowsHeaderFragmentContainer } from "Apps/Shows/Components/ShowsHeader"
 import { ShowsMeta } from "Apps/Shows/Components/ShowsMeta"
-import { ShowsCurrentShowsQueryRenderer } from "Apps/Shows/Components/ShowsCurrentShows"
+import type { ShowsIndex_featuredShows$data } from "__generated__/ShowsIndex_featuredShows.graphql"
+import type { ShowsIndex_viewer$data } from "__generated__/ShowsIndex_viewer.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ShowsIndexProps {
   featuredShows: ShowsIndex_featuredShows$data

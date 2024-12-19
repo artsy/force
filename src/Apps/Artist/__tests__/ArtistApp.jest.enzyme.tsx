@@ -1,8 +1,8 @@
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ArtistAppFragmentContainer } from "Apps/Artist/ArtistApp"
-import type { ArtistApp_Test_Query } from "__generated__/ArtistApp_Test_Query.graphql"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { findCurrentRoute } from "System/Router/Utils/routeUtils"
+import type { ArtistApp_Test_Query } from "__generated__/ArtistApp_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

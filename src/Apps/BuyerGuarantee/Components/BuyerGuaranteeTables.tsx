@@ -1,8 +1,8 @@
-import { GridColumns, Column, Text } from "@artsy/palette"
+import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
+import { Column, GridColumns, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import type { FC } from "react"
 import styled from "styled-components"
-import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 
 export const BuyerGuaranteeTableDesktop: FC<
   React.PropsWithChildren<unknown>

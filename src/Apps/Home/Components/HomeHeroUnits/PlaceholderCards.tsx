@@ -1,16 +1,16 @@
 import {
   Box,
-  ResponsiveBox,
-  GridColumns,
+  Button,
   Column,
+  GridColumns,
+  ResponsiveBox,
+  Skeleton,
   SkeletonBox,
   SkeletonText,
   Spacer,
-  Button,
-  Skeleton,
 } from "@artsy/palette"
-import { Media } from "Utils/Responsive"
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
+import { Media } from "Utils/Responsive"
 import type { FC } from "react"
 
 export const PlaceholderCards: FC<React.PropsWithChildren<unknown>> = () => {

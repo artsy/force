@@ -1,14 +1,14 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { MyBidsBidItem_saleArtwork$data } from "__generated__/MyBidsBidItem_saleArtwork.graphql"
+import ChevronCircleDownIcon from "@artsy/icons/ChevronCircleDownIcon"
+import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
 import { Box, Flex, Image, Spacer, Text } from "@artsy/palette"
+import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 import { RouterLink } from "System/Components/RouterLink"
-import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { trackHelpers } from "Utils/cohesionHelpers"
-import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
-import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
-import ChevronCircleDownIcon from "@artsy/icons/ChevronCircleDownIcon"
+import type { MyBidsBidItem_saleArtwork$data } from "__generated__/MyBidsBidItem_saleArtwork.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface MyBidsBidItemProps {
   horizontalSlidePosition: number

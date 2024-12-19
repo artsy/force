@@ -1,7 +1,7 @@
 import { Clickable } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import styled, { css } from "styled-components"
 import { RouterUnawareLink } from "System/Components/RouterLink"
+import styled, { css } from "styled-components"
 
 const navBarItemMixin = css<{ active?: boolean }>`
   position: relative;

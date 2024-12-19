@@ -1,7 +1,7 @@
+import NoArtIcon from "@artsy/icons/NoArtIcon"
 import { Flex, Image, ResponsiveBox } from "@artsy/palette"
 import type { AuctionResultImage_auctionResult$key } from "__generated__/AuctionResultImage_auctionResult.graphql"
 import { graphql, useFragment } from "react-relay"
-import NoArtIcon from "@artsy/icons/NoArtIcon"
 
 export const MAX_DIMENSION = 400
 

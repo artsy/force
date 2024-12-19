@@ -1,9 +1,9 @@
 import { Join, Spacer } from "@artsy/palette"
+import { MetaTags } from "Components/MetaTags"
+import type { ArtistCVRoute_viewer$data } from "__generated__/ArtistCVRoute_viewer.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCVGroupRefetchContainer } from "./Components/ArtistCVGroup"
-import type { ArtistCVRoute_viewer$data } from "__generated__/ArtistCVRoute_viewer.graphql"
-import { MetaTags } from "Components/MetaTags"
 
 interface ArtistCVRouteProps {
   viewer: ArtistCVRoute_viewer$data

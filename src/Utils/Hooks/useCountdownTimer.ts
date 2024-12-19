@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react"
 import {
   differenceInHours,
   differenceInMinutes,
   differenceInSeconds,
 } from "date-fns"
+import { useEffect, useState } from "react"
 
 const calculateTime = (endTime: string, includeSeconds: boolean) => {
   const now = new Date()

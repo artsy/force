@@ -1,13 +1,13 @@
-import type * as React from "react"
 import { Column, GridColumns, Join, Separator, Spacer } from "@artsy/palette"
-import { ViewingRoomWorksFragmentContainer as ViewingRoomWorks } from "./Components/ViewingRoomWorks"
+import type { ViewingRoomStatementRoute_viewingRoom$data } from "__generated__/ViewingRoomStatementRoute_viewingRoom.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ViewWorksButton } from "./Components/ViewWorksButton"
+import { ViewingRoomBodyFragmentContainer as ViewingRoomBody } from "./Components/ViewingRoomBody"
 import { ViewingRoomIntroFragmentContainer as ViewingRoomIntro } from "./Components/ViewingRoomIntro"
 import { ViewingRoomPullQuoteFragmentContainer as ViewingRoomPullQuote } from "./Components/ViewingRoomPullQuote"
-import { ViewingRoomBodyFragmentContainer as ViewingRoomBody } from "./Components/ViewingRoomBody"
 import { ViewingRoomSubsectionsFragmentContainer as ViewingRoomSubsections } from "./Components/ViewingRoomSubsections"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ViewingRoomStatementRoute_viewingRoom$data } from "__generated__/ViewingRoomStatementRoute_viewingRoom.graphql"
-import { ViewWorksButton } from "./Components/ViewWorksButton"
+import { ViewingRoomWorksFragmentContainer as ViewingRoomWorks } from "./Components/ViewingRoomWorks"
 
 interface ViewingRoomStatementRouteProps {
   viewingRoom: ViewingRoomStatementRoute_viewingRoom$data

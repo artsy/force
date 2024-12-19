@@ -1,7 +1,7 @@
-import { ArticleAdProvider, ArticleAd, type ArticleAdProps } from "./ArticleAd"
-import { AD_SIZES } from "./types"
-import { States } from "storybook-states"
 import { track } from "react-tracking"
+import { States } from "storybook-states"
+import { ArticleAd, type ArticleAdProps, ArticleAdProvider } from "./ArticleAd"
+import { AD_SIZES } from "./types"
 
 export default {
   title: "Components/ArticleAd",

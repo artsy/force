@@ -1,15 +1,15 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { screen, render, within, waitFor } from "@testing-library/react"
+import { render, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import {
   AddressAutocompleteInput,
   type AddressAutocompleteInputProps,
 } from "Components/Address/AddressAutocompleteInput"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import compact from "lodash/compact"
 import { type FC, useState } from "react"
 import { useTracking } from "react-tracking"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),

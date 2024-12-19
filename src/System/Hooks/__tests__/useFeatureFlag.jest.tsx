@@ -1,11 +1,11 @@
 import { render } from "@testing-library/react"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import {
+  getFeatureVariant,
   useFeatureFlag,
   useFeatureVariant,
   useTrackFeatureVariant,
-  getFeatureVariant,
 } from "System/Hooks/useFeatureFlag"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useEffect } from "react"
 
 const FEATURE_FLAGS = {

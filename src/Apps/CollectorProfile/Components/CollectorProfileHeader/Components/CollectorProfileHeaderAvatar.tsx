@@ -1,7 +1,7 @@
 import { Avatar, Box, type BoxProps } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
 import type { CollectorProfileHeaderAvatar_me$data } from "__generated__/CollectorProfileHeaderAvatar_me.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface CollectorProfileHeaderAvatarProps extends BoxProps {
   me: CollectorProfileHeaderAvatar_me$data

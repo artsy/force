@@ -1,7 +1,7 @@
 import { ArtistsByLetterFragmentContainer } from "Apps/Artists/Routes/ArtistsByLetter"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import type { ArtistsByLetterQuery } from "__generated__/ArtistsByLetterQuery.graphql"
-import { MockBoot } from "DevTools/MockBoot"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

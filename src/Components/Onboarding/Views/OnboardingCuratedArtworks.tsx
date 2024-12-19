@@ -1,5 +1,5 @@
-import type { FC } from "react"
 import { OnboardingMarketingCollectionQueryRenderer } from "Components/Onboarding/Components/OnboardingMarketingCollection"
+import type { FC } from "react"
 
 export const OnboardingCuratedArtworks: FC<
   React.PropsWithChildren<unknown>

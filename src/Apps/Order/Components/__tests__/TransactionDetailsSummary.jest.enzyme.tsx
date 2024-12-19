@@ -1,4 +1,5 @@
-import type { TransactionDetailsSummaryItemTestQuery$rawResponse } from "__generated__/TransactionDetailsSummaryItemTestQuery.graphql"
+import { Text } from "@artsy/palette"
+import { TransactionDetailsSummaryItemFragmentContainer } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import {
   BuyOrderWithSelectedShippingQuote,
   OfferOrderWithOffers,
@@ -6,10 +7,9 @@ import {
   UntouchedBuyOrder,
   UntouchedMakeOfferWithArtsyShippingDomesticFromUS,
 } from "Apps/__tests__/Fixtures/Order"
-import { graphql } from "react-relay"
-import { TransactionDetailsSummaryItemFragmentContainer } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import { Text } from "@artsy/palette"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { TransactionDetailsSummaryItemTestQuery$rawResponse } from "__generated__/TransactionDetailsSummaryItemTestQuery.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

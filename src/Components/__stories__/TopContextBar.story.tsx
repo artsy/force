@@ -1,6 +1,6 @@
 import { Box } from "@artsy/palette"
-import { States } from "storybook-states"
 import { AppContainer } from "Apps/Components/AppContainer"
+import { States } from "storybook-states"
 import { TopContextBar, type TopContextBarProps } from "../TopContextBar"
 
 const SRC =

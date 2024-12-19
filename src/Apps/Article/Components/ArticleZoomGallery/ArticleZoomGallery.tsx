@@ -1,3 +1,6 @@
+import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
+import CloseIcon from "@artsy/icons/CloseIcon"
 import {
   Box,
   Clickable,
@@ -7,23 +10,20 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
+import { useArticleContext } from "Apps/Article/Components/ArticleContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
+import type { ArticleZoomGalleryQuery } from "__generated__/ArticleZoomGalleryQuery.graphql"
+import type { ArticleZoomGallery_article$data } from "__generated__/ArticleZoomGallery_article.graphql"
+import { compact } from "lodash"
+import { mapCursorToMax } from "map-cursor-to-max"
 import { type FC, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { ArticleZoomGallery_article$data } from "__generated__/ArticleZoomGallery_article.graphql"
-import type { ArticleZoomGalleryQuery } from "__generated__/ArticleZoomGalleryQuery.graphql"
-import { useCursor } from "use-cursor"
-import { compact } from "lodash"
 import styled, { css } from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
-import { ArticleZoomGalleryFigureFragmentContainer } from "./ArticleZoomGalleryFigure"
+import { useCursor } from "use-cursor"
 import { ArticleZoomGalleryCaptionFragmentContainer } from "./ArticleZoomGalleryCaption"
-import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
-import { useArticleContext } from "Apps/Article/Components/ArticleContext"
-import { mapCursorToMax } from "map-cursor-to-max"
-import CloseIcon from "@artsy/icons/CloseIcon"
-import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
-import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
+import { ArticleZoomGalleryFigureFragmentContainer } from "./ArticleZoomGalleryFigure"
 
 interface ArticleZoomGalleryProps {
   article: ArticleZoomGallery_article$data

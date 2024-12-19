@@ -1,13 +1,13 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtistSeriesApp_artistSeries$data } from "__generated__/ArtistSeriesApp_artistSeries.graphql"
-import { ArtistSeriesHeaderFragmentContainer as ArtistSeriesHeader } from "./Components/ArtistSeriesHeader"
-import { ArtistSeriesRailFragmentContainer as OtherArtistSeriesRail } from "Components/ArtistSeriesRail/ArtistSeriesRail"
-import { ArtistSeriesMetaFragmentContainer as ArtistSeriesMeta } from "./Components/ArtistSeriesMeta"
 import { ContextModule } from "@artsy/cohesion"
-import { Analytics } from "System/Contexts/AnalyticsContext"
 import { Spacer } from "@artsy/palette"
 import { ArtistSeriesArtworkFilterQueryRenderer } from "Apps/ArtistSeries/Components/ArtistSeriesArtworksFilter"
+import { ArtistSeriesRailFragmentContainer as OtherArtistSeriesRail } from "Components/ArtistSeriesRail/ArtistSeriesRail"
+import { Analytics } from "System/Contexts/AnalyticsContext"
+import type { ArtistSeriesApp_artistSeries$data } from "__generated__/ArtistSeriesApp_artistSeries.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ArtistSeriesHeaderFragmentContainer as ArtistSeriesHeader } from "./Components/ArtistSeriesHeader"
+import { ArtistSeriesMetaFragmentContainer as ArtistSeriesMeta } from "./Components/ArtistSeriesMeta"
 
 interface ArtistSeriesAppProps {
   artistSeries: ArtistSeriesApp_artistSeries$data

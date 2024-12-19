@@ -1,7 +1,3 @@
-import type React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useTracking } from "react-tracking"
 import {
   ActionType,
   type ClickedPartnerCard,
@@ -9,9 +5,13 @@ import {
   OwnerType,
   type PageOwnerType,
 } from "@artsy/cohesion"
+import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { FairExhibitorCard_exhibitor$data } from "__generated__/FairExhibitorCard_exhibitor.graphql"
 import type { FairExhibitorCard_fair$data } from "__generated__/FairExhibitorCard_fair.graphql"
-import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
+import type React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface FairExhibitorCardProps {
   exhibitor: FairExhibitorCard_exhibitor$data

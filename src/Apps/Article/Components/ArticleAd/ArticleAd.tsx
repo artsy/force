@@ -1,5 +1,3 @@
-import { type FC, memo } from "react"
-import { DFPSlotsProvider } from "react-dfp"
 import {
   Box,
   type BoxProps,
@@ -7,9 +5,11 @@ import {
   ResponsiveBox,
   Text,
 } from "@artsy/palette"
-import type { AdUnit, AdSize } from "./types"
-import { useCookieConsentManager } from "Components/CookieConsentManager/CookieConsentManagerContext"
 import { ArticleAdBaner } from "Apps/Article/Components/ArticleAd/ArticleAdBanner"
+import { useCookieConsentManager } from "Components/CookieConsentManager/CookieConsentManagerContext"
+import { type FC, memo } from "react"
+import { DFPSlotsProvider } from "react-dfp"
+import type { AdSize, AdUnit } from "./types"
 
 export interface ArticleAdProps extends BoxProps {
   unit: AdUnit

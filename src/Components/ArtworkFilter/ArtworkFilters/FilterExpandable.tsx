@@ -1,7 +1,7 @@
-import type React from "react"
-import { useRef } from "react"
 import { Box, Expandable, type ExpandableProps } from "@artsy/palette"
 import { getENV } from "Utils/getENV"
+import type React from "react"
+import { useRef } from "react"
 
 export const FilterExpandable: React.FC<
   React.PropsWithChildren<ExpandableProps>

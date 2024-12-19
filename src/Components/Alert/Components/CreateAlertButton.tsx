@@ -1,8 +1,8 @@
-import type { FC } from "react"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import { Button, type ButtonProps } from "@artsy/palette"
-import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
+import type { FC } from "react"
 
 interface RenderButtonProps {
   onClick: () => void

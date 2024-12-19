@@ -1,9 +1,9 @@
 import loadable from "@loadable/component"
-import { graphql } from "react-relay"
-import { RedirectException } from "found"
-import type { RouteProps } from "System/Router/Route"
-import { redirectGeneToCollection } from "./Server/redirectGeneToCollection"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
+import type { RouteProps } from "System/Router/Route"
+import { RedirectException } from "found"
+import { graphql } from "react-relay"
+import { redirectGeneToCollection } from "./Server/redirectGeneToCollection"
 
 const GeneApp = loadable(
   () => import(/* webpackChunkName: "geneBundle" */ "./GeneApp"),

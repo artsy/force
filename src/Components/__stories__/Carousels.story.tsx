@@ -1,16 +1,16 @@
 import {
   Box,
-  Text,
   Button,
+  CarouselBar,
   Flex,
-  Tabs,
-  Tab,
+  FullBleed,
   Swiper,
   type SwiperProps,
-  CarouselBar,
-  splitBoxProps,
   SwiperRail,
-  FullBleed,
+  Tab,
+  Tabs,
+  Text,
+  splitBoxProps,
 } from "@artsy/palette"
 import { random } from "lodash"
 import { useState } from "react"

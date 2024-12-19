@@ -1,4 +1,3 @@
-import * as Yup from "yup"
 import {
   Button,
   Column,
@@ -6,13 +5,9 @@ import {
   Input,
   Message,
   ModalDialog,
-  useToasts,
   VisuallyHidden,
+  useToasts,
 } from "@artsy/palette"
-import { Formik, Form } from "formik"
-import type { FC } from "react"
-import { CountrySelect } from "Components/CountrySelect"
-import { CreditCardInput } from "Components/CreditCardInput"
 import {
   CardCvcElement,
   CardExpiryElement,
@@ -21,6 +16,11 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js"
 import { useAddCreditCard } from "Apps/Settings/Routes/Payments/useAddCreditCard"
+import { CountrySelect } from "Components/CountrySelect"
+import { CreditCardInput } from "Components/CreditCardInput"
+import { Form, Formik } from "formik"
+import type { FC } from "react"
+import * as Yup from "yup"
 
 export const INITIAL_VALUES = {
   addressLine1: "",

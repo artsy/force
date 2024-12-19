@@ -1,10 +1,10 @@
-import type { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
+import { MetaTags } from "Components/MetaTags"
 import { Person as SeoDataForArtist } from "Components/Seo/Person"
+import { getENV } from "Utils/getENV"
+import type { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { getENV } from "Utils/getENV"
 import { structuredDataAttributes } from "./helpers"
-import { MetaTags } from "Components/MetaTags"
 
 interface Props {
   artist: ArtistMeta_artist$data

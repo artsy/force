@@ -1,5 +1,5 @@
-import { mount } from "enzyme"
 import { RailHeaderTitle } from "Components/Rail/RailHeader"
+import { mount } from "enzyme"
 
 describe("RailHeaderTitle", () => {
   it("returns the text with no viewAllHref", () => {

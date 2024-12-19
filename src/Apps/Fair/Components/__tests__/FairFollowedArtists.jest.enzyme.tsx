@@ -1,7 +1,7 @@
 import { FairFollowedArtists } from "Apps/Fair/Components/FairOverview/FairFollowedArtists"
-import { useTracking } from "react-tracking"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { mount } from "enzyme"
+import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 jest.mock("Components/Artwork/ShelfArtwork", () => {

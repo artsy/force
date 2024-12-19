@@ -1,10 +1,10 @@
-import type React from "react"
-import { Box, Flex, Image, Text, BorderBox } from "@artsy/palette"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import styled from "styled-components"
+import { BorderBox, Box, Flex, Image, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { RouterLink } from "System/Components/RouterLink"
+import type React from "react"
 import { useTracking } from "react-tracking"
+import styled from "styled-components"
 
 interface GenericSearchResultItemProps {
   imageUrl: string

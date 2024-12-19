@@ -1,9 +1,9 @@
-import type { FC } from "react"
 import { Column, GridColumns } from "@artsy/palette"
-import { ArtworkItem } from "./ArtworkItem"
-import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtworksList_artworks$data } from "__generated__/ArtworksList_artworks.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ArtworkItem } from "./ArtworkItem"
 
 interface ArtworksListProps {
   selectedIds: string[]

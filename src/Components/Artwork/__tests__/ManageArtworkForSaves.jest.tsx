@@ -8,7 +8,7 @@ import {
 import { MockBoot } from "DevTools/MockBoot"
 import { useMutation } from "Utils/Hooks/useMutation"
 import type { FC } from "react"
-import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
+import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 import type { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 
 jest.unmock("react-relay")

@@ -1,22 +1,22 @@
-import type { NewPaymentTestQuery$rawResponse } from "__generated__/NewPaymentTestQuery.graphql"
+import { NewPaymentFragmentContainer } from "Apps/Order/Routes/NewPayment"
+import {
+  fixFailedPaymentFailure,
+  fixFailedPaymentInsufficientInventoryFailure,
+  fixFailedPaymentSuccess,
+  fixFailedPaymentWithActionRequired,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/fixFailedPayment"
 import {
   OfferOrderWithShippingDetails,
   OfferWithTotals,
 } from "Apps/__tests__/Fixtures/Order"
-import { DateTime } from "luxon"
-import { graphql } from "react-relay"
-import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
+import { MockBoot } from "DevTools/MockBoot"
 import { mockLocation } from "DevTools/mockLocation"
 import { mockStripe } from "DevTools/mockStripe"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MockBoot } from "DevTools/MockBoot"
-import { NewPaymentFragmentContainer } from "Apps/Order/Routes/NewPayment"
-import {
-  fixFailedPaymentSuccess,
-  fixFailedPaymentInsufficientInventoryFailure,
-  fixFailedPaymentFailure,
-  fixFailedPaymentWithActionRequired,
-} from "Apps/Order/Routes/__fixtures__/MutationResults/fixFailedPayment"
+import type { NewPaymentTestQuery$rawResponse } from "__generated__/NewPaymentTestQuery.graphql"
+import { DateTime } from "luxon"
+import { graphql } from "react-relay"
+import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")

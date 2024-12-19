@@ -1,3 +1,5 @@
+import ChevronSmallDownIcon from "@artsy/icons/ChevronSmallDownIcon"
+import ChevronSmallUpIcon from "@artsy/icons/ChevronSmallUpIcon"
 import {
   Box,
   type BoxProps,
@@ -8,9 +10,6 @@ import {
   type DropdownProps,
   Pill,
 } from "@artsy/palette"
-import { type FC, useMemo } from "react"
-import ChevronSmallDownIcon from "@artsy/icons/ChevronSmallDownIcon"
-import ChevronSmallUpIcon from "@artsy/icons/ChevronSmallUpIcon"
 import {
   type Slice,
   initialArtworkFilterState,
@@ -18,6 +17,7 @@ import {
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { MultiSelectArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import { type FC, useMemo } from "react"
 
 interface FilterQuickProps
   extends Omit<DropdownProps, "dropdown" | "children"> {

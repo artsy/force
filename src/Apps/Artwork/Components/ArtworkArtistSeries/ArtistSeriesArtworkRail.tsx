@@ -1,17 +1,17 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtistSeriesArtworkRail_artwork$data } from "__generated__/ArtistSeriesArtworkRail_artwork.graphql"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
-import { useTracking } from "react-tracking"
 import {
   ActionType,
   type ClickedArtworkGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { extractNodes } from "Utils/extractNodes"
+import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail/Rail"
+import { extractNodes } from "Utils/extractNodes"
 import { getSignalLabel } from "Utils/getSignalLabel"
+import type { ArtistSeriesArtworkRail_artwork$data } from "__generated__/ArtistSeriesArtworkRail_artwork.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface Props {
   artwork: ArtistSeriesArtworkRail_artwork$data

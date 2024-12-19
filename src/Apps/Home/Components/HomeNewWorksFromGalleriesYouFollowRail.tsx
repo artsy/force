@@ -1,16 +1,3 @@
-import { Skeleton } from "@artsy/palette"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useTracking } from "react-tracking"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data } from "__generated__/HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection.graphql"
-import type { HomeNewWorksFromGalleriesYouFollowRailQuery } from "__generated__/HomeNewWorksFromGalleriesYouFollowRailQuery.graphql"
-import {
-  ShelfArtworkFragmentContainer,
-  ShelfArtworkPlaceholder,
-} from "Components/Artwork/ShelfArtwork"
-import { extractNodes } from "Utils/extractNodes"
 import {
   ActionType,
   type ClickedArtworkGroup,
@@ -18,9 +5,22 @@ import {
   OwnerType,
   clickedEntityGroup,
 } from "@artsy/cohesion"
+import { Skeleton } from "@artsy/palette"
+import {
+  ShelfArtworkFragmentContainer,
+  ShelfArtworkPlaceholder,
+} from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
 import { getSignalLabel } from "Utils/getSignalLabel"
+import type { HomeNewWorksFromGalleriesYouFollowRailQuery } from "__generated__/HomeNewWorksFromGalleriesYouFollowRailQuery.graphql"
+import type { HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data } from "__generated__/HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface HomeNewWorksFromGalleriesYouFollowRailProps {
   newWorksFromGalleriesYouFollowConnection: HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data

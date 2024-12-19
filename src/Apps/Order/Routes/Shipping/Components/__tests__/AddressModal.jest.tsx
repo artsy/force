@@ -1,23 +1,23 @@
 import { screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { graphql } from "react-relay"
 import {
   AddressModal,
   type AddressModalProps,
 } from "Apps/Order/Routes/Shipping/Components/AddressModal"
-import { validAddress } from "Components/__tests__/Utils/addressForm2"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import type { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
-import { createMockEnvironment } from "relay-test-utils"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { AddressModalTestQuery } from "__generated__/AddressModalTestQuery.graphql"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
-import type { DeepPartial } from "Utils/typeSupport"
+import type { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import {
   fillAddressFormFields,
   hasCorrectAddressFormFields,
 } from "Components/Address/__tests__/utils"
+import { validAddress } from "Components/__tests__/Utils/addressForm2"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { DeepPartial } from "Utils/typeSupport"
+import type { AddressModalTestQuery } from "__generated__/AddressModalTestQuery.graphql"
+import { graphql } from "react-relay"
+import { createMockEnvironment } from "relay-test-utils"
 
 jest.setTimeout(10000)
 

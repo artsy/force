@@ -3,7 +3,7 @@ import {
   PhotoThumbnail,
   type PhotoThumbnailProps,
 } from "Components/PhotoUpload/Components/PhotoThumbnail"
-import { mount, type ReactWrapper } from "enzyme"
+import { type ReactWrapper, mount } from "enzyme"
 
 const deleteFn = jest.fn()
 const file = new File([new Array(10000).join(" ")], "foo.png", {

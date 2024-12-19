@@ -7,9 +7,9 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { MetadataPlaceholder } from "Components/Artwork/Metadata"
+import { Media } from "Utils/Responsive"
 import { times } from "lodash"
 import type { FC } from "react"
-import { Media } from "Utils/Responsive"
 
 interface ArtworksRowPlaceholderProps {
   count: number

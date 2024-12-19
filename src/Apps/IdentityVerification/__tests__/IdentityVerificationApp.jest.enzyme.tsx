@@ -1,13 +1,13 @@
-import { graphql } from "react-relay"
-import { IdentityVerificationAppFragmentContainer } from "Apps/IdentityVerification/IdentityVerificationApp"
-import { IdentityVerificationAppTestPage } from "./Utils/IdentityVerificationAppTestPage"
-import { mockLocation } from "DevTools/mockLocation"
-import { HttpError } from "found"
 import { Toasts, ToastsProvider } from "@artsy/palette"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { IdentityVerificationAppFragmentContainer } from "Apps/IdentityVerification/IdentityVerificationApp"
 import { MockBoot } from "DevTools/MockBoot"
+import { mockLocation } from "DevTools/mockLocation"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { HttpError } from "found"
+import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
+import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
+import { IdentityVerificationAppTestPage } from "./Utils/IdentityVerificationAppTestPage"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

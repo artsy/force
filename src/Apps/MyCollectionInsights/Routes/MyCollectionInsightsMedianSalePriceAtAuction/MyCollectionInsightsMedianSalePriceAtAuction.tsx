@@ -1,8 +1,8 @@
 import { Box, Clickable, Flex, ModalDialog, Spacer, Text } from "@artsy/palette"
-import { graphql, useFragment } from "react-relay"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import type { MyCollectionInsightsMedianSalePriceAtAuction_artist$key } from "__generated__/MyCollectionInsightsMedianSalePriceAtAuction_artist.graphql"
 import { Fragment, useState } from "react"
+import { graphql, useFragment } from "react-relay"
 import { MyCollectionInsightsSelectArtistModal } from "./Components/MyCollectionInsightsSelectArtistModal"
 
 interface MyCollectionInsightsMedianSalePriceAtAuctionProps {

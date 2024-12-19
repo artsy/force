@@ -18,9 +18,17 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
 import { ArtworkFilterCreateAlert } from "Components/ArtworkFilter/ArtworkFilterCreateAlert"
 import { ArtworkFilterDrawer } from "Components/ArtworkFilter/ArtworkFilterDrawer"
+import { ArtworkFilterSort } from "Components/ArtworkFilter/ArtworkFilterSort"
 import { ArtworkFilterExpandableSort } from "Components/ArtworkFilter/ArtworkFilters/ArtworkFilterExpandableSort"
+import {
+  ARTWORK_FILTERS_QUICK_FIELDS,
+  ArtworkFiltersQuick,
+} from "Components/ArtworkFilter/ArtworkFiltersQuick"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { Sticky } from "Components/Sticky"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -49,14 +57,6 @@ import { ArtworkFilters } from "./ArtworkFilters"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
-import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
-import { ArtworkFilterSort } from "Components/ArtworkFilter/ArtworkFilterSort"
-import {
-  ARTWORK_FILTERS_QUICK_FIELDS,
-  ArtworkFiltersQuick,
-} from "Components/ArtworkFilter/ArtworkFiltersQuick"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element

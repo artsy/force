@@ -1,13 +1,13 @@
-import { isArray } from "lodash"
 import {
   initialArtworkFilterState,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { DEFAULT_METRIC } from "Utils/metrics"
-import type { FilterPill } from "./types"
+import { isArray } from "lodash"
 import { extractPillsFromCriteria } from "./Utils/extractPills"
 import { getAllowedSearchCriteria } from "./Utils/savedSearchCriteria"
-import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import type { FilterPill } from "./types"
 
 export const useActiveFilterPills = (defaultPills: FilterPill[] = []) => {
   const { aggregations, setFilter, filters } = useArtworkFilterContext()

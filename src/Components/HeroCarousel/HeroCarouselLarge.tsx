@@ -1,13 +1,4 @@
 import {
-  Children,
-  type FC,
-  forwardRef,
-  type ForwardRefExoticComponent,
-  useCallback,
-  useEffect,
-  useRef,
-} from "react"
-import {
   Box,
   Carousel,
   CarouselCell,
@@ -21,8 +12,17 @@ import {
   ShelfPrevious,
   Spacer,
 } from "@artsy/palette"
-import { useCursor } from "use-cursor"
 import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
+import {
+  Children,
+  type FC,
+  type ForwardRefExoticComponent,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react"
+import { useCursor } from "use-cursor"
 
 interface HeroCarouselLargeProps {
   children: React.ReactNode

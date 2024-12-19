@@ -1,4 +1,4 @@
-import { ResponsiveBox, Image } from "@artsy/palette"
+import { Image, ResponsiveBox } from "@artsy/palette"
 import { cropped, resized } from "Utils/resized"
 
 export default {

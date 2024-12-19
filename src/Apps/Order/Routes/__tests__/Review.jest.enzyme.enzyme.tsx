@@ -1,6 +1,33 @@
-import type { ReviewTestQuery$rawResponse } from "__generated__/ReviewTestQuery.graphql"
+import { waitFor } from "@testing-library/react"
+import { OfferSummaryItemFragmentContainer } from "Apps/Order/Components/OfferSummaryItem"
+import { PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
+import { TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
+import { ReviewFragmentContainer } from "Apps/Order/Routes/Review"
 import {
-  PrivateSaleOrderWithShippingDetails,
+  submitOfferOrderFailedConfirmation,
+  submitOfferOrderSuccess,
+  submitOfferOrderSuccessInReview,
+  submitOfferOrderWithActionRequired,
+  submitOfferOrderWithFailure,
+  submitOfferOrderWithNoInventoryFailure,
+  submitOfferOrderWithVersionMismatchFailure,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/submitOfferOrder"
+import {
+  submitOrderSuccess,
+  submitOrderWithActionRequired,
+  submitOrderWithFailure,
+  submitOrderWithFailureCardDeclined,
+  submitOrderWithFailureCurrencyNotSupported,
+  submitOrderWithFailureInsufficientFunds,
+  submitOrderWithMissingInfo,
+  submitOrderWithNoInventoryFailure,
+  submitOrderWithVersionMismatchFailure,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/submitOrder"
+import {
+  ErrorDialogs,
+  getErrorDialogCopy,
+} from "Apps/Order/Utils/getErrorDialogCopy"
+import {
   BuyOrderWithArtaShippingDetails,
   BuyOrderWithBankDebitDetails,
   BuyOrderWithShippingDetails,
@@ -8,46 +35,19 @@ import {
   OfferOrderWithMissingMetadata,
   OfferOrderWithShippingDetails,
   OfferOrderWithShippingDetailsAndNote,
+  PrivateSaleOrderWithShippingDetails,
 } from "Apps/__tests__/Fixtures/Order"
-import { OfferSummaryItemFragmentContainer } from "Apps/Order/Components/OfferSummaryItem"
+import { MockBoot } from "DevTools/MockBoot"
 import { expectOne } from "DevTools/RootTestPage"
-import { graphql } from "react-relay"
-import { ReviewFragmentContainer } from "Apps/Order/Routes/Review"
-import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { mockLocation } from "DevTools/mockLocation"
 import { mockStripe } from "DevTools/mockStripe"
-import { TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import { PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
-import { cloneDeep } from "lodash"
-import { useTracking } from "react-tracking"
-import { waitFor } from "@testing-library/react"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MockBoot } from "DevTools/MockBoot"
-import {
-  submitOfferOrderSuccess,
-  submitOfferOrderWithFailure,
-  submitOfferOrderWithVersionMismatchFailure,
-  submitOfferOrderFailedConfirmation,
-  submitOfferOrderWithNoInventoryFailure,
-  submitOfferOrderWithActionRequired,
-  submitOfferOrderSuccessInReview,
-} from "Apps/Order/Routes/__fixtures__/MutationResults/submitOfferOrder"
-import {
-  submitOrderSuccess,
-  submitOrderWithFailure,
-  submitOrderWithVersionMismatchFailure,
-  submitOrderWithMissingInfo,
-  submitOrderWithFailureCardDeclined,
-  submitOrderWithFailureInsufficientFunds,
-  submitOrderWithNoInventoryFailure,
-  submitOrderWithActionRequired,
-  submitOrderWithFailureCurrencyNotSupported,
-} from "Apps/Order/Routes/__fixtures__/MutationResults/submitOrder"
 import type { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
-import {
-  ErrorDialogs,
-  getErrorDialogCopy,
-} from "Apps/Order/Utils/getErrorDialogCopy"
+import type { ReviewTestQuery$rawResponse } from "__generated__/ReviewTestQuery.graphql"
+import { cloneDeep } from "lodash"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 
 jest.unmock("react-relay")
 

@@ -10,8 +10,8 @@ import {
 
 import {
   ContextualMenu,
-  ContextualMenuItem,
   ContextualMenuDivider,
+  ContextualMenuItem,
 } from "Components/ContextualMenu"
 
 export default {

@@ -1,28 +1,28 @@
 import { Flex, Join, Separator, Spinner, Text } from "@artsy/palette"
+import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
+import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
+import type { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
+import { SystemContext } from "System/Contexts/SystemContext"
+import { useRouter } from "System/Hooks/useRouter"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
+import { getENV } from "Utils/getENV"
+import type {
+  NotificationTypesEnum,
+  NotificationsListQuery,
+} from "__generated__/NotificationsListQuery.graphql"
+import type { NotificationsList_viewer$data } from "__generated__/NotificationsList_viewer.graphql"
+import { useContext, useEffect, useState } from "react"
 import {
   type RelayPaginationProp,
   createPaginationContainer,
   graphql,
 } from "react-relay"
-import { extractNodes } from "Utils/extractNodes"
-import type { NotificationsList_viewer$data } from "__generated__/NotificationsList_viewer.graphql"
-import type {
-  NotificationsListQuery,
-  NotificationTypesEnum,
-} from "__generated__/NotificationsListQuery.graphql"
-import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
-import { useContext, useEffect, useState } from "react"
+import { NotificationsEmptyStateByType } from "./NotificationsEmptyStateByType"
+import { NotificationsListPlaceholder } from "./NotificationsListPlaceholder"
 import { NotificationsListScrollSentinel } from "./NotificationsListScrollSentinel"
 import type { NotificationType } from "./types"
-import { NotificationsEmptyStateByType } from "./NotificationsEmptyStateByType"
 import { shouldDisplayNotification } from "./util"
-import { NotificationsListPlaceholder } from "./NotificationsListPlaceholder"
-import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
-import { useRouter } from "System/Hooks/useRouter"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { SystemContext } from "System/Contexts/SystemContext"
-import { getENV } from "Utils/getENV"
-import type { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
 
 interface NotificationsListQueryRendererProps {
   mode: NotificationListMode

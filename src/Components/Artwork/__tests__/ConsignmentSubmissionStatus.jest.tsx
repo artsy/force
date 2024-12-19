@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
-import type { ConsignmentSubmissionStatusTestQuery } from "__generated__/ConsignmentSubmissionStatusTestQuery.graphql"
 import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork/ConsignmentSubmissionStatus"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { ConsignmentSubmissionStatusTestQuery } from "__generated__/ConsignmentSubmissionStatusTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

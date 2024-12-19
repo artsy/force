@@ -1,32 +1,32 @@
-import { BorderedRadio, Checkbox, Link, Input } from "@artsy/palette"
+import { BorderedRadio, Checkbox, Input, Link } from "@artsy/palette"
+import { Elements } from "@stripe/react-stripe-js"
+import type { StripeError, Token } from "@stripe/stripe-js"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import type { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
-import type { CreditCardPickerTestQuery$rawResponse } from "__generated__/CreditCardPickerTestQuery.graphql"
+import {
+  CreditCardPicker,
+  CreditCardPickerFragmentContainer,
+} from "Apps/Order/Components/CreditCardPicker"
+import { creatingCreditCardSuccess } from "Apps/Order/Routes/__fixtures__/MutationResults/createCreditCard"
 import {
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
   OfferOrderWithShippingDetails,
   ShippingDetails,
 } from "Apps/__tests__/Fixtures/Order"
+import { AddressForm } from "Components/Address/AddressForm"
+import type { Address } from "Components/Address/utils"
 import {
   fillCountrySelect,
   fillIn,
   validAddress,
 } from "Components/__tests__/Utils/addressForm"
-import { AddressForm } from "Components/Address/AddressForm"
-import type { Address } from "Components/Address/utils"
-import { RootTestPage } from "DevTools/RootTestPage"
-import { graphql } from "react-relay"
-import {
-  CreditCardPicker,
-  CreditCardPickerFragmentContainer,
-} from "Apps/Order/Components/CreditCardPicker"
-import type { Token, StripeError } from "@stripe/stripe-js"
-import { Elements } from "@stripe/react-stripe-js"
-import { mockStripe } from "DevTools/mockStripe"
 import { MockBoot } from "DevTools/MockBoot"
+import { RootTestPage } from "DevTools/RootTestPage"
+import { mockStripe } from "DevTools/mockStripe"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { creatingCreditCardSuccess } from "Apps/Order/Routes/__fixtures__/MutationResults/createCreditCard"
+import type { CreditCardPickerTestQuery$rawResponse } from "__generated__/CreditCardPickerTestQuery.graphql"
+import type { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
+import { graphql } from "react-relay"
 
 jest.mock("sharify", () => ({
   data: {

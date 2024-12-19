@@ -1,9 +1,9 @@
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { mount } from "enzyme"
-import { createRef } from "react"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
+import { mount } from "enzyme"
+import { createRef } from "react"
 
 jest.mock("Utils/Hooks/useDidMount")
 jest.mock("Utils/Hooks/useIntersectionObserver")

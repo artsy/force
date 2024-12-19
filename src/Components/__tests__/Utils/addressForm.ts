@@ -1,9 +1,9 @@
-/* Address utilities for the old address form without improvements like state select */
-import type { Address } from "Components/Address/utils"
-import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+/* Address utilities for the old address form without improvements like state select */
+import type { Address } from "Components/Address/utils"
+import { CountrySelect } from "Components/CountrySelect"
 
 export const validAddress: Address = {
   name: "Erik David",

@@ -1,37 +1,37 @@
 import {
-  Text,
-  Flex,
   Box,
-  Spacer,
-  Join,
-  Separator,
   Button,
-  GridColumns,
   Column,
-  SkeletonText,
+  Flex,
+  GridColumns,
+  Join,
+  Message,
+  Separator,
   Skeleton,
   SkeletonBox,
-  Message,
+  SkeletonText,
+  Spacer,
+  Text,
 } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
-import type { SavedSearchAlertsArtworksQuery } from "__generated__/SavedSearchAlertsArtworksQuery.graphql"
-import { createFragmentContainer, graphql } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
-import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
-import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { AlertProvider } from "Components/Alert/AlertProvider"
-import ArtworkGrid, {
-  ArtworkGridPlaceholder,
-} from "Components/ArtworkGrid/ArtworkGrid"
-import { Modal } from "Components/Alert/Components/Modal/Modal"
-import { Media } from "Utils/Responsive"
 import {
   CriteriaPills,
   CriteriaPillsPlaceholder,
 } from "Components/Alert/Components/CriteriaPills"
+import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { ModalHeader } from "Components/Alert/Components/Modal/ModalHeader"
+import ArtworkGrid, {
+  ArtworkGridPlaceholder,
+} from "Components/ArtworkGrid/ArtworkGrid"
+import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
+import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import { RouterLink } from "System/Components/RouterLink"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useJump } from "Utils/Hooks/useJump"
+import { Media } from "Utils/Responsive"
+import type { SavedSearchAlertsArtworksQuery } from "__generated__/SavedSearchAlertsArtworksQuery.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface AlertArtworksProps {
   alert: NonNullable<SavedSearchAlertsArtworksQuery["response"]["me"]>["alert"]

@@ -1,10 +1,10 @@
-import type * as React from "react"
-import { RouterLink } from "System/Components/RouterLink"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { useTracking } from "react-tracking"
 import { Button } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { useJump } from "Utils/Hooks/useJump"
+import type * as React from "react"
+import { useTracking } from "react-tracking"
 
 interface ViewWorksButtonProps {
   artworksCount: number

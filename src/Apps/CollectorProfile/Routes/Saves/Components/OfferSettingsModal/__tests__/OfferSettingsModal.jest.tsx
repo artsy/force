@@ -1,11 +1,11 @@
-import { screen, fireEvent } from "@testing-library/react"
-import { useMutation } from "Utils/Hooks/useMutation"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { render } from "DevTools/renderWithMockBoot"
+import { fireEvent, screen } from "@testing-library/react"
 import { OfferSettingsModal } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsModal"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { render } from "DevTools/renderWithMockBoot"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useMutation } from "Utils/Hooks/useMutation"
 import type { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 import { createMockEnvironment } from "relay-test-utils"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.mock("Utils/Hooks/useMutation")
 jest.mock("System/Hooks/useSystemContext")

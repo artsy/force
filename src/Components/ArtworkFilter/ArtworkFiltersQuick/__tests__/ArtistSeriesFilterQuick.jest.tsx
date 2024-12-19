@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react"
-import { createArtworkFilterTestRenderer } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
 import type { ArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { createArtworkFilterTestRenderer } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
 import { ArtistSeriesFilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/ArtistSeriesFilterQuick"
 
 jest.mock("System/Hooks/useFeatureFlag", () => ({

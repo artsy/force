@@ -1,23 +1,23 @@
-import { Box, Skeleton } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
 import {
   ActionType,
   type ClickedArtistSeriesGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { extractNodes } from "Utils/extractNodes"
-import { Rail } from "Components/Rail/Rail"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { ArtistSeriesRail_artist$data } from "__generated__/ArtistSeriesRail_artist.graphql"
-import type { ArtistSeriesRailQuery } from "__generated__/ArtistSeriesRailQuery.graphql"
+import { Box, Skeleton } from "@artsy/palette"
 import {
   CellArtistSeriesFragmentContainer,
   CellArtistSeriesPlaceholder,
 } from "Components/Cells/CellArtistSeries"
-import type { FC } from "react"
-import { useTracking } from "react-tracking"
+import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
+import type { ArtistSeriesRailQuery } from "__generated__/ArtistSeriesRailQuery.graphql"
+import type { ArtistSeriesRail_artist$data } from "__generated__/ArtistSeriesRail_artist.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ArtistSeriesProps {
   artist: ArtistSeriesRail_artist$data

@@ -1,7 +1,7 @@
-import type { FC } from "react"
 import { SaleAgreementListItem } from "Apps/SaleAgreements/Components/SaleAgreementsListItem"
 import type { SaleAgreementsFilter_viewer$data } from "__generated__/SaleAgreementsFilter_viewer.graphql"
 import { sortBy } from "lodash"
+import type { FC } from "react"
 
 export interface SaleAgreementsListProps {
   saleAgreements: NonNullable<

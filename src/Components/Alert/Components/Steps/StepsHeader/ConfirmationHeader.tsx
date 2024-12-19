@@ -1,5 +1,5 @@
-import type { FC } from "react"
 import { Text } from "@artsy/palette"
+import type { FC } from "react"
 
 export const ConfirmationHeader: FC<React.PropsWithChildren<unknown>> = () => {
   return (

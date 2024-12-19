@@ -1,10 +1,10 @@
 import { Box, FullBleed, Spacer } from "@artsy/palette"
-import type { PrivateArtworkDetails_artwork$key } from "__generated__/PrivateArtworkDetails_artwork.graphql"
-import { PrivateArtworkAboutArtist } from "./PrivateArtworkAboutArtist"
 import { PrivateArtworkAboutWork } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkAboutWork"
-import { graphql, useFragment } from "react-relay"
 import { PrivateArtworkMetadata } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkMetadata"
 import { Media } from "Utils/Responsive"
+import type { PrivateArtworkDetails_artwork$key } from "__generated__/PrivateArtworkDetails_artwork.graphql"
+import { graphql, useFragment } from "react-relay"
+import { PrivateArtworkAboutArtist } from "./PrivateArtworkAboutArtist"
 
 interface PrivateArtworkDetailsProps {
   artwork: PrivateArtworkDetails_artwork$key

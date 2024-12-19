@@ -1,5 +1,5 @@
-import { Expandable, type ExpandableProps } from "@artsy/palette"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import { Expandable, type ExpandableProps } from "@artsy/palette"
 import { useTracking } from "react-tracking"
 
 export const SidebarExpandable: React.FC<

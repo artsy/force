@@ -1,7 +1,7 @@
 import {
-  type OrderPaymentState,
   type OrderPaymentAction,
   OrderPaymentActions,
+  type OrderPaymentState,
 } from "./OrderPaymentContext"
 
 export const orderPaymentReducer = (

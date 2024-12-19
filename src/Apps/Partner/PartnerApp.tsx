@@ -1,14 +1,14 @@
-import type * as React from "react"
-import { Separator, FullBleed, Marquee } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import { FullBleed, Marquee, Separator } from "@artsy/palette"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "Apps/Partner/Components/NavigationTabs"
-import { PartnerHeaderFragmentContainer as PartnerHeader } from "./Components/PartnerHeader"
+import { Analytics } from "System/Contexts/AnalyticsContext"
 import type { PartnerApp_partner$data } from "__generated__/PartnerApp_partner.graphql"
+import { HttpError } from "found"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { PartnerHeaderFragmentContainer as PartnerHeader } from "./Components/PartnerHeader"
 import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "./Components/PartnerHeader/PartnerHeaderImage"
 import { PartnerMetaFragmentContainer } from "./Components/PartnerMeta"
 import { PartnerArtistsLoadingContextProvider } from "./Utils/PartnerArtistsLoadingContext"
-import { HttpError } from "found"
-import { Analytics } from "System/Contexts/AnalyticsContext"
 
 export interface PartnerAppProps {
   partner: PartnerApp_partner$data

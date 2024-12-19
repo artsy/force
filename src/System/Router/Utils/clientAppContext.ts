@@ -1,6 +1,6 @@
+import type { FeatureFlags } from "System/Hooks/useFeatureFlag"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
-import type { FeatureFlags } from "System/Hooks/useFeatureFlag"
 
 export interface ClientContext {
   user: User

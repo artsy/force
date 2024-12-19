@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import {
-  ErrorDialogs,
   ErrorDialogMessage,
+  ErrorDialogs,
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
 

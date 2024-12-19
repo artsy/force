@@ -1,11 +1,11 @@
 import { ActionType, type SentArtworkInquiry } from "@artsy/cohesion"
-import { useTracking } from "react-tracking"
-import { type Environment, commitMutation, graphql } from "react-relay"
 import type {
   SubmitInquiryRequestMutationInput,
   useArtworkInquiryRequestMutation,
   useArtworkInquiryRequestMutation$data,
 } from "__generated__/useArtworkInquiryRequestMutation.graphql"
+import { type Environment, commitMutation, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import { useInquiryContext } from "./useInquiryContext"
 
 // Previously we were setting this to the number `6000`:

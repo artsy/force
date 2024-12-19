@@ -1,4 +1,4 @@
-import { Text, Flex, type FlexProps } from "@artsy/palette"
+import { Flex, type FlexProps, Text } from "@artsy/palette"
 import { Highlight } from "Components/Search/SuggestionItem/Highlight"
 import type { FC } from "react"
 

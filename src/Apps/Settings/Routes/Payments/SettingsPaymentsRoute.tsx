@@ -1,7 +1,7 @@
+import type { SettingsPaymentsRoute_me$data } from "__generated__/SettingsPaymentsRoute_me.graphql"
 import type React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsPaymentsMethodsFragmentContainer } from "./Components/SettingsPaymentsMethods"
-import type { SettingsPaymentsRoute_me$data } from "__generated__/SettingsPaymentsRoute_me.graphql"
 
 interface SettingsPaymentsRouteProps {
   me: SettingsPaymentsRoute_me$data

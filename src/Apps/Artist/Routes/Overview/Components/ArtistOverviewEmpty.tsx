@@ -1,4 +1,4 @@
-import { Text, GridColumns, Column } from "@artsy/palette"
+import { Column, GridColumns, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 
 export const ArtistOverviewEmpty: React.FC<

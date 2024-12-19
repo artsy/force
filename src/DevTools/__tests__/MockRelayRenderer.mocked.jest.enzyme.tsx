@@ -1,5 +1,5 @@
-import { mount } from "enzyme"
 import { MockRelayRenderer } from "DevTools/MockRelayRenderer"
+import { mount } from "enzyme"
 
 describe("MockRelayRenderer", () => {
   const consoleError = console.error

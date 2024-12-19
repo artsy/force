@@ -1,12 +1,12 @@
 import type {
-  ArtistBioTestQuery$rawResponse,
   ArtistBioTestQuery$data,
+  ArtistBioTestQuery$rawResponse,
 } from "__generated__/ArtistBioTestQuery.graphql"
 
-import { renderRelayTree } from "DevTools/renderRelayTree"
-import { MockBoot } from "DevTools/MockBoot"
-import { graphql } from "react-relay"
 import { ArtistBioFragmentContainer as ArtistBio } from "Components/ArtistBio"
+import { MockBoot } from "DevTools/MockBoot"
+import { renderRelayTree } from "DevTools/renderRelayTree"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

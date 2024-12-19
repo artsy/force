@@ -1,4 +1,4 @@
-import { Box, Image, Text, Spacer, Button } from "@artsy/palette"
+import { Box, Button, Image, Spacer, Text } from "@artsy/palette"
 
 interface ArtworkItemProps {
   artwork: any

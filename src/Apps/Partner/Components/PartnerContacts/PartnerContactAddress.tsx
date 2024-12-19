@@ -1,8 +1,8 @@
-import type * as React from "react"
 import { Text } from "@artsy/palette"
-import { getContactAddressLines } from "./partnerContactUtils"
 import type { PartnerContactAddress_location$data } from "__generated__/PartnerContactAddress_location.graphql"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { getContactAddressLines } from "./partnerContactUtils"
 
 export interface PartnerContactAddressProps {
   location: PartnerContactAddress_location$data

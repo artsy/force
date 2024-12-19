@@ -1,6 +1,6 @@
 import { LotTimer } from "Apps/Artwork/Components/ArtworkSidebar/LotTimer"
-import { DateTime, Settings } from "luxon"
 import { mount } from "enzyme"
+import { DateTime, Settings } from "luxon"
 import "jest-styled-components"
 import type { LotTimer_saleArtwork$data } from "__generated__/LotTimer_saleArtwork.graphql"
 

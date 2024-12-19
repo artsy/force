@@ -1,5 +1,5 @@
-import type * as React from "react"
 import { Box, Column, GridColumns, Toasts, useToasts } from "@artsy/palette"
+import type * as React from "react"
 import { AppContainer } from "./AppContainer"
 import { Z } from "./constants"
 

@@ -1,3 +1,4 @@
+import CloseIcon from "@artsy/icons/CloseIcon"
 import {
   Clickable,
   Flex,
@@ -11,9 +12,8 @@ import {
   useTheme,
 } from "@artsy/palette"
 import { useCareerHighlightsStoriesContext } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Hooks/useCareerHighlightsStoriesContext"
-import { omit } from "lodash"
 import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
-import CloseIcon from "@artsy/icons/CloseIcon"
+import { omit } from "lodash"
 
 type CareerHighlightModalProps = ModalBaseProps
 

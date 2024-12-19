@@ -1,5 +1,5 @@
-import { mount } from "enzyme"
 import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
+import { mount } from "enzyme"
 
 import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
 

@@ -10,12 +10,12 @@ import {
 } from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
 
-import type { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
-import { Formik, Form } from "formik"
-import { OfferSettingsListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsListItem"
 import { useUpdateMeCollection } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/Mutations/useUpdateMeCollection"
+import { OfferSettingsListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsListItem"
 import createLogger from "Utils/logger"
+import type { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 import type { UpdateMeCollectionInput } from "__generated__/useUpdateMeCollectionMutation.graphql"
+import { Form, Formik } from "formik"
 
 interface OfferSettingsModalProps {
   onClose: () => void

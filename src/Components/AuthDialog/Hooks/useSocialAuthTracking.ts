@@ -1,10 +1,10 @@
-import * as Yup from "yup"
-import Cookies from "cookies-js"
-import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
-import { useEffect } from "react"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useRouter } from "System/Hooks/useRouter"
 import type { AuthDialogAnalytics } from "Components/AuthDialog/AuthDialogContext"
+import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import Cookies from "cookies-js"
+import { useEffect } from "react"
+import * as Yup from "yup"
 
 const USE_SOCIAL_AUTH_TRACKING_KEY = "useSocialAuthTracking"
 

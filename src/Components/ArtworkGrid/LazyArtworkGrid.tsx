@@ -1,5 +1,5 @@
-import StaticContainer from "found/StaticContainer"
 import { useRouter } from "found"
+import StaticContainer from "found/StaticContainer"
 
 /**
  * When loading artwork grids / filter lazily we need to ensure that rerenders

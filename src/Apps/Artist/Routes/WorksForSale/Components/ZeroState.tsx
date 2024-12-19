@@ -1,8 +1,8 @@
 import { Box, type BoxProps, Message } from "@artsy/palette"
-import { isEmpty } from "lodash"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { Sticky } from "Components/Sticky"
+import { isEmpty } from "lodash"
 
 export const ZeroState: React.FC<React.PropsWithChildren<BoxProps>> = props => {
   const { selectedFiltersCounts, resetFilters } = useArtworkFilterContext()

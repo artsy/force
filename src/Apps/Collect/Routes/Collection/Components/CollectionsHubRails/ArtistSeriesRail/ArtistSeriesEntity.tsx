@@ -1,18 +1,18 @@
-import { Box, Flex, Text, Image } from "@artsy/palette"
-import type { ArtistSeriesEntity_member$data } from "__generated__/ArtistSeriesEntity_member.graphql"
-import { useTracking } from "react-tracking"
-import { RouterLink } from "System/Components/RouterLink"
-import currency from "currency.js"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import {
-  ContextModule,
-  type ClickedArtistSeriesGroup,
   ActionType,
+  type ClickedArtistSeriesGroup,
+  ContextModule,
 } from "@artsy/cohesion"
+import { Box, Flex, Image, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { extractNodes } from "Utils/extractNodes"
 import { cropped } from "Utils/resized"
+import type { ArtistSeriesEntity_member$data } from "__generated__/ArtistSeriesEntity_member.graphql"
+import currency from "currency.js"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 export interface ArtistSeriesEntityProps {
   member: ArtistSeriesEntity_member$data

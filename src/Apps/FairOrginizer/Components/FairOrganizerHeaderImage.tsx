@@ -1,7 +1,7 @@
+import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
+import type { FairOrganizerHeaderImage_fairOrganizer$data } from "__generated__/FairOrganizerHeaderImage_fairOrganizer.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { FairOrganizerHeaderImage_fairOrganizer$data } from "__generated__/FairOrganizerHeaderImage_fairOrganizer.graphql"
-import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 
 interface FairOrganizerHeaderImageProps {
   fairOrganizer: FairOrganizerHeaderImage_fairOrganizer$data

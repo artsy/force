@@ -1,11 +1,11 @@
 import { screen } from "@testing-library/react"
 import { BidTimerLine } from "Components/Artwork/Details/BidTimerLine"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useTimer } from "Utils/Hooks/useTimer"
+import type { BidTimerLineTestQuery } from "__generated__/BidTimerLineTestQuery.graphql"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { BidTimerLineTestQuery } from "__generated__/BidTimerLineTestQuery.graphql"
 
 jest.mock("Components/ArtworkGrid/ArtworkGridContext")
 jest.mock("Utils/Hooks/useTimer")

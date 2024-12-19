@@ -1,10 +1,10 @@
-import type * as React from "react"
-import { HomeHeroUnitBase, type HomeHeroUnitBaseProps } from "./HomeHeroUnit"
-import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
-import { useFeatureVariant } from "System/Hooks/useFeatureFlag"
-import { useOnce } from "Utils/Hooks/useOnce"
 import { ActionType, type ExperimentViewed, OwnerType } from "@artsy/cohesion"
+import { useFeatureVariant } from "System/Hooks/useFeatureFlag"
+import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
+import { useOnce } from "Utils/Hooks/useOnce"
+import type * as React from "react"
 import { useTracking } from "react-tracking"
+import { HomeHeroUnitBase, type HomeHeroUnitBaseProps } from "./HomeHeroUnit"
 
 const EXPERIMENT_NAME = "diamond_hero-app-download"
 

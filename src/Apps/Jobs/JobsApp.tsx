@@ -1,10 +1,10 @@
 import { Column, GridColumns, Separator, Spacer, Text } from "@artsy/palette"
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Components/RouterLink"
 import type { JobsApp_viewer$data } from "__generated__/JobsApp_viewer.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { JobsFilterFragmentContainer } from "./Components/JobsFilter"
 
 const HEADER_IMAGE_URL =

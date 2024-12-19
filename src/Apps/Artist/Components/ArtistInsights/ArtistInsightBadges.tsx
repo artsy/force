@@ -5,9 +5,9 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
+import type { ArtistInsightBadges_artist$data } from "__generated__/ArtistInsightBadges_artist.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtistInsightBadges_artist$data } from "__generated__/ArtistInsightBadges_artist.graphql"
 
 interface ArtistInsightBadgesProps {
   artist: ArtistInsightBadges_artist$data

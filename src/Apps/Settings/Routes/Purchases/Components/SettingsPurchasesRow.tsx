@@ -1,4 +1,15 @@
 import {
+  ActionType,
+  type ClickedChangePaymentMethod,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import AlertStrokeIcon from "@artsy/icons/AlertStrokeIcon"
+import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
+import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
+import HelpIcon from "@artsy/icons/HelpIcon"
+import PendingIcon from "@artsy/icons/PendingIcon"
+import {
   Box,
   Button,
   Column,
@@ -12,31 +23,20 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { DateTime } from "luxon"
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Components/RouterLink"
-import type {
-  SettingsPurchasesRow_order$data,
-  CommerceOrderDisplayStateEnum,
-  CommerceBuyerOfferActionEnum,
-} from "__generated__/SettingsPurchasesRow_order.graphql"
-import type { LocaleOptions } from "luxon"
-import { extractNodes } from "Utils/extractNodes"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
-import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
-import HelpIcon from "@artsy/icons/HelpIcon"
-import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
-import PendingIcon from "@artsy/icons/PendingIcon"
-import AlertStrokeIcon from "@artsy/icons/AlertStrokeIcon"
+import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
+import type {
+  CommerceBuyerOfferActionEnum,
+  CommerceOrderDisplayStateEnum,
+  SettingsPurchasesRow_order$data,
+} from "__generated__/SettingsPurchasesRow_order.graphql"
+import { DateTime } from "luxon"
+import type { LocaleOptions } from "luxon"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import {
-  ActionType,
-  ContextModule,
-  OwnerType,
-  type ClickedChangePaymentMethod,
-} from "@artsy/cohesion"
 
 type BuyerDisplayStateEnum =
   | CommerceBuyerOfferActionEnum

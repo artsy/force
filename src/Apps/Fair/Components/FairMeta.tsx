@@ -1,8 +1,8 @@
+import { getENV } from "Utils/getENV"
+import type { FairMeta_fair$data } from "__generated__/FairMeta_fair.graphql"
 import type * as React from "react"
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { FairMeta_fair$data } from "__generated__/FairMeta_fair.graphql"
-import { getENV } from "Utils/getENV"
 
 interface FairMetaProps {
   fair: FairMeta_fair$data

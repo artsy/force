@@ -1,9 +1,9 @@
-import { graphql, useFragment } from "react-relay"
-import type { ConversationStatusWithCounter_order$key } from "__generated__/ConversationStatusWithCounter_order.graphql"
-import { Flex, Text } from "@artsy/palette"
-import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import AlertFillIcon from "@artsy/icons/AlertFillIcon"
+import StopwatchIcon from "@artsy/icons/StopwatchIcon"
+import { Flex, Text } from "@artsy/palette"
 import { CountdownTimer } from "Apps/Conversations/components/Details/OrderInformation/CountdownTimer"
+import type { ConversationStatusWithCounter_order$key } from "__generated__/ConversationStatusWithCounter_order.graphql"
+import { graphql, useFragment } from "react-relay"
 
 interface ConversationStatusWithCounterProps {
   order: ConversationStatusWithCounter_order$key

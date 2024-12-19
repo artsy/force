@@ -7,17 +7,17 @@ import {
 } from "@artsy/palette"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import { getENV } from "Utils/getENV"
+import { compact, debounce } from "lodash"
 import {
-  useState,
-  useEffect,
-  useRef,
-  type MouseEvent,
   type ChangeEvent,
   type FC,
-  useMemo,
+  type MouseEvent,
   useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
 } from "react"
-import { compact, debounce } from "lodash"
 
 const DEBOUNCE_DELAY = 300
 

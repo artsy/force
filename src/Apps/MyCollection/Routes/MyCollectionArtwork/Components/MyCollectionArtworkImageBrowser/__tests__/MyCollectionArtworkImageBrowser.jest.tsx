@@ -1,10 +1,10 @@
 import { screen } from "@testing-library/react"
-import type { MyCollectionArtworkImageBrowserTestQuery } from "__generated__/MyCollectionArtworkImageBrowserTestQuery.graphql"
 import { MyCollectionArtworkImageBrowser } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { MyCollectionArtworkImageBrowserTestQuery } from "__generated__/MyCollectionArtworkImageBrowserTestQuery.graphql"
+import { graphql } from "react-relay"
 
 jest.mock("System/Hooks/useSystemContext")
 jest.unmock("react-relay")

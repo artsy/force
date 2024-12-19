@@ -1,7 +1,7 @@
-import { UtilButton, UtilButtonLink } from "./UtilButton"
+import type { ArtworkDownloadButton_artwork$data } from "__generated__/ArtworkDownloadButton_artwork.graphql"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtworkDownloadButton_artwork$data } from "__generated__/ArtworkDownloadButton_artwork.graphql"
+import { UtilButton, UtilButtonLink } from "./UtilButton"
 
 interface ArtworkDownloadButtonProps {
   artwork: ArtworkDownloadButton_artwork$data

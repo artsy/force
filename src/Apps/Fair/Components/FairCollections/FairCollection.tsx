@@ -1,18 +1,18 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { FairCollection_collection$data } from "__generated__/FairCollection_collection.graphql"
-import { TriptychCard } from "@artsy/palette"
-import { crop } from "Utils/resizer"
-import { RouterLink } from "System/Components/RouterLink"
-import { compact } from "lodash"
-import { useTracking } from "react-tracking"
 import {
   ActionType,
   type ClickedCollectionGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { TriptychCard } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { crop } from "Utils/resizer"
+import type { FairCollection_collection$data } from "__generated__/FairCollection_collection.graphql"
+import { compact } from "lodash"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 const CARD_WIDTH = 263
 const CARD_LARGE_IMAGE_SIZE = 170

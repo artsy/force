@@ -1,7 +1,9 @@
-import { Spacer, Text, Join, Box, Pill } from "@artsy/palette"
-import { type FC, useMemo } from "react"
+import { Box, Join, Pill, Spacer, Text } from "@artsy/palette"
 import { OnboardingFigure } from "Components/Onboarding/Components/OnboardingFigure"
 import { OnboardingQuestionPanel } from "Components/Onboarding/Components/OnboardingQuestionPanel"
+import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
+import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
+import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import {
   OPTION_ARTISTS_ON_THE_RISE,
   OPTION_ART_QUIZ,
@@ -14,10 +16,8 @@ import {
   OPTION_KEEP_TRACK_OF_ART,
   OPTION_TOP_AUCTION_LOTS,
 } from "Components/Onboarding/config"
-import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
-import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
-import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
+import { type FC, useMemo } from "react"
 
 export const OnboardingQuestionThree: FC<
   React.PropsWithChildren<unknown>

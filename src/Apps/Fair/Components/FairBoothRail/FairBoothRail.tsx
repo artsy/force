@@ -1,11 +1,3 @@
-import { useRef } from "react"
-import type * as React from "react"
-import { Box, type BoxProps, Flex, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { FairBoothRail_show$data } from "__generated__/FairBoothRail_show.graphql"
-import { FairBoothRailArtworksQueryRenderer as FairBoothRailArtworks } from "./FairBoothRailArtworks"
-import { RouterLink } from "System/Components/RouterLink"
-import { useTracking } from "react-tracking"
 import {
   ActionType,
   type ClickedArtworkGroup,
@@ -13,15 +5,23 @@ import {
   OwnerType,
   type PageOwnerType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { Box, type BoxProps, Flex, Text } from "@artsy/palette"
 import {
   initialBoothFilterState,
   useBoothsFilterContext,
 } from "Apps/Fair/Components/BoothFilterContext"
-import { removeDefaultValues } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/paramsCasing"
-import qs from "qs"
+import { removeDefaultValues } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useRouter } from "System/Hooks/useRouter"
+import type { FairBoothRail_show$data } from "__generated__/FairBoothRail_show.graphql"
+import qs from "qs"
+import { useRef } from "react"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { FairBoothRailArtworksQueryRenderer as FairBoothRailArtworks } from "./FairBoothRailArtworks"
 
 interface FairBoothRailProps extends BoxProps {
   show: FairBoothRail_show$data

@@ -1,14 +1,14 @@
 import { Flex, Spacer, Text } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
-import type { FC } from "react"
-import { useFragment, graphql } from "react-relay"
-import type { PartnerOfferCreatedNotification_notification$key } from "__generated__/PartnerOfferCreatedNotification_notification.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
-import { PartnerOfferArtwork } from "Components/Notifications/PartnerOfferArtwork"
+import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
+import { PartnerOfferArtwork } from "Components/Notifications/PartnerOfferArtwork"
+import { RouterLink } from "System/Components/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
+import { extractNodes } from "Utils/extractNodes"
+import type { PartnerOfferCreatedNotification_notification$key } from "__generated__/PartnerOfferCreatedNotification_notification.graphql"
+import type { FC } from "react"
+import { graphql, useFragment } from "react-relay"
 
 interface PartnerOfferCreatedNotificationProps {
   notification: PartnerOfferCreatedNotification_notification$key

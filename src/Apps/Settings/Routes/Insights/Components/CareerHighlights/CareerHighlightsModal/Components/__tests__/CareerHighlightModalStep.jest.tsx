@@ -1,8 +1,8 @@
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
-import { CareerHighlightModalStep } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Components/CareerHighlightModalStep"
-import type { CareerHighlightModalStepTestQuery } from "__generated__/CareerHighlightModalStepTestQuery.graphql"
 import { screen } from "@testing-library/react"
+import { CareerHighlightModalStep } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Components/CareerHighlightModalStep"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { CareerHighlightModalStepTestQuery } from "__generated__/CareerHighlightModalStepTestQuery.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

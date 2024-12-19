@@ -1,7 +1,7 @@
 import { Flex, Spacer, Spinner, Text } from "@artsy/palette"
-import { type FC, useEffect } from "react"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
+import { type FC, useEffect } from "react"
 
 interface OnboardingThankYouProps {
   autoClose?: boolean

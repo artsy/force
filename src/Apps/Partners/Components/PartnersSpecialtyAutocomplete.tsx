@@ -4,14 +4,14 @@ import {
   Sup,
   Text,
 } from "@artsy/palette"
-import { type FC, useMemo, useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { PartnersSpecialtyAutocomplete_viewer$data } from "__generated__/PartnersSpecialtyAutocomplete_viewer.graphql"
 import type { PartnersSpecialtyAutocompleteQuery } from "__generated__/PartnersSpecialtyAutocompleteQuery.graphql"
-import { useRouter } from "System/Hooks/useRouter"
+import type { PartnersSpecialtyAutocomplete_viewer$data } from "__generated__/PartnersSpecialtyAutocomplete_viewer.graphql"
 import { compact, omit } from "lodash"
+import { type FC, useMemo, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface PartnersSpecialtyAutocompleteProps {
   viewer: PartnersSpecialtyAutocomplete_viewer$data

@@ -1,14 +1,14 @@
 import CloseFillIcon from "@artsy/icons/CloseFillIcon"
+import DocumentIcon from "@artsy/icons/DocumentIcon"
 import { Box, Clickable, Flex, ProgressBar, Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { useRemoveAssetFromConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
+import type { DocumentsFormValues } from "Apps/Sell/Routes/AdditionalRoutes/AdditionalDocumentsRoute"
+import type { DropzoneFile } from "Components/FileUpload/types"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { useFormikContext } from "formik"
-import type { DocumentsFormValues } from "Apps/Sell/Routes/AdditionalRoutes/AdditionalDocumentsRoute"
-import DocumentIcon from "@artsy/icons/DocumentIcon"
-import type { DropzoneFile } from "Components/FileUpload/types"
 
 const logger = createLogger("Sell/DocumentPreviewItem.tsx")
 const IMAGE_SIZES = [100, 140]

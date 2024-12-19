@@ -1,13 +1,13 @@
-import type * as React from "react"
-import styled from "styled-components"
 import { Image, ResponsiveBox } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import type { PartnerContactMap_location$data } from "__generated__/PartnerContactMap_location.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
 import {
   getGoogleMapUrl,
   getGoogleStaticMapImageUrl,
 } from "./partnerContactUtils"
-import type { PartnerContactMap_location$data } from "__generated__/PartnerContactMap_location.graphql"
-import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Components/RouterLink"
 
 export interface PartnerContactMapProps {
   location: PartnerContactMap_location$data

@@ -1,14 +1,14 @@
-import { renderRelayTree } from "DevTools/renderRelayTree"
 import { MockBoot } from "DevTools/MockBoot"
+import { renderRelayTree } from "DevTools/renderRelayTree"
 import { graphql } from "react-relay"
 
-import type { SeoDataForArtwork_Test_Query$rawResponse } from "__generated__/SeoDataForArtwork_Test_Query.graphql"
-import { CreativeWork } from "Components/Seo/CreativeWork"
-import { Product } from "Components/Seo/Product"
 import {
   AVAILABILITY,
   SeoDataForArtworkFragmentContainer,
 } from "Apps/Artwork/Components/Seo/SeoDataForArtwork"
+import { CreativeWork } from "Components/Seo/CreativeWork"
+import { Product } from "Components/Seo/Product"
+import type { SeoDataForArtwork_Test_Query$rawResponse } from "__generated__/SeoDataForArtwork_Test_Query.graphql"
 import { SeoDataForArtworkFixture } from "./SeoDataForArtwork.fixture"
 
 jest.unmock("react-relay")

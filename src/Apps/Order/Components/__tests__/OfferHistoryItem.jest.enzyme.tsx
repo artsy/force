@@ -1,14 +1,14 @@
 import { Button } from "@artsy/palette"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import type { OfferHistoryItemTestQuery$rawResponse } from "__generated__/OfferHistoryItemTestQuery.graphql"
+import { OfferHistoryItemFragmentContainer } from "Apps/Order/Components/OfferHistoryItem"
 import {
   OfferWithTotals,
   Offers,
   UntouchedOfferOrder,
 } from "Apps/__tests__/Fixtures/Order"
-import { graphql } from "react-relay"
-import { OfferHistoryItemFragmentContainer } from "Apps/Order/Components/OfferHistoryItem"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { OfferHistoryItemTestQuery$rawResponse } from "__generated__/OfferHistoryItemTestQuery.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

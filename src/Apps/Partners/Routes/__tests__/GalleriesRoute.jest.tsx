@@ -1,11 +1,11 @@
-import { graphql } from "react-relay"
-import { GalleriesRouteFragmentContainer } from "Apps/Partners/Routes/GalleriesRoute"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { GalleriesRouteFragmentContainer_Test_Query } from "__generated__/GalleriesRouteFragmentContainer_Test_Query.graphql"
-import { MockBoot } from "DevTools/MockBoot"
 import { screen } from "@testing-library/react"
-import { useTracking } from "react-tracking"
+import { GalleriesRouteFragmentContainer } from "Apps/Partners/Routes/GalleriesRoute"
+import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
+import type { GalleriesRouteFragmentContainer_Test_Query } from "__generated__/GalleriesRouteFragmentContainer_Test_Query.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter")

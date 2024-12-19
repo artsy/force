@@ -1,11 +1,11 @@
 import { AutocompleteInput } from "@artsy/palette"
+import { SearchRouteOptionFragmentContainer } from "Apps/Example/Routes/Search/SearchRouteOption"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { extractNodes } from "Utils/extractNodes"
+import type { SearchRouteQuery } from "__generated__/SearchRouteQuery.graphql"
 import { compact, debounce } from "lodash"
 import { type FC, useMemo, useState } from "react"
 import { graphql } from "react-relay"
-import type { SearchRouteQuery } from "__generated__/SearchRouteQuery.graphql"
-import { SearchRouteOptionFragmentContainer } from "Apps/Example/Routes/Search/SearchRouteOption"
 
 export const SearchRoute: FC<React.PropsWithChildren<unknown>> = () => {
   const [query, setQuery] = useState("")

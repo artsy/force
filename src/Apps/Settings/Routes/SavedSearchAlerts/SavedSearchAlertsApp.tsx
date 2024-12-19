@@ -1,45 +1,45 @@
+import { ActionType } from "@artsy/cohesion"
 import {
-  GridColumns,
-  Column,
-  Separator,
   Box,
-  Join,
-  useToasts,
   Button,
+  Column,
   Flex,
   FullBleed,
+  GridColumns,
+  Join,
+  Separator,
   Stack,
   THEME,
+  useToasts,
 } from "@artsy/palette"
+import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
+import { SavedSearchAlertsArtworksQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertsArtworks"
+import { MetaTags } from "Components/MetaTags"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { Jump } from "Utils/Hooks/useJump"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import { Media } from "Utils/Responsive"
+import { extractNodes } from "Utils/extractNodes"
+import type { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlertsApp_Alert_Query.graphql"
+import type { SavedSearchAlertsApp_me$data } from "__generated__/SavedSearchAlertsApp_me.graphql"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import {
-  createPaginationContainer,
   type Environment,
+  type RelayPaginationProp,
+  createPaginationContainer,
   fetchQuery,
   graphql,
-  type RelayPaginationProp,
 } from "react-relay"
-import { useCallback, useEffect, useMemo, useState } from "react"
-import type { SavedSearchAlertsApp_me$data } from "__generated__/SavedSearchAlertsApp_me.graphql"
-import { Media } from "Utils/Responsive"
-import type { EditAlertEntity } from "./types"
-import { extractNodes } from "Utils/extractNodes"
+import { useTracking } from "react-tracking"
 import { SavedSearchAlertDeleteModal } from "./Components/SavedSearchAlertDeleteModal"
+import { SavedSearchAlertHeader } from "./Components/SavedSearchAlertHeader"
 import {
   SavedSearchAlertListItemFragmentContainer,
   type SavedSearchAlertListItemVariant,
 } from "./Components/SavedSearchAlertListItem"
-import { SavedSearchAlertHeader } from "./Components/SavedSearchAlertHeader"
-import { MetaTags } from "Components/MetaTags"
 import { SavedSearchAlertsEmptyResults } from "./Components/SavedSearchAlertsEmptyResults"
-import { useTracking } from "react-tracking"
-import { ActionType } from "@artsy/cohesion"
-import { useRouter } from "System/Hooks/useRouter"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import type { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlertsApp_Alert_Query.graphql"
-import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { SavedSearchAlertsArtworksQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertsArtworks"
-import { Jump } from "Utils/Hooks/useJump"
+import type { EditAlertEntity } from "./types"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me$data

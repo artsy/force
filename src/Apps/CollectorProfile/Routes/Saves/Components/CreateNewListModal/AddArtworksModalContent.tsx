@@ -1,26 +1,26 @@
-import { type FC, useState } from "react"
 import {
-  Flex,
-  Text,
-  Spacer,
-  GridColumns,
   Column,
+  Flex,
+  GridColumns,
   SkeletonBox,
   SkeletonText,
+  Spacer,
+  Text,
 } from "@artsy/palette"
 import { SortFilter } from "Components/SortFilter"
+import { type FC, useState } from "react"
 import { ArtworksListFragmentContainer } from "./ArtworksList"
 
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import {
-  createPaginationContainer,
-  graphql,
-  type RelayPaginationProp,
-} from "react-relay"
-import type { AddArtworksModalContentQuery } from "__generated__/AddArtworksModalContentQuery.graphql"
-import type { AddArtworksModalContent_me$data } from "__generated__/AddArtworksModalContent_me.graphql"
 import { MetadataPlaceholder } from "Components/Artwork/Metadata"
 import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { AddArtworksModalContentQuery } from "__generated__/AddArtworksModalContentQuery.graphql"
+import type { AddArtworksModalContent_me$data } from "__generated__/AddArtworksModalContent_me.graphql"
+import {
+  type RelayPaginationProp,
+  createPaginationContainer,
+  graphql,
+} from "react-relay"
 
 interface AddArtworksModalContentQueryRenderProps {
   selectedArtworkIds: string[]

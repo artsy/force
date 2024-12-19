@@ -9,19 +9,19 @@ import {
   Text,
 } from "@artsy/palette"
 import {
-  CategoryRailFragmentContainer,
   CATEGORY_RAIL_PLACEHOLDER,
+  CategoryRailFragmentContainer,
 } from "Components/CategoryRail"
-import { type FC, Fragment, useState } from "react"
-import {
-  createPaginationContainer,
-  graphql,
-  type RelayPaginationProp,
-} from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import type { SettingsSavesCategoriesQuery } from "__generated__/SettingsSavesCategoriesQuery.graphql"
 import type { SettingsSavesCategories_me$data } from "__generated__/SettingsSavesCategories_me.graphql"
+import { type FC, Fragment, useState } from "react"
+import {
+  type RelayPaginationProp,
+  createPaginationContainer,
+  graphql,
+} from "react-relay"
 
 interface SettingsSavesCategoriesProps {
   me: SettingsSavesCategories_me$data

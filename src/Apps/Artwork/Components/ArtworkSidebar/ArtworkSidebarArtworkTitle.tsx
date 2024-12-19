@@ -1,6 +1,6 @@
-import { createFragmentContainer, graphql } from "react-relay"
 import { Text } from "@artsy/palette"
 import type { ArtworkSidebarArtworkTitle_artwork$data } from "__generated__/ArtworkSidebarArtworkTitle_artwork.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtworkSidebarArtworkTitleProps {
   artwork: ArtworkSidebarArtworkTitle_artwork$data

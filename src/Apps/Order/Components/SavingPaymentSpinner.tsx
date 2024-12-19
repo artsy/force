@@ -1,6 +1,6 @@
+import { Flex, Spinner, Text } from "@artsy/palette"
 import type { FC } from "react"
 import styled from "styled-components"
-import { Flex, Spinner, Text } from "@artsy/palette"
 
 export const SavingPaymentSpinner: FC<
   React.PropsWithChildren<unknown>

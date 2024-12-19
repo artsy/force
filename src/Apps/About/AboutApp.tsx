@@ -10,11 +10,11 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Components/RouterLink"
 import { resized } from "Utils/resized"
 import { AboutArtworksRailQueryRenderer } from "./AboutArtworksRail"
-import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 
 export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (

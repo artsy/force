@@ -1,12 +1,12 @@
-import type * as React from "react"
 import { Checkbox, Flex, Radio, RadioGroup, Text } from "@artsy/palette"
-import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
-import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
 import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
+import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
+import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
 import type { Metric } from "Utils/metrics"
+import type * as React from "react"
 
 export const sizeMap = [
   { displayName: "Small (under 40cm)", name: "SMALL" },

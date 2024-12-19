@@ -1,7 +1,7 @@
-import { graphql } from "react-relay"
+import { NavigationTabsFragmentContainer as NavigationTabs } from "Apps/Partner/Components/NavigationTabs"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import type { NavigationTabs_Test_PartnerQuery } from "__generated__/NavigationTabs_Test_PartnerQuery.graphql"
-import { NavigationTabsFragmentContainer as NavigationTabs } from "Apps/Partner/Components/NavigationTabs"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("Components/RouteTabs")

@@ -1,10 +1,10 @@
+import { Box } from "@artsy/palette"
+import { TopContextBar } from "Components/TopContextBar"
+import { Analytics } from "System/Contexts/AnalyticsContext"
+import type { ShowSubApp_show$data } from "__generated__/ShowSubApp_show.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Box } from "@artsy/palette"
-import type { ShowSubApp_show$data } from "__generated__/ShowSubApp_show.graphql"
 import { ShowMetaFragmentContainer as ShowMeta } from "./Components/ShowMeta"
-import { Analytics } from "System/Contexts/AnalyticsContext"
-import { TopContextBar } from "Components/TopContextBar"
 
 interface ShowAppProps {
   show: ShowSubApp_show$data

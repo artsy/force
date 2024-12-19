@@ -1,13 +1,13 @@
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import "jest-styled-components"
-import { graphql } from "react-relay"
-import { FollowGeneButtonFragmentContainer } from "Components/FollowButton/FollowGeneButton"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { fireEvent, screen } from "@testing-library/react"
-import type { FollowGeneButton_Test_Query } from "__generated__/FollowGeneButton_Test_Query.graphql"
-import { useMutation } from "Utils/Hooks/useMutation"
-import { useFollowButtonTracking } from "Components/FollowButton/useFollowButtonTracking"
 import { useAuthDialog } from "Components/AuthDialog"
+import { FollowGeneButtonFragmentContainer } from "Components/FollowButton/FollowGeneButton"
+import { useFollowButtonTracking } from "Components/FollowButton/useFollowButtonTracking"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { useMutation } from "Utils/Hooks/useMutation"
+import type { FollowGeneButton_Test_Query } from "__generated__/FollowGeneButton_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

@@ -1,5 +1,5 @@
-import { loadStripe, type StripeElementsOptions } from "@stripe/stripe-js"
 import { Elements, ElementsConsumer } from "@stripe/react-stripe-js"
+import { type StripeElementsOptions, loadStripe } from "@stripe/stripe-js"
 import type * as React from "react"
 import { data as sd } from "sharify"
 

@@ -1,6 +1,3 @@
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { CellArticle_article$data } from "__generated__/CellArticle_article.graphql"
 import {
   Box,
   type BoxProps,
@@ -11,6 +8,9 @@ import {
   Text,
 } from "@artsy/palette"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import type { CellArticle_article$data } from "__generated__/CellArticle_article.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 
 export interface CellArticleProps extends Omit<RouterLinkProps, "to"> {

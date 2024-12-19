@@ -1,8 +1,8 @@
-import { MockBoot } from "DevTools/MockBoot"
-import { useTracking as baseUseTracking } from "react-tracking"
-import { useSystemContext as baseUseSystemContext } from "System/Hooks/useSystemContext"
 import { AuctionsApp } from "Apps/Auctions/AuctionsApp"
+import { MockBoot } from "DevTools/MockBoot"
+import { useSystemContext as baseUseSystemContext } from "System/Hooks/useSystemContext"
 import { mount } from "enzyme"
+import { useTracking as baseUseTracking } from "react-tracking"
 jest.mock("react-tracking")
 jest.mock("System/Hooks/useSystemContext")
 

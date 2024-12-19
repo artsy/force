@@ -1,22 +1,22 @@
-import { graphql } from "react-relay"
-import {
-  UntouchedOfferOrder,
-  UntouchedOfferOrderInPounds,
-  UntouchedOfferOrderWithRange,
-  UntouchedOfferOrderMultipleEditionSets,
-  UntouchedOfferOrderSingleEditionSet,
-  UntouchedOfferOrderSingleEditionSetNoPrice,
-  UntouchedOfferOrderPriceHidden,
-} from "Apps/__tests__/Fixtures/Order"
 import { OfferFragmentContainer } from "Apps/Order/Routes/Offer"
-import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MockBoot } from "DevTools/MockBoot"
 import {
   initialOfferFailedAmountIsInvalid,
   initialOfferFailedCannotOffer,
   initialOfferSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/initialOffer"
+import {
+  UntouchedOfferOrder,
+  UntouchedOfferOrderInPounds,
+  UntouchedOfferOrderMultipleEditionSets,
+  UntouchedOfferOrderPriceHidden,
+  UntouchedOfferOrderSingleEditionSet,
+  UntouchedOfferOrderSingleEditionSetNoPrice,
+  UntouchedOfferOrderWithRange,
+} from "Apps/__tests__/Fixtures/Order"
+import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
+import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 
 // Need to mock Utils/Events instead of using mockTracking because
 // Boot's `dispatch` tracking prop overrides the one injected by

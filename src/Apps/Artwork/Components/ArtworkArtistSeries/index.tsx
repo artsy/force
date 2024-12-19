@@ -1,15 +1,15 @@
-import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule } from "@artsy/cohesion"
+import { Skeleton, SkeletonBox, SkeletonText, Spacer } from "@artsy/palette"
 import { ArtistSeriesArtworkRailFragmentContainer as ArtistSeriesArtworkRail } from "Apps/Artwork/Components/ArtworkArtistSeries/ArtistSeriesArtworkRail"
 import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "Components/ArtistSeriesRail/ArtistSeriesRail"
-import type { ArtworkArtistSeries_artwork$data } from "__generated__/ArtworkArtistSeries_artwork.graphql"
-import { Skeleton, SkeletonBox, SkeletonText, Spacer } from "@artsy/palette"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { ArtworkArtistSeriesQuery } from "__generated__/ArtworkArtistSeriesQuery.graphql"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Rail } from "Components/Rail/Rail"
 import { withSystemContext } from "System/Contexts/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { ArtworkArtistSeriesQuery } from "__generated__/ArtworkArtistSeriesQuery.graphql"
+import type { ArtworkArtistSeries_artwork$data } from "__generated__/ArtworkArtistSeries_artwork.graphql"
+import * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtworkArtistSeriesProps {
   artwork: ArtworkArtistSeries_artwork$data

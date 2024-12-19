@@ -2,8 +2,8 @@ import type {
   ArtsyRequest,
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
-import { isStaticAuthRoute } from "./isStaticAuthRoute"
 import { sanitizeRedirect } from "Utils/sanitizeRedirect"
+import { isStaticAuthRoute } from "./isStaticAuthRoute"
 
 export const checkForRedirect = ({
   req,

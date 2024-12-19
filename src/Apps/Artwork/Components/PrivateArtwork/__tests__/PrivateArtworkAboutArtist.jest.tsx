@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/react"
 import { PrivateArtworkAboutArtist } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkAboutArtist"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
 import type { PrivateArtworkAboutArtistQuery } from "__generated__/PrivateArtworkAboutArtistQuery.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

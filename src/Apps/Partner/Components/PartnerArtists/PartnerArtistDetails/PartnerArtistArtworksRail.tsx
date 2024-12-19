@@ -1,9 +1,9 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { PartnerArtistArtworksRail_partnerArtist$data } from "__generated__/PartnerArtistArtworksRail_partnerArtist.graphql"
-import { extractNodes } from "Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail/Rail"
+import { extractNodes } from "Utils/extractNodes"
+import type { PartnerArtistArtworksRail_partnerArtist$data } from "__generated__/PartnerArtistArtworksRail_partnerArtist.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface PartnerArtistArtworksRailProps {
   partnerArtist: PartnerArtistArtworksRail_partnerArtist$data

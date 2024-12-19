@@ -8,14 +8,14 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import {
-  type AuthDialogMode,
-  AUTH_DIALOG_MODES,
-} from "Components/AuthDialog/AuthDialogContext"
 import { useAuthDialog } from "Components/AuthDialog"
+import {
+  AUTH_DIALOG_MODES,
+  type AuthDialogMode,
+} from "Components/AuthDialog/AuthDialogContext"
+import { merge } from "lodash"
 import { type FC, useState } from "react"
 import { Title } from "react-head"
-import { merge } from "lodash"
 
 export const DebugAuth: FC<React.PropsWithChildren<unknown>> = () => {
   const { showAuthDialog } = useAuthDialog()

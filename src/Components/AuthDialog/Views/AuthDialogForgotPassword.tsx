@@ -1,5 +1,3 @@
-import * as Yup from "yup"
-import type { FC } from "react"
 import {
   Button,
   Clickable,
@@ -10,10 +8,12 @@ import {
   Text,
 } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
-import { Form, Formik } from "formik"
-import { forgotPassword } from "Utils/auth"
-import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
+import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
+import { forgotPassword } from "Utils/auth"
+import { Form, Formik } from "formik"
+import type { FC } from "react"
+import * as Yup from "yup"
 
 export const AuthDialogForgotPassword: FC<
   React.PropsWithChildren<unknown>

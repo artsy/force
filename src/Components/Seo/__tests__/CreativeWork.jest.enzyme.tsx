@@ -1,5 +1,5 @@
-import { mount } from "enzyme"
 import { CreativeWork } from "Components/Seo/CreativeWork"
+import { mount } from "enzyme"
 import { HeadProvider } from "react-head"
 
 describe("CreativeWork", () => {

@@ -1,5 +1,5 @@
-import ddTracer, { type Span } from "dd-trace"
 import url from "url"
+import ddTracer, { type Span } from "dd-trace"
 import type { Request } from "express"
 
 if (process.env.DD_APM_ENABLED) {

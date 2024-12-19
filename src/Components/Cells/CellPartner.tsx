@@ -1,11 +1,11 @@
 import { Box, Image, ResponsiveBox, SkeletonBox, Text } from "@artsy/palette"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
-import type { CellPartner_partner$data } from "__generated__/CellPartner_partner.graphql"
-import { DEFAULT_CELL_WIDTH } from "./constants"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import type { CellPartner_partner$data } from "__generated__/CellPartner_partner.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { DEFAULT_CELL_WIDTH } from "./constants"
 
 export interface CellPartnerProps extends Omit<RouterLinkProps, "to"> {
   partner: CellPartner_partner$data

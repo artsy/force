@@ -1,8 +1,8 @@
+import { useOnboarding } from "Components/Onboarding"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { omit } from "lodash"
 import { useEffect, useRef } from "react"
-import { useOnboarding } from "Components/Onboarding"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useRouter } from "System/Hooks/useRouter"
 
 // TODO: Lazy load
 export const useOnboardingModal = () => {

@@ -1,7 +1,7 @@
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { SettingsAuctionsRouteFragmentContainer } from "Apps/Settings/Routes/Auctions/SettingsAuctionsRoute"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import type { SettingsAuctionsRouteQuery_Test_Query } from "__generated__/SettingsAuctionsRouteQuery_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

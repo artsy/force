@@ -1,22 +1,22 @@
 import {
-  init,
-  browserTracingIntegration,
-  dedupeIntegration,
-  startBrowserTracingPageLoadSpan,
-  SEMANTIC_ATTRIBUTE_SENTRY_SOURCE,
-  type Span,
   SEMANTIC_ATTRIBUTE_SENTRY_OP,
   SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN,
+  SEMANTIC_ATTRIBUTE_SENTRY_SOURCE,
+  type Span,
+  browserTracingIntegration,
+  dedupeIntegration,
+  init,
   startBrowserTracingNavigationSpan,
+  startBrowserTracingPageLoadSpan,
 } from "@sentry/browser"
 import {
   ALLOWED_URLS,
   DENIED_URLS,
   IGNORED_ERRORS,
 } from "Server/analytics/sentryFilters"
-import type { Match } from "found"
-import { getENV } from "Utils/getENV"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
+import { getENV } from "Utils/getENV"
+import type { Match } from "found"
 
 let initialPageLoadSpan: Span | undefined | null
 

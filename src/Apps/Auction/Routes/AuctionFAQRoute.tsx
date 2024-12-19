@@ -1,12 +1,12 @@
-import { Box, Text, THEME, Spacer, Expandable } from "@artsy/palette"
+import { Box, Expandable, Spacer, THEME, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import type { FC } from "react"
-import styled from "styled-components"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { AuctionFAQRoute_viewer$data } from "__generated__/AuctionFAQRoute_viewer.graphql"
 import { MetaTags } from "Components/MetaTags"
-import { toStyle } from "Utils/toStyle"
 import { RouterLink } from "System/Components/RouterLink"
+import { toStyle } from "Utils/toStyle"
+import type { AuctionFAQRoute_viewer$data } from "__generated__/AuctionFAQRoute_viewer.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
 
 interface AuctionFAQRouteProps {
   viewer: AuctionFAQRoute_viewer$data

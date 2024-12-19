@@ -1,9 +1,9 @@
 import { Box } from "@artsy/palette"
-import { States } from "storybook-states"
 import {
   FullscreenBox,
   type FullscreenBoxProps,
 } from "Components/FullscreenBox"
+import { States } from "storybook-states"
 
 export default {
   title: "Components/FullscreenBox",

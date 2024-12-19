@@ -1,8 +1,8 @@
 import loadable from "@loadable/component"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
+import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import type { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
-import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
-import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 
 const CollectApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collect"),

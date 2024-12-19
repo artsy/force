@@ -1,6 +1,4 @@
 import { OwnerType } from "@artsy/cohesion"
-import type { ArtistSeriesArtworksFilter_artistSeries$data } from "__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
-import type { ArtistSeriesArtworksFilterQuery } from "__generated__/ArtistSeriesArtworksFilterQuery.graphql"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import { ArtworkFilterAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterAlertContextProvider"
 import {
@@ -13,6 +11,11 @@ import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitial
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { ArtistSeriesArtworksFilterQuery } from "__generated__/ArtistSeriesArtworksFilterQuery.graphql"
+import type { ArtistSeriesArtworksFilter_artistSeries$data } from "__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
 import { type Match, type RouterState, withRouter } from "found"
 import type * as React from "react"
 import {
@@ -20,9 +23,6 @@ import {
   createRefetchContainer,
   graphql,
 } from "react-relay"
-import { useRouter } from "System/Hooks/useRouter"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 
 interface ArtistSeriesArtworksFilterProps {
   artistSeries: ArtistSeriesArtworksFilter_artistSeries$data

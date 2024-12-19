@@ -1,4 +1,3 @@
-import { useState } from "react"
 import {
   Box,
   Button,
@@ -7,13 +6,14 @@ import {
   GridColumns,
   Text,
 } from "@artsy/palette"
-import { crop } from "Utils/resizer"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { CollectionsCategory_category$data } from "__generated__/CollectionsCategory_category.graphql"
 import {
-  MOBILE_NAV_HEIGHT,
   DESKTOP_NAV_BAR_HEIGHT,
+  MOBILE_NAV_HEIGHT,
 } from "Components/NavBar/constants"
+import { crop } from "Utils/resizer"
+import type { CollectionsCategory_category$data } from "__generated__/CollectionsCategory_category.graphql"
+import { useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { slugify } from "underscore.string"
 
 interface CollectionsCategoryProps {

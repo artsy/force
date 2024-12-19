@@ -2,17 +2,17 @@ import {
   Box,
   Column,
   GridColumns,
-  ResponsiveBox,
-  Text,
   Image,
+  ResponsiveBox,
   Spacer,
+  Text,
   useTheme,
 } from "@artsy/palette"
-import type { FC } from "react"
 import { RouterLink } from "System/Components/RouterLink"
-import styled from "styled-components"
-import { createFragmentContainer, graphql } from "react-relay"
 import type { ArticleSeriesItem_article$data } from "__generated__/ArticleSeriesItem_article.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
 
 interface ArticleSeriesItemProps {
   article: ArticleSeriesItem_article$data

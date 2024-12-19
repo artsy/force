@@ -1,10 +1,10 @@
-import { InquiryBasicInfoFragmentContainer } from "Components/Inquiry/Views/InquiryBasicInfo"
-import { useUpdateMyUserProfile } from "Components/Inquiry/Hooks/useUpdateMyUserProfile"
+import { fireEvent, screen } from "@testing-library/react"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import { useUpdateMyUserProfile } from "Components/Inquiry/Hooks/useUpdateMyUserProfile"
+import { InquiryBasicInfoFragmentContainer } from "Components/Inquiry/Views/InquiryBasicInfo"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { fireEvent, screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("../../Hooks/useUpdateMyUserProfile")

@@ -1,8 +1,8 @@
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { AuctionArtworkFilterRefetchContainer } from "Apps/Auction/Components/AuctionArtworkFilter"
-import type { AuctionArtworkFilterTestQuery } from "__generated__/AuctionArtworkFilterTestQuery.graphql"
 import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { AuctionArtworkFilterTestQuery } from "__generated__/AuctionArtworkFilterTestQuery.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

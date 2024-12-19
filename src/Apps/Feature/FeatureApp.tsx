@@ -1,9 +1,9 @@
+import { HTML, Join, Spacer } from "@artsy/palette"
+import type { FeatureApp_feature$data } from "__generated__/FeatureApp_feature.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FeatureMetaFragmentContainer as FeatureMeta } from "./Components/FeatureMeta"
 import { FeatureHeaderFragmentContainer as FeatureHeader } from "./Components/FeatureHeader/FeatureHeader"
-import type { FeatureApp_feature$data } from "__generated__/FeatureApp_feature.graphql"
-import { Join, Spacer, HTML } from "@artsy/palette"
+import { FeatureMetaFragmentContainer as FeatureMeta } from "./Components/FeatureMeta"
 import { FeatureSetFragmentContainer as FeatureSet } from "./Components/FeatureSet/FeatureSet"
 
 interface FeatureAppProps {

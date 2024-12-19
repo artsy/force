@@ -2,11 +2,11 @@ import { Box, Join, Skeleton, Spacer } from "@artsy/palette"
 import { OtherWorks } from "Apps/Artwork/Components/OtherWorks"
 import { HeaderPlaceholder } from "Apps/Artwork/Components/OtherWorks/Header"
 import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { withSystemContext } from "System/Contexts/SystemContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ArtworkErrorAppOtherWorksQuery } from "__generated__/ArtworkErrorAppOtherWorksQuery.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import { withSystemContext } from "System/Contexts/SystemContext"
 
 const OtherWorksFragmentContainer = createFragmentContainer(
   withSystemContext(OtherWorks),

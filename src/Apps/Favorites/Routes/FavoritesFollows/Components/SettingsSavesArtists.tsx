@@ -9,19 +9,19 @@ import {
   Text,
 } from "@artsy/palette"
 import {
-  ArtistRailFragmentContainer,
   ARTIST_RAIL_PLACEHOLDER,
+  ArtistRailFragmentContainer,
 } from "Components/ArtistRail"
-import { type FC, Fragment, useState } from "react"
-import {
-  createPaginationContainer,
-  graphql,
-  type RelayPaginationProp,
-} from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import type { SettingsSavesArtistsQuery } from "__generated__/SettingsSavesArtistsQuery.graphql"
 import type { SettingsSavesArtists_me$data } from "__generated__/SettingsSavesArtists_me.graphql"
+import { type FC, Fragment, useState } from "react"
+import {
+  type RelayPaginationProp,
+  createPaginationContainer,
+  graphql,
+} from "react-relay"
 
 interface SettingsSavesArtistsProps {
   me: SettingsSavesArtists_me$data

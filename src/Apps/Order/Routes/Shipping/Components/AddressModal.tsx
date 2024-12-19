@@ -1,32 +1,32 @@
-import { useState, type FC, useEffect } from "react"
-import * as Yup from "yup"
 import {
+  Banner,
   Button,
-  Clickable,
   Checkbox,
+  Clickable,
   Flex,
   ModalDialog,
   Spacer,
   Text,
-  Banner,
 } from "@artsy/palette"
+import { type FC, useEffect, useState } from "react"
+import * as Yup from "yup"
 
 import { Form, Formik, type FormikHelpers, useFormikContext } from "formik"
 
-import { addressWithFallbackValues } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
-import createLogger from "Utils/logger"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
-import type { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import {
   type SavedAddressResult,
   type UserAddressAction,
   useUserAddressUpdates,
 } from "Apps/Order/Routes/Shipping/Hooks/useUserAddressUpdates"
+import { addressWithFallbackValues } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
+import type { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import {
   AddressFormFields,
   type FormikContextWithAddress,
   addressFormFieldsValidator,
 } from "Components/Address/AddressFormFields"
+import createLogger from "Utils/logger"
 
 const logger = createLogger("AddressModal.tsx")
 

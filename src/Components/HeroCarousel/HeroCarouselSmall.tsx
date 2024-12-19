@@ -1,11 +1,4 @@
 import {
-  Children,
-  type FC,
-  forwardRef,
-  type ForwardRefExoticComponent,
-  useState,
-} from "react"
-import {
   ProgressDots,
   Spacer,
   Swiper,
@@ -14,6 +7,13 @@ import {
   SwiperRail,
   type SwiperRailProps,
 } from "@artsy/palette"
+import {
+  Children,
+  type FC,
+  type ForwardRefExoticComponent,
+  forwardRef,
+  useState,
+} from "react"
 
 interface HeroCarouselSmallProps {
   progressbarVariant?: "dot" | "dash"

@@ -1,16 +1,16 @@
-import { type FC, useCallback, useEffect } from "react"
+import { useDismissibleContext } from "@artsy/dismissible"
 import { Text } from "@artsy/palette"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
-import {
-  withProgressiveOnboardingCounts,
-  type WithProgressiveOnboardingCountsProps,
-} from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
-import { useDismissibleContext } from "@artsy/dismissible"
 import {
   PROGRESSIVE_ONBOARDING,
   PROGRESSIVE_ONBOARDING_ALERT_CHAIN,
   PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST_CHAIN,
 } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
+import {
+  type WithProgressiveOnboardingCountsProps,
+  withProgressiveOnboardingCounts,
+} from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
+import { type FC, useCallback, useEffect } from "react"
 
 const KEY = PROGRESSIVE_ONBOARDING.saveArtwork
 

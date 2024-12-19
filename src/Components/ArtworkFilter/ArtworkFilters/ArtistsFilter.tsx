@@ -1,6 +1,3 @@
-import { type FC, useEffect } from "react"
-import type * as React from "react"
-import { sortBy } from "lodash"
 import { Checkbox, type CheckboxProps, Flex } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
@@ -8,10 +5,13 @@ import {
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { fetchFollowedArtists } from "Components/ArtworkFilter/Utils/fetchFollowedArtists"
-import { FilterExpandable } from "./FilterExpandable"
-import { ShowMore } from "./ShowMore"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { sortBy } from "lodash"
+import { type FC, useEffect } from "react"
+import type * as React from "react"
+import { FilterExpandable } from "./FilterExpandable"
+import { ShowMore } from "./ShowMore"
 
 export interface ArtistsFilterProps {
   expanded?: boolean

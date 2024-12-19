@@ -1,9 +1,9 @@
-import { type ComponentProps, type FC, Fragment } from "react"
+import FairIcon from "@artsy/icons/FairIcon"
+import GroupIcon from "@artsy/icons/GroupIcon"
+import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"
 import PublicationIcon from "@artsy/icons/PublicationIcon"
-import InstitutionIcon from "@artsy/icons/InstitutionIcon"
-import GroupIcon from "@artsy/icons/GroupIcon"
-import FairIcon from "@artsy/icons/FairIcon"
+import { type ComponentProps, type FC, Fragment } from "react"
 
 export type CareerHighlightKind =
   | "SOLO_SHOW"

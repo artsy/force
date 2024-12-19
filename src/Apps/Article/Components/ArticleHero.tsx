@@ -1,10 +1,3 @@
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import {
-  FullBleedHeader,
-  FullBleedHeaderOverlay,
-  useFullBleedHeaderHeight,
-} from "Components/FullBleedHeader/FullBleedHeader"
 import {
   Box,
   Column,
@@ -17,7 +10,14 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
+import {
+  FullBleedHeader,
+  FullBleedHeaderOverlay,
+  useFullBleedHeaderHeight,
+} from "Components/FullBleedHeader/FullBleedHeader"
 import type { ArticleHero_article$data } from "__generated__/ArticleHero_article.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { CENTERED_LAYOUT_COLUMNS } from "./ArticleBody"
 

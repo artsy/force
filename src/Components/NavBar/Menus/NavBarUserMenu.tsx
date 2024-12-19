@@ -1,31 +1,31 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import ArtworkIcon from "@artsy/icons/ArtworkIcon"
+import BagIcon from "@artsy/icons/BagIcon"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
+import GraphIcon from "@artsy/icons/GraphIcon"
+import GroupIcon from "@artsy/icons/GroupIcon"
+import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
+import LockIcon from "@artsy/icons/LockIcon"
+import LogoutIcon from "@artsy/icons/LogoutIcon"
+import SettingsIcon from "@artsy/icons/SettingsIcon"
 import { Box, type BoxProps, Separator, Text } from "@artsy/palette"
+import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
+import {
+  NavBarUserMenuAvatar,
+  NavBarUserMenuAvatarSkeleton,
+} from "Components/NavBar/Menus/NavBarUserMenuAvatar"
+import { ProgressiveOnboardingAlertHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertHighlight"
+import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
+import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { logout } from "Utils/auth"
 import { getENV } from "Utils/getENV"
 import { userIsAdmin } from "Utils/user"
 import type * as React from "react"
+import { Suspense } from "react"
 import { useTracking } from "react-tracking"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
-import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
-import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
-import { ProgressiveOnboardingAlertHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertHighlight"
-import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
-import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
-import ArtworkIcon from "@artsy/icons/ArtworkIcon"
-import GraphIcon from "@artsy/icons/GraphIcon"
-import GroupIcon from "@artsy/icons/GroupIcon"
-import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
-import LogoutIcon from "@artsy/icons/LogoutIcon"
-import SettingsIcon from "@artsy/icons/SettingsIcon"
-import LockIcon from "@artsy/icons/LockIcon"
-import BagIcon from "@artsy/icons/BagIcon"
-import {
-  NavBarUserMenuAvatar,
-  NavBarUserMenuAvatarSkeleton,
-} from "Components/NavBar/Menus/NavBarUserMenuAvatar"
-import { Suspense } from "react"
-import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 
 interface NavBarUserMenuProps extends BoxProps {}
 

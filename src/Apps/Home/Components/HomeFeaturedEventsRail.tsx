@@ -6,21 +6,21 @@ import {
 } from "@artsy/cohesion"
 import {
   Box,
-  Image,
-  Text,
-  GridColumns,
   Column,
+  GridColumns,
+  Image,
   ResponsiveBox,
   Stack,
+  Text,
 } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import { Media } from "Utils/Responsive"
+import { getInternalHref } from "Utils/url"
+import type { HomeFeaturedEventsRail_orderedSet$data } from "__generated__/HomeFeaturedEventsRail_orderedSet.graphql"
 import { compact, take } from "lodash"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { RouterLink } from "System/Components/RouterLink"
-import { Media } from "Utils/Responsive"
-import type { HomeFeaturedEventsRail_orderedSet$data } from "__generated__/HomeFeaturedEventsRail_orderedSet.graphql"
-import { getInternalHref } from "Utils/url"
 
 interface HomeFeaturedEventsRailProps {
   orderedSet: HomeFeaturedEventsRail_orderedSet$data

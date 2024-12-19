@@ -1,4 +1,4 @@
-import type { ArtworkSidebarBidAction_Test_Query$rawResponse } from "__generated__/ArtworkSidebarBidAction_Test_Query.graphql"
+import { ArtworkSidebarBidActionFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarBidAction"
 import {
   ArtworkFromAuctionPreview,
   ArtworkFromClosedAuction,
@@ -16,8 +16,8 @@ import {
   SaleRequiringIDV,
   UserPendingIDV,
 } from "Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarBidAction"
-import { ArtworkSidebarBidActionFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarBidAction"
 import { renderRelayTree } from "DevTools/renderRelayTree"
+import type { ArtworkSidebarBidAction_Test_Query$rawResponse } from "__generated__/ArtworkSidebarBidAction_Test_Query.graphql"
 import { merge } from "lodash"
 import { graphql } from "react-relay"
 

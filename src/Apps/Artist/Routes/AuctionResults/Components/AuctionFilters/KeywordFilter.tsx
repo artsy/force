@@ -1,10 +1,10 @@
+import SearchIcon from "@artsy/icons/SearchIcon"
 import { LabeledInput } from "@artsy/palette"
+import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
+import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { debounce } from "lodash"
 import { useEffect, useMemo } from "react"
 import type * as React from "react"
-import SearchIcon from "@artsy/icons/SearchIcon"
-import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
-import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 
 const DEBOUNCE_DELAY = 300
 

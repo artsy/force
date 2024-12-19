@@ -1,12 +1,12 @@
 import { Spacer } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtistApp_artist$data } from "__generated__/ArtistApp_artist.graphql"
-import { Analytics } from "System/Contexts/AnalyticsContext"
-import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistHeader"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
-import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta/ArtistMeta"
-import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
+import { Analytics } from "System/Contexts/AnalyticsContext"
 import { Jump } from "Utils/Hooks/useJump"
+import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
+import type { ArtistApp_artist$data } from "__generated__/ArtistApp_artist.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistHeader"
+import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta/ArtistMeta"
 
 interface ArtistAppProps {
   artist: ArtistApp_artist$data

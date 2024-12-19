@@ -1,8 +1,8 @@
 import { Column, Separator } from "@artsy/palette"
+import type { UserActiveBids_me$data } from "__generated__/UserActiveBids_me.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
-import type { UserActiveBids_me$data } from "__generated__/UserActiveBids_me.graphql"
 import { SettingsAuctionsLotStandingFragmentContainer } from "./SettingsAuctionsLotStanding"
 
 interface UserActiveBidsProps {

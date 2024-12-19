@@ -1,9 +1,9 @@
-import { type Environment, commitMutation, graphql } from "react-relay"
 import type {
-  SaveArtworkMutation,
   SaveArtworkInput,
+  SaveArtworkMutation,
   SaveArtworkMutation$data,
 } from "__generated__/SaveArtworkMutation.graphql"
+import { type Environment, commitMutation, graphql } from "react-relay"
 
 export const SaveArtwork = (
   environment: Environment,

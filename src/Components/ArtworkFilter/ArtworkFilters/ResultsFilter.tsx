@@ -1,8 +1,8 @@
 import { FilterSelect } from "@artsy/palette"
 import { FilterExpandable } from "./FilterExpandable"
 import {
-  useFilterSelectResults,
   type UseFilterSelectResultsProps,
+  useFilterSelectResults,
 } from "./Utils/useFilterSelectResults"
 
 interface ResultsFilterProps extends UseFilterSelectResultsProps {
