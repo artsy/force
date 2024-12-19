@@ -96,6 +96,7 @@ const node: ConcreteRequest = {
     text: "query settingsRoutes_DeleteAccountRouteQuery {\n  me {\n    ...DeleteAccountRoute_me\n    id\n  }\n}\n\nfragment DeleteAccountRoute_me on Me {\n  hasPassword\n}\n",
   },
 }
+
 ;(node as any).hash = "c54bb2421e59e40f01d0a70e9f8bca56"
 
 export default node

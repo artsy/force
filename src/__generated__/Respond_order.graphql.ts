@@ -301,6 +301,7 @@ const node: ReaderFragment = (function () {
     abstractKey: "__isCommerceOrder",
   }
 })()
+
 ;(node as any).hash = "45e63b570eec8458e189de28d39d1292"
 
 export default node

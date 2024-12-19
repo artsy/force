@@ -167,6 +167,7 @@ const node: ReaderFragment = {
   type: "CommerceOrder",
   abstractKey: "__isCommerceOrder",
 }
+
 ;(node as any).hash = "6b6c70e787b01d75b4bf97f952905b88"
 
 export default node

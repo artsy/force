@@ -163,6 +163,7 @@ const node: ReaderFragment = {
   type: "Gene",
   abstractKey: null,
 }
+
 ;(node as any).hash = "90714ad51091e668d2a1eae00ca3d146"
 
 export default node

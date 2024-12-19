@@ -70,6 +70,7 @@ const node: ReaderFragment = {
   type: "HeroUnitConnection",
   abstractKey: null,
 }
+
 ;(node as any).hash = "529f890beb49b59606acee848d0572f8"
 
 export default node

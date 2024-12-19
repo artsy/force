@@ -93,6 +93,7 @@ const node: ReaderFragment = {
   type: "SearchableConnection",
   abstractKey: null,
 }
+
 ;(node as any).hash = "76f1af5fa568892ae22f4ba4840ff358"
 
 export default node

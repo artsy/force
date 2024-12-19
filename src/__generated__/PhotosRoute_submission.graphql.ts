@@ -146,6 +146,7 @@ const node: ReaderFragment = {
   type: "ConsignmentSubmission",
   abstractKey: null,
 }
+
 ;(node as any).hash = "c64280d04b3f622527c15ed31d37b169"
 
 export default node

@@ -111,6 +111,7 @@ const node: ConcreteRequest = {
     text: "query NotificationPreferencesQuery {\n  viewer {\n    ...NotificationPreferences_viewer\n  }\n}\n\nfragment NotificationPreferences_viewer on Viewer {\n  notificationPreferences {\n    channel\n    name\n    status\n  }\n}\n",
   },
 }
+
 ;(node as any).hash = "59f3999f3f59f823cc03ba0795090112"
 
 export default node

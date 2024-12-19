@@ -93,6 +93,7 @@ const node: ConcreteRequest = {
     text: "query settingsRoutes_SettingsQuery {\n  me @principalField {\n    ...SettingsApp_me\n    id\n  }\n}\n\nfragment SettingsApp_me on Me {\n  name\n}\n",
   },
 }
+
 ;(node as any).hash = "2110a4436f8f780bd8c2218f9081f92f"
 
 export default node

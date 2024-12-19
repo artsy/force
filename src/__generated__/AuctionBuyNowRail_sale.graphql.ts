@@ -148,6 +148,7 @@ const node: ReaderFragment = {
   type: "Sale",
   abstractKey: null,
 }
+
 ;(node as any).hash = "46d45f905272960b1af05997302d0936"
 
 export default node

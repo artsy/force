@@ -169,6 +169,7 @@ const node: ReaderFragment = (function () {
     abstractKey: "__isArtworkConnectionInterface",
   }
 })()
+
 ;(node as any).hash = "33daab4206d833407dbfce33acf9d5b8"
 
 export default node

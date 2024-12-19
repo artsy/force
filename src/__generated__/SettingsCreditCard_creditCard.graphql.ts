@@ -76,6 +76,7 @@ const node: ReaderFragment = {
   type: "CreditCard",
   abstractKey: null,
 }
+
 ;(node as any).hash = "901989cbe42f4fb17b0fd6e9af202e93"
 
 export default node

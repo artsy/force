@@ -118,6 +118,7 @@ const node: ConcreteRequest = {
     text: "query jobsRoutes_JobsQuery @cacheable {\n  viewer {\n    ...JobsApp_viewer\n  }\n}\n\nfragment JobLink_job on Job {\n  id\n  title\n  location\n}\n\nfragment JobsApp_viewer on Viewer {\n  ...JobsFilter_viewer\n}\n\nfragment JobsFilter_viewer on Viewer {\n  jobs {\n    ...JobLink_job\n    id\n    location\n    departmentName\n  }\n}\n",
   },
 }
+
 ;(node as any).hash = "f111bf42d552fb795ffe2d669568297c"
 
 export default node

@@ -100,6 +100,7 @@ const node: ConcreteRequest = {
     text: "query useRefreshUserDataQuery {\n  me {\n    ...AuctionBidRoute_me\n    id\n  }\n}\n\nfragment AuctionBidRoute_me on Me {\n  internalID\n  hasQualifiedCreditCards\n}\n",
   },
 }
+
 ;(node as any).hash = "43aae92130e1a27bccb0a9451b12d83b"
 
 export default node

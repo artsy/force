@@ -145,6 +145,7 @@ const node: ConcreteRequest = {
     text: "query SmsSecondFactorRefetchQuery {\n  me {\n    ...SmsSecondFactor_me\n    id\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n",
   },
 }
+
 ;(node as any).hash = "bb3f464bd834c3a55e0098e887384d50"
 
 export default node

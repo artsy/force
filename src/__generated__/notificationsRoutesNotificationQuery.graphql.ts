@@ -96,6 +96,7 @@ const node: ConcreteRequest = {
     text: "query notificationsRoutesNotificationQuery {\n  me {\n    ...NotificationsApp_me\n    id\n  }\n}\n\nfragment NotificationsApp_me on Me {\n  unreadNotificationsCount\n}\n",
   },
 }
+
 ;(node as any).hash = "4b25572db1fc5773e8cfeb61d82e6408"
 
 export default node

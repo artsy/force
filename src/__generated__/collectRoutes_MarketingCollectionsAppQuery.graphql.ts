@@ -132,6 +132,7 @@ const node: ConcreteRequest = {
     text: "query collectRoutes_MarketingCollectionsAppQuery {\n  marketingCategories @principalField {\n    ...Collections_marketingCategories\n  }\n}\n\nfragment CollectionsCategory_category on MarketingCollectionCategory {\n  name\n  collections {\n    internalID\n    slug\n    title\n    headerImage\n    id\n  }\n}\n\nfragment Collections_marketingCategories on MarketingCollectionCategory {\n  name\n  ...CollectionsCategory_category\n}\n",
   },
 }
+
 ;(node as any).hash = "fef524f8337c800a5308955689bca0b6"
 
 export default node

@@ -44,6 +44,7 @@ const node: ReaderFragment = {
   type: "MyCollectionInfo",
   abstractKey: null,
 }
+
 ;(node as any).hash = "31731a4df77fe241d978cc8a19580e07"
 
 export default node

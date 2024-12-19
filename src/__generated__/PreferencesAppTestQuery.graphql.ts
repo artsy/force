@@ -131,6 +131,7 @@ const node: ConcreteRequest = {
     text: "query PreferencesAppTestQuery {\n  viewer {\n    ...PreferencesApp_viewer\n  }\n}\n\nfragment PreferencesApp_viewer on Viewer {\n  notificationPreferences {\n    name\n    status\n  }\n}\n",
   },
 }
+
 ;(node as any).hash = "643af9897cedd91a59e33cc6ce08fe50"
 
 export default node

@@ -181,6 +181,7 @@ const node: ReaderFragment = (function () {
     abstractKey: "__isCommerceOrderEventUnion",
   }
 })()
+
 ;(node as any).hash = "933decb94f0800d2c168c96b51b45456"
 
 export default node

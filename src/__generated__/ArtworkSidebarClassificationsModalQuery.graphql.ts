@@ -114,6 +114,7 @@ const node: ConcreteRequest = {
     text: "query ArtworkSidebarClassificationsModalQuery {\n  viewer {\n    ...ArtworkSidebarClassificationsModal_viewer\n  }\n}\n\nfragment ArtworkSidebarClassificationsModal_viewer on Viewer {\n  artworkAttributionClasses {\n    id\n    name\n    longDescription\n  }\n}\n",
   },
 }
+
 ;(node as any).hash = "a40434b7da7b4a9f4b3e7c4679014df1"
 
 export default node

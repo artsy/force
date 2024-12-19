@@ -125,6 +125,7 @@ const node: ConcreteRequest = {
     text: "query SettingsEditSettingsTwoFactorBackupCodesDialogQuery {\n  me {\n    ...SettingsEditSettingsTwoFactorBackupCodesDialog_me\n    id\n  }\n}\n\nfragment SettingsEditSettingsTwoFactorBackupCodesDialog_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      code\n    }\n  }\n}\n",
   },
 }
+
 ;(node as any).hash = "9c28e8c257e52c793e703fe70ca563b7"
 
 export default node
