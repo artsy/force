@@ -59,6 +59,7 @@ const ArtworkVideoPlayer: FC<
     }, 0)
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     window.addEventListener("blur", trackClickedPlayVideo)
 
@@ -67,7 +68,6 @@ const ArtworkVideoPlayer: FC<
     return () => {
       window.removeEventListener("blur", trackClickedPlayVideo)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!activeVideo || activeVideo.__typename === "%other") {

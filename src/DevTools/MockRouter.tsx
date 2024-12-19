@@ -38,6 +38,7 @@ export const MockRouter: React.FC<React.PropsWithChildren<MockRouterProps>> = ({
   const [MockRouterApp, setMockRouterApp] =
     useState<React.ReactElement<any> | null>(null)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const initRouter = async () => {
       try {
@@ -76,7 +77,6 @@ export const MockRouter: React.FC<React.PropsWithChildren<MockRouterProps>> = ({
     }
 
     initRouter()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!MockRouterApp) {

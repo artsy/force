@@ -50,6 +50,7 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
   const [inputValue, setInputValue] = useState("")
   const disablePills = !shouldStartSearching(inputValue)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     inputRef.current?.focus()
 
@@ -58,7 +59,6 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
       context_module: selectedPill.analyticsContextModule,
     })
     // When selecting another pill - this effect shouldn't be executed again, so we disable the linting rule
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const refetch = useCallback(

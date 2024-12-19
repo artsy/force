@@ -80,15 +80,13 @@ const CollectorProfileSavesRoute: FC<
    * For this reason, 404 error will be displayed immediately.
    * To prevent this from happening, `useMemo` is used here
    */
-  const selectedArtworkList = useMemo(
-    () => {
-      return artworkLists.find(
-        artworkList => artworkList.internalID === selectedArtworkListId
-      )
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedArtworkListId]
-  )
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  const selectedArtworkList = useMemo(() => {
+    return artworkLists.find(
+      artworkList => artworkList.internalID === selectedArtworkListId
+    )
+  }, [selectedArtworkListId])
 
   // TODO: Should be at routing level
   if (!selectedArtworkList) {

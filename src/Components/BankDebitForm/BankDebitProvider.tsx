@@ -52,6 +52,7 @@ export const BankDebitProvider: FC<React.PropsWithChildren<Props>> = ({
   const [bankDebitSetupError, setBankDebitSetupError] = useState(false)
   const { submitMutation } = CreateBankDebitSetupForOrder()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -85,7 +86,6 @@ export const BankDebitProvider: FC<React.PropsWithChildren<Props>> = ({
     if (!stripeClient) {
       fetchData()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const { theme } = useTheme()
@@ -164,7 +164,7 @@ export const BankDebitProvider: FC<React.PropsWithChildren<Props>> = ({
         isLoading={isStripePaymentElementLoading && !bankDebitSetupError}
       >
         {isStripePaymentElementLoading && !bankDebitSetupError && (
-          <Box height={300}></Box>
+          <Box height={300} />
         )}
         <Spacer y={2} />
         {stripeClient && (

@@ -41,6 +41,7 @@ const PageApp: FC<React.PropsWithChildren<PageAppProps>> = ({ page }) => {
     }
   }, [page.internalID])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (PAGE_SLUGS_WITH_AUTH_REQUIRED.includes(page.internalID) && !user?.id) {
       showAuthDialog({
@@ -53,7 +54,6 @@ const PageApp: FC<React.PropsWithChildren<PageAppProps>> = ({ page }) => {
         },
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, user])
 
   const canonical = TOP_LEVEL_PAGE_SLUG_ALLOWLIST.includes(match.params.id)

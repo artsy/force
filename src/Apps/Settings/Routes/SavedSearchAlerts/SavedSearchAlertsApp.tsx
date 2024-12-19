@@ -71,6 +71,7 @@ export const SavedSearchAlertsApp: React.FC<
 
   const [viewOption, setViewOption] = useState<"EDIT" | "ARTWORKS" | null>(null)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!alerts || !alerts[0]) return
     if (match?.params?.alertID) return
@@ -88,7 +89,6 @@ export const SavedSearchAlertsApp: React.FC<
       setViewOption("EDIT")
       silentPush(`/favorites/alerts/${alerts[0].internalID}/edit`)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile, match.params])
 
   const closeModal = () => {
@@ -202,6 +202,7 @@ export const SavedSearchAlertsApp: React.FC<
   const alertID = match?.params?.alertID ?? editAlertEntity?.id
   const path = match.location.pathname
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!alertID) return
 
@@ -245,8 +246,6 @@ export const SavedSearchAlertsApp: React.FC<
           silentPush(`/favorites/alerts/${alert.internalID}/edit`)
         }
       })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alertID, relayEnvironment])
 
   const list = useMemo(

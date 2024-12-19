@@ -97,6 +97,7 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
 
   // If the user is expecting a partner offer, require login and remove
   // the query param from the URL after login.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const expectingPartnerOffer = !!match?.location?.query?.partner_offer_id
     const isLoggedIn = !!me
@@ -119,7 +120,6 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
       url.searchParams.delete("partner_offer_id")
       silentReplace(url.toString())
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const isPrivateArtwork = artwork?.isUnlisted && artwork?.partner
@@ -209,6 +209,8 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
    * the `trackingMiddleware` file as we need to pass along additional metadata.
    *
    */
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!!submittedOrderId) {
       // TODO: Look into using router push
@@ -216,7 +218,6 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
       silentPush(props.match.location.pathname)
     }
     track()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (match?.location?.query?.creating_order) {

@@ -88,11 +88,11 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
   // Prefetch most clicked links.
   // See: https://artsy.slack.com/archives/C05EEBNEF71/p1726074422149369?thread_ts=1726073316.088559&cid=C05EEBNEF71
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const PREFETCH_NAVBAR_LINKS = ["/artists", "/collect"]
 
     PREFETCH_NAVBAR_LINKS.forEach(prefetch)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleMobileNavClick = (

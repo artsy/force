@@ -52,14 +52,13 @@ describe(AvailabilityFilter, () => {
       const MobileVersionOfAvailabilityFilter = () => {
         const filterContext = useArtworkFilterContext()
 
+        // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
         useEffect(() => {
           // on mount, initialize the staged filters
           filterContext.setShouldStageFilterChanges?.(true)
           if (filterContext.filters) {
             filterContext.setStagedFilters?.(filterContext.filters)
           }
-
-          // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
 
         return <AvailabilityFilter expanded />

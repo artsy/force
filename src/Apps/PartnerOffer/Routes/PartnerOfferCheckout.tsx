@@ -51,9 +51,9 @@ export const PartnerOfferCheckout: FC<
     }
   }, [partnerCheckoutMutation, partnerOfferId, router])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     handleRedirect()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

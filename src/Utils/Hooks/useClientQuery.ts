@@ -74,6 +74,7 @@ export const useClientQuery = <T extends OperationType>({
     }
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (key.current !== prevKey.current) {
       setData(null)
@@ -89,7 +90,6 @@ export const useClientQuery = <T extends OperationType>({
 
     // https://github.com/facebook/react/issues/25149
     // Excludes `T`
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     cacheConfig,
     data,

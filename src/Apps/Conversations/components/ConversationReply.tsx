@@ -137,9 +137,9 @@ export const ConversationReply: FC<
     }
   )
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     resetForm()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.internalID, resetForm])
 
   // Listen for Command+Enter keypress
@@ -196,7 +196,7 @@ export const ConversationReply: FC<
               // Set original height each time so scrollHeight is also
               // calculated when the content shrinks.
               field.style.height = TEXT_AREA_MIN_HEIGHT
-              setTextAreaHeight(field.scrollHeight + "px")
+              setTextAreaHeight(`${field.scrollHeight}px`)
               field.style.height = textAreaHeight
             }}
             onChange={({ value }) => setFieldValue("message", value)}

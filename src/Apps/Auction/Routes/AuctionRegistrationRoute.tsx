@@ -43,6 +43,7 @@ const AuctionRegistrationRoute: React.FC<
   }
 
   // Track page view or redirect
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (redirectToSaleHome(sale)) {
       router.replace(`/auction/${sale.slug}`)
@@ -51,7 +52,6 @@ const AuctionRegistrationRoute: React.FC<
     } else {
       tracking.registrationPageView()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Will redirect to /confirm-registration above on page mount

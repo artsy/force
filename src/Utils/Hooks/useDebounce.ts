@@ -15,7 +15,7 @@ export const useDebounce = ({
   delay = 200,
   settings,
 }: UseDebounce) => {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   return useCallback(debounce(callback, delay, settings), [callback, delay])
 }
 

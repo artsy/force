@@ -15,18 +15,18 @@ export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
     filterContext.setFilter?.("keyword", text)
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleChangeText = useMemo(
     () => debounce(updateKeywordFilter, DEBOUNCE_DELAY),
     // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [filterContext]
   )
 
   // Stop the invocation of the debounced function after unmounting
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     return () => handleChangeText?.cancel?.()
     // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

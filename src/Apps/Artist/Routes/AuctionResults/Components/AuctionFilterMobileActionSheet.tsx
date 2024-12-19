@@ -31,6 +31,7 @@ export const AuctionFilterMobileActionSheet: FC<
     filterContext.stagedFilters
   )
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     // While mobile sheet is mounted, the effect of the user's filter selections
     // should be merely staged until the Apply button is pressed, rather than
@@ -45,7 +46,6 @@ export const AuctionFilterMobileActionSheet: FC<
     return () => {
       filterContext.setShouldStageFilterChanges?.(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const applyFilters = () => {

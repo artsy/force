@@ -99,9 +99,9 @@ export const useLocalImageStorage = (
     }
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     changeLocalImage()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key])
 
   return localImage

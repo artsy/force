@@ -28,6 +28,7 @@ export const usePrefetchRoute = ({
   // If we're transitioning routes, we don't want to prefetch
   const prefetchDisabled = !prefetchFeatureFlagEnabled || !match?.elements
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const prefetch = useCallback(
     (path = initialPath) => {
       if (prefetchDisabled) {
@@ -107,7 +108,6 @@ export const usePrefetchRoute = ({
 
       return querySubscriptions
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [initialPath, prefetchDisabled]
   )
 

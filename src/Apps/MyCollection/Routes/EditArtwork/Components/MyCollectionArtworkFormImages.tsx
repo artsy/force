@@ -62,6 +62,7 @@ export const MyCollectionArtworkFormImages: React.FC<
     return photos.filter(c => !(c.geminiToken || c.url) && !c.loading)
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const imagesToUpload = getImagesToUpload(values.newPhotos)
 
@@ -70,7 +71,6 @@ export const MyCollectionArtworkFormImages: React.FC<
 
       setFieldValue("newPhotos", [...values.newPhotos])
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values.newPhotos])
 
   const handleDrop = (acceptedFiles: File[]) => {
