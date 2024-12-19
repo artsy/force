@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0114728984a085f7255212ef6c83ced4>>
+ * @generated SignedSource<<d81072ea0562f2e6f59f75a045df7851>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,12 @@ export type ArtworkLightbox_artwork$data = {
     } | null | undefined;
     readonly internalID: string | null | undefined;
     readonly isDefault: boolean | null | undefined;
-    readonly mobileLightboxSource: string | null | undefined;
+    readonly mobileLightboxSource: {
+      readonly height: number | null | undefined;
+      readonly src: string;
+      readonly srcSet: string;
+      readonly width: number | null | undefined;
+    } | null | undefined;
     readonly placeholder: string | null | undefined;
     readonly resized: {
       readonly height: number | null | undefined;
@@ -41,6 +46,11 @@ export type ArtworkLightbox_artwork$key = {
 const node: ReaderFragment = (function(){
 var v0 = {
   "kind": "Literal",
+  "name": "height",
+  "value": 800
+},
+v1 = {
+  "kind": "Literal",
   "name": "version",
   "value": [
     "main",
@@ -49,25 +59,22 @@ var v0 = {
     "large"
   ]
 },
-v1 = [
-  {
-    "kind": "Literal",
-    "name": "height",
-    "value": 800
-  },
+v2 = {
+  "kind": "Literal",
+  "name": "width",
+  "value": 800
+},
+v3 = [
+  (v0/*: any*/),
   {
     "kind": "Literal",
     "name": "quality",
     "value": 80
   },
-  (v0/*: any*/),
-  {
-    "kind": "Literal",
-    "name": "width",
-    "value": 800
-  }
+  (v1/*: any*/),
+  (v2/*: any*/)
 ],
-v2 = [
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -161,33 +168,43 @@ return {
           "storageKey": "url(version:[\"small\",\"medium\"])"
         },
         {
-          "alias": "mobileLightboxSource",
-          "args": [
-            (v0/*: any*/)
-          ],
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": "url(version:[\"main\",\"normalized\",\"larger\",\"large\"])"
-        },
-        {
           "alias": "fallback",
-          "args": (v1/*: any*/),
+          "args": (v3/*: any*/),
           "concreteType": "CroppedImageUrl",
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": (v2/*: any*/),
+          "selections": (v4/*: any*/),
           "storageKey": "cropped(height:800,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
         },
         {
           "alias": null,
-          "args": (v1/*: any*/),
+          "args": (v3/*: any*/),
           "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
-          "selections": (v2/*: any*/),
+          "selections": (v4/*: any*/),
           "storageKey": "resized(height:800,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
+        },
+        {
+          "alias": "mobileLightboxSource",
+          "args": [
+            (v0/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "quality",
+              "value": 50
+            },
+            (v1/*: any*/),
+            (v2/*: any*/)
+          ],
+          "concreteType": "ResizedImageUrl",
+          "kind": "LinkedField",
+          "name": "resized",
+          "plural": false,
+          "selections": (v4/*: any*/),
+          "storageKey": "resized(height:800,quality:50,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
         },
         {
           "alias": null,
@@ -205,6 +222,6 @@ return {
 };
 })();
 
-(node as any).hash = "8ddbe3cf4e515b8138627cde1bb7910e";
+(node as any).hash = "72c3a12b84c5f05f81798d377ab3b71c";
 
 export default node;
