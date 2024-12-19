@@ -290,7 +290,7 @@
   "lint-staged": {
     "*": "yarn detect-secrets:hook",
     "*.@(md)": ["yarn format"],
-    "*.@(js|jsx|ts|tsx)": ["yarn format && yarn lint"]
+    "*.@(js|jsx|ts|tsx)": ["yarn format"]
   },
   "nyc": {
     "check-coverage": true,
