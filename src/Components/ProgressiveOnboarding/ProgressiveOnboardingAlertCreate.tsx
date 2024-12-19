@@ -1,5 +1,4 @@
-import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
-import type { FC, ReactNode } from "react"
+import { useDismissibleContext } from "@artsy/dismissible"
 import {
   Box,
   Button,
@@ -9,14 +8,15 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { resized } from "Utils/resized"
+import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
+import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import {
   type WithProgressiveOnboardingCountsProps,
   withProgressiveOnboardingCounts,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useDismissibleContext } from "@artsy/dismissible"
-import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
+import { resized } from "Utils/resized"
+import type { FC, ReactNode } from "react"
 
 const KEY = PROGRESSIVE_ONBOARDING.alertCreate
 

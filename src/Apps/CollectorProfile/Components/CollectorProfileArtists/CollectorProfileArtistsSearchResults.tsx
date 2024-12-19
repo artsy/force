@@ -1,12 +1,12 @@
-import { type FC, Suspense, useMemo } from "react"
-import { graphql, useLazyLoadQuery } from "react-relay"
-import type { CollectorProfileArtistsSearchResultsQuery } from "__generated__/CollectorProfileArtistsSearchResultsQuery.graphql"
-import { compact } from "lodash"
 import { Message } from "@artsy/palette"
 import {
   CollectorProfileArtistsListArtist,
   CollectorProfileArtistsListArtistSkeleton,
 } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsListArtist"
+import type { CollectorProfileArtistsSearchResultsQuery } from "__generated__/CollectorProfileArtistsSearchResultsQuery.graphql"
+import { compact } from "lodash"
+import { type FC, Suspense, useMemo } from "react"
+import { graphql, useLazyLoadQuery } from "react-relay"
 
 interface CollectorProfileArtistsSearchResultsProps {
   term: string

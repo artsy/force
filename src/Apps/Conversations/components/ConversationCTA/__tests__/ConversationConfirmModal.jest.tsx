@@ -1,7 +1,7 @@
+import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { ConversationConfirmModal } from "Apps/Conversations/components/ConversationCTA/ConversationConfirmModal"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { screen, fireEvent, waitFor } from "@testing-library/react"
-import { ConversationConfirmModal } from "Apps/Conversations/components/ConversationCTA/ConversationConfirmModal"
 
 jest.unmock("react-relay")
 

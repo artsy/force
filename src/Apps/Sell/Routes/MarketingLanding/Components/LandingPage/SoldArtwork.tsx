@@ -1,11 +1,11 @@
 import type { AuthContextModule } from "@artsy/cohesion"
 import { Box, Image } from "@artsy/palette"
-import type { SoldArtwork_artwork$data } from "__generated__/SoldArtwork_artwork.graphql"
 import { SoldArtworkDetailsFragmentContainer } from "Apps/Sell/Routes/MarketingLanding/Components/LandingPage/SoldArtworkDetails"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import { resized } from "Utils/resized"
+import type { SoldArtwork_artwork$data } from "__generated__/SoldArtwork_artwork.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface SoldArtworkProps
   extends Omit<RouterLinkProps, "to" | "width"> {

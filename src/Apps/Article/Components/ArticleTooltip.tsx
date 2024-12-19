@@ -1,11 +1,11 @@
 import { Dropdown } from "@artsy/palette"
-import type { FC } from "react"
 import {
   type Entity,
   EntityTooltip,
   EntityTooltipHighlight,
 } from "Components/EntityTooltip"
 import { RouterLink } from "System/Components/RouterLink"
+import type { FC } from "react"
 
 export { isEntity as isSupportedArticleTooltip } from "Components/EntityTooltip"
 

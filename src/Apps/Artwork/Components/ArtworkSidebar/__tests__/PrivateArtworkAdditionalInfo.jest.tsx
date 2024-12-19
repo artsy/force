@@ -1,11 +1,11 @@
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
-import { useTracking } from "react-tracking"
-import { MockBoot } from "DevTools/MockBoot"
-import type { PrivateArtworkAdditionalInfo_Test_Query } from "__generated__/PrivateArtworkAdditionalInfo_Test_Query.graphql"
-import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { fireEvent, screen } from "@testing-library/react"
 import { PrivateArtworkAdditionalInfo } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkAdditionalInfo"
+import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
+import type { PrivateArtworkAdditionalInfo_Test_Query } from "__generated__/PrivateArtworkAdditionalInfo_Test_Query.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 

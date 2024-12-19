@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
 import { PartnerShowOpenedNotification } from "Components/Notifications/PartnerShowOpenedNotification"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { PartnerShowOpenedNotification_test_Query } from "__generated__/PartnerShowOpenedNotification_test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))

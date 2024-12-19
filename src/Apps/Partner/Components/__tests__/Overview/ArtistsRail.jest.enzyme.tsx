@@ -1,9 +1,9 @@
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { graphql } from "react-relay"
 import { ArtistsRailFragmentContainer } from "Apps/Partner/Components/Overview/ArtistsRail"
 import { ViewAllButton } from "Apps/Partner/Components/Overview/ViewAllButton"
 import { PartnerArtistsQueryRenderer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistList/PartnerArtists"
 import { PartnerArtistsCarouselRenderer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistsCarousel/PartnerArtistsCarousel"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

@@ -1,15 +1,15 @@
 import {
+  Box,
   Column,
+  FullBleed,
   GridColumns,
   ResponsiveBox,
-  Box,
   Text,
-  FullBleed,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import type { ReactElement } from "react"
 import { Media } from "Utils/Responsive"
+import type { ReactElement } from "react"
 
 export const TextAndImageLayout: React.FC<
   React.PropsWithChildren<{

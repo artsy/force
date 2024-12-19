@@ -1,5 +1,5 @@
-import { useEffect } from "react"
 import { useRouter } from "System/Hooks/useRouter"
+import { useEffect } from "react"
 
 /**
  * Checks to see if a route has completed fetching.

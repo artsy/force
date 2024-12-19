@@ -1,6 +1,6 @@
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import qs from "qs"
 import { isDefaultFilter } from "./isDefaultFilter"
-import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 
 /**
  * Returns a string representing the query part of a URL. It removes default

@@ -1,8 +1,11 @@
+import ChevronCircleDownIcon from "@artsy/icons/ChevronCircleDownIcon"
+import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
+import MessageIcon from "@artsy/icons/MessageIcon"
 import {
+  Column as BaseColumn,
   Box,
   Button,
   type ButtonSize,
-  Column as BaseColumn,
   type ColumnProps,
   GridColumns,
   Join,
@@ -10,21 +13,18 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import {
-  createRefetchContainer,
-  graphql,
-  type RelayRefetchProp,
-} from "react-relay"
-import { usePoll } from "Utils/Hooks/usePoll"
+import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
+import { AuctionLotInfoFragmentContainer } from "Apps/Auction/Routes/Bid/Components/AuctionLotInfo"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
-import type { AuctionActiveBids_me$data } from "__generated__/AuctionActiveBids_me.graphql"
-import { AuctionLotInfoFragmentContainer } from "Apps/Auction/Routes/Bid/Components/AuctionLotInfo"
+import { usePoll } from "Utils/Hooks/usePoll"
 import { Media } from "Utils/Responsive"
-import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import MessageIcon from "@artsy/icons/MessageIcon"
-import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
-import ChevronCircleDownIcon from "@artsy/icons/ChevronCircleDownIcon"
+import type { AuctionActiveBids_me$data } from "__generated__/AuctionActiveBids_me.graphql"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 
 interface AuctionActiveBidsProps {
   me: AuctionActiveBids_me$data

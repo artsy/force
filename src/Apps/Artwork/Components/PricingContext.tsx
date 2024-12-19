@@ -1,3 +1,4 @@
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   BorderBox,
   Flex,
@@ -10,25 +11,24 @@ import {
   Text,
 } from "@artsy/palette"
 import { BarChart, type BarDescriptor } from "@artsy/palette-charts"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { PricingContextQuery } from "__generated__/PricingContextQuery.graphql"
 import type {
   AnalyticsPricingContextDimensionEnum,
   PricingContext_artwork$data,
 } from "__generated__/PricingContext_artwork.graphql"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { once } from "lodash"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 // eslint-disable-next-line no-restricted-imports
 import Waypoint from "react-waypoint"
 import {
-  createCollectUrl,
   type FilterCategory,
+  createCollectUrl,
 } from "./../Utils/createCollectUrl"
 import { PricingContextModal } from "./PricingContextModal"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { PricingContextQuery } from "__generated__/PricingContextQuery.graphql"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useTracking } from "react-tracking"
 
 interface PricingContextProps {
   artwork: PricingContext_artwork$data

@@ -1,6 +1,6 @@
+import { HTML, Join, Spacer, Text } from "@artsy/palette"
 import type * as React from "react"
 import styled from "styled-components"
-import { HTML, Join, Spacer, Text } from "@artsy/palette"
 
 const TextWithNewlines = styled(Text)`
   white-space: pre-wrap;

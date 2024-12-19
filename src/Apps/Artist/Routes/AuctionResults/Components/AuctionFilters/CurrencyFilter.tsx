@@ -1,5 +1,5 @@
+import { Flex, Radio } from "@artsy/palette"
 import type * as React from "react"
-import { Radio, Flex } from "@artsy/palette"
 
 import {
   useAuctionResultsFilterContext,

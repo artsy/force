@@ -1,8 +1,8 @@
-import { RouterLink } from "System/Components/RouterLink"
 import { Image, ResponsiveBox, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ViewingRoomCard_viewingRoom$data } from "__generated__/ViewingRoomCard_viewingRoom.graphql"
+import { RouterLink } from "System/Components/RouterLink"
 import { cropped } from "Utils/resized"
+import type { ViewingRoomCard_viewingRoom$data } from "__generated__/ViewingRoomCard_viewingRoom.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ViewingRoomCardProps {
   viewingRoom: ViewingRoomCard_viewingRoom$data

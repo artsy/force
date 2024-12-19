@@ -8,8 +8,6 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
-import type { ConditionRoute_submission$key } from "__generated__/ConditionRoute_submission.graphql"
-import type { ArtworkConditionEnumType } from "__generated__/useUpdateMyCollectionArtworkMutation.graphql"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
@@ -17,6 +15,8 @@ import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { conditionOptions } from "Apps/Sell/Utils/conditionOptions"
 import { ErrorPage } from "Components/ErrorPage"
+import type { ConditionRoute_submission$key } from "__generated__/ConditionRoute_submission.graphql"
+import type { ArtworkConditionEnumType } from "__generated__/useUpdateMyCollectionArtworkMutation.graphql"
 import { Formik } from "formik"
 import type * as React from "react"
 import { useState } from "react"

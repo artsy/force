@@ -1,11 +1,11 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { NavBarMobileMenuNotificationsQueryRenderer } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuNotifications"
+import { ProgressiveOnboardingAlertHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertHighlight"
 import { trackEvent } from "Server/analytics/helpers"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type * as React from "react"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
-import { ProgressiveOnboardingAlertHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertHighlight"
 
 export const NavBarMobileMenuLoggedIn: React.FC<
   React.PropsWithChildren<unknown>

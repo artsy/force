@@ -1,5 +1,5 @@
-import { Column, GridColumns, Join, Separator, Text } from "@artsy/palette"
 import InfoIcon from "@artsy/icons/InfoIcon"
+import { Column, GridColumns, Join, Separator, Text } from "@artsy/palette"
 import { SettingsEditProfileFieldsFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileFields"
 import type { SettingsEditProfileRoute_me$data } from "__generated__/SettingsEditProfileRoute_me.graphql"
 import type React from "react"

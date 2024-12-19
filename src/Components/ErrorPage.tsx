@@ -1,14 +1,14 @@
 import {
-  Spacer,
-  Text,
-  GridColumns,
-  Column,
   Box,
   type BoxProps,
+  Column,
+  GridColumns,
+  Spacer,
+  Text,
 } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type * as React from "react"
 import styled from "styled-components"
-import { RouterLink } from "System/Components/RouterLink"
 
 interface ErrorPageProps extends BoxProps {
   code: number | string

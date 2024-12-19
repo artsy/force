@@ -1,8 +1,8 @@
 import {
   Flex,
-  SkeletonBox,
   Join,
   Separator,
+  SkeletonBox,
   SkeletonText,
   Spacer,
 } from "@artsy/palette"

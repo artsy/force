@@ -1,9 +1,9 @@
-import type * as React from "react"
-import { type BoxProps, Text, boxMixin, type TextProps } from "@artsy/palette"
-import { StyledLink } from "./StyledLink"
-import type { RouterLinkProps } from "System/Components/RouterLink"
-import styled from "styled-components"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
+import { type BoxProps, Text, type TextProps, boxMixin } from "@artsy/palette"
+import type { RouterLinkProps } from "System/Components/RouterLink"
+import type * as React from "react"
+import styled from "styled-components"
+import { StyledLink } from "./StyledLink"
 
 type BackLinkProps = RouterLinkProps &
   BoxProps & { fontWeight?: TextProps["fontWeight"] }

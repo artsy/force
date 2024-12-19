@@ -1,8 +1,8 @@
+import HeartFillIcon from "@artsy/icons/HeartFillIcon"
+import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 import { UtilButton } from "Apps/Artwork/Components/ArtworkImageBrowser/UtilButton"
 import type React from "react"
 import type { FC } from "react"
-import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
-import HeartFillIcon from "@artsy/icons/HeartFillIcon"
 
 interface SaveUtilButtonProps {
   isSaved: boolean

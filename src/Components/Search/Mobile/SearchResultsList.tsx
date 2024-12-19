@@ -1,26 +1,26 @@
+import { ActionType } from "@artsy/cohesion"
+import { Flex, Spinner } from "@artsy/palette"
+import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
+import {
+  SuggestionItem,
+  type SuggestionItemOptionProps,
+} from "Components/Search/SuggestionItem/SuggestionItem"
+import type { PillType } from "Components/Search/constants"
+import {
+  type SearchNodeOption,
+  formatOptions,
+} from "Components/Search/utils/formatOptions"
+import { extractNodes } from "Utils/extractNodes"
+import type { SearchResultsList_viewer$data } from "__generated__/SearchResultsList_viewer.graphql"
 import { type FC, useEffect } from "react"
 import {
   type RelayPaginationProp,
   createPaginationContainer,
   graphql,
 } from "react-relay"
-import type { SearchResultsList_viewer$data } from "__generated__/SearchResultsList_viewer.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import {
-  SuggestionItem,
-  type SuggestionItemOptionProps,
-} from "Components/Search/SuggestionItem/SuggestionItem"
-import { Flex, Spinner } from "@artsy/palette"
-import {
-  type SearchNodeOption,
-  formatOptions,
-} from "Components/Search/utils/formatOptions"
-import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
-import { NoResults } from "./SearchResultsList/NoResults"
-import { ContentPlaceholder } from "./SearchResultsList/ContentPlaceholder"
 import { useTracking } from "react-tracking"
-import type { PillType } from "Components/Search/constants"
-import { ActionType } from "@artsy/cohesion"
+import { ContentPlaceholder } from "./SearchResultsList/ContentPlaceholder"
+import { NoResults } from "./SearchResultsList/NoResults"
 
 interface SearchResultsListProps {
   relay: RelayPaginationProp

@@ -1,13 +1,13 @@
-import { Avatar, Box, Flex, Stack, Text, Tooltip } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Components/RouterLink"
-import type { CollectorProfileHeader_me$data } from "__generated__/CollectorProfileHeader_me.graphql"
 import MapPinIcon from "@artsy/icons/MapPinIcon"
 import ShieldIcon from "@artsy/icons/ShieldIcon"
 import VerifiedPersonIcon from "@artsy/icons/VerifiedPersonIcon"
-import styled from "styled-components"
+import { Avatar, Box, Flex, Stack, Text, Tooltip } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
+import type { CollectorProfileHeader_me$data } from "__generated__/CollectorProfileHeader_me.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
 
 interface CollectorProfileHeaderProps {
   me: CollectorProfileHeader_me$data

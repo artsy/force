@@ -1,9 +1,9 @@
 import { fireEvent, screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ConversationsSidebarItem } from "Apps/Conversations/components/Sidebar/ConversationsSidebarItem"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ConversationsSidebarItemTestQuery } from "__generated__/ConversationsSidebarItemTestQuery.graphql"
-import { useTracking } from "react-tracking"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")

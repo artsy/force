@@ -1,6 +1,6 @@
+import { identity, pickBy } from "lodash"
 import type * as React from "react"
 import { StructuredData } from "./StructuredData"
-import { identity, pickBy } from "lodash"
 
 interface PostalAddressSchemaData {
   "@type": string

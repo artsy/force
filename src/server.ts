@@ -1,23 +1,23 @@
 import "instrument"
 
-import { renderServerApp } from "System/Router/renderServerApp"
-import express from "express"
+import { adminServerRoutes } from "Apps/Admin/adminServerRoutes"
+import { appPreferencesServerRoutes } from "Apps/AppPreferences/appPreferencesServerRoutes"
+import { redirectCollectionToArtistSeries } from "Apps/Collect/Server/redirectCollectionToArtistSeries"
+import { rssServerApp } from "Apps/RSS/rssServerApp"
+import { redirectsServerRoutes } from "Apps/Redirects/redirectsServerRoutes"
+import { sitemapsServerApp } from "Apps/Sitemaps/sitemapsServerApp"
+import { cookieConsentManagerServerRoutes } from "Components/CookieConsentManager/cookieConsentManagerServerRoutes"
 import type {
   ArtsyRequest,
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
-import type { NextFunction } from "express"
-import { adminServerRoutes } from "Apps/Admin/adminServerRoutes"
-import { sitemapsServerApp } from "Apps/Sitemaps/sitemapsServerApp"
-import { rssServerApp } from "Apps/RSS/rssServerApp"
-import { redirectsServerRoutes } from "Apps/Redirects/redirectsServerRoutes"
-import { cookieConsentManagerServerRoutes } from "Components/CookieConsentManager/cookieConsentManagerServerRoutes"
-import { appPreferencesServerRoutes } from "Apps/AppPreferences/appPreferencesServerRoutes"
-import { setupServerRouter } from "System/Router/serverRouter"
-import { getRoutes } from "System/Router/Utils/routeUtils"
-import { initializeMiddleware } from "middleware"
 import { errorHandlerMiddleware } from "Server/middleware/errorHandler"
-import { redirectCollectionToArtistSeries } from "Apps/Collect/Server/redirectCollectionToArtistSeries"
+import { getRoutes } from "System/Router/Utils/routeUtils"
+import { renderServerApp } from "System/Router/renderServerApp"
+import { setupServerRouter } from "System/Router/serverRouter"
+import express from "express"
+import type { NextFunction } from "express"
+import { initializeMiddleware } from "middleware"
 
 const app = express()
 

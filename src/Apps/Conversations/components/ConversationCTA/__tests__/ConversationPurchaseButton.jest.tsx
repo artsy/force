@@ -1,12 +1,12 @@
-import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen, fireEvent, waitFor } from "@testing-library/react"
-import { useTracking } from "react-tracking"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { ConversationPurchaseButton } from "Apps/Conversations/components/ConversationCTA/ConversationPurchaseButton"
 import { useMakeInquiryOrder } from "Apps/Conversations/mutations/useMakeInquiryOrderMutation"
 import { usePartnerOfferCheckoutMutation } from "Apps/PartnerOffer/Routes/Mutations/UsePartnerOfferCheckoutMutation"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")

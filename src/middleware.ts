@@ -1,58 +1,58 @@
-import artsyPassport from "./Server/passport"
-import addRequestId from "express-request-id"
+import path from "path"
+import bodyParser from "body-parser"
 import compression from "compression"
+import timeout from "connect-timeout"
 import cookieParser from "cookie-parser"
 import express from "express"
-import favicon from "serve-favicon"
+import addRequestId from "express-request-id"
 import glob from "glob"
 import helmet from "helmet"
-import path from "path"
+import favicon from "serve-favicon"
 // eslint-disable-next-line no-restricted-imports
 import sharify from "sharify"
-import timeout from "connect-timeout"
-import bodyParser from "body-parser"
 import {
-  APP_TIMEOUT,
   API_URL,
-  APP_URL,
   APPLE_CLIENT_ID,
   APPLE_KEY_ID,
   APPLE_PRIVATE_KEY,
   APPLE_TEAM_ID,
+  APP_TIMEOUT,
+  APP_URL,
   CLIENT_ID,
   CLIENT_SECRET,
   FACEBOOK_ID,
   FACEBOOK_SECRET,
   GOOGLE_CLIENT_ID,
   GOOGLE_SECRET,
-  SEGMENT_WRITE_KEY_SERVER,
   IP_DENYLIST,
   NODE_ENV,
+  SEGMENT_WRITE_KEY_SERVER,
 } from "./Server/config"
+import artsyPassport from "./Server/passport"
 
-import { morganMiddleware } from "./Server/middleware/morgan"
-import { ensureSslMiddleware } from "./Server/middleware/ensureSsl"
-import { hstsMiddleware } from "./Server/middleware/hsts"
-import { ipFilter } from "./Server/middleware/ipFilter"
-import { sessionMiddleware } from "./Server/middleware/session"
-import { assetMiddleware } from "./Server/middleware/assetMiddleware"
-import { csrfTokenMiddleware } from "./Server/middleware/csrfToken"
-import { asyncLocalsMiddleware } from "./Server/middleware/asyncLocalMiddleware"
-import { bootstrapSharifyAndContextLocalsMiddleware } from "./Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
-import { userRequiredMiddleware } from "./Server/middleware/userRequiredMiddleware"
-import { downcaseMiddleware } from "./Server/middleware/downcase"
-import { hardcodedRedirectsMiddleware } from "./Server/middleware/hardcodedRedirects"
-import { localsMiddleware } from "./Server/middleware/locals"
-import { sameOriginMiddleware } from "./Server/middleware/sameOrigin"
-import { serverTimingHeaders } from "./Server/middleware/serverTimingHeaders"
-import { featureFlagMiddleware } from "./Server/middleware/featureFlagMiddleware"
+import { appPreferencesMiddleware } from "Apps/AppPreferences/appPreferencesMiddleware"
+import { bootstrapSharify } from "./Server/bootstrapSharify"
+import { registerFeatureFlagService } from "./Server/featureFlags/featureFlagService"
 import {
   UnleashFeatureFlagService,
   UnleashService,
 } from "./Server/featureFlags/unleashService"
-import { registerFeatureFlagService } from "./Server/featureFlags/featureFlagService"
-import { appPreferencesMiddleware } from "Apps/AppPreferences/appPreferencesMiddleware"
-import { bootstrapSharify } from "./Server/bootstrapSharify"
+import { assetMiddleware } from "./Server/middleware/assetMiddleware"
+import { asyncLocalsMiddleware } from "./Server/middleware/asyncLocalMiddleware"
+import { bootstrapSharifyAndContextLocalsMiddleware } from "./Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
+import { csrfTokenMiddleware } from "./Server/middleware/csrfToken"
+import { downcaseMiddleware } from "./Server/middleware/downcase"
+import { ensureSslMiddleware } from "./Server/middleware/ensureSsl"
+import { featureFlagMiddleware } from "./Server/middleware/featureFlagMiddleware"
+import { hardcodedRedirectsMiddleware } from "./Server/middleware/hardcodedRedirects"
+import { hstsMiddleware } from "./Server/middleware/hsts"
+import { ipFilter } from "./Server/middleware/ipFilter"
+import { localsMiddleware } from "./Server/middleware/locals"
+import { morganMiddleware } from "./Server/middleware/morgan"
+import { sameOriginMiddleware } from "./Server/middleware/sameOrigin"
+import { serverTimingHeaders } from "./Server/middleware/serverTimingHeaders"
+import { sessionMiddleware } from "./Server/middleware/session"
+import { userRequiredMiddleware } from "./Server/middleware/userRequiredMiddleware"
 
 bootstrapSharify()
 

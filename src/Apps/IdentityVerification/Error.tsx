@@ -1,6 +1,6 @@
 import { Column, GridColumns, Message, Spacer } from "@artsy/palette"
-import type * as React from "react"
 import { MetaTags } from "Components/MetaTags"
+import type * as React from "react"
 
 export const Error: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (

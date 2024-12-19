@@ -1,11 +1,11 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react"
-import { useMutation } from "Utils/Hooks/useMutation"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import {
-  DeleteArtworkListModal,
   type DeleteArtworkListEntity,
+  DeleteArtworkListModal,
 } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/DeleteArtworkListModal"
-import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools/MockBoot"
+import { useMutation } from "Utils/Hooks/useMutation"
+import { useTracking } from "react-tracking"
 
 jest.mock("Utils/Hooks/useMutation")
 

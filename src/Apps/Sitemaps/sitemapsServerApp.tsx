@@ -1,7 +1,7 @@
-import express from "express"
-import { getENV } from "Utils/getENV"
-import httpProxy from "http-proxy"
 import { SITEMAP_BASE_URL } from "Server/config"
+import { getENV } from "Utils/getENV"
+import express from "express"
+import httpProxy from "http-proxy"
 
 const sitemapsServerApp = express()
 

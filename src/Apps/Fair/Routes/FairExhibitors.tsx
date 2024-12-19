@@ -1,12 +1,12 @@
-import type React from "react"
-import { useEffect } from "react"
 import { Box, Join, Spacer, Text } from "@artsy/palette"
-import { graphql, createFragmentContainer } from "react-relay"
-import type { FairExhibitors_fair$data } from "__generated__/FairExhibitors_fair.graphql"
 import { FairExhibitorsGroupFragmentContainer } from "Apps/Fair/Components/FairExhibitors/FairExhibitorsGroup"
 import { getExhibitorSectionId } from "Apps/Fair/Utils/getExhibitorSectionId"
 import { useRouter } from "System/Hooks/useRouter"
 import { Jump, useJump } from "Utils/Hooks/useJump"
+import type { FairExhibitors_fair$data } from "__generated__/FairExhibitors_fair.graphql"
+import type React from "react"
+import { useEffect } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface FairExhibitorsProps {
   fair: FairExhibitors_fair$data

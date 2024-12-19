@@ -1,26 +1,26 @@
-import type { ShowArtworks_show$data } from "__generated__/ShowArtworks_show.graphql"
+import type { BoxProps } from "@artsy/palette"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
   type Counts,
   type SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
+import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { ShowArtworksFilterQuery } from "__generated__/ShowArtworksFilterQuery.graphql"
+import type { ShowArtworks_show$data } from "__generated__/ShowArtworks_show.graphql"
+import { omit } from "lodash"
 import type * as React from "react"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
   graphql,
 } from "react-relay"
-import type { BoxProps } from "@artsy/palette"
-import { useRouter } from "System/Hooks/useRouter"
-import { omit } from "lodash"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
-import type { ShowArtworksFilterQuery } from "__generated__/ShowArtworksFilterQuery.graphql"
-import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface ShowArtworksFilterProps extends BoxProps {
   show: ShowArtworks_show$data

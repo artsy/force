@@ -1,27 +1,27 @@
-import type { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
-import type { CreditCardPicker_order$data } from "__generated__/CreditCardPicker_order.graphql"
-import type { CreditCardPickerCreateCreditCardMutation } from "__generated__/CreditCardPickerCreateCreditCardMutation.graphql"
 import {
   type AddressChangeHandler,
   type AddressErrors,
   AddressForm,
   type AddressTouched,
 } from "Components/Address/AddressForm"
+import type { CreditCardPickerCreateCreditCardMutation } from "__generated__/CreditCardPickerCreateCreditCardMutation.graphql"
+import type { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
+import type { CreditCardPicker_order$data } from "__generated__/CreditCardPicker_order.graphql"
 
 import { type Address, emptyAddress } from "Components/Address/utils"
 
-import { CreditCardInput } from "Components/CreditCardInput"
-import { validateAddress } from "Apps/Order/Utils/formValidators"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { CardNumberElement } from "@stripe/react-stripe-js"
+import type {
+  CreateTokenCardData,
+  Stripe,
+  StripeElements,
+  StripeError,
+} from "@stripe/stripe-js"
+import { validateAddress } from "Apps/Order/Utils/formValidators"
+import { CreditCardInput } from "Components/CreditCardInput"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type {
-  StripeError,
-  CreateTokenCardData,
-  StripeElements,
-  Stripe,
-} from "@stripe/stripe-js"
-import { CardNumberElement } from "@stripe/react-stripe-js"
 
 import {
   BorderedRadio,
@@ -29,19 +29,19 @@ import {
   Flex,
   Link,
   RadioGroup,
-  Text,
   Spacer,
+  Text,
 } from "@artsy/palette"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import type { CommitMutation } from "Apps/Order/Utils/commitMutation"
-import { CreditCardDetails } from "./CreditCardDetails"
-import { createStripeWrapper } from "Utils/createStripeWrapper"
-import { isNull, mergeWith } from "lodash"
-import { type TrackingProp, useTracking } from "react-tracking"
 import {
   SystemContextConsumer,
   type SystemContextProps,
 } from "System/Contexts/SystemContext"
+import { createStripeWrapper } from "Utils/createStripeWrapper"
+import { isNull, mergeWith } from "lodash"
+import { type TrackingProp, useTracking } from "react-tracking"
+import { CreditCardDetails } from "./CreditCardDetails"
 
 export interface StripeProps {
   stripe: Stripe

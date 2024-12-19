@@ -1,5 +1,5 @@
-import { graphql, useFragment } from "react-relay"
-import type { PrivateArtworkMetadata_artwork$key } from "__generated__/PrivateArtworkMetadata_artwork.graphql"
+import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
+import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
 import {
   Box,
   Clickable,
@@ -9,9 +9,9 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import type { PrivateArtworkMetadata_artwork$key } from "__generated__/PrivateArtworkMetadata_artwork.graphql"
 import { useState } from "react"
-import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
-import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
+import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 
 interface PrivateArtworkMetadataProps {

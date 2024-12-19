@@ -9,14 +9,14 @@ import {
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { MarketingAlternatingStack } from "Apps/Marketing/Components/MarketingAlternatingStack"
-import { MarketingHeader } from "Apps/Marketing/Components/MarketingHeader"
+import { MarketingCollectionCell } from "Apps/Marketing/Components/MarketingCollectionCell"
 import { MarketingFeaturedArtworksRailQueryRenderer } from "Apps/Marketing/Components/MarketingFeaturedArtworksRail"
+import { MarketingHeader } from "Apps/Marketing/Components/MarketingHeader"
+import { MarketingQuizCTA } from "Apps/Marketing/Components/MarketingQuizCTA"
 import { MarketingTrendingArtistsRailQueryRenderer } from "Apps/Marketing/Components/MarketingTrendingArtistsRail"
+import { BRAND_PALETTE } from "Apps/Marketing/Utils/brandPalette"
 import { MetaTags } from "Components/MetaTags"
 import type { FC } from "react"
-import { MarketingCollectionCell } from "Apps/Marketing/Components/MarketingCollectionCell"
-import { MarketingQuizCTA } from "Apps/Marketing/Components/MarketingQuizCTA"
-import { BRAND_PALETTE } from "Apps/Marketing/Utils/brandPalette"
 
 export const MarketingFindArtYouLoveRoute: FC<
   React.PropsWithChildren<unknown>

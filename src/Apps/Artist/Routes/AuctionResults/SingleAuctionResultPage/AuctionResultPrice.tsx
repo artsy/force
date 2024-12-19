@@ -1,9 +1,9 @@
+import InfoIcon from "@artsy/icons/InfoIcon"
+import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import { Box, Clickable, Flex, Text, Tooltip } from "@artsy/palette"
 import type { AuctionResultPrice_auctionResult$key } from "__generated__/AuctionResultPrice_auctionResult.graphql"
 import { DateTime } from "luxon"
 import { graphql, useFragment } from "react-relay"
-import InfoIcon from "@artsy/icons/InfoIcon"
-import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 
 interface AuctionResultPriceProps {
   auctionResult: AuctionResultPrice_auctionResult$key

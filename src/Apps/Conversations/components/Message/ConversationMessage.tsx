@@ -1,17 +1,17 @@
-import { graphql, useFragment } from "react-relay"
 import { Box, Spacer, Text } from "@artsy/palette"
-import { isSameMinute } from "date-fns"
-import React from "react"
+import { ConversationMessageBubble } from "Apps/Conversations/components/Message/ConversationMessageBubble"
+import { ConversationMessageFile } from "Apps/Conversations/components/Message/ConversationMessageFile"
+import { ConversationMessageImage } from "Apps/Conversations/components/Message/ConversationMessageImage"
+import { useScrollPagination } from "Apps/Conversations/hooks/useScrollPagination"
 import type {
   ConversationMessage_message$data,
   ConversationMessage_message$key,
 } from "__generated__/ConversationMessage_message.graphql"
 import type { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
-import { useScrollPagination } from "Apps/Conversations/hooks/useScrollPagination"
+import { isSameMinute } from "date-fns"
+import React from "react"
 import Linkify from "react-linkify"
-import { ConversationMessageBubble } from "Apps/Conversations/components/Message/ConversationMessageBubble"
-import { ConversationMessageImage } from "Apps/Conversations/components/Message/ConversationMessageImage"
-import { ConversationMessageFile } from "Apps/Conversations/components/Message/ConversationMessageFile"
+import { graphql, useFragment } from "react-relay"
 
 export type Messages = Pick<
   NonNullable<ConversationMessage_message$data>,

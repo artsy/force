@@ -1,20 +1,20 @@
 import { BorderedRadio, Button } from "@artsy/palette"
+import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import type { BankAccountPickerTestQuery$rawResponse } from "__generated__/BankAccountPickerTestQuery.graphql"
+import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
+import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+import type { BankAccountSelection } from "Apps/Order/Routes/Payment/index"
 import {
   BuyOrderPickup,
   UntouchedBuyOrder,
 } from "Apps/__tests__/Fixtures/Order"
-import { expectOne, RootTestPage } from "DevTools/RootTestPage"
-import { graphql } from "react-relay"
-import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
-import { MockBoot } from "DevTools/MockBoot"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import type { BankAccountPicker_me$data } from "__generated__/BankAccountPicker_me.graphql"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
-import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
-import type { BankAccountSelection } from "Apps/Order/Routes/Payment/index"
-import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+import { MockBoot } from "DevTools/MockBoot"
+import { RootTestPage, expectOne } from "DevTools/RootTestPage"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { BankAccountPickerTestQuery$rawResponse } from "__generated__/BankAccountPickerTestQuery.graphql"
+import type { BankAccountPicker_me$data } from "__generated__/BankAccountPicker_me.graphql"
+import { graphql } from "react-relay"
 
 jest.mock("Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext")
 

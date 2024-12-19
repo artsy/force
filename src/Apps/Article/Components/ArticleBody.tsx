@@ -1,34 +1,34 @@
 import {
   Box,
   Column,
+  type ColumnSpan,
+  type ColumnStart,
+  Flex,
+  FullBleed,
   GridColumns,
   HTML,
+  Image,
   Join,
   Spacer,
   Text,
-  Image,
-  FullBleed,
-  Flex,
-  type ColumnSpan,
-  type ColumnStart,
 } from "@artsy/palette"
+import { ArticleShare } from "Components/ArticleShare"
+import { Sticky } from "Components/Sticky"
+import { TopContextBar } from "Components/TopContextBar"
+import { RouterLink } from "System/Components/RouterLink"
+import { Analytics } from "System/Contexts/AnalyticsContext"
+import type { ArticleBody_article$data } from "__generated__/ArticleBody_article.graphql"
 import { DateTime } from "luxon"
 import { type FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { ArticleBody_article$data } from "__generated__/ArticleBody_article.graphql"
-import { ArticleShare } from "Components/ArticleShare"
-import { RouterLink } from "System/Components/RouterLink"
-import { ArticleHeroFragmentContainer } from "./ArticleHero"
+import { ArticleAd } from "./ArticleAd/ArticleAd"
 import { ArticleBylineFragmentContainer } from "./ArticleByline"
 import { ArticleContextProvider } from "./ArticleContext"
-import { ArticleAd } from "./ArticleAd/ArticleAd"
+import { ArticleHeroFragmentContainer } from "./ArticleHero"
+import { ArticleNewsSourceFragmentContainer } from "./ArticleNewsSource"
 import { ArticleSectionFragmentContainer } from "./ArticleSection"
 import { ArticleSectionAdFragmentContainer } from "./ArticleSectionAd"
 import { OPTIMAL_READING_WIDTH } from "./Sections/ArticleSectionText"
-import { Analytics } from "System/Contexts/AnalyticsContext"
-import { ArticleNewsSourceFragmentContainer } from "./ArticleNewsSource"
-import { TopContextBar } from "Components/TopContextBar"
-import { Sticky } from "Components/Sticky"
 
 interface ArticleBodyProps {
   article: ArticleBody_article$data

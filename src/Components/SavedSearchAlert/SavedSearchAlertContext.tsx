@@ -1,18 +1,18 @@
 import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/paramsCasing"
+import { allowedSearchCriteriaKeys } from "Components/SavedSearchAlert/constants"
+import type { Metric } from "Utils/metrics"
+import qs from "qs"
 import { useContext, useState } from "react"
 import { createContext } from "react"
-import type { Metric } from "Utils/metrics"
+import { extractPills } from "./Utils/extractPills"
+import { getAllowedSearchCriteria } from "./Utils/savedSearchCriteria"
 import type {
   FilterPill,
   SavedSearchEntity,
   SearchCriteriaAttributeKeys,
   SearchCriteriaAttributes,
 } from "./types"
-import { extractPills } from "./Utils/extractPills"
-import { getAllowedSearchCriteria } from "./Utils/savedSearchCriteria"
-import { allowedSearchCriteriaKeys } from "Components/SavedSearchAlert/constants"
-import qs from "qs"
-import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 
 interface SavedSearchAlertContextProps {
   pills: FilterPill[]

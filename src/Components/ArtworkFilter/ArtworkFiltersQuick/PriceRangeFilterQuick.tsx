@@ -1,12 +1,12 @@
-import type { FC } from "react"
-import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { PriceRange } from "Components/PriceRange/PriceRange"
 import { Dropdown, type DropdownProps } from "@artsy/palette"
+import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { usePriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import {
   FilterQuickDropdownAnchor,
   FilterQuickDropdownPanel,
 } from "Components/ArtworkFilter/ArtworkFiltersQuick/FilterQuick"
-import { usePriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { PriceRange } from "Components/PriceRange/PriceRange"
+import type { FC } from "react"
 
 export interface PriceRangeFilterQuickProps
   extends Omit<DropdownProps, "dropdown" | "children"> {}

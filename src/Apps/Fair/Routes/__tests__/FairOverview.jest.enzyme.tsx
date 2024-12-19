@@ -1,9 +1,9 @@
+import { waitFor } from "@testing-library/react"
 import { FairOverviewFragmentContainer } from "Apps/Fair/Routes/FairOverview"
-import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Hooks/useRouter"
 import type { FairOverview_Test_Query } from "__generated__/FairOverview_Test_Query.graphql"
-import { waitFor } from "@testing-library/react"
+import { graphql } from "react-relay"
 
 const mockJumpTo = jest.fn()
 

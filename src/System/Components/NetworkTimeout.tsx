@@ -1,8 +1,8 @@
-import { useEffect } from "react"
-import type * as React from "react"
+import { useToasts } from "@artsy/palette"
 import { ErrorWithMetadata } from "Utils/errors"
 import createLogger from "Utils/logger"
-import { useToasts } from "@artsy/palette"
+import { useEffect } from "react"
+import type * as React from "react"
 
 const logger = createLogger("Artsy/Router/NetworkTimeout")
 

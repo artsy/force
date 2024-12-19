@@ -1,12 +1,12 @@
 import { Box, type BoxProps, Shelf, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { NearbyGalleriesRail_partners$data } from "__generated__/NearbyGalleriesRail_partners.graphql"
-import type { NearbyGalleriesRailRendererQuery } from "__generated__/NearbyGalleriesRailRendererQuery.graphql"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { NearbyGalleriesRailPlaceholder } from "./NearbyGalleriesRailPlaceholder"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { compact } from "lodash"
 import { CellPartnerFragmentContainer } from "Components/Cells/CellPartner"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { NearbyGalleriesRailRendererQuery } from "__generated__/NearbyGalleriesRailRendererQuery.graphql"
+import type { NearbyGalleriesRail_partners$data } from "__generated__/NearbyGalleriesRail_partners.graphql"
+import { compact } from "lodash"
+import { createFragmentContainer, graphql } from "react-relay"
+import { NearbyGalleriesRailPlaceholder } from "./NearbyGalleriesRailPlaceholder"
 
 interface NearbyGalleriesRailProps extends BoxProps {
   partners: NearbyGalleriesRail_partners$data

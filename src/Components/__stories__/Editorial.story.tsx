@@ -1,4 +1,4 @@
-import { Box, Text, GridColumns, Column, HTML } from "@artsy/palette"
+import { Box, Column, GridColumns, HTML, Text } from "@artsy/palette"
 import { Page } from "./Components/Page"
 
 export default {

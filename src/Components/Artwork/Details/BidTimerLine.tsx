@@ -1,12 +1,12 @@
+import { Text } from "@artsy/palette"
 import { EmptyLine } from "Components/Artwork/Details/Details"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
-import { useTimer } from "Utils/Hooks/useTimer"
-import { Text } from "@artsy/palette"
-import { DateTime } from "luxon"
-import { graphql, useFragment } from "react-relay"
-import type { BidTimerLine_artwork$key } from "__generated__/BidTimerLine_artwork.graphql"
-import { useState } from "react"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
+import { useTimer } from "Utils/Hooks/useTimer"
+import type { BidTimerLine_artwork$key } from "__generated__/BidTimerLine_artwork.graphql"
+import { DateTime } from "luxon"
+import { useState } from "react"
+import { graphql, useFragment } from "react-relay"
 
 interface BidTimerLineProps {
   artwork: BidTimerLine_artwork$key

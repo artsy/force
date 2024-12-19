@@ -1,10 +1,10 @@
-import { mount } from "enzyme"
-import { act } from "react-dom/test-utils"
 import {
   BoothFilterContextProvider,
   initialBoothFilterState,
   useBoothsFilterContext,
 } from "Apps/Fair/Components/BoothFilterContext"
+import { mount } from "enzyme"
+import { act } from "react-dom/test-utils"
 
 describe("BoothFilterContext", () => {
   let context: ReturnType<typeof useBoothsFilterContext>

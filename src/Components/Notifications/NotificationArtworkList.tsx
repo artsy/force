@@ -1,10 +1,10 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Flex } from "@artsy/palette"
-import type { NotificationArtworkList_artworksConnection$key } from "__generated__/NotificationArtworkList_artworksConnection.graphql"
 import { NotificationArtwork } from "Components/Notifications/NotificationArtwork"
+import { extractNodes } from "Utils/extractNodes"
+import type { NotificationArtworkList_artworksConnection$key } from "__generated__/NotificationArtworkList_artworksConnection.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
-import { extractNodes } from "Utils/extractNodes"
 
 interface NotificationArtworkListProps {
   artworksConnection?: NotificationArtworkList_artworksConnection$key | null

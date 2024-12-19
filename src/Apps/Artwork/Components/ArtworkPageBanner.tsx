@@ -1,13 +1,13 @@
-import type { FC } from "react"
-import { graphql, useFragment } from "react-relay"
 import { Text } from "@artsy/palette"
+import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
+import { FullBleedBanner } from "Components/FullBleedBanner"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useRouter } from "System/Hooks/useRouter"
+import { extractNodes } from "Utils/extractNodes"
 import type { ArtworkPageBanner_artwork$key } from "__generated__/ArtworkPageBanner_artwork.graphql"
 import type { ArtworkPageBanner_me$key } from "__generated__/ArtworkPageBanner_me.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import { useRouter } from "System/Hooks/useRouter"
-import { FullBleedBanner } from "Components/FullBleedBanner"
-import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import type { FC } from "react"
+import { graphql, useFragment } from "react-relay"
 
 interface ArtworkPageBannerProps {
   artwork: ArtworkPageBanner_artwork$key

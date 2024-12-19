@@ -1,5 +1,5 @@
-import { mount } from "enzyme"
 import { EventTiming } from "Components/EventTiming"
+import { mount } from "enzyme"
 
 const currentTime = "2018-05-10T20:22:32.000Z"
 

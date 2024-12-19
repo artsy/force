@@ -1,8 +1,8 @@
 import type { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
-import { APP_URL } from "Server/config"
 import { parse } from "url"
+import { APP_URL } from "Server/config"
 
 /**
  * HSTS allows for a more effective implementation of TLS by ensuring

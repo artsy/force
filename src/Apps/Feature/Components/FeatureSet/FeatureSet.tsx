@@ -1,12 +1,12 @@
-import type * as React from "react"
 import { Box, type BoxProps, Join, Spacer } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import { extractNodes } from "Utils/extractNodes"
 import type { FeatureSet_set$data } from "__generated__/FeatureSet_set.graphql"
-import { FeatureSetMetaFragmentContainer as FeatureSetMeta } from "./FeatureSetMeta"
+import type * as React from "react"
+import { useMemo } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureSetContainerFragmentContainer as FeatureSetContainer } from "./FeatureSetContainer"
 import { FeatureSetItemFragmentContainer as FeatureSetItem } from "./FeatureSetItem"
-import { extractNodes } from "Utils/extractNodes"
-import { useMemo } from "react"
+import { FeatureSetMetaFragmentContainer as FeatureSetMeta } from "./FeatureSetMeta"
 
 interface FeatureSetProps extends Omit<BoxProps, "color"> {
   set: FeatureSet_set$data

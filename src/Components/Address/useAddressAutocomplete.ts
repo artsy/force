@@ -1,17 +1,17 @@
-import type { AutocompleteInputOptionType } from "@artsy/palette"
-import type { Address } from "Components/Address/utils"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
-import { getENV } from "Utils/getENV"
-import { useCallback, useEffect, useMemo, useState } from "react"
-import { throttle, uniqBy } from "lodash"
-import { useTracking } from "react-tracking"
 import {
   ActionType,
   type AddressAutoCompletionResult,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import type { AutocompleteInputOptionType } from "@artsy/palette"
+import type { Address } from "Components/Address/utils"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { getENV } from "Utils/getENV"
+import { throttle, uniqBy } from "lodash"
+import { useCallback, useEffect, useMemo, useState } from "react"
+import { useTracking } from "react-tracking"
 
 const THROTTLE_DELAY = 500
 

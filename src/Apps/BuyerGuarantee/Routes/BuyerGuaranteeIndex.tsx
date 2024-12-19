@@ -1,4 +1,9 @@
-import type { FC } from "react"
+import CertificateIcon from "@artsy/icons/CertificateIcon"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
+import LockIcon from "@artsy/icons/LockIcon"
+import MessageIcon from "@artsy/icons/MessageIcon"
+import MoneyBackIcon from "@artsy/icons/MoneyBackIcon"
+import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import {
   Button,
   Column,
@@ -11,26 +16,21 @@ import {
   Text,
 } from "@artsy/palette"
 import {
-  FullBleedHeader,
-  FullBleedHeaderOverlay,
-} from "Components/FullBleedHeader/FullBleedHeader"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { MetaTags } from "Components/MetaTags"
-import { cropped } from "Utils/resized"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import {
   BuyerGuaranteeTableDesktop,
   BuyerGuaranteeTableMobile,
 } from "Apps/BuyerGuarantee/Components/BuyerGuaranteeTables"
-import { Media } from "Utils/Responsive"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import {
+  FullBleedHeader,
+  FullBleedHeaderOverlay,
+} from "Components/FullBleedHeader/FullBleedHeader"
+import { MetaTags } from "Components/MetaTags"
 import { Jump, useJump } from "Utils/Hooks/useJump"
-import LockIcon from "@artsy/icons/LockIcon"
-import VerifiedIcon from "@artsy/icons/VerifiedIcon"
-import CertificateIcon from "@artsy/icons/CertificateIcon"
-import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
-import MoneyBackIcon from "@artsy/icons/MoneyBackIcon"
-import MessageIcon from "@artsy/icons/MessageIcon"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import { Media } from "Utils/Responsive"
+import { cropped } from "Utils/resized"
+import type { FC } from "react"
 
 const SUPPORT_ARTICLE_URL =
   "https://support.artsy.net/s/article/The-Artsy-Guarantee"

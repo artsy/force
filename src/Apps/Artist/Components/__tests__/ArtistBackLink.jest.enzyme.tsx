@@ -1,9 +1,9 @@
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ArtistBackLinkFragmentContainer } from "Apps/Artist/Components/ArtistBackLink"
-import type { ArtistBackLink_Test_Query } from "__generated__/ArtistBackLink_Test_Query.graphql"
-import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { ArtistBackLink_Test_Query } from "__generated__/ArtistBackLink_Test_Query.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

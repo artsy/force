@@ -1,16 +1,16 @@
 import {
   Column,
-  Join,
-  Text,
-  Spacer,
-  GridColumns,
-  Pill,
   Flex,
+  GridColumns,
+  Join,
+  Pill,
+  Spacer,
+  Text,
 } from "@artsy/palette"
+import type { JobsFilter_viewer$data } from "__generated__/JobsFilter_viewer.graphql"
 import { uniq } from "lodash"
 import { type FC, Fragment, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { JobsFilter_viewer$data } from "__generated__/JobsFilter_viewer.graphql"
 import { JobLinkFragmentContainer } from "./JobLink"
 
 export const LEADGEN_LOCATION = "Don't See Your Dream Job?"

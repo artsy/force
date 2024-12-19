@@ -1,11 +1,11 @@
-import type * as React from "react"
-import { Button } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { FairOrganizerFollowButton_fairOrganizer$data } from "__generated__/FairOrganizerFollowButton_fairOrganizer.graphql"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { fairOrganizerFollowMutation } from "Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation"
 import { ContextModule, Intent } from "@artsy/cohesion"
+import { Button } from "@artsy/palette"
+import { fairOrganizerFollowMutation } from "Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation"
 import { useAuthDialog } from "Components/AuthDialog"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { FairOrganizerFollowButton_fairOrganizer$data } from "__generated__/FairOrganizerFollowButton_fairOrganizer.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface FairOrganizerFollowButtonProps {
   fairOrganizer: FairOrganizerFollowButton_fairOrganizer$data

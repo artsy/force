@@ -1,6 +1,6 @@
 import { useMutation } from "Utils/Hooks/useMutation"
-import { graphql } from "react-relay"
 import type { useDeleteAlertMutation } from "__generated__/useDeleteAlertMutation.graphql"
+import { graphql } from "react-relay"
 
 export const useDeleteAlert = () => {
   return useMutation<useDeleteAlertMutation>({

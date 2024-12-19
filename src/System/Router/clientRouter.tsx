@@ -1,3 +1,15 @@
+import { Boot } from "System/Boot"
+import type { SystemContextProps } from "System/Contexts/SystemContext"
+import type { FeatureFlags } from "System/Hooks/useFeatureFlag"
+import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
+import { loadingIndicatorMiddleware } from "System/Router/Middleware/loadingIndicatorMiddleware"
+import { trackingMiddleware } from "System/Router/Middleware/trackingMiddleware"
+import { renderStates } from "System/Router/RenderStates"
+import type { RouteProps } from "System/Router/Route"
+import { getClientAppContext } from "System/Router/Utils/clientAppContext"
+import { queryStringParsing } from "System/Router/Utils/queryStringParsing"
+import { shouldUpdateScroll } from "System/Router/Utils/shouldUpdateScroll"
+import { getUser } from "Utils/user"
 import {
   BrowserProtocol,
   HashProtocol,
@@ -5,22 +17,10 @@ import {
   MemoryProtocol,
   createQueryMiddleware,
 } from "farce"
-import { Resolver } from "found-relay"
 import { createInitialFarceRouter, createRender } from "found"
+import { Resolver } from "found-relay"
 import { ScrollManager, type ScrollManagerProps } from "found-scroll"
-import { renderStates } from "System/Router/RenderStates"
-import type { RouteProps } from "System/Router/Route"
-import type { FeatureFlags } from "System/Hooks/useFeatureFlag"
-import { getUser } from "Utils/user"
-import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import qs from "qs"
-import { getClientAppContext } from "System/Router/Utils/clientAppContext"
-import { queryStringParsing } from "System/Router/Utils/queryStringParsing"
-import { shouldUpdateScroll } from "System/Router/Utils/shouldUpdateScroll"
-import { Boot } from "System/Boot"
-import type { SystemContextProps } from "System/Contexts/SystemContext"
-import { loadingIndicatorMiddleware } from "System/Router/Middleware/loadingIndicatorMiddleware"
-import { trackingMiddleware } from "System/Router/Middleware/trackingMiddleware"
 import React from "react"
 
 export interface RouterConfig {

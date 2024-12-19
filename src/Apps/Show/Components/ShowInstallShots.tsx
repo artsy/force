@@ -1,4 +1,5 @@
-import { type FC, useState } from "react"
+import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
   Box,
   Clickable,
@@ -8,17 +9,16 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
-import { compact } from "lodash"
-import { createFragmentContainer, graphql } from "react-relay"
+import { themeGet } from "@styled-system/theme-get"
+import { FullscreenBox } from "Components/FullscreenBox"
+import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
 import { maxDimensionsByArea, resized } from "Utils/resized"
 import type { ShowInstallShots_show$data } from "__generated__/ShowInstallShots_show.graphql"
-import { themeGet } from "@styled-system/theme-get"
-import { useCursor } from "use-cursor"
-import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
+import { compact } from "lodash"
+import { type FC, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
-import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
-import { FullscreenBox } from "Components/FullscreenBox"
+import { useCursor } from "use-cursor"
 
 interface ShowInstallShotsProps {
   show: ShowInstallShots_show$data

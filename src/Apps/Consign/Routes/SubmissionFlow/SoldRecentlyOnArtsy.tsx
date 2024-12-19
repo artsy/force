@@ -1,18 +1,18 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Flex, Skeleton, SkeletonText, Spacer, Text } from "@artsy/palette"
-import { shuffle } from "lodash"
-import { createFragmentContainer, graphql } from "react-relay"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail/Rail"
-import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { extractNodes } from "Utils/extractNodes"
 import type { SoldRecentlyOnArtsyQuery } from "__generated__/SoldRecentlyOnArtsyQuery.graphql"
 import type { SoldRecentlyOnArtsy_recentlySoldArtworks$data } from "__generated__/SoldRecentlyOnArtsy_recentlySoldArtworks.graphql"
+import { shuffle } from "lodash"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface SoldRecentlyOnArtsyProps {
   recentlySoldArtworks: SoldRecentlyOnArtsy_recentlySoldArtworks$data

@@ -2,9 +2,9 @@ import loadable from "@loadable/component"
 import { getRedirect } from "Apps/Order/getRedirect"
 import { redirects } from "Apps/Order/redirects"
 import { ErrorPage } from "Components/ErrorPage"
+import type { RouteProps } from "System/Router/Route"
 import { Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
-import type { RouteProps } from "System/Router/Route"
 
 const RespondRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Respond"),

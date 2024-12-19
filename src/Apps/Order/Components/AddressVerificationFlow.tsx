@@ -1,7 +1,11 @@
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { AddressVerificationFlowQuery } from "__generated__/AddressVerificationFlowQuery.graphql"
-import type { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
+import {
+  ActionType,
+  type ClickedCloseValidationAddressModal,
+  type ClickedValidationAddressOptions,
+  ContextModule,
+  OwnerType,
+  type ValidationAddressViewed,
+} from "@artsy/cohesion"
 import {
   BorderedRadio,
   Box,
@@ -12,18 +16,14 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useCallback, useEffect, useState } from "react"
-import { useTracking } from "react-tracking"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import {
-  ActionType,
-  type ClickedCloseValidationAddressModal,
-  type ClickedValidationAddressOptions,
-  ContextModule,
-  OwnerType,
-  type ValidationAddressViewed,
-} from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { AddressVerificationFlowQuery } from "__generated__/AddressVerificationFlowQuery.graphql"
+import type { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
+import { useCallback, useEffect, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 type VerifyAddressSuccessType = Extract<
   AddressVerificationFlow_verifyAddress$data["verifyAddressOrError"],

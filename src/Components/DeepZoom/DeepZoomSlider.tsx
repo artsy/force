@@ -1,7 +1,7 @@
 import {
-  Flex,
-  type ClickableProps,
   Clickable,
+  type ClickableProps,
+  Flex,
   type FlexProps,
   useTheme,
 } from "@artsy/palette"

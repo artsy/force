@@ -1,7 +1,7 @@
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { Banner } from "@artsy/palette"
-import { useEffect, useState } from "react"
 import { useRouter } from "System/Hooks/useRouter"
+import { useEffect, useState } from "react"
 
 export const ArtsyGuaranteeMessage: React.FC<
   React.PropsWithChildren<unknown>

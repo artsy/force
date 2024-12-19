@@ -1,13 +1,13 @@
-import { createFragmentContainer, graphql } from "react-relay"
-import { ArticlesRailFragmentContainer } from "Apps/Partner/Components/Overview/ArticlesRail"
-import type { Overview_partner$data } from "__generated__/Overview_partner.graphql"
-import { ArtistsRailFragmentContainer } from "Apps/Partner/Components/Overview/ArtistsRail"
-import { ShowsRailFragmentContainer } from "Apps/Partner/Components/Overview/ShowsRail"
 import { AboutPartnerFragmentContainer } from "Apps/Partner/Components/Overview/AboutPartner"
-import { SubscriberBannerFragmentContainer } from "Apps/Partner/Components/Overview/SubscriberBanner"
+import { ArticlesRailFragmentContainer } from "Apps/Partner/Components/Overview/ArticlesRail"
+import { ArtistsRailFragmentContainer } from "Apps/Partner/Components/Overview/ArtistsRail"
 import { ArtworksRailRenderer } from "Apps/Partner/Components/Overview/ArtworksRail"
-import { ShowBannersRailRenderer } from "Apps/Partner/Components/Overview/ShowBannersRail/ShowBannersRail"
 import { NearbyGalleriesRailRenderer } from "Apps/Partner/Components/Overview/NearbyGalleriesRail"
+import { ShowBannersRailRenderer } from "Apps/Partner/Components/Overview/ShowBannersRail/ShowBannersRail"
+import { ShowsRailFragmentContainer } from "Apps/Partner/Components/Overview/ShowsRail"
+import { SubscriberBannerFragmentContainer } from "Apps/Partner/Components/Overview/SubscriberBanner"
+import type { Overview_partner$data } from "__generated__/Overview_partner.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface OverviewProps {
   partner: Overview_partner$data

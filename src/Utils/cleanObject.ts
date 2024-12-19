@@ -1,4 +1,4 @@
-import { pickBy, identity } from "lodash"
+import { identity, pickBy } from "lodash"
 
 /**
  * Removes null and undefined values from an object

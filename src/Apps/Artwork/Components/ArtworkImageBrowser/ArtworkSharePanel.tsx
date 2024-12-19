@@ -1,3 +1,8 @@
+import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
+import FacebookIcon from "@artsy/icons/FacebookIcon"
+import PinterestIcon from "@artsy/icons/PinterestIcon"
+import TumblrIcon from "@artsy/icons/TumblrIcon"
+import XIcon from "@artsy/icons/XIcon"
 import {
   Box,
   type BoxProps,
@@ -8,18 +13,13 @@ import {
   Separator,
   Text,
 } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import type { ArtworkSharePanel_artwork$data } from "__generated__/ArtworkSharePanel_artwork.graphql"
 import type * as React from "react"
 import { useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtworkSharePanel_artwork$data } from "__generated__/ArtworkSharePanel_artwork.graphql"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
-import { RouterLink } from "System/Components/RouterLink"
-import XIcon from "@artsy/icons/XIcon"
-import FacebookIcon from "@artsy/icons/FacebookIcon"
-import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
-import TumblrIcon from "@artsy/icons/TumblrIcon"
-import PinterestIcon from "@artsy/icons/PinterestIcon"
 
 interface ArtworkSharePanelProps extends BoxProps {
   artwork: ArtworkSharePanel_artwork$data

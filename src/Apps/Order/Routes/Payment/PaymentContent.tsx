@@ -1,42 +1,42 @@
-import {
-  type FC,
-  type RefObject,
-  type ReactElement,
-  useEffect,
-  useRef,
-} from "react"
-import { useTracking } from "react-tracking"
 import { ActionType, OwnerType } from "@artsy/cohesion"
+import InfoIcon from "@artsy/icons/InfoIcon"
+import InstitutionIcon from "@artsy/icons/InstitutionIcon"
+import UnknownCardIcon from "@artsy/icons/UnknownCardIcon"
 import {
-  Clickable,
-  Spacer,
   BorderedRadio,
-  RadioGroup,
-  Text,
-  type RadioProps,
-  Tooltip,
+  Clickable,
   Flex,
+  RadioGroup,
+  type RadioProps,
+  Spacer,
+  Text,
+  Tooltip,
 } from "@artsy/palette"
+import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import type { Payment_me$data } from "__generated__/Payment_me.graphql"
-import type {
-  Payment_order$data,
-  CommercePaymentMethodEnum,
-} from "__generated__/Payment_order.graphql"
-import type { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import {
   type CreditCardPicker,
   CreditCardPickerFragmentContainer,
 } from "Apps/Order/Components/CreditCardPicker"
-import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
-import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
+import type { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import { RouterLink } from "System/Components/RouterLink"
-import InfoIcon from "@artsy/icons/InfoIcon"
-import InstitutionIcon from "@artsy/icons/InstitutionIcon"
-import UnknownCardIcon from "@artsy/icons/UnknownCardIcon"
 import { Jump } from "Utils/Hooks/useJump"
 import { extractNodes } from "Utils/extractNodes"
+import type { Payment_me$data } from "__generated__/Payment_me.graphql"
+import type {
+  CommercePaymentMethodEnum,
+  Payment_order$data,
+} from "__generated__/Payment_order.graphql"
+import {
+  type FC,
+  type ReactElement,
+  type RefObject,
+  useEffect,
+  useRef,
+} from "react"
+import { useTracking } from "react-tracking"
+import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
 
 export interface Props {
   order: Payment_order$data

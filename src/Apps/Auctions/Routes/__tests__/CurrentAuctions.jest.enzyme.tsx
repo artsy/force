@@ -1,7 +1,7 @@
 import { CurrentAuctionsPaginationContainer } from "Apps/Auctions/Routes/CurrentAuctions"
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
 import { useTracking as baseUseTracking } from "react-tracking"
 
 jest.mock("react-tracking")

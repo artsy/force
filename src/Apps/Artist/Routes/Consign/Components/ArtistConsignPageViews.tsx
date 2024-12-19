@@ -1,9 +1,9 @@
-import type * as React from "react"
 import { Spacer, Text } from "@artsy/palette"
+import type { ArtistConsignPageViews_artist$data } from "__generated__/ArtistConsignPageViews_artist.graphql"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
-import type { ArtistConsignPageViews_artist$data } from "__generated__/ArtistConsignPageViews_artist.graphql"
 
 interface ArtistConsignPageViewsProps {
   artist: ArtistConsignPageViews_artist$data

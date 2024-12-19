@@ -1,8 +1,8 @@
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
-import { ArtworkSidebarShippingInformationFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarShippingInformation"
-import type { ArtworkSidebarShippingInformation_Test_Query } from "__generated__/ArtworkSidebarShippingInformation_Test_Query.graphql"
 import { screen } from "@testing-library/react"
+import { ArtworkSidebarShippingInformationFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarShippingInformation"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { ArtworkSidebarShippingInformation_Test_Query } from "__generated__/ArtworkSidebarShippingInformation_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

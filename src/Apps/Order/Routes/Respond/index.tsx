@@ -1,42 +1,42 @@
+import { ContextModule, OwnerType } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   BorderedRadio,
   Button,
-  Text,
   Flex,
   RadioGroup,
   Spacer,
+  Text,
   type TextAreaChange,
 } from "@artsy/palette"
+import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
+import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import type { Respond_order$data } from "__generated__/Respond_order.graphql"
-import type { RespondCounterOfferMutation } from "__generated__/RespondCounterOfferMutation.graphql"
+import { OfferHistoryItemFragmentContainer as OfferHistoryItem } from "Apps/Order/Components/OfferHistoryItem"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
 import { OfferNote } from "Apps/Order/Components/OfferNote"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
+import { counterofferFlowSteps } from "Apps/Order/Components/OrderStepper"
+import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
 import { RevealButton } from "Apps/Order/Components/RevealButton"
+import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
   type CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { CountdownTimer } from "Components/CountdownTimer"
+import { Media } from "Utils/Responsive"
+import { extractNodes } from "Utils/extractNodes"
+import createLogger from "Utils/logger"
+import type { RespondCounterOfferMutation } from "__generated__/RespondCounterOfferMutation.graphql"
+import type { Respond_order$data } from "__generated__/Respond_order.graphql"
 import type { Match, Router, RouterState } from "found"
+import { isNil } from "lodash"
 import { type FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import createLogger from "Utils/logger"
-import { Media } from "Utils/Responsive"
-import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
-import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
-import { OfferHistoryItemFragmentContainer as OfferHistoryItem } from "Apps/Order/Components/OfferHistoryItem"
-import { counterofferFlowSteps } from "Apps/Order/Components/OrderStepper"
-import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
-import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { isNil } from "lodash"
 import { useTracking } from "react-tracking"
-import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
-import { extractNodes } from "Utils/extractNodes"
 
 export interface RespondProps extends RouterState {
   order: Respond_order$data

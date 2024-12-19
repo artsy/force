@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react"
-import { OnboardingFollowArtists } from "../../Views/OnboardingFollowArtists"
 import { fireEvent, screen } from "@testing-library/react"
+import { OnboardingFollowArtists } from "../../Views/OnboardingFollowArtists"
 
 jest.mock("Components/Onboarding/Hooks/useOnboardingContext", () => {
   return {

@@ -1,50 +1,50 @@
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Button, Flex, Join, Spacer } from "@artsy/palette"
-import type { Review_order$data } from "__generated__/Review_order.graphql"
-import type { ReviewSubmitOfferOrderWithConversationMutation } from "__generated__/ReviewSubmitOfferOrderWithConversationMutation.graphql"
-import type { ReviewSubmitOrderMutation } from "__generated__/ReviewSubmitOrderMutation.graphql"
-import { PartnerOfferTimerItem } from "Apps/Order/Components/PartnerOfferTimerItem"
+import type { Stripe, StripeElements } from "@stripe/stripe-js"
+import { AdditionalArtworkDetailsFragmentContainer as AdditionalArtworkDetails } from "Apps/Order/Components/AdditionalArtworkDetails"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
+import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { ItemReviewFragmentContainer as ItemReview } from "Apps/Order/Components/ItemReview"
+import { OfferSummaryItemFragmentContainer as OfferSummaryItem } from "Apps/Order/Components/OfferSummaryItem"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import {
-  privateFlowSteps,
   buyNowFlowSteps,
   offerFlowSteps,
+  privateFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
+import { PartnerOfferTimerItem } from "Apps/Order/Components/PartnerOfferTimerItem"
+import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
+import { ShippingArtaSummaryItemFragmentContainer } from "Apps/Order/Components/ShippingArtaSummaryItem"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import { AdditionalArtworkDetailsFragmentContainer as AdditionalArtworkDetails } from "Apps/Order/Components/AdditionalArtworkDetails"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
   type CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import type { Router } from "found"
-import type { FC } from "react"
-import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
-import { get } from "Utils/get"
-import createLogger from "Utils/logger"
-import { Media } from "Utils/Responsive"
-import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
-import { OfferSummaryItemFragmentContainer as OfferSummaryItem } from "Apps/Order/Components/OfferSummaryItem"
-import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
-import { createStripeWrapper } from "Utils/createStripeWrapper"
-import type { Stripe, StripeElements } from "@stripe/stripe-js"
-import { ShippingArtaSummaryItemFragmentContainer } from "Apps/Order/Components/ShippingArtaSummaryItem"
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import { extractNodes } from "Utils/extractNodes"
-import { useTracking } from "react-tracking"
-import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import {
   ErrorDialogs,
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
-import type { RouteProps } from "System/Router/Route"
 import {
   type SystemContextProps,
   withSystemContext,
 } from "System/Contexts/SystemContext"
+import type { RouteProps } from "System/Router/Route"
+import { Media } from "Utils/Responsive"
+import { createStripeWrapper } from "Utils/createStripeWrapper"
+import { extractNodes } from "Utils/extractNodes"
+import { get } from "Utils/get"
+import createLogger from "Utils/logger"
+import type { ReviewSubmitOfferOrderWithConversationMutation } from "__generated__/ReviewSubmitOfferOrderWithConversationMutation.graphql"
+import type { ReviewSubmitOrderMutation } from "__generated__/ReviewSubmitOrderMutation.graphql"
+import type { Review_order$data } from "__generated__/Review_order.graphql"
+import type { Router } from "found"
+import type { FC } from "react"
+import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 export interface ReviewProps extends SystemContextProps {
   stripe: Stripe

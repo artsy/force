@@ -1,14 +1,14 @@
 import { Checkbox, Flex } from "@artsy/palette"
-import { entries, isEmpty } from "lodash"
-import type { FC } from "react"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
-import { FilterExpandable } from "./FilterExpandable"
 import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import { entries, isEmpty } from "lodash"
+import type { FC } from "react"
+import { FilterExpandable } from "./FilterExpandable"
 
 interface WayToBuy {
   selected: boolean

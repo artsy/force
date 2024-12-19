@@ -1,11 +1,11 @@
-import type { FC } from "react"
-import { MetaTags } from "Components/MetaTags"
-import { Spacer, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { NewForYouApp_viewer$data } from "__generated__/NewForYouApp_viewer.graphql"
-import { NewForYouArtworksGridFragmentContainer } from "Apps/NewForYou/Components/NewForYouArtworksGrid"
 import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
+import { Spacer, Text } from "@artsy/palette"
 import { LogInPrompt } from "Apps/Components/LogInPrompt"
+import { NewForYouArtworksGridFragmentContainer } from "Apps/NewForYou/Components/NewForYouArtworksGrid"
+import { MetaTags } from "Components/MetaTags"
+import type { NewForYouApp_viewer$data } from "__generated__/NewForYouApp_viewer.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface NewForYouAppProps {
   viewer: NewForYouApp_viewer$data

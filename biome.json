@@ -43,6 +43,7 @@
       "style": {
         "noArguments": "off",
         "noNonNullAssertion": "off",
+        "noUselessElse": "off",
         "useNodejsImportProtocol": "off"
       },
       "suspicious": {

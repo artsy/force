@@ -6,9 +6,9 @@ import {
   type TappedMyCollectionAddArtworkArtist,
 } from "@artsy/cohesion"
 import { CollectorProfileArtistsAddDialog } from "Components/CollectorProfile/CollectorProfileArtistsAddDialog"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { FC } from "react"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 interface CompleteProfileCollectionDialogProps {
   onClose: () => void

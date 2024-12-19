@@ -4,13 +4,13 @@ import { uploadPhotoToS3 } from "Components/PhotoUpload/Utils/fileUtils"
 import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
-import { useTracking } from "react-tracking"
-import { createMockEnvironment } from "relay-test-utils"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { Breakpoint } from "Utils/Responsive"
 import type { CleanRelayFragment } from "Utils/typeSupport"
 import type { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { createMockEnvironment } from "relay-test-utils"
 
 jest.mock("System/Hooks/useSystemContext")
 

@@ -1,7 +1,7 @@
 import { Avatar, Box, Flex, Text } from "@artsy/palette"
+import type { SearchRouteOption_artist$data } from "__generated__/SearchRouteOption_artist.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { SearchRouteOption_artist$data } from "__generated__/SearchRouteOption_artist.graphql"
 
 interface SearchRouteOptionProps {
   artist: SearchRouteOption_artist$data

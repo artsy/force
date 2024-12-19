@@ -5,32 +5,32 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import {
-  Image,
-  Text,
-  Spacer,
+  Column,
   Flex,
+  GridColumns,
+  Image,
+  ResponsiveBox,
   Skeleton,
   SkeletonBox,
   SkeletonText,
-  GridColumns,
-  Column,
-  ResponsiveBox,
+  Spacer,
+  Text,
 } from "@artsy/palette"
-import { compact, take } from "lodash"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { Masonry } from "Components/Masonry"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useTracking } from "react-tracking"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { RouterLink } from "System/Components/RouterLink"
-import { Media } from "Utils/Responsive"
-import type { HomeFeaturedMarketNewsQuery } from "__generated__/HomeFeaturedMarketNewsQuery.graphql"
-import type { HomeFeaturedMarketNews_articles$data } from "__generated__/HomeFeaturedMarketNews_articles.graphql"
 import {
   CellArticleFragmentContainer,
   CellArticlePlaceholder,
 } from "Components/Cells/CellArticle"
+import { Masonry } from "Components/Masonry"
+import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { Media } from "Utils/Responsive"
+import type { HomeFeaturedMarketNewsQuery } from "__generated__/HomeFeaturedMarketNewsQuery.graphql"
+import type { HomeFeaturedMarketNews_articles$data } from "__generated__/HomeFeaturedMarketNews_articles.graphql"
+import { compact, take } from "lodash"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 const ARTICLE_COUNT = 6
 

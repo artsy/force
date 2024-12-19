@@ -1,22 +1,22 @@
+import HelpIcon from "@artsy/icons/HelpIcon"
 import { Link } from "@artsy/palette"
 import { BarChart } from "@artsy/palette-charts"
-import type {
-  PricingContextTestQuery$rawResponse,
-  PricingContextTestQuery$data,
-} from "__generated__/PricingContextTestQuery.graphql"
-import { renderRelayTree } from "DevTools/renderRelayTree"
-import { mount } from "enzyme"
-import { graphql } from "react-relay"
-// eslint-disable-next-line no-restricted-imports
-import Waypoint from "react-waypoint"
 import {
   PricingContext,
   PricingContextFragmentContainer,
 } from "Apps/Artwork/Components/PricingContext"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import HelpIcon from "@artsy/icons/HelpIcon"
 import { MockBoot } from "DevTools/MockBoot"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { renderRelayTree } from "DevTools/renderRelayTree"
+import type {
+  PricingContextTestQuery$data,
+  PricingContextTestQuery$rawResponse,
+} from "__generated__/PricingContextTestQuery.graphql"
+import { mount } from "enzyme"
+import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+// eslint-disable-next-line no-restricted-imports
+import Waypoint from "react-waypoint"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

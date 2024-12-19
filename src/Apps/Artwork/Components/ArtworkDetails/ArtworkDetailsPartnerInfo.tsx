@@ -1,12 +1,12 @@
-import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtworkDetailsPartnerInfoQuery } from "__generated__/ArtworkDetailsPartnerInfoQuery.graphql"
-import type { ArtworkDetailsPartnerInfo_artwork$data } from "__generated__/ArtworkDetailsPartnerInfo_artwork.graphql"
 import { ContextModule } from "@artsy/cohesion"
 import { Skeleton, SkeletonBox, StackableBorderBox } from "@artsy/palette"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
+import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { ArtworkDetailsPartnerInfoQuery } from "__generated__/ArtworkDetailsPartnerInfoQuery.graphql"
+import type { ArtworkDetailsPartnerInfo_artwork$data } from "__generated__/ArtworkDetailsPartnerInfo_artwork.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface PartnerInfoProps {
   artwork: ArtworkDetailsPartnerInfo_artwork$data

@@ -1,12 +1,12 @@
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { CellArtistSeriesStoryQuery } from "__generated__/CellArtistSeriesStoryQuery.graphql"
 import { graphql } from "react-relay"
 import { States } from "storybook-states"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   CellArtistSeriesFragmentContainer,
-  type CellArtistSeriesProps,
   CellArtistSeriesPlaceholder,
+  type CellArtistSeriesProps,
 } from "./CellArtistSeries"
-import type { CellArtistSeriesStoryQuery } from "__generated__/CellArtistSeriesStoryQuery.graphql"
 
 export default {
   title: "Components/Cell",

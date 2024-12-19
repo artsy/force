@@ -1,17 +1,17 @@
-import { useState } from "react"
 import {
   ContextualMenu,
   ContextualMenuDivider,
   ContextualMenuItem,
 } from "Components/ContextualMenu"
+import { useState } from "react"
 import {
-  DeleteArtworkListModal,
   type DeleteArtworkListEntity,
+  DeleteArtworkListModal,
 } from "./DeleteArtworkListModal"
 
 import {
-  EditArtworkListModal,
   type EditArtworkListEntity,
+  EditArtworkListModal,
 } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/EditArtworkListModal"
 
 // FIXME: Should be a fragment

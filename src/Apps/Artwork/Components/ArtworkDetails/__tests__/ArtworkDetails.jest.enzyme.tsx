@@ -1,9 +1,9 @@
-import type { ArtworkDetails_Test_Query } from "__generated__/ArtworkDetails_Test_Query.graphql"
 import { ArtworkDetailsFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails"
-import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools/MockBoot"
-import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { ArtworkDetails_Test_Query } from "__generated__/ArtworkDetails_Test_Query.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")

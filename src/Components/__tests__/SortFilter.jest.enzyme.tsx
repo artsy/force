@@ -1,5 +1,5 @@
-import { mount } from "enzyme"
 import { SortFilter } from "Components/SortFilter"
+import { mount } from "enzyme"
 
 describe("SortFilter", () => {
   const mockedOnSort = jest.fn()

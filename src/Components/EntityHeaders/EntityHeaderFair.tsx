@@ -1,10 +1,10 @@
 import { ContextModule } from "@artsy/cohesion"
-import { type BoxProps, Flex, Text, Avatar } from "@artsy/palette"
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { Avatar, type BoxProps, Flex, Text } from "@artsy/palette"
+import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 import { RouterLink } from "System/Components/RouterLink"
 import type { EntityHeaderFair_fair$data } from "__generated__/EntityHeaderFair_fair.graphql"
-import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface EntityHeaderFairProps extends BoxProps {
   fair: EntityHeaderFair_fair$data

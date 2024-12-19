@@ -1,7 +1,7 @@
 import { getAsyncLocalStorage } from "Server/asyncLocalWrapper"
+import { tryParse } from "Utils/tryParse"
 // eslint-disable-next-line no-restricted-imports
 import { type GlobalData, data as sd } from "sharify"
-import { tryParse } from "Utils/tryParse"
 
 export function getENV(ENV_VAR: keyof GlobalData) {
   let envVar

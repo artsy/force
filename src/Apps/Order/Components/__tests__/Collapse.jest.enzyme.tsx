@@ -1,5 +1,5 @@
-import { mount } from "enzyme"
 import { Collapse } from "Apps/Order/Components/Collapse"
+import { mount } from "enzyme"
 
 describe("Collapse", () => {
   it("is visible (height: auto) when open is true", () => {

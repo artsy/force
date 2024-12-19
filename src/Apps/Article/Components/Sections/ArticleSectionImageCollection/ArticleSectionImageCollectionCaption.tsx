@@ -1,8 +1,8 @@
-import type { FC } from "react"
 import { HTML, Text } from "@artsy/palette"
 import Metadata from "Components/Artwork/Metadata"
-import { createFragmentContainer, graphql } from "react-relay"
 import type { ArticleSectionImageCollectionCaption_figure$data } from "__generated__/ArticleSectionImageCollectionCaption_figure.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArticleSectionImageCollectionCaptionProps {
   figure: ArticleSectionImageCollectionCaption_figure$data

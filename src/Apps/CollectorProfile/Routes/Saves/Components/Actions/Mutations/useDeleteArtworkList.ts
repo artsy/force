@@ -1,10 +1,10 @@
-import { ConnectionHandler, graphql } from "react-relay"
-import type { RecordSourceSelectorProxy } from "relay-runtime"
 import { useMutation } from "Utils/Hooks/useMutation"
 import type {
   useDeleteArtworkListMutation,
   useDeleteArtworkListMutation$data,
 } from "__generated__/useDeleteArtworkListMutation.graphql"
+import { ConnectionHandler, graphql } from "react-relay"
+import type { RecordSourceSelectorProxy } from "relay-runtime"
 
 const deleteArtworkListUpdater = (
   store: RecordSourceSelectorProxy<useDeleteArtworkListMutation$data>,

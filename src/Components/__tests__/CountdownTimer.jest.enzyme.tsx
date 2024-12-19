@@ -1,7 +1,7 @@
+import { CountdownTimer } from "Components/CountdownTimer"
+import type { ExtractProps } from "Utils/ExtractProps"
 import { mount } from "enzyme"
 import { DateTime, Duration, Settings } from "luxon"
-import type { ExtractProps } from "Utils/ExtractProps"
-import { CountdownTimer } from "Components/CountdownTimer"
 
 const DATE = "2018-12-03T13:50:31.641Z"
 const SUMMER_DATE = "2018-08-03T13:50:31.641Z"

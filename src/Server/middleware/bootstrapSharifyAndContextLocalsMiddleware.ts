@@ -1,9 +1,9 @@
-import type { NextFunction } from "express"
-import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 import { parse } from "url"
 import artsyXapp from "@artsy/xapp"
-import uuid from "node-uuid"
 import { getAsyncLocalStorage } from "Server/asyncLocalWrapper"
+import type { NextFunction } from "express"
+import uuid from "node-uuid"
+import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
 /**
  * Contains the subset of sharify locals that are required for all force routes.

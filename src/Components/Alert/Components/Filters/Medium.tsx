@@ -1,6 +1,6 @@
-import type { FC } from "react"
-import { MEDIUM_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { QuickMultipleSelectAlertFilter } from "Components/Alert/Components/Filters/QuickMultipleSelectAlertFilter"
+import { MEDIUM_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
+import type { FC } from "react"
 
 export const Medium: FC<React.PropsWithChildren<unknown>> = () => {
   return (

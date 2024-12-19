@@ -1,8 +1,8 @@
+import { Box } from "@artsy/palette"
+import { LoadingArea } from "Components/LoadingArea"
+import { useRouter } from "System/Hooks/useRouter"
 import { type FC, useCallback, useEffect } from "react"
 import { usePartnerOfferCheckoutMutation } from "./Mutations/UsePartnerOfferCheckoutMutation"
-import { useRouter } from "System/Hooks/useRouter"
-import { LoadingArea } from "Components/LoadingArea"
-import { Box } from "@artsy/palette"
 
 export const PartnerOfferCheckout: FC<
   React.PropsWithChildren<unknown>

@@ -1,8 +1,8 @@
 import {
   AuthDialogContext,
-  reducer,
-  INITIAL_STATE,
   type AuthDialogMode,
+  INITIAL_STATE,
+  reducer,
 } from "Components/AuthDialog/AuthDialogContext"
 import { type FC, useReducer } from "react"
 

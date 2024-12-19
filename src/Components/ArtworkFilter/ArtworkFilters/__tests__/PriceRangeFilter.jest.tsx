@@ -5,12 +5,12 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { getENV } from "Utils/getENV"
 import {
-  aggregationsToHistogram,
   PriceRangeFilter,
   type PriceRangeFilterProps,
+  aggregationsToHistogram,
 } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { getENV } from "Utils/getENV"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

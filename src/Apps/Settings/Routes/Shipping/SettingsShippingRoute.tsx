@@ -1,7 +1,7 @@
+import type { SettingsShippingRoute_me$data } from "__generated__/SettingsShippingRoute_me.graphql"
 import type React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsShippingAddressesFragmentContainer } from "./Components/SettingsShippingAddresses"
-import type { SettingsShippingRoute_me$data } from "__generated__/SettingsShippingRoute_me.graphql"
 
 interface SettingsShippingRouteProps {
   me: SettingsShippingRoute_me$data

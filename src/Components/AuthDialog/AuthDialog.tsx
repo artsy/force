@@ -1,17 +1,17 @@
-import { ModalDialog, Image, Box } from "@artsy/palette"
+import { Box, Image, ModalDialog } from "@artsy/palette"
 import {
   type AuthDialogMode,
   useAuthDialogContext,
 } from "Components/AuthDialog/AuthDialogContext"
-import { AuthDialogLogin } from "Components/AuthDialog/Views/AuthDialogLogin"
+import { AuthDialogTitle } from "Components/AuthDialog/AuthDialogTitle"
+import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 import { AuthDialogForgotPassword } from "Components/AuthDialog/Views/AuthDialogForgotPassword"
+import { AuthDialogLogin } from "Components/AuthDialog/Views/AuthDialogLogin"
 import { AuthDialogSignUp } from "Components/AuthDialog/Views/AuthDialogSignUp"
-import { type FC, useEffect } from "react"
+import { AuthDialogWelcome } from "Components/AuthDialog/Views/AuthDialogWelcome"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { resized } from "Utils/resized"
-import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
-import { AuthDialogWelcome } from "Components/AuthDialog/Views/AuthDialogWelcome"
-import { AuthDialogTitle } from "Components/AuthDialog/AuthDialogTitle"
+import { type FC, useEffect } from "react"
 
 export interface AuthDialogProps {
   onClose: () => void

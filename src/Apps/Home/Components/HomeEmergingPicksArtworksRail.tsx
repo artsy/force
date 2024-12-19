@@ -5,19 +5,19 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { Skeleton } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import type { HomeEmergingPicksArtworksRail_viewer$data } from "__generated__/HomeEmergingPicksArtworksRail_viewer.graphql"
-import type { HomeEmergingPicksArtworksRailQuery } from "__generated__/HomeEmergingPicksArtworksRailQuery.graphql"
-import { useTracking } from "react-tracking"
 import { getSignalLabel } from "Utils/getSignalLabel"
-import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
+import type { HomeEmergingPicksArtworksRailQuery } from "__generated__/HomeEmergingPicksArtworksRailQuery.graphql"
+import type { HomeEmergingPicksArtworksRail_viewer$data } from "__generated__/HomeEmergingPicksArtworksRail_viewer.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface HomeEmergingPicksArtworksRailProps {
   viewer: HomeEmergingPicksArtworksRail_viewer$data

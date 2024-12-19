@@ -1,5 +1,5 @@
-import type { SSRCache } from "react-relay-network-modern-ssr/lib/server"
 import { serializeRelayHydrationData } from "System/Router/Utils/serializeRelayHydrationData"
+import type { SSRCache } from "react-relay-network-modern-ssr/lib/server"
 import mockSerialize from "serialize-javascript"
 
 jest.mock("serialize-javascript", () => jest.fn())

@@ -1,17 +1,17 @@
-import { Checkbox, Box, Text, Flex } from "@artsy/palette"
-import { intersection } from "lodash"
-import type * as React from "react"
-import styled from "styled-components"
+import { Box, Checkbox, Flex, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import { intersection } from "lodash"
+import type * as React from "react"
+import styled from "styled-components"
 import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
-import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 import { sortResults } from "./Utils/sortResults"
-import { themeGet } from "@styled-system/theme-get"
 
 export const COLOR_OPTIONS = [
   { hex: "#BB392D", value: "red", name: "Red" },

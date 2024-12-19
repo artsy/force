@@ -1,17 +1,17 @@
-import type * as React from "react"
-import {
-  createRefetchContainer,
-  graphql,
-  type RelayRefetchProp,
-} from "react-relay"
-import { ArtworkSidebarBidActionFragmentContainer } from "./ArtworkSidebarBidAction"
-import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "./ArtworkSidebarCurrentBidInfo"
+import { Spacer } from "@artsy/palette"
+import { usePoll } from "Utils/Hooks/usePoll"
 import type { ArtworkSidebarAuctionInfoPolling_artwork$data } from "__generated__/ArtworkSidebarAuctionInfoPolling_artwork.graphql"
 import type { ArtworkSidebarAuctionInfoPolling_me$data } from "__generated__/ArtworkSidebarAuctionInfoPolling_me.graphql"
-import { usePoll } from "Utils/Hooks/usePoll"
+import type * as React from "react"
 import { useEffect, useRef, useState } from "react"
-import { Spacer } from "@artsy/palette"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 import { useTracking } from "react-tracking"
+import { ArtworkSidebarBidActionFragmentContainer } from "./ArtworkSidebarBidAction"
+import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "./ArtworkSidebarCurrentBidInfo"
 
 type Props = {
   artwork: ArtworkSidebarAuctionInfoPolling_artwork$data

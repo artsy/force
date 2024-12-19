@@ -1,8 +1,8 @@
-import type * as React from "react"
-import type { ConversationMessageArtwork_item$key } from "__generated__/ConversationMessageArtwork_item.graphql"
-import { graphql, useFragment } from "react-relay"
-import { type FlexProps, Flex, Image, Text } from "@artsy/palette"
+import { Flex, type FlexProps, Image, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import type { ConversationMessageArtwork_item$key } from "__generated__/ConversationMessageArtwork_item.graphql"
+import type * as React from "react"
+import { graphql, useFragment } from "react-relay"
 
 const MAX_IMAGE_WIDTH = 335
 

@@ -1,8 +1,8 @@
 import { Box, Join, Spacer, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
-import { LiveAuctionToolTip } from "./LiveAuctionToolTip"
 import type { AuctionInfoSidebar_sale$data } from "__generated__/AuctionInfoSidebar_sale.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
+import { LiveAuctionToolTip } from "./LiveAuctionToolTip"
 
 interface AuctionInfoSidebarProps {
   sale: AuctionInfoSidebar_sale$data

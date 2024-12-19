@@ -1,19 +1,19 @@
 import { useUpdateEffect } from "@artsy/palette"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useEffect, useRef, useState } from "react"
 import {
   type Disposable,
   type Environment,
-  fetchQuery,
   type GraphQLTaggedNode,
+  fetchQuery,
 } from "react-relay"
 import {
   type CacheConfig,
-  createOperationDescriptor,
   type FetchQueryFetchPolicy,
-  getRequest,
   type OperationType,
+  createOperationDescriptor,
+  getRequest,
 } from "relay-runtime"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 
 export const useClientQuery = <T extends OperationType>({
   environment,

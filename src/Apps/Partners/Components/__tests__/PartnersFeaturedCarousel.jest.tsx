@@ -1,9 +1,9 @@
 import { screen } from "@testing-library/react"
-import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { PartnersFeaturedCarouselFragmentContainer } from "Apps/Partners/Components/PartnersFeaturedCarousel"
-import type { PartnersFeaturedCarousel_Test_Query } from "__generated__/PartnersFeaturedCarousel_Test_Query.graphql"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
+import type { PartnersFeaturedCarousel_Test_Query } from "__generated__/PartnersFeaturedCarousel_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter")

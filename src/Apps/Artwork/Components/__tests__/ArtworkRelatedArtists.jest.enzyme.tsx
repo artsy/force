@@ -1,7 +1,7 @@
-import { ArtworkRelatedArtistsFixture } from "Apps/__tests__/Fixtures/Artwork/ArtworkRelatedArtists.fixture"
-import { useTracking } from "react-tracking"
-import { mount } from "enzyme"
 import { ArtworkRelatedArtists } from "Apps/Artwork/Components/ArtworkRelatedArtists"
+import { ArtworkRelatedArtistsFixture } from "Apps/__tests__/Fixtures/Artwork/ArtworkRelatedArtists.fixture"
+import { mount } from "enzyme"
+import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 

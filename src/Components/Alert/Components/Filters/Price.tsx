@@ -1,16 +1,16 @@
-import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { Text } from "@artsy/palette"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { aggregationsToHistogram } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { PriceRange } from "Components/PriceRange/PriceRange"
 import {
   type CustomRange,
   DEFAULT_PRICE_RANGE,
 } from "Components/PriceRange/constants"
-import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { aggregationsToHistogram } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
-import type { PriceAggregationsQuery } from "__generated__/PriceAggregationsQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { createFragmentContainer, graphql } from "react-relay"
+import type { PriceAggregationsQuery } from "__generated__/PriceAggregationsQuery.graphql"
 import type { Price_artworksConnection$data } from "__generated__/Price_artworksConnection.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface PriceProps {
   artworksConnection?: Price_artworksConnection$data | null

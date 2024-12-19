@@ -1,12 +1,12 @@
-import { Text, Spacer, Shelf } from "@artsy/palette"
-import type * as React from "react"
-import type { ArtistConsignRecentlySold_artist$data } from "__generated__/ArtistConsignRecentlySold_artist.graphql"
 import { ContextModule } from "@artsy/cohesion"
+import { Shelf, Spacer, Text } from "@artsy/palette"
+import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import { extractNodes } from "Utils/extractNodes"
+import type { ArtistConsignRecentlySold_artist$data } from "__generated__/ArtistConsignRecentlySold_artist.graphql"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
-import { extractNodes } from "Utils/extractNodes"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 
 interface ArtistConsignRecentlySoldProps {
   artist: ArtistConsignRecentlySold_artist$data

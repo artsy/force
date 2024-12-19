@@ -1,15 +1,13 @@
-import { useEffect, useState } from "react"
-import type * as React from "react"
 import {
   Button,
-  Text,
   Checkbox,
   Clickable,
   Flex,
-  Spacer,
   Message,
-  RadioGroup,
   Radio,
+  RadioGroup,
+  Spacer,
+  Text,
 } from "@artsy/palette"
 import {
   type ArtworkFiltersState,
@@ -17,19 +15,21 @@ import {
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { Media } from "Utils/Responsive"
-import { FilterExpandable } from "./FilterExpandable"
-import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
-import { useMode } from "Utils/Hooks/useMode"
-import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
 import { NumericInput } from "Components/NumericInput"
+import { useMode } from "Utils/Hooks/useMode"
+import { Media } from "Utils/Responsive"
+import { getRangeValue } from "Utils/customRangeUtils"
 import {
   getCustomSizeRangeInInches,
   getPredefinedSizesByMetric,
   parseSizeRange,
 } from "Utils/customSizeUtils"
-import { getRangeValue } from "Utils/customRangeUtils"
+import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
+import { useEffect, useState } from "react"
+import type * as React from "react"
+import { FilterExpandable } from "./FilterExpandable"
+import { isCustomValue } from "./Utils/isCustomValue"
 
 type Numeric = number | "*"
 type CustomRange = Numeric[]

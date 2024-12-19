@@ -1,19 +1,19 @@
-import { type FC, useCallback, useEffect } from "react"
+import { useDismissibleContext } from "@artsy/dismissible"
 import { Text } from "@artsy/palette"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
-import {
-  withProgressiveOnboardingCounts,
-  type WithProgressiveOnboardingCountsProps,
-} from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
-import { useRouter } from "System/Hooks/useRouter"
-import { pathToRegexp } from "path-to-regexp"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useDismissibleContext } from "@artsy/dismissible"
 import {
   PROGRESSIVE_ONBOARDING,
   PROGRESSIVE_ONBOARDING_ALERT_CHAIN,
   PROGRESSIVE_ONBOARDING_SAVE_CHAIN,
 } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
+import {
+  type WithProgressiveOnboardingCountsProps,
+  withProgressiveOnboardingCounts,
+} from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { pathToRegexp } from "path-to-regexp"
+import { type FC, useCallback, useEffect } from "react"
 
 const KEY = PROGRESSIVE_ONBOARDING.followArtist
 interface ProgressiveOnboardingFollowArtistProps

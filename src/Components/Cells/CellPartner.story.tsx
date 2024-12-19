@@ -1,12 +1,12 @@
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { CellPartnerStoryQuery } from "__generated__/CellPartnerStoryQuery.graphql"
 import { graphql } from "react-relay"
 import { States } from "storybook-states"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   CellPartnerFragmentContainer,
-  type CellPartnerProps,
   CellPartnerPlaceholder,
+  type CellPartnerProps,
 } from "./CellPartner"
-import type { CellPartnerStoryQuery } from "__generated__/CellPartnerStoryQuery.graphql"
 
 export default {
   title: "Components/Cell",

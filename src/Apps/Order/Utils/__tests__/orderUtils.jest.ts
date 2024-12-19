@@ -1,8 +1,8 @@
-import { getInitialPaymentMethodValue } from "./../orderUtils"
 import type {
   CommercePaymentMethodEnum,
   Payment_order$data,
 } from "__generated__/Payment_order.graphql"
+import { getInitialPaymentMethodValue } from "./../orderUtils"
 
 describe("order utils", () => {
   describe("get initial payment method value", () => {

@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from "react"
 import { WorkflowEngine } from "Utils/WorkflowEngine"
+import { useEffect, useRef, useState } from "react"
 import type { Context } from "./Hooks/useInquiryContext"
-import { Visited } from "./Visited"
 import { InquiryAccount } from "./Views/InquiryAccount"
+import { InquiryArtistsInCollection } from "./Views/InquiryArtistsInCollection"
 import { InquiryBasicInfoQueryRenderer } from "./Views/InquiryBasicInfo"
+import { InquiryConfirmation } from "./Views/InquiryConfirmation"
 import { InquiryInquiryQueryRenderer } from "./Views/InquiryInquiry"
 import { InquirySpecialist } from "./Views/InquirySpecialist"
-import { InquiryConfirmation } from "./Views/InquiryConfirmation"
-import { InquiryArtistsInCollection } from "./Views/InquiryArtistsInCollection"
+import { Visited } from "./Visited"
 
 const VIEWS = {
   Account: InquiryAccount,

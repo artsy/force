@@ -1,7 +1,7 @@
-import type { FC } from "react"
-import { Box } from "@artsy/palette"
-import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
+import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
+import { Box } from "@artsy/palette"
+import type { FC } from "react"
 
 interface SelectArtworkItemProps {
   isSelected: boolean

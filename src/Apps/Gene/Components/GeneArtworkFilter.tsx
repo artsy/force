@@ -1,26 +1,26 @@
-import type * as React from "react"
-import {
-  createRefetchContainer,
-  type RelayRefetchProp,
-  graphql,
-} from "react-relay"
-import { useRouter } from "System/Hooks/useRouter"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
-import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import {
   ArtworkFilterContextProvider,
   type Counts,
-  initialArtworkFilterState,
   type SharedArtworkFilterContextProps,
+  initialArtworkFilterState,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import type { GeneArtworkFilter_gene$data } from "__generated__/GeneArtworkFilter_gene.graphql"
+import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
+import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
+import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
+import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import type { GeneArtworkFilterQuery } from "__generated__/GeneArtworkFilterQuery.graphql"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
-import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
-import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
+import type { GeneArtworkFilter_gene$data } from "__generated__/GeneArtworkFilter_gene.graphql"
+import type * as React from "react"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 
 interface GeneArtworkFilterProps {
   gene: GeneArtworkFilter_gene$data

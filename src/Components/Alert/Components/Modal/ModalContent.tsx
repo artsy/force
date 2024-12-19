@@ -1,7 +1,7 @@
-import type React from "react"
-import { useSentinelVisibility } from "@artsy/palette/dist/utils/useSentinelVisibility"
-import { Box, type BoxProps } from "@artsy/palette/dist/elements/Box/Box"
 import { Flex, ModalClose, useTheme } from "@artsy/palette"
+import { Box, type BoxProps } from "@artsy/palette/dist/elements/Box/Box"
+import { useSentinelVisibility } from "@artsy/palette/dist/utils/useSentinelVisibility"
+import type React from "react"
 
 export interface ModalDialogContentProps
   extends BoxProps,

@@ -1,9 +1,9 @@
 import { screen } from "@testing-library/react"
-import type { ArtistAuctionResultItemTestQuery } from "__generated__/ArtistAuctionResultItemTestQuery.graphql"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { ArtistAuctionResultItemTestQuery } from "__generated__/ArtistAuctionResultItemTestQuery.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useSystemContext")

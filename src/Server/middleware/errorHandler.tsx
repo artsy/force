@@ -1,3 +1,13 @@
+import { Theme, injectGlobalStyles } from "@artsy/palette"
+import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
+import { ErrorPage } from "Components/ErrorPage"
+import { NODE_ENV, VERBOSE_LOGGING } from "Server/config"
+import { renderServerApp } from "System/Router/renderServerApp"
+import createLogger from "Utils/logger"
+import type { NextFunction } from "express"
+import { IpDeniedError } from "express-ipfilter"
+import { renderToString } from "react-dom/server"
+import { ServerStyleSheet } from "styled-components"
 /**
  * Types of Errors & handlers
  *
@@ -21,16 +31,6 @@
  *   - Handled by `errorHandlerMiddleware`
  */
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
-import type { NextFunction } from "express"
-import { IpDeniedError } from "express-ipfilter"
-import { NODE_ENV, VERBOSE_LOGGING } from "Server/config"
-import { ErrorPage } from "Components/ErrorPage"
-import { renderToString } from "react-dom/server"
-import { ServerStyleSheet } from "styled-components"
-import { injectGlobalStyles, Theme } from "@artsy/palette"
-import createLogger from "Utils/logger"
-import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
-import { renderServerApp } from "System/Router/renderServerApp"
 
 const { GlobalStyles } = injectGlobalStyles()
 const logger = createLogger("Server/middleware/errorHandlerMiddleware")

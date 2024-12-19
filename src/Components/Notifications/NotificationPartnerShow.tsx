@@ -1,12 +1,12 @@
-import type * as React from "react"
-import { graphql, useFragment } from "react-relay"
-import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import type { AuthContextModule } from "@artsy/cohesion"
 import { Box, Button, Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
-import type { NotificationPartnerShow_show$key } from "__generated__/NotificationPartnerShow_show.graphql"
-import { compact, truncate } from "lodash"
 import { CellShowStatus } from "Components/Cells/CellShow"
 import { NOTIFICATION_MAX_WIDTH } from "Components/Notifications/Notification"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import type { NotificationPartnerShow_show$key } from "__generated__/NotificationPartnerShow_show.graphql"
+import { compact, truncate } from "lodash"
+import type * as React from "react"
+import { graphql, useFragment } from "react-relay"
 
 export interface NotificationShowProps
   extends Omit<RouterLinkProps, "to" | "width"> {

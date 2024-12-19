@@ -1,5 +1,5 @@
-import type * as React from "react"
 import { SortFilter } from "Components/SortFilter"
+import type * as React from "react"
 import { useBoothsFilterContext } from "./BoothFilterContext"
 
 export const FairBoothSortFilter: React.FC<

@@ -1,21 +1,21 @@
 import {
-  Text,
-  Spacer,
+  Box,
   Button,
   Flex,
-  Skeleton,
-  SkeletonText,
-  SkeletonBox,
   ResponsiveBox,
-  Box,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+  Text,
 } from "@artsy/palette"
-import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import GridItem from "Components/Artwork/GridItem"
-import { extractNodes } from "Utils/extractNodes"
-import type { ShowsCurrentShow_show$data } from "__generated__/ShowsCurrentShow_show.graphql"
 import { Masonry } from "Components/Masonry"
 import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
+import type { ShowsCurrentShow_show$data } from "__generated__/ShowsCurrentShow_show.graphql"
+import * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ShowsCurrentShowProps {
   show: ShowsCurrentShow_show$data

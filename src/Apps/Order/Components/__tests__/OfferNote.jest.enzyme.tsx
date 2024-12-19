@@ -1,8 +1,8 @@
-import { SystemContextProvider } from "System/Contexts/SystemContext"
-import { type ReactWrapper, mount } from "enzyme"
-import type { ExtractProps } from "Utils/ExtractProps"
 import { OfferNote } from "Apps/Order/Components/OfferNote"
 import { useInquiry } from "Components/Inquiry/useInquiry"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
+import type { ExtractProps } from "Utils/ExtractProps"
+import { type ReactWrapper, mount } from "enzyme"
 
 const simulateTyping = (wrapper: ReactWrapper, text: string) => {
   const textArea = wrapper.find("textarea")

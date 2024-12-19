@@ -1,5 +1,5 @@
-import { QueryResponseCache } from "relay-runtime"
 import { hydrateCacheFromSSR } from "System/Relay/createRelaySSREnvironment"
+import { QueryResponseCache } from "relay-runtime"
 
 describe("#hydrateCacheFromSSR", () => {
   const relayResponseCache = new QueryResponseCache({

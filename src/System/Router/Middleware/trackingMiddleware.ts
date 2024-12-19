@@ -1,7 +1,7 @@
-import { ActionTypes } from "farce"
 import { get } from "Utils/get"
-import { match } from "path-to-regexp"
 import { getENV } from "Utils/getENV"
+import { ActionTypes } from "farce"
+import { match } from "path-to-regexp"
 
 /**
  * PageView tracking middleware for use in our router apps. Middleware conforms

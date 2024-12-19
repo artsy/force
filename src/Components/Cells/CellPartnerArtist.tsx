@@ -1,11 +1,11 @@
 import { Image, ResponsiveBox, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
-import type { CellPartnerArtist_partnerArtist$data } from "__generated__/CellPartnerArtist_partnerArtist.graphql"
-import { DEFAULT_CELL_WIDTH } from "./constants"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
-import type { FC } from "react"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
+import type { CellPartnerArtist_partnerArtist$data } from "__generated__/CellPartnerArtist_partnerArtist.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { DEFAULT_CELL_WIDTH } from "./constants"
 
 export interface CellPartnerArtistProps extends Partial<RouterLinkProps> {
   artistPartnerEdge: CellPartnerArtist_partnerArtist$data

@@ -1,8 +1,8 @@
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useElligibleForOnboarding } from "Components/AuthDialog/Hooks/useElligibleForOnboarding"
-import { useMemo } from "react"
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
+import { useMemo } from "react"
 
 /**
  * Returns a string representing the URL to redirect to after authentication.

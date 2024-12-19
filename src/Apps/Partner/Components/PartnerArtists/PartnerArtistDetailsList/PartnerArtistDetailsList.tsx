@@ -1,16 +1,16 @@
 import { Box, Join, Spacer } from "@artsy/palette"
+import { PartnerArtistDetailsFragmentContainer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistDetails/PartnerArtistDetails"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { PartnerArtistDetailsListQuery } from "__generated__/PartnerArtistDetailsListQuery.graphql"
+import type { PartnerArtistDetailsList_partner$data } from "__generated__/PartnerArtistDetailsList_partner.graphql"
 import { useEffect, useRef, useState } from "react"
 import type * as React from "react"
 import {
+  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
-  type RelayPaginationProp,
 } from "react-relay"
-import type { PartnerArtistDetailsList_partner$data } from "__generated__/PartnerArtistDetailsList_partner.graphql"
-import type { PartnerArtistDetailsListQuery } from "__generated__/PartnerArtistDetailsListQuery.graphql"
 import { PartnerArtistDetailsListPlaceholder } from "./PartnerArtistDetailsListPlaceholder"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { PartnerArtistDetailsFragmentContainer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistDetails/PartnerArtistDetails"
 
 export interface PartnerArtistDetailsListProps {
   partner: PartnerArtistDetailsList_partner$data

@@ -1,7 +1,7 @@
+import { MetaTags } from "Components/MetaTags"
+import type { GeneMeta_gene$data } from "__generated__/GeneMeta_gene.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { GeneMeta_gene$data } from "__generated__/GeneMeta_gene.graphql"
-import { MetaTags } from "Components/MetaTags"
 
 interface GeneMetaProps {
   gene: GeneMeta_gene$data

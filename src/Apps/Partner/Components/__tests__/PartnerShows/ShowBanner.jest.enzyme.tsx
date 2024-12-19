@@ -1,6 +1,6 @@
+import { ShowBannerFragmentContainer } from "Apps/Partner/Components/PartnerShows"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { ShowBannerFragmentContainer } from "Apps/Partner/Components/PartnerShows"
 
 jest.unmock("react-relay")
 

@@ -1,9 +1,9 @@
 import { CollectionHubFixture } from "Apps/__tests__/Fixtures/Collections"
-import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
+import { useTracking } from "react-tracking"
 import "jest-styled-components"
-import { OtherCollectionsRail } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/OtherCollectionsRail/index"
 import { paginateCarousel } from "@artsy/palette"
+import { OtherCollectionsRail } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/OtherCollectionsRail/index"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")

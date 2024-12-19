@@ -1,6 +1,6 @@
 import { Flex, Text } from "@artsy/palette"
-import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
+import styled from "styled-components"
 
 export const ConversationNewMessageMarker: React.FC<
   React.PropsWithChildren<unknown>

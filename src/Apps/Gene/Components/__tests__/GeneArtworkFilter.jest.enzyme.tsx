@@ -1,9 +1,4 @@
-import { MockBoot } from "DevTools/MockBoot"
 import { GeneArtworkFilterRefetchContainer } from "Apps/Gene/Components/GeneArtworkFilter"
-import { graphql } from "react-relay"
-import type { GeneArtworkFilter_Query } from "__generated__/GeneArtworkFilter_Query.graphql"
-import { useTracking } from "react-tracking"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import {
   artistAggregation,
   artistNationalityAggregation,
@@ -12,7 +7,12 @@ import {
   mediumAggregation,
   partnerAggregation,
 } from "Apps/__tests__/Fixtures/aggregations"
+import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import type { GeneArtworkFilter_Query } from "__generated__/GeneArtworkFilter_Query.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({

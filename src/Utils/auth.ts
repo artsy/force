@@ -2,9 +2,9 @@
 // - Wraps auth related functions in consistent Promise interface
 // - Automatically handles CSRF token, session ID, reCAPTCHA token
 
-import Cookies from "cookies-js"
 import { getENV } from "Utils/getENV"
 import { recaptcha } from "Utils/recaptcha"
+import Cookies from "cookies-js"
 
 const headers = {
   Accept: "application/json",

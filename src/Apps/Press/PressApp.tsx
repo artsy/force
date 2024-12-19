@@ -1,11 +1,11 @@
-import { Text, Spacer, GridColumns, Column } from "@artsy/palette"
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import { PageHTML } from "Apps/Page/Components/PageHTML"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
-import type { PressApp_page$data } from "__generated__/PressApp_page.graphql"
-import { PageHTML } from "Apps/Page/Components/PageHTML"
 import { RouterLink } from "System/Components/RouterLink"
+import type { PressApp_page$data } from "__generated__/PressApp_page.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface PressAppProps {
   page: PressApp_page$data

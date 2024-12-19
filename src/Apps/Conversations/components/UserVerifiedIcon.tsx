@@ -1,6 +1,6 @@
-import { Box, Flex } from "@artsy/palette"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"
+import { Box, Flex } from "@artsy/palette"
 
 /**
  * This Icon is a workaround because @artsy/icons doesn't support Icons with

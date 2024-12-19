@@ -1,12 +1,12 @@
 import { Spacer } from "@artsy/palette"
+import { Analytics } from "System/Contexts/AnalyticsContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
+import type { ArtistSubApp_artist$data } from "__generated__/ArtistSubApp_artist.graphql"
 import type { Match } from "found"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtistSubApp_artist$data } from "__generated__/ArtistSubApp_artist.graphql"
-import { Analytics } from "System/Contexts/AnalyticsContext"
 import { ArtistBackLinkFragmentContainer } from "./Components/ArtistBackLink"
 import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta/ArtistMeta"
-import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 
 interface ArtistSubAppProps {
   artist: ArtistSubApp_artist$data

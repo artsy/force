@@ -1,5 +1,5 @@
 import { Box, type BoxProps, breakpoints } from "@artsy/palette"
-import type { FC, ElementType, HTMLAttributes } from "react"
+import type { ElementType, FC, HTMLAttributes } from "react"
 
 interface AppContainerProps extends BoxProps, HTMLAttributes<HTMLElement> {
   as?: ElementType | keyof JSX.IntrinsicElements

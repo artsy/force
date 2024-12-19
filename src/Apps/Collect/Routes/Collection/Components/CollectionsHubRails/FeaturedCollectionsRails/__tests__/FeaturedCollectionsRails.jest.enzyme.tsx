@@ -1,11 +1,11 @@
 import { CollectionHubFixture } from "Apps/__tests__/Fixtures/Collections"
-import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
+import { useTracking } from "react-tracking"
 import "jest-styled-components"
-import { FeaturedCollectionsRails } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/FeaturedCollectionsRails/index"
 import { paginateCarousel } from "@artsy/palette"
-import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { FeaturedCollectionRailEntityFragmentContainer } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/FeaturedCollectionsRails/FeaturedCollectionRailEntity"
+import { FeaturedCollectionsRails } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/FeaturedCollectionsRails/index"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.mock("react-tracking")

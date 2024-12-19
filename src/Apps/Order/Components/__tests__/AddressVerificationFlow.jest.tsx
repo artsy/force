@@ -1,11 +1,11 @@
 import { screen, waitFor } from "@testing-library/react"
 import { AddressVerificationFlowFragmentContainer } from "Apps/Order/Components/AddressVerificationFlow"
-import type { AddressVerificationFlow_Test_Query } from "__generated__/AddressVerificationFlow_Test_Query.graphql"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
-import type { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
-import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { AddressVerificationFlow_Test_Query } from "__generated__/AddressVerificationFlow_Test_Query.graphql"
+import type { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 const mockOnChosenAddress = jest.fn()
 const mockOnClose = jest.fn()

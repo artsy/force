@@ -1,6 +1,6 @@
 import { Box, Spacer, Text } from "@artsy/palette"
 import { SearchInputContainer } from "Components/Search/SearchInputContainer"
-import { useState, useCallback } from "react"
+import { useCallback, useState } from "react"
 
 export const MyCollectionInsightsSelectArtistModal: React.FC<
   React.PropsWithChildren<unknown>

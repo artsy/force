@@ -1,10 +1,10 @@
-import { mount } from "enzyme"
-import type * as React from "react"
 import {
+  type WithInquiryProps,
   useInquiry,
   withInquiry,
-  type WithInquiryProps,
 } from "Components/Inquiry/useInquiry"
+import { mount } from "enzyme"
+import type * as React from "react"
 
 jest.mock("../Inquiry", () => ({
   Inquiry: ({ askSpecialist }) => (

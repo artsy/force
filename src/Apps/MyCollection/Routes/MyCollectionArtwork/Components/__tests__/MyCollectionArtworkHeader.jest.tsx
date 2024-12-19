@@ -1,8 +1,8 @@
-import type { MyCollectionArtworkHeaderTestQuery } from "__generated__/MyCollectionArtworkHeaderTestQuery.graphql"
+import { screen } from "@testing-library/react"
 import { MyCollectionArtworkHeader } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkHeader"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { MyCollectionArtworkHeaderTestQuery } from "__generated__/MyCollectionArtworkHeaderTestQuery.graphql"
 import { graphql } from "react-relay"
-import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 

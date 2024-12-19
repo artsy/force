@@ -1,8 +1,8 @@
-import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedBanner } from "Components/FullBleedBanner"
+import { RouterLink } from "System/Components/RouterLink"
 import { getENV } from "Utils/getENV"
 import type { CascadingEndTimesBanner_sale$data } from "__generated__/CascadingEndTimesBanner_sale.graphql"
-import { RouterLink } from "System/Components/RouterLink"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface CascadingEndTimesBannerProps {
   sale: CascadingEndTimesBanner_sale$data

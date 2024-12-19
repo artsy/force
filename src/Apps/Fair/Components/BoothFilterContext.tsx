@@ -1,9 +1,9 @@
-import { createContext, useReducer, useContext } from "react"
-import type * as React from "react"
-import { omit } from "lodash"
-import useDeepCompareEffect from "use-deep-compare-effect"
-import type { SortOptions } from "Components/SortFilter"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
+import type { SortOptions } from "Components/SortFilter"
+import { omit } from "lodash"
+import { createContext, useContext, useReducer } from "react"
+import type * as React from "react"
+import useDeepCompareEffect from "use-deep-compare-effect"
 
 export interface BoothFilters {
   sort?: string

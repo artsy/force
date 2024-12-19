@@ -6,10 +6,10 @@ import {
   ShelfNext,
   ShelfPrevious,
 } from "@artsy/palette"
+import type { SearchInputPills_viewer$data } from "__generated__/SearchInputPills_viewer.graphql"
 import { type FC, useEffect, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
-import type { SearchInputPills_viewer$data } from "__generated__/SearchInputPills_viewer.graphql"
 import { PILLS, type PillType, TOP_PILL } from "./constants"
 
 const ChevronStyle = css`

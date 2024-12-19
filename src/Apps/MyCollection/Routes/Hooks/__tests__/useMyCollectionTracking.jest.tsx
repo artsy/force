@@ -1,7 +1,7 @@
 import { OwnerType } from "@artsy/cohesion"
 import { renderHook } from "@testing-library/react-hooks"
-import { useTracking } from "react-tracking"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
+import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 

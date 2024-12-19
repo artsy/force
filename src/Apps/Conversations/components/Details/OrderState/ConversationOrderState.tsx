@@ -1,13 +1,13 @@
-import { Flex, Text } from "@artsy/palette"
-import CloseFillIcon from "@artsy/icons/CloseFillIcon"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
-import { graphql, useFragment } from "react-relay"
-import type {
-  ConversationOrderState_state$key,
-  CommerceOrderStateEnum,
-  CommerceOrderModeEnum,
-} from "__generated__/ConversationOrderState_state.graphql"
+import CloseFillIcon from "@artsy/icons/CloseFillIcon"
+import { Flex, Text } from "@artsy/palette"
 import { ConversationStatusWithCounter } from "Apps/Conversations/components/Details/OrderState/ConversationStatusWithCounter"
+import type {
+  CommerceOrderModeEnum,
+  CommerceOrderStateEnum,
+  ConversationOrderState_state$key,
+} from "__generated__/ConversationOrderState_state.graphql"
+import { graphql, useFragment } from "react-relay"
 
 type ModeState = `${CommerceOrderModeEnum}_${CommerceOrderStateEnum}`
 

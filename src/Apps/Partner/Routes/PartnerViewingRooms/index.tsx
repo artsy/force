@@ -1,10 +1,10 @@
+import { Spacer } from "@artsy/palette"
+import { PartnerViewingRoomsGridFragmentContainer } from "Apps/Partner/Components/PartnerViewingRooms/PartnerViewingRoomsGrid"
+import type { PartnerViewingRooms_currentViewingRooms$data } from "__generated__/PartnerViewingRooms_currentViewingRooms.graphql"
+import type { PartnerViewingRooms_pastViewingRooms$data } from "__generated__/PartnerViewingRooms_pastViewingRooms.graphql"
+import type { PartnerViewingRooms_upcomingViewingRooms$data } from "__generated__/PartnerViewingRooms_upcomingViewingRooms.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { PartnerViewingRooms_currentViewingRooms$data } from "__generated__/PartnerViewingRooms_currentViewingRooms.graphql"
-import type { PartnerViewingRooms_upcomingViewingRooms$data } from "__generated__/PartnerViewingRooms_upcomingViewingRooms.graphql"
-import type { PartnerViewingRooms_pastViewingRooms$data } from "__generated__/PartnerViewingRooms_pastViewingRooms.graphql"
-import { PartnerViewingRoomsGridFragmentContainer } from "Apps/Partner/Components/PartnerViewingRooms/PartnerViewingRoomsGrid"
-import { Spacer } from "@artsy/palette"
 
 interface PartnerViewingRoomsProps {
   currentViewingRooms: PartnerViewingRooms_currentViewingRooms$data

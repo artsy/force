@@ -1,11 +1,11 @@
 import "Server/webpackPublicPath"
-import { getAppRoutes } from "routes"
 import { loadableReady } from "@loadable/component"
 import { setupAnalytics } from "Server/analytics/helpers"
 import { setupClientRouter } from "System/Router/clientRouter"
 import { setupSentryClient } from "System/Utils/setupSentryClient"
 import { setupWebVitals } from "System/Utils/setupWebVitals"
 import { hydrateRoot } from "react-dom/client"
+import { getAppRoutes } from "routes"
 
 setupAnalytics()
 setupSentryClient()

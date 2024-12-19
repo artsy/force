@@ -1,6 +1,6 @@
 import { Flex, ResponsiveBox } from "@artsy/palette"
-import type { MyCollectionArtworkImageBrowser_artwork$key } from "__generated__/MyCollectionArtworkImageBrowser_artwork.graphql"
 import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowser"
+import type { MyCollectionArtworkImageBrowser_artwork$key } from "__generated__/MyCollectionArtworkImageBrowser_artwork.graphql"
 import { graphql, useFragment } from "react-relay"
 import { MyCollectionArtworkNoImageComponent } from "./MyCollectionArtworkNoImageComponent"
 

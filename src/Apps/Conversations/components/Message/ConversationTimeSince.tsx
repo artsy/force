@@ -1,9 +1,9 @@
-import type * as React from "react"
 import { Box, type BoxProps, Text } from "@artsy/palette"
 import {
   exactDate,
   relativeDate,
 } from "Apps/Conversations/components/Message/Utils/dateFormatters"
+import type * as React from "react"
 
 interface ConversationTimeSinceProps extends Omit<BoxProps, "color"> {
   message: any

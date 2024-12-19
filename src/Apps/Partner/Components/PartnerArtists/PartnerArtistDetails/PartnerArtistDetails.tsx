@@ -1,7 +1,4 @@
-import { createFragmentContainer, graphql } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { PartnerArtistDetails_partnerArtist$data } from "__generated__/PartnerArtistDetails_partnerArtist.graphql"
-import type { PartnerArtistDetailsQuery } from "__generated__/PartnerArtistDetailsQuery.graphql"
+import { ContextModule } from "@artsy/cohesion"
 import {
   Column,
   GridColumns,
@@ -12,11 +9,14 @@ import {
   Text,
 } from "@artsy/palette"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { ContextModule } from "@artsy/cohesion"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { RouterLink } from "System/Components/RouterLink"
-import { PartnerArtistDetailsPlaceholder } from "./PartnerArtistDetailsPlaceholder"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { PartnerArtistDetailsQuery } from "__generated__/PartnerArtistDetailsQuery.graphql"
+import type { PartnerArtistDetails_partnerArtist$data } from "__generated__/PartnerArtistDetails_partnerArtist.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerArtistArtworksFragmentContainer } from "./PartnerArtistArtworksRail"
+import { PartnerArtistDetailsPlaceholder } from "./PartnerArtistDetailsPlaceholder"
 
 export interface PartnerArtistDetailsProps {
   partnerArtist: PartnerArtistDetails_partnerArtist$data

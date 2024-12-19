@@ -1,13 +1,13 @@
-import type { FC } from "react"
-import { Link } from "react-head"
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import { ArticlesIndexNewsFragmentContainer } from "Apps/Articles/Components/ArticlesIndexNews"
 import { MetaTags } from "Components/MetaTags"
-import { ArticlesIndexArticlesPaginationContainer } from "./Components/ArticlesIndexArticles"
+import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
 import { getENV } from "Utils/getENV"
 import type { ArticlesApp_viewer$data } from "__generated__/ArticlesApp_viewer.graphql"
-import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
-import { ArticlesIndexNewsFragmentContainer } from "Apps/Articles/Components/ArticlesIndexNews"
+import type { FC } from "react"
+import { Link } from "react-head"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ArticlesIndexArticlesPaginationContainer } from "./Components/ArticlesIndexArticles"
 
 interface ArticlesAppProps {
   viewer: ArticlesApp_viewer$data

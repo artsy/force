@@ -1,9 +1,9 @@
 import { Flex, Join, Spacer, Tab, Tabs, Text } from "@artsy/palette"
+import { SaleAgreementsList } from "Apps/SaleAgreements/Components/SaleAgreementsList"
+import { extractNodes } from "Utils/extractNodes"
+import type { SaleAgreementsFilter_viewer$key } from "__generated__/SaleAgreementsFilter_viewer.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
-import type { SaleAgreementsFilter_viewer$key } from "__generated__/SaleAgreementsFilter_viewer.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import { SaleAgreementsList } from "Apps/SaleAgreements/Components/SaleAgreementsList"
 
 interface SaleAgreementsFilterProps {
   viewer: SaleAgreementsFilter_viewer$key

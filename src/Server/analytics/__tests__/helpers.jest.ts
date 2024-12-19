@@ -1,6 +1,6 @@
-import { trackEvent } from "../helpers"
 import { OwnerType, timeOnPage } from "@artsy/cohesion"
 import type { GlobalData } from "sharify"
+import { trackEvent } from "../helpers"
 
 describe("#trackEvent", () => {
   beforeEach(() => {

@@ -1,4 +1,6 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
+import NoArtIcon from "@artsy/icons/NoArtIcon"
+import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import {
   Box,
   Clickable,
@@ -10,15 +12,13 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import type { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { DateTime, type LocaleOptions } from "luxon"
-import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
-import StopwatchIcon from "@artsy/icons/StopwatchIcon"
-import NoArtIcon from "@artsy/icons/NoArtIcon"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
+import { DateTime, type LocaleOptions } from "luxon"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface Props {
   auctionResult: ArtistAuctionResultItem_auctionResult$data

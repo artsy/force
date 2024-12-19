@@ -1,13 +1,13 @@
-import type { FC } from "react"
-import { Link } from "react-head"
 import { Spacer, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import { ArticleAdProvider } from "Apps/Article/Components/ArticleAd/ArticleAd"
 import { MetaTags } from "Components/MetaTags"
+import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
 import { getENV } from "Utils/getENV"
 import type { NewsApp_viewer$data } from "__generated__/NewsApp_viewer.graphql"
+import type { FC } from "react"
+import { Link } from "react-head"
+import { createFragmentContainer, graphql } from "react-relay"
 import { NewsIndexArticlesPaginationContainer } from "./Components/NewsIndexArticles"
-import { ArticleAdProvider } from "Apps/Article/Components/ArticleAd/ArticleAd"
-import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
 
 interface NewsAppProps {
   viewer: NewsApp_viewer$data

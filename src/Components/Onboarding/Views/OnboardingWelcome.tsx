@@ -1,11 +1,11 @@
-import { Flex, Text, Spacer, Button, Box } from "@artsy/palette"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { RouterLink } from "System/Components/RouterLink"
+import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
 import { OnboardingWelcomeAnimatedPanel } from "Components/Onboarding/Components/OnboardingWelcomeAnimatedPanel"
-import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
+import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
 import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
+import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 
 export const OnboardingWelcome = () => {
   const { user } = useSystemContext()

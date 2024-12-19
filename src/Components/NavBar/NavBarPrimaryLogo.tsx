@@ -1,8 +1,8 @@
+import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
+import { themeGet } from "@styled-system/theme-get"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import type * as React from "react"
 import styled from "styled-components"
-import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
-import { themeGet } from "@styled-system/theme-get"
-import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 
 export const NavBarPrimaryLogo: React.FC<
   React.PropsWithChildren<Omit<RouterLinkProps, "to" | "ref">>

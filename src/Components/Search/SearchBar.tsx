@@ -1,9 +1,9 @@
 import { Box } from "@artsy/palette"
-import { SearchBarInput } from "./SearchBarInput"
-import { Media } from "Utils/Responsive"
-import { MobileSearchBarQueryRenderer } from "./Mobile/MobileSearchBar"
-import type { FC } from "react"
 import { useRouter } from "System/Hooks/useRouter"
+import { Media } from "Utils/Responsive"
+import type { FC } from "react"
+import { MobileSearchBarQueryRenderer } from "./Mobile/MobileSearchBar"
+import { SearchBarInput } from "./SearchBarInput"
 
 interface SearchBarProps {
   onClose: () => void

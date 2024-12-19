@@ -10,10 +10,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import type {
-  MyCollectionArtworkSWASubmissionStatus_artwork$data,
-  MyCollectionArtworkSWASubmissionStatus_artwork$key,
-} from "__generated__/MyCollectionArtworkSWASubmissionStatus_artwork.graphql"
 import {
   BASIC_STEPS,
   INITIAL_EDIT_STEP,
@@ -23,13 +19,17 @@ import {
   useTestSubmissionState,
 } from "Apps/Sell/SellFlowContext"
 import { usePreviousSubmission } from "Apps/Sell/Utils/previousSubmissionUtils"
+import { RouterLink } from "System/Components/RouterLink"
+import { Media } from "Utils/Responsive"
+import { extractNodes } from "Utils/extractNodes"
+import type {
+  MyCollectionArtworkSWASubmissionStatus_artwork$data,
+  MyCollectionArtworkSWASubmissionStatus_artwork$key,
+} from "__generated__/MyCollectionArtworkSWASubmissionStatus_artwork.graphql"
 import type React from "react"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
-import { RouterLink } from "System/Components/RouterLink"
-import { extractNodes } from "Utils/extractNodes"
-import { Media } from "Utils/Responsive"
 
 interface Props {
   artwork: MyCollectionArtworkSWASubmissionStatus_artwork$key

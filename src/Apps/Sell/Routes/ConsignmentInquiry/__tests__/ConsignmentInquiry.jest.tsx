@@ -1,11 +1,11 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { ConsignmentInquiryFragmentContainer } from "Apps/Sell/Routes/ConsignmentInquiry/ConsignmentInquiry"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
-import { useTracking } from "react-tracking"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

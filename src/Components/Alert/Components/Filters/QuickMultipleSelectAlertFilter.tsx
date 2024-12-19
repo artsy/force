@@ -6,10 +6,10 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { type FC, useState } from "react"
+import { handleFieldsWithMultipleValues } from "Components/Alert/Helpers/handleFieldsWithMultipleValues"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import type { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
-import { handleFieldsWithMultipleValues } from "Components/Alert/Helpers/handleFieldsWithMultipleValues"
+import { type FC, useState } from "react"
 
 interface QuickMultipleSelectAlertFilterProps {
   criteriaKey: SearchCriteriaAttributeKeys

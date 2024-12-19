@@ -1,12 +1,12 @@
-import take from "lodash/take"
-import { useCallback } from "react"
-import { fetchQuery } from "react-relay"
-import type { OperationType, Subscription } from "relay-runtime"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 import { isDevelopment } from "Utils/device"
+import take from "lodash/take"
+import { useCallback } from "react"
+import { fetchQuery } from "react-relay"
+import type { OperationType, Subscription } from "relay-runtime"
 
 interface UsePrefetchRouteProps {
   initialPath?: string

@@ -1,23 +1,23 @@
-import type { FC, ReactNode } from "react"
-import { ConsentManagerBuilder } from "@segment/consent-manager"
-import { getENV } from "Utils/getENV"
+import { ActionType } from "@artsy/cohesion"
+import type { SavedCookieConsentPreferences } from "@artsy/cohesion/dist/Schema/Events/CookieConsent"
 import { useDidMount } from "@artsy/palette"
+import { ConsentManagerBuilder } from "@segment/consent-manager"
+import { CookieConsentBanner } from "Components/CookieConsentManager/CookieConsentBanner"
+import { CookieConsentManagerProvider } from "Components/CookieConsentManager/CookieConsentManagerContext"
+import { CookieConsentManagerDialog } from "Components/CookieConsentManager/CookieConsentManagerDialog"
+import { CookieConsentManagerSetter } from "Components/CookieConsentManager/CookieConsentManagerSetter"
 import {
-  CUSTOM_DESTINATIONS,
   ALLOW_ALL_PREFERENCES,
+  CUSTOM_DESTINATIONS,
   mapCustomPreferences,
   remapSegmentCategory,
 } from "Components/CookieConsentManager/categories"
-import { useMode } from "Utils/Hooks/useMode"
-import { CookieConsentBanner } from "Components/CookieConsentManager/CookieConsentBanner"
 import { useConsentRequired } from "Components/CookieConsentManager/useConsentRequired"
-import { useTracking } from "react-tracking"
-import { CookieConsentManagerDialog } from "Components/CookieConsentManager/CookieConsentManagerDialog"
-import { CookieConsentManagerProvider } from "Components/CookieConsentManager/CookieConsentManagerContext"
-import { CookieConsentManagerSetter } from "Components/CookieConsentManager/CookieConsentManagerSetter"
-import type { SavedCookieConsentPreferences } from "@artsy/cohesion/dist/Schema/Events/CookieConsent"
-import { ActionType } from "@artsy/cohesion"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useMode } from "Utils/Hooks/useMode"
+import { getENV } from "Utils/getENV"
+import type { FC, ReactNode } from "react"
+import { useTracking } from "react-tracking"
 
 export const COOKIE_CONSENT_MANAGER_COOKIE_NAME = "tracking-preferences"
 

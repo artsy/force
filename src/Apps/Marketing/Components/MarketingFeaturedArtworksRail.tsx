@@ -1,16 +1,16 @@
-import type { FC } from "react"
 import { Skeleton } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { MarketingFeaturedArtworksRail_viewer$data } from "__generated__/MarketingFeaturedArtworksRail_viewer.graphql"
-import type { MarketingFeaturedArtworksRailQuery } from "__generated__/MarketingFeaturedArtworksRailQuery.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import { Rail } from "Components/Rail/Rail"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
+import { Rail } from "Components/Rail/Rail"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
+import type { MarketingFeaturedArtworksRailQuery } from "__generated__/MarketingFeaturedArtworksRailQuery.graphql"
+import type { MarketingFeaturedArtworksRail_viewer$data } from "__generated__/MarketingFeaturedArtworksRail_viewer.graphql"
 import { compact } from "lodash"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface MarketingFeaturedArtworksRailProps {
   viewer: MarketingFeaturedArtworksRail_viewer$data

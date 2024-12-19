@@ -1,9 +1,9 @@
-import type * as React from "react"
 import { Column, GridColumns } from "@artsy/palette"
+import type { PartnerContactCard_location$data } from "__generated__/PartnerContactCard_location.graphql"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerContactAddressFragmentContainer as PartnerContactAddress } from "./PartnerContactAddress"
 import { PartnerContactMapFragmentContainer as PartnerContactMap } from "./PartnerContactMap"
-import type { PartnerContactCard_location$data } from "__generated__/PartnerContactCard_location.graphql"
 
 export interface PartnerContactCardProps {
   location: PartnerContactCard_location$data

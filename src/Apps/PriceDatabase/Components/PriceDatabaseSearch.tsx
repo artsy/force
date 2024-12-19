@@ -1,3 +1,4 @@
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import {
   Button,
   Column,
@@ -6,17 +7,16 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import qs from "qs"
-import { type FC, useState } from "react"
-import { useTracking } from "react-tracking"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { categoryMap } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/MediumFilter"
 import { sizeMap } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/SizeFilter"
+import { filterSearchFilters } from "Apps/PriceDatabase/Utils/filterSearchFilters"
 import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { useRouter } from "System/Hooks/useRouter"
-import { filterSearchFilters } from "Apps/PriceDatabase/Utils/filterSearchFilters"
+import qs from "qs"
+import { type FC, useState } from "react"
+import { useTracking } from "react-tracking"
 import { PriceDatabaseArtistAutosuggest } from "./PriceDatabaseArtistAutosuggest"
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 
 const ALLOWED_FILTERS = ["categories", "sizes"]
 

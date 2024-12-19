@@ -1,10 +1,10 @@
-import { Column, Image, GridColumns, Text, ResponsiveBox } from "@artsy/palette"
-import type { CollectionsHubsNav_marketingCollections$data } from "__generated__/CollectionsHubsNav_marketingCollections.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Column, GridColumns, Image, ResponsiveBox, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import { cropped } from "Utils/resized"
+import type { CollectionsHubsNav_marketingCollections$data } from "__generated__/CollectionsHubsNav_marketingCollections.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { cropped } from "Utils/resized"
-import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
 
 interface CollectionsHubsNavProps {

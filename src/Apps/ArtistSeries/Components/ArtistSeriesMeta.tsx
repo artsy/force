@@ -1,8 +1,8 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { MetaTags } from "Components/MetaTags"
 import type { ArtistSeriesMeta_artistSeries$data } from "__generated__/ArtistSeriesMeta_artistSeries.graphql"
 import { truncate } from "lodash"
-import { MetaTags } from "Components/MetaTags"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtistSeriesMetaProps {
   artistSeries: ArtistSeriesMeta_artistSeries$data

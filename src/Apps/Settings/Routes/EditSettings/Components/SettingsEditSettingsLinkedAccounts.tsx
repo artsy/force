@@ -1,17 +1,17 @@
+import AppleIcon from "@artsy/icons/AppleIcon"
+import FacebookIcon from "@artsy/icons/FacebookIcon"
+import GoogleIcon from "@artsy/icons/GoogleIcon"
 import { Button, Join, Spacer, Text, useToasts } from "@artsy/palette"
-import { type FC, useEffect } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
-import { getENV } from "Utils/getENV"
 import { useMode } from "Utils/Hooks/useMode"
+import { getENV } from "Utils/getENV"
 import type {
   AuthenticationProvider,
   SettingsEditSettingsLinkedAccounts_me$data,
 } from "__generated__/SettingsEditSettingsLinkedAccounts_me.graphql"
+import { type FC, useEffect } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useUnlinkSettingsLinkedAccount } from "./useUnlinkSettingsLinkedAccount"
-import FacebookIcon from "@artsy/icons/FacebookIcon"
-import AppleIcon from "@artsy/icons/AppleIcon"
-import GoogleIcon from "@artsy/icons/GoogleIcon"
 
 interface SettingsEditSettingsLinkedAccountsProps {
   me: SettingsEditSettingsLinkedAccounts_me$data

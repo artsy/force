@@ -1,4 +1,4 @@
-import { Spacer, Tabs, Tab, Text } from "@artsy/palette"
+import { Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import { ArtQuizTrendingArtistsQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizTrendingArtists"
 import { ArtQuizTrendingCollectionsQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizTrendingCollections"
 import type { FC } from "react"

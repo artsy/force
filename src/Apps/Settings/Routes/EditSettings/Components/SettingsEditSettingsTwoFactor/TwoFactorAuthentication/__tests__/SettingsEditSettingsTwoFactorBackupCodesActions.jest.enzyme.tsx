@@ -1,5 +1,5 @@
-import { mount } from "enzyme"
 import { SettingsEditSettingsTwoFactorBackupCodesActions } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/SettingsEditSettingsTwoFactorBackupCodesActions"
+import { mount } from "enzyme"
 
 describe("Two factor authentication enrollment", () => {
   const props = {

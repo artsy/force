@@ -1,10 +1,10 @@
-import type { FC, ReactNode } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule } from "@artsy/cohesion"
 import { Avatar, type BoxProps, Flex, Text } from "@artsy/palette"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { RouterLink } from "System/Components/RouterLink"
 import type { EntityHeaderArtist_artist$data } from "__generated__/EntityHeaderArtist_artist.graphql"
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
+import type { FC, ReactNode } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface EntityHeaderArtistProps extends BoxProps {
   artist: EntityHeaderArtist_artist$data

@@ -1,10 +1,10 @@
-import type * as React from "react"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { DisableSecondFactor } from "./Mutation/DisableSecondFactor"
-import type { FormikProps } from "formik"
-import type { DisableSecondFactorInput } from "__generated__/DisableSecondFactorMutation.graphql"
-import { map } from "lodash"
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { DisableSecondFactorInput } from "__generated__/DisableSecondFactorMutation.graphql"
+import type { FormikProps } from "formik"
+import { map } from "lodash"
+import type * as React from "react"
+import { DisableSecondFactor } from "./Mutation/DisableSecondFactor"
 
 interface DisableFactorConfirmationProps {
   onConfirm: () => void

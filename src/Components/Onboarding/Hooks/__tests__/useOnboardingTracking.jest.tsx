@@ -1,6 +1,6 @@
-import { useOnboardingTracking } from "../useOnboardingTracking"
 import { renderHook } from "@testing-library/react-hooks"
 import { useTracking } from "react-tracking"
+import { useOnboardingTracking } from "../useOnboardingTracking"
 
 jest.mock("react-tracking")
 

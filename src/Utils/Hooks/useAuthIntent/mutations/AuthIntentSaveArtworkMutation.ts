@@ -1,7 +1,7 @@
-import { commitMutation, graphql } from "react-relay"
-import type { AuthIntentMutation } from "./types"
 import type { AuthIntentSaveArtworkMutation } from "__generated__/AuthIntentSaveArtworkMutation.graphql"
+import { commitMutation, graphql } from "react-relay"
 import type { Environment } from "react-relay"
+import type { AuthIntentMutation } from "./types"
 
 export const saveArtworkMutation: AuthIntentMutation = (
   relayEnvironment: Environment,

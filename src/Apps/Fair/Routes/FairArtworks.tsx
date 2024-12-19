@@ -1,39 +1,39 @@
-import type { FairArtworks_fair$data } from "__generated__/FairArtworks_fair.graphql"
+import { Join, Spacer } from "@artsy/palette"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
   type Counts,
   type SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
+import { ArtistNationalityFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
+import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
+import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
+import { AttributionClassFilter } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
+import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
+import { ColorFilter } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
+import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
+import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
+import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
+import { PartnersFilter } from "Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
+import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
+import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
+import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
+import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { FairArtworksFilterQuery } from "__generated__/FairArtworksFilterQuery.graphql"
+import type { FairArtworks_fair$data } from "__generated__/FairArtworks_fair.graphql"
 import type * as React from "react"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
   graphql,
 } from "react-relay"
-import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
-import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
-import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
-import { ColorFilter } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
-import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
-import { useRouter } from "System/Hooks/useRouter"
-import { AttributionClassFilter } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
-import { PartnersFilter } from "Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
-import { ArtistNationalityFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
-import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
-import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
-import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
-import { Join, Spacer } from "@artsy/palette"
-import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
-import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
-import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
-import type { FairArtworksFilterQuery } from "__generated__/FairArtworksFilterQuery.graphql"
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair$data

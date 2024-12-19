@@ -1,14 +1,14 @@
-import { Flex, Spacer, Text } from "@artsy/palette"
-import type { FC } from "react"
-import { useFragment, graphql } from "react-relay"
-import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
-import type { PartnerShowOpenedNotification_notification$key } from "__generated__/PartnerShowOpenedNotification_notification.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
-import { RouterLink } from "System/Components/RouterLink"
-import { NotificationPartnerShow } from "Components/Notifications/NotificationPartnerShow"
 import { ContextModule } from "@artsy/cohesion"
+import { Flex, Spacer, Text } from "@artsy/palette"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
+import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
+import { NotificationPartnerShow } from "Components/Notifications/NotificationPartnerShow"
+import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
+import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
+import type { PartnerShowOpenedNotification_notification$key } from "__generated__/PartnerShowOpenedNotification_notification.graphql"
+import type { FC } from "react"
+import { graphql, useFragment } from "react-relay"
 
 interface PartnerShowOpenedNotificationProps {
   notification: PartnerShowOpenedNotification_notification$key

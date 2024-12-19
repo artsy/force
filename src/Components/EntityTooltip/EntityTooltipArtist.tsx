@@ -1,4 +1,4 @@
-import type { FC } from "react"
+import { ActionType, type ClickedTooltip } from "@artsy/cohesion"
 import {
   Box,
   HorizontalOverflow,
@@ -10,15 +10,15 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { EntityTooltipArtistQuery } from "__generated__/EntityTooltipArtistQuery.graphql"
 import type { EntityTooltipArtist_artist$data } from "__generated__/EntityTooltipArtist_artist.graphql"
-import { RouterLink } from "System/Components/RouterLink"
-import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { ActionType, type ClickedTooltip } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 interface EntityTooltipArtistProps {
   artist: EntityTooltipArtist_artist$data

@@ -1,9 +1,9 @@
+import type { PartnerContactAddress_location$data } from "__generated__/PartnerContactAddress_location.graphql"
+import type { PartnerContactMap_location$data } from "__generated__/PartnerContactMap_location.graphql"
 import { compact } from "lodash"
+import qs from "qs"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
-import qs from "qs"
-import type { PartnerContactMap_location$data } from "__generated__/PartnerContactMap_location.graphql"
-import type { PartnerContactAddress_location$data } from "__generated__/PartnerContactAddress_location.graphql"
 
 export function getContactAddressLines(
   location:

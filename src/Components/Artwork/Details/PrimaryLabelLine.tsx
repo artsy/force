@@ -1,7 +1,7 @@
-import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { Text } from "@artsy/palette"
-import { graphql, useFragment } from "react-relay"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import type { PrimaryLabelLine_artwork$key } from "__generated__/PrimaryLabelLine_artwork.graphql"
+import { graphql, useFragment } from "react-relay"
 
 interface PrimaryLabelLineProps {
   artwork: PrimaryLabelLine_artwork$key

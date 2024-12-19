@@ -1,10 +1,10 @@
 import { Spacer, Text } from "@artsy/palette"
 
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import type { ArtworkSidebarLinks_artwork$data } from "__generated__/ArtworkSidebarLinks_artwork.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ArtworkSidebarLinksProps {
   artwork: ArtworkSidebarLinks_artwork$data

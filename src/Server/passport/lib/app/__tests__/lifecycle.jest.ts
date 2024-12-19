@@ -1,8 +1,8 @@
 import * as lifecycle from "Server/passport/lib/app/lifecycle"
 import options from "Server/passport/lib/options"
+import passport from "passport"
 // eslint-disable-next-line no-restricted-imports
 import request, { type SuperAgentRequest } from "superagent"
-import passport from "passport"
 
 jest.mock("Server/passport/lib/options", () => ({
   loginPagePath: "/login",

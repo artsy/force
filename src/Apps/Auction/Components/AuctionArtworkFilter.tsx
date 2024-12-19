@@ -1,32 +1,32 @@
-import { useRouter } from "System/Hooks/useRouter"
-import {
-  createRefetchContainer,
-  graphql,
-  type RelayRefetchProp,
-} from "react-relay"
+import { Join, Spacer } from "@artsy/palette"
+import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
 import { ArtworkFilter } from "Components/ArtworkFilter"
 import type {
   Aggregations,
   Counts,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
+import { ColorFilter } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
+import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
+import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
-import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import type { AuctionArtworkFilter_viewer$data } from "__generated__/AuctionArtworkFilter_viewer.graphql"
-import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
-import { Join, Spacer } from "@artsy/palette"
-import { ColorFilter } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
-import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
-import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
-import type { AuctionArtworkFilterQuery } from "__generated__/AuctionArtworkFilterQuery.graphql"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { AuctionArtworkFilterQuery } from "__generated__/AuctionArtworkFilterQuery.graphql"
+import type { AuctionArtworkFilter_viewer$data } from "__generated__/AuctionArtworkFilter_viewer.graphql"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 
 interface AuctionArtworkFilterProps {
   relay: RelayRefetchProp

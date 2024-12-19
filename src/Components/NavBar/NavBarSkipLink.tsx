@@ -1,7 +1,7 @@
-import type * as React from "react"
-import styled from "styled-components"
 import { Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import type * as React from "react"
+import styled from "styled-components"
 
 export const NavBarSkipLink: React.FC<
   React.PropsWithChildren<unknown>

@@ -1,7 +1,7 @@
 import { Box, Clickable, ModalDialog, THEME, Text } from "@artsy/palette"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { useState } from "react"
 import styled from "styled-components"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 export const MyCollectionArtworkDetailField = ({
   label,

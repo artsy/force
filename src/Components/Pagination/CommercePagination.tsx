@@ -1,5 +1,5 @@
-import { Pagination } from "./index"
 import { createFragmentContainer, graphql } from "react-relay"
+import { Pagination } from "./index"
 
 export const CommercePaginationFragmentContainer = createFragmentContainer(
   Pagination,

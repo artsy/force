@@ -1,10 +1,10 @@
-import type { FC } from "react"
-import type { SuggestionItemOptionProps } from "./SuggestionItem"
+import { Flex, Spacer, Text } from "@artsy/palette"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
-import { SuggestionItemPreview } from "./SuggestionItemPreview"
+import type { FC } from "react"
 import { Highlight } from "./Highlight"
-import { Text, Flex, Spacer } from "@artsy/palette"
+import type { SuggestionItemOptionProps } from "./SuggestionItem"
+import { SuggestionItemPreview } from "./SuggestionItemPreview"
 
 interface DefaultSuggestionProps {
   option: SuggestionItemOptionProps

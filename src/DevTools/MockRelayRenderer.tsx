@@ -1,9 +1,14 @@
+import {
+  SystemContextConsumer,
+  SystemContextProvider,
+} from "System/Contexts/SystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 /* eslint-disable jest/no-commented-out-tests */
 import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { IMocks } from "graphql-tools/dist/Interfaces"
 import * as React from "react"
 import { type GraphQLTaggedNode, QueryRenderer } from "react-relay"
+import type { Environment as IEnvironment } from "react-relay"
 import {
   Environment,
   type INetwork,
@@ -11,15 +16,10 @@ import {
   RecordSource,
   Store,
 } from "relay-runtime"
-import type { Environment as IEnvironment } from "react-relay"
 import {
   createMockNetworkLayer,
   createMockNetworkLayer2,
 } from "./createMockNetworkLayer"
-import {
-  SystemContextConsumer,
-  SystemContextProvider,
-} from "System/Contexts/SystemContext"
 
 export interface MockRelayRendererProps<T extends OperationType> {
   Component: React.ComponentType<React.PropsWithChildren<any>>

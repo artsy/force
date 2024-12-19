@@ -1,14 +1,14 @@
-import { useEffect } from "react"
-import { Box, Join, Separator, Spacer, Text, THEME } from "@artsy/palette"
-import type { Match } from "found"
-import type { ArtistsRoute_partner$data } from "__generated__/ArtistsRoute_partner.graphql"
-import { createFragmentContainer, graphql } from "react-relay"
-import { usePartnerArtistsLoadingContext } from "Apps/Partner/Utils/PartnerArtistsLoadingContext"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { Jump, useJump } from "Utils/Hooks/useJump"
-import { PartnerArtistsFragmentContainer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistList/PartnerArtists"
+import { Box, Join, Separator, Spacer, THEME, Text } from "@artsy/palette"
 import { PartnerArtistDetailsRenderer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistDetails/PartnerArtistDetails"
 import { PartnerArtistDetailsListRenderer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistDetailsList/PartnerArtistDetailsList"
+import { PartnerArtistsFragmentContainer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistList/PartnerArtists"
+import { usePartnerArtistsLoadingContext } from "Apps/Partner/Utils/PartnerArtistsLoadingContext"
+import { Jump, useJump } from "Utils/Hooks/useJump"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import type { ArtistsRoute_partner$data } from "__generated__/ArtistsRoute_partner.graphql"
+import type { Match } from "found"
+import { useEffect } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface ArtistsRouteProps {
   partner: ArtistsRoute_partner$data

@@ -1,6 +1,6 @@
 import { useEventTiming } from "Utils/Hooks/useEventTiming"
-import { DateTime } from "luxon"
 import { mount } from "enzyme"
+import { DateTime } from "luxon"
 
 type Time = Partial<{
   day: number

@@ -2,29 +2,29 @@ import SearchIcon from "@artsy/icons/SearchIcon"
 import { Box, LabeledInput } from "@artsy/palette"
 import { type FC, useCallback, useEffect, useRef, useState } from "react"
 
-import {
-  type PillType,
-  TOP_PILL,
-  SEARCH_DEBOUNCE_DELAY,
-} from "Components/Search/constants"
-import {
-  createRefetchContainer,
-  type RelayRefetchProp,
-  graphql,
-} from "react-relay"
-import createLogger from "Utils/logger"
-import { SearchInputPillsFragmentContainer } from "Components/Search/SearchInputPills"
-import { reportPerformanceMeasurement } from "Components/Search/utils/reportPerformanceMeasurement"
-import { shouldStartSearching } from "Components/Search/utils/shouldStartSearching"
-import { useDebounce } from "Utils/Hooks/useDebounce"
-import type { Overlay_viewer$data } from "__generated__/Overlay_viewer.graphql"
+import { ActionType } from "@artsy/cohesion"
 import {
   OVERLAY_CONTENT_ID,
   OverlayBase,
 } from "Components/Search/Mobile/OverlayBase"
-import { SearchResultsListPaginationContainer } from "./SearchResultsList"
+import { SearchInputPillsFragmentContainer } from "Components/Search/SearchInputPills"
+import {
+  type PillType,
+  SEARCH_DEBOUNCE_DELAY,
+  TOP_PILL,
+} from "Components/Search/constants"
+import { reportPerformanceMeasurement } from "Components/Search/utils/reportPerformanceMeasurement"
+import { shouldStartSearching } from "Components/Search/utils/shouldStartSearching"
+import { useDebounce } from "Utils/Hooks/useDebounce"
+import createLogger from "Utils/logger"
+import type { Overlay_viewer$data } from "__generated__/Overlay_viewer.graphql"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 import { useTracking } from "react-tracking"
-import { ActionType } from "@artsy/cohesion"
+import { SearchResultsListPaginationContainer } from "./SearchResultsList"
 
 const logger = createLogger("Components/Search/Mobile")
 

@@ -1,9 +1,9 @@
 import { Join, Spacer } from "@artsy/palette"
-import { GeneFamilyFragmentContainer } from "./GeneFamily"
+import { extractNodes } from "Utils/extractNodes"
+import type { GeneFamilies_geneFamiliesConnection$data } from "__generated__/GeneFamilies_geneFamiliesConnection.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { GeneFamilies_geneFamiliesConnection$data } from "__generated__/GeneFamilies_geneFamiliesConnection.graphql"
-import { extractNodes } from "Utils/extractNodes"
+import { GeneFamilyFragmentContainer } from "./GeneFamily"
 
 interface GeneFamiliesProps {
   geneFamiliesConnection: GeneFamilies_geneFamiliesConnection$data

@@ -1,3 +1,5 @@
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import HelpIcon from "@artsy/icons/HelpIcon"
 import {
   Button,
   Clickable,
@@ -6,11 +8,9 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { RouterLink } from "System/Components/RouterLink"
-import HelpIcon from "@artsy/icons/HelpIcon"
-import { useTracking } from "react-tracking"
 import { useState } from "react"
+import { useTracking } from "react-tracking"
 
 export const PricingContextModal: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)

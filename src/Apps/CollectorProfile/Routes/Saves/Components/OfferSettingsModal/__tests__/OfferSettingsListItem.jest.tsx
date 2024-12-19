@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { OfferSettingsListItem } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsListItem"
-import { useFormikContext } from "formik"
 import type { OfferSettingsListItem_item$data } from "__generated__/OfferSettingsListItem_item.graphql"
+import { useFormikContext } from "formik"
 
 jest.mock("formik", () => ({
   useFormikContext: jest.fn().mockReturnValue({

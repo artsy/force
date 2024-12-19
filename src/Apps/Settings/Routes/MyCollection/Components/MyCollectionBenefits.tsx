@@ -6,8 +6,8 @@ import {
   ResponsiveBox,
   Text,
 } from "@artsy/palette"
-import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
+import { resized } from "Utils/resized"
 
 export const MyCollectionBenefits: React.FC<
   React.PropsWithChildren<unknown>

@@ -1,4 +1,4 @@
-import { Flex, Box, Button } from "@artsy/palette"
+import { Box, Button, Flex } from "@artsy/palette"
 import type { FC } from "react"
 import { OnboardingProgress } from "./OnboardingProgress"
 

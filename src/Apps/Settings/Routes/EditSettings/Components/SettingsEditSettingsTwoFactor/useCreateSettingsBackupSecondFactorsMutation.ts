@@ -1,10 +1,10 @@
-import { commitMutation, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type {
+  CreateBackupSecondFactorsInput,
   useCreateSettingsBackupSecondFactorsMutation,
   useCreateSettingsBackupSecondFactorsMutation$data,
-  CreateBackupSecondFactorsInput,
 } from "__generated__/useCreateSettingsBackupSecondFactorsMutation.graphql"
+import { commitMutation, graphql } from "react-relay"
 
 export const useCreateSettingsBackupSecondFactors = () => {
   const { relayEnvironment } = useSystemContext()

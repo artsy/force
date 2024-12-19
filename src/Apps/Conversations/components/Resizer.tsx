@@ -1,7 +1,7 @@
-import type { FC } from "react"
-import { SplitPane, type SplitPaneProps } from "react-multi-split-pane"
 import { Box } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import type { FC } from "react"
+import { SplitPane, type SplitPaneProps } from "react-multi-split-pane"
 import styled from "styled-components"
 
 export const Resizer: FC<React.PropsWithChildren<SplitPaneProps>> = ({

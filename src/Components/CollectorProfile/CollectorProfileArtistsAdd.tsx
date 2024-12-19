@@ -11,21 +11,21 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
+import { CollectorProfileArtistsAddNewDialog } from "Components/CollectorProfile/CollectorProfileArtistsAddNewDialog"
+import { CollectorProfileArtistsAddResult } from "Components/CollectorProfile/CollectorProfileArtistsAddResult"
+import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { useDebouncedValue } from "Utils/Hooks/useDebounce"
+import { useMutation } from "Utils/Hooks/useMutation"
+import { extractNodes } from "Utils/extractNodes"
 import type {
   CollectorProfileArtistsAddCreateUserInterestsMutation,
   UserInterestCategory,
   UserInterestInterestType,
 } from "__generated__/CollectorProfileArtistsAddCreateUserInterestsMutation.graphql"
 import type { CollectorProfileArtistsAddQuery } from "__generated__/CollectorProfileArtistsAddQuery.graphql"
-import { CollectorProfileArtistsAddNewDialog } from "Components/CollectorProfile/CollectorProfileArtistsAddNewDialog"
-import { CollectorProfileArtistsAddResult } from "Components/CollectorProfile/CollectorProfileArtistsAddResult"
-import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 import { type FC, useRef, useState } from "react"
 import { type Environment, graphql } from "react-relay"
-import { extractNodes } from "Utils/extractNodes"
-import { useClientQuery } from "Utils/Hooks/useClientQuery"
-import { useDebouncedValue } from "Utils/Hooks/useDebounce"
-import { useMutation } from "Utils/Hooks/useMutation"
 
 interface CollectorProfileArtistsAddProps {
   description?: string

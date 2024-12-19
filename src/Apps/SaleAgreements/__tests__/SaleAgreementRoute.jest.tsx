@@ -1,8 +1,8 @@
-import { graphql } from "react-relay"
-import type { SaleAgreementRoute_Test_Query } from "__generated__/SaleAgreementRoute_Test_Query.graphql"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
 import { SaleAgreementRoute } from "Apps/SaleAgreements/Routes/SaleAgreementRoute"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { SaleAgreementRoute_Test_Query } from "__generated__/SaleAgreementRoute_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({

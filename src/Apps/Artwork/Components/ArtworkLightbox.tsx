@@ -4,18 +4,18 @@ import {
   Image,
   ResponsiveBox,
 } from "@artsy/palette"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { getENV } from "Utils/getENV"
+import { useLocalImage } from "Utils/localImageHelpers"
 import { resized as resizer } from "Utils/resized"
+import { userIsTeam } from "Utils/user"
+import type { ArtworkLightbox_artwork$data } from "__generated__/ArtworkLightbox_artwork.graphql"
 import { compact } from "lodash"
 import { scale } from "proportional-scale"
 import type * as React from "react"
 import { Link } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useLocalImage } from "Utils/localImageHelpers"
-import { userIsTeam } from "Utils/user"
-import type { ArtworkLightbox_artwork$data } from "__generated__/ArtworkLightbox_artwork.graphql"
 import { ArtworkLightboxPlaceholder } from "./ArtworkLightboxPlaceholder"
-import { getENV } from "Utils/getENV"
 
 interface ArtworkLightboxProps extends ClickableProps {
   artwork: ArtworkLightbox_artwork$data

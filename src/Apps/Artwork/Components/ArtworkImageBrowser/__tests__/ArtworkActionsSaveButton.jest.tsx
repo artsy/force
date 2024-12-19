@@ -5,10 +5,10 @@ import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkF
 import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
 import type { ArtworkActionsSaveButton_Test_Query } from "__generated__/ArtworkActionsSaveButton_Test_Query.graphql"
-import { fetchQuery } from "react-relay"
 import { act } from "react-dom/test-utils"
+import { graphql } from "react-relay"
+import { fetchQuery } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("Components/Artwork/SaveButton/SaveArtworkMutation")

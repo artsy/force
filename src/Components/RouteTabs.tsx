@@ -1,14 +1,14 @@
-import type * as React from "react"
-import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   BaseTab,
-  BaseTabs,
   type BaseTabProps,
+  BaseTabs,
   type BaseTabsProps,
 } from "@artsy/palette"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import { useIsRouteActive } from "System/Hooks/useRouter"
+import type * as React from "react"
 import { useTracking } from "react-tracking"
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 
 export const RouteTab: React.FC<
   React.PropsWithChildren<BaseTabProps & RouterLinkProps>

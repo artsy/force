@@ -1,14 +1,14 @@
-import { Link } from "react-head"
+import CloseIcon from "@artsy/icons/CloseIcon"
 import { Spinner } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { type FC, type ImgHTMLAttributes, useEffect, useRef } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
+import { FullscreenBox } from "Components/FullscreenBox"
 import { useMode } from "Utils/Hooks/useMode"
 import { resized } from "Utils/resized"
 import type { ArticleZoomGalleryFigure_figure$data } from "__generated__/ArticleZoomGalleryFigure_figure.graphql"
-import { FullscreenBox } from "Components/FullscreenBox"
-import CloseIcon from "@artsy/icons/CloseIcon"
+import { type FC, type ImgHTMLAttributes, useEffect, useRef } from "react"
+import { Link } from "react-head"
+import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
 
 interface ArticleZoomGalleryFigureProps {
   figure: ArticleZoomGalleryFigure_figure$data

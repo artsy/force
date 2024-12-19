@@ -1,11 +1,11 @@
 import {
-  Text,
-  GridColumns,
   Breadcrumbs,
   Column,
+  GridColumns,
   HTML,
-  Spacer,
   ReadMore,
+  Spacer,
+  Text,
 } from "@artsy/palette"
 import type { Header_collection$data } from "__generated__/Header_collection.graphql"
 import { Link } from "found"

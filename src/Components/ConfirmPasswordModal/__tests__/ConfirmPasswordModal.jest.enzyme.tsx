@@ -1,7 +1,7 @@
-import { mount } from "enzyme"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 import { MockBoot } from "DevTools/MockBoot"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { mount } from "enzyme"
 
 jest.mock("Components/ConfirmPasswordModal/Mutations/ConfirmPassword", () => ({
   ConfirmPassword: jest.fn(),

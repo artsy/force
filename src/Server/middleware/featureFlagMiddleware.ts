@@ -1,11 +1,11 @@
+import {
+  type FeatureFlagService,
+  createFeatureFlagService,
+} from "Server/featureFlags/featureFlagService"
+import { updateSharifyAndContext } from "Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
+import type { FeatureFlags } from "System/Hooks/useFeatureFlag"
 import type { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
-import {
-  createFeatureFlagService,
-  type FeatureFlagService,
-} from "Server/featureFlags/featureFlagService"
-import type { FeatureFlags } from "System/Hooks/useFeatureFlag"
-import { updateSharifyAndContext } from "Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
 
 export function featureFlagMiddleware(serviceType: symbol) {
   let service: FeatureFlagService

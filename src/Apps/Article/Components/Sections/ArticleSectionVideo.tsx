@@ -1,12 +1,12 @@
-import type { FC } from "react"
-import type { ArticleSectionVideo_section$data } from "__generated__/ArticleSectionVideo_section.graphql"
-import { createFragmentContainer, graphql } from "react-relay"
 import { Clickable, Image, ResponsiveBox, Text } from "@artsy/palette"
-import styled from "styled-components"
-import { useMode } from "Utils/Hooks/useMode"
 import { themeGet } from "@styled-system/theme-get"
 import { useArticleTracking } from "Apps/Article/useArticleTracking"
 import { useCookieConsentManager } from "Components/CookieConsentManager/CookieConsentManagerContext"
+import { useMode } from "Utils/Hooks/useMode"
+import type { ArticleSectionVideo_section$data } from "__generated__/ArticleSectionVideo_section.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
 
 interface ArticleSectionVideoProps {
   section: ArticleSectionVideo_section$data

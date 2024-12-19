@@ -1,4 +1,4 @@
-import { act, render, type RenderResult } from "@testing-library/react"
+import { type RenderResult, act, render } from "@testing-library/react"
 import { MockBoot } from "DevTools/MockBoot"
 import type * as React from "react"
 import {
@@ -9,9 +9,9 @@ import {
 } from "react-relay"
 import type { OperationDescriptor, OperationType } from "relay-runtime"
 import {
-  createMockEnvironment,
-  MockPayloadGenerator,
   type MockEnvironment,
+  MockPayloadGenerator,
+  createMockEnvironment,
 } from "relay-test-utils"
 import type { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 

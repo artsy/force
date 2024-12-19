@@ -1,11 +1,11 @@
+import { Join, Link, Spacer, Text } from "@artsy/palette"
+import { SaleAgreementsFilter } from "Apps/SaleAgreements/Components/SaleAgreementsFilter"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { getENV } from "Utils/getENV"
+import type { SaleAgreementsApp_viewer$key } from "__generated__/SaleAgreementsApp_viewer.graphql"
+import { HttpError } from "found"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
-import { Join, Link, Spacer, Text } from "@artsy/palette"
-import type { SaleAgreementsApp_viewer$key } from "__generated__/SaleAgreementsApp_viewer.graphql"
-import { SaleAgreementsFilter } from "Apps/SaleAgreements/Components/SaleAgreementsFilter"
-import { getENV } from "Utils/getENV"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
-import { HttpError } from "found"
 
 interface SaleAgreementsAppProps {
   viewer: SaleAgreementsApp_viewer$key

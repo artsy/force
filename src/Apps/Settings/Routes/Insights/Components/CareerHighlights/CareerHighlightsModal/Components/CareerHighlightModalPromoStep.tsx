@@ -1,15 +1,15 @@
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 import {
-  Flex,
-  Text,
-  Spacer,
   Button,
-  ResponsiveBox,
+  Flex,
   Image,
+  ResponsiveBox,
+  Spacer,
+  Text,
 } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import { cropped } from "Utils/resized"
 import { Media } from "Utils/Responsive"
-import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
+import { cropped } from "Utils/resized"
 
 const CareerHighlightModalPromoStepDesktop = () => {
   const { src: dSrc, srcSet: dSrcSet } = cropped(

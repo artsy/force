@@ -1,11 +1,11 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ExampleArtistRoute_artist$data } from "__generated__/ExampleArtistRoute_artist.graphql"
-import { Box, Text } from "@artsy/palette"
-import { Title } from "react-head"
-import { Analytics } from "System/Contexts/AnalyticsContext"
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ContextModule } from "@artsy/cohesion"
+import { Box, Text } from "@artsy/palette"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
+import { Analytics } from "System/Contexts/AnalyticsContext"
+import type { ExampleArtistRoute_artist$data } from "__generated__/ExampleArtistRoute_artist.graphql"
+import type * as React from "react"
+import { Title } from "react-head"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface ExampleArtistAppProps {
   artist: ExampleArtistRoute_artist$data

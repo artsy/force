@@ -1,11 +1,11 @@
-import { mount, type ReactWrapper } from "enzyme"
+import { Input } from "@artsy/palette"
 import {
   LocationAutocompleteInput,
-  normalizePlace,
   type Place,
+  normalizePlace,
 } from "Components/LocationAutocompleteInput"
-import { Input } from "@artsy/palette"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { type ReactWrapper, mount } from "enzyme"
 
 const mockGetPlacePredictions = jest.fn().mockResolvedValue({
   predictions: [

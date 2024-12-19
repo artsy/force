@@ -1,11 +1,11 @@
-import type { LotTimer_saleArtwork$data } from "__generated__/LotTimer_saleArtwork.graphql"
-import { createFragmentContainer, graphql } from "react-relay"
-import * as React from "react"
-import { Text, Spacer, Box } from "@artsy/palette"
+import { Box, Spacer, Text } from "@artsy/palette"
+import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
+import type { LotTimer_saleArtwork$data } from "__generated__/LotTimer_saleArtwork.graphql"
+import * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarAuctionProgressBar } from "./ArtworkSidebarAuctionProgressBar"
-import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 
 export interface LotTimerProps {
   saleArtwork: LotTimer_saleArtwork$data

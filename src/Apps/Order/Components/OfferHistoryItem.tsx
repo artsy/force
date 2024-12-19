@@ -1,14 +1,14 @@
 import { Flex, type FlexProps, Spacer, Text } from "@artsy/palette"
-import type { OfferHistoryItem_order$data } from "__generated__/OfferHistoryItem_order.graphql"
+import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
+import { getOfferItemFromOrder } from "Apps/Order/Utils/offerUtils"
 import {
   StepSummaryItem,
   type StepSummaryItemProps,
 } from "Components/StepSummaryItem"
+import type { OfferHistoryItem_order$data } from "__generated__/OfferHistoryItem_order.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RevealButton } from "./RevealButton"
-import { getOfferItemFromOrder } from "Apps/Order/Utils/offerUtils"
-import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 
 const OfferHistoryItem: React.FC<
   React.PropsWithChildren<

@@ -1,15 +1,15 @@
 import { Join, Spacer } from "@artsy/palette"
-import type * as React from "react"
-import { Title, Meta } from "react-head"
-import { createFragmentContainer, graphql } from "react-relay"
+import { ArtistEditorialNewsGridQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
+import { ArtistOverviewEmpty } from "Apps/Artist/Routes/Overview/Components/ArtistOverviewEmpty"
 import { ArtistRelatedGeneCategoriesQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistRelatedGeneCategories"
+import { ArtistSeriesRailQueryRenderer } from "Components/ArtistSeriesRail/ArtistSeriesRail"
+import type { ArtistOverviewRoute_artist$data } from "__generated__/ArtistOverviewRoute_artist.graphql"
+import type * as React from "react"
+import { Meta, Title } from "react-head"
+import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCareerHighlightsQueryRenderer } from "./Components/ArtistCareerHighlights"
 import { ArtistCurrentShowsRailQueryRenderer } from "./Components/ArtistCurrentShowsRail"
 import { ArtistRelatedArtistsRailQueryRenderer } from "./Components/ArtistRelatedArtistsRail"
-import { ArtistSeriesRailQueryRenderer } from "Components/ArtistSeriesRail/ArtistSeriesRail"
-import type { ArtistOverviewRoute_artist$data } from "__generated__/ArtistOverviewRoute_artist.graphql"
-import { ArtistEditorialNewsGridQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
-import { ArtistOverviewEmpty } from "Apps/Artist/Routes/Overview/Components/ArtistOverviewEmpty"
 
 interface ArtistOverviewRouteProps {
   artist: ArtistOverviewRoute_artist$data

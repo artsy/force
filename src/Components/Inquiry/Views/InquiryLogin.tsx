@@ -1,4 +1,11 @@
 import {
+  ActionType,
+  AuthModalType,
+  ContextModule,
+  Intent,
+  type SuccessfullyLoggedIn,
+} from "@artsy/cohesion"
+import {
   Box,
   Button,
   Clickable,
@@ -9,24 +16,17 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
+import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import { logger } from "Components/Inquiry/util"
+import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
+import { login } from "Utils/auth"
+import { wait } from "Utils/wait"
 import { useState } from "react"
 import type * as React from "react"
-import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import { wait } from "Utils/wait"
-import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
-import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
-import { login } from "Utils/auth"
-import { useInquiryAccountContext, Screen } from "./InquiryAccount"
-import { logger } from "Components/Inquiry/util"
 import { useTracking } from "react-tracking"
-import {
-  ActionType,
-  AuthModalType,
-  ContextModule,
-  Intent,
-  type SuccessfullyLoggedIn,
-} from "@artsy/cohesion"
-import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
+import { Screen, useInquiryAccountContext } from "./InquiryAccount"
 
 type Mode =
   | "Pending"

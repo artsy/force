@@ -1,17 +1,17 @@
-import { Pill, Stack } from "@artsy/palette"
-import type { NavigationTabs_searchableConnection$data } from "__generated__/NavigationTabs_searchableConnection.graphql"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Components/RouterLink"
-import { useIsRouteActive } from "System/Hooks/useRouter"
 import {
   ActionType,
   type ClickedNavigationTab,
   type ContextModule,
 } from "@artsy/cohesion"
-import { useTracking } from "react-tracking"
-import { type FC, useMemo } from "react"
+import { Pill, Stack } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useIsRouteActive } from "System/Hooks/useRouter"
+import type { NavigationTabs_searchableConnection$data } from "__generated__/NavigationTabs_searchableConnection.graphql"
 import { compact } from "lodash"
+import { type FC, useMemo } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 export interface NavigationTabsProps {
   searchableConnection: NavigationTabs_searchableConnection$data

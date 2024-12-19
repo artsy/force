@@ -1,7 +1,7 @@
 import { Box, THEME } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import styled from "styled-components"
 import { toStyle } from "Utils/toStyle"
+import styled from "styled-components"
 
 export const PageHTML = styled(Box)`
   h1,

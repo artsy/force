@@ -1,6 +1,6 @@
-import type { Router } from "found"
 import type { RouteProps } from "System/Router/Route"
 import { catchLinks } from "System/Router/Utils/catchLinks"
+import type { Router } from "found"
 
 interface InterceptLinksProps {
   router: Router

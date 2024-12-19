@@ -1,8 +1,8 @@
-import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { EntityHeaderGeneFragmentContainer_Test_Query } from "__generated__/EntityHeaderGeneFragmentContainer_Test_Query.graphql"
 import { screen } from "@testing-library/react"
 import { EntityHeaderGeneFragmentContainer } from "Components/EntityHeaders/EntityHeaderGene"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { EntityHeaderGeneFragmentContainer_Test_Query } from "__generated__/EntityHeaderGeneFragmentContainer_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

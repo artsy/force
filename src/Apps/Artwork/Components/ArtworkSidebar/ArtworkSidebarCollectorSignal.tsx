@@ -1,10 +1,10 @@
-import { Flex, Text, Stack } from "@artsy/palette"
-import { useFragment, graphql } from "react-relay"
-import type { ArtworkSidebarCollectorSignal_artwork$key } from "__generated__/ArtworkSidebarCollectorSignal_artwork.graphql"
 import FairIcon from "@artsy/icons/FairIcon"
-import { RouterLink } from "System/Components/RouterLink"
 import TrendingIcon from "@artsy/icons/TrendingIcon"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
+import { Flex, Stack, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import type { ArtworkSidebarCollectorSignal_artwork$key } from "__generated__/ArtworkSidebarCollectorSignal_artwork.graphql"
+import { graphql, useFragment } from "react-relay"
 
 interface ArtworkSidebarCollectorSignalProps {
   artwork: ArtworkSidebarCollectorSignal_artwork$key

@@ -1,14 +1,14 @@
+import {
+  type FlexProps,
+  Spacer,
+  StackableBorderBox,
+  Text,
+} from "@artsy/palette"
+import { extractNodes } from "Utils/extractNodes"
 import type { AdditionalArtworkDetails_order$data } from "__generated__/AdditionalArtworkDetails_order.graphql"
 import type { Omit } from "lodash"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import {
-  type FlexProps,
-  Text,
-  Spacer,
-  StackableBorderBox,
-} from "@artsy/palette"
-import { extractNodes } from "Utils/extractNodes"
 
 export interface AdditionalArtworkDetailsProps
   extends Omit<FlexProps, "order"> {

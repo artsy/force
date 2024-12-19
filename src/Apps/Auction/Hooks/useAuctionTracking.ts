@@ -1,11 +1,11 @@
-import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ActionType,
   type AddToCalendar,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useTracking } from "react-tracking"
 
 /**
  * Tracking TODO:

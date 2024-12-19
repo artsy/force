@@ -1,12 +1,12 @@
-import type * as React from "react"
 import { Checkbox, Flex } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { FilterExpandable } from "./FilterExpandable"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import type * as React from "react"
+import { FilterExpandable } from "./FilterExpandable"
 
 export const ATTRIBUTION_CLASS_OPTIONS = [
   { name: "Unique", value: "unique" },

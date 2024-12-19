@@ -7,11 +7,11 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import type { CellArtistSeries_artistSeries$data } from "__generated__/CellArtistSeries_artistSeries.graphql"
-import { DEFAULT_CELL_WIDTH } from "./constants"
 import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { DEFAULT_CELL_WIDTH } from "./constants"
 
 export interface CellArtistSeriesProps extends Omit<RouterLinkProps, "to"> {
   artistSeries: CellArtistSeries_artistSeries$data

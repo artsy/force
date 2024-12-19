@@ -1,13 +1,13 @@
-import { LabeledInput } from "@artsy/palette"
-import { FilterExpandable } from "./FilterExpandable"
-import type React from "react"
-import { useRef, useEffect, useMemo, useState } from "react"
-import { debounce } from "lodash"
-import {
-  useCurrentlySelectedFilters,
-  useArtworkFilterContext,
-} from "Components/ArtworkFilter/ArtworkFilterContext"
 import SearchIcon from "@artsy/icons/SearchIcon"
+import { LabeledInput } from "@artsy/palette"
+import {
+  useArtworkFilterContext,
+  useCurrentlySelectedFilters,
+} from "Components/ArtworkFilter/ArtworkFilterContext"
+import { debounce } from "lodash"
+import type React from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { FilterExpandable } from "./FilterExpandable"
 
 const DEBOUNCE_DELAY = 300
 

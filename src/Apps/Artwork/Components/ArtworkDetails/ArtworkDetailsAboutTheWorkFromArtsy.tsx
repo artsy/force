@@ -1,8 +1,8 @@
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { HTML, ReadMore, Spacer, StackableBorderBox } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
 import type { ArtworkDetailsAboutTheWorkFromArtsy_artwork$data } from "__generated__/ArtworkDetailsAboutTheWorkFromArtsy_artwork.graphql"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
 export const READ_MORE_MAX_CHARS = {

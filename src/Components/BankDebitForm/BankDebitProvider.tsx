@@ -1,19 +1,19 @@
-import { type FC, useEffect, useState } from "react"
+import { Box, Message, Spacer, Text, useTheme } from "@artsy/palette"
+import { Elements } from "@stripe/react-stripe-js"
 import {
   type Appearance,
-  loadStripe,
   type StripeError,
+  loadStripe,
 } from "@stripe/stripe-js"
-import { Elements } from "@stripe/react-stripe-js"
+import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+import { LoadingArea } from "Components/LoadingArea"
 import { getENV } from "Utils/getENV"
-import { BankDebitForm } from "./BankDebitForm"
-import { CreateBankDebitSetupForOrder } from "./Mutations/CreateBankDebitSetupForOrder"
 import type { BankAccountPicker_order$data } from "__generated__/BankAccountPicker_order.graphql"
 import type { Payment_order$data } from "__generated__/Payment_order.graphql"
-import { Box, Message, Spacer, Text, useTheme } from "@artsy/palette"
-import { LoadingArea } from "Components/LoadingArea"
 import { camelCase, upperFirst } from "lodash"
-import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+import { type FC, useEffect, useState } from "react"
+import { BankDebitForm } from "./BankDebitForm"
+import { CreateBankDebitSetupForOrder } from "./Mutations/CreateBankDebitSetupForOrder"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 

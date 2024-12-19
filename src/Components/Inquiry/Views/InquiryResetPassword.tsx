@@ -1,4 +1,11 @@
 import {
+  ActionType,
+  AuthModalType,
+  ContextModule,
+  Intent,
+  type ResetYourPassword,
+} from "@artsy/cohesion"
+import {
   Box,
   Button,
   Clickable,
@@ -7,19 +14,12 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import { forgotPassword } from "Utils/auth"
 import { useState } from "react"
 import type * as React from "react"
-import { forgotPassword } from "Utils/auth"
-import { useInquiryAccountContext, Screen } from "./InquiryAccount"
 import { useTracking } from "react-tracking"
-import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
-import {
-  ActionType,
-  AuthModalType,
-  ContextModule,
-  Intent,
-  type ResetYourPassword,
-} from "@artsy/cohesion"
+import { Screen, useInquiryAccountContext } from "./InquiryAccount"
 
 type Mode = "Resetting" | "Error" | "Done"
 

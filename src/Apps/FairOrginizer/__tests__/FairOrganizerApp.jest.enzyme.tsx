@@ -1,8 +1,8 @@
-import { graphql } from "react-relay"
-import type { FairOrganizerApp_Test_Query } from "__generated__/FairOrganizerApp_Test_Query.graphql"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { FairOrganizerAppFragmentContainer } from "Apps/FairOrginizer/FairOrganizerApp"
 import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { FairOrganizerApp_Test_Query } from "__generated__/FairOrganizerApp_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

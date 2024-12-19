@@ -8,17 +8,17 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { isEmpty, camelCase, snakeCase } from "lodash"
-import type { FC } from "react"
-import { Form, Formik } from "formik"
-import { createFragmentContainer, graphql } from "react-relay"
+import { MetaTags } from "Components/MetaTags"
+import { useRouter } from "System/Hooks/useRouter"
 import type {
   PreferencesApp_viewer$data,
   SubGroupStatus,
 } from "__generated__/PreferencesApp_viewer.graphql"
+import { Form, Formik } from "formik"
+import { camelCase, isEmpty, snakeCase } from "lodash"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useEditNotificationPreferences } from "./useEditNotificationPreferences"
-import { useRouter } from "System/Hooks/useRouter"
-import { MetaTags } from "Components/MetaTags"
 
 export const parseTokenFromRouter = (router): string => {
   const tokenFromQuery =

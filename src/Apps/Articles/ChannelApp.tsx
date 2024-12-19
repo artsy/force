@@ -1,14 +1,14 @@
-import type { FC } from "react"
 import { Box, Flex, Join, Spacer, Text, useTheme } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { MetaTags } from "Components/MetaTags"
-import type { ChannelApp_channel$data } from "__generated__/ChannelApp_channel.graphql"
 import { ArticleAdProvider } from "Apps/Article/Components/ArticleAd/ArticleAd"
 import {
   FullBleedHeader,
   FullBleedHeaderOverlay,
 } from "Components/FullBleedHeader/FullBleedHeader"
+import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Components/RouterLink"
+import type { ChannelApp_channel$data } from "__generated__/ChannelApp_channel.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { ChannelArticlesPaginationContainer } from "./Components/ChannelArticles"
 
 interface ChannelAppProps {

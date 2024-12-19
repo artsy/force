@@ -1,8 +1,8 @@
 import { Box, Button, Clickable, Flex, ModalBase, Text } from "@artsy/palette"
+import { isEqual, omit } from "lodash"
 import { type ReactNode, useEffect, useRef } from "react"
 import styled from "styled-components"
 import { useArtworkFilterContext } from "./ArtworkFilterContext"
-import { isEqual, omit } from "lodash"
 import { countChangedFilters } from "./Utils/countChangedFilters"
 
 interface ArtworkFilterMobileOverlayProps {

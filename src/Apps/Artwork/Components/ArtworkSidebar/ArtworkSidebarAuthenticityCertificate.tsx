@@ -1,17 +1,17 @@
 import {
-  Flex,
-  Text,
-  Spacer,
-  Clickable,
-  ModalDialog,
   Button,
+  Clickable,
+  Flex,
+  ModalDialog,
+  Spacer,
+  Text,
 } from "@artsy/palette"
 import type { ArtworkSidebarAuthenticityCertificate_artwork$data } from "__generated__/ArtworkSidebarAuthenticityCertificate_artwork.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { RouterLink } from "System/Components/RouterLink"
 import CertificateIcon from "@artsy/icons/CertificateIcon"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface ArtworkSidebarAuthenticityCertificateProps {
   artwork: ArtworkSidebarAuthenticityCertificate_artwork$data

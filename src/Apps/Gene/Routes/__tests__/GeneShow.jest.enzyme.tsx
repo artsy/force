@@ -1,8 +1,8 @@
 import { GeneShowFragmentContainer } from "Apps/Gene/Routes/GeneShow"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { graphql } from "react-relay"
-import type { GeneShow_Test_Query } from "__generated__/GeneShow_Test_Query.graphql"
 import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { GeneShow_Test_Query } from "__generated__/GeneShow_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("../../Components/GeneArtworkFilter", () => ({

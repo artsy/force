@@ -1,6 +1,6 @@
-import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
 import type { useUnlinkSettingsLinkedAccountMutation } from "__generated__/useUnlinkSettingsLinkedAccountMutation.graphql"
+import { graphql } from "react-relay"
 
 export const useUnlinkSettingsLinkedAccount = () => {
   return useMutation<useUnlinkSettingsLinkedAccountMutation>({

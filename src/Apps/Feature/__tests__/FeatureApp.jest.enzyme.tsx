@@ -1,8 +1,8 @@
-import { MockBoot } from "DevTools/MockBoot"
 import { FeatureAppFragmentContainer } from "Apps/Feature/FeatureApp"
-import { graphql } from "react-relay"
-import type { FeatureApp_Test_Query } from "__generated__/FeatureApp_Test_Query.graphql"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { FeatureApp_Test_Query } from "__generated__/FeatureApp_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

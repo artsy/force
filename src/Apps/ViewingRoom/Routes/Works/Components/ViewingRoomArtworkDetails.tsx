@@ -1,12 +1,12 @@
-import type * as React from "react"
-import { Button, GridColumns, Column, HTML, ReadMore } from "@artsy/palette"
-import type { ViewingRoomArtworkDetails_artwork$data } from "__generated__/ViewingRoomArtworkDetails_artwork.graphql"
-import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Components/RouterLink"
-import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { useTracking } from "react-tracking"
+import { Button, Column, GridColumns, HTML, ReadMore } from "@artsy/palette"
+import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
+import { RouterLink } from "System/Components/RouterLink"
+import type { ViewingRoomArtworkDetails_artwork$data } from "__generated__/ViewingRoomArtworkDetails_artwork.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ViewingRoomArtworkDetailsProps {
   artwork: ViewingRoomArtworkDetails_artwork$data

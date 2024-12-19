@@ -1,34 +1,34 @@
-import { type FC, useState } from "react"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Button, Flex, Message, Spacer, Text } from "@artsy/palette"
-import type { Offer_order$data } from "__generated__/Offer_order.graphql"
-import type { OfferMutation } from "__generated__/OfferMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
+import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
-import { PriceOptionsFragmentContainer } from "Apps/Order/Components/PriceOptions"
 import { OfferNote } from "Apps/Order/Components/OfferNote"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
+import { offerFlowSteps } from "Apps/Order/Components/OrderStepper"
+import { PriceOptionsFragmentContainer } from "Apps/Order/Components/PriceOptions"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
   type CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-import { useTracking } from "react-tracking"
-import type { Router } from "found"
-import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
-import createLogger from "Utils/logger"
-import { Media } from "Utils/Responsive"
-import { offerFlowSteps } from "Apps/Order/Components/OrderStepper"
-import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
+import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import {
   getOfferItemFromOrder,
   lastOfferNote,
 } from "Apps/Order/Utils/offerUtils"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { isNil } from "lodash"
-import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
-import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { useJump } from "Utils/Hooks/useJump"
+import { Media } from "Utils/Responsive"
+import createLogger from "Utils/logger"
+import type { OfferMutation } from "__generated__/OfferMutation.graphql"
+import type { Offer_order$data } from "__generated__/Offer_order.graphql"
+import type { Router } from "found"
+import { isNil } from "lodash"
+import { type FC, useState } from "react"
+import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 const logger = createLogger("Order/Routes/Offer/index.tsx")
 

@@ -1,7 +1,7 @@
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ArtistCVRouteFragmentContainer } from "Apps/Artist/Routes/CV/ArtistCVRoute"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import type { ArtistCVRoute_Test_Query } from "__generated__/ArtistCVRoute_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("Components/MetaTags", () => ({

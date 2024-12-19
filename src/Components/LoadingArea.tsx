@@ -1,6 +1,6 @@
 import { Box, type BoxProps, Spinner } from "@artsy/palette"
 import { Sticky } from "Components/Sticky"
-import type { ReactNode, FC } from "react"
+import type { FC, ReactNode } from "react"
 
 interface LoadingAreaProps extends BoxProps {
   isLoading: boolean

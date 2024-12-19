@@ -1,10 +1,10 @@
 import { renderHook } from "@testing-library/react-hooks"
-import { fetchQuery } from "react-relay"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 import take from "lodash/take"
+import { fetchQuery } from "react-relay"
 
 jest.mock("react-relay", () => ({
   fetchQuery: jest.fn(),

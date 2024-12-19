@@ -1,9 +1,11 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import CloseIcon from "@artsy/icons/CloseIcon"
+import MenuIcon from "@artsy/icons/MenuIcon"
 import { ModalBase, Separator, Text } from "@artsy/palette"
 import {
-  WHATS_NEW_SUBMENU_DATA,
   ARTISTS_SUBMENU_DATA,
   ARTWORKS_SUBMENU_DATA,
+  WHATS_NEW_SUBMENU_DATA,
 } from "Components/NavBar/menuData"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
@@ -18,8 +20,6 @@ import {
 import { NavBarMobileMenuNavigationProvider } from "./NavBarMobileMenuNavigation"
 import { NavBarMobileMenuTransition } from "./NavBarMobileMenuTransition"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
-import CloseIcon from "@artsy/icons/CloseIcon"
-import MenuIcon from "@artsy/icons/MenuIcon"
 
 interface NavBarMobileMenuProps {
   isOpen: boolean

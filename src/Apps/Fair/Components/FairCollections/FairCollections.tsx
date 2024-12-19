@@ -1,7 +1,7 @@
+import { Box, type BoxProps, Shelf, Spacer, Text } from "@artsy/palette"
+import type { FairCollections_fair$data } from "__generated__/FairCollections_fair.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { FairCollections_fair$data } from "__generated__/FairCollections_fair.graphql"
-import { Box, type BoxProps, Shelf, Spacer, Text } from "@artsy/palette"
 import { FairCollectionFragmentContainer as FairCollection } from "./FairCollection"
 
 interface FairCollectionsProps extends BoxProps {

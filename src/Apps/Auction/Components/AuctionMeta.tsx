@@ -1,7 +1,7 @@
-import { createFragmentContainer, graphql } from "react-relay"
+import { MetaTags } from "Components/MetaTags"
 import type { AuctionMeta_sale$data } from "__generated__/AuctionMeta_sale.graphql"
 import { truncate } from "lodash"
-import { MetaTags } from "Components/MetaTags"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface AuctionMetaProps {
   sale: AuctionMeta_sale$data

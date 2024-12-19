@@ -1,9 +1,9 @@
 import { Text } from "@artsy/palette"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkFilter } from "Components/ArtworkFilter"
 import { useRouter } from "System/Hooks/useRouter"
 import type { ExampleArtworkFilterRoute_viewer$data } from "__generated__/ExampleArtworkFilterRoute_viewer.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ExampleArtworkFilterProps {
   viewer: ExampleArtworkFilterRoute_viewer$data

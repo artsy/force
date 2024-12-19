@@ -1,5 +1,5 @@
-import { mount } from "enzyme"
 import { StructuredData } from "Components/Seo/StructuredData"
+import { mount } from "enzyme"
 import { HeadProvider } from "react-head"
 
 describe("StructuredData", () => {

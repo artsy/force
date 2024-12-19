@@ -1,10 +1,10 @@
 import { Spacer } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionTimerFragmentContainer } from "Components/AuctionTimer"
+import { createFragmentContainer, graphql } from "react-relay"
 
+import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import type { ArtworkSidebarAuctionTimer_artwork$data } from "__generated__/ArtworkSidebarAuctionTimer_artwork.graphql"
 import { LotTimerFragmentContainer } from "./LotTimer"
-import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 
 interface ArtworkSidebarAuctionTimerProps {
   artwork: ArtworkSidebarAuctionTimer_artwork$data

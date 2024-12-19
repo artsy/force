@@ -1,15 +1,15 @@
 import path from "path"
-import type RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
-import { getENV } from "Utils/getENV"
-import type { Environment } from "react-relay"
 import { ChunkExtractor } from "@loadable/server"
-import { ServerStyleSheet } from "styled-components"
-import { renderToString } from "react-dom/server"
 import { ENABLE_SSR_STREAMING } from "Server/config"
-import { renderToStream } from "System/Router/Utils/renderToStream"
-import type { ArtsyRequest } from "Server/middleware/artsyExpress"
-import { serializeRelayHydrationData } from "System/Router/Utils/serializeRelayHydrationData"
 import { loadAssetManifest } from "Server/manifest"
+import type { ArtsyRequest } from "Server/middleware/artsyExpress"
+import { renderToStream } from "System/Router/Utils/renderToStream"
+import { serializeRelayHydrationData } from "System/Router/Utils/serializeRelayHydrationData"
+import { getENV } from "Utils/getENV"
+import { renderToString } from "react-dom/server"
+import type { Environment } from "react-relay"
+import type RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
+import { ServerStyleSheet } from "styled-components"
 
 interface CollectAssetsProps {
   ServerRouter: React.FC<React.PropsWithChildren<unknown>>

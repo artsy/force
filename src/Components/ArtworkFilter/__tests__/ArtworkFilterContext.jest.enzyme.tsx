@@ -1,10 +1,10 @@
-import { mount } from "enzyme"
-import { act } from "react-dom/test-utils"
 import {
   ArtworkFilterContextProvider,
   initialArtworkFilterState,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { mount } from "enzyme"
+import { act } from "react-dom/test-utils"
 
 describe("ArtworkFilterContext", () => {
   let context: ReturnType<typeof useArtworkFilterContext>

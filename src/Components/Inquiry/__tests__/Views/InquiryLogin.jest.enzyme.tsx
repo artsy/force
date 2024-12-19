@@ -1,10 +1,10 @@
-import { mount } from "enzyme"
-import { InquiryLogin } from "Components/Inquiry/Views/InquiryLogin"
-import { login } from "Utils/auth"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import { InquiryLogin } from "Components/Inquiry/Views/InquiryLogin"
 import { fill } from "Components/Inquiry/__tests__/util"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { login } from "Utils/auth"
+import { mount } from "enzyme"
 import { useTracking } from "react-tracking"
 
 jest.mock("Utils/auth")

@@ -1,11 +1,11 @@
-import { DateTime } from "luxon"
 import {
   daysSinceDate,
-  fromToday,
   exactDate,
+  fromToday,
   minutesSinceDate,
   relativeDate,
 } from "Apps/Conversations/components/Message/Utils/dateFormatters"
+import { DateTime } from "luxon"
 
 describe("dateFormatters", () => {
   describe("daysSinceDate", () => {

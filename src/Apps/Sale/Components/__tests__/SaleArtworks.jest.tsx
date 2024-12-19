@@ -2,11 +2,11 @@ import { screen } from "@testing-library/react"
 import { SaleArtworkFilterRefetchContainer } from "Apps/Sale/Components/SaleArtworks"
 import {
   artistAggregation,
-  partnerAggregation,
-  locationCityAggregation,
-  mediumAggregation,
-  materialsTermsAggregation,
   artistNationalityAggregation,
+  locationCityAggregation,
+  materialsTermsAggregation,
+  mediumAggregation,
+  partnerAggregation,
 } from "Apps/__tests__/Fixtures/aggregations"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"

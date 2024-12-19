@@ -1,13 +1,13 @@
-import type * as React from "react"
 import { Box, type BoxProps, Flex, Shelf, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtworksRail_partner$data } from "__generated__/ArtworksRail_partner.graphql"
-import type { ArtworksRailRendererQuery } from "__generated__/ArtworksRailRendererQuery.graphql"
-import { ArtworksRailPlaceholder } from "./ArtworkRailPlaceholder"
-import { ViewAllButton } from "./ViewAllButton"
+import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import type { ArtworksRailRendererQuery } from "__generated__/ArtworksRailRendererQuery.graphql"
+import type { ArtworksRail_partner$data } from "__generated__/ArtworksRail_partner.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ArtworksRailPlaceholder } from "./ArtworkRailPlaceholder"
+import { ViewAllButton } from "./ViewAllButton"
 
 interface ArtworksRailProps extends BoxProps {
   partner: ArtworksRail_partner$data

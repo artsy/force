@@ -1,13 +1,3 @@
-import { type FC, Fragment } from "react"
-import { graphql, useLazyLoadQuery } from "react-relay"
-import type {
-  CollectionArtworkSorts,
-  SavesArtworksGridQuery,
-} from "__generated__/SavesArtworksGridQuery.graphql"
-import type { CustomRangeSegment } from "Components/PriceRange/constants"
-import { Masonry } from "Components/Masonry"
-import { extractNodes } from "Utils/extractNodes"
-import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import {
   Clickable,
   Message,
@@ -15,8 +5,18 @@ import {
   Spacer,
   Stack,
 } from "@artsy/palette"
+import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
+import { Masonry } from "Components/Masonry"
 import { PaginationFragmentContainer } from "Components/Pagination"
+import type { CustomRangeSegment } from "Components/PriceRange/constants"
+import { extractNodes } from "Utils/extractNodes"
+import type {
+  CollectionArtworkSorts,
+  SavesArtworksGridQuery,
+} from "__generated__/SavesArtworksGridQuery.graphql"
+import { type FC, Fragment } from "react"
+import { graphql, useLazyLoadQuery } from "react-relay"
 
 interface SavesArtworksGridProps {
   id: string

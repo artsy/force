@@ -1,19 +1,19 @@
-import { type FC, useMemo } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import {
-  Flex,
-  Join,
-  Spacer,
   Box,
+  Column,
+  Flex,
   FullBleed,
   GridColumns,
-  Column,
+  Join,
+  Spacer,
 } from "@artsy/palette"
-import type { ArticleSectionImageCollection_section$data } from "__generated__/ArticleSectionImageCollection_section.graphql"
-import { ArticleSectionImageCollectionImageFragmentContainer } from "./ArticleSectionImageCollectionImage"
-import { ArticleSectionImageCollectionCaptionFragmentContainer } from "./ArticleSectionImageCollectionCaption"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { CENTERED_LAYOUT_COLUMNS } from "Apps/Article/Components/ArticleBody"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import type { ArticleSectionImageCollection_section$data } from "__generated__/ArticleSectionImageCollection_section.graphql"
+import { type FC, useMemo } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ArticleSectionImageCollectionCaptionFragmentContainer } from "./ArticleSectionImageCollectionCaption"
+import { ArticleSectionImageCollectionImageFragmentContainer } from "./ArticleSectionImageCollectionImage"
 
 const FULLBLEED_IMAGE_WIDTH = 2000
 const MAX_IMAGE_WIDTH = 910

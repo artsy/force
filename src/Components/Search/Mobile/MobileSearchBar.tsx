@@ -1,16 +1,16 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { LabeledInput, useDidMount } from "@artsy/palette"
-import { OverlayRefetchContainer } from "./Overlay"
 import { type FC, useState } from "react"
+import { OverlayRefetchContainer } from "./Overlay"
 
-import { graphql } from "react-relay"
+import { StaticSearchContainer } from "Components/Search/StaticSearchContainer"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type {
   MobileSearchBarSuggestQuery,
   MobileSearchBarSuggestQuery$data,
 } from "__generated__/MobileSearchBarSuggestQuery.graphql"
-import { StaticSearchContainer } from "Components/Search/StaticSearchContainer"
+import { graphql } from "react-relay"
 
 interface MobileSearchBarProps {
   viewer: NonNullable<MobileSearchBarSuggestQuery$data["viewer"]>

@@ -1,8 +1,8 @@
-import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { UserActiveBidsFragmentContainer } from "Apps/Settings/Routes/Auctions/Components/UserActiveBids"
-import type { UserActiveBids_Test_Query } from "__generated__/UserActiveBids_Test_Query.graphql"
 import { screen } from "@testing-library/react"
+import { UserActiveBidsFragmentContainer } from "Apps/Settings/Routes/Auctions/Components/UserActiveBids"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { UserActiveBids_Test_Query } from "__generated__/UserActiveBids_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

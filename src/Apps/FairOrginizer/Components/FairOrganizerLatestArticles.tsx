@@ -1,11 +1,11 @@
-import type * as React from "react"
 import { Box, Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { FairOrganizerLatestArticles_fairOrganizer$data } from "__generated__/FairOrganizerLatestArticles_fairOrganizer.graphql"
-import { extractNodes } from "Utils/extractNodes"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 import { Masonry } from "Components/Masonry"
+import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
+import type { FairOrganizerLatestArticles_fairOrganizer$data } from "__generated__/FairOrganizerLatestArticles_fairOrganizer.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface FairOrganizerLatestArticlesProps {
   fairOrganizer: FairOrganizerLatestArticles_fairOrganizer$data

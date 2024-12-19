@@ -1,20 +1,20 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Button,
   Column,
   GridColumns,
-  Text,
   Image,
   ResponsiveBox,
+  Text,
 } from "@artsy/palette"
-import type { ArtistConsignHeader_artist$data } from "__generated__/ArtistConsignHeader_artist.graphql"
 import { SectionContainer } from "Apps/Artist/Routes/Consign/Components/SectionContainer"
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { useTracking } from "react-tracking"
+import { getConsignSubmissionUrl } from "Apps/Artist/Routes/Consign/Components/Utils/getConsignSubmissionUrl"
 import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
+import type { ArtistConsignHeader_artist$data } from "__generated__/ArtistConsignHeader_artist.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { getConsignSubmissionUrl } from "Apps/Artist/Routes/Consign/Components/Utils/getConsignSubmissionUrl"
-import { extractNodes } from "Utils/extractNodes"
+import { useTracking } from "react-tracking"
 
 interface ArtistConsignHeaderProps {
   artist: ArtistConsignHeader_artist$data

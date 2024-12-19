@@ -1,11 +1,11 @@
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { RegisterButtonFragmentContainer } from "Apps/Auction/Components/RegisterButton"
+import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
+import { useAuthDialog } from "Components/AuthDialog"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { useRouter } from "System/Hooks/useRouter"
 import type { RegisterButton_Test_Query } from "__generated__/RegisterButton_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import { useRouter } from "System/Hooks/useRouter"
-import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

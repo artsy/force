@@ -8,9 +8,9 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import type { FC } from "react"
 import { RouterLink } from "System/Components/RouterLink"
 import { cropped } from "Utils/resized"
+import type { FC } from "react"
 
 interface HomePersonalizeMoreCardProps extends BoxProps {
   src: string

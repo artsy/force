@@ -1,13 +1,13 @@
 import { Box, Flex, Stack, Text, useToasts } from "@artsy/palette"
-import { AuthDialogView } from "Components/AuthDialog/AuthDialog"
-import { type FC, useEffect } from "react"
-import { useRecaptcha } from "Utils/EnableRecaptcha"
-import { useAuthDialogOptions } from "Apps/Authentication/Hooks/useAuthDialogOptions"
-import { MetaTags } from "Components/MetaTags"
 import { AuthenticationInlineDialogProvider } from "Apps/Authentication/Components/AuthenticationInlineDialogProvider"
+import { useAuthDialogOptions } from "Apps/Authentication/Hooks/useAuthDialogOptions"
+import { AuthDialogView } from "Components/AuthDialog/AuthDialog"
 import type { AuthDialogMode } from "Components/AuthDialog/AuthDialogContext"
-import { useRouter } from "System/Hooks/useRouter"
 import { AuthDialogTitle } from "Components/AuthDialog/AuthDialogTitle"
+import { MetaTags } from "Components/MetaTags"
+import { useRouter } from "System/Hooks/useRouter"
+import { useRecaptcha } from "Utils/EnableRecaptcha"
+import { type FC, useEffect } from "react"
 
 const AuthenticationInlineDialogContents: FC<
   React.PropsWithChildren<unknown>

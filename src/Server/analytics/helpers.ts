@@ -1,12 +1,12 @@
+import { subscribeToInAppMessagesByPath } from "Server/analytics/brazeMessagingIntegration"
 import { getContextPageFromClient } from "Server/getContextPage"
 import { reportLoadTimeToVolley } from "Server/volley"
+import { getClientParam } from "Utils/getClientParam"
 import { extend, omit, pick } from "lodash"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
-import { trackTimeOnPage } from "./timeOnPageListener"
 import { setAnalyticsClientReferrerOptions } from "./setAnalyticsClientReferrerOptions"
-import { subscribeToInAppMessagesByPath } from "Server/analytics/brazeMessagingIntegration"
-import { getClientParam } from "Utils/getClientParam"
+import { trackTimeOnPage } from "./timeOnPageListener"
 const Events = require("../../Utils/Events").default
 
 /**

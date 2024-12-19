@@ -1,6 +1,6 @@
 import { useMutation } from "Utils/Hooks/useMutation"
-import { graphql } from "react-relay"
 import type { useSelectShippingQuoteMutation } from "__generated__/useSelectShippingQuoteMutation.graphql"
+import { graphql } from "react-relay"
 
 export const useSelectShippingQuote = () => {
   return useMutation<useSelectShippingQuoteMutation>({

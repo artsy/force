@@ -1,27 +1,27 @@
 import {
+  BorderedRadio,
+  Box,
   Button,
   Expandable,
   Flex,
-  ModalDialog,
-  Spacer,
   Image,
-  Text,
+  ModalDialog,
   Separator,
-  BorderedRadio,
-  Box,
+  Spacer,
+  Text,
 } from "@artsy/palette"
-import { graphql, useFragment } from "react-relay"
+import { themeGet } from "@styled-system/theme-get"
+import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
+import { ConversationMakeOfferButton } from "Apps/Conversations/components/ConversationCTA/ConversationMakeOfferButton"
+import { ConversationPurchaseButton } from "Apps/Conversations/components/ConversationCTA/ConversationPurchaseButton"
 import type {
   ConversationConfirmModal_artwork$data,
   ConversationConfirmModal_artwork$key,
 } from "__generated__/ConversationConfirmModal_artwork.graphql"
-import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
-import { useState } from "react"
-import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
-import { ConversationMakeOfferButton } from "Apps/Conversations/components/ConversationCTA/ConversationMakeOfferButton"
-import { ConversationPurchaseButton } from "Apps/Conversations/components/ConversationCTA/ConversationPurchaseButton"
 import type { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
+import { useState } from "react"
+import { graphql, useFragment } from "react-relay"
+import styled from "styled-components"
 
 interface ConversationConfirmModalProps {
   artwork: ConversationConfirmModal_artwork$key

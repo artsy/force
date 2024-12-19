@@ -1,14 +1,14 @@
-import { Box, Text, Spacer, GridColumns, Column } from "@artsy/palette"
-import type { ArtistConsignFAQ_artist$data } from "__generated__/ArtistConsignFAQ_artist.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { useTracking } from "react-tracking"
+import { Box, Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import { Masonry } from "Components/Masonry"
+import { RouterLink } from "System/Components/RouterLink"
+import type { ArtistConsignFAQ_artist$data } from "__generated__/ArtistConsignFAQ_artist.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
 import { getConsignSubmissionUrl } from "./Utils/getConsignSubmissionUrl"
-import { Masonry } from "Components/Masonry"
-import { RouterLink } from "System/Components/RouterLink"
 
 interface ArtistConsignFAQProps {
   artist: ArtistConsignFAQ_artist$data

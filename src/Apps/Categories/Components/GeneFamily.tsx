@@ -1,11 +1,11 @@
 import { Box, Spacer, Text } from "@artsy/palette"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { GeneFamily_geneFamily$data } from "__generated__/GeneFamily_geneFamily.graphql"
-import { sortBy } from "lodash"
 import { Masonry } from "Components/Masonry"
 import { RouterLink } from "System/Components/RouterLink"
 import { Jump } from "Utils/Hooks/useJump"
+import type { GeneFamily_geneFamily$data } from "__generated__/GeneFamily_geneFamily.graphql"
+import { sortBy } from "lodash"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface GeneFamilyProps {
   geneFamily: GeneFamily_geneFamily$data

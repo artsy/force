@@ -1,17 +1,17 @@
-import { useState, type FC } from "react"
+import { Join, Message, Spacer } from "@artsy/palette"
+import { CommercePaginationFragmentContainer } from "Components/Pagination/CommercePagination"
+import { extractNodes } from "Utils/extractNodes"
+import type { SettingsPurchases_me$data } from "__generated__/SettingsPurchases_me.graphql"
+import { type FC, useState } from "react"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
   graphql,
 } from "react-relay"
-import { Join, Spacer, Message } from "@artsy/palette"
-import { extractNodes } from "Utils/extractNodes"
 import {
   SettingsPurchasesRowFragmentContainer,
   SettingsPurchasesRowPlaceholder,
 } from "./SettingsPurchasesRow"
-import type { SettingsPurchases_me$data } from "__generated__/SettingsPurchases_me.graphql"
-import { CommercePaginationFragmentContainer } from "Components/Pagination/CommercePagination"
 
 export interface SettingsPurchasesProps {
   me: SettingsPurchases_me$data

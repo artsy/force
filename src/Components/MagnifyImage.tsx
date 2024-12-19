@@ -1,7 +1,7 @@
-import { Image as BaseImage, type ImageProps, Box } from "@artsy/palette"
+import { Image as BaseImage, Box, type ImageProps } from "@artsy/palette"
+import { isTouch } from "Utils/device"
 import { useRef, useState } from "react"
 import styled from "styled-components"
-import { isTouch } from "Utils/device"
 
 interface MagnifyImageProps extends ImageProps {
   scale?: number

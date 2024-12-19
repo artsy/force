@@ -1,4 +1,4 @@
-import { Text, Box, Spacer } from "@artsy/palette"
+import { Box, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { FC } from "react"

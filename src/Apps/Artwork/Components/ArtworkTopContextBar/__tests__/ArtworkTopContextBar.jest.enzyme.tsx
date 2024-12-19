@@ -1,8 +1,8 @@
-import type { ArtworkTopContextBar_Test_Query } from "__generated__/ArtworkTopContextBar_Test_Query.graphql"
 import { ArtworkTopContextBarFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBar"
-import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { ArtworkTopContextBar_Test_Query } from "__generated__/ArtworkTopContextBar_Test_Query.graphql"
 import { DateTime } from "luxon"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

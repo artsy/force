@@ -1,18 +1,18 @@
+import { ContextModule, OwnerType, clickedEntityGroup } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Skeleton } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
-import { Rail } from "Components/Rail/Rail"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { extractNodes } from "Utils/extractNodes"
-import type { ArtistCurrentShowsRail_artist$data } from "__generated__/ArtistCurrentShowsRail_artist.graphql"
-import type { ArtistCurrentShowsRailQuery } from "__generated__/ArtistCurrentShowsRailQuery.graphql"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   CellShowFragmentContainer,
   CellShowPlaceholder,
 } from "Components/Cells/CellShow"
+import { Rail } from "Components/Rail/Rail"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
+import type { ArtistCurrentShowsRailQuery } from "__generated__/ArtistCurrentShowsRailQuery.graphql"
+import type { ArtistCurrentShowsRail_artist$data } from "__generated__/ArtistCurrentShowsRail_artist.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ArtistCurrentShowsRailProps {
   artist: ArtistCurrentShowsRail_artist$data

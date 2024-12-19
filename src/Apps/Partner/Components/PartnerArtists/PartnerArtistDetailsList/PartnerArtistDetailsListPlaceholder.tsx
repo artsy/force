@@ -1,6 +1,6 @@
-import type * as React from "react"
 import { Join, Skeleton, Spacer } from "@artsy/palette"
 import { PartnerArtistDetailsPlaceholder } from "Apps/Partner/Components/PartnerArtists/PartnerArtistDetails/PartnerArtistDetailsPlaceholder"
+import type * as React from "react"
 
 export interface PartnerArtistDetailsListPlaceholderProps {
   count: number

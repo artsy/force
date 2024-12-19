@@ -1,15 +1,15 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Flex, Skeleton, SkeletonBox, Text } from "@artsy/palette"
-import type { PreviouslySoldOnArtsyRail_recentlySoldArtworks$data } from "__generated__/PreviouslySoldOnArtsyRail_recentlySoldArtworks.graphql"
-import type { PreviouslySoldOnArtsyRailQuery } from "__generated__/PreviouslySoldOnArtsyRailQuery.graphql"
 import { SoldArtworkFragmentContainer } from "Apps/Sell/Routes/MarketingLanding/Components/LandingPage/SoldArtwork"
 import { Rail } from "Components/Rail/Rail"
-import { shuffle } from "lodash"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { extractNodes } from "Utils/extractNodes"
+import type { PreviouslySoldOnArtsyRailQuery } from "__generated__/PreviouslySoldOnArtsyRailQuery.graphql"
+import type { PreviouslySoldOnArtsyRail_recentlySoldArtworks$data } from "__generated__/PreviouslySoldOnArtsyRail_recentlySoldArtworks.graphql"
+import { shuffle } from "lodash"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface PreviouslySoldOnArtsyRailProps {
   recentlySoldArtworks: PreviouslySoldOnArtsyRail_recentlySoldArtworks$data

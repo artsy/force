@@ -1,8 +1,8 @@
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { useRouter } from "System/Hooks/useRouter"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import type { ArticleVisibilityMetadata_article$data } from "__generated__/ArticleVisibilityMetadata_article.graphql"
-import { useRouter } from "System/Hooks/useRouter"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArticleVisibilityMetadataProps {
   article: ArticleVisibilityMetadata_article$data

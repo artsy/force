@@ -1,9 +1,9 @@
 import { ZeroState } from "Apps/Search/Components/ZeroState"
-import { SystemContextProvider } from "System/Contexts/SystemContext"
+import { SearchResultsArtistsRoute as SearchResultsArtists } from "Apps/Search/Routes/SearchResultsArtists"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import { MockBoot } from "DevTools/MockBoot"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { mount } from "enzyme"
-import { SearchResultsArtistsRoute as SearchResultsArtists } from "Apps/Search/Routes/SearchResultsArtists"
 
 jest.mock("Components/Pagination/useComputeHref")
 

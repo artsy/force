@@ -1,9 +1,9 @@
+import { Rail } from "Components/Rail/Rail"
+import { extractNodes } from "Utils/extractNodes"
+import type { FairOrganizerPastEventsRail_fairOrganizer$data } from "__generated__/FairOrganizerPastEventsRail_fairOrganizer.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairOrganizerPastEventRailCellFragmentContainer as FairOrganizerPastEventRailCell } from "./FairOrganizerPastEventRailCell"
-import type { FairOrganizerPastEventsRail_fairOrganizer$data } from "__generated__/FairOrganizerPastEventsRail_fairOrganizer.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import { Rail } from "Components/Rail/Rail"
 
 interface FairOrganizerPastEventsRailProps {
   fairOrganizer: FairOrganizerPastEventsRail_fairOrganizer$data

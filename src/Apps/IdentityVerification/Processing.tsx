@@ -1,14 +1,14 @@
 import {
   Button,
-  Message,
-  Text,
-  Spacer,
-  GridColumns,
   Column,
+  GridColumns,
+  Message,
+  Spacer,
+  Text,
 } from "@artsy/palette"
+import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Components/RouterLink"
 import type * as React from "react"
-import { MetaTags } from "Components/MetaTags"
 
 export const Processing: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (

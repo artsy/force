@@ -1,18 +1,18 @@
 import {
   Box,
   Flex,
-  RadioGroup,
+  type FlexProps,
   Radio,
+  RadioGroup,
   Separator,
   Text,
-  type FlexProps,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 
+import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 import type { ArtworkSidebarEditionSets_artwork$data } from "__generated__/ArtworkSidebarEditionSets_artwork.graphql"
 import React, { type Dispatch, type SetStateAction } from "react"
 import { ArtworkSidebarSizeInfoFragmentContainer } from "./ArtworkSidebarSizeInfo"
-import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 
 const Row: React.FC<React.PropsWithChildren<FlexProps>> = ({
   children,

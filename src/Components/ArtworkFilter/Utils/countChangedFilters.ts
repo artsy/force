@@ -1,5 +1,5 @@
 import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
-import { isEqual, transform, isObject } from "lodash"
+import { isEqual, isObject, transform } from "lodash"
 
 const difference = (initial: {}, next: {}) => {
   return transform(next, (result, value, key) => {

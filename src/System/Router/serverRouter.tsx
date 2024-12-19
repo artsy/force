@@ -3,10 +3,15 @@ import type {
   ArtsyRequest,
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
+import { Boot } from "System/Boot"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import type { RouteProps } from "System/Router/Route"
-import { matchingMediaQueriesForUserAgent } from "System/Router/Utils/matchingMediaQueriesForUserAgent"
 import { renderStates } from "System/Router/RenderStates"
+import type { RouteProps } from "System/Router/Route"
+import { collectAssets } from "System/Router/Utils/collectAssets"
+import { executeRouteHooks } from "System/Router/Utils/executeRouteHooks"
+import { matchingMediaQueriesForUserAgent } from "System/Router/Utils/matchingMediaQueriesForUserAgent"
+import { queryStringParsing } from "System/Router/Utils/queryStringParsing"
+import { getServerAppContext } from "System/Router/Utils/serverAppContext"
 import type { RouterConfig } from "System/Router/clientRouter"
 import { type MatchingMediaQueries, createMediaStyle } from "Utils/Responsive"
 import { getUser } from "Utils/user"
@@ -21,11 +26,6 @@ import {
 } from "found/server"
 import qs from "qs"
 import type React from "react"
-import { executeRouteHooks } from "System/Router/Utils/executeRouteHooks"
-import { Boot } from "System/Boot"
-import { collectAssets } from "System/Router/Utils/collectAssets"
-import { getServerAppContext } from "System/Router/Utils/serverAppContext"
-import { queryStringParsing } from "System/Router/Utils/queryStringParsing"
 
 export interface ServerAppResults {
   html?: string

@@ -1,12 +1,12 @@
-import { Box, Text, GridColumns, Column, Spacer } from "@artsy/palette"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { useTracking } from "react-tracking"
-import type * as React from "react"
-import type { MenuData } from "Components/NavBar/menuData"
+import { Box, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { NavBarMenuItemLink } from "./NavBarMenuItem"
+import type { MenuData } from "Components/NavBar/menuData"
 import { RouterLink } from "System/Components/RouterLink"
+import type * as React from "react"
+import { useTracking } from "react-tracking"
+import { NavBarMenuItemLink } from "./NavBarMenuItem"
 
 interface NavBarSubMenuProps {
   menu: MenuData

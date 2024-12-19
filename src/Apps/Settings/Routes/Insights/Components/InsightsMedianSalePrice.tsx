@@ -1,14 +1,14 @@
-import { Box, Flex, Text, Clickable, Spacer, Join } from "@artsy/palette"
+import { Box, Clickable, Flex, Join, Spacer, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
-import { groupBy } from "lodash"
-import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import type { InsightsMedianSalePrice_me$data } from "__generated__/InsightsMedianSalePrice_me.graphql"
-import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
+import { groupBy } from "lodash"
 import { Fragment } from "react"
-import { useRouter } from "System/Hooks/useRouter"
+import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
 
 interface InsightsMedianSalePriceProps {
   me: InsightsMedianSalePrice_me$data

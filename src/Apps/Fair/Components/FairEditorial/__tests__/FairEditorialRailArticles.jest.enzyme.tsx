@@ -1,6 +1,6 @@
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { FairEditorialRailArticlesFragmentContainer } from "Apps/Fair/Components/FairEditorial/FairEditorialRailArticles"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

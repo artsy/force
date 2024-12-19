@@ -1,3 +1,4 @@
+import SortIcon from "@artsy/icons/SortIcon"
 import {
   Clickable,
   Dropdown,
@@ -6,11 +7,10 @@ import {
   RadioGroup,
   Text,
 } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { FC } from "react"
-import SortIcon from "@artsy/icons/SortIcon"
 import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
 
 interface ArtworkFilterSortProps
   extends Omit<DropdownProps, "dropdown" | "children"> {}

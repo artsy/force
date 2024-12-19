@@ -1,18 +1,18 @@
-import { type FC, useMemo } from "react"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import type { HistogramBarEntity } from "Components/PriceRange/Histogram"
+import { PriceRange } from "Components/PriceRange/PriceRange"
+import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
+import type { CustomRange } from "Components/PriceRange/constants"
+import { sortBy } from "lodash"
+import { type FC, useMemo } from "react"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
-import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
-import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { sortBy } from "lodash"
-import { PriceRange } from "Components/PriceRange/PriceRange"
-import type { CustomRange } from "Components/PriceRange/constants"
-import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
-import type { HistogramBarEntity } from "Components/PriceRange/Histogram"
 
 export interface PriceRangeFilterProps {
   expanded?: boolean

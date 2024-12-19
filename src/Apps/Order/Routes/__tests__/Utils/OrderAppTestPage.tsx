@@ -1,19 +1,19 @@
 /* eslint-disable jest/no-standalone-expect */
 import { BorderedRadio, Button } from "@artsy/palette"
 import { Stepper } from "@artsy/palette"
-import type { ReactWrapper } from "enzyme"
 import { ArtworkSummaryItemFragmentContainer } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
-import { PaymentMethodSummaryItemFragmentContainer } from "Apps/Order/Components/PaymentMethodSummaryItem"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
 import { OrderStepper } from "Apps/Order/Components/OrderStepper"
+import { PaymentMethodSummaryItemFragmentContainer } from "Apps/Order/Components/PaymentMethodSummaryItem"
 import { PriceOptions } from "Apps/Order/Components/PriceOptions"
 import { ShippingArtaSummaryItemFragmentContainer } from "Apps/Order/Components/ShippingArtaSummaryItem"
 import { ShippingSummaryItemFragmentContainer } from "Apps/Order/Components/ShippingSummaryItem"
 import { TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { CountdownTimer } from "Components/CountdownTimer"
 import { RootTestPage, expectOne } from "DevTools/RootTestPage"
+import type { ReactWrapper } from "enzyme"
 
 export class OrderAppTestPage extends RootTestPage {
   /** COMPONENT SELECTORS **/

@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
-import { graphql } from "react-relay"
-import { RedirectException } from "found"
 import type { RouteProps } from "System/Router/Route"
+import { RedirectException } from "found"
+import { graphql } from "react-relay"
 
 const ShowApp = loadable(
   () => import(/* webpackChunkName: "showBundle" */ "./ShowApp"),

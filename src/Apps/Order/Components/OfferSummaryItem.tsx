@@ -1,12 +1,12 @@
 import { Spacer, Text } from "@artsy/palette"
-import type { OfferSummaryItem_order$data } from "__generated__/OfferSummaryItem_order.graphql"
+import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
+import { getOfferItemFromOrder } from "Apps/Order/Utils/offerUtils"
 import {
   StepSummaryItem,
   type StepSummaryItemProps,
 } from "Components/StepSummaryItem"
+import type { OfferSummaryItem_order$data } from "__generated__/OfferSummaryItem_order.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import { getOfferItemFromOrder } from "Apps/Order/Utils/offerUtils"
-import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 
 const OfferSummaryItem = ({
   order,

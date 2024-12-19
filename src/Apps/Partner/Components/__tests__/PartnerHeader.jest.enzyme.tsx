@@ -1,13 +1,13 @@
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import type { PartnerHeader_Test_Query } from "__generated__/PartnerHeader_Test_Query.graphql"
 import {
   HeaderImage,
   PartnerHeaderFragmentContainer as PartnerHeader,
 } from "Apps/Partner/Components/PartnerHeader"
-import { RouterLink } from "System/Components/RouterLink"
 import { PartnerHeaderAddress } from "Apps/Partner/Components/PartnerHeader/PartnerHeaderAddress"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { RouterLink } from "System/Components/RouterLink"
+import type { PartnerHeader_Test_Query } from "__generated__/PartnerHeader_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("Components/RouteTabs")

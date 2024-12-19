@@ -1,8 +1,8 @@
+import { Box, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import type { ArtworkSidebarPrivateArtwork_artwork$key } from "__generated__/ArtworkSidebarPrivateArtwork_artwork.graphql"
 import type React from "react"
 import { graphql, useFragment } from "react-relay"
-import type { ArtworkSidebarPrivateArtwork_artwork$key } from "__generated__/ArtworkSidebarPrivateArtwork_artwork.graphql"
-import { RouterLink } from "System/Components/RouterLink"
-import { Box, Text } from "@artsy/palette"
 import { useTracking } from "react-tracking"
 
 interface ArtworkSidebarPrivateArtworkProps {

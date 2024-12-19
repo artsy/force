@@ -1,21 +1,21 @@
 import {
   Box,
-  Text,
+  Column,
+  GridColumns,
+  HorizontalOverflow,
   Join,
   Select,
-  GridColumns,
-  Column,
-  HorizontalOverflow,
+  Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
+import { useDidMount } from "Utils/Hooks/useDidMount"
+import type { ShowsHeader_viewer$data } from "__generated__/ShowsHeader_viewer.graphql"
 import { uniqBy } from "lodash"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { keyframes } from "styled-components"
-import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Hooks/useRouter"
-import type { ShowsHeader_viewer$data } from "__generated__/ShowsHeader_viewer.graphql"
-import { useDidMount } from "Utils/Hooks/useDidMount"
 
 interface ShowsHeaderProps {
   viewer: ShowsHeader_viewer$data

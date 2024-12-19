@@ -1,21 +1,21 @@
 import {
   Column,
+  Flex,
+  FullBleed,
   GridColumns,
+  HTML,
   Join,
   Spacer,
   Text,
-  HTML,
-  FullBleed,
-  Flex,
 } from "@artsy/palette"
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleShare } from "Components/ArticleShare"
 import { TopContextBar } from "Components/TopContextBar"
 import type { ArticleSeries_article$data } from "__generated__/ArticleSeries_article.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleAd } from "./ArticleAd/ArticleAd"
-import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
 import { ArticleSeriesItemFragmentContainer } from "./ArticleSeriesItem"
+import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
 
 interface ArticleSeriesProps {
   article: ArticleSeries_article$data

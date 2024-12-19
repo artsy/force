@@ -1,7 +1,7 @@
 import { Expandable, Text } from "@artsy/palette"
+import type { ArtistCareerHighlight_insight$data } from "__generated__/ArtistCareerHighlight_insight.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtistCareerHighlight_insight$data } from "__generated__/ArtistCareerHighlight_insight.graphql"
 import styled from "styled-components"
 
 interface ArtistCareerHighlightProps {

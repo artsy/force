@@ -1,12 +1,12 @@
-import { MockBoot } from "DevTools/MockBoot"
-import { FairAppFragmentContainer } from "Apps/Fair/FairApp"
-import { graphql } from "react-relay"
-import type { FairApp_Test_Query } from "__generated__/FairApp_Test_Query.graphql"
-import { useTracking } from "react-tracking"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { useRouter } from "System/Hooks/useRouter"
 import { fireEvent, screen } from "@testing-library/react"
+import { FairAppFragmentContainer } from "Apps/Fair/FairApp"
+import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
+import { useRouter } from "System/Hooks/useRouter"
+import type { FairApp_Test_Query } from "__generated__/FairApp_Test_Query.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 const mockJumpTo = jest.fn()
 

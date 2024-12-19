@@ -1,8 +1,8 @@
 import { ShowContextualLinkFragmentContainer } from "Apps/Show/Components/ShowContextualLink"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { graphql } from "react-relay"
-import type { ShowContextualLink_Test_Query } from "__generated__/ShowContextualLink_Test_Query.graphql"
 import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { ShowContextualLink_Test_Query } from "__generated__/ShowContextualLink_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

@@ -1,20 +1,20 @@
+import { AppShell } from "Apps/Components/AppShell"
 import {
   createMockNetworkLayer,
   createMockNetworkLayer2,
 } from "DevTools/createMockNetworkLayer"
-import type { IMocks } from "graphql-tools/dist/Interfaces"
-import type React from "react"
-import { useEffect, useState } from "react"
-import { getUser } from "Utils/user"
-import { AppShell } from "Apps/Components/AppShell"
-import type { Environment } from "react-relay"
+import type { SystemContextProps } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
-import type { HistoryEnhancerOptions } from "farce"
 import {
   type RouterConfig,
   setupClientRouter,
 } from "System/Router/clientRouter"
-import type { SystemContextProps } from "System/Contexts/SystemContext"
+import { getUser } from "Utils/user"
+import type { HistoryEnhancerOptions } from "farce"
+import type { IMocks } from "graphql-tools/dist/Interfaces"
+import type React from "react"
+import { useEffect, useState } from "react"
+import type { Environment } from "react-relay"
 
 interface MockRouterProps {
   context?: RouterConfig["context"]

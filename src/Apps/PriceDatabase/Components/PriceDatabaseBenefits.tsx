@@ -1,17 +1,17 @@
 import {
-  Column,
-  GridColumns,
-  Text,
-  Image,
-  Separator,
-  Flex,
-  ResponsiveBox,
   Box,
+  Column,
+  Flex,
+  GridColumns,
+  Image,
+  ResponsiveBox,
+  Separator,
   Spacer,
+  Text,
 } from "@artsy/palette"
+import { Media } from "Utils/Responsive"
 import type { ReactElement } from "react"
 import type * as React from "react"
-import { Media } from "Utils/Responsive"
 
 export const PriceDatabaseBenefits: React.FC<
   React.PropsWithChildren<unknown>

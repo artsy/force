@@ -1,5 +1,5 @@
-import { isEqual } from "lodash"
 import { cleanObject } from "Utils/cleanObject"
+import { isEqual } from "lodash"
 
 /**
  * Handler for `found-scroll` used for determining if scroll management should

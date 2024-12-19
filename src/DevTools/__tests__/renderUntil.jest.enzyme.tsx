@@ -1,6 +1,6 @@
+import { renderUntil } from "DevTools/renderUntil"
 import { mount } from "enzyme"
 import * as React from "react"
-import { renderUntil } from "DevTools/renderUntil"
 
 class Component extends React.Component<React.PropsWithChildren> {
   state = {

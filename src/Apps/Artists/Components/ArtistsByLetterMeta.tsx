@@ -1,7 +1,7 @@
-import type * as React from "react"
-import { Link, Meta, Title } from "react-head"
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
+import type * as React from "react"
+import { Link, Meta, Title } from "react-head"
 
 const TITLE = "Modern and Contemporary Artists"
 

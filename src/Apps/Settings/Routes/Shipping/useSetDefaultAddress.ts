@@ -1,6 +1,6 @@
 import { useMutation } from "Utils/Hooks/useMutation"
-import { graphql } from "react-relay"
 import type { useSetDefaultAddressMutation } from "__generated__/useSetDefaultAddressMutation.graphql"
+import { graphql } from "react-relay"
 
 export const useSetDefaultAddress = () => {
   return useMutation<useSetDefaultAddressMutation>({

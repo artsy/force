@@ -1,35 +1,35 @@
+import { Flex, FullBleed, Join, Spacer, Text } from "@artsy/palette"
+import { defaultSort, isValidSort } from "Apps/Fair/Utils/IsValidSort"
+import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { LoadingArea } from "Components/LoadingArea"
+import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
+import { Sticky } from "Components/Sticky"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { Jump } from "Utils/Hooks/useJump"
+import { usePrevious } from "Utils/Hooks/usePrevious"
+import { Media } from "Utils/Responsive"
+import { extractNodes } from "Utils/extractNodes"
+import createLogger from "Utils/logger"
+import type { FairBoothsContainerQuery } from "__generated__/FairBoothsContainerQuery.graphql"
+import type { FairBooths_fair$data } from "__generated__/FairBooths_fair.graphql"
+import { isEqual } from "lodash"
 import { useState } from "react"
 import type * as React from "react"
 import {
+  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { Text, Flex, FullBleed, Spacer, Join } from "@artsy/palette"
-import { isEqual } from "lodash"
-import { usePrevious } from "Utils/Hooks/usePrevious"
-import type { FairBooths_fair$data } from "__generated__/FairBooths_fair.graphql"
-import { Media } from "Utils/Responsive"
-import { Sticky } from "Components/Sticky"
-import { LoadingArea } from "Components/LoadingArea"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { useRouter } from "System/Hooks/useRouter"
-import createLogger from "Utils/logger"
-import type { FairBoothsContainerQuery } from "__generated__/FairBoothsContainerQuery.graphql"
-import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import {
   BoothFilterContextProvider,
   initialBoothFilterState,
   useBoothsFilterContext,
 } from "./BoothFilterContext"
-import { FairBoothSortFilter } from "./FairBoothSortFilter"
 import { FairBoothRailFragmentContainer as FairBoothRail } from "./FairBoothRail"
-import { defaultSort, isValidSort } from "Apps/Fair/Utils/IsValidSort"
-import { extractNodes } from "Utils/extractNodes"
-import { Jump } from "Utils/Hooks/useJump"
+import { FairBoothSortFilter } from "./FairBoothSortFilter"
 
 const logger = createLogger("FairBooths.tsx")
 

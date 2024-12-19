@@ -6,13 +6,13 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
+import { useDeleteAddress } from "Apps/Settings/Routes/Shipping/useDeleteAddress"
+import { useMode } from "Utils/Hooks/useMode"
+import { compactObject } from "Utils/compactObject"
+import type { SettingsShippingAddress_address$data } from "__generated__/SettingsShippingAddress_address.graphql"
 import { pick } from "lodash"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { compactObject } from "Utils/compactObject"
-import { useMode } from "Utils/Hooks/useMode"
-import type { SettingsShippingAddress_address$data } from "__generated__/SettingsShippingAddress_address.graphql"
-import { useDeleteAddress } from "Apps/Settings/Routes/Shipping/useDeleteAddress"
 import {
   INITIAL_ADDRESS,
   SettingsShippingAddressForm,

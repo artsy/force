@@ -1,12 +1,12 @@
-import type * as React from "react"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Box, type BoxProps, Flex, Image, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import styled, { css } from "styled-components"
-import { DateTime } from "luxon"
+import { themeGet } from "@styled-system/theme-get"
 import { RouterLink } from "System/Components/RouterLink"
 import type { FairsFairRow_fair$data } from "__generated__/FairsFairRow_fair.graphql"
-import { themeGet } from "@styled-system/theme-get"
-import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
+import { DateTime } from "luxon"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import styled, { css } from "styled-components"
 
 const Container = styled(Flex)<{ href?: string }>`
   ${({ href }) =>

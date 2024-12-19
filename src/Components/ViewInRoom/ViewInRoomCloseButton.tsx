@@ -1,6 +1,6 @@
+import CloseIcon from "@artsy/icons/CloseIcon"
 import { Clickable, type ClickableProps } from "@artsy/palette"
 import type * as React from "react"
-import CloseIcon from "@artsy/icons/CloseIcon"
 
 interface ViewInRoomCloseButtonProps extends ClickableProps {}
 

@@ -1,9 +1,9 @@
-import { States } from "storybook-states"
-import { DateTime } from "luxon"
 import {
   CountdownTimer,
   type CountdownTimerProps,
 } from "Components/CountdownTimer"
+import { DateTime } from "luxon"
+import { States } from "storybook-states"
 
 export default {
   title: "Components/CountdownTimer",

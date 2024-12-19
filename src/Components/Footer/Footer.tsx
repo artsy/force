@@ -1,9 +1,14 @@
-import type * as React from "react"
-import styled from "styled-components"
-import { Media } from "Utils/Responsive"
+import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
+import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
+import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
+import FacebookIcon from "@artsy/icons/FacebookIcon"
+import InstagramIcon from "@artsy/icons/InstagramIcon"
+import SpotifyIcon from "@artsy/icons/SpotifyIcon"
+import TikTokIcon from "@artsy/icons/TikTokIcon"
+import WeChatIcon from "@artsy/icons/WeChatIcon"
+import XIcon from "@artsy/icons/XIcon"
 import {
   Box,
-  boxMixin,
   type BoxProps,
   Clickable,
   Column,
@@ -16,22 +21,17 @@ import {
   Separator,
   Spacer,
   Text,
+  boxMixin,
 } from "@artsy/palette"
-import { useCCPARequest } from "Components/CCPARequest"
-import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
-import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
-import XIcon from "@artsy/icons/XIcon"
-import FacebookIcon from "@artsy/icons/FacebookIcon"
-import WeChatIcon from "@artsy/icons/WeChatIcon"
-import InstagramIcon from "@artsy/icons/InstagramIcon"
-import TikTokIcon from "@artsy/icons/TikTokIcon"
-import SpotifyIcon from "@artsy/icons/SpotifyIcon"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
-import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
 import { themeGet } from "@styled-system/theme-get"
-import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
-import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
+import { useCCPARequest } from "Components/CCPARequest"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
+import { Media } from "Utils/Responsive"
+import type * as React from "react"
+import styled from "styled-components"
+import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
 
 interface FooterProps extends BoxProps {}
 

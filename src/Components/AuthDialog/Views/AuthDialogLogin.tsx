@@ -1,5 +1,3 @@
-import * as Yup from "yup"
-import type { FC } from "react"
 import {
   Box,
   Button,
@@ -13,11 +11,13 @@ import {
   Text,
 } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
-import { Form, Formik } from "formik"
-import { login } from "Utils/auth"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
-import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
+import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
+import { login } from "Utils/auth"
+import { Form, Formik } from "formik"
+import type { FC } from "react"
+import * as Yup from "yup"
 
 export const AuthDialogLogin: FC<React.PropsWithChildren<unknown>> = () => {
   const { dispatch, state } = useAuthDialogContext()

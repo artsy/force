@@ -1,5 +1,5 @@
-import type { AuctionTimer_sale$data } from "__generated__/AuctionTimer_sale.graphql"
 import { Timer } from "Components/Timer"
+import type { AuctionTimer_sale$data } from "__generated__/AuctionTimer_sale.graphql"
 import { DateTime } from "luxon"
 import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

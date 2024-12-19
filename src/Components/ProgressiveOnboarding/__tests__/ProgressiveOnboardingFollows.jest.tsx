@@ -1,15 +1,15 @@
+import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
 import { render, screen } from "@testing-library/react"
-import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { __ProgressiveOnboardingFollowArtist__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { __ProgressiveOnboardingFollowFind__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
 import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
+import {
+  PROGRESSIVE_ONBOARDING,
+  PROGRESSIVE_ONBOARDING_KEYS,
+} from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
+import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { type FC, useEffect } from "react"
-import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
-import {
-  PROGRESSIVE_ONBOARDING_KEYS,
-  PROGRESSIVE_ONBOARDING,
-} from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 
 jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: jest.fn().mockReturnValue({ isLoggedIn: true }),

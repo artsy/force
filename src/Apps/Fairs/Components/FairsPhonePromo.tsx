@@ -1,7 +1,7 @@
-import type * as React from "react"
 import { Box, type BoxProps, Image, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { resized } from "Utils/resized"
+import type * as React from "react"
 
 export const FairsPhonePromo: React.FC<
   React.PropsWithChildren<BoxProps>

@@ -1,9 +1,9 @@
 import { fireEvent, screen } from "@testing-library/react"
 import { PreviouslySoldOnArtsyRailFragmentContainer } from "Apps/Sell/Routes/MarketingLanding/Components/LandingPage/PreviouslySoldOnArtsyRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

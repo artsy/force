@@ -1,7 +1,7 @@
+import { MetaTags } from "Components/MetaTags"
+import type { FeatureMeta_feature$data } from "__generated__/FeatureMeta_feature.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { FeatureMeta_feature$data } from "__generated__/FeatureMeta_feature.graphql"
-import { MetaTags } from "Components/MetaTags"
 
 interface FeatureMetaProps {
   feature: FeatureMeta_feature$data

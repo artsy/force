@@ -1,7 +1,7 @@
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { LogInPrompt } from "Apps/Components/LogInPrompt"
-import { mount } from "enzyme"
 import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
+import { LogInPrompt } from "Apps/Components/LogInPrompt"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { mount } from "enzyme"
 
 jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: jest.fn(),

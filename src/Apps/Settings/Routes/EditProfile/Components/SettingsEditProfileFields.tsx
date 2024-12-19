@@ -1,4 +1,12 @@
 import {
+  ActionType,
+  type ClickedVerifyIdentity,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
+import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
+import {
   Box,
   Button,
   Clickable,
@@ -13,29 +21,21 @@ import {
 import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
 import { SettingsEditProfileImageRefetchContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/SettingsEditProfileImage"
 import { useEditProfileTracking } from "Apps/Settings/Routes/EditProfile/Hooks/useEditProfileTracking"
+import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
+import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
 import {
   LocationAutocompleteInput,
-  normalizePlace,
   type Place,
+  normalizePlace,
 } from "Components/LocationAutocompleteInput"
-import { Form, Formik } from "formik"
-import { createFragmentContainer, graphql } from "react-relay"
+import { RouterLink } from "System/Components/RouterLink"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import createLogger from "Utils/logger"
 import type { SettingsEditProfileFields_me$data } from "__generated__/SettingsEditProfileFields_me.graphql"
 import type { EditableLocation } from "__generated__/useUpdateMyUserProfileMutation.graphql"
-import { RouterLink } from "System/Components/RouterLink"
-import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
-import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
-import createLogger from "Utils/logger"
-import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
-import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
+import { Form, Formik } from "formik"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import {
-  ActionType,
-  type ClickedVerifyIdentity,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
 
 const logger = createLogger("SettingsEditProfileFields")
 

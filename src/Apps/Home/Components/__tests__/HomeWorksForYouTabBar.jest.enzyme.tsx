@@ -1,5 +1,5 @@
-import { mount } from "enzyme"
 import { HomeWorksForYouTabBar } from "Apps/Home/Components/HomeWorksForYouTabBar"
+import { mount } from "enzyme"
 
 jest.mock("Apps/Home/Components/HomeNewWorksForYouRail", () => ({
   HomeNewWorksForYouRailQueryRenderer: () => null,

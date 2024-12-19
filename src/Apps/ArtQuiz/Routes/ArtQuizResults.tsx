@@ -1,8 +1,8 @@
 import { ArtQuizResultsEmpty } from "Apps/ArtQuiz/Components/ArtQuizResultsEmpty"
 import { ArtQuizResultsTabs } from "Apps/ArtQuiz/Components/ArtQuizResultsTabs"
+import type { ArtQuizResults_me$data } from "__generated__/ArtQuizResults_me.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtQuizResults_me$data } from "__generated__/ArtQuizResults_me.graphql"
 
 interface ArtQuizResultsProps {
   me: ArtQuizResults_me$data

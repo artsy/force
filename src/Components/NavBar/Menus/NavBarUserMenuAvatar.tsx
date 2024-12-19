@@ -1,7 +1,7 @@
 import { Avatar, Skeleton } from "@artsy/palette"
+import type { NavBarUserMenuAvatarQuery } from "__generated__/NavBarUserMenuAvatarQuery.graphql"
 import type { FC } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
-import type { NavBarUserMenuAvatarQuery } from "__generated__/NavBarUserMenuAvatarQuery.graphql"
 
 type NavBarUserMenuAvatarProps = {}
 

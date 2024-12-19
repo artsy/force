@@ -1,7 +1,7 @@
 import { FairsFairRowFragmentContainer } from "Apps/Fairs/Components/FairsFairRow"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { graphql } from "react-relay"
 import { DateTime } from "luxon"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

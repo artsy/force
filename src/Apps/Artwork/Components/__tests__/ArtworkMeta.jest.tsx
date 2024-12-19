@@ -1,9 +1,9 @@
-import { MockBoot } from "DevTools/MockBoot"
 import { ArtworkMeta } from "Apps/Artwork/Components/ArtworkMeta"
-import { useRouter } from "System/Hooks/useRouter"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
+import { useRouter } from "System/Hooks/useRouter"
 import type { ArtworkMeta_Test_Query } from "__generated__/ArtworkMeta_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter")

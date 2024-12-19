@@ -1,8 +1,8 @@
+import { MetaTags } from "Components/MetaTags"
+import type { ArticleMetaTags_article$data } from "__generated__/ArticleMetaTags_article.graphql"
 import type { FC } from "react"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { MetaTags } from "Components/MetaTags"
-import type { ArticleMetaTags_article$data } from "__generated__/ArticleMetaTags_article.graphql"
 
 interface ArticleMetaTagsProps {
   article: ArticleMetaTags_article$data

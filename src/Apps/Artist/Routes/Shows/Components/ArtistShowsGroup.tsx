@@ -1,17 +1,17 @@
-import { Text, GridColumns, Column, Spacer } from "@artsy/palette"
-import type * as React from "react"
-import {
-  createRefetchContainer,
-  graphql,
-  type RelayRefetchProp,
-} from "react-relay"
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import { CellShowFragmentContainer } from "Components/Cells/CellShow"
+import { LoadingArea } from "Components/LoadingArea"
+import { PaginationFragmentContainer } from "Components/Pagination"
+import { Jump } from "Utils/Hooks/useJump"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistShowsGroup_artist$data } from "__generated__/ArtistShowsGroup_artist.graphql"
-import { PaginationFragmentContainer } from "Components/Pagination"
-import { CellShowFragmentContainer } from "Components/Cells/CellShow"
+import type * as React from "react"
 import { useState } from "react"
-import { LoadingArea } from "Components/LoadingArea"
-import { Jump } from "Utils/Hooks/useJump"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 
 interface ArtistShowsGroupProps {
   artist: ArtistShowsGroup_artist$data

@@ -1,9 +1,9 @@
-import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
 import type {
   useSelectArtworkListsMutation,
   useSelectArtworkListsMutation$data,
 } from "__generated__/useSelectArtworkListsMutation.graphql"
+import { graphql } from "react-relay"
 
 interface Counts {
   custom: number

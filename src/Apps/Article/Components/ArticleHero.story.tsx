@@ -1,8 +1,8 @@
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { ArticleHeroStoryQuery } from "__generated__/ArticleHeroStoryQuery.graphql"
 import { graphql } from "react-relay"
 import { States } from "storybook-states"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArticleHeroFragmentContainer } from "./ArticleHero"
-import type { ArticleHeroStoryQuery } from "__generated__/ArticleHeroStoryQuery.graphql"
 
 export default {
   title: "Components/Article/ArticleHero",

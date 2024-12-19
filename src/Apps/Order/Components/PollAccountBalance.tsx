@@ -1,17 +1,17 @@
 import { type FC, useState } from "react"
 import {
-  graphql,
-  createRefetchContainer,
   type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
 } from "react-relay"
 
+import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner"
+import { BalanceCheckResult } from "Apps/Order/Routes/Payment/index"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { usePoll } from "Utils/Hooks/usePoll"
 import type { PollAccountBalanceQuery } from "__generated__/PollAccountBalanceQuery.graphql"
 import type { PollAccountBalance_commerceBankAccountBalance$data } from "__generated__/PollAccountBalance_commerceBankAccountBalance.graphql"
-import { BalanceCheckResult } from "Apps/Order/Routes/Payment/index"
-import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner"
 
 interface PollAccountBalanceProps {
   relay: RelayRefetchProp

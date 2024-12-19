@@ -1,8 +1,8 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Expandable, Join, Spacer, Text } from "@artsy/palette"
-import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
+import { useTracking } from "react-tracking"
 
 export interface FAQProps {
   shouldTrackClickEvent?: boolean

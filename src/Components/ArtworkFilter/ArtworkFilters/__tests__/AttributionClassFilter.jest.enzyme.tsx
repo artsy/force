@@ -1,4 +1,3 @@
-import { mount } from "enzyme"
 import {
   type ArtworkFilterContextProps,
   ArtworkFilterContextProvider,
@@ -8,6 +7,7 @@ import {
   AttributionClassFilter,
   type AttributionClassFilterProps,
 } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
+import { mount } from "enzyme"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

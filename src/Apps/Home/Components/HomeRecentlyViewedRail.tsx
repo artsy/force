@@ -1,22 +1,22 @@
-import { Shelf, Skeleton } from "@artsy/palette"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useTracking } from "react-tracking"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { HomeRecentlyViewedRail_homePage$data } from "__generated__/HomeRecentlyViewedRail_homePage.graphql"
-import type { HomeRecentlyViewedRailQuery } from "__generated__/HomeRecentlyViewedRailQuery.graphql"
-import {
-  ShelfArtworkFragmentContainer,
-  ShelfArtworkPlaceholder,
-} from "Components/Artwork/ShelfArtwork"
 import {
   ActionType,
   type ClickedArtworkGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { Shelf, Skeleton } from "@artsy/palette"
+import {
+  ShelfArtworkFragmentContainer,
+  ShelfArtworkPlaceholder,
+} from "Components/Artwork/ShelfArtwork"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { getSignalLabel } from "Utils/getSignalLabel"
+import type { HomeRecentlyViewedRailQuery } from "__generated__/HomeRecentlyViewedRailQuery.graphql"
+import type { HomeRecentlyViewedRail_homePage$data } from "__generated__/HomeRecentlyViewedRail_homePage.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface HomeRecentlyViewedRailProps {
   homePage: HomeRecentlyViewedRail_homePage$data

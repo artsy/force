@@ -1,10 +1,10 @@
-import { mount } from "enzyme"
-import { act } from "react-dom/test-utils"
 import {
   AuctionResultsFilterContextProvider,
   useAuctionResultsFilterContext,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
+import { mount } from "enzyme"
+import { act } from "react-dom/test-utils"
 
 describe("AuctionResultsFilterContext", () => {
   let context: ReturnType<typeof useAuctionResultsFilterContext>

@@ -1,11 +1,11 @@
-import { SystemContextProvider } from "System/Contexts/SystemContext"
-import { useTracking } from "react-tracking"
-import { mount } from "enzyme"
 import { NavBarMobileMenu } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenu"
 import { NavBarMobileMenuTransition } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuTransition"
 import { NavBarMobileSubMenuBack } from "Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenu"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 import type { FeatureFlags } from "System/Hooks/useFeatureFlag"
 import { logout } from "Utils/auth"
+import { mount } from "enzyme"
+import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 

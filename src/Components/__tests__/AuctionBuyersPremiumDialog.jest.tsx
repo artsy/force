@@ -1,8 +1,8 @@
-import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { AuctionBuyersPremiumDialogFragmentContainer } from "Components/AuctionBuyersPremiumDialog"
-import type { AuctionBuyersPremiumDialog_Test_Query } from "__generated__/AuctionBuyersPremiumDialog_Test_Query.graphql"
 import { screen } from "@testing-library/react"
+import { AuctionBuyersPremiumDialogFragmentContainer } from "Components/AuctionBuyersPremiumDialog"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { AuctionBuyersPremiumDialog_Test_Query } from "__generated__/AuctionBuyersPremiumDialog_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

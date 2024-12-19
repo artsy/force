@@ -6,15 +6,15 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { type FC, useMemo } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { RouterLink } from "System/Components/RouterLink"
-import { extractNodes } from "Utils/extractNodes"
-import type { ArtistRelatedGeneCategories_artist$data } from "__generated__/ArtistRelatedGeneCategories_artist.graphql"
-import type { ArtistRelatedGeneCategoriesQuery } from "__generated__/ArtistRelatedGeneCategoriesQuery.graphql"
 import { Media } from "Utils/Responsive"
+import { extractNodes } from "Utils/extractNodes"
+import type { ArtistRelatedGeneCategoriesQuery } from "__generated__/ArtistRelatedGeneCategoriesQuery.graphql"
+import type { ArtistRelatedGeneCategories_artist$data } from "__generated__/ArtistRelatedGeneCategories_artist.graphql"
+import { type FC, useMemo } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtistRelatedGeneCategoriesProps {
   artist: ArtistRelatedGeneCategories_artist$data

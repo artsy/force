@@ -1,17 +1,17 @@
-import type * as React from "react"
+import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import {
   Box,
+  Clickable,
   Flex,
   FullBleed,
+  Image,
   Separator,
   Text,
-  Image,
-  Clickable,
 } from "@artsy/palette"
-import { cropped } from "Utils/resized"
-import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
-import { sanitizeURL } from "Utils/sanitizeURL"
 import { RouterLink } from "System/Components/RouterLink"
+import { cropped } from "Utils/resized"
+import { sanitizeURL } from "Utils/sanitizeURL"
+import type * as React from "react"
 
 export interface TopContextBarProps {
   displayBackArrow?: boolean

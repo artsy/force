@@ -1,22 +1,22 @@
-import { graphql, useFragment } from "react-relay"
-import type { PrivateArtworkAboutArtist_artwork$key } from "__generated__/PrivateArtworkAboutArtist_artwork.graphql"
+import { ActionType, type ClickedOnReadMore } from "@artsy/cohesion"
 import {
+  Avatar,
   Box,
   Flex,
-  Text,
-  ReadMore,
   HTML,
+  ReadMore,
   Spacer,
-  Avatar,
   Stack,
+  Text,
 } from "@artsy/palette"
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { formatFollowerCount } from "Utils/formatFollowerCount"
-import { useTracking } from "react-tracking"
-import { ActionType, type ClickedOnReadMore } from "@artsy/cohesion"
-import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { RouterLink } from "System/Components/RouterLink"
+import { formatFollowerCount } from "Utils/formatFollowerCount"
+import type { PrivateArtworkAboutArtist_artwork$key } from "__generated__/PrivateArtworkAboutArtist_artwork.graphql"
+import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
+import styled from "styled-components"
 
 interface PrivateArtworkAboutArtistProps {
   artwork: PrivateArtworkAboutArtist_artwork$key

@@ -1,9 +1,9 @@
-import { DateTime } from "luxon"
+import { screen } from "@testing-library/react"
 import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkAuctionRegistrationPanel"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
 import type { ArtworkAuctionRegistrationPanelQuery } from "__generated__/ArtworkAuctionRegistrationPanelQuery.graphql"
-import { screen } from "@testing-library/react"
+import { DateTime } from "luxon"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

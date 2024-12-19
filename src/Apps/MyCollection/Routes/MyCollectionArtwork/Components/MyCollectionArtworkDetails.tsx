@@ -1,6 +1,6 @@
-import type { MyCollectionArtworkDetails_artwork$key } from "__generated__/MyCollectionArtworkDetails_artwork.graphql"
 import { MyCollectionArtworkDetailField } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetailField"
 import { buildLocationDisplay } from "Components/LocationAutocompleteInput"
+import type { MyCollectionArtworkDetails_artwork$key } from "__generated__/MyCollectionArtworkDetails_artwork.graphql"
 import { graphql, useFragment } from "react-relay"
 
 export interface MyCollectionArtworkDetailsProps {

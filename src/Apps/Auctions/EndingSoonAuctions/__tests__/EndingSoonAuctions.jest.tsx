@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/react"
 import { EndingSoonAuctionsFragmentContainer } from "Apps/Auctions/EndingSoonAuctions/EndingSoonAuctions"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("Components/ArtworkGrid/ArtworkGrid", () => "ArtworkGrid")

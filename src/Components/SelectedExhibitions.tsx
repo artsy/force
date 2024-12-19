@@ -7,13 +7,13 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
+import { Media } from "Utils/Responsive"
 import type { SelectedExhibitions_exhibitions$data } from "__generated__/SelectedExhibitions_exhibitions.graphql"
 import { Link } from "found"
 import { groupBy, toPairs } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Media } from "Utils/Responsive"
-import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
 
 const MIN_FOR_SELECTED_EXHIBITIONS = 3
 export const MIN_EXHIBITIONS = 2
