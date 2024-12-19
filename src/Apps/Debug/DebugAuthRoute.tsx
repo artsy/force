@@ -17,7 +17,7 @@ import { merge } from "lodash"
 import { type FC, useState } from "react"
 import { Title } from "react-head"
 
-export const DebugAuth: FC<React.PropsWithChildren<unknown>> = () => {
+export const DebugAuthRoute: FC<React.PropsWithChildren<unknown>> = () => {
   const { showAuthDialog } = useAuthDialog()
 
   const [state, setState] = useState<

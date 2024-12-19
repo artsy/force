@@ -1,22 +1,31 @@
-import { Clickable, Text } from "@artsy/palette"
 import loadable from "@loadable/component"
-import { RouterLink } from "System/Components/RouterLink"
 import type { RouteProps } from "System/Router/Route"
 import { HttpError } from "found"
-import { useState } from "react"
 
-const DebugApp = loadable(
-  () => import(/* webpackChunkName: "debugBundle" */ "./DebugApp"),
-  { resolveComponent: component => component.DebugApp }
+const DebugBaselineRoute = loadable(
+  () => import(/* webpackChunkName: "debugBundle" */ "./DebugBaselineRoute"),
+  { resolveComponent: component => component.DebugBaselineRoute }
 )
 
-const DebugAuth = loadable(
-  () => import(/* webpackChunkName: "debugBundle" */ "./DebugAuth"),
-  { resolveComponent: component => component.DebugAuth }
+const DebugAuthRoute = loadable(
+  () => import(/* webpackChunkName: "debugBundle" */ "./DebugAuthRoute"),
+  { resolveComponent: component => component.DebugAuthRoute }
+)
+
+const DebugClientError404Route = loadable(
+  () =>
+    import(/* webpackChunkName: "debugBundle" */ "./DebugClientError404Route"),
+  { resolveComponent: component => component.DebugClientError404Route }
+)
+
+const DebugClientError500Route = loadable(
+  () =>
+    import(/* webpackChunkName: "debugBundle" */ "./DebugClientError500Route"),
+  { resolveComponent: component => component.DebugClientError500Route }
 )
 
 /**
- * This route is just for testing baseline page shell stuff -- Lighthouse,
+ * These routes are just for testing baseline page shell stuff -- Lighthouse,
  * Calibre, assets loaded on page, and other debugging things that might
  * impact global performance.
  */
@@ -26,13 +35,11 @@ export const debugRoutes: RouteProps[] = [
     children: [
       {
         path: "baseline",
-        // layout: "LogoOnly",
-        Component: DebugApp,
+        Component: DebugBaselineRoute,
       },
-      // TODO: Remove this route once new AuthDialog is deployed
       {
         path: "auth",
-        Component: DebugAuth,
+        Component: DebugAuthRoute,
       },
       {
         path: "error-404",
@@ -42,13 +49,7 @@ export const debugRoutes: RouteProps[] = [
       },
       {
         path: "client-error-404",
-        Component: () => {
-          return (
-            <Text mt={4} variant="sm-display">
-              <RouterLink to="/artist/example-404">Click to 404</RouterLink>
-            </Text>
-          )
-        },
+        Component: DebugClientError404Route,
       },
       {
         path: "error-500",
@@ -58,29 +59,7 @@ export const debugRoutes: RouteProps[] = [
       },
       {
         path: "client-error-500",
-        Component: () => {
-          const [error, setError] = useState(false)
-
-          return (
-            <>
-              {error && (
-                // @ts-ignore
-                // eslint-disable-next-line react/jsx-no-undef
-                <Example />
-              )}
-              <Text mt={4} variant="sm-display">
-                <Clickable
-                  textDecoration="underline"
-                  onClick={() => {
-                    setError(true)
-                  }}
-                >
-                  Click to 500
-                </Clickable>
-              </Text>
-            </>
-          )
-        },
+        Component: DebugClientError500Route,
       },
     ],
   },
