@@ -8,57 +8,54 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type TitleRoute_submission$data = {
-  readonly artist:
-    | {
-        readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">
-      }
-    | null
-    | undefined
-  readonly title: string | null | undefined
-  readonly " $fragmentType": "TitleRoute_submission"
-}
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
+  } | null | undefined;
+  readonly title: string | null | undefined;
+  readonly " $fragmentType": "TitleRoute_submission";
+};
 export type TitleRoute_submission$key = {
-  readonly " $data"?: TitleRoute_submission$data
-  readonly " $fragmentSpreads": FragmentRefs<"TitleRoute_submission">
-}
+  readonly " $data"?: TitleRoute_submission$data;
+  readonly " $fragmentSpreads": FragmentRefs<"TitleRoute_submission">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "TitleRoute_submission",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "TitleRoute_submission",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "title",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "title",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: null,
-      concreteType: "Artist",
-      kind: "LinkedField",
-      name: "artist",
-      plural: false,
-      selections: [
+      "alias": null,
+      "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
+      "plural": false,
+      "selections": [
         {
-          args: null,
-          kind: "FragmentSpread",
-          name: "EntityHeaderArtist_artist",
-        },
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "EntityHeaderArtist_artist"
+        }
       ],
-      storageKey: null,
-    },
+      "storageKey": null
+    }
   ],
-  type: "ConsignmentSubmission",
-  abstractKey: null,
-}
+  "type": "ConsignmentSubmission",
+  "abstractKey": null
+};
 
-;(node as any).hash = "8e86821f7986d717d06fb61eb7572eee"
+(node as any).hash = "8e86821f7986d717d06fb61eb7572eee";
 
-export default node
+export default node;

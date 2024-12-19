@@ -8,89 +8,89 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkImageBrowser_artwork$data = {
   readonly figures: ReadonlyArray<{
-    readonly height?: number | null | undefined
-    readonly width?: number | null | undefined
-  }>
-  readonly internalID: string
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkImageBrowser_artwork">
-  readonly " $fragmentType": "MyCollectionArtworkImageBrowser_artwork"
-}
+    readonly height?: number | null | undefined;
+    readonly width?: number | null | undefined;
+  }>;
+  readonly internalID: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkImageBrowser_artwork">;
+  readonly " $fragmentType": "MyCollectionArtworkImageBrowser_artwork";
+};
 export type MyCollectionArtworkImageBrowser_artwork$key = {
-  readonly " $data"?: MyCollectionArtworkImageBrowser_artwork$data
-  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkImageBrowser_artwork">
-}
+  readonly " $data"?: MyCollectionArtworkImageBrowser_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkImageBrowser_artwork">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "MyCollectionArtworkImageBrowser_artwork",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "MyCollectionArtworkImageBrowser_artwork",
+  "selections": [
     {
-      args: [
+      "args": [
         {
-          kind: "Literal",
-          name: "includeAllImages",
-          value: true,
-        },
+          "kind": "Literal",
+          "name": "includeAllImages",
+          "value": true
+        }
       ],
-      kind: "FragmentSpread",
-      name: "ArtworkImageBrowser_artwork",
+      "kind": "FragmentSpread",
+      "name": "ArtworkImageBrowser_artwork"
     },
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "internalID",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: [
+      "alias": null,
+      "args": [
         {
-          kind: "Literal",
-          name: "includeAll",
-          value: true,
-        },
+          "kind": "Literal",
+          "name": "includeAll",
+          "value": true
+        }
       ],
-      concreteType: null,
-      kind: "LinkedField",
-      name: "figures",
-      plural: true,
-      selections: [
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "figures",
+      "plural": true,
+      "selections": [
         {
-          kind: "InlineFragment",
-          selections: [
+          "kind": "InlineFragment",
+          "selections": [
             {
-              alias: null,
-              args: null,
-              kind: "ScalarField",
-              name: "width",
-              storageKey: null,
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "width",
+              "storageKey": null
             },
             {
-              alias: null,
-              args: null,
-              kind: "ScalarField",
-              name: "height",
-              storageKey: null,
-            },
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
+              "storageKey": null
+            }
           ],
-          type: "Image",
-          abstractKey: null,
-        },
+          "type": "Image",
+          "abstractKey": null
+        }
       ],
-      storageKey: "figures(includeAll:true)",
-    },
+      "storageKey": "figures(includeAll:true)"
+    }
   ],
-  type: "Artwork",
-  abstractKey: null,
-}
+  "type": "Artwork",
+  "abstractKey": null
+};
 
-;(node as any).hash = "7da29a5e1e8b4379b10cd8775e6731b7"
+(node as any).hash = "7da29a5e1e8b4379b10cd8775e6731b7";
 
-export default node
+export default node;

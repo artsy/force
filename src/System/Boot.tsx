@@ -4,7 +4,10 @@ import { type FC, useEffect } from "react"
 import { HeadProvider } from "react-head"
 import { type Environment, RelayEnvironmentProvider } from "react-relay"
 import Events from "Utils/Events"
-import { type MatchingMediaQueries, MediaContextProvider } from "Utils/Responsive"
+import {
+  type MatchingMediaQueries,
+  MediaContextProvider,
+} from "Utils/Responsive"
 import { SiftContainer } from "Utils/SiftContainer"
 import track from "react-tracking"
 import { StickyProvider } from "Components/Sticky"

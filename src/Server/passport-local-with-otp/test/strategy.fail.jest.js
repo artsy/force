@@ -6,19 +6,21 @@ const Strategy = require("../lib/strategy")
 // FIXME:
 describe.skip("Strategy", () => {
   describe("failing authentication", () => {
-    const strategy = new Strategy((username, password, otp, done) => done(null, false))
+    const strategy = new Strategy((username, password, otp, done) =>
+      done(null, false)
+    )
 
     let info
 
     // eslint-disable-next-line jest/no-done-callback
-    beforeAll((done) => {
+    beforeAll(done => {
       chai.passport
         .use(strategy)
-        .fail((i) => {
+        .fail(i => {
           info = i
           done()
         })
-        .request((req) => {
+        .request(req => {
           req.body = {}
           req.body.username = "johndoe"
           req.body.password = "secret"
@@ -33,19 +35,21 @@ describe.skip("Strategy", () => {
   })
 
   describe("failing authentication with info", () => {
-    const strategy = new Strategy((username, password, otp, done) => done(null, false, { message: "authentication failed" }))
+    const strategy = new Strategy((username, password, otp, done) =>
+      done(null, false, { message: "authentication failed" })
+    )
 
     let info
 
     // eslint-disable-next-line jest/no-done-callback
-    beforeAll((done) => {
+    beforeAll(done => {
       chai.passport
         .use(strategy)
-        .fail((i) => {
+        .fail(i => {
           info = i
           done()
         })
-        .request((req) => {
+        .request(req => {
           req.body = {}
           req.body.username = "johndoe"
           req.body.password = "secret"

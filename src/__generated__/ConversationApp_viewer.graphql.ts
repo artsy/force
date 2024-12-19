@@ -8,52 +8,50 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type ConversationApp_viewer$data = {
-  readonly " $fragmentSpreads": FragmentRefs<
-    "ConversationsContext_viewer" | "ConversationsSidebar_viewer"
-  >
-  readonly " $fragmentType": "ConversationApp_viewer"
-}
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationsContext_viewer" | "ConversationsSidebar_viewer">;
+  readonly " $fragmentType": "ConversationApp_viewer";
+};
 export type ConversationApp_viewer$key = {
-  readonly " $data"?: ConversationApp_viewer$data
-  readonly " $fragmentSpreads": FragmentRefs<"ConversationApp_viewer">
-}
+  readonly " $data"?: ConversationApp_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationApp_viewer">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [
+  "argumentDefinitions": [
     {
-      defaultValue: 10,
-      kind: "LocalArgument",
-      name: "first",
-    },
+      "defaultValue": 10,
+      "kind": "LocalArgument",
+      "name": "first"
+    }
   ],
-  kind: "Fragment",
-  metadata: null,
-  name: "ConversationApp_viewer",
-  selections: [
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ConversationApp_viewer",
+  "selections": [
     {
-      args: [
+      "args": [
         {
-          kind: "Variable",
-          name: "first",
-          variableName: "first",
-        },
+          "kind": "Variable",
+          "name": "first",
+          "variableName": "first"
+        }
       ],
-      kind: "FragmentSpread",
-      name: "ConversationsSidebar_viewer",
+      "kind": "FragmentSpread",
+      "name": "ConversationsSidebar_viewer"
     },
     {
-      args: null,
-      kind: "FragmentSpread",
-      name: "ConversationsContext_viewer",
-    },
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ConversationsContext_viewer"
+    }
   ],
-  type: "Viewer",
-  abstractKey: null,
-}
+  "type": "Viewer",
+  "abstractKey": null
+};
 
-;(node as any).hash = "cf67b6848e119d4f26ec70cd2873d7ee"
+(node as any).hash = "cf67b6848e119d4f26ec70cd2873d7ee";
 
-export default node
+export default node;

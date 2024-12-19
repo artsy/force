@@ -7,7 +7,11 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import type * as React from "react"
-import { type RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 import type { BoxProps } from "@artsy/palette"
 import { useRouter } from "System/Hooks/useRouter"
 import { omit } from "lodash"

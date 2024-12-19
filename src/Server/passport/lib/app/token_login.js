@@ -50,7 +50,7 @@ module.exports.trustTokenLogin = (req, res, next) => {
 
       const user = { accessToken: response.body.access_token }
 
-      req.login(user, (err) => {
+      req.login(user, err => {
         if (err != null) {
           return next()
         }

@@ -1,5 +1,8 @@
 import type { LayoutVariant } from "Apps/Components/Layouts"
-import type { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 import type { ClientContext } from "System/Router/Utils/clientAppContext"
 import type { RemoveIndex } from "Utils/typeSupport"
 import type { NextFunction } from "express"

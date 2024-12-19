@@ -8,41 +8,41 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerInfo_fairOrganizer$data = {
-  readonly about: string | null | undefined
-  readonly " $fragmentType": "FairOrganizerInfo_fairOrganizer"
-}
+  readonly about: string | null | undefined;
+  readonly " $fragmentType": "FairOrganizerInfo_fairOrganizer";
+};
 export type FairOrganizerInfo_fairOrganizer$key = {
-  readonly " $data"?: FairOrganizerInfo_fairOrganizer$data
-  readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerInfo_fairOrganizer">
-}
+  readonly " $data"?: FairOrganizerInfo_fairOrganizer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerInfo_fairOrganizer">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "FairOrganizerInfo_fairOrganizer",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "FairOrganizerInfo_fairOrganizer",
+  "selections": [
     {
-      alias: null,
-      args: [
+      "alias": null,
+      "args": [
         {
-          kind: "Literal",
-          name: "format",
-          value: "HTML",
-        },
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        }
       ],
-      kind: "ScalarField",
-      name: "about",
-      storageKey: 'about(format:"HTML")',
-    },
+      "kind": "ScalarField",
+      "name": "about",
+      "storageKey": "about(format:\"HTML\")"
+    }
   ],
-  type: "FairOrganizer",
-  abstractKey: null,
-}
+  "type": "FairOrganizer",
+  "abstractKey": null
+};
 
-;(node as any).hash = "8c1500080b2355919c6d76e295bc97e7"
+(node as any).hash = "8c1500080b2355919c6d76e295bc97e7";
 
-export default node
+export default node;

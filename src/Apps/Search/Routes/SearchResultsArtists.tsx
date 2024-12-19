@@ -7,7 +7,11 @@ import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import { type RouterState, withRouter } from "found"
 import qs from "qs"
-import { type RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 
 export interface Props extends RouterState {
   viewer: SearchResultsArtists_viewer$data
@@ -31,7 +35,10 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
     super(props)
 
     const page = this.getQueryParam("page")
-    this.state = { isLoading: false, page: (page && Number.parseInt(page, 10)) || 1 }
+    this.state = {
+      isLoading: false,
+      page: (page && Number.parseInt(page, 10)) || 1,
+    }
   }
 
   toggleLoading = (isLoading: boolean): void => {

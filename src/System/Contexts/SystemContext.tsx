@@ -1,11 +1,11 @@
+import type { FeatureFlags } from "System/Hooks/useFeatureFlag"
+import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
+import { getENV } from "Utils/getENV"
+import { type Metric, getSupportedMetric } from "Utils/metrics"
+import { getUser } from "Utils/user"
 import type { Router } from "found"
 import { createContext, useState } from "react"
 import type { Environment } from "react-relay"
-import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import { getUser } from "Utils/user"
-import type { FeatureFlags } from "System/Hooks/useFeatureFlag"
-import { getSupportedMetric, type Metric } from "Utils/metrics"
-import { getENV } from "Utils/getENV"
 
 export type UserPreferences = {
   metric: Metric

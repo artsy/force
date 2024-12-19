@@ -11,14 +11,14 @@ describe.skip("Strategy", () => {
     let err
 
     // eslint-disable-next-line jest/no-done-callback
-    beforeAll((done) => {
+    beforeAll(done => {
       chai.passport
         .use(strategy)
-        .error((e) => {
+        .error(e => {
           err = e
           done()
         })
-        .request((req) => {
+        .request(req => {
           req.body = {}
           req.body.username = "johndoe"
           req.body.password = "secret"
@@ -40,14 +40,14 @@ describe.skip("Strategy", () => {
     let err
 
     // eslint-disable-next-line jest/no-done-callback
-    beforeAll((done) => {
+    beforeAll(done => {
       chai.passport
         .use(strategy)
-        .error((e) => {
+        .error(e => {
           err = e
           done()
         })
-        .request((req) => {
+        .request(req => {
           req.body = {}
           req.body.username = "johndoe"
           req.body.password = "secret"

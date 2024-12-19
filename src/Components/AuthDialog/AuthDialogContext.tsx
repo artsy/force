@@ -7,7 +7,10 @@ import {
   type AuthTrigger,
 } from "@artsy/cohesion"
 import { useToasts } from "@artsy/palette"
-import { AuthDialog, type AuthDialogProps } from "Components/AuthDialog/AuthDialog"
+import {
+  AuthDialog,
+  type AuthDialogProps,
+} from "Components/AuthDialog/AuthDialog"
 import { merge } from "lodash"
 import { createContext, type FC, useContext, useReducer } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"

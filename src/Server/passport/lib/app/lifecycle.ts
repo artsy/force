@@ -12,7 +12,10 @@ import request from "superagent"
 import artsyXapp from "@artsy/xapp"
 import { parse, resolve } from "url"
 import type { NextFunction } from "express"
-import type { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 import { get, isFunction, isString } from "lodash"
 
 interface Req extends ArtsyRequest {
@@ -145,7 +148,8 @@ export const onLocalSignup = (
 
 type Provider = "facebook" | "apple" | "google"
 
-export const beforeSocialAuth = (provider: Provider) =>
+export const beforeSocialAuth =
+  (provider: Provider) =>
   (req: Req, res: ArtsyResponse, next: NextFunction) => {
     let options
 
@@ -168,7 +172,8 @@ export const beforeSocialAuth = (provider: Provider) =>
     passport.authenticate(provider, options)(req, res, next)
   }
 
-export const afterSocialAuth = (provider: Provider) =>
+export const afterSocialAuth =
+  (provider: Provider) =>
   (req: Req, res: ArtsyResponse, next: NextFunction) => {
     if (req.query.denied) {
       return next(new Error(`${provider} denied`))

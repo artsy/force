@@ -2,7 +2,10 @@ import { LoadingClassName } from "System/Relay/renderWithLoadProgress"
 import "DevTools/renderUntil"
 import { type RenderUntilPredicate, mount } from "enzyme"
 import type * as React from "react"
-import { MockRelayRenderer, type MockRelayRendererProps } from "./MockRelayRenderer"
+import {
+  MockRelayRenderer,
+  type MockRelayRendererProps,
+} from "./MockRelayRenderer"
 
 /**
  * A {@link ReactWrapper.prototype.renderUntil} callback implementation that

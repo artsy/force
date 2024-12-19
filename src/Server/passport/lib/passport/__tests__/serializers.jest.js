@@ -23,7 +23,7 @@ describe("#serialize", () => {
     }
   })
 
-  it("only stores select data in the session", (done) => {
+  it("only stores select data in the session", done => {
     const user = { id: "craig", foo: "baz", bam: "bop" }
     serialize({}, user, (_err, data) => {
       expect(data.foo != null).not.toBeTruthy()
@@ -33,7 +33,7 @@ describe("#serialize", () => {
     resolveSerialize()
   })
 
-  it("add authentications", (done) => {
+  it("add authentications", done => {
     const user = { id: "craig", foo: "baz", bam: "bop" }
     serialize({}, user, (_err, data) => {
       expect(data.authentications[0].provider).toEqual("facebook")
@@ -42,9 +42,9 @@ describe("#serialize", () => {
     resolveSerialize()
   })
 
-  it("works when there's an error from Gravity", (done) => {
+  it("works when there's an error from Gravity", done => {
     const user = { id: "craig", foo: "baz", bam: "bop" }
-    serialize({}, user, (err) => {
+    serialize({}, user, err => {
       expect(err.message).toEqual("fail")
       done()
     })
@@ -52,7 +52,7 @@ describe("#serialize", () => {
     request.end.mock.calls[1][0](new Error("fail"), null)
   })
 
-  it("glues the user onto the request", (done) => {
+  it("glues the user onto the request", done => {
     const user = { id: "craig", foo: "baz", bam: "bop" }
     const req = { user: null }
     serialize(req, user, (_err, _data) => {
@@ -64,7 +64,7 @@ describe("#serialize", () => {
 })
 
 describe("#deserialize", () => {
-  it("passes the user data through", (done) => {
+  it("passes the user data through", done => {
     deserialize({ id: "craig", name: "Craig" }, (_err, user) => {
       expect(user.name).toEqual("Craig")
       done()

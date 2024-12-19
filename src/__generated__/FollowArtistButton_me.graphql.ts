@@ -8,59 +8,56 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type FollowArtistButton_me$data = {
-  readonly counts:
-    | {
-        readonly followedArtists: number
-      }
-    | null
-    | undefined
-  readonly id: string
-  readonly " $fragmentType": "FollowArtistButton_me"
-}
+  readonly counts: {
+    readonly followedArtists: number;
+  } | null | undefined;
+  readonly id: string;
+  readonly " $fragmentType": "FollowArtistButton_me";
+};
 export type FollowArtistButton_me$key = {
-  readonly " $data"?: FollowArtistButton_me$data
-  readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_me">
-}
+  readonly " $data"?: FollowArtistButton_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_me">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "FollowArtistButton_me",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "FollowArtistButton_me",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "id",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: null,
-      concreteType: "MeCounts",
-      kind: "LinkedField",
-      name: "counts",
-      plural: false,
-      selections: [
+      "alias": null,
+      "args": null,
+      "concreteType": "MeCounts",
+      "kind": "LinkedField",
+      "name": "counts",
+      "plural": false,
+      "selections": [
         {
-          alias: null,
-          args: null,
-          kind: "ScalarField",
-          name: "followedArtists",
-          storageKey: null,
-        },
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "followedArtists",
+          "storageKey": null
+        }
       ],
-      storageKey: null,
-    },
+      "storageKey": null
+    }
   ],
-  type: "Me",
-  abstractKey: null,
-}
+  "type": "Me",
+  "abstractKey": null
+};
 
-;(node as any).hash = "b8c3e1b49347f9d84689ffbb01e8b255"
+(node as any).hash = "b8c3e1b49347f9d84689ffbb01e8b255";
 
-export default node
+export default node;

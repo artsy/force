@@ -8,55 +8,55 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomsApp_allViewingRooms$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomsLatestGrid_viewingRooms">
-  readonly " $fragmentType": "ViewingRoomsApp_allViewingRooms"
-}
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomsLatestGrid_viewingRooms">;
+  readonly " $fragmentType": "ViewingRoomsApp_allViewingRooms";
+};
 export type ViewingRoomsApp_allViewingRooms$key = {
-  readonly " $data"?: ViewingRoomsApp_allViewingRooms$data
-  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomsApp_allViewingRooms">
-}
+  readonly " $data"?: ViewingRoomsApp_allViewingRooms$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomsApp_allViewingRooms">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [
+  "argumentDefinitions": [
     {
-      defaultValue: null,
-      kind: "LocalArgument",
-      name: "after",
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after"
     },
     {
-      defaultValue: null,
-      kind: "LocalArgument",
-      name: "count",
-    },
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "count"
+    }
   ],
-  kind: "Fragment",
-  metadata: null,
-  name: "ViewingRoomsApp_allViewingRooms",
-  selections: [
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ViewingRoomsApp_allViewingRooms",
+  "selections": [
     {
-      args: [
+      "args": [
         {
-          kind: "Variable",
-          name: "after",
-          variableName: "after",
+          "kind": "Variable",
+          "name": "after",
+          "variableName": "after"
         },
         {
-          kind: "Variable",
-          name: "count",
-          variableName: "count",
-        },
+          "kind": "Variable",
+          "name": "count",
+          "variableName": "count"
+        }
       ],
-      kind: "FragmentSpread",
-      name: "ViewingRoomsLatestGrid_viewingRooms",
-    },
+      "kind": "FragmentSpread",
+      "name": "ViewingRoomsLatestGrid_viewingRooms"
+    }
   ],
-  type: "Viewer",
-  abstractKey: null,
-}
+  "type": "Viewer",
+  "abstractKey": null
+};
 
-;(node as any).hash = "bac462a0b1f43ecffedeb54a49be7a86"
+(node as any).hash = "bac462a0b1f43ecffedeb54a49be7a86";
 
-export default node
+export default node;

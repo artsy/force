@@ -17,7 +17,11 @@ import {
   normalizePlace,
 } from "Components/LocationAutocompleteInput"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import { ActionType, ContextModule, type EditedUserProfile } from "@artsy/cohesion"
+import {
+  ActionType,
+  ContextModule,
+  type EditedUserProfile,
+} from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
