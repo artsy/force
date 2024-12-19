@@ -1,7 +1,7 @@
 import { ResponsiveBox, Image, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { cropped } from "Utils/resized"
-import { FC } from "react"
+import type { FC } from "react"
 
 interface MarketingCollectionCellProps {
   title: string
@@ -9,11 +9,9 @@ interface MarketingCollectionCellProps {
   src: string
 }
 
-export const MarketingCollectionCell: FC<React.PropsWithChildren<MarketingCollectionCellProps>> = ({
-  title,
-  href,
-  src,
-}) => {
+export const MarketingCollectionCell: FC<
+  React.PropsWithChildren<MarketingCollectionCellProps>
+> = ({ title, href, src }) => {
   const image = cropped(src, { width: 400, height: 300 })
 
   return (

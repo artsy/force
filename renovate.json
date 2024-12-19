@@ -1,8 +1,4 @@
 {
-  "extends": [
-    "@artsy:app"
-  ],
-  "assignees": [
-    "mc-jones"
-  ]
+  "extends": ["@artsy:app"],
+  "assignees": ["mc-jones"]
 }

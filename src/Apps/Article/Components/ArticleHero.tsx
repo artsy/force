@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   FullBleedHeader,
@@ -17,7 +17,7 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
-import { ArticleHero_article$data } from "__generated__/ArticleHero_article.graphql"
+import type { ArticleHero_article$data } from "__generated__/ArticleHero_article.graphql"
 import styled from "styled-components"
 import { CENTERED_LAYOUT_COLUMNS } from "./ArticleBody"
 
@@ -26,7 +26,10 @@ interface ArticleHeroProps {
   fixed?: boolean
 }
 
-const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({ article, fixed = true }) => {
+const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
+  article,
+  fixed = true,
+}) => {
   const height = useFullBleedHeaderHeight()
 
   const { theme } = useTheme()
@@ -96,7 +99,7 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({ article, f
               <Box
                 display="block"
                 width="100%"
-                height={(height as unknown) as string}
+                height={height as unknown as string}
                 style={{ objectFit: "cover" }}
                 as="video"
                 src={article.hero.media as string}

@@ -16,13 +16,13 @@ import { useEditProfileTracking } from "Apps/Settings/Routes/EditProfile/Hooks/u
 import {
   LocationAutocompleteInput,
   normalizePlace,
-  Place,
+  type Place,
 } from "Components/LocationAutocompleteInput"
 import { Form, Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import { SettingsEditProfileFields_me$data } from "__generated__/SettingsEditProfileFields_me.graphql"
-import { EditableLocation } from "__generated__/useUpdateMyUserProfileMutation.graphql"
+import type { SettingsEditProfileFields_me$data } from "__generated__/SettingsEditProfileFields_me.graphql"
+import type { EditableLocation } from "__generated__/useUpdateMyUserProfileMutation.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
 import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
@@ -32,7 +32,7 @@ import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
-  ClickedVerifyIdentity,
+  type ClickedVerifyIdentity,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
@@ -57,9 +57,9 @@ interface SettingsEditProfileFieldsProps {
   me: SettingsEditProfileFields_me$data
 }
 
-const SettingsEditProfileFields: React.FC<React.PropsWithChildren<SettingsEditProfileFieldsProps>> = ({
-  me,
-}) => {
+const SettingsEditProfileFields: React.FC<
+  React.PropsWithChildren<SettingsEditProfileFieldsProps>
+> = ({ me }) => {
   const { sendToast } = useToasts()
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
   const { submitMutation: submitVerifyIDMutation } = useVerifyID()
@@ -349,9 +349,8 @@ const SettingsEditProfileFields: React.FC<React.PropsWithChildren<SettingsEditPr
   )
 }
 
-export const SettingsEditProfileFieldsFragmentContainer = createFragmentContainer(
-  SettingsEditProfileFields,
-  {
+export const SettingsEditProfileFieldsFragmentContainer =
+  createFragmentContainer(SettingsEditProfileFields, {
     me: graphql`
       fragment SettingsEditProfileFields_me on Me {
         ...SettingsEditProfileImage_me
@@ -372,5 +371,4 @@ export const SettingsEditProfileFieldsFragmentContainer = createFragmentContaine
         canRequestEmailConfirmation
       }
     `,
-  }
-)
+  })

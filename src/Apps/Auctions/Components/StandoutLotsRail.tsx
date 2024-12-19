@@ -1,5 +1,5 @@
-import { AuthContextModule } from "@artsy/cohesion"
-import * as React from "react"
+import type { AuthContextModule } from "@artsy/cohesion"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import {
@@ -10,8 +10,8 @@ import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { extractNodes } from "Utils/extractNodes"
-import { StandoutLotsRailQuery } from "__generated__/StandoutLotsRailQuery.graphql"
-import { StandoutLotsRail_viewer$data } from "__generated__/StandoutLotsRail_viewer.graphql"
+import type { StandoutLotsRailQuery } from "__generated__/StandoutLotsRailQuery.graphql"
+import type { StandoutLotsRail_viewer$data } from "__generated__/StandoutLotsRail_viewer.graphql"
 import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 import { CuratorialRailsZeroState } from "Apps/Auctions/Components/CuritorialRailsTabBar"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -22,12 +22,13 @@ export interface StandoutLotsRailProps {
   viewer: StandoutLotsRail_viewer$data
 }
 
-export const StandoutLotsRail: React.FC<React.PropsWithChildren<StandoutLotsRailProps>> = ({
-  viewer,
-}) => {
+export const StandoutLotsRail: React.FC<
+  React.PropsWithChildren<StandoutLotsRailProps>
+> = ({ viewer }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
-  const contextModule = tabTypeToContextModuleMap.standoutLots as AuthContextModule
+  const contextModule =
+    tabTypeToContextModuleMap.standoutLots as AuthContextModule
   const artworks = extractNodes(viewer.standoutLotsRailConnection)
 
   if (artworks.length === 0) {
@@ -88,7 +89,9 @@ export const StandoutLotsRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const StandoutLotsRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const StandoutLotsRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

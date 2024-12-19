@@ -1,13 +1,15 @@
 import { Avatar, Box, Flex, Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SearchRouteOption_artist$data } from "__generated__/SearchRouteOption_artist.graphql"
+import type { SearchRouteOption_artist$data } from "__generated__/SearchRouteOption_artist.graphql"
 
 interface SearchRouteOptionProps {
   artist: SearchRouteOption_artist$data
 }
 
-export const SearchRouteOption: FC<React.PropsWithChildren<SearchRouteOptionProps>> = ({ artist }) => {
+export const SearchRouteOption: FC<
+  React.PropsWithChildren<SearchRouteOptionProps>
+> = ({ artist }) => {
   return (
     <Flex px={2} py={1} gap={1} alignItems="center">
       <Avatar

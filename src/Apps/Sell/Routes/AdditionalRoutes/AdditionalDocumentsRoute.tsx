@@ -5,11 +5,11 @@ import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { UploadDocumentsForm } from "Apps/Sell/Components/UploadDocumentsForm"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
-import { Asset, dropzoneFileFromAsset } from "Apps/Sell/Utils/uploadUtils"
-import { DropzoneFile } from "Components/FileUpload/types"
-import { AdditionalDocumentsRoute_submission$key } from "__generated__/AdditionalDocumentsRoute_submission.graphql"
+import { type Asset, dropzoneFileFromAsset } from "Apps/Sell/Utils/uploadUtils"
+import type { DropzoneFile } from "Components/FileUpload/types"
+import type { AdditionalDocumentsRoute_submission$key } from "__generated__/AdditionalDocumentsRoute_submission.graphql"
 import { Formik } from "formik"
-import * as React from "react"
+import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
 
@@ -41,7 +41,9 @@ interface AdditionalDocumentsRouteProps {
   submission: AdditionalDocumentsRoute_submission$key
 }
 
-export const AdditionalDocumentsRoute: React.FC<React.PropsWithChildren<AdditionalDocumentsRouteProps>> = props => {
+export const AdditionalDocumentsRoute: React.FC<
+  React.PropsWithChildren<AdditionalDocumentsRouteProps>
+> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
   const {
     actions: { setLoading },

@@ -1,7 +1,7 @@
-import { Box, BoxProps, Flex, Image, Text } from "@artsy/palette"
-import { AuctionLotInfo_saleArtwork$data } from "__generated__/AuctionLotInfo_saleArtwork.graphql"
-import * as React from "react"
-import { RelayProp, createFragmentContainer, graphql } from "react-relay"
+import { Box, type BoxProps, Flex, Image, Text } from "@artsy/palette"
+import type { AuctionLotInfo_saleArtwork$data } from "__generated__/AuctionLotInfo_saleArtwork.graphql"
+import type * as React from "react"
+import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 
 interface AuctionLotInfoProps extends BoxProps {
@@ -10,11 +10,9 @@ interface AuctionLotInfoProps extends BoxProps {
   relay: RelayProp
 }
 
-const AuctionLotInfo: React.FC<React.PropsWithChildren<AuctionLotInfoProps>> = ({
-  hideLotInfo = false,
-  saleArtwork,
-  ...rest
-}) => {
+const AuctionLotInfo: React.FC<
+  React.PropsWithChildren<AuctionLotInfoProps>
+> = ({ hideLotInfo = false, saleArtwork, ...rest }) => {
   const artwork = saleArtwork.artwork
   const bidCount = saleArtwork.counts?.bidderPositions
 

@@ -1,6 +1,6 @@
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Column,
   Flex,
   GridColumns,
@@ -16,10 +16,9 @@ interface ShowBannersRailPlaceholderProps extends BoxProps {
   count: number
 }
 
-export const ShowBannersRailPlaceholder: React.FC<React.PropsWithChildren<ShowBannersRailPlaceholderProps>> = ({
-  count,
-  ...rest
-}) => {
+export const ShowBannersRailPlaceholder: React.FC<
+  React.PropsWithChildren<ShowBannersRailPlaceholderProps>
+> = ({ count, ...rest }) => {
   return (
     <Box {...rest}>
       <GridColumns gridRowGap={[3, 2]}>

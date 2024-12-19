@@ -1,4 +1,4 @@
-import { ArtworkMeta_artwork$key } from "__generated__/ArtworkMeta_artwork.graphql"
+import type { ArtworkMeta_artwork$key } from "__generated__/ArtworkMeta_artwork.graphql"
 import { Link, Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/SeoDataForArtwork"
@@ -10,7 +10,9 @@ interface ArtworkMetaProps {
   artwork: ArtworkMeta_artwork$key
 }
 
-export const ArtworkMeta: React.FC<React.PropsWithChildren<ArtworkMetaProps>> = ({ artwork }) => {
+export const ArtworkMeta: React.FC<
+  React.PropsWithChildren<ArtworkMetaProps>
+> = ({ artwork }) => {
   const { match } = useRouter()
   const data = useFragment(artworkMetaFragment, artwork)
 

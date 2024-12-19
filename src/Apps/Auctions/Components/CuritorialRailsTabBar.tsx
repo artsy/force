@@ -1,12 +1,14 @@
 import { Spacer, Tab, Tabs, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { AuctionsZeroState } from "./AuctionsZeroState"
 import { StandoutLotsRailQueryRenderer } from "./StandoutLotsRail"
 import { TrendingLotsRailQueryRenderer } from "./TrendingLotsRail"
 import { HomeAuctionLotsForYouRailQueryRenderer } from "Apps/Home/Components/HomeAuctionLotsForYouRail"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
-export const CuritorialRailsTabBar: React.FC<React.PropsWithChildren<unknown>> = ({}) => {
+export const CuritorialRailsTabBar: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({}) => {
   const { user } = useSystemContext()
 
   return (
@@ -31,6 +33,8 @@ export const CuritorialRailsTabBar: React.FC<React.PropsWithChildren<unknown>> =
   )
 }
 
-export const CuratorialRailsZeroState: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const CuratorialRailsZeroState: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return <AuctionsZeroState>No Works To Show</AuctionsZeroState>
 }

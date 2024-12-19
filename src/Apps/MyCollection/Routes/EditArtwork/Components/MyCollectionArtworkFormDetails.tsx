@@ -15,7 +15,7 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
-import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
+import type { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { categoryOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/categoryOptions"
 import { rarityOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/rarityOptions"
 import { ArtistAutoComplete } from "Apps/Sell/Components/ArtistAutocomplete"
@@ -29,19 +29,16 @@ import { useFormikContext } from "formik"
 import { useState } from "react"
 import { ProvenanceModal } from "./ProvenanceModal"
 
-export const MyCollectionArtworkFormDetails: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const MyCollectionArtworkFormDetails: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { sendToast } = useToasts()
 
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
 
-  const {
-    values,
-    handleChange,
-    setFieldValue,
-    setFieldTouched,
-    handleBlur,
-  } = useFormikContext<ArtworkModel>()
+  const { values, handleChange, setFieldValue, setFieldTouched, handleBlur } =
+    useFormikContext<ArtworkModel>()
 
   const isLimitedEdition = values.attributionClass === "LIMITED_EDITION"
 

@@ -1,5 +1,5 @@
 import { Box, Clickable, Flex, Text, Tooltip } from "@artsy/palette"
-import { AuctionResultPrice_auctionResult$key } from "__generated__/AuctionResultPrice_auctionResult.graphql"
+import type { AuctionResultPrice_auctionResult$key } from "__generated__/AuctionResultPrice_auctionResult.graphql"
 import { DateTime } from "luxon"
 import { graphql, useFragment } from "react-relay"
 import InfoIcon from "@artsy/icons/InfoIcon"
@@ -9,9 +9,9 @@ interface AuctionResultPriceProps {
   auctionResult: AuctionResultPrice_auctionResult$key
 }
 
-export const AuctionResultPrice: React.FC<React.PropsWithChildren<AuctionResultPriceProps>> = ({
-  auctionResult,
-}) => {
+export const AuctionResultPrice: React.FC<
+  React.PropsWithChildren<AuctionResultPriceProps>
+> = ({ auctionResult }) => {
   const data = useFragment(auctionResultPriceFragment, auctionResult)
 
   const {

@@ -1,6 +1,6 @@
 import { Image } from "@artsy/palette"
 import { ArtworkListNoImage } from "./Images/ArtworkListNoImage"
-import { FC } from "react"
+import type { FC } from "react"
 import { cropped } from "Utils/resized"
 
 interface SavesEntityImageProps {
@@ -8,10 +8,9 @@ interface SavesEntityImageProps {
   size?: number
 }
 
-export const SavesEntityImage: FC<React.PropsWithChildren<SavesEntityImageProps>> = ({
-  url,
-  size = 60,
-}) => {
+export const SavesEntityImage: FC<
+  React.PropsWithChildren<SavesEntityImageProps>
+> = ({ url, size = 60 }) => {
   if (url === null) {
     return <ArtworkListNoImage width={size} height={size} />
   }

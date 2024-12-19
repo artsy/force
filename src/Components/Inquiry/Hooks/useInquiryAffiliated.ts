@@ -6,10 +6,10 @@ import { logger } from "../util"
 type Option = { text: string; value: string }
 
 export enum Mode {
-  Pending,
-  Loading,
-  Success,
-  Error,
+  Pending = 0,
+  Loading = 1,
+  Success = 2,
+  Error = 3,
 }
 
 export const useInquiryAffiliated = () => {

@@ -1,19 +1,19 @@
 import { Flex, Join, Separator, Spinner, Text } from "@artsy/palette"
 import {
-  RelayPaginationProp,
+  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
 } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { NotificationsList_viewer$data } from "__generated__/NotificationsList_viewer.graphql"
-import {
+import type { NotificationsList_viewer$data } from "__generated__/NotificationsList_viewer.graphql"
+import type {
   NotificationsListQuery,
   NotificationTypesEnum,
 } from "__generated__/NotificationsListQuery.graphql"
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
 import { useContext, useEffect, useState } from "react"
 import { NotificationsListScrollSentinel } from "./NotificationsListScrollSentinel"
-import { NotificationType } from "./types"
+import type { NotificationType } from "./types"
 import { NotificationsEmptyStateByType } from "./NotificationsEmptyStateByType"
 import { shouldDisplayNotification } from "./util"
 import { NotificationsListPlaceholder } from "./NotificationsListPlaceholder"
@@ -22,7 +22,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { SystemContext } from "System/Contexts/SystemContext"
 import { getENV } from "Utils/getENV"
-import { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
+import type { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
 
 interface NotificationsListQueryRendererProps {
   mode: NotificationListMode
@@ -36,12 +36,9 @@ interface NotificationsListProps {
   type: NotificationType
 }
 
-export const NotificationsList: React.FC<React.PropsWithChildren<NotificationsListProps>> = ({
-  mode,
-  viewer,
-  relay,
-  type,
-}) => {
+export const NotificationsList: React.FC<
+  React.PropsWithChildren<NotificationsListProps>
+> = ({ mode, viewer, relay, type }) => {
   const { router, match } = useRouter()
   const [loading, setLoading] = useState(false)
 
@@ -187,10 +184,9 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
   }
 )
 
-export const NotificationsListQueryRenderer: React.FC<React.PropsWithChildren<NotificationsListQueryRendererProps>> = ({
-  mode,
-  type,
-}) => {
+export const NotificationsListQueryRenderer: React.FC<
+  React.PropsWithChildren<NotificationsListQueryRendererProps>
+> = ({ mode, type }) => {
   const { relayEnvironment } = useContext(SystemContext)
   const { state } = useNotificationsContext()
 

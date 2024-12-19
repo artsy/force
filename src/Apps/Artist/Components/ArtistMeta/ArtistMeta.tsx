@@ -1,4 +1,4 @@
-import { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
+import type { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
 import { Person as SeoDataForArtist } from "Components/Seo/Person"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -10,7 +10,9 @@ interface Props {
   artist: ArtistMeta_artist$data
 }
 
-export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({ artist }) => {
+export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
+  artist,
+}) => {
   const alternateNames = artist?.alternateNames || []
 
   return (

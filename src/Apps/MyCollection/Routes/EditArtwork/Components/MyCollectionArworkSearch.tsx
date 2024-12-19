@@ -4,7 +4,7 @@ import { Masonry } from "Components/Masonry"
 import { Fragment } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { MyCollectionArworkSearchQuery } from "__generated__/MyCollectionArworkSearchQuery.graphql"
+import type { MyCollectionArworkSearchQuery } from "__generated__/MyCollectionArworkSearchQuery.graphql"
 
 interface MyCollectionArworkSearchProps {
   artistId: string
@@ -13,12 +13,9 @@ interface MyCollectionArworkSearchProps {
   query?: string | null
 }
 
-export const MyCollectionArworkSearch: React.FC<React.PropsWithChildren<MyCollectionArworkSearchProps>> = ({
-  artistId,
-  onClick,
-  onSkip,
-  query,
-}) => {
+export const MyCollectionArworkSearch: React.FC<
+  React.PropsWithChildren<MyCollectionArworkSearchProps>
+> = ({ artistId, onClick, onSkip, query }) => {
   const input = query ? { keyword: query } : null
 
   const data = useLazyLoadQuery<MyCollectionArworkSearchQuery>(
@@ -111,10 +108,12 @@ export const MyCollectionArworkSearch: React.FC<React.PropsWithChildren<MyCollec
   )
 }
 
-const NoResults: React.FC<React.PropsWithChildren<{
-  onSkip: () => void
-  query?: string | null
-}>> = ({ onSkip, query }) => {
+const NoResults: React.FC<
+  React.PropsWithChildren<{
+    onSkip: () => void
+    query?: string | null
+  }>
+> = ({ onSkip, query }) => {
   return (
     <Box my={4}>
       <Text variant={["xs", "sm-display"]} flexWrap="wrap">

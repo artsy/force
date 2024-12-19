@@ -1,9 +1,9 @@
-import { Box, BoxProps, Button, useToasts } from "@artsy/palette"
+import { Box, type BoxProps, Button, useToasts } from "@artsy/palette"
 import { useMakeInquiryOffer } from "Apps/Conversations/mutations/useMakeInquiryOfferMutation"
 import { useState } from "react"
 import { useRouter } from "System/Hooks/useRouter"
-import { ActionType, OwnerType, TappedMakeOffer } from "@artsy/cohesion"
-import { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
+import { ActionType, OwnerType, type TappedMakeOffer } from "@artsy/cohesion"
+import type { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
 import { useConversationPurchaseButtonData } from "Apps/Conversations/components/ConversationCTA/useConversationPurchaseButtonData"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { useTracking } from "react-tracking"
@@ -12,20 +12,17 @@ interface ConversationMakeOfferButtonProps extends BoxProps {
   conversation: useConversationPurchaseButtonData_conversation$key
 }
 
-export const ConversationMakeOfferButton: React.FC<React.PropsWithChildren<ConversationMakeOfferButtonProps>> = ({
-  conversation,
-  ...boxProps
-}) => {
+export const ConversationMakeOfferButton: React.FC<
+  React.PropsWithChildren<ConversationMakeOfferButtonProps>
+> = ({ conversation, ...boxProps }) => {
   const tracking = useTracking()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { router } = useRouter()
   const { submitMutation } = useMakeInquiryOffer()
   const { sendToast } = useToasts()
 
-  const {
-    showSelectEditionSetModal,
-    isConfirmModalVisible,
-  } = useConversationsContext()
+  const { showSelectEditionSetModal, isConfirmModalVisible } =
+    useConversationsContext()
 
   const data = useConversationPurchaseButtonData(conversation)
 

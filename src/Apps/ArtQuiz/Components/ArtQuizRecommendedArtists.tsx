@@ -1,8 +1,8 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtQuizRecommendedArtists_me$data } from "__generated__/ArtQuizRecommendedArtists_me.graphql"
-import { ArtQuizRecommendedArtistsQuery } from "__generated__/ArtQuizRecommendedArtistsQuery.graphql"
+import type { ArtQuizRecommendedArtists_me$data } from "__generated__/ArtQuizRecommendedArtists_me.graphql"
+import type { ArtQuizRecommendedArtistsQuery } from "__generated__/ArtQuizRecommendedArtistsQuery.graphql"
 import { compact, uniq } from "lodash"
 import {
   ArtQuizRecommendedArtistFragmentContainer,
@@ -14,9 +14,9 @@ interface ArtQuizRecommendedArtistsProps {
   me: ArtQuizRecommendedArtists_me$data
 }
 
-const ArtQuizRecommendedArtists: FC<React.PropsWithChildren<ArtQuizRecommendedArtistsProps>> = ({
-  me,
-}) => {
+const ArtQuizRecommendedArtists: FC<
+  React.PropsWithChildren<ArtQuizRecommendedArtistsProps>
+> = ({ me }) => {
   const likedArtists = compact(
     uniq(me.quiz.savedArtworks.map(artwork => artwork.artist))
   )

@@ -1,8 +1,11 @@
 import { LoadingClassName } from "System/Relay/renderWithLoadProgress"
 import "DevTools/renderUntil"
-import { RenderUntilPredicate, mount } from "enzyme"
-import * as React from "react"
-import { MockRelayRenderer, MockRelayRendererProps } from "./MockRelayRenderer"
+import { type RenderUntilPredicate, mount } from "enzyme"
+import type * as React from "react"
+import {
+  MockRelayRenderer,
+  type MockRelayRendererProps,
+} from "./MockRelayRenderer"
 
 /**
  * A {@link ReactWrapper.prototype.renderUntil} callback implementation that
@@ -93,7 +96,7 @@ const RelayFinishedLoading: RenderUntilPredicate<any, any, any> = tree =>
 export function renderRelayTree<
   P = {},
   S = {},
-  C extends React.Component = React.Component
+  C extends React.Component = React.Component,
 >(
   params: MockRelayRendererProps<any> & {
     renderUntil?: RenderUntilPredicate<P, S, C>

@@ -2,14 +2,14 @@ import { isArray, omit } from "lodash"
 import { useContext, useReducer, useState } from "react"
 import * as React from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { SortOptions } from "Components/SortFilter"
+import type { SortOptions } from "Components/SortFilter"
 import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
 import { rangeToTuple } from "./Utils/rangeToTuple"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { DEFAULT_METRIC, getSupportedMetric, Metric } from "Utils/metrics"
-import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import { DEFAULT_METRIC, getSupportedMetric, type Metric } from "Utils/metrics"
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 
 /**
  * Initial filter state
@@ -210,26 +210,25 @@ export interface ArtworkFilterContextProps {
 /**
  * Context behavior shared globally across the ArtworkFilter component tree
  */
-export const ArtworkFilterContext = React.createContext<
-  ArtworkFilterContextProps
->({
-  filters: initialArtworkFilterState,
-  hasFilters: false,
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  isDefaultValue: null,
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  rangeToTuple: null,
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  resetFilters: null,
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  setFilter: null,
-  sortOptions: [],
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  unsetFilter: null,
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  ZeroState: null,
-  mountedContext: false,
-})
+export const ArtworkFilterContext =
+  React.createContext<ArtworkFilterContextProps>({
+    filters: initialArtworkFilterState,
+    hasFilters: false,
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    isDefaultValue: null,
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    rangeToTuple: null,
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    resetFilters: null,
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    setFilter: null,
+    sortOptions: [],
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    unsetFilter: null,
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    ZeroState: null,
+    mountedContext: false,
+  })
 
 export type SharedArtworkFilterContextProps = Pick<
   ArtworkFilterContextProps,
@@ -245,9 +244,13 @@ export type SharedArtworkFilterContextProps = Pick<
   onChange?: (filterState) => void
 }
 
-export const ArtworkFilterContextProvider: React.FC<React.PropsWithChildren<SharedArtworkFilterContextProps & {
-  children: React.ReactNode
-}>> = ({
+export const ArtworkFilterContextProvider: React.FC<
+  React.PropsWithChildren<
+    SharedArtworkFilterContextProps & {
+      children: React.ReactNode
+    }
+  >
+> = ({
   aggregations = [],
   children,
   counts = {},
@@ -285,12 +288,10 @@ export const ArtworkFilterContextProvider: React.FC<React.PropsWithChildren<Shar
 
   // TODO: Consolidate this into additional reducer
   const [artworkCounts, setCounts] = useState(counts)
-  const [shouldStageFilterChanges, setShouldStageFilterChanges] = useState(
-    false
-  )
-  const [followedArtists, setFollowedArtists] = useState<FollowedArtists>(
-    _followedArtists
-  )
+  const [shouldStageFilterChanges, setShouldStageFilterChanges] =
+    useState(false)
+  const [followedArtists, setFollowedArtists] =
+    useState<FollowedArtists>(_followedArtists)
 
   useDeepCompareEffect(() => {
     if (onChange) {
@@ -446,7 +447,7 @@ const artworkFilterReducer = (
     case "SET": {
       const { name, value } = action.payload
 
-      let filterState: ArtworkFilters = {
+      const filterState: ArtworkFilters = {
         page: 1,
       }
 

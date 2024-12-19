@@ -1,6 +1,6 @@
 import { Flex, Text, Spacer, Button, FullBleed, Box } from "@artsy/palette"
 import { SplitLayout } from "Components/SplitLayout"
-import { FC } from "react"
+import type { FC } from "react"
 import { RouterLink } from "System/Components/RouterLink"
 
 import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
@@ -11,7 +11,9 @@ interface ArtQuizWelcomeProps {
   onStartQuiz: () => void
 }
 
-export const ArtQuizWelcome: FC<React.PropsWithChildren<ArtQuizWelcomeProps>> = ({ onStartQuiz }) => {
+export const ArtQuizWelcome: FC<
+  React.PropsWithChildren<ArtQuizWelcomeProps>
+> = ({ onStartQuiz }) => {
   return (
     <ArtQuizFullScreen>
       <FullBleed height="100%">

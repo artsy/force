@@ -1,9 +1,9 @@
-import * as React from "react";
+import type * as React from "react"
 
-interface BuyerGuaranteeAppProps {}
+type BuyerGuaranteeAppProps = {}
 
-export const BuyerGuaranteeApp: React.FC<React.PropsWithChildren<BuyerGuaranteeAppProps>> = ({
-  children,
-}) => {
+export const BuyerGuaranteeApp: React.FC<
+  React.PropsWithChildren<BuyerGuaranteeAppProps>
+> = ({ children }) => {
   return <>{children}</>
 }

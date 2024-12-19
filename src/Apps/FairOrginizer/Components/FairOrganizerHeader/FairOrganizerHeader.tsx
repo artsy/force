@@ -1,10 +1,10 @@
-import * as React from "react"
+import type * as React from "react"
 import { DateTime } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
 import { FairOrganizerFollowButtonFragmentContainer as FairOrganizerFollowButton } from "Apps/FairOrginizer/Components/FairOrganizerFollowButton"
 import { FairOrganizerInfoFragmentContainer as FairOrganizerInfo } from "./FairOrganizerInfo"
-import { FairOrganizerHeader_fairOrganizer$data } from "__generated__/FairOrganizerHeader_fairOrganizer.graphql"
+import type { FairOrganizerHeader_fairOrganizer$data } from "__generated__/FairOrganizerHeader_fairOrganizer.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { Timer } from "Components/Timer"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
@@ -15,9 +15,9 @@ interface FairOrganizerHeaderProps {
   fairOrganizer: FairOrganizerHeader_fairOrganizer$data
 }
 
-export const FairOrganizerHeader: React.FC<React.PropsWithChildren<FairOrganizerHeaderProps>> = ({
-  fairOrganizer,
-}) => {
+export const FairOrganizerHeader: React.FC<
+  React.PropsWithChildren<FairOrganizerHeaderProps>
+> = ({ fairOrganizer }) => {
   const { fairsConnection, name, profile } = fairOrganizer
   const [fair] = extractNodes(fairsConnection)
   const { startAt, exhibitionPeriod, href } = fair

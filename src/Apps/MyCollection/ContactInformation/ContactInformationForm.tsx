@@ -1,7 +1,7 @@
-import { Box, BoxProps, Input, PhoneInput } from "@artsy/palette"
+import { Box, type BoxProps, Input, PhoneInput } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ContactInformationForm_me$data } from "__generated__/ContactInformationForm_me.graphql"
+import type { ContactInformationForm_me$data } from "__generated__/ContactInformationForm_me.graphql"
 import { countries } from "Utils/countries"
 
 export interface ContactInformationFormModel {
@@ -16,19 +16,11 @@ export interface ContactInformationFormProps extends BoxProps {
   optionalPhoneNumber?: boolean
 }
 
-export const ContactInformationForm: React.FC<React.PropsWithChildren<ContactInformationFormProps>> = ({
-  me,
-  optionalPhoneNumber = false,
-  ...rest
-}) => {
-  const {
-    values,
-    handleChange,
-    handleBlur,
-    touched,
-    errors,
-    setFieldValue,
-  } = useFormikContext<ContactInformationFormModel>()
+export const ContactInformationForm: React.FC<
+  React.PropsWithChildren<ContactInformationFormProps>
+> = ({ me, optionalPhoneNumber = false, ...rest }) => {
+  const { values, handleChange, handleBlur, touched, errors, setFieldValue } =
+    useFormikContext<ContactInformationFormModel>()
 
   return (
     <Box {...rest}>

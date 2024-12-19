@@ -1,8 +1,8 @@
-import { ComponentType } from "react"
+import type { ComponentType } from "react"
 import { graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { withProgressiveOnboardingCountsQuery } from "__generated__/withProgressiveOnboardingCountsQuery.graphql"
+import type { withProgressiveOnboardingCountsQuery } from "__generated__/withProgressiveOnboardingCountsQuery.graphql"
 
 export interface WithProgressiveOnboardingCountsProps {
   counts: {
@@ -22,9 +22,11 @@ const INITIAL_COUNTS = {
 }
 
 export const withProgressiveOnboardingCounts = <
-  T extends WithProgressiveOnboardingCountsProps
+  T extends WithProgressiveOnboardingCountsProps,
 >(
-  Component: ComponentType<React.PropsWithChildren<T & WithProgressiveOnboardingCountsProps>>
+  Component: ComponentType<
+    React.PropsWithChildren<T & WithProgressiveOnboardingCountsProps>
+  >
 ): ComponentType<React.PropsWithChildren<Omit<T, "counts">>> => {
   return (props: T) => {
     const { isLoggedIn } = useSystemContext()

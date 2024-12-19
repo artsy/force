@@ -1,4 +1,4 @@
-import { SelectedFiltersCounts } from "../ArtworkFilterContext"
+import type { SelectedFiltersCounts } from "../ArtworkFilterContext"
 
 export const getTotalSelectedFiltersCount = (
   selectedFiltersCounts: Partial<SelectedFiltersCounts> = {}

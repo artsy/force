@@ -3,15 +3,15 @@ import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/Auc
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
-import { MyCollectionArtworkAuctionResults_artist$data } from "__generated__/MyCollectionArtworkAuctionResults_artist.graphql"
+import type { MyCollectionArtworkAuctionResults_artist$data } from "__generated__/MyCollectionArtworkAuctionResults_artist.graphql"
 
 interface MyCollectionArtworkAuctionResultsProps {
   artist: MyCollectionArtworkAuctionResults_artist$data
 }
 
-const MyCollectionAuctionResultsContainer: React.FC<React.PropsWithChildren<MyCollectionArtworkAuctionResultsProps>> = ({
-  artist,
-}) => {
+const MyCollectionAuctionResultsContainer: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkAuctionResultsProps>
+> = ({ artist }) => {
   const { slug, auctionResultsConnection } = artist
 
   if (!auctionResultsConnection) {
@@ -63,9 +63,8 @@ const MyCollectionAuctionResultsContainer: React.FC<React.PropsWithChildren<MyCo
   )
 }
 
-export const MyCollectionArtworkAuctionResultsFragmentContainer = createFragmentContainer(
-  MyCollectionAuctionResultsContainer,
-  {
+export const MyCollectionArtworkAuctionResultsFragmentContainer =
+  createFragmentContainer(MyCollectionAuctionResultsContainer, {
     artist: graphql`
       fragment MyCollectionArtworkAuctionResults_artist on Artist
         @argumentDefinitions(first: { type: "Int", defaultValue: 6 }) {
@@ -87,5 +86,4 @@ export const MyCollectionArtworkAuctionResultsFragmentContainer = createFragment
         }
       }
     `,
-  }
-)
+  })

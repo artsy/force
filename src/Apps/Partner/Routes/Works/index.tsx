@@ -1,12 +1,12 @@
-import * as React from "react"
-import { createRefetchContainer, RelayRefetchProp } from "react-relay"
+import type * as React from "react"
+import { createRefetchContainer, type RelayRefetchProp } from "react-relay"
 import { graphql } from "react-relay"
-import { Works_partner$data } from "__generated__/Works_partner.graphql"
+import type { Works_partner$data } from "__generated__/Works_partner.graphql"
 import {
   ArtworkFilterContextProvider,
-  Counts,
+  type Counts,
   initialArtworkFilterState,
-  SharedArtworkFilterContextProps,
+  type SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
@@ -18,17 +18,16 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
-import { WorksFilterQuery } from "__generated__/WorksFilterQuery.graphql"
+import type { WorksFilterQuery } from "__generated__/WorksFilterQuery.graphql"
 
 interface PartnerArtworkFilterProps {
   partner: Works_partner$data
   relay: RelayRefetchProp
 }
 
-export const Artworks: React.FC<React.PropsWithChildren<PartnerArtworkFilterProps>> = ({
-  partner,
-  relay,
-}) => {
+export const Artworks: React.FC<
+  React.PropsWithChildren<PartnerArtworkFilterProps>
+> = ({ partner, relay }) => {
   const { sidebar } = partner
   const { match } = useRouter()
   const filters = match?.location?.query ?? {}
@@ -119,9 +118,11 @@ export const ArtworksRefetchContainer = createRefetchContainer(
   `
 )
 
-interface PartnerArtworkFilterQueryRendererProps {}
+type PartnerArtworkFilterQueryRendererProps = {}
 
-export const PartnerArtworksQueryRenderer: React.FC<React.PropsWithChildren<PartnerArtworkFilterQueryRendererProps>> = rest => {
+export const PartnerArtworksQueryRenderer: React.FC<
+  React.PropsWithChildren<PartnerArtworkFilterQueryRendererProps>
+> = rest => {
   const { relayEnvironment } = useSystemContext()
   const { match } = useRouter()
 

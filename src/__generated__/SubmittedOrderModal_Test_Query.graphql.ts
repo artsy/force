@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e3e200719d19fea68cc96d085f155e6d>>
+ * @generated SignedSource<<b53e6de99008069f219946cb809b7a31>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,6 +32,12 @@ var v0 = [
 v1 = {
   "enumValues": null,
   "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": true,
   "plural": false,
   "type": "String"
 };
@@ -104,6 +110,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "impulseConversationId",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -113,7 +126,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4444e17f70c00a9bb4533e0f8206fd37",
+    "cacheID": "9a7919e0cfb8f61f5c6c01819f85cd26",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -131,17 +144,13 @@ return {
           "plural": false,
           "type": "ID"
         },
-        "submittedOrder.stateExpiresAt": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        }
+        "submittedOrder.impulseConversationId": (v2/*: any*/),
+        "submittedOrder.stateExpiresAt": (v2/*: any*/)
       }
     },
     "name": "SubmittedOrderModal_Test_Query",
     "operationKind": "query",
-    "text": "query SubmittedOrderModal_Test_Query {\n  submittedOrder: commerceOrder(id: \"some-id\") {\n    __typename\n    ...SubmittedOrderModal_submittedOrder\n    id\n  }\n}\n\nfragment SubmittedOrderModal_submittedOrder on CommerceOrder {\n  __isCommerceOrder: __typename\n  stateExpiresAt(format: \"MMM D\")\n}\n"
+    "text": "query SubmittedOrderModal_Test_Query {\n  submittedOrder: commerceOrder(id: \"some-id\") {\n    __typename\n    ...SubmittedOrderModal_submittedOrder\n    id\n  }\n}\n\nfragment SubmittedOrderModal_submittedOrder on CommerceOrder {\n  __isCommerceOrder: __typename\n  stateExpiresAt(format: \"MMM D\")\n  impulseConversationId\n}\n"
   }
 };
 })();

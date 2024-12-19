@@ -1,9 +1,9 @@
-import { FC, useCallback } from "react"
+import { type FC, useCallback } from "react"
 import { Text } from "@artsy/palette"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import {
   withProgressiveOnboardingCounts,
-  WithProgressiveOnboardingCountsProps,
+  type WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useDismissibleContext } from "@artsy/dismissible"
 import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
@@ -13,9 +13,9 @@ const KEY = PROGRESSIVE_ONBOARDING.saveOfferSettings
 interface ProgressiveOnboardingSaveOfferSettingsProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingSaveOfferSettings__: FC<React.PropsWithChildren<ProgressiveOnboardingSaveOfferSettingsProps>> = ({
-  children,
-}) => {
+export const __ProgressiveOnboardingSaveOfferSettings__: FC<
+  React.PropsWithChildren<ProgressiveOnboardingSaveOfferSettingsProps>
+> = ({ children }) => {
   const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayble = !isDismissed(KEY).status
@@ -45,6 +45,5 @@ export const __ProgressiveOnboardingSaveOfferSettings__: FC<React.PropsWithChild
   )
 }
 
-export const ProgressiveOnboardingSaveOfferSettings = withProgressiveOnboardingCounts(
-  __ProgressiveOnboardingSaveOfferSettings__
-)
+export const ProgressiveOnboardingSaveOfferSettings =
+  withProgressiveOnboardingCounts(__ProgressiveOnboardingSaveOfferSettings__)

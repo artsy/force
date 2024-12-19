@@ -7,7 +7,9 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { resized } from "Utils/resized"
 import { useTracking } from "react-tracking"
 
-export const SpeakToTheTeam: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const SpeakToTheTeam: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()

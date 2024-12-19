@@ -1,6 +1,6 @@
-import React from "react"
+import type React from "react"
 import { useSentinelVisibility } from "@artsy/palette/dist/utils/useSentinelVisibility"
-import { Box, BoxProps } from "@artsy/palette/dist/elements/Box/Box"
+import { Box, type BoxProps } from "@artsy/palette/dist/elements/Box/Box"
 import { Flex, ModalClose, useTheme } from "@artsy/palette"
 
 export interface ModalDialogContentProps
@@ -11,21 +11,14 @@ export interface ModalDialogContentProps
   footer?: React.ReactNode
 }
 
-export const ModalContent: React.FC<React.PropsWithChildren<ModalDialogContentProps>> = ({
-  children,
-  header,
-  footer,
-  onClose,
-}) => {
-  const {
-    sentinel: topSentinel,
-    isSentinelVisible: isAtTop,
-  } = useSentinelVisibility()
+export const ModalContent: React.FC<
+  React.PropsWithChildren<ModalDialogContentProps>
+> = ({ children, header, footer, onClose }) => {
+  const { sentinel: topSentinel, isSentinelVisible: isAtTop } =
+    useSentinelVisibility()
 
-  const {
-    sentinel: bottomSentinel,
-    isSentinelVisible: isAtBottom,
-  } = useSentinelVisibility()
+  const { sentinel: bottomSentinel, isSentinelVisible: isAtBottom } =
+    useSentinelVisibility()
 
   const { theme } = useTheme()
 

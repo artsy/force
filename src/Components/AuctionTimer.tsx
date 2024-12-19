@@ -1,4 +1,4 @@
-import { AuctionTimer_sale$data } from "__generated__/AuctionTimer_sale.graphql"
+import type { AuctionTimer_sale$data } from "__generated__/AuctionTimer_sale.graphql"
 import { Timer } from "Components/Timer"
 import { DateTime } from "luxon"
 import { Component } from "react"

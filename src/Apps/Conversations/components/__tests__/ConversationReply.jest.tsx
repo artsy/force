@@ -1,7 +1,7 @@
 import { act, fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { ConversationReplyTestQuery } from "__generated__/ConversationReplyTestQuery.graphql"
+import type { ConversationReplyTestQuery } from "__generated__/ConversationReplyTestQuery.graphql"
 import { ConversationReply } from "Apps/Conversations/components/ConversationReply"
 import * as formik from "formik"
 import { useTracking } from "react-tracking"

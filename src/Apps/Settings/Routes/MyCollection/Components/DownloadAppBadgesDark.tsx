@@ -1,4 +1,4 @@
-import { Box, Flex, FlexProps, Image, Spacer } from "@artsy/palette"
+import { Box, Flex, type FlexProps, Image, Spacer } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import {
   useDeviceDetection,
@@ -6,9 +6,9 @@ import {
   DOWNLOAD_APP_URLS,
 } from "Utils/Hooks/useDeviceDetection"
 
-export const DownloadAppBadgesDark: React.FC<React.PropsWithChildren<FlexProps>> = ({
-  justifyContent,
-}) => {
+export const DownloadAppBadgesDark: React.FC<
+  React.PropsWithChildren<FlexProps>
+> = ({ justifyContent }) => {
   const { device: deviceOS } = useDeviceDetection()
 
   if (deviceOS === Device.Unknown) {

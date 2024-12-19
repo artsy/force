@@ -1,17 +1,17 @@
 /* eslint-disable jest/no-commented-out-tests */
 import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { IMocks } from "graphql-tools/dist/Interfaces"
+import type { IMocks } from "graphql-tools/dist/Interfaces"
 import * as React from "react"
-import { GraphQLTaggedNode, QueryRenderer } from "react-relay"
+import { type GraphQLTaggedNode, QueryRenderer } from "react-relay"
 import {
   Environment,
-  INetwork,
-  OperationType,
+  type INetwork,
+  type OperationType,
   RecordSource,
   Store,
 } from "relay-runtime"
-import { Environment as IEnvironment } from "react-relay"
+import type { Environment as IEnvironment } from "react-relay"
 import {
   createMockNetworkLayer,
   createMockNetworkLayer2,
@@ -148,12 +148,8 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
   }
 
   getRelayNetwork() {
-    const {
-      mockResolvers,
-      mockData,
-      mockMutationResults,
-      mockNetwork,
-    } = this.props
+    const { mockResolvers, mockData, mockMutationResults, mockNetwork } =
+      this.props
 
     if (mockNetwork) {
       if (mockResolvers || mockData || mockMutationResults) {

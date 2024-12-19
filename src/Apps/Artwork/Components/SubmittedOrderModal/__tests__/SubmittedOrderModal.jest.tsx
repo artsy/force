@@ -8,6 +8,14 @@ jest.unmock("react-relay")
 const mockedResolver = {
   CommerceOrder: () => ({
     stateExpiresAt: "Feb 28",
+    impulseConversationId: null,
+  }),
+}
+
+const mockedResolverWithConversation = {
+  CommerceOrder: () => ({
+    stateExpiresAt: "Sept 10",
+    impulseConversationId: "12345",
   }),
 }
 
@@ -56,5 +64,13 @@ describe("SubmittedOrderModal", () => {
     await waitFor(() =>
       expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
     )
+  })
+
+  it("links to proper conversation when conversation id is present", async () => {
+    renderWithRelay(mockedResolverWithConversation)
+
+    const button = await screen.findByRole("link")
+    expect(button).toHaveAttribute("href", "/user/conversations/12345")
+    expect(within(button).getByText("Go to Inbox")).toBeInTheDocument()
   })
 })

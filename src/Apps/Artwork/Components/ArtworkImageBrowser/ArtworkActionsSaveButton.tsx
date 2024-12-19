@@ -3,10 +3,10 @@ import { ArtworkActionsWatchLotButtonFragmentContainer } from "Apps/Artwork/Comp
 import { SaveUtilButton } from "Apps/Artwork/Components/ArtworkImageBrowser/SaveUtilButton"
 import { useArtworkLists } from "Components/Artwork/useArtworkLists"
 import { ProgressiveOnboardingSaveArtwork } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
-import { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActionsSaveButton_artwork.graphql"
+import type { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActionsSaveButton_artwork.graphql"
 
 const logger = createLogger("ArtworkActionsSaveButton")
 
@@ -14,9 +14,9 @@ interface ArtworkActionsSaveButtonProps {
   artwork: ArtworkActionsSaveButton_artwork$data
 }
 
-export const ArtworkActionsSaveButton: FC<React.PropsWithChildren<ArtworkActionsSaveButtonProps>> = ({
-  artwork,
-}) => {
+export const ArtworkActionsSaveButton: FC<
+  React.PropsWithChildren<ArtworkActionsSaveButtonProps>
+> = ({ artwork }) => {
   const { isAuction, isClosed } = artwork.sale ?? {}
   const isOpenOrUpcomingSale = isAuction && !isClosed
 
@@ -67,9 +67,8 @@ export const ArtworkActionsSaveButton: FC<React.PropsWithChildren<ArtworkActions
   )
 }
 
-export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer(
-  ArtworkActionsSaveButton,
-  {
+export const ArtworkActionsSaveButtonFragmentContainer =
+  createFragmentContainer(ArtworkActionsSaveButton, {
     artwork: graphql`
       fragment ArtworkActionsSaveButton_artwork on Artwork {
         id
@@ -95,5 +94,4 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
         ...ArtworkActionsWatchLotButton_artwork
       }
     `,
-  }
-)
+  })

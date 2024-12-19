@@ -1,7 +1,7 @@
 import { MockBoot } from "DevTools/MockBoot"
 import { ArtworksRefetchContainer } from "Apps/Partner/Routes/Works"
 import { graphql } from "react-relay"
-import { Works_Query } from "__generated__/Works_Query.graphql"
+import type { Works_Query } from "__generated__/Works_Query.graphql"
 import { useTracking } from "react-tracking"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"

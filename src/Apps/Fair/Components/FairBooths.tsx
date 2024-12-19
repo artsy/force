@@ -1,11 +1,15 @@
 import { useState } from "react"
-import * as React from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import type * as React from "react"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { Text, Flex, FullBleed, Spacer, Join } from "@artsy/palette"
 import { isEqual } from "lodash"
 import { usePrevious } from "Utils/Hooks/usePrevious"
-import { FairBooths_fair$data } from "__generated__/FairBooths_fair.graphql"
+import type { FairBooths_fair$data } from "__generated__/FairBooths_fair.graphql"
 import { Media } from "Utils/Responsive"
 import { Sticky } from "Components/Sticky"
 import { LoadingArea } from "Components/LoadingArea"
@@ -14,7 +18,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
-import { FairBoothsContainerQuery } from "__generated__/FairBoothsContainerQuery.graphql"
+import type { FairBoothsContainerQuery } from "__generated__/FairBoothsContainerQuery.graphql"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import {
   BoothFilterContextProvider,
@@ -36,7 +40,10 @@ interface FairBoothsProps {
   relay: RelayRefetchProp
 }
 
-const FairBooths: React.FC<React.PropsWithChildren<FairBoothsProps>> = ({ fair, relay }) => {
+const FairBooths: React.FC<React.PropsWithChildren<FairBoothsProps>> = ({
+  fair,
+  relay,
+}) => {
   const context = useBoothsFilterContext()
 
   const [isLoading, setIsLoading] = useState(false)
@@ -152,7 +159,9 @@ const FairBooths: React.FC<React.PropsWithChildren<FairBoothsProps>> = ({ fair, 
   )
 }
 
-const FairBoothsWithContext: React.FC<React.PropsWithChildren<FairBoothsProps>> = ({ ...props }) => {
+const FairBoothsWithContext: React.FC<
+  React.PropsWithChildren<FairBoothsProps>
+> = ({ ...props }) => {
   const {
     match: { location },
   } = useRouter()
@@ -231,9 +240,9 @@ export const FairBoothsFragmentContainer = createRefetchContainer(
   `
 )
 
-export const FairBoothsQueryRenderer: React.FC<React.PropsWithChildren<{ slug: string }>> = ({
-  slug,
-}) => {
+export const FairBoothsQueryRenderer: React.FC<
+  React.PropsWithChildren<{ slug: string }>
+> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
   const {
     match: { location },

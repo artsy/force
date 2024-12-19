@@ -7,16 +7,20 @@ import {
   Text,
   useDidMount,
 } from "@artsy/palette"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
-import { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
-import { AuctionBidRoute_artwork$data } from "__generated__/AuctionBidRoute_artwork.graphql"
-import { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
+import type { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
+import type { AuctionBidRoute_artwork$data } from "__generated__/AuctionBidRoute_artwork.graphql"
+import type { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
 import { AuctionLotInfoFragmentContainer } from "./Components/AuctionLotInfo"
 import { dropWhile } from "lodash"
 import { Form, Formik } from "formik"
 import { PricingTransparencyQueryRenderer } from "./Components/PricingTransparency"
-import { Match } from "found"
+import type { Match } from "found"
 import { useEffect } from "react"
 import { useSubmitBid } from "./useSubmitBid"
 import { AddressFormWithCreditCard } from "Apps/Auction/Components/Form/AddressFormWithCreditCard"
@@ -36,12 +40,9 @@ interface AuctionBidRouteProps {
   sale: AuctionBidRoute_sale$data
 }
 
-const AuctionBidRoute: React.FC<React.PropsWithChildren<AuctionBidRouteProps>> = ({
-  artwork,
-  me,
-  relay,
-  sale,
-}) => {
+const AuctionBidRoute: React.FC<
+  React.PropsWithChildren<AuctionBidRouteProps>
+> = ({ artwork, me, relay, sale }) => {
   const { match, router } = useRouter()
   const { tracking } = useAuctionTracking()
 
@@ -173,10 +174,10 @@ export const AuctionBidRouteFragmentContainer = createRefetchContainer(
   (props: AuctionBidRouteProps) => {
     return (
       // Wrap the provider down here as we need it for our hooks
-      (<CreditCardInputProvider>
+      <CreditCardInputProvider>
         <AuctionBidRoute {...props} />
-      </CreditCardInputProvider>)
-    );
+      </CreditCardInputProvider>
+    )
   },
   {
     sale: graphql`

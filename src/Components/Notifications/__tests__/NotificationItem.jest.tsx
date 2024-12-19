@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { NotificationItem_test_Query } from "__generated__/NotificationItem_test_Query.graphql"
+import type { NotificationItem_test_Query } from "__generated__/NotificationItem_test_Query.graphql"
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
 import { SUPPORTED_NOTIFICATION_TYPES } from "Components/Notifications/Notification"
 
@@ -51,7 +51,7 @@ describe("NotificationItem", () => {
       Notification: () => notification,
     })
 
-    expect(screen.getAllByRole("img")).toHaveLength(4)
+    expect(screen.getAllByRole("presentation")).toHaveLength(4)
   })
 
   describe("the remaining artworks count", () => {

@@ -1,6 +1,6 @@
 import {
   CreateNewListModalWizard,
-  CreateNewListModalWizardProps,
+  type CreateNewListModalWizardProps,
 } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/CreateNewListModalWizard"
 import { fireEvent, screen } from "@testing-library/react"
 import { useMutation } from "Utils/Hooks/useMutation"

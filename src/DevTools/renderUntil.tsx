@@ -1,10 +1,10 @@
-import { ReactWrapper, RenderUntilPredicate, mount } from "enzyme"
-import * as React from "react"
+import { ReactWrapper, type RenderUntilPredicate, mount } from "enzyme"
+import type * as React from "react"
 
 function renderUntil<
   P = {},
   S = {},
-  C extends React.Component = React.Component
+  C extends React.Component = React.Component,
 >(predicate: RenderUntilPredicate<P, S, C>) {
   return new Promise<ReactWrapper<P, S, C>>(resolve => {
     /**
@@ -44,7 +44,7 @@ ReactWrapper.prototype.renderUntil = renderUntil
 function deprecated_renderUntil<
   P = {},
   S = {},
-  C extends React.Component = React.Component
+  C extends React.Component = React.Component,
 >(until: RenderUntilPredicate<P, S, C>, element: React.ReactElement<P>) {
   /**
    * In case of an uncaught error, be sure to reject the promise ASAP and

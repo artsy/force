@@ -12,26 +12,25 @@ import {
   CategoryRailFragmentContainer,
   CATEGORY_RAIL_PLACEHOLDER,
 } from "Components/CategoryRail"
-import { FC, Fragment, useState } from "react"
+import { type FC, Fragment, useState } from "react"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { SettingsSavesCategoriesQuery } from "__generated__/SettingsSavesCategoriesQuery.graphql"
-import { SettingsSavesCategories_me$data } from "__generated__/SettingsSavesCategories_me.graphql"
+import type { SettingsSavesCategoriesQuery } from "__generated__/SettingsSavesCategoriesQuery.graphql"
+import type { SettingsSavesCategories_me$data } from "__generated__/SettingsSavesCategories_me.graphql"
 
 interface SettingsSavesCategoriesProps {
   me: SettingsSavesCategories_me$data
   relay: RelayPaginationProp
 }
 
-const SettingsSavesCategories: FC<React.PropsWithChildren<SettingsSavesCategoriesProps>> = ({
-  me,
-  relay,
-}) => {
+const SettingsSavesCategories: FC<
+  React.PropsWithChildren<SettingsSavesCategoriesProps>
+> = ({ me, relay }) => {
   const [loading, setLoading] = useState(false)
 
   const connection = me.followsAndSaves?.categoriesConnection
@@ -97,10 +96,11 @@ export const SETTINGS_SAVES_CATEGORIES_QUERY = graphql`
   }
 `
 
-export const SettingsSavesCategoriesPaginationContainer = createPaginationContainer(
-  SettingsSavesCategories,
-  {
-    me: graphql`
+export const SettingsSavesCategoriesPaginationContainer =
+  createPaginationContainer(
+    SettingsSavesCategories,
+    {
+      me: graphql`
       fragment SettingsSavesCategories_me on Me
         @argumentDefinitions(after: { type: "String" }) {
         followsAndSaves {
@@ -120,18 +120,18 @@ export const SettingsSavesCategoriesPaginationContainer = createPaginationContai
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return { ...prevVars, totalCount }
     },
-    getVariables(_, { cursor: after }, fragmentVariables) {
-      return { ...fragmentVariables, after }
-    },
-    query: SETTINGS_SAVES_CATEGORIES_QUERY,
-  }
-)
+    {
+      direction: "forward",
+      getFragmentVariables(prevVars, totalCount) {
+        return { ...prevVars, totalCount }
+      },
+      getVariables(_, { cursor: after }, fragmentVariables) {
+        return { ...fragmentVariables, after }
+      },
+      query: SETTINGS_SAVES_CATEGORIES_QUERY,
+    }
+  )
 
 const SETTINGS_SAVES_CATEGORIES_PLACEHOLDER = (
   <>

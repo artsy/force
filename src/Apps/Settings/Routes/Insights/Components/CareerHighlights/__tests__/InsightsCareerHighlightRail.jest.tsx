@@ -1,26 +1,25 @@
 import { screen } from "@testing-library/react"
 import { InsightsCareerHighlightRailFragmentContainer } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/InsightsCareerHighlightRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { InsightsCareerHighlightRailTestQuery } from "__generated__/InsightsCareerHighlightRailTestQuery.graphql"
+import type { InsightsCareerHighlightRailTestQuery } from "__generated__/InsightsCareerHighlightRailTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
 describe("InsightsCareerHighlightRail", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    InsightsCareerHighlightRailTestQuery
-  >({
-    Component: (props: any) => (
-      <InsightsCareerHighlightRailFragmentContainer {...props} />
-    ),
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<InsightsCareerHighlightRailTestQuery>({
+      Component: (props: any) => (
+        <InsightsCareerHighlightRailFragmentContainer {...props} />
+      ),
+      query: graphql`
       query InsightsCareerHighlightRailTestQuery @relay_test_operation {
         me {
           ...InsightsCareerHighlightRail_me
         }
       }
     `,
-  })
+    })
 
   describe("when a user collection has career highlights", () => {
     it("renders career highlights", () => {

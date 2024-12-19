@@ -1,6 +1,6 @@
 import { Flex, Text } from "@artsy/palette"
 import { useFragment, graphql } from "react-relay"
-import {
+import type {
   NotificationTypeLabel_notification$key,
   NotificationTypesEnum,
 } from "__generated__/NotificationTypeLabel_notification.graphql"
@@ -9,7 +9,9 @@ interface Props {
   notification: NotificationTypeLabel_notification$key
 }
 
-export const NotificationTypeLabel: React.FC<React.PropsWithChildren<Props>> = ({ notification }) => {
+export const NotificationTypeLabel: React.FC<
+  React.PropsWithChildren<Props>
+> = ({ notification }) => {
   const data = useFragment(NotificationTypeLabelFragment, notification)
 
   const { notificationType, publishedAt } = data

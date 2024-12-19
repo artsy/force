@@ -1,16 +1,15 @@
-import { Box, BoxProps, Clickable, Message } from "@artsy/palette"
+import { Box, type BoxProps, Clickable, Message } from "@artsy/palette"
 import { Sticky } from "Components/Sticky"
-import * as React from "react"
+import type * as React from "react"
 import styled from "styled-components"
 
 interface ArtworkGridEmptyStateProps extends BoxProps {
   onClearFilters?: () => void
 }
 
-export const ArtworkGridEmptyState: React.FC<React.PropsWithChildren<ArtworkGridEmptyStateProps>> = ({
-  onClearFilters,
-  ...rest
-}) => (
+export const ArtworkGridEmptyState: React.FC<
+  React.PropsWithChildren<ArtworkGridEmptyStateProps>
+> = ({ onClearFilters, ...rest }) => (
   <Box width="100%" {...rest}>
     <Sticky>
       {({ stuck }) => {

@@ -8,21 +8,21 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { SavedSearchAlertEditFormQuery } from "__generated__/SavedSearchAlertEditFormQuery.graphql"
-import { SavedSearchAlertEditForm_viewer$data } from "__generated__/SavedSearchAlertEditForm_viewer.graphql"
+import type { SavedSearchAlertEditFormQuery } from "__generated__/SavedSearchAlertEditFormQuery.graphql"
+import type { SavedSearchAlertEditForm_viewer$data } from "__generated__/SavedSearchAlertEditForm_viewer.graphql"
 import { Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
+import type { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { Media } from "Utils/Responsive"
 import { SavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
-import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
 import { Filters } from "Components/Alert/Components/Steps/Filters"
-import { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
+import type { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { isEqual } from "lodash"
 import { FiltersFooter } from "Components/Alert/Components/Steps/StepsFooter/FiltersFooter"
@@ -58,12 +58,9 @@ interface SavedSearchAlertEditFormProps {
   onCompleted: () => void
 }
 
-const SavedSearchAlertEditSteps: React.FC<React.PropsWithChildren<SavedSearchAlertEditStepsProps>> = ({
-  viewer,
-  onDeleteClick,
-  onCompleted,
-  onCloseClick,
-}) => {
+const SavedSearchAlertEditSteps: React.FC<
+  React.PropsWithChildren<SavedSearchAlertEditStepsProps>
+> = ({ viewer, onDeleteClick, onCompleted, onCloseClick }) => {
   const { current } = useAlertContext()
 
   return (
@@ -115,17 +112,11 @@ const SavedSearchAlertEditSteps: React.FC<React.PropsWithChildren<SavedSearchAle
   )
 }
 
-const SavedSearchAlertEditForm: React.FC<React.PropsWithChildren<SavedSearchAlertEditFormProps>> = ({
-  onDeleteClick,
-  onCompleted,
-}) => {
-  const {
-    state,
-    goToFilters,
-    dispatch,
-    onComplete,
-    createAlertError,
-  } = useAlertContext()
+const SavedSearchAlertEditForm: React.FC<
+  React.PropsWithChildren<SavedSearchAlertEditFormProps>
+> = ({ onDeleteClick, onCompleted }) => {
+  const { state, goToFilters, dispatch, onComplete, createAlertError } =
+    useAlertContext()
   const { jumpTo } = useJump()
   const { sendToast } = useToasts()
 
@@ -247,9 +238,8 @@ const SavedSearchAlertEditForm: React.FC<React.PropsWithChildren<SavedSearchAler
   )
 }
 
-export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer(
-  SavedSearchAlertEditSteps,
-  {
+export const SavedSearchAlertEditFormFragmentContainer =
+  createFragmentContainer(SavedSearchAlertEditSteps, {
     viewer: graphql`
       fragment SavedSearchAlertEditForm_viewer on Viewer {
         notificationPreferences {
@@ -288,15 +278,11 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })
 
-export const SavedSearchAlertEditFormQueryRenderer: React.FC<React.PropsWithChildren<SavedSearchAlertEditFormQueryRendererProps>> = ({
-  editAlertEntity,
-  onDeleteClick,
-  onCompleted,
-  onCloseClick,
-}) => {
+export const SavedSearchAlertEditFormQueryRenderer: React.FC<
+  React.PropsWithChildren<SavedSearchAlertEditFormQueryRendererProps>
+> = ({ editAlertEntity, onDeleteClick, onCompleted, onCloseClick }) => {
   return (
     <SystemQueryRenderer<SavedSearchAlertEditFormQuery>
       query={graphql`
@@ -333,7 +319,7 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<React.PropsWithChil
         return (
           <AlertProvider
             initialCriteria={getAllowedSearchCriteria(
-              (props.me.alert as unknown) as SearchCriteriaAttributes
+              props.me.alert as unknown as SearchCriteriaAttributes
             )}
             alertID={props.me.alert.internalID}
             initialSettings={{

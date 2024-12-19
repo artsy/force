@@ -1,11 +1,11 @@
 import { Skeleton } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data } from "__generated__/HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection.graphql"
-import { HomeNewWorksFromGalleriesYouFollowRailQuery } from "__generated__/HomeNewWorksFromGalleriesYouFollowRailQuery.graphql"
+import type { HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data } from "__generated__/HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection.graphql"
+import type { HomeNewWorksFromGalleriesYouFollowRailQuery } from "__generated__/HomeNewWorksFromGalleriesYouFollowRailQuery.graphql"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
@@ -13,7 +13,7 @@ import {
 import { extractNodes } from "Utils/extractNodes"
 import {
   ActionType,
-  ClickedArtworkGroup,
+  type ClickedArtworkGroup,
   ContextModule,
   OwnerType,
   clickedEntityGroup,
@@ -26,15 +26,12 @@ interface HomeNewWorksFromGalleriesYouFollowRailProps {
   newWorksFromGalleriesYouFollowConnection: HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data
 }
 
-const HomeNewWorksFromGalleriesYouFollowRail: React.FC<React.PropsWithChildren<HomeNewWorksFromGalleriesYouFollowRailProps>> = ({
-  newWorksFromGalleriesYouFollowConnection,
-}) => {
+const HomeNewWorksFromGalleriesYouFollowRail: React.FC<
+  React.PropsWithChildren<HomeNewWorksFromGalleriesYouFollowRailProps>
+> = ({ newWorksFromGalleriesYouFollowConnection }) => {
   const { trackEvent } = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const artworks = extractNodes(newWorksFromGalleriesYouFollowConnection)
 
@@ -93,9 +90,8 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<React.PropsWithChildren<H
   )
 }
 
-export const HomeNewWorksFromGalleriesYouFollowRailFragmentContainer = createFragmentContainer(
-  HomeNewWorksFromGalleriesYouFollowRail,
-  {
+export const HomeNewWorksFromGalleriesYouFollowRailFragmentContainer =
+  createFragmentContainer(HomeNewWorksFromGalleriesYouFollowRail, {
     newWorksFromGalleriesYouFollowConnection: graphql`
       fragment HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection on ArtworkConnection {
         edges {
@@ -114,10 +110,11 @@ export const HomeNewWorksFromGalleriesYouFollowRailFragmentContainer = createFra
         }
       }
     `,
-  }
-)
+  })
 
-export const HomeNewWorksFromGalleriesYouFollowRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeNewWorksFromGalleriesYouFollowRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   const { user } = useSystemContext()

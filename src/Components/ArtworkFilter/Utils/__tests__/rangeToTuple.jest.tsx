@@ -1,5 +1,5 @@
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { rangeToTuple } from "Components/ArtworkFilter/Utils/rangeToTuple"
 
 describe("rangeToTuple", () => {

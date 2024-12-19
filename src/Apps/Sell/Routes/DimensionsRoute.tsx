@@ -13,9 +13,9 @@ import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useFocusInput } from "Apps/Sell/Hooks/useFocusInput"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { DimensionsRoute_submission$key } from "__generated__/DimensionsRoute_submission.graphql"
+import type { DimensionsRoute_submission$key } from "__generated__/DimensionsRoute_submission.graphql"
 import { Formik } from "formik"
-import * as React from "react"
+import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
 
@@ -46,7 +46,9 @@ interface DimensionsRouteProps {
   submission: DimensionsRoute_submission$key
 }
 
-export const DimensionsRoute: React.FC<React.PropsWithChildren<DimensionsRouteProps>> = props => {
+export const DimensionsRoute: React.FC<
+  React.PropsWithChildren<DimensionsRouteProps>
+> = props => {
   const { actions } = useSellFlowContext()
   const submission = useFragment(FRAGMENT, props.submission)
   const { userPreferences } = useSystemContext()

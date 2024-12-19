@@ -1,9 +1,9 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Text, BoxProps, Flex, Avatar } from "@artsy/palette"
-import { FC } from "react"
+import { Text, type BoxProps, Flex, Avatar } from "@artsy/palette"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
-import { EntityHeaderFairOrganizer_fairOrganizer$data } from "__generated__/EntityHeaderFairOrganizer_fairOrganizer.graphql"
+import type { EntityHeaderFairOrganizer_fairOrganizer$data } from "__generated__/EntityHeaderFairOrganizer_fairOrganizer.graphql"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 
 export interface EntityHeaderFairOrganizerProps extends BoxProps {
@@ -13,7 +13,9 @@ export interface EntityHeaderFairOrganizerProps extends BoxProps {
   FollowButton?: JSX.Element
 }
 
-const EntityHeaderFairOrganizer: FC<React.PropsWithChildren<EntityHeaderFairOrganizerProps>> = ({
+const EntityHeaderFairOrganizer: FC<
+  React.PropsWithChildren<EntityHeaderFairOrganizerProps>
+> = ({
   fairOrganizer,
   displayAvatar = true,
   displayLink = true,
@@ -75,9 +77,8 @@ const EntityHeaderFairOrganizer: FC<React.PropsWithChildren<EntityHeaderFairOrga
   )
 }
 
-export const EntityHeaderFairOrganizerFragmentContainer = createFragmentContainer(
-  EntityHeaderFairOrganizer,
-  {
+export const EntityHeaderFairOrganizerFragmentContainer =
+  createFragmentContainer(EntityHeaderFairOrganizer, {
     fairOrganizer: graphql`
       fragment EntityHeaderFairOrganizer_fairOrganizer on FairOrganizer {
         internalID
@@ -99,5 +100,4 @@ export const EntityHeaderFairOrganizerFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })

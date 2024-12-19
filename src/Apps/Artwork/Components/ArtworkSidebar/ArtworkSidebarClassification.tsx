@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { ArtworkSidebarClassification_artwork$data } from "__generated__/ArtworkSidebarClassification_artwork.graphql"
+import type { ArtworkSidebarClassification_artwork$data } from "__generated__/ArtworkSidebarClassification_artwork.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { Clickable, Flex, Text } from "@artsy/palette"
@@ -11,9 +11,9 @@ interface ArtworkSidebarClassificationProps {
   artwork: ArtworkSidebarClassification_artwork$data
 }
 
-const ArtworkSidebarClassification: React.FC<React.PropsWithChildren<ArtworkSidebarClassificationProps>> = ({
-  artwork,
-}) => {
+const ArtworkSidebarClassification: React.FC<
+  React.PropsWithChildren<ArtworkSidebarClassificationProps>
+> = ({ artwork }) => {
   const { trackEvent } = useTracking()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -54,9 +54,8 @@ const ArtworkSidebarClassification: React.FC<React.PropsWithChildren<ArtworkSide
   )
 }
 
-export const ArtworkSidebarClassificationFragmentContainer = createFragmentContainer(
-  ArtworkSidebarClassification,
-  {
+export const ArtworkSidebarClassificationFragmentContainer =
+  createFragmentContainer(ArtworkSidebarClassification, {
     artwork: graphql`
       fragment ArtworkSidebarClassification_artwork on Artwork {
         attributionClass {
@@ -64,5 +63,4 @@ export const ArtworkSidebarClassificationFragmentContainer = createFragmentConta
         }
       }
     `,
-  }
-)
+  })

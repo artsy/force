@@ -1,5 +1,5 @@
 import { Box, Flex, Join, Separator, Text } from "@artsy/palette"
-import { AuctionResultMetaData_auctionResult$key } from "__generated__/AuctionResultMetaData_auctionResult.graphql"
+import type { AuctionResultMetaData_auctionResult$key } from "__generated__/AuctionResultMetaData_auctionResult.graphql"
 import { MyCollectionArtworkDetailField } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetailField"
 import { graphql, useFragment } from "react-relay"
 import { Media } from "Utils/Responsive"
@@ -8,9 +8,9 @@ interface AuctionResultMetaDataProps {
   auctionResult: AuctionResultMetaData_auctionResult$key
 }
 
-export const AuctionResultMetaData: React.FC<React.PropsWithChildren<AuctionResultMetaDataProps>> = ({
-  auctionResult,
-}) => {
+export const AuctionResultMetaData: React.FC<
+  React.PropsWithChildren<AuctionResultMetaDataProps>
+> = ({ auctionResult }) => {
   const data = useFragment(auctionResultMetaDataFragment, auctionResult)
 
   const {

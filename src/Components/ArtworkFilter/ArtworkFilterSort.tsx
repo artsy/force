@@ -1,13 +1,13 @@
 import {
   Clickable,
   Dropdown,
-  DropdownProps,
+  type DropdownProps,
   Radio,
   RadioGroup,
   Text,
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { FC } from "react"
+import type { FC } from "react"
 import SortIcon from "@artsy/icons/SortIcon"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
@@ -15,7 +15,9 @@ import { themeGet } from "@styled-system/theme-get"
 interface ArtworkFilterSortProps
   extends Omit<DropdownProps, "dropdown" | "children"> {}
 
-export const ArtworkFilterSort: FC<React.PropsWithChildren<ArtworkFilterSortProps>> = props => {
+export const ArtworkFilterSort: FC<
+  React.PropsWithChildren<ArtworkFilterSortProps>
+> = props => {
   const { sortOptions, filters, setFilter } = useArtworkFilterContext()
 
   const activeSort = sortOptions?.find(({ value }) => {

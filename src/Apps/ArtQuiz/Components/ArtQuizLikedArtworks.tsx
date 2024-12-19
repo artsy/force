@@ -1,8 +1,8 @@
-import { FC, Fragment } from "react"
+import { type FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtQuizLikedArtworks_me$data } from "__generated__/ArtQuizLikedArtworks_me.graphql"
-import { ArtQuizLikedArtworksQuery } from "__generated__/ArtQuizLikedArtworksQuery.graphql"
+import type { ArtQuizLikedArtworks_me$data } from "__generated__/ArtQuizLikedArtworks_me.graphql"
+import type { ArtQuizLikedArtworksQuery } from "__generated__/ArtQuizLikedArtworksQuery.graphql"
 import { Masonry } from "Components/Masonry"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { Spacer } from "@artsy/palette"
@@ -12,7 +12,9 @@ interface ArtQuizLikedArtworksProps {
   me: ArtQuizLikedArtworks_me$data
 }
 
-const ArtQuizLikedArtworks: FC<React.PropsWithChildren<ArtQuizLikedArtworksProps>> = ({ me }) => {
+const ArtQuizLikedArtworks: FC<
+  React.PropsWithChildren<ArtQuizLikedArtworksProps>
+> = ({ me }) => {
   return (
     <Masonry columnCount={[2, 3, 4]}>
       {me.quiz.savedArtworks.map(artwork => {
@@ -44,7 +46,9 @@ const ArtQuizLikedArtworksFragmentContainer = createFragmentContainer(
   }
 )
 
-const ArtQuizLikedArtworksPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const ArtQuizLikedArtworksPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return <ArtworkGridPlaceholder columnCount={[2, 3, 4]} amount={6} />
 }
 

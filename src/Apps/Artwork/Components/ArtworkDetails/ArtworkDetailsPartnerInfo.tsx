@@ -1,7 +1,7 @@
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkDetailsPartnerInfoQuery } from "__generated__/ArtworkDetailsPartnerInfoQuery.graphql"
-import { ArtworkDetailsPartnerInfo_artwork$data } from "__generated__/ArtworkDetailsPartnerInfo_artwork.graphql"
+import type { ArtworkDetailsPartnerInfoQuery } from "__generated__/ArtworkDetailsPartnerInfoQuery.graphql"
+import type { ArtworkDetailsPartnerInfo_artwork$data } from "__generated__/ArtworkDetailsPartnerInfo_artwork.graphql"
 import { ContextModule } from "@artsy/cohesion"
 import { Skeleton, SkeletonBox, StackableBorderBox } from "@artsy/palette"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
@@ -12,7 +12,9 @@ export interface PartnerInfoProps {
   artwork: ArtworkDetailsPartnerInfo_artwork$data
 }
 
-export const PartnerInfo: React.FC<React.PropsWithChildren<PartnerInfoProps>> = ({ artwork }) => {
+export const PartnerInfo: React.FC<
+  React.PropsWithChildren<PartnerInfoProps>
+> = ({ artwork }) => {
   const { partner } = artwork
 
   if (!partner) return null
@@ -40,9 +42,8 @@ export const PartnerInfo: React.FC<React.PropsWithChildren<PartnerInfoProps>> = 
   )
 }
 
-export const ArtworkDetailsPartnerInfoFragmentContainer = createFragmentContainer(
-  PartnerInfo,
-  {
+export const ArtworkDetailsPartnerInfoFragmentContainer =
+  createFragmentContainer(PartnerInfo, {
     artwork: graphql`
       fragment ArtworkDetailsPartnerInfo_artwork on Artwork {
         partner {
@@ -56,8 +57,7 @@ export const ArtworkDetailsPartnerInfoFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })
 
 const PLACEHOLDER = (
   <Skeleton>
@@ -67,9 +67,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtworkDetailsPartnerInfoQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const ArtworkDetailsPartnerInfoQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

@@ -3,10 +3,10 @@ import { States } from "storybook-states"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   EntityHeaderFairFragmentContainer,
-  EntityHeaderFairProps,
+  type EntityHeaderFairProps,
 } from "./EntityHeaderFair"
 import { EntityHeaderPlaceholder } from "./EntityHeaderPlaceholder"
-import { EntityHeaderFairStoryQuery } from "__generated__/EntityHeaderFairStoryQuery.graphql"
+import type { EntityHeaderFairStoryQuery } from "__generated__/EntityHeaderFairStoryQuery.graphql"
 
 export default {
   title: "Components/EntityHeader",

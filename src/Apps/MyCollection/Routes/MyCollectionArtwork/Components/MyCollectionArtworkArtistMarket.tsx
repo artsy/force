@@ -11,7 +11,7 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import { MyCollectionArtworkArtistMarket_marketPriceInsights$data } from "__generated__/MyCollectionArtworkArtistMarket_marketPriceInsights.graphql"
+import type { MyCollectionArtworkArtistMarket_marketPriceInsights$data } from "__generated__/MyCollectionArtworkArtistMarket_marketPriceInsights.graphql"
 import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
@@ -145,9 +145,8 @@ const SalePriceEstimatePerformance = ({ value }: { value: number }) => {
   )
 }
 
-export const MyCollectionArtworkArtistMarketFragmentContainer = createFragmentContainer(
-  MyCollectionArtworkArtistMarket,
-  {
+export const MyCollectionArtworkArtistMarketFragmentContainer =
+  createFragmentContainer(MyCollectionArtworkArtistMarket, {
     marketPriceInsights: graphql`
       fragment MyCollectionArtworkArtistMarket_marketPriceInsights on ArtworkPriceInsights {
         annualLotsSold
@@ -157,5 +156,4 @@ export const MyCollectionArtworkArtistMarketFragmentContainer = createFragmentCo
         sellThroughRate
       }
     `,
-  }
-)
+  })

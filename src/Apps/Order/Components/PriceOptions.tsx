@@ -6,9 +6,13 @@ import { MinPriceWarning } from "./MinPriceWarning"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { ActionType, ClickedOfferOption, PageOwnerType } from "@artsy/cohesion"
-import { PriceOptions_artwork$data } from "__generated__/PriceOptions_artwork.graphql"
-import { PriceOptions_order$data } from "__generated__/PriceOptions_order.graphql"
+import {
+  ActionType,
+  type ClickedOfferOption,
+  type PageOwnerType,
+} from "@artsy/cohesion"
+import type { PriceOptions_artwork$data } from "__generated__/PriceOptions_artwork.graphql"
+import type { PriceOptions_order$data } from "__generated__/PriceOptions_order.graphql"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { useTracking } from "react-tracking"
 import { Jump, useJump } from "Utils/Hooks/useJump"
@@ -26,18 +30,14 @@ export interface PriceOptionsProps {
   order: PriceOptions_order$data
 }
 
-export const PriceOptions: React.FC<React.PropsWithChildren<PriceOptionsProps>> = ({
-  onChange,
-  onFocus,
-  showError,
-  artwork,
-  order,
-}) => {
+export const PriceOptions: React.FC<
+  React.PropsWithChildren<PriceOptionsProps>
+> = ({ onChange, onFocus, showError, artwork, order }) => {
   const tracking = useTracking()
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
 
   const listPrice = artwork?.listPrice
-  const orderPrice = parseFloat(
+  const orderPrice = Number.parseFloat(
     order.lineItems?.edges?.[0]?.node?.listPrice || "0"
   )
   const formattedOrderPrice: PriceOptions_artwork$data["listPrice"] = {
@@ -50,14 +50,11 @@ export const PriceOptions: React.FC<React.PropsWithChildren<PriceOptionsProps>> 
     artwork?.isPriceRange,
     isPartnerOfferOrder
   )
-  const {
-    lastOffer,
-    selectedPriceOption,
-    selectedPriceValue,
-  } = getInitialOfferState(
-    priceOptions,
-    Number(order?.myLastOffer?.amountCents || 0) / 100
-  )
+  const { lastOffer, selectedPriceOption, selectedPriceValue } =
+    getInitialOfferState(
+      priceOptions,
+      Number(order?.myLastOffer?.amountCents || 0) / 100
+    )
   const { device } = useDeviceDetection()
 
   const [customValue, setCustomValue] = useState<number | undefined>(lastOffer)

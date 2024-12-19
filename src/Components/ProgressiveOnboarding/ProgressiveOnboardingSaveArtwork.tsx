@@ -1,9 +1,9 @@
-import { FC, useCallback, useEffect } from "react"
+import { type FC, useCallback, useEffect } from "react"
 import { Text } from "@artsy/palette"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import {
   withProgressiveOnboardingCounts,
-  WithProgressiveOnboardingCountsProps,
+  type WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useDismissibleContext } from "@artsy/dismissible"
 import {
@@ -17,10 +17,9 @@ const KEY = PROGRESSIVE_ONBOARDING.saveArtwork
 interface ProgressiveOnboardingSaveArtworkProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingSaveArtwork__: FC<React.PropsWithChildren<ProgressiveOnboardingSaveArtworkProps>> = ({
-  counts,
-  children,
-}) => {
+export const __ProgressiveOnboardingSaveArtwork__: FC<
+  React.PropsWithChildren<ProgressiveOnboardingSaveArtworkProps>
+> = ({ counts, children }) => {
   const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayble =

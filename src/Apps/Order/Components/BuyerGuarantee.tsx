@@ -1,6 +1,6 @@
-import { ActionType, ContextModule } from "@artsy/cohesion"
+import { ActionType, type ContextModule } from "@artsy/cohesion"
 import { Flex, Text, StackableBorderBox, Spacer } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
@@ -16,7 +16,9 @@ interface BuyerGuaranteeProps {
   privateSaleConditions?: string | null
 }
 
-export const BuyerGuarantee: React.FC<React.PropsWithChildren<BuyerGuaranteeProps>> = ({
+export const BuyerGuarantee: React.FC<
+  React.PropsWithChildren<BuyerGuaranteeProps>
+> = ({
   contextModule,
   contextPageOwnerType,
   orderSource,

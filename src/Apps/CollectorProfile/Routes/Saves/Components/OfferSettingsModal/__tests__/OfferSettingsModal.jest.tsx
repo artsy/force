@@ -3,7 +3,7 @@ import { useMutation } from "Utils/Hooks/useMutation"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { render } from "DevTools/renderWithMockBoot"
 import { OfferSettingsModal } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsModal"
-import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
+import type { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 import { createMockEnvironment } from "relay-test-utils"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
@@ -59,7 +59,7 @@ describe("OfferSettingsModal", () => {
   it("calls the mutation when the Save button is clicked", async () => {
     render(
       <OfferSettingsModal
-        me={(mockedMe as unknown) as CollectorProfileSavesRoute_me$data}
+        me={mockedMe as unknown as CollectorProfileSavesRoute_me$data}
         onClose={onClose}
       />
     )
@@ -86,7 +86,7 @@ describe("OfferSettingsModal", () => {
   })
 })
 
-const mockedMe = ({
+const mockedMe = {
   customArtworkLists: {
     edges: [
       {
@@ -112,4 +112,4 @@ const mockedMe = ({
     internalID: "saved-artworks",
     shareableWithPartners: false,
   },
-} as unknown) as CollectorProfileSavesRoute_me$data
+} as unknown as CollectorProfileSavesRoute_me$data

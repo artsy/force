@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
-import {
+import type {
   useSelectArtworkListsMutation,
   useSelectArtworkListsMutation$data,
 } from "__generated__/useSelectArtworkListsMutation.graphql"
@@ -12,9 +12,7 @@ interface Counts {
 
 type Response = NonNullable<
   NonNullable<
-    NonNullable<
-      useSelectArtworkListsMutation$data
-    >["artworksCollectionsBatchUpdate"]
+    NonNullable<useSelectArtworkListsMutation$data>["artworksCollectionsBatchUpdate"]
   >["responseOrError"]
 >
 type ListEntity =

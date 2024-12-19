@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { FairOrganizerFollowButton_Test_Query } from "__generated__/FairOrganizerFollowButton_Test_Query.graphql"
+import type { FairOrganizerFollowButton_Test_Query } from "__generated__/FairOrganizerFollowButton_Test_Query.graphql"
 import { FairOrganizerFollowButtonFragmentContainer } from "Apps/FairOrginizer/Components/FairOrganizerFollowButton"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { fairOrganizerFollowMutation } from "Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation"
@@ -28,7 +28,8 @@ describe("FairOrganizerFollowButton", () => {
   )
 
   const mockUseSystemContext = useSystemContext as jest.Mock
-  const mockFairOrganizerFollowMutation = fairOrganizerFollowMutation as jest.Mock
+  const mockFairOrganizerFollowMutation =
+    fairOrganizerFollowMutation as jest.Mock
   const mockUseAuthDialog = useAuthDialog as jest.Mock
 
   beforeAll(() => {

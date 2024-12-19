@@ -1,8 +1,8 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtQuizTrendingCollections_viewer$data } from "__generated__/ArtQuizTrendingCollections_viewer.graphql"
-import { ArtQuizTrendingCollectionsQuery } from "__generated__/ArtQuizTrendingCollectionsQuery.graphql"
+import type { ArtQuizTrendingCollections_viewer$data } from "__generated__/ArtQuizTrendingCollections_viewer.graphql"
+import type { ArtQuizTrendingCollectionsQuery } from "__generated__/ArtQuizTrendingCollectionsQuery.graphql"
 import { Join, Skeleton, Spacer } from "@artsy/palette"
 import {
   ArtQuizTrendingCollectionFragmentContainer,
@@ -13,9 +13,9 @@ interface ArtQuizTrendingCollectionsProps {
   viewer: ArtQuizTrendingCollections_viewer$data
 }
 
-const ArtQuizTrendingCollections: FC<React.PropsWithChildren<ArtQuizTrendingCollectionsProps>> = ({
-  viewer,
-}) => {
+const ArtQuizTrendingCollections: FC<
+  React.PropsWithChildren<ArtQuizTrendingCollectionsProps>
+> = ({ viewer }) => {
   if (!viewer.marketingCollections) return null
 
   return (
@@ -34,9 +34,8 @@ const ArtQuizTrendingCollections: FC<React.PropsWithChildren<ArtQuizTrendingColl
   )
 }
 
-export const ArtQuizTrendingCollectionsFragmentContainer = createFragmentContainer(
-  ArtQuizTrendingCollections,
-  {
+export const ArtQuizTrendingCollectionsFragmentContainer =
+  createFragmentContainer(ArtQuizTrendingCollections, {
     viewer: graphql`
       fragment ArtQuizTrendingCollections_viewer on Viewer {
         marketingCollections(
@@ -56,8 +55,7 @@ export const ArtQuizTrendingCollectionsFragmentContainer = createFragmentContain
         }
       }
     `,
-  }
-)
+  })
 
 const ArtQuizTrendingCollectionsPlaceholder = () => {
   return (

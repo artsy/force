@@ -9,7 +9,7 @@ import {
 } from "@artsy/palette"
 import { crop } from "Utils/resizer"
 import { createFragmentContainer, graphql } from "react-relay"
-import { CollectionsCategory_category$data } from "__generated__/CollectionsCategory_category.graphql"
+import type { CollectionsCategory_category$data } from "__generated__/CollectionsCategory_category.graphql"
 import {
   MOBILE_NAV_HEIGHT,
   DESKTOP_NAV_BAR_HEIGHT,
@@ -20,10 +20,9 @@ interface CollectionsCategoryProps {
   category: CollectionsCategory_category$data
 }
 
-export const CollectionsCategory: React.FC<React.PropsWithChildren<CollectionsCategoryProps>> = ({
-  category,
-  category: { collections },
-}) => {
+export const CollectionsCategory: React.FC<
+  React.PropsWithChildren<CollectionsCategoryProps>
+> = ({ category, category: { collections } }) => {
   const [showAll, toggleShowAll] = useState(false)
 
   const sortedCollections = [...collections].sort((a, b) =>

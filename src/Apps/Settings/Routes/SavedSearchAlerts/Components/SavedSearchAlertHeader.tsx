@@ -1,5 +1,5 @@
-import { Flex, Option, Select, Text } from "@artsy/palette"
-import { FC } from "react"
+import { Flex, type Option, Select, Text } from "@artsy/palette"
+import type { FC } from "react"
 
 interface SavedSearchAlertHeaderProps {
   selected: string
@@ -11,10 +11,9 @@ const SORT_OPTIONS: Option[] = [
   { value: "NAME_ASC", text: "Name (A-Z)" },
 ]
 
-export const SavedSearchAlertHeader: FC<React.PropsWithChildren<SavedSearchAlertHeaderProps>> = ({
-  selected,
-  onSortSelect,
-}) => {
+export const SavedSearchAlertHeader: FC<
+  React.PropsWithChildren<SavedSearchAlertHeaderProps>
+> = ({ selected, onSortSelect }) => {
   return (
     <Flex
       flexDirection={["column", "row"]}

@@ -1,10 +1,10 @@
 import { usePrepareFiltersForPills } from "Components/ArtworkFilter/Utils/usePrepareFiltersForPills"
 import {
   SavedSearchAlertContextProvider,
-  SavedSearchAlertContextProviderProps,
+  type SavedSearchAlertContextProviderProps,
 } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { getSearchCriteriaFromFilters } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
-import { FC } from "react"
+import type { FC } from "react"
 
 interface ArtworkFilterSavedSearchAlertContextProviderProps
   extends Omit<SavedSearchAlertContextProviderProps, "criteria"> {}
@@ -13,11 +13,9 @@ interface ArtworkFilterSavedSearchAlertContextProviderProps
  * A simple component that just wraps the `SavedSearchAlertContextProvider` in order
  *  to omit the `criteria` prop, which is inferred from the filter context
  */
-export const ArtworkFilterSavedSearchAlertContextProvider: FC<React.PropsWithChildren<ArtworkFilterSavedSearchAlertContextProviderProps>> = ({
-  children,
-  entity,
-  ...rest
-}) => {
+export const ArtworkFilterSavedSearchAlertContextProvider: FC<
+  React.PropsWithChildren<ArtworkFilterSavedSearchAlertContextProviderProps>
+> = ({ children, entity, ...rest }) => {
   const filters = usePrepareFiltersForPills()
   const criteria = getSearchCriteriaFromFilters(entity, filters)
 

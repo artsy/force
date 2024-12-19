@@ -1,6 +1,6 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box, Column, FullBleed, GridColumns } from "@artsy/palette"
-import { NotificationsApp_me$data } from "__generated__/NotificationsApp_me.graphql"
+import type { NotificationsApp_me$data } from "__generated__/NotificationsApp_me.graphql"
 import {
   DESKTOP_HEIGHT,
   MIN_LIST_WIDTH,
@@ -21,7 +21,9 @@ interface NotificationsAppProps {
   me: NotificationsApp_me$data
 }
 
-const NotificationsApp: React.FC<React.PropsWithChildren<NotificationsAppProps>> = ({ me }) => {
+const NotificationsApp: React.FC<
+  React.PropsWithChildren<NotificationsAppProps>
+> = ({ me }) => {
   const { match } = useRouter()
   const { showAuthDialog } = useAuthDialog()
   const { isLoggedIn } = useSystemContext()

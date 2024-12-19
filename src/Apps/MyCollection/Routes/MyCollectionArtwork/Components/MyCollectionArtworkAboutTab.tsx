@@ -1,18 +1,20 @@
 import { Box, Join, Separator, Spacer } from "@artsy/palette"
-import { MyCollectionArtworkAboutTab_artwork$key } from "__generated__/MyCollectionArtworkAboutTab_artwork.graphql"
+import type { MyCollectionArtworkAboutTab_artwork$key } from "__generated__/MyCollectionArtworkAboutTab_artwork.graphql"
 import { MyCollectionArtworkDetails } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetails"
 import { MyCollectionArtworkRequestPriceEstimate } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkRequestPriceEstimate"
 import { MyCollectionArtworkSubmitForSale } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSubmitForSale"
 import { MyCollectionPriceEstimateStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionPriceEstimateStatus"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrentArticlesRail"
-import { FC } from "react"
+import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface MyCollectionArtworkAboutTabProps {
   artwork: MyCollectionArtworkAboutTab_artwork$key
 }
 
-export const MyCollectionArtworkAboutTab: FC<React.PropsWithChildren<MyCollectionArtworkAboutTabProps>> = props => {
+export const MyCollectionArtworkAboutTab: FC<
+  React.PropsWithChildren<MyCollectionArtworkAboutTabProps>
+> = props => {
   const artwork = useFragment(FRAGMENT, props.artwork)
 
   const submission = artwork.consignmentSubmission

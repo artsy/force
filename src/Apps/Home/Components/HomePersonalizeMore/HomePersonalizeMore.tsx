@@ -1,5 +1,5 @@
 import { Column, GridColumns } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { HomePersonalizeMoreCard } from "./HomePersonalizeMoreCard"
 
 export const HomePersonalizeMore: FC<React.PropsWithChildren<unknown>> = () => {

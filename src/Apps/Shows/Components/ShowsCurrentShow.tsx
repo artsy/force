@@ -13,7 +13,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import GridItem from "Components/Artwork/GridItem"
 import { extractNodes } from "Utils/extractNodes"
-import { ShowsCurrentShow_show$data } from "__generated__/ShowsCurrentShow_show.graphql"
+import type { ShowsCurrentShow_show$data } from "__generated__/ShowsCurrentShow_show.graphql"
 import { Masonry } from "Components/Masonry"
 import { RouterLink } from "System/Components/RouterLink"
 
@@ -21,7 +21,9 @@ interface ShowsCurrentShowProps {
   show: ShowsCurrentShow_show$data
 }
 
-const ShowsCurrentShow: React.FC<React.PropsWithChildren<ShowsCurrentShowProps>> = ({ show }) => {
+const ShowsCurrentShow: React.FC<
+  React.PropsWithChildren<ShowsCurrentShowProps>
+> = ({ show }) => {
   const artworks = extractNodes(show.artworksConnection)
   const count = show.artworksConnection?.totalCount ?? 0
   const remaining = count - 15
@@ -111,7 +113,9 @@ export const ShowsCurrentShowFragmentContainer = createFragmentContainer(
   }
 )
 
-export const ShowsCurrentShowPlaceholder: React.FC<React.PropsWithChildren<unknown>> = () => (
+export const ShowsCurrentShowPlaceholder: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => (
   <Skeleton>
     <SkeletonText variant="lg-display">Partner Name</SkeletonText>
 

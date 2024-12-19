@@ -3,7 +3,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { FollowGeneButtonQueryRenderer } from "Components/FollowButton/FollowGeneButton"
-import { GeneShow_gene$data } from "__generated__/GeneShow_gene.graphql"
+import type { GeneShow_gene$data } from "__generated__/GeneShow_gene.graphql"
 import { GeneArtworkFilterQueryRenderer } from "Apps/Gene/Components/GeneArtworkFilter"
 import { GeneMetaFragmentContainer } from "Apps/Gene/Components/GeneMeta"
 import { extractNodes } from "Utils/extractNodes"
@@ -12,7 +12,9 @@ interface GeneShowProps {
   gene: GeneShow_gene$data
 }
 
-export const GeneShow: React.FC<React.PropsWithChildren<GeneShowProps>> = ({ gene }) => {
+export const GeneShow: React.FC<React.PropsWithChildren<GeneShowProps>> = ({
+  gene,
+}) => {
   const similar = extractNodes(gene.similar)
   const artists = extractNodes(gene.artistsConnection)
 

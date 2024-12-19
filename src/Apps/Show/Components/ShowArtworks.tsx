@@ -1,21 +1,25 @@
-import { ShowArtworks_show$data } from "__generated__/ShowArtworks_show.graphql"
+import type { ShowArtworks_show$data } from "__generated__/ShowArtworks_show.graphql"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
-  Counts,
-  SharedArtworkFilterContextProps,
+  type Counts,
+  type SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import * as React from "react"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import { BoxProps } from "@artsy/palette"
+import type * as React from "react"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
+import type { BoxProps } from "@artsy/palette"
 import { useRouter } from "System/Hooks/useRouter"
 import { omit } from "lodash"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
-import { ShowArtworksFilterQuery } from "__generated__/ShowArtworksFilterQuery.graphql"
+import type { ShowArtworksFilterQuery } from "__generated__/ShowArtworksFilterQuery.graphql"
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface ShowArtworksFilterProps extends BoxProps {
@@ -24,7 +28,9 @@ interface ShowArtworksFilterProps extends BoxProps {
   counts?: Counts
 }
 
-const ShowArtworksFilter: React.FC<React.PropsWithChildren<ShowArtworksFilterProps>> = props => {
+const ShowArtworksFilter: React.FC<
+  React.PropsWithChildren<ShowArtworksFilterProps>
+> = props => {
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
   const { relay, show, counts, ...rest } = props
@@ -123,9 +129,11 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
   `
 )
 
-interface ShowArtworkFilterQueryRendererProps {}
+type ShowArtworkFilterQueryRendererProps = {}
 
-export const ShowArtworkFilterQueryRenderer: React.FC<React.PropsWithChildren<ShowArtworkFilterQueryRendererProps>> = rest => {
+export const ShowArtworkFilterQueryRenderer: React.FC<
+  React.PropsWithChildren<ShowArtworkFilterQueryRendererProps>
+> = rest => {
   const { relayEnvironment } = useSystemContext()
   const { match } = useRouter()
 

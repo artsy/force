@@ -1,7 +1,7 @@
 import { Join, Message, Spacer } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistShowsRoute_viewer$data } from "__generated__/ArtistShowsRoute_viewer.graphql"
+import type { ArtistShowsRoute_viewer$data } from "__generated__/ArtistShowsRoute_viewer.graphql"
 import { ArtistShowsGroupRefetchContainer } from "./Components/ArtistShowsGroup"
 import { Title } from "react-head"
 
@@ -9,7 +9,9 @@ interface ArtistShowsRouteProps {
   viewer: ArtistShowsRoute_viewer$data
 }
 
-const ArtistShowsRoute: React.FC<React.PropsWithChildren<ArtistShowsRouteProps>> = ({ viewer }) => {
+const ArtistShowsRoute: React.FC<
+  React.PropsWithChildren<ArtistShowsRouteProps>
+> = ({ viewer }) => {
   if (!viewer.artist) return null
 
   const hasCurrentShows = viewer.artist.currentShowsCount?.totalCount ?? 0 > 0

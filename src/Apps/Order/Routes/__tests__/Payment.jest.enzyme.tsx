@@ -1,6 +1,6 @@
 import { BorderedRadio, Checkbox } from "@artsy/palette"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import { PaymentTestQuery$rawResponse } from "__generated__/PaymentTestQuery.graphql"
+import type { PaymentTestQuery$rawResponse } from "__generated__/PaymentTestQuery.graphql"
 import {
   BuyOrderWithShippingDetails,
   PrivateSaleOrderWithShippingDetails,
@@ -15,7 +15,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import { CreditCardPickerFragmentContainer } from "Apps/Order/Components/CreditCardPicker"
 import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
-import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
+import type { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"

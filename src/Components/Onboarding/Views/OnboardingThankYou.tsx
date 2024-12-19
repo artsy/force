@@ -1,5 +1,5 @@
 import { Flex, Spacer, Spinner, Text } from "@artsy/palette"
-import { FC, useEffect } from "react"
+import { type FC, useEffect } from "react"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
 
@@ -10,10 +10,9 @@ interface OnboardingThankYouProps {
 
 const AUTOCLOSE_DELAY = 5000
 
-export const OnboardingThankYou: FC<React.PropsWithChildren<OnboardingThankYouProps>> = ({
-  autoClose,
-  message,
-}) => {
+export const OnboardingThankYou: FC<
+  React.PropsWithChildren<OnboardingThankYouProps>
+> = ({ autoClose, message }) => {
   const { register } = useOnboardingFadeTransition({ next: () => {} })
   const { onComplete, onClose } = useOnboardingContext()
 

@@ -1,5 +1,5 @@
 import { get } from "Utils/get"
-import { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
+import type { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
 import { getENV } from "Utils/getENV"
 import { identity, pickBy } from "lodash"
 

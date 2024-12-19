@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairSubApp_fair$data } from "__generated__/FairSubApp_fair.graphql"
+import type { FairSubApp_fair$data } from "__generated__/FairSubApp_fair.graphql"
 import { FairMetaFragmentContainer } from "./Components/FairMeta"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { userIsAdmin } from "Utils/user"
@@ -11,7 +11,10 @@ interface FairAppProps {
   fair: FairSubApp_fair$data
 }
 
-const FairApp: React.FC<React.PropsWithChildren<FairAppProps>> = ({ children, fair }) => {
+const FairApp: React.FC<React.PropsWithChildren<FairAppProps>> = ({
+  children,
+  fair,
+}) => {
   const { user } = useSystemContext()
 
   // If a fair's profile is inaccessible, that means it's private, which in turn means

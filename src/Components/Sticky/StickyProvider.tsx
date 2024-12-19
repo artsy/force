@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react"
-import * as React from "react"
+import type * as React from "react"
 
 export type TSticky = {
   id: string
@@ -33,7 +33,9 @@ const StickyContext = createContext<{
  * Imported once in Boot.tsx.
  * You do NOT need to import this to use a `Sticky` component.
  */
-export const StickyProvider: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+export const StickyProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const [stickies, setStickies] = useState<TSticky[]>([])
 
   const registerSticky = useCallback((sticky: TSticky) => {

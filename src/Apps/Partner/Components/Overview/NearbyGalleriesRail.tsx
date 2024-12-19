@@ -1,7 +1,7 @@
-import { Box, BoxProps, Shelf, Text } from "@artsy/palette"
+import { Box, type BoxProps, Shelf, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { NearbyGalleriesRail_partners$data } from "__generated__/NearbyGalleriesRail_partners.graphql"
-import { NearbyGalleriesRailRendererQuery } from "__generated__/NearbyGalleriesRailRendererQuery.graphql"
+import type { NearbyGalleriesRail_partners$data } from "__generated__/NearbyGalleriesRail_partners.graphql"
+import type { NearbyGalleriesRailRendererQuery } from "__generated__/NearbyGalleriesRailRendererQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { NearbyGalleriesRailPlaceholder } from "./NearbyGalleriesRailPlaceholder"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -12,10 +12,9 @@ interface NearbyGalleriesRailProps extends BoxProps {
   partners: NearbyGalleriesRail_partners$data
 }
 
-const NearbyGalleriesRail: React.FC<React.PropsWithChildren<NearbyGalleriesRailProps>> = ({
-  partners,
-  ...rest
-}) => {
+const NearbyGalleriesRail: React.FC<
+  React.PropsWithChildren<NearbyGalleriesRailProps>
+> = ({ partners, ...rest }) => {
   if (!partners || partners.length === 0) {
     return null
   }
@@ -57,9 +56,13 @@ const NearbyGalleriesRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const NearbyGalleriesRailRenderer: React.FC<React.PropsWithChildren<{
-  near: string
-} & Omit<NearbyGalleriesRailProps, "partners">>> = ({ near, ...rest }) => {
+export const NearbyGalleriesRailRenderer: React.FC<
+  React.PropsWithChildren<
+    {
+      near: string
+    } & Omit<NearbyGalleriesRailProps, "partners">
+  >
+> = ({ near, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

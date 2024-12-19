@@ -1,7 +1,7 @@
-import { ActionType, SentArtworkInquiry } from "@artsy/cohesion"
+import { ActionType, type SentArtworkInquiry } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
-import { Environment, commitMutation, graphql } from "react-relay"
-import {
+import { type Environment, commitMutation, graphql } from "react-relay"
+import type {
   SubmitInquiryRequestMutationInput,
   useArtworkInquiryRequestMutation,
   useArtworkInquiryRequestMutation$data,
@@ -32,9 +32,7 @@ export const useArtworkInquiryRequest = () => {
   const submitArtworkInquiryRequest = ({
     artworkID,
     ...rest
-  }: UseArtworkInquiryRequestInput): Promise<
-    useArtworkInquiryRequestMutation$data
-  > => {
+  }: UseArtworkInquiryRequestInput): Promise<useArtworkInquiryRequestMutation$data> => {
     return new Promise((resolve, reject) => {
       commitMutation<useArtworkInquiryRequestMutation>(
         relayEnvironment.current as Environment,

@@ -1,25 +1,25 @@
-import { FC, useEffect } from "react"
+import { type FC, useEffect } from "react"
 import {
-  RelayPaginationProp,
+  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
 } from "react-relay"
-import { SearchResultsList_viewer$data } from "__generated__/SearchResultsList_viewer.graphql"
+import type { SearchResultsList_viewer$data } from "__generated__/SearchResultsList_viewer.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import {
   SuggestionItem,
-  SuggestionItemOptionProps,
+  type SuggestionItemOptionProps,
 } from "Components/Search/SuggestionItem/SuggestionItem"
 import { Flex, Spinner } from "@artsy/palette"
 import {
-  SearchNodeOption,
+  type SearchNodeOption,
   formatOptions,
 } from "Components/Search/utils/formatOptions"
 import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 import { NoResults } from "./SearchResultsList/NoResults"
 import { ContentPlaceholder } from "./SearchResultsList/ContentPlaceholder"
 import { useTracking } from "react-tracking"
-import { PillType } from "Components/Search/constants"
+import type { PillType } from "Components/Search/constants"
 import { ActionType } from "@artsy/cohesion"
 
 interface SearchResultsListProps {
@@ -32,13 +32,9 @@ interface SearchResultsListProps {
 
 const ENTITIES_PER_SCROLL = 10
 
-const SearchResultsList: FC<React.PropsWithChildren<SearchResultsListProps>> = ({
-  relay,
-  viewer,
-  query,
-  selectedPill,
-  onClose,
-}) => {
+const SearchResultsList: FC<
+  React.PropsWithChildren<SearchResultsListProps>
+> = ({ relay, viewer, query, selectedPill, onClose }) => {
   const tracking = useTracking()
   const options = extractNodes(viewer.searchConnection)
 

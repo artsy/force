@@ -6,23 +6,23 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { FC, useMemo } from "react"
+import { type FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtistRelatedGeneCategories_artist$data } from "__generated__/ArtistRelatedGeneCategories_artist.graphql"
-import { ArtistRelatedGeneCategoriesQuery } from "__generated__/ArtistRelatedGeneCategoriesQuery.graphql"
+import type { ArtistRelatedGeneCategories_artist$data } from "__generated__/ArtistRelatedGeneCategories_artist.graphql"
+import type { ArtistRelatedGeneCategoriesQuery } from "__generated__/ArtistRelatedGeneCategoriesQuery.graphql"
 import { Media } from "Utils/Responsive"
 
 interface ArtistRelatedGeneCategoriesProps {
   artist: ArtistRelatedGeneCategories_artist$data
 }
 
-const ArtistRelatedGeneCategories: FC<React.PropsWithChildren<ArtistRelatedGeneCategoriesProps>> = ({
-  artist,
-}) => {
+const ArtistRelatedGeneCategories: FC<
+  React.PropsWithChildren<ArtistRelatedGeneCategoriesProps>
+> = ({ artist }) => {
   const genes = extractNodes(artist.related?.genes)
 
   const pills = useMemo(
@@ -62,9 +62,8 @@ const ArtistRelatedGeneCategories: FC<React.PropsWithChildren<ArtistRelatedGeneC
   )
 }
 
-export const ArtistRelatedGeneCategoriesFragmentContainer = createFragmentContainer(
-  ArtistRelatedGeneCategories,
-  {
+export const ArtistRelatedGeneCategoriesFragmentContainer =
+  createFragmentContainer(ArtistRelatedGeneCategories, {
     artist: graphql`
       fragment ArtistRelatedGeneCategories_artist on Artist {
         related {
@@ -80,12 +79,11 @@ export const ArtistRelatedGeneCategoriesFragmentContainer = createFragmentContai
         }
       }
     `,
-  }
-)
+  })
 
-export const ArtistRelatedGeneCategoriesQueryRenderer: FC<React.PropsWithChildren<{ slug: string }>> = ({
-  slug,
-}) => {
+export const ArtistRelatedGeneCategoriesQueryRenderer: FC<
+  React.PropsWithChildren<{ slug: string }>
+> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

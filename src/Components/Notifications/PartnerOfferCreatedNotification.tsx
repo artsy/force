@@ -1,8 +1,8 @@
 import { Flex, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import { FC } from "react"
+import type { FC } from "react"
 import { useFragment, graphql } from "react-relay"
-import { PartnerOfferCreatedNotification_notification$key } from "__generated__/PartnerOfferCreatedNotification_notification.graphql"
+import type { PartnerOfferCreatedNotification_notification$key } from "__generated__/PartnerOfferCreatedNotification_notification.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
@@ -14,20 +14,16 @@ interface PartnerOfferCreatedNotificationProps {
   notification: PartnerOfferCreatedNotification_notification$key
 }
 
-export const PartnerOfferCreatedNotification: FC<React.PropsWithChildren<PartnerOfferCreatedNotificationProps>> = ({
-  notification,
-}) => {
+export const PartnerOfferCreatedNotification: FC<
+  React.PropsWithChildren<PartnerOfferCreatedNotificationProps>
+> = ({ notification }) => {
   const notificationData = useFragment(
     PartnerOfferCreatedNotificationFragment,
     notification
   )
 
-  const {
-    headline,
-    item,
-    targetHref,
-    offerArtworksConnection,
-  } = notificationData
+  const { headline, item, targetHref, offerArtworksConnection } =
+    notificationData
 
   const partnerOffer = item?.partnerOffer
   const artwork = extractNodes(offerArtworksConnection)[0]

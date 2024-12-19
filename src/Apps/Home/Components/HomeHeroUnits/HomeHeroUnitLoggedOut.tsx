@@ -1,9 +1,9 @@
-import * as React from "react"
-import { HomeHeroUnitBase, HomeHeroUnitBaseProps } from "./HomeHeroUnit"
+import type * as React from "react"
+import { HomeHeroUnitBase, type HomeHeroUnitBaseProps } from "./HomeHeroUnit"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { useFeatureVariant } from "System/Hooks/useFeatureFlag"
 import { useOnce } from "Utils/Hooks/useOnce"
-import { ActionType, ExperimentViewed, OwnerType } from "@artsy/cohesion"
+import { ActionType, type ExperimentViewed, OwnerType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 
 const EXPERIMENT_NAME = "diamond_hero-app-download"
@@ -16,8 +16,7 @@ export const HomeHeroUnitLoggedOut: React.FC<{ index: number }> = ({
   const variants: Record<string, Omit<HomeHeroUnitBaseProps, "index">> = {
     control: {
       title: "The art world online",
-      body:
-        "Artsy is the world’s leading platform to discover, buy, and manage the art you love",
+      body: "Artsy is the world’s leading platform to discover, buy, and manage the art you love.",
       imageUrl: "https://files.artsy.net/images/01_Artsy_App-Download-HP.jpg",
       link: {
         desktop: {

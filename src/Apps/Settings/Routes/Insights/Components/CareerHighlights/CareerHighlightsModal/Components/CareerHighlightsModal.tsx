@@ -2,7 +2,7 @@ import {
   Clickable,
   Flex,
   ModalBase,
-  ModalBaseProps,
+  type ModalBaseProps,
   ProgressDots,
   ShelfNext,
   ShelfPrevious,
@@ -17,11 +17,9 @@ import CloseIcon from "@artsy/icons/CloseIcon"
 
 type CareerHighlightModalProps = ModalBaseProps
 
-export const CareerHighlightModal: React.FC<React.PropsWithChildren<CareerHighlightModalProps>> = ({
-  onClose,
-  children,
-  ...rest
-}) => {
+export const CareerHighlightModal: React.FC<
+  React.PropsWithChildren<CareerHighlightModalProps>
+> = ({ onClose, children, ...rest }) => {
   const isMounted = useDidMount()
   const [boxProps, modalProps] = splitBoxProps(rest)
   const { dotPosition, total, back, next } = useCareerHighlightsStoriesContext()

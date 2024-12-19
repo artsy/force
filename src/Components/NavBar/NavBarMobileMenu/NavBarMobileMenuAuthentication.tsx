@@ -3,11 +3,13 @@ import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchem
 import { NavBarMobileMenuNotificationsQueryRenderer } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuNotifications"
 import { trackEvent } from "Server/analytics/helpers"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import * as React from "react"
+import type * as React from "react"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
 import { ProgressiveOnboardingAlertHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertHighlight"
 
-export const NavBarMobileMenuLoggedIn: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const NavBarMobileMenuLoggedIn: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const handleClick = (
     event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>
   ) => {
@@ -50,7 +52,9 @@ export const NavBarMobileMenuLoggedIn: React.FC<React.PropsWithChildren<unknown>
   )
 }
 
-const NavBarMobileMenuLoggedOut: React.FC<React.PropsWithChildren<unknown>> = () => {
+const NavBarMobileMenuLoggedOut: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <>
       <NavBarMobileMenuItemLink
@@ -68,7 +72,9 @@ const NavBarMobileMenuLoggedOut: React.FC<React.PropsWithChildren<unknown>> = ()
   )
 }
 
-export const NavBarMobileMenuAuthentication: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const NavBarMobileMenuAuthentication: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { isLoggedIn } = useSystemContext()
 
   return isLoggedIn ? (

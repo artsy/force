@@ -45,7 +45,9 @@ describe("ConsignRoute", () => {
 
     expect(
       // eslint-disable-next-line testing-library/no-node-access
-      screen.queryAllByText("Request a price estimate")[0].closest("a")
+      screen
+        .queryAllByText("Request a price estimate")[0]
+        .closest("a")
     ).toHaveAttribute(
       "href",
       "/consign/submission?contextPath=%2Fartist%2Falex-katz%2Fconsign&subject=Request%20a%20price%20estimate"

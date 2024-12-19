@@ -1,8 +1,8 @@
-import * as React from "react"
+import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
-import { Color, Flex, FlexProps, Text, THEME } from "@artsy/palette"
+import { type Color, Flex, type FlexProps, Text, THEME } from "@artsy/palette"
 import { ConversationTimeSince } from "./ConversationTimeSince"
-import {
+import type {
   ConversationOrderUpdate_event$data,
   ConversationOrderUpdate_event$key,
 } from "__generated__/ConversationOrderUpdate_event.graphql"
@@ -13,10 +13,9 @@ export interface OrderUpdateProps extends FlexProps {
   event: ConversationOrderUpdate_event$key
 }
 
-export const ConversationOrderUpdate: React.FC<React.PropsWithChildren<OrderUpdateProps>> = ({
-  event,
-  ...flexProps
-}) => {
+export const ConversationOrderUpdate: React.FC<
+  React.PropsWithChildren<OrderUpdateProps>
+> = ({ event, ...flexProps }) => {
   const data = useFragment(FRAGMENT, event)
 
   const { color, textColor, message, Icon } = getIconProps(data)

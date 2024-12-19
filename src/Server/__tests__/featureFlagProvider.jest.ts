@@ -1,10 +1,10 @@
 import {
-  FeatureFlagContext,
-  FeatureFlagService,
+  type FeatureFlagContext,
+  type FeatureFlagService,
   createFeatureFlagService,
   registerFeatureFlagService,
 } from "Server/featureFlags/featureFlagService"
-import { Variant } from "unleash-client"
+import type { Variant } from "unleash-client"
 
 const TestServiceSymbol = Symbol("TestServiceSymbol")
 

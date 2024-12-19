@@ -1,12 +1,12 @@
 import { Link } from "react-head"
 import { Spinner } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { FC, ImgHTMLAttributes, useEffect, useRef } from "react"
+import { type FC, type ImgHTMLAttributes, useEffect, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useMode } from "Utils/Hooks/useMode"
 import { resized } from "Utils/resized"
-import { ArticleZoomGalleryFigure_figure$data } from "__generated__/ArticleZoomGalleryFigure_figure.graphql"
+import type { ArticleZoomGalleryFigure_figure$data } from "__generated__/ArticleZoomGalleryFigure_figure.graphql"
 import { FullscreenBox } from "Components/FullscreenBox"
 import CloseIcon from "@artsy/icons/CloseIcon"
 
@@ -18,11 +18,9 @@ interface ArticleZoomGalleryFigureProps {
   preload: boolean
 }
 
-const ArticleZoomGalleryFigure: FC<React.PropsWithChildren<ArticleZoomGalleryFigureProps>> = ({
-  figure,
-  active,
-  preload,
-}) => {
+const ArticleZoomGalleryFigure: FC<
+  React.PropsWithChildren<ArticleZoomGalleryFigureProps>
+> = ({ figure, active, preload }) => {
   if (
     figure.__typename !== "Artwork" &&
     figure.__typename !== "ArticleImageSection" &&
@@ -113,27 +111,28 @@ const ArticleZoomGalleryFigure: FC<React.PropsWithChildren<ArticleZoomGalleryFig
 
   // See: https://web.dev/preload-responsive-images/#preload-and-lesspicturegreater
   if (preload)
-    return (<>
-      {sources.map((source, i) => {
-        return (
-          // eslint-disable-next-line jsx-a11y/anchor-is-valid
-          (<Link
-            key={i}
-            rel="preload"
-            as="image"
-            imagesrcset={source.img.srcSet}
-            media={source.media.preload}
-          />)
-        );
-      })}
-    </>);
+    return (
+      <>
+        {sources.map((source, i) => {
+          return (
+            // eslint-disable-next-line jsx-a11y/anchor-is-valid
+            <Link
+              key={i}
+              rel="preload"
+              as="image"
+              imagesrcset={source.img.srcSet}
+              media={source.media.preload}
+            />
+          )
+        })}
+      </>
+    )
 
   return null
 }
 
-export const ArticleZoomGalleryFigureFragmentContainer = createFragmentContainer(
-  ArticleZoomGalleryFigure,
-  {
+export const ArticleZoomGalleryFigureFragmentContainer =
+  createFragmentContainer(ArticleZoomGalleryFigure, {
     figure: graphql`
       fragment ArticleZoomGalleryFigure_figure on ArticleSectionImageCollectionFigure {
         __typename
@@ -161,8 +160,7 @@ export const ArticleZoomGalleryFigureFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })
 
 const Img = styled.img`
   display: block;
@@ -173,7 +171,9 @@ const Img = styled.img`
 
 type Mode = "Loading" | "Ready" | "Error"
 
-const Image: FC<React.PropsWithChildren<ImgHTMLAttributes<HTMLImageElement>>> = props => {
+const Image: FC<
+  React.PropsWithChildren<ImgHTMLAttributes<HTMLImageElement>>
+> = props => {
   const [mode, setMode] = useMode<Mode>("Loading")
 
   const ref = useRef<HTMLImageElement>(null)

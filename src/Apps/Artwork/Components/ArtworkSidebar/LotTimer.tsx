@@ -1,4 +1,4 @@
-import { LotTimer_saleArtwork$data } from "__generated__/LotTimer_saleArtwork.graphql"
+import type { LotTimer_saleArtwork$data } from "__generated__/LotTimer_saleArtwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as React from "react"
 import { Text, Spacer, Box } from "@artsy/palette"
@@ -11,7 +11,9 @@ export interface LotTimerProps {
   saleArtwork: LotTimer_saleArtwork$data
 }
 
-export const LotTimer: React.FC<React.PropsWithChildren<LotTimerProps>> = ({ saleArtwork }) => {
+export const LotTimer: React.FC<React.PropsWithChildren<LotTimerProps>> = ({
+  saleArtwork,
+}) => {
   const { endAt, extendedBiddingEndAt, lotID } = saleArtwork
 
   const startAt = saleArtwork.sale?.startAt
@@ -22,9 +24,8 @@ export const LotTimer: React.FC<React.PropsWithChildren<LotTimerProps>> = ({ sal
 
   const biddingEndAt = extendedBiddingEndAt ?? endAt
 
-  const [updatedBiddingEndAt, setUpdatedBiddingEndAt] = React.useState(
-    biddingEndAt
-  )
+  const [updatedBiddingEndAt, setUpdatedBiddingEndAt] =
+    React.useState(biddingEndAt)
   const [isExtended, setIsExtended] = React.useState(false)
 
   useAuctionWebsocket({

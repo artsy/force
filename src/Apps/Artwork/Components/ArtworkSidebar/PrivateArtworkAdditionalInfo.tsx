@@ -1,7 +1,7 @@
 import {
   Clickable,
   Flex,
-  FlexProps,
+  type FlexProps,
   HTML,
   Join,
   ReadMore,
@@ -9,7 +9,7 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { PrivateArtworkAdditionalInfo_artwork$key } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
+import type { PrivateArtworkAdditionalInfo_artwork$key } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -24,17 +24,13 @@ export interface PrivateArtworkAdditionalInfoProps extends FlexProps {
   artwork: PrivateArtworkAdditionalInfo_artwork$key
 }
 
-export const PrivateArtworkAdditionalInfo: React.FC<React.PropsWithChildren<PrivateArtworkAdditionalInfoProps>> = ({
-  artwork,
-  ...flexProps
-}) => {
+export const PrivateArtworkAdditionalInfo: React.FC<
+  React.PropsWithChildren<PrivateArtworkAdditionalInfoProps>
+> = ({ artwork, ...flexProps }) => {
   const data = useFragment(privateArtworkAdditionalInfoFragment, artwork)
 
-  const {
-    listItems,
-    openConditionModal,
-    setOpenConditionModal,
-  } = useArtworkDetailsAdditionalInfoFields({ artwork: data })
+  const { listItems, openConditionModal, setOpenConditionModal } =
+    useArtworkDetailsAdditionalInfoFields({ artwork: data })
 
   const itemsToRemove = ["Materials", "Size", "Rarity", "Frame"]
 

@@ -5,8 +5,8 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { MockPayloadGenerator } from "relay-test-utils"
-import { CleanRelayFragment } from "Utils/typeSupport"
-import { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
+import type { CleanRelayFragment } from "Utils/typeSupport"
+import type { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
@@ -286,8 +286,7 @@ const mockMe = {
             formattedNationalityAndBirthday: "British, b. 1974",
             image: {
               cropped: {
-                src:
-                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FX9vVvod7QY73ZwLDSZzljw%2Flarge.jpg&width=45",
+                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FX9vVvod7QY73ZwLDSZzljw%2Flarge.jpg&width=45",
                 srcSet:
                   "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FX9vVvod7QY73ZwLDSZzljw%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=50&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FX9vVvod7QY73ZwLDSZzljw%2Flarge.jpg&width=90 2x",
               },
@@ -309,8 +308,7 @@ const mockMe = {
             formattedNationalityAndBirthday: "Spanish, 1893–1983",
             image: {
               cropped: {
-                src:
-                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FDvZH9-qtZotZ5w1596tctA%2Flarge.jpg&width=45",
+                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FDvZH9-qtZotZ5w1596tctA%2Flarge.jpg&width=45",
                 srcSet:
                   "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FDvZH9-qtZotZ5w1596tctA%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=50&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FDvZH9-qtZotZ5w1596tctA%2Flarge.jpg&width=90 2x",
               },
@@ -332,8 +330,7 @@ const mockMe = {
             formattedNationalityAndBirthday: "German, b. 1962",
             image: {
               cropped: {
-                src:
-                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F4F7gPHDcx-zo1-KQMZrhOQ%2Flarge.jpg&width=45",
+                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F4F7gPHDcx-zo1-KQMZrhOQ%2Flarge.jpg&width=45",
                 srcSet:
                   "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F4F7gPHDcx-zo1-KQMZrhOQ%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=50&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F4F7gPHDcx-zo1-KQMZrhOQ%2Flarge.jpg&width=90 2x",
               },
@@ -352,8 +349,7 @@ const mockMe = {
             formattedNationalityAndBirthday: "German, b. 1932",
             image: {
               cropped: {
-                src:
-                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FrRTvzzrz1FIybrFzbrPagQ%2Flarge.jpg&width=45",
+                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FrRTvzzrz1FIybrFzbrPagQ%2Flarge.jpg&width=45",
                 srcSet:
                   "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FrRTvzzrz1FIybrFzbrPagQ%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=50&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FrRTvzzrz1FIybrFzbrPagQ%2Flarge.jpg&width=90 2x",
               },
@@ -372,8 +368,7 @@ const mockMe = {
             formattedNationalityAndBirthday: "German, 1888–1976",
             image: {
               cropped: {
-                src:
-                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKVLI9Ht_Dt2WJN1ByAv0yg%2Fsquare.jpg&width=45",
+                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKVLI9Ht_Dt2WJN1ByAv0yg%2Fsquare.jpg&width=45",
                 srcSet:
                   "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKVLI9Ht_Dt2WJN1ByAv0yg%2Fsquare.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=50&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKVLI9Ht_Dt2WJN1ByAv0yg%2Fsquare.jpg&width=90 2x",
               },
@@ -392,8 +387,7 @@ const mockMe = {
             formattedNationalityAndBirthday: "Japanese, b. 1970",
             image: {
               cropped: {
-                src:
-                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F8SRr_x1xJiobS88sZdn52Q%2Flarge.jpg&width=45",
+                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F8SRr_x1xJiobS88sZdn52Q%2Flarge.jpg&width=45",
                 srcSet:
                   "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F8SRr_x1xJiobS88sZdn52Q%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=50&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F8SRr_x1xJiobS88sZdn52Q%2Flarge.jpg&width=90 2x",
               },
@@ -412,8 +406,7 @@ const mockMe = {
             formattedNationalityAndBirthday: "American, 1928–1987",
             image: {
               cropped: {
-                src:
-                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Flarge.jpg&width=45",
+                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Flarge.jpg&width=45",
                 srcSet:
                   "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=50&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Flarge.jpg&width=90 2x",
               },
@@ -461,8 +454,7 @@ const mockArtist = {
             "Megan Mary Baker, ‘Landscape Study no.3 (Tiepolo)’, 2022",
           image: {
             placeholder: "75.5464048146975%",
-            url:
-              "https://d32dm0rphc51dk.cloudfront.net/DTh4yTCxyXI1XYcc7Sq7zg/larger.jpg",
+            url: "https://d32dm0rphc51dk.cloudfront.net/DTh4yTCxyXI1XYcc7Sq7zg/larger.jpg",
             aspectRatio: 1.32,
           },
           artistNames: "Megan Mary Baker",
@@ -534,13 +526,11 @@ const mockArtist = {
             "Megan Mary Baker, ‘What a Thing to Be Still When Everything Else is Moving’, 2022",
           image: {
             placeholder: "85.61741613133475%",
-            url:
-              "https://d32dm0rphc51dk.cloudfront.net/rnlenDwA_AgRuMIvn0MG0Q/larger.jpg",
+            url: "https://d32dm0rphc51dk.cloudfront.net/rnlenDwA_AgRuMIvn0MG0Q/larger.jpg",
             aspectRatio: 1.17,
           },
           artistNames: "Megan Mary Baker",
-          href:
-            "/artwork/megan-mary-baker-what-a-thing-to-be-still-when-everything-else-is-moving",
+          href: "/artwork/megan-mary-baker-what-a-thing-to-be-still-when-everything-else-is-moving",
           sale_message: "£9,750–£10,250",
           cultural_maker: null,
           artist: {
@@ -565,8 +555,7 @@ const mockArtist = {
           },
           sale: null,
           sale_artwork: null,
-          slug:
-            "megan-mary-baker-what-a-thing-to-be-still-when-everything-else-is-moving",
+          slug: "megan-mary-baker-what-a-thing-to-be-still-when-everything-else-is-moving",
           isSaved: false,
           attributionClass: {
             name: "Unique",
@@ -582,8 +571,7 @@ const mockArtist = {
         },
       },
     ],
-    id:
-      "ZmlsdGVyQXJ0d29ya3NDb25uZWN0aW9uOnsiYWdncmVnYXRpb25zIjpbInRvdGFsIl0sImFydGlzdF9pZCI6IjVkYjllN2U3Nzg3YWRkMDAxMjM0YjAyNSIsInBhZ2UiOjEsInNpemUiOjMwfQ==",
+    id: "ZmlsdGVyQXJ0d29ya3NDb25uZWN0aW9uOnsiYWdncmVnYXRpb25zIjpbInRvdGFsIl0sImFydGlzdF9pZCI6IjVkYjllN2U3Nzg3YWRkMDAxMjM0YjAyNSIsInBhZ2UiOjEsInNpemUiOjMwfQ==",
   },
   id: "QXJ0aXN0OjVkYjllN2U3Nzg3YWRkMDAxMjM0YjAyNQ==",
 }

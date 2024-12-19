@@ -1,6 +1,6 @@
 import { Box, Flex, SkeletonText, Sup, Text as BaseText } from "@artsy/palette"
 import { useRouter } from "found"
-import * as React from "react"
+import type * as React from "react"
 import { RouterLink } from "System/Components/RouterLink"
 import { getENV } from "Utils/getENV"
 import { getInternalHref } from "Utils/url"
@@ -20,9 +20,9 @@ type RailHeaderTitleProps = Pick<
   "title" | "viewAllHref" | "viewAllOnClick"
 >
 
-export const RailHeaderTitle: React.FC<React.PropsWithChildren<
-  RailHeaderTitleProps
->> = ({ viewAllHref, viewAllOnClick, title }) => {
+export const RailHeaderTitle: React.FC<
+  React.PropsWithChildren<RailHeaderTitleProps>
+> = ({ viewAllHref, viewAllOnClick, title }) => {
   if (!viewAllHref) return <>{title}</>
 
   const href = getInternalHref(viewAllHref)

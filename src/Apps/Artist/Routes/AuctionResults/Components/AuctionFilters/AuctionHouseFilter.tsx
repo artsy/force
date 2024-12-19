@@ -1,5 +1,5 @@
 import { Checkbox, Flex } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
@@ -15,9 +15,9 @@ export const auctionHouseMap = [
   { displayName: "Artsy Auction", name: "Artsy Auction" },
 ]
 
-export const AuctionHouseFilter: React.FC<React.PropsWithChildren<
-  unknown
->> = () => {
+export const AuctionHouseFilter: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { setFilter } = useAuctionResultsFilterContext()
   const { organizations = [] } = useCurrentlySelectedFiltersForAuctionResults()
 

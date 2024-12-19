@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import {
   Box,
   Image,
@@ -9,26 +9,25 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { EntityTooltipGeneQuery } from "__generated__/EntityTooltipGeneQuery.graphql"
-import { EntityTooltipGene_gene$data } from "__generated__/EntityTooltipGene_gene.graphql"
+import type { EntityTooltipGeneQuery } from "__generated__/EntityTooltipGeneQuery.graphql"
+import type { EntityTooltipGene_gene$data } from "__generated__/EntityTooltipGene_gene.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 import { EntityHeaderGeneFragmentContainer } from "Components/EntityHeaders/EntityHeaderGene"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useTracking } from "react-tracking"
-import { ActionType, ClickedTooltip } from "@artsy/cohesion"
+import { ActionType, type ClickedTooltip } from "@artsy/cohesion"
 
 interface EntityTooltipGeneProps {
   gene: EntityTooltipGene_gene$data
 }
 
-const EntityTooltipGene: FC<React.PropsWithChildren<EntityTooltipGeneProps>> = ({ gene }) => {
+const EntityTooltipGene: FC<
+  React.PropsWithChildren<EntityTooltipGeneProps>
+> = ({ gene }) => {
   const { trackEvent } = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const handleClick = () => {
     const payload: ClickedTooltip = {
@@ -106,7 +105,9 @@ const EntityTooltipGeneFragmentContainer = createFragmentContainer(
   }
 )
 
-const EntityTooltipGenePlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const EntityTooltipGenePlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton p={2} width={300}>
       <SkeletonBox width={260} height={146} />
@@ -125,9 +126,9 @@ interface EntityTooltipGeneQueryRendererProps {
   id: string
 }
 
-export const EntityTooltipGeneQueryRenderer: FC<React.PropsWithChildren<EntityTooltipGeneQueryRendererProps>> = ({
-  id,
-}) => {
+export const EntityTooltipGeneQueryRenderer: FC<
+  React.PropsWithChildren<EntityTooltipGeneQueryRendererProps>
+> = ({ id }) => {
   return (
     <SystemQueryRenderer<EntityTooltipGeneQuery>
       variables={{ id }}

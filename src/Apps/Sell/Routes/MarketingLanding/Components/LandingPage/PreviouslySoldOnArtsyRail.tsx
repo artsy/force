@@ -1,7 +1,7 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Flex, Skeleton, SkeletonBox, Text } from "@artsy/palette"
-import { PreviouslySoldOnArtsyRail_recentlySoldArtworks$data } from "__generated__/PreviouslySoldOnArtsyRail_recentlySoldArtworks.graphql"
-import { PreviouslySoldOnArtsyRailQuery } from "__generated__/PreviouslySoldOnArtsyRailQuery.graphql"
+import type { PreviouslySoldOnArtsyRail_recentlySoldArtworks$data } from "__generated__/PreviouslySoldOnArtsyRail_recentlySoldArtworks.graphql"
+import type { PreviouslySoldOnArtsyRailQuery } from "__generated__/PreviouslySoldOnArtsyRailQuery.graphql"
 import { SoldArtworkFragmentContainer } from "Apps/Sell/Routes/MarketingLanding/Components/LandingPage/SoldArtwork"
 import { Rail } from "Components/Rail/Rail"
 import { shuffle } from "lodash"
@@ -15,9 +15,9 @@ interface PreviouslySoldOnArtsyRailProps {
   recentlySoldArtworks: PreviouslySoldOnArtsyRail_recentlySoldArtworks$data
 }
 
-export const PreviouslySoldOnArtsyRail: React.FC<React.PropsWithChildren<PreviouslySoldOnArtsyRailProps>> = ({
-  recentlySoldArtworks,
-}) => {
+export const PreviouslySoldOnArtsyRail: React.FC<
+  React.PropsWithChildren<PreviouslySoldOnArtsyRailProps>
+> = ({ recentlySoldArtworks }) => {
   const tracking = useTracking()
 
   if (!recentlySoldArtworks) {
@@ -103,9 +103,8 @@ export const PreviouslySoldOnArtsyRail: React.FC<React.PropsWithChildren<Previou
   )
 }
 
-export const PreviouslySoldOnArtsyRailFragmentContainer = createFragmentContainer(
-  PreviouslySoldOnArtsyRail,
-  {
+export const PreviouslySoldOnArtsyRailFragmentContainer =
+  createFragmentContainer(PreviouslySoldOnArtsyRail, {
     recentlySoldArtworks: graphql`
       fragment PreviouslySoldOnArtsyRail_recentlySoldArtworks on RecentlySoldArtworkTypeConnection {
         edges {
@@ -131,8 +130,7 @@ export const PreviouslySoldOnArtsyRailFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })
 
 const PLACEHOLDER = (
   <Skeleton>
@@ -168,7 +166,9 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const PreviouslySoldOnArtsyRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const PreviouslySoldOnArtsyRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <SystemQueryRenderer<PreviouslySoldOnArtsyRailQuery>
       lazyLoad

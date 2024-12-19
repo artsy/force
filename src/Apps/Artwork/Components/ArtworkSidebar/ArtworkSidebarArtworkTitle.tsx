@@ -1,14 +1,14 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { Text } from "@artsy/palette"
-import { ArtworkSidebarArtworkTitle_artwork$data } from "__generated__/ArtworkSidebarArtworkTitle_artwork.graphql"
+import type { ArtworkSidebarArtworkTitle_artwork$data } from "__generated__/ArtworkSidebarArtworkTitle_artwork.graphql"
 
 interface ArtworkSidebarArtworkTitleProps {
   artwork: ArtworkSidebarArtworkTitle_artwork$data
 }
 
-const ArtworkSidebarArtworkTitle: React.FC<React.PropsWithChildren<ArtworkSidebarArtworkTitleProps>> = ({
-  artwork,
-}) => {
+const ArtworkSidebarArtworkTitle: React.FC<
+  React.PropsWithChildren<ArtworkSidebarArtworkTitleProps>
+> = ({ artwork }) => {
   const getArtworkDate = () => {
     const formattedDate = artwork.date?.replace(/\s+/g, "") ?? ""
 
@@ -27,14 +27,12 @@ const ArtworkSidebarArtworkTitle: React.FC<React.PropsWithChildren<ArtworkSideba
   )
 }
 
-export const ArtworkSidebarArtworkTitleFragmentContainer = createFragmentContainer(
-  ArtworkSidebarArtworkTitle,
-  {
+export const ArtworkSidebarArtworkTitleFragmentContainer =
+  createFragmentContainer(ArtworkSidebarArtworkTitle, {
     artwork: graphql`
       fragment ArtworkSidebarArtworkTitle_artwork on Artwork {
         date
         title
       }
     `,
-  }
-)
+  })

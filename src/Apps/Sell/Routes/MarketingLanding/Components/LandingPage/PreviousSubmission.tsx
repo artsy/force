@@ -2,17 +2,19 @@ import { Clickable, Flex, Text } from "@artsy/palette"
 import {
   INITIAL_STEP,
   PRE_SUBMITTED_STEPS,
-  SellFlowStep,
+  type SellFlowStep,
 } from "Apps/Sell/SellFlowContext"
 import { usePreviousSubmission } from "Apps/Sell/Utils/previousSubmissionUtils"
 import { EntityHeaderSubmissionFragmentContainer } from "Components/EntityHeaders/EntityHeaderSubmission"
 import { FadeInBox } from "Components/FadeInBox"
-import { PreviousSubmissionQuery } from "__generated__/PreviousSubmissionQuery.graphql"
+import type { PreviousSubmissionQuery } from "__generated__/PreviousSubmissionQuery.graphql"
 import { useRouter } from "found"
 import { Suspense } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 
-export const PreviousSubmissionQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const PreviousSubmissionQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { submissionID, step } = usePreviousSubmission()
 
   if (!submissionID) return null
@@ -32,10 +34,9 @@ interface PreviousSubmissionProps {
   currentStep: SellFlowStep
 }
 
-const PreviousSubmission: React.FC<React.PropsWithChildren<PreviousSubmissionProps>> = ({
-  submissionID,
-  currentStep = INITIAL_STEP,
-}) => {
+const PreviousSubmission: React.FC<
+  React.PropsWithChildren<PreviousSubmissionProps>
+> = ({ submissionID, currentStep = INITIAL_STEP }) => {
   const { router } = useRouter()
 
   const { submission } = useLazyLoadQuery<PreviousSubmissionQuery>(

@@ -1,11 +1,11 @@
 import { Image, ResponsiveBox, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { useTracking } from "react-tracking"
 import { graphql } from "react-relay"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { RouterLink } from "System/Components/RouterLink"
-import { ViewingRoomWorksArtwork_artwork$data } from "__generated__/ViewingRoomWorksArtwork_artwork.graphql"
+import type { ViewingRoomWorksArtwork_artwork$data } from "__generated__/ViewingRoomWorksArtwork_artwork.graphql"
 import { useJump } from "Utils/Hooks/useJump"
 
 interface ViewingRoomWorksArtworkProps {
@@ -13,10 +13,9 @@ interface ViewingRoomWorksArtworkProps {
   artwork: ViewingRoomWorksArtwork_artwork$data
 }
 
-const ViewingRoomWorksArtwork: React.FC<React.PropsWithChildren<ViewingRoomWorksArtworkProps>> = ({
-  to,
-  artwork,
-}) => {
+const ViewingRoomWorksArtwork: React.FC<
+  React.PropsWithChildren<ViewingRoomWorksArtworkProps>
+> = ({ to, artwork }) => {
   const tracking = useTracking()
 
   const { jumpTo } = useJump({ offset: 20 })

@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import styled from "styled-components"
 import { HTML, Join, Spacer, Text } from "@artsy/palette"
 
@@ -13,11 +13,9 @@ interface InfoSectionProps {
   type?: "html" | "text"
 }
 
-export const InfoSection: React.FC<React.PropsWithChildren<InfoSectionProps>> = ({
-  label,
-  info,
-  type,
-}) => {
+export const InfoSection: React.FC<
+  React.PropsWithChildren<InfoSectionProps>
+> = ({ label, info, type }) => {
   const Info = () => {
     switch (type) {
       case "html": {

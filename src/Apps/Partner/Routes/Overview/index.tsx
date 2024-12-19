@@ -1,6 +1,6 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticlesRailFragmentContainer } from "Apps/Partner/Components/Overview/ArticlesRail"
-import { Overview_partner$data } from "__generated__/Overview_partner.graphql"
+import type { Overview_partner$data } from "__generated__/Overview_partner.graphql"
 import { ArtistsRailFragmentContainer } from "Apps/Partner/Components/Overview/ArtistsRail"
 import { ShowsRailFragmentContainer } from "Apps/Partner/Components/Overview/ShowsRail"
 import { AboutPartnerFragmentContainer } from "Apps/Partner/Components/Overview/AboutPartner"
@@ -13,7 +13,9 @@ interface OverviewProps {
   partner: Overview_partner$data
 }
 
-const Overview: React.FC<React.PropsWithChildren<OverviewProps>> = ({ partner }) => {
+const Overview: React.FC<React.PropsWithChildren<OverviewProps>> = ({
+  partner,
+}) => {
   const {
     slug,
     partnerType,

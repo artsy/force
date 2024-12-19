@@ -11,20 +11,20 @@ import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/Edit
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
 import { MyCollectionArworkSearch } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArworkSearch"
 import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
-import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
+import type { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { SearchInputContainer } from "Components/Search/SearchInputContainer"
 import { useFormikContext } from "formik"
 import { pickBy } from "lodash"
 import { Suspense, useCallback, useState } from "react"
 
-interface MyCollectionArtworkFormArtworkStepProps {}
+type MyCollectionArtworkFormArtworkStepProps = {}
 
-export const MyCollectionArtworkFormArtworkStep: React.FC<React.PropsWithChildren<MyCollectionArtworkFormArtworkStepProps>> = () => {
-  const {
-    trackSelectArtwork,
-    trackSkipArtworkSelection,
-  } = useMyCollectionTracking()
+export const MyCollectionArtworkFormArtworkStep: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkFormArtworkStepProps>
+> = () => {
+  const { trackSelectArtwork, trackSkipArtworkSelection } =
+    useMyCollectionTracking()
   const { onBack, onNext, onSkip } = useMyCollectionArtworkFormContext()
   const [query, setQuery] = useState("")
   const trimmedQuery = query?.trimStart()

@@ -8,10 +8,10 @@ import {
   Button,
 } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import { FC } from "react"
+import type { FC } from "react"
 import { useFragment, graphql } from "react-relay"
 import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
-import { ArticleFeaturedArtistNotification_notification$key } from "__generated__/ArticleFeaturedArtistNotification_notification.graphql"
+import type { ArticleFeaturedArtistNotification_notification$key } from "__generated__/ArticleFeaturedArtistNotification_notification.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
@@ -21,9 +21,9 @@ interface ArticleFeaturedArtistNotificationProps {
   notification: ArticleFeaturedArtistNotification_notification$key
 }
 
-export const ArticleFeaturedArtistNotification: FC<React.PropsWithChildren<ArticleFeaturedArtistNotificationProps>> = ({
-  notification,
-}) => {
+export const ArticleFeaturedArtistNotification: FC<
+  React.PropsWithChildren<ArticleFeaturedArtistNotificationProps>
+> = ({ notification }) => {
   const notificationData = useFragment(
     ArticleFeaturedArtistNotificationFragment,
     notification

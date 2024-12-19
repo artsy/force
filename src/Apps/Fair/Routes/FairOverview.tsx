@@ -1,10 +1,10 @@
-import { FC, useEffect, useRef } from "react"
-import { BoxProps, Join, Spacer } from "@artsy/palette"
+import { type FC, useEffect, useRef } from "react"
+import { type BoxProps, Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairCollectionsFragmentContainer } from "Apps/Fair/Components/FairCollections/FairCollections"
 import { FairFollowedArtistsQueryRenderer } from "Apps/Fair/Components/FairOverview/FairFollowedArtists"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { FairOverview_fair$data } from "__generated__/FairOverview_fair.graphql"
+import type { FairOverview_fair$data } from "__generated__/FairOverview_fair.graphql"
 import { FairAboutFragmentContainer as FairAbout } from "Apps/Fair/Components/FairOverview/FairAbout"
 import { FairBoothsQueryRenderer as FairBooths } from "Apps/Fair/Components/FairBooths"
 import { useRouter } from "System/Hooks/useRouter"
@@ -15,7 +15,9 @@ interface FairOverviewProps extends BoxProps {
   fair: FairOverview_fair$data
 }
 
-const FairOverview: FC<React.PropsWithChildren<FairOverviewProps>> = ({ fair }) => {
+const FairOverview: FC<React.PropsWithChildren<FairOverviewProps>> = ({
+  fair,
+}) => {
   const { user } = useSystemContext()
   const { match } = useRouter()
   const { jumpTo } = useJump()

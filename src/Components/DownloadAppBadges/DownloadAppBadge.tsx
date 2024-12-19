@@ -1,8 +1,12 @@
-import * as React from "react"
+import type * as React from "react"
 import { useTracking } from "react-tracking"
-import { ActionType, ClickedAppDownload, ContextModule } from "@artsy/cohesion"
+import {
+  ActionType,
+  type ClickedAppDownload,
+  type ContextModule,
+} from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { Link, LinkProps } from "@artsy/palette"
+import { Link, type LinkProps } from "@artsy/palette"
 import { Device } from "Utils/Hooks/useDeviceDetection"
 
 // SVGs are referenced as files because:
@@ -21,19 +25,13 @@ interface DownloadAppBadgeProps extends LinkProps {
   downloadAppUrl: string
 }
 
-export const DownloadAppBadge: React.FC<React.PropsWithChildren<DownloadAppBadgeProps>> = ({
-  contextModule,
-  device,
-  downloadAppUrl,
-  ...rest
-}) => {
+export const DownloadAppBadge: React.FC<
+  React.PropsWithChildren<DownloadAppBadgeProps>
+> = ({ contextModule, device, downloadAppUrl, ...rest }) => {
   const tracking = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const handleClick = () => {
     const clickedAppDownload: ClickedAppDownload = {

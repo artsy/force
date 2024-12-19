@@ -9,7 +9,7 @@ export const allowedAuctionResultFilters = (
 
     // Coerce integers
     if (INTEGER_INPUT_ARGS.includes(key)) {
-      obj[key] = parseInt(filterParams[key] as string, 10) || 1
+      obj[key] = Number.parseInt(filterParams[key] as string, 10) || 1
       return obj
     }
 

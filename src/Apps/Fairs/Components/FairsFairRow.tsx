@@ -1,10 +1,10 @@
-import * as React from "react"
-import { Box, BoxProps, Flex, Image, Text } from "@artsy/palette"
+import type * as React from "react"
+import { Box, type BoxProps, Flex, Image, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
 import { DateTime } from "luxon"
 import { RouterLink } from "System/Components/RouterLink"
-import { FairsFairRow_fair$data } from "__generated__/FairsFairRow_fair.graphql"
+import type { FairsFairRow_fair$data } from "__generated__/FairsFairRow_fair.graphql"
 import { themeGet } from "@styled-system/theme-get"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 
@@ -24,7 +24,10 @@ interface FairsFairRowProps extends BoxProps {
   fair: FairsFairRow_fair$data
 }
 
-const FairsFairRow: React.FC<React.PropsWithChildren<FairsFairRowProps>> = ({ fair, ...rest }) => {
+const FairsFairRow: React.FC<React.PropsWithChildren<FairsFairRowProps>> = ({
+  fair,
+  ...rest
+}) => {
   const icon = fair.profile?.icon?.resized
   const href =
     // If fair status is upcoming — link to the organizer profile

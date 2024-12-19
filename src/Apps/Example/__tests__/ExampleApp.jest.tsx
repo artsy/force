@@ -1,7 +1,7 @@
 import { ExampleAppFragmentContainer } from "Apps/Example/ExampleApp"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { ExampleApp_Test_Query } from "__generated__/ExampleApp_Test_Query.graphql"
+import type { ExampleApp_Test_Query } from "__generated__/ExampleApp_Test_Query.graphql"
 import { MockBoot } from "DevTools/MockBoot"
 import { screen } from "@testing-library/react"
 import { findMetaTagBySelector } from "DevTools/findMetaTagBySelector"

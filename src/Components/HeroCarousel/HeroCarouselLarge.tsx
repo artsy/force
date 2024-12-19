@@ -1,8 +1,8 @@
 import {
   Children,
-  FC,
+  type FC,
   forwardRef,
-  ForwardRefExoticComponent,
+  type ForwardRefExoticComponent,
   useCallback,
   useEffect,
   useRef,
@@ -11,9 +11,9 @@ import {
   Box,
   Carousel,
   CarouselCell,
-  CarouselCellProps,
+  type CarouselCellProps,
   CarouselRail,
-  CarouselRailProps,
+  type CarouselRailProps,
   Flex,
   FullBleed,
   ProgressDots,
@@ -31,12 +31,9 @@ interface HeroCarouselLargeProps {
   onChange?: (index) => void
 }
 
-export const HeroCarouselLarge: React.FC<React.PropsWithChildren<HeroCarouselLargeProps>> = ({
-  children,
-  fullBleed = true,
-  progressbarVariant,
-  onChange,
-}) => {
+export const HeroCarouselLarge: React.FC<
+  React.PropsWithChildren<HeroCarouselLargeProps>
+> = ({ children, fullBleed = true, progressbarVariant, onChange }) => {
   const length = Children.count(children)
 
   const {

@@ -1,14 +1,16 @@
-import { FC, useEffect, useRef } from "react"
+import { type FC, useEffect, useRef } from "react"
 import { isEqual, omit } from "lodash"
 import styled from "styled-components"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { Box, Button, Clickable, Flex, ModalBase, Text } from "@artsy/palette"
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
 
-export const AuctionFilterMobileActionSheet: FC<React.PropsWithChildren<{
-  children: JSX.Element
-  onClose: () => void
-}>> = ({ children, onClose }) => {
+export const AuctionFilterMobileActionSheet: FC<
+  React.PropsWithChildren<{
+    children: JSX.Element
+    onClose: () => void
+  }>
+> = ({ children, onClose }) => {
   const filterContext = useAuctionResultsFilterContext()
 
   const contentRef = useRef<HTMLDivElement | null>(null)

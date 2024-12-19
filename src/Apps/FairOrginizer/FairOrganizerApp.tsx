@@ -1,8 +1,8 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { truncate } from "lodash"
 import { Spacer } from "@artsy/palette"
-import { FairOrganizerApp_fairOrganizer$data } from "__generated__/FairOrganizerApp_fairOrganizer.graphql"
+import type { FairOrganizerApp_fairOrganizer$data } from "__generated__/FairOrganizerApp_fairOrganizer.graphql"
 import { FairOrganizerHeaderImageFragmentContainer as FairOrganizerHeaderImage } from "./Components/FairOrganizerHeaderImage"
 import { FairOrganizerHeaderFragmentContainer as FairOrganizerHeader } from "./Components/FairOrganizerHeader/FairOrganizerHeader"
 import { FairOrganizerPastEventsRailFragmentContainer as FairOrganizerPastEventsRail } from "./Components/FairOrganizerPastEventsRail"
@@ -13,9 +13,9 @@ interface FairOrganizerAppProps {
   fairOrganizer: FairOrganizerApp_fairOrganizer$data
 }
 
-const FairOrganizerApp: React.FC<React.PropsWithChildren<FairOrganizerAppProps>> = ({
-  fairOrganizer,
-}) => {
+const FairOrganizerApp: React.FC<
+  React.PropsWithChildren<FairOrganizerAppProps>
+> = ({ fairOrganizer }) => {
   const { name, profile, slug, description } = fairOrganizer
 
   return (

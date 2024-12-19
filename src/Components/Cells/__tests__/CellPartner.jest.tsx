@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { CellPartnerFragmentContainer_Test_Query } from "__generated__/CellPartnerFragmentContainer_Test_Query.graphql"
+import type { CellPartnerFragmentContainer_Test_Query } from "__generated__/CellPartnerFragmentContainer_Test_Query.graphql"
 import { screen } from "@testing-library/react"
 import { CellPartnerFragmentContainer } from "Components/Cells/CellPartner"
 
@@ -10,18 +10,17 @@ jest.mock("Components/FollowButton/FollowProfileButton", () => ({
   FollowProfileButtonQueryRenderer: () => null,
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<
-  CellPartnerFragmentContainer_Test_Query
->({
-  Component: CellPartnerFragmentContainer,
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<CellPartnerFragmentContainer_Test_Query>({
+    Component: CellPartnerFragmentContainer,
+    query: graphql`
     query CellPartnerFragmentContainer_Test_Query @relay_test_operation {
       partner(id: "example") {
         ...CellPartner_partner
       }
     }
   `,
-})
+  })
 
 describe("CellPartner", () => {
   it("renders the component", () => {

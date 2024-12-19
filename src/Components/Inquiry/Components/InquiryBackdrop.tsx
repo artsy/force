@@ -1,9 +1,11 @@
-import { ModalBase, ModalBaseProps, useTheme } from "@artsy/palette"
-import * as React from "react"
+import { ModalBase, type ModalBaseProps, useTheme } from "@artsy/palette"
+import type * as React from "react"
 import styled from "styled-components"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 
-export const InquiryBackdrop: React.FC<React.PropsWithChildren<ModalBaseProps>> = props => {
+export const InquiryBackdrop: React.FC<
+  React.PropsWithChildren<ModalBaseProps>
+> = props => {
   const isMounted = useDidMount()
 
   const { theme } = useTheme()

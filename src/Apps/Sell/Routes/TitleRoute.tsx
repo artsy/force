@@ -5,9 +5,9 @@ import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useFocusInput } from "Apps/Sell/Hooks/useFocusInput"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
-import { TitleRoute_submission$key } from "__generated__/TitleRoute_submission.graphql"
+import type { TitleRoute_submission$key } from "__generated__/TitleRoute_submission.graphql"
 import { Formik } from "formik"
-import * as React from "react"
+import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
 
@@ -32,7 +32,9 @@ interface TitleRouteProps {
   submission: TitleRoute_submission$key
 }
 
-export const TitleRoute: React.FC<React.PropsWithChildren<TitleRouteProps>> = props => {
+export const TitleRoute: React.FC<
+  React.PropsWithChildren<TitleRouteProps>
+> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
   const { actions } = useSellFlowContext()
   const focusedInputRef = useFocusInput()

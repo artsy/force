@@ -2,8 +2,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { useEffect, useState, FC, useRef } from "react"
-import { useFormik, FormikHelpers } from "formik"
+import { useEffect, useState, type FC, useRef } from "react"
+import { useFormik, type FormikHelpers } from "formik"
 import * as Yup from "yup"
 import { Button, Flex, TextArea, useToasts } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
@@ -12,8 +12,8 @@ import { sentConversationMessage } from "@artsy/cohesion"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSendConversationMessage } from "Apps/Conversations/mutations/useSendConversationMessage"
-import { useSendConversationMessageMutation$data } from "__generated__/useSendConversationMessageMutation.graphql"
-import { ConversationReply_conversation$key } from "__generated__/ConversationReply_conversation.graphql"
+import type { useSendConversationMessageMutation$data } from "__generated__/useSendConversationMessageMutation.graphql"
+import type { ConversationReply_conversation$key } from "__generated__/ConversationReply_conversation.graphql"
 import { ConversationCTA } from "Apps/Conversations/components/ConversationCTA/ConversationCTA"
 
 interface ConversationReplyProps {
@@ -26,9 +26,9 @@ interface ConversationReplyFormValues {
 
 const TEXT_AREA_MIN_HEIGHT = "50px"
 
-export const ConversationReply: FC<React.PropsWithChildren<ConversationReplyProps>> = ({
-  conversation,
-}) => {
+export const ConversationReply: FC<
+  React.PropsWithChildren<ConversationReplyProps>
+> = ({ conversation }) => {
   const { user } = useSystemContext()
   const { match } = useRouter()
   const { trackEvent } = useTracking()

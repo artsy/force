@@ -1,15 +1,19 @@
-import * as React from "react"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import type * as React from "react"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
-  Counts,
-  SharedArtworkFilterContextProps,
+  type Counts,
+  type SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { usePathnameComplete } from "Utils/Hooks/usePathnameComplete"
 import { useRouter } from "System/Hooks/useRouter"
-import { CollectionArtworksFilter_collection$data } from "__generated__/CollectionArtworksFilter_collection.graphql"
+import type { CollectionArtworksFilter_collection$data } from "__generated__/CollectionArtworksFilter_collection.graphql"
 import { ColorFilter } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
@@ -34,7 +38,9 @@ interface CollectionArtworksFilterProps {
   counts?: Counts
 }
 
-export const CollectionArtworksFilter: React.FC<React.PropsWithChildren<CollectionArtworksFilterProps>> = props => {
+export const CollectionArtworksFilter: React.FC<
+  React.PropsWithChildren<CollectionArtworksFilterProps>
+> = props => {
   const { relay, collection, aggregations, counts } = props
   const { slug, query } = collection
   const isArtistCollection = query?.artistIDs?.length === 1

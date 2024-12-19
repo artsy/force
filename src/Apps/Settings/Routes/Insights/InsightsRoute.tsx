@@ -5,7 +5,7 @@ import { MetaTags } from "Components/MetaTags"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { Media } from "Utils/Responsive"
-import { InsightsRoute_me$data } from "__generated__/InsightsRoute_me.graphql"
+import type { InsightsRoute_me$data } from "__generated__/InsightsRoute_me.graphql"
 import { InsightsAuctionResultsFragmentContainer } from "./Components/InsightsAuctionResults"
 import { InsightsHeader } from "./Components/InsightsHeader"
 import { InsightsLandingPage } from "./Components/InsightsLandingPage"
@@ -15,7 +15,9 @@ export interface InsightsRouteProps {
   me: InsightsRoute_me$data
 }
 
-const InsightsRoute: React.FC<React.PropsWithChildren<InsightsRouteProps>> = ({ me }) => {
+const InsightsRoute: React.FC<React.PropsWithChildren<InsightsRouteProps>> = ({
+  me,
+}) => {
   const isCareerHighlightEnabled = useFeatureFlag(
     "my-collection-web-phase-7-career-highlights"
   )

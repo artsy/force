@@ -1,8 +1,8 @@
 import { Box } from "@artsy/palette"
-import { AdUnit } from "Apps/Article/Components/ArticleAd/types"
+import type { AdUnit } from "Apps/Article/Components/ArticleAd/types"
 import { useArticleTracking } from "Apps/Article/useArticleTracking"
 import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
-import { FC } from "react"
+import type { FC } from "react"
 import { AdSlot } from "react-dfp"
 
 interface ArticleAdBanerProps {
@@ -11,11 +11,9 @@ interface ArticleAdBanerProps {
   height: number
 }
 
-export const ArticleAdBaner: FC<React.PropsWithChildren<ArticleAdBanerProps>> = ({
-  unit,
-  width,
-  height,
-}) => {
+export const ArticleAdBaner: FC<
+  React.PropsWithChildren<ArticleAdBanerProps>
+> = ({ unit, width, height }) => {
   const { displayedAd } = useArticleTracking()
 
   // Since ads are iframed we have to calculate a value to use to scale them via transform.

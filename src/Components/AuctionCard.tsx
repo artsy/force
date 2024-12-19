@@ -1,7 +1,7 @@
 import { Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
-import { AuctionCard_sale$data } from "__generated__/AuctionCard_sale.graphql"
+import type { AuctionCard_sale$data } from "__generated__/AuctionCard_sale.graphql"
 import { DateTime } from "luxon"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 
@@ -60,7 +60,9 @@ export interface AuctionCardProps {
   sale: AuctionCard_sale$data
 }
 
-export const AuctionCard: React.FC<React.PropsWithChildren<AuctionCardProps>> = ({ sale }) => {
+export const AuctionCard: React.FC<
+  React.PropsWithChildren<AuctionCardProps>
+> = ({ sale }) => {
   if (!sale) return null
 
   const statusLabel = upcomingLabel(sale)

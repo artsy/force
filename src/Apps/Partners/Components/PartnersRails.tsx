@@ -1,8 +1,8 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnersRailQueryRenderer } from "./PartnersRail"
-import { PartnersRails_viewer$data } from "__generated__/PartnersRails_viewer.graphql"
-import { PartnersRailsQuery } from "__generated__/PartnersRailsQuery.graphql"
+import type { PartnersRails_viewer$data } from "__generated__/PartnersRails_viewer.graphql"
+import type { PartnersRailsQuery } from "__generated__/PartnersRailsQuery.graphql"
 import { compact, shuffle } from "lodash"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -15,7 +15,10 @@ interface PartnersRailsProps {
   type: "INSTITUTION" | "GALLERY"
 }
 
-const PartnersRails: FC<React.PropsWithChildren<PartnersRailsProps>> = ({ viewer, type }) => {
+const PartnersRails: FC<React.PropsWithChildren<PartnersRailsProps>> = ({
+  viewer,
+  type,
+}) => {
   const categories = shuffle(compact(viewer.partnerCategories))
 
   return (
@@ -77,9 +80,9 @@ interface PartnersRailsQueryRendererProps {
   type: "INSTITUTION" | "GALLERY"
 }
 
-export const PartnersRailsQueryRenderer: FC<React.PropsWithChildren<PartnersRailsQueryRendererProps>> = ({
-  type,
-}) => {
+export const PartnersRailsQueryRenderer: FC<
+  React.PropsWithChildren<PartnersRailsQueryRendererProps>
+> = ({ type }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

@@ -1,5 +1,5 @@
 import { createFragmentContainer, graphql } from "react-relay"
-import { AuctionMeta_sale$data } from "__generated__/AuctionMeta_sale.graphql"
+import type { AuctionMeta_sale$data } from "__generated__/AuctionMeta_sale.graphql"
 import { truncate } from "lodash"
 import { MetaTags } from "Components/MetaTags"
 
@@ -7,7 +7,9 @@ interface AuctionMetaProps {
   sale: AuctionMeta_sale$data
 }
 
-const AuctionMeta: React.FC<React.PropsWithChildren<AuctionMetaProps>> = props => {
+const AuctionMeta: React.FC<
+  React.PropsWithChildren<AuctionMetaProps>
+> = props => {
   const { sale } = props
   const title = `${sale.name} | Artsy`
   const description = truncate(sale.description ?? "", {

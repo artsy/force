@@ -8,12 +8,12 @@ import {
   TextArea,
   useToasts,
 } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { wait } from "Utils/wait"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import {
-  InquiryState,
+  type InquiryState,
   useInquiryContext,
 } from "Components/Inquiry/Hooks/useInquiryContext"
 import { logger } from "Components/Inquiry/util"
@@ -22,7 +22,9 @@ import { RouterLink } from "System/Components/RouterLink"
 
 type Mode = "Pending" | "Sending" | "Error" | "Success"
 
-export const InquirySpecialist: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const InquirySpecialist: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { user } = useSystemContext()
   const { sendToast } = useToasts()
 
@@ -34,11 +36,11 @@ export const InquirySpecialist: React.FC<React.PropsWithChildren<unknown>> = () 
     setInquiry(prevState => ({ ...prevState, message: value }))
   }
 
-  const handleInputChange = (name: keyof InquiryState) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setInquiry(prevState => ({ ...prevState, [name]: event.target.value }))
-  }
+  const handleInputChange =
+    (name: keyof InquiryState) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setInquiry(prevState => ({ ...prevState, [name]: event.target.value }))
+    }
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 

@@ -1,4 +1,4 @@
-import { ReactNode, FC } from "react"
+import type { ReactNode, FC } from "react"
 import { TopContextBar } from "Components/TopContextBar"
 import { Spacer, Text } from "@artsy/palette"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
@@ -7,7 +7,9 @@ interface FavoritesAppProps {
   children: ReactNode
 }
 
-export const FavoritesApp: FC<React.PropsWithChildren<FavoritesAppProps>> = ({ children }) => {
+export const FavoritesApp: FC<React.PropsWithChildren<FavoritesAppProps>> = ({
+  children,
+}) => {
   return (
     <>
       <TopContextBar displayBackArrow href="/collector-profile/my-collection">

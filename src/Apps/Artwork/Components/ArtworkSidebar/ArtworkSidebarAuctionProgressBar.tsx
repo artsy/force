@@ -1,6 +1,6 @@
-import * as React from "react"
-import { BoxProps, ProgressBar } from "@artsy/palette"
-import { Time } from "Utils/getSaleOrLotTimerInfo"
+import type * as React from "react"
+import { type BoxProps, ProgressBar } from "@artsy/palette"
+import type { Time } from "Utils/getSaleOrLotTimerInfo"
 
 export interface ArtworkSidebarAuctionProgressBarProps extends BoxProps {
   time: Time
@@ -9,7 +9,9 @@ export interface ArtworkSidebarAuctionProgressBarProps extends BoxProps {
   extendedBiddingIntervalMinutes: number
 }
 
-export const ArtworkSidebarAuctionProgressBar: React.FC<React.PropsWithChildren<ArtworkSidebarAuctionProgressBarProps>> = ({
+export const ArtworkSidebarAuctionProgressBar: React.FC<
+  React.PropsWithChildren<ArtworkSidebarAuctionProgressBarProps>
+> = ({
   time,
   extendedBiddingPeriodMinutes,
   hasBeenExtended,
@@ -18,10 +20,10 @@ export const ArtworkSidebarAuctionProgressBar: React.FC<React.PropsWithChildren<
 }) => {
   const { days, hours, minutes, seconds } = time
 
-  const parsedDaysUntilEnd = parseInt(days, 10)
-  const parsedHoursUntilEnd = parseInt(hours, 10)
-  const parsedMinutesUntilEnd = parseInt(minutes, 10)
-  const parsedSecondsUntilEnd = parseInt(seconds, 10)
+  const parsedDaysUntilEnd = Number.parseInt(days, 10)
+  const parsedHoursUntilEnd = Number.parseInt(hours, 10)
+  const parsedMinutesUntilEnd = Number.parseInt(minutes, 10)
+  const parsedSecondsUntilEnd = Number.parseInt(seconds, 10)
 
   const isWithinExtendedBiddingPeriod =
     parsedDaysUntilEnd < 1 &&

@@ -1,8 +1,8 @@
 import { useEffect } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { PartnerArtists_partner$data } from "__generated__/PartnerArtists_partner.graphql"
-import { PartnerArtistsQuery } from "__generated__/PartnerArtistsQuery.graphql"
+import type { PartnerArtists_partner$data } from "__generated__/PartnerArtists_partner.graphql"
+import type { PartnerArtistsQuery } from "__generated__/PartnerArtistsQuery.graphql"
 import { usePartnerArtistsLoadingContext } from "Apps/Partner/Utils/PartnerArtistsLoadingContext"
 import { PartnerArtistListPlaceholder } from "./PartnerArtistListPlaceholder"
 import { PartnerArtistListFragmentContainer } from "./PartnerArtistList"
@@ -12,7 +12,9 @@ export interface PartnerArtistsProps {
   partner: PartnerArtists_partner$data
 }
 
-export const PartnerArtists: React.FC<React.PropsWithChildren<PartnerArtistsProps>> = ({ partner }) => {
+export const PartnerArtists: React.FC<
+  React.PropsWithChildren<PartnerArtistsProps>
+> = ({ partner }) => {
   const { setIsLoaded } = usePartnerArtistsLoadingContext()
 
   useEffect(() => {
@@ -37,9 +39,11 @@ export const PartnerArtistsFragmentContainer = createFragmentContainer(
   }
 )
 
-export const PartnerArtistsQueryRenderer: React.FC<React.PropsWithChildren<{
-  partnerId: string
-}>> = ({ partnerId, ...rest }) => {
+export const PartnerArtistsQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    partnerId: string
+  }>
+> = ({ partnerId, ...rest }) => {
   return (
     <SystemQueryRenderer<PartnerArtistsQuery>
       lazyLoad

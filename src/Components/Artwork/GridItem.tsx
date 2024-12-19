@@ -1,4 +1,4 @@
-import { AuthContextModule, ContextModule } from "@artsy/cohesion"
+import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Box, Flex, Popover, ResponsiveBox } from "@artsy/palette"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { MagnifyImage } from "Components/MagnifyImage"
@@ -6,10 +6,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { RouterLink } from "System/Components/RouterLink"
-import { LocalImage, useLocalImage } from "Utils/localImageHelpers"
+import { type LocalImage, useLocalImage } from "Utils/localImageHelpers"
 import { cropped, resized } from "Utils/resized"
 import { userIsTeam } from "Utils/user"
-import { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
+import type { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
 import Metadata from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
@@ -36,9 +36,9 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   onPopoverDismiss?: () => void
 }
 
-export const ArtworkGridItem: React.FC<React.PropsWithChildren<
-  ArtworkGridItemProps
->> = ({
+export const ArtworkGridItem: React.FC<
+  React.PropsWithChildren<ArtworkGridItemProps>
+> = ({
   artwork,
   contextModule,
   disableRouterLinking,
@@ -158,11 +158,13 @@ export const ArtworkGridItem: React.FC<React.PropsWithChildren<
   )
 }
 
-const ArtworkGridItemImage: React.FC<React.PropsWithChildren<
-  Pick<ArtworkGridItemProps, "artwork" | "lazyLoad"> & {
-    localImage: LocalImage | null
-  }
->> = ({ artwork, lazyLoad, localImage }) => {
+const ArtworkGridItemImage: React.FC<
+  React.PropsWithChildren<
+    Pick<ArtworkGridItemProps, "artwork" | "lazyLoad"> & {
+      localImage: LocalImage | null
+    }
+  >
+> = ({ artwork, lazyLoad, localImage }) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
 
@@ -260,12 +262,14 @@ const DisabledLink = styled(Box)`
   left: 0;
 `
 
-const LinkContainer: React.FC<React.PropsWithChildren<
-  Pick<ArtworkGridItemProps, "artwork" | "disableRouterLinking" | "to"> & {
-    localImage: LocalImage | null
-    onClick: () => void
-  }
->> = ({ artwork, children, disableRouterLinking, onClick, localImage, to }) => {
+const LinkContainer: React.FC<
+  React.PropsWithChildren<
+    Pick<ArtworkGridItemProps, "artwork" | "disableRouterLinking" | "to"> & {
+      localImage: LocalImage | null
+      onClick: () => void
+    }
+  >
+> = ({ artwork, children, disableRouterLinking, onClick, localImage, to }) => {
   const imageURL = artwork.image?.url
   if (!!disableRouterLinking) {
     return (

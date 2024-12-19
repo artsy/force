@@ -6,10 +6,10 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
-import { CellShow_show$data } from "__generated__/CellShow_show.graphql"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import type { CellShow_show$data } from "__generated__/CellShow_show.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 import { useEventTiming } from "Utils/Hooks/useEventTiming"
@@ -85,10 +85,9 @@ const CellShow: FC<React.PropsWithChildren<CellShowProps>> = ({
 
 type CellShowPlaceholderProps = Pick<CellShowProps, "mode" | "displayKind">
 
-export const CellShowPlaceholder: FC<React.PropsWithChildren<CellShowPlaceholderProps>> = ({
-  mode = "RAIL",
-  displayKind = false,
-}) => {
+export const CellShowPlaceholder: FC<
+  React.PropsWithChildren<CellShowPlaceholderProps>
+> = ({ mode = "RAIL", displayKind = false }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
 
   return (
@@ -121,7 +120,9 @@ interface CellShowStatusProps {
   endAt: string
 }
 
-export const CellShowStatus: FC<React.PropsWithChildren<CellShowStatusProps>> = ({ startAt, endAt }) => {
+export const CellShowStatus: FC<
+  React.PropsWithChildren<CellShowStatusProps>
+> = ({ startAt, endAt }) => {
   const { formattedTime: status } = useEventTiming({
     currentTime: useCurrentTime({ syncWithServer: true }),
     startAt,

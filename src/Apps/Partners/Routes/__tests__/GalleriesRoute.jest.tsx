@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { GalleriesRouteFragmentContainer } from "Apps/Partners/Routes/GalleriesRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { GalleriesRouteFragmentContainer_Test_Query } from "__generated__/GalleriesRouteFragmentContainer_Test_Query.graphql"
+import type { GalleriesRouteFragmentContainer_Test_Query } from "__generated__/GalleriesRouteFragmentContainer_Test_Query.graphql"
 import { MockBoot } from "DevTools/MockBoot"
 import { screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
@@ -29,24 +29,23 @@ jest.mock("Utils/Hooks/useStableShuffle", () => ({
   useStableShuffle: ({ items }) => ({ shuffled: items }),
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<
-  GalleriesRouteFragmentContainer_Test_Query
->({
-  Component: ({ viewer }) => {
-    return (
-      <MockBoot>
-        <GalleriesRouteFragmentContainer viewer={viewer!} />
-      </MockBoot>
-    )
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<GalleriesRouteFragmentContainer_Test_Query>({
+    Component: ({ viewer }) => {
+      return (
+        <MockBoot>
+          <GalleriesRouteFragmentContainer viewer={viewer!} />
+        </MockBoot>
+      )
+    },
+    query: graphql`
     query GalleriesRouteFragmentContainer_Test_Query @relay_test_operation {
       viewer {
         ...GalleriesRoute_viewer
       }
     }
   `,
-})
+  })
 
 describe("GalleriesRoute", () => {
   const mockTracking = useTracking as jest.Mock

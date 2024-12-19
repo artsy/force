@@ -1,17 +1,14 @@
-import * as React from "react"
-import { BoxProps, Clickable, Flex, Text } from "@artsy/palette"
+import type * as React from "react"
+import { type BoxProps, Clickable, Flex, Text } from "@artsy/palette"
 interface ArtworkDefinitionListProps extends BoxProps {
   term: string
   children: React.ReactNode
   onTitleClick?: () => void
 }
 
-export const ArtworkDefinitionList: React.FC<React.PropsWithChildren<ArtworkDefinitionListProps>> = ({
-  term,
-  children,
-  onTitleClick,
-  ...rest
-}) => {
+export const ArtworkDefinitionList: React.FC<
+  React.PropsWithChildren<ArtworkDefinitionListProps>
+> = ({ term, children, onTitleClick, ...rest }) => {
   return (
     <Flex as="dl" flexDirection={["column", "row"]} {...rest}>
       {onTitleClick ? (

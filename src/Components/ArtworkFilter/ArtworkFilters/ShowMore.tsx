@@ -1,6 +1,6 @@
-import { BoxProps, Clickable, Text } from "@artsy/palette"
+import { type BoxProps, Clickable, Text } from "@artsy/palette"
 import { Children, isValidElement, useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 
 interface ShowMoreProps extends BoxProps {
   initial?: number

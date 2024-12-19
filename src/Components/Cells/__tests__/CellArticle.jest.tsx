@@ -1,23 +1,22 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { CellArticleFragmentContainer_Test_Query } from "__generated__/CellArticleFragmentContainer_Test_Query.graphql"
+import type { CellArticleFragmentContainer_Test_Query } from "__generated__/CellArticleFragmentContainer_Test_Query.graphql"
 import { screen } from "@testing-library/react"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  CellArticleFragmentContainer_Test_Query
->({
-  Component: CellArticleFragmentContainer,
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<CellArticleFragmentContainer_Test_Query>({
+    Component: CellArticleFragmentContainer,
+    query: graphql`
     query CellArticleFragmentContainer_Test_Query @relay_test_operation {
       article(id: "example") {
         ...CellArticle_article
       }
     }
   `,
-})
+  })
 
 describe("CellArticle", () => {
   it("renders the component", () => {

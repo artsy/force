@@ -2,23 +2,24 @@ import { screen } from "@testing-library/react"
 import { PrivateArtworkAboutArtist } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkAboutArtist"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { PrivateArtworkAboutArtistQuery } from "__generated__/PrivateArtworkAboutArtistQuery.graphql"
+import type { PrivateArtworkAboutArtistQuery } from "__generated__/PrivateArtworkAboutArtistQuery.graphql"
 
 jest.unmock("react-relay")
 
 describe("ArtworkSidebarPrivateArtwork", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    PrivateArtworkAboutArtistQuery
-  >({
-    Component: props => <PrivateArtworkAboutArtist artwork={props.artwork!} />,
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<PrivateArtworkAboutArtistQuery>({
+      Component: props => (
+        <PrivateArtworkAboutArtist artwork={props.artwork!} />
+      ),
+      query: graphql`
       query PrivateArtworkAboutArtistQuery {
         artwork(id: "foo") {
           ...PrivateArtworkAboutArtist_artwork
         }
       }
     `,
-  })
+    })
 
   it("renders correctly", () => {
     renderWithRelay({

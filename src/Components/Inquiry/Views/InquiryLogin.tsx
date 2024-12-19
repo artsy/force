@@ -10,7 +10,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { wait } from "Utils/wait"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
@@ -24,7 +24,7 @@ import {
   AuthModalType,
   ContextModule,
   Intent,
-  SuccessfullyLoggedIn,
+  type SuccessfullyLoggedIn,
 } from "@artsy/cohesion"
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 
@@ -137,15 +137,15 @@ export const InquiryLogin: React.FC<React.PropsWithChildren<unknown>> = () => {
     }
   }
 
-  const handleInputChange = (name: keyof InquiryLoginState) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (name === "email") {
-      setInquiry(prevState => ({ ...prevState, [name]: event.target.value }))
+  const handleInputChange =
+    (name: keyof InquiryLoginState) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (name === "email") {
+        setInquiry(prevState => ({ ...prevState, [name]: event.target.value }))
+      }
+      setState(prevState => ({ ...prevState, [name]: event.target.value }))
+      mode === "Error" && setMode("Pending")
     }
-    setState(prevState => ({ ...prevState, [name]: event.target.value }))
-    mode === "Error" && setMode("Pending")
-  }
 
   const handleClick = () => {
     navigateTo(Screen.ResetPassword)

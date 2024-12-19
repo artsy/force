@@ -1,8 +1,8 @@
 import {
   Children,
-  FC,
+  type FC,
   forwardRef,
-  ForwardRefExoticComponent,
+  type ForwardRefExoticComponent,
   useState,
 } from "react"
 import {
@@ -10,9 +10,9 @@ import {
   Spacer,
   Swiper,
   SwiperCell,
-  SwiperCellProps,
+  type SwiperCellProps,
   SwiperRail,
-  SwiperRailProps,
+  type SwiperRailProps,
 } from "@artsy/palette"
 
 interface HeroCarouselSmallProps {
@@ -20,11 +20,9 @@ interface HeroCarouselSmallProps {
   onChange?: (index) => void
 }
 
-export const HeroCarouselSmall: FC<React.PropsWithChildren<HeroCarouselSmallProps>> = ({
-  children,
-  progressbarVariant,
-  onChange,
-}) => {
+export const HeroCarouselSmall: FC<
+  React.PropsWithChildren<HeroCarouselSmallProps>
+> = ({ children, progressbarVariant, onChange }) => {
   const length = Children.count(children)
 
   const [index, setIndex] = useState(0)

@@ -1,19 +1,19 @@
 import { Text, Spacer, Column, GridColumns, Message } from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtistArtistSeriesRoute_artist$data } from "__generated__/ArtistArtistSeriesRoute_artist.graphql"
+import type { ArtistArtistSeriesRoute_artist$data } from "__generated__/ArtistArtistSeriesRoute_artist.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Title, Meta } from "react-head"
 import { Jump } from "Utils/Hooks/useJump"
 import { CellArtistSeriesFragmentContainer } from "Components/Cells/CellArtistSeries"
-import { FC } from "react"
+import type { FC } from "react"
 
 interface ArtistArtistSeriesRouteProps {
   artist: ArtistArtistSeriesRoute_artist$data
 }
 
-const ArtistArtistSeriesRoute: FC<React.PropsWithChildren<ArtistArtistSeriesRouteProps>> = ({
-  artist,
-}) => {
+const ArtistArtistSeriesRoute: FC<
+  React.PropsWithChildren<ArtistArtistSeriesRouteProps>
+> = ({ artist }) => {
   const artistSeries = extractNodes(artist.artistSeriesConnection)
 
   if (artistSeries.length === 0) {

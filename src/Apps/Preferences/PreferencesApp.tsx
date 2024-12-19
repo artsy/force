@@ -9,10 +9,10 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { isEmpty, camelCase, snakeCase } from "lodash"
-import { FC } from "react"
+import type { FC } from "react"
 import { Form, Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
-import {
+import type {
   PreferencesApp_viewer$data,
   SubGroupStatus,
 } from "__generated__/PreferencesApp_viewer.graphql"
@@ -47,7 +47,9 @@ interface FormValuesForNotificationPreferences {
   partnerOffersOnSaves: boolean
 }
 
-export const PreferencesApp: FC<React.PropsWithChildren<PreferencesAppProps>> = ({ viewer }) => {
+export const PreferencesApp: FC<
+  React.PropsWithChildren<PreferencesAppProps>
+> = ({ viewer }) => {
   const router = useRouter()
   const authenticationToken = parseTokenFromRouter(router)
   const { sendToast } = useToasts()

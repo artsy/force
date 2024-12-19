@@ -1,7 +1,7 @@
 import { screen, fireEvent, waitFor } from "@testing-library/react"
 import {
   CreateNewListModalContainer,
-  CreateNewListModalContainerProps,
+  type CreateNewListModalContainerProps,
 } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/CreateNewListModal"
 import { render } from "DevTools/renderWithMockBoot"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"

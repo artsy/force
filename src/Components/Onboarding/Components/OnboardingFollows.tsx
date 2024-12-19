@@ -1,5 +1,5 @@
 import { Box, Text, LabeledInput, Button, Flex } from "@artsy/palette"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { OnboardingOrderedSetQueryRenderer } from "Components/Onboarding/Components/OnboardingOrderedSet"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { OnboardingSearchResultsQueryRenderer } from "Components/Onboarding/Components/OnboardingSearchResults"
@@ -25,7 +25,9 @@ const CONFIGURATION = {
   },
 } as const
 
-export const OnboardingFollows: FC<React.PropsWithChildren<OnboardingFollowsProps>> = ({ kind }) => {
+export const OnboardingFollows: FC<
+  React.PropsWithChildren<OnboardingFollowsProps>
+> = ({ kind }) => {
   const { next, state } = useOnboardingContext()
   const { register, handleNext, loading } = useOnboardingFadeTransition({
     next,

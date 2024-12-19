@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistSeriesMeta_artistSeries$data } from "__generated__/ArtistSeriesMeta_artistSeries.graphql"
+import type { ArtistSeriesMeta_artistSeries$data } from "__generated__/ArtistSeriesMeta_artistSeries.graphql"
 import { truncate } from "lodash"
 import { MetaTags } from "Components/MetaTags"
 
@@ -8,7 +8,9 @@ interface ArtistSeriesMetaProps {
   artistSeries: ArtistSeriesMeta_artistSeries$data
 }
 
-export const ArtistSeriesMeta: React.FC<React.PropsWithChildren<ArtistSeriesMetaProps>> = props => {
+export const ArtistSeriesMeta: React.FC<
+  React.PropsWithChildren<ArtistSeriesMetaProps>
+> = props => {
   const { artistSeries } = props
   const artist = artistSeries?.artists?.[0]
   const artistName = artist?.name ? `${artist.name}’s ` : ""

@@ -1,15 +1,15 @@
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
 import {
   CellPartnerFragmentContainer,
   CellPartnerPlaceholder,
 } from "Components/Cells/CellPartner"
-import { PartnersFilteredCells_viewer$data } from "__generated__/PartnersFilteredCells_viewer.graphql"
-import { PartnersFilteredCellsQuery } from "__generated__/PartnersFilteredCellsQuery.graphql"
+import type { PartnersFilteredCells_viewer$data } from "__generated__/PartnersFilteredCells_viewer.graphql"
+import type { PartnersFilteredCellsQuery } from "__generated__/PartnersFilteredCellsQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
@@ -28,10 +28,9 @@ interface PartnersFilteredCellsProps {
   relay: RelayPaginationProp
 }
 
-const PartnersFilteredCells: FC<React.PropsWithChildren<PartnersFilteredCellsProps>> = ({
-  viewer,
-  relay,
-}) => {
+const PartnersFilteredCells: FC<
+  React.PropsWithChildren<PartnersFilteredCellsProps>
+> = ({ viewer, relay }) => {
   const [loading, setLoading] = useState(false)
 
   const partners = extractNodes(viewer.partnersConnection)
@@ -149,7 +148,9 @@ const PartnersFilteredCellsPaginationContainer = createPaginationContainer(
   }
 )
 
-const PartnersFilteredCellsPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const PartnersFilteredCellsPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton>
       <SkeletonText variant="lg-display" mb={4}>
@@ -175,11 +176,9 @@ interface PartnersFilteredCellsQueryRendererProps {
   type: "INSTITUTION" | "GALLERY"
 }
 
-export const PartnersFilteredCellsQueryRenderer: FC<React.PropsWithChildren<PartnersFilteredCellsQueryRendererProps>> = ({
-  near,
-  category,
-  type,
-}) => {
+export const PartnersFilteredCellsQueryRenderer: FC<
+  React.PropsWithChildren<PartnersFilteredCellsQueryRendererProps>
+> = ({ near, category, type }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

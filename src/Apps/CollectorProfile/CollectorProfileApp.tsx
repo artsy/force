@@ -3,7 +3,7 @@ import { EmptyMyCollectionPage } from "Apps/Settings/Routes/MyCollection/Compone
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_me.graphql"
+import type { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { Spacer } from "@artsy/palette"
@@ -12,10 +12,9 @@ interface CollectorProfileAppProps {
   me: CollectorProfileApp_me$data
 }
 
-const CollectorProfileApp: React.FC<React.PropsWithChildren<CollectorProfileAppProps>> = ({
-  me,
-  children,
-}) => {
+const CollectorProfileApp: React.FC<
+  React.PropsWithChildren<CollectorProfileAppProps>
+> = ({ me, children }) => {
   const { isLoggedIn } = useSystemContext()
 
   if (!isLoggedIn) {

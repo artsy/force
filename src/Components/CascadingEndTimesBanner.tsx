@@ -1,16 +1,16 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import { getENV } from "Utils/getENV"
-import { CascadingEndTimesBanner_sale$data } from "__generated__/CascadingEndTimesBanner_sale.graphql"
+import type { CascadingEndTimesBanner_sale$data } from "__generated__/CascadingEndTimesBanner_sale.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 
 interface CascadingEndTimesBannerProps {
   sale: CascadingEndTimesBanner_sale$data
 }
 
-const CascadingEndTimesBanner: React.FC<React.PropsWithChildren<CascadingEndTimesBannerProps>> = ({
-  sale,
-}) => {
+const CascadingEndTimesBanner: React.FC<
+  React.PropsWithChildren<CascadingEndTimesBannerProps>
+> = ({ sale }) => {
   const helpArticleLink = getENV("CASCADING_AUCTION_HELP_ARTICLE_LINK")
 
   if (!sale.cascadingEndTimeIntervalMinutes || sale.isClosed) {

@@ -11,21 +11,21 @@ import {
 } from "@artsy/palette"
 import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import { Form, Formik } from "formik"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { logout } from "Utils/auth"
 import * as Yup from "yup"
-import { DeleteAccountRoute_me$data } from "__generated__/DeleteAccountRoute_me.graphql"
+import type { DeleteAccountRoute_me$data } from "__generated__/DeleteAccountRoute_me.graphql"
 import { useDeleteAccount } from "./useDeleteAccount"
 
 interface DeleteAccountRouteProps {
   me: DeleteAccountRoute_me$data
 }
 
-export const DeleteAccountRoute: FC<React.PropsWithChildren<DeleteAccountRouteProps>> = ({
-  me: { hasPassword },
-}) => {
+export const DeleteAccountRoute: FC<
+  React.PropsWithChildren<DeleteAccountRouteProps>
+> = ({ me: { hasPassword } }) => {
   const { sendToast } = useToasts()
   const { submitMutation } = useDeleteAccount()
 

@@ -1,10 +1,10 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { ErrorPage } from "Components/ErrorPage"
-import { RouteProps } from "System/Router/Route"
-import { RedirectException, RenderProps } from "found"
+import type { RouteProps } from "System/Router/Route"
+import { RedirectException, type RenderProps } from "found"
 import { extractNodes } from "Utils/extractNodes"
-import { fairOrganizerRoutes_FairOrganizerQuery$data } from "__generated__/fairOrganizerRoutes_FairOrganizerQuery.graphql"
+import type { fairOrganizerRoutes_FairOrganizerQuery$data } from "__generated__/fairOrganizerRoutes_FairOrganizerQuery.graphql"
 
 export interface Props
   extends RenderProps,

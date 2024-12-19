@@ -1,12 +1,12 @@
 import {
   Flex,
-  ClickableProps,
+  type ClickableProps,
   Clickable,
-  FlexProps,
+  type FlexProps,
   useTheme,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import * as React from "react"
+import type * as React from "react"
 import styled, { css } from "styled-components"
 
 interface DeepZoomSliderProps extends FlexProps {
@@ -19,7 +19,9 @@ interface DeepZoomSliderProps extends FlexProps {
   onZoomOutClicked?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-export const DeepZoomSlider: React.FC<React.PropsWithChildren<DeepZoomSliderProps>> = ({
+export const DeepZoomSlider: React.FC<
+  React.PropsWithChildren<DeepZoomSliderProps>
+> = ({
   min,
   max,
   step,
@@ -128,7 +130,9 @@ const Svg = styled.svg`
   stroke: ${themeGet("colors.white100")};
 `
 
-const ZoomOutButton: React.FC<React.PropsWithChildren<ClickableProps>> = props => (
+const ZoomOutButton: React.FC<
+  React.PropsWithChildren<ClickableProps>
+> = props => (
   <Clickable {...props}>
     <Svg>
       <line x1="0" y1="50%" x2="100%" y2="50%" strokeWidth="2px" />
@@ -136,7 +140,9 @@ const ZoomOutButton: React.FC<React.PropsWithChildren<ClickableProps>> = props =
   </Clickable>
 )
 
-const ZoomInButton: React.FC<React.PropsWithChildren<ClickableProps>> = props => (
+const ZoomInButton: React.FC<
+  React.PropsWithChildren<ClickableProps>
+> = props => (
   <Clickable {...props}>
     <Svg>
       <line x1="50%" y1="0" x2="50%" y2="100%" strokeWidth="2px" />

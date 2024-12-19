@@ -1,6 +1,6 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArticlesIndexNews_viewer$data } from "__generated__/ArticlesIndexNews_viewer.graphql"
+import type { ArticlesIndexNews_viewer$data } from "__generated__/ArticlesIndexNews_viewer.graphql"
 import { Flex, Stack, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 
@@ -8,7 +8,9 @@ interface ArticlesIndexNewsProps {
   viewer: ArticlesIndexNews_viewer$data
 }
 
-const ArticlesIndexNews: FC<React.PropsWithChildren<ArticlesIndexNewsProps>> = ({ viewer }) => {
+const ArticlesIndexNews: FC<
+  React.PropsWithChildren<ArticlesIndexNewsProps>
+> = ({ viewer }) => {
   const date = new Date().toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",

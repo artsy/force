@@ -1,9 +1,9 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { Skeleton } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { MarketingFeaturedArtworksRail_viewer$data } from "__generated__/MarketingFeaturedArtworksRail_viewer.graphql"
-import { MarketingFeaturedArtworksRailQuery } from "__generated__/MarketingFeaturedArtworksRailQuery.graphql"
+import type { MarketingFeaturedArtworksRail_viewer$data } from "__generated__/MarketingFeaturedArtworksRail_viewer.graphql"
+import type { MarketingFeaturedArtworksRailQuery } from "__generated__/MarketingFeaturedArtworksRailQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { Rail } from "Components/Rail/Rail"
 import {
@@ -16,9 +16,9 @@ interface MarketingFeaturedArtworksRailProps {
   viewer: MarketingFeaturedArtworksRail_viewer$data
 }
 
-const MarketingFeaturedArtworksRail: FC<React.PropsWithChildren<MarketingFeaturedArtworksRailProps>> = ({
-  viewer,
-}) => {
+const MarketingFeaturedArtworksRail: FC<
+  React.PropsWithChildren<MarketingFeaturedArtworksRailProps>
+> = ({ viewer }) => {
   const [collection] = compact(viewer.marketingCollections)
 
   if (!collection) {
@@ -65,9 +65,8 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const MarketingFeaturedArtworksRailFragmentContainer = createFragmentContainer(
-  MarketingFeaturedArtworksRail,
-  {
+export const MarketingFeaturedArtworksRailFragmentContainer =
+  createFragmentContainer(MarketingFeaturedArtworksRail, {
     viewer: graphql`
       fragment MarketingFeaturedArtworksRail_viewer on Viewer {
         marketingCollections(slugs: ["new-this-week"]) {
@@ -82,10 +81,11 @@ export const MarketingFeaturedArtworksRailFragmentContainer = createFragmentCont
         }
       }
     `,
-  }
-)
+  })
 
-export const MarketingFeaturedArtworksRailQueryRenderer: FC<React.PropsWithChildren<unknown>> = () => {
+export const MarketingFeaturedArtworksRailQueryRenderer: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <SystemQueryRenderer<MarketingFeaturedArtworksRailQuery>
       lazyLoad

@@ -1,5 +1,5 @@
 import { FairBoothsFragmentContainer } from "Apps/Fair/Components/FairBooths"
-import { FairBooths_Test_Query } from "__generated__/FairBooths_Test_Query.graphql"
+import type { FairBooths_Test_Query } from "__generated__/FairBooths_Test_Query.graphql"
 import { FairBoothRail } from "Apps/Fair/Components/FairBoothRail"
 import { graphql } from "react-relay"
 import { FairBoothSortFilter } from "Apps/Fair/Components/FairBoothSortFilter"

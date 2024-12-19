@@ -1,7 +1,8 @@
-import React, { useEffect } from "react"
+import type React from "react"
+import { useEffect } from "react"
 import { Box, Join, Spacer, Text } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
-import { FairExhibitors_fair$data } from "__generated__/FairExhibitors_fair.graphql"
+import type { FairExhibitors_fair$data } from "__generated__/FairExhibitors_fair.graphql"
 import { FairExhibitorsGroupFragmentContainer } from "Apps/Fair/Components/FairExhibitors/FairExhibitorsGroup"
 import { getExhibitorSectionId } from "Apps/Fair/Utils/getExhibitorSectionId"
 import { useRouter } from "System/Hooks/useRouter"
@@ -11,7 +12,9 @@ interface FairExhibitorsProps {
   fair: FairExhibitors_fair$data
 }
 
-const FairExhibitors: React.FC<React.PropsWithChildren<FairExhibitorsProps>> = ({ fair }) => {
+const FairExhibitors: React.FC<
+  React.PropsWithChildren<FairExhibitorsProps>
+> = ({ fair }) => {
   const { match } = useRouter()
 
   const { focused_exhibitor: focusedExhibitorID } = match.location.query

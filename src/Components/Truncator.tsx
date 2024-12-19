@@ -1,5 +1,5 @@
 import { ErrorBoundary } from "System/Components/ErrorBoundary"
-import * as React from "react"
+import type * as React from "react"
 import ReactDOM from "react-dom/server"
 
 interface Props {
@@ -48,7 +48,9 @@ export const Truncator: React.FC<React.PropsWithChildren<Props>> = ({
   )
 }
 
-const TruncatorWrapper: React.FC<React.PropsWithChildren<{ unsafeHTML: string }>> = ({ unsafeHTML }) => {
+const TruncatorWrapper: React.FC<
+  React.PropsWithChildren<{ unsafeHTML: string }>
+> = ({ unsafeHTML }) => {
   return (
     <div
       dangerouslySetInnerHTML={{

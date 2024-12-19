@@ -11,7 +11,9 @@ interface InfoSectionProps {
   icon: JSX.Element
 }
 
-const InfoSection: React.FC<React.PropsWithChildren<InfoSectionProps>> = props => {
+const InfoSection: React.FC<
+  React.PropsWithChildren<InfoSectionProps>
+> = props => {
   return (
     <Flex flexDirection="row">
       <Flex alignItems="center" height="20px" width="18px" mr={1}>

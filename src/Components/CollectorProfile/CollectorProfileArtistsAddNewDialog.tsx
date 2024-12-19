@@ -1,8 +1,8 @@
 import { Button, Input, ModalDialog, Stack, useToasts } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { CollectorProfileArtistsAddNewDialogCreateArtistMutation } from "__generated__/CollectorProfileArtistsAddNewDialogCreateArtistMutation.graphql"
+import type { CollectorProfileArtistsAddNewDialogCreateArtistMutation } from "__generated__/CollectorProfileArtistsAddNewDialogCreateArtistMutation.graphql"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
 
@@ -12,14 +12,13 @@ interface CollectorProfileArtistsAddNewDialogProps {
   onAdd: (artistID: string) => void
 }
 
-export const CollectorProfileArtistsAddNewDialog: FC<React.PropsWithChildren<CollectorProfileArtistsAddNewDialogProps>> = ({
-  name,
-  onClose,
-  onAdd,
-}) => {
-  const { submitMutation } = useMutation<
-    CollectorProfileArtistsAddNewDialogCreateArtistMutation
-  >({ mutation: MUTATION })
+export const CollectorProfileArtistsAddNewDialog: FC<
+  React.PropsWithChildren<CollectorProfileArtistsAddNewDialogProps>
+> = ({ name, onClose, onAdd }) => {
+  const { submitMutation } =
+    useMutation<CollectorProfileArtistsAddNewDialogCreateArtistMutation>({
+      mutation: MUTATION,
+    })
 
   const { sendToast } = useToasts()
 

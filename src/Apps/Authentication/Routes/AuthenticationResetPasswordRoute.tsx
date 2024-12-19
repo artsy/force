@@ -8,7 +8,7 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { Formik } from "formik"
-import React from "react"
+import type React from "react"
 import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
 import { resetPassword } from "Utils/auth"
@@ -18,12 +18,14 @@ import * as Yup from "yup"
 import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
-interface AuthenticationResetPasswordRouteProps {}
+type AuthenticationResetPasswordRouteProps = {}
 
 type Mode = "Pending" | "Loading" | "Success" | "Error"
 
 // TODO: Clean up
-export const AuthenticationResetPasswordRoute: React.FC<React.PropsWithChildren<AuthenticationResetPasswordRouteProps>> = () => {
+export const AuthenticationResetPasswordRoute: React.FC<
+  React.PropsWithChildren<AuthenticationResetPasswordRouteProps>
+> = () => {
   const { match } = useRouter()
 
   const query = match?.location?.query ?? {}

@@ -1,15 +1,15 @@
 import { Skeleton } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { HomeFeaturedGalleriesRail_orderedSet$data } from "__generated__/HomeFeaturedGalleriesRail_orderedSet.graphql"
-import { HomeFeaturedGalleriesRailQuery } from "__generated__/HomeFeaturedGalleriesRailQuery.graphql"
+import type { HomeFeaturedGalleriesRail_orderedSet$data } from "__generated__/HomeFeaturedGalleriesRail_orderedSet.graphql"
+import type { HomeFeaturedGalleriesRailQuery } from "__generated__/HomeFeaturedGalleriesRailQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import {
   ActionType,
-  ClickedGalleryGroup,
+  type ClickedGalleryGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
@@ -23,9 +23,9 @@ interface HomeFeaturedGalleriesRailProps {
   orderedSet: HomeFeaturedGalleriesRail_orderedSet$data
 }
 
-const HomeFeaturedGalleriesRail: React.FC<React.PropsWithChildren<HomeFeaturedGalleriesRailProps>> = ({
-  orderedSet,
-}) => {
+const HomeFeaturedGalleriesRail: React.FC<
+  React.PropsWithChildren<HomeFeaturedGalleriesRailProps>
+> = ({ orderedSet }) => {
   const { trackEvent } = useTracking()
 
   const nodes = extractNodes(orderedSet.orderedItemsConnection)
@@ -94,9 +94,8 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const HomeFeaturedGalleriesRailFragmentContainer = createFragmentContainer(
-  HomeFeaturedGalleriesRail,
-  {
+export const HomeFeaturedGalleriesRailFragmentContainer =
+  createFragmentContainer(HomeFeaturedGalleriesRail, {
     orderedSet: graphql`
       fragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {
         orderedItemsConnection(first: 20) {
@@ -117,10 +116,11 @@ export const HomeFeaturedGalleriesRailFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })
 
-export const HomeFeaturedGalleriesRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeFeaturedGalleriesRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

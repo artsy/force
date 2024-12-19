@@ -1,10 +1,10 @@
 import { ModalBase } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { ViewInRoom_artwork$data } from "__generated__/ViewInRoom_artwork.graphql"
+import type { ViewInRoom_artwork$data } from "__generated__/ViewInRoom_artwork.graphql"
 import { ViewInRoomArtworkFragmentContainer } from "./ViewInRoomArtwork"
 import { ViewInRoomCloseButton } from "./ViewInRoomCloseButton"
 import { ViewInRoomRoom } from "./ViewInRoomRoom"
@@ -16,7 +16,10 @@ interface ViewInRoomProps {
   onClose(): void
 }
 
-const ViewInRoom: React.FC<React.PropsWithChildren<ViewInRoomProps>> = ({ artwork, onClose }) => {
+const ViewInRoom: React.FC<React.PropsWithChildren<ViewInRoomProps>> = ({
+  artwork,
+  onClose,
+}) => {
   return (
     <ModalBase position="relative" onClose={onClose}>
       <ViewInRoomTransition>

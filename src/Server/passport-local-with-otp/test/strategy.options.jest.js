@@ -4,24 +4,24 @@ const chai = require("chai")
 const Strategy = require("../lib/strategy")
 
 // FIXME:
-describe.skip("Strategy", function () {
-  describe("handling a request without a body, but no username and password, with message option to authenticate", function () {
-    const strategy = new Strategy(function (username, password, otp, done) {
+describe.skip("Strategy", () => {
+  describe("handling a request without a body, but no username and password, with message option to authenticate", () => {
+    const strategy = new Strategy((username, password, otp, done) => {
       throw new Error("should not be called")
     })
 
     let info, status
 
     // eslint-disable-next-line jest/no-done-callback
-    beforeAll(function (done) {
+    beforeAll(done => {
       chai.passport
         .use(strategy)
-        .fail(function (i, s) {
+        .fail((i, s) => {
           info = i
           status = s
           done()
         })
-        .request(function (req) {
+        .request(req => {
           req.body = {}
         })
         .authenticate({
@@ -29,7 +29,7 @@ describe.skip("Strategy", function () {
         })
     })
 
-    it("should fail with info and status", function () {
+    it("should fail with info and status", () => {
       expect(info.message).toEqual("Something is wrong with this request")
       expect(status).toEqual(400)
     })

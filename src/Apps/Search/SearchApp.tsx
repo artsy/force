@@ -6,13 +6,13 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { SearchApp_viewer$data } from "__generated__/SearchApp_viewer.graphql"
+import type { SearchApp_viewer$data } from "__generated__/SearchApp_viewer.graphql"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "Apps/Search/Components/NavigationTabs"
 import { SearchMeta } from "Apps/Search/Components/SearchMeta"
 import { RecentlyViewed } from "Components/RecentlyViewed"
 import { Sticky } from "Components/Sticky"
-import React from "react"
+import type React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
 import { ZeroState } from "./Components/ZeroState"
@@ -23,10 +23,9 @@ export interface SearchAppProps {
   viewer: SearchApp_viewer$data
 }
 
-const TotalResults: React.FC<React.PropsWithChildren<{ count: number; term: string }>> = ({
-  count,
-  term,
-}) => {
+const TotalResults: React.FC<
+  React.PropsWithChildren<{ count: number; term: string }>
+> = ({ count, term }) => {
   return (
     <>
       <Text variant={["lg-display", "xl"]}>
@@ -41,7 +40,10 @@ const TotalResults: React.FC<React.PropsWithChildren<{ count: number; term: stri
   )
 }
 
-export const SearchApp: React.FC<React.PropsWithChildren<SearchAppProps>> = ({ viewer, children }) => {
+export const SearchApp: React.FC<React.PropsWithChildren<SearchAppProps>> = ({
+  viewer,
+  children,
+}) => {
   const {
     match: { location },
   } = useRouter()
@@ -50,8 +52,9 @@ export const SearchApp: React.FC<React.PropsWithChildren<SearchAppProps>> = ({ v
   const { aggregations } = searchConnection ?? {}
 
   const term = query.term
-  const typeAggregation = aggregations?.find(agg => agg?.slice === "TYPE")
-    ?.counts
+  const typeAggregation = aggregations?.find(
+    agg => agg?.slice === "TYPE"
+  )?.counts
 
   const artworkCount = artworksConnection?.counts?.total ?? 0
   const countWithoutArtworks =

@@ -1,24 +1,23 @@
 import { Box, Button, Join, Separator, Text } from "@artsy/palette"
-import { FC, Fragment, useState } from "react"
+import { type FC, Fragment, useState } from "react"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
 import { ArticleAd } from "Apps/Article/Components/ArticleAd/ArticleAd"
 import { ArticleBodyFragmentContainer } from "Apps/Article/Components/ArticleBody"
 import { extractNodes } from "Utils/extractNodes"
-import { NewsIndexArticles_viewer$data } from "__generated__/NewsIndexArticles_viewer.graphql"
+import type { NewsIndexArticles_viewer$data } from "__generated__/NewsIndexArticles_viewer.graphql"
 
 interface NewsIndexArticlesProps {
   viewer: NewsIndexArticles_viewer$data
   relay: RelayPaginationProp
 }
 
-export const NewsIndexArticles: FC<React.PropsWithChildren<NewsIndexArticlesProps>> = ({
-  viewer,
-  relay,
-}) => {
+export const NewsIndexArticles: FC<
+  React.PropsWithChildren<NewsIndexArticlesProps>
+> = ({ viewer, relay }) => {
   const [loading, setLoading] = useState(false)
 
   const articles = extractNodes(viewer.articlesConnection)

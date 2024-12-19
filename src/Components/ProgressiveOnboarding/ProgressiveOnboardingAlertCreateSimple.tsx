@@ -1,8 +1,8 @@
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
-import { FC } from "react"
+import type { FC } from "react"
 import { Text } from "@artsy/palette"
 import {
-  WithProgressiveOnboardingCountsProps,
+  type WithProgressiveOnboardingCountsProps,
   withProgressiveOnboardingCounts,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -14,10 +14,9 @@ const KEY = PROGRESSIVE_ONBOARDING.alertCreate
 interface ProgressiveOnboardingAlertCreateSimpleProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingAlertCreateSimple__: FC<React.PropsWithChildren<ProgressiveOnboardingAlertCreateSimpleProps>> = ({
-  children,
-  counts,
-}) => {
+export const __ProgressiveOnboardingAlertCreateSimple__: FC<
+  React.PropsWithChildren<ProgressiveOnboardingAlertCreateSimpleProps>
+> = ({ children, counts }) => {
   const { isLoggedIn } = useSystemContext()
 
   const { dismiss, isDismissed } = useDismissibleContext()
@@ -53,6 +52,5 @@ export const __ProgressiveOnboardingAlertCreateSimple__: FC<React.PropsWithChild
   )
 }
 
-export const ProgressiveOnboardingAlertCreateSimple = withProgressiveOnboardingCounts(
-  __ProgressiveOnboardingAlertCreateSimple__
-)
+export const ProgressiveOnboardingAlertCreateSimple =
+  withProgressiveOnboardingCounts(__ProgressiveOnboardingAlertCreateSimple__)

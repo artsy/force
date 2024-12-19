@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen, waitFor } from "@testing-library/react"
-import { CollectorProfileSavesRoute_Test_Query } from "__generated__/CollectorProfileSavesRoute_Test_Query.graphql"
+import type { CollectorProfileSavesRoute_Test_Query } from "__generated__/CollectorProfileSavesRoute_Test_Query.graphql"
 import { CollectorProfileSavesRouteFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/CollectorProfileSavesRoute"
 import { useRouter } from "System/Hooks/useRouter"
 import { useTracking } from "react-tracking"
@@ -11,18 +11,17 @@ jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter")
 jest.mock("found")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  CollectorProfileSavesRoute_Test_Query
->({
-  Component: CollectorProfileSavesRouteFragmentContainer,
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<CollectorProfileSavesRoute_Test_Query>({
+    Component: CollectorProfileSavesRouteFragmentContainer,
+    query: graphql`
     query CollectorProfileSavesRoute_Test_Query @relay_test_operation {
       me {
         ...CollectorProfileSavesRoute_me
       }
     }
   `,
-})
+  })
 
 describe("CollectorProfileSavesRoute", () => {
   const mockUseRouter = useRouter as jest.Mock

@@ -1,6 +1,13 @@
 import * as React from "react"
 import styled, { css } from "styled-components"
-import { Box, Clickable, Flex, Link, Text, TextProps } from "@artsy/palette"
+import {
+  Box,
+  Clickable,
+  Flex,
+  Link,
+  Text,
+  type TextProps,
+} from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { getENV } from "Utils/getENV"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
@@ -112,9 +119,9 @@ export const UtilButton = React.forwardRef(
   }
 )
 
-const UtilButtonInnerText: React.FC<React.PropsWithChildren<
-  UtilButtonInnerTextProps
->> = ({ label, longestLabel, ...rest }) => {
+const UtilButtonInnerText: React.FC<
+  React.PropsWithChildren<UtilButtonInnerTextProps>
+> = ({ label, longestLabel, ...rest }) => {
   if (!label) {
     return null
   }

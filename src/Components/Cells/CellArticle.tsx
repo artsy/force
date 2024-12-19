@@ -1,16 +1,16 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { CellArticle_article$data } from "__generated__/CellArticle_article.graphql"
+import type { CellArticle_article$data } from "__generated__/CellArticle_article.graphql"
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Image,
   ResponsiveBox,
   SkeletonBox,
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 
 export interface CellArticleProps extends Omit<RouterLinkProps, "to"> {
@@ -102,10 +102,9 @@ export const CellArticleFragmentContainer = createFragmentContainer(
 
 type CellArticlePlaceholderProps = Pick<CellArticleProps, "mode"> & BoxProps
 
-export const CellArticlePlaceholder: FC<React.PropsWithChildren<CellArticlePlaceholderProps>> = ({
-  mode = "RAIL",
-  ...rest
-}) => {
+export const CellArticlePlaceholder: FC<
+  React.PropsWithChildren<CellArticlePlaceholderProps>
+> = ({ mode = "RAIL", ...rest }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
 
   return (

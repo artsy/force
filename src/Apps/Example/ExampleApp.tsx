@@ -1,10 +1,10 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ExampleApp_system$data } from "__generated__/ExampleApp_system.graphql"
+import type { ExampleApp_system$data } from "__generated__/ExampleApp_system.graphql"
 import { Box, Flex, Join, Separator, Spacer, Text } from "@artsy/palette"
 import {
   RouterLink as BaseRouteLink,
-  RouterLinkProps,
+  type RouterLinkProps,
 } from "System/Components/RouterLink"
 import { ExampleAppMeta } from "./Components/ExampleAppMeta"
 import styled from "styled-components"

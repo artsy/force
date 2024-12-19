@@ -1,11 +1,11 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { Link } from "react-head"
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
 import { ArticlesIndexArticlesPaginationContainer } from "./Components/ArticlesIndexArticles"
 import { getENV } from "Utils/getENV"
-import { ArticlesApp_viewer$data } from "__generated__/ArticlesApp_viewer.graphql"
+import type { ArticlesApp_viewer$data } from "__generated__/ArticlesApp_viewer.graphql"
 import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
 import { ArticlesIndexNewsFragmentContainer } from "Apps/Articles/Components/ArticlesIndexNews"
 
@@ -13,7 +13,9 @@ interface ArticlesAppProps {
   viewer: ArticlesApp_viewer$data
 }
 
-const ArticlesApp: FC<React.PropsWithChildren<ArticlesAppProps>> = ({ viewer }) => {
+const ArticlesApp: FC<React.PropsWithChildren<ArticlesAppProps>> = ({
+  viewer,
+}) => {
   useScrollToOpenEditorialAuthModal()
 
   return (

@@ -8,16 +8,20 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { useState } from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 // eslint-disable-next-line no-restricted-imports
 import request from "superagent"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { AppSecondFactor_me$data } from "__generated__/AppSecondFactor_me.graphql"
-import { CreateAppSecondFactorInput } from "__generated__/CreateAppSecondFactorMutation.graphql"
-import { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
+import type { AppSecondFactor_me$data } from "__generated__/AppSecondFactor_me.graphql"
+import type { CreateAppSecondFactorInput } from "__generated__/CreateAppSecondFactorMutation.graphql"
+import type { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
 import { DisableFactorConfirmation } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/DisableFactorConfirmation"
 import { AppSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
 import { CreateAppSecondFactor } from "./Mutation/CreateAppSecondFactor"
@@ -31,17 +35,15 @@ interface AppSecondFactorProps {
 }
 
 // TODO: This needs to be rebuilt from scratch
-export const AppSecondFactor: React.FC<React.PropsWithChildren<AppSecondFactorProps>> = ({
-  me,
-  relay,
-}) => {
+export const AppSecondFactor: React.FC<
+  React.PropsWithChildren<AppSecondFactorProps>
+> = ({ me, relay }) => {
   const [showConfirmDisable, setShowConfirmDisable] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [showSetupModal, setShowSetupModal] = useState(false)
   const [showCompleteModal, setShowCompleteModal] = useState(false)
-  const [showCompleteRedirectModal, setShowCompleteRedirectModal] = useState(
-    false
-  )
+  const [showCompleteRedirectModal, setShowCompleteRedirectModal] =
+    useState(false)
   const [stagedSecondFactor, setStagedSecondFactor] = useState(null)
   const [passwordConfirmation, setPasswordConfirmation] = useState("")
   const [isDisabling] = useState(false) // ???

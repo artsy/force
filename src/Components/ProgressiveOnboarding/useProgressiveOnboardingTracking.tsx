@@ -1,4 +1,4 @@
-import { ActionType, TooltipViewed } from "@artsy/cohesion"
+import { ActionType, type TooltipViewed } from "@artsy/cohesion"
 import { useCallback } from "react"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -12,11 +12,8 @@ export const useProgressiveOnboardingTracking = ({
 }: UseProgressiveOnboardingTracking) => {
   const analytics = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const trackEvent = useCallback(() => {
     if (

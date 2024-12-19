@@ -1,6 +1,6 @@
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Column,
   Flex,
   GridColumns,
@@ -19,7 +19,7 @@ import type {
   StripeCardNumberElementChangeEvent,
   StripeElementStyleVariant,
 } from "@stripe/stripe-js"
-import { StripeCardCvcElementChangeEvent } from "@stripe/stripe-js"
+import type { StripeCardCvcElementChangeEvent } from "@stripe/stripe-js"
 import { themeGet } from "@styled-system/theme-get"
 import styled, { css } from "styled-components"
 
@@ -38,12 +38,9 @@ interface CreditCardInputProps extends BoxProps {
  * A Stripe credit card input that mimics style of V3 Palette Input.
  * Parent element must be wrapped with `CreditaCardInputProvider`.
  */
-export const CreditCardInput: React.FC<React.PropsWithChildren<CreditCardInputProps>> = ({
-  error,
-  onChange,
-  required,
-  ...rest
-}) => {
+export const CreditCardInput: React.FC<
+  React.PropsWithChildren<CreditCardInputProps>
+> = ({ error, onChange, required, ...rest }) => {
   const { theme } = useTheme()
 
   const stripeBaseStyle: StripeElementStyleVariant = {

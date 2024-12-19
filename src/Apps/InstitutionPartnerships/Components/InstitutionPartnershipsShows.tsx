@@ -1,8 +1,8 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { InstitutionPartnershipsShows_orderedSet$data } from "__generated__/InstitutionPartnershipsShows_orderedSet.graphql"
-import { InstitutionPartnershipsShowsQuery } from "__generated__/InstitutionPartnershipsShowsQuery.graphql"
+import type { InstitutionPartnershipsShows_orderedSet$data } from "__generated__/InstitutionPartnershipsShows_orderedSet.graphql"
+import type { InstitutionPartnershipsShowsQuery } from "__generated__/InstitutionPartnershipsShowsQuery.graphql"
 import {
   CellShowFragmentContainer,
   CellShowPlaceholder,
@@ -13,9 +13,9 @@ interface InstitutionPartnershipsShowsProps {
   orderedSet: InstitutionPartnershipsShows_orderedSet$data
 }
 
-const InstitutionPartnershipsShows: FC<React.PropsWithChildren<InstitutionPartnershipsShowsProps>> = ({
-  orderedSet,
-}) => {
+const InstitutionPartnershipsShows: FC<
+  React.PropsWithChildren<InstitutionPartnershipsShowsProps>
+> = ({ orderedSet }) => {
   const shows = orderedSet.items
 
   if (!shows || shows.length === 0) return null
@@ -51,7 +51,9 @@ const InstitutionPartnershipsShowsFragmentContainer = createFragmentContainer(
   }
 )
 
-const InstitutionPartnershipsShowsPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const InstitutionPartnershipsShowsPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <GridColumns>
       <Column span={6}>
@@ -65,7 +67,9 @@ const InstitutionPartnershipsShowsPlaceholder: FC<React.PropsWithChildren<unknow
   )
 }
 
-export const InstitutionPartnershipsShowsQueryRenderer: FC<React.PropsWithChildren<unknown>> = () => {
+export const InstitutionPartnershipsShowsQueryRenderer: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <SystemQueryRenderer<InstitutionPartnershipsShowsQuery>
       lazyLoad

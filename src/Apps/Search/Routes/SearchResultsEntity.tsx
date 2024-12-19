@@ -1,13 +1,17 @@
 import * as React from "react"
 import { Box, Separator } from "@artsy/palette"
-import { SearchResultsEntity_viewer$data } from "__generated__/SearchResultsEntity_viewer.graphql"
+import type { SearchResultsEntity_viewer$data } from "__generated__/SearchResultsEntity_viewer.graphql"
 import { GenericSearchResultItem } from "Apps/Search/Components/GenericSearchResultItem"
 import { ZeroState } from "Apps/Search/Components/ZeroState"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
-import { RouterState, withRouter } from "found"
+import { type RouterState, withRouter } from "found"
 import qs from "qs"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 
 export interface Props extends RouterState {
   viewer: SearchResultsEntity_viewer$data
@@ -35,7 +39,10 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
     } = this.props
     const { page } = location.query
 
-    this.state = { isLoading: false, page: (page && parseInt(page, 10)) || 1 }
+    this.state = {
+      isLoading: false,
+      page: (page && Number.parseInt(page, 10)) || 1,
+    }
   }
 
   toggleLoading = (isLoading: boolean) => {
@@ -175,7 +182,9 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
 }
 
 export const SearchResultsEntityRouteFragmentContainer = createRefetchContainer(
-  withRouter(SearchResultsEntityRoute) as React.ComponentType<React.PropsWithChildren<Props>>,
+  withRouter(SearchResultsEntityRoute) as React.ComponentType<
+    React.PropsWithChildren<Props>
+  >,
   {
     viewer: graphql`
       fragment SearchResultsEntity_viewer on Viewer

@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { useCreateArtworkMutation } from "__generated__/useCreateArtworkMutation.graphql"
+import type { useCreateArtworkMutation } from "__generated__/useCreateArtworkMutation.graphql"
 
 export const useCreateArtwork = () => {
   return useMutation<useCreateArtworkMutation>({

@@ -1,6 +1,6 @@
-import { FC, Suspense } from "react"
+import { type FC, Suspense } from "react"
 import { QuickMultipleSelectAlertFilter } from "Components/Alert/Components/Filters/QuickMultipleSelectAlertFilter"
-import { ArtistSeriesOptionsQuery } from "__generated__/ArtistSeriesOptionsQuery.graphql"
+import type { ArtistSeriesOptionsQuery } from "__generated__/ArtistSeriesOptionsQuery.graphql"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import {
@@ -69,7 +69,9 @@ export const ArtistSeries: FC<React.PropsWithChildren<unknown>> = () => {
   )
 }
 
-export const ArtistSeriesQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = props => {
+export const ArtistSeriesQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = props => {
   return (
     <Suspense fallback={<ArtistSeriesPlaceholder />}>
       <ArtistSeries {...props} />
@@ -77,7 +79,9 @@ export const ArtistSeriesQueryRenderer: React.FC<React.PropsWithChildren<unknown
   )
 }
 
-const ArtistSeriesPlaceholder: React.FC<React.PropsWithChildren<unknown>> = () => {
+const ArtistSeriesPlaceholder: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton>
       <SkeletonText variant="xs" mb={2}>

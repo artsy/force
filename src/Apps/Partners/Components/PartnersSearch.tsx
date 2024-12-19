@@ -1,15 +1,16 @@
 import {
   AutocompleteInput,
-  AutocompleteInputOptionType,
-  AutocompleteInputProps,
+  type AutocompleteInputOptionType,
+  type AutocompleteInputProps,
 } from "@artsy/palette"
 import { compact } from "lodash"
-import React, { FC, useState } from "react"
+import type React from "react"
+import { type FC, useState } from "react"
 import { graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useRouter } from "System/Hooks/useRouter"
-import { PartnersSearchQuery } from "__generated__/PartnersSearchQuery.graphql"
+import type { PartnersSearchQuery } from "__generated__/PartnersSearchQuery.graphql"
 
 const TYPES = {
   GALLERY: "Galleries",
@@ -22,9 +23,9 @@ interface PartnersSearchQueryRendererProps {
   type: "GALLERY" | "INSTITUTION"
 }
 
-export const PartnersSearchQueryRenderer: FC<React.PropsWithChildren<PartnersSearchQueryRendererProps>> = ({
-  type,
-}) => {
+export const PartnersSearchQueryRenderer: FC<
+  React.PropsWithChildren<PartnersSearchQueryRendererProps>
+> = ({ type }) => {
   const { relayEnvironment } = useSystemContext()
   const { router, match } = useRouter()
 

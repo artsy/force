@@ -1,8 +1,8 @@
-import * as React from "react"
+import type * as React from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { DisableSecondFactor } from "./Mutation/DisableSecondFactor"
-import { FormikProps } from "formik"
-import { DisableSecondFactorInput } from "__generated__/DisableSecondFactorMutation.graphql"
+import type { FormikProps } from "formik"
+import type { DisableSecondFactorInput } from "__generated__/DisableSecondFactorMutation.graphql"
 import { map } from "lodash"
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 
@@ -13,7 +13,9 @@ interface DisableFactorConfirmationProps {
   secondFactorID: string
 }
 
-export const DisableFactorConfirmation: React.FC<React.PropsWithChildren<DisableFactorConfirmationProps>> = props => {
+export const DisableFactorConfirmation: React.FC<
+  React.PropsWithChildren<DisableFactorConfirmationProps>
+> = props => {
   const { onCancel, onConfirm, show, secondFactorID } = props
   const { relayEnvironment } = useSystemContext()
 

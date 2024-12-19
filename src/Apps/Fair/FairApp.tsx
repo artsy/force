@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairApp_fair$data } from "__generated__/FairApp_fair.graphql"
+import type { FairApp_fair$data } from "__generated__/FairApp_fair.graphql"
 import { FullBleed, Spacer, useTheme } from "@artsy/palette"
 import { FairMetaFragmentContainer } from "./Components/FairMeta"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -22,7 +22,10 @@ interface FairAppProps {
   fair: FairApp_fair$data
 }
 
-const FairApp: React.FC<React.PropsWithChildren<FairAppProps>> = ({ children, fair }) => {
+const FairApp: React.FC<React.PropsWithChildren<FairAppProps>> = ({
+  children,
+  fair,
+}) => {
   const { match } = useRouter()
 
   return (
@@ -76,7 +79,9 @@ const FairApp: React.FC<React.PropsWithChildren<FairAppProps>> = ({ children, fa
   )
 }
 
-const TrackingWrappedFairApp: React.FC<React.PropsWithChildren<FairAppProps>> = props => {
+const TrackingWrappedFairApp: React.FC<
+  React.PropsWithChildren<FairAppProps>
+> = props => {
   const {
     fair: { internalID, profile },
   } = props
@@ -116,7 +121,10 @@ export const FairAppFragmentContainer = createFragmentContainer(
   }
 )
 
-const Stuck: React.FC<React.PropsWithChildren<{ stuck: boolean }>> = ({ stuck, children }) => {
+const Stuck: React.FC<React.PropsWithChildren<{ stuck: boolean }>> = ({
+  stuck,
+  children,
+}) => {
   const { theme } = useTheme()
 
   return (

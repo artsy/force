@@ -1,5 +1,5 @@
-import { ReactWrapper } from "enzyme"
-import * as React from "react"
+import type { ReactWrapper } from "enzyme"
+import type * as React from "react"
 
 declare module "enzyme" {
   export type RenderUntilPredicate<P, S, C> = (

@@ -1,8 +1,8 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Spacer } from "@artsy/palette"
-import { ArtworkImageBrowser_artwork$data } from "__generated__/ArtworkImageBrowser_artwork.graphql"
+import type { ArtworkImageBrowser_artwork$data } from "__generated__/ArtworkImageBrowser_artwork.graphql"
 import { scale } from "proportional-scale"
-import * as React from "react"
+import type * as React from "react"
 import { useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useCursor } from "use-cursor"
@@ -19,12 +19,17 @@ interface ArtworkImageBrowserProps {
   isMyCollectionArtwork?: boolean
 }
 
-export const ArtworkImageBrowser: React.FC<React.PropsWithChildren<
-  ArtworkImageBrowserProps
->> = ({ artwork, isMyCollectionArtwork }) => {
+export const ArtworkImageBrowser: React.FC<
+  React.PropsWithChildren<ArtworkImageBrowserProps>
+> = ({ artwork, isMyCollectionArtwork }) => {
   const { figures } = artwork
 
-  const { index: activeIndex, handleNext, handlePrev, setCursor } = useCursor({
+  const {
+    index: activeIndex,
+    handleNext,
+    handlePrev,
+    setCursor,
+  } = useCursor({
     max: figures.length,
   })
 

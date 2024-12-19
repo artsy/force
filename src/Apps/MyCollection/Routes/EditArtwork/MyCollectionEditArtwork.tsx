@@ -14,9 +14,9 @@ import { useRouter } from "System/Hooks/useRouter"
 import { storeLocalImage } from "Utils/localImageHelpers"
 import createLogger from "Utils/logger"
 import { wait } from "Utils/wait"
-import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
+import type { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
-import { ArtworkModel } from "./Utils/artworkModel"
+import type { ArtworkModel } from "./Utils/artworkModel"
 import { MyCollectionArtworkDetailsValidationSchema } from "./Utils/artworkValidation"
 
 const logger = createLogger("MyCollectionEditArtwork.tsx")
@@ -25,9 +25,9 @@ export interface MyCollectionEditArtworkProps {
   artwork?: MyCollectionEditArtwork_artwork$data
 }
 
-export const MyCollectionEditArtwork: React.FC<React.PropsWithChildren<MyCollectionEditArtworkProps>> = ({
-  artwork,
-}) => {
+export const MyCollectionEditArtwork: React.FC<
+  React.PropsWithChildren<MyCollectionEditArtworkProps>
+> = ({ artwork }) => {
   const { localImages, addLocalImage, removeLocalImage } = useLocalImageState()
 
   const { router } = useRouter()

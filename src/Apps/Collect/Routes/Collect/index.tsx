@@ -1,16 +1,16 @@
 import { Box, Separator, Spacer, Text, Flex } from "@artsy/palette"
-import { Match, Router } from "found"
-import * as React from "react"
+import type { Match, Router } from "found"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
-import { getMetadata, Medium, Color } from "./Utils/getMetadata"
-import { Collect_marketingCollections$data } from "__generated__/Collect_marketingCollections.graphql"
-import { CollectArtworkFilterQuery } from "__generated__/CollectArtworkFilterQuery.graphql"
+import { getMetadata, type Medium, type Color } from "./Utils/getMetadata"
+import type { Collect_marketingCollections$data } from "__generated__/Collect_marketingCollections.graphql"
+import type { CollectArtworkFilterQuery } from "__generated__/CollectArtworkFilterQuery.graphql"
 import { CollectionsHubsNavFragmentContainer as CollectionsHubsNav } from "Components/CollectionsHubsNav"
 import { ArtworkFilter } from "Components/ArtworkFilter"
 import { RouterLink } from "System/Components/RouterLink"
-import {
+import type {
   Counts,
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"

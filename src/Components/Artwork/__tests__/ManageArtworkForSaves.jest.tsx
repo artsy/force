@@ -1,15 +1,15 @@
 import { Button } from "@artsy/palette"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import {
-  ArtworkEntity,
+  type ArtworkEntity,
   ManageArtworkForSavesProvider,
   useManageArtworkForSavesContext,
 } from "Components/Artwork/ManageArtworkForSaves"
 import { MockBoot } from "DevTools/MockBoot"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { FC } from "react"
+import type { FC } from "react"
 import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
-import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
+import type { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 
 jest.unmock("react-relay")
 jest.mock("Utils/Hooks/useMutation")

@@ -12,12 +12,12 @@ import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
 import { storeLocalImage } from "Utils/localImageHelpers"
 import createLogger from "Utils/logger"
-import { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
+import type { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
 import { Formik } from "formik"
 import { useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
-import { ArtworkModel } from "./Utils/artworkModel"
+import type { ArtworkModel } from "./Utils/artworkModel"
 import { MyCollectionArtworkDetailsValidationSchema } from "./Utils/artworkValidation"
 
 const logger = createLogger("MyCollectionCreateArtwork.tsx")
@@ -28,22 +28,17 @@ interface MyCollectionCreateArtworkProps {
   me: MyCollectionCreateArtwork_me$data
 }
 
-export const MyCollectionCreateArtwork: React.FC<React.PropsWithChildren<MyCollectionCreateArtworkProps>> = ({
-  me,
-}) => {
-  const {
-    localImages,
-    addLocalImage,
-    clearLocalImages,
-    removeLocalImage,
-  } = useLocalImageState()
+export const MyCollectionCreateArtwork: React.FC<
+  React.PropsWithChildren<MyCollectionCreateArtworkProps>
+> = ({ me }) => {
+  const { localImages, addLocalImage, clearLocalImages, removeLocalImage } =
+    useLocalImageState()
 
   const { router } = useRouter()
   const { sendToast } = useToasts()
   const { createOrUpdateArtwork } = useCreateOrUpdateArtwork()
-  const {
-    saveCollectedArtwork: trackSaveCollectedArtwork,
-  } = useMyCollectionTracking()
+  const { saveCollectedArtwork: trackSaveCollectedArtwork } =
+    useMyCollectionTracking()
 
   const initialStep = "artist-select"
 
@@ -154,13 +149,11 @@ export const MyCollectionCreateArtwork: React.FC<React.PropsWithChildren<MyColle
   )
 }
 
-export const MyCollectionCreateArtworkFragmentContainer = createFragmentContainer(
-  MyCollectionCreateArtwork,
-  {
+export const MyCollectionCreateArtworkFragmentContainer =
+  createFragmentContainer(MyCollectionCreateArtwork, {
     me: graphql`
       fragment MyCollectionCreateArtwork_me on Me {
         ...MyCollectionArtworkFormArtistStep_me
       }
     `,
-  }
-)
+  })

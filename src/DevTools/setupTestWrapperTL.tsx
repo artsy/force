@@ -1,19 +1,19 @@
-import { act, render, RenderResult } from "@testing-library/react"
+import { act, render, type RenderResult } from "@testing-library/react"
 import { MockBoot } from "DevTools/MockBoot"
-import * as React from "react"
+import type * as React from "react"
 import {
-  GraphQLTaggedNode,
+  type GraphQLTaggedNode,
   QueryRenderer,
   RelayEnvironmentProvider,
-  Variables,
+  type Variables,
 } from "react-relay"
-import { OperationDescriptor, OperationType } from "relay-runtime"
+import type { OperationDescriptor, OperationType } from "relay-runtime"
 import {
   createMockEnvironment,
   MockPayloadGenerator,
-  MockEnvironment,
+  type MockEnvironment,
 } from "relay-test-utils"
-import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
+import type { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 
 type SetupTestWrapper<T extends OperationType> = {
   Component: React.ComponentType<React.PropsWithChildren<T["response"]>>
@@ -86,16 +86,12 @@ type RTLRenderResult = RenderResult<
 
 type RenderWithRelay = RTLRenderResult & {
   env: MockEnvironment
-  mockResolveLastOperation: (
-    mockResolvers: MockResolvers
-  ) => {
+  mockResolveLastOperation: (mockResolvers: MockResolvers) => {
     operation: OperationDescriptor
     operationName: string
     operationVariables: Variables
   }
-  mockRejectLastOperation: (
-    error: Error
-  ) => {
+  mockRejectLastOperation: (error: Error) => {
     operation: OperationDescriptor
     operationName: string
     operationVariables: Variables

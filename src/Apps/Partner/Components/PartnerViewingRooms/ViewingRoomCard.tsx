@@ -1,14 +1,16 @@
 import { RouterLink } from "System/Components/RouterLink"
 import { Image, ResponsiveBox, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomCard_viewingRoom$data } from "__generated__/ViewingRoomCard_viewingRoom.graphql"
+import type { ViewingRoomCard_viewingRoom$data } from "__generated__/ViewingRoomCard_viewingRoom.graphql"
 import { cropped } from "Utils/resized"
 
 interface ViewingRoomCardProps {
   viewingRoom: ViewingRoomCard_viewingRoom$data
 }
 
-const ViewingRoomCard: React.FC<React.PropsWithChildren<ViewingRoomCardProps>> = ({ viewingRoom }) => {
+const ViewingRoomCard: React.FC<
+  React.PropsWithChildren<ViewingRoomCardProps>
+> = ({ viewingRoom }) => {
   const { coverImage, title, href, exhibitionPeriod } = viewingRoom
 
   const coverImageURL = cropped(coverImage?.imageURLs?.normalized ?? "", {

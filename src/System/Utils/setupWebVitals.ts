@@ -1,5 +1,5 @@
 import { getENV } from "Utils/getENV"
-import { onLCP, onFCP, onTTFB, onINP, Metric } from "web-vitals"
+import { onLCP, onFCP, onTTFB, onINP, type Metric } from "web-vitals"
 
 export const setupWebVitals = () => {
   if (!getENV("ENABLE_WEB_VITALS_LOGGING")) {
@@ -13,7 +13,7 @@ export const setupWebVitals = () => {
     ["INP", onINP],
   ] as const
 
-  const log = ([type, onVital]: typeof VITALS[0]) => {
+  const log = ([type, onVital]: (typeof VITALS)[0]) => {
     onVital(
       (metric: Metric) => {
         console.log(`[web-vitals] ${type}`, metric)

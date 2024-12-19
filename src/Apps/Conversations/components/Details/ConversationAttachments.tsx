@@ -1,6 +1,6 @@
 import { extractNodes } from "Utils/extractNodes"
 import { graphql, useFragment } from "react-relay"
-import { ConversationAttachments_conversation$key } from "__generated__/ConversationAttachments_conversation.graphql"
+import type { ConversationAttachments_conversation$key } from "__generated__/ConversationAttachments_conversation.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 import { Flex, Separator, Text } from "@artsy/palette"
 import DocumentIcon from "@artsy/icons/DocumentIcon"
@@ -9,9 +9,9 @@ interface ConversationAttachmentsProps {
   conversation: ConversationAttachments_conversation$key
 }
 
-export const ConversationAttachments: React.FC<React.PropsWithChildren<ConversationAttachmentsProps>> = ({
-  conversation,
-}) => {
+export const ConversationAttachments: React.FC<
+  React.PropsWithChildren<ConversationAttachmentsProps>
+> = ({ conversation }) => {
   const data = useFragment(
     graphql`
       fragment ConversationAttachments_conversation on Conversation {

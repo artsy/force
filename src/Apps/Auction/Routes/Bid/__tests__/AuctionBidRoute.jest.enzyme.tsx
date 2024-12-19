@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { AuctionBidRouteFragmentContainer } from "Apps/Auction/Routes/Bid/AuctionBidRoute"
-import { AuctionBidRouteTestQuery } from "__generated__/AuctionBidRouteTestQuery.graphql"
+import type { AuctionBidRouteTestQuery } from "__generated__/AuctionBidRouteTestQuery.graphql"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSubmitBid } from "Apps/Auction/Routes/Bid/useSubmitBid"
@@ -122,7 +122,8 @@ describe("AuctionBidRoute", () => {
     }))
 
     // Hack to get around mocking Formik
-    ;(mockFormik as React.FC<React.PropsWithChildren<unknown>>).displayName = "Formik"
+    ;(mockFormik as React.FC<React.PropsWithChildren<unknown>>).displayName =
+      "Formik"
     mockFormik.mockImplementation(({ children }) => {
       return children(defaultFormikProps)
     })
@@ -165,7 +166,6 @@ describe("AuctionBidRoute", () => {
         hasQualifiedCreditCards: true,
       }),
     })
-
     ;(wrapper.find("ModalDialog").props() as any).onClose()
     expect(spy).toHaveBeenCalledWith("/auction/sale-slug")
   })

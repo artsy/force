@@ -1,7 +1,7 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SaleApp_sale$data } from "__generated__/SaleApp_sale.graphql"
-import { SaleApp_viewer$data } from "__generated__/SaleApp_viewer.graphql"
+import type { SaleApp_sale$data } from "__generated__/SaleApp_sale.graphql"
+import type { SaleApp_viewer$data } from "__generated__/SaleApp_viewer.graphql"
 import {
   Box,
   Flex,
@@ -21,7 +21,11 @@ export interface SaleAppProps {
   viewer: SaleApp_viewer$data
 }
 
-const SaleApp: React.FC<React.PropsWithChildren<SaleAppProps>> = ({ children, sale, viewer }) => {
+const SaleApp: React.FC<React.PropsWithChildren<SaleAppProps>> = ({
+  children,
+  sale,
+  viewer,
+}) => {
   return (
     <>
       <SaleMetaFragmentContainer sale={sale} />

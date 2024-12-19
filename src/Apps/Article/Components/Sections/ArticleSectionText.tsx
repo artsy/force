@@ -1,6 +1,6 @@
-import { FC, useMemo } from "react"
+import { type FC, useMemo } from "react"
 import { ArticleHTML } from "Apps/Article/Components/ArticleHTML"
-import { ArticleSectionText_section$data } from "__generated__/ArticleSectionText_section.graphql"
+import type { ArticleSectionText_section$data } from "__generated__/ArticleSectionText_section.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 
@@ -12,11 +12,9 @@ interface ArticleSectionTextProps {
   isLast: boolean
 }
 
-const ArticleSectionText: FC<React.PropsWithChildren<ArticleSectionTextProps>> = ({
-  section,
-  isFirst,
-  isLast,
-}) => {
+const ArticleSectionText: FC<
+  React.PropsWithChildren<ArticleSectionTextProps>
+> = ({ section, isFirst, isLast }) => {
   const HTML = useMemo(() => {
     switch (true) {
       case isFirst:

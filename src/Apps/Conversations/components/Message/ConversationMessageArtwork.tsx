@@ -1,7 +1,7 @@
-import * as React from "react"
-import { ConversationMessageArtwork_item$key } from "__generated__/ConversationMessageArtwork_item.graphql"
+import type * as React from "react"
+import type { ConversationMessageArtwork_item$key } from "__generated__/ConversationMessageArtwork_item.graphql"
 import { graphql, useFragment } from "react-relay"
-import { FlexProps, Flex, Image, Text } from "@artsy/palette"
+import { type FlexProps, Flex, Image, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 
 const MAX_IMAGE_WIDTH = 335
@@ -10,10 +10,9 @@ interface ConversationMessageArtworkProps extends FlexProps {
   item: ConversationMessageArtwork_item$key
 }
 
-export const ConversationMessageArtwork: React.FC<React.PropsWithChildren<ConversationMessageArtworkProps>> = ({
-  item,
-  ...flexProps
-}) => {
+export const ConversationMessageArtwork: React.FC<
+  React.PropsWithChildren<ConversationMessageArtworkProps>
+> = ({ item, ...flexProps }) => {
   const data = useFragment(FRAGMENT, item)
 
   if (!data) {

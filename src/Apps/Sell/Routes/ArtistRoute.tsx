@@ -1,7 +1,7 @@
 import { Box, Text, useToasts } from "@artsy/palette"
 import {
   ArtistAutoComplete,
-  AutocompleteArtist,
+  type AutocompleteArtist,
 } from "Apps/Sell/Components/ArtistAutocomplete"
 import { ArtistNotEligiblText } from "Apps/Sell/Components/ArtistNotEligibleText"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
@@ -11,12 +11,12 @@ import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
-import {
+import type {
   ArtistRoute_submission$data,
   ArtistRoute_submission$key,
 } from "__generated__/ArtistRoute_submission.graphql"
-import { Formik, FormikProps } from "formik"
-import * as React from "react"
+import { Formik, type FormikProps } from "formik"
+import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
 
@@ -51,15 +51,19 @@ interface ArtistRouteProps {
   submission: ArtistRoute_submission$key
 }
 
-export const ArtistRouteFragmentContainer: React.FC<React.PropsWithChildren<ArtistRouteProps>> = props => {
+export const ArtistRouteFragmentContainer: React.FC<
+  React.PropsWithChildren<ArtistRouteProps>
+> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
 
   return <ArtistRoute submission={submission} />
 }
 
-export const ArtistRoute: React.FC<React.PropsWithChildren<{
-  submission?: ArtistRoute_submission$data
-}>> = ({ submission }) => {
+export const ArtistRoute: React.FC<
+  React.PropsWithChildren<{
+    submission?: ArtistRoute_submission$data
+  }>
+> = ({ submission }) => {
   const { router } = useRouter()
   const { actions } = useSellFlowContext()
   const { sendToast } = useToasts()

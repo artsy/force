@@ -1,4 +1,4 @@
-import { Banner, BannerProps, Flex, Text } from "@artsy/palette"
+import { Banner, type BannerProps, Flex, Text } from "@artsy/palette"
 import { errorMessageForBidding } from "Apps/Auction/Components/Form/Utils/errorMessages"
 import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
 

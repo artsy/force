@@ -1,7 +1,7 @@
 import { ProgressBar } from "@artsy/palette"
-import { Color } from "@artsy/palette-tokens"
+import type { Color } from "@artsy/palette-tokens"
 import { DateTime } from "luxon"
-import React from "react"
+import type React from "react"
 
 interface ProgressBarTimerProps {
   currentTime: string | DateTime
@@ -14,12 +14,9 @@ interface ProgressBarTimerProps {
  * Extracted out of @artsy/palette
  * @deprecated Add a `progress` field to the return of `useTimer` instead
  */
-export const ProgressBarTimer: React.FC<React.PropsWithChildren<ProgressBarTimerProps>> = ({
-  currentTime,
-  countdownStart,
-  countdownEnd,
-  highlight = "brand",
-}) => {
+export const ProgressBarTimer: React.FC<
+  React.PropsWithChildren<ProgressBarTimerProps>
+> = ({ currentTime, countdownStart, countdownEnd, highlight = "brand" }) => {
   const secondsRemaining = DateTime.fromISO(countdownEnd).diff(
     DateTime.fromISO(currentTime.toString()),
     "seconds"

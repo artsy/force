@@ -1,6 +1,6 @@
 import { Join, Separator } from "@artsy/palette"
-import React from "react"
-import { SettingsAuctionsRoute_me$data } from "__generated__/SettingsAuctionsRoute_me.graphql"
+import type React from "react"
+import type { SettingsAuctionsRoute_me$data } from "__generated__/SettingsAuctionsRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { UserActiveBidsFragmentContainer } from "./Components/UserActiveBids"
 import { UserBidHistoryFragmentContainer } from "./Components/UserBidHistory"
@@ -10,9 +10,9 @@ interface SettingsAuctionsRouteProps {
   me: SettingsAuctionsRoute_me$data
 }
 
-const SettingsAuctionsRoute: React.FC<React.PropsWithChildren<SettingsAuctionsRouteProps>> = ({
-  me,
-}) => {
+const SettingsAuctionsRoute: React.FC<
+  React.PropsWithChildren<SettingsAuctionsRouteProps>
+> = ({ me }) => {
   return (
     <Join separator={<Separator my={4} />}>
       <UserActiveBidsFragmentContainer me={me} />

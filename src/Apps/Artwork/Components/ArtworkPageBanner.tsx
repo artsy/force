@@ -1,8 +1,8 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
 import { Text } from "@artsy/palette"
-import { ArtworkPageBanner_artwork$key } from "__generated__/ArtworkPageBanner_artwork.graphql"
-import { ArtworkPageBanner_me$key } from "__generated__/ArtworkPageBanner_me.graphql"
+import type { ArtworkPageBanner_artwork$key } from "__generated__/ArtworkPageBanner_artwork.graphql"
+import type { ArtworkPageBanner_me$key } from "__generated__/ArtworkPageBanner_me.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { useRouter } from "System/Hooks/useRouter"
 import { FullBleedBanner } from "Components/FullBleedBanner"
@@ -13,7 +13,9 @@ interface ArtworkPageBannerProps {
   artwork: ArtworkPageBanner_artwork$key
   me: ArtworkPageBanner_me$key
 }
-export const ArtworkPageBanner: FC<React.PropsWithChildren<ArtworkPageBannerProps>> = props => {
+export const ArtworkPageBanner: FC<
+  React.PropsWithChildren<ArtworkPageBannerProps>
+> = props => {
   const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
   const me = useFragment(ME_FRAGMENT, props.me)
   const { match } = useRouter()

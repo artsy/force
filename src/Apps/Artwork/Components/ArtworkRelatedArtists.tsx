@@ -10,20 +10,20 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ArtworkRelatedArtists_artwork$data } from "__generated__/ArtworkRelatedArtists_artwork.graphql"
+import type { ArtworkRelatedArtists_artwork$data } from "__generated__/ArtworkRelatedArtists_artwork.graphql"
 import { hideGrid } from "Apps/Artwork/Components/OtherWorks"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import {
-  RelayPaginationProp,
+  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
 } from "react-relay"
 import createLogger from "Utils/logger"
 import { extractNodes } from "Utils/extractNodes"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtworkRelatedArtistsQuery } from "__generated__/ArtworkRelatedArtistsQuery.graphql"
+import type { ArtworkRelatedArtistsQuery } from "__generated__/ArtworkRelatedArtistsQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import track, { useTracking } from "react-tracking"
@@ -37,78 +37,77 @@ export interface ArtworkRelatedArtistsProps {
 
 const PAGE_SIZE = 6
 
-export const ArtworkRelatedArtists: React.FC<React.PropsWithChildren<ArtworkRelatedArtistsProps>> = track()(
-  props => {
-    const { trackEvent } = useTracking()
+export const ArtworkRelatedArtists: React.FC<
+  React.PropsWithChildren<ArtworkRelatedArtistsProps>
+> = track()(props => {
+  const { trackEvent } = useTracking()
 
-    const [fetchingNextPage, setFetchingNextPage] = useState(false)
+  const [fetchingNextPage, setFetchingNextPage] = useState(false)
 
-    const {
-      artwork: { artist },
-      relay,
-    } = props
+  const {
+    artwork: { artist },
+    relay,
+  } = props
 
-    if (hideGrid(artist?.related?.artistsConnection)) {
-      return null
-    }
-
-    const fetchData = () => {
-      if (!relay.hasMore() || relay.isLoading()) {
-        return
-      }
-
-      setFetchingNextPage(true)
-
-      relay.loadMore(PAGE_SIZE, error => {
-        if (error) {
-          logger.error(error)
-        }
-        setFetchingNextPage(false)
-      })
-    }
-
-    const artists = extractNodes(artist?.related?.artistsConnection)
-
-    return (
-      <Box data-test={ContextModule.relatedArtistsRail}>
-        <Text variant="lg-display">Related artists</Text>
-
-        <Spacer y={4} />
-
-        <GridColumns>
-          {artists.map((node, index) => {
-            return (
-              <Column key={index} span={[12, 6, 4, 4]}>
-                <EntityHeaderArtistFragmentContainer
-                  artist={node}
-                  onClick={() => {
-                    trackEvent({
-                      context_module:
-                        DeprecatedSchema.ContextModule.RelatedArtists,
-                      type: DeprecatedSchema.Type.ArtistCard,
-                      action_type: DeprecatedSchema.ActionType.Click,
-                    })
-                  }}
-                />
-              </Column>
-            )
-          })}
-        </GridColumns>
-
-        <Spacer y={4} />
-
-        {relay.hasMore() && (
-          <ShowMoreButton onClick={fetchData} loading={fetchingNextPage} />
-        )}
-      </Box>
-    )
+  if (hideGrid(artist?.related?.artistsConnection)) {
+    return null
   }
-)
 
-const ShowMoreButton: React.FC<React.PropsWithChildren<{ onClick: () => void; loading: boolean }>> = ({
-  onClick,
-  loading,
-}) => {
+  const fetchData = () => {
+    if (!relay.hasMore() || relay.isLoading()) {
+      return
+    }
+
+    setFetchingNextPage(true)
+
+    relay.loadMore(PAGE_SIZE, error => {
+      if (error) {
+        logger.error(error)
+      }
+      setFetchingNextPage(false)
+    })
+  }
+
+  const artists = extractNodes(artist?.related?.artistsConnection)
+
+  return (
+    <Box data-test={ContextModule.relatedArtistsRail}>
+      <Text variant="lg-display">Related artists</Text>
+
+      <Spacer y={4} />
+
+      <GridColumns>
+        {artists.map((node, index) => {
+          return (
+            <Column key={index} span={[12, 6, 4, 4]}>
+              <EntityHeaderArtistFragmentContainer
+                artist={node}
+                onClick={() => {
+                  trackEvent({
+                    context_module:
+                      DeprecatedSchema.ContextModule.RelatedArtists,
+                    type: DeprecatedSchema.Type.ArtistCard,
+                    action_type: DeprecatedSchema.ActionType.Click,
+                  })
+                }}
+              />
+            </Column>
+          )
+        })}
+      </GridColumns>
+
+      <Spacer y={4} />
+
+      {relay.hasMore() && (
+        <ShowMoreButton onClick={fetchData} loading={fetchingNextPage} />
+      )}
+    </Box>
+  )
+})
+
+const ShowMoreButton: React.FC<
+  React.PropsWithChildren<{ onClick: () => void; loading: boolean }>
+> = ({ onClick, loading }) => {
   return (
     <Flex justifyContent="center">
       <Button onClick={onClick} loading={loading}>
@@ -118,10 +117,11 @@ const ShowMoreButton: React.FC<React.PropsWithChildren<{ onClick: () => void; lo
   )
 }
 
-export const ArtworkRelatedArtistsPaginationContainer = createPaginationContainer(
-  ArtworkRelatedArtists,
-  {
-    artwork: graphql`
+export const ArtworkRelatedArtistsPaginationContainer =
+  createPaginationContainer(
+    ArtworkRelatedArtists,
+    {
+      artwork: graphql`
       fragment ArtworkRelatedArtists_artwork on Artwork
         @argumentDefinitions(
           count: { type: "Int", defaultValue: 6 }
@@ -146,27 +146,27 @@ export const ArtworkRelatedArtistsPaginationContainer = createPaginationContaine
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getConnectionFromProps(props) {
-      return props.artwork.artist?.related?.artistsConnection
     },
-    getFragmentVariables(prevVars, count) {
-      return {
-        ...prevVars,
-        count,
-      }
-    },
-    getVariables(props, { count, cursor }, fragmentVariables) {
-      return {
-        ...fragmentVariables,
-        count,
-        cursor,
-        artworkID: props.artwork.slug,
-      }
-    },
-    query: graphql`
+    {
+      direction: "forward",
+      getConnectionFromProps(props) {
+        return props.artwork.artist?.related?.artistsConnection
+      },
+      getFragmentVariables(prevVars, count) {
+        return {
+          ...prevVars,
+          count,
+        }
+      },
+      getVariables(props, { count, cursor }, fragmentVariables) {
+        return {
+          ...fragmentVariables,
+          count,
+          cursor,
+          artworkID: props.artwork.slug,
+        }
+      },
+      query: graphql`
       query ArtworkRelatedArtistsPaginationQuery(
         $count: Int!
         $cursor: String
@@ -178,8 +178,8 @@ export const ArtworkRelatedArtistsPaginationContainer = createPaginationContaine
         }
       }
     `,
-  }
-)
+    }
+  )
 
 const PLACEHOLDER = (
   <Skeleton>
@@ -213,9 +213,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtworkRelatedArtistsQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const ArtworkRelatedArtistsQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

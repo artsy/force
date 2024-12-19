@@ -1,13 +1,15 @@
 import { Box, Separator, Text } from "@artsy/palette"
 import { SendFeedback } from "Apps/Search/Components/SendFeedback"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { FC } from "react"
+import type { FC } from "react"
 
 interface ZeroStateProps {
   term: string
 }
 
-export const ZeroState: FC<React.PropsWithChildren<ZeroStateProps>> = ({ term }) => {
+export const ZeroState: FC<React.PropsWithChildren<ZeroStateProps>> = ({
+  term,
+}) => {
   const { hasFilters, filters } = useArtworkFilterContext()
 
   return (

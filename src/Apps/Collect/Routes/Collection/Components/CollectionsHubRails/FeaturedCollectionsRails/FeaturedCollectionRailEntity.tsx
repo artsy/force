@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react"
+import { type FC, useMemo } from "react"
 import { ReadMore, Text, Image, Box, Spacer } from "@artsy/palette"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
@@ -6,26 +6,22 @@ import currency from "currency.js"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FeaturedCollectionRailEntity_member$data } from "__generated__/FeaturedCollectionRailEntity_member.graphql"
+import type { FeaturedCollectionRailEntity_member$data } from "__generated__/FeaturedCollectionRailEntity_member.graphql"
 
 interface FeaturedCollectionRailEntityProps {
   member: FeaturedCollectionRailEntity_member$data
   index: number
 }
 
-export const FeaturedCollectionRailEntity: FC<React.PropsWithChildren<FeaturedCollectionRailEntityProps>> = ({
-  index,
-  member,
-}) => {
+export const FeaturedCollectionRailEntity: FC<
+  React.PropsWithChildren<FeaturedCollectionRailEntityProps>
+> = ({ index, member }) => {
   const { description, priceGuidance, slug, id, thumbnailImage, title } = member
 
   const { trackEvent } = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const handleClick = () => {
     trackEvent(
@@ -93,9 +89,8 @@ export const FeaturedCollectionRailEntity: FC<React.PropsWithChildren<FeaturedCo
   )
 }
 
-export const FeaturedCollectionRailEntityFragmentContainer = createFragmentContainer(
-  FeaturedCollectionRailEntity,
-  {
+export const FeaturedCollectionRailEntityFragmentContainer =
+  createFragmentContainer(FeaturedCollectionRailEntity, {
     member: graphql`
       fragment FeaturedCollectionRailEntity_member on MarketingCollection {
         id
@@ -113,5 +108,4 @@ export const FeaturedCollectionRailEntityFragmentContainer = createFragmentConta
         }
       }
     `,
-  }
-)
+  })

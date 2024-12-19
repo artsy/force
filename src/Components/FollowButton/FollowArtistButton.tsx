@@ -1,16 +1,16 @@
 import {
-  AuthContextModule,
+  type AuthContextModule,
   Intent,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { ButtonProps } from "@artsy/palette"
-import { FollowArtistButtonMutation } from "__generated__/FollowArtistButtonMutation.graphql"
-import * as React from "react"
-import { FollowArtistButton_artist$data } from "__generated__/FollowArtistButton_artist.graphql"
-import { FollowArtistButton_me$data } from "__generated__/FollowArtistButton_me.graphql"
-import { FollowArtistButtonQuery } from "__generated__/FollowArtistButtonQuery.graphql"
-import { FollowButton, FollowButtonRenderProps } from "./Button"
+import type { ButtonProps } from "@artsy/palette"
+import type { FollowArtistButtonMutation } from "__generated__/FollowArtistButtonMutation.graphql"
+import type * as React from "react"
+import type { FollowArtistButton_artist$data } from "__generated__/FollowArtistButton_artist.graphql"
+import type { FollowArtistButton_me$data } from "__generated__/FollowArtistButton_me.graphql"
+import type { FollowArtistButtonQuery } from "__generated__/FollowArtistButtonQuery.graphql"
+import { FollowButton, type FollowButtonRenderProps } from "./Button"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"

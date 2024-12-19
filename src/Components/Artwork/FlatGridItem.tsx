@@ -9,7 +9,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { RouterLink } from "System/Components/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { userIsTeam } from "Utils/user"
-import { FlatGridItem_artwork$data } from "__generated__/FlatGridItem_artwork.graphql"
+import type { FlatGridItem_artwork$data } from "__generated__/FlatGridItem_artwork.graphql"
 import Metadata from "./Metadata"
 import { useSaveButton } from "./SaveButton"
 import { DeprecatedSaveButtonQueryRenderer } from "Components/Artwork/SaveButton/DeprecatedSaveButton"
@@ -19,7 +19,10 @@ interface FlatGridItemProps {
   onClick?: () => void
 }
 
-const FlatGridItem: React.FC<React.PropsWithChildren<FlatGridItemProps>> = ({ artwork, onClick }) => {
+const FlatGridItem: React.FC<React.PropsWithChildren<FlatGridItemProps>> = ({
+  artwork,
+  onClick,
+}) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
   const { containerProps, isSaveButtonVisible } = useSaveButton({

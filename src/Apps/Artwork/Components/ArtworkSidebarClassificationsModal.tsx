@@ -10,8 +10,8 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtworkSidebarClassificationsModalQuery } from "__generated__/ArtworkSidebarClassificationsModalQuery.graphql"
-import { ArtworkSidebarClassificationsModal_viewer$data } from "__generated__/ArtworkSidebarClassificationsModal_viewer.graphql"
+import type { ArtworkSidebarClassificationsModalQuery } from "__generated__/ArtworkSidebarClassificationsModalQuery.graphql"
+import type { ArtworkSidebarClassificationsModal_viewer$data } from "__generated__/ArtworkSidebarClassificationsModal_viewer.graphql"
 
 const ARTWORK_CLASSIFICATIONS_PLACEHOLDER = [...new Array(3)].map((_, i) => {
   return (
@@ -35,12 +35,9 @@ interface ArtworkSidebarClassificationsModalProps {
   showDisclaimer?: boolean
 }
 
-const ArtworkSidebarClassificationsModal: React.FC<React.PropsWithChildren<ArtworkSidebarClassificationsModalProps>> = ({
-  viewer,
-  show,
-  onClose,
-  showDisclaimer = true,
-}) => {
+const ArtworkSidebarClassificationsModal: React.FC<
+  React.PropsWithChildren<ArtworkSidebarClassificationsModalProps>
+> = ({ viewer, show, onClose, showDisclaimer = true }) => {
   if (!show) return null
 
   return (
@@ -83,9 +80,8 @@ const ArtworkSidebarClassificationsModal: React.FC<React.PropsWithChildren<Artwo
   )
 }
 
-export const ArtworkSidebarClassificationsModalFragmentContainer = createFragmentContainer(
-  ArtworkSidebarClassificationsModal,
-  {
+export const ArtworkSidebarClassificationsModalFragmentContainer =
+  createFragmentContainer(ArtworkSidebarClassificationsModal, {
     viewer: graphql`
       fragment ArtworkSidebarClassificationsModal_viewer on Viewer {
         artworkAttributionClasses {
@@ -95,8 +91,7 @@ export const ArtworkSidebarClassificationsModalFragmentContainer = createFragmen
         }
       }
     `,
-  }
-)
+  })
 
 export const ARTWORK_SIDEBAR_CLASSIFICATIONS_MODAL_QUERY = graphql`
   query ArtworkSidebarClassificationsModalQuery {
@@ -106,10 +101,11 @@ export const ARTWORK_SIDEBAR_CLASSIFICATIONS_MODAL_QUERY = graphql`
   }
 `
 
-export const ArtworkSidebarClassificationsModalQueryRenderer: React.FC<React.PropsWithChildren<Omit<
-  ArtworkSidebarClassificationsModalProps,
-  "viewer"
->>> = rest => {
+export const ArtworkSidebarClassificationsModalQueryRenderer: React.FC<
+  React.PropsWithChildren<
+    Omit<ArtworkSidebarClassificationsModalProps, "viewer">
+  >
+> = rest => {
   const { relayEnvironment } = useSystemContext()
 
   return (

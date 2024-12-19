@@ -11,13 +11,13 @@ import { themeGet } from "@styled-system/theme-get"
 import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
 import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer"
 import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { isTouch } from "Utils/device"
 import { useDetectActivity } from "Utils/Hooks/useDetectActivity"
 import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
-import { ArtworkImageBrowserLarge_artwork$data } from "__generated__/ArtworkImageBrowserLarge_artwork.graphql"
+import type { ArtworkImageBrowserLarge_artwork$data } from "__generated__/ArtworkImageBrowserLarge_artwork.graphql"
 
 interface ArtworkImageBrowserLargeProps {
   artwork: ArtworkImageBrowserLarge_artwork$data
@@ -28,14 +28,9 @@ interface ArtworkImageBrowserLargeProps {
   maxHeight: number
 }
 
-const ArtworkImageBrowserLarge: React.FC<React.PropsWithChildren<ArtworkImageBrowserLargeProps>> = ({
-  artwork,
-  activeIndex,
-  onNext,
-  onPrev,
-  onChange,
-  maxHeight,
-}) => {
+const ArtworkImageBrowserLarge: React.FC<
+  React.PropsWithChildren<ArtworkImageBrowserLargeProps>
+> = ({ artwork, activeIndex, onNext, onPrev, onChange, maxHeight }) => {
   const { figures } = artwork
 
   const activeFigure = figures[activeIndex]
@@ -143,9 +138,8 @@ const ArtworkImageBrowserLarge: React.FC<React.PropsWithChildren<ArtworkImageBro
   )
 }
 
-export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer(
-  ArtworkImageBrowserLarge,
-  {
+export const ArtworkImageBrowserLargeFragmentContainer =
+  createFragmentContainer(ArtworkImageBrowserLarge, {
     artwork: graphql`
       fragment ArtworkImageBrowserLarge_artwork on Artwork
         @argumentDefinitions(
@@ -169,8 +163,7 @@ export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })
 
 const NextPrevious = styled(Clickable)`
   position: absolute;

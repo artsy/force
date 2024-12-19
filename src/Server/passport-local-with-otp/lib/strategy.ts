@@ -1,7 +1,7 @@
 /**
  * Module dependencies.
  */
-let passport = require("passport-strategy"),
+const passport = require("passport-strategy"),
   util = require("util"),
   lookup = require("./utils").lookup
 
@@ -71,13 +71,13 @@ util.inherits(Strategy, passport.Strategy)
  */
 Strategy.prototype.authenticate = function (req, options) {
   options = options || {}
-  let username =
+  const username =
     lookup(req.body, this._usernameField) ||
     lookup(req.query, this._usernameField)
-  let password =
+  const password =
     lookup(req.body, this._passwordField) ||
     lookup(req.query, this._passwordField)
-  let otp =
+  const otp =
     lookup(req.body, this._otpField) || lookup(req.query, this._otpField)
 
   if (!username || !password) {
@@ -88,7 +88,7 @@ Strategy.prototype.authenticate = function (req, options) {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-this-alias
-  let self = this
+  const self = this
 
   function verified(err, user, info) {
     if (err) {

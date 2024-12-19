@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ArtistAppFragmentContainer } from "Apps/Artist/ArtistApp"
-import { ArtistApp_Test_Query } from "__generated__/ArtistApp_Test_Query.graphql"
+import type { ArtistApp_Test_Query } from "__generated__/ArtistApp_Test_Query.graphql"
 import { findCurrentRoute } from "System/Router/Utils/routeUtils"
 
 jest.unmock("react-relay")
@@ -21,7 +21,7 @@ jest.mock("../Components/ArtistBackLink.tsx", () => ({
 }))
 
 describe("ArtistApp", () => {
-  let mockfindCurrentRoute = findCurrentRoute as jest.Mock
+  const mockfindCurrentRoute = findCurrentRoute as jest.Mock
 
   const { getWrapper } = setupTestWrapper<ArtistApp_Test_Query>({
     Component: ArtistAppFragmentContainer,

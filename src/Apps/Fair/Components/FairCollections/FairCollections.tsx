@@ -1,17 +1,16 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairCollections_fair$data } from "__generated__/FairCollections_fair.graphql"
-import { Box, BoxProps, Shelf, Spacer, Text } from "@artsy/palette"
+import type { FairCollections_fair$data } from "__generated__/FairCollections_fair.graphql"
+import { Box, type BoxProps, Shelf, Spacer, Text } from "@artsy/palette"
 import { FairCollectionFragmentContainer as FairCollection } from "./FairCollection"
 
 interface FairCollectionsProps extends BoxProps {
   fair: FairCollections_fair$data
 }
 
-export const FairCollections: React.FC<React.PropsWithChildren<FairCollectionsProps>> = ({
-  fair,
-  ...rest
-}) => {
+export const FairCollections: React.FC<
+  React.PropsWithChildren<FairCollectionsProps>
+> = ({ fair, ...rest }) => {
   return (
     <Box {...rest}>
       <Text variant="lg">Curated Highlights</Text>

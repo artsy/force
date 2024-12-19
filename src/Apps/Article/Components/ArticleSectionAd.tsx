@@ -1,8 +1,8 @@
 import { FullBleed } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleAd } from "./ArticleAd/ArticleAd"
-import { ArticleSectionAd_article$data } from "__generated__/ArticleSectionAd_article.graphql"
+import type { ArticleSectionAd_article$data } from "__generated__/ArticleSectionAd_article.graphql"
 
 const IMAGE_SECTIONS = [
   "ArticleSectionImageCollection",
@@ -19,7 +19,10 @@ interface ArticleSectionAdProps {
  * Features have ads placed after the first and third image-sections.
  * Standard layouts have a single ad placed after the second image-section.
  */
-const ArticleSectionAd: FC<React.PropsWithChildren<ArticleSectionAdProps>> = ({ article, i }) => {
+const ArticleSectionAd: FC<React.PropsWithChildren<ArticleSectionAdProps>> = ({
+  article,
+  i,
+}) => {
   const [first, second, third] = article.sections
     .map((section, index) => {
       return IMAGE_SECTIONS.includes(section.__typename) ? index : false

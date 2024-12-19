@@ -1,9 +1,9 @@
-import {
+import type {
   CategoryPreferences,
   Destination,
 } from "@segment/consent-manager/types/types"
 import { useCookieConsentManager } from "Components/CookieConsentManager/CookieConsentManagerContext"
-import { FC, useEffect } from "react"
+import { type FC, useEffect } from "react"
 
 interface CookieConsentManagerSetterProps {
   destinations: Destination[]
@@ -16,10 +16,9 @@ interface CookieConsentManagerSetterProps {
  * save the destinations and preferences to the context, which sits above the
  * `ConsentManagerBuilder` in the component tree.
  */
-export const CookieConsentManagerSetter: FC<React.PropsWithChildren<CookieConsentManagerSetterProps>> = ({
-  destinations,
-  preferences,
-}) => {
+export const CookieConsentManagerSetter: FC<
+  React.PropsWithChildren<CookieConsentManagerSetterProps>
+> = ({ destinations, preferences }) => {
   const { setDestinations, setPreferences } = useCookieConsentManager()
 
   useEffect(() => {

@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { Button, Text, Spacer, GridColumns, Column } from "@artsy/palette"
-import { ArtistConsignHowToSell_artist$data } from "__generated__/ArtistConsignHowToSell_artist.graphql"
+import type { ArtistConsignHowToSell_artist$data } from "__generated__/ArtistConsignHowToSell_artist.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
@@ -16,9 +16,9 @@ interface ArtistConsignHowtoSellProps {
   artist: ArtistConsignHowToSell_artist$data
 }
 
-const ArtistConsignHowtoSell: React.FC<React.PropsWithChildren<ArtistConsignHowtoSellProps>> = ({
-  artist,
-}) => {
+const ArtistConsignHowtoSell: React.FC<
+  React.PropsWithChildren<ArtistConsignHowtoSellProps>
+> = ({ artist }) => {
   const tracking = useTracking()
 
   return (
@@ -86,11 +86,13 @@ export const ArtistConsignHowtoSellFragmentContainer = createFragmentContainer(
   }
 )
 
-const Section: React.FC<React.PropsWithChildren<{
-  icon: React.ReactNode
-  text: string
-  description: string
-}>> = ({ icon, text, description }) => {
+const Section: React.FC<
+  React.PropsWithChildren<{
+    icon: React.ReactNode
+    text: string
+    description: string
+  }>
+> = ({ icon, text, description }) => {
   return (
     <Column span={4}>
       {icon}

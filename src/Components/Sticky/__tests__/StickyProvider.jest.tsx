@@ -1,6 +1,6 @@
 import {
   getOffsetTopForSticky,
-  TSticky,
+  type TSticky,
 } from "Components/Sticky/StickyProvider"
 
 const EXAMPLE_STICKIES: TSticky[] = [

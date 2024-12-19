@@ -13,14 +13,14 @@ import { MarketingHeader } from "Apps/Marketing/Components/MarketingHeader"
 import { MarketingFeaturedArtworksRailQueryRenderer } from "Apps/Marketing/Components/MarketingFeaturedArtworksRail"
 import { MarketingTrendingArtistsRailQueryRenderer } from "Apps/Marketing/Components/MarketingTrendingArtistsRail"
 import { MetaTags } from "Components/MetaTags"
-import { FC } from "react"
+import type { FC } from "react"
 import { MarketingCollectionCell } from "Apps/Marketing/Components/MarketingCollectionCell"
 import { MarketingQuizCTA } from "Apps/Marketing/Components/MarketingQuizCTA"
 import { BRAND_PALETTE } from "Apps/Marketing/Utils/brandPalette"
 
-export const MarketingFindArtYouLoveRoute: FC<React.PropsWithChildren<
-  unknown
->> = () => {
+export const MarketingFindArtYouLoveRoute: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <>
       <MetaTags
@@ -67,22 +67,19 @@ export const MarketingFindArtYouLoveRoute: FC<React.PropsWithChildren<
               title: "Save artworks",
               subtitle:
                 "Keep track of artworks that catch your eye, and get better recommendations with every save.",
-              src:
-                "https://files.artsy.net/images/marketing_find_01_april-14.jpg",
+              src: "https://files.artsy.net/images/marketing_find_01_april-14.jpg",
             },
             {
               title: "Follow artists",
               subtitle:
                 "Get updates on your favorite artists, including new artworks, shows, and more.",
-              src:
-                "https://files.artsy.net/images/marketing_find_02_april-14.jpg",
+              src: "https://files.artsy.net/images/marketing_find_02_april-14.jpg",
             },
             {
               title: "Set alerts",
               subtitle:
                 "On the hunt for a particular work? Create an alert and we’ll let you know when there’s a match.",
-              src:
-                "https://files.artsy.net/images/marketing_find_03_april-14.jpg",
+              src: "https://files.artsy.net/images/marketing_find_03_april-14.jpg",
             },
           ]}
         />

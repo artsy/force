@@ -1,8 +1,10 @@
-import * as React from "react"
+import type * as React from "react"
 import { SortFilter } from "Components/SortFilter"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 
-export const ArtworkSortFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const ArtworkSortFilter: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const context = useArtworkFilterContext()
   const { sortOptions, filters } = context
 

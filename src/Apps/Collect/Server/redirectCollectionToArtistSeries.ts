@@ -1,6 +1,9 @@
 import { collectionToArtistSeriesSlugMap } from "Apps/Collect/Utils/collectionToArtistSeriesSlugMap"
-import { NextFunction } from "express"
-import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type { NextFunction } from "express"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 
 export function redirectCollectionToArtistSeries(
   req: ArtsyRequest,

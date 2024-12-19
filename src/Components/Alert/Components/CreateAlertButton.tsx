@@ -1,6 +1,6 @@
-import { FC } from "react"
+import type { FC } from "react"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
-import { Button, ButtonProps } from "@artsy/palette"
+import { Button, type ButtonProps } from "@artsy/palette"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 
@@ -13,11 +13,9 @@ export interface CreateAlertButtonProps extends ButtonProps {
   renderButton?: (props: RenderButtonProps) => JSX.Element
 }
 
-export const CreateAlertButton: FC<React.PropsWithChildren<CreateAlertButtonProps>> = ({
-  onClick,
-  renderButton,
-  ...buttonProps
-}) => {
+export const CreateAlertButton: FC<
+  React.PropsWithChildren<CreateAlertButtonProps>
+> = ({ onClick, renderButton, ...buttonProps }) => {
   const { clickedCreateAlert } = useAlertTracking()
   const { dispatch } = useAlertContext()
 

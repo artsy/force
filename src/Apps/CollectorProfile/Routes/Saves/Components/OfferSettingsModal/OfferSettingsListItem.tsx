@@ -1,26 +1,27 @@
 import { Flex, Image, Toggle, Text, Spacer } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { OfferSettingsListItem_item$data } from "__generated__/OfferSettingsListItem_item.graphql"
+import type { OfferSettingsListItem_item$data } from "__generated__/OfferSettingsListItem_item.graphql"
 import { useFormikContext } from "formik"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
-import { OfferSettingsFormModel } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsModal"
+import type { OfferSettingsFormModel } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsModal"
 import HideIcon from "@artsy/icons/HideIcon"
 
 interface OfferSettingsListItemProps {
   item: OfferSettingsListItem_item$data
 }
 
-export const OfferSettingsListItem: FC<React.PropsWithChildren<OfferSettingsListItemProps>> = props => {
+export const OfferSettingsListItem: FC<
+  React.PropsWithChildren<OfferSettingsListItemProps>
+> = props => {
   const { item } = props
   const artworkNodes = extractNodes(item.artworksConnection)
   const imageURL = artworkNodes[0]?.image?.resized?.src ?? null
   const totalArtworks = item.artworksCount ?? 0
-  const { values, setFieldValue, isSubmitting } = useFormikContext<
-    OfferSettingsFormModel
-  >()
+  const { values, setFieldValue, isSubmitting } =
+    useFormikContext<OfferSettingsFormModel>()
 
   return (
     <Flex justifyContent="space-between">

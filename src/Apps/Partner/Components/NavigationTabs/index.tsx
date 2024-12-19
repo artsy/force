@@ -3,14 +3,16 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { Sticky } from "Components/Sticky"
-import { NavigationTabs_partner$data } from "__generated__/NavigationTabs_partner.graphql"
+import type { NavigationTabs_partner$data } from "__generated__/NavigationTabs_partner.graphql"
 import { useJump } from "Utils/Hooks/useJump"
 
 interface NavigationTabsProps {
   partner: NavigationTabs_partner$data
 }
 
-export const NavigationTabs: React.FC<React.PropsWithChildren<NavigationTabsProps>> = ({ partner }) => {
+export const NavigationTabs: React.FC<
+  React.PropsWithChildren<NavigationTabsProps>
+> = ({ partner }) => {
   const {
     slug,
     locations,

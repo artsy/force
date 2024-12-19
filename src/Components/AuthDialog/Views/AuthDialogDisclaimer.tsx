@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { SkeletonText, Stack, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
@@ -6,9 +6,11 @@ import { isTouch } from "Utils/device"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 
-interface AuthDialogDisclaimerProps {}
+type AuthDialogDisclaimerProps = {}
 
-export const AuthDialogDisclaimer: FC<React.PropsWithChildren<AuthDialogDisclaimerProps>> = props => {
+export const AuthDialogDisclaimer: FC<
+  React.PropsWithChildren<AuthDialogDisclaimerProps>
+> = props => {
   const { loading, isAutomaticallySubscribed } = useCountryCode()
 
   if (loading) {
@@ -60,7 +62,9 @@ export const AuthDialogDisclaimer: FC<React.PropsWithChildren<AuthDialogDisclaim
   )
 }
 
-export const AuthDialogDisclaimerSkeleton: FC<React.PropsWithChildren<unknown>> = () => {
+export const AuthDialogDisclaimerSkeleton: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Stack gap={1}>
       <SkeletonText

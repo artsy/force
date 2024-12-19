@@ -1,4 +1,4 @@
-import { ArtworkSidebarCurrentBidInfo_artwork$data } from "__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
+import type { ArtworkSidebarCurrentBidInfo_artwork$data } from "__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
@@ -34,10 +34,9 @@ const TextWithPulse = styled(Text)`
   animation-iteration-count: 1;
 `
 
-export const ArtworkSidebarCurrentBidInfo: React.FC<React.PropsWithChildren<ArtworkSidebarCurrentBidInfoProps>> = ({
-  artwork,
-  currentBidChanged,
-}) => {
+export const ArtworkSidebarCurrentBidInfo: React.FC<
+  React.PropsWithChildren<ArtworkSidebarCurrentBidInfoProps>
+> = ({ artwork, currentBidChanged }) => {
   const { trackEvent } = useTracking()
 
   const { dialogComponent, showDialog, hideDialog } = useDialog({
@@ -192,9 +191,8 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<React.PropsWithChildren<Artw
   )
 }
 
-export const ArtworkSidebarCurrentBidInfoFragmentContainer = createFragmentContainer(
-  ArtworkSidebarCurrentBidInfo,
-  {
+export const ArtworkSidebarCurrentBidInfoFragmentContainer =
+  createFragmentContainer(ArtworkSidebarCurrentBidInfo, {
     artwork: graphql`
       fragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {
         sale {
@@ -234,5 +232,4 @@ export const ArtworkSidebarCurrentBidInfoFragmentContainer = createFragmentConta
         ...ArtworkSidebarBiddingClosedMessage_artwork
       }
     `,
-  }
-)
+  })

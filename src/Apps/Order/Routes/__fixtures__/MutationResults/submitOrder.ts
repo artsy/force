@@ -20,8 +20,7 @@ export const submitOrderWithFailureCardDeclined = {
       error: {
         type: "processing",
         code: "charge_authorization_failed",
-        data:
-          '{"id":null,"failure_code":"card_declined","failure_message":"Your card was declined.","decline_code":"card_declined"}',
+        data: '{"id":null,"failure_code":"card_declined","failure_message":"Your card was declined.","decline_code":"card_declined"}',
       },
     },
   },
@@ -34,8 +33,7 @@ export const submitOrderWithFailureInsufficientFunds = {
       error: {
         type: "processing",
         code: "charge_authorization_failed",
-        data:
-          '{"id":null,"failure_code":"card_declined","failure_message":"Your card has insufficient funds to complete the purchase.","decline_code":"insufficient_funds"}',
+        data: '{"id":null,"failure_code":"card_declined","failure_message":"Your card has insufficient funds to complete the purchase.","decline_code":"insufficient_funds"}',
       },
     },
   },
@@ -48,8 +46,7 @@ export const submitOrderWithFailureCurrencyNotSupported = {
       error: {
         type: "processing",
         code: "charge_authorization_failed",
-        data:
-          '{"id":null,"failure_code":"card_declined","failure_message":"Your card is not supported for this currency.","decline_code":"currency_not_supported"}',
+        data: '{"id":null,"failure_code":"card_declined","failure_message":"Your card is not supported for this currency.","decline_code":"currency_not_supported"}',
       },
     },
   },

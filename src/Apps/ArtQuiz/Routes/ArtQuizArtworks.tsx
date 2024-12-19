@@ -1,5 +1,5 @@
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtQuizArtworks_me$data } from "__generated__/ArtQuizArtworks_me.graphql"
+import type { ArtQuizArtworks_me$data } from "__generated__/ArtQuizArtworks_me.graphql"
 import {
   Clickable,
   Flex,
@@ -10,12 +10,12 @@ import {
 } from "@artsy/palette"
 import {
   ArtQuizButton,
-  ArtQuizButtonRef,
+  type ArtQuizButtonRef,
 } from "Apps/ArtQuiz/Components/ArtQuizButton"
 import { Mode, useArtQuizCards } from "Apps/ArtQuiz/Components/ArtQuizCard"
 import { useSwipe } from "Apps/ArtQuiz/Hooks/useSwipe"
 import { useDislikeArtwork } from "Apps/ArtQuiz/Hooks/useDislikeArtwork"
-import { FC, useCallback, useRef, useState } from "react"
+import { type FC, useCallback, useRef, useState } from "react"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
@@ -33,7 +33,9 @@ interface ArtQuizArtworksProps {
   me: ArtQuizArtworks_me$data
 }
 
-export const ArtQuizArtworks: FC<React.PropsWithChildren<ArtQuizArtworksProps>> = ({ me }) => {
+export const ArtQuizArtworks: FC<
+  React.PropsWithChildren<ArtQuizArtworksProps>
+> = ({ me }) => {
   const { submitMutation: submitDislike } = useDislikeArtwork()
   const { submitMutation: submitSave } = useSaveArtwork()
   const { submitMutation: submitUpdate } = useUpdateQuiz()

@@ -1,9 +1,9 @@
 import { screen, waitFor } from "@testing-library/react"
 import { AddressVerificationFlowFragmentContainer } from "Apps/Order/Components/AddressVerificationFlow"
-import { AddressVerificationFlow_Test_Query } from "__generated__/AddressVerificationFlow_Test_Query.graphql"
+import type { AddressVerificationFlow_Test_Query } from "__generated__/AddressVerificationFlow_Test_Query.graphql"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
+import type { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
@@ -48,11 +48,10 @@ beforeAll(() => {
   }))
 })
 
-const { renderWithRelay } = setupTestWrapperTL<
-  AddressVerificationFlow_Test_Query
->({
-  Component: AddressVerificationFlowFragmentContainer,
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<AddressVerificationFlow_Test_Query>({
+    Component: AddressVerificationFlowFragmentContainer,
+    query: graphql`
     query AddressVerificationFlow_Test_Query($address: VerifyAddressInput!)
       @relay_test_operation {
       verifyAddress(input: $address) {
@@ -60,8 +59,8 @@ const { renderWithRelay } = setupTestWrapperTL<
       }
     }
   `,
-  variables: { address: mockInputAddress },
-})
+    variables: { address: mockInputAddress },
+  })
 
 type SuccessType = Extract<
   AddressVerificationFlow_verifyAddress$data["verifyAddressOrError"],

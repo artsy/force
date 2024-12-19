@@ -1,6 +1,6 @@
 import { Flex, SkeletonText, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import * as React from "react"
+import type * as React from "react"
 
 interface HeaderProps {
   buttonHref?: string
@@ -28,7 +28,11 @@ export const Header: React.FC<React.PropsWithChildren<HeaderProps>> = ({
   )
 }
 
-export const HeaderPlaceholder: React.FC<React.PropsWithChildren<Omit<HeaderProps, "buttonHref"> & { buttonHref?: boolean }>> = ({ buttonHref, children, title }) => {
+export const HeaderPlaceholder: React.FC<
+  React.PropsWithChildren<
+    Omit<HeaderProps, "buttonHref"> & { buttonHref?: boolean }
+  >
+> = ({ buttonHref, children, title }) => {
   return (
     <Flex flexDirection="row" justifyContent="space-between">
       <SkeletonText variant="lg-display">{title}</SkeletonText>

@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { InstitutionsRouteFragmentContainer } from "Apps/Partners/Routes/InstitutionsRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { InstitutionsRouteFragmentContainer_Test_Query } from "__generated__/InstitutionsRouteFragmentContainer_Test_Query.graphql"
+import type { InstitutionsRouteFragmentContainer_Test_Query } from "__generated__/InstitutionsRouteFragmentContainer_Test_Query.graphql"
 import { MockBoot } from "DevTools/MockBoot"
 import { screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
@@ -29,24 +29,23 @@ jest.mock("Utils/Hooks/useStableShuffle", () => ({
   useStableShuffle: ({ items }) => ({ shuffled: items }),
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<
-  InstitutionsRouteFragmentContainer_Test_Query
->({
-  Component: ({ viewer }) => {
-    return (
-      <MockBoot>
-        <InstitutionsRouteFragmentContainer viewer={viewer!} />
-      </MockBoot>
-    )
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<InstitutionsRouteFragmentContainer_Test_Query>({
+    Component: ({ viewer }) => {
+      return (
+        <MockBoot>
+          <InstitutionsRouteFragmentContainer viewer={viewer!} />
+        </MockBoot>
+      )
+    },
+    query: graphql`
     query InstitutionsRouteFragmentContainer_Test_Query @relay_test_operation {
       viewer {
         ...InstitutionsRoute_viewer
       }
     }
   `,
-})
+  })
 
 describe("InstitutionsRoute", () => {
   const mockTracking = useTracking as jest.Mock

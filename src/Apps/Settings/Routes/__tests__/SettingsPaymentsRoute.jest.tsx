@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { SettingsPaymentsRouteFragmentContainer } from "Apps/Settings/Routes/Payments/SettingsPaymentsRoute"
-import { SettingsPaymentsRoute_Test_Query } from "__generated__/SettingsPaymentsRoute_Test_Query.graphql"
+import type { SettingsPaymentsRoute_Test_Query } from "__generated__/SettingsPaymentsRoute_Test_Query.graphql"
 import { useDeleteCreditCard } from "Apps/Settings/Routes/Payments/useDeleteCreditCard"
 import { useDeleteBankAccount } from "Apps/Settings/Routes/Payments/useDeleteBankAccount"
 
@@ -10,20 +10,19 @@ jest.unmock("react-relay")
 jest.mock("Apps/Settings/Routes/Payments/useDeleteBankAccount")
 jest.mock("Apps/Settings/Routes/Payments/useDeleteCreditCard")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  SettingsPaymentsRoute_Test_Query
->({
-  Component: ({ me }) => {
-    return <SettingsPaymentsRouteFragmentContainer me={me as any} />
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<SettingsPaymentsRoute_Test_Query>({
+    Component: ({ me }) => {
+      return <SettingsPaymentsRouteFragmentContainer me={me as any} />
+    },
+    query: graphql`
     query SettingsPaymentsRoute_Test_Query @relay_test_operation {
       me {
         ...SettingsPaymentsRoute_me
       }
     }
   `,
-})
+  })
 
 const mockUseDeleteBankAccount = useDeleteBankAccount as jest.Mock
 const mockUseDeleteCreditCard = useDeleteCreditCard as jest.Mock

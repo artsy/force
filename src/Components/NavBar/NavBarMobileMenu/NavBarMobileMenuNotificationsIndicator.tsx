@@ -1,19 +1,19 @@
 import { useContext } from "react"
 import { graphql } from "react-relay"
-import { NavBarMobileMenuNotificationsIndicatorQuery } from "__generated__/NavBarMobileMenuNotificationsIndicatorQuery.graphql"
+import type { NavBarMobileMenuNotificationsIndicatorQuery } from "__generated__/NavBarMobileMenuNotificationsIndicatorQuery.graphql"
 import { SystemContext } from "System/Contexts/SystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { createFragmentContainer } from "react-relay"
-import { NavBarMobileMenuNotificationsIndicator_me$data } from "__generated__/NavBarMobileMenuNotificationsIndicator_me.graphql"
+import type { NavBarMobileMenuNotificationsIndicator_me$data } from "__generated__/NavBarMobileMenuNotificationsIndicator_me.graphql"
 import { NavBarNotificationIndicator } from "Components/NavBar/NavBarNotificationIndicator"
 
 interface NavBarMobileMenuNotificationsIndicatorProps {
   me?: NavBarMobileMenuNotificationsIndicator_me$data | null
 }
 
-export const NavBarMobileMenuNotificationsIndicator: React.FC<React.PropsWithChildren<NavBarMobileMenuNotificationsIndicatorProps>> = ({
-  me,
-}) => {
+export const NavBarMobileMenuNotificationsIndicator: React.FC<
+  React.PropsWithChildren<NavBarMobileMenuNotificationsIndicatorProps>
+> = ({ me }) => {
   const unreadConversationCount = me?.unreadConversationCount ?? 0
   const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
   const unseenNotificationsCount = me?.unseenNotificationsCount ?? 0
@@ -37,9 +37,8 @@ export const NavBarMobileMenuNotificationsIndicator: React.FC<React.PropsWithChi
   )
 }
 
-export const NavBarMobileMenuNotificationsIndicatorFragmentContainer = createFragmentContainer(
-  NavBarMobileMenuNotificationsIndicator,
-  {
+export const NavBarMobileMenuNotificationsIndicatorFragmentContainer =
+  createFragmentContainer(NavBarMobileMenuNotificationsIndicator, {
     me: graphql`
       fragment NavBarMobileMenuNotificationsIndicator_me on Me {
         unreadConversationCount
@@ -47,10 +46,11 @@ export const NavBarMobileMenuNotificationsIndicatorFragmentContainer = createFra
         unseenNotificationsCount
       }
     `,
-  }
-)
+  })
 
-export const NavBarMobileMenuNotificationsIndicatorQueryRenderer: React.FC<React.PropsWithChildren<{}>> = () => {
+export const NavBarMobileMenuNotificationsIndicatorQueryRenderer: React.FC<
+  React.PropsWithChildren<{}>
+> = () => {
   const { relayEnvironment } = useContext(SystemContext)
 
   return (

@@ -41,15 +41,13 @@ const FAIR_EXHIBITORS_FIXTURE = {
         profile: {
           icon: {
             resized: {
-              src:
-                "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fit&width=50&height=50&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKw5-1P5ytRxpSxBTMenYxg%2Flarge.jpg",
+              src: "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fit&width=50&height=50&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKw5-1P5ytRxpSxBTMenYxg%2Flarge.jpg",
               srcSet:
                 "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fit&width=50&height=50&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKw5-1P5ytRxpSxBTMenYxg%2Flarge.jpg 1x, https://d196wkiy8qx2u5.cloudfront.net?resize_to=fit&width=100&height=100&quality=50&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKw5-1P5ytRxpSxBTMenYxg%2Flarge.jpg 2x",
             },
           },
           image: {
-            url:
-              "https://d32dm0rphc51dk.cloudfront.net/ZVgfEYpNiJD0wVUTik19LQ/square.jpg",
+            url: "https://d32dm0rphc51dk.cloudfront.net/ZVgfEYpNiJD0wVUTik19LQ/square.jpg",
           },
         },
       },
@@ -64,15 +62,13 @@ const FAIR_EXHIBITORS_FIXTURE = {
         profile: {
           icon: {
             resized: {
-              src:
-                "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fit&width=50&height=50&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKdNH0s8y2HGtVxWQZy5dkg%2Flarge.jpg",
+              src: "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fit&width=50&height=50&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKdNH0s8y2HGtVxWQZy5dkg%2Flarge.jpg",
               srcSet:
                 "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fit&width=50&height=50&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKdNH0s8y2HGtVxWQZy5dkg%2Flarge.jpg 1x, https://d196wkiy8qx2u5.cloudfront.net?resize_to=fit&width=100&height=100&quality=50&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKdNH0s8y2HGtVxWQZy5dkg%2Flarge.jpg 2x",
             },
           },
           image: {
-            url:
-              "https://d32dm0rphc51dk.cloudfront.net/wAZ4Kk9IE0lCpdRJi7MJsA/wide.jpg",
+            url: "https://d32dm0rphc51dk.cloudfront.net/wAZ4Kk9IE0lCpdRJi7MJsA/wide.jpg",
           },
         },
       },

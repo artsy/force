@@ -10,13 +10,13 @@ jest.mock("Server/passport/lib/options", () => ({
   logoutPath: "/users/sign_out",
 }))
 
-describe("token login middleware", function () {
+describe("token login middleware", () => {
   let req
   let res
   let next
 
-  beforeEach(function () {
-    for (let method of [
+  beforeEach(() => {
+    for (const method of [
       "get",
       "end",
       "set",
@@ -29,8 +29,8 @@ describe("token login middleware", function () {
     }
   })
 
-  describe("#headerLogin", function () {
-    beforeEach(function () {
+  describe("#headerLogin", () => {
+    beforeEach(() => {
       req = {
         query: {},
         get: jest.fn(() => "access-foo-token"),
@@ -40,20 +40,20 @@ describe("token login middleware", function () {
       next = jest.fn()
     })
 
-    it("logs in a user if they pass their access token as a header", function () {
+    it("logs in a user if they pass their access token as a header", () => {
       headerLogin(req, res, next)
       expect(req.login.mock.calls[0][0].accessToken).toEqual("access-foo-token")
     })
 
-    it("does not log in a user on sign out", function () {
+    it("does not log in a user on sign out", () => {
       req.path = "/users/sign_out"
       headerLogin(req, res, next)
       expect(next).toHaveBeenCalled()
     })
   })
 
-  describe("trustTokenLogin", function () {
-    it("immediately nexts if there is no trust_token query param", function () {
+  describe("trustTokenLogin", () => {
+    it("immediately nexts if there is no trust_token query param", () => {
       const req = { query: {}, url: "/target-path" }
       const res = { redirect: jest.fn() }
       const next = jest.fn()
@@ -64,7 +64,7 @@ describe("token login middleware", function () {
     })
 
     it(`logs the user in when there is a trust_token present, redirecting to \
-a url sans trust_token param`, function () {
+a url sans trust_token param`, () => {
       const req = {
         connection: { remoteAddress: "99.99.99.99" },
         login: jest.fn((user, cb) => cb(null)),
@@ -83,7 +83,7 @@ a url sans trust_token param`, function () {
       expect(res.redirect.mock.calls[0][0]).toEqual("/target-path")
     })
 
-    it("preserves any other query string params", function () {
+    it("preserves any other query string params", () => {
       const req = {
         connection: { remoteAddress: "99.99.99.99" },
         login: jest.fn((user, cb) => cb(null)),
@@ -101,7 +101,7 @@ a url sans trust_token param`, function () {
       )
     })
 
-    it("nexts on failed code response", function () {
+    it("nexts on failed code response", () => {
       const req = {
         connection: { remoteAddress: "99.99.99.99" },
         query: { trust_token: "xxxx" },

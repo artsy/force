@@ -3,9 +3,11 @@ import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
-import * as React from "react"
+import type * as React from "react"
 
-export const HideUpcomingFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HideUpcomingFilter: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { setFilter } = useAuctionResultsFilterContext()
   const { hideUpcoming } = useCurrentlySelectedFiltersForAuctionResults()
 

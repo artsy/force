@@ -1,5 +1,5 @@
-import { Box, BoxProps } from "@artsy/palette"
-import * as React from "react"
+import { Box, type BoxProps } from "@artsy/palette"
+import type * as React from "react"
 import { useEffect } from "react"
 import { useRef } from "react"
 import styled from "styled-components"
@@ -26,10 +26,9 @@ interface ViewInRoomRoomProps extends BoxProps {
   onMount(): void
 }
 
-export const ViewInRoomRoom: React.FC<React.PropsWithChildren<ViewInRoomRoomProps>> = ({
-  onMount,
-  ...rest
-}) => {
+export const ViewInRoomRoom: React.FC<
+  React.PropsWithChildren<ViewInRoomRoomProps>
+> = ({ onMount, ...rest }) => {
   const ref = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {

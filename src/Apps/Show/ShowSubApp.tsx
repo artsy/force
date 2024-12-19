@@ -1,7 +1,7 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box } from "@artsy/palette"
-import { ShowSubApp_show$data } from "__generated__/ShowSubApp_show.graphql"
+import type { ShowSubApp_show$data } from "__generated__/ShowSubApp_show.graphql"
 import { ShowMetaFragmentContainer as ShowMeta } from "./Components/ShowMeta"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { TopContextBar } from "Components/TopContextBar"
@@ -10,7 +10,10 @@ interface ShowAppProps {
   show: ShowSubApp_show$data
 }
 
-const ShowApp: React.FC<React.PropsWithChildren<ShowAppProps>> = ({ children, show }) => {
+const ShowApp: React.FC<React.PropsWithChildren<ShowAppProps>> = ({
+  children,
+  show,
+}) => {
   return (
     <>
       <ShowMeta show={show} />

@@ -1,5 +1,5 @@
 import {
-  CustomRange,
+  type CustomRange,
   DEFAULT_CUSTOM_RANGE,
   DEFAULT_PRICE_RANGE,
   PRICE_RANGE_FORMAT,
@@ -7,7 +7,7 @@ import {
 
 const parsePart = (part: string): number | "*" => {
   if (part === "*") return part
-  const parsed = parseFloat(part)
+  const parsed = Number.parseFloat(part)
   return isNaN(parsed) ? "*" : Math.floor(parsed)
 }
 

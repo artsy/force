@@ -10,14 +10,14 @@ import {
   Text,
 } from "@artsy/palette"
 import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
-import { FC, ReactNode, useEffect, useRef, useState } from "react"
+import { type FC, type ReactNode, useEffect, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { formatLargeNumber } from "Utils/formatLargeNumber"
-import { MarketStatsQuery } from "__generated__/MarketStatsQuery.graphql"
-import { MarketStats_priceInsightsConnection$data } from "__generated__/MarketStats_priceInsightsConnection.graphql"
+import type { MarketStatsQuery } from "__generated__/MarketStatsQuery.graphql"
+import type { MarketStats_priceInsightsConnection$data } from "__generated__/MarketStats_priceInsightsConnection.graphql"
 import { MarketStatsInfoButton } from "./MarketStatsInfoButton"
 import ArrowUpIcon from "@artsy/icons/ArrowUpIcon"
 import ArrowDownIcon from "@artsy/icons/ArrowDownIcon"
@@ -35,10 +35,10 @@ export const MarketStats: FC<React.PropsWithChildren<MarketStatsProps>> = ({
 
   const priceInsights = extractNodes(priceInsightsConnection)
 
-  useEffect(() => onRendered?.(priceInsights.length > 0), [
-    onRendered,
-    priceInsights,
-  ])
+  useEffect(
+    () => onRendered?.(priceInsights.length > 0),
+    [onRendered, priceInsights]
+  )
 
   const [selectedPriceInsight, setSelectedPriceInsight] = useState(
     priceInsights[0]
@@ -151,7 +151,9 @@ interface MarketStatsSignalProps {
   children: number
 }
 
-const MarketStatsSignal: FC<React.PropsWithChildren<MarketStatsSignalProps>> = ({ children }) => {
+const MarketStatsSignal: FC<
+  React.PropsWithChildren<MarketStatsSignalProps>
+> = ({ children }) => {
   switch (true) {
     case children > 0:
       return (
@@ -208,11 +210,9 @@ interface MarketStatsFigureProps {
   loading?: boolean
 }
 
-const MarketStatsFigure: FC<React.PropsWithChildren<MarketStatsFigureProps>> = ({
-  loading = false,
-  label,
-  value,
-}) => {
+const MarketStatsFigure: FC<
+  React.PropsWithChildren<MarketStatsFigureProps>
+> = ({ loading = false, label, value }) => {
   const Component = loading ? SkeletonText : Text
 
   return (
@@ -298,10 +298,12 @@ export const MarketStatsFragmentContainer = createFragmentContainer(
   }
 )
 
-export const MarketStatsQueryRenderer: FC<React.PropsWithChildren<{
-  id: string
-  onRendered?: (visible: boolean) => void
-}>> = ({ id, onRendered }) => {
+export const MarketStatsQueryRenderer: FC<
+  React.PropsWithChildren<{
+    id: string
+    onRendered?: (visible: boolean) => void
+  }>
+> = ({ id, onRendered }) => {
   const [hasRendered, setHasRendered] = useState(false)
 
   const onRender = (visible: boolean) => {

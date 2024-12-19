@@ -1,17 +1,17 @@
 import { Box, Button, Flex, HTML, Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import Metadata from "Components/Artwork/Metadata"
 import { RouterLink } from "System/Components/RouterLink"
-import { ArticleZoomGalleryCaption_figure$data } from "__generated__/ArticleZoomGalleryCaption_figure.graphql"
+import type { ArticleZoomGalleryCaption_figure$data } from "__generated__/ArticleZoomGalleryCaption_figure.graphql"
 
 interface ArticleZoomGalleryCaptionProps {
   figure: ArticleZoomGalleryCaption_figure$data
 }
 
-const ArticleZoomGalleryCaption: FC<React.PropsWithChildren<ArticleZoomGalleryCaptionProps>> = ({
-  figure,
-}) => {
+const ArticleZoomGalleryCaption: FC<
+  React.PropsWithChildren<ArticleZoomGalleryCaptionProps>
+> = ({ figure }) => {
   switch (figure.__typename) {
     case "Artwork":
       return (
@@ -71,9 +71,8 @@ const ArticleZoomGalleryCaption: FC<React.PropsWithChildren<ArticleZoomGalleryCa
   }
 }
 
-export const ArticleZoomGalleryCaptionFragmentContainer = createFragmentContainer(
-  ArticleZoomGalleryCaption,
-  {
+export const ArticleZoomGalleryCaptionFragmentContainer =
+  createFragmentContainer(ArticleZoomGalleryCaption, {
     figure: graphql`
       fragment ArticleZoomGalleryCaption_figure on ArticleSectionImageCollectionFigure {
         __typename
@@ -96,5 +95,4 @@ export const ArticleZoomGalleryCaptionFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })

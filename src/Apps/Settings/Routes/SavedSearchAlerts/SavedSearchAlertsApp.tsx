@@ -13,20 +13,20 @@ import {
 } from "@artsy/palette"
 import {
   createPaginationContainer,
-  Environment,
+  type Environment,
   fetchQuery,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { SavedSearchAlertsApp_me$data } from "__generated__/SavedSearchAlertsApp_me.graphql"
+import type { SavedSearchAlertsApp_me$data } from "__generated__/SavedSearchAlertsApp_me.graphql"
 import { Media } from "Utils/Responsive"
-import { EditAlertEntity } from "./types"
+import type { EditAlertEntity } from "./types"
 import { extractNodes } from "Utils/extractNodes"
 import { SavedSearchAlertDeleteModal } from "./Components/SavedSearchAlertDeleteModal"
 import {
   SavedSearchAlertListItemFragmentContainer,
-  SavedSearchAlertListItemVariant,
+  type SavedSearchAlertListItemVariant,
 } from "./Components/SavedSearchAlertListItem"
 import { SavedSearchAlertHeader } from "./Components/SavedSearchAlertHeader"
 import { MetaTags } from "Components/MetaTags"
@@ -35,7 +35,7 @@ import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlertsApp_Alert_Query.graphql"
+import type { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlertsApp_Alert_Query.graphql"
 import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { SavedSearchAlertsArtworksQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertsArtworks"
@@ -50,10 +50,9 @@ interface RefetchVariables {
   sort?: string
 }
 
-export const SavedSearchAlertsApp: React.FC<React.PropsWithChildren<SavedSearchAlertsAppProps>> = ({
-  me,
-  relay,
-}) => {
+export const SavedSearchAlertsApp: React.FC<
+  React.PropsWithChildren<SavedSearchAlertsAppProps>
+> = ({ me, relay }) => {
   const { relayEnvironment } = useSystemContext()
   const { sendToast } = useToasts()
   const { trackEvent } = useTracking()
@@ -67,10 +66,8 @@ export const SavedSearchAlertsApp: React.FC<React.PropsWithChildren<SavedSearchA
   const sm = __internal__useMatchMedia(THEME.mediaQueries.sm)
   const isMobile = xs || sm
 
-  const [
-    editAlertEntity,
-    setEditAlertEntity,
-  ] = useState<EditAlertEntity | null>(null)
+  const [editAlertEntity, setEditAlertEntity] =
+    useState<EditAlertEntity | null>(null)
 
   const [viewOption, setViewOption] = useState<"EDIT" | "ARTWORKS" | null>(null)
 
@@ -393,10 +390,11 @@ export const SavedSearchAlertsApp: React.FC<React.PropsWithChildren<SavedSearchA
   )
 }
 
-export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer(
-  SavedSearchAlertsApp,
-  {
-    me: graphql`
+export const SavedSearchAlertsAppPaginationContainer =
+  createPaginationContainer(
+    SavedSearchAlertsApp,
+    {
+      me: graphql`
       fragment SavedSearchAlertsApp_me on Me
         @argumentDefinitions(
           after: { type: "String" }
@@ -425,20 +423,20 @@ export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return { ...prevVars, totalCount }
     },
-    getVariables(_, { count, cursor }, fragmentVariables) {
-      return {
-        ...fragmentVariables,
-        count,
-        after: cursor,
-      }
-    },
-    query: graphql`
+    {
+      direction: "forward",
+      getFragmentVariables(prevVars, totalCount) {
+        return { ...prevVars, totalCount }
+      },
+      getVariables(_, { count, cursor }, fragmentVariables) {
+        return {
+          ...fragmentVariables,
+          count,
+          after: cursor,
+        }
+      },
+      query: graphql`
       query SavedSearchAlertsAppRefetchQuery(
         $after: String
         $count: Int!
@@ -450,5 +448,5 @@ export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer
         }
       }
     `,
-  }
-)
+    }
+  )

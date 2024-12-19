@@ -18,17 +18,19 @@ import { useTracking } from "react-tracking"
 import styled from "styled-components"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { createFragmentContainer, graphql } from "react-relay"
-import { MeetTheSpecialistsQuery } from "__generated__/MeetTheSpecialistsQuery.graphql"
-import { MeetTheSpecialists_staticContent$data } from "__generated__/MeetTheSpecialists_staticContent.graphql"
+import type { MeetTheSpecialistsQuery } from "__generated__/MeetTheSpecialistsQuery.graphql"
+import type { MeetTheSpecialists_staticContent$data } from "__generated__/MeetTheSpecialists_staticContent.graphql"
 
 export const CARD_WIDTH = 404
 export const CARD_HEIGHT = 610
 export const CARD_HEIGHT_MD = 557
 export const CARD_HEIGHT_MOBILE = 418
 
-export const MeetTheSpecialists: React.FC<React.PropsWithChildren<{
-  staticContent: MeetTheSpecialists_staticContent$data
-}>> = ({ staticContent }) => {
+export const MeetTheSpecialists: React.FC<
+  React.PropsWithChildren<{
+    staticContent: MeetTheSpecialists_staticContent$data
+  }>
+> = ({ staticContent }) => {
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
@@ -163,7 +165,9 @@ const Info = styled(Box)`
   text-shadow: ${themeGet("effects.textShadow")};
 `
 
-export const MeetTheSpecialistsQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const MeetTheSpecialistsQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <SystemQueryRenderer<MeetTheSpecialistsQuery>
       lazyLoad

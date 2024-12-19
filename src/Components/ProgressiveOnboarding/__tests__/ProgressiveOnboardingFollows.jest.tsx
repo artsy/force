@@ -4,7 +4,7 @@ import { __ProgressiveOnboardingFollowArtist__ } from "Components/ProgressiveOnb
 import { __ProgressiveOnboardingFollowFind__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
 import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { FC, useEffect } from "react"
+import { type FC, useEffect } from "react"
 import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
 import {
   PROGRESSIVE_ONBOARDING_KEYS,
@@ -65,7 +65,8 @@ const Example: FC<React.PropsWithChildren<unknown>> = () => {
 }
 
 describe("ProgressiveOnboarding: Follows", () => {
-  const mockWithProgressiveOnboardingCounts = withProgressiveOnboardingCounts as jest.Mock
+  const mockWithProgressiveOnboardingCounts =
+    withProgressiveOnboardingCounts as jest.Mock
 
   const followArtistText = "Interested in this artist?"
   const followFindText = "Find and edit all your Follows here."

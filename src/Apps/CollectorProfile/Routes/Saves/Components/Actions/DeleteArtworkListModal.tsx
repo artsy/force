@@ -3,7 +3,7 @@ import { useDeleteArtworkList } from "./Mutations/useDeleteArtworkList"
 
 import { useRouter } from "System/Hooks/useRouter"
 import { useTracking } from "react-tracking"
-import { ActionType, DeletedArtworkList, OwnerType } from "@artsy/cohesion"
+import { ActionType, type DeletedArtworkList, OwnerType } from "@artsy/cohesion"
 import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 
 export interface DeleteArtworkListEntity {
@@ -16,10 +16,9 @@ interface Props {
   onClose: () => void
 }
 
-export const DeleteArtworkListModal: React.FC<React.PropsWithChildren<Props>> = ({
-  artworkList,
-  onClose,
-}) => {
+export const DeleteArtworkListModal: React.FC<
+  React.PropsWithChildren<Props>
+> = ({ artworkList, onClose }) => {
   const { router } = useRouter()
   const { trackEvent } = useTracking()
 

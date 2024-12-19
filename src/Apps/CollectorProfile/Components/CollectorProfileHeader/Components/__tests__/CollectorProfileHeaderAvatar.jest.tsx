@@ -39,8 +39,7 @@ const dataMockResolvers = {
   Me: () => ({
     icon: {
       resized: {
-        src:
-          "https://d32dm0rphc51dk.cloudfront.net/3Q8YQZ7YjJ8ZQ3ZQ8ZQ8ZQ/medium.jpg",
+        src: "https://d32dm0rphc51dk.cloudfront.net/3Q8YQZ7YjJ8ZQ3ZQ8ZQ8ZQ/medium.jpg",
         srcSet:
           "https://d32dm0rphc51dk.cloudfront.net/3Q8YQZ7YjJ8ZQ3ZQ8ZQ8ZQ/medium.jpg",
       },

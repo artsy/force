@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairEditorialRailArticles_fair$data } from "__generated__/FairEditorialRailArticles_fair.graphql"
+import type { FairEditorialRailArticles_fair$data } from "__generated__/FairEditorialRailArticles_fair.graphql"
 import { Flex, Shelf, Spacer, Text } from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
@@ -8,7 +8,7 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
-  ClickedArticleGroup,
+  type ClickedArticleGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
@@ -18,16 +18,13 @@ export interface FairBoothRailArtworksProps {
   fair: FairEditorialRailArticles_fair$data
 }
 
-const FairEditorialRailArticles: React.FC<React.PropsWithChildren<FairBoothRailArtworksProps>> = ({
-  fair,
-}) => {
+const FairEditorialRailArticles: React.FC<
+  React.PropsWithChildren<FairBoothRailArtworksProps>
+> = ({ fair }) => {
   const tracking = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const articles = extractNodes(fair.articlesConnection)
 
@@ -75,9 +72,8 @@ const FairEditorialRailArticles: React.FC<React.PropsWithChildren<FairBoothRailA
   )
 }
 
-export const FairEditorialRailArticlesFragmentContainer = createFragmentContainer(
-  FairEditorialRailArticles,
-  {
+export const FairEditorialRailArticlesFragmentContainer =
+  createFragmentContainer(FairEditorialRailArticles, {
     fair: graphql`
       fragment FairEditorialRailArticles_fair on Fair {
         href
@@ -93,5 +89,4 @@ export const FairEditorialRailArticlesFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })

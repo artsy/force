@@ -1,5 +1,5 @@
-import { Box, BoxProps, Flex } from "@artsy/palette"
-import { FC } from "react"
+import { Box, type BoxProps, Flex } from "@artsy/palette"
+import type { FC } from "react"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
 interface SplitLayoutProps {

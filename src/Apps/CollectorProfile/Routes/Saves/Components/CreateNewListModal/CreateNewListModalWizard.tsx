@@ -1,5 +1,5 @@
-import { FC, useState } from "react"
-import { CreateNewListModal, ArtworkList } from "./CreateNewListModal"
+import { type FC, useState } from "react"
+import { CreateNewListModal, type ArtworkList } from "./CreateNewListModal"
 import { AddArtworksModal } from "./AddArtworksModal"
 
 export interface CreateNewListModalWizardProps {
@@ -8,11 +8,9 @@ export interface CreateNewListModalWizardProps {
   savedArtworksCount: number
 }
 
-export const CreateNewListModalWizard: FC<React.PropsWithChildren<CreateNewListModalWizardProps>> = ({
-  onComplete,
-  onClose,
-  savedArtworksCount,
-}) => {
+export const CreateNewListModalWizard: FC<
+  React.PropsWithChildren<CreateNewListModalWizardProps>
+> = ({ onComplete, onClose, savedArtworksCount }) => {
   const [artworkList, setArtworkList] = useState<ArtworkList | null>(null)
 
   const handleCreateListComplete = (list: ArtworkList) => {

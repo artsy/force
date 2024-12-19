@@ -1,8 +1,8 @@
-import React from "react"
+import type React from "react"
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
 import { HomeHeroUnitFragmentContainer } from "./HomeHeroUnit"
 import { createFragmentContainer, graphql } from "react-relay"
-import { HomeHeroUnits_heroUnits$data } from "__generated__/HomeHeroUnits_heroUnits.graphql"
+import type { HomeHeroUnits_heroUnits$data } from "__generated__/HomeHeroUnits_heroUnits.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { HomeHeroUnitLoggedOut } from "./HomeHeroUnitLoggedOut"
@@ -11,9 +11,9 @@ interface HomeHeroUnitsProps {
   heroUnits: HomeHeroUnits_heroUnits$data
 }
 
-export const HomeHeroUnits: React.FC<React.PropsWithChildren<
-  HomeHeroUnitsProps
->> = ({ heroUnits }) => {
+export const HomeHeroUnits: React.FC<
+  React.PropsWithChildren<HomeHeroUnitsProps>
+> = ({ heroUnits }) => {
   const { isLoggedIn } = useSystemContext()
   const nodes = extractNodes(heroUnits)
 

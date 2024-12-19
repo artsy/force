@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { ErrorWithMetadata } from "Utils/errors"
 import createLogger from "Utils/logger"
 import { useToasts } from "@artsy/palette"
@@ -8,7 +8,9 @@ const logger = createLogger("Artsy/Router/NetworkTimeout")
 
 const NETWORK_TIMEOUT_MS = 15000
 
-export const NetworkTimeout: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const NetworkTimeout: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { sendToast } = useToasts()
 
   useEffect(() => {

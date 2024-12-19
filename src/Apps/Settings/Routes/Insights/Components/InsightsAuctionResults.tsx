@@ -1,4 +1,4 @@
-import { InsightsAuctionResults_me$data } from "__generated__/InsightsAuctionResults_me.graphql"
+import type { InsightsAuctionResults_me$data } from "__generated__/InsightsAuctionResults_me.graphql"
 import { Column, Join, Spacer, Text } from "@artsy/palette"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -8,9 +8,9 @@ interface InsightsAuctionResultsProps {
   me: InsightsAuctionResults_me$data
 }
 
-const InsightsAuctionResults: React.FC<React.PropsWithChildren<InsightsAuctionResultsProps>> = ({
-  me,
-}) => {
+const InsightsAuctionResults: React.FC<
+  React.PropsWithChildren<InsightsAuctionResultsProps>
+> = ({ me }) => {
   const auctionResults = extractNodes(me.myCollectionAuctionResults)
 
   if (!auctionResults.length) {

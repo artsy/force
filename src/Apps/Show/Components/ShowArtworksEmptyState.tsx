@@ -1,15 +1,15 @@
-import * as React from "react"
+import type * as React from "react"
 import { Message } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowArtworksEmptyState_show$data } from "__generated__/ShowArtworksEmptyState_show.graphql"
+import type { ShowArtworksEmptyState_show$data } from "__generated__/ShowArtworksEmptyState_show.graphql"
 
 interface ShowArtworksEmptyStateProps {
   show: ShowArtworksEmptyState_show$data
 }
 
-export const ShowArtworksEmptyState: React.FC<React.PropsWithChildren<ShowArtworksEmptyStateProps>> = ({
-  show,
-}) => {
+export const ShowArtworksEmptyState: React.FC<
+  React.PropsWithChildren<ShowArtworksEmptyStateProps>
+> = ({ show }) => {
   const message = [
     `This ${
       show.isFairBooth ? "fair booth" : "show"

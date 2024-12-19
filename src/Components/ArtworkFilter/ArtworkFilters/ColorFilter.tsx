@@ -1,6 +1,6 @@
 import { Checkbox, Box, Text, Flex } from "@artsy/palette"
 import { intersection } from "lodash"
-import * as React from "react"
+import type * as React from "react"
 import styled from "styled-components"
 import {
   SelectedFiltersCountsLabels,
@@ -26,7 +26,7 @@ export const COLOR_OPTIONS = [
   { hex: "#E1ADCD", value: "pink", name: "Pink" },
 ]
 
-type ColorOption = typeof COLOR_OPTIONS[number]
+type ColorOption = (typeof COLOR_OPTIONS)[number]
 
 const ColorSwatch = styled.div`
   width: ${themeGet("space.2")};
@@ -53,9 +53,9 @@ const BlackAndWhiteSwatch = styled(ColorSwatch)`
   }
 `
 
-const ColorFilterOption: React.FC<React.PropsWithChildren<{ colorOption: ColorOption }>> = ({
-  colorOption,
-}) => {
+const ColorFilterOption: React.FC<
+  React.PropsWithChildren<{ colorOption: ColorOption }>
+> = ({ colorOption }) => {
   const { name, value, hex } = colorOption
 
   const { setFilter } = useArtworkFilterContext()
@@ -106,7 +106,9 @@ export interface ColorFilterProps {
   expanded?: boolean // set to true to force expansion
 }
 
-export const ColorFilter: React.FC<React.PropsWithChildren<ColorFilterProps>> = ({ expanded }) => {
+export const ColorFilter: React.FC<
+  React.PropsWithChildren<ColorFilterProps>
+> = ({ expanded }) => {
   const { colors = [] } = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(

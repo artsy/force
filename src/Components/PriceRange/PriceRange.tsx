@@ -1,7 +1,10 @@
-import { FC, useState, FormEvent, useEffect } from "react"
+import { type FC, useState, type FormEvent, useEffect } from "react"
 import { Flex, Spacer, Box, Text, Range, usePrevious } from "@artsy/palette"
-import { Histogram, HistogramBarEntity } from "./Histogram"
-import { CustomRange, DEFAULT_RANGE } from "Components/PriceRange/constants"
+import { Histogram, type HistogramBarEntity } from "./Histogram"
+import {
+  type CustomRange,
+  DEFAULT_RANGE,
+} from "Components/PriceRange/constants"
 import { NumericInput } from "Components/NumericInput"
 import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
 import { parseSliderPriceRange } from "Components/PriceRange/Utils/parseSliderPriceRange"
@@ -56,23 +59,23 @@ export const PriceRange: FC<React.PropsWithChildren<PriceRangeProps>> = ({
     updateRange(convertedRange)
   }
 
-  const handleInputValueChange = (changedIndex: number) => ({
-    currentTarget: { value },
-  }: FormEvent<HTMLInputElement>) => {
-    const nextRange = localRange.map((rangeValue, index) => {
-      if (index === changedIndex && (value === "" || value === "0")) {
-        return "*"
-      }
+  const handleInputValueChange =
+    (changedIndex: number) =>
+    ({ currentTarget: { value } }: FormEvent<HTMLInputElement>) => {
+      const nextRange = localRange.map((rangeValue, index) => {
+        if (index === changedIndex && (value === "" || value === "0")) {
+          return "*"
+        }
 
-      if (index === changedIndex) {
-        return parseInt(value, 10)
-      }
+        if (index === changedIndex) {
+          return Number.parseInt(value, 10)
+        }
 
-      return rangeValue
-    })
+        return rangeValue
+      })
 
-    updateRange(nextRange)
-  }
+      updateRange(nextRange)
+    }
 
   return (
     <>

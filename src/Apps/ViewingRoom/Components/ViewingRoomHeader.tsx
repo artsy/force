@@ -1,8 +1,8 @@
-import * as React from "react"
+import type * as React from "react"
 import { Box, Flex, FullBleed, Image, Text, useTheme } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomHeader_viewingRoom$data } from "__generated__/ViewingRoomHeader_viewingRoom.graphql"
+import type { ViewingRoomHeader_viewingRoom$data } from "__generated__/ViewingRoomHeader_viewingRoom.graphql"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { resized } from "Utils/resized"
 import { RouterLink } from "System/Components/RouterLink"
@@ -12,7 +12,9 @@ interface ViewingRoomHeaderProps {
   viewingRoom: ViewingRoomHeader_viewingRoom$data
 }
 
-const ViewingRoomHeader: React.FC<React.PropsWithChildren<ViewingRoomHeaderProps>> = props => {
+const ViewingRoomHeader: React.FC<
+  React.PropsWithChildren<ViewingRoomHeaderProps>
+> = props => {
   return (
     <>
       <Media greaterThanOrEqual="sm">
@@ -49,9 +51,9 @@ export const ViewingRoomHeaderFragmentContainer = createFragmentContainer(
   }
 )
 
-const ViewingRoomHeaderLarge: React.FC<React.PropsWithChildren<ViewingRoomHeaderProps>> = ({
-  viewingRoom,
-}) => {
+const ViewingRoomHeaderLarge: React.FC<
+  React.PropsWithChildren<ViewingRoomHeaderProps>
+> = ({ viewingRoom }) => {
   const { desktop } = useNavBarHeight()
 
   const src = viewingRoom.image?.imageURLs?.normalized
@@ -117,9 +119,9 @@ const ViewingRoomHeaderLarge: React.FC<React.PropsWithChildren<ViewingRoomHeader
   )
 }
 
-const ViewingRoomHeaderSmall: React.FC<React.PropsWithChildren<ViewingRoomHeaderProps>> = ({
-  viewingRoom,
-}) => {
+const ViewingRoomHeaderSmall: React.FC<
+  React.PropsWithChildren<ViewingRoomHeaderProps>
+> = ({ viewingRoom }) => {
   const { mobile } = useNavBarHeight()
 
   const src = viewingRoom.image?.imageURLs?.normalized

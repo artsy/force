@@ -1,6 +1,6 @@
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Clickable,
   Column,
   CSSGrid,
@@ -10,8 +10,11 @@ import {
   Spinner,
   Text,
 } from "@artsy/palette"
-import { formatFileSize, Photo } from "Components/PhotoUpload/Utils/fileUtils"
-import { ComponentProps, useEffect, useState } from "react"
+import {
+  formatFileSize,
+  type Photo,
+} from "Components/PhotoUpload/Utils/fileUtils"
+import { type ComponentProps, useEffect, useState } from "react"
 import styled from "styled-components"
 import { Media } from "Utils/Responsive"
 import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
@@ -37,10 +40,14 @@ const ImageContainer = styled(Box).attrs({
   cursor: default;
 `
 
-export const PhotoThumbnail: React.FC<React.PropsWithChildren<PhotoThumbnailProps &
-  BoxProps & {
-    onLoad?: ComponentProps<typeof Image>["onLoad"]
-  }>> = ({ photo, onDelete, ...rest }) => {
+export const PhotoThumbnail: React.FC<
+  React.PropsWithChildren<
+    PhotoThumbnailProps &
+      BoxProps & {
+        onLoad?: ComponentProps<typeof Image>["onLoad"]
+      }
+  >
+> = ({ photo, onDelete, ...rest }) => {
   const [photoSrc, setPhotoSrc] = useState<string>()
 
   useEffect(() => {
@@ -151,11 +158,9 @@ interface PhotoThumbnailStateProps extends Omit<PhotoThumbnailProps, "state"> {
   photoSrc?: string
 }
 
-const PhotoThumbnailLoadingState: React.FC<React.PropsWithChildren<PhotoThumbnailStateProps>> = ({
-  onDelete,
-  photoSrc,
-  photo,
-}) => (
+const PhotoThumbnailLoadingState: React.FC<
+  React.PropsWithChildren<PhotoThumbnailStateProps>
+> = ({ onDelete, photoSrc, photo }) => (
   <Column span={[2]} display="flex" alignItems="center" flexDirection="row">
     <ImageContainer>
       <Image
@@ -174,10 +179,9 @@ const PhotoThumbnailLoadingState: React.FC<React.PropsWithChildren<PhotoThumbnai
   </Column>
 )
 
-const PhotoThumbnailErrorState: React.FC<React.PropsWithChildren<PhotoThumbnailStateProps>> = ({
-  onDelete,
-  photo,
-}) => (
+const PhotoThumbnailErrorState: React.FC<
+  React.PropsWithChildren<PhotoThumbnailStateProps>
+> = ({ onDelete, photo }) => (
   <>
     <Flex alignItems="center">
       <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
@@ -189,9 +193,13 @@ const PhotoThumbnailErrorState: React.FC<React.PropsWithChildren<PhotoThumbnailS
   </>
 )
 
-const PhotoThumbnailSuccessState: React.FC<React.PropsWithChildren<PhotoThumbnailStateProps & {
-  onLoad: ComponentProps<typeof Image>["onLoad"]
-}>> = ({ onDelete, photoSrc, photo, onLoad = () => {} }) => (
+const PhotoThumbnailSuccessState: React.FC<
+  React.PropsWithChildren<
+    PhotoThumbnailStateProps & {
+      onLoad: ComponentProps<typeof Image>["onLoad"]
+    }
+  >
+> = ({ onDelete, photoSrc, photo, onLoad = () => {} }) => (
   <>
     <Flex alignItems="center">
       <ImageContainer>
@@ -212,10 +220,9 @@ const PhotoThumbnailSuccessState: React.FC<React.PropsWithChildren<PhotoThumbnai
   </>
 )
 
-const PhotoThumbnailProcessingState: React.FC<React.PropsWithChildren<PhotoThumbnailStateProps>> = ({
-  onDelete,
-  photo,
-}) => (
+const PhotoThumbnailProcessingState: React.FC<
+  React.PropsWithChildren<PhotoThumbnailStateProps>
+> = ({ onDelete, photo }) => (
   <>
     <Flex alignItems="center">
       <ImageContainer

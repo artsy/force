@@ -1,6 +1,6 @@
 import {
   ActionType,
-  ClickedChangePage,
+  type ClickedChangePage,
   ContextModule,
   commercialFilterParamsChanged,
 } from "@artsy/cohesion"
@@ -8,7 +8,7 @@ import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import FilterIcon from "@artsy/icons/FilterIcon"
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Button,
   Clickable,
   Flex,
@@ -29,14 +29,19 @@ import { Jump, useJump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
 import { isEqual } from "lodash"
-import React, { useMemo, useState } from "react"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import type React from "react"
+import { useMemo, useState } from "react"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 import { useTracking } from "react-tracking"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { ArtworkFilterArtworkGridRefetchContainer as ArtworkFilterArtworkGrid } from "./ArtworkFilterArtworkGrid"
 import {
   ArtworkFilterContextProvider,
-  SharedArtworkFilterContextProps,
+  type SharedArtworkFilterContextProps,
   useArtworkFilterContext,
 } from "./ArtworkFilterContext"
 import { ArtworkFilterMobileOverlay } from "./ArtworkFilterMobileOverlay"
@@ -71,7 +76,9 @@ interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
  * doesn't `extend Viewer`, the BaseArtworkFilter can be imported below. See
  * `Apps/Collection` for an example, which queries Kaws for data.
  */
-export const ArtworkFilter: React.FC<React.PropsWithChildren<ArtworkFilterProps>> = ({
+export const ArtworkFilter: React.FC<
+  React.PropsWithChildren<ArtworkFilterProps>
+> = ({
   aggregations,
   counts,
   filters,
@@ -99,9 +106,13 @@ export const ArtworkFilter: React.FC<React.PropsWithChildren<ArtworkFilterProps>
   )
 }
 
-export const BaseArtworkFilter: React.FC<React.PropsWithChildren<Omit<ArtworkFilterProps, keyof SharedArtworkFilterContextProps> & {
-  relay: RelayRefetchProp
-}>> = ({
+export const BaseArtworkFilter: React.FC<
+  React.PropsWithChildren<
+    Omit<ArtworkFilterProps, keyof SharedArtworkFilterContextProps> & {
+      relay: RelayRefetchProp
+    }
+  >
+> = ({
   children,
   Filters,
   offset,
@@ -114,11 +125,8 @@ export const BaseArtworkFilter: React.FC<React.PropsWithChildren<Omit<ArtworkFil
 }) => {
   const tracking = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const [isLoading, setIsLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)

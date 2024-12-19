@@ -1,11 +1,11 @@
 import { OwnerType } from "@artsy/cohesion"
 import { SuggestedArtworksShelf } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksShelf"
 import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
-import { SavedSearchEntity } from "Components/SavedSearchAlert/types"
+import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
-import { SuggestedArtworksShelf_Test_Query } from "__generated__/SuggestedArtworksShelf_Test_Query.graphql"
+import type { SuggestedArtworksShelf_Test_Query } from "__generated__/SuggestedArtworksShelf_Test_Query.graphql"
 
 jest.unmock("react-relay")
 
@@ -33,24 +33,23 @@ describe("SuggestedArtworksShelf", () => {
     attributionClass: ["unique"],
   }
 
-  const { renderWithRelay } = setupTestWrapperTL<
-    SuggestedArtworksShelf_Test_Query
-  >({
-    Component: props => {
-      return (
-        <SavedSearchAlertContextProvider
-          entity={savedSearchEntity}
-          criteria={criteria}
-          aggregations={[]}
-          artistSlug="bansky"
-        >
-          <SuggestedArtworksShelf
-            artworksConnection={props.artworksConnection}
-          />
-        </SavedSearchAlertContextProvider>
-      )
-    },
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<SuggestedArtworksShelf_Test_Query>({
+      Component: props => {
+        return (
+          <SavedSearchAlertContextProvider
+            entity={savedSearchEntity}
+            criteria={criteria}
+            aggregations={[]}
+            artistSlug="bansky"
+          >
+            <SuggestedArtworksShelf
+              artworksConnection={props.artworksConnection}
+            />
+          </SavedSearchAlertContextProvider>
+        )
+      },
+      query: graphql`
       query SuggestedArtworksShelf_Test_Query @relay_test_operation {
         artworksConnection(first: 5, sort: "-published_at", forSale: true) {
           counts {
@@ -65,7 +64,7 @@ describe("SuggestedArtworksShelf", () => {
         }
       }
     `,
-  })
+    })
 
   it("renders SuggestedArtworkShelf", async () => {
     renderWithRelay({

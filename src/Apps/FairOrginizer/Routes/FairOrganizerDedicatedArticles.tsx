@@ -1,12 +1,16 @@
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { useEffect, useState } from "react"
-import * as React from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import type * as React from "react"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { extractNodes } from "Utils/extractNodes"
 import { DedicatedArticlesBreadcrumbsFragmentContainer as DedicatedArticlesBreadcrumbs } from "Apps/FairOrginizer/Components/DedicatedArticlesBreadcrumbs"
 import { FairOrganizerDedicatedArticlesQuery } from "./FairOrganizerDedicatedArticlesQuery"
-import { FairOrganizerDedicatedArticles_fairOrganizer$data } from "__generated__/FairOrganizerDedicatedArticles_fairOrganizer.graphql"
+import type { FairOrganizerDedicatedArticles_fairOrganizer$data } from "__generated__/FairOrganizerDedicatedArticles_fairOrganizer.graphql"
 import createLogger from "Utils/logger"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { LoadingArea } from "Components/LoadingArea"
@@ -21,10 +25,9 @@ interface FairOrganizerDedicatedArticlesProps {
   relay: RelayRefetchProp
 }
 
-export const FairOrganizerDedicatedArticles: React.FC<React.PropsWithChildren<FairOrganizerDedicatedArticlesProps>> = ({
-  fairOrganizer,
-  relay,
-}) => {
+export const FairOrganizerDedicatedArticles: React.FC<
+  React.PropsWithChildren<FairOrganizerDedicatedArticlesProps>
+> = ({ fairOrganizer, relay }) => {
   const { name, slug, articlesConnection } = fairOrganizer
   const {
     pageInfo: { hasNextPage },
@@ -106,10 +109,11 @@ export const FairOrganizerDedicatedArticles: React.FC<React.PropsWithChildren<Fa
   )
 }
 
-export const FairOrganizerDedicatedArticlesFragmentContainer = createRefetchContainer(
-  FairOrganizerDedicatedArticles,
-  {
-    fairOrganizer: graphql`
+export const FairOrganizerDedicatedArticlesFragmentContainer =
+  createRefetchContainer(
+    FairOrganizerDedicatedArticles,
+    {
+      fairOrganizer: graphql`
       fragment FairOrganizerDedicatedArticles_fairOrganizer on FairOrganizer
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 16 }
@@ -139,6 +143,6 @@ export const FairOrganizerDedicatedArticlesFragmentContainer = createRefetchCont
         ...DedicatedArticlesBreadcrumbs_fairOrganizer
       }
     `,
-  },
-  FairOrganizerDedicatedArticlesQuery
-)
+    },
+    FairOrganizerDedicatedArticlesQuery
+  )

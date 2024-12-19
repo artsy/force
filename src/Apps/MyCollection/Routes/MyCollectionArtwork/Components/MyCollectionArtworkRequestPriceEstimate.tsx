@@ -1,6 +1,6 @@
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 import { Box, Button, Flex, Separator, Text } from "@artsy/palette"
-import { MyCollectionArtworkRequestPriceEstimate_artwork$key } from "__generated__/MyCollectionArtworkRequestPriceEstimate_artwork.graphql"
+import type { MyCollectionArtworkRequestPriceEstimate_artwork$key } from "__generated__/MyCollectionArtworkRequestPriceEstimate_artwork.graphql"
 import { graphql, useFragment } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 
@@ -9,10 +9,9 @@ interface MyCollectionArtworkRequestPriceEstimateProps {
   ctaColor?: "primaryBlack" | "secondaryNeutral" | null
 }
 
-export const MyCollectionArtworkRequestPriceEstimate: React.FC<React.PropsWithChildren<MyCollectionArtworkRequestPriceEstimateProps>> = ({
-  ctaColor = "primaryBlack",
-  ...props
-}) => {
+export const MyCollectionArtworkRequestPriceEstimate: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkRequestPriceEstimateProps>
+> = ({ ctaColor = "primaryBlack", ...props }) => {
   const artwork = useFragment(FRAGMENT, props.artwork)
   if (artwork.hasPriceEstimateRequest) {
     return (

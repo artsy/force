@@ -3,20 +3,20 @@ import { Analytics } from "System/Contexts/AnalyticsContext"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import {
   SavedAddresses,
-  SavedAddressesProps,
+  type SavedAddressesProps,
 } from "Apps/Order/Routes/Shipping/Components/SavedAddresses"
-import { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
+import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import userEvent from "@testing-library/user-event"
 import { Formik } from "formik"
 import {
   FulfillmentType,
-  ShipValues,
+  type ShipValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { SavedAddressesTestQuery } from "__generated__/SavedAddressesTestQuery.graphql"
+import type { SavedAddressesTestQuery } from "__generated__/SavedAddressesTestQuery.graphql"
 import { fillAddressFormFields } from "Components/Address/__tests__/utils"
 
 jest.unmock("react-relay")
@@ -99,7 +99,7 @@ describe("Saved Addresses", () => {
       active: true,
       onSelect: jest.fn(),
     }
-    mockShippingContext = ({
+    mockShippingContext = {
       meData: {
         addressList: basicAddressList,
       },
@@ -116,7 +116,7 @@ describe("Saved Addresses", () => {
         setIsPerformingOperation: jest.fn(),
         setSelectedSavedAddressID: jest.fn(),
       },
-    } as unknown) as ShippingContextProps
+    } as unknown as ShippingContextProps
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent,
     }))

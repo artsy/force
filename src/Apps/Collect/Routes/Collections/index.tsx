@@ -1,5 +1,5 @@
 import { Box, Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
-import { Collections_marketingCategories$data } from "__generated__/Collections_marketingCategories.graphql"
+import type { Collections_marketingCategories$data } from "__generated__/Collections_marketingCategories.graphql"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CollectionsCategoryFragmentContainer } from "./Components/CollectionsCategory"
@@ -10,9 +10,9 @@ interface CollectionsAppProps {
   marketingCategories: Collections_marketingCategories$data
 }
 
-export const CollectionsApp: React.FC<React.PropsWithChildren<CollectionsAppProps>> = ({
-  marketingCategories,
-}) => {
+export const CollectionsApp: React.FC<
+  React.PropsWithChildren<CollectionsAppProps>
+> = ({ marketingCategories }) => {
   const sorted = [...(marketingCategories ?? [])].sort((a, b) =>
     a.name.localeCompare(b.name)
   )

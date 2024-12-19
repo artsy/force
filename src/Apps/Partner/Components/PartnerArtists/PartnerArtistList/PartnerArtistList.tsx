@@ -1,5 +1,5 @@
-import * as React from "react"
-import { PartnerArtistList_partner$data } from "__generated__/PartnerArtistList_partner.graphql"
+import type * as React from "react"
+import type { PartnerArtistList_partner$data } from "__generated__/PartnerArtistList_partner.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Join, media, Spacer, Text } from "@artsy/palette"
 import { compact } from "lodash"
@@ -10,9 +10,9 @@ export interface PartnerArtistListProps {
   partner: PartnerArtistList_partner$data
 }
 
-export const PartnerArtistList: React.FC<React.PropsWithChildren<PartnerArtistListProps>> = ({
-  partner,
-}) => {
+export const PartnerArtistList: React.FC<
+  React.PropsWithChildren<PartnerArtistListProps>
+> = ({ partner }) => {
   if (
     !partner.allArtistsConnection?.edges ||
     (partner.allArtistsConnection.edges.length ?? 0) === 0

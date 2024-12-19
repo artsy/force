@@ -1,15 +1,15 @@
 import { useToasts } from "@artsy/palette"
 import { useAddAssetToConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
-import { DocumentsFormValues } from "Apps/Sell/Routes/AdditionalRoutes/AdditionalDocumentsRoute"
+import type { DocumentsFormValues } from "Apps/Sell/Routes/AdditionalRoutes/AdditionalDocumentsRoute"
 import { normalizePhoto } from "Components/PhotoUpload/Utils/fileUtils"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { useFormikContext } from "formik"
 import { useCallback, useEffect } from "react"
-import { FileRejection } from "react-dropzone"
+import type { FileRejection } from "react-dropzone"
 import { uploadDocument as uploadDocumentToS3 } from "Apps/Sell/Utils/uploadUtils"
-import { DropzoneFile } from "Components/FileUpload/types"
+import type { DropzoneFile } from "Components/FileUpload/types"
 import { FileDropzone } from "Components/FileUpload/FileDropzone"
 import { getErrorMessage } from "Components/FileUpload/utils/getErrorMessage"
 
@@ -26,7 +26,9 @@ const ALLOWED_MIME_TYPES = [
 const ALLOWED_MIME_TYPES_HUMINIZED =
   "images (JPG, PNG or HEIC) or PDF or Microsoft Office files"
 
-export const UploadDocumentsForm: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const UploadDocumentsForm: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const { submitMutation: addAsset } = useAddAssetToConsignmentSubmission()
   const { setFieldValue, values } = useFormikContext<DocumentsFormValues>()

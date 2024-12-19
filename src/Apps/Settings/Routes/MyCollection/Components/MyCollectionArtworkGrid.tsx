@@ -1,11 +1,11 @@
 import { useDismissibleContext } from "@artsy/dismissible"
 import { ArtworkGridContainer } from "Components/ArtworkGrid/ArtworkGrid"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Text } from "@artsy/palette"
 import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { _FragmentRefs } from "relay-runtime"
-import { MyCollectionArtworkGrid_artworks$data } from "__generated__/MyCollectionArtworkGrid_artworks.graphql"
+import type { MyCollectionArtworkGrid_artworks$data } from "__generated__/MyCollectionArtworkGrid_artworks.graphql"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 const POPOVER_KEY = PROGRESSIVE_ONBOARDING.startSelling
@@ -15,10 +15,9 @@ interface MyCollectionArtworkGridProps {
   onLoadMore: () => void
 }
 
-const MyCollectionArtworksGrid: FC<React.PropsWithChildren<MyCollectionArtworkGridProps>> = ({
-  artworks,
-  onLoadMore,
-}) => {
+const MyCollectionArtworksGrid: FC<
+  React.PropsWithChildren<MyCollectionArtworkGridProps>
+> = ({ artworks, onLoadMore }) => {
   const enablePostApprovalSubmissionFlow = useFeatureFlag(
     "onyx_post_approval_submission_flow"
   )

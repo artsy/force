@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import {
   Column,
   GridColumns,
@@ -10,14 +10,16 @@ import {
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistSeriesHeader_artistSeries$data } from "__generated__/ArtistSeriesHeader_artistSeries.graphql"
+import type { ArtistSeriesHeader_artistSeries$data } from "__generated__/ArtistSeriesHeader_artistSeries.graphql"
 import { TopContextBar } from "Components/TopContextBar"
 
 interface ArtistSeriesHeaderProps {
   artistSeries: ArtistSeriesHeader_artistSeries$data
 }
 
-const ArtistSeriesHeader: React.FC<React.PropsWithChildren<ArtistSeriesHeaderProps>> = ({
+const ArtistSeriesHeader: React.FC<
+  React.PropsWithChildren<ArtistSeriesHeaderProps>
+> = ({
   artistSeries: {
     title,
     descriptionFormatted,

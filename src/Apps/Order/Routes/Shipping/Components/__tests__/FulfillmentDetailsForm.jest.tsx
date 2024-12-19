@@ -9,17 +9,17 @@ import {
 import userEvent from "@testing-library/user-event"
 import {
   FulfillmentDetailsForm,
-  FulfillmentDetailsFormProps,
+  type FulfillmentDetailsFormProps,
 } from "Apps/Order/Routes/Shipping/Components/FulfillmentDetailsForm"
-import { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
+import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import {
   FulfillmentType,
-  ShipValues,
+  type ShipValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
-import { DeepPartial } from "Utils/typeSupport"
+import type { DeepPartial } from "Utils/typeSupport"
 import { useTracking } from "react-tracking"
 
 jest.mock("System/Hooks/useFeatureFlag", () => ({
@@ -95,7 +95,7 @@ beforeEach(() => {
       },
     },
   }
-  mockShippingContext = ({
+  mockShippingContext = {
     actions: {
       setFulfillmentDetailsFormikContext: jest.fn(),
       goBackToFulfillmentDetails: jest.fn(),
@@ -108,7 +108,7 @@ beforeEach(() => {
     state: {
       shippingFormMode: "saved_addresses",
     },
-  } as unknown) as ShippingContextProps
+  } as unknown as ShippingContextProps
 
   HTMLElement.prototype.scrollIntoView = mockScrollIntoView
 })
@@ -274,7 +274,7 @@ describe("FulfillmentDetailsForm", () => {
       }
       renderTree(testProps)
 
-      let shippingRadio: HTMLElement = await screen.findByRole("radio", {
+      const shippingRadio: HTMLElement = await screen.findByRole("radio", {
         name: "Shipping",
       })
 

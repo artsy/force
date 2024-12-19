@@ -1,8 +1,8 @@
 import { Flex, Spacer, Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { useFragment, graphql } from "react-relay"
 import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
-import { PartnerShowOpenedNotification_notification$key } from "__generated__/PartnerShowOpenedNotification_notification.graphql"
+import type { PartnerShowOpenedNotification_notification$key } from "__generated__/PartnerShowOpenedNotification_notification.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 import { RouterLink } from "System/Components/RouterLink"
@@ -14,9 +14,9 @@ interface PartnerShowOpenedNotificationProps {
   notification: PartnerShowOpenedNotification_notification$key
 }
 
-export const PartnerShowOpenedNotification: FC<React.PropsWithChildren<PartnerShowOpenedNotificationProps>> = ({
-  notification,
-}) => {
+export const PartnerShowOpenedNotification: FC<
+  React.PropsWithChildren<PartnerShowOpenedNotificationProps>
+> = ({ notification }) => {
   const notificationData = useFragment(
     PartnerShowOpenedNotificationFragment,
     notification

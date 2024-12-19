@@ -1,6 +1,6 @@
-import { AuthContextModule } from "@artsy/cohesion"
-import { SaveButton_artwork$data } from "__generated__/SaveButton_artwork.graphql"
-import * as React from "react"
+import type { AuthContextModule } from "@artsy/cohesion"
+import type { SaveButton_artwork$data } from "__generated__/SaveButton_artwork.graphql"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Clickable, Flex, Text } from "@artsy/palette"
 import { useSaveArtwork } from "./useSaveArtwork"
@@ -9,9 +9,9 @@ import { useState } from "react"
 import { isTouch } from "Utils/device"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 import HeartFillIcon from "@artsy/icons/HeartFillIcon"
-import { SaveArtworkToListsButton_artwork$data } from "__generated__/SaveArtworkToListsButton_artwork.graphql"
+import type { SaveArtworkToListsButton_artwork$data } from "__generated__/SaveArtworkToListsButton_artwork.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { SaveButtonQuery } from "__generated__/SaveButtonQuery.graphql"
+import type { SaveButtonQuery } from "__generated__/SaveButtonQuery.graphql"
 
 export interface SaveButtonProps {
   artwork: SaveButton_artwork$data
@@ -32,12 +32,9 @@ interface SaveButtonBaseProps {
 const BTN_HEIGHT = 18
 const BTN_WIDTH = 18
 
-export const SaveButtonBase: React.FC<React.PropsWithChildren<SaveButtonBaseProps>> = ({
-  isSaved,
-  onClick,
-  artwork,
-  testID = "saveButton",
-}) => {
+export const SaveButtonBase: React.FC<
+  React.PropsWithChildren<SaveButtonBaseProps>
+> = ({ isSaved, onClick, artwork, testID = "saveButton" }) => {
   const [isHovered, setIsHovered] = useState(false)
   const title = isSaved ? "Unsave" : "Save"
   const { lotWatcherCount, lotClosesAt } =
@@ -169,10 +166,9 @@ interface SaveButtonQueryRendererProps
   id: string
 }
 
-export const SaveButtonQueryRenderer: React.FC<React.PropsWithChildren<SaveButtonQueryRendererProps>> = ({
-  id,
-  contextModule,
-}) => {
+export const SaveButtonQueryRenderer: React.FC<
+  React.PropsWithChildren<SaveButtonQueryRendererProps>
+> = ({ id, contextModule }) => {
   const placeholderArtwork = {
     collectorSignals: null,
   }

@@ -1,15 +1,15 @@
 import { Skeleton } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { HomeTrendingArtistsRail_viewer$data } from "__generated__/HomeTrendingArtistsRail_viewer.graphql"
-import { HomeTrendingArtistsRailQuery } from "__generated__/HomeTrendingArtistsRailQuery.graphql"
+import type { HomeTrendingArtistsRail_viewer$data } from "__generated__/HomeTrendingArtistsRail_viewer.graphql"
+import type { HomeTrendingArtistsRailQuery } from "__generated__/HomeTrendingArtistsRailQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import {
   ActionType,
-  ClickedArtistGroup,
+  type ClickedArtistGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
@@ -23,9 +23,9 @@ interface HomeTrendingArtistsRailProps {
   viewer: HomeTrendingArtistsRail_viewer$data
 }
 
-const HomeTrendingArtistsRail: React.FC<React.PropsWithChildren<HomeTrendingArtistsRailProps>> = ({
-  viewer,
-}) => {
+const HomeTrendingArtistsRail: React.FC<
+  React.PropsWithChildren<HomeTrendingArtistsRailProps>
+> = ({ viewer }) => {
   const { trackEvent } = useTracking()
 
   const artists = extractNodes(viewer.curatedTrendingArtists)
@@ -110,7 +110,9 @@ export const HomeTrendingArtistsRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const HomeTrendingArtistsRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeTrendingArtistsRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

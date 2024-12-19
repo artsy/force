@@ -1,7 +1,7 @@
 import { Box, Image } from "@artsy/palette"
 import { ArtworkListNoImage } from "./ArtworkListNoImage"
 import { prepareImageURLs } from "Apps/CollectorProfile/Routes/Saves/Utils/prepareImageURLs"
-import { FC } from "react"
+import type { FC } from "react"
 import { cropped } from "Utils/resized"
 import { ArtworkListImageBorder } from "Apps/CollectorProfile/Routes/Saves/Components/Images/ArtworkListImageBorder"
 
@@ -19,9 +19,9 @@ const SMALL_IMAGE_SIZE = 112
 const LARGE_IMAGE_OFFSET = 4
 const SMALL_IMAGE_OFFSET = 2
 
-export const StackedImageLayout: FC<React.PropsWithChildren<StackedImageLayoutProps>> = ({
-  imageURLs,
-}) => {
+export const StackedImageLayout: FC<
+  React.PropsWithChildren<StackedImageLayoutProps>
+> = ({ imageURLs }) => {
   const preparedImageURLs = prepareImageURLs(imageURLs)
   const reversedImageURLs = preparedImageURLs.reverse()
 
@@ -38,7 +38,10 @@ export const StackedImageLayout: FC<React.PropsWithChildren<StackedImageLayoutPr
   )
 }
 
-const StackImage: FC<React.PropsWithChildren<StackImageProps>> = ({ url, index }) => {
+const StackImage: FC<React.PropsWithChildren<StackImageProps>> = ({
+  url,
+  index,
+}) => {
   const SIZE = [SMALL_IMAGE_SIZE, LARGE_IMAGE_SIZE]
   const OFFSET_BY_INDEX = [
     `${SMALL_IMAGE_OFFSET * index}px`,

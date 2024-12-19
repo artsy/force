@@ -1,5 +1,5 @@
-import { FC, useEffect, useState } from "react"
-import { Box, Popover, PopoverProps } from "@artsy/palette"
+import { type FC, useEffect, useState } from "react"
+import { Box, Popover, type PopoverProps } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { useProgressiveOnboardingTracking } from "Components/ProgressiveOnboarding/useProgressiveOnboardingTracking"
 import { isTouch } from "Utils/device"
@@ -9,9 +9,9 @@ interface ProgressiveOnboardingPopoverProps
   name: string
 }
 
-export const ProgressiveOnboardingPopover: FC<React.PropsWithChildren<
-  ProgressiveOnboardingPopoverProps
->> = ({ popover, children, name, ...rest }) => {
+export const ProgressiveOnboardingPopover: FC<
+  React.PropsWithChildren<ProgressiveOnboardingPopoverProps>
+> = ({ popover, children, name, ...rest }) => {
   const [visible, setVisible] = useState(false)
 
   const { trackEvent } = useProgressiveOnboardingTracking({ name })

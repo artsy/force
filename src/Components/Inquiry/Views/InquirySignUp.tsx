@@ -8,7 +8,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { useState } from "react"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { EnableRecaptcha } from "Utils/EnableRecaptcha"
@@ -21,7 +21,7 @@ import {
   ActionType,
   AuthModalType,
   ContextModule,
-  CreatedAccount,
+  type CreatedAccount,
   Intent,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
@@ -113,16 +113,16 @@ export const InquirySignUp: React.FC<React.PropsWithChildren<unknown>> = () => {
     }
   }
 
-  const handleInputChange = (name: keyof InquirySignUpState) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (name === "email") {
-      setInquiry(prevState => ({ ...prevState, [name]: event.target.value }))
-    }
+  const handleInputChange =
+    (name: keyof InquirySignUpState) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (name === "email") {
+        setInquiry(prevState => ({ ...prevState, [name]: event.target.value }))
+      }
 
-    setState(prevState => ({ ...prevState, [name]: event.target.value }))
-    mode === "Error" && setMode("Pending")
-  }
+      setState(prevState => ({ ...prevState, [name]: event.target.value }))
+      mode === "Error" && setMode("Pending")
+    }
 
   return (
     <>

@@ -1,18 +1,18 @@
 import { Shelf, Skeleton } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { HomeRecentlyViewedRail_homePage$data } from "__generated__/HomeRecentlyViewedRail_homePage.graphql"
-import { HomeRecentlyViewedRailQuery } from "__generated__/HomeRecentlyViewedRailQuery.graphql"
+import type { HomeRecentlyViewedRail_homePage$data } from "__generated__/HomeRecentlyViewedRail_homePage.graphql"
+import type { HomeRecentlyViewedRailQuery } from "__generated__/HomeRecentlyViewedRailQuery.graphql"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import {
   ActionType,
-  ClickedArtworkGroup,
+  type ClickedArtworkGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
@@ -22,9 +22,9 @@ interface HomeRecentlyViewedRailProps {
   homePage: HomeRecentlyViewedRail_homePage$data
 }
 
-const HomeRecentlyViewedRail: React.FC<React.PropsWithChildren<HomeRecentlyViewedRailProps>> = ({
-  homePage,
-}) => {
+const HomeRecentlyViewedRail: React.FC<
+  React.PropsWithChildren<HomeRecentlyViewedRailProps>
+> = ({ homePage }) => {
   const { trackEvent } = useTracking()
 
   const results = homePage.artworkModule?.results
@@ -106,7 +106,9 @@ export const HomeRecentlyViewedRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const HomeRecentlyViewedRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeRecentlyViewedRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

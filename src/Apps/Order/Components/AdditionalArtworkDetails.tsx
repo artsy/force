@@ -1,8 +1,13 @@
-import { AdditionalArtworkDetails_order$data } from "__generated__/AdditionalArtworkDetails_order.graphql"
-import { Omit } from "lodash"
-import * as React from "react"
+import type { AdditionalArtworkDetails_order$data } from "__generated__/AdditionalArtworkDetails_order.graphql"
+import type { Omit } from "lodash"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FlexProps, Text, Spacer, StackableBorderBox } from "@artsy/palette"
+import {
+  type FlexProps,
+  Text,
+  Spacer,
+  StackableBorderBox,
+} from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
 
 export interface AdditionalArtworkDetailsProps
@@ -10,10 +15,9 @@ export interface AdditionalArtworkDetailsProps
   order: AdditionalArtworkDetails_order$data
 }
 
-const AdditionalArtworkDetails: React.FC<React.PropsWithChildren<AdditionalArtworkDetailsProps>> = ({
-  order: { artworkDetails, lineItems },
-  ...others
-}) => {
+const AdditionalArtworkDetails: React.FC<
+  React.PropsWithChildren<AdditionalArtworkDetailsProps>
+> = ({ order: { artworkDetails, lineItems }, ...others }) => {
   const artworkVersion = extractNodes(lineItems)[0]?.artworkVersion
 
   return (
@@ -41,9 +45,8 @@ const AdditionalArtworkDetails: React.FC<React.PropsWithChildren<AdditionalArtwo
   )
 }
 
-export const AdditionalArtworkDetailsFragmentContainer = createFragmentContainer(
-  AdditionalArtworkDetails,
-  {
+export const AdditionalArtworkDetailsFragmentContainer =
+  createFragmentContainer(AdditionalArtworkDetails, {
     order: graphql`
       fragment AdditionalArtworkDetails_order on CommerceOrder {
         artworkDetails
@@ -59,5 +62,4 @@ export const AdditionalArtworkDetailsFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })

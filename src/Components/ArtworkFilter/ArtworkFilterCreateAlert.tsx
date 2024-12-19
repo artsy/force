@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react"
+import type { FC, ReactNode } from "react"
 import { ProgressiveOnboardingAlertCreate } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
 import { isEmpty } from "lodash"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
@@ -9,9 +9,9 @@ interface ArtworkFilterCreateAlertProps {
   children?: ReactNode
 }
 
-export const ArtworkFilterCreateAlert: FC<React.PropsWithChildren<
-  ArtworkFilterCreateAlertProps
->> = ({ renderButton, children }) => {
+export const ArtworkFilterCreateAlert: FC<
+  React.PropsWithChildren<ArtworkFilterCreateAlertProps>
+> = ({ renderButton, children }) => {
   const { entity } = useSavedSearchAlertContext()
 
   // If there is no entity then we don't want to create an alert

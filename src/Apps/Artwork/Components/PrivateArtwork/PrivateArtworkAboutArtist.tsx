@@ -1,5 +1,5 @@
 import { graphql, useFragment } from "react-relay"
-import { PrivateArtworkAboutArtist_artwork$key } from "__generated__/PrivateArtworkAboutArtist_artwork.graphql"
+import type { PrivateArtworkAboutArtist_artwork$key } from "__generated__/PrivateArtworkAboutArtist_artwork.graphql"
 import {
   Box,
   Flex,
@@ -13,7 +13,7 @@ import {
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
 import { useTracking } from "react-tracking"
-import { ActionType, ClickedOnReadMore } from "@artsy/cohesion"
+import { ActionType, type ClickedOnReadMore } from "@artsy/cohesion"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { RouterLink } from "System/Components/RouterLink"
@@ -22,9 +22,9 @@ interface PrivateArtworkAboutArtistProps {
   artwork: PrivateArtworkAboutArtist_artwork$key
 }
 
-export const PrivateArtworkAboutArtist: React.FC<React.PropsWithChildren<
-  PrivateArtworkAboutArtistProps
->> = ({ artwork }) => {
+export const PrivateArtworkAboutArtist: React.FC<
+  React.PropsWithChildren<PrivateArtworkAboutArtistProps>
+> = ({ artwork }) => {
   const { trackEvent } = useTracking()
 
   const data = useFragment(

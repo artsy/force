@@ -1,9 +1,13 @@
-import * as React from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import type * as React from "react"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { ArtworkSidebarBidActionFragmentContainer } from "./ArtworkSidebarBidAction"
 import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "./ArtworkSidebarCurrentBidInfo"
-import { ArtworkSidebarAuctionInfoPolling_artwork$data } from "__generated__/ArtworkSidebarAuctionInfoPolling_artwork.graphql"
-import { ArtworkSidebarAuctionInfoPolling_me$data } from "__generated__/ArtworkSidebarAuctionInfoPolling_me.graphql"
+import type { ArtworkSidebarAuctionInfoPolling_artwork$data } from "__generated__/ArtworkSidebarAuctionInfoPolling_artwork.graphql"
+import type { ArtworkSidebarAuctionInfoPolling_me$data } from "__generated__/ArtworkSidebarAuctionInfoPolling_me.graphql"
 import { usePoll } from "Utils/Hooks/usePoll"
 import { useEffect, useRef, useState } from "react"
 import { Spacer } from "@artsy/palette"
@@ -15,9 +19,9 @@ type Props = {
   relay: RelayRefetchProp
 }
 
-export const ArtworkSidebarAuctionPolling: React.FC<React.PropsWithChildren<
-  Props
->> = ({ artwork, relay, me }) => {
+export const ArtworkSidebarAuctionPolling: React.FC<
+  React.PropsWithChildren<Props>
+> = ({ artwork, relay, me }) => {
   const { sale, saleArtwork } = artwork
   const isClosed = !!sale?.isClosed
   const currentBidDisplay = saleArtwork?.currentBid?.display
@@ -65,10 +69,11 @@ export const ArtworkSidebarAuctionPolling: React.FC<React.PropsWithChildren<
   )
 }
 
-export const ArtworkSidebarAuctionPollingRefetchContainer = createRefetchContainer(
-  ArtworkSidebarAuctionPolling,
-  {
-    artwork: graphql`
+export const ArtworkSidebarAuctionPollingRefetchContainer =
+  createRefetchContainer(
+    ArtworkSidebarAuctionPolling,
+    {
+      artwork: graphql`
       fragment ArtworkSidebarAuctionInfoPolling_artwork on Artwork {
         internalID
         sale {
@@ -83,13 +88,13 @@ export const ArtworkSidebarAuctionPollingRefetchContainer = createRefetchContain
         ...ArtworkSidebarBidAction_artwork
       }
     `,
-    me: graphql`
+      me: graphql`
       fragment ArtworkSidebarAuctionInfoPolling_me on Me {
         ...ArtworkSidebarBidAction_me
       }
     `,
-  },
-  graphql`
+    },
+    graphql`
     query ArtworkSidebarAuctionInfoPollingQuery($artworkID: String!) {
       artwork(id: $artworkID) {
         internalID
@@ -102,4 +107,4 @@ export const ArtworkSidebarAuctionPollingRefetchContainer = createRefetchContain
       }
     }
   `
-)
+  )

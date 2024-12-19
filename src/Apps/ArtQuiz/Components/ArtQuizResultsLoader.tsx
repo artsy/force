@@ -1,7 +1,7 @@
 import { Flex, Text, Spacer, FullBleed, Spinner, Box } from "@artsy/palette"
 import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
 import { SplitLayout } from "Components/SplitLayout"
-import { useState, useEffect, FC } from "react"
+import { useState, useEffect, type FC } from "react"
 
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 
@@ -9,9 +9,9 @@ interface ArtQuizResultsLoaderProps {
   onReady(): void
 }
 
-export const ArtQuizResultsLoader: FC<React.PropsWithChildren<ArtQuizResultsLoaderProps>> = ({
-  onReady,
-}) => {
+export const ArtQuizResultsLoader: FC<
+  React.PropsWithChildren<ArtQuizResultsLoaderProps>
+> = ({ onReady }) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

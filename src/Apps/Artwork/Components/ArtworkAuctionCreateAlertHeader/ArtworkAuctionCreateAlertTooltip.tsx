@@ -1,9 +1,11 @@
 import { Box, Flex, Pill, Text, Tooltip } from "@artsy/palette"
 import InfoIcon from "@artsy/icons/InfoIcon"
-import { FC } from "react"
+import type { FC } from "react"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 
-export const ArtworkAuctionCreateAlertTooltip: FC<React.PropsWithChildren<unknown>> = () => {
+export const ArtworkAuctionCreateAlertTooltip: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { pills, entity } = useSavedSearchAlertContext()
   const artistName = entity.defaultCriteria?.artistIDs?.[0].displayValue ?? ""
 

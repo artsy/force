@@ -2,7 +2,7 @@ import { renderRelayTree } from "DevTools/renderRelayTree"
 import { MockBoot } from "DevTools/MockBoot"
 import { ArtistSeriesMetaFragmentContainer } from "Apps/ArtistSeries/Components/ArtistSeriesMeta"
 import { graphql } from "react-relay"
-import { ArtistSeriesMeta_TestQuery$rawResponse } from "__generated__/ArtistSeriesMeta_TestQuery.graphql"
+import type { ArtistSeriesMeta_TestQuery$rawResponse } from "__generated__/ArtistSeriesMeta_TestQuery.graphql"
 
 jest.unmock("react-relay")
 
@@ -96,13 +96,14 @@ const ArtistSeriesMetaFixture: ArtistSeriesMeta_TestQuery$rawResponse = {
   },
 }
 
-const ArtistSeriesMetaFixtureNoArtist: ArtistSeriesMeta_TestQuery$rawResponse = {
-  artistSeries: {
-    id: "123",
-    title: "Squashes",
-    description:
-      "Squashes are a lot like pumpkins except that they don't belong to any particular holiday. The most independent gourd, they always remain in style throughout the year.",
-    slug: "squashes",
-    artists: [],
-  },
-}
+const ArtistSeriesMetaFixtureNoArtist: ArtistSeriesMeta_TestQuery$rawResponse =
+  {
+    artistSeries: {
+      id: "123",
+      title: "Squashes",
+      description:
+        "Squashes are a lot like pumpkins except that they don't belong to any particular holiday. The most independent gourd, they always remain in style throughout the year.",
+      slug: "squashes",
+      artists: [],
+    },
+  }

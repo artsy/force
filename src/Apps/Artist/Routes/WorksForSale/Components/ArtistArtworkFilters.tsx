@@ -16,9 +16,11 @@ import { Join, Spacer } from "@artsy/palette"
 import { ArtistSeriesFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistSeriesFilter"
 import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
 
-interface ArtistArtworkFiltersProps {}
+type ArtistArtworkFiltersProps = {}
 
-export const ArtistArtworkFilters: React.FC<React.PropsWithChildren<ArtistArtworkFiltersProps>> = props => {
+export const ArtistArtworkFilters: React.FC<
+  React.PropsWithChildren<ArtistArtworkFiltersProps>
+> = props => {
   const { user } = useSystemContext()
 
   return (

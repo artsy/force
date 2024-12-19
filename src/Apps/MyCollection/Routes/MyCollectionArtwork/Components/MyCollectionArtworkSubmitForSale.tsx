@@ -4,7 +4,7 @@ import { createOrUpdateConsignSubmission } from "Apps/Sell/Utils/createOrUpdateC
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
-import { MyCollectionArtworkSubmitForSale_artwork$key } from "__generated__/MyCollectionArtworkSubmitForSale_artwork.graphql"
+import type { MyCollectionArtworkSubmitForSale_artwork$key } from "__generated__/MyCollectionArtworkSubmitForSale_artwork.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -13,7 +13,9 @@ interface MyCollectionArtworkSubmitForSaleProps {
   artwork: MyCollectionArtworkSubmitForSale_artwork$key
 }
 
-export const MyCollectionArtworkSubmitForSale: React.FC<React.PropsWithChildren<MyCollectionArtworkSubmitForSaleProps>> = props => {
+export const MyCollectionArtworkSubmitForSale: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkSubmitForSaleProps>
+> = props => {
   const { trackEvent } = useTracking()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const { router } = useRouter()

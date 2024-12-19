@@ -1,6 +1,6 @@
 import { Link } from "@artsy/palette"
 import { BarChart } from "@artsy/palette-charts"
-import {
+import type {
   PricingContextTestQuery$rawResponse,
   PricingContextTestQuery$data,
 } from "__generated__/PricingContextTestQuery.graphql"
@@ -28,43 +28,44 @@ jest.mock("@artsy/palette", () => {
 })
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-const mockPricingContext: PricingContextTestQuery$rawResponse["artwork"]["pricingContext"] = {
-  appliedFiltersDisplay: "Price ranges of small mocks by David Sheldrick",
-  appliedFilters: {
-    category: "PAINTING",
-    dimension: "SMALL",
-  },
-  bins: [
-    {
-      maxPrice: "$88",
-      maxPriceCents: 8855,
-      minPrice: "$9",
-      minPriceCents: 900,
-      numArtworks: 67,
+const mockPricingContext: PricingContextTestQuery$rawResponse["artwork"]["pricingContext"] =
+  {
+    appliedFiltersDisplay: "Price ranges of small mocks by David Sheldrick",
+    appliedFilters: {
+      category: "PAINTING",
+      dimension: "SMALL",
     },
-    {
-      maxPrice: "$168",
-      maxPriceCents: 16810,
-      minPrice: "$88",
-      minPriceCents: 8855,
-      numArtworks: 1,
-    },
-    {
-      maxPrice: "$247",
-      maxPriceCents: 24765,
-      minPrice: "$168",
-      minPriceCents: 16810,
-      numArtworks: 0,
-    },
-    {
-      maxPrice: "$327",
-      maxPriceCents: 32720,
-      minPrice: "$247",
-      minPriceCents: 24765,
-      numArtworks: 17,
-    },
-  ],
-}
+    bins: [
+      {
+        maxPrice: "$88",
+        maxPriceCents: 8855,
+        minPrice: "$9",
+        minPriceCents: 900,
+        numArtworks: 67,
+      },
+      {
+        maxPrice: "$168",
+        maxPriceCents: 16810,
+        minPrice: "$88",
+        minPriceCents: 8855,
+        numArtworks: 1,
+      },
+      {
+        maxPrice: "$247",
+        maxPriceCents: 24765,
+        minPrice: "$168",
+        minPriceCents: 16810,
+        numArtworks: 0,
+      },
+      {
+        maxPrice: "$327",
+        maxPriceCents: 32720,
+        minPrice: "$247",
+        minPriceCents: 24765,
+        numArtworks: 17,
+      },
+    ],
+  }
 
 const mockArtwork: PricingContextTestQuery$rawResponse["artwork"] = {
   artists: [{ id: "asfwef", slug: "andy-warhol" }],

@@ -6,7 +6,7 @@ import { FulfillmentType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { ArtaErrorDialogMessage } from "Apps/Order/Utils/getErrorDialogCopy"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
-import { SaveAndContinueButton_order$data } from "__generated__/SaveAndContinueButton_order.graphql"
+import type { SaveAndContinueButton_order$data } from "__generated__/SaveAndContinueButton_order.graphql"
 
 const logger = createLogger(
   "Order/Routes/Shipping/Hooks/useSaveSelectedShippingQuote.tsx"

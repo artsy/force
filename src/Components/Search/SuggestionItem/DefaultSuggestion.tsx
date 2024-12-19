@@ -1,5 +1,5 @@
-import { FC } from "react"
-import { SuggestionItemOptionProps } from "./SuggestionItem"
+import type { FC } from "react"
+import type { SuggestionItemOptionProps } from "./SuggestionItem"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
 import { SuggestionItemPreview } from "./SuggestionItemPreview"
@@ -11,10 +11,9 @@ interface DefaultSuggestionProps {
   query: string
 }
 
-export const DefaultSuggestion: FC<React.PropsWithChildren<DefaultSuggestionProps>> = ({
-  option,
-  query,
-}) => {
+export const DefaultSuggestion: FC<
+  React.PropsWithChildren<DefaultSuggestionProps>
+> = ({ option, query }) => {
   const matches = match(option.text, query)
   const parts = parse(option.text, matches)
   const partTags = parts.map(({ highlight, text }, index) =>

@@ -1,13 +1,15 @@
-import { TextArea, TextAreaChange } from "@artsy/palette"
-import * as React from "react"
+import { TextArea, type TextAreaChange } from "@artsy/palette"
+import type * as React from "react"
 import { useInquiry } from "Components/Inquiry/useInquiry"
 
-export const OfferNote: React.FC<React.PropsWithChildren<{
-  onChange(change: TextAreaChange): void
-  artworkId: string
-  counteroffer?: boolean
-  value?: string
-}>> = ({ onChange, artworkId, value }) => {
+export const OfferNote: React.FC<
+  React.PropsWithChildren<{
+    onChange(change: TextAreaChange): void
+    artworkId: string
+    counteroffer?: boolean
+    value?: string
+  }>
+> = ({ onChange, artworkId, value }) => {
   const { inquiryComponent } = useInquiry({
     artworkID: artworkId,
   })

@@ -3,21 +3,20 @@ import { useState } from "react"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { WorksForYouArtistFeed_viewer$data } from "__generated__/WorksForYouArtistFeed_viewer.graphql"
+import type { WorksForYouArtistFeed_viewer$data } from "__generated__/WorksForYouArtistFeed_viewer.graphql"
 
 interface WorksForYouArtistFeedProps {
   relay: RelayPaginationProp
   viewer: WorksForYouArtistFeed_viewer$data
 }
 
-const WorksForYouArtistFeed: React.FC<React.PropsWithChildren<WorksForYouArtistFeedProps>> = ({
-  relay,
-  viewer,
-}) => {
+const WorksForYouArtistFeed: React.FC<
+  React.PropsWithChildren<WorksForYouArtistFeedProps>
+> = ({ relay, viewer }) => {
   const { user } = useSystemContext()
   const [isLoading, setLoading] = useState(false)
   const { artist } = viewer
@@ -73,10 +72,11 @@ const WorksForYouArtistFeed: React.FC<React.PropsWithChildren<WorksForYouArtistF
   )
 }
 
-export const WorksForYouArtistFeedPaginationContainer = createPaginationContainer(
-  WorksForYouArtistFeed,
-  {
-    viewer: graphql`
+export const WorksForYouArtistFeedPaginationContainer =
+  createPaginationContainer(
+    WorksForYouArtistFeed,
+    {
+      viewer: graphql`
       fragment WorksForYouArtistFeed_viewer on Viewer
         @argumentDefinitions(
           count: { type: "Int", defaultValue: 25 }
@@ -121,23 +121,23 @@ export const WorksForYouArtistFeedPaginationContainer = createPaginationContaine
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return {
-        ...prevVars,
-        count: totalCount,
-      }
     },
-    getVariables(_props, { count, cursor }, fragmentVariables) {
-      return {
-        ...fragmentVariables,
-        count,
-        cursor,
-      }
-    },
-    query: graphql`
+    {
+      direction: "forward",
+      getFragmentVariables(prevVars, totalCount) {
+        return {
+          ...prevVars,
+          count: totalCount,
+        }
+      },
+      getVariables(_props, { count, cursor }, fragmentVariables) {
+        return {
+          ...fragmentVariables,
+          count,
+          cursor,
+        }
+      },
+      query: graphql`
       query WorksForYouArtistFeedPaginationQuery(
         $artistSlug: String!
         $count: Int!
@@ -155,5 +155,5 @@ export const WorksForYouArtistFeedPaginationContainer = createPaginationContaine
         }
       }
     `,
-  }
-)
+    }
+  )

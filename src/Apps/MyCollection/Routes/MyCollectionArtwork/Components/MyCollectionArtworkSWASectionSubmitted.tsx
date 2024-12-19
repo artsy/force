@@ -7,7 +7,7 @@ import {
   Text,
 } from "@artsy/palette"
 
-import { MyCollectionArtworkSWASectionSubmitted_submissionState$key } from "__generated__/MyCollectionArtworkSWASectionSubmitted_submissionState.graphql"
+import type { MyCollectionArtworkSWASectionSubmitted_submissionState$key } from "__generated__/MyCollectionArtworkSWASectionSubmitted_submissionState.graphql"
 
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -18,13 +18,11 @@ interface Props {
   artwork: MyCollectionArtworkSWASectionSubmitted_submissionState$key
 }
 
-export const MyCollectionArtworkSWASectionSubmitted: React.FC<React.PropsWithChildren<Props>> = ({
-  artwork,
-}) => {
-  const [
-    isSubmissionStatusModalOpen,
-    setIsSubmissionStatusModalOpen,
-  ] = useState(false)
+export const MyCollectionArtworkSWASectionSubmitted: React.FC<
+  React.PropsWithChildren<Props>
+> = ({ artwork }) => {
+  const [isSubmissionStatusModalOpen, setIsSubmissionStatusModalOpen] =
+    useState(false)
 
   const { consignmentSubmission } = useFragment(
     submissionStateFragment,
@@ -106,10 +104,9 @@ interface SubmissionStatusModalProps {
   onClose(): void
 }
 
-const SubmissionStatusModal: React.FC<React.PropsWithChildren<SubmissionStatusModalProps>> = ({
-  show,
-  onClose,
-}) => {
+const SubmissionStatusModal: React.FC<
+  React.PropsWithChildren<SubmissionStatusModalProps>
+> = ({ show, onClose }) => {
   if (!show) return null
   const article = "https://support.artsy.net/s/article/What-items-do-you-accept"
 

@@ -11,16 +11,16 @@ import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { extractNodes } from "Utils/extractNodes"
-import { SoldRecentlyOnArtsyQuery } from "__generated__/SoldRecentlyOnArtsyQuery.graphql"
-import { SoldRecentlyOnArtsy_recentlySoldArtworks$data } from "__generated__/SoldRecentlyOnArtsy_recentlySoldArtworks.graphql"
+import type { SoldRecentlyOnArtsyQuery } from "__generated__/SoldRecentlyOnArtsyQuery.graphql"
+import type { SoldRecentlyOnArtsy_recentlySoldArtworks$data } from "__generated__/SoldRecentlyOnArtsy_recentlySoldArtworks.graphql"
 
 interface SoldRecentlyOnArtsyProps {
   recentlySoldArtworks: SoldRecentlyOnArtsy_recentlySoldArtworks$data
 }
 
-export const SoldRecentlyOnArtsy: React.FC<React.PropsWithChildren<SoldRecentlyOnArtsyProps>> = ({
-  recentlySoldArtworks,
-}) => {
+export const SoldRecentlyOnArtsy: React.FC<
+  React.PropsWithChildren<SoldRecentlyOnArtsyProps>
+> = ({ recentlySoldArtworks }) => {
   const tracking = useTracking()
 
   if (!recentlySoldArtworks) {
@@ -176,7 +176,9 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const SoldRecentlyOnArtsyQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const SoldRecentlyOnArtsyQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <SystemQueryRenderer<SoldRecentlyOnArtsyQuery>
       lazyLoad

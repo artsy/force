@@ -11,10 +11,10 @@ import {
   stripeCardElementNotFound,
   stripeNotLoadedErrorMessage,
 } from "Apps/Auction/Components/Form/Utils/errorMessages"
-import { FormikHelpers } from "formik"
-import { AddressFormValues } from "Apps/Invoice/Components/AddressFormWithCreditCard"
+import type { FormikHelpers } from "formik"
+import type { AddressFormValues } from "Apps/Invoice/Components/AddressFormWithCreditCard"
 import { useMakeInvoicePayment } from "Apps/Invoice/Hooks/useMakeInvoicePayment"
-import { InvoicePaymentFormProps } from "Apps/Invoice/Components/InvoicePaymentForm"
+import type { InvoicePaymentFormProps } from "Apps/Invoice/Components/InvoicePaymentForm"
 import { useToasts } from "@artsy/palette"
 
 const logger = createLogger("useCreateTokenAndSubmit")

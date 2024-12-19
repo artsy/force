@@ -1,11 +1,11 @@
-import React, { useRef } from "react"
-import { Box, Expandable, ExpandableProps } from "@artsy/palette"
+import type React from "react"
+import { useRef } from "react"
+import { Box, Expandable, type ExpandableProps } from "@artsy/palette"
 import { getENV } from "Utils/getENV"
 
-export const FilterExpandable: React.FC<React.PropsWithChildren<ExpandableProps>> = ({
-  expanded,
-  ...rest
-}) => {
+export const FilterExpandable: React.FC<
+  React.PropsWithChildren<ExpandableProps>
+> = ({ expanded, ...rest }) => {
   const ref = useRef<HTMLDivElement | null>(null)
 
   // Note: `IS_MOBILE` requires a full page load

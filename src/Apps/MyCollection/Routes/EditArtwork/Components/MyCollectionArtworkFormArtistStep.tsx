@@ -12,15 +12,15 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
 import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
-import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
+import type { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import {
   ArtistAutoComplete,
-  AutocompleteArtist,
+  type AutocompleteArtist,
 } from "Apps/Sell/Components/ArtistAutocomplete"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { extractNodes } from "Utils/extractNodes"
-import { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
+import type { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
 import { useFormikContext } from "formik"
 import { debounce, sortBy } from "lodash"
 import { useEffect, useMemo, useState } from "react"
@@ -30,17 +30,15 @@ interface MyCollectionArtworkFormArtistStepProps {
   me: MyCollectionArtworkFormArtistStep_me$key
 }
 
-export const MyCollectionArtworkFormArtistStep: React.FC<React.PropsWithChildren<MyCollectionArtworkFormArtistStepProps>> = ({
-  me: meProp,
-}) => {
+export const MyCollectionArtworkFormArtistStep: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkFormArtistStepProps>
+> = ({ me: meProp }) => {
   const me = useFragment(MyCollectionArtworkFormArtistStepFragment, meProp)
 
   const { onBack, onNext, onSkip } = useMyCollectionArtworkFormContext()
   const { setFieldValue, setValues } = useFormikContext<ArtworkModel>()
-  const {
-    trackSelectArtist,
-    trackSkipArtistSelection,
-  } = useMyCollectionTracking()
+  const { trackSelectArtist, trackSkipArtistSelection } =
+    useMyCollectionTracking()
 
   const collectedArtists = sortBy(
     extractNodes(me?.myCollectionInfo?.collectedArtistsConnection),
@@ -84,9 +82,10 @@ export const MyCollectionArtworkFormArtistStep: React.FC<React.PropsWithChildren
     onSkip?.()
   }
 
-  const handleArtistNotFound = useMemo(() => debounce(setArtistNotFound, 200), [
-    setArtistNotFound,
-  ])
+  const handleArtistNotFound = useMemo(
+    () => debounce(setArtistNotFound, 200),
+    [setArtistNotFound]
+  )
 
   // Stop the invocation of the debounced function after unmounting
   useEffect(() => handleArtistNotFound.cancel, [handleArtistNotFound])

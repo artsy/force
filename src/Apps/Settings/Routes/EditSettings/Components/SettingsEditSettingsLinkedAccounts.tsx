@@ -1,10 +1,10 @@
 import { Button, Join, Spacer, Text, useToasts } from "@artsy/palette"
-import { FC, useEffect } from "react"
+import { type FC, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
 import { useMode } from "Utils/Hooks/useMode"
-import {
+import type {
   AuthenticationProvider,
   SettingsEditSettingsLinkedAccounts_me$data,
 } from "__generated__/SettingsEditSettingsLinkedAccounts_me.graphql"
@@ -19,9 +19,9 @@ interface SettingsEditSettingsLinkedAccountsProps {
 
 const providerNames = ["Apple", "Facebook", "Google"]
 
-export const SettingsEditSettingsLinkedAccounts: FC<React.PropsWithChildren<SettingsEditSettingsLinkedAccountsProps>> = ({
-  me,
-}) => {
+export const SettingsEditSettingsLinkedAccounts: FC<
+  React.PropsWithChildren<SettingsEditSettingsLinkedAccountsProps>
+> = ({ me }) => {
   const { match } = useRouter()
   const { sendToast } = useToasts()
 
@@ -41,7 +41,7 @@ export const SettingsEditSettingsLinkedAccounts: FC<React.PropsWithChildren<Sett
         sendToast({
           variant: "error",
           message,
-          ttl: Infinity,
+          ttl: Number.POSITIVE_INFINITY,
         })
       }
     }
@@ -79,9 +79,8 @@ export const SettingsEditSettingsLinkedAccounts: FC<React.PropsWithChildren<Sett
   )
 }
 
-export const SettingsEditSettingsLinkedAccountsFragmentContainer = createFragmentContainer(
-  SettingsEditSettingsLinkedAccounts,
-  {
+export const SettingsEditSettingsLinkedAccountsFragmentContainer =
+  createFragmentContainer(SettingsEditSettingsLinkedAccounts, {
     me: graphql`
       fragment SettingsEditSettingsLinkedAccounts_me on Me {
         authentications {
@@ -89,8 +88,7 @@ export const SettingsEditSettingsLinkedAccountsFragmentContainer = createFragmen
         }
       }
     `,
-  }
-)
+  })
 
 interface SettingsEditSettingsLinkedAccountsButtonProps {
   Icon: React.FunctionComponent<React.PropsWithChildren<any>>
@@ -101,12 +99,9 @@ interface SettingsEditSettingsLinkedAccountsButtonProps {
 
 type Mode = "Disconnected" | "Connecting" | "Connected" | "Disconnecting"
 
-const SettingsEditSettingsLinkedAccountsButton: FC<React.PropsWithChildren<SettingsEditSettingsLinkedAccountsButtonProps>> = ({
-  Icon,
-  me,
-  href,
-  provider,
-}) => {
+const SettingsEditSettingsLinkedAccountsButton: FC<
+  React.PropsWithChildren<SettingsEditSettingsLinkedAccountsButtonProps>
+> = ({ Icon, me, href, provider }) => {
   const isConnected = me.authentications.find(
     authentication => authentication.provider === provider
   )

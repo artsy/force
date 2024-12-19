@@ -4,7 +4,7 @@ import {
   Flex,
   Link,
   Select,
-  Option,
+  type Option,
   Separator,
   Spacer,
   Text,
@@ -12,18 +12,18 @@ import {
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarBidAction_artwork$data } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
-import { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSidebarBidAction_me.graphql"
+import type { ArtworkSidebarBidAction_artwork$data } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
+import type { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSidebarBidAction_me.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { TrackingProp, useTracking } from "react-tracking"
+import { type TrackingProp, useTracking } from "react-tracking"
 import { getENV } from "Utils/getENV"
 import { bidderQualifications } from "Utils/identityVerificationRequirements"
 import { compact } from "lodash"
-import { Router } from "found"
+import type { Router } from "found"
 import { useRouter } from "System/Hooks/useRouter"
 import { ActionType, ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
-import { ShowAuthDialog, withAuthDialog } from "Components/AuthDialog"
+import { type ShowAuthDialog, withAuthDialog } from "Components/AuthDialog"
 import HelpIcon from "@artsy/icons/HelpIcon"
 
 export interface ArtworkSidebarBidActionProps {
@@ -38,9 +38,11 @@ export interface ArtworkSidebarBidActionState {
   selectedMaxBidCents: number
 }
 
-const RegisterToBidButton: React.FC<React.PropsWithChildren<{
-  onClick: () => void
-}>> = ({ onClick }) => {
+const RegisterToBidButton: React.FC<
+  React.PropsWithChildren<{
+    onClick: () => void
+  }>
+> = ({ onClick }) => {
   return (
     <Button width="100%" size="large" mt={1} onClick={onClick} data-test="bid">
       Register to bid
@@ -48,9 +50,11 @@ const RegisterToBidButton: React.FC<React.PropsWithChildren<{
   )
 }
 
-const VerifyIdentityButton: React.FC<React.PropsWithChildren<{
-  id: string
-}>> = ({ id }) => (
+const VerifyIdentityButton: React.FC<
+  React.PropsWithChildren<{
+    id: string
+  }>
+> = ({ id }) => (
   <a href={`/identity-verification/${id}`}>
     <Button width="100%" size="large">
       Verify identity
@@ -58,9 +62,9 @@ const VerifyIdentityButton: React.FC<React.PropsWithChildren<{
   </a>
 )
 
-const IdentityVerificationDisclaimer: React.FC<React.PropsWithChildren<
-  unknown
->> = () => {
+const IdentityVerificationDisclaimer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Text variant="sm-display" color="black60" textAlign="center">
       Identity verification required to bid.{" "}
@@ -78,7 +82,7 @@ export class ArtworkSidebarBidAction extends React.Component<
   }
 
   setMaxBid = (newVal: string) => {
-    this.setState({ selectedMaxBidCents: parseInt(newVal, 10) })
+    this.setState({ selectedMaxBidCents: Number.parseInt(newVal, 10) })
   }
 
   redirectToRegister = () => {

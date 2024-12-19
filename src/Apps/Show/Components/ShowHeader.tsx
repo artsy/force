@@ -1,7 +1,7 @@
-import * as React from "react"
-import { Box, BoxProps, Join, Spacer, Text } from "@artsy/palette"
+import type * as React from "react"
+import { Box, type BoxProps, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowHeader_show$data } from "__generated__/ShowHeader_show.graphql"
+import type { ShowHeader_show$data } from "__generated__/ShowHeader_show.graphql"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 import { useEventTiming } from "Utils/Hooks/useEventTiming"
 import { ShowContextualLinkFragmentContainer } from "./ShowContextualLink"
@@ -9,7 +9,10 @@ import { ShowContextualLinkFragmentContainer } from "./ShowContextualLink"
 interface ShowHeaderProps extends BoxProps {
   show: ShowHeader_show$data
 }
-export const ShowHeader: React.FC<React.PropsWithChildren<ShowHeaderProps>> = ({ show, ...rest }) => {
+export const ShowHeader: React.FC<React.PropsWithChildren<ShowHeaderProps>> = ({
+  show,
+  ...rest
+}) => {
   const { name, startAt, endAt, formattedStartAt, formattedEndAt } = show
 
   const currentTime = useCurrentTime({ syncWithServer: true })

@@ -6,13 +6,13 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { IdentityVerificationApp_identityVerification$data } from "__generated__/IdentityVerificationApp_identityVerification.graphql"
-import { IdentityVerificationAppStartMutation } from "__generated__/IdentityVerificationAppStartMutation.graphql"
+import type { IdentityVerificationApp_identityVerification$data } from "__generated__/IdentityVerificationApp_identityVerification.graphql"
+import type { IdentityVerificationAppStartMutation } from "__generated__/IdentityVerificationAppStartMutation.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useMemo, useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import {
-  RelayProp,
+  type RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
@@ -194,8 +194,7 @@ const IdentityVerificationApp: React.FC<React.PropsWithChildren<Props>> = ({
               <Text variant="sm">
                 • You will have to enable permissions for your camera to take a
                 photo of your ID and yourself.
-                <br />
-                • All four corners of your ID must be captured.
+                <br />• All four corners of your ID must be captured.
                 <br />• Artsy can not accept emails of your personal documents,
                 they must be submitted to our secure identity verification
                 partner during this process.

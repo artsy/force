@@ -1,7 +1,8 @@
-import { Clickable, ClickableProps } from "@artsy/palette"
-import React, {
+import { Clickable, type ClickableProps } from "@artsy/palette"
+import type React from "react"
+import {
   forwardRef,
-  Ref,
+  type Ref,
   useCallback,
   useImperativeHandle,
   useRef,

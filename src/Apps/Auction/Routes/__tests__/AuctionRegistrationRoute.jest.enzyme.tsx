@@ -5,7 +5,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { AuctionRegistrationRouteFragmentContainer } from "Apps/Auction/Routes/AuctionRegistrationRoute"
-import { AuctionRegistrationRouteTestQuery } from "__generated__/AuctionRegistrationRouteTestQuery.graphql"
+import type { AuctionRegistrationRouteTestQuery } from "__generated__/AuctionRegistrationRouteTestQuery.graphql"
 import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
 
 jest.unmock("react-relay")
@@ -97,7 +97,8 @@ describe("AuctionRegistrationRoute", () => {
     }))
 
     // Hack to get around mocking Formik
-    ;(mockFormik as React.FC<React.PropsWithChildren<unknown>>).displayName = "Formik"
+    ;(mockFormik as React.FC<React.PropsWithChildren<unknown>>).displayName =
+      "Formik"
     mockFormik.mockImplementation(({ children }) => {
       return children(defaultFormikProps)
     })
@@ -191,7 +192,6 @@ describe("AuctionRegistrationRoute", () => {
         slug: "sale-slug",
       }),
     })
-
     ;(wrapper.find("ModalDialog").props() as any).onClose()
     expect(spy).toHaveBeenCalledWith("/auction/sale-slug")
   })
@@ -259,7 +259,6 @@ describe("AuctionRegistrationRoute", () => {
           internalID: "saleInternalID",
         }),
       })
-
       ;(wrapper.find("Formik").props() as any).onSubmit(values, helpers)
       await flushPromiseQueue()
 

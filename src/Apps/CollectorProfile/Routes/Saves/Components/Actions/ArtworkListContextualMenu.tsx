@@ -6,12 +6,12 @@ import {
 } from "Components/ContextualMenu"
 import {
   DeleteArtworkListModal,
-  DeleteArtworkListEntity,
+  type DeleteArtworkListEntity,
 } from "./DeleteArtworkListModal"
 
 import {
   EditArtworkListModal,
-  EditArtworkListEntity,
+  type EditArtworkListEntity,
 } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/EditArtworkListModal"
 
 // FIXME: Should be a fragment
@@ -21,9 +21,9 @@ interface ArtworkListContextualMenuProps {
   artworkList: ArtworkListEntity
 }
 
-export const ArtworkListContextualMenu: React.FC<React.PropsWithChildren<ArtworkListContextualMenuProps>> = ({
-  artworkList,
-}) => {
+export const ArtworkListContextualMenu: React.FC<
+  React.PropsWithChildren<ArtworkListContextualMenuProps>
+> = ({ artworkList }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 

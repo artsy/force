@@ -9,12 +9,12 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { Form, Formik } from "formik"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { logout } from "Utils/auth"
 import { useMode } from "Utils/Hooks/useMode"
 import * as Yup from "yup"
-import { SettingsEditSettingsPassword_me$data } from "__generated__/SettingsEditSettingsPassword_me.graphql"
+import type { SettingsEditSettingsPassword_me$data } from "__generated__/SettingsEditSettingsPassword_me.graphql"
 import { useUpdateSettingsPassword } from "Apps/Settings/Routes/EditSettings/useUpdateSettingsPassword"
 import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
 
@@ -24,9 +24,9 @@ interface SettingsEditSettingsPasswordProps {
 
 type Mode = "Pending" | "Active"
 
-export const SettingsEditSettingsPassword: FC<React.PropsWithChildren<SettingsEditSettingsPasswordProps>> = ({
-  me: { hasPassword },
-}) => {
+export const SettingsEditSettingsPassword: FC<
+  React.PropsWithChildren<SettingsEditSettingsPasswordProps>
+> = ({ me: { hasPassword } }) => {
   const [mode, setMode] = useMode<Mode>("Pending")
   const { sendToast } = useToasts()
   const { submitUpdateSettingsPassword } = useUpdateSettingsPassword()
@@ -198,13 +198,11 @@ export const SettingsEditSettingsPassword: FC<React.PropsWithChildren<SettingsEd
   )
 }
 
-export const SettingsEditSettingsPasswordFragmentContainer = createFragmentContainer(
-  SettingsEditSettingsPassword,
-  {
+export const SettingsEditSettingsPasswordFragmentContainer =
+  createFragmentContainer(SettingsEditSettingsPassword, {
     me: graphql`
       fragment SettingsEditSettingsPassword_me on Me {
         hasPassword
       }
     `,
-  }
-)
+  })

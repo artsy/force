@@ -1,12 +1,12 @@
-import { Box, BoxProps, Button, useToasts } from "@artsy/palette"
+import { Box, type BoxProps, Button, useToasts } from "@artsy/palette"
 import { useMakeInquiryOrder } from "Apps/Conversations/mutations/useMakeInquiryOrderMutation"
 import { useState } from "react"
 import { useRouter } from "System/Hooks/useRouter"
 import { useTracking } from "react-tracking"
-import { ActionType, OwnerType, ClickedBuyNow } from "@artsy/cohesion"
+import { ActionType, OwnerType, type ClickedBuyNow } from "@artsy/cohesion"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { useConversationPurchaseButtonData } from "Apps/Conversations/components/ConversationCTA/useConversationPurchaseButtonData"
-import { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
+import type { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
 import { usePartnerOfferCheckoutMutation } from "Apps/PartnerOffer/Routes/Mutations/UsePartnerOfferCheckoutMutation"
 import { ErrorWithMetadata } from "Utils/errors"
 
@@ -15,11 +15,9 @@ interface ConversationPurchaseButtonProps extends BoxProps {
   partnerOffer: { internalID: string } | null
 }
 
-export const ConversationPurchaseButton: React.FC<React.PropsWithChildren<ConversationPurchaseButtonProps>> = ({
-  conversation,
-  partnerOffer,
-  ...boxProps
-}) => {
+export const ConversationPurchaseButton: React.FC<
+  React.PropsWithChildren<ConversationPurchaseButtonProps>
+> = ({ conversation, partnerOffer, ...boxProps }) => {
   const tracking = useTracking()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { router } = useRouter()
@@ -27,10 +25,8 @@ export const ConversationPurchaseButton: React.FC<React.PropsWithChildren<Conver
   const partnerOfferCheckout = usePartnerOfferCheckoutMutation()
   const { sendToast } = useToasts()
 
-  const {
-    showSelectEditionSetModal,
-    isConfirmModalVisible,
-  } = useConversationsContext()
+  const { showSelectEditionSetModal, isConfirmModalVisible } =
+    useConversationsContext()
 
   const data = useConversationPurchaseButtonData(conversation)
 

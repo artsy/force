@@ -1,6 +1,6 @@
-import { FC, useRef, useState } from "react"
+import { type FC, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
-import { CollectorProfileArtistsListArtist_userInterestEdge$key } from "__generated__/CollectorProfileArtistsListArtist_userInterestEdge.graphql"
+import type { CollectorProfileArtistsListArtist_userInterestEdge$key } from "__generated__/CollectorProfileArtistsListArtist_userInterestEdge.graphql"
 import {
   Box,
   Button,
@@ -18,7 +18,7 @@ import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowA
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 import styled from "styled-components"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { CollectorProfileArtistsListArtistUpdateMutation } from "__generated__/CollectorProfileArtistsListArtistUpdateMutation.graphql"
+import type { CollectorProfileArtistsListArtistUpdateMutation } from "__generated__/CollectorProfileArtistsListArtistUpdateMutation.graphql"
 import MoreIcon from "@artsy/icons/MoreIcon"
 import { Z } from "Apps/Components/constants"
 import { NavBarMenuItemButton } from "Components/NavBar/Menus/NavBarMenuItem"
@@ -30,9 +30,9 @@ interface CollectorProfileArtistsListArtistProps {
   userInterestEdge: CollectorProfileArtistsListArtist_userInterestEdge$key
 }
 
-export const CollectorProfileArtistsListArtist: FC<React.PropsWithChildren<
-  CollectorProfileArtistsListArtistProps
->> = ({ userInterestEdge }) => {
+export const CollectorProfileArtistsListArtist: FC<
+  React.PropsWithChildren<CollectorProfileArtistsListArtistProps>
+> = ({ userInterestEdge }) => {
   const [mode, setMode] = useState<"Idle" | "Open" | "Delete">("Idle")
 
   const { sendToast } = useToasts()
@@ -41,19 +41,18 @@ export const CollectorProfileArtistsListArtist: FC<React.PropsWithChildren<
 
   const { node: artist } = userInterest || {}
 
-  const { submitMutation } = useMutation<
-    CollectorProfileArtistsListArtistUpdateMutation
-  >({
-    mutation: MUTATION,
-    optimisticResponse: {
-      updateUserInterest: {
-        userInterestEdge: {
-          id: userInterest.id,
-          private: !userInterest.private,
+  const { submitMutation } =
+    useMutation<CollectorProfileArtistsListArtistUpdateMutation>({
+      mutation: MUTATION,
+      optimisticResponse: {
+        updateUserInterest: {
+          userInterestEdge: {
+            id: userInterest.id,
+            private: !userInterest.private,
+          } as any,
         } as any,
-      } as any,
-    },
-  })
+      },
+    })
 
   const handleToggle = async () => {
     try {
@@ -201,9 +200,9 @@ export const CollectorProfileArtistsListArtist: FC<React.PropsWithChildren<
   )
 }
 
-export const CollectorProfileArtistsListArtistSkeleton: FC<React.PropsWithChildren<
-  unknown
->> = () => {
+export const CollectorProfileArtistsListArtistSkeleton: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <>
       <Media greaterThan="xs">

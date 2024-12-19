@@ -1,9 +1,9 @@
-import { Details_Test_Query$rawResponse } from "__generated__/Details_Test_Query.graphql"
+import type { Details_Test_Query$rawResponse } from "__generated__/Details_Test_Query.graphql"
 import { renderRelayTree } from "DevTools/renderRelayTree"
 import { graphql } from "react-relay"
 import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
-import { AuthContextModule, ContextModule } from "@artsy/cohesion"
+import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthDialog } from "Components/AuthDialog"
 
@@ -574,84 +574,85 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
   isListed: false,
 }
 
-const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] = {
-  id: "opaque-artwork-id",
-  saleArtwork: {
-    lotID: "lot-id",
-    id: "opaque-sale-artwork-id",
-  },
-  internalID: "opaque-internal-id",
-  artist: {
-    id: "artist-id",
-    targetSupply: {
-      isP1: true,
+const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] =
+  {
+    id: "opaque-artwork-id",
+    saleArtwork: {
+      lotID: "lot-id",
+      id: "opaque-sale-artwork-id",
     },
-  },
-  marketPriceInsights: {
-    demandRank: 0.9,
-  },
-  artists: [
-    {
-      id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
-      href: "/artist/gerhard-richter",
-      name: "Gerhard Richter",
+    internalID: "opaque-internal-id",
+    artist: {
+      id: "artist-id",
+      targetSupply: {
+        isP1: true,
+      },
     },
-  ],
-  href: "/artwork/gerhard-richter-tulips-p17-14",
-  date: "2017",
-  sale_message: "$450",
-  cultural_maker: null,
-  title: "Tulips (P17)",
-  collecting_institution: "This Really Great Gallery",
-  partner: {
-    id: "opaque-partner-id",
-    name: "Forum Auctions",
-    href: "/auction/forum-auctions",
-  },
-  sale: {
-    id: "opaque-sale-id",
-    is_auction: true,
-    is_closed: false,
-    cascadingEndTimeIntervalMinutes: null,
-    extendedBiddingIntervalMinutes: null,
-    startAt: "2022-03-11T12:33:37.000Z",
-    endAt: "2022-03-12T12:33:37.000Z",
-  },
-  sale_artwork: {
-    lotID: "lot-id",
-    lotLabel: "0",
-    id: "opaque-sale-artwork-id",
-    highest_bid: { display: "$2,600" },
-    opening_bid: { display: "$2,400" },
-    counts: { bidder_positions: 0 },
-    endAt: "2022-03-12T12:33:37.000Z",
-    formattedEndDateTime: "Closes, Mar 12 • 12:33pm GMT",
-    extendedBiddingEndAt: null,
-  },
-  attributionClass: {
-    id: "attributionClass-id",
-    name: "Unique",
-  },
-  mediumType: {
-    filterGene: {
-      id: "gene-id",
-      name: "Prints",
+    marketPriceInsights: {
+      demandRank: 0.9,
     },
-  },
-  collectorSignals: {
-    primaryLabel: null,
-    partnerOffer: null,
-    auction: null,
-  },
-  consignmentSubmission: {
-    internalID: "internal-id",
-    state: "SUBMITTED",
-    stateLabel: "Submitted",
-    actionLabel: "Action",
-    stateLabelColor: "black100",
-  },
-  isListed: false,
-}
+    artists: [
+      {
+        id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
+        href: "/artist/gerhard-richter",
+        name: "Gerhard Richter",
+      },
+    ],
+    href: "/artwork/gerhard-richter-tulips-p17-14",
+    date: "2017",
+    sale_message: "$450",
+    cultural_maker: null,
+    title: "Tulips (P17)",
+    collecting_institution: "This Really Great Gallery",
+    partner: {
+      id: "opaque-partner-id",
+      name: "Forum Auctions",
+      href: "/auction/forum-auctions",
+    },
+    sale: {
+      id: "opaque-sale-id",
+      is_auction: true,
+      is_closed: false,
+      cascadingEndTimeIntervalMinutes: null,
+      extendedBiddingIntervalMinutes: null,
+      startAt: "2022-03-11T12:33:37.000Z",
+      endAt: "2022-03-12T12:33:37.000Z",
+    },
+    sale_artwork: {
+      lotID: "lot-id",
+      lotLabel: "0",
+      id: "opaque-sale-artwork-id",
+      highest_bid: { display: "$2,600" },
+      opening_bid: { display: "$2,400" },
+      counts: { bidder_positions: 0 },
+      endAt: "2022-03-12T12:33:37.000Z",
+      formattedEndDateTime: "Closes, Mar 12 • 12:33pm GMT",
+      extendedBiddingEndAt: null,
+    },
+    attributionClass: {
+      id: "attributionClass-id",
+      name: "Unique",
+    },
+    mediumType: {
+      filterGene: {
+        id: "gene-id",
+        name: "Prints",
+      },
+    },
+    collectorSignals: {
+      primaryLabel: null,
+      partnerOffer: null,
+      auction: null,
+    },
+    consignmentSubmission: {
+      internalID: "internal-id",
+      state: "SUBMITTED",
+      stateLabel: "Submitted",
+      actionLabel: "Action",
+      stateLabelColor: "black100",
+    },
+    isListed: false,
+  }
 
 const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
   id: "opaque-artwork-id",

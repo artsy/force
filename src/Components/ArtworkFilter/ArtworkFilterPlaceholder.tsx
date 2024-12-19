@@ -3,7 +3,7 @@ import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import FilterIcon from "@artsy/icons/FilterIcon"
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Button,
   Flex,
   FullBleed,
@@ -23,10 +23,9 @@ interface ArtworkFilterPlaceholderProps extends BoxProps {
   showCreateAlert?: boolean
 }
 
-export const ArtworkFilterPlaceholder: React.FC<React.PropsWithChildren<ArtworkFilterPlaceholderProps>> = ({
-  showCreateAlert = false,
-  ...rest
-}) => {
+export const ArtworkFilterPlaceholder: React.FC<
+  React.PropsWithChildren<ArtworkFilterPlaceholderProps>
+> = ({ showCreateAlert = false, ...rest }) => {
   return (
     <Skeleton {...rest}>
       {/* Mobile Artwork Filter Placeholder */}

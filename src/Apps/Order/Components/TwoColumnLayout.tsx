@@ -1,5 +1,5 @@
 import { Box, Column, Flex, GridColumns, Spacer } from "@artsy/palette"
-import { Children, FC, ReactNode } from "react"
+import { Children, type FC, type ReactNode } from "react"
 import { Media } from "Utils/Responsive"
 
 const CONTENT_SPAN = 7
@@ -39,11 +39,9 @@ export interface TwoColumnLayoutProps {
   noRowGap?: boolean
 }
 
-export const TwoColumnLayout: FC<React.PropsWithChildren<TwoColumnLayoutProps>> = ({
-  Content,
-  Sidebar,
-  noRowGap,
-}) => (
+export const TwoColumnLayout: FC<
+  React.PropsWithChildren<TwoColumnLayoutProps>
+> = ({ Content, Sidebar, noRowGap }) => (
   <GridColumns gridRowGap={noRowGap ? 0 : undefined}>
     <Column span={[12, CONTENT_SPAN]}>{Content}</Column>
     <Column display={["none", "block"]} span={1} />

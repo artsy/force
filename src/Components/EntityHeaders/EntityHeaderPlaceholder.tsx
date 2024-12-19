@@ -1,20 +1,19 @@
 import {
-  BoxProps,
+  type BoxProps,
   Flex,
   Skeleton,
   SkeletonBox,
   SkeletonText,
 } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 
 export interface EntityHeaderPlaceholderProps extends BoxProps {
   displayAvatar?: boolean
 }
 
-export const EntityHeaderPlaceholder: FC<React.PropsWithChildren<EntityHeaderPlaceholderProps>> = ({
-  displayAvatar = true,
-  ...rest
-}) => {
+export const EntityHeaderPlaceholder: FC<
+  React.PropsWithChildren<EntityHeaderPlaceholderProps>
+> = ({ displayAvatar = true, ...rest }) => {
   return (
     <Skeleton display="flex" {...rest}>
       {displayAvatar && (

@@ -1,23 +1,23 @@
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
   AutocompleteInput,
-  AutocompleteInputOptionType,
+  type AutocompleteInputOptionType,
   Box,
   Flex,
   Image,
   Text,
 } from "@artsy/palette"
-import { FormValues } from "Apps/Sell/Routes/ArtistRoute"
+import type { FormValues } from "Apps/Sell/Routes/ArtistRoute"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { extractNodes } from "Utils/extractNodes"
-import {
+import type {
   ArtistAutocomplete_SearchConnection_Query,
   ArtistAutocomplete_SearchConnection_Query$data,
 } from "__generated__/ArtistAutocomplete_SearchConnection_Query.graphql"
 import { useFormikContext } from "formik"
 import { debounce } from "lodash"
 import { useEffect, useMemo, useState } from "react"
-import { Environment, fetchQuery, graphql } from "react-relay"
+import { type Environment, fetchQuery, graphql } from "react-relay"
 
 const DEBOUNCE_DELAY = 300
 
@@ -38,16 +38,18 @@ interface ArtistAutocompleteOption extends AutocompleteInputOptionType {
   option: AutocompleteArtist
 }
 
-export const ArtistAutoComplete: React.FC<React.PropsWithChildren<{
-  onArtistNotFound?: (notFound: boolean) => void
-  onError: () => void
-  onChange?: (value: string) => void
-  onSelect: (artist: AutocompleteArtist | null) => void
-  placeholder?: string
-  showChevronIcon?: boolean
-  required?: boolean
-  title?: string
-}>> = ({
+export const ArtistAutoComplete: React.FC<
+  React.PropsWithChildren<{
+    onArtistNotFound?: (notFound: boolean) => void
+    onError: () => void
+    onChange?: (value: string) => void
+    onSelect: (artist: AutocompleteArtist | null) => void
+    placeholder?: string
+    showChevronIcon?: boolean
+    required?: boolean
+    title?: string
+  }>
+> = ({
   onArtistNotFound,
   onError,
   onChange,
@@ -63,13 +65,8 @@ export const ArtistAutoComplete: React.FC<React.PropsWithChildren<{
   const [isError, setIsError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const { relayEnvironment } = useSystemContext()
-  const {
-    values,
-    setFieldValue,
-    errors,
-    touched,
-    setFieldTouched,
-  } = useFormikContext<FormValues>()
+  const { values, setFieldValue, errors, touched, setFieldTouched } =
+    useFormikContext<FormValues>()
 
   const [artistNotFoundMessage, setArtistNotFoundMessage] = useState<string>("")
 

@@ -2,7 +2,7 @@ import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ActionType,
-  AddToCalendar,
+  type AddToCalendar,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
@@ -14,11 +14,8 @@ import {
 
 export const useAuctionTracking = () => {
   const { trackEvent } = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const tracking = {
     addToCalendar: ({ subject }: { subject: AddToCalendar["subject"] }) => {

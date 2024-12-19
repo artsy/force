@@ -5,11 +5,9 @@ interface ConfirmationModalProps {
   onClose: () => void
   onLeave: () => void
 }
-export const ArtworkFormExitConfirmationDialog: React.FC<React.PropsWithChildren<ConfirmationModalProps>> = ({
-  isEditing,
-  onClose,
-  onLeave,
-}) => {
+export const ArtworkFormExitConfirmationDialog: React.FC<
+  React.PropsWithChildren<ConfirmationModalProps>
+> = ({ isEditing, onClose, onLeave }) => {
   return (
     <ModalDialog
       title="Leave without saving?"

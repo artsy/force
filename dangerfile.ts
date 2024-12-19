@@ -37,7 +37,6 @@ function warnCreateSmokeTestIfRoutesFileChanged() {
     )
   }
 }
-
 ;(async function () {
   preventDefaultQueryRenderImport()
   warnCreateSmokeTestIfRoutesFileChanged()

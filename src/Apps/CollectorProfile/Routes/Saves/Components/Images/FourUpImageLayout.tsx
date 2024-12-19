@@ -1,7 +1,7 @@
 import { Box, Flex, Image, Spacer } from "@artsy/palette"
 import { ArtworkListNoImage } from "./ArtworkListNoImage"
 import { prepareImageURLs } from "Apps/CollectorProfile/Routes/Saves/Utils/prepareImageURLs"
-import { FC } from "react"
+import type { FC } from "react"
 import { cropped } from "Utils/resized"
 import { ArtworkListImageBorder } from "Apps/CollectorProfile/Routes/Saves/Components/Images/ArtworkListImageBorder"
 
@@ -17,9 +17,9 @@ const LARGE_IMAGE_SIZE = 100
 const SMALL_IMAGE_SIZE = 58
 const IMAGE_OFFSET = "2px"
 
-export const FourUpImageLayout: FC<React.PropsWithChildren<FourUpImageLayoutProps>> = ({
-  imageURLs,
-}) => {
+export const FourUpImageLayout: FC<
+  React.PropsWithChildren<FourUpImageLayoutProps>
+> = ({ imageURLs }) => {
   const preparedImageURLs = prepareImageURLs(imageURLs)
 
   return (

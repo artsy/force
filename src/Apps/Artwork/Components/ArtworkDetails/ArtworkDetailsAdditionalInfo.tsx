@@ -2,7 +2,7 @@ import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchem
 import {
   Clickable,
   Flex,
-  FlexProps,
+  type FlexProps,
   HTML,
   Join,
   ReadMore,
@@ -10,7 +10,7 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { ArtworkDetailsAdditionalInfo_artwork$data } from "__generated__/ArtworkDetailsAdditionalInfo_artwork.graphql"
+import type { ArtworkDetailsAdditionalInfo_artwork$data } from "__generated__/ArtworkDetailsAdditionalInfo_artwork.graphql"
 import { useState } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -24,21 +24,17 @@ import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
-import { PrivateArtworkAdditionalInfo_artwork$data } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
+import type { PrivateArtworkAdditionalInfo_artwork$data } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
 
 export interface ArtworkDetailsAdditionalInfoProps extends FlexProps {
   artwork: ArtworkDetailsAdditionalInfo_artwork$data
 }
 
-export const ArtworkDetailsAdditionalInfo: React.FC<React.PropsWithChildren<ArtworkDetailsAdditionalInfoProps>> = ({
-  artwork,
-  ...flexProps
-}) => {
-  const {
-    listItems,
-    openConditionModal,
-    setOpenConditionModal,
-  } = useArtworkDetailsAdditionalInfoFields({ artwork })
+export const ArtworkDetailsAdditionalInfo: React.FC<
+  React.PropsWithChildren<ArtworkDetailsAdditionalInfoProps>
+> = ({ artwork, ...flexProps }) => {
+  const { listItems, openConditionModal, setOpenConditionModal } =
+    useArtworkDetailsAdditionalInfoFields({ artwork })
 
   const displayItems = listItems.filter(i => i.value != null && i.value !== "")
 
@@ -116,11 +112,8 @@ export const useArtworkDetailsAdditionalInfoFields = ({
   )
 
   const { trackEvent } = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const [openMediumModal, setOpenMediumModal] = useState(false)
   const [openRarityModal, setOpenRarityModal] = useState(false)
@@ -251,9 +244,8 @@ export const useArtworkDetailsAdditionalInfoFields = ({
   }
 }
 
-export const ArtworkDetailsAdditionalInfoFragmentContainer = createFragmentContainer(
-  ArtworkDetailsAdditionalInfo,
-  {
+export const ArtworkDetailsAdditionalInfoFragmentContainer =
+  createFragmentContainer(ArtworkDetailsAdditionalInfo, {
     artwork: graphql`
       fragment ArtworkDetailsAdditionalInfo_artwork on Artwork {
         category
@@ -294,5 +286,4 @@ export const ArtworkDetailsAdditionalInfoFragmentContainer = createFragmentConta
         ...ArtworkDetailsMediumModal_artwork
       }
     `,
-  }
-)
+  })

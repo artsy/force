@@ -1,13 +1,15 @@
-import { FC, useMemo } from "react"
+import { type FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, FullBleed, ResponsiveBox } from "@artsy/palette"
-import { ArticleSectionEmbed_section$data } from "__generated__/ArticleSectionEmbed_section.graphql"
+import type { ArticleSectionEmbed_section$data } from "__generated__/ArticleSectionEmbed_section.graphql"
 
 interface ArticleSectionEmbedProps {
   section: ArticleSectionEmbed_section$data
 }
 
-const ArticleSectionEmbed: FC<React.PropsWithChildren<ArticleSectionEmbedProps>> = ({ section }) => {
+const ArticleSectionEmbed: FC<
+  React.PropsWithChildren<ArticleSectionEmbedProps>
+> = ({ section }) => {
   const { Container } = useMemo(() => {
     switch (section._layout) {
       case "FILLWIDTH":

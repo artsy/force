@@ -1,6 +1,6 @@
 import { Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SettingsBankAccount_bankAccount$data } from "__generated__/SettingsBankAccount_bankAccount.graphql"
+import type { SettingsBankAccount_bankAccount$data } from "__generated__/SettingsBankAccount_bankAccount.graphql"
 import { useDeleteBankAccount } from "Apps/Settings/Routes/Payments/useDeleteBankAccount"
 import { SettingsPaymentsMethod } from "./SettingsPaymentsMethod"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
@@ -9,9 +9,9 @@ interface SettingsBankAccountProps {
   bankAccount: SettingsBankAccount_bankAccount$data
 }
 
-const SettingsBankAccount: React.FC<React.PropsWithChildren<SettingsBankAccountProps>> = ({
-  bankAccount,
-}) => {
+const SettingsBankAccount: React.FC<
+  React.PropsWithChildren<SettingsBankAccountProps>
+> = ({ bankAccount }) => {
   const { internalID, last4 } = bankAccount
   const { submitMutation } = useDeleteBankAccount()
 

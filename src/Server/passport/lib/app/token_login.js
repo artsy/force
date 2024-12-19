@@ -5,14 +5,14 @@
 
 const forwardedFor = require("./forwarded_for")
 // TODO: Remove let added for 'rewire'
-let opts = require("../options")
+const opts = require("../options")
 const qs = require("querystring")
 // TODO: Remove let added for 'rewire'
-let request = require("superagent")
+const request = require("superagent")
 const omit = require("lodash/omit")
 const isEmpty = require("lodash/isEmpty")
 
-module.exports.headerLogin = function (req, _res, next) {
+module.exports.headerLogin = (req, _res, next) => {
   if (req.path === opts.logoutPath) {
     return next()
   }
@@ -26,7 +26,7 @@ module.exports.headerLogin = function (req, _res, next) {
   }
 }
 
-module.exports.trustTokenLogin = function (req, res, next) {
+module.exports.trustTokenLogin = (req, res, next) => {
   let token
   if ((token = req.query.trust_token) == null) {
     return next()
@@ -43,14 +43,14 @@ module.exports.trustTokenLogin = function (req, res, next) {
     .post(`${opts.ARTSY_URL}/oauth2/access_token`)
     .set({ "X-Forwarded-For": forwardedFor(req) })
     .send(settings)
-    .end(function (err, response) {
+    .end((err, response) => {
       if (err != null || !response.ok) {
         return next()
       }
 
       const user = { accessToken: response.body.access_token }
 
-      req.login(user, function (err) {
+      req.login(user, err => {
         if (err != null) {
           return next()
         }

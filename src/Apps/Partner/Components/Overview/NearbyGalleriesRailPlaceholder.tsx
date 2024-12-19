@@ -1,14 +1,13 @@
-import { Box, BoxProps, Shelf, SkeletonText } from "@artsy/palette"
+import { Box, type BoxProps, Shelf, SkeletonText } from "@artsy/palette"
 import { CellPartnerPlaceholder } from "Components/Cells/CellPartner"
 
 export interface NearbyGalleriesRailPlaceholderProps extends BoxProps {
   count: number
 }
 
-export const NearbyGalleriesRailPlaceholder: React.FC<React.PropsWithChildren<NearbyGalleriesRailPlaceholderProps>> = ({
-  count,
-  ...rest
-}) => {
+export const NearbyGalleriesRailPlaceholder: React.FC<
+  React.PropsWithChildren<NearbyGalleriesRailPlaceholderProps>
+> = ({ count, ...rest }) => {
   return (
     <Box {...rest}>
       <SkeletonText variant="lg-display" mb={4}>

@@ -1,8 +1,8 @@
 import { Box, Text, GridColumns, Column, Spacer } from "@artsy/palette"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
-import * as React from "react"
-import { MenuData } from "Components/NavBar/menuData"
+import type * as React from "react"
+import type { MenuData } from "Components/NavBar/menuData"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { NavBarMenuItemLink } from "./NavBarMenuItem"
@@ -16,9 +16,9 @@ interface NavBarSubMenuProps {
 }
 
 /** Component for full-width sub-menus (Artworks, Artists) */
-export const NavBarSubMenu: React.FC<React.PropsWithChildren<
-  NavBarSubMenuProps
->> = ({ menu, contextModule, onClick }) => {
+export const NavBarSubMenu: React.FC<
+  React.PropsWithChildren<NavBarSubMenuProps>
+> = ({ menu, contextModule, onClick }) => {
   const { trackEvent } = useTracking()
 
   const handleClick = (

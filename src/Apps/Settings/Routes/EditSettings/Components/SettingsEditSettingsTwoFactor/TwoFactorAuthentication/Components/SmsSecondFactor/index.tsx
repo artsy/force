@@ -8,17 +8,21 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { useState } from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { afterUpdateRedirect } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 // eslint-disable-next-line no-restricted-imports
 import request from "superagent"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { CreateSmsSecondFactorInput } from "__generated__/CreateSmsSecondFactorMutation.graphql"
-import { SmsSecondFactor_me$data } from "__generated__/SmsSecondFactor_me.graphql"
-import { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
+import type { CreateSmsSecondFactorInput } from "__generated__/CreateSmsSecondFactorMutation.graphql"
+import type { SmsSecondFactor_me$data } from "__generated__/SmsSecondFactor_me.graphql"
+import type { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
 import { DisableFactorConfirmation } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/DisableFactorConfirmation"
 import { OnCompleteRedirectModal, SmsSecondFactorModal } from "./Modal"
 import { CreateSmsSecondFactor } from "./Mutation/CreateSmsSecondFactor"
@@ -31,18 +35,16 @@ interface SmsSecondFactorProps {
 }
 
 // TODO: This needs to be rebuilt from scratch
-export const SmsSecondFactor: React.FC<React.PropsWithChildren<SmsSecondFactorProps>> = ({
-  me,
-  relay,
-}) => {
+export const SmsSecondFactor: React.FC<
+  React.PropsWithChildren<SmsSecondFactorProps>
+> = ({ me, relay }) => {
   const { relayEnvironment } = useSystemContext()
   const [showConfirmDisable, setShowConfirmDisable] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [showSetupModal, setShowSetupModal] = useState(false)
   const [showCompleteModal, setShowCompleteModal] = useState(false)
-  const [showCompleteRedirectModal, setShowCompleteRedirectModal] = useState(
-    false
-  )
+  const [showCompleteRedirectModal, setShowCompleteRedirectModal] =
+    useState(false)
   const [isDisabling] = useState(false) // ???
   const [isCreating, setCreating] = useState(false)
   const [passwordConfirmation, setPasswordConfirmation] = useState("")

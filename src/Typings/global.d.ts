@@ -1,4 +1,4 @@
-import Braze from "@braze/web-sdk"
+import type Braze from "@braze/web-sdk"
 import React from "react"
 
 declare global {
@@ -63,6 +63,3 @@ declare module "react" {
     fetchPriority?: "high" | "low" | "auto"
   }
 }
-
-// This is needed to conform to the module format, which requires to export something.
-export {}

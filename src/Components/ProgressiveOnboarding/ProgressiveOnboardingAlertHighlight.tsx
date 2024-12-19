@@ -1,19 +1,18 @@
 import { useDismissibleContext } from "@artsy/dismissible"
 import {
   ProgressiveOnboardingHighlight,
-  ProgressiveOnboardingHighlightPosition,
+  type ProgressiveOnboardingHighlightPosition,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight"
 import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
-import { FC, useEffect } from "react"
+import { type FC, useEffect } from "react"
 
 interface ProgressiveOnboardingAlertHighlightProps {
   position: ProgressiveOnboardingHighlightPosition
 }
 
-export const ProgressiveOnboardingAlertHighlight: FC<React.PropsWithChildren<ProgressiveOnboardingAlertHighlightProps>> = ({
-  children,
-  position,
-}) => {
+export const ProgressiveOnboardingAlertHighlight: FC<
+  React.PropsWithChildren<ProgressiveOnboardingAlertHighlightProps>
+> = ({ children, position }) => {
   const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayable =

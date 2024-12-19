@@ -13,18 +13,18 @@ import {
   normalizePlace,
 } from "Components/LocationAutocompleteInput"
 import { Formik } from "formik"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import { SettingsEditProfileAboutYou_me$data } from "__generated__/SettingsEditProfileAboutYou_me.graphql"
+import type { SettingsEditProfileAboutYou_me$data } from "__generated__/SettingsEditProfileAboutYou_me.graphql"
 
 interface SettingsEditProfileAboutYouProps {
   me: SettingsEditProfileAboutYou_me$data
 }
 
-const SettingsEditProfileAboutYou: FC<React.PropsWithChildren<SettingsEditProfileAboutYouProps>> = ({
-  me,
-}) => {
+const SettingsEditProfileAboutYou: FC<
+  React.PropsWithChildren<SettingsEditProfileAboutYouProps>
+> = ({ me }) => {
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
   const { sendToast } = useToasts()
 
@@ -119,7 +119,7 @@ const SettingsEditProfileAboutYou: FC<React.PropsWithChildren<SettingsEditProfil
                   // so have to split it into min/max
                   const [priceRangeMin, priceRangeMax] = value
                     .split(":")
-                    .map(n => parseInt(n, 10))
+                    .map(n => Number.parseInt(n, 10))
 
                   formik.setFieldValue("priceRangeMin", priceRangeMin)
                   formik.setFieldValue("priceRangeMax", priceRangeMax)
@@ -147,9 +147,8 @@ const SettingsEditProfileAboutYou: FC<React.PropsWithChildren<SettingsEditProfil
   )
 }
 
-export const SettingsEditProfileAboutYouFragmentContainer = createFragmentContainer(
-  SettingsEditProfileAboutYou,
-  {
+export const SettingsEditProfileAboutYouFragmentContainer =
+  createFragmentContainer(SettingsEditProfileAboutYou, {
     me: graphql`
       fragment SettingsEditProfileAboutYou_me on Me {
         location {
@@ -162,8 +161,7 @@ export const SettingsEditProfileAboutYouFragmentContainer = createFragmentContai
         priceRangeMax
       }
     `,
-  }
-)
+  })
 
 export const PRICE_BUCKETS = [
   { text: "Select a price range", value: "" },

@@ -1,5 +1,5 @@
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
-import { FC, ReactNode } from "react"
+import type { FC, ReactNode } from "react"
 import {
   Box,
   Button,
@@ -11,7 +11,7 @@ import {
 } from "@artsy/palette"
 import { resized } from "Utils/resized"
 import {
-  WithProgressiveOnboardingCountsProps,
+  type WithProgressiveOnboardingCountsProps,
   withProgressiveOnboardingCounts,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -25,10 +25,9 @@ interface ProgressiveOnboardingAlertCreateProps
   children: (actions: { onSkip(): void }) => ReactNode
 }
 
-export const __ProgressiveOnboardingAlertCreate__: FC<React.PropsWithChildren<ProgressiveOnboardingAlertCreateProps>> = ({
-  children,
-  counts,
-}) => {
+export const __ProgressiveOnboardingAlertCreate__: FC<
+  React.PropsWithChildren<ProgressiveOnboardingAlertCreateProps>
+> = ({ children, counts }) => {
   const { isLoggedIn } = useSystemContext()
 
   const { dismiss, isDismissed } = useDismissibleContext()

@@ -1,8 +1,8 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureMetaFragmentContainer as FeatureMeta } from "./Components/FeatureMeta"
 import { FeatureHeaderFragmentContainer as FeatureHeader } from "./Components/FeatureHeader/FeatureHeader"
-import { FeatureApp_feature$data } from "__generated__/FeatureApp_feature.graphql"
+import type { FeatureApp_feature$data } from "__generated__/FeatureApp_feature.graphql"
 import { Join, Spacer, HTML } from "@artsy/palette"
 import { FeatureSetFragmentContainer as FeatureSet } from "./Components/FeatureSet/FeatureSet"
 
@@ -10,7 +10,9 @@ interface FeatureAppProps {
   feature: FeatureApp_feature$data
 }
 
-const FeatureApp: React.FC<React.PropsWithChildren<FeatureAppProps>> = ({ feature }) => {
+const FeatureApp: React.FC<React.PropsWithChildren<FeatureAppProps>> = ({
+  feature,
+}) => {
   if (!feature) return null
 
   return (

@@ -7,7 +7,7 @@ import {
   Column,
 } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import * as React from "react"
+import type * as React from "react"
 import { MetaTags } from "Components/MetaTags"
 
 export const Processing: React.FC<React.PropsWithChildren<unknown>> = () => {

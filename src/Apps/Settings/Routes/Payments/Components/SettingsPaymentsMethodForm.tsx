@@ -10,7 +10,7 @@ import {
   VisuallyHidden,
 } from "@artsy/palette"
 import { Formik, Form } from "formik"
-import { FC } from "react"
+import type { FC } from "react"
 import { CountrySelect } from "Components/CountrySelect"
 import { CreditCardInput } from "Components/CreditCardInput"
 import {
@@ -45,9 +45,9 @@ interface SettingsPaymentsMethodFormProps {
   onClose(): void
 }
 
-export const SettingsPaymentsMethodForm: FC<React.PropsWithChildren<SettingsPaymentsMethodFormProps>> = ({
-  onClose,
-}) => {
+export const SettingsPaymentsMethodForm: FC<
+  React.PropsWithChildren<SettingsPaymentsMethodFormProps>
+> = ({ onClose }) => {
   const { sendToast } = useToasts()
 
   const stripe = useStripe()

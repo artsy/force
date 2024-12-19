@@ -1,11 +1,13 @@
 import { Avatar, Skeleton } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
-import { NavBarUserMenuAvatarQuery } from "__generated__/NavBarUserMenuAvatarQuery.graphql"
+import type { NavBarUserMenuAvatarQuery } from "__generated__/NavBarUserMenuAvatarQuery.graphql"
 
-interface NavBarUserMenuAvatarProps {}
+type NavBarUserMenuAvatarProps = {}
 
-export const NavBarUserMenuAvatar: FC<React.PropsWithChildren<NavBarUserMenuAvatarProps>> = () => {
+export const NavBarUserMenuAvatar: FC<
+  React.PropsWithChildren<NavBarUserMenuAvatarProps>
+> = () => {
   const { me } = useLazyLoadQuery<NavBarUserMenuAvatarQuery>(
     QUERY,
     {},
@@ -27,7 +29,9 @@ export const NavBarUserMenuAvatar: FC<React.PropsWithChildren<NavBarUserMenuAvat
   )
 }
 
-export const NavBarUserMenuAvatarSkeleton: FC<React.PropsWithChildren<unknown>> = () => {
+export const NavBarUserMenuAvatarSkeleton: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton>
       <Avatar size="xs" bg="black10" border="1px solid" borderColor="black10" />

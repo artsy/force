@@ -2,24 +2,23 @@ import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { ViewingRoomPublishedNotification } from "Components/Notifications/ViewingRoomPublishedNotification"
-import { ViewingRoomPublishedNotification_test_Query } from "__generated__/ViewingRoomPublishedNotification_test_Query.graphql"
+import type { ViewingRoomPublishedNotification_test_Query } from "__generated__/ViewingRoomPublishedNotification_test_Query.graphql"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
 
-const { renderWithRelay } = setupTestWrapperTL<
-  ViewingRoomPublishedNotification_test_Query
->({
-  Component: props => {
-    const notification = props.notificationsConnection?.edges?.[0]?.node
+const { renderWithRelay } =
+  setupTestWrapperTL<ViewingRoomPublishedNotification_test_Query>({
+    Component: props => {
+      const notification = props.notificationsConnection?.edges?.[0]?.node
 
-    if (notification) {
-      return <ViewingRoomPublishedNotification notification={notification} />
-    }
+      if (notification) {
+        return <ViewingRoomPublishedNotification notification={notification} />
+      }
 
-    return null
-  },
-  query: graphql`
+      return null
+    },
+    query: graphql`
     query ViewingRoomPublishedNotification_test_Query @relay_test_operation {
       notificationsConnection(first: 1) {
         edges {
@@ -30,7 +29,7 @@ const { renderWithRelay } = setupTestWrapperTL<
       }
     }
   `,
-})
+  })
 
 describe("ViewingRoomPublishedNotification", () => {
   it("renders viewing rooms", () => {
@@ -47,7 +46,7 @@ describe("ViewingRoomPublishedNotification", () => {
       "href",
       viewingRooms[0].node.href
     )
-    expect(screen.getAllByRole("img")[0]).toHaveAttribute(
+    expect(screen.getAllByRole("presentation")[0]).toHaveAttribute(
       "src",
       `undefined?quality=80&resize_to=width&src=${viewingRooms[0].node.image.imageURLs.normalized}&width=600`
     )
@@ -61,7 +60,7 @@ describe("ViewingRoomPublishedNotification", () => {
       "href",
       viewingRooms[1].node.href
     )
-    expect(screen.getAllByRole("img")[1]).toHaveAttribute(
+    expect(screen.getAllByRole("presentation")[1]).toHaveAttribute(
       "src",
       `undefined?quality=80&resize_to=width&src=${viewingRooms[1].node.image.imageURLs.normalized}&width=600`
     )

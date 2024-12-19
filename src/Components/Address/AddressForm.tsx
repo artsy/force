@@ -10,19 +10,19 @@ import { CountrySelect } from "Components/CountrySelect"
 import * as React from "react"
 import { isEqual } from "lodash"
 import {
-  AddressAutocompleteSuggestion,
+  type AddressAutocompleteSuggestion,
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
   ContextModule,
-  EditedAutocompletedAddress,
+  type EditedAutocompletedAddress,
   OwnerType,
-  SelectedItemFromAddressAutoCompletion,
+  type SelectedItemFromAddressAutoCompletion,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { Address, emptyAddress } from "Components/Address/utils"
+import { type Address, emptyAddress } from "Components/Address/utils"
 
 const ENABLE_SECONDARY_SUGGESTIONS = false
 
@@ -47,7 +47,9 @@ export interface AddressFormProps {
   tabIndex?: number
 }
 
-export const AddressForm: React.FC<React.PropsWithChildren<AddressFormProps>> = ({
+export const AddressForm: React.FC<
+  React.PropsWithChildren<AddressFormProps>
+> = ({
   onChange,
   value,
   billing,
@@ -88,26 +90,25 @@ export const AddressForm: React.FC<React.PropsWithChildren<AddressFormProps>> = 
 
   const [key, setKey] = React.useState<keyof Address>()
 
-  const changeEventHandler = (key: keyof Address) => (
-    ev: React.FormEvent<HTMLInputElement>
-  ) => {
-    const shouldFetch = autocomplete.enabled && key === "addressLine1"
-    if (shouldFetch) {
-      fetchForAutocomplete({ search: ev.currentTarget.value })
-    }
-    setKey(key)
-    onChangeValue(key, ev.currentTarget.value)
+  const changeEventHandler =
+    (key: keyof Address) => (ev: React.FormEvent<HTMLInputElement>) => {
+      const shouldFetch = autocomplete.enabled && key === "addressLine1"
+      if (shouldFetch) {
+        fetchForAutocomplete({ search: ev.currentTarget.value })
+      }
+      setKey(key)
+      onChangeValue(key, ev.currentTarget.value)
 
-    if (
-      selectedAddressOption.option &&
-      !selectedAddressOption.edited &&
-      key !== "name" &&
-      key !== "phoneNumber"
-    ) {
-      trackAutoCompleteEdit(key)
-      setSelectedAddressOption({ ...selectedAddressOption, edited: true })
+      if (
+        selectedAddressOption.option &&
+        !selectedAddressOption.edited &&
+        key !== "name" &&
+        key !== "phoneNumber"
+      ) {
+        trackAutoCompleteEdit(key)
+        setSelectedAddressOption({ ...selectedAddressOption, edited: true })
+      }
     }
-  }
 
   const changeValueHandler = (key: keyof Address) => (value: string) => {
     setKey(key)

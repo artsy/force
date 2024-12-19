@@ -3,10 +3,9 @@ interface HighDemandIconProps {
   height?: number
 }
 
-export const HighDemandIcon: React.FC<React.PropsWithChildren<HighDemandIconProps>> = ({
-  width = 22,
-  height = 22,
-}) => {
+export const HighDemandIcon: React.FC<
+  React.PropsWithChildren<HighDemandIconProps>
+> = ({ width = 22, height = 22 }) => {
   return (
     <svg width={width} height={height} viewBox="0 0 16 16" fill="none">
       <path

@@ -1,9 +1,9 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
-import { ShelfArtwork_artwork$data } from "__generated__/ShelfArtwork_artwork.graphql"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import type { ShelfArtwork_artwork$data } from "__generated__/ShelfArtwork_artwork.graphql"
 import Metadata, { MetadataPlaceholder } from "Components/Artwork/Metadata"
-import { AuthContextModule } from "@artsy/cohesion"
+import type { AuthContextModule } from "@artsy/cohesion"
 import { Box, Image, SkeletonBox } from "@artsy/palette"
 import { useHoverMetadata } from "Components/Artwork/useHoverMetadata"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
@@ -154,7 +154,9 @@ interface ShelfArtworkPlaceholderProps
   index: number
 }
 
-export const ShelfArtworkPlaceholder: React.FC<React.PropsWithChildren<ShelfArtworkPlaceholderProps>> = ({
+export const ShelfArtworkPlaceholder: React.FC<
+  React.PropsWithChildren<ShelfArtworkPlaceholderProps>
+> = ({
   index,
   hideSaleInfo,
   area = DEFAULT_AREA,

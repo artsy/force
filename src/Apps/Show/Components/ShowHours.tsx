@@ -1,14 +1,17 @@
-import { BoxProps } from "@artsy/palette"
-import * as React from "react"
+import type { BoxProps } from "@artsy/palette"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowLocationHoursFragmentContainer } from "./ShowLocationHours"
-import { ShowHours_show$data } from "__generated__/ShowHours_show.graphql"
+import type { ShowHours_show$data } from "__generated__/ShowHours_show.graphql"
 
 export interface ShowHoursProps extends BoxProps {
   show: ShowHours_show$data
 }
 
-export const ShowHours: React.FC<React.PropsWithChildren<ShowHoursProps>> = ({ show, ...rest }) => {
+export const ShowHours: React.FC<React.PropsWithChildren<ShowHoursProps>> = ({
+  show,
+  ...rest
+}) => {
   const location = show.location ?? show.fair?.location
 
   if (!location) {

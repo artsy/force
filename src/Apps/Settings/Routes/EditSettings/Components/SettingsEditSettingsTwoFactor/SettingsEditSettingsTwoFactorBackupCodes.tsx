@@ -9,11 +9,11 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useMode } from "Utils/Hooks/useMode"
-import { SettingsEditSettingsTwoFactorBackupCodes_me$data } from "__generated__/SettingsEditSettingsTwoFactorBackupCodes_me.graphql"
-import { CreateBackupSecondFactorsInput } from "__generated__/useCreateSettingsBackupSecondFactorsMutation.graphql"
+import type { SettingsEditSettingsTwoFactorBackupCodes_me$data } from "__generated__/SettingsEditSettingsTwoFactorBackupCodes_me.graphql"
+import type { CreateBackupSecondFactorsInput } from "__generated__/useCreateSettingsBackupSecondFactorsMutation.graphql"
 import { SettingsEditSettingsTwoFactorBackupCodesDialogQueryRenderer } from "./SettingsEditSettingsTwoFactorBackupCodesDialog"
 import { useCreateSettingsBackupSecondFactors } from "./useCreateSettingsBackupSecondFactorsMutation"
 
@@ -23,17 +23,16 @@ interface SettingsEditSettingsTwoFactorBackupCodesProps {
 
 type Mode = "Pending" | "Show" | "Creating"
 
-export const SettingsEditSettingsTwoFactorBackupCodes: FC<React.PropsWithChildren<SettingsEditSettingsTwoFactorBackupCodesProps>> = ({
-  me,
-}) => {
+export const SettingsEditSettingsTwoFactorBackupCodes: FC<
+  React.PropsWithChildren<SettingsEditSettingsTwoFactorBackupCodesProps>
+> = ({ me }) => {
   const [mode, setMode] = useMode<Mode>("Pending")
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const { sendToast } = useToasts()
 
-  const {
-    submitCreateSettingsBackupSecondFactors,
-  } = useCreateSettingsBackupSecondFactors()
+  const { submitCreateSettingsBackupSecondFactors } =
+    useCreateSettingsBackupSecondFactors()
 
   const handleGenerate = async (
     password: CreateBackupSecondFactorsInput["password"]
@@ -147,9 +146,8 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<React.PropsWithChildre
   )
 }
 
-export const SettingsEditSettingsTwoFactorBackupCodesFragmentContainer = createFragmentContainer(
-  SettingsEditSettingsTwoFactorBackupCodes,
-  {
+export const SettingsEditSettingsTwoFactorBackupCodesFragmentContainer =
+  createFragmentContainer(SettingsEditSettingsTwoFactorBackupCodes, {
     me: graphql`
       fragment SettingsEditSettingsTwoFactorBackupCodes_me on Me {
         backupSecondFactors: secondFactors(kinds: [backup]) {
@@ -159,5 +157,4 @@ export const SettingsEditSettingsTwoFactorBackupCodesFragmentContainer = createF
         }
       }
     `,
-  }
-)
+  })

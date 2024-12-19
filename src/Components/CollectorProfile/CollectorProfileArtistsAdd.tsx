@@ -1,3 +1,4 @@
+import CloseIcon from "@artsy/icons/CloseIcon"
 import SearchIcon from "@artsy/icons/SearchIcon"
 import {
   Box,
@@ -10,22 +11,21 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { FC, useRef, useState } from "react"
-import { Environment, graphql } from "react-relay"
-import { extractNodes } from "Utils/extractNodes"
-import { useClientQuery } from "Utils/Hooks/useClientQuery"
-import { CollectorProfileArtistsAddQuery } from "__generated__/CollectorProfileArtistsAddQuery.graphql"
-import { useDebouncedValue } from "Utils/Hooks/useDebounce"
-import CloseIcon from "@artsy/icons/CloseIcon"
-import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
-import { useMutation } from "Utils/Hooks/useMutation"
-import {
+import type {
   CollectorProfileArtistsAddCreateUserInterestsMutation,
   UserInterestCategory,
   UserInterestInterestType,
 } from "__generated__/CollectorProfileArtistsAddCreateUserInterestsMutation.graphql"
-import { CollectorProfileArtistsAddResult } from "Components/CollectorProfile/CollectorProfileArtistsAddResult"
+import type { CollectorProfileArtistsAddQuery } from "__generated__/CollectorProfileArtistsAddQuery.graphql"
 import { CollectorProfileArtistsAddNewDialog } from "Components/CollectorProfile/CollectorProfileArtistsAddNewDialog"
+import { CollectorProfileArtistsAddResult } from "Components/CollectorProfile/CollectorProfileArtistsAddResult"
+import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
+import { type FC, useRef, useState } from "react"
+import { type Environment, graphql } from "react-relay"
+import { extractNodes } from "Utils/extractNodes"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { useDebouncedValue } from "Utils/Hooks/useDebounce"
+import { useMutation } from "Utils/Hooks/useMutation"
 
 interface CollectorProfileArtistsAddProps {
   description?: string
@@ -35,12 +35,9 @@ interface CollectorProfileArtistsAddProps {
   relayEnvironment?: Environment | null
 }
 
-export const CollectorProfileArtistsAdd: FC<React.PropsWithChildren<CollectorProfileArtistsAddProps>> = ({
-  description,
-  onCancel,
-  onSuccess,
-  relayEnvironment,
-}) => {
+export const CollectorProfileArtistsAdd: FC<
+  React.PropsWithChildren<CollectorProfileArtistsAddProps>
+> = ({ description, onCancel, onSuccess, relayEnvironment }) => {
   const [query, setQuery] = useState("")
 
   const { debouncedValue: debouncedQuery } = useDebouncedValue({
@@ -69,9 +66,11 @@ export const CollectorProfileArtistsAdd: FC<React.PropsWithChildren<CollectorPro
 
   const [mode, setMode] = useState<"Idle" | "Adding" | "New">("Idle")
 
-  const { submitMutation } = useMutation<
-    CollectorProfileArtistsAddCreateUserInterestsMutation
-  >({ mutation: MUTATION, relayEnvironment })
+  const { submitMutation } =
+    useMutation<CollectorProfileArtistsAddCreateUserInterestsMutation>({
+      mutation: MUTATION,
+      relayEnvironment,
+    })
 
   const handleAdd = async () => {
     setMode("Adding")
@@ -82,7 +81,6 @@ export const CollectorProfileArtistsAdd: FC<React.PropsWithChildren<CollectorPro
           category: "COLLECTED_BEFORE" as UserInterestCategory,
           interestId,
           interestType: "ARTIST" as UserInterestInterestType,
-          private: true,
         }
       })
 

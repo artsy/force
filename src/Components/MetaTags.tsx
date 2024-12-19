@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { Title, Meta, Link } from "react-head"
 import { getENV } from "Utils/getENV"
 import { cropped } from "Utils/resized"

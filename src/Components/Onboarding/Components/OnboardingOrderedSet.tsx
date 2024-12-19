@@ -1,9 +1,9 @@
 import { Join, Separator } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { OnboardingOrderedSet_orderedSet$data } from "__generated__/OnboardingOrderedSet_orderedSet.graphql"
-import { OnboardingOrderedSetQuery } from "__generated__/OnboardingOrderedSetQuery.graphql"
-import { FC } from "react"
+import type { OnboardingOrderedSet_orderedSet$data } from "__generated__/OnboardingOrderedSet_orderedSet.graphql"
+import type { OnboardingOrderedSetQuery } from "__generated__/OnboardingOrderedSetQuery.graphql"
+import type { FC } from "react"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { extractNodes } from "Utils/extractNodes"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
@@ -17,9 +17,9 @@ interface OnboardingOrderedSetProps {
   orderedSet: OnboardingOrderedSet_orderedSet$data
 }
 
-export const OnboardingOrderedSet: FC<React.PropsWithChildren<OnboardingOrderedSetProps>> = ({
-  orderedSet,
-}) => {
+export const OnboardingOrderedSet: FC<
+  React.PropsWithChildren<OnboardingOrderedSetProps>
+> = ({ orderedSet }) => {
   const { dispatch } = useOnboardingContext()
   const nodes = extractNodes(orderedSet.orderedItemsConnection)
 
@@ -119,9 +119,9 @@ interface OnboardingOrderedSetQueryRendererProps {
   id: string
 }
 
-export const OnboardingOrderedSetQueryRenderer: FC<React.PropsWithChildren<OnboardingOrderedSetQueryRendererProps>> = ({
-  id,
-}) => {
+export const OnboardingOrderedSetQueryRenderer: FC<
+  React.PropsWithChildren<OnboardingOrderedSetQueryRendererProps>
+> = ({ id }) => {
   return (
     <SystemQueryRenderer<OnboardingOrderedSetQuery>
       query={graphql`

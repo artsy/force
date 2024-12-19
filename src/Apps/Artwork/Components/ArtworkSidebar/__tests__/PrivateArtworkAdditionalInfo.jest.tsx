@@ -2,7 +2,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools/MockBoot"
-import { PrivateArtworkAdditionalInfo_Test_Query } from "__generated__/PrivateArtworkAdditionalInfo_Test_Query.graphql"
+import type { PrivateArtworkAdditionalInfo_Test_Query } from "__generated__/PrivateArtworkAdditionalInfo_Test_Query.graphql"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { fireEvent, screen } from "@testing-library/react"
 import { PrivateArtworkAdditionalInfo } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkAdditionalInfo"
@@ -11,29 +11,28 @@ jest.unmock("react-relay")
 
 jest.mock("react-tracking")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  PrivateArtworkAdditionalInfo_Test_Query
->({
-  Component: ({ artwork }) => {
-    return (
-      <MockBoot>
-        <AnalyticsCombinedContextProvider
-          contextPageOwnerId="example-artwork-id"
-          path="/artwork/example-artwork-slug"
-        >
-          <PrivateArtworkAdditionalInfo artwork={artwork!} />
-        </AnalyticsCombinedContextProvider>
-      </MockBoot>
-    )
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<PrivateArtworkAdditionalInfo_Test_Query>({
+    Component: ({ artwork }) => {
+      return (
+        <MockBoot>
+          <AnalyticsCombinedContextProvider
+            contextPageOwnerId="example-artwork-id"
+            path="/artwork/example-artwork-slug"
+          >
+            <PrivateArtworkAdditionalInfo artwork={artwork!} />
+          </AnalyticsCombinedContextProvider>
+        </MockBoot>
+      )
+    },
+    query: graphql`
     query PrivateArtworkAdditionalInfo_Test_Query @relay_test_operation {
       artwork(id: "xxx") {
         ...PrivateArtworkAdditionalInfo_artwork
       }
     }
   `,
-})
+  })
 
 describe("PrivateArtworkAdditionalInfo", () => {
   const trackEvent = jest.fn()

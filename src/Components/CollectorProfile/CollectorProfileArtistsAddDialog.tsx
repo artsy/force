@@ -1,5 +1,5 @@
 import { ModalDialog } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { CollectorProfileArtistsAdd } from "Components/CollectorProfile/CollectorProfileArtistsAdd"
 
 interface CollectorProfileArtistsAddDialogProps {
@@ -8,11 +8,9 @@ interface CollectorProfileArtistsAddDialogProps {
   title: string
 }
 
-export const CollectorProfileArtistsAddDialog: FC<React.PropsWithChildren<CollectorProfileArtistsAddDialogProps>> = ({
-  onClose,
-  onSuccess,
-  title,
-}) => {
+export const CollectorProfileArtistsAddDialog: FC<
+  React.PropsWithChildren<CollectorProfileArtistsAddDialogProps>
+> = ({ onClose, onSuccess, title }) => {
   return (
     <>
       <ModalDialog

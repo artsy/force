@@ -5,16 +5,19 @@ import {
   Radio,
   Separator,
   Text,
-  FlexProps,
+  type FlexProps,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { ArtworkSidebarEditionSets_artwork$data } from "__generated__/ArtworkSidebarEditionSets_artwork.graphql"
-import React, { Dispatch, SetStateAction } from "react"
+import type { ArtworkSidebarEditionSets_artwork$data } from "__generated__/ArtworkSidebarEditionSets_artwork.graphql"
+import React, { type Dispatch, type SetStateAction } from "react"
 import { ArtworkSidebarSizeInfoFragmentContainer } from "./ArtworkSidebarSizeInfo"
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 
-const Row: React.FC<React.PropsWithChildren<FlexProps>> = ({ children, ...others }) => (
+const Row: React.FC<React.PropsWithChildren<FlexProps>> = ({
+  children,
+  ...others
+}) => (
   <Flex justifyContent="left" {...others}>
     {children}
   </Flex>
@@ -30,11 +33,9 @@ interface ArtworkSidebarEditionSetsProps {
   onSelectEditionSet?: Dispatch<SetStateAction<EditionSet>>
 }
 
-const ArtworkSidebarEditionSets: React.FC<React.PropsWithChildren<ArtworkSidebarEditionSetsProps>> = ({
-  artwork,
-  selectedEditionSet,
-  onSelectEditionSet,
-}) => {
+const ArtworkSidebarEditionSets: React.FC<
+  React.PropsWithChildren<ArtworkSidebarEditionSetsProps>
+> = ({ artwork, selectedEditionSet, onSelectEditionSet }) => {
   const { editionSets, isInquireable, isOfferable, isAcquireable } = artwork
 
   const { setSelectedEditionSet } = useSelectedEditionSetContext()
@@ -92,9 +93,8 @@ const ArtworkSidebarEditionSets: React.FC<React.PropsWithChildren<ArtworkSidebar
   )
 }
 
-export const ArtworkSidebarEditionSetFragmentContainer = createFragmentContainer(
-  ArtworkSidebarEditionSets,
-  {
+export const ArtworkSidebarEditionSetFragmentContainer =
+  createFragmentContainer(ArtworkSidebarEditionSets, {
     artwork: graphql`
       fragment ArtworkSidebarEditionSets_artwork on Artwork {
         isInquireable
@@ -114,5 +114,4 @@ export const ArtworkSidebarEditionSetFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })

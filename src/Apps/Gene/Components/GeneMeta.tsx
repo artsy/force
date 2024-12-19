@@ -1,13 +1,15 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { GeneMeta_gene$data } from "__generated__/GeneMeta_gene.graphql"
+import type { GeneMeta_gene$data } from "__generated__/GeneMeta_gene.graphql"
 import { MetaTags } from "Components/MetaTags"
 
 interface GeneMetaProps {
   gene: GeneMeta_gene$data
 }
 
-const GeneMeta: React.FC<React.PropsWithChildren<GeneMetaProps>> = ({ gene }) => {
+const GeneMeta: React.FC<React.PropsWithChildren<GeneMetaProps>> = ({
+  gene,
+}) => {
   const fallbackDescription = `Explore ${gene.name} art on Artsy. Browse works by size, price, and medium.`
   const title = `${gene.displayName || gene.name} | Artsy`
 

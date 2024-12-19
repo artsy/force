@@ -10,9 +10,9 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
+import type { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { DateTime, LocaleOptions } from "luxon"
+import { DateTime, type LocaleOptions } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
 import { useAuthDialog } from "Components/AuthDialog"
@@ -26,7 +26,9 @@ export interface Props {
   showArtistName?: boolean
 }
 
-export const ArtistAuctionResultItem: React.FC<React.PropsWithChildren<Props>> = props => {
+export const ArtistAuctionResultItem: React.FC<
+  React.PropsWithChildren<Props>
+> = props => {
   const { user } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
 
@@ -69,7 +71,7 @@ export const ArtistAuctionResultItem: React.FC<React.PropsWithChildren<Props>> =
   }
 
   return (
-    (<RouterLink
+    <RouterLink
       to={`/auction-result/${internalID}`}
       textDecoration="none"
       display="block"
@@ -179,8 +181,8 @@ export const ArtistAuctionResultItem: React.FC<React.PropsWithChildren<Props>> =
           <ArtistAuctionResultItemPrice {...props} />
         </Column>
       </GridColumns>
-    </RouterLink>)
-  );
+    </RouterLink>
+  )
 }
 
 export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
@@ -231,7 +233,9 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
   }
 )
 
-const ArtistAuctionResultItemPrice: React.FC<React.PropsWithChildren<Props>> = props => {
+const ArtistAuctionResultItemPrice: React.FC<
+  React.PropsWithChildren<Props>
+> = props => {
   const {
     salePrice,
     salePriceUSD,

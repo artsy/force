@@ -10,7 +10,7 @@ import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useFullBleedHeaderHeight } from "Components/FullBleedHeader/FullBleedHeader"
 import { Media } from "Utils/Responsive"
 import { cropped } from "Utils/resized"
-import { FC } from "react"
+import type { FC } from "react"
 
 interface MarketingHeaderProps {
   title: string
@@ -20,9 +20,9 @@ interface MarketingHeaderProps {
   children?: React.ReactNode
 }
 
-export const MarketingHeader: FC<React.PropsWithChildren<
-  MarketingHeaderProps
->> = ({ title, subtitle, src, accentColor, children }) => {
+export const MarketingHeader: FC<
+  React.PropsWithChildren<MarketingHeaderProps>
+> = ({ title, subtitle, src, accentColor, children }) => {
   const height = useFullBleedHeaderHeight()
 
   const images = {

@@ -1,19 +1,19 @@
 import { Expandable, Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistCareerHighlight_insight$data } from "__generated__/ArtistCareerHighlight_insight.graphql"
+import type { ArtistCareerHighlight_insight$data } from "__generated__/ArtistCareerHighlight_insight.graphql"
 import styled from "styled-components"
 
 interface ArtistCareerHighlightProps {
   insight: ArtistCareerHighlight_insight$data
 }
 
-export const ArtistCareerHighlight: FC<React.PropsWithChildren<ArtistCareerHighlightProps>> = ({
-  insight,
-}) => {
+export const ArtistCareerHighlight: FC<
+  React.PropsWithChildren<ArtistCareerHighlightProps>
+> = ({ insight }) => {
   if (!insight?.description && !insight?.entities?.length) return null
   return (
-    (<Expandable label={insight.label} pb={1}>
+    <Expandable label={insight.label} pb={1}>
       <Description
         variant="sm"
         color="black60"
@@ -30,8 +30,8 @@ export const ArtistCareerHighlight: FC<React.PropsWithChildren<ArtistCareerHighl
                 .replace(/,\s([^,]+)$/, ", and $1"),
             })}
       />
-    </Expandable>)
-  );
+    </Expandable>
+  )
 }
 
 export const ArtistCareerHighlightFragmentContainer = createFragmentContainer(

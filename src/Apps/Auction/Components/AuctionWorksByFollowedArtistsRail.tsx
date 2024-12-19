@@ -2,16 +2,16 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail/Rail"
 import { extractNodes } from "Utils/extractNodes"
-import { AuctionWorksByFollowedArtistsRail_viewer$data } from "__generated__/AuctionWorksByFollowedArtistsRail_viewer.graphql"
+import type { AuctionWorksByFollowedArtistsRail_viewer$data } from "__generated__/AuctionWorksByFollowedArtistsRail_viewer.graphql"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface AuctionWorksByFollowedArtistsRailProps {
   viewer: AuctionWorksByFollowedArtistsRail_viewer$data
 }
 
-const AuctionWorksByFollowedArtistsRail: React.FC<React.PropsWithChildren<AuctionWorksByFollowedArtistsRailProps>> = ({
-  viewer,
-}) => {
+const AuctionWorksByFollowedArtistsRail: React.FC<
+  React.PropsWithChildren<AuctionWorksByFollowedArtistsRailProps>
+> = ({ viewer }) => {
   const nodes = extractNodes(viewer.saleArtworksConnection)
 
   if (nodes.length === 0) {
@@ -42,9 +42,8 @@ const AuctionWorksByFollowedArtistsRail: React.FC<React.PropsWithChildren<Auctio
   )
 }
 
-export const AuctionWorksByFollowedArtistsRailFragmentContainer = createFragmentContainer(
-  AuctionWorksByFollowedArtistsRail,
-  {
+export const AuctionWorksByFollowedArtistsRailFragmentContainer =
+  createFragmentContainer(AuctionWorksByFollowedArtistsRail, {
     viewer: graphql`
       fragment AuctionWorksByFollowedArtistsRail_viewer on Viewer
         @argumentDefinitions(saleID: { type: "String" }) {
@@ -62,5 +61,4 @@ export const AuctionWorksByFollowedArtistsRailFragmentContainer = createFragment
         }
       }
     `,
-  }
-)
+  })

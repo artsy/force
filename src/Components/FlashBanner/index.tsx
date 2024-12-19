@@ -1,13 +1,13 @@
-import { FC, useMemo } from "react"
+import { type FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { EmailConfirmationCTA } from "Components/FlashBanner/EmailConfirmationCTA"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { EmailConfirmationLinkExpired } from "./EmailConfirmationLinkExpired"
-import { FlashBannerQuery } from "__generated__/FlashBannerQuery.graphql"
+import type { FlashBannerQuery } from "__generated__/FlashBannerQuery.graphql"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import { useRouter } from "System/Hooks/useRouter"
-import { FlashBanner_me$data } from "__generated__/FlashBanner_me.graphql"
+import type { FlashBanner_me$data } from "__generated__/FlashBanner_me.graphql"
 
 interface FlashBannerProps {
   me?: FlashBanner_me$data | null
@@ -80,9 +80,9 @@ export const FlashBannerFragmentContainer = createFragmentContainer(
   }
 )
 
-export const FlashBannerQueryRenderer: FC<React.PropsWithChildren<
-  unknown
->> = () => {
+export const FlashBannerQueryRenderer: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { user } = useSystemContext()
 
   if (!user) {

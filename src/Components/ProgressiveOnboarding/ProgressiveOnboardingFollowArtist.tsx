@@ -1,9 +1,9 @@
-import { FC, useCallback, useEffect } from "react"
+import { type FC, useCallback, useEffect } from "react"
 import { Text } from "@artsy/palette"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import {
   withProgressiveOnboardingCounts,
-  WithProgressiveOnboardingCountsProps,
+  type WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useRouter } from "System/Hooks/useRouter"
 import { pathToRegexp } from "path-to-regexp"
@@ -19,10 +19,9 @@ const KEY = PROGRESSIVE_ONBOARDING.followArtist
 interface ProgressiveOnboardingFollowArtistProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingFollowArtist__: FC<React.PropsWithChildren<ProgressiveOnboardingFollowArtistProps>> = ({
-  counts,
-  children,
-}) => {
+export const __ProgressiveOnboardingFollowArtist__: FC<
+  React.PropsWithChildren<ProgressiveOnboardingFollowArtistProps>
+> = ({ counts, children }) => {
   const router = useRouter()
   const { isLoggedIn } = useSystemContext()
 
@@ -83,6 +82,5 @@ export const __ProgressiveOnboardingFollowArtist__: FC<React.PropsWithChildren<P
   )
 }
 
-export const ProgressiveOnboardingFollowArtist = withProgressiveOnboardingCounts(
-  __ProgressiveOnboardingFollowArtist__
-)
+export const ProgressiveOnboardingFollowArtist =
+  withProgressiveOnboardingCounts(__ProgressiveOnboardingFollowArtist__)

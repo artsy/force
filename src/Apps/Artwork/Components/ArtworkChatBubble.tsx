@@ -1,8 +1,8 @@
-import { FC, useMemo } from "react"
+import { type FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { exceedsChatSupportThreshold } from "Utils/exceedsChatSupportThreshold"
 import { getENV } from "Utils/getENV"
-import { ArtworkChatBubble_artwork$data } from "__generated__/ArtworkChatBubble_artwork.graphql"
+import type { ArtworkChatBubble_artwork$data } from "__generated__/ArtworkChatBubble_artwork.graphql"
 import { SalesforceWrapper } from "Components/SalesforceWrapper"
 import { Media } from "Utils/Responsive"
 
@@ -10,16 +10,11 @@ interface ArtworkChatBubbleProps {
   artwork: ArtworkChatBubble_artwork$data
 }
 
-const ArtworkChatBubble: FC<React.PropsWithChildren<
-  ArtworkChatBubbleProps
->> = ({ artwork }) => {
-  const {
-    isAcquireable,
-    isInquireable,
-    isOfferable,
-    listPrice,
-    saleArtwork,
-  } = artwork
+const ArtworkChatBubble: FC<
+  React.PropsWithChildren<ArtworkChatBubbleProps>
+> = ({ artwork }) => {
+  const { isAcquireable, isInquireable, isOfferable, listPrice, saleArtwork } =
+    artwork
 
   const price = useMemo(() => {
     if (!listPrice) return null

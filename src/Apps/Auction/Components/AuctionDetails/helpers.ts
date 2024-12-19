@@ -1,6 +1,6 @@
 import { DateTime } from "luxon"
 import { stripTags } from "underscore.string"
-import { AddToCalendarProps } from "./AddToCalendar"
+import type { AddToCalendarProps } from "./AddToCalendar"
 
 /** @returns URL to create a new Google Calendar event */
 export const generateGoogleCalendarUrl = ({
@@ -87,10 +87,7 @@ const formatCalendarDate = (date, offsetHours = 0) => {
  * @param date ISO string
  * @param offsetHours optional number of hours to offset time by
  */
-export const formatIsoDateNoZoneOffset = (
-  date: string,
-  offsetHours: number = 0
-) => {
+export const formatIsoDateNoZoneOffset = (date: string, offsetHours = 0) => {
   const dateWithZoneCorrection = DateTime.fromISO(date, {
     zone: "America/New_York",
   }).toUTC()

@@ -1,14 +1,14 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { FairBoothRailArtworksQuery } from "__generated__/FairBoothRailArtworksQuery.graphql"
-import { FairBoothRailArtworks_show$data } from "__generated__/FairBoothRailArtworks_show.graphql"
+import type { FairBoothRailArtworksQuery } from "__generated__/FairBoothRailArtworksQuery.graphql"
+import type { FairBoothRailArtworks_show$data } from "__generated__/FairBoothRailArtworks_show.graphql"
 import {
   ActionType,
-  ClickedArtworkGroup,
+  type ClickedArtworkGroup,
   ContextModule,
   OwnerType,
-  PageOwnerType,
+  type PageOwnerType,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -24,16 +24,13 @@ export interface FairBoothRailArtworksProps {
   show: FairBoothRailArtworks_show$data
 }
 
-const FairBoothRailArtworks: React.FC<React.PropsWithChildren<FairBoothRailArtworksProps>> = ({
-  show,
-}) => {
+const FairBoothRailArtworks: React.FC<
+  React.PropsWithChildren<FairBoothRailArtworksProps>
+> = ({ show }) => {
   const tracking = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const clickedFairArtworkData = ({
     artworkID,
@@ -108,9 +105,11 @@ export const FairBoothRailArtworksFragmentContainer = createFragmentContainer(
   }
 )
 
-export const FairBoothRailArtworksQueryRenderer: React.FC<React.PropsWithChildren<{
-  id: string
-}>> = ({ id, ...rest }) => {
+export const FairBoothRailArtworksQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    id: string
+  }>
+> = ({ id, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

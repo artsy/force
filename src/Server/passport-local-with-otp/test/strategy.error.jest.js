@@ -2,23 +2,23 @@ const chai = require("chai")
 const Strategy = require("../lib/strategy")
 
 // FIXME:
-describe.skip("Strategy", function () {
-  describe("encountering an error during verification", function () {
-    const strategy = new Strategy(function (username, password, otp, done) {
+describe.skip("Strategy", () => {
+  describe("encountering an error during verification", () => {
+    const strategy = new Strategy((username, password, otp, done) => {
       done(new Error("something went wrong"))
     })
 
     let err
 
     // eslint-disable-next-line jest/no-done-callback
-    beforeAll(function (done) {
+    beforeAll(done => {
       chai.passport
         .use(strategy)
-        .error(function (e) {
+        .error(e => {
           err = e
           done()
         })
-        .request(function (req) {
+        .request(req => {
           req.body = {}
           req.body.username = "johndoe"
           req.body.password = "secret"
@@ -27,27 +27,27 @@ describe.skip("Strategy", function () {
         .authenticate()
     })
 
-    it("should error", function () {
+    it("should error", () => {
       expect(err.message).toContain("something went wrong")
     })
   })
 
-  describe("encountering an exception during verification", function () {
-    const strategy = new Strategy(function (username, password, otp, done) {
+  describe("encountering an exception during verification", () => {
+    const strategy = new Strategy((username, password, otp, done) => {
       throw new Error("something went horribly wrong")
     })
 
     let err
 
     // eslint-disable-next-line jest/no-done-callback
-    beforeAll(function (done) {
+    beforeAll(done => {
       chai.passport
         .use(strategy)
-        .error(function (e) {
+        .error(e => {
           err = e
           done()
         })
-        .request(function (req) {
+        .request(req => {
           req.body = {}
           req.body.username = "johndoe"
           req.body.password = "secret"
@@ -56,7 +56,7 @@ describe.skip("Strategy", function () {
         .authenticate()
     })
 
-    it("should error", function () {
+    it("should error", () => {
       expect(err.message).toContain("something went horribly wrong")
     })
   })

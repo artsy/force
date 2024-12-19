@@ -1,11 +1,13 @@
 import { Button, useToasts } from "@artsy/palette"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 
 // This button can be used for any email campaign that is triggered by a button click.
-export const TriggerCampaignButton: FC<React.PropsWithChildren<unknown>> = () => {
+export const TriggerCampaignButton: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const [isLoading, setIsLoading] = useState(false)
   const { user } = useSystemContext()
   const { sendToast } = useToasts()

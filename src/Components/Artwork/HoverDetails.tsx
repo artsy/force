@@ -1,16 +1,18 @@
 import { Box, Join, Pill, Spacer } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { compact } from "lodash"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { HoverDetails_artwork$data } from "__generated__/HoverDetails_artwork.graphql"
+import type { HoverDetails_artwork$data } from "__generated__/HoverDetails_artwork.graphql"
 
 interface HoverDetailsProps {
   artwork: HoverDetails_artwork$data
 }
 
-const HoverDetails: FC<React.PropsWithChildren<HoverDetailsProps>> = ({ artwork }) => {
+const HoverDetails: FC<React.PropsWithChildren<HoverDetailsProps>> = ({
+  artwork,
+}) => {
   const labels = compact([
     artwork.attributionClass?.name,
     artwork.mediumType?.filterGene?.name,

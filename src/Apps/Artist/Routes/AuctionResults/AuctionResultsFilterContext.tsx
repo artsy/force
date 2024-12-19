@@ -1,12 +1,12 @@
 import {
-  AuctionResultsFilters,
+  type AuctionResultsFilters,
   initialAuctionResultsFilterState,
 } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
 import { omit } from "lodash"
 import * as React from "react"
 import { useContext, useReducer, useState } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { getSupportedMetric, Metric } from "Utils/metrics"
+import { getSupportedMetric, type Metric } from "Utils/metrics"
 
 export type Slice =
   | "SIMPLE_PRICE_HISTOGRAM"
@@ -78,18 +78,17 @@ export interface AuctionResultsFilterContextProps {
 /**
  * Context behavior shared globally across the AuctionResultsFilter component tree
  */
-export const AuctionResultsFilterContext = React.createContext<
-  AuctionResultsFilterContextProps
->({
-  filters: initialAuctionResultsFilterState({
-    startDate: null,
-    endDate: null,
-  }),
-  setFilter: null,
-  resetFilters: null,
-  unsetFilter: null,
-  ZeroState: null,
-})
+export const AuctionResultsFilterContext =
+  React.createContext<AuctionResultsFilterContextProps>({
+    filters: initialAuctionResultsFilterState({
+      startDate: null,
+      endDate: null,
+    }),
+    setFilter: null,
+    resetFilters: null,
+    unsetFilter: null,
+    ZeroState: null,
+  })
 
 export type SharedAuctionResultsFilterContextProps = Pick<
   AuctionResultsFilterContextProps,
@@ -104,9 +103,13 @@ export type SharedAuctionResultsFilterContextProps = Pick<
   onChange?: (filterState) => void
 }
 
-export const AuctionResultsFilterContextProvider: React.FC<React.PropsWithChildren<SharedAuctionResultsFilterContextProps & {
-  children: React.ReactNode
-}>> = ({
+export const AuctionResultsFilterContextProvider: React.FC<
+  React.PropsWithChildren<
+    SharedAuctionResultsFilterContextProps & {
+      children: React.ReactNode
+    }
+  >
+> = ({
   aggregations = [],
   children,
   filters = {},
@@ -139,9 +142,8 @@ export const AuctionResultsFilterContextProvider: React.FC<React.PropsWithChildr
     AuctionResultsFilterReducer,
     {}
   )
-  const [shouldStageFilterChanges, setShouldStageFilterChanges] = useState(
-    false
-  )
+  const [shouldStageFilterChanges, setShouldStageFilterChanges] =
+    useState(false)
 
   useDeepCompareEffect(() => {
     if (onChange) {
@@ -351,11 +353,8 @@ const AuctionResultsFilterReducer = (
      * Resetting filters back to their initial state
      */
     case "RESET": {
-      const {
-        earliestCreatedYear,
-        latestCreatedYear,
-        metric,
-      } = action.payload as any
+      const { earliestCreatedYear, latestCreatedYear, metric } =
+        action.payload as any
       return {
         ...initialAuctionResultsFilterState({
           startDate: earliestCreatedYear,

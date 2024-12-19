@@ -3,10 +3,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule } from "@artsy/cohesion"
 import { ArtistSeriesArtworkRailFragmentContainer as ArtistSeriesArtworkRail } from "Apps/Artwork/Components/ArtworkArtistSeries/ArtistSeriesArtworkRail"
 import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "Components/ArtistSeriesRail/ArtistSeriesRail"
-import { ArtworkArtistSeries_artwork$data } from "__generated__/ArtworkArtistSeries_artwork.graphql"
+import type { ArtworkArtistSeries_artwork$data } from "__generated__/ArtworkArtistSeries_artwork.graphql"
 import { Skeleton, SkeletonBox, SkeletonText, Spacer } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtworkArtistSeriesQuery } from "__generated__/ArtworkArtistSeriesQuery.graphql"
+import type { ArtworkArtistSeriesQuery } from "__generated__/ArtworkArtistSeriesQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Rail } from "Components/Rail/Rail"
 import { withSystemContext } from "System/Contexts/SystemContext"
@@ -15,9 +15,9 @@ interface ArtworkArtistSeriesProps {
   artwork: ArtworkArtistSeries_artwork$data
 }
 
-const ArtworkArtistSeries: React.FC<React.PropsWithChildren<ArtworkArtistSeriesProps>> = ({
-  artwork,
-}) => {
+const ArtworkArtistSeries: React.FC<
+  React.PropsWithChildren<ArtworkArtistSeriesProps>
+> = ({ artwork }) => {
   const artworkArtistSeries = (artwork?.seriesForCounts?.edges ?? [])[0]?.node
   const artistArtistSeries = (artwork?.seriesArtist?.artistSeriesConnection
     ?.edges ?? [])[0]?.node
@@ -104,9 +104,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtworkArtistSeriesQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const ArtworkArtistSeriesQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

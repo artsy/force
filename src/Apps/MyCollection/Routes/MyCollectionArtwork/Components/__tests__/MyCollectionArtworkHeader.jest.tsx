@@ -1,4 +1,4 @@
-import { MyCollectionArtworkHeaderTestQuery } from "__generated__/MyCollectionArtworkHeaderTestQuery.graphql"
+import type { MyCollectionArtworkHeaderTestQuery } from "__generated__/MyCollectionArtworkHeaderTestQuery.graphql"
 import { MyCollectionArtworkHeader } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkHeader"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
@@ -7,23 +7,22 @@ import { screen } from "@testing-library/react"
 jest.unmock("react-relay")
 
 describe("MyCollectionArtworkHeader", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    MyCollectionArtworkHeaderTestQuery
-  >({
-    Component: props => {
-      if (props?.artwork) {
-        return <MyCollectionArtworkHeader {...(props as any)} />
-      }
-      return null
-    },
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<MyCollectionArtworkHeaderTestQuery>({
+      Component: props => {
+        if (props?.artwork) {
+          return <MyCollectionArtworkHeader {...(props as any)} />
+        }
+        return null
+      },
+      query: graphql`
       query MyCollectionArtworkHeaderTestQuery @relay_test_operation {
         artwork(id: "foo") {
           ...MyCollectionArtworkHeader_artwork
         }
       }
     `,
-  })
+    })
 
   it("displays Edit Artwork Details CTA", () => {
     renderWithRelay({ Artwork: () => mockResolversWithoutSubmission })

@@ -1,5 +1,5 @@
 import { Flex, Text } from "@artsy/palette"
-import { Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
+import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 
 interface Props {
   brand: string

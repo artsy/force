@@ -4,7 +4,7 @@ import {
   ResponsiveBox,
   Text,
   Image,
-  ColumnSpan,
+  type ColumnSpan,
 } from "@artsy/palette"
 
 const imageHeight = 320
@@ -23,7 +23,9 @@ interface Props {
   data: Array<StepsWithImageDataType>
 }
 
-export const StepsWithImage: React.FC<React.PropsWithChildren<Props>> = props => {
+export const StepsWithImage: React.FC<
+  React.PropsWithChildren<Props>
+> = props => {
   const { data, sectionTitle } = props
   if (!data.length) {
     return null

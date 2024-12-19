@@ -1,4 +1,4 @@
-import {
+import type {
   ArtistBioTestQuery$rawResponse,
   ArtistBioTestQuery$data,
 } from "__generated__/ArtistBioTestQuery.graphql"

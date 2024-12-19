@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { Radio, Flex } from "@artsy/palette"
 
 import {
@@ -8,11 +8,12 @@ import {
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
 
-export const CurrencyFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const CurrencyFilter: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { setFilter, aggregations } = useAuctionResultsFilterContext()
-  const {
-    currency: selectedCurrency,
-  } = useCurrentlySelectedFiltersForAuctionResults()
+  const { currency: selectedCurrency } =
+    useCurrentlySelectedFiltersForAuctionResults()
 
   const currencies = aggregations?.find(
     aggregation => aggregation.slice === "CURRENCIES_COUNT"

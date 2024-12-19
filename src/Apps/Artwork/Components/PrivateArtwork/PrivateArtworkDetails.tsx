@@ -1,5 +1,5 @@
 import { Box, FullBleed, Spacer } from "@artsy/palette"
-import { PrivateArtworkDetails_artwork$key } from "__generated__/PrivateArtworkDetails_artwork.graphql"
+import type { PrivateArtworkDetails_artwork$key } from "__generated__/PrivateArtworkDetails_artwork.graphql"
 import { PrivateArtworkAboutArtist } from "./PrivateArtworkAboutArtist"
 import { PrivateArtworkAboutWork } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkAboutWork"
 import { graphql, useFragment } from "react-relay"
@@ -10,9 +10,9 @@ interface PrivateArtworkDetailsProps {
   artwork: PrivateArtworkDetails_artwork$key
 }
 
-export const PrivateArtworkDetails: React.FC<React.PropsWithChildren<PrivateArtworkDetailsProps>> = ({
-  artwork,
-}) => {
+export const PrivateArtworkDetails: React.FC<
+  React.PropsWithChildren<PrivateArtworkDetailsProps>
+> = ({ artwork }) => {
   const data = useFragment(
     graphql`
       fragment PrivateArtworkDetails_artwork on Artwork {

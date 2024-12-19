@@ -1,8 +1,8 @@
-import * as React from "react"
+import type * as React from "react"
 import styled from "styled-components"
 import {
   Flex,
-  FlexProps,
+  type FlexProps,
   Text,
   StackableBorderBox,
   Clickable,
@@ -21,13 +21,9 @@ const LockIconPositioner = styled(Flex)`
   right: 0;
 `
 
-export const StepSummaryItem: React.FC<React.PropsWithChildren<StepSummaryItemProps>> = ({
-  title,
-  onChange,
-  children,
-  locked,
-  ...others
-}) => {
+export const StepSummaryItem: React.FC<
+  React.PropsWithChildren<StepSummaryItemProps>
+> = ({ title, onChange, children, locked, ...others }) => {
   const showHeading = title || (onChange && !locked)
 
   return (

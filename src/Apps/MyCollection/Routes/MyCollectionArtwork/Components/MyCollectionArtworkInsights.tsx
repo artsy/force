@@ -1,5 +1,5 @@
 import { Box, Join, Spacer } from "@artsy/palette"
-import { MyCollectionArtworkInsights_artwork$key } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
+import type { MyCollectionArtworkInsights_artwork$key } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
 import { MyCollectionArtworkRequestPriceEstimate } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkRequestPriceEstimate"
 import { MyCollectionArtworkSubmitForSale } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSubmitForSale"
 import { MyCollectionArtworkSWASectionSubmitted } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASectionSubmitted"
@@ -17,9 +17,9 @@ interface MyCollectionArtworkInsightsProps {
   artwork: MyCollectionArtworkInsights_artwork$key
 }
 
-export const MyCollectionArtworkInsights: React.FC<React.PropsWithChildren<MyCollectionArtworkInsightsProps>> = ({
-  ...restProps
-}) => {
+export const MyCollectionArtworkInsights: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkInsightsProps>
+> = ({ ...restProps }) => {
   const enablePostApprovalSubmissionFlow = useFeatureFlag(
     "onyx_post_approval_submission_flow"
   )

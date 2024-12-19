@@ -2,7 +2,7 @@ import { FullBleed } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { SellMeta } from "Apps/Sell/Routes/MarketingLanding/Components/SellMeta"
 import { SellFlowContextProvider } from "Apps/Sell/SellFlowContext"
-import { SubmissionRoute_submission$key } from "__generated__/SubmissionRoute_submission.graphql"
+import type { SubmissionRoute_submission$key } from "__generated__/SubmissionRoute_submission.graphql"
 import { HttpError } from "found"
 import { graphql, useFragment } from "react-relay"
 
@@ -20,7 +20,9 @@ interface SubmissionRouteProps {
   children: React.ReactNode
 }
 
-export const SubmissionRoute: React.FC<React.PropsWithChildren<SubmissionRouteProps>> = props => {
+export const SubmissionRoute: React.FC<
+  React.PropsWithChildren<SubmissionRouteProps>
+> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
 
   if (!submission?.externalId) throw new HttpError(404)

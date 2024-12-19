@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import {
   Box,
   HorizontalOverflow,
@@ -12,26 +12,25 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { EntityTooltipArtistQuery } from "__generated__/EntityTooltipArtistQuery.graphql"
-import { EntityTooltipArtist_artist$data } from "__generated__/EntityTooltipArtist_artist.graphql"
+import type { EntityTooltipArtistQuery } from "__generated__/EntityTooltipArtistQuery.graphql"
+import type { EntityTooltipArtist_artist$data } from "__generated__/EntityTooltipArtist_artist.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { useTracking } from "react-tracking"
-import { ActionType, ClickedTooltip } from "@artsy/cohesion"
+import { ActionType, type ClickedTooltip } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 interface EntityTooltipArtistProps {
   artist: EntityTooltipArtist_artist$data
 }
 
-const EntityTooltipArtist: FC<React.PropsWithChildren<EntityTooltipArtistProps>> = ({ artist }) => {
+const EntityTooltipArtist: FC<
+  React.PropsWithChildren<EntityTooltipArtistProps>
+> = ({ artist }) => {
   const { trackEvent } = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const handleClick = () => {
     const payload: ClickedTooltip = {
@@ -120,7 +119,9 @@ const EntityTooltipArtistFragmentContainer = createFragmentContainer(
   }
 )
 
-const EntityTooltipArtistPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const EntityTooltipArtistPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton p={2} width={300}>
       <HorizontalOverflow mb={2}>
@@ -153,9 +154,9 @@ interface EntityTooltipArtistQueryRendererProps {
   id: string
 }
 
-export const EntityTooltipArtistQueryRenderer: FC<React.PropsWithChildren<EntityTooltipArtistQueryRendererProps>> = ({
-  id,
-}) => {
+export const EntityTooltipArtistQueryRenderer: FC<
+  React.PropsWithChildren<EntityTooltipArtistQueryRendererProps>
+> = ({ id }) => {
   return (
     <SystemQueryRenderer<EntityTooltipArtistQuery>
       variables={{ id }}

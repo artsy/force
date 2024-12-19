@@ -1,5 +1,5 @@
-import { FormikHelpers } from "formik"
-import { Address, emptyAddress } from "Components/Address/utils"
+import type { FormikHelpers } from "formik"
+import { type Address, emptyAddress } from "Components/Address/utils"
 
 export interface AuctionFormValues {
   address: Address
@@ -22,7 +22,7 @@ export const initialValuesForRegistration: Omit<
 export const initialValuesForBidding: AuctionFormValues = {
   ...initialValuesForRegistration,
   agreeToTerms: true, // user will have agreed during registration
-  selectedBid: (null as unknown) as string,
+  selectedBid: null as unknown as string,
 }
 
 export type AuctionFormHelpers = FormikHelpers<AuctionFormValues>

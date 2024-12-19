@@ -1,7 +1,7 @@
 import { BorderedRadio, Checkbox, Link, Input } from "@artsy/palette"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
-import { CreditCardPickerTestQuery$rawResponse } from "__generated__/CreditCardPickerTestQuery.graphql"
+import type { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
+import type { CreditCardPickerTestQuery$rawResponse } from "__generated__/CreditCardPickerTestQuery.graphql"
 import {
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
@@ -14,7 +14,7 @@ import {
   validAddress,
 } from "Components/__tests__/Utils/addressForm"
 import { AddressForm } from "Components/Address/AddressForm"
-import { Address } from "Components/Address/utils"
+import type { Address } from "Components/Address/utils"
 import { RootTestPage } from "DevTools/RootTestPage"
 import { graphql } from "react-relay"
 import {
@@ -83,9 +83,9 @@ const fillAddressForm = (component: any, address: Address) => {
 
 class CreditCardPickerTestPage extends RootTestPage {
   getCreditCardId: CreditCardPicker["getCreditCardId"] = async () => {
-    const result = (this.find(
-      CreditCardPicker
-    ).instance() as any).getCreditCardId()
+    const result = (
+      this.find(CreditCardPicker).instance() as any
+    ).getCreditCardId()
     await this.update()
     return result
   }

@@ -1,8 +1,8 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { PartnerViewingRooms_currentViewingRooms$data } from "__generated__/PartnerViewingRooms_currentViewingRooms.graphql"
-import { PartnerViewingRooms_upcomingViewingRooms$data } from "__generated__/PartnerViewingRooms_upcomingViewingRooms.graphql"
-import { PartnerViewingRooms_pastViewingRooms$data } from "__generated__/PartnerViewingRooms_pastViewingRooms.graphql"
+import type { PartnerViewingRooms_currentViewingRooms$data } from "__generated__/PartnerViewingRooms_currentViewingRooms.graphql"
+import type { PartnerViewingRooms_upcomingViewingRooms$data } from "__generated__/PartnerViewingRooms_upcomingViewingRooms.graphql"
+import type { PartnerViewingRooms_pastViewingRooms$data } from "__generated__/PartnerViewingRooms_pastViewingRooms.graphql"
 import { PartnerViewingRoomsGridFragmentContainer } from "Apps/Partner/Components/PartnerViewingRooms/PartnerViewingRoomsGrid"
 import { Spacer } from "@artsy/palette"
 
@@ -12,11 +12,9 @@ interface PartnerViewingRoomsProps {
   pastViewingRooms: PartnerViewingRooms_pastViewingRooms$data
 }
 
-export const PartnerViewingRooms: React.FC<React.PropsWithChildren<PartnerViewingRoomsProps>> = ({
-  currentViewingRooms,
-  upcomingViewingRooms,
-  pastViewingRooms,
-}) => {
+export const PartnerViewingRooms: React.FC<
+  React.PropsWithChildren<PartnerViewingRoomsProps>
+> = ({ currentViewingRooms, upcomingViewingRooms, pastViewingRooms }) => {
   return (
     <>
       <Spacer y={4} />

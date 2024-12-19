@@ -1,8 +1,11 @@
 import { SystemContext } from "System/Contexts/SystemContext"
 import { useContext } from "react"
 import * as React from "react"
-import { Environment, commitMutation as relayCommitMutation } from "react-relay"
-import { MutationConfig, MutationParameters } from "relay-runtime"
+import {
+  type Environment,
+  commitMutation as relayCommitMutation,
+} from "react-relay"
+import type { MutationConfig, MutationParameters } from "relay-runtime"
 
 interface OperationBase {
   variables: object
@@ -87,7 +90,9 @@ class ProvideMutationContext extends React.Component<
 
 export function injectCommitMutation<Props extends CommitMutationProps>(
   Component: React.ComponentType<React.PropsWithChildren<Props>>
-): React.ComponentType<React.PropsWithChildren<Omit<Props, keyof CommitMutationProps>>> {
+): React.ComponentType<
+  React.PropsWithChildren<Omit<Props, keyof CommitMutationProps>>
+> {
   return props => {
     const { relayEnvironment } = useContext(SystemContext)
     return (

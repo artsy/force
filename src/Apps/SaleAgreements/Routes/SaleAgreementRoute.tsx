@@ -1,7 +1,7 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
-import { SaleAgreementRoute_saleAgreement$key } from "__generated__/SaleAgreementRoute_saleAgreement.graphql"
+import type { SaleAgreementRoute_saleAgreement$key } from "__generated__/SaleAgreementRoute_saleAgreement.graphql"
 import { PageHTML } from "Apps/Page/Components/PageHTML"
 import { TopContextBar } from "Components/TopContextBar"
 import { HttpError } from "found"
@@ -11,9 +11,9 @@ interface SaleAgreementRouteProps {
   saleAgreement: SaleAgreementRoute_saleAgreement$key
 }
 
-export const SaleAgreementRoute: FC<React.PropsWithChildren<SaleAgreementRouteProps>> = ({
-  saleAgreement,
-}) => {
+export const SaleAgreementRoute: FC<
+  React.PropsWithChildren<SaleAgreementRouteProps>
+> = ({ saleAgreement }) => {
   const data = useFragment(saleAgreementFragment, saleAgreement)
   const showSupplementalCosPage = useFeatureFlag("sapphire_supplemental-cos")
 

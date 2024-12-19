@@ -1,7 +1,7 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistSellWithArtsy_artist$data } from "__generated__/ArtistSellWithArtsy_artist.graphql"
-import { ArtistSellWithArtsyQuery } from "__generated__/ArtistSellWithArtsyQuery.graphql"
+import type { ArtistSellWithArtsy_artist$data } from "__generated__/ArtistSellWithArtsy_artist.graphql"
+import type { ArtistSellWithArtsyQuery } from "__generated__/ArtistSellWithArtsyQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   Box,
@@ -23,7 +23,9 @@ interface ArtistSellWithArtsyProps {
   artist?: ArtistSellWithArtsy_artist$data
 }
 
-const ArtistSellWithArtsy: FC<React.PropsWithChildren<ArtistSellWithArtsyProps>> = ({ artist }) => {
+const ArtistSellWithArtsy: FC<
+  React.PropsWithChildren<ArtistSellWithArtsyProps>
+> = ({ artist }) => {
   const image = artist?.image?.resized?.src
 
   const href = artist?.targetSupply?.isInMicrofunnel
@@ -145,9 +147,9 @@ interface ArtistSellWithArtsyQueryRendererProps {
   slug: string
 }
 
-export const ArtistSellWithArtsyQueryRenderer: FC<React.PropsWithChildren<ArtistSellWithArtsyQueryRendererProps>> = ({
-  slug,
-}) => {
+export const ArtistSellWithArtsyQueryRenderer: FC<
+  React.PropsWithChildren<ArtistSellWithArtsyQueryRendererProps>
+> = ({ slug }) => {
   return (
     <SystemQueryRenderer<ArtistSellWithArtsyQuery>
       lazyLoad

@@ -1,7 +1,7 @@
 import { FullBleed, Join, Separator, Spacer } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArticleApp_article$data } from "__generated__/ArticleApp_article.graphql"
+import type { ArticleApp_article$data } from "__generated__/ArticleApp_article.graphql"
 import { ArticleBodyFragmentContainer } from "./Components/ArticleBody"
 import { ArticleChannelRelatedArticlesQueryRenderer } from "./Components/ArticleChannelRelatedArticles"
 import { ArticleInfiniteScrollQueryRenderer } from "./Components/ArticleInfiniteScroll"
@@ -17,7 +17,9 @@ interface ArticleAppProps {
   article: ArticleApp_article$data
 }
 
-const ArticleApp: FC<React.PropsWithChildren<ArticleAppProps>> = ({ article }) => {
+const ArticleApp: FC<React.PropsWithChildren<ArticleAppProps>> = ({
+  article,
+}) => {
   useScrollToOpenEditorialAuthModal()
 
   return (

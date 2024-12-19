@@ -2,16 +2,16 @@ import { Column, Separator } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
-import { UserActiveBids_me$data } from "__generated__/UserActiveBids_me.graphql"
+import type { UserActiveBids_me$data } from "__generated__/UserActiveBids_me.graphql"
 import { SettingsAuctionsLotStandingFragmentContainer } from "./SettingsAuctionsLotStanding"
 
 interface UserActiveBidsProps {
   me: UserActiveBids_me$data
 }
 
-export const UserActiveBids: React.FC<React.PropsWithChildren<UserActiveBidsProps>> = ({
-  me: { activeLotStandings: lotStandings },
-}) => {
+export const UserActiveBids: React.FC<
+  React.PropsWithChildren<UserActiveBidsProps>
+> = ({ me: { activeLotStandings: lotStandings } }) => {
   if (!lotStandings || lotStandings.length === 0) {
     return <SectionContainer title="Active Bids"></SectionContainer>
   }

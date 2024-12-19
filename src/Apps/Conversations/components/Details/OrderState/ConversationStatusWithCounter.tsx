@@ -1,5 +1,5 @@
 import { graphql, useFragment } from "react-relay"
-import { ConversationStatusWithCounter_order$key } from "__generated__/ConversationStatusWithCounter_order.graphql"
+import type { ConversationStatusWithCounter_order$key } from "__generated__/ConversationStatusWithCounter_order.graphql"
 import { Flex, Text } from "@artsy/palette"
 import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import AlertFillIcon from "@artsy/icons/AlertFillIcon"
@@ -10,10 +10,9 @@ interface ConversationStatusWithCounterProps {
   status: "offer" | "buy" | "buyerCounteroffer" | "sellerCounteroffer"
 }
 
-export const ConversationStatusWithCounter: React.FC<React.PropsWithChildren<ConversationStatusWithCounterProps>> = ({
-  order,
-  status,
-}) => {
+export const ConversationStatusWithCounter: React.FC<
+  React.PropsWithChildren<ConversationStatusWithCounterProps>
+> = ({ order, status }) => {
   const data = useFragment(
     graphql`
       fragment ConversationStatusWithCounter_order on CommerceOrder {

@@ -1,7 +1,7 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Clickable, Flex, Spacer, Sup, Text } from "@artsy/palette"
-import { SavedSearchAlertListItem_item$data } from "__generated__/SavedSearchAlertListItem_item.graphql"
-import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
+import type { SavedSearchAlertListItem_item$data } from "__generated__/SavedSearchAlertListItem_item.graphql"
+import type { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useJump } from "Utils/Hooks/useJump"
@@ -15,9 +15,9 @@ interface SavedSearchAlertListItemProps {
   onViewArtworksClick: (entity: EditAlertEntity) => void
 }
 
-export const SavedSearchAlertListItem: React.FC<React.PropsWithChildren<
-  SavedSearchAlertListItemProps
->> = ({ item, variant, onEditAlertClick, onViewArtworksClick }) => {
+export const SavedSearchAlertListItem: React.FC<
+  React.PropsWithChildren<SavedSearchAlertListItemProps>
+> = ({ item, variant, onEditAlertClick, onViewArtworksClick }) => {
   const { jumpTo } = useJump()
   const { trackEvent } = useTracking()
 
@@ -139,9 +139,8 @@ export const SavedSearchAlertListItem: React.FC<React.PropsWithChildren<
   )
 }
 
-export const SavedSearchAlertListItemFragmentContainer = createFragmentContainer(
-  SavedSearchAlertListItem,
-  {
+export const SavedSearchAlertListItemFragmentContainer =
+  createFragmentContainer(SavedSearchAlertListItem, {
     item: graphql`
       fragment SavedSearchAlertListItem_item on Alert {
         internalID
@@ -160,5 +159,4 @@ export const SavedSearchAlertListItemFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })

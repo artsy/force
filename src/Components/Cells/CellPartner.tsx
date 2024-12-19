@@ -1,8 +1,8 @@
 import { Box, Image, ResponsiveBox, SkeletonBox, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
-import { CellPartner_partner$data } from "__generated__/CellPartner_partner.graphql"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import type { CellPartner_partner$data } from "__generated__/CellPartner_partner.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
@@ -72,9 +72,9 @@ const CellPartner: React.FC<React.PropsWithChildren<CellPartnerProps>> = ({
 
 type CellPartnerPlaceholderProps = Pick<CellPartnerProps, "mode">
 
-export const CellPartnerPlaceholder: React.FC<React.PropsWithChildren<CellPartnerPlaceholderProps>> = ({
-  mode = "RAIL",
-}) => {
+export const CellPartnerPlaceholder: React.FC<
+  React.PropsWithChildren<CellPartnerPlaceholderProps>
+> = ({ mode = "RAIL" }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
 
   return (

@@ -1,9 +1,9 @@
 import { ResponsiveBox, Image } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleZoomButton } from "Apps/Article/Components/ArticleZoomButton"
 import { useArticleZoomGallery } from "Apps/Article/Components/ArticleZoomGallery/ArticleZoomGallery"
-import { ArticleSectionImageCollectionImage_figure$data } from "__generated__/ArticleSectionImageCollectionImage_figure.graphql"
+import type { ArticleSectionImageCollectionImage_figure$data } from "__generated__/ArticleSectionImageCollectionImage_figure.graphql"
 import { resized } from "Utils/resized"
 
 interface ArticleSectionImageCollectionImageProps {
@@ -11,14 +11,11 @@ interface ArticleSectionImageCollectionImageProps {
   targetWidth: number
 }
 
-const ArticleSectionImageCollectionImage: FC<React.PropsWithChildren<ArticleSectionImageCollectionImageProps>> = ({
-  figure,
-  targetWidth,
-}) => {
-  const {
-    articleZoomGalleryComponent,
-    showArticleZoomGallery,
-  } = useArticleZoomGallery()
+const ArticleSectionImageCollectionImage: FC<
+  React.PropsWithChildren<ArticleSectionImageCollectionImageProps>
+> = ({ figure, targetWidth }) => {
+  const { articleZoomGalleryComponent, showArticleZoomGallery } =
+    useArticleZoomGallery()
 
   const handleClick = () => {
     if (!figure.id) return
@@ -55,9 +52,8 @@ const ArticleSectionImageCollectionImage: FC<React.PropsWithChildren<ArticleSect
   )
 }
 
-export const ArticleSectionImageCollectionImageFragmentContainer = createFragmentContainer(
-  ArticleSectionImageCollectionImage,
-  {
+export const ArticleSectionImageCollectionImageFragmentContainer =
+  createFragmentContainer(ArticleSectionImageCollectionImage, {
     figure: graphql`
       fragment ArticleSectionImageCollectionImage_figure on ArticleSectionImageCollectionFigure {
         ... on ArticleImageSection {
@@ -87,5 +83,4 @@ export const ArticleSectionImageCollectionImageFragmentContainer = createFragmen
         }
       }
     `,
-  }
-)
+  })

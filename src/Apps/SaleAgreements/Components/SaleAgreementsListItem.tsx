@@ -1,15 +1,15 @@
 import { Box, Separator, Text } from "@artsy/palette"
-import { SaleAgreementsListProps } from "Apps/SaleAgreements/Components/SaleAgreementsList"
-import { FC } from "react"
+import type { SaleAgreementsListProps } from "Apps/SaleAgreements/Components/SaleAgreementsList"
+import type { FC } from "react"
 import { RouterLink } from "System/Components/RouterLink"
 
 export interface SaleAgreementListItemProps {
   saleAgreement: SaleAgreementsListProps["saleAgreements"][0]
 }
 
-export const SaleAgreementListItem: FC<React.PropsWithChildren<SaleAgreementListItemProps>> = ({
-  saleAgreement,
-}) => {
+export const SaleAgreementListItem: FC<
+  React.PropsWithChildren<SaleAgreementListItemProps>
+> = ({ saleAgreement }) => {
   if (!saleAgreement) return null
 
   return (

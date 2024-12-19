@@ -1,23 +1,26 @@
 import { Button, Message, ModalDialog, Spacer, Text } from "@artsy/palette"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   getStatusCopy,
   continueToInboxText,
 } from "Apps/Order/Utils/getStatusCopy"
 import { RouterLink } from "System/Components/RouterLink"
-import { SubmittedOrderModal_submittedOrder$data } from "__generated__/SubmittedOrderModal_submittedOrder.graphql"
+import type { SubmittedOrderModal_submittedOrder$data } from "__generated__/SubmittedOrderModal_submittedOrder.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { SubmittedOrderModalQuery } from "__generated__/SubmittedOrderModalQuery.graphql"
+import type { SubmittedOrderModalQuery } from "__generated__/SubmittedOrderModalQuery.graphql"
 
 interface SubmittedOrderModalProps {
   submittedOrder: SubmittedOrderModal_submittedOrder$data
 }
 
-const SubmittedOrderModal: FC<React.PropsWithChildren<SubmittedOrderModalProps>> = ({
-  submittedOrder,
-}) => {
+const SubmittedOrderModal: FC<
+  React.PropsWithChildren<SubmittedOrderModalProps>
+> = ({ submittedOrder }) => {
   const [isOpen, setIsOpen] = useState(true)
+  const linkUrl = submittedOrder.impulseConversationId
+    ? `/user/conversations/${submittedOrder.impulseConversationId}`
+    : "/user/conversations"
 
   if (!isOpen) return null
 
@@ -33,7 +36,7 @@ const SubmittedOrderModal: FC<React.PropsWithChildren<SubmittedOrderModalProps>>
       <Message>{description}</Message>
       <Spacer y={2} />
       <Text>{continueToInboxText}</Text>
-      <RouterLink to="/user/conversations" onClick={handleClose}>
+      <RouterLink to={linkUrl} onClick={handleClose}>
         <Button mt={2} width="100%">
           Go to Inbox
         </Button>
@@ -48,14 +51,17 @@ export const SubmittedOrderModalFragmentContainer = createFragmentContainer(
     submittedOrder: graphql`
       fragment SubmittedOrderModal_submittedOrder on CommerceOrder {
         stateExpiresAt(format: "MMM D")
+        impulseConversationId
       }
     `,
   }
 )
 
-export const SubmittedOrderModalQueryRenderer: FC<React.PropsWithChildren<{ orderId: string }>> = ({
-  orderId,
-}) => {
+export const SubmittedOrderModalQueryRenderer: FC<
+  React.PropsWithChildren<{
+    orderId: string
+  }>
+> = ({ orderId }) => {
   return (
     <SystemQueryRenderer<SubmittedOrderModalQuery>
       variables={{ orderId }}
@@ -74,6 +80,7 @@ export const SubmittedOrderModalQueryRenderer: FC<React.PropsWithChildren<{ orde
         query SubmittedOrderModalQuery($orderId: ID!) {
           submittedOrder: commerceOrder(id: $orderId) {
             ...SubmittedOrderModal_submittedOrder
+            impulseConversationId
           }
         }
       `}

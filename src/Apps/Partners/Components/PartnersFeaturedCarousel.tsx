@@ -1,18 +1,18 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
 import { extractNodes } from "Utils/extractNodes"
 import { useStableShuffle } from "Utils/Hooks/useStableShuffle"
-import { PartnersFeaturedCarousel_viewer$data } from "__generated__/PartnersFeaturedCarousel_viewer.graphql"
+import type { PartnersFeaturedCarousel_viewer$data } from "__generated__/PartnersFeaturedCarousel_viewer.graphql"
 import { PartnersFeaturedCarouselCellFragmentContainer } from "./PartnersFeaturedCarouselCell"
 
 interface PartnersFeaturedCarouselProps {
   viewer: PartnersFeaturedCarousel_viewer$data
 }
 
-const PartnersFeaturedCarousel: FC<React.PropsWithChildren<PartnersFeaturedCarouselProps>> = ({
-  viewer,
-}) => {
+const PartnersFeaturedCarousel: FC<
+  React.PropsWithChildren<PartnersFeaturedCarouselProps>
+> = ({ viewer }) => {
   const profiles = extractNodes(viewer.orderedSet?.orderedItemsConnection)
   const { shuffled } = useStableShuffle({ items: profiles })
 
@@ -32,9 +32,8 @@ const PartnersFeaturedCarousel: FC<React.PropsWithChildren<PartnersFeaturedCarou
   )
 }
 
-export const PartnersFeaturedCarouselFragmentContainer = createFragmentContainer(
-  PartnersFeaturedCarousel,
-  {
+export const PartnersFeaturedCarouselFragmentContainer =
+  createFragmentContainer(PartnersFeaturedCarousel, {
     viewer: graphql`
       fragment PartnersFeaturedCarousel_viewer on Viewer
         @argumentDefinitions(id: { type: "String!" }) {
@@ -52,5 +51,4 @@ export const PartnersFeaturedCarouselFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })

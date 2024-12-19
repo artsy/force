@@ -1,14 +1,17 @@
-import { Box, Text, Image, BoxProps } from "@artsy/palette"
-import { FC } from "react"
+import { Box, Text, Image, type BoxProps } from "@artsy/palette"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArticleSponsor_sponsor$data } from "__generated__/ArticleSponsor_sponsor.graphql"
+import type { ArticleSponsor_sponsor$data } from "__generated__/ArticleSponsor_sponsor.graphql"
 import { useArticleTracking } from "Apps/Article/useArticleTracking"
 
 interface ArticleSponsorProps extends BoxProps {
   sponsor: ArticleSponsor_sponsor$data
 }
 
-const ArticleSponsor: FC<React.PropsWithChildren<ArticleSponsorProps>> = ({ sponsor, ...rest }) => {
+const ArticleSponsor: FC<React.PropsWithChildren<ArticleSponsorProps>> = ({
+  sponsor,
+  ...rest
+}) => {
   const { clickedSponsorLink } = useArticleTracking()
 
   const logo = sponsor.partnerLightLogo ?? sponsor.partnerDarkLogo

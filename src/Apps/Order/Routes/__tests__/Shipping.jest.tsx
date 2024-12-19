@@ -23,7 +23,7 @@ import {
   saveAddressSuccess,
   updateAddressSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
-import {
+import type {
   ShippingTestQuery,
   ShippingTestQuery$rawResponse,
 } from "__generated__/ShippingTestQuery.graphql"
@@ -40,7 +40,7 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { queryByAttribute } from "@testing-library/dom"
 import { ErrorDialogMessage } from "Apps/Order/Utils/getErrorDialogCopy"
 import { within } from "@testing-library/dom"
-import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
+import { type MockEnvironment, createMockEnvironment } from "relay-test-utils"
 import { useRouter } from "System/Hooks/useRouter"
 
 jest.setTimeout(10000)
@@ -297,17 +297,16 @@ describe.skip("Shipping", () => {
     return renderWithRelayRaw(resolvers, componentProps, relayEnv)
   }
 
-  const { renderWithRelay: renderWithRelayRaw } = setupTestWrapperTL<
-    ShippingTestQuery
-  >({
-    Component: props => {
-      return (
-        <MockBoot relayEnvironment={mockRelayEnv}>
-          <ShippingRouteWithDialog order={props.order!} me={props.me!} />
-        </MockBoot>
-      )
-    },
-    query: graphql`
+  const { renderWithRelay: renderWithRelayRaw } =
+    setupTestWrapperTL<ShippingTestQuery>({
+      Component: props => {
+        return (
+          <MockBoot relayEnvironment={mockRelayEnv}>
+            <ShippingRouteWithDialog order={props.order!} me={props.me!} />
+          </MockBoot>
+        )
+      },
+      query: graphql`
       query ShippingTestQuery @relay_test_operation @raw_response_type {
         order: commerceOrder(id: "unused") {
           ...Shipping_order
@@ -317,7 +316,7 @@ describe.skip("Shipping", () => {
         }
       }
     `,
-  })
+    })
 
   describe("initial load with order data", () => {
     it("loads with saved shipping fulfillment and no saved addresses", async () => {
@@ -355,10 +354,10 @@ describe.skip("Shipping", () => {
     })
 
     it("loads with saved shipping fulfillment and matching saved addresses", async () => {
-      const expectedAddress = meWithAddresses.addressConnection!.edges![1]!
-        .node!
-      const unexpectedAddress = meWithAddresses.addressConnection!.edges![0]!
-        .node!
+      const expectedAddress =
+        meWithAddresses.addressConnection!.edges![1]!.node!
+      const unexpectedAddress =
+        meWithAddresses.addressConnection!.edges![0]!.node!
 
       const orderWithFulfillment = {
         ...order,
@@ -779,8 +778,7 @@ describe.skip("Shipping", () => {
             error: {
               type: "arta",
               code: "destination_could_not_be_geocoded",
-              data:
-                '{"status":422,"errors":{"destination":["could not be geocoded"]}}',
+              data: '{"status":422,"errors":{"destination":["could not be geocoded"]}}',
             },
           },
         })
@@ -1124,10 +1122,11 @@ describe.skip("Shipping", () => {
           Me: () => meWithAddresses,
         })
 
-        const automaticFulfillmentMutation = await resolveSaveFulfillmentDetails(
-          mockResolveLastOperation,
-          settingOrderShipmentSuccess.commerceSetShipping
-        )
+        const automaticFulfillmentMutation =
+          await resolveSaveFulfillmentDetails(
+            mockResolveLastOperation,
+            settingOrderShipmentSuccess.commerceSetShipping
+          )
 
         expect(automaticFulfillmentMutation.operationName).toEqual(
           "useSaveFulfillmentDetailsMutation"
@@ -1213,10 +1212,11 @@ describe.skip("Shipping", () => {
               Me: () => meWithAddresses,
             })
 
-            const automaticFulfillmentMutation = await resolveSaveFulfillmentDetails(
-              mockResolveLastOperation,
-              settingOrderShipmentSuccess.commerceSetShipping
-            )
+            const automaticFulfillmentMutation =
+              await resolveSaveFulfillmentDetails(
+                mockResolveLastOperation,
+                settingOrderShipmentSuccess.commerceSetShipping
+              )
 
             expect(automaticFulfillmentMutation.operationName).toEqual(
               "useSaveFulfillmentDetailsMutation"
@@ -1294,9 +1294,8 @@ describe.skip("Shipping", () => {
           // TODO: need a better way to get a specific input field from multiple forms
           await waitFor(async () => {
             const addressModal = screen.getByTestId("AddressModal")
-            const addressLine2 = within(addressModal).getByPlaceholderText(
-              /Apt, floor, suite/
-            )
+            const addressLine2 =
+              within(addressModal).getByPlaceholderText(/Apt, floor, suite/)
             await userEvent.clear(addressLine2)
             await userEvent.paste(addressLine2, "25th fl.")
           })
@@ -1431,12 +1430,11 @@ describe.skip("Shipping", () => {
 
             await saveAndContinue()
             await flushPromiseQueue()
-            const selectNewShippingOptionOperation = await mockResolveLastOperation(
-              {
+            const selectNewShippingOptionOperation =
+              await mockResolveLastOperation({
                 CommerceSelectShippingOptionPayload: () =>
                   selectShippingQuoteSuccess.commerceSelectShippingOption,
-              }
-            )
+              })
             expect(selectNewShippingOptionOperation.operationName).toBe(
               "useSelectShippingQuoteMutation"
             )
@@ -1504,12 +1502,11 @@ describe.skip("Shipping", () => {
 
             await flushPromiseQueue()
             await saveAndContinue()
-            const selectShippingOptionOperation = await mockResolveLastOperation(
-              {
+            const selectShippingOptionOperation =
+              await mockResolveLastOperation({
                 CommerceSelectShippingOptionPayload: () =>
                   selectShippingQuoteSuccess.commerceSelectShippingOption,
-              }
-            )
+              })
             expect(selectShippingOptionOperation.operationName).toBe(
               "useSelectShippingQuoteMutation"
             )
@@ -1525,7 +1522,8 @@ describe.skip("Shipping", () => {
         const settingOrderArtaShipmentSuccessWithoutQuotes = cloneDeep(
           settingOrderArtaShipmentSuccess
         ) as any
-        settingOrderArtaShipmentSuccessWithoutQuotes.commerceSetShipping.orderOrError.order.lineItems.edges[0].node.shippingQuoteOptions.edges = []
+        settingOrderArtaShipmentSuccessWithoutQuotes.commerceSetShipping.orderOrError.order.lineItems.edges[0].node.shippingQuoteOptions.edges =
+          []
 
         const { mockResolveLastOperation } = renderWithRelay({
           CommerceOrder: () => UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
@@ -1827,13 +1825,12 @@ describe.skip("Shipping", () => {
         })
       })
       it("shows dialog and tracks error if shipping quote save operation fails", async () => {
-        const {
-          mockResolveLastOperation,
-          mockRejectLastOperation,
-        } = renderWithRelay({
-          CommerceOrder: () => UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
-          Me: () => meWithoutAddress,
-        })
+        const { mockResolveLastOperation, mockRejectLastOperation } =
+          renderWithRelay({
+            CommerceOrder: () =>
+              UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+            Me: () => meWithoutAddress,
+          })
 
         await fillAddressForm(validAddress)
         await saveAndContinue()
@@ -2243,9 +2240,8 @@ describe.skip("Shipping", () => {
               await saveAndContinue()
 
               await flushPromiseQueue()
-              const selectShippingOptionOperation = await mockResolveLastOperation(
-                {}
-              )
+              const selectShippingOptionOperation =
+                await mockResolveLastOperation({})
 
               expect(selectShippingOptionOperation.operationName).toEqual(
                 "useSelectShippingQuoteMutation"
@@ -2296,9 +2292,8 @@ describe.skip("Shipping", () => {
               await saveAndContinue()
 
               await flushPromiseQueue()
-              const selectShippingOptionOperation = await mockResolveLastOperation(
-                {}
-              )
+              const selectShippingOptionOperation =
+                await mockResolveLastOperation({})
               expect(selectShippingOptionOperation.operationName).toEqual(
                 "useSelectShippingQuoteMutation"
               )
@@ -2352,12 +2347,11 @@ describe.skip("Shipping", () => {
               await saveAndContinue()
 
               await flushPromiseQueue()
-              const selectShippingOptionOperation = await mockResolveLastOperation(
-                {
+              const selectShippingOptionOperation =
+                await mockResolveLastOperation({
                   CommerceSelectShippingOptionPayload: () =>
                     selectShippingQuoteSuccess.commerceSelectShippingOption,
-                }
-              )
+                })
               expect(selectShippingOptionOperation.operationName).toEqual(
                 "useSelectShippingQuoteMutation"
               )
@@ -2401,9 +2395,8 @@ describe.skip("Shipping", () => {
               // TODO: need a better way to get a specific input field from multiple forms
               await waitFor(async () => {
                 const addressModal = screen.getByTestId("AddressModal")
-                const addressLine2 = within(addressModal).getByPlaceholderText(
-                  /Apt, floor, suite/
-                )
+                const addressLine2 =
+                  within(addressModal).getByPlaceholderText(/Apt, floor, suite/)
                 await userEvent.clear(addressLine2)
                 await userEvent.paste(addressLine2, "25th fl.")
               })
@@ -2456,10 +2449,11 @@ describe.skip("Shipping", () => {
 
               await flushPromiseQueue()
 
-              const saveFulfillmentOperation = await resolveSaveFulfillmentDetails(
-                mockResolveLastOperation,
-                settingOrderShipmentSuccess.commerceSetShipping
-              )
+              const saveFulfillmentOperation =
+                await resolveSaveFulfillmentDetails(
+                  mockResolveLastOperation,
+                  settingOrderShipmentSuccess.commerceSetShipping
+                )
 
               expect(saveFulfillmentOperation.operationName).toEqual(
                 "useSaveFulfillmentDetailsMutation"
@@ -2468,12 +2462,11 @@ describe.skip("Shipping", () => {
               await saveAndContinue()
 
               await flushPromiseQueue()
-              const selectShippingOptionOperation = await mockResolveLastOperation(
-                {
+              const selectShippingOptionOperation =
+                await mockResolveLastOperation({
                   CommerceSelectShippingOptionPayload: () =>
                     selectShippingQuoteSuccess.commerceSelectShippingOption,
-                }
-              )
+                })
 
               expect(selectShippingOptionOperation.operationName).toEqual(
                 "useSelectShippingQuoteMutation"

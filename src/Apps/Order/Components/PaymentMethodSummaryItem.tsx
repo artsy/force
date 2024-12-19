@@ -1,7 +1,7 @@
-import { PaymentMethodSummaryItem_order$data } from "__generated__/PaymentMethodSummaryItem_order.graphql"
+import type { PaymentMethodSummaryItem_order$data } from "__generated__/PaymentMethodSummaryItem_order.graphql"
 import {
   StepSummaryItem,
-  StepSummaryItemProps,
+  type StepSummaryItemProps,
 } from "Components/StepSummaryItem"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreditCardDetails } from "./CreditCardDetails"
@@ -47,9 +47,8 @@ export const PaymentMethodSummaryItem = ({
   )
 }
 
-export const PaymentMethodSummaryItemFragmentContainer = createFragmentContainer(
-  PaymentMethodSummaryItem,
-  {
+export const PaymentMethodSummaryItemFragmentContainer =
+  createFragmentContainer(PaymentMethodSummaryItem, {
     order: graphql`
       fragment PaymentMethodSummaryItem_order on CommerceOrder {
         source
@@ -70,5 +69,4 @@ export const PaymentMethodSummaryItemFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })

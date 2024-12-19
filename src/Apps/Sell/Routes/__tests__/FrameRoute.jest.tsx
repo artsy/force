@@ -6,7 +6,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { graphql } from "react-relay"
-import { FrameRoute_Test_Query$rawResponse } from "__generated__/FrameRoute_Test_Query.graphql"
+import type { FrameRoute_Test_Query$rawResponse } from "__generated__/FrameRoute_Test_Query.graphql"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()
@@ -26,20 +26,19 @@ jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => true),
 }))
 
-const submissionMock: Partial<
-  FrameRoute_Test_Query$rawResponse["submission"]
-> = {
-  externalId: "externalId",
-  myCollectionArtwork: {
-    id: "id",
-    artworkId: "artworkId",
-    isFramed: true,
-    framedMetric: "cm",
-    framedWidth: "160",
-    framedHeight: "100",
-    framedDepth: "1",
-  },
-}
+const submissionMock: Partial<FrameRoute_Test_Query$rawResponse["submission"]> =
+  {
+    externalId: "externalId",
+    myCollectionArtwork: {
+      id: "id",
+      artworkId: "artworkId",
+      isFramed: true,
+      framedMetric: "cm",
+      framedWidth: "160",
+      framedHeight: "100",
+      framedDepth: "1",
+    },
+  }
 
 beforeEach(() => {
   ;(useSystemContext as jest.Mock).mockImplementation(() => {

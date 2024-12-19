@@ -1,20 +1,24 @@
 import {
   Box,
   Button,
-  ButtonSize,
+  type ButtonSize,
   Column as BaseColumn,
-  ColumnProps,
+  type ColumnProps,
   GridColumns,
   Join,
   Separator,
   Spacer,
   Text,
 } from "@artsy/palette"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { usePoll } from "Utils/Hooks/usePoll"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
-import { AuctionActiveBids_me$data } from "__generated__/AuctionActiveBids_me.graphql"
+import type { AuctionActiveBids_me$data } from "__generated__/AuctionActiveBids_me.graphql"
 import { AuctionLotInfoFragmentContainer } from "Apps/Auction/Routes/Bid/Components/AuctionLotInfo"
 import { Media } from "Utils/Responsive"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
@@ -31,7 +35,9 @@ interface LotStanding {
   lotStanding: NonNullable<AuctionActiveBidsProps["me"]["lotStandings"]>[0]
 }
 
-const AuctionActiveBids: React.FC<React.PropsWithChildren<AuctionActiveBidsProps>> = ({ me, relay }) => {
+const AuctionActiveBids: React.FC<
+  React.PropsWithChildren<AuctionActiveBidsProps>
+> = ({ me, relay }) => {
   const { match } = useRouter()
 
   usePoll({
@@ -163,9 +169,11 @@ export const AuctionActiveBidsRefetchContainer = createRefetchContainer(
   `
 )
 
-const BidStatus: React.FC<React.PropsWithChildren<{
-  lotStanding: NonNullable<AuctionActiveBidsProps["me"]["lotStandings"]>[0]
-}>> = ({ lotStanding }) => {
+const BidStatus: React.FC<
+  React.PropsWithChildren<{
+    lotStanding: NonNullable<AuctionActiveBidsProps["me"]["lotStandings"]>[0]
+  }>
+> = ({ lotStanding }) => {
   if (!lotStanding) {
     return null
   }
@@ -199,10 +207,14 @@ const BidStatus: React.FC<React.PropsWithChildren<{
   }
 }
 
-const BidButton: React.FC<React.PropsWithChildren<LotStanding & {
-  me: AuctionActiveBidsProps["me"]
-  size?: ButtonSize
-}>> = ({ lotStanding, me, size = "large" }) => {
+const BidButton: React.FC<
+  React.PropsWithChildren<
+    LotStanding & {
+      me: AuctionActiveBidsProps["me"]
+      size?: ButtonSize
+    }
+  >
+> = ({ lotStanding, me, size = "large" }) => {
   const { router } = useRouter()
   const { tracking } = useAuctionTracking()
 
@@ -257,7 +269,10 @@ const BidButton: React.FC<React.PropsWithChildren<LotStanding & {
   )
 }
 
-const Column: React.FC<React.PropsWithChildren<ColumnProps>> = ({ children, ...rest }) => {
+const Column: React.FC<React.PropsWithChildren<ColumnProps>> = ({
+  children,
+  ...rest
+}) => {
   return (
     <BaseColumn span={3} alignItems="center" display="flex" {...rest}>
       {children}

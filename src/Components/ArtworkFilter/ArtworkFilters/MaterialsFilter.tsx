@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { SelectedFiltersCountsLabels } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ResultsFilter } from "./ResultsFilter"
 
@@ -6,9 +6,9 @@ export interface MaterialsFilterProps {
   expanded?: boolean
 }
 
-export const MaterialsFilter: React.FC<React.PropsWithChildren<MaterialsFilterProps>> = ({
-  expanded,
-}) => {
+export const MaterialsFilter: React.FC<
+  React.PropsWithChildren<MaterialsFilterProps>
+> = ({ expanded }) => {
   return (
     <ResultsFilter
       expanded={expanded}

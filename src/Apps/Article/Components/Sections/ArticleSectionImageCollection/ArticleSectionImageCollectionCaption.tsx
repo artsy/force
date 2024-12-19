@@ -1,16 +1,16 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { HTML, Text } from "@artsy/palette"
 import Metadata from "Components/Artwork/Metadata"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArticleSectionImageCollectionCaption_figure$data } from "__generated__/ArticleSectionImageCollectionCaption_figure.graphql"
+import type { ArticleSectionImageCollectionCaption_figure$data } from "__generated__/ArticleSectionImageCollectionCaption_figure.graphql"
 
 interface ArticleSectionImageCollectionCaptionProps {
   figure: ArticleSectionImageCollectionCaption_figure$data
 }
 
-const ArticleSectionImageCollectionCaption: FC<React.PropsWithChildren<ArticleSectionImageCollectionCaptionProps>> = ({
-  figure,
-}) => {
+const ArticleSectionImageCollectionCaption: FC<
+  React.PropsWithChildren<ArticleSectionImageCollectionCaptionProps>
+> = ({ figure }) => {
   if (figure.__typename === "Artwork") {
     return <Metadata mt={0} artwork={figure} />
   }
@@ -47,9 +47,8 @@ const ArticleSectionImageCollectionCaption: FC<React.PropsWithChildren<ArticleSe
   return null
 }
 
-export const ArticleSectionImageCollectionCaptionFragmentContainer = createFragmentContainer(
-  ArticleSectionImageCollectionCaption,
-  {
+export const ArticleSectionImageCollectionCaptionFragmentContainer =
+  createFragmentContainer(ArticleSectionImageCollectionCaption, {
     figure: graphql`
       fragment ArticleSectionImageCollectionCaption_figure on ArticleSectionImageCollectionFigure {
         __typename
@@ -69,5 +68,4 @@ export const ArticleSectionImageCollectionCaptionFragmentContainer = createFragm
         }
       }
     `,
-  }
-)
+  })

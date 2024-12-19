@@ -1,4 +1,4 @@
-import { TransactionDetailsSummaryItemTestQuery$rawResponse } from "__generated__/TransactionDetailsSummaryItemTestQuery.graphql"
+import type { TransactionDetailsSummaryItemTestQuery$rawResponse } from "__generated__/TransactionDetailsSummaryItemTestQuery.graphql"
 import {
   BuyOrderWithSelectedShippingQuote,
   OfferOrderWithOffers,

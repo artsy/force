@@ -1,13 +1,13 @@
 import { Join, Message, Separator } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
-import { OnboardingSearchResults_viewer$data } from "__generated__/OnboardingSearchResults_viewer.graphql"
-import { OnboardingSearchResultsQuery } from "__generated__/OnboardingSearchResultsQuery.graphql"
+import type { OnboardingSearchResults_viewer$data } from "__generated__/OnboardingSearchResults_viewer.graphql"
+import type { OnboardingSearchResultsQuery } from "__generated__/OnboardingSearchResultsQuery.graphql"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 import { ContextModule } from "@artsy/cohesion"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
@@ -18,10 +18,9 @@ interface OnboardingSearchResultsProps {
   term: string
 }
 
-const OnboardingSearchResults: FC<React.PropsWithChildren<OnboardingSearchResultsProps>> = ({
-  term,
-  viewer,
-}) => {
+const OnboardingSearchResults: FC<
+  React.PropsWithChildren<OnboardingSearchResultsProps>
+> = ({ term, viewer }) => {
   const { dispatch } = useOnboardingContext()
   const nodes = extractNodes(viewer.matchConnection)
 
@@ -136,10 +135,9 @@ const PLACEHOLDER = (
   </Join>
 )
 
-export const OnboardingSearchResultsQueryRenderer: FC<React.PropsWithChildren<OnboardingOrderedSetQueryRendererProps>> = ({
-  term,
-  entities,
-}) => {
+export const OnboardingSearchResultsQueryRenderer: FC<
+  React.PropsWithChildren<OnboardingOrderedSetQueryRendererProps>
+> = ({ term, entities }) => {
   return (
     <SystemQueryRenderer<OnboardingSearchResultsQuery>
       query={graphql`

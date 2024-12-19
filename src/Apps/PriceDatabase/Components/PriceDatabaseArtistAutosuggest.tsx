@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { useState } from "react"
 import { AutocompleteInput } from "@artsy/palette"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
-import { PriceDatabaseArtistAutosuggestQuery } from "__generated__/PriceDatabaseArtistAutosuggestQuery.graphql"
+import type { PriceDatabaseArtistAutosuggestQuery } from "__generated__/PriceDatabaseArtistAutosuggestQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { compact } from "lodash"
 
@@ -10,9 +10,9 @@ interface ArtistAutosuggestProps {
   onChange: (slug: string) => void
 }
 
-export const PriceDatabaseArtistAutosuggest: React.FC<React.PropsWithChildren<ArtistAutosuggestProps>> = ({
-  onChange,
-}) => {
+export const PriceDatabaseArtistAutosuggest: React.FC<
+  React.PropsWithChildren<ArtistAutosuggestProps>
+> = ({ onChange }) => {
   const [query, setQuery] = useState("")
 
   const { data, loading } = useClientQuery<PriceDatabaseArtistAutosuggestQuery>(

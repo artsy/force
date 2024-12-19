@@ -7,11 +7,11 @@ import {
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
-import { CellArtist_artist$data } from "__generated__/CellArtist_artist.graphql"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import type { CellArtist_artist$data } from "__generated__/CellArtist_artist.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
-import { FC } from "react"
+import type { FC } from "react"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 
 export interface CellArtistProps extends Partial<RouterLinkProps> {
@@ -87,10 +87,9 @@ type CellArtistPlaceholderProps = Pick<
   "mode" | "displayCounts"
 >
 
-export const CellArtistPlaceholder: FC<React.PropsWithChildren<CellArtistPlaceholderProps>> = ({
-  mode = "RAIL",
-  displayCounts,
-}) => {
+export const CellArtistPlaceholder: FC<
+  React.PropsWithChildren<CellArtistPlaceholderProps>
+> = ({ mode = "RAIL", displayCounts }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
 
   return (

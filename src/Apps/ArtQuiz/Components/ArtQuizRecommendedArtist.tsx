@@ -14,19 +14,19 @@ import {
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtQuizRecommendedArtist_artist$data } from "__generated__/ArtQuizRecommendedArtist_artist.graphql"
+import type { ArtQuizRecommendedArtist_artist$data } from "__generated__/ArtQuizRecommendedArtist_artist.graphql"
 
 interface ArtQuizRecommendedArtistProps {
   artist: ArtQuizRecommendedArtist_artist$data
 }
 
-export const ArtQuizRecommendedArtist: FC<React.PropsWithChildren<ArtQuizRecommendedArtistProps>> = ({
-  artist,
-}) => {
+export const ArtQuizRecommendedArtist: FC<
+  React.PropsWithChildren<ArtQuizRecommendedArtistProps>
+> = ({ artist }) => {
   const artworks = extractNodes(artist.artworksConnection)
 
   return (
@@ -74,9 +74,8 @@ export const ArtQuizRecommendedArtist: FC<React.PropsWithChildren<ArtQuizRecomme
   )
 }
 
-export const ArtQuizRecommendedArtistFragmentContainer = createFragmentContainer(
-  ArtQuizRecommendedArtist,
-  {
+export const ArtQuizRecommendedArtistFragmentContainer =
+  createFragmentContainer(ArtQuizRecommendedArtist, {
     artist: graphql`
       fragment ArtQuizRecommendedArtist_artist on Artist {
         internalID
@@ -97,10 +96,11 @@ export const ArtQuizRecommendedArtistFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })
 
-export const ArtQuizRecommendedArtistPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+export const ArtQuizRecommendedArtistPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <GridColumns gridRowGap={[2, 4]}>
       <Column span={6}>

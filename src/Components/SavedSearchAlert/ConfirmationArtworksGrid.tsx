@@ -7,16 +7,16 @@ import {
   Text,
 } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { FC } from "react"
+import type { FC } from "react"
 import { graphql } from "react-relay"
-import {
+import type {
   ConfirmationArtworksGridQuery,
   ConfirmationArtworksGridQuery$data,
 } from "__generated__/ConfirmationArtworksGridQuery.graphql"
 import ArtworkGrid, {
   ArtworkGridPlaceholder,
 } from "Components/ArtworkGrid/ArtworkGrid"
-import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import {
@@ -33,11 +33,9 @@ interface ConfirmationArtworksProps {
   onClose: () => void
 }
 
-export const ConfirmationArtworks: FC<React.PropsWithChildren<ConfirmationArtworksProps>> = ({
-  artworksConnection,
-  alertID,
-  onClose,
-}) => {
+export const ConfirmationArtworks: FC<
+  React.PropsWithChildren<ConfirmationArtworksProps>
+> = ({ artworksConnection, alertID, onClose }) => {
   const { clickedArtworkGroup } = useAlertTracking()
   const artworksCount = artworksConnection?.counts?.total ?? 0
 
@@ -112,7 +110,9 @@ interface ConfirmationArtworksGridQueryRendererProps
   excludeArtworkIDs?: string[]
 }
 
-export const ConfirmationArtworksGridQueryRenderer: FC<React.PropsWithChildren<ConfirmationArtworksGridQueryRendererProps>> = props => {
+export const ConfirmationArtworksGridQueryRenderer: FC<
+  React.PropsWithChildren<ConfirmationArtworksGridQueryRendererProps>
+> = props => {
   const { onClose, excludeArtworkIDs, alertID, ...inputProps } = props
 
   return (

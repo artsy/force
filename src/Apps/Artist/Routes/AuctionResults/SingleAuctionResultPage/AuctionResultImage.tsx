@@ -1,5 +1,5 @@
 import { Flex, Image, ResponsiveBox } from "@artsy/palette"
-import { AuctionResultImage_auctionResult$key } from "__generated__/AuctionResultImage_auctionResult.graphql"
+import type { AuctionResultImage_auctionResult$key } from "__generated__/AuctionResultImage_auctionResult.graphql"
 import { graphql, useFragment } from "react-relay"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
 
@@ -9,9 +9,9 @@ interface AuctionResultImageProps {
   auctionResult: AuctionResultImage_auctionResult$key
 }
 
-export const AuctionResultImage: React.FC<React.PropsWithChildren<AuctionResultImageProps>> = ({
-  auctionResult,
-}) => {
+export const AuctionResultImage: React.FC<
+  React.PropsWithChildren<AuctionResultImageProps>
+> = ({ auctionResult }) => {
   const { images, title } = useFragment(
     auctionResultImageFragment,
     auctionResult

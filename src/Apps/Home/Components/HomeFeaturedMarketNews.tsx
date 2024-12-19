@@ -1,6 +1,6 @@
 import {
   ActionType,
-  ClickedArticleGroup,
+  type ClickedArticleGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
@@ -17,7 +17,7 @@ import {
   ResponsiveBox,
 } from "@artsy/palette"
 import { compact, take } from "lodash"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Masonry } from "Components/Masonry"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -25,8 +25,8 @@ import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
-import { HomeFeaturedMarketNewsQuery } from "__generated__/HomeFeaturedMarketNewsQuery.graphql"
-import { HomeFeaturedMarketNews_articles$data } from "__generated__/HomeFeaturedMarketNews_articles.graphql"
+import type { HomeFeaturedMarketNewsQuery } from "__generated__/HomeFeaturedMarketNewsQuery.graphql"
+import type { HomeFeaturedMarketNews_articles$data } from "__generated__/HomeFeaturedMarketNews_articles.graphql"
 import {
   CellArticleFragmentContainer,
   CellArticlePlaceholder,
@@ -37,9 +37,9 @@ const ARTICLE_COUNT = 6
 interface HomeFeaturedMarketNewsProps {
   articles: HomeFeaturedMarketNews_articles$data
 }
-const HomeFeaturedMarketNews: React.FC<React.PropsWithChildren<HomeFeaturedMarketNewsProps>> = ({
-  articles,
-}) => {
+const HomeFeaturedMarketNews: React.FC<
+  React.PropsWithChildren<HomeFeaturedMarketNewsProps>
+> = ({ articles }) => {
   const { trackEvent } = useTracking()
   const [firstArticle, ...restOfArticles] = articles
   const truncatedRestOfArticles = take(restOfArticles, ARTICLE_COUNT)
@@ -119,7 +119,9 @@ const HomeFeaturedMarketNews: React.FC<React.PropsWithChildren<HomeFeaturedMarke
   )
 }
 
-const HomeFeaturedMarketNewsContainer: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+const HomeFeaturedMarketNewsContainer: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const { trackEvent } = useTracking()
 
   return (
@@ -224,7 +226,9 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const HomeFeaturedMarketNewsQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const HomeFeaturedMarketNewsQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

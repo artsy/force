@@ -8,8 +8,8 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
-import { ConditionRoute_submission$key } from "__generated__/ConditionRoute_submission.graphql"
-import { ArtworkConditionEnumType } from "__generated__/useUpdateMyCollectionArtworkMutation.graphql"
+import type { ConditionRoute_submission$key } from "__generated__/ConditionRoute_submission.graphql"
+import type { ArtworkConditionEnumType } from "__generated__/useUpdateMyCollectionArtworkMutation.graphql"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
@@ -18,7 +18,7 @@ import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { conditionOptions } from "Apps/Sell/Utils/conditionOptions"
 import { ErrorPage } from "Components/ErrorPage"
 import { Formik } from "formik"
-import * as React from "react"
+import type * as React from "react"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
@@ -52,15 +52,15 @@ interface ConditionRouteProps {
   submission: ConditionRoute_submission$key
 }
 
-export const ConditionRoute: React.FC<React.PropsWithChildren<ConditionRouteProps>> = props => {
+export const ConditionRoute: React.FC<
+  React.PropsWithChildren<ConditionRouteProps>
+> = props => {
   const { actions } = useSellFlowContext()
   const submission = useFragment(FRAGMENT, props.submission)
   const artwork = submission.myCollectionArtwork
 
-  const [
-    isConditionDefinitionModalOpen,
-    setIsConditionDefinitionModalOpen,
-  ] = useState(false)
+  const [isConditionDefinitionModalOpen, setIsConditionDefinitionModalOpen] =
+    useState(false)
 
   if (!artwork) {
     return (

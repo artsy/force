@@ -2,16 +2,16 @@ import {
   ProgressDots,
   Swiper,
   SwiperCell,
-  SwiperCellProps,
+  type SwiperCellProps,
   SwiperRail,
-  SwiperRailProps,
+  type SwiperRailProps,
 } from "@artsy/palette"
 import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
 import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer"
 import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkImageBrowserSmall_artwork$data } from "__generated__/ArtworkImageBrowserSmall_artwork.graphql"
+import type { ArtworkImageBrowserSmall_artwork$data } from "__generated__/ArtworkImageBrowserSmall_artwork.graphql"
 
 interface ArtworkImageBrowserSmallProps {
   artwork: ArtworkImageBrowserSmall_artwork$data
@@ -22,12 +22,9 @@ interface ArtworkImageBrowserSmallProps {
   maxHeight: number
 }
 
-const ArtworkImageBrowserSmall: React.FC<React.PropsWithChildren<ArtworkImageBrowserSmallProps>> = ({
-  artwork,
-  activeIndex,
-  setActiveIndex,
-  maxHeight,
-}) => {
+const ArtworkImageBrowserSmall: React.FC<
+  React.PropsWithChildren<ArtworkImageBrowserSmallProps>
+> = ({ artwork, activeIndex, setActiveIndex, maxHeight }) => {
   const figures = artwork.figures
   const activeFigure = figures[activeIndex]
 
@@ -120,9 +117,8 @@ const Rail: React.FC<React.PropsWithChildren<SwiperRailProps>> = props => {
   return <SwiperRail {...props} display="block" />
 }
 
-export const ArtworkImageBrowserSmallFragmentContainer = createFragmentContainer(
-  ArtworkImageBrowserSmall,
-  {
+export const ArtworkImageBrowserSmallFragmentContainer =
+  createFragmentContainer(ArtworkImageBrowserSmall, {
     artwork: graphql`
       fragment ArtworkImageBrowserSmall_artwork on Artwork
         @argumentDefinitions(
@@ -146,5 +142,4 @@ export const ArtworkImageBrowserSmallFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })

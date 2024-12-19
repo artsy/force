@@ -2,8 +2,8 @@ import CloseFillIcon from "@artsy/icons/CloseFillIcon"
 import { Box, Clickable, Flex, Image, ProgressBar, Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { useRemoveAssetFromConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
-import { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
-import { DropzoneFile } from "Components/FileUpload/types"
+import type { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
+import type { DropzoneFile } from "Components/FileUpload/types"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
@@ -17,13 +17,12 @@ interface ImagePreviewItemProps {
   photo: DropzoneFile
 }
 
-export const ImagePreviewItem: React.FC<React.PropsWithChildren<ImagePreviewItemProps>> = ({
-  photo,
-}) => {
+export const ImagePreviewItem: React.FC<
+  React.PropsWithChildren<ImagePreviewItemProps>
+> = ({ photo }) => {
   const { isLoggedIn } = useSystemContext()
-  const {
-    submitMutation: removeAsset,
-  } = useRemoveAssetFromConsignmentSubmission()
+  const { submitMutation: removeAsset } =
+    useRemoveAssetFromConsignmentSubmission()
   const { setFieldValue, values } = useFormikContext<PhotosFormValues>()
   const [photoSrc, setPhotoSrc] = useState<string>(photo.url || "")
   const [isProcessing, setIsProcessing] = useState(

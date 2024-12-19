@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairCollection_collection$data } from "__generated__/FairCollection_collection.graphql"
+import type { FairCollection_collection$data } from "__generated__/FairCollection_collection.graphql"
 import { TriptychCard } from "@artsy/palette"
 import { crop } from "Utils/resizer"
 import { RouterLink } from "System/Components/RouterLink"
@@ -8,7 +8,7 @@ import { compact } from "lodash"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
-  ClickedCollectionGroup,
+  type ClickedCollectionGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
@@ -29,17 +29,13 @@ interface FairCollectionProps {
   carouselIndex: number // needed for analytics
 }
 
-export const FairCollection: React.FC<React.PropsWithChildren<FairCollectionProps>> = ({
-  collection,
-  carouselIndex,
-}) => {
+export const FairCollection: React.FC<
+  React.PropsWithChildren<FairCollectionProps>
+> = ({ collection, carouselIndex }) => {
   const tracking = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const collectionTrackingData: ClickedCollectionGroup = {
     context_module: ContextModule.curatedHighlightsRail,

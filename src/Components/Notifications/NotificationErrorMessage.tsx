@@ -1,9 +1,11 @@
 import { Text, Box, Spacer } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { FC } from "react"
+import type { FC } from "react"
 
-export const NotificationErrorMessage: FC<React.PropsWithChildren<unknown>> = () => {
+export const NotificationErrorMessage: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { isLoggedIn } = useSystemContext()
 
   if (!isLoggedIn)

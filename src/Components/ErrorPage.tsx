@@ -4,9 +4,9 @@ import {
   GridColumns,
   Column,
   Box,
-  BoxProps,
+  type BoxProps,
 } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import styled from "styled-components"
 import { RouterLink } from "System/Components/RouterLink"
 

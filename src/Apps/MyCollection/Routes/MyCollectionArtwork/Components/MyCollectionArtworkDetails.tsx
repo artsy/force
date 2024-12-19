@@ -1,4 +1,4 @@
-import { MyCollectionArtworkDetails_artwork$key } from "__generated__/MyCollectionArtworkDetails_artwork.graphql"
+import type { MyCollectionArtworkDetails_artwork$key } from "__generated__/MyCollectionArtworkDetails_artwork.graphql"
 import { MyCollectionArtworkDetailField } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetailField"
 import { buildLocationDisplay } from "Components/LocationAutocompleteInput"
 import { graphql, useFragment } from "react-relay"
@@ -7,7 +7,9 @@ export interface MyCollectionArtworkDetailsProps {
   artwork: MyCollectionArtworkDetails_artwork$key
 }
 
-export const MyCollectionArtworkDetails: React.FC<React.PropsWithChildren<MyCollectionArtworkDetailsProps>> = props => {
+export const MyCollectionArtworkDetails: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkDetailsProps>
+> = props => {
   const {
     attributionClass,
     mediumType,

@@ -3,7 +3,7 @@ import { InsightsMedianSalePriceFragmentContainer } from "Apps/Settings/Routes/I
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { InsightsMedianSalePriceTestQuery } from "__generated__/InsightsMedianSalePriceTestQuery.graphql"
+import type { InsightsMedianSalePriceTestQuery } from "__generated__/InsightsMedianSalePriceTestQuery.graphql"
 
 jest.unmock("react-relay")
 
@@ -19,18 +19,17 @@ jest.mock("System/Hooks/useRouter", () => ({
 }))
 
 describe("InsightsMedianSalePrice", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    InsightsMedianSalePriceTestQuery
-  >({
-    Component: InsightsMedianSalePriceFragmentContainer,
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<InsightsMedianSalePriceTestQuery>({
+      Component: InsightsMedianSalePriceFragmentContainer,
+      query: graphql`
       query InsightsMedianSalePriceTestQuery @relay_test_operation {
         me {
           ...InsightsMedianSalePrice_me
         }
       }
     `,
-  })
+    })
 
   beforeAll(() => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({

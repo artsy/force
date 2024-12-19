@@ -8,7 +8,7 @@ import {
   useTheme,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { FC } from "react"
+import type { FC } from "react"
 import styled from "styled-components"
 
 export const OVERLAY_CONTENT_ID = "MobileSearchOverlayContent"
@@ -23,10 +23,8 @@ export const OverlayBase: FC<React.PropsWithChildren<OverlayBaseProps>> = ({
   children,
   onClose,
 }) => {
-  const {
-    sentinel: topSentinel,
-    isSentinelVisible: isAtTop,
-  } = useSentinelVisibility()
+  const { sentinel: topSentinel, isSentinelVisible: isAtTop } =
+    useSentinelVisibility()
 
   const { theme } = useTheme()
 

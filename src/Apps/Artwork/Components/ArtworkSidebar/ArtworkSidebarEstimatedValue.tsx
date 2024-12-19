@@ -1,15 +1,15 @@
 import { Text } from "@artsy/palette"
 
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarEstimatedValue_artwork$data } from "__generated__/ArtworkSidebarEstimatedValue_artwork.graphql"
+import type { ArtworkSidebarEstimatedValue_artwork$data } from "__generated__/ArtworkSidebarEstimatedValue_artwork.graphql"
 
 interface ArtworkSidebarEstimatedValueProps {
   artwork: ArtworkSidebarEstimatedValue_artwork$data
 }
 
-const ArtworkSidebarEstimatedValue: React.FC<React.PropsWithChildren<ArtworkSidebarEstimatedValueProps>> = ({
-  artwork,
-}) => {
+const ArtworkSidebarEstimatedValue: React.FC<
+  React.PropsWithChildren<ArtworkSidebarEstimatedValueProps>
+> = ({ artwork }) => {
   const { saleArtwork, sale } = artwork
   if (!!sale?.isClosed || !saleArtwork?.estimate) {
     return null
@@ -22,9 +22,8 @@ const ArtworkSidebarEstimatedValue: React.FC<React.PropsWithChildren<ArtworkSide
   )
 }
 
-export const ArtworkSidebarEstimatedValueFragmentContainer = createFragmentContainer(
-  ArtworkSidebarEstimatedValue,
-  {
+export const ArtworkSidebarEstimatedValueFragmentContainer =
+  createFragmentContainer(ArtworkSidebarEstimatedValue, {
     artwork: graphql`
       fragment ArtworkSidebarEstimatedValue_artwork on Artwork {
         saleArtwork {
@@ -35,5 +34,4 @@ export const ArtworkSidebarEstimatedValueFragmentContainer = createFragmentConta
         }
       }
     `,
-  }
-)
+  })

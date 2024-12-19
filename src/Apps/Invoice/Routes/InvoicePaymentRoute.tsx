@@ -1,5 +1,5 @@
 import { Spacer, StackableBorderBox, Text } from "@artsy/palette"
-import { InvoicePaymentRoute_invoice$key } from "__generated__/InvoicePaymentRoute_invoice.graphql"
+import type { InvoicePaymentRoute_invoice$key } from "__generated__/InvoicePaymentRoute_invoice.graphql"
 import { InvoicePaymentForm } from "Apps/Invoice/Components/InvoicePaymentForm"
 import { CreditCardInputProvider } from "Components/CreditCardInput"
 import { graphql, useFragment } from "react-relay"
@@ -9,9 +9,9 @@ interface InvoicePaymentRouteProps {
   invoice: InvoicePaymentRoute_invoice$key
 }
 
-export const InvoicePaymentRoute: React.FC<React.PropsWithChildren<InvoicePaymentRouteProps>> = ({
-  invoice,
-}) => {
+export const InvoicePaymentRoute: React.FC<
+  React.PropsWithChildren<InvoicePaymentRouteProps>
+> = ({ invoice }) => {
   const data = useFragment(InvoicePaymentRouteFragment, invoice)
 
   const { remaining, internalID, remainingMinor } = data

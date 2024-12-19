@@ -1,16 +1,16 @@
-import { Flex, Text, RadioProps, BoxProps } from "@artsy/palette"
-import * as React from "react"
+import { Flex, Text, type RadioProps, type BoxProps } from "@artsy/palette"
+import type * as React from "react"
 import styled from "styled-components"
-import { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
+import type { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 
 interface SavedAddressItemProps extends BoxProps {
   address: SavedAddressType
   handleClickEdit: (event: any) => void
 }
 
-export const SavedAddressItem: React.FC<React.PropsWithChildren<SavedAddressItemProps>> = (
-  props
-): React.ReactElement<RadioProps<string>> => {
+export const SavedAddressItem: React.FC<
+  React.PropsWithChildren<SavedAddressItemProps>
+> = (props): React.ReactElement<RadioProps<string>> => {
   const handleClickEdit = props.handleClickEdit
   const address = props?.address
   const addressLine1 = address?.addressLine1

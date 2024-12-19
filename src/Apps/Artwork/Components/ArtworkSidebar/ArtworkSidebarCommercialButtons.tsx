@@ -1,7 +1,7 @@
 import { graphql, useFragment } from "react-relay"
 import {
   ArtworkSidebarEditionSetFragmentContainer,
-  EditionSet,
+  type EditionSet,
 } from "./ArtworkSidebarEditionSets"
 import {
   Box,
@@ -21,15 +21,15 @@ import { useInquiry } from "Components/Inquiry/useInquiry"
 import { ErrorWithMetadata } from "Utils/errors"
 import { logger } from "@sentry/utils"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { ArtworkSidebarCommercialButtons_artwork$key } from "__generated__/ArtworkSidebarCommercialButtons_artwork.graphql"
-import { ArtworkSidebarCommercialButtons_me$key } from "__generated__/ArtworkSidebarCommercialButtons_me.graphql"
-import { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
-import { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOfferOrderMutation.graphql"
+import type { ArtworkSidebarCommercialButtons_artwork$key } from "__generated__/ArtworkSidebarCommercialButtons_artwork.graphql"
+import type { ArtworkSidebarCommercialButtons_me$key } from "__generated__/ArtworkSidebarCommercialButtons_me.graphql"
+import type { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
+import type { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOfferOrderMutation.graphql"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
-  ClickedBuyNow,
-  ClickedContactGallery,
+  type ClickedBuyNow,
+  type ClickedContactGallery,
   ContextModule,
   Intent,
   OwnerType,
@@ -44,7 +44,7 @@ import { useMutation } from "Utils/Hooks/useMutation"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { extractNodes } from "Utils/extractNodes"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
-import { ResponsiveValue } from "styled-system"
+import type { ResponsiveValue } from "styled-system"
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 import { getSignalLabel } from "Utils/getSignalLabel"
 
@@ -57,11 +57,9 @@ interface ArtworkSidebarCommercialButtonsProps {
 
 const THE_PAST = new Date(0).toISOString()
 
-export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<ArtworkSidebarCommercialButtonsProps>> = ({
-  showPrice = true,
-  showButtonActions = true,
-  ...props
-}) => {
+export const ArtworkSidebarCommercialButtons: React.FC<
+  React.PropsWithChildren<ArtworkSidebarCommercialButtonsProps>
+> = ({ showPrice = true, showButtonActions = true, ...props }) => {
   const { theme } = useTheme()
 
   const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
@@ -92,10 +90,8 @@ export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<A
   const createOrder = useCreateOrderMutation()
   const createOfferOrder = useCreateOfferOrderMutation()
 
-  const [
-    isCommitingCreateOrderMutation,
-    setIsCommitingCreateOrderMutation,
-  ] = useState(false)
+  const [isCommitingCreateOrderMutation, setIsCommitingCreateOrderMutation] =
+    useState(false)
 
   const [
     isCommittingCreateOfferOrderMutation,
@@ -164,7 +160,8 @@ export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<A
       })
 
       let redirectUrl = "/"
-      let orderOrError = response.commerceCreatePartnerOfferOrder?.orderOrError
+      const orderOrError =
+        response.commerceCreatePartnerOfferOrder?.orderOrError
 
       if (orderOrError?.error) {
         const errorCode = orderOrError.error.code
@@ -329,9 +326,8 @@ export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<A
   const [selectedEditionSet, setSelectedEditionSet] = useState(
     firstAvailableEcommerceEditionSet()
   )
-  const {
-    setSelectedEditionSet: setSelectedEditionSetInContext,
-  } = useSelectedEditionSetContext()
+  const { setSelectedEditionSet: setSelectedEditionSetInContext } =
+    useSelectedEditionSetContext()
 
   useEffect(() => {
     setSelectedEditionSet(firstAvailableEcommerceEditionSet())
@@ -506,7 +502,9 @@ interface SaleMessageProps {
   saleMessage: string | null | undefined
 }
 
-const SaleMessage: React.FC<React.PropsWithChildren<SaleMessageProps>> = ({ saleMessage }) => {
+const SaleMessage: React.FC<React.PropsWithChildren<SaleMessageProps>> = ({
+  saleMessage,
+}) => {
   if (!saleMessage) {
     return null
   }
@@ -572,10 +570,9 @@ const OfferDisplay: React.FC<React.PropsWithChildren<OfferDisplayProps>> = ({
   )
 }
 
-const ErrorToast: React.FC<React.PropsWithChildren<{ onClose(): void; show: boolean }>> = ({
-  show,
-  onClose,
-}) => {
+const ErrorToast: React.FC<
+  React.PropsWithChildren<{ onClose(): void; show: boolean }>
+> = ({ show, onClose }) => {
   const { sendToast } = useToasts()
 
   useEffect(() => {

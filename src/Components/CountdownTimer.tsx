@@ -3,7 +3,7 @@ import { Flex, Spacer, StackableBorderBox, Text } from "@artsy/palette"
 import { ProgressBarTimer } from "Components/ProgressBarTimer"
 import { TimeRemaining } from "Components/TimeRemaining"
 import { DateTime } from "luxon"
-import React from "react"
+import type React from "react"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 
 const FIVE_HOURS_IN_SECONDS = 60 * 60 * 5
@@ -19,12 +19,9 @@ export interface CountdownTimerProps {
  * Extracted out of @artsy/palette
  * @deprecated Use `useTimer` instead
  */
-export const CountdownTimer: React.FC<React.PropsWithChildren<CountdownTimerProps>> = ({
-  action,
-  note,
-  countdownEnd,
-  countdownStart,
-}) => {
+export const CountdownTimer: React.FC<
+  React.PropsWithChildren<CountdownTimerProps>
+> = ({ action, note, countdownEnd, countdownStart }) => {
   const currentTime = useCurrentTime({ syncWithServer: true })
   const endDateTime = DateTime.fromISO(countdownEnd).toLocal()
 

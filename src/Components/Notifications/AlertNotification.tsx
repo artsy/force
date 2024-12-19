@@ -3,17 +3,17 @@ import { NotificationArtworkList } from "Components/Notifications/NotificationAr
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
 import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
 import { RouterLink } from "System/Components/RouterLink"
-import { AlertNotification_notification$key } from "__generated__/AlertNotification_notification.graphql"
-import { FC } from "react"
+import type { AlertNotification_notification$key } from "__generated__/AlertNotification_notification.graphql"
+import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface AlertNotificationProps {
   notification: AlertNotification_notification$key
 }
 
-export const AlertNotification: FC<React.PropsWithChildren<AlertNotificationProps>> = ({
-  notification,
-}) => {
+export const AlertNotification: FC<
+  React.PropsWithChildren<AlertNotificationProps>
+> = ({ notification }) => {
   const notificationData = useFragment(AlertNotificationFragment, notification)
 
   const { artworksConnection, headline, item } = notificationData

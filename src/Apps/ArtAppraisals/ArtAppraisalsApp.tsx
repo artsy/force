@@ -17,7 +17,9 @@ import { cropped, resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 import { RouterLink } from "System/Components/RouterLink"
 
-export const ArtAppraisalsApp: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const ArtAppraisalsApp: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <>
       <MetaTags

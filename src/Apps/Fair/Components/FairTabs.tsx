@@ -1,17 +1,17 @@
 import {
   ActionType,
-  ClickedNavigationTab,
+  type ClickedNavigationTab,
   ContextModule,
-  PageOwnerType,
+  type PageOwnerType,
 } from "@artsy/cohesion"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
-import { FC, useRef } from "react"
+import { type FC, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useJump } from "Utils/Hooks/useJump"
-import { FairTabs_fair$data } from "__generated__/FairTabs_fair.graphql"
+import type { FairTabs_fair$data } from "__generated__/FairTabs_fair.graphql"
 
 interface FairTabsProps {
   fair: FairTabs_fair$data
@@ -20,41 +20,40 @@ interface FairTabsProps {
 const FairTabs: FC<React.PropsWithChildren<FairTabsProps>> = ({ fair }) => {
   const tracking = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const lastClickedTab = useRef(ContextModule.fairInfo)
 
   const { jumpTo } = useJump()
 
-  const handleClick = ({
-    destinationPath,
-    subject,
-    contextModule,
-  }: {
-    destinationPath: string
-    subject: string
-    contextModule: ContextModule
-  }) => () => {
-    jumpTo("FairTabs")
-
-    const trackingData: ClickedNavigationTab = {
-      action: ActionType.clickedNavigationTab,
-      context_module: lastClickedTab.current,
-      context_page_owner_id: contextPageOwnerId,
-      context_page_owner_slug: contextPageOwnerSlug,
-      context_page_owner_type: contextPageOwnerType as PageOwnerType,
-      destination_path: destinationPath,
+  const handleClick =
+    ({
+      destinationPath,
       subject,
+      contextModule,
+    }: {
+      destinationPath: string
+      subject: string
+      contextModule: ContextModule
+    }) =>
+    () => {
+      jumpTo("FairTabs")
+
+      const trackingData: ClickedNavigationTab = {
+        action: ActionType.clickedNavigationTab,
+        context_module: lastClickedTab.current,
+        context_page_owner_id: contextPageOwnerId,
+        context_page_owner_slug: contextPageOwnerSlug,
+        context_page_owner_type: contextPageOwnerType as PageOwnerType,
+        destination_path: destinationPath,
+        subject,
+      }
+
+      lastClickedTab.current = contextModule
+
+      tracking.trackEvent(trackingData)
     }
-
-    lastClickedTab.current = contextModule
-
-    tracking.trackEvent(trackingData)
-  }
 
   const fairHref = fair.href ?? ""
   const artworkCount = fair.counts?.artworks ?? 0

@@ -4,10 +4,10 @@ import {
   NotificationsPills,
   NotificationsPillsPlaceholder,
 } from "Components/Notifications/NotificationsPills"
-import { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
+import type { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
 import { NotificationsContextualMenu } from "Components/Notifications/NotificationsContextualMenu"
-import { MarkAllAsReadPanelProps } from "Components/Notifications/MarkAllAsReadPanel"
-import { FC } from "react"
+import type { MarkAllAsReadPanelProps } from "Components/Notifications/MarkAllAsReadPanel"
+import type { FC } from "react"
 import styled from "styled-components"
 
 export interface NotificationsHeaderProps extends MarkAllAsReadPanelProps {
@@ -15,11 +15,9 @@ export interface NotificationsHeaderProps extends MarkAllAsReadPanelProps {
   onHide?: () => void
 }
 
-export const NotificationsHeader: FC<React.PropsWithChildren<NotificationsHeaderProps>> = ({
-  mode,
-  onHide,
-  unreadCounts,
-}) => {
+export const NotificationsHeader: FC<
+  React.PropsWithChildren<NotificationsHeaderProps>
+> = ({ mode, onHide, unreadCounts }) => {
   return (
     <NotificationsHeaderContainer>
       <Flex
@@ -69,9 +67,9 @@ interface NotificationsHeaderPlaceholderProps {
   onHide(): void
 }
 
-export const NotificationsHeaderPlaceholder: FC<React.PropsWithChildren<NotificationsHeaderPlaceholderProps>> = ({
-  onHide,
-}) => {
+export const NotificationsHeaderPlaceholder: FC<
+  React.PropsWithChildren<NotificationsHeaderPlaceholderProps>
+> = ({ onHide }) => {
   return (
     <NotificationsHeaderContainer>
       <Stack

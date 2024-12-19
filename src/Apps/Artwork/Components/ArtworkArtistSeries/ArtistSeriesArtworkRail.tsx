@@ -1,11 +1,11 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistSeriesArtworkRail_artwork$data } from "__generated__/ArtistSeriesArtworkRail_artwork.graphql"
+import type { ArtistSeriesArtworkRail_artwork$data } from "__generated__/ArtistSeriesArtworkRail_artwork.graphql"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
-  ClickedArtworkGroup,
+  type ClickedArtworkGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
@@ -17,7 +17,9 @@ interface Props {
   artwork: ArtistSeriesArtworkRail_artwork$data
 }
 
-export const ArtistSeriesArtworkRail: React.FC<React.PropsWithChildren<Props>> = ({ artwork }) => {
+export const ArtistSeriesArtworkRail: React.FC<
+  React.PropsWithChildren<Props>
+> = ({ artwork }) => {
   const { trackEvent } = useTracking()
   const { artistSeriesConnection } = artwork
   const nodes = extractNodes(artistSeriesConnection)

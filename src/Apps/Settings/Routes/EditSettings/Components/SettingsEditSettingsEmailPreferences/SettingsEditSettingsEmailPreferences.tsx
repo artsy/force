@@ -1,8 +1,10 @@
 import { Button, Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { RouterLink } from "System/Components/RouterLink"
 
-export const SettingsEditSettingsEmailPreferences: FC<React.PropsWithChildren<unknown>> = () => {
+export const SettingsEditSettingsEmailPreferences: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <>
       <Text color="black100" variant={["md", "lg"]} mb={4}>

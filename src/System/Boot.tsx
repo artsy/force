@@ -1,10 +1,13 @@
 import { Theme, injectGlobalStyles, ToastsProvider } from "@artsy/palette"
-import { RouteProps } from "System/Router/Route"
-import { FC, useEffect } from "react"
+import type { RouteProps } from "System/Router/Route"
+import { type FC, useEffect } from "react"
 import { HeadProvider } from "react-head"
-import { Environment, RelayEnvironmentProvider } from "react-relay"
+import { type Environment, RelayEnvironmentProvider } from "react-relay"
 import Events from "Utils/Events"
-import { MatchingMediaQueries, MediaContextProvider } from "Utils/Responsive"
+import {
+  type MatchingMediaQueries,
+  MediaContextProvider,
+} from "Utils/Responsive"
 import { SiftContainer } from "Utils/SiftContainer"
 import track from "react-tracking"
 import { StickyProvider } from "Components/Sticky"
@@ -17,7 +20,7 @@ import {
   AppPreferencesProvider,
   useAppPreferences,
 } from "Apps/AppPreferences/useAppPreferences"
-import { ClientContext } from "System/Router/Utils/clientAppContext"
+import type { ClientContext } from "System/Router/Utils/clientAppContext"
 import { ErrorBoundary } from "System/Components/ErrorBoundary"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { StyleSheetManager } from "styled-components"
@@ -34,9 +37,9 @@ export interface BootProps extends React.PropsWithChildren {
 
 const { GlobalStyles } = injectGlobalStyles()
 
-export const Boot: React.FC<React.PropsWithChildren<
-  React.PropsWithChildren<BootProps>
->> = track(undefined, {
+export const Boot: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<BootProps>>
+> = track(undefined, {
   dispatch: Events.postEvent,
 })((props: BootProps) => {
   /**
@@ -97,9 +100,11 @@ export const Boot: React.FC<React.PropsWithChildren<
   )
 })
 
-const EnvironmentProvider: FC<React.PropsWithChildren<{
-  environment: Environment
-}>> = ({ children, environment }) => {
+const EnvironmentProvider: FC<
+  React.PropsWithChildren<{
+    environment: Environment
+  }>
+> = ({ children, environment }) => {
   if (process.env.NODE_ENV === "test") return <>{children}</>
 
   return (

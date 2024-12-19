@@ -7,14 +7,12 @@ interface ParsedQuery {
 
 describe(queryStringParsing, () => {
   it("coerces booleans from the strings 'true' and 'false'", () => {
-    const parsedTrue: Partial<ParsedQuery> = queryStringParsing(
-      "acquireable=true"
-    )
+    const parsedTrue: Partial<ParsedQuery> =
+      queryStringParsing("acquireable=true")
     expect(parsedTrue.acquireable).toBe(true)
 
-    const parsedFalse: Partial<ParsedQuery> = queryStringParsing(
-      "acquireable=false"
-    )
+    const parsedFalse: Partial<ParsedQuery> =
+      queryStringParsing("acquireable=false")
     expect(parsedFalse.acquireable).toBe(false)
   })
 

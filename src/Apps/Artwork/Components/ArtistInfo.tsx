@@ -5,17 +5,17 @@ import {
   Spacer,
   StackableBorderBox,
 } from "@artsy/palette"
-import { ArtistInfo_artist$data } from "__generated__/ArtistInfo_artist.graphql"
+import type { ArtistInfo_artist$data } from "__generated__/ArtistInfo_artist.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ArtistBioFragmentContainer } from "Components/ArtistBio"
 import { ArtistMarketInsightsFragmentContainer } from "Components/ArtistMarketInsights"
 import { SelectedExhibitionFragmentContainer } from "Components/SelectedExhibitions"
 import { ContextModule } from "@artsy/cohesion"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtistInfoQuery } from "__generated__/ArtistInfoQuery.graphql"
+import type { ArtistInfoQuery } from "__generated__/ArtistInfoQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
@@ -175,9 +175,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtistInfoQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const ArtistInfoQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

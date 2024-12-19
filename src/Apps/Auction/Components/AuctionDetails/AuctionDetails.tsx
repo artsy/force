@@ -10,8 +10,8 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { AddToCalendar } from "./AddToCalendar"
 import { formatIsoDateNoZoneOffset } from "./helpers"
-import { AuctionDetails_sale$data } from "__generated__/AuctionDetails_sale.graphql"
-import { AuctionDetails_me$data } from "__generated__/AuctionDetails_me.graphql"
+import type { AuctionDetails_sale$data } from "__generated__/AuctionDetails_sale.graphql"
+import type { AuctionDetails_me$data } from "__generated__/AuctionDetails_me.graphql"
 import { AuctionInfoSidebarFragmentContainer } from "./AuctionInfoSidebar"
 import { RegisterButtonFragmentContainer } from "Apps/Auction/Components/RegisterButton"
 import { SaleDetailTimerFragmentContainer } from "Apps/Auction/Components/AuctionDetails/SaleDetailTimer"
@@ -23,7 +23,9 @@ interface AuctionDetailsProps {
   me: AuctionDetails_me$data
 }
 
-const AuctionDetails: React.FC<React.PropsWithChildren<AuctionDetailsProps>> = ({ sale, me }) => {
+const AuctionDetails: React.FC<
+  React.PropsWithChildren<AuctionDetailsProps>
+> = ({ sale, me }) => {
   const liveAuctionUrl = `${getENV("PREDICTION_URL")}/${sale.slug}`
 
   const startDate = sale.liveStartAt || sale.startAt

@@ -1,5 +1,8 @@
 import { mount } from "enzyme"
-import { computeOptionalSchemaData, LocalBusiness } from "Components/Seo/LocalBusiness"
+import {
+  computeOptionalSchemaData,
+  LocalBusiness,
+} from "Components/Seo/LocalBusiness"
 import { HeadProvider } from "react-head"
 
 describe("LocalBusiness", () => {

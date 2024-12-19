@@ -1,12 +1,12 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { LabeledInput, useDidMount } from "@artsy/palette"
 import { OverlayRefetchContainer } from "./Overlay"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 
 import { graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import {
+import type {
   MobileSearchBarSuggestQuery,
   MobileSearchBarSuggestQuery$data,
 } from "__generated__/MobileSearchBarSuggestQuery.graphql"
@@ -17,9 +17,9 @@ interface MobileSearchBarProps {
   onClose: () => void
 }
 
-export const MobileSearchBar: FC<React.PropsWithChildren<
-  MobileSearchBarProps
->> = ({ viewer, onClose }) => {
+export const MobileSearchBar: FC<
+  React.PropsWithChildren<MobileSearchBarProps>
+> = ({ viewer, onClose }) => {
   const [overlayDisplayed, setOverlayDisplayed] = useState(false)
 
   const displayOverlay = () => {
@@ -51,9 +51,9 @@ interface MobileSearchBarQueryRendererProps {
   onClose: () => void
 }
 
-export const MobileSearchBarQueryRenderer: FC<React.PropsWithChildren<
-  MobileSearchBarQueryRendererProps
->> = props => {
+export const MobileSearchBarQueryRenderer: FC<
+  React.PropsWithChildren<MobileSearchBarQueryRendererProps>
+> = props => {
   const { relayEnvironment, searchQuery = "" } = useSystemContext()
   const isClient = useDidMount()
 

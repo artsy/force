@@ -1,4 +1,4 @@
-import { Aggregation } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type { Aggregation } from "Components/ArtworkFilter/ArtworkFilterContext"
 
 export const artistAggregation: Aggregation = {
   slice: "ARTIST",

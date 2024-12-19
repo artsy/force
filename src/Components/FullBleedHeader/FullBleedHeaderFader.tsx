@@ -1,19 +1,18 @@
 import { Box } from "@artsy/palette"
-import { FC, useEffect, useRef } from "react"
+import { type FC, useEffect, useRef } from "react"
 import styled from "styled-components"
 import { useCursor } from "use-cursor"
 import { useMode } from "Utils/Hooks/useMode"
 import { wait } from "Utils/wait"
-import { FullBleedHeader, FullBleedHeaderProps } from "./FullBleedHeader"
+import { FullBleedHeader, type FullBleedHeaderProps } from "./FullBleedHeader"
 
 interface FullBleedHeaderFaderProps {
   figures: FullBleedHeaderProps[]
 }
 
-export const FullBleedHeaderFader: FC<React.PropsWithChildren<FullBleedHeaderFaderProps>> = ({
-  figures,
-  children,
-}) => {
+export const FullBleedHeaderFader: FC<
+  React.PropsWithChildren<FullBleedHeaderFaderProps>
+> = ({ figures, children }) => {
   const [mode, setMode] = useMode<"Resting" | "Transitioning">("Resting")
 
   const { index, cursor, handleNext } = useCursor({ max: figures.length })

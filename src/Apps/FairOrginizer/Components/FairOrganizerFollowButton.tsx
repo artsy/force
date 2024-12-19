@@ -1,7 +1,7 @@
-import * as React from "react"
+import type * as React from "react"
 import { Button } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairOrganizerFollowButton_fairOrganizer$data } from "__generated__/FairOrganizerFollowButton_fairOrganizer.graphql"
+import type { FairOrganizerFollowButton_fairOrganizer$data } from "__generated__/FairOrganizerFollowButton_fairOrganizer.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { fairOrganizerFollowMutation } from "Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation"
 import { ContextModule, Intent } from "@artsy/cohesion"
@@ -11,7 +11,9 @@ interface FairOrganizerFollowButtonProps {
   fairOrganizer: FairOrganizerFollowButton_fairOrganizer$data
 }
 
-export const FairOrganizerFollowButton: React.FC<React.PropsWithChildren<FairOrganizerFollowButtonProps>> = props => {
+export const FairOrganizerFollowButton: React.FC<
+  React.PropsWithChildren<FairOrganizerFollowButtonProps>
+> = props => {
   const { fairOrganizer } = props
   const { profile } = fairOrganizer
 
@@ -67,9 +69,8 @@ export const FairOrganizerFollowButton: React.FC<React.PropsWithChildren<FairOrg
   )
 }
 
-export const FairOrganizerFollowButtonFragmentContainer = createFragmentContainer(
-  FairOrganizerFollowButton,
-  {
+export const FairOrganizerFollowButtonFragmentContainer =
+  createFragmentContainer(FairOrganizerFollowButton, {
     fairOrganizer: graphql`
       fragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {
         slug
@@ -81,5 +82,4 @@ export const FairOrganizerFollowButtonFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })

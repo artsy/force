@@ -1,4 +1,4 @@
-import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { aggregationNameFromFilter } from "Components/SavedSearchAlert/constants"
 
 export const aggregationForFilter = (

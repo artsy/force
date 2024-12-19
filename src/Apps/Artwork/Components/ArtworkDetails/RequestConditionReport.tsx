@@ -1,19 +1,19 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Button, ModalDialog, Text, useToasts } from "@artsy/palette"
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { commitMutation, createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import createLogger from "Utils/logger"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { RequestConditionReport_artwork$data } from "__generated__/RequestConditionReport_artwork.graphql"
-import { RequestConditionReport_me$data } from "__generated__/RequestConditionReport_me.graphql"
-import {
+import type { RequestConditionReport_artwork$data } from "__generated__/RequestConditionReport_artwork.graphql"
+import type { RequestConditionReport_me$data } from "__generated__/RequestConditionReport_me.graphql"
+import type {
   RequestConditionReportMutation,
   RequestConditionReportMutation$data,
 } from "__generated__/RequestConditionReportMutation.graphql"
-import { RequestConditionReportQuery } from "__generated__/RequestConditionReportQuery.graphql"
+import type { RequestConditionReportQuery } from "__generated__/RequestConditionReportQuery.graphql"
 import track, { useTracking } from "react-tracking"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
@@ -27,7 +27,9 @@ interface RequestConditionReportProps {
   me: RequestConditionReport_me$data | null | undefined
 }
 
-export const RequestConditionReport: React.FC<React.PropsWithChildren<RequestConditionReportProps>> = props => {
+export const RequestConditionReport: React.FC<
+  React.PropsWithChildren<RequestConditionReportProps>
+> = props => {
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const { trackEvent } = useTracking()
 
@@ -153,11 +155,13 @@ export const RequestConditionReport: React.FC<React.PropsWithChildren<RequestCon
   )
 }
 
-const RequestedConditionReportModal: React.FC<React.PropsWithChildren<{
-  onClose(): void
-  show: boolean
-  email: string
-}>> = ({ onClose, show, email }) => {
+const RequestedConditionReportModal: React.FC<
+  React.PropsWithChildren<{
+    onClose(): void
+    show: boolean
+    email: string
+  }>
+> = ({ onClose, show, email }) => {
   if (!show) return null
 
   return (
@@ -186,23 +190,25 @@ const RequestedConditionReportModal: React.FC<React.PropsWithChildren<{
   )
 }
 
-const TrackingWrappedRequestConditionReport: React.FC<React.PropsWithChildren<RequestConditionReportProps>> = track(
-  props => {
-    return {
-      context_page: DeprecatedAnalyticsSchema.PageName.ArtworkPage,
-      context_module:
-        DeprecatedAnalyticsSchema.ContextModule.AboutTheWorkCondition,
-      context_page_owner_id: props.artwork.internalID,
-      context_page_owner_slug: props.artwork.slug,
-      context_page_owner_type: "Artwork",
-      sale_artwork_id: props.artwork.saleArtwork?.internalID,
-    }
+const TrackingWrappedRequestConditionReport: React.FC<
+  React.PropsWithChildren<RequestConditionReportProps>
+> = track(props => {
+  return {
+    context_page: DeprecatedAnalyticsSchema.PageName.ArtworkPage,
+    context_module:
+      DeprecatedAnalyticsSchema.ContextModule.AboutTheWorkCondition,
+    context_page_owner_id: props.artwork.internalID,
+    context_page_owner_slug: props.artwork.slug,
+    context_page_owner_type: "Artwork",
+    sale_artwork_id: props.artwork.saleArtwork?.internalID,
   }
-)(RequestConditionReport)
+})(RequestConditionReport)
 
-export const RequestConditionReportQueryRenderer: React.FC<React.PropsWithChildren<{
-  artworkID: string
-}>> = ({ artworkID }) => {
+export const RequestConditionReportQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    artworkID: string
+  }>
+> = ({ artworkID }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

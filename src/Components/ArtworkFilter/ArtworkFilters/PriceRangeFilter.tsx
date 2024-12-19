@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react"
+import { type FC, useMemo } from "react"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
@@ -7,18 +7,20 @@ import {
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
-import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { sortBy } from "lodash"
 import { PriceRange } from "Components/PriceRange/PriceRange"
-import { CustomRange } from "Components/PriceRange/constants"
+import type { CustomRange } from "Components/PriceRange/constants"
 import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
-import { HistogramBarEntity } from "Components/PriceRange/Histogram"
+import type { HistogramBarEntity } from "Components/PriceRange/Histogram"
 
 export interface PriceRangeFilterProps {
   expanded?: boolean
 }
 
-export const PriceRangeFilter: FC<React.PropsWithChildren<PriceRangeFilterProps>> = ({ expanded }) => {
+export const PriceRangeFilter: FC<
+  React.PropsWithChildren<PriceRangeFilterProps>
+> = ({ expanded }) => {
   const { field, range, histogram, onPriceRangeUpdate } = usePriceRangeFilter()
 
   const countLabel = useFilterLabelCountByKey(

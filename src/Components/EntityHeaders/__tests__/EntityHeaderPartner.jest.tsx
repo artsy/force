@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { EntityHeaderPartnerFragmentContainer_Test_Query } from "__generated__/EntityHeaderPartnerFragmentContainer_Test_Query.graphql"
+import type { EntityHeaderPartnerFragmentContainer_Test_Query } from "__generated__/EntityHeaderPartnerFragmentContainer_Test_Query.graphql"
 import { screen } from "@testing-library/react"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 
@@ -15,12 +15,11 @@ const QUERY = graphql`
 `
 
 describe("EntityHeaderPartner", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    EntityHeaderPartnerFragmentContainer_Test_Query
-  >({
-    Component: EntityHeaderPartnerFragmentContainer,
-    query: QUERY,
-  })
+  const { renderWithRelay } =
+    setupTestWrapperTL<EntityHeaderPartnerFragmentContainer_Test_Query>({
+      Component: EntityHeaderPartnerFragmentContainer,
+      query: QUERY,
+    })
 
   it("renders the component", () => {
     renderWithRelay({

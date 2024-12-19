@@ -1,12 +1,15 @@
-import { Text, Flex, FlexProps } from "@artsy/palette"
+import { Text, Flex, type FlexProps } from "@artsy/palette"
 import { Highlight } from "Components/Search/SuggestionItem/Highlight"
-import { FC } from "react"
+import type { FC } from "react"
 
 interface NoResultsProps extends FlexProps {
   query: string
 }
 
-export const NoResults: FC<React.PropsWithChildren<NoResultsProps>> = ({ query, ...rest }) => {
+export const NoResults: FC<React.PropsWithChildren<NoResultsProps>> = ({
+  query,
+  ...rest
+}) => {
   return (
     <Flex flexDirection="column" {...rest}>
       <Text alignContent="center" textAlign="center">

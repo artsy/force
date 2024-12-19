@@ -1,8 +1,8 @@
 import { Button, ModalDialog, Stack, Text, useToasts } from "@artsy/palette"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { CollectorProfileArtistsDeleteDialogMutation } from "__generated__/CollectorProfileArtistsDeleteDialogMutation.graphql"
+import type { CollectorProfileArtistsDeleteDialogMutation } from "__generated__/CollectorProfileArtistsDeleteDialogMutation.graphql"
 import { useRouter } from "System/Hooks/useRouter"
 
 interface CollectorProfileArtistsDeleteDialogProps {
@@ -11,18 +11,15 @@ interface CollectorProfileArtistsDeleteDialogProps {
   onClose: () => void
 }
 
-export const CollectorProfileArtistsDeleteDialog: FC<React.PropsWithChildren<CollectorProfileArtistsDeleteDialogProps>> = ({
-  id,
-  name,
-  onClose,
-}) => {
+export const CollectorProfileArtistsDeleteDialog: FC<
+  React.PropsWithChildren<CollectorProfileArtistsDeleteDialogProps>
+> = ({ id, name, onClose }) => {
   const { router } = useRouter()
 
-  const { submitMutation } = useMutation<
-    CollectorProfileArtistsDeleteDialogMutation
-  >({
-    mutation: MUTATION,
-  })
+  const { submitMutation } =
+    useMutation<CollectorProfileArtistsDeleteDialogMutation>({
+      mutation: MUTATION,
+    })
 
   const { sendToast } = useToasts()
 

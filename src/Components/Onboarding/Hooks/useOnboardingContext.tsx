@@ -1,5 +1,5 @@
 import {
-  FC,
+  type FC,
   createContext,
   useRef,
   useContext,
@@ -97,10 +97,9 @@ interface OnboardingProviderProps {
   onClose(): void
 }
 
-export const OnboardingProvider: FC<React.PropsWithChildren<OnboardingProviderProps>> = ({
-  children,
-  onClose,
-}) => {
+export const OnboardingProvider: FC<
+  React.PropsWithChildren<OnboardingProviderProps>
+> = ({ children, onClose }) => {
   const basis = useRef<State>(DEFAULT_STATE)
   const { relayEnvironment } = useSystemContext()
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({
@@ -117,7 +116,13 @@ export const OnboardingProvider: FC<React.PropsWithChildren<OnboardingProviderPr
     }
   }
 
-  const { workflowEngine, back, current, next, reset: __reset__ } = useConfig({
+  const {
+    workflowEngine,
+    back,
+    current,
+    next,
+    reset: __reset__,
+  } = useConfig({
     basis,
     onClose,
   })

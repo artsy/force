@@ -1,21 +1,25 @@
 import { OwnerType } from "@artsy/cohesion"
-import { ArtistSeriesArtworksFilter_artistSeries$data } from "__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
-import { ArtistSeriesArtworksFilterQuery } from "__generated__/ArtistSeriesArtworksFilterQuery.graphql"
+import type { ArtistSeriesArtworksFilter_artistSeries$data } from "__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
+import type { ArtistSeriesArtworksFilterQuery } from "__generated__/ArtistSeriesArtworksFilterQuery.graphql"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import { ArtworkFilterAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterAlertContextProvider"
 import {
   ArtworkFilterContextProvider,
-  SharedArtworkFilterContextProps,
+  type SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { ArtworkFilterSavedSearchAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterSavedSearchAlertContextProvider"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
-import { SavedSearchEntity } from "Components/SavedSearchAlert/types"
-import { Match, RouterState, withRouter } from "found"
-import * as React from "react"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
+import { type Match, type RouterState, withRouter } from "found"
+import type * as React from "react"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -26,9 +30,9 @@ interface ArtistSeriesArtworksFilterProps {
   match?: Match
 }
 
-const ArtistSeriesArtworksFilter: React.FC<React.PropsWithChildren<
-  ArtistSeriesArtworksFilterProps & RouterState
->> = props => {
+const ArtistSeriesArtworksFilter: React.FC<
+  React.PropsWithChildren<ArtistSeriesArtworksFilterProps & RouterState>
+> = props => {
   const { userPreferences } = useSystemContext()
   const { match, relay, artistSeries } = props
   const { filtered_artworks, sidebar } = artistSeries
@@ -99,12 +103,13 @@ const ArtistSeriesArtworksFilter: React.FC<React.PropsWithChildren<
   )
 }
 
-export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer(
-  withRouter<ArtistSeriesArtworksFilterProps & RouterState>(
-    ArtistSeriesArtworksFilter
-  ),
-  {
-    artistSeries: graphql`
+export const ArtistSeriesArtworksFilterRefetchContainer =
+  createRefetchContainer(
+    withRouter<ArtistSeriesArtworksFilterProps & RouterState>(
+      ArtistSeriesArtworksFilter
+    ),
+    {
+      artistSeries: graphql`
       fragment ArtistSeriesArtworksFilter_artistSeries on ArtistSeries
         @argumentDefinitions(
           input: { type: "FilterArtworksInput" }
@@ -140,8 +145,8 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
         title
       }
     `,
-  },
-  graphql`
+    },
+    graphql`
     query ArtistSeriesArtworksFilterRefetchQuery(
       $input: FilterArtworksInput
       $slug: ID!
@@ -151,13 +156,13 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
       }
     }
   `
-)
+  )
 
-interface ArtistSeriesArtworkFilterQueryRendererProps {}
+type ArtistSeriesArtworkFilterQueryRendererProps = {}
 
-export const ArtistSeriesArtworkFilterQueryRenderer: React.FC<React.PropsWithChildren<
-  ArtistSeriesArtworkFilterQueryRendererProps
->> = rest => {
+export const ArtistSeriesArtworkFilterQueryRenderer: React.FC<
+  React.PropsWithChildren<ArtistSeriesArtworkFilterQueryRendererProps>
+> = rest => {
   const { relayEnvironment } = useSystemContext()
   const { match } = useRouter()
 

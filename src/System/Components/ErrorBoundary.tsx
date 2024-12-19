@@ -5,7 +5,7 @@ import { ErrorPage } from "Components/ErrorPage"
 import { Button, Spacer } from "@artsy/palette"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
 import { getENV } from "Utils/getENV"
-import { ErrorInfo } from "react"
+import type { ErrorInfo } from "react"
 import { HttpError } from "found"
 
 const logger = createLogger()

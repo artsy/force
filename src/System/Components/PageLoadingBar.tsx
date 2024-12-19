@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react"
+import type React from "react"
+import { useState, useEffect, useRef } from "react"
 import styled, { keyframes, css } from "styled-components"
 import { Box } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
@@ -7,9 +8,9 @@ interface PageLoadingBarProps {
   loadingState: "resting" | "loading" | "complete"
 }
 
-export const PageLoadingBar: React.FC<React.PropsWithChildren<PageLoadingBarProps>> = ({
-  loadingState = "resting",
-}) => {
+export const PageLoadingBar: React.FC<
+  React.PropsWithChildren<PageLoadingBarProps>
+> = ({ loadingState = "resting" }) => {
   const firstMount = useRef(true)
   const [isComplete, setIsComplete] = useState(false)
   const [loading, setLoading] = useState(loadingState)

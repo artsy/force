@@ -1,13 +1,13 @@
 import { ModalDialog, useToasts } from "@artsy/palette"
 
-import { Formik, FormikHelpers } from "formik"
+import { Formik, type FormikHelpers } from "formik"
 import { useUpdateArtworkList } from "./Mutations/useUpdateArtworkList"
 import createLogger from "Utils/logger"
 import { useTracking } from "react-tracking"
-import { ActionType, EditedArtworkList, OwnerType } from "@artsy/cohesion"
+import { ActionType, type EditedArtworkList, OwnerType } from "@artsy/cohesion"
 import {
   ArtworkListForm,
-  ArtworkListFormikValues,
+  type ArtworkListFormikValues,
   validationSchema,
 } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkListForm/ArtworkListForm"
 
@@ -24,10 +24,9 @@ interface EditArtworkListModalProps {
 
 const logger = createLogger("EditArtworkListModal")
 
-export const EditArtworkListModal: React.FC<React.PropsWithChildren<EditArtworkListModalProps>> = ({
-  artworkList,
-  onClose,
-}) => {
+export const EditArtworkListModal: React.FC<
+  React.PropsWithChildren<EditArtworkListModalProps>
+> = ({ artworkList, onClose }) => {
   const { trackEvent } = useTracking()
 
   const initialValues: ArtworkListFormikValues = {

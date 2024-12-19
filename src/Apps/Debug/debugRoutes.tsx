@@ -2,7 +2,7 @@ import { Clickable, Text } from "@artsy/palette"
 import loadable from "@loadable/component"
 import { HttpError } from "found"
 import { useState } from "react"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 import { RouterLink } from "System/Components/RouterLink"
 
 const DebugApp = loadable(

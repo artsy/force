@@ -5,7 +5,7 @@ import { __ProgressiveOnboardingAlertCreate__ } from "Components/ProgressiveOnbo
 import { PROGRESSIVE_ONBOARDING_KEYS } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { FC } from "react"
+import type { FC } from "react"
 
 jest.mock("Components/ArtworkFilter/ArtworkFilterContext", () => ({
   useArtworkFilterContext: jest.fn(),
@@ -45,7 +45,8 @@ const Example: FC<React.PropsWithChildren<unknown>> = () => {
 describe("ProgressiveOnboarding: Alerts", () => {
   // FIXME:
 
-  const mockWithProgressiveOnboardingCounts = withProgressiveOnboardingCounts as jest.Mock
+  const mockWithProgressiveOnboardingCounts =
+    withProgressiveOnboardingCounts as jest.Mock
   const mockUseArtworkFilterContext = useArtworkFilterContext as jest.Mock
 
   const alertCreateText = "Hunting for a particular artwork?"

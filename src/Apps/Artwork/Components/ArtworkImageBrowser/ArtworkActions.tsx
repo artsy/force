@@ -13,7 +13,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
 import { Media } from "Utils/Responsive"
 import { userIsAdmin, userIsTeam } from "Utils/user"
-import { ArtworkActions_artwork$data } from "__generated__/ArtworkActions_artwork.graphql"
+import type { ArtworkActions_artwork$data } from "__generated__/ArtworkActions_artwork.graphql"
 import { ArtworkSharePanelFragmentContainer } from "./ArtworkSharePanel"
 import { UtilButton, UtilButtonLink } from "./UtilButton"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
@@ -24,9 +24,9 @@ interface ArtworkActionsProps {
   selectRoomViewableFigure(): void
 }
 
-export const ArtworkActions: React.FC<React.PropsWithChildren<
-  ArtworkActionsProps
->> = ({ artwork, selectRoomViewableFigure }) => {
+export const ArtworkActions: React.FC<
+  React.PropsWithChildren<ArtworkActionsProps>
+> = ({ artwork, selectRoomViewableFigure }) => {
   const { user } = useSystemContext()
   const isAdmin = userIsAdmin(user)
   const isTeam = userIsTeam(user)
@@ -42,11 +42,8 @@ export const ArtworkActions: React.FC<React.PropsWithChildren<
     })
   }
 
-  const {
-    showViewInRoom,
-    hideViewInRoom,
-    isViewInRoomVisible,
-  } = useViewInRoom()
+  const { showViewInRoom, hideViewInRoom, isViewInRoomVisible } =
+    useViewInRoom()
 
   const ViewInRoomButton = (
     <UtilButton

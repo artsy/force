@@ -2,20 +2,19 @@ import { Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import {
   withProgressiveOnboardingCounts,
-  WithProgressiveOnboardingCountsProps,
+  type WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
-import { FC } from "react"
+import type { FC } from "react"
 import { useDismissibleContext } from "@artsy/dismissible"
 import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 
 interface ProgressiveOnboardingFollowFindProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const __ProgressiveOnboardingFollowFind__: FC<React.PropsWithChildren<ProgressiveOnboardingFollowFindProps>> = ({
-  children,
-  counts,
-}) => {
+export const __ProgressiveOnboardingFollowFind__: FC<
+  React.PropsWithChildren<ProgressiveOnboardingFollowFindProps>
+> = ({ children, counts }) => {
   const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayable =

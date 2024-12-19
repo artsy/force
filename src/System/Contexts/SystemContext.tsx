@@ -1,11 +1,11 @@
-import { Router } from "found"
-import { createContext, useState } from "react"
-import { Environment } from "react-relay"
+import type { FeatureFlags } from "System/Hooks/useFeatureFlag"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import { getUser } from "Utils/user"
-import { FeatureFlags } from "System/Hooks/useFeatureFlag"
-import { getSupportedMetric, Metric } from "Utils/metrics"
 import { getENV } from "Utils/getENV"
+import { type Metric, getSupportedMetric } from "Utils/metrics"
+import { getUser } from "Utils/user"
+import type { Router } from "found"
+import { createContext, useState } from "react"
+import type { Environment } from "react-relay"
 
 export type UserPreferences = {
   metric: Metric
@@ -29,12 +29,12 @@ export interface SystemContextProps extends SystemContextState {
 }
 
 export const SystemContext = createContext<SystemContextProps>(
-  ({} as unknown) as SystemContextProps
+  {} as unknown as SystemContextProps
 )
 
-export const SystemContextProvider: React.FC<React.PropsWithChildren<React.PropsWithChildren<
-  Partial<SystemContextProps>
->>> = ({ children, ...props }) => {
+export const SystemContextProvider: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<Partial<SystemContextProps>>>
+> = ({ children, ...props }) => {
   const [router, setRouter] = useState<SystemContextProps["router"]>(null)
 
   const [user, setUser] = useState<SystemContextProps["user"]>(

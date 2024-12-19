@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { SuggestionItemLink } from "./SuggestionItemLink"
 import { DefaultSuggestion } from "./DefaultSuggestion"
 import { Box, Pill } from "@artsy/palette"
@@ -20,7 +20,9 @@ interface SuggestionItemProps {
   onClick: (option?: SuggestionItemOptionProps) => void
 }
 
-export const SuggestionItem: FC<React.PropsWithChildren<SuggestionItemProps>> = props => {
+export const SuggestionItem: FC<
+  React.PropsWithChildren<SuggestionItemProps>
+> = props => {
   const { option, onClick } = props
 
   const handleClick = () => {

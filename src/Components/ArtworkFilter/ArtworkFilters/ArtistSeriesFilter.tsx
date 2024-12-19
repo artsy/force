@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { SelectedFiltersCountsLabels } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ResultsFilter } from "./ResultsFilter"
 
@@ -7,10 +7,9 @@ export interface ArtistSeriesFilterProps {
   label?: string
 }
 
-export const ArtistSeriesFilter: React.FC<React.PropsWithChildren<ArtistSeriesFilterProps>> = ({
-  expanded,
-  label = "Artist Series",
-}) => {
+export const ArtistSeriesFilter: React.FC<
+  React.PropsWithChildren<ArtistSeriesFilterProps>
+> = ({ expanded, label = "Artist Series" }) => {
   return (
     <>
       <ResultsFilter

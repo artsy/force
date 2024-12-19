@@ -1,14 +1,14 @@
-import { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
-import { CreditCardPicker_order$data } from "__generated__/CreditCardPicker_order.graphql"
-import { CreditCardPickerCreateCreditCardMutation } from "__generated__/CreditCardPickerCreateCreditCardMutation.graphql"
+import type { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
+import type { CreditCardPicker_order$data } from "__generated__/CreditCardPicker_order.graphql"
+import type { CreditCardPickerCreateCreditCardMutation } from "__generated__/CreditCardPickerCreateCreditCardMutation.graphql"
 import {
-  AddressChangeHandler,
-  AddressErrors,
+  type AddressChangeHandler,
+  type AddressErrors,
   AddressForm,
-  AddressTouched,
+  type AddressTouched,
 } from "Components/Address/AddressForm"
 
-import { Address, emptyAddress } from "Components/Address/utils"
+import { type Address, emptyAddress } from "Components/Address/utils"
 
 import { CreditCardInput } from "Components/CreditCardInput"
 import { validateAddress } from "Apps/Order/Utils/formValidators"
@@ -33,14 +33,14 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import { CommitMutation } from "Apps/Order/Utils/commitMutation"
+import type { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import { CreditCardDetails } from "./CreditCardDetails"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { isNull, mergeWith } from "lodash"
-import { TrackingProp, useTracking } from "react-tracking"
+import { type TrackingProp, useTracking } from "react-tracking"
 import {
   SystemContextConsumer,
-  SystemContextProps,
+  type SystemContextProps,
 } from "System/Contexts/SystemContext"
 
 export interface StripeProps {
@@ -123,9 +123,8 @@ export class CreditCardPicker extends React.Component<
       this.setState({ isCreatingStripeToken: true })
       const stripeBillingAddress = this.getStripeBillingAddress()
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const cardNumberElement = this.props.elements.getElement(
-        CardNumberElement
-      )!
+      const cardNumberElement =
+        this.props.elements.getElement(CardNumberElement)!
       return await this.props.stripe.createToken(
         cardNumberElement,
         stripeBillingAddress
@@ -379,9 +378,9 @@ export class CreditCardPicker extends React.Component<
       this.props.order.requestedFulfillment,
       (o, s) => (isNull(s) ? o : s)
     )
-    const selectedBillingAddress = (this.needsAddress()
-      ? this.state.address
-      : shippingAddress) as Address
+    const selectedBillingAddress = (
+      this.needsAddress() ? this.state.address : shippingAddress
+    ) as Address
     const {
       name,
       addressLine1,
@@ -457,11 +456,13 @@ export class CreditCardPicker extends React.Component<
 // Our mess of HOC wrappers is not amenable to ref forwarding, so to expose a
 // ref to the CreditCardPicker instance (for getCreditCardId) we'll add an
 // `innerRef` prop which gets sneakily injected here
-const CreditCardPickerWithInnerRef: React.FC<React.PropsWithChildren<
-  CreditCardPickerProps & {
-    innerRef: React.RefObject<CreditCardPicker>
-  }
->> = ({ innerRef, ...props }) => {
+const CreditCardPickerWithInnerRef: React.FC<
+  React.PropsWithChildren<
+    CreditCardPickerProps & {
+      innerRef: React.RefObject<CreditCardPicker>
+    }
+  >
+> = ({ innerRef, ...props }) => {
   const tracking = useTracking()
 
   return (

@@ -1,7 +1,7 @@
 import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ConversationsSidebarItem } from "Apps/Conversations/components/Sidebar/ConversationsSidebarItem"
-import { ConversationsSidebarItemTestQuery } from "__generated__/ConversationsSidebarItemTestQuery.graphql"
+import type { ConversationsSidebarItemTestQuery } from "__generated__/ConversationsSidebarItemTestQuery.graphql"
 import { useTracking } from "react-tracking"
 import { graphql } from "react-relay"
 
@@ -25,20 +25,19 @@ describe("ConversationSidebarItem", () => {
   const mockTracking = useTracking as jest.Mock
   const trackEvent = jest.fn()
 
-  const { renderWithRelay } = setupTestWrapperTL<
-    ConversationsSidebarItemTestQuery
-  >({
-    Component: ({ conversation }) => (
-      <ConversationsSidebarItem conversation={conversation!} index={2} />
-    ),
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<ConversationsSidebarItemTestQuery>({
+      Component: ({ conversation }) => (
+        <ConversationsSidebarItem conversation={conversation!} index={2} />
+      ),
+      query: graphql`
       query ConversationsSidebarItemTestQuery @relay_test_operation {
         conversation(id: "conversation-id") {
           ...ConversationsSidebarItem_conversation
         }
       }
     `,
-  })
+    })
 
   beforeEach(() => {
     mockTracking.mockImplementation(() => ({ trackEvent }))

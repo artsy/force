@@ -3,7 +3,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { useTracking } from "react-tracking"
-import { PriceOptions_Test_Query } from "__generated__/PriceOptions_Test_Query.graphql"
+import type { PriceOptions_Test_Query } from "__generated__/PriceOptions_Test_Query.graphql"
 
 jest.unmock("react-relay")
 

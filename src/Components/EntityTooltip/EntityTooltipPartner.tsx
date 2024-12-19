@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import {
   Box,
   Image,
@@ -9,26 +9,25 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { EntityTooltipPartnerQuery } from "__generated__/EntityTooltipPartnerQuery.graphql"
-import { EntityTooltipPartner_partner$data } from "__generated__/EntityTooltipPartner_partner.graphql"
+import type { EntityTooltipPartnerQuery } from "__generated__/EntityTooltipPartnerQuery.graphql"
+import type { EntityTooltipPartner_partner$data } from "__generated__/EntityTooltipPartner_partner.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { ActionType, ClickedTooltip } from "@artsy/cohesion"
+import { ActionType, type ClickedTooltip } from "@artsy/cohesion"
 
 interface EntityTooltipPartnerProps {
   partner: EntityTooltipPartner_partner$data
 }
 
-const EntityTooltipPartner: FC<React.PropsWithChildren<EntityTooltipPartnerProps>> = ({ partner }) => {
+const EntityTooltipPartner: FC<
+  React.PropsWithChildren<EntityTooltipPartnerProps>
+> = ({ partner }) => {
   const { trackEvent } = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const handleClick = () => {
     const payload: ClickedTooltip = {
@@ -114,7 +113,9 @@ const EntityTooltipPartnerFragmentContainer = createFragmentContainer(
   }
 )
 
-const EntityTooltipPartnerPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const EntityTooltipPartnerPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton p={2} width={300}>
       <SkeletonBox width={260} height={146} />
@@ -135,9 +136,9 @@ interface EntityTooltipPartnerQueryRendererProps {
   id: string
 }
 
-export const EntityTooltipPartnerQueryRenderer: FC<React.PropsWithChildren<EntityTooltipPartnerQueryRendererProps>> = ({
-  id,
-}) => {
+export const EntityTooltipPartnerQueryRenderer: FC<
+  React.PropsWithChildren<EntityTooltipPartnerQueryRendererProps>
+> = ({ id }) => {
   return (
     <SystemQueryRenderer<EntityTooltipPartnerQuery>
       variables={{ id }}

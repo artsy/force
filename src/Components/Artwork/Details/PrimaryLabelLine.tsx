@@ -1,15 +1,15 @@
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { Text } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
-import { PrimaryLabelLine_artwork$key } from "__generated__/PrimaryLabelLine_artwork.graphql"
+import type { PrimaryLabelLine_artwork$key } from "__generated__/PrimaryLabelLine_artwork.graphql"
 
 interface PrimaryLabelLineProps {
   artwork: PrimaryLabelLine_artwork$key
 }
 
-export const PrimaryLabelLine: React.FC<React.PropsWithChildren<PrimaryLabelLineProps>> = ({
-  artwork,
-}) => {
+export const PrimaryLabelLine: React.FC<
+  React.PropsWithChildren<PrimaryLabelLineProps>
+> = ({ artwork }) => {
   const data = useFragment(primaryLabelLineFragment, artwork)
   const primaryLabel = data.collectorSignals?.primaryLabel
   const { hideSignals } = useArtworkGridContext()

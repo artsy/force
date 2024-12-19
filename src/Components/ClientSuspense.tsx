@@ -1,15 +1,14 @@
 import { useDidMount } from "@artsy/palette"
-import { FC, ReactNode, Suspense } from "react"
+import { type FC, type ReactNode, Suspense } from "react"
 
 interface ClientSuspenseProps {
   fallback: NonNullable<ReactNode>
   children: ReactNode
 }
 
-export const ClientSuspense: FC<React.PropsWithChildren<ClientSuspenseProps>> = ({
-  fallback,
-  children,
-}) => {
+export const ClientSuspense: FC<
+  React.PropsWithChildren<ClientSuspenseProps>
+> = ({ fallback, children }) => {
   const isMounted = useDidMount()
 
   return (

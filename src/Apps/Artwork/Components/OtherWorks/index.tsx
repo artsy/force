@@ -1,6 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Join, Skeleton, Spacer } from "@artsy/palette"
-import { OtherWorks_artwork$data } from "__generated__/OtherWorks_artwork.graphql"
+import type { OtherWorks_artwork$data } from "__generated__/OtherWorks_artwork.graphql"
 import { OtherAuctionsQueryRenderer } from "Apps/Artwork/Components/OtherAuctions"
 import {
   Header,
@@ -10,16 +10,16 @@ import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import ArtworkGrid, {
   ArtworkGridPlaceholder,
 } from "Components/ArtworkGrid/ArtworkGrid"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "Utils/get"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { OtherWorksQuery } from "__generated__/OtherWorksQuery.graphql"
+import type { OtherWorksQuery } from "__generated__/OtherWorksQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { compact } from "lodash"
 import track, { useTracking } from "react-tracking"
 import {
-  SystemContextProps,
+  type SystemContextProps,
   withSystemContext,
 } from "System/Contexts/SystemContext"
 
@@ -185,9 +185,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const OtherWorksQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const OtherWorksQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

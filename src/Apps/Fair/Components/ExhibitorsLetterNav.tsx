@@ -1,13 +1,13 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   Text,
   Flex,
   HorizontalOverflow,
   Clickable,
-  BoxProps,
+  type BoxProps,
 } from "@artsy/palette"
-import { ExhibitorsLetterNav_fair$data } from "__generated__/ExhibitorsLetterNav_fair.graphql"
+import type { ExhibitorsLetterNav_fair$data } from "__generated__/ExhibitorsLetterNav_fair.graphql"
 import { getExhibitorSectionId } from "Apps/Fair/Utils/getExhibitorSectionId"
 import { useJump } from "Utils/Hooks/useJump"
 import { Media } from "Utils/Responsive"
@@ -18,9 +18,9 @@ interface ExhibitorsLetterNavProps {
   fair: ExhibitorsLetterNav_fair$data
 }
 
-export const ExhibitorsLetterNav: React.FC<React.PropsWithChildren<ExhibitorsLetterNavProps>> = ({
-  fair,
-}) => {
+export const ExhibitorsLetterNav: React.FC<
+  React.PropsWithChildren<ExhibitorsLetterNavProps>
+> = ({ fair }) => {
   const letters = fair?.exhibitorsGroupedByName?.map(group => group?.letter)
 
   return (
@@ -76,7 +76,11 @@ interface LetterProps extends BoxProps {
   isEnabled: boolean
 }
 
-const Letter: React.FC<React.PropsWithChildren<LetterProps>> = ({ letter, isEnabled, ...rest }) => {
+const Letter: React.FC<React.PropsWithChildren<LetterProps>> = ({
+  letter,
+  isEnabled,
+  ...rest
+}) => {
   const { jumpTo } = useJump({ offset: 10 })
 
   const sectionLabel =

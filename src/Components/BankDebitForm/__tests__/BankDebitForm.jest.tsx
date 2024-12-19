@@ -2,7 +2,7 @@ import { render } from "@testing-library/react"
 import { BuyOrderWithShippingDetails } from "Apps/__tests__/Fixtures/Order"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
-import { PaymentTestQuery$rawResponse } from "__generated__/PaymentTestQuery.graphql"
+import type { PaymentTestQuery$rawResponse } from "__generated__/PaymentTestQuery.graphql"
 import { BankDebitForm } from "Components/BankDebitForm/BankDebitForm"
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 

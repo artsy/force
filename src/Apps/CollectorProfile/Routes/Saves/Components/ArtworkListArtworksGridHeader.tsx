@@ -2,10 +2,12 @@ import { Flex, Spacer, Text } from "@artsy/palette"
 import { getTotalCountLabel } from "Components/ArtworkFilter"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkSortFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkSortFilter"
-import { FC } from "react"
+import type { FC } from "react"
 import { Media } from "Utils/Responsive"
 
-export const ArtworkListArtworksGridHeader: FC<React.PropsWithChildren<unknown>> = () => {
+export const ArtworkListArtworksGridHeader: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const filterContext = useArtworkFilterContext()
   const totalCountLabel = getTotalCountLabel({
     total: `${filterContext.counts!.artworks}`,

@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { FairOrganizerDedicatedArticles_Test_Query } from "__generated__/FairOrganizerDedicatedArticles_Test_Query.graphql"
+import type { FairOrganizerDedicatedArticles_Test_Query } from "__generated__/FairOrganizerDedicatedArticles_Test_Query.graphql"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { FairOrganizerDedicatedArticlesFragmentContainer } from "Apps/FairOrginizer/Routes/FairOrganizerDedicatedArticles"
 
@@ -20,28 +20,27 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: jest.fn(),
 }))
 
-const { getWrapper } = setupTestWrapper<
-  FairOrganizerDedicatedArticles_Test_Query
->({
-  Component: props => {
-    return (
-      <FairOrganizerDedicatedArticlesFragmentContainer {...(props as any)} />
-    )
-  },
-  query: graphql`
+const { getWrapper } =
+  setupTestWrapper<FairOrganizerDedicatedArticles_Test_Query>({
+    Component: props => {
+      return (
+        <FairOrganizerDedicatedArticlesFragmentContainer {...(props as any)} />
+      )
+    },
+    query: graphql`
     query FairOrganizerDedicatedArticles_Test_Query @relay_test_operation {
       fairOrganizer(id: "example") {
         ...FairOrganizerDedicatedArticles_fairOrganizer
       }
     }
   `,
-  variables: {
-    // @ts-ignore
-    first: 10,
-    // @ts-ignore
-    page: 1,
-  },
-})
+    variables: {
+      // @ts-ignore
+      first: 10,
+      // @ts-ignore
+      page: 1,
+    },
+  })
 
 describe("FairOrganizerDedicatedArticles", () => {
   it("renders a section title with the fair organizer name", () => {

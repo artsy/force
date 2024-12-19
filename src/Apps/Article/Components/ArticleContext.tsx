@@ -1,4 +1,4 @@
-import { createContext, FC, useContext } from "react"
+import { createContext, type FC, useContext } from "react"
 
 const ArticleContext = createContext({
   articleId: "",
@@ -8,10 +8,9 @@ interface ArticleContextProviderProps {
   articleId: string
 }
 
-export const ArticleContextProvider: FC<React.PropsWithChildren<ArticleContextProviderProps>> = ({
-  articleId,
-  children,
-}) => {
+export const ArticleContextProvider: FC<
+  React.PropsWithChildren<ArticleContextProviderProps>
+> = ({ articleId, children }) => {
   return (
     <ArticleContext.Provider value={{ articleId }}>
       {children}

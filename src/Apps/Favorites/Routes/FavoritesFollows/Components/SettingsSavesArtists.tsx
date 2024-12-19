@@ -12,23 +12,25 @@ import {
   ArtistRailFragmentContainer,
   ARTIST_RAIL_PLACEHOLDER,
 } from "Components/ArtistRail"
-import { FC, Fragment, useState } from "react"
+import { type FC, Fragment, useState } from "react"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { SettingsSavesArtistsQuery } from "__generated__/SettingsSavesArtistsQuery.graphql"
-import { SettingsSavesArtists_me$data } from "__generated__/SettingsSavesArtists_me.graphql"
+import type { SettingsSavesArtistsQuery } from "__generated__/SettingsSavesArtistsQuery.graphql"
+import type { SettingsSavesArtists_me$data } from "__generated__/SettingsSavesArtists_me.graphql"
 
 interface SettingsSavesArtistsProps {
   me: SettingsSavesArtists_me$data
   relay: RelayPaginationProp
 }
 
-const SettingsSavesArtists: FC<React.PropsWithChildren<SettingsSavesArtistsProps>> = ({ me, relay }) => {
+const SettingsSavesArtists: FC<
+  React.PropsWithChildren<SettingsSavesArtistsProps>
+> = ({ me, relay }) => {
   const [loading, setLoading] = useState(false)
 
   const connection = me.followsAndSaves?.artistsConnection
@@ -89,10 +91,11 @@ export const SETTINGS_SAVES_ARTISTS_QUERY = graphql`
   }
 `
 
-export const SettingsSavesArtistsPaginationContainer = createPaginationContainer(
-  SettingsSavesArtists,
-  {
-    me: graphql`
+export const SettingsSavesArtistsPaginationContainer =
+  createPaginationContainer(
+    SettingsSavesArtists,
+    {
+      me: graphql`
       fragment SettingsSavesArtists_me on Me
         @argumentDefinitions(after: { type: "String" }) {
         followsAndSaves {
@@ -111,18 +114,18 @@ export const SettingsSavesArtistsPaginationContainer = createPaginationContainer
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return { ...prevVars, totalCount }
     },
-    getVariables(_, { cursor: after }, fragmentVariables) {
-      return { ...fragmentVariables, after }
-    },
-    query: SETTINGS_SAVES_ARTISTS_QUERY,
-  }
-)
+    {
+      direction: "forward",
+      getFragmentVariables(prevVars, totalCount) {
+        return { ...prevVars, totalCount }
+      },
+      getVariables(_, { cursor: after }, fragmentVariables) {
+        return { ...fragmentVariables, after }
+      },
+      query: SETTINGS_SAVES_ARTISTS_QUERY,
+    }
+  )
 
 const SETTINGS_SAVES_ARTISTS_PLACEHOLDER = (
   <>

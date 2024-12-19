@@ -1,7 +1,7 @@
 import { Column, Image, GridColumns, Text, ResponsiveBox } from "@artsy/palette"
-import { CollectionsHubsNav_marketingCollections$data } from "__generated__/CollectionsHubsNav_marketingCollections.graphql"
+import type { CollectionsHubsNav_marketingCollections$data } from "__generated__/CollectionsHubsNav_marketingCollections.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { cropped } from "Utils/resized"
 import { RouterLink } from "System/Components/RouterLink"
@@ -12,7 +12,9 @@ interface CollectionsHubsNavProps {
 }
 
 // TODO: Move this into collect app
-export const CollectionsHubsNav: FC<React.PropsWithChildren<CollectionsHubsNavProps>> = props => {
+export const CollectionsHubsNav: FC<
+  React.PropsWithChildren<CollectionsHubsNavProps>
+> = props => {
   const { trackEvent } = useTracking()
 
   return (

@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { EntityHeaderGeneFragmentContainer_Test_Query } from "__generated__/EntityHeaderGeneFragmentContainer_Test_Query.graphql"
+import type { EntityHeaderGeneFragmentContainer_Test_Query } from "__generated__/EntityHeaderGeneFragmentContainer_Test_Query.graphql"
 import { screen } from "@testing-library/react"
 import { EntityHeaderGeneFragmentContainer } from "Components/EntityHeaders/EntityHeaderGene"
 
@@ -15,12 +15,11 @@ const QUERY = graphql`
 `
 
 describe("EntityHeaderGene", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    EntityHeaderGeneFragmentContainer_Test_Query
-  >({
-    Component: EntityHeaderGeneFragmentContainer,
-    query: QUERY,
-  })
+  const { renderWithRelay } =
+    setupTestWrapperTL<EntityHeaderGeneFragmentContainer_Test_Query>({
+      Component: EntityHeaderGeneFragmentContainer,
+      query: QUERY,
+    })
 
   it("renders the component", () => {
     renderWithRelay({

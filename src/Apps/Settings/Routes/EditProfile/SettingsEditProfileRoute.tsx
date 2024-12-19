@@ -1,17 +1,17 @@
 import { Column, GridColumns, Join, Separator, Text } from "@artsy/palette"
 import InfoIcon from "@artsy/icons/InfoIcon"
 import { SettingsEditProfileFieldsFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileFields"
-import { SettingsEditProfileRoute_me$data } from "__generated__/SettingsEditProfileRoute_me.graphql"
-import React from "react"
+import type { SettingsEditProfileRoute_me$data } from "__generated__/SettingsEditProfileRoute_me.graphql"
+import type React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface SettingsEditProfileRouteProps {
   me: SettingsEditProfileRoute_me$data
 }
 
-const SettingsEditProfileRoute: React.FC<React.PropsWithChildren<SettingsEditProfileRouteProps>> = ({
-  me,
-}) => {
+const SettingsEditProfileRoute: React.FC<
+  React.PropsWithChildren<SettingsEditProfileRouteProps>
+> = ({ me }) => {
   return (
     <GridColumns>
       <Column span={8} bg="black5" p={2} display="flex" gap={1}>
@@ -31,9 +31,8 @@ const SettingsEditProfileRoute: React.FC<React.PropsWithChildren<SettingsEditPro
   )
 }
 
-export const SettingsEditProfileRouteFragmentContainer = createFragmentContainer(
-  SettingsEditProfileRoute,
-  {
+export const SettingsEditProfileRouteFragmentContainer =
+  createFragmentContainer(SettingsEditProfileRoute, {
     me: graphql`
       fragment SettingsEditProfileRoute_me on Me {
         ...SettingsEditProfileAboutYou_me
@@ -41,5 +40,4 @@ export const SettingsEditProfileRouteFragmentContainer = createFragmentContainer
         ...SettingsEditProfileFields_me
       }
     `,
-  }
-)
+  })

@@ -1,14 +1,14 @@
 import { Flex, Label } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
-import { ExclusiveAccessBadge_artwork$key } from "__generated__/ExclusiveAccessBadge_artwork.graphql"
+import type { ExclusiveAccessBadge_artwork$key } from "__generated__/ExclusiveAccessBadge_artwork.graphql"
 
 interface ExclusiveAccessBadgeProps {
   artwork: ExclusiveAccessBadge_artwork$key
 }
 
-export const ExclusiveAccessBadge: React.FC<React.PropsWithChildren<ExclusiveAccessBadgeProps>> = ({
-  artwork,
-}) => {
+export const ExclusiveAccessBadge: React.FC<
+  React.PropsWithChildren<ExclusiveAccessBadgeProps>
+> = ({ artwork }) => {
   const data = useFragment(exclusiveAccessBadgeFragment, artwork)
 
   if (!data.isUnlisted) {

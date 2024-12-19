@@ -1,9 +1,9 @@
 import { Box, Text, THEME, Spacer, Expandable } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { FC } from "react"
+import type { FC } from "react"
 import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AuctionFAQRoute_viewer$data } from "__generated__/AuctionFAQRoute_viewer.graphql"
+import type { AuctionFAQRoute_viewer$data } from "__generated__/AuctionFAQRoute_viewer.graphql"
 import { MetaTags } from "Components/MetaTags"
 import { toStyle } from "Utils/toStyle"
 import { RouterLink } from "System/Components/RouterLink"
@@ -12,7 +12,9 @@ interface AuctionFAQRouteProps {
   viewer: AuctionFAQRoute_viewer$data
 }
 
-const AuctionFAQRoute: React.FC<React.PropsWithChildren<AuctionFAQRouteProps>> = ({ viewer }) => {
+const AuctionFAQRoute: React.FC<
+  React.PropsWithChildren<AuctionFAQRouteProps>
+> = ({ viewer }) => {
   const {
     biddingContent,
     buyersPremiumTaxesAndFeesContent,
@@ -59,10 +61,12 @@ const AuctionFAQRoute: React.FC<React.PropsWithChildren<AuctionFAQRouteProps>> =
   )
 }
 
-const Section: React.FC<React.PropsWithChildren<{
-  content: string | null | undefined
-  title: string
-}>> = ({ content, title }) => {
+const Section: React.FC<
+  React.PropsWithChildren<{
+    content: string | null | undefined
+    title: string
+  }>
+> = ({ content, title }) => {
   if (!content) {
     return null
   }
@@ -126,7 +130,10 @@ const computeProps = ({ viewer }: AuctionFAQRouteProps) => {
   }
 }
 
-const HTML: FC<React.PropsWithChildren<{ children: string }>> = ({ children, ...rest }) => {
+const HTML: FC<React.PropsWithChildren<{ children: string }>> = ({
+  children,
+  ...rest
+}) => {
   return <Container dangerouslySetInnerHTML={{ __html: children }} {...rest} />
 }
 

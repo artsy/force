@@ -4,7 +4,7 @@ import { graphql } from "react-relay"
 import { FollowProfileButtonFragmentContainer } from "Components/FollowButton/FollowProfileButton"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { fireEvent, screen } from "@testing-library/react"
-import { FollowProfileButton_Test_Query } from "__generated__/FollowProfileButton_Test_Query.graphql"
+import type { FollowProfileButton_Test_Query } from "__generated__/FollowProfileButton_Test_Query.graphql"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useFollowButtonTracking } from "Components/FollowButton/useFollowButtonTracking"
 import { useAuthDialog } from "Components/AuthDialog"
@@ -76,7 +76,6 @@ describe("FollowProfileButton", () => {
 
     it("opens the auth modal", () => {
       const showAuthDialog = jest.fn()
-
       ;(useAuthDialog as jest.Mock).mockImplementation(() => {
         return { showAuthDialog }
       })

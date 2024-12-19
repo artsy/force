@@ -1,4 +1,4 @@
-import { ArtsyRequest } from "Server/middleware/artsyExpress"
+import type { ArtsyRequest } from "Server/middleware/artsyExpress"
 
 export const isStaticAuthRoute = ({ req }: { req: ArtsyRequest }) => {
   const { parse } = require("url")

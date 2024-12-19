@@ -1,7 +1,7 @@
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
-import { Avatar, BoxProps, Flex, Text } from "@artsy/palette"
-import { EntityHeaderSubmission_submission$data } from "__generated__/EntityHeaderSubmission_submission.graphql"
-import { FC } from "react"
+import { Avatar, type BoxProps, Flex, Text } from "@artsy/palette"
+import type { EntityHeaderSubmission_submission$data } from "__generated__/EntityHeaderSubmission_submission.graphql"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 export interface EntityHeaderSubmissionProps extends BoxProps {
@@ -11,7 +11,9 @@ export interface EntityHeaderSubmissionProps extends BoxProps {
   FollowButton?: JSX.Element
 }
 
-const EntityHeaderSubmission: FC<React.PropsWithChildren<EntityHeaderSubmissionProps>> = ({
+const EntityHeaderSubmission: FC<
+  React.PropsWithChildren<EntityHeaderSubmissionProps>
+> = ({
   submission,
   displayAvatar = true,
   displayLink = true,

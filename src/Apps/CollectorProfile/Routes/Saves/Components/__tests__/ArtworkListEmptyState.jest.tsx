@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
-import { ArtworkListEmptyState_Test_Query } from "__generated__/ArtworkListEmptyState_Test_Query.graphql"
+import type { ArtworkListEmptyState_Test_Query } from "__generated__/ArtworkListEmptyState_Test_Query.graphql"
 import { ArtworkListEmptyStateFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkListEmptyState"
 
 jest.unmock("react-relay")
@@ -15,24 +15,23 @@ jest.mock("System/Hooks/useRouter", () => ({
   })),
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<
-  ArtworkListEmptyState_Test_Query
->({
-  Component: props => {
-    if (!props.me) {
-      return null
-    }
+const { renderWithRelay } =
+  setupTestWrapperTL<ArtworkListEmptyState_Test_Query>({
+    Component: props => {
+      if (!props.me) {
+        return null
+      }
 
-    return <ArtworkListEmptyStateFragmentContainer me={props.me} />
-  },
-  query: graphql`
+      return <ArtworkListEmptyStateFragmentContainer me={props.me} />
+    },
+    query: graphql`
     query ArtworkListEmptyState_Test_Query @relay_test_operation {
       me {
         ...ArtworkListEmptyState_me @arguments(listID: "listID")
       }
     }
   `,
-})
+  })
 
 describe("ArtworkListEmptyState", () => {
   it("should render correct texts for default artwork list", () => {

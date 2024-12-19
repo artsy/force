@@ -1,4 +1,4 @@
-import { mount } from "enzyme"
+import type { mount } from "enzyme"
 
 export const fill = (
   wrapper: ReturnType<typeof mount>,
@@ -10,7 +10,6 @@ export const fill = (
   if (input.length === 0) {
     input = wrapper.find(`textarea[name="${name}"]`)
   }
-
   ;(input.getDOMNode() as HTMLInputElement).value = value
   input.simulate("change")
 }

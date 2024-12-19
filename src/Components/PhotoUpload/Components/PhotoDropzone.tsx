@@ -1,10 +1,11 @@
-import { Box, BoxProps, Button, Text } from "@artsy/palette"
+import { Box, type BoxProps, Button, Text } from "@artsy/palette"
 import { concatDropzoneErrors } from "Components/FileUpload/utils/concatDropzoneErrors"
 import { validateTotalMaxSize } from "Components/FileUpload/utils/validateTotalMaxSize"
-import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
+import type { Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { Media } from "Utils/Responsive"
-import React, { useEffect, useRef, useState } from "react"
-import { FileRejection, useDropzone } from "react-dropzone"
+import type React from "react"
+import { useEffect, useRef, useState } from "react"
+import { type FileRejection, useDropzone } from "react-dropzone"
 
 export interface PhotoDropzoneProps extends BoxProps {
   allPhotos: Photo[]
@@ -17,13 +18,9 @@ export interface PhotoDropzoneProps extends BoxProps {
  * @deprecated Deprecated - prefer using FileDropzone, which is a more generic version of this component
  * Also probably safe to remove this component entirely when cleaning up old sell flow
  */
-export const PhotoDropzone: React.FC<React.PropsWithChildren<PhotoDropzoneProps>> = ({
-  allPhotos,
-  maxTotalSize,
-  onDrop,
-  onReject,
-  ...rest
-}) => {
+export const PhotoDropzone: React.FC<
+  React.PropsWithChildren<PhotoDropzoneProps>
+> = ({ allPhotos, maxTotalSize, onDrop, onReject, ...rest }) => {
   const [customErrors, setCustomErrors] = useState<Array<FileRejection>>([])
   const buttonRef = useRef<HTMLButtonElement | null>(null)
 

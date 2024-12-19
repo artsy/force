@@ -1,9 +1,9 @@
-import * as React from "react"
+import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
-import { AuthContextModule } from "@artsy/cohesion"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import type { AuthContextModule } from "@artsy/cohesion"
 import { Box, Button, Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
-import { NotificationPartnerShow_show$key } from "__generated__/NotificationPartnerShow_show.graphql"
+import type { NotificationPartnerShow_show$key } from "__generated__/NotificationPartnerShow_show.graphql"
 import { compact, truncate } from "lodash"
 import { CellShowStatus } from "Components/Cells/CellShow"
 import { NOTIFICATION_MAX_WIDTH } from "Components/Notifications/Notification"
@@ -15,12 +15,9 @@ export interface NotificationShowProps
   onClick?: () => void
 }
 
-export const NotificationPartnerShow: React.FC<React.PropsWithChildren<NotificationShowProps>> = ({
-  show: showProp,
-  contextModule,
-  onClick,
-  ...rest
-}) => {
+export const NotificationPartnerShow: React.FC<
+  React.PropsWithChildren<NotificationShowProps>
+> = ({ show: showProp, contextModule, onClick, ...rest }) => {
   const show = useFragment(notificationShowFragment, showProp)
 
   const image = show?.coverImage?.cropped

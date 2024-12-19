@@ -2,9 +2,11 @@ import { Spacer, Text } from "@artsy/palette"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import * as React from "react"
+import type * as React from "react"
 
-export const ArtistNotEligiblText: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const ArtistNotEligiblText: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { trackTappedContactAdvisor } = useSubmissionTracking()
   const { user } = useSystemContext()
 

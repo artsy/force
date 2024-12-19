@@ -1,8 +1,12 @@
 import { Box, Flex, Separator, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { useTracking } from "react-tracking"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { isMenuLinkData, LinkData, MenuData } from "Components/NavBar/menuData"
+import {
+  isMenuLinkData,
+  type LinkData,
+  type MenuData,
+} from "Components/NavBar/menuData"
 import {
   NavBarMobileMenuItemButton,
   NavBarMobileMenuItemLink,
@@ -17,10 +21,9 @@ interface NavBarMobileSubMenuProps {
   menu: MenuData
 }
 
-export const NavBarMobileSubMenu: React.FC<React.PropsWithChildren<NavBarMobileSubMenuProps>> = ({
-  children,
-  menu,
-}) => {
+export const NavBarMobileSubMenu: React.FC<
+  React.PropsWithChildren<NavBarMobileSubMenuProps>
+> = ({ children, menu }) => {
   const { trackEvent } = useTracking()
   const { path, push } = useNavBarMobileMenuNavigation()
   const contextModule = useTrackingContextModule()
@@ -69,12 +72,9 @@ interface NavBarMobileSubMenuPanelProps {
   showBacknav?: boolean
 }
 
-const NavBarMobileSubMenuPanel: React.FC<React.PropsWithChildren<NavBarMobileSubMenuPanelProps>> = ({
-  isOpen,
-  title,
-  links,
-  showBacknav = true,
-}) => {
+const NavBarMobileSubMenuPanel: React.FC<
+  React.PropsWithChildren<NavBarMobileSubMenuPanelProps>
+> = ({ isOpen, title, links, showBacknav = true }) => {
   const isArtistsMenu = title === "Artists"
 
   return (
@@ -120,7 +120,9 @@ const NavBarMobileSubMenuPanel: React.FC<React.PropsWithChildren<NavBarMobileSub
   )
 }
 
-export const NavBarMobileSubMenuBack: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const NavBarMobileSubMenuBack: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { trackEvent } = useTracking()
   const { pop } = useNavBarMobileMenuNavigation()
   const contextModule = useTrackingContextModule()
@@ -159,9 +161,9 @@ interface NavBarMobileSubMenuItemProps {
   link: LinkData
 }
 
-export const NavBarMobileSubMenuItem: React.FC<React.PropsWithChildren<NavBarMobileSubMenuItemProps>> = ({
-  link,
-}) => {
+export const NavBarMobileSubMenuItem: React.FC<
+  React.PropsWithChildren<NavBarMobileSubMenuItemProps>
+> = ({ link }) => {
   const { trackEvent } = useTracking()
   const contextModule = useTrackingContextModule()
 

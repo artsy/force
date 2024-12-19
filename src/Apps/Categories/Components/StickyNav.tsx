@@ -1,16 +1,18 @@
 import { Pill, Spacer, Flex, HorizontalOverflow } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { extractNodes } from "Utils/extractNodes"
-import { StickyNav_geneFamiliesConnection$data } from "__generated__/StickyNav_geneFamiliesConnection.graphql"
+import type { StickyNav_geneFamiliesConnection$data } from "__generated__/StickyNav_geneFamiliesConnection.graphql"
 import { useJump } from "Utils/Hooks/useJump"
 
 interface StickyNavProps {
   geneFamiliesConnection: StickyNav_geneFamiliesConnection$data
 }
 
-const StickyNav: React.FC<React.PropsWithChildren<StickyNavProps>> = ({ geneFamiliesConnection }) => {
+const StickyNav: React.FC<React.PropsWithChildren<StickyNavProps>> = ({
+  geneFamiliesConnection,
+}) => {
   const { jumpTo } = useJump({ offset: 10 })
   const geneFamilies = extractNodes(geneFamiliesConnection)
 
@@ -20,7 +22,7 @@ const StickyNav: React.FC<React.PropsWithChildren<StickyNavProps>> = ({ geneFami
 
   return (
     // TODO: Simplify layout
-    (<HorizontalOverflow my={-1} py={1}>
+    <HorizontalOverflow my={-1} py={1}>
       <AppContainer display="flex">
         <Spacer x={[2, 4]} />
 
@@ -38,8 +40,8 @@ const StickyNav: React.FC<React.PropsWithChildren<StickyNavProps>> = ({ geneFami
 
         <Spacer x={[2, 4]} />
       </AppContainer>
-    </HorizontalOverflow>)
-  );
+    </HorizontalOverflow>
+  )
 }
 
 export const StickyNavFragmentContainer = createFragmentContainer(StickyNav, {

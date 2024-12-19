@@ -13,7 +13,7 @@ import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import { useTracking } from "react-tracking"
 import { Media } from "Utils/Responsive"
 import { RouterLink } from "System/Components/RouterLink"
-import { ConversationHeader_conversation$key } from "__generated__/ConversationHeader_conversation.graphql"
+import type { ConversationHeader_conversation$key } from "__generated__/ConversationHeader_conversation.graphql"
 import { useMobileLayoutActions } from "Apps/Conversations/hooks/useMobileLayoutActions"
 import { extractNodes } from "Utils/extractNodes"
 import { ReviewOrderButton } from "Apps/Conversations/components/Details/OrderInformation/ReviewOrderButton"
@@ -22,9 +22,9 @@ interface ConversationHeaderProps {
   conversation: ConversationHeader_conversation$key
 }
 
-export const ConversationHeader: React.FC<React.PropsWithChildren<ConversationHeaderProps>> = ({
-  conversation,
-}) => {
+export const ConversationHeader: React.FC<
+  React.PropsWithChildren<ConversationHeaderProps>
+> = ({ conversation }) => {
   const { goToDetails, goToSidebar } = useMobileLayoutActions()
 
   const { trackEvent } = useTracking()

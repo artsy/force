@@ -10,12 +10,12 @@ import ArtworkGrid, {
   ArtworkGridPlaceholder,
 } from "Components/ArtworkGrid/ArtworkGrid"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
-import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { FC } from "react"
+import type { FC } from "react"
 
 import { graphql } from "react-relay"
-import {
+import type {
   SuggestedArtworksModalGridQuery,
   SuggestedArtworksModalGridQuery$data,
 } from "__generated__/SuggestedArtworksModalGridQuery.graphql"
@@ -29,10 +29,9 @@ interface SuggestedArtworksModalGridProps {
   onClose: () => void
 }
 
-export const SuggestedArtworksModalGrid: FC<React.PropsWithChildren<SuggestedArtworksModalGridProps>> = ({
-  artworksConnection,
-  onClose,
-}) => {
+export const SuggestedArtworksModalGrid: FC<
+  React.PropsWithChildren<SuggestedArtworksModalGridProps>
+> = ({ artworksConnection, onClose }) => {
   const artworksCount = artworksConnection?.counts?.total ?? 0
 
   if (artworksCount === 0) {
@@ -77,7 +76,9 @@ interface SuggestedArtworksModalGridQueryRendererProps
   onClose: () => void
 }
 
-export const SuggestedArtworksModalGridQueryRenderer: FC<React.PropsWithChildren<SuggestedArtworksModalGridQueryRendererProps>> = props => {
+export const SuggestedArtworksModalGridQueryRenderer: FC<
+  React.PropsWithChildren<SuggestedArtworksModalGridQueryRendererProps>
+> = props => {
   const { onClose, ...inputProps } = props
 
   return (

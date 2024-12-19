@@ -7,9 +7,9 @@ import {
   Spacer,
   ReadMore,
 } from "@artsy/palette"
-import { Header_collection$data } from "__generated__/Header_collection.graphql"
+import type { Header_collection$data } from "__generated__/Header_collection.graphql"
 import { Link } from "found"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { slugify } from "underscore.string"
 
@@ -17,9 +17,9 @@ export interface CollectionHeaderProps {
   collection: Header_collection$data
 }
 
-export const CollectionHeader: React.FC<React.PropsWithChildren<CollectionHeaderProps>> = ({
-  collection,
-}) => {
+export const CollectionHeader: React.FC<
+  React.PropsWithChildren<CollectionHeaderProps>
+> = ({ collection }) => {
   return (
     <>
       <GridColumns mt={4} as="header" gridRowGap={[2, 0]}>

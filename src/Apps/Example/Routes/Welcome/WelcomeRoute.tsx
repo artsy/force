@@ -1,5 +1,5 @@
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { Button, Flex, ModalDialog, Text } from "@artsy/palette"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useTracking } from "react-tracking"
@@ -7,11 +7,8 @@ import { ContextModule, clickedShowMore } from "@artsy/cohesion"
 
 export const WelcomeRoute: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { trackEvent } = useTracking()
-  const {
-    contextPageOwnerType,
-    contextPageOwnerSlug,
-    contextPageOwnerId,
-  } = useAnalyticsContext()
+  const { contextPageOwnerType, contextPageOwnerSlug, contextPageOwnerId } =
+    useAnalyticsContext()
 
   const [showDialog, setShowDialog] = useState(false)
 

@@ -1,15 +1,17 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { Button } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
 
-export const SaveAndContinueButton: FC<React.PropsWithChildren<{
-  testId?: string
-  onClick?: () => void
-  media?: { [key: string]: string }
-  loading?: boolean
-  disabled?: boolean
-  tabIndex?: number
-}>> = ({
+export const SaveAndContinueButton: FC<
+  React.PropsWithChildren<{
+    testId?: string
+    onClick?: () => void
+    media?: { [key: string]: string }
+    loading?: boolean
+    disabled?: boolean
+    tabIndex?: number
+  }>
+> = ({
   testId,
   onClick,
   media,

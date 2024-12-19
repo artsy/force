@@ -1,7 +1,7 @@
 import { Avatar, Box, Flex, Stack, Text, Tooltip } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
-import { CollectorProfileHeader_me$data } from "__generated__/CollectorProfileHeader_me.graphql"
+import type { CollectorProfileHeader_me$data } from "__generated__/CollectorProfileHeader_me.graphql"
 import MapPinIcon from "@artsy/icons/MapPinIcon"
 import ShieldIcon from "@artsy/icons/ShieldIcon"
 import VerifiedPersonIcon from "@artsy/icons/VerifiedPersonIcon"
@@ -13,9 +13,9 @@ interface CollectorProfileHeaderProps {
   me: CollectorProfileHeader_me$data
 }
 
-const CollectorProfileHeader: React.FC<React.PropsWithChildren<CollectorProfileHeaderProps>> = ({
-  me,
-}) => {
+const CollectorProfileHeader: React.FC<
+  React.PropsWithChildren<CollectorProfileHeaderProps>
+> = ({ me }) => {
   const collectorProfile = me.collectorProfile
   const hasBadge = !!(
     collectorProfile?.confirmedBuyerAt || collectorProfile?.isIdentityVerified

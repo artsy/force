@@ -8,15 +8,17 @@ import {
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { ReactElement } from "react"
+import type { ReactElement } from "react"
 import { Media } from "Utils/Responsive"
 
-export const TextAndImageLayout: React.FC<React.PropsWithChildren<{
-  text: ReactElement
-  button: ReactElement
-  image: ReactElement
-  references?: string
-}>> = ({ text, button, image, references }) => {
+export const TextAndImageLayout: React.FC<
+  React.PropsWithChildren<{
+    text: ReactElement
+    button: ReactElement
+    image: ReactElement
+    references?: string
+  }>
+> = ({ text, button, image, references }) => {
   return (
     <FullBleed bg="black100" position="relative">
       <AppContainer>

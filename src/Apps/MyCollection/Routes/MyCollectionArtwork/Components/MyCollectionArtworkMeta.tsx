@@ -1,4 +1,4 @@
-import { MyCollectionArtworkMeta_artwork$key } from "__generated__/MyCollectionArtworkMeta_artwork.graphql"
+import type { MyCollectionArtworkMeta_artwork$key } from "__generated__/MyCollectionArtworkMeta_artwork.graphql"
 import { MetaTags } from "Components/MetaTags"
 import { graphql, useFragment } from "react-relay"
 
@@ -6,7 +6,9 @@ interface MyCollectionArtworkMetaProps {
   artwork: MyCollectionArtworkMeta_artwork$key
 }
 
-export const MyCollectionArtworkMeta: React.FC<React.PropsWithChildren<MyCollectionArtworkMetaProps>> = props => {
+export const MyCollectionArtworkMeta: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkMetaProps>
+> = props => {
   const { artistNames, title } = useFragment(FRAGMENT, props.artwork)
 
   return (

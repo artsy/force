@@ -1,5 +1,5 @@
 import { Button, Flex } from "@artsy/palette"
-import { MyCollectionArtworkHeader_artwork$key } from "__generated__/MyCollectionArtworkHeader_artwork.graphql"
+import type { MyCollectionArtworkHeader_artwork$key } from "__generated__/MyCollectionArtworkHeader_artwork.graphql"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkBackButton } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkBackButton"
 import { graphql, useFragment } from "react-relay"
@@ -10,10 +10,11 @@ interface MyCollectionArtworkHeaderProps {
   artwork: MyCollectionArtworkHeader_artwork$key
 }
 
-export const MyCollectionArtworkHeader: React.FC<React.PropsWithChildren<MyCollectionArtworkHeaderProps>> = props => {
-  const {
-    editCollectedArtwork: trackEditCollectedArtwork,
-  } = useMyCollectionTracking()
+export const MyCollectionArtworkHeader: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkHeaderProps>
+> = props => {
+  const { editCollectedArtwork: trackEditCollectedArtwork } =
+    useMyCollectionTracking()
 
   const artwork = useFragment(FRAGMENT, props.artwork)
   const showEditCTA = !artwork.consignmentSubmission?.internalID

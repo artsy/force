@@ -1,15 +1,15 @@
-import * as React from "react"
+import type * as React from "react"
 import { Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomBody_viewingRoom$data } from "__generated__/ViewingRoomBody_viewingRoom.graphql"
+import type { ViewingRoomBody_viewingRoom$data } from "__generated__/ViewingRoomBody_viewingRoom.graphql"
 
 interface ViewingRoomBodyProps {
   viewingRoom: ViewingRoomBody_viewingRoom$data
 }
 
-const ViewingRoomBody: React.FC<React.PropsWithChildren<ViewingRoomBodyProps>> = ({
-  viewingRoom: { body },
-}) => {
+const ViewingRoomBody: React.FC<
+  React.PropsWithChildren<ViewingRoomBodyProps>
+> = ({ viewingRoom: { body } }) => {
   if (!body) {
     return null
   }

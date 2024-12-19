@@ -3,11 +3,11 @@ import { screen, render, within, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import {
   AddressAutocompleteInput,
-  AddressAutocompleteInputProps,
+  type AddressAutocompleteInputProps,
 } from "Components/Address/AddressAutocompleteInput"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import compact from "lodash/compact"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { useTracking } from "react-tracking"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 

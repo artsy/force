@@ -1,5 +1,5 @@
 import { Spacer, Text, Join, Box, Pill } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { OnboardingFigure } from "Components/Onboarding/Components/OnboardingFigure"
 import { OnboardingQuestionPanel } from "Components/Onboarding/Components/OnboardingQuestionPanel"
 import {
@@ -13,7 +13,9 @@ import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingC
 import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
 
-export const OnboardingQuestionTwo: FC<React.PropsWithChildren<unknown>> = () => {
+export const OnboardingQuestionTwo: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { state, dispatch, next } = useOnboardingContext()
   const { register, loading, handleNext } = useOnboardingFadeTransition({
     next,

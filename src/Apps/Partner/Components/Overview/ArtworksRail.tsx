@@ -1,8 +1,8 @@
-import * as React from "react"
-import { Box, BoxProps, Flex, Shelf, Text } from "@artsy/palette"
+import type * as React from "react"
+import { Box, type BoxProps, Flex, Shelf, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworksRail_partner$data } from "__generated__/ArtworksRail_partner.graphql"
-import { ArtworksRailRendererQuery } from "__generated__/ArtworksRailRendererQuery.graphql"
+import type { ArtworksRail_partner$data } from "__generated__/ArtworksRail_partner.graphql"
+import type { ArtworksRailRendererQuery } from "__generated__/ArtworksRailRendererQuery.graphql"
 import { ArtworksRailPlaceholder } from "./ArtworkRailPlaceholder"
 import { ViewAllButton } from "./ViewAllButton"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -13,7 +13,10 @@ interface ArtworksRailProps extends BoxProps {
   partner: ArtworksRail_partner$data
 }
 
-const ArtworksRail: React.FC<React.PropsWithChildren<ArtworksRailProps>> = ({ partner, ...rest }) => {
+const ArtworksRail: React.FC<React.PropsWithChildren<ArtworksRailProps>> = ({
+  partner,
+  ...rest
+}) => {
   if (
     !partner ||
     !partner.filterArtworksConnection?.edges ||
@@ -72,9 +75,13 @@ const ArtworksRailFragmentContainer = createFragmentContainer(ArtworksRail, {
   `,
 })
 
-export const ArtworksRailRenderer: React.FC<React.PropsWithChildren<{
-  partnerId: string
-} & Omit<ArtworksRailProps, "partner">>> = ({ partnerId, ...rest }) => {
+export const ArtworksRailRenderer: React.FC<
+  React.PropsWithChildren<
+    {
+      partnerId: string
+    } & Omit<ArtworksRailProps, "partner">
+  >
+> = ({ partnerId, ...rest }) => {
   return (
     <SystemQueryRenderer<ArtworksRailRendererQuery>
       lazyLoad

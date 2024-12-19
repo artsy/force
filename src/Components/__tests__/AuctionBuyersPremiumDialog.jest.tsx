@@ -1,23 +1,22 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { AuctionBuyersPremiumDialogFragmentContainer } from "Components/AuctionBuyersPremiumDialog"
-import { AuctionBuyersPremiumDialog_Test_Query } from "__generated__/AuctionBuyersPremiumDialog_Test_Query.graphql"
+import type { AuctionBuyersPremiumDialog_Test_Query } from "__generated__/AuctionBuyersPremiumDialog_Test_Query.graphql"
 import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  AuctionBuyersPremiumDialog_Test_Query
->({
-  Component: AuctionBuyersPremiumDialogFragmentContainer,
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<AuctionBuyersPremiumDialog_Test_Query>({
+    Component: AuctionBuyersPremiumDialogFragmentContainer,
+    query: graphql`
     query AuctionBuyersPremiumDialog_Test_Query @relay_test_operation {
       sale(id: "example") {
         ...AuctionBuyersPremiumDialog_sale
       }
     }
   `,
-})
+  })
 
 describe("AuctionBuyersPremiumDialog", () => {
   describe("one point", () => {

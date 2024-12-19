@@ -1,4 +1,4 @@
-import { Image as BaseImage, ImageProps, Box } from "@artsy/palette"
+import { Image as BaseImage, type ImageProps, Box } from "@artsy/palette"
 import { useRef, useState } from "react"
 import styled from "styled-components"
 import { isTouch } from "Utils/device"
@@ -12,9 +12,9 @@ const ENTER_TIMEOUT_DELAY = 300
 const DEFAULT_SCALE = 1.75
 const DEFAULT_SCALE_DURATION = 0.15
 
-export const MagnifyImage: React.FC<React.PropsWithChildren<
-  MagnifyImageProps
->> = ({
+export const MagnifyImage: React.FC<
+  React.PropsWithChildren<MagnifyImageProps>
+> = ({
   scale = DEFAULT_SCALE,
   scaleDuration = DEFAULT_SCALE_DURATION,
   ...rest

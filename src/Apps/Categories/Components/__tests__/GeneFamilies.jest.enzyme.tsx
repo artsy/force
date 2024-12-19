@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { GeneFamiliesFragmentContainer } from "Apps/Categories/Components/GeneFamilies"
-import { GeneFamilies_Test_Query } from "__generated__/GeneFamilies_Test_Query.graphql"
+import type { GeneFamilies_Test_Query } from "__generated__/GeneFamilies_Test_Query.graphql"
 
 jest.unmock("react-relay")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({

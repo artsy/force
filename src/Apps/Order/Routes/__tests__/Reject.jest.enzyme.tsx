@@ -1,4 +1,4 @@
-import { RejectTestQuery$rawResponse } from "__generated__/RejectTestQuery.graphql"
+import type { RejectTestQuery$rawResponse } from "__generated__/RejectTestQuery.graphql"
 import { OfferOrderWithShippingDetails } from "Apps/__tests__/Fixtures/Order"
 import { StepSummaryItem } from "Components/StepSummaryItem"
 import { DateTime } from "luxon"

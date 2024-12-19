@@ -12,7 +12,7 @@ import {
   VisuallyHidden,
 } from "@artsy/palette"
 import { Formik, Form } from "formik"
-import { FC } from "react"
+import type { FC } from "react"
 import { CountrySelect } from "Components/CountrySelect"
 import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
 import { useEditAddress } from "Apps/Settings/Routes/Shipping/useEditAddress"
@@ -75,10 +75,9 @@ interface SettingsShippingAddressFormProps {
   }
 }
 
-export const SettingsShippingAddressForm: FC<React.PropsWithChildren<SettingsShippingAddressFormProps>> = ({
-  onClose,
-  address,
-}) => {
+export const SettingsShippingAddressForm: FC<
+  React.PropsWithChildren<SettingsShippingAddressFormProps>
+> = ({ onClose, address }) => {
   const { submitMutation: submitAddAddress } = useAddAddress()
   const { submitMutation: submitEditAddress } = useEditAddress()
   const { submitMutation: submitSetDefaultAddress } = useSetDefaultAddress()

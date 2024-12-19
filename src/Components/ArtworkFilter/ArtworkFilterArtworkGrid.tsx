@@ -1,6 +1,6 @@
-import * as React from "react"
-import { RelayProp, createFragmentContainer, graphql } from "react-relay"
-import { ArtworkFilterArtworkGrid_filtered_artworks$data } from "__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
+import type * as React from "react"
+import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
+import type { ArtworkFilterArtworkGrid_filtered_artworks$data } from "__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
@@ -8,7 +8,7 @@ import { PaginationFragmentContainer as Pagination } from "Components/Pagination
 import { useArtworkFilterContext } from "./ArtworkFilterContext"
 import {
   ActionType,
-  ClickedMainArtworkGrid,
+  type ClickedMainArtworkGrid,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
@@ -23,14 +23,13 @@ interface ArtworkFilterArtworkGridProps {
   relay: RelayProp
 }
 
-const ArtworkFilterArtworkGrid: React.FC<React.PropsWithChildren<ArtworkFilterArtworkGridProps>> = props => {
+const ArtworkFilterArtworkGrid: React.FC<
+  React.PropsWithChildren<ArtworkFilterArtworkGridProps>
+> = props => {
   const { user } = useSystemContext()
   const { trackEvent } = useTracking()
-  const {
-    contextPageOwnerType,
-    contextPageOwnerSlug,
-    contextPageOwnerId,
-  } = useAnalyticsContext()
+  const { contextPageOwnerType, contextPageOwnerSlug, contextPageOwnerId } =
+    useAnalyticsContext()
   const context = useArtworkFilterContext()
 
   const {

@@ -1,5 +1,5 @@
 import { Box, Clickable, Flex, Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 
 interface ConversationMessageFileProps {
   src: string
@@ -7,11 +7,9 @@ interface ConversationMessageFileProps {
   size: string
 }
 
-export const ConversationMessageFile: FC<React.PropsWithChildren<ConversationMessageFileProps>> = ({
-  src,
-  name,
-  size,
-}) => {
+export const ConversationMessageFile: FC<
+  React.PropsWithChildren<ConversationMessageFileProps>
+> = ({ src, name, size }) => {
   return (
     <Clickable
       display="flex"

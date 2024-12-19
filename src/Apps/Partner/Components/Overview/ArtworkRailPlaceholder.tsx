@@ -1,14 +1,13 @@
-import { Box, BoxProps, Flex, Shelf, SkeletonText } from "@artsy/palette"
+import { Box, type BoxProps, Flex, Shelf, SkeletonText } from "@artsy/palette"
 import { ShelfArtworkPlaceholder } from "Components/Artwork/ShelfArtwork"
 
 export interface ArtworksRailPlaceholderProps extends BoxProps {
   count: number
 }
 
-export const ArtworksRailPlaceholder: React.FC<React.PropsWithChildren<ArtworksRailPlaceholderProps>> = ({
-  count,
-  ...rest
-}) => {
+export const ArtworksRailPlaceholder: React.FC<
+  React.PropsWithChildren<ArtworksRailPlaceholderProps>
+> = ({ count, ...rest }) => {
   return (
     <Box {...rest}>
       <Flex mb={4} justifyContent="space-between" alignItems="center">

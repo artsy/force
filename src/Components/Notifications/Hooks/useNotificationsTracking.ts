@@ -1,15 +1,15 @@
 import {
   ActionType,
-  ClickedBuyNow,
-  ClickedViewWork,
+  type ClickedBuyNow,
+  type ClickedViewWork,
   OwnerType,
 } from "@artsy/cohesion"
-import {
+import type {
   ClickedActivityPanelNotificationItem,
   ClickedActivityPanelTab,
 } from "@artsy/cohesion/dist/Schema/Events/ActivityPanel"
 import { useTracking } from "react-tracking"
-import { CollectorSignals, getSignalLabel } from "Utils/getSignalLabel"
+import { type CollectorSignals, getSignalLabel } from "Utils/getSignalLabel"
 
 export const useNotificationsTracking = () => {
   const { trackEvent } = useTracking()

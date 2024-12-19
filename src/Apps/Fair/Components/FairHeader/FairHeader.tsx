@@ -1,14 +1,16 @@
-import * as React from "react"
-import { BoxProps, Column, Flex, GridColumns, Text } from "@artsy/palette"
+import type * as React from "react"
+import { type BoxProps, Column, Flex, GridColumns, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairHeader_fair$data } from "__generated__/FairHeader_fair.graphql"
+import type { FairHeader_fair$data } from "__generated__/FairHeader_fair.graphql"
 import { HeaderIcon } from "Components/HeaderIcon"
 
 interface FairHeaderProps extends BoxProps {
   fair: FairHeader_fair$data
 }
 
-const FairHeader: React.FC<React.PropsWithChildren<FairHeaderProps>> = ({ fair }) => {
+const FairHeader: React.FC<React.PropsWithChildren<FairHeaderProps>> = ({
+  fair,
+}) => {
   const { name, exhibitionPeriod, profile } = fair
 
   const avatar = profile?.icon?.url

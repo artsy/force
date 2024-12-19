@@ -8,11 +8,11 @@ import {
   FullBleed,
   Flex,
 } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleShare } from "Components/ArticleShare"
 import { TopContextBar } from "Components/TopContextBar"
-import { ArticleSeries_article$data } from "__generated__/ArticleSeries_article.graphql"
+import type { ArticleSeries_article$data } from "__generated__/ArticleSeries_article.graphql"
 import { ArticleAd } from "./ArticleAd/ArticleAd"
 import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
 import { ArticleSeriesItemFragmentContainer } from "./ArticleSeriesItem"
@@ -21,7 +21,9 @@ interface ArticleSeriesProps {
   article: ArticleSeries_article$data
 }
 
-const ArticleSeries: FC<React.PropsWithChildren<ArticleSeriesProps>> = ({ article }) => {
+const ArticleSeries: FC<React.PropsWithChildren<ArticleSeriesProps>> = ({
+  article,
+}) => {
   return (
     <>
       <TopContextBar href="/articles" displayBackArrow>

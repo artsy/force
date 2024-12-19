@@ -4,7 +4,7 @@ import { __ProgressiveOnboardingSaveArtwork__ } from "Components/ProgressiveOnbo
 import { __ProgressiveOnboardingSaveFind__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { FC, useEffect } from "react"
+import { type FC, useEffect } from "react"
 import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
 import {
   PROGRESSIVE_ONBOARDING_KEYS,
@@ -51,7 +51,8 @@ const Example: FC<React.PropsWithChildren<unknown>> = () => {
 }
 
 describe("ProgressiveOnboarding: Saves", () => {
-  const mockWithProgressiveOnboardingCounts = withProgressiveOnboardingCounts as jest.Mock
+  const mockWithProgressiveOnboardingCounts =
+    withProgressiveOnboardingCounts as jest.Mock
 
   const saveArtworkText = "Like what you see?"
   const saveFindText = "Find and edit all your Saves here."

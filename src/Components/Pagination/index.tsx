@@ -1,11 +1,11 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Pagination_pageCursors$data } from "__generated__/Pagination_pageCursors.graphql"
-import { CommercePagination_pageCursors$data } from "__generated__/CommercePagination_pageCursors.graphql"
+import type { Pagination_pageCursors$data } from "__generated__/Pagination_pageCursors.graphql"
+import type { CommercePagination_pageCursors$data } from "__generated__/CommercePagination_pageCursors.graphql"
 import {
   Pagination as PaginationBase,
-  PaginationProps as BasePaginationProps,
-  BoxProps,
+  type PaginationProps as BasePaginationProps,
+  type BoxProps,
 } from "@artsy/palette"
 import { useComputeHref } from "./useComputeHref"
 import { userIsForcingNavigation } from "System/Router/Utils/catchLinks"
@@ -37,6 +37,7 @@ export const Pagination: React.FC<React.PropsWithChildren<PaginationProps>> = ({
 }) => {
   const { jumpTo } = useJump({ offset })
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const getHref = __getHref__ ?? useComputeHref()
 
   if (pageCursors?.around.length === 1) {
@@ -82,8 +83,8 @@ export const Pagination: React.FC<React.PropsWithChildren<PaginationProps>> = ({
 
   return (
     // FIXME: Should not have external margin
-    (<PaginationBase mt={6} {...paginationProps} {...rest} />)
-  );
+    <PaginationBase mt={6} {...paginationProps} {...rest} />
+  )
 }
 
 export const PaginationFragmentContainer = createFragmentContainer(Pagination, {

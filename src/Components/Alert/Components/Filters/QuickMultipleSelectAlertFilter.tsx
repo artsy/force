@@ -6,9 +6,9 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { FC, useState } from "react"
+import { type FC, useState } from "react"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
-import { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
+import type { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
 import { handleFieldsWithMultipleValues } from "Components/Alert/Helpers/handleFieldsWithMultipleValues"
 
 interface QuickMultipleSelectAlertFilterProps {
@@ -21,12 +21,14 @@ interface QuickMultipleSelectAlertFilterProps {
   truncate?: number
 }
 
-export const QuickMultipleSelectAlertFilter: FC<React.PropsWithChildren<QuickMultipleSelectAlertFilterProps>> = ({
+export const QuickMultipleSelectAlertFilter: FC<
+  React.PropsWithChildren<QuickMultipleSelectAlertFilterProps>
+> = ({
   criteriaKey,
   description,
   label,
   options,
-  truncate = Infinity,
+  truncate = Number.POSITIVE_INFINITY,
 }) => {
   const { state, dispatch } = useAlertContext()
 
@@ -62,9 +64,9 @@ export const QuickMultipleSelectAlertFilter: FC<React.PropsWithChildren<QuickMul
             <Column span={6} key={index}>
               <Checkbox
                 onSelect={selected => toggleSelection(selected, value)}
-                selected={(state.criteria[criteriaKey] as
-                  | string[]
-                  | null)?.includes(value)}
+                selected={(
+                  state.criteria[criteriaKey] as string[] | null
+                )?.includes(value)}
               >
                 {name}
               </Checkbox>

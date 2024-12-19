@@ -2,17 +2,16 @@ import { ModalBase, Text } from "@artsy/palette"
 import { NavBarUserMenu } from "Components/NavBar/Menus"
 import { NavBarMobileMenuIcon } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenu"
 import { NavBarMobileMenuItemButton } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuItem"
-import { FC } from "react"
+import type { FC } from "react"
 
 interface NavBarMobileMenuProfileProps {
   onClose: () => void
   onNavButtonClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
-export const NavBarMobileMenuProfile: FC<React.PropsWithChildren<NavBarMobileMenuProfileProps>> = ({
-  onClose,
-  onNavButtonClick,
-}) => {
+export const NavBarMobileMenuProfile: FC<
+  React.PropsWithChildren<NavBarMobileMenuProfileProps>
+> = ({ onClose, onNavButtonClick }) => {
   return (
     <ModalBase dialogProps={{ width: "100%", height: "100%", bg: "white100" }}>
       <Text variant="sm-display" width="100%" onClick={onNavButtonClick}>

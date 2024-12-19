@@ -1,9 +1,11 @@
 import { Join, Spacer } from "@artsy/palette"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
-import React from "react"
+import type React from "react"
 import { RouterLink } from "System/Components/RouterLink"
 
-export const StepsNavigation: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const StepsNavigation: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { state } = useSellFlowContext()
 
   const pathForStep = (step: string) => {

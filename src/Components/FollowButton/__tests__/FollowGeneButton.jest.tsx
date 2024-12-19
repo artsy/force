@@ -4,7 +4,7 @@ import { graphql } from "react-relay"
 import { FollowGeneButtonFragmentContainer } from "Components/FollowButton/FollowGeneButton"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { fireEvent, screen } from "@testing-library/react"
-import { FollowGeneButton_Test_Query } from "__generated__/FollowGeneButton_Test_Query.graphql"
+import type { FollowGeneButton_Test_Query } from "__generated__/FollowGeneButton_Test_Query.graphql"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useFollowButtonTracking } from "Components/FollowButton/useFollowButtonTracking"
 import { useAuthDialog } from "Components/AuthDialog"
@@ -70,7 +70,6 @@ describe("FollowGeneButton", () => {
 
     it("opens the auth modal", () => {
       const showAuthDialog = jest.fn()
-
       ;(useAuthDialog as jest.Mock).mockImplementation(() => {
         return { showAuthDialog }
       })

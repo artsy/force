@@ -1,14 +1,18 @@
 import { useRouter } from "System/Hooks/useRouter"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
-  Aggregations,
+  type Aggregations,
   ArtworkFilterContextProvider,
-  Counts,
+  type Counts,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { SaleArtworksFilter_viewer$data } from "__generated__/SaleArtworksFilter_viewer.graphql"
+import type { SaleArtworksFilter_viewer$data } from "__generated__/SaleArtworksFilter_viewer.graphql"
 import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
 
 interface SaleArtworkFilterProps {
@@ -17,12 +21,9 @@ interface SaleArtworkFilterProps {
   featuredKeywords?: readonly string[]
 }
 
-const SaleArtworkFilter: React.FC<React.PropsWithChildren<SaleArtworkFilterProps>> = ({
-  relay,
-  viewer,
-  featuredKeywords,
-  ...rest
-}) => {
+const SaleArtworkFilter: React.FC<
+  React.PropsWithChildren<SaleArtworkFilterProps>
+> = ({ relay, viewer, featuredKeywords, ...rest }) => {
   const { user, userPreferences } = useSystemContext()
   const { match } = useRouter()
 

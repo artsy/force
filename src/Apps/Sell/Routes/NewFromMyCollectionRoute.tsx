@@ -3,7 +3,7 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { DevDebug } from "Apps/Sell/Components/DevDebug"
 import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { Formik } from "formik"
-import * as React from "react"
+import type * as React from "react"
 import * as Yup from "yup"
 
 const Schema = Yup.object().shape({
@@ -14,7 +14,9 @@ interface FormValues {
   myCollectionArtworkID: string
 }
 
-export const NewFromMyCollectionRoute: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const NewFromMyCollectionRoute: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const initialValues: FormValues = {
     myCollectionArtworkID: "",
   }

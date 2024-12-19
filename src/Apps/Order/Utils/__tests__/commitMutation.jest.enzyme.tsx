@@ -1,13 +1,13 @@
-import { commitMutationTest1Mutation } from "__generated__/commitMutationTest1Mutation.graphql"
+import type { commitMutationTest1Mutation } from "__generated__/commitMutationTest1Mutation.graphql"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
 import { mount } from "enzyme"
 import { graphql } from "react-relay"
 import { Environment, RecordSource, Store } from "relay-runtime"
-import { Environment as IEnvironment } from "react-relay"
+import type { Environment as IEnvironment } from "react-relay"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import {
-  CommitMutation,
+  type CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import { settingOrderPaymentFailed } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderPayment"
@@ -58,7 +58,7 @@ describe("injectCommitMutation", () => {
       }) => {
         return (
           // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-          (<div
+          <div
             className={
               props.isCommittingMutation ? "isCommittingMutation" : "nothing"
             }
@@ -93,8 +93,8 @@ describe("injectCommitMutation", () => {
             }}
           >
             {props.word}
-          </div>)
-        );
+          </div>
+        )
       }
     )
 

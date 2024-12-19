@@ -6,7 +6,7 @@ import {
   ModalDialog,
   Button,
 } from "@artsy/palette"
-import { ArtworkSidebarAuthenticityCertificate_artwork$data } from "__generated__/ArtworkSidebarAuthenticityCertificate_artwork.graphql"
+import type { ArtworkSidebarAuthenticityCertificate_artwork$data } from "__generated__/ArtworkSidebarAuthenticityCertificate_artwork.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -17,9 +17,9 @@ interface ArtworkSidebarAuthenticityCertificateProps {
   artwork: ArtworkSidebarAuthenticityCertificate_artwork$data
 }
 
-export const ArtworkSidebarAuthenticityCertificate: React.FC<React.PropsWithChildren<ArtworkSidebarAuthenticityCertificateProps>> = ({
-  artwork,
-}) => {
+export const ArtworkSidebarAuthenticityCertificate: React.FC<
+  React.PropsWithChildren<ArtworkSidebarAuthenticityCertificateProps>
+> = ({ artwork }) => {
   const [isShowingModal, setIsShowingModal] = useState(false)
 
   const handleClose = () => {
@@ -97,14 +97,12 @@ export const ArtworkSidebarAuthenticityCertificate: React.FC<React.PropsWithChil
   )
 }
 
-export const ArtworkSidebarAuthenticityCertificateFragmentContainer = createFragmentContainer(
-  ArtworkSidebarAuthenticityCertificate,
-  {
+export const ArtworkSidebarAuthenticityCertificateFragmentContainer =
+  createFragmentContainer(ArtworkSidebarAuthenticityCertificate, {
     artwork: graphql`
       fragment ArtworkSidebarAuthenticityCertificate_artwork on Artwork {
         hasCertificateOfAuthenticity
         isBiddable
       }
     `,
-  }
-)
+  })

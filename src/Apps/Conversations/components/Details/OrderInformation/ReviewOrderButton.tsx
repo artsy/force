@@ -1,18 +1,18 @@
 import { graphql, useFragment } from "react-relay"
-import { Button, ButtonProps } from "@artsy/palette"
-import { ReviewOrderButton_order$key } from "__generated__/ReviewOrderButton_order.graphql"
+import { Button, type ButtonProps } from "@artsy/palette"
+import type { ReviewOrderButton_order$key } from "__generated__/ReviewOrderButton_order.graphql"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
-import { CounterOfferState } from "Apps/Conversations/components/Details/OrderState/ConversationOrderState"
+import type { CounterOfferState } from "Apps/Conversations/components/Details/OrderState/ConversationOrderState"
 
 interface ReviewOrderButtonProps {
   order: ReviewOrderButton_order$key
 }
 
-export const ReviewOrderButton: React.FC<React.PropsWithChildren<ReviewOrderButtonProps>> = ({
-  order,
-}) => {
+export const ReviewOrderButton: React.FC<
+  React.PropsWithChildren<ReviewOrderButtonProps>
+> = ({ order }) => {
   const { match } = useRouter()
   const { trackEvent } = useTracking()
 

@@ -1,18 +1,18 @@
 import { Join, Spacer, Sup, Text } from "@artsy/palette"
 import { AppSecondFactorRefetchContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/AppSecondFactor"
 import { SmsSecondFactorRefetchContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/SmsSecondFactor"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SettingsEditSettingsTwoFactor_me$data } from "__generated__/SettingsEditSettingsTwoFactor_me.graphql"
+import type { SettingsEditSettingsTwoFactor_me$data } from "__generated__/SettingsEditSettingsTwoFactor_me.graphql"
 import { SettingsEditSettingsTwoFactorBackupCodesFragmentContainer } from "./SettingsEditSettingsTwoFactorBackupCodes"
 
 interface SettingsEditSettingsTwoFactorProps {
   me: SettingsEditSettingsTwoFactor_me$data
 }
 
-export const SettingsEditSettingsTwoFactor: React.FC<React.PropsWithChildren<SettingsEditSettingsTwoFactorProps>> = ({
-  me,
-}) => {
+export const SettingsEditSettingsTwoFactor: React.FC<
+  React.PropsWithChildren<SettingsEditSettingsTwoFactorProps>
+> = ({ me }) => {
   return (
     <>
       <Text variant={["md", "lg"]} mb={4}>
@@ -38,9 +38,8 @@ export const SettingsEditSettingsTwoFactor: React.FC<React.PropsWithChildren<Set
   )
 }
 
-export const SettingsEditSettingsTwoFactorFragmentContainer = createFragmentContainer(
-  SettingsEditSettingsTwoFactor,
-  {
+export const SettingsEditSettingsTwoFactorFragmentContainer =
+  createFragmentContainer(SettingsEditSettingsTwoFactor, {
     me: graphql`
       fragment SettingsEditSettingsTwoFactor_me on Me {
         hasSecondFactorEnabled
@@ -49,5 +48,4 @@ export const SettingsEditSettingsTwoFactorFragmentContainer = createFragmentCont
         ...SettingsEditSettingsTwoFactorBackupCodes_me
       }
     `,
-  }
-)
+  })

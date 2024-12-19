@@ -1,7 +1,7 @@
-import React from "react"
+import type React from "react"
 import {
   ModalBase,
-  ModalBaseProps,
+  type ModalBaseProps,
   splitBoxProps,
   useDidMount,
   Box,
@@ -11,12 +11,9 @@ import {
 
 export type OnboardingModalProps = ModalBaseProps
 
-export const OnboardingModal: React.FC<React.PropsWithChildren<OnboardingModalProps>> = ({
-  children,
-  onClose,
-  title,
-  ...rest
-}) => {
+export const OnboardingModal: React.FC<
+  React.PropsWithChildren<OnboardingModalProps>
+> = ({ children, onClose, title, ...rest }) => {
   const isMounted = useDidMount()
   const [boxProps, modalProps] = splitBoxProps(rest)
 

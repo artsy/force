@@ -1,7 +1,7 @@
 import { Dropdown } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import {
-  Entity,
+  type Entity,
   EntityTooltip,
   EntityTooltipHighlight,
 } from "Components/EntityTooltip"
@@ -15,9 +15,9 @@ interface ArticleTooltipProps {
   id: string
 }
 
-export const ArticleTooltip: FC<React.PropsWithChildren<
-  ArticleTooltipProps
->> = ({ entity, href, id, children }) => {
+export const ArticleTooltip: FC<
+  React.PropsWithChildren<ArticleTooltipProps>
+> = ({ entity, href, id, children }) => {
   return (
     <Dropdown
       placement="bottom"

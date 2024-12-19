@@ -1,8 +1,12 @@
 import { Text, Spacer, Column, GridColumns, Message } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtistArticlesRoute_artist$data } from "__generated__/ArtistArticlesRoute_artist.graphql"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import type { ArtistArticlesRoute_artist$data } from "__generated__/ArtistArticlesRoute_artist.graphql"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { Title } from "react-head"
 import { Jump } from "Utils/Hooks/useJump"
@@ -15,10 +19,9 @@ interface ArtistArticlesRouteProps {
   relay: RelayRefetchProp
 }
 
-const ArtistArticlesRoute: React.FC<React.PropsWithChildren<ArtistArticlesRouteProps>> = ({
-  artist,
-  relay,
-}) => {
+const ArtistArticlesRoute: React.FC<
+  React.PropsWithChildren<ArtistArticlesRouteProps>
+> = ({ artist, relay }) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const articles = extractNodes(artist.articlesConnection)

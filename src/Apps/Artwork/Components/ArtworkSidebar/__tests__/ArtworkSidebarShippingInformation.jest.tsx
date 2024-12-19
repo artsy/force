@@ -1,25 +1,24 @@
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { ArtworkSidebarShippingInformationFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarShippingInformation"
-import { ArtworkSidebarShippingInformation_Test_Query } from "__generated__/ArtworkSidebarShippingInformation_Test_Query.graphql"
+import type { ArtworkSidebarShippingInformation_Test_Query } from "__generated__/ArtworkSidebarShippingInformation_Test_Query.graphql"
 import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  ArtworkSidebarShippingInformation_Test_Query
->({
-  Component: ({ artwork }) => (
-    <ArtworkSidebarShippingInformationFragmentContainer artwork={artwork!} />
-  ),
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<ArtworkSidebarShippingInformation_Test_Query>({
+    Component: ({ artwork }) => (
+      <ArtworkSidebarShippingInformationFragmentContainer artwork={artwork!} />
+    ),
+    query: graphql`
     query ArtworkSidebarShippingInformation_Test_Query @relay_test_operation {
       artwork(id: "josef-albers-homage-to-the-square-85") {
         ...ArtworkSidebarShippingInformation_artwork
       }
     }
   `,
-})
+  })
 
 describe("ArtworkSidebarShippingInformation", () => {
   describe("Artwork with no shippingOrigin", () => {

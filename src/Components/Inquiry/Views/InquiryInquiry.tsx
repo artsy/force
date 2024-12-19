@@ -13,11 +13,11 @@ import {
   TextArea,
 } from "@artsy/palette"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import * as React from "react"
+import type * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { InquiryInquiry_artwork$data } from "__generated__/InquiryInquiry_artwork.graphql"
-import { InquiryInquiryQuery } from "__generated__/InquiryInquiryQuery.graphql"
+import type { InquiryInquiry_artwork$data } from "__generated__/InquiryInquiry_artwork.graphql"
+import type { InquiryInquiryQuery } from "__generated__/InquiryInquiryQuery.graphql"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import { wait } from "Utils/wait"
 import {
@@ -35,16 +35,13 @@ interface InquiryInquiryProps {
   artwork: InquiryInquiry_artwork$data
 }
 
-const InquiryInquiry: React.FC<React.PropsWithChildren<InquiryInquiryProps>> = ({ artwork }) => {
+const InquiryInquiry: React.FC<
+  React.PropsWithChildren<InquiryInquiryProps>
+> = ({ artwork }) => {
   const { user } = useSystemContext()
 
-  const {
-    next,
-    setInquiry,
-    inquiry,
-    artworkID,
-    setContext,
-  } = useInquiryContext()
+  const { next, setInquiry, inquiry, artworkID, setContext } =
+    useInquiryContext()
 
   const [mode, setMode] = useState<Mode>("Pending")
 
@@ -233,7 +230,9 @@ const InquiryInquiryFragmentContainer = createFragmentContainer(
   }
 )
 
-export const InquiryInquiryPlaceholder: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const InquiryInquiryPlaceholder: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton>
       <SkeletonText variant="lg-display" mr={4}>
@@ -285,7 +284,9 @@ export const InquiryInquiryPlaceholder: React.FC<React.PropsWithChildren<unknown
   )
 }
 
-export const InquiryInquiryQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const InquiryInquiryQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
   const { artworkID } = useInquiryContext()
 

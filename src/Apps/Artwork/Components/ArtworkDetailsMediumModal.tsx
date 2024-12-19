@@ -1,7 +1,7 @@
 import { Button, ModalDialog, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkDetailsMediumModal_artwork$data } from "__generated__/ArtworkDetailsMediumModal_artwork.graphql"
+import type { ArtworkDetailsMediumModal_artwork$data } from "__generated__/ArtworkDetailsMediumModal_artwork.graphql"
 
 interface ArtworkDetailsMediumModalProps {
   artwork: ArtworkDetailsMediumModal_artwork$data
@@ -9,11 +9,9 @@ interface ArtworkDetailsMediumModalProps {
   onClose(): void
 }
 
-export const ArtworkDetailsMediumModal: React.FC<React.PropsWithChildren<ArtworkDetailsMediumModalProps>> = ({
-  artwork,
-  show,
-  onClose,
-}) => {
+export const ArtworkDetailsMediumModal: React.FC<
+  React.PropsWithChildren<ArtworkDetailsMediumModalProps>
+> = ({ artwork, show, onClose }) => {
   if (!show || !artwork.mediumType) return null
 
   return (
@@ -31,9 +29,8 @@ export const ArtworkDetailsMediumModal: React.FC<React.PropsWithChildren<Artwork
   )
 }
 
-export const ArtworkDetailsMediumModalFragmentContainer = createFragmentContainer(
-  ArtworkDetailsMediumModal,
-  {
+export const ArtworkDetailsMediumModalFragmentContainer =
+  createFragmentContainer(ArtworkDetailsMediumModal, {
     artwork: graphql`
       fragment ArtworkDetailsMediumModal_artwork on Artwork {
         mediumType {
@@ -42,5 +39,4 @@ export const ArtworkDetailsMediumModalFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })

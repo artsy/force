@@ -1,9 +1,9 @@
 import { Flex, Spacer, Text } from "@artsy/palette"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { RouterLink } from "System/Components/RouterLink"
-import { FC } from "react"
+import type { FC } from "react"
 import { useFragment, graphql } from "react-relay"
-import { ArtworkPublishedNotification_notification$key } from "__generated__/ArtworkPublishedNotification_notification.graphql"
+import type { ArtworkPublishedNotification_notification$key } from "__generated__/ArtworkPublishedNotification_notification.graphql"
 import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
 import { NotificationArtworkList } from "Components/Notifications/NotificationArtworkList"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
@@ -12,9 +12,9 @@ interface ArtworkPublishedNotificationProps {
   notification: ArtworkPublishedNotification_notification$key
 }
 
-export const ArtworkPublishedNotification: FC<React.PropsWithChildren<ArtworkPublishedNotificationProps>> = ({
-  notification,
-}) => {
+export const ArtworkPublishedNotification: FC<
+  React.PropsWithChildren<ArtworkPublishedNotificationProps>
+> = ({ notification }) => {
   const notificationData = useFragment(
     ArtworkPublishedNotificationFragment,
     notification

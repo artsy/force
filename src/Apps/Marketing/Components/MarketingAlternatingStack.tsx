@@ -8,7 +8,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { FC, Fragment } from "react"
+import { type FC, Fragment } from "react"
 import { RouterLink } from "System/Components/RouterLink"
 import { cropped } from "Utils/resized"
 
@@ -26,9 +26,9 @@ interface MarketingAlternatingStackProps {
   cards: Card[]
 }
 
-export const MarketingAlternatingStack: FC<React.PropsWithChildren<MarketingAlternatingStackProps>> = ({
-  cards,
-}) => {
+export const MarketingAlternatingStack: FC<
+  React.PropsWithChildren<MarketingAlternatingStackProps>
+> = ({ cards }) => {
   return (
     <>
       <GridColumns gridRowGap={[2, 6]}>

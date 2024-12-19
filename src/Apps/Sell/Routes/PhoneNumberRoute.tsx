@@ -6,10 +6,10 @@ import { useFocusInput } from "Apps/Sell/Hooks/useFocusInput"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { validatePhoneNumber } from "Components/PhoneNumberInput"
 import { COUNTRY_CODES, countries } from "Utils/countries"
-import { PhoneNumberRoute_me$key } from "__generated__/PhoneNumberRoute_me.graphql"
-import { PhoneNumberRoute_submission$key } from "__generated__/PhoneNumberRoute_submission.graphql"
+import type { PhoneNumberRoute_me$key } from "__generated__/PhoneNumberRoute_me.graphql"
+import type { PhoneNumberRoute_submission$key } from "__generated__/PhoneNumberRoute_submission.graphql"
 import { Formik } from "formik"
-import * as React from "react"
+import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
 
@@ -60,9 +60,9 @@ interface PhoneNumberRouteProps {
   me: PhoneNumberRoute_me$key
 }
 
-export const PhoneNumberRoute: React.FC<React.PropsWithChildren<
-  PhoneNumberRouteProps
->> = props => {
+export const PhoneNumberRoute: React.FC<
+  React.PropsWithChildren<PhoneNumberRouteProps>
+> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
   const me = useFragment(FRAGMENT_ME, props.me)
 

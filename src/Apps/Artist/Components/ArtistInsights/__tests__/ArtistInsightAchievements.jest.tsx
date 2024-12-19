@@ -32,8 +32,9 @@ describe("ArtistInsightAchievements", () => {
       }),
     })
 
-    const expandableText = screen.getByTestId("expandable-dropdownlist")
-      .innerHTML
+    const expandableText = screen.getByTestId(
+      "expandable-dropdownlist"
+    ).innerHTML
 
     expect(
       screen.getByText("Solo show at a major institution")

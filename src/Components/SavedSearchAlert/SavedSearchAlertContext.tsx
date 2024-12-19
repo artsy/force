@@ -1,8 +1,8 @@
-import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useContext, useState } from "react"
 import { createContext } from "react"
-import { Metric } from "Utils/metrics"
-import {
+import type { Metric } from "Utils/metrics"
+import type {
   FilterPill,
   SavedSearchEntity,
   SearchCriteriaAttributeKeys,
@@ -55,7 +55,9 @@ const SavedSearchAlertContext = createContext<SavedSearchAlertContextProps>({
   criteriaHref: () => null,
 })
 
-export const SavedSearchAlertContextProvider: React.FC<React.PropsWithChildren<SavedSearchAlertContextProviderProps>> = ({
+export const SavedSearchAlertContextProvider: React.FC<
+  React.PropsWithChildren<SavedSearchAlertContextProviderProps>
+> = ({
   entity,
   aggregations,
   criteria: criteriaFromArgument,

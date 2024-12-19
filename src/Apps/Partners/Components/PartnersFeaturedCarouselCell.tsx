@@ -1,20 +1,19 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Flex, Image, Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 import { RouterLink } from "System/Components/RouterLink"
-import { PartnersFeaturedCarouselCell_profile$data } from "__generated__/PartnersFeaturedCarouselCell_profile.graphql"
+import type { PartnersFeaturedCarouselCell_profile$data } from "__generated__/PartnersFeaturedCarouselCell_profile.graphql"
 
 interface PartnersFeaturedCarouselCellProps {
   profile: PartnersFeaturedCarouselCell_profile$data
   lazyLoad?: boolean
 }
 
-const PartnersFeaturedCarouselCell: FC<React.PropsWithChildren<PartnersFeaturedCarouselCellProps>> = ({
-  profile,
-  lazyLoad = true,
-}) => {
+const PartnersFeaturedCarouselCell: FC<
+  React.PropsWithChildren<PartnersFeaturedCarouselCellProps>
+> = ({ profile, lazyLoad = true }) => {
   const partner = profile.owner
 
   if (!partner) return null
@@ -105,9 +104,8 @@ const PartnersFeaturedCarouselCell: FC<React.PropsWithChildren<PartnersFeaturedC
   )
 }
 
-export const PartnersFeaturedCarouselCellFragmentContainer = createFragmentContainer(
-  PartnersFeaturedCarouselCell,
-  {
+export const PartnersFeaturedCarouselCellFragmentContainer =
+  createFragmentContainer(PartnersFeaturedCarouselCell, {
     profile: graphql`
       fragment PartnersFeaturedCarouselCell_profile on Profile {
         internalID
@@ -141,5 +139,4 @@ export const PartnersFeaturedCarouselCellFragmentContainer = createFragmentConta
         }
       }
     `,
-  }
-)
+  })

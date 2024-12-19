@@ -2,8 +2,8 @@ import { useTracking } from "react-tracking"
 import { renderRelayTree } from "DevTools/renderRelayTree"
 import { MockBoot } from "DevTools/MockBoot"
 import { graphql } from "react-relay"
-import { ViewingRoomWorksRoute_Test_Query$rawResponse } from "__generated__/ViewingRoomWorksRoute_Test_Query.graphql"
-import { Breakpoint } from "@artsy/palette"
+import type { ViewingRoomWorksRoute_Test_Query$rawResponse } from "__generated__/ViewingRoomWorksRoute_Test_Query.graphql"
+import type { Breakpoint } from "@artsy/palette"
 import { ViewingRoomWorksRouteFragmentContainer } from "Apps/ViewingRoom/Routes/Works/ViewingRoomWorksRoute"
 
 jest.unmock("react-relay")
@@ -96,306 +96,293 @@ describe("ViewingRoomWorksRoute", () => {
   })
 })
 
-const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse = {
-  viewingRoom: {
-    artworksConnection: {
-      edges: [
-        {
-          node: {
-            saleArtwork: {
-              id: "opaque-sale-artwork-id",
-              lotID: "lot-id",
-            },
-            internalID: "5de6b49aa665fc000db78197",
-            images: [
-              {
-                internalID: "5de6b49b7bc07c0013d44b5d",
-                solo: {
-                  width: 500,
-                  height: 500,
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                  srcSet:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse =
+  {
+    viewingRoom: {
+      artworksConnection: {
+        edges: [
+          {
+            node: {
+              saleArtwork: {
+                id: "opaque-sale-artwork-id",
+                lotID: "lot-id",
+              },
+              internalID: "5de6b49aa665fc000db78197",
+              images: [
+                {
+                  internalID: "5de6b49b7bc07c0013d44b5d",
+                  solo: {
+                    width: 500,
+                    height: 500,
+                    src: "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                    srcSet:
+                      "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  },
+                  resized: {
+                    width: 500,
+                    height: 500,
+                    src: "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                    srcSet:
+                      "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  },
                 },
-                resized: {
-                  width: 500,
-                  height: 500,
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                  srcSet:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                {
+                  internalID: "5eb95fc5c74214001104a724",
+                  solo: {
+                    width: 500,
+                    height: 500,
+                    src: "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                    srcSet:
+                      "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  },
+                  resized: {
+                    width: 500,
+                    height: 500,
+                    src: "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                    srcSet:
+                      "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  },
+                },
+                {
+                  internalID: "5eb95fcdc74214001104a726",
+                  solo: {
+                    width: 500,
+                    height: 500,
+                    src: "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                    srcSet:
+                      "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  },
+                  resized: {
+                    width: 500,
+                    height: 500,
+                    src: "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                    srcSet:
+                      "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  },
+                },
+              ],
+              id: "QXJ0d29yazo1ZGU2YjQ5YWE2NjVmYzAwMGRiNzgxOTc=",
+              title: "Beep Beep",
+              date: "2015",
+              additionalInformation: "some description",
+              href: "/artwork/bill-miles-beep-beep",
+              artist: {
+                id: "artist-id",
+                targetSupply: {
+                  isP1: true,
                 },
               },
-              {
-                internalID: "5eb95fc5c74214001104a724",
-                solo: {
-                  width: 500,
-                  height: 500,
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                  srcSet:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+              marketPriceInsights: {
+                demandRank: 0.9,
+              },
+              artists: [
+                {
+                  id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
+                  href: "/artist/bill-miles",
+                  name: "Bill Miles",
                 },
-                resized: {
-                  width: 500,
-                  height: 500,
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                  srcSet:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+              ],
+              sale_message: "$500",
+              cultural_maker: null,
+              collecting_institution: "This Really Great Gallery",
+              partner: {
+                id: "opaque-partner-id",
+                name: "Forum Auctions",
+                href: "/auction/forum-auctions",
+              },
+              sale: {
+                id: "opaque-sale-id",
+                is_auction: false,
+                is_closed: false,
+                cascadingEndTimeIntervalMinutes: null,
+                extendedBiddingIntervalMinutes: null,
+                startAt: "2022-03-11T12:33:37.000Z",
+                endAt: "2022-03-12T12:33:37.000Z",
+              },
+              sale_artwork: {
+                lotID: "lot-id",
+                lotLabel: "0",
+                id: "opaque-sale-artwork-id",
+                highest_bid: { display: "$2,600" },
+                opening_bid: { display: "$2,400" },
+                counts: { bidder_positions: 0 },
+                endAt: "2022-03-12T12:33:37.000Z",
+                formattedEndDateTime: "Closes, Mar 12 • 12:33pm GMT",
+                extendedBiddingEndAt: null,
+              },
+              attributionClass: {
+                id: "attributionClass-id",
+                name: "Unique",
+              },
+              mediumType: {
+                filterGene: {
+                  id: "gene-id",
+                  name: "Prints",
                 },
               },
-              {
-                internalID: "5eb95fcdc74214001104a726",
-                solo: {
-                  width: 500,
-                  height: 500,
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                  srcSet:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+              collectorSignals: {
+                primaryLabel: null,
+                partnerOffer: null,
+                auction: {
+                  bidCount: 0,
+                  liveBiddingStarted: false,
+                  lotClosesAt: new Date(Date.now() + 60 * 1000).toISOString(),
+                  onlineBiddingExtended: false,
+                  registrationEndsAt: "2022-03-5T12:33:37.000Z",
                 },
-                resized: {
-                  width: 500,
-                  height: 500,
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                  srcSet:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                },
-              },
-            ],
-            id: "QXJ0d29yazo1ZGU2YjQ5YWE2NjVmYzAwMGRiNzgxOTc=",
-            title: "Beep Beep",
-            date: "2015",
-            additionalInformation: "some description",
-            href: "/artwork/bill-miles-beep-beep",
-            artist: {
-              id: "artist-id",
-              targetSupply: {
-                isP1: true,
-              },
-            },
-            marketPriceInsights: {
-              demandRank: 0.9,
-            },
-            artists: [
-              {
-                id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
-                href: "/artist/bill-miles",
-                name: "Bill Miles",
-              },
-            ],
-            sale_message: "$500",
-            cultural_maker: null,
-            collecting_institution: "This Really Great Gallery",
-            partner: {
-              id: "opaque-partner-id",
-              name: "Forum Auctions",
-              href: "/auction/forum-auctions",
-            },
-            sale: {
-              id: "opaque-sale-id",
-              is_auction: false,
-              is_closed: false,
-              cascadingEndTimeIntervalMinutes: null,
-              extendedBiddingIntervalMinutes: null,
-              startAt: "2022-03-11T12:33:37.000Z",
-              endAt: "2022-03-12T12:33:37.000Z",
-            },
-            sale_artwork: {
-              lotID: "lot-id",
-              lotLabel: "0",
-              id: "opaque-sale-artwork-id",
-              highest_bid: { display: "$2,600" },
-              opening_bid: { display: "$2,400" },
-              counts: { bidder_positions: 0 },
-              endAt: "2022-03-12T12:33:37.000Z",
-              formattedEndDateTime: "Closes, Mar 12 • 12:33pm GMT",
-              extendedBiddingEndAt: null,
-            },
-            attributionClass: {
-              id: "attributionClass-id",
-              name: "Unique",
-            },
-            mediumType: {
-              filterGene: {
-                id: "gene-id",
-                name: "Prints",
-              },
-            },
-            collectorSignals: {
-              primaryLabel: null,
-              partnerOffer: null,
-              auction: {
-                bidCount: 0,
-                liveBiddingStarted: false,
-                lotClosesAt: new Date(Date.now() + 60 * 1000).toISOString(),
-                onlineBiddingExtended: false,
-                registrationEndsAt: "2022-03-5T12:33:37.000Z",
               },
             },
           },
-        },
-        {
-          node: {
-            internalID: "5de6b3a46882b7000eee31f8",
-            saleArtwork: {
-              id: "opaque-sale-artwork-id-2",
-              lotID: "lot-id-2",
-            },
-            images: [
-              {
-                internalID: "5de6b3a4a665fc000db78117",
-                solo: {
-                  width: 500,
-                  height: 500,
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                  srcSet:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+          {
+            node: {
+              internalID: "5de6b3a46882b7000eee31f8",
+              saleArtwork: {
+                id: "opaque-sale-artwork-id-2",
+                lotID: "lot-id-2",
+              },
+              images: [
+                {
+                  internalID: "5de6b3a4a665fc000db78117",
+                  solo: {
+                    width: 500,
+                    height: 500,
+                    src: "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                    srcSet:
+                      "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  },
+                  resized: {
+                    width: 500,
+                    height: 500,
+                    src: "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                    srcSet:
+                      "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  },
                 },
-                resized: {
-                  width: 500,
-                  height: 500,
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                  srcSet:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                {
+                  internalID: "5eb95f3ec74214001104a71d",
+                  solo: {
+                    width: 500,
+                    height: 500,
+                    src: "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                    srcSet:
+                      "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  },
+                  resized: {
+                    width: 500,
+                    height: 500,
+                    src: "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                    srcSet:
+                      "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  },
+                },
+                {
+                  internalID: "5eb95f45b5fef100123a168f",
+                  solo: {
+                    width: 500,
+                    height: 500,
+                    src: "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                    srcSet:
+                      "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  },
+                  resized: {
+                    width: 500,
+                    height: 500,
+                    src: "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                    srcSet:
+                      "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  },
+                },
+                {
+                  internalID: "5eb95f46c74214001104a720",
+                  solo: {
+                    width: 500,
+                    height: 500,
+                    src: "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                    srcSet:
+                      "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  },
+                  resized: {
+                    width: 500,
+                    height: 500,
+                    src: "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                    srcSet:
+                      "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  },
+                },
+              ],
+              id: "QXJ0d29yazo1ZGU2YjNhNDY4ODJiNzAwMGVlZTMxZjg=",
+              title: "Please Do Not Touch",
+              date: "2018",
+              additionalInformation: "some description",
+              href: "/artwork/emma-johnson-please-do-not-touch",
+              artist: {
+                id: "artist-id",
+                targetSupply: {
+                  isP1: true,
                 },
               },
-              {
-                internalID: "5eb95f3ec74214001104a71d",
-                solo: {
-                  width: 500,
-                  height: 500,
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                  srcSet:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                },
-                resized: {
-                  width: 500,
-                  height: 500,
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                  srcSet:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                },
+              marketPriceInsights: {
+                demandRank: 0.9,
               },
-              {
-                internalID: "5eb95f45b5fef100123a168f",
-                solo: {
-                  width: 500,
-                  height: 500,
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                  srcSet:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+              artists: [
+                {
+                  id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
+                  href: "/artist/bill-miles",
+                  name: "Bill Miles",
                 },
-                resized: {
-                  width: 500,
-                  height: 500,
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                  srcSet:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                },
+              ],
+              sale_message: "$450",
+              cultural_maker: null,
+              collecting_institution: "This Really Great Gallery",
+              partner: {
+                id: "opaque-partner-id",
+                name: "Forum Auctions",
+                href: "/auction/forum-auctions",
               },
-              {
-                internalID: "5eb95f46c74214001104a720",
-                solo: {
-                  width: 500,
-                  height: 500,
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                  srcSet:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                },
-                resized: {
-                  width: 500,
-                  height: 500,
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
-                  srcSet:
-                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+              sale: {
+                id: "opaque-sale-id",
+                is_auction: false,
+                is_closed: false,
+                cascadingEndTimeIntervalMinutes: null,
+                extendedBiddingIntervalMinutes: null,
+                startAt: "2022-03-11T12:33:37.000Z",
+                endAt: "2022-03-12T12:33:37.000Z",
+              },
+              sale_artwork: {
+                lotID: "lot-id",
+                lotLabel: "0",
+                id: "opaque-sale-artwork-id",
+                highest_bid: { display: "$2,600" },
+                opening_bid: { display: "$2,400" },
+                counts: { bidder_positions: 0 },
+                endAt: "2022-03-12T12:33:37.000Z",
+                formattedEndDateTime: "Closes, Mar 12 • 12:33pm GMT",
+                extendedBiddingEndAt: null,
+              },
+              attributionClass: {
+                id: "attributionClass-id",
+                name: "Unique",
+              },
+              mediumType: {
+                filterGene: {
+                  id: "gene-id",
+                  name: "Prints",
                 },
               },
-            ],
-            id: "QXJ0d29yazo1ZGU2YjNhNDY4ODJiNzAwMGVlZTMxZjg=",
-            title: "Please Do Not Touch",
-            date: "2018",
-            additionalInformation: "some description",
-            href: "/artwork/emma-johnson-please-do-not-touch",
-            artist: {
-              id: "artist-id",
-              targetSupply: {
-                isP1: true,
-              },
-            },
-            marketPriceInsights: {
-              demandRank: 0.9,
-            },
-            artists: [
-              {
-                id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
-                href: "/artist/bill-miles",
-                name: "Bill Miles",
-              },
-            ],
-            sale_message: "$450",
-            cultural_maker: null,
-            collecting_institution: "This Really Great Gallery",
-            partner: {
-              id: "opaque-partner-id",
-              name: "Forum Auctions",
-              href: "/auction/forum-auctions",
-            },
-            sale: {
-              id: "opaque-sale-id",
-              is_auction: false,
-              is_closed: false,
-              cascadingEndTimeIntervalMinutes: null,
-              extendedBiddingIntervalMinutes: null,
-              startAt: "2022-03-11T12:33:37.000Z",
-              endAt: "2022-03-12T12:33:37.000Z",
-            },
-            sale_artwork: {
-              lotID: "lot-id",
-              lotLabel: "0",
-              id: "opaque-sale-artwork-id",
-              highest_bid: { display: "$2,600" },
-              opening_bid: { display: "$2,400" },
-              counts: { bidder_positions: 0 },
-              endAt: "2022-03-12T12:33:37.000Z",
-              formattedEndDateTime: "Closes, Mar 12 • 12:33pm GMT",
-              extendedBiddingEndAt: null,
-            },
-            attributionClass: {
-              id: "attributionClass-id",
-              name: "Unique",
-            },
-            mediumType: {
-              filterGene: {
-                id: "gene-id",
-                name: "Prints",
-              },
-            },
-            collectorSignals: {
-              primaryLabel: null,
-              partnerOffer: null,
-              auction: {
-                bidCount: 0,
-                liveBiddingStarted: false,
-                lotClosesAt: new Date(Date.now() + 60 * 1000).toISOString(),
-                onlineBiddingExtended: false,
-                registrationEndsAt: "2022-03-5T12:33:37.000Z",
+              collectorSignals: {
+                primaryLabel: null,
+                partnerOffer: null,
+                auction: {
+                  bidCount: 0,
+                  liveBiddingStarted: false,
+                  lotClosesAt: new Date(Date.now() + 60 * 1000).toISOString(),
+                  onlineBiddingExtended: false,
+                  registrationEndsAt: "2022-03-5T12:33:37.000Z",
+                },
               },
             },
           },
-        },
-      ],
+        ],
+      },
     },
-  },
-}
+  }

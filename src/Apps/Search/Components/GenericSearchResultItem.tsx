@@ -1,4 +1,4 @@
-import React from "react"
+import type React from "react"
 import { Box, Flex, Image, Text, BorderBox } from "@artsy/palette"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import styled from "styled-components"
@@ -17,16 +17,9 @@ interface GenericSearchResultItemProps {
   id: string
 }
 
-export const GenericSearchResultItem: React.FC<React.PropsWithChildren<GenericSearchResultItemProps>> = ({
-  imageUrl,
-  name,
-  description,
-  href,
-  entityType,
-  term,
-  index,
-  id,
-}) => {
+export const GenericSearchResultItem: React.FC<
+  React.PropsWithChildren<GenericSearchResultItemProps>
+> = ({ imageUrl, name, description, href, entityType, term, index, id }) => {
   const tracking = useTracking()
 
   const translateEntityType = (anEntityType: string) => {

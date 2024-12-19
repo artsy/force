@@ -4,7 +4,7 @@ import { groupBy } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
-import { InsightsMedianSalePrice_me$data } from "__generated__/InsightsMedianSalePrice_me.graphql"
+import type { InsightsMedianSalePrice_me$data } from "__generated__/InsightsMedianSalePrice_me.graphql"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { Fragment } from "react"
@@ -14,9 +14,9 @@ interface InsightsMedianSalePriceProps {
   me: InsightsMedianSalePrice_me$data
 }
 
-const InsightsMedianSalePrice: React.FC<React.PropsWithChildren<InsightsMedianSalePriceProps>> = ({
-  me,
-}) => {
+const InsightsMedianSalePrice: React.FC<
+  React.PropsWithChildren<InsightsMedianSalePriceProps>
+> = ({ me }) => {
   const medianSalePrices = extractNodes(me.medianSalePrices)
 
   if (!medianSalePrices.length) {
@@ -103,11 +103,13 @@ const InsightsMedianSalePrice: React.FC<React.PropsWithChildren<InsightsMedianSa
   )
 }
 
-const ArtistRowWrapper: React.FC<React.PropsWithChildren<{
-  artistID: string
-  children: JSX.Element
-  medium: string
-}>> = ({ artistID, children, medium }) => {
+const ArtistRowWrapper: React.FC<
+  React.PropsWithChildren<{
+    artistID: string
+    children: JSX.Element
+    medium: string
+  }>
+> = ({ artistID, children, medium }) => {
   const { router } = useRouter()
 
   const enableMedianSalePriceGraphScreen = useFeatureFlag(

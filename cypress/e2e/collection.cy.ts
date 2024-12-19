@@ -1,12 +1,8 @@
 import { artworkGridRenders } from "../helpers/artworkGridRenders"
-import { visitWithStatusRetries } from "../helpers/visitWithStatusRetries"
 
 describe("/collection/:id", () => {
-  beforeEach(() => {
-    visitWithStatusRetries("/collection/emerging-photographers")
-  })
-
   it("renders metadata and page content", () => {
+    cy.visit("/collection/emerging-photographers")
     cy.title().should("eq", "Emerging Photographers - For Sale on Artsy")
     cy.get("meta[name='description']")
       .should("have.attr", "content")
@@ -21,11 +17,8 @@ describe("/collection/:id", () => {
 })
 
 describe("/collection/:id (a collection hub)", () => {
-  beforeEach(() => {
-    visitWithStatusRetries("/collection/contemporary")
-  })
-
   it("renders metadata and page content", () => {
+    cy.visit("/collection/contemporary")
     cy.title().should("eq", "Contemporary Art - For Sale on Artsy")
     cy.get("meta[name='description']")
       .should("have.attr", "content")
@@ -35,19 +28,22 @@ describe("/collection/:id (a collection hub)", () => {
       )
 
     cy.get("h1").should("contain", "Contemporary")
-    artworkGridRenders()
+
+    cy.wait(1000).then(() => {
+      artworkGridRenders()
+    })
   })
 })
 
 describe("redirection", () => {
   it("redirects selected collections to artist series", () => {
-    visitWithStatusRetries("/collection/albrecht-durer-engraving")
+    cy.visit("/collection/albrecht-durer-engraving")
     cy.location("pathname").should(
       "eq",
       "/artist-series/albrecht-durer-etchings-and-engravings"
     )
 
-    visitWithStatusRetries("/collection/zeng-fanzhi-mask-series")
+    cy.visit("/collection/zeng-fanzhi-mask-series")
     cy.location("pathname").should(
       "eq",
       "/artist-series/zeng-fanzhi-ceng-fan-zhi-mask-series"

@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ExampleArtistRoute_artist$data } from "__generated__/ExampleArtistRoute_artist.graphql"
+import type { ExampleArtistRoute_artist$data } from "__generated__/ExampleArtistRoute_artist.graphql"
 import { Box, Text } from "@artsy/palette"
 import { Title } from "react-head"
 import { Analytics } from "System/Contexts/AnalyticsContext"
@@ -11,7 +11,9 @@ export interface ExampleArtistAppProps {
   artist: ExampleArtistRoute_artist$data
 }
 
-const ExampleArtistRoute: React.FC<React.PropsWithChildren<ExampleArtistAppProps>> = ({ artist }) => {
+const ExampleArtistRoute: React.FC<
+  React.PropsWithChildren<ExampleArtistAppProps>
+> = ({ artist }) => {
   return (
     <Box>
       <Title>{artist.name} | Artsy</Title>
@@ -35,7 +37,9 @@ const ExampleArtistRoute: React.FC<React.PropsWithChildren<ExampleArtistAppProps
 /**
  * Routes with :slugs require Analytics to provide the corresponding internalID
  */
-const TrackingWrappedExampleArtistRoute: React.FC<React.PropsWithChildren<ExampleArtistAppProps>> = props => {
+const TrackingWrappedExampleArtistRoute: React.FC<
+  React.PropsWithChildren<ExampleArtistAppProps>
+> = props => {
   const {
     artist: { internalID },
   } = props

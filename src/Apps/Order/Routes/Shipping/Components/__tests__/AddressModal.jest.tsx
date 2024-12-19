@@ -3,17 +3,17 @@ import userEvent from "@testing-library/user-event"
 import { graphql } from "react-relay"
 import {
   AddressModal,
-  AddressModalProps,
+  type AddressModalProps,
 } from "Apps/Order/Routes/Shipping/Components/AddressModal"
 import { validAddress } from "Components/__tests__/Utils/addressForm2"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
+import type { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { createMockEnvironment } from "relay-test-utils"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { AddressModalTestQuery } from "__generated__/AddressModalTestQuery.graphql"
+import type { AddressModalTestQuery } from "__generated__/AddressModalTestQuery.graphql"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
-import { DeepPartial } from "Utils/typeSupport"
+import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
+import type { DeepPartial } from "Utils/typeSupport"
 import {
   fillAddressFormFields,
   hasCorrectAddressFormFields,
@@ -38,7 +38,7 @@ let testAddressModalProps: AddressModalProps
 
 let mockRelayEnv: ReturnType<typeof createMockEnvironment>
 
-let mockShippingcontext: DeepPartial<ShippingContextProps> = {
+const mockShippingcontext: DeepPartial<ShippingContextProps> = {
   state: {},
   orderData: {
     shipsFrom: "US",
@@ -158,10 +158,8 @@ describe("AddressModal", () => {
 
     await userEvent.click(screen.getByText("Delete"))
 
-    const {
-      operationName,
-      operationVariables,
-    } = await mockResolveLastOperation({})
+    const { operationName, operationVariables } =
+      await mockResolveLastOperation({})
 
     expect(operationName).toBe("useDeleteSavedAddressMutation")
 

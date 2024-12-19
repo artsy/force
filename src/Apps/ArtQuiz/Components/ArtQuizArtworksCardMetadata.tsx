@@ -1,6 +1,6 @@
-import { Box, BoxProps, Text } from "@artsy/palette"
+import { Box, type BoxProps, Text } from "@artsy/palette"
 import { compact } from "lodash"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   getContrastTIQ,
@@ -8,16 +8,15 @@ import {
   stringifyRgba,
   adjustAlpha,
 } from "Utils/color"
-import { ArtQuizArtworksCardMetadata_artwork$data } from "__generated__/ArtQuizArtworksCardMetadata_artwork.graphql"
+import type { ArtQuizArtworksCardMetadata_artwork$data } from "__generated__/ArtQuizArtworksCardMetadata_artwork.graphql"
 
 interface ArtQuizArtworksCardMetadataProps extends BoxProps {
   artwork: ArtQuizArtworksCardMetadata_artwork$data
 }
 
-const ArtQuizArtworksCardMetadata: FC<React.PropsWithChildren<ArtQuizArtworksCardMetadataProps>> = ({
-  artwork,
-  ...rest
-}) => {
+const ArtQuizArtworksCardMetadata: FC<
+  React.PropsWithChildren<ArtQuizArtworksCardMetadataProps>
+> = ({ artwork, ...rest }) => {
   const backgroundRgba = hexToRgba(artwork.dominantColors[0] ?? "#ffffff")
   const foregroundRgba = getContrastTIQ(backgroundRgba)
   const textShadowRgba = adjustAlpha(getContrastTIQ(foregroundRgba), 0.5)
@@ -55,9 +54,8 @@ const ArtQuizArtworksCardMetadata: FC<React.PropsWithChildren<ArtQuizArtworksCar
   )
 }
 
-export const ArtQuizArtworksCardMetadataFragmentContainer = createFragmentContainer(
-  ArtQuizArtworksCardMetadata,
-  {
+export const ArtQuizArtworksCardMetadataFragmentContainer =
+  createFragmentContainer(ArtQuizArtworksCardMetadata, {
     artwork: graphql`
       fragment ArtQuizArtworksCardMetadata_artwork on Artwork {
         title
@@ -72,5 +70,4 @@ export const ArtQuizArtworksCardMetadataFragmentContainer = createFragmentContai
         }
       }
     `,
-  }
-)
+  })

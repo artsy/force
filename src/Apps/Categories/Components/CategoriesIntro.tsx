@@ -1,7 +1,9 @@
 import { Column, GridColumns, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 
-export const CategoriesIntro: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const CategoriesIntro: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <GridColumns>
       <Column span={6}>

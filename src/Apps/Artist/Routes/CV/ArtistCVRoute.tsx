@@ -1,15 +1,17 @@
 import { Join, Spacer } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCVGroupRefetchContainer } from "./Components/ArtistCVGroup"
-import { ArtistCVRoute_viewer$data } from "__generated__/ArtistCVRoute_viewer.graphql"
+import type { ArtistCVRoute_viewer$data } from "__generated__/ArtistCVRoute_viewer.graphql"
 import { MetaTags } from "Components/MetaTags"
 
 interface ArtistCVRouteProps {
   viewer: ArtistCVRoute_viewer$data
 }
 
-const ArtistCVRoute: React.FC<React.PropsWithChildren<ArtistCVRouteProps>> = ({ viewer }) => {
+const ArtistCVRoute: React.FC<React.PropsWithChildren<ArtistCVRouteProps>> = ({
+  viewer,
+}) => {
   if (!viewer) {
     return null
   }

@@ -3,7 +3,7 @@ import {
   findRoutesByPath,
   getRoutes,
 } from "System/Router/Utils/routeUtils"
-import { Match, Router } from "found"
+import type { Match, Router } from "found"
 import { getAppRoutes } from "routes"
 
 jest.mock("routes", () => ({ getAppRoutes: jest.fn() }))
@@ -143,10 +143,10 @@ describe("routeUtils", () => {
   describe("findCurrentRoute", () => {
     const getMatch = (config: Partial<Match>) => ({
       routes: [],
-      router: ({} as unknown) as Router,
+      router: {} as unknown as Router,
       context: {},
       routeIndices: [0],
-      location: ({} as unknown) as Location,
+      location: {} as unknown as Location,
       params: {},
       ...config,
     })

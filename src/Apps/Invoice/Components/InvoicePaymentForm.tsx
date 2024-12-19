@@ -1,7 +1,7 @@
 import { Formik, Form } from "formik"
 import * as Yup from "yup"
 import { Button, Spacer } from "@artsy/palette"
-import { AddressFormValues } from "Apps/Invoice/Components/AddressFormWithCreditCard"
+import type { AddressFormValues } from "Apps/Invoice/Components/AddressFormWithCreditCard"
 import { AddressFormWithCreditCard } from "Apps/Invoice/Components/AddressFormWithCreditCard"
 import { useCreateTokenAndSubmit } from "Apps/Invoice/Hooks/useCreateTokenAndSubmit"
 import { addressFormFieldsValidator } from "Components/Address/AddressFormFields"
@@ -14,9 +14,9 @@ export interface InvoicePaymentFormProps {
   amountMinor: number
 }
 
-export const InvoicePaymentForm: React.FC<React.PropsWithChildren<
-  InvoicePaymentFormProps
->> = props => {
+export const InvoicePaymentForm: React.FC<
+  React.PropsWithChildren<InvoicePaymentFormProps>
+> = props => {
   const { match, router } = useRouter()
   const token = match.params.token
   const invoiceRoute = `/invoice/${token}`

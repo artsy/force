@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   Box,
@@ -10,8 +10,8 @@ import {
   Join,
   Spacer,
 } from "@artsy/palette"
-import { ArtistsIndex_featuredArtists$data } from "__generated__/ArtistsIndex_featuredArtists.graphql"
-import { ArtistsIndex_featuredGenes$data } from "__generated__/ArtistsIndex_featuredGenes.graphql"
+import type { ArtistsIndex_featuredArtists$data } from "__generated__/ArtistsIndex_featuredArtists.graphql"
+import type { ArtistsIndex_featuredGenes$data } from "__generated__/ArtistsIndex_featuredGenes.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 import { ArtistsIndexMeta } from "Apps/Artists/Components/ArtistsIndexMeta"
 import { ArtistsCarouselCellFragmentContainer } from "Apps/Artists/Components/ArtistsCarouselCell"
@@ -26,10 +26,9 @@ interface ArtistsIndexProps {
   featuredGenes: ArtistsIndex_featuredGenes$data | null
 }
 
-export const ArtistsIndex: React.FC<React.PropsWithChildren<ArtistsIndexProps>> = ({
-  featuredArtists,
-  featuredGenes,
-}) => {
+export const ArtistsIndex: React.FC<
+  React.PropsWithChildren<ArtistsIndexProps>
+> = ({ featuredArtists, featuredGenes }) => {
   const [featuredArtistsSet] = featuredArtists ?? []
   const [featuredGenesSet] = featuredGenes ?? []
 

@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react"
+import React, { type ReactElement } from "react"
 
 import MoreIcon from "@artsy/icons/MoreIcon"
 import { Clickable, Dropdown } from "@artsy/palette"
@@ -32,9 +32,9 @@ const validateChildren = (children: React.ReactNode) => {
  * Creates a contextual menu by composing a MoreIcon (⋯) trigger
  * and a Dropdown component from Palette.
  */
-export const ContextualMenu: React.FC<React.PropsWithChildren<
-  ContextualMenuProps
->> = ({ children, placement = "bottom-end", zIndex }) => {
+export const ContextualMenu: React.FC<
+  React.PropsWithChildren<ContextualMenuProps>
+> = ({ children, placement = "bottom-end", zIndex }) => {
   validateChildren(children)
 
   return (

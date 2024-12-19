@@ -1,18 +1,22 @@
-import * as React from "react"
-import { Flex, FlexProps, Text, TextProps } from "@artsy/palette"
+import type * as React from "react"
+import { Flex, type FlexProps, Text, type TextProps } from "@artsy/palette"
 import { useTimer } from "Utils/Hooks/useTimer"
 
 const SEPARATOR = <>&nbsp;&nbsp;</>
 
-export const Timer: React.FC<React.PropsWithChildren<{
-  endDate: string
-  startDate?: string
-  labelWithTimeRemaining?: string
-  labelWithoutTimeRemaining?: string
-  label?: string
-  color?: string
-} & FlexProps &
-  TextProps>> = ({
+export const Timer: React.FC<
+  React.PropsWithChildren<
+    {
+      endDate: string
+      startDate?: string
+      labelWithTimeRemaining?: string
+      labelWithoutTimeRemaining?: string
+      label?: string
+      color?: string
+    } & FlexProps &
+      TextProps
+  >
+> = ({
   endDate,
   startDate,
   labelWithTimeRemaining,

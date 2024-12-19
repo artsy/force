@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { Box, Pill, Spacer } from "@artsy/palette"
 
@@ -6,7 +6,9 @@ export interface FeaturedKeywordsFilterQuickProps {
   featuredKeywords: readonly string[] | null | undefined
 }
 
-export const FeaturedKeywordsFilterQuick: FC<React.PropsWithChildren<FeaturedKeywordsFilterQuickProps>> = props => {
+export const FeaturedKeywordsFilterQuick: FC<
+  React.PropsWithChildren<FeaturedKeywordsFilterQuickProps>
+> = props => {
   const { filters, setFilter } = useArtworkFilterContext()
 
   const toggleKeyword = keyword => {

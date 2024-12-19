@@ -9,13 +9,13 @@ import {
   Image,
   FullBleed,
   Flex,
-  ColumnSpan,
-  ColumnStart,
+  type ColumnSpan,
+  type ColumnStart,
 } from "@artsy/palette"
 import { DateTime } from "luxon"
-import { FC, Fragment } from "react"
+import { type FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArticleBody_article$data } from "__generated__/ArticleBody_article.graphql"
+import type { ArticleBody_article$data } from "__generated__/ArticleBody_article.graphql"
 import { ArticleShare } from "Components/ArticleShare"
 import { RouterLink } from "System/Components/RouterLink"
 import { ArticleHeroFragmentContainer } from "./ArticleHero"
@@ -34,7 +34,9 @@ interface ArticleBodyProps {
   article: ArticleBody_article$data
 }
 
-const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({ article }) => {
+const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
+  article,
+}) => {
   const centered = article.layout === "FEATURE" || article.layout === "NEWS"
 
   return (

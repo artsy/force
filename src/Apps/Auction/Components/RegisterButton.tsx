@@ -1,7 +1,7 @@
 import { Button, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RegisterButton_sale$data } from "__generated__/RegisterButton_sale.graphql"
-import { RegisterButton_me$data } from "__generated__/RegisterButton_me.graphql"
+import type { RegisterButton_sale$data } from "__generated__/RegisterButton_sale.graphql"
+import type { RegisterButton_me$data } from "__generated__/RegisterButton_me.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import { ContextModule, Intent } from "@artsy/cohesion"
@@ -16,7 +16,9 @@ export interface RegisterButtonProps {
   sale: RegisterButton_sale$data
 }
 
-export const RegisterButton: React.FC<React.PropsWithChildren<RegisterButtonProps>> = ({ me, sale }) => {
+export const RegisterButton: React.FC<
+  React.PropsWithChildren<RegisterButtonProps>
+> = ({ me, sale }) => {
   const { router } = useRouter()
   const { tracking } = useAuctionTracking()
 
@@ -209,13 +211,15 @@ const IdentityVerificationMessage = () => {
   )
 }
 
-const ButtonAction: React.FC<React.PropsWithChildren<{
-  description?: string | JSX.Element
-  disabled?: boolean
-  onClick?: () => void
-  title: string
-  to?: string
-}>> = ({ description = false, disabled, title, to, onClick }) => {
+const ButtonAction: React.FC<
+  React.PropsWithChildren<{
+    description?: string | JSX.Element
+    disabled?: boolean
+    onClick?: () => void
+    title: string
+    to?: string
+  }>
+> = ({ description = false, disabled, title, to, onClick }) => {
   return (
     <Flex flexDirection="column" data-testid="RegisterButton">
       <Button

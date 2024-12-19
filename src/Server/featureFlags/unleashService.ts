@@ -1,11 +1,11 @@
-import { startUnleash, Unleash } from "unleash-client"
+import { startUnleash, type Unleash } from "unleash-client"
 import {
   UNLEASH_API,
   UNLEASH_APP_NAME,
   UNLEASH_SERVER_KEY,
   NODE_ENV,
 } from "Server/config"
-import { FeatureFlagService } from "./featureFlagService"
+import type { FeatureFlagService } from "./featureFlagService"
 
 // Pass in as argument to registerFeatureFlagProvideder() when using unleash as feature flag service
 export const UnleashService = Symbol("UnleashService")

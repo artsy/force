@@ -1,13 +1,13 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import { SentConsignmentInquiry } from "@artsy/cohesion/dist/Schema/Events/Consignments"
+import type { SentConsignmentInquiry } from "@artsy/cohesion/dist/Schema/Events/Consignments"
 import { Button, Spacer, Text, useToasts } from "@artsy/palette"
-import { ConsignmentInquiry_me$data } from "__generated__/ConsignmentInquiry_me.graphql"
-import { ConsignmentInquiry_viewer$data } from "__generated__/ConsignmentInquiry_viewer.graphql"
-import { CreateConsignmentInquiryMutationInput } from "__generated__/useCreateConsignmentInquiryMutation.graphql"
+import type { ConsignmentInquiry_me$data } from "__generated__/ConsignmentInquiry_me.graphql"
+import type { ConsignmentInquiry_viewer$data } from "__generated__/ConsignmentInquiry_viewer.graphql"
+import type { CreateConsignmentInquiryMutationInput } from "__generated__/useCreateConsignmentInquiryMutation.graphql"
 import { validateContactInformationValidationSchema } from "Apps/MyCollection/Routes/PriceEstimate/utils/contactInformationValidationSchema"
 import {
   ConsignmentInquiryForm,
-  ConsignmentInquiryFormModel,
+  type ConsignmentInquiryFormModel,
 } from "Apps/Sell/Routes/ConsignmentInquiry/Components/ConsignmentInquiryForm"
 import { ConsignmentInquiryFormAbandonEditModal } from "Apps/Sell/Routes/ConsignmentInquiry/Components/ConsignmentInquiryFormAbandonEdit"
 import { useCreateConsignmentInquiry } from "Apps/Sell/Routes/ConsignmentInquiry/utils/useCreateConsignmentInquiry"
@@ -49,17 +49,15 @@ export interface ConsignmentInquiryProps {
   viewer: ConsignmentInquiry_viewer$data
 }
 
-export const ConsignmentInquiry: React.FC<React.PropsWithChildren<ConsignmentInquiryProps>> = ({
-  me,
-  viewer,
-}) => {
+export const ConsignmentInquiry: React.FC<
+  React.PropsWithChildren<ConsignmentInquiryProps>
+> = ({ me, viewer }) => {
   const [showExitModal, setShowExitModal] = useState(false)
   const { trackEvent } = useTracking()
   const { router, match } = useRouter()
   const { sendToast } = useToasts()
-  const {
-    submitMutation: createConsignmentInquiry,
-  } = useCreateConsignmentInquiry()
+  const { submitMutation: createConsignmentInquiry } =
+    useCreateConsignmentInquiry()
 
   const initialValue = getContactInformationFormInitialValues(me)
   const initialErrors = validateContactInformationValidationSchema(

@@ -1,12 +1,14 @@
 import { Box, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import * as React from "react";
+import type * as React from "react"
 import styled from "styled-components"
 
 export const EIGHT_FEET_PX = 567
 export const EIGHT_FEET_CM = 243.84
 
-export const ViewInRoomScale: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const ViewInRoomScale: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Box
       position="absolute"

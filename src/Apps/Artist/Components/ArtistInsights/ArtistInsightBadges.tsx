@@ -5,17 +5,17 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistInsightBadges_artist$data } from "__generated__/ArtistInsightBadges_artist.graphql"
+import type { ArtistInsightBadges_artist$data } from "__generated__/ArtistInsightBadges_artist.graphql"
 
 interface ArtistInsightBadgesProps {
   artist: ArtistInsightBadges_artist$data
 }
 
-export const ArtistInsightBadges: FC<React.PropsWithChildren<ArtistInsightBadgesProps>> = ({
-  artist,
-}) => {
+export const ArtistInsightBadges: FC<
+  React.PropsWithChildren<ArtistInsightBadgesProps>
+> = ({ artist }) => {
   if (artist.insightBadges.length === 0) {
     return null
   }
@@ -65,7 +65,9 @@ export const ArtistInsightBadgesFragmentContainer = createFragmentContainer(
   }
 )
 
-export const ArtistInsightBadgesPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+export const ArtistInsightBadgesPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton>
       <Text variant="lg-display" mb={2}>

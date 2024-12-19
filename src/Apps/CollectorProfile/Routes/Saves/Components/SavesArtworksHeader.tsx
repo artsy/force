@@ -1,16 +1,18 @@
 import HideIcon from "@artsy/icons/HideIcon"
 import { Text, Stack, Clickable, Tooltip, SkeletonText } from "@artsy/palette"
 import { ArtworkListContextualMenu } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/ArtworkListContextualMenu"
-import { FC } from "react"
+import type { FC } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
-import { SavesArtworksHeaderQuery } from "__generated__/SavesArtworksHeaderQuery.graphql"
+import type { SavesArtworksHeaderQuery } from "__generated__/SavesArtworksHeaderQuery.graphql"
 import { ClientSuspense } from "Components/ClientSuspense"
 
 interface SavesArtworksHeaderProps {
   id: string
 }
 
-const SavesArtworksHeader: FC<React.PropsWithChildren<SavesArtworksHeaderProps>> = ({ id }) => {
+const SavesArtworksHeader: FC<
+  React.PropsWithChildren<SavesArtworksHeaderProps>
+> = ({ id }) => {
   const { me } = useLazyLoadQuery<SavesArtworksHeaderQuery>(QUERY, {
     id,
   })
@@ -57,11 +59,15 @@ const SavesArtworksHeader: FC<React.PropsWithChildren<SavesArtworksHeaderProps>>
   )
 }
 
-const SavesArtworksHeaderSkeleton: FC<React.PropsWithChildren<unknown>> = () => {
+const SavesArtworksHeaderSkeleton: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return <SkeletonText variant="lg">Loading...</SkeletonText>
 }
 
-export const SavesArtworksHeaderQueryRenderer: FC<React.PropsWithChildren<SavesArtworksHeaderProps>> = props => {
+export const SavesArtworksHeaderQueryRenderer: FC<
+  React.PropsWithChildren<SavesArtworksHeaderProps>
+> = props => {
   return (
     <ClientSuspense fallback={<SavesArtworksHeaderSkeleton />}>
       <SavesArtworksHeader {...props} />

@@ -1,11 +1,11 @@
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Flex,
-  InputProps,
+  type InputProps,
   Input,
   Select,
-  SelectProps,
+  type SelectProps,
   Text,
 } from "@artsy/palette"
 import { countries } from "Utils/countries"
@@ -20,7 +20,9 @@ interface PhoneNumberInputProps extends BoxProps {
   selectProps: Omit<SelectProps, "options">
 }
 
-export const PhoneNumberInput: React.FC<React.PropsWithChildren<PhoneNumberInputProps>> = ({
+export const PhoneNumberInput: React.FC<
+  React.PropsWithChildren<PhoneNumberInputProps>
+> = ({
   title = "Phone number",
   required,
   error,

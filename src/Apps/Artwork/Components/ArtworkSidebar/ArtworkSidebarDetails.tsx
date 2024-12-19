@@ -1,5 +1,5 @@
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarDetails_artwork$data } from "__generated__/ArtworkSidebarDetails_artwork.graphql"
+import type { ArtworkSidebarDetails_artwork$data } from "__generated__/ArtworkSidebarDetails_artwork.graphql"
 import { Box, Spacer, Text } from "@artsy/palette"
 import { ArtworkSidebarClassificationFragmentContainer } from "./ArtworkSidebarClassification"
 import { ArtworkSidebarAuthenticityCertificateFragmentContainer } from "./ArtworkSidebarAuthenticityCertificate"
@@ -9,17 +9,11 @@ interface ArtworkSidebarDetailsProps {
   artwork: ArtworkSidebarDetails_artwork$data
 }
 
-const ArtworkSidebarDetails: React.FC<React.PropsWithChildren<ArtworkSidebarDetailsProps>> = ({
-  artwork,
-}) => {
-  const {
-    medium,
-    dimensions,
-    framed,
-    editionOf,
-    editionSets,
-    isUnlisted,
-  } = artwork
+const ArtworkSidebarDetails: React.FC<
+  React.PropsWithChildren<ArtworkSidebarDetailsProps>
+> = ({ artwork }) => {
+  const { medium, dimensions, framed, editionOf, editionSets, isUnlisted } =
+    artwork
 
   const dimensionsPresent = dimensions =>
     /\d/.test(dimensions?.in) || /\d/.test(dimensions?.cm)

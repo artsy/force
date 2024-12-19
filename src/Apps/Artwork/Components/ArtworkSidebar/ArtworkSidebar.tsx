@@ -9,8 +9,8 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarArtistsFragmentContainer } from "./ArtworkSidebarArtists"
-import { ArtworkSidebar_artwork$data } from "__generated__/ArtworkSidebar_artwork.graphql"
-import { ArtworkSidebar_me$data } from "__generated__/ArtworkSidebar_me.graphql"
+import type { ArtworkSidebar_artwork$data } from "__generated__/ArtworkSidebar_artwork.graphql"
+import type { ArtworkSidebar_me$data } from "__generated__/ArtworkSidebar_me.graphql"
 import { ArtworkSidebarShippingInformationFragmentContainer } from "./ArtworkSidebarShippingInformation"
 import { SidebarExpandable } from "Components/Artwork/SidebarExpandable"
 
@@ -34,7 +34,7 @@ import { ArtworkSidebarPrivateArtwork } from "Apps/Artwork/Components/ArtworkSid
 import { PrivateArtworkAdditionalInfo } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkAdditionalInfo"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { ArtworkSidebarQuery } from "__generated__/ArtworkSidebarQuery.graphql"
+import type { ArtworkSidebarQuery } from "__generated__/ArtworkSidebarQuery.graphql"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork$data
@@ -54,10 +54,9 @@ const checkIfArtworkIsOnLoanOrPermanentCollection = (
   }
 }
 
-export const ArtworkSidebar: React.FC<React.PropsWithChildren<ArtworkSidebarProps>> = ({
-  artwork,
-  me,
-}) => {
+export const ArtworkSidebar: React.FC<
+  React.PropsWithChildren<ArtworkSidebarProps>
+> = ({ artwork, me }) => {
   const {
     isSold,
     isAcquireable,
@@ -317,10 +316,9 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtworkSidebarQueryRenderer: React.FC<ArtworkSidebarQueryRendererProps> = ({
-  artworkID,
-  ...rest
-}) => {
+export const ArtworkSidebarQueryRenderer: React.FC<
+  ArtworkSidebarQueryRendererProps
+> = ({ artworkID, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

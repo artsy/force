@@ -1,7 +1,7 @@
 import { Join, Spacer } from "@artsy/palette"
 import { HideUpcomingFilter } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/HideUpcomingFilter"
 import { PriceRangeFilter } from "./PriceRangeFilter"
-import * as React from "react"
+import type * as React from "react"
 import { AuctionHouseFilter } from "./AuctionHouseFilter"
 import { MediumFilter } from "./MediumFilter"
 import { SizeFilter } from "./SizeFilter"
@@ -10,9 +10,11 @@ import { CurrencyFilter } from "./CurrencyFilter"
 import { KeywordFilter } from "./KeywordFilter"
 import { SaleEndYearFilter } from "./SaleEndYearFilter"
 
-export const AuctionFilters: React.FC<React.PropsWithChildren<{
-  showUpcomingAuctionResults: boolean
-}>> = ({ showUpcomingAuctionResults }) => {
+export const AuctionFilters: React.FC<
+  React.PropsWithChildren<{
+    showUpcomingAuctionResults: boolean
+  }>
+> = ({ showUpcomingAuctionResults }) => {
   return (
     <>
       {showUpcomingAuctionResults && (

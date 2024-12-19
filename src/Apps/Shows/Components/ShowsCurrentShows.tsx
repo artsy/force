@@ -1,16 +1,16 @@
 import { Box, Button, Join, Separator } from "@artsy/palette"
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { ShowsCurrentShowsQuery } from "__generated__/ShowsCurrentShowsQuery.graphql"
-import { ShowsCurrentShows_viewer$data } from "__generated__/ShowsCurrentShows_viewer.graphql"
+import type { ShowsCurrentShowsQuery } from "__generated__/ShowsCurrentShowsQuery.graphql"
+import type { ShowsCurrentShows_viewer$data } from "__generated__/ShowsCurrentShows_viewer.graphql"
 import {
   ShowsCurrentShowFragmentContainer,
   ShowsCurrentShowPlaceholder,
@@ -21,10 +21,9 @@ interface ShowsCurrentShowsProps {
   relay: RelayPaginationProp
 }
 
-const ShowsCurrentShows: React.FC<React.PropsWithChildren<ShowsCurrentShowsProps>> = ({
-  viewer,
-  relay,
-}) => {
+const ShowsCurrentShows: React.FC<
+  React.PropsWithChildren<ShowsCurrentShowsProps>
+> = ({ viewer, relay }) => {
   const shows = extractNodes(viewer.showsConnection)
 
   const [loading, setLoading] = useState(false)
@@ -129,7 +128,9 @@ const SHOWS_CURRENT_SHOWS_PLACEHOLDER = (
   </Join>
 )
 
-export const ShowsCurrentShowsQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const ShowsCurrentShowsQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (

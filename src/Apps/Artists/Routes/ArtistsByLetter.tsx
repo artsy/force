@@ -9,13 +9,17 @@ import {
   Column,
 } from "@artsy/palette"
 import { useState } from "react"
-import * as React from "react"
-import { graphql, createRefetchContainer, RelayRefetchProp } from "react-relay"
+import type * as React from "react"
+import {
+  graphql,
+  createRefetchContainer,
+  type RelayRefetchProp,
+} from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { PaginationFragmentContainer } from "Components/Pagination"
-import { ArtistsByLetter_viewer$data } from "__generated__/ArtistsByLetter_viewer.graphql"
+import type { ArtistsByLetter_viewer$data } from "__generated__/ArtistsByLetter_viewer.graphql"
 import { ArtistsByLetterMeta } from "Apps/Artists/Components/ArtistsByLetterMeta"
 import { ArtistsLetterNav } from "Apps/Artists/Components/ArtistsLetterNav"
 import { LoadingArea } from "Components/LoadingArea"
@@ -37,10 +41,9 @@ interface ArtistsByLetterProps {
   relay: RelayRefetchProp
 }
 
-export const ArtistsByLetter: React.FC<React.PropsWithChildren<ArtistsByLetterProps>> = ({
-  relay,
-  viewer,
-}) => {
+export const ArtistsByLetter: React.FC<
+  React.PropsWithChildren<ArtistsByLetterProps>
+> = ({ relay, viewer }) => {
   const {
     match: { params, location },
     router,

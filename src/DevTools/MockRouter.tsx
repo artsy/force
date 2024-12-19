@@ -2,15 +2,19 @@ import {
   createMockNetworkLayer,
   createMockNetworkLayer2,
 } from "DevTools/createMockNetworkLayer"
-import { IMocks } from "graphql-tools/dist/Interfaces"
-import React, { useEffect, useState } from "react"
+import type { IMocks } from "graphql-tools/dist/Interfaces"
+import type React from "react"
+import { useEffect, useState } from "react"
 import { getUser } from "Utils/user"
 import { AppShell } from "Apps/Components/AppShell"
-import { Environment } from "react-relay"
-import { RouteProps } from "System/Router/Route"
-import { HistoryEnhancerOptions } from "farce"
-import { RouterConfig, setupClientRouter } from "System/Router/clientRouter"
-import { SystemContextProps } from "System/Contexts/SystemContext"
+import type { Environment } from "react-relay"
+import type { RouteProps } from "System/Router/Route"
+import type { HistoryEnhancerOptions } from "farce"
+import {
+  type RouterConfig,
+  setupClientRouter,
+} from "System/Router/clientRouter"
+import type { SystemContextProps } from "System/Contexts/SystemContext"
 
 interface MockRouterProps {
   context?: RouterConfig["context"]
@@ -31,9 +35,8 @@ export const MockRouter: React.FC<React.PropsWithChildren<MockRouterProps>> = ({
   mockResolvers,
   routes,
 }) => {
-  const [MockRouterApp, setMockRouterApp] = useState<React.ReactElement<
-    any
-  > | null>(null)
+  const [MockRouterApp, setMockRouterApp] =
+    useState<React.ReactElement<any> | null>(null)
 
   useEffect(() => {
     const initRouter = async () => {
@@ -43,8 +46,8 @@ export const MockRouter: React.FC<React.PropsWithChildren<MockRouterProps>> = ({
         const relayEnvironment = mockResolvers
           ? createMockNetworkLayer(mockResolvers)
           : mockData || mockMutationResults
-          ? createMockNetworkLayer2({ mockData, mockMutationResults })
-          : null
+            ? createMockNetworkLayer2({ mockData, mockMutationResults })
+            : null
 
         const { ClientRouter } = await setupClientRouter({
           routes: [
@@ -62,7 +65,7 @@ export const MockRouter: React.FC<React.PropsWithChildren<MockRouterProps>> = ({
           context: {
             ...context,
             user,
-            relayEnvironment: (relayEnvironment as unknown) as Environment,
+            relayEnvironment: relayEnvironment as unknown as Environment,
           } as SystemContextProps,
         })
 
@@ -83,8 +86,8 @@ export const MockRouter: React.FC<React.PropsWithChildren<MockRouterProps>> = ({
   return MockRouterApp
 }
 
-const MockRouterAppShell: React.FC<React.PropsWithChildren<
-  MockRouterProps
->> = ({ children, ...props }) => {
+const MockRouterAppShell: React.FC<
+  React.PropsWithChildren<MockRouterProps>
+> = ({ children, ...props }) => {
   return <AppShell {...props}>{children}</AppShell>
 }

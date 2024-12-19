@@ -1,13 +1,13 @@
 import {
   ActionType,
-  ClickedAddFilters,
-  ClickedArtworkGroup,
-  ClickedCreateAlert,
+  type ClickedAddFilters,
+  type ClickedArtworkGroup,
+  type ClickedCreateAlert,
   ContextModule,
-  DeletedSavedSearch,
+  type DeletedSavedSearch,
   OwnerType,
-  ScreenOwnerType,
-  ToggledSavedSearch,
+  type ScreenOwnerType,
+  type ToggledSavedSearch,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 
@@ -16,11 +16,8 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 export const useAlertTracking = () => {
   const { trackEvent } = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   if (!contextPageOwnerId || !contextPageOwnerSlug || !contextPageOwnerType) {
     console.warn("Missing analytics context")

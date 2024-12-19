@@ -1,5 +1,5 @@
-import { CustomErrorCode, DropzoneFile } from "Components/FileUpload/types"
-import { FileRejection } from "react-dropzone"
+import { CustomErrorCode, type DropzoneFile } from "Components/FileUpload/types"
+import type { FileRejection } from "react-dropzone"
 
 const KBSize = 1000
 const MBSize = Math.pow(KBSize, 2)

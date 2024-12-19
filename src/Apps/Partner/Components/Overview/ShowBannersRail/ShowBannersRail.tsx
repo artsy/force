@@ -1,8 +1,8 @@
-import * as React from "react"
-import { Box, BoxProps } from "@artsy/palette"
+import type * as React from "react"
+import { Box, type BoxProps } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowBannersRail_partner$data } from "__generated__/ShowBannersRail_partner.graphql"
-import { ShowBannersRailRendererQuery } from "__generated__/ShowBannersRailRendererQuery.graphql"
+import type { ShowBannersRail_partner$data } from "__generated__/ShowBannersRail_partner.graphql"
+import type { ShowBannersRailRendererQuery } from "__generated__/ShowBannersRailRendererQuery.graphql"
 import { compact, take, uniqBy } from "lodash"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { ShowBannersRailPlaceholder } from "./ShowBannersRailPlaceholder"
@@ -14,10 +14,9 @@ interface ShowBannersRailProps extends BoxProps {
   partner: ShowBannersRail_partner$data
 }
 
-const ShowBannersRail: React.FC<React.PropsWithChildren<ShowBannersRailProps>> = ({
-  partner,
-  ...rest
-}) => {
+const ShowBannersRail: React.FC<
+  React.PropsWithChildren<ShowBannersRailProps>
+> = ({ partner, ...rest }) => {
   if (!partner) return null
 
   const featured = compact(partner?.featuredShow?.edges)
@@ -121,9 +120,13 @@ const ShowBannersRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const ShowBannersRailRenderer: React.FC<React.PropsWithChildren<{
-  partnerId: string
-} & Omit<ShowBannersRailProps, "partner">>> = ({ partnerId, ...rest }) => {
+export const ShowBannersRailRenderer: React.FC<
+  React.PropsWithChildren<
+    {
+      partnerId: string
+    } & Omit<ShowBannersRailProps, "partner">
+  >
+> = ({ partnerId, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

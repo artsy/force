@@ -1,7 +1,7 @@
 import { RouterLink } from "System/Components/RouterLink"
 import { HTML, Text } from "@artsy/palette"
-import { ArtistBio_bio$data } from "__generated__/ArtistBio_bio.graphql"
-import * as React from "react"
+import type { ArtistBio_bio$data } from "__generated__/ArtistBio_bio.graphql"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 
@@ -11,7 +11,9 @@ export interface ArtistBioProps {
   onReadMoreClicked?: () => void
 }
 
-export const ArtistBio: React.FC<React.PropsWithChildren<ArtistBioProps>> = ({ bio }) => {
+export const ArtistBio: React.FC<React.PropsWithChildren<ArtistBioProps>> = ({
+  bio,
+}) => {
   const { credit, partnerID, text } = bio.biographyBlurb ?? {}
   const partnerHref = `${sd.APP_URL}/${partnerID}`
 

@@ -2,7 +2,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools/MockBoot"
-import { ArtworkDetailsAdditionalInfo_Test_Query } from "__generated__/ArtworkDetailsAdditionalInfo_Test_Query.graphql"
+import type { ArtworkDetailsAdditionalInfo_Test_Query } from "__generated__/ArtworkDetailsAdditionalInfo_Test_Query.graphql"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { ArtworkDetailsAdditionalInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsAdditionalInfo"
 import { fireEvent, screen } from "@testing-library/react"
@@ -14,30 +14,29 @@ jest.mock("react-tracking")
 
 jest.mock("Apps/Artwork/Components/SelectedEditionSetContext")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  ArtworkDetailsAdditionalInfo_Test_Query
->({
-  Component: props => {
-    return (
-      <MockBoot>
-        <AnalyticsCombinedContextProvider
-          contextPageOwnerId="example-artwork-id"
-          path="/artwork/example-artwork-slug"
-        >
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-          <ArtworkDetailsAdditionalInfoFragmentContainer {...props} />
-        </AnalyticsCombinedContextProvider>
-      </MockBoot>
-    )
-  },
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<ArtworkDetailsAdditionalInfo_Test_Query>({
+    Component: props => {
+      return (
+        <MockBoot>
+          <AnalyticsCombinedContextProvider
+            contextPageOwnerId="example-artwork-id"
+            path="/artwork/example-artwork-slug"
+          >
+            {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
+            <ArtworkDetailsAdditionalInfoFragmentContainer {...props} />
+          </AnalyticsCombinedContextProvider>
+        </MockBoot>
+      )
+    },
+    query: graphql`
     query ArtworkDetailsAdditionalInfo_Test_Query @relay_test_operation {
       artwork(id: "xxx") {
         ...ArtworkDetailsAdditionalInfo_artwork
       }
     }
   `,
-})
+  })
 
 describe("ArtworkDetailsAdditionalInfo", () => {
   const trackEvent = jest.fn()

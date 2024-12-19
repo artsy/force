@@ -1,16 +1,16 @@
 import { Box, Button, Flex, Separator, Spacer, Text } from "@artsy/palette"
 import { Timer } from "Components/Timer"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkAuctionRegistrationPanel_artwork$data } from "__generated__/ArtworkAuctionRegistrationPanel_artwork.graphql"
+import type { ArtworkAuctionRegistrationPanel_artwork$data } from "__generated__/ArtworkAuctionRegistrationPanel_artwork.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 
 interface ArtworkAuctionRegistrationPanelProps {
   artwork: ArtworkAuctionRegistrationPanel_artwork$data
 }
 
-const ArtworkAuctionRegistrationPanel: React.FC<React.PropsWithChildren<ArtworkAuctionRegistrationPanelProps>> = ({
-  artwork,
-}) => {
+const ArtworkAuctionRegistrationPanel: React.FC<
+  React.PropsWithChildren<ArtworkAuctionRegistrationPanelProps>
+> = ({ artwork }) => {
   const isCountingDown = !!artwork.sale?.registrationEndsAt
   const href = `/auction-registration/${artwork.sale?.slug}`
   const title = isCountingDown
@@ -74,9 +74,8 @@ const ArtworkAuctionRegistrationPanel: React.FC<React.PropsWithChildren<ArtworkA
   )
 }
 
-export const ArtworkAuctionRegistrationPanelFragmentContainer = createFragmentContainer(
-  ArtworkAuctionRegistrationPanel,
-  {
+export const ArtworkAuctionRegistrationPanelFragmentContainer =
+  createFragmentContainer(ArtworkAuctionRegistrationPanel, {
     artwork: graphql`
       fragment ArtworkAuctionRegistrationPanel_artwork on Artwork {
         sale {
@@ -86,5 +85,4 @@ export const ArtworkAuctionRegistrationPanelFragmentContainer = createFragmentCo
         }
       }
     `,
-  }
-)
+  })

@@ -1,16 +1,16 @@
-import * as React from "react"
+import type * as React from "react"
 import { HTML, Text, FullBleed, Flex, Box, Image } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FeatureHeaderDefault_feature$data } from "__generated__/FeatureHeaderDefault_feature.graphql"
+import type { FeatureHeaderDefault_feature$data } from "__generated__/FeatureHeaderDefault_feature.graphql"
 import { useFullBleedHeaderHeight } from "Components/FullBleedHeader/FullBleedHeader"
 
 export interface FeatureHeaderDefaultProps {
   feature: FeatureHeaderDefault_feature$data
 }
 
-export const FeatureHeaderDefault: React.FC<React.PropsWithChildren<FeatureHeaderDefaultProps>> = ({
-  feature: { name, subheadline, defaultImage: image },
-}) => {
+export const FeatureHeaderDefault: React.FC<
+  React.PropsWithChildren<FeatureHeaderDefaultProps>
+> = ({ feature: { name, subheadline, defaultImage: image } }) => {
   const height = useFullBleedHeaderHeight()
 
   return (

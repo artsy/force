@@ -1,7 +1,7 @@
 import { Clickable, Flex, Spacer, Text, Tooltip } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-import { MyCollectionArtworkDemandIndex_marketPriceInsights$data } from "__generated__/MyCollectionArtworkDemandIndex_marketPriceInsights.graphql"
+import type { MyCollectionArtworkDemandIndex_marketPriceInsights$data } from "__generated__/MyCollectionArtworkDemandIndex_marketPriceInsights.graphql"
 import { DemandIndexBar } from "./DemandIndexBar"
 import { HighDemandIcon } from "./HighDemandIcon"
 import InfoIcon from "@artsy/icons/InfoIcon"
@@ -13,9 +13,9 @@ interface MyCollectionArtworkDemandIndexProps {
 const DemandIndexExplanation =
   "Overall strength of demand for this artist and medium combination. Based on the last 36 months of auction sale data from top commercial auction houses."
 
-const MyCollectionArtworkDemandIndex: React.FC<React.PropsWithChildren<MyCollectionArtworkDemandIndexProps>> = ({
-  marketPriceInsights,
-}) => {
+const MyCollectionArtworkDemandIndex: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkDemandIndexProps>
+> = ({ marketPriceInsights }) => {
   if (!marketPriceInsights?.demandRank) {
     return null
   }
@@ -85,14 +85,12 @@ const MyCollectionArtworkDemandIndex: React.FC<React.PropsWithChildren<MyCollect
   )
 }
 
-export const MyCollectionArtworkDemandIndexFragmentContainer = createFragmentContainer(
-  MyCollectionArtworkDemandIndex,
-  {
+export const MyCollectionArtworkDemandIndexFragmentContainer =
+  createFragmentContainer(MyCollectionArtworkDemandIndex, {
     marketPriceInsights: graphql`
       fragment MyCollectionArtworkDemandIndex_marketPriceInsights on ArtworkPriceInsights {
         demandRank
         demandRankDisplayText
       }
     `,
-  }
-)
+  })

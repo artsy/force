@@ -5,7 +5,7 @@ import {
   Clickable,
   CarouselRail,
   CarouselCell,
-  BoxProps,
+  type BoxProps,
 } from "@artsy/palette"
 
 export interface CarouselProps extends BoxProps {
@@ -20,10 +20,9 @@ interface FairsPromoCarouselProps {
   duration?: number
 }
 
-export const FairsPromoCarousel: React.FC<React.PropsWithChildren<FairsPromoCarouselProps>> = ({
-  children,
-  duration = 5000,
-}) => {
+export const FairsPromoCarousel: React.FC<
+  React.PropsWithChildren<FairsPromoCarouselProps>
+> = ({ children, duration = 5000 }) => {
   const [interacted, setInteracted] = useState(false)
   const [cursor, setCursor] = useState(0)
 

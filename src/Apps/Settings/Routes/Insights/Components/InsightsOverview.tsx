@@ -1,12 +1,14 @@
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { InsightsOverview_info$data } from "__generated__/InsightsOverview_info.graphql"
+import type { InsightsOverview_info$data } from "__generated__/InsightsOverview_info.graphql"
 
 interface InsightsOverviewProps {
   info: InsightsOverview_info$data
 }
 
-const InsightsOverview: React.FC<React.PropsWithChildren<InsightsOverviewProps>> = ({ info }) => {
+const InsightsOverview: React.FC<
+  React.PropsWithChildren<InsightsOverviewProps>
+> = ({ info }) => {
   if (!info) {
     return null
   }

@@ -5,16 +5,15 @@ import {
   ConfirmationArtworks,
   NUMBER_OF_ARTWORKS_TO_SHOW,
 } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
-import { ConfirmationArtworksGrid_Test_Query } from "__generated__/ConfirmationArtworksGrid_Test_Query.graphql"
+import type { ConfirmationArtworksGrid_Test_Query } from "__generated__/ConfirmationArtworksGrid_Test_Query.graphql"
 
 jest.unmock("react-relay")
 
 describe("ConfirmationArtworksGrid", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    ConfirmationArtworksGrid_Test_Query
-  >({
-    Component: ConfirmationArtworks,
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<ConfirmationArtworksGrid_Test_Query>({
+      Component: ConfirmationArtworks,
+      query: graphql`
       query ConfirmationArtworksGrid_Test_Query($input: FilterArtworksInput)
         @relay_test_operation {
         artworksConnection(input: $input) {
@@ -25,7 +24,7 @@ describe("ConfirmationArtworksGrid", () => {
         }
       }
     `,
-  })
+    })
 
   it("renders artworks count and artworks grid", () => {
     renderWithRelay({

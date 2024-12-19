@@ -4,13 +4,15 @@ import { EndingSoonAuctionsGridPaginationContainer } from "Apps/Auctions/Routes/
 import { LogInPrompt } from "Apps/Components/LogInPrompt"
 import { MetaTags } from "Components/MetaTags"
 import { createFragmentContainer, graphql } from "react-relay"
-import { EndingSoonAuctions_viewer$data } from "__generated__/EndingSoonAuctions_viewer.graphql"
+import type { EndingSoonAuctions_viewer$data } from "__generated__/EndingSoonAuctions_viewer.graphql"
 
 interface EndingSoonAuctionsProps {
   viewer: EndingSoonAuctions_viewer$data
 }
 
-const EndingSoonAuctions: React.FC<React.PropsWithChildren<EndingSoonAuctionsProps>> = ({ viewer }) => {
+const EndingSoonAuctions: React.FC<
+  React.PropsWithChildren<EndingSoonAuctionsProps>
+> = ({ viewer }) => {
   return (
     <>
       <MetaTags

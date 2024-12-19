@@ -1,7 +1,7 @@
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistWorksForSaleEmpty_artist$data } from "__generated__/ArtistWorksForSaleEmpty_artist.graphql"
+import type { ArtistWorksForSaleEmpty_artist$data } from "__generated__/ArtistWorksForSaleEmpty_artist.graphql"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 import { ArtworkFilterAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterAlertContextProvider"
 
@@ -9,9 +9,9 @@ interface ArtistWorksForSaleEmptyProps {
   artist: ArtistWorksForSaleEmpty_artist$data
 }
 
-const ArtistWorksForSaleEmpty: FC<React.PropsWithChildren<ArtistWorksForSaleEmptyProps>> = ({
-  artist,
-}) => {
+const ArtistWorksForSaleEmpty: FC<
+  React.PropsWithChildren<ArtistWorksForSaleEmptyProps>
+> = ({ artist }) => {
   return (
     <>
       <Spacer y={[2, 0]} />

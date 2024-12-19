@@ -11,7 +11,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Components/RouterLink"
 import { cropped, resized } from "Utils/resized"
@@ -19,7 +19,9 @@ import { InstitutionPartnershipsHero } from "./Components/InstitutionPartnership
 import { InstitutionPartnershipsProfilesQueryRenderer } from "./Components/InstitutionPartnershipsProfiles"
 import { InstitutionPartnershipsShowsQueryRenderer } from "./Components/InstitutionPartnershipsShows"
 
-export const InstitutionPartnershipsApp: FC<React.PropsWithChildren<unknown>> = () => {
+export const InstitutionPartnershipsApp: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <>
       <MetaTags

@@ -2,17 +2,19 @@ import { Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
-import { ArtistConsignMarketTrends_artist$data } from "__generated__/ArtistConsignMarketTrends_artist.graphql"
+import type { ArtistConsignMarketTrends_artist$data } from "__generated__/ArtistConsignMarketTrends_artist.graphql"
 
 interface ArtistConsignMarketTrendsProps {
   artist: ArtistConsignMarketTrends_artist$data
 }
 
-export const ArtistConsignMarketTrends: React.FC<React.PropsWithChildren<ArtistConsignMarketTrendsProps>> = props => {
+export const ArtistConsignMarketTrends: React.FC<
+  React.PropsWithChildren<ArtistConsignMarketTrendsProps>
+> = props => {
   const tracking = useTracking()
 
   const {
@@ -70,11 +72,9 @@ export const ArtistConsignMarketTrends: React.FC<React.PropsWithChildren<ArtistC
   )
 }
 
-const Statistic: React.FC<React.PropsWithChildren<{ top: string; middle: string; bottom: string }>> = ({
-  top,
-  middle,
-  bottom,
-}) => {
+const Statistic: React.FC<
+  React.PropsWithChildren<{ top: string; middle: string; bottom: string }>
+> = ({ top, middle, bottom }) => {
   return (
     <Column span={4} textAlign="center">
       <Text variant="lg-display" color="white100">
@@ -92,9 +92,8 @@ const Statistic: React.FC<React.PropsWithChildren<{ top: string; middle: string;
   )
 }
 
-export const ArtistConsignMarketTrendsFragmentContainer = createFragmentContainer(
-  ArtistConsignMarketTrends,
-  {
+export const ArtistConsignMarketTrendsFragmentContainer =
+  createFragmentContainer(ArtistConsignMarketTrends, {
     artist: graphql`
       fragment ArtistConsignMarketTrends_artist on Artist {
         href
@@ -109,5 +108,4 @@ export const ArtistConsignMarketTrendsFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })

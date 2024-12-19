@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { MetaTags } from "Components/MetaTags"
 
 const TITLE = "Art Gallery Shows and Museum Exhibitions | Artsy"
@@ -9,7 +9,9 @@ interface ShowsMetaProps {
   cityName?: string
 }
 
-export const ShowsMeta: React.FC<React.PropsWithChildren<ShowsMetaProps>> = ({ cityName }) => {
+export const ShowsMeta: React.FC<React.PropsWithChildren<ShowsMetaProps>> = ({
+  cityName,
+}) => {
   const title = cityName ? `${cityName} ${TITLE}` : TITLE
   const description = cityName
     ? `Explore shows in ${cityName} on Artsy. ${DESCRIPTION}`

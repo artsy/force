@@ -1,11 +1,10 @@
 import { TextArea, Text, Spacer } from "@artsy/palette"
-import { SavedSearchAlertFormValues } from "Components/SavedSearchAlert/types"
+import type { SavedSearchAlertFormValues } from "Components/SavedSearchAlert/types"
 import { useFormikContext } from "formik"
 
 export const DetailsInput: React.FC<React.PropsWithChildren<unknown>> = () => {
-  const { values, errors, setFieldValue, handleBlur } = useFormikContext<
-    SavedSearchAlertFormValues
-  >()
+  const { values, errors, setFieldValue, handleBlur } =
+    useFormikContext<SavedSearchAlertFormValues>()
 
   return (
     <>

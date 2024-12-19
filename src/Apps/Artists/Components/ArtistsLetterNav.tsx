@@ -1,16 +1,16 @@
-import { Box, BoxProps, Flex, Text } from "@artsy/palette"
+import { Box, type BoxProps, Flex, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import * as React from "react"
+import type * as React from "react"
 import styled from "styled-components"
-import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 
 export const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
 
 interface ArtistsLetterNavProps extends BoxProps {}
 
-export const ArtistsLetterNav: React.FC<React.PropsWithChildren<ArtistsLetterNavProps>> = ({
-  ...rest
-}) => {
+export const ArtistsLetterNav: React.FC<
+  React.PropsWithChildren<ArtistsLetterNavProps>
+> = ({ ...rest }) => {
   return (
     <Flex flexWrap="wrap" justifyContent={["flex-start", "flex-end"]} {...rest}>
       {LETTERS.map((letter, i) => {

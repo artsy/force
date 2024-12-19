@@ -8,10 +8,14 @@ import {
   Tooltip,
   useToasts,
 } from "@artsy/palette"
-import { ChangeEvent, FC, useState } from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { type ChangeEvent, type FC, useState } from "react"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import styled from "styled-components"
-import { SettingsEditProfileImage_me$data } from "__generated__/SettingsEditProfileImage_me.graphql"
+import type { SettingsEditProfileImage_me$data } from "__generated__/SettingsEditProfileImage_me.graphql"
 import { Media } from "Utils/Responsive"
 import {
   normalizePhoto,
@@ -19,7 +23,7 @@ import {
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { SettingsEditProfileImageMutation } from "__generated__/SettingsEditProfileImageMutation.graphql"
+import type { SettingsEditProfileImageMutation } from "__generated__/SettingsEditProfileImageMutation.graphql"
 import { usePoll } from "Utils/Hooks/usePoll"
 
 interface SettingsEditProfileImageProps {
@@ -27,10 +31,9 @@ interface SettingsEditProfileImageProps {
   relay: RelayRefetchProp
 }
 
-const SettingsEditProfileImage: FC<React.PropsWithChildren<SettingsEditProfileImageProps>> = ({
-  me,
-  relay,
-}) => {
+const SettingsEditProfileImage: FC<
+  React.PropsWithChildren<SettingsEditProfileImageProps>
+> = ({ me, relay }) => {
   const { sendToast } = useToasts()
 
   const [mode, setMode] = useState<"Idle" | "Uploading">("Idle")

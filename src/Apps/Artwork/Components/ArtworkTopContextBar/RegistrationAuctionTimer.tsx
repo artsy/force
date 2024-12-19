@@ -1,15 +1,15 @@
 import { Flex, Text } from "@artsy/palette"
 import { Timer } from "Components/Timer"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RegistrationAuctionTimer_sale$data } from "__generated__/RegistrationAuctionTimer_sale.graphql"
+import type { RegistrationAuctionTimer_sale$data } from "__generated__/RegistrationAuctionTimer_sale.graphql"
 
 interface RegistrationAuctionTimerProps {
   sale: RegistrationAuctionTimer_sale$data
 }
 
-const RegistrationAuctionTimer: React.FC<React.PropsWithChildren<RegistrationAuctionTimerProps>> = ({
-  sale,
-}) => {
+const RegistrationAuctionTimer: React.FC<
+  React.PropsWithChildren<RegistrationAuctionTimerProps>
+> = ({ sale }) => {
   if (!sale.registrationEndsAt || sale.isRegistrationClosed) {
     return null
   }
@@ -29,14 +29,12 @@ const RegistrationAuctionTimer: React.FC<React.PropsWithChildren<RegistrationAuc
   )
 }
 
-export const RegistrationAuctionTimerFragmentContainer = createFragmentContainer(
-  RegistrationAuctionTimer,
-  {
+export const RegistrationAuctionTimerFragmentContainer =
+  createFragmentContainer(RegistrationAuctionTimer, {
     sale: graphql`
       fragment RegistrationAuctionTimer_sale on Sale {
         registrationEndsAt
         isRegistrationClosed
       }
     `,
-  }
-)
+  })

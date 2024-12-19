@@ -1,8 +1,8 @@
 import { Join, Spacer } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { CollectionsHubRails_linkedCollections$data } from "__generated__/CollectionsHubRails_linkedCollections.graphql"
-import { CollectionsHubRailsQuery } from "__generated__/CollectionsHubRailsQuery.graphql"
+import type { CollectionsHubRails_linkedCollections$data } from "__generated__/CollectionsHubRails_linkedCollections.graphql"
+import type { CollectionsHubRailsQuery } from "__generated__/CollectionsHubRailsQuery.graphql"
 import { ArtistSeriesRailContainer as ArtistSeriesRail } from "./ArtistSeriesRail"
 import { FeaturedCollectionsRailsContainer as FeaturedCollectionsRails } from "./FeaturedCollectionsRails"
 import { OtherCollectionsRailsContainer as OtherCollectionsRail } from "./OtherCollectionsRail"
@@ -12,9 +12,9 @@ interface CollectionsHubRailsProps {
   linkedCollections: CollectionsHubRails_linkedCollections$data
 }
 
-export const CollectionsHubRails: React.FC<React.PropsWithChildren<CollectionsHubRailsProps>> = ({
-  linkedCollections,
-}) => {
+export const CollectionsHubRails: React.FC<
+  React.PropsWithChildren<CollectionsHubRailsProps>
+> = ({ linkedCollections }) => {
   const showCollectionHubs = linkedCollections.length > 0
 
   if (!showCollectionHubs) {
@@ -73,9 +73,11 @@ export const CollectionsHubRailsContainer = createFragmentContainer(
   }
 )
 
-export const CollectionsHubRailsQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const CollectionsHubRailsQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   return (
     <SystemQueryRenderer<CollectionsHubRailsQuery>
       query={graphql`

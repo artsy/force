@@ -1,9 +1,12 @@
 import { Flex, Spacer, Text, Clickable } from "@artsy/palette"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { FC } from "react"
+import type { FC } from "react"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
-import { withInquiry, WithInquiryProps } from "Components/Inquiry/useInquiry"
+import {
+  withInquiry,
+  type WithInquiryProps,
+} from "Components/Inquiry/useInquiry"
 import { useTracking } from "react-tracking"
 
 interface StickyFooterProps extends WithInquiryProps {

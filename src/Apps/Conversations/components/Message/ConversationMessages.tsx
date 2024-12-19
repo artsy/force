@@ -1,6 +1,7 @@
-import { Box, BoxProps, Flex, Spinner } from "@artsy/palette"
-import React, {
-  FC,
+import { Box, type BoxProps, Flex, Spinner } from "@artsy/palette"
+import type React from "react"
+import {
+  type FC,
   Fragment,
   useCallback,
   useEffect,
@@ -10,14 +11,14 @@ import React, {
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
-import { ConversationMessage, Messages } from "./ConversationMessage"
+import { ConversationMessage, type Messages } from "./ConversationMessage"
 import { extractNodes } from "Utils/extractNodes"
-import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
+import type { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 import { Sentinel } from "Components/Sentinal"
 import {
-  Message,
+  type Message,
   isRelevantEvent,
   useGroupedMessages,
 } from "Apps/Conversations/hooks/useGroupedMessages"
@@ -35,15 +36,13 @@ interface ConversationMessagesProps {
   relay: RelayPaginationProp
 }
 
-export const ConversationMessages: FC<React.PropsWithChildren<ConversationMessagesProps>> = ({
-  conversation,
-  relay,
-}) => {
+export const ConversationMessages: FC<
+  React.PropsWithChildren<ConversationMessagesProps>
+> = ({ conversation, relay }) => {
   const [isFetchingAllMessages, startFetchAllTransition] = useState(false)
   const [isFetchingLoadMoreMessages, startLoadMoreTransition] = useState(false)
-  const [showLatestMessagesFlyOut, setShowLatestMessagesFlyOut] = useState(
-    false
-  )
+  const [showLatestMessagesFlyOut, setShowLatestMessagesFlyOut] =
+    useState(false)
 
   const autoScrollToBottomRef = useRef<HTMLDivElement>(null)
 
@@ -214,10 +213,11 @@ export const ConversationMessages: FC<React.PropsWithChildren<ConversationMessag
   )
 }
 
-export const ConversationMessagesPaginationContainer = createPaginationContainer(
-  ConversationMessages,
-  {
-    conversation: graphql`
+export const ConversationMessagesPaginationContainer =
+  createPaginationContainer(
+    ConversationMessages,
+    {
+      conversation: graphql`
       fragment ConversationMessages_conversation on Conversation
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 15 }
@@ -308,16 +308,16 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return { ...prevVars, totalCount }
     },
-    getVariables(_, { cursor: after }, fragmentVariables) {
-      return { ...fragmentVariables, after }
-    },
-    query: graphql`
+    {
+      direction: "forward",
+      getFragmentVariables(prevVars, totalCount) {
+        return { ...prevVars, totalCount }
+      },
+      getVariables(_, { cursor: after }, fragmentVariables) {
+        return { ...fragmentVariables, after }
+      },
+      query: graphql`
       query ConversationMessagesPaginationQuery(
         $conversationId: String!
         $first: Int!
@@ -329,8 +329,8 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
         }
       }
     `,
-  }
-)
+    }
+  )
 
 interface UseAutoScrollToBottomProps {
   messages: any[]
@@ -369,7 +369,9 @@ const useAutoScrollToBottom = ({
   return { triggerAutoScroll }
 }
 
-const LoadingSpinner: React.FC<React.PropsWithChildren<BoxProps>> = boxProps => (
+const LoadingSpinner: React.FC<
+  React.PropsWithChildren<BoxProps>
+> = boxProps => (
   <Box position="relative" {...boxProps} data-testid="LoadingSpinner">
     <Spinner />
   </Box>
@@ -380,10 +382,9 @@ const LatestMessagesSentinel = Sentinel
 const TopLoadingSpinner = LoadingSpinner
 const AutoScrollToBottom = Box
 
-const BottomLoadingSpinner: React.FC<React.PropsWithChildren<BoxProps & { visible: boolean }>> = ({
-  visible,
-  ...boxProps
-}) => {
+const BottomLoadingSpinner: React.FC<
+  React.PropsWithChildren<BoxProps & { visible: boolean }>
+> = ({ visible, ...boxProps }) => {
   return (
     <SpinnerWrapper className={visible ? "active" : ""}>
       <Box position="relative" {...boxProps} data-testid="LoadingSpinner">

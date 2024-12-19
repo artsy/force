@@ -1,8 +1,8 @@
 import { Box, Text, Spacer, GridColumns, Column } from "@artsy/palette"
-import { ArtistConsignFAQ_artist$data } from "__generated__/ArtistConsignFAQ_artist.graphql"
+import type { ArtistConsignFAQ_artist$data } from "__generated__/ArtistConsignFAQ_artist.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
@@ -14,7 +14,9 @@ interface ArtistConsignFAQProps {
   artist: ArtistConsignFAQ_artist$data
 }
 
-const ArtistConsignFAQ: React.FC<React.PropsWithChildren<ArtistConsignFAQProps>> = props => {
+const ArtistConsignFAQ: React.FC<
+  React.PropsWithChildren<ArtistConsignFAQProps>
+> = props => {
   const tracking = useTracking()
 
   return (
@@ -167,10 +169,9 @@ export const ArtistConsignFAQFragmentContainer = createFragmentContainer(
   }
 )
 
-const Question: React.FC<React.PropsWithChildren<{ question: string; answer: JSX.Element }>> = ({
-  question,
-  answer,
-}) => {
+const Question: React.FC<
+  React.PropsWithChildren<{ question: string; answer: JSX.Element }>
+> = ({ question, answer }) => {
   return (
     <Box
       mb={4}

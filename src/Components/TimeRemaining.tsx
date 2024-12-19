@@ -1,20 +1,22 @@
 import { Flex, Text } from "@artsy/palette"
 import { DateTime, Duration } from "luxon"
-import React from "react"
+import type React from "react"
 
 /**
  * Extracted out of @artsy/palette
  * @deprecated Use `useTimer` instead
  */
-export const TimeRemaining: React.FC<React.PropsWithChildren<{
-  countdownEnd: string
-  currentTime: string
-  highlight: string
-  labelWithoutTimeRemaining?: string
-  labelWithTimeRemaining?: string
-  timeEndedDisplayText?: string
-  trailingText?: string
-}>> = ({
+export const TimeRemaining: React.FC<
+  React.PropsWithChildren<{
+    countdownEnd: string
+    currentTime: string
+    highlight: string
+    labelWithoutTimeRemaining?: string
+    labelWithTimeRemaining?: string
+    timeEndedDisplayText?: string
+    trailingText?: string
+  }>
+> = ({
   countdownEnd,
   currentTime,
   highlight = "brand",

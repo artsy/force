@@ -1,12 +1,12 @@
 import { Spacer } from "@artsy/palette"
 import { ArtworkListsHeader } from "./Components/ArtworkListsHeader"
-import { FC, useEffect, useMemo, useRef } from "react"
+import { type FC, useEffect, useMemo, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
-import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
+import type { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 import { useTracking } from "react-tracking"
-import { ActionType, OwnerType, ViewedArtworkList } from "@artsy/cohesion"
+import { ActionType, OwnerType, type ViewedArtworkList } from "@artsy/cohesion"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { HttpError } from "found"
 import { MetaTags } from "Components/MetaTags"
@@ -26,9 +26,9 @@ interface CollectorProfileSavesRouteProps {
   me: CollectorProfileSavesRoute_me$data
 }
 
-const CollectorProfileSavesRoute: FC<React.PropsWithChildren<CollectorProfileSavesRouteProps>> = ({
-  me,
-}) => {
+const CollectorProfileSavesRoute: FC<
+  React.PropsWithChildren<CollectorProfileSavesRouteProps>
+> = ({ me }) => {
   const {
     match: { params },
   } = useRouter()
@@ -125,7 +125,9 @@ const CollectorProfileSavesRoute: FC<React.PropsWithChildren<CollectorProfileSav
   )
 }
 
-const PageWrapper: FC<React.PropsWithChildren<CollectorProfileSavesRouteProps>> = props => {
+const PageWrapper: FC<
+  React.PropsWithChildren<CollectorProfileSavesRouteProps>
+> = props => {
   const { match } = useRouter()
 
   return (
@@ -135,9 +137,8 @@ const PageWrapper: FC<React.PropsWithChildren<CollectorProfileSavesRouteProps>> 
   )
 }
 
-export const CollectorProfileSavesRouteFragmentContainer = createFragmentContainer(
-  PageWrapper,
-  {
+export const CollectorProfileSavesRouteFragmentContainer =
+  createFragmentContainer(PageWrapper, {
     me: graphql`
       fragment CollectorProfileSavesRoute_me on Me {
         savedArtworksArtworkList: collection(id: "saved-artwork") {
@@ -173,5 +174,4 @@ export const CollectorProfileSavesRouteFragmentContainer = createFragmentContain
         }
       }
     `,
-  }
-)
+  })

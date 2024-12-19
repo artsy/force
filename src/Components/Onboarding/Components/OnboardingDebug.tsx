@@ -1,18 +1,13 @@
 import { Box, Flex, Button } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { useMode } from "Utils/Hooks/useMode"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { OnboardingModal } from "./OnboardingModal"
 import { OnboardingSteps } from "./OnboardingSteps"
 
 export const OnboardingDebug: FC<React.PropsWithChildren<unknown>> = () => {
-  const {
-    state,
-    current,
-    progress,
-    dispatch,
-    workflowEngine,
-  } = useOnboardingContext()
+  const { state, current, progress, dispatch, workflowEngine } =
+    useOnboardingContext()
 
   const [mode, setMode] = useMode<"Resting" | "Modal">("Resting")
   return (

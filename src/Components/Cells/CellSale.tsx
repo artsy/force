@@ -8,10 +8,10 @@ import {
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Components/RouterLink"
-import { CellSale_sale$data } from "__generated__/CellSale_sale.graphql"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import type { CellSale_sale$data } from "__generated__/CellSale_sale.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
-import { FC } from "react"
+import type { FC } from "react"
 
 export interface CellSaleProps extends Omit<RouterLinkProps, "to"> {
   sale: CellSale_sale$data
@@ -19,7 +19,11 @@ export interface CellSaleProps extends Omit<RouterLinkProps, "to"> {
   mode?: "GRID" | "RAIL"
 }
 
-const CellSale: FC<React.PropsWithChildren<CellSaleProps>> = ({ sale, mode = "RAIL", ...rest }) => {
+const CellSale: FC<React.PropsWithChildren<CellSaleProps>> = ({
+  sale,
+  mode = "RAIL",
+  ...rest
+}) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
   const image = sale.coverImage?.cropped
 

@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { EntityHeaderArtistFragmentContainer_Test_Query } from "__generated__/EntityHeaderArtistFragmentContainer_Test_Query.graphql"
+import type { EntityHeaderArtistFragmentContainer_Test_Query } from "__generated__/EntityHeaderArtistFragmentContainer_Test_Query.graphql"
 import { screen } from "@testing-library/react"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 
@@ -15,12 +15,11 @@ const QUERY = graphql`
 `
 
 describe("EntityHeaderArtist", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    EntityHeaderArtistFragmentContainer_Test_Query
-  >({
-    Component: EntityHeaderArtistFragmentContainer,
-    query: QUERY,
-  })
+  const { renderWithRelay } =
+    setupTestWrapperTL<EntityHeaderArtistFragmentContainer_Test_Query>({
+      Component: EntityHeaderArtistFragmentContainer,
+      query: QUERY,
+    })
 
   it("renders the component", () => {
     renderWithRelay({
@@ -44,20 +43,19 @@ describe("EntityHeaderArtist", () => {
   })
 
   describe("displayCounts", () => {
-    const { renderWithRelay } = setupTestWrapperTL<
-      EntityHeaderArtistFragmentContainer_Test_Query
-    >({
-      Component: props => {
-        if (!props.artist) return null
-        return (
-          <EntityHeaderArtistFragmentContainer
-            artist={props.artist}
-            displayCounts
-          />
-        )
-      },
-      query: QUERY,
-    })
+    const { renderWithRelay } =
+      setupTestWrapperTL<EntityHeaderArtistFragmentContainer_Test_Query>({
+        Component: props => {
+          if (!props.artist) return null
+          return (
+            <EntityHeaderArtistFragmentContainer
+              artist={props.artist}
+              displayCounts
+            />
+          )
+        },
+        query: QUERY,
+      })
 
     it("displays the counts", () => {
       renderWithRelay({

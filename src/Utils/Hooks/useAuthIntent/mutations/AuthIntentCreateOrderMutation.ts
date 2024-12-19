@@ -1,7 +1,7 @@
 import { commitMutation, graphql } from "react-relay"
-import { AuthIntentMutation } from "./types"
-import { AuthIntentCreateOrderMutation } from "__generated__/AuthIntentCreateOrderMutation.graphql"
-import { Environment } from "react-relay"
+import type { AuthIntentMutation } from "./types"
+import type { AuthIntentCreateOrderMutation } from "__generated__/AuthIntentCreateOrderMutation.graphql"
+import type { Environment } from "react-relay"
 
 export const createOrderMutation: AuthIntentMutation = (
   relayEnvironment: Environment,

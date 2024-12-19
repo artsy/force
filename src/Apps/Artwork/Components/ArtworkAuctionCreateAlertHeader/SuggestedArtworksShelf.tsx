@@ -1,9 +1,16 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Column, Flex, Skeleton, Spacer } from "@artsy/palette"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { FC } from "react"
-import { graphql } from "react-relay"
 import {
+  Button,
+  Column,
+  GridColumns,
+  HorizontalOverflow,
+  Skeleton,
+  Stack,
+} from "@artsy/palette"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { type FC, useState } from "react"
+import { graphql } from "react-relay"
+import type {
   SuggestedArtworksShelfQuery,
   SuggestedArtworksShelfQuery$data,
 } from "__generated__/SuggestedArtworksShelfQuery.graphql"
@@ -11,10 +18,10 @@ import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
-import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { extractNodes } from "Utils/extractNodes"
 import { ArtworkAuctionCreateAlertTooltip } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
-import { SuggestedArtworksButton } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksButton"
+import { SuggestedArtworksModal } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksModal"
 
 export const NUMBER_OF_ARTWORKS_TO_SHOW = 5
 
@@ -22,54 +29,61 @@ interface SuggestedArtworksShelfProps {
   artworksConnection: SuggestedArtworksShelfQuery$data["artworksConnection"]
 }
 
-export const SuggestedArtworksShelf: FC<React.PropsWithChildren<SuggestedArtworksShelfProps>> = ({
-  artworksConnection,
-}) => {
+export const SuggestedArtworksShelf: FC<
+  React.PropsWithChildren<SuggestedArtworksShelfProps>
+> = ({ artworksConnection }) => {
   const artworks = extractNodes(artworksConnection)
   const suggestedArtworksCount = artworksConnection?.counts?.total ?? 0
   const displaySuggestedArtworksSection = suggestedArtworksCount > 0
-  const displaySeeMoreButton =
-    suggestedArtworksCount > NUMBER_OF_ARTWORKS_TO_SHOW
+  const displaySeeMore = suggestedArtworksCount > NUMBER_OF_ARTWORKS_TO_SHOW
+
+  const [open, setOpen] = useState(false)
 
   if (!displaySuggestedArtworksSection) return null
 
   return (
-    <>
+    <GridColumns>
       <Column span={12} display={["none", "block"]}>
-        <Spacer y={4} />
         <ArtworkAuctionCreateAlertTooltip />
       </Column>
 
       <Column span={12} display={["none", "block"]}>
-        <Flex
-          flexDirection="row"
-          flexWrap="wrap"
-          gap={2}
-          justifyContent="center"
-          overflow="hidden"
-          height="350px"
-        >
-          {artworks.map(artwork => (
-            <ShelfArtworkFragmentContainer
-              artwork={artwork}
-              contextModule={ContextModule.artworkClosedLotHeader}
-              key={artwork.internalID}
-              data-testid="ShelfSuggestedArtworks"
-            />
-          ))}
-        </Flex>
+        <HorizontalOverflow justifyContent="center">
+          <Stack gap={2} flexDirection="row">
+            {artworks.map(artwork => (
+              <ShelfArtworkFragmentContainer
+                artwork={artwork}
+                contextModule={ContextModule.artworkClosedLotHeader}
+                key={artwork.internalID}
+                data-testid="ShelfSuggestedArtworks"
+              />
+            ))}
+          </Stack>
+        </HorizontalOverflow>
       </Column>
 
-      {!!displaySeeMoreButton && (
-        <Column span={2} start={6}>
-          <SuggestedArtworksButton />
+      {displaySeeMore && (
+        <Column span={12} display="flex">
+          <Button
+            variant="secondaryNeutral"
+            size={["large", "small"]}
+            m="auto"
+            width={["100%", "auto"]}
+            onClick={() => setOpen(true)}
+          >
+            See more
+          </Button>
+
+          {open && <SuggestedArtworksModal onClose={() => setOpen(false)} />}
         </Column>
       )}
-    </>
+    </GridColumns>
   )
 }
 
-export const SuggestedArtworksShelfQueryRenderer: FC<React.PropsWithChildren<SearchCriteriaAttributes>> = props => {
+export const SuggestedArtworksShelfQueryRenderer: FC<
+  React.PropsWithChildren<SearchCriteriaAttributes>
+> = props => {
   return (
     <SystemQueryRenderer<SuggestedArtworksShelfQuery>
       placeholder={<SuggestedArtworksShelfPlaceholder />}
@@ -116,21 +130,38 @@ export const SuggestedArtworksShelfQueryRenderer: FC<React.PropsWithChildren<Sea
   )
 }
 
-const SuggestedArtworksShelfPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const SuggestedArtworksShelfPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Skeleton>
-      <Flex
-        flexDirection="row"
-        flexWrap="wrap"
-        gap={2}
-        justifyContent="center"
-        overflow="hidden"
-        height="340px"
-      >
-        {[...new Array(5)].map((_, i) => {
-          return <ShelfArtworkPlaceholder key={i} index={i} />
-        })}
-      </Flex>
+      <GridColumns>
+        <Column span={12} display={["none", "block"]}>
+          <ArtworkAuctionCreateAlertTooltip />
+        </Column>
+
+        <Column span={12} display={["none", "block"]}>
+          <HorizontalOverflow justifyContent="center">
+            <Stack gap={2} flexDirection="row">
+              {[...new Array(NUMBER_OF_ARTWORKS_TO_SHOW)].map((_, i) => {
+                return <ShelfArtworkPlaceholder key={i} index={i} />
+              })}
+            </Stack>
+          </HorizontalOverflow>
+        </Column>
+
+        <Column span={12} display="flex">
+          <Button
+            variant="secondaryNeutral"
+            size={["large", "small"]}
+            m="auto"
+            width={["100%", "auto"]}
+            disabled
+          >
+            Browse Similar Works
+          </Button>
+        </Column>
+      </GridColumns>
     </Skeleton>
   )
 }

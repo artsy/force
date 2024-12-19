@@ -230,7 +230,7 @@ describe("AuctionResultsFilterContext", () => {
 
     describe("when in staged mode", () => {
       beforeAll(() => {
-        let filters = {
+        const filters = {
           ...initialAuctionResultsFilterState?.({
             startDate: null,
             endDate: null,

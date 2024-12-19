@@ -6,7 +6,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { DimensionsRoute_Test_Query$rawResponse } from "__generated__/DimensionsRoute_Test_Query.graphql"
+import type { DimensionsRoute_Test_Query$rawResponse } from "__generated__/DimensionsRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 

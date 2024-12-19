@@ -1,7 +1,7 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { AboutArtworksRailQuery } from "__generated__/AboutArtworksRailQuery.graphql"
-import { AboutArtworksRail_marketingCollection$data } from "__generated__/AboutArtworksRail_marketingCollection.graphql"
+import type { AboutArtworksRailQuery } from "__generated__/AboutArtworksRailQuery.graphql"
+import type { AboutArtworksRail_marketingCollection$data } from "__generated__/AboutArtworksRail_marketingCollection.graphql"
 import { Rail } from "Components/Rail/Rail"
 import { extractNodes } from "Utils/extractNodes"
 import {
@@ -14,7 +14,9 @@ interface AboutArtworksRailProps {
   marketingCollection: AboutArtworksRail_marketingCollection$data
 }
 
-export const AboutArtworksRail: React.FC<React.PropsWithChildren<AboutArtworksRailProps>> = props => {
+export const AboutArtworksRail: React.FC<
+  React.PropsWithChildren<AboutArtworksRailProps>
+> = props => {
   const artworks = extractNodes(props.marketingCollection.artworksConnection)
 
   if (artworks.length === 0) {
@@ -58,7 +60,9 @@ export const AboutArtworksRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const AboutArtworksRailQueryRenderer: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const AboutArtworksRailQueryRenderer: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <SystemQueryRenderer<AboutArtworksRailQuery>
       lazyLoad

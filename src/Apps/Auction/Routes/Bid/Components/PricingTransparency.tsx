@@ -1,6 +1,6 @@
-import * as React from "react"
+import type * as React from "react"
 import { graphql } from "react-relay"
-import {
+import type {
   PricingTransparencyQuery,
   PricingTransparencyQuery$data,
   PricingTransparencyQuery$variables,
@@ -19,7 +19,9 @@ import {
 } from "@artsy/palette"
 import { useMemo } from "react"
 
-const PricingTransparency: React.FC<React.PropsWithChildren<PricingTransparencyQuery$data>> = props => {
+const PricingTransparency: React.FC<
+  React.PropsWithChildren<PricingTransparencyQuery$data>
+> = props => {
   const calculatedCost = props.artwork?.saleArtwork?.calculatedCost
 
   return (
@@ -87,7 +89,7 @@ export const PricingTransparencyQueryRenderer = ({
 }: Omit<PricingTransparencyQuery$variables, "bidAmountMinor">) => {
   const { relayEnvironment } = useSystemContext()
   const { values } = useAuctionFormContext()
-  const bidAmountMinor = parseInt(values.selectedBid || "0")
+  const bidAmountMinor = Number.parseInt(values.selectedBid || "0")
 
   // Hack to prevent invalid refetch / preloader state during route transition
   // when the url changes after user places a successful bid and we redirect

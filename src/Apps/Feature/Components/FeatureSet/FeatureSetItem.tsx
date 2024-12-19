@@ -1,22 +1,21 @@
-import * as React from "react"
+import type * as React from "react"
 import { Box } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
-  FeaturedLinkSize,
+  type FeaturedLinkSize,
   FeatureFeaturedLinkFragmentContainer as FeatureFeaturedLink,
 } from "Apps/Feature/Components/FeatureFeaturedLink"
 import GridItem from "Components/Artwork/GridItem"
-import { FeatureSetItem_setItem$data } from "__generated__/FeatureSetItem_setItem.graphql"
+import type { FeatureSetItem_setItem$data } from "__generated__/FeatureSetItem_setItem.graphql"
 
 export interface FeatureSetItemProps {
   setItem: FeatureSetItem_setItem$data
   size: FeaturedLinkSize
 }
 
-export const FeatureSetItem: React.FC<React.PropsWithChildren<FeatureSetItemProps>> = ({
-  setItem,
-  size,
-}) => {
+export const FeatureSetItem: React.FC<
+  React.PropsWithChildren<FeatureSetItemProps>
+> = ({ setItem, size }) => {
   switch (setItem.__typename) {
     case "FeaturedLink":
       return (

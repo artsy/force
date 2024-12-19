@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react"
-import { MyCollectionArtworkTitleTestQuery } from "__generated__/MyCollectionArtworkTitleTestQuery.graphql"
+import type { MyCollectionArtworkTitleTestQuery } from "__generated__/MyCollectionArtworkTitleTestQuery.graphql"
 import { MyCollectionArtworkTitle } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkTitle"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
@@ -7,23 +7,22 @@ import { graphql } from "react-relay"
 jest.unmock("react-relay")
 
 describe("MyCollectionArtworkTitle", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    MyCollectionArtworkTitleTestQuery
-  >({
-    Component: props => {
-      if (props?.artwork) {
-        return <MyCollectionArtworkTitle {...(props as any)} />
-      }
-      return null
-    },
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<MyCollectionArtworkTitleTestQuery>({
+      Component: props => {
+        if (props?.artwork) {
+          return <MyCollectionArtworkTitle {...(props as any)} />
+        }
+        return null
+      },
+      query: graphql`
       query MyCollectionArtworkTitleTestQuery @relay_test_operation {
         artwork(id: "foo") {
           ...MyCollectionArtworkTitle_artwork
         }
       }
     `,
-  })
+    })
 
   beforeEach(() => {
     renderWithRelay({ Artwork: () => mockResolversWithData })

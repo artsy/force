@@ -1,8 +1,8 @@
 import { createContext, useReducer, useContext } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { omit } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { SortOptions } from "Components/SortFilter"
+import type { SortOptions } from "Components/SortFilter"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 
 export interface BoothFilters {
@@ -48,13 +48,9 @@ export const BoothFilterContext = createContext<BoothFilterContextProps>({
   setFilter: () => {},
 })
 
-export const BoothFilterContextProvider: React.FC<React.PropsWithChildren<SharedBoothFilterContextProps>> = ({
-  children,
-  filters = {},
-  sortOptions,
-  onFilterClick,
-  onChange,
-}) => {
+export const BoothFilterContextProvider: React.FC<
+  React.PropsWithChildren<SharedBoothFilterContextProps>
+> = ({ children, filters = {}, sortOptions, onFilterClick, onChange }) => {
   const initialFilterState = {
     ...initialBoothFilterState,
     ...paramsToCamelCase(filters),
@@ -112,7 +108,7 @@ const boothFilterReducer = (
     case "SET": {
       const { name, value } = action.payload
 
-      let filterState: BoothFilters = { page: 1 }
+      const filterState: BoothFilters = { page: 1 }
 
       if (name === "page") {
         filterState[name] = Number(value)

@@ -1,9 +1,9 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { Column, GridColumns } from "@artsy/palette"
 import { ArtworkItem } from "./ArtworkItem"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtworksList_artworks$data } from "__generated__/ArtworksList_artworks.graphql"
+import type { ArtworksList_artworks$data } from "__generated__/ArtworksList_artworks.graphql"
 
 interface ArtworksListProps {
   selectedIds: string[]
@@ -23,7 +23,7 @@ const ArtworksList: FC<React.PropsWithChildren<ArtworksListProps>> = ({
   return (
     // Disable scroll anchoring for infinite article scroll
     // https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-anchor/Guide_to_scroll_anchoring
-    (<div style={{ overflowAnchor: "none" }}>
+    <div style={{ overflowAnchor: "none" }}>
       <GridColumns alignItems="flex-end">
         {extractNodes(artworks).map(artwork => {
           return (
@@ -42,8 +42,8 @@ const ArtworksList: FC<React.PropsWithChildren<ArtworksListProps>> = ({
           )
         })}
       </GridColumns>
-    </div>)
-  );
+    </div>
+  )
 }
 
 export const ArtworksListFragmentContainer = createFragmentContainer(

@@ -2,23 +2,22 @@ import { DateTime } from "luxon"
 import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkAuctionRegistrationPanel"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { ArtworkAuctionRegistrationPanelQuery } from "__generated__/ArtworkAuctionRegistrationPanelQuery.graphql"
+import type { ArtworkAuctionRegistrationPanelQuery } from "__generated__/ArtworkAuctionRegistrationPanelQuery.graphql"
 import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  ArtworkAuctionRegistrationPanelQuery
->({
-  Component: ArtworkAuctionRegistrationPanelFragmentContainer,
-  query: graphql`
+const { renderWithRelay } =
+  setupTestWrapperTL<ArtworkAuctionRegistrationPanelQuery>({
+    Component: ArtworkAuctionRegistrationPanelFragmentContainer,
+    query: graphql`
     query ArtworkAuctionRegistrationPanelQuery {
       artwork(id: "example") {
         ...ArtworkAuctionRegistrationPanel_artwork
       }
     }
   `,
-})
+  })
 
 describe("ArtworkAuctionRegistrationPanel", () => {
   it("renders countdown timer and button", () => {

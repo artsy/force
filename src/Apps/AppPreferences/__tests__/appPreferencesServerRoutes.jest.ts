@@ -2,7 +2,7 @@ import {
   appPreferencesPost,
   getAppPreferences,
 } from "Apps/AppPreferences/appPreferencesServerRoutes"
-import { ArtsyRequest } from "Server/middleware/artsyExpress"
+import type { ArtsyRequest } from "Server/middleware/artsyExpress"
 
 describe("getAppPreferences", () => {
   it("returns the default app preferences if there are none", () => {

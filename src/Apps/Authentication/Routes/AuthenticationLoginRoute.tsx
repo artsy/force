@@ -1,6 +1,8 @@
 import { AuthenticationInlineDialog } from "Apps/Authentication/Components/AuthenticationInlineDialog"
-import { FC } from "react"
+import type { FC } from "react"
 
-export const AuthenticationLoginRoute: FC<React.PropsWithChildren<unknown>> = () => {
+export const AuthenticationLoginRoute: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return <AuthenticationInlineDialog mode="Welcome" />
 }

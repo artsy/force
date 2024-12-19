@@ -13,18 +13,18 @@ import {
   Spacer,
 } from "@artsy/palette"
 import styled from "styled-components"
-import { FC, Fragment } from "react"
+import { type FC, Fragment } from "react"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { ArticleInfiniteScrollQuery } from "__generated__/ArticleInfiniteScrollQuery.graphql"
+import type { ArticleInfiniteScrollQuery } from "__generated__/ArticleInfiniteScrollQuery.graphql"
 import { ArticleBodyFragmentContainer } from "./ArticleBody"
 import { ArticleVerticalRelatedArticlesQueryRenderer } from "./ArticleVerticalRelatedArticles"
-import { ArticleInfiniteScroll_viewer$data } from "__generated__/ArticleInfiniteScroll_viewer.graphql"
+import type { ArticleInfiniteScroll_viewer$data } from "__generated__/ArticleInfiniteScroll_viewer.graphql"
 import { useMode } from "Utils/Hooks/useMode"
 import { themeGet } from "@styled-system/theme-get"
 import { ArticleVisibilityMetadataFragmentContainer } from "./ArticleVisibilityMetadata"
@@ -35,10 +35,9 @@ interface ArticleInfiniteScrollProps {
   relay: RelayPaginationProp
 }
 
-export const ArticleInfiniteScroll: FC<React.PropsWithChildren<ArticleInfiniteScrollProps>> = ({
-  viewer,
-  relay,
-}) => {
+export const ArticleInfiniteScroll: FC<
+  React.PropsWithChildren<ArticleInfiniteScrollProps>
+> = ({ viewer, relay }) => {
   const articles = extractNodes(viewer.articlesConnection)
 
   const [mode, setMode] = useMode<"Pending" | "Loading">("Pending")
@@ -99,10 +98,11 @@ const ARTICLE_NEXT_QUERY = graphql`
   }
 `
 
-export const ArticleInfiniteScrollPaginationContainer = createPaginationContainer(
-  ArticleInfiniteScroll,
-  {
-    viewer: graphql`
+export const ArticleInfiniteScrollPaginationContainer =
+  createPaginationContainer(
+    ArticleInfiniteScroll,
+    {
+      viewer: graphql`
       fragment ArticleInfiniteScroll_viewer on Viewer
         @argumentDefinitions(
           after: { type: "String" }
@@ -127,32 +127,31 @@ export const ArticleInfiniteScrollPaginationContainer = createPaginationContaine
         }
       }
     `,
-  },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return { ...prevVars, count: totalCount }
     },
-    getVariables(_props, { count, cursor }, fragmentVariables) {
-      return { ...fragmentVariables, count, after: cursor }
-    },
-    query: ARTICLE_NEXT_QUERY,
-  }
-)
+    {
+      direction: "forward",
+      getFragmentVariables(prevVars, totalCount) {
+        return { ...prevVars, count: totalCount }
+      },
+      getVariables(_props, { count, cursor }, fragmentVariables) {
+        return { ...fragmentVariables, count, after: cursor }
+      },
+      query: ARTICLE_NEXT_QUERY,
+    }
+  )
 
 interface ArticleInfiniteScrollQueryRendererProps {
   articleID: string
   channelID: string
 }
 
-export const ArticleInfiniteScrollQueryRenderer: FC<React.PropsWithChildren<ArticleInfiniteScrollQueryRendererProps>> = ({
-  articleID,
-  channelID,
-}) => {
+export const ArticleInfiniteScrollQueryRenderer: FC<
+  React.PropsWithChildren<ArticleInfiniteScrollQueryRendererProps>
+> = ({ articleID, channelID }) => {
   return (
     // Disable scroll anchoring for infinite article scroll
     // https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-anchor/Guide_to_scroll_anchoring
-    (<div style={{ overflowAnchor: "none" }}>
+    <div style={{ overflowAnchor: "none" }}>
       <SystemQueryRenderer<ArticleInfiniteScrollQuery>
         lazyLoad
         placeholder={<ArticleInfiniteScrollPlaceholder />}
@@ -173,11 +172,13 @@ export const ArticleInfiniteScrollQueryRenderer: FC<React.PropsWithChildren<Arti
           )
         }}
       />
-    </div>)
-  );
+    </div>
+  )
 }
 
-const ArticleInfiniteScrollPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const ArticleInfiniteScrollPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <>
       <FullBleed bg="black5" p={1}>

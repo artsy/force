@@ -1,8 +1,10 @@
-import * as React from "react"
+import type * as React from "react"
 import { Text, useTheme } from "@artsy/palette"
 import { useState } from "react"
 
-export const HomeHeroUnitCredit: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+export const HomeHeroUnitCredit: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const [hover, setHover] = useState(false)
 
   const handleMouseEnter = () => setHover(true)

@@ -1,13 +1,13 @@
-import { SearchResultsArtworks_viewer$data } from "__generated__/SearchResultsArtworks_viewer.graphql"
+import type { SearchResultsArtworks_viewer$data } from "__generated__/SearchResultsArtworks_viewer.graphql"
 import { SearchResultsArtworksFilters } from "Apps/Search/Components/SearchResultsArtworksFilters"
 import { ZeroState } from "Apps/Search/Components/ZeroState"
 import { ArtworkFilter } from "Components/ArtworkFilter"
-import {
+import type {
   Counts,
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import * as React from "react"
+import type * as React from "react"
 import { useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
@@ -19,7 +19,9 @@ interface SearchResultsRouteProps {
   viewer: SearchResultsArtworks_viewer$data
 }
 
-export const SearchResultsArtworksRoute: React.FC<React.PropsWithChildren<SearchResultsRouteProps>> = props => {
+export const SearchResultsArtworksRoute: React.FC<
+  React.PropsWithChildren<SearchResultsRouteProps>
+> = props => {
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
   const [searchFilterKey, setSearchFilterKey] = useState(
@@ -65,9 +67,8 @@ export const SearchResultsArtworksRoute: React.FC<React.PropsWithChildren<Search
   )
 }
 
-export const SearchResultsArtworksRouteFragmentContainer = createFragmentContainer(
-  SearchResultsArtworksRoute,
-  {
+export const SearchResultsArtworksRouteFragmentContainer =
+  createFragmentContainer(SearchResultsArtworksRoute, {
     viewer: graphql`
       fragment SearchResultsArtworks_viewer on Viewer
         @argumentDefinitions(
@@ -91,5 +92,4 @@ export const SearchResultsArtworksRouteFragmentContainer = createFragmentContain
         ...ArtworkFilter_viewer @arguments(input: $input)
       }
     `,
-  }
-)
+  })

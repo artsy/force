@@ -1,5 +1,5 @@
-import { Box, BoxProps, Flex, Join, Spacer } from "@artsy/palette"
-import { FC } from "react"
+import { Box, type BoxProps, Flex, Join, Spacer } from "@artsy/palette"
+import type { FC } from "react"
 import { useArticleTracking } from "Apps/Article/useArticleTracking"
 import { getENV } from "Utils/getENV"
 import XIcon from "@artsy/icons/XIcon"

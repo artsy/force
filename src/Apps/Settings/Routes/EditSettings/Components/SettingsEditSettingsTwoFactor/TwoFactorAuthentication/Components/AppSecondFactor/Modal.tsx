@@ -4,21 +4,25 @@ import {
   Input,
   Join,
   ModalDialog,
-  Text,
   Spacer,
+  Text,
 } from "@artsy/palette"
-import { CreateAppSecondFactorMutation$data } from "__generated__/CreateAppSecondFactorMutation.graphql"
+import type { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
+import { BackupSecondFactorReminder } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/BackupSecondFactorReminder"
+import { EnableSecondFactor } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/Mutation/EnableSecondFactor"
+import { redirectMessage } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Formik, FormikHelpers as FormikActions, FormikProps } from "formik"
+import type { CreateAppSecondFactorMutation$data } from "__generated__/CreateAppSecondFactorMutation.graphql"
+import {
+  Formik,
+  type FormikHelpers as FormikActions,
+  type FormikProps,
+} from "formik"
 import QRCode from "qrcode.react"
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import * as Yup from "yup"
-import { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
-import { EnableSecondFactor } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/Mutation/EnableSecondFactor"
 import { UpdateAppSecondFactor } from "./Mutation/UpdateAppSecondFactor"
-import { BackupSecondFactorReminder } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/BackupSecondFactorReminder"
-import { redirectMessage } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
 export interface FormValues {
   name: string
@@ -45,7 +49,9 @@ interface AppSecondFactorModalProps {
   password: string
 }
 
-export const AppSecondFactorModal: React.FC<React.PropsWithChildren<AppSecondFactorModalProps>> = props => {
+export const AppSecondFactorModal: React.FC<
+  React.PropsWithChildren<AppSecondFactorModalProps>
+> = props => {
   const { secondFactor, password, onComplete } = props
   const { relayEnvironment } = useSystemContext()
 
@@ -248,7 +254,9 @@ interface OnCompleteRedirectModalProps {
   show: boolean
 }
 
-export const OnCompleteRedirectModal: React.FC<React.PropsWithChildren<OnCompleteRedirectModalProps>> = props => {
+export const OnCompleteRedirectModal: React.FC<
+  React.PropsWithChildren<OnCompleteRedirectModalProps>
+> = props => {
   const { onClick, redirectTo, show } = props
 
   if (!show) return null

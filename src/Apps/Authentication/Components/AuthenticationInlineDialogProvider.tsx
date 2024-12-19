@@ -2,18 +2,17 @@ import {
   AuthDialogContext,
   reducer,
   INITIAL_STATE,
-  AuthDialogMode,
+  type AuthDialogMode,
 } from "Components/AuthDialog/AuthDialogContext"
-import { FC, useReducer } from "react"
+import { type FC, useReducer } from "react"
 
 interface AuthenticationInlineDialogProviderProps {
   mode: AuthDialogMode
 }
 
-export const AuthenticationInlineDialogProvider: FC<React.PropsWithChildren<AuthenticationInlineDialogProviderProps>> = ({
-  children,
-  mode,
-}) => {
+export const AuthenticationInlineDialogProvider: FC<
+  React.PropsWithChildren<AuthenticationInlineDialogProviderProps>
+> = ({ children, mode }) => {
   const [state, dispatch] = useReducer(reducer, { ...INITIAL_STATE, mode })
 
   return (

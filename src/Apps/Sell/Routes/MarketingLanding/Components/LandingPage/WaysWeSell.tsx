@@ -1,4 +1,4 @@
-import React from "react"
+import type React from "react"
 import {
   Text,
   Image,
@@ -46,20 +46,17 @@ const IMAGE_STOREFRONT = {
 const DATA: ShelfItemProps[] = [
   {
     image: IMAGE_AUCTIONS,
-    text:
-      "Our curated auctions provide you with multiple opportunities to reach the widest audience and successfully achieve your artwork’s full potential.",
+    text: "Our curated auctions provide you with multiple opportunities to reach the widest audience and successfully achieve your artwork’s full potential.",
     title: "Auctions",
   },
   {
     image: IMAGE_PRIVATE_SALES,
-    text:
-      "​​We offer tailored and discreet sales arrangements for our collectors’ highest value and most sensitive artworks.",
+    text: "​​We offer tailored and discreet sales arrangements for our collectors’ highest value and most sensitive artworks.",
     title: "Private sales",
   },
   {
     image: IMAGE_STOREFRONT,
-    text:
-      "When your work is listed directly on Artsy.net—the world’s largest online art marketplace—it reaches over 3 million art lovers.",
+    text: "When your work is listed directly on Artsy.net—the world’s largest online art marketplace—it reaches over 3 million art lovers.",
     title: "Online marketplace",
   },
 ]
@@ -87,7 +84,11 @@ export const WaysWeSell = () => {
   )
 }
 
-const ShelfItem: React.FC<React.PropsWithChildren<ShelfItemProps>> = ({ image, title, text }) => {
+const ShelfItem: React.FC<React.PropsWithChildren<ShelfItemProps>> = ({
+  image,
+  title,
+  text,
+}) => {
   return (
     <Stack gap={[1, 2]}>
       <ResponsiveBox

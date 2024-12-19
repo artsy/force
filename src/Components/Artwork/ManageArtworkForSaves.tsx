@@ -1,12 +1,12 @@
 import { useToasts } from "@artsy/palette"
 import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
-import { ArtworkList } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/CreateNewListModal"
+import type { ArtworkList } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/CreateNewListModal"
 import { CreateNewListModalForManageArtwork } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/CreateNewListModalForManageArtwork"
 import { SelectArtworkListsModalQueryRender } from "Apps/CollectorProfile/Routes/Saves/Components/SelectArtworkListsModal/SelectArtworkListsModal"
 import {
   createContext,
-  Dispatch,
-  FC,
+  type Dispatch,
+  type FC,
   useContext,
   useReducer,
   useState,
@@ -15,8 +15,8 @@ import {
 import { useRouter } from "System/Hooks/useRouter"
 
 export enum ModalKey {
-  SelectListsForArtwork,
-  CreateNewList,
+  SelectListsForArtwork = 0,
+  CreateNewList = 1,
 }
 
 type State = {
@@ -85,9 +85,10 @@ export const INITIAL_STATE: State = {
   recentlyAddedList: null,
 }
 
-export const ManageArtworkForSaves = createContext<
-  ManageArtworkForSavesContextState
->((null as unknown) as ManageArtworkForSavesContextState)
+export const ManageArtworkForSaves =
+  createContext<ManageArtworkForSavesContextState>(
+    null as unknown as ManageArtworkForSavesContextState
+  )
 
 export const useManageArtworkForSavesContext = () => {
   return useContext(ManageArtworkForSaves)
@@ -98,11 +99,9 @@ export const useManageArtworkForSavesContext = () => {
  * If `savedListId` was passed, it means the user is on the artwork lists page
  * In this case, whether the artwork is saved or not will depend on the local state (not on the status received from backend)
  */
-export const ManageArtworkForSavesProvider: FC<React.PropsWithChildren<ProviderProps>> = ({
-  children,
-  savedListId,
-  artwork,
-}) => {
+export const ManageArtworkForSavesProvider: FC<
+  React.PropsWithChildren<ProviderProps>
+> = ({ children, savedListId, artwork }) => {
   const [isSavedToList, setIsSavedToList] = useState(!!savedListId)
   const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,

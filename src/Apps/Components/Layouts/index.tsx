@@ -6,7 +6,7 @@ import { LayoutFullBleed } from "Apps/Components/Layouts/LayoutFullBleed"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
 import { LayoutNavOnly } from "Apps/Components/Layouts/LayoutNavOnly"
 import { useRouter } from "System/Hooks/useRouter"
-import { FC, ReactNode } from "react"
+import type { FC, ReactNode } from "react"
 
 export interface BaseLayoutProps {
   children: ReactNode
@@ -27,7 +27,10 @@ export const LAYOUTS = {
 
 export type LayoutVariant = keyof typeof LAYOUTS
 
-export const Layout: FC<React.PropsWithChildren<LayoutProps>> = ({ variant = "Default", children }) => {
+export const Layout: FC<React.PropsWithChildren<LayoutProps>> = ({
+  variant = "Default",
+  children,
+}) => {
   const { match } = useRouter()
 
   const isFetching = !match.elements

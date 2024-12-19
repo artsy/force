@@ -1,5 +1,5 @@
-import { AssetCredentials } from "Components/PhotoUpload/Mutations/getGeminiCredentialsForEnvironment"
-import { Photo } from "./fileUtils"
+import type { AssetCredentials } from "Components/PhotoUpload/Mutations/getGeminiCredentialsForEnvironment"
+import type { Photo } from "./fileUtils"
 
 // Fetches the artwork image and returns a file that can then be used to upload the image to S3.
 const fetchExternalFile = async (photo: Photo) => {

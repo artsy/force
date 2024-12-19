@@ -1,7 +1,7 @@
 import { Box } from "@artsy/palette"
 import {
   Children,
-  FC,
+  type FC,
   createContext,
   isValidElement,
   useContext,
@@ -21,9 +21,9 @@ interface TransitionPanelProviderProps {
   children: JSX.Element[]
 }
 
-export const TransitionPanelProvider: FC<React.PropsWithChildren<TransitionPanelProviderProps>> = ({
-  children,
-}) => {
+export const TransitionPanelProvider: FC<
+  React.PropsWithChildren<TransitionPanelProviderProps>
+> = ({ children }) => {
   const screens = Children.toArray(children).filter(isValidElement)
 
   const [active, setActive] = useState(0)

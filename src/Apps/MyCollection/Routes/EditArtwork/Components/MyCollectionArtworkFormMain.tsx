@@ -17,7 +17,7 @@ import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtw
 import { MyCollectionArtworkFormImages } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormImages"
 import { useDeleteArtwork } from "Apps/MyCollection/Routes/EditArtwork/Mutations/useDeleteArtwork"
 import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
-import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
+import type { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { Form, useFormikContext } from "formik"
 import { useState } from "react"
@@ -25,7 +25,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
-import { MyCollectionArtworkFormMain_artwork$data } from "__generated__/MyCollectionArtworkFormMain_artwork.graphql"
+import type { MyCollectionArtworkFormMain_artwork$data } from "__generated__/MyCollectionArtworkFormMain_artwork.graphql"
 
 const logger = createLogger("MyCollectionArtworkForm.tsx")
 
@@ -33,22 +33,19 @@ export interface MyCollectionArtworkFormMainProps {
   artwork?: MyCollectionArtworkFormMain_artwork$data
 }
 
-export const MyCollectionArtworkFormMain: React.FC<React.PropsWithChildren<MyCollectionArtworkFormMainProps>> = ({
-  artwork,
-}) => {
+export const MyCollectionArtworkFormMain: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkFormMainProps>
+> = ({ artwork }) => {
   const { onBack } = useMyCollectionArtworkFormContext()
-  const {
-    deleteCollectedArtwork: trackDeleteCollectedArtwork,
-  } = useMyCollectionTracking()
+  const { deleteCollectedArtwork: trackDeleteCollectedArtwork } =
+    useMyCollectionTracking()
   const { router, match } = useRouter()
   const { sendToast } = useToasts()
 
   const { theme } = useTheme()
 
-  const [
-    showLeaveWithoutSavingModal,
-    setShowLeaveWithoutSavingModal,
-  ] = useState(false)
+  const [showLeaveWithoutSavingModal, setShowLeaveWithoutSavingModal] =
+    useState(false)
   const [showDeletionModal, setShowDeletionModal] = useState(false)
   const { submitMutation: deleteArtwork } = useDeleteArtwork()
 
@@ -85,14 +82,8 @@ export const MyCollectionArtworkFormMain: React.FC<React.PropsWithChildren<MyCol
     }
   }
 
-  const {
-    handleSubmit,
-    isSubmitting,
-    isValid,
-    values,
-    dirty,
-    setValues,
-  } = useFormikContext<ArtworkModel>()
+  const { handleSubmit, isSubmitting, isValid, values, dirty, setValues } =
+    useFormikContext<ArtworkModel>()
 
   const handleBack = () => {
     // Reset form values to initial values
@@ -212,14 +203,12 @@ export const MyCollectionArtworkFormMain: React.FC<React.PropsWithChildren<MyCol
   )
 }
 
-export const MyCollectionArtworkFormMainFragmentContainer = createFragmentContainer(
-  MyCollectionArtworkFormMain,
-  {
+export const MyCollectionArtworkFormMainFragmentContainer =
+  createFragmentContainer(MyCollectionArtworkFormMain, {
     artwork: graphql`
       fragment MyCollectionArtworkFormMain_artwork on Artwork {
         internalID
         slug
       }
     `,
-  }
-)
+  })

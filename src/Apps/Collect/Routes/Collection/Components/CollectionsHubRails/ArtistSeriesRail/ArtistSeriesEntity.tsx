@@ -1,13 +1,13 @@
 import { Box, Flex, Text, Image } from "@artsy/palette"
-import { ArtistSeriesEntity_member$data } from "__generated__/ArtistSeriesEntity_member.graphql"
+import type { ArtistSeriesEntity_member$data } from "__generated__/ArtistSeriesEntity_member.graphql"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import currency from "currency.js"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   ContextModule,
-  ClickedArtistSeriesGroup,
+  type ClickedArtistSeriesGroup,
   ActionType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -19,28 +19,18 @@ export interface ArtistSeriesEntityProps {
   itemNumber: number
 }
 
-export const ArtistSeriesEntity: React.FC<React.PropsWithChildren<ArtistSeriesEntityProps>> = ({
-  member,
-  itemNumber,
-}) => {
-  const {
-    headerImage,
-    artworksConnection,
-    priceGuidance,
-    slug,
-    id,
-    title,
-  } = member
+export const ArtistSeriesEntity: React.FC<
+  React.PropsWithChildren<ArtistSeriesEntityProps>
+> = ({ member, itemNumber }) => {
+  const { headerImage, artworksConnection, priceGuidance, slug, id, title } =
+    member
 
   const artworks = extractNodes(artworksConnection)
 
   const { trackEvent } = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const handleLinkClick = () => {
     if (!contextPageOwnerType) return null
@@ -124,7 +114,9 @@ export const ArtistSeriesEntity: React.FC<React.PropsWithChildren<ArtistSeriesEn
 }
 
 export const ArtistSeriesRailContainer = createFragmentContainer(
-  ArtistSeriesEntity as React.FC<React.PropsWithChildren<ArtistSeriesEntityProps>>,
+  ArtistSeriesEntity as React.FC<
+    React.PropsWithChildren<ArtistSeriesEntityProps>
+  >,
   {
     member: graphql`
       fragment ArtistSeriesEntity_member on MarketingCollection {

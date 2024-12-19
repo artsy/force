@@ -3,10 +3,10 @@ import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShipping
 import { useSaveFulfillmentDetails } from "Apps/Order/Routes/Shipping/Mutations/useSaveFulfillmentDetails"
 import {
   FulfillmentType,
-  FulfillmentValues,
+  type FulfillmentValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import createLogger from "Utils/logger"
-import { CommerceSetShippingInput } from "__generated__/useSaveFulfillmentDetailsMutation.graphql"
+import type { CommerceSetShippingInput } from "__generated__/useSaveFulfillmentDetailsMutation.graphql"
 
 const logger = createLogger(
   "Order/Routes/Shipping/Hooks/useHandleSaveFulfillmentDetails"
@@ -65,9 +65,10 @@ export const useHandleSaveFulfillmentDetails = () => {
           },
         }
       } else {
-        requiresArtsyShippingToDestination = shippingContext.orderData.requiresArtsyShippingTo(
-          values.attributes.country
-        )
+        requiresArtsyShippingToDestination =
+          shippingContext.orderData.requiresArtsyShippingTo(
+            values.attributes.country
+          )
 
         const { phoneNumber, ...addressValues } = values.attributes
 

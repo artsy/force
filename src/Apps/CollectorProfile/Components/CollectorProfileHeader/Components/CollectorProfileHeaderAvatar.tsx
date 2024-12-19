@@ -1,16 +1,15 @@
-import { Avatar, Box, BoxProps } from "@artsy/palette"
+import { Avatar, Box, type BoxProps } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-import { CollectorProfileHeaderAvatar_me$data } from "__generated__/CollectorProfileHeaderAvatar_me.graphql"
+import type { CollectorProfileHeaderAvatar_me$data } from "__generated__/CollectorProfileHeaderAvatar_me.graphql"
 
 interface CollectorProfileHeaderAvatarProps extends BoxProps {
   me: CollectorProfileHeaderAvatar_me$data
 }
 
-const CollectorProfileHeaderAvatar: React.FC<React.PropsWithChildren<CollectorProfileHeaderAvatarProps>> = ({
-  me,
-  ...rest
-}) => {
+const CollectorProfileHeaderAvatar: React.FC<
+  React.PropsWithChildren<CollectorProfileHeaderAvatarProps>
+> = ({ me, ...rest }) => {
   const image = (me.icon?.versions?.length ?? 0) > 0 ? me.icon?.cropped : null
 
   const avatar = {
@@ -33,9 +32,8 @@ const CollectorProfileHeaderAvatar: React.FC<React.PropsWithChildren<CollectorPr
   )
 }
 
-export const CollectorProfileHeaderAvatarFragmentContainer = createFragmentContainer(
-  CollectorProfileHeaderAvatar,
-  {
+export const CollectorProfileHeaderAvatarFragmentContainer =
+  createFragmentContainer(CollectorProfileHeaderAvatar, {
     me: graphql`
       fragment CollectorProfileHeaderAvatar_me on Me {
         initials
@@ -49,5 +47,4 @@ export const CollectorProfileHeaderAvatarFragmentContainer = createFragmentConta
         }
       }
     `,
-  }
-)
+  })

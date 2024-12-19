@@ -1,7 +1,7 @@
-import * as React from "react"
-import { Box, BoxProps, Join, Spacer } from "@artsy/palette"
+import type * as React from "react"
+import { Box, type BoxProps, Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FeatureSet_set$data } from "__generated__/FeatureSet_set.graphql"
+import type { FeatureSet_set$data } from "__generated__/FeatureSet_set.graphql"
 import { FeatureSetMetaFragmentContainer as FeatureSetMeta } from "./FeatureSetMeta"
 import { FeatureSetContainerFragmentContainer as FeatureSetContainer } from "./FeatureSetContainer"
 import { FeatureSetItemFragmentContainer as FeatureSetItem } from "./FeatureSetItem"
@@ -14,7 +14,10 @@ interface FeatureSetProps extends Omit<BoxProps, "color"> {
 
 const SUPPORTED_ITEM_TYPES = ["FeaturedLink", "Artwork"]
 
-export const FeatureSet: React.FC<React.PropsWithChildren<FeatureSetProps>> = ({ set, ...rest }) => {
+export const FeatureSet: React.FC<React.PropsWithChildren<FeatureSetProps>> = ({
+  set,
+  ...rest
+}) => {
   const orderedItems = extractNodes(set.orderedItems)
   const count = orderedItems.length
   const size = useMemo(() => {

@@ -98,9 +98,8 @@ const BottomFormNextButton = () => {
   const { isLoggedIn } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
   const { trackTappedContinueSubmission } = useSubmissionTracking()
-  const {
-    submitMutation: associateSubmissionMutation,
-  } = useAssociateSubmission()
+  const { submitMutation: associateSubmissionMutation } =
+    useAssociateSubmission()
   const { value, clearValue } = useAuthIntent()
 
   const {

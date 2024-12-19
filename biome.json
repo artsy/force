@@ -1,0 +1,81 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
+  "files": {
+    "ignoreUnknown": false,
+    "ignore": ["src/__generated__/**/*"]
+  },
+  "formatter": {
+    "enabled": true,
+    "useEditorconfig": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80,
+    "attributePosition": "auto",
+    "bracketSpacing": true,
+    "ignore": ["**/__generated__", "hokusai/*.yml"]
+  },
+  "organizeImports": { "enabled": true },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "noSwitchDeclarations": "off"
+      },
+      "complexity": {
+        "noBannedTypes": "off",
+        "noExcessiveNestedTestSuites": "off",
+        "noForEach": "off",
+        "noUselessFragments": "off",
+        "useLiteralKeys": "off",
+        "useOptionalChain": "off"
+      },
+      "performance": {
+        "noAccumulatingSpread": "off",
+        "noDelete": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      },
+      "style": {
+        "noArguments": "off",
+        "noNonNullAssertion": "off",
+        "useNodejsImportProtocol": "off"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "off",
+        "noAsyncPromiseExecutor": "off",
+        "noExplicitAny": "off",
+        "noImplicitAnyLet": "off"
+      }
+    },
+    "ignore": ["src/__generated__/**/*"]
+  },
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "es5",
+      "semicolons": "asNeeded",
+      "arrowParentheses": "asNeeded",
+      "bracketSameLine": false,
+      "quoteStyle": "double",
+      "attributePosition": "auto",
+      "bracketSpacing": true
+    }
+  },
+  "overrides": [
+    { "include": ["*.cy.js", "*.cy.ts"], "linter": { "rules": {} } },
+    {
+      "include": ["webpack/**/*"],
+      "linter": { "rules": { "suspicious": { "noConsole": "off" } } }
+    },
+    {
+      "include": ["*.test.ts", "*.test.tsx", "*.jest.ts", "**/*.jest.tsx"],
+      "linter": { "rules": { "style": { "noNonNullAssertion": "off" } } }
+    }
+  ]
+}

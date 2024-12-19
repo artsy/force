@@ -1,7 +1,7 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { PartnerArtistDetails_partnerArtist$data } from "__generated__/PartnerArtistDetails_partnerArtist.graphql"
-import { PartnerArtistDetailsQuery } from "__generated__/PartnerArtistDetailsQuery.graphql"
+import type { PartnerArtistDetails_partnerArtist$data } from "__generated__/PartnerArtistDetails_partnerArtist.graphql"
+import type { PartnerArtistDetailsQuery } from "__generated__/PartnerArtistDetailsQuery.graphql"
 import {
   Column,
   GridColumns,
@@ -23,10 +23,9 @@ export interface PartnerArtistDetailsProps {
   partnerId: string
 }
 
-export const PartnerArtistDetails: React.FC<React.PropsWithChildren<PartnerArtistDetailsProps>> = ({
-  partnerArtist,
-  partnerId,
-}) => {
+export const PartnerArtistDetails: React.FC<
+  React.PropsWithChildren<PartnerArtistDetailsProps>
+> = ({ partnerArtist, partnerId }) => {
   if (!partnerArtist || !partnerArtist.node) return null
 
   const {
@@ -112,10 +111,12 @@ export const PartnerArtistDetailsFragmentContainer = createFragmentContainer(
   }
 )
 
-export const PartnerArtistDetailsRenderer: React.FC<React.PropsWithChildren<{
-  partnerId: string
-  artistId: string
-}>> = ({ partnerId, artistId, ...rest }) => {
+export const PartnerArtistDetailsRenderer: React.FC<
+  React.PropsWithChildren<{
+    partnerId: string
+    artistId: string
+  }>
+> = ({ partnerId, artistId, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

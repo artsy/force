@@ -1,4 +1,4 @@
-import { AuthIntent, ContextModule } from "@artsy/cohesion"
+import { type AuthIntent, ContextModule } from "@artsy/cohesion"
 import { Button, Flex, FullBleed, Spacer } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { ArtistNotEligiblText } from "Apps/Sell/Components/ArtistNotEligibleText"
@@ -9,8 +9,8 @@ import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/En
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { ArtistNotEligibleRoute_artist$key } from "__generated__/ArtistNotEligibleRoute_artist.graphql"
-import * as React from "react"
+import type { ArtistNotEligibleRoute_artist$key } from "__generated__/ArtistNotEligibleRoute_artist.graphql"
+import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
 
 const FRAGMENT = graphql`
@@ -22,7 +22,9 @@ interface ArtistNotEligibleRouteProps {
   artist: ArtistNotEligibleRoute_artist$key
 }
 
-export const ArtistNotEligibleRoute: React.FC<React.PropsWithChildren<ArtistNotEligibleRouteProps>> = props => {
+export const ArtistNotEligibleRoute: React.FC<
+  React.PropsWithChildren<ArtistNotEligibleRouteProps>
+> = props => {
   const artist = useFragment(FRAGMENT, props.artist)
   const { showAuthDialog } = useAuthDialog()
   const { router } = useRouter()

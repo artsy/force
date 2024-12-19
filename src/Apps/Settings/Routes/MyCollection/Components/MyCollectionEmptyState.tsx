@@ -16,12 +16,13 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { resized } from "Utils/resized"
 
-export const MyCollectionEmptyState: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const MyCollectionEmptyState: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { isLoggedIn } = useSystemContext()
 
-  const {
-    addCollectedArtwork: trackAddCollectedArtwork,
-  } = useMyCollectionTracking()
+  const { addCollectedArtwork: trackAddCollectedArtwork } =
+    useMyCollectionTracking()
 
   const image = resized(
     "https://files.artsy.net/images/my-coll-get-app-img.jpg",

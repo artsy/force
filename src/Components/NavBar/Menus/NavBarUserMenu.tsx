@@ -1,10 +1,10 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Box, BoxProps, Separator, Text } from "@artsy/palette"
+import { Box, type BoxProps, Separator, Text } from "@artsy/palette"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { logout } from "Utils/auth"
 import { getENV } from "Utils/getENV"
 import { userIsAdmin } from "Utils/user"
-import * as React from "react"
+import type * as React from "react"
 import { useTracking } from "react-tracking"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
 import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
@@ -29,7 +29,9 @@ import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 
 interface NavBarUserMenuProps extends BoxProps {}
 
-export const NavBarUserMenu: React.FC<React.PropsWithChildren<NavBarUserMenuProps>> = props => {
+export const NavBarUserMenu: React.FC<
+  React.PropsWithChildren<NavBarUserMenuProps>
+> = props => {
   const { trackEvent } = useTracking()
 
   const { user } = useSystemContext()

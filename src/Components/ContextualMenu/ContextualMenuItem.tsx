@@ -1,19 +1,16 @@
 import styled from "styled-components"
 
 import { themeGet } from "@styled-system/theme-get"
-import { Clickable, ClickableProps, Separator } from "@artsy/palette"
+import { Clickable, type ClickableProps, Separator } from "@artsy/palette"
 
 interface ContextualMenuItemProps extends ClickableProps {
   children: React.ReactNode
   onClick?: () => void
 }
 
-export const ContextualMenuItem: React.FC<React.PropsWithChildren<ContextualMenuItemProps>> = ({
-  children,
-  onClick,
-  padding = 2,
-  ...rest
-}) => {
+export const ContextualMenuItem: React.FC<
+  React.PropsWithChildren<ContextualMenuItemProps>
+> = ({ children, onClick, padding = 2, ...rest }) => {
   return (
     <ContextualMenuItemContent
       onClick={onClick}
@@ -36,6 +33,8 @@ const ContextualMenuItemContent = styled(Clickable)`
   }
 `
 
-export const ContextualMenuDivider: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const ContextualMenuDivider: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return <Separator color="black10" as="hr" width="100%" />
 }

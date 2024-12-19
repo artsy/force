@@ -1,8 +1,8 @@
 import { Box, Flex, Image, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Analytics } from "System/Contexts/AnalyticsContext"
-import { ExampleArtworkRoute_artwork$data } from "__generated__/ExampleArtworkRoute_artwork.graphql"
+import type { ExampleArtworkRoute_artwork$data } from "__generated__/ExampleArtworkRoute_artwork.graphql"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { MetaTags } from "Components/MetaTags"
 import { extractNodes } from "Utils/extractNodes"
@@ -11,9 +11,9 @@ export interface ExampleArtworkRouteProps {
   artwork: ExampleArtworkRoute_artwork$data
 }
 
-const ExampleArtworkRoute: React.FC<React.PropsWithChildren<ExampleArtworkRouteProps>> = ({
-  artwork,
-}) => {
+const ExampleArtworkRoute: React.FC<
+  React.PropsWithChildren<ExampleArtworkRouteProps>
+> = ({ artwork }) => {
   const artists = extractNodes(artwork.artist?.related?.artistsConnection)
 
   return (
@@ -51,7 +51,9 @@ const ExampleArtworkRoute: React.FC<React.PropsWithChildren<ExampleArtworkRouteP
 /**
  * Routes with :slugs require Analytics to provide the corresponding internalID
  */
-const TrackingWrappedExampleArtworkRoute: React.FC<React.PropsWithChildren<ExampleArtworkRouteProps>> = props => {
+const TrackingWrappedExampleArtworkRoute: React.FC<
+  React.PropsWithChildren<ExampleArtworkRouteProps>
+> = props => {
   const {
     artwork: { internalID },
   } = props

@@ -1,11 +1,12 @@
 import { Popover, THEME } from "@artsy/palette"
 import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkAuctionRegistrationPanel"
 import { UtilButton } from "./UtilButton"
-import React, { FC, useCallback, useEffect, useState } from "react"
+import type React from "react"
+import { type FC, useCallback, useEffect, useState } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkActionsWatchLotButton_artwork$data } from "__generated__/ArtworkActionsWatchLotButton_artwork.graphql"
+import type { ArtworkActionsWatchLotButton_artwork$data } from "__generated__/ArtworkActionsWatchLotButton_artwork.graphql"
 
 import HeartFillIcon from "@artsy/icons/HeartFillIcon"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
@@ -17,9 +18,9 @@ interface ArtworkActionsWatchLotButtonProps {
   onClick: () => void
 }
 
-const ArtworkActionsWatchLotButton: FC<React.PropsWithChildren<
-  ArtworkActionsWatchLotButtonProps
->> = ({ isSaved, artwork, canShowRegistrationPopover = true, onClick }) => {
+const ArtworkActionsWatchLotButton: FC<
+  React.PropsWithChildren<ArtworkActionsWatchLotButtonProps>
+> = ({ isSaved, artwork, canShowRegistrationPopover = true, onClick }) => {
   const { isLoggedIn } = useSystemContext()
   const [popoverVisible, setPopoverVisible] = useState(false)
 
@@ -83,9 +84,9 @@ const ArtworkActionsWatchLotButton: FC<React.PropsWithChildren<
             ref={anchorRef}
             name="heart"
             Icon={
-              ((isSaved
+              (isSaved
                 ? FilledIcon
-                : HeartStrokeIcon) as unknown) as React.ReactNode
+                : HeartStrokeIcon) as unknown as React.ReactNode
             }
             label={isSaved ? "Watching lot" : "Watch lot"}
             onClick={handleButtonClick}
@@ -98,9 +99,8 @@ const ArtworkActionsWatchLotButton: FC<React.PropsWithChildren<
 
 const FilledIcon = () => <HeartFillIcon fill="blue100" />
 
-export const ArtworkActionsWatchLotButtonFragmentContainer = createFragmentContainer(
-  ArtworkActionsWatchLotButton,
-  {
+export const ArtworkActionsWatchLotButtonFragmentContainer =
+  createFragmentContainer(ArtworkActionsWatchLotButton, {
     artwork: graphql`
       fragment ArtworkActionsWatchLotButton_artwork on Artwork {
         sale {
@@ -114,5 +114,4 @@ export const ArtworkActionsWatchLotButtonFragmentContainer = createFragmentConta
         ...ArtworkAuctionRegistrationPanel_artwork
       }
     `,
-  }
-)
+  })

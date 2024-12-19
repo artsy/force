@@ -1,4 +1,4 @@
-import { ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse } from "__generated__/ArtworkSidebarCurrentBidInfo_Test_Query.graphql"
+import type { ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse } from "__generated__/ArtworkSidebarCurrentBidInfo_Test_Query.graphql"
 import {
   AuctionPreview,
   AuctionPreviewNoStartingBid,

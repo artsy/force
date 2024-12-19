@@ -1,9 +1,9 @@
 import { useCallback, useEffect } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useRouter } from "System/Hooks/useRouter"
-import { useRecordArtworkViewMutation } from "__generated__/useRecordArtworkViewMutation.graphql"
+import type { useRecordArtworkViewMutation } from "__generated__/useRecordArtworkViewMutation.graphql"
 import { commitMutation } from "react-relay"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 
@@ -54,7 +54,9 @@ export const useRecordArtworkView = () => {
 /**
  * Component wrapper to enable hook usage in a class component
  */
-export const UseRecordArtworkView: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const UseRecordArtworkView: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   useRecordArtworkView()
   return null
 }

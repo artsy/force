@@ -5,8 +5,8 @@ import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { RouterLink } from "System/Components/RouterLink"
-import { ThankYouRoute_submission$key } from "__generated__/ThankYouRoute_submission.graphql"
-import * as React from "react"
+import type { ThankYouRoute_submission$key } from "__generated__/ThankYouRoute_submission.graphql"
+import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
 
 const FRAGMENT = graphql`
@@ -20,7 +20,9 @@ interface ThankYouRouteProps {
   submission: ThankYouRoute_submission$key
 }
 
-export const ThankYouRoute: React.FC<React.PropsWithChildren<ThankYouRouteProps>> = props => {
+export const ThankYouRoute: React.FC<
+  React.PropsWithChildren<ThankYouRouteProps>
+> = props => {
   const {
     state: { step },
   } = useSellFlowContext()
@@ -29,10 +31,8 @@ export const ThankYouRoute: React.FC<React.PropsWithChildren<ThankYouRouteProps>
     props.submission
   )
 
-  const {
-    trackTappedSubmitAnotherWork,
-    trackTappedViewArtworkInMyCollection,
-  } = useSubmissionTracking()
+  const { trackTappedSubmitAnotherWork, trackTappedViewArtworkInMyCollection } =
+    useSubmissionTracking()
 
   const isSubmitted = state === "SUBMITTED"
 

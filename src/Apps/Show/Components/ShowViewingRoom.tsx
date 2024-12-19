@@ -1,14 +1,14 @@
-import * as React from "react"
-import { Box, BoxProps, Card, ResponsiveBox, Text } from "@artsy/palette"
+import type * as React from "react"
+import { Box, type BoxProps, Card, ResponsiveBox, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowViewingRoom_show$data } from "__generated__/ShowViewingRoom_show.graphql"
+import type { ShowViewingRoom_show$data } from "__generated__/ShowViewingRoom_show.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 import { cropped } from "Utils/resized"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ActionType,
-  ClickedViewingRoomCard,
+  type ClickedViewingRoomCard,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
@@ -19,10 +19,9 @@ interface ShowViewingRoomProps extends BoxProps {
   show: ShowViewingRoom_show$data
 }
 
-export const ShowViewingRoom: React.FC<React.PropsWithChildren<ShowViewingRoomProps>> = ({
-  show,
-  ...rest
-}) => {
+export const ShowViewingRoom: React.FC<
+  React.PropsWithChildren<ShowViewingRoomProps>
+> = ({ show, ...rest }) => {
   const [viewingRoom] = extractNodes(show.viewingRoomsConnection)
 
   const image = cropped(viewingRoom.image?.imageURLs?.normalized!, {
@@ -31,11 +30,8 @@ export const ShowViewingRoom: React.FC<React.PropsWithChildren<ShowViewingRoomPr
   })
 
   const tracking = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const handleClick = () => {
     const payload: ClickedViewingRoomCard = {

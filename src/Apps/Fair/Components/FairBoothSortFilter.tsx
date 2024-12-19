@@ -1,8 +1,10 @@
-import * as React from "react"
+import type * as React from "react"
 import { SortFilter } from "Components/SortFilter"
 import { useBoothsFilterContext } from "./BoothFilterContext"
 
-export const FairBoothSortFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const FairBoothSortFilter: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const context = useBoothsFilterContext()
   const { sortOptions, filters, setFilter } = context
 

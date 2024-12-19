@@ -1,6 +1,6 @@
 import { compact, uniq } from "lodash"
-import { RouteProps } from "System/Router/Route"
-import { match, MatchResult } from "path-to-regexp"
+import type { RouteProps } from "System/Router/Route"
+import { match, type MatchResult } from "path-to-regexp"
 
 export function getRoutes(): {
   routes: RouteProps[]
@@ -60,7 +60,7 @@ export const findCurrentRoute = (match): RouteProps => {
   if (!routeIndices || routeIndices.length === 0) {
     return baseRoute
   }
-  let remainingRouteIndicies = [...routeIndices]
+  const remainingRouteIndicies = [...routeIndices]
   let route = routes[remainingRouteIndicies.shift()]
 
   while (remainingRouteIndicies.length > 0) {
@@ -78,9 +78,7 @@ interface FindRoutesByPathProps {
   path: string
 }
 
-export function findRoutesByPath({
-  path,
-}: FindRoutesByPathProps): Array<{
+export function findRoutesByPath({ path }: FindRoutesByPathProps): Array<{
   route: RouteProps
   match: MatchResult<any>
 }> {

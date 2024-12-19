@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { RouterLink } from "System/Components/RouterLink"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
@@ -10,9 +10,9 @@ interface ViewWorksButtonProps {
   artworksCount: number
 }
 
-export const ViewWorksButton: React.FC<React.PropsWithChildren<ViewWorksButtonProps>> = ({
-  artworksCount,
-}) => {
+export const ViewWorksButton: React.FC<
+  React.PropsWithChildren<ViewWorksButtonProps>
+> = ({ artworksCount }) => {
   const tracking = useTracking()
 
   const { jumpTo } = useJump({ offset: 20 })

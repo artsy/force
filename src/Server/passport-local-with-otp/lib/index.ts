@@ -1,7 +1,7 @@
 /**
  * Module dependencies.
  */
-let Strategy = require("./strategy")
+const Strategy = require("./strategy")
 
 /**
  * Expose `Strategy` directly from package.

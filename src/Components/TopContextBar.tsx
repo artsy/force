@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import {
   Box,
   Flex,
@@ -23,7 +23,9 @@ export interface TopContextBarProps {
   hideSeparator?: boolean
 }
 
-export const TopContextBar: React.FC<React.PropsWithChildren<TopContextBarProps>> = ({
+export const TopContextBar: React.FC<
+  React.PropsWithChildren<TopContextBarProps>
+> = ({
   children,
   displayBackArrow = false,
   href: _href,

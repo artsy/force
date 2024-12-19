@@ -1,14 +1,14 @@
-import { AuthContextModule, AuthIntent } from "@artsy/cohesion"
+import type { AuthContextModule, AuthIntent } from "@artsy/cohesion"
 import { useTitleWithIntent } from "Apps/Authentication/Hooks/useTitleWithIntent"
 import { DEFAULT_TITLES } from "Components/AuthDialog/AuthDialog"
 import {
-  AuthDialogMode,
+  type AuthDialogMode,
   DEFAULT_AUTH_MODAL_INTENTS,
   useAuthDialogContext,
 } from "Components/AuthDialog/AuthDialogContext"
 import { useEffect } from "react"
 import { useRouter } from "System/Hooks/useRouter"
-import { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
+import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
 
 /**
  * Converts query params into auth dialog options and sets them.
@@ -59,8 +59,8 @@ export const useAuthDialogOptions = () => {
         kind: "submission",
         objectId: query.submissionId,
       }
-    : ((query.afterSignUpAction as unknown) as AfterAuthAction) ||
-      ((query.afterAuthAction as unknown) as AfterAuthAction)
+    : (query.afterSignUpAction as unknown as AfterAuthAction) ||
+      (query.afterAuthAction as unknown as AfterAuthAction)
 
   useEffect(() => {
     dispatch({

@@ -1,4 +1,4 @@
-import React from "react"
+import type React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -15,14 +15,16 @@ import {
 import ArtworkGrid, {
   ArtworkGridPlaceholder,
 } from "Components/ArtworkGrid/ArtworkGrid"
-import { RelatedWorksQuery } from "__generated__/RelatedWorksQuery.graphql"
-import { RelatedWorks_artwork$data } from "__generated__/RelatedWorks_artwork.graphql"
+import type { RelatedWorksQuery } from "__generated__/RelatedWorksQuery.graphql"
+import type { RelatedWorks_artwork$data } from "__generated__/RelatedWorks_artwork.graphql"
 
 interface RelatedWorksProps {
   artwork: RelatedWorks_artwork$data
 }
 
-export const RelatedWorks: React.FC<React.PropsWithChildren<RelatedWorksProps>> = ({ artwork }) => {
+export const RelatedWorks: React.FC<
+  React.PropsWithChildren<RelatedWorksProps>
+> = ({ artwork }) => {
   const { trackEvent } = useTracking()
 
   const artworksConnection = artwork.layer?.artworksConnection
@@ -89,9 +91,11 @@ export const RelatedWorksFragmentContainer = createFragmentContainer(
   }
 )
 
-export const RelatedWorksQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const RelatedWorksQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

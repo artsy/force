@@ -1,10 +1,12 @@
 import { Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { useAppPreferences } from "Apps/AppPreferences/useAppPreferences"
-import { FC } from "react"
+import type { FC } from "react"
 
-interface SettingsEditSettingsThemeSelectProps {}
+type SettingsEditSettingsThemeSelectProps = {}
 
-export const SettingsEditSettingsThemeSelect: FC<React.PropsWithChildren<SettingsEditSettingsThemeSelectProps>> = props => {
+export const SettingsEditSettingsThemeSelect: FC<
+  React.PropsWithChildren<SettingsEditSettingsThemeSelectProps>
+> = props => {
   const { updatePreferences, preferences } = useAppPreferences()
 
   return (

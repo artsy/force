@@ -1,11 +1,12 @@
-import React, { FC, useState } from "react"
+import type React from "react"
+import { type FC, useState } from "react"
 import { ModalDialog, useToasts } from "@artsy/palette"
 import { SelectArtworkListsHeader } from "./SelectArtworkListsHeader"
 import { SelectArtworkListsFooter } from "./SelectArtworkListsFooter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SelectArtworkListsModal_me$data } from "__generated__/SelectArtworkListsModal_me.graphql"
-import { SelectArtworkListsModalQuery } from "__generated__/SelectArtworkListsModalQuery.graphql"
+import type { SelectArtworkListsModal_me$data } from "__generated__/SelectArtworkListsModal_me.graphql"
+import type { SelectArtworkListsModalQuery } from "__generated__/SelectArtworkListsModalQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { getSelectedArtworkListIds } from "Apps/CollectorProfile/Routes/Saves/Utils/getSelectedArtworkListIds"
 import { useSelectArtworkLists } from "./useSelectArtworkLists"
@@ -14,11 +15,11 @@ import createLogger from "Utils/logger"
 import { SelectArtworkListsContent } from "./SelectArtworkListsContent"
 import {
   ListKey,
-  OnSaveResultData,
-  ResultListEntity,
+  type OnSaveResultData,
+  type ResultListEntity,
   useManageArtworkForSavesContext,
 } from "Components/Artwork/ManageArtworkForSaves"
-import { ActionType, AddedArtworkToArtworkList } from "@artsy/cohesion"
+import { ActionType, type AddedArtworkToArtworkList } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useTracking } from "react-tracking"
 
@@ -30,9 +31,9 @@ export interface SelectArtworkListsModalProps {
 
 type ArtworkListById = Record<string, ResultListEntity>
 
-export const SelectArtworkListsModal: React.FC<React.PropsWithChildren<SelectArtworkListsModalProps>> = ({
-  me,
-}) => {
+export const SelectArtworkListsModal: React.FC<
+  React.PropsWithChildren<SelectArtworkListsModalProps>
+> = ({ me }) => {
   const { state, dispatch, reset, onSave } = useManageArtworkForSavesContext()
   const analytics = useAnalyticsContext()
   const { trackEvent } = useTracking()
@@ -92,7 +93,7 @@ export const SelectArtworkListsModal: React.FC<React.PropsWithChildren<SelectArt
     }
   }
 
-  const handleArtworkListPress = (artworkList: typeof artworkLists[0]) => {
+  const handleArtworkListPress = (artworkList: (typeof artworkLists)[0]) => {
     dispatch({
       type: "ADD_OR_REMOVE_LIST_ID",
       payload: {
@@ -156,7 +157,9 @@ export const SelectArtworkListsModal: React.FC<React.PropsWithChildren<SelectArt
     }
   }
 
-  const checkIsArtworkListSelected = (artworkList: typeof artworkLists[0]) => {
+  const checkIsArtworkListSelected = (
+    artworkList: (typeof artworkLists)[0]
+  ) => {
     /**
      * User added artwork to the previously unselected artwork list
      * So we have to display the artwork list as *selected*
@@ -241,7 +244,9 @@ export const SelectArtworkListsModalFragmentContainer = createFragmentContainer(
   }
 )
 
-export const SelectArtworkListsModalQueryRender: FC<React.PropsWithChildren<unknown>> = () => {
+export const SelectArtworkListsModalQueryRender: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { state } = useManageArtworkForSavesContext()
 
   return (

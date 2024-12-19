@@ -1,14 +1,14 @@
 import { compact, take } from "lodash"
 import { useMemo } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   CellPartnerFragmentContainer,
   CellPartnerPlaceholder,
 } from "Components/Cells/CellPartner"
 import { Rail } from "Components/Rail/Rail"
-import { PartnersRail_partnerCategory$data } from "__generated__/PartnersRail_partnerCategory.graphql"
-import { PartnersRailQuery } from "__generated__/PartnersRailQuery.graphql"
+import type { PartnersRail_partnerCategory$data } from "__generated__/PartnersRail_partnerCategory.graphql"
+import type { PartnersRailQuery } from "__generated__/PartnersRailQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Skeleton } from "@artsy/palette"
 
@@ -16,7 +16,9 @@ interface PartnersRailProps {
   partnerCategory: PartnersRail_partnerCategory$data
 }
 
-const PartnersRail: React.FC<React.PropsWithChildren<PartnersRailProps>> = ({ partnerCategory }) => {
+const PartnersRail: React.FC<React.PropsWithChildren<PartnersRailProps>> = ({
+  partnerCategory,
+}) => {
   const partners = useMemo(() => {
     return mergeBuckets(
       compact(partnerCategory.primary),
@@ -45,9 +47,9 @@ interface PartnersRailPlaceholderProps {
   name: string
 }
 
-export const PartnersRailPlaceholder: React.FC<React.PropsWithChildren<PartnersRailPlaceholderProps>> = ({
-  name,
-}) => {
+export const PartnersRailPlaceholder: React.FC<
+  React.PropsWithChildren<PartnersRailPlaceholderProps>
+> = ({ name }) => {
   return (
     <Skeleton>
       <Rail
@@ -106,11 +108,9 @@ interface PartnersRailQueryRendererProps {
   type: "INSTITUTION" | "GALLERY"
 }
 
-export const PartnersRailQueryRenderer: React.FC<React.PropsWithChildren<PartnersRailQueryRendererProps>> = ({
-  id,
-  name,
-  type,
-}) => {
+export const PartnersRailQueryRenderer: React.FC<
+  React.PropsWithChildren<PartnersRailQueryRendererProps>
+> = ({ id, name, type }) => {
   return (
     <SystemQueryRenderer<PartnersRailQuery>
       lazyLoad

@@ -1,15 +1,15 @@
 import { UtilButton, UtilButtonLink } from "./UtilButton"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkDownloadButton_artwork$data } from "__generated__/ArtworkDownloadButton_artwork.graphql"
+import type { ArtworkDownloadButton_artwork$data } from "__generated__/ArtworkDownloadButton_artwork.graphql"
 
 interface ArtworkDownloadButtonProps {
   artwork: ArtworkDownloadButton_artwork$data
 }
 
-const ArtworkDownloadButton: React.FC<React.PropsWithChildren<ArtworkDownloadButtonProps>> = ({
-  artwork,
-}) => {
+const ArtworkDownloadButton: React.FC<
+  React.PropsWithChildren<ArtworkDownloadButtonProps>
+> = ({ artwork }) => {
   if (!artwork.downloadableImageUrl) return null
 
   const { artists, title, date } = artwork

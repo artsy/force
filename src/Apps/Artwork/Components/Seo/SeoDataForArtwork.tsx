@@ -1,7 +1,7 @@
 import { trim } from "lodash"
-import * as React from "react"
+import type * as React from "react"
 
-import { SeoDataForArtwork_artwork$data } from "__generated__/SeoDataForArtwork_artwork.graphql"
+import type { SeoDataForArtwork_artwork$data } from "__generated__/SeoDataForArtwork_artwork.graphql"
 import { CreativeWork } from "Components/Seo/CreativeWork"
 import { Product } from "Components/Seo/Product"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -17,9 +17,9 @@ export const AVAILABILITY = {
   sold: "https://schema.org/OutOfStock",
 }
 
-export const SeoDataForArtwork: React.FC<React.PropsWithChildren<
-  SeoDataForArtworkProps
->> = ({ artwork }) => {
+export const SeoDataForArtwork: React.FC<
+  React.PropsWithChildren<SeoDataForArtworkProps>
+> = ({ artwork }) => {
   const artistsName = artwork.artistNames
 
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION

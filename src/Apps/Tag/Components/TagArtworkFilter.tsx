@@ -1,21 +1,25 @@
-import * as React from "react"
-import { createRefetchContainer, RelayRefetchProp, graphql } from "react-relay"
+import type * as React from "react"
+import {
+  createRefetchContainer,
+  type RelayRefetchProp,
+  graphql,
+} from "react-relay"
 import { useRouter } from "System/Hooks/useRouter"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
-  Counts,
+  type Counts,
   initialArtworkFilterState,
-  SharedArtworkFilterContextProps,
+  type SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { TagArtworkFilter_tag$data } from "__generated__/TagArtworkFilter_tag.graphql"
+import type { TagArtworkFilter_tag$data } from "__generated__/TagArtworkFilter_tag.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
-import { TagArtworkFilterQuery } from "__generated__/TagArtworkFilterQuery.graphql"
+import type { TagArtworkFilterQuery } from "__generated__/TagArtworkFilterQuery.graphql"
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 
 interface TagArtworkFilterProps {
@@ -23,7 +27,9 @@ interface TagArtworkFilterProps {
   relay: RelayRefetchProp
 }
 
-const TagArtworkFilter: React.FC<React.PropsWithChildren<TagArtworkFilterProps>> = ({ tag, relay }) => {
+const TagArtworkFilter: React.FC<
+  React.PropsWithChildren<TagArtworkFilterProps>
+> = ({ tag, relay }) => {
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
   const { sidebar } = tag
@@ -102,9 +108,11 @@ export const TagArtworkFilterRefetchContainer = createRefetchContainer(
   `
 )
 
-interface TagArtworkFilterQueryRendererProps {}
+type TagArtworkFilterQueryRendererProps = {}
 
-export const TagArtworkFilterQueryRenderer: React.FC<React.PropsWithChildren<TagArtworkFilterQueryRendererProps>> = rest => {
+export const TagArtworkFilterQueryRenderer: React.FC<
+  React.PropsWithChildren<TagArtworkFilterQueryRendererProps>
+> = rest => {
   const { relayEnvironment } = useSystemContext()
   const { match } = useRouter()
 

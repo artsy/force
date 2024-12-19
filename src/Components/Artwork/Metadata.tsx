@@ -1,14 +1,14 @@
-import { AuthContextModule } from "@artsy/cohesion"
-import { Box, BoxProps } from "@artsy/palette"
+import type { AuthContextModule } from "@artsy/cohesion"
+import { Box, type BoxProps } from "@artsy/palette"
 import {
   DetailsFragmentContainer,
   DetailsPlaceholder,
 } from "Components/Artwork/Details/Details"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "System/Components/RouterLink"
-import { Metadata_artwork$data } from "__generated__/Metadata_artwork.graphql"
+import type { Metadata_artwork$data } from "__generated__/Metadata_artwork.graphql"
 
 export interface MetadataProps
   extends BoxProps,
@@ -69,13 +69,9 @@ export const Metadata: React.FC<React.PropsWithChildren<MetadataProps>> = ({
   )
 }
 
-const LinkContainer: React.FC<React.PropsWithChildren<Omit<MetadataProps, "children">>> = ({
-  artwork,
-  disableRouterLinking,
-  mt,
-  to,
-  ...rest
-}) => {
+const LinkContainer: React.FC<
+  React.PropsWithChildren<Omit<MetadataProps, "children">>
+> = ({ artwork, disableRouterLinking, mt, to, ...rest }) => {
   if (!!disableRouterLinking) {
     return <DisabledLink mt={mt}>{rest.children}</DisabledLink>
   }
@@ -127,13 +123,9 @@ type MetadataPlaceholderProps = Pick<
 > &
   BoxProps
 
-export const MetadataPlaceholder: React.FC<React.PropsWithChildren<MetadataPlaceholderProps>> = ({
-  mt = 1,
-  hidePartnerName,
-  hideArtistName,
-  hideSaleInfo,
-  ...rest
-}) => {
+export const MetadataPlaceholder: React.FC<
+  React.PropsWithChildren<MetadataPlaceholderProps>
+> = ({ mt = 1, hidePartnerName, hideArtistName, hideSaleInfo, ...rest }) => {
   return (
     <Box mt={mt} {...rest}>
       <DetailsPlaceholder

@@ -1,27 +1,26 @@
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { CareerHighlightModalStep } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Components/CareerHighlightModalStep"
-import { CareerHighlightModalStepTestQuery } from "__generated__/CareerHighlightModalStepTestQuery.graphql"
+import type { CareerHighlightModalStepTestQuery } from "__generated__/CareerHighlightModalStepTestQuery.graphql"
 import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
 describe("CareerHighlightModalStep", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    CareerHighlightModalStepTestQuery
-  >({
-    Component: ({ me }) => {
-      if (me?.myCollectionInfo?.BIENNIAL)
-        return (
-          <CareerHighlightModalStep
-            careerHighlight={me.myCollectionInfo.BIENNIAL}
-            kind="BIENNIAL"
-          />
-        )
+  const { renderWithRelay } =
+    setupTestWrapperTL<CareerHighlightModalStepTestQuery>({
+      Component: ({ me }) => {
+        if (me?.myCollectionInfo?.BIENNIAL)
+          return (
+            <CareerHighlightModalStep
+              careerHighlight={me.myCollectionInfo.BIENNIAL}
+              kind="BIENNIAL"
+            />
+          )
 
-      return null
-    },
-    query: graphql`
+        return null
+      },
+      query: graphql`
       query CareerHighlightModalStepTestQuery @relay_test_operation {
         me {
           myCollectionInfo {
@@ -32,7 +31,7 @@ describe("CareerHighlightModalStep", () => {
         }
       }
     `,
-  })
+    })
 
   it("renders the career highlights data", () => {
     renderWithRelay(mockResolver)

@@ -8,9 +8,9 @@ import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { createMockEnvironment } from "relay-test-utils"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Breakpoint } from "Utils/Responsive"
-import { CleanRelayFragment } from "Utils/typeSupport"
-import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
+import type { Breakpoint } from "Utils/Responsive"
+import type { CleanRelayFragment } from "Utils/typeSupport"
+import type { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
 
 jest.mock("System/Hooks/useSystemContext")
 

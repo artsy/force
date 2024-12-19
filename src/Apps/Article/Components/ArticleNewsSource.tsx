@@ -1,14 +1,16 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useArticleTracking } from "Apps/Article/useArticleTracking"
-import { ArticleNewsSource_article$data } from "__generated__/ArticleNewsSource_article.graphql"
+import type { ArticleNewsSource_article$data } from "__generated__/ArticleNewsSource_article.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 
 interface ArticleNewsSourceProps {
   article: ArticleNewsSource_article$data
 }
 
-const ArticleNewsSource: FC<React.PropsWithChildren<ArticleNewsSourceProps>> = ({ article }) => {
+const ArticleNewsSource: FC<
+  React.PropsWithChildren<ArticleNewsSourceProps>
+> = ({ article }) => {
   const { clickedExternalNewsSource } = useArticleTracking()
 
   return (

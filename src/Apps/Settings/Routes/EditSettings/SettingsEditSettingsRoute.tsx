@@ -1,9 +1,9 @@
-import React from "react"
+import type React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Column, GridColumns, Join, Separator } from "@artsy/palette"
 import { SettingsEditSettingsTwoFactorFragmentContainer } from "./Components/SettingsEditSettingsTwoFactor/SettingsEditSettingsTwoFactor"
 import { SettingsEditSettingsPasswordFragmentContainer } from "./Components/SettingsEditSettingsPassword"
-import { SettingsEditSettingsRoute_me$data } from "__generated__/SettingsEditSettingsRoute_me.graphql"
+import type { SettingsEditSettingsRoute_me$data } from "__generated__/SettingsEditSettingsRoute_me.graphql"
 import { SettingsEditSettingsDeleteAccount } from "./Components/SettingsEditSettingsDeleteAccount/SettingsEditSettingsDeleteAccount"
 import { SettingsEditSettingsLinkedAccountsFragmentContainer } from "./Components/SettingsEditSettingsLinkedAccounts"
 import { SettingsEditSettingsEmailPreferences } from "./Components/SettingsEditSettingsEmailPreferences/SettingsEditSettingsEmailPreferences"
@@ -14,7 +14,9 @@ interface SettingsEditRouteProps {
   me: SettingsEditSettingsRoute_me$data
 }
 
-const SettingsEditRoute: React.FC<React.PropsWithChildren<SettingsEditRouteProps>> = ({ me }) => {
+const SettingsEditRoute: React.FC<
+  React.PropsWithChildren<SettingsEditRouteProps>
+> = ({ me }) => {
   return (
     <GridColumns>
       <Column span={8}>

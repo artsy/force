@@ -7,15 +7,15 @@ import { UploadMoreMessage } from "Apps/Sell/Components/UploadMoreMessage"
 import { UploadPhotosForm } from "Apps/Sell/Components/UploadPhotosForm"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import {
-  Asset,
+  type Asset,
   dropzoneFileFromAsset,
   photosFromMyCollectionArtwork,
 } from "Apps/Sell/Utils/uploadUtils"
-import { DropzoneFile } from "Components/FileUpload/types"
+import type { DropzoneFile } from "Components/FileUpload/types"
 import { RouterLink } from "System/Components/RouterLink"
-import { PhotosRoute_submission$key } from "__generated__/PhotosRoute_submission.graphql"
+import type { PhotosRoute_submission$key } from "__generated__/PhotosRoute_submission.graphql"
 import { Formik } from "formik"
-import * as React from "react"
+import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
 
@@ -58,7 +58,9 @@ interface PhotosRouteProps {
   submission: PhotosRoute_submission$key
 }
 
-export const PhotosRoute: React.FC<React.PropsWithChildren<PhotosRouteProps>> = props => {
+export const PhotosRoute: React.FC<
+  React.PropsWithChildren<PhotosRouteProps>
+> = props => {
   const {
     actions: { setLoading },
   } = useSellFlowContext()

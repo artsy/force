@@ -1,9 +1,9 @@
 import { Column, GridColumns, Skeleton, Text } from "@artsy/palette"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { createFragmentContainer, graphql } from "react-relay"
-import { CollectionFeaturedArtists_collection$data } from "__generated__/CollectionFeaturedArtists_collection.graphql"
-import { CollectionFeaturedArtists_artworks$data } from "__generated__/CollectionFeaturedArtists_artworks.graphql"
-import { CollectionFeaturedArtistsQuery } from "__generated__/CollectionFeaturedArtistsQuery.graphql"
+import type { CollectionFeaturedArtists_collection$data } from "__generated__/CollectionFeaturedArtists_collection.graphql"
+import type { CollectionFeaturedArtists_artworks$data } from "__generated__/CollectionFeaturedArtists_artworks.graphql"
+import type { CollectionFeaturedArtistsQuery } from "__generated__/CollectionFeaturedArtistsQuery.graphql"
 import { compact, filter, take } from "lodash"
 import { ContextModule } from "@artsy/cohesion"
 import { useRouter } from "System/Hooks/useRouter"
@@ -17,10 +17,9 @@ interface CollectionFeaturedArtistsProps {
   artworks: CollectionFeaturedArtists_artworks$data
 }
 
-export const CollectionFeaturedArtists: React.FC<React.PropsWithChildren<CollectionFeaturedArtistsProps>> = ({
-  artworks,
-  collection,
-}) => {
+export const CollectionFeaturedArtists: React.FC<
+  React.PropsWithChildren<CollectionFeaturedArtistsProps>
+> = ({ artworks, collection }) => {
   const merchandisableArtists = artworks?.merchandisableArtists ?? []
 
   const featuredArtists = getFeaturedArtists(
@@ -64,9 +63,8 @@ export const CollectionFeaturedArtists: React.FC<React.PropsWithChildren<Collect
   )
 }
 
-export const CollectionFeaturedArtistsFragmentContainer = createFragmentContainer(
-  CollectionFeaturedArtists,
-  {
+export const CollectionFeaturedArtistsFragmentContainer =
+  createFragmentContainer(CollectionFeaturedArtists, {
     collection: graphql`
       fragment CollectionFeaturedArtists_collection on MarketingCollection {
         category
@@ -93,12 +91,13 @@ export const CollectionFeaturedArtistsFragmentContainer = createFragmentContaine
         }
       }
     `,
-  }
-)
+  })
 
-export const CollectionFeaturedArtistsQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const CollectionFeaturedArtistsQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   const { match } = useRouter()
 
   const { aggregations } = initializeVariablesWithFilterState(

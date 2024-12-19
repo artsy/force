@@ -8,7 +8,7 @@ import {
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { logout } from "Utils/auth"
-import * as React from "react"
+import type * as React from "react"
 import { useTracking } from "react-tracking"
 import { NavBarMobileMenuAuthentication } from "./NavBarMobileMenuAuthentication"
 import {
@@ -27,11 +27,9 @@ interface NavBarMobileMenuProps {
   onNavButtonClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
-export const NavBarMobileMenu: React.FC<React.PropsWithChildren<NavBarMobileMenuProps>> = ({
-  isOpen,
-  onNavButtonClick,
-  onClose,
-}) => {
+export const NavBarMobileMenu: React.FC<
+  React.PropsWithChildren<NavBarMobileMenuProps>
+> = ({ isOpen, onNavButtonClick, onClose }) => {
   const { isLoggedIn } = useSystemContext()
 
   const { downloadAppUrl } = useDeviceDetection()
@@ -177,7 +175,9 @@ export const NavBarMobileMenu: React.FC<React.PropsWithChildren<NavBarMobileMenu
   )
 }
 
-export const NavBarMobileMenuIcon: React.FC<React.PropsWithChildren<{ open: boolean }>> = ({ open }) => {
+export const NavBarMobileMenuIcon: React.FC<
+  React.PropsWithChildren<{ open: boolean }>
+> = ({ open }) => {
   // TODO: Should be able to scale these using width & height props
   return open ? (
     <CloseIcon style={{ transform: "scale(1.5)" }} />

@@ -1,15 +1,17 @@
-import * as React from "react"
-import { Text, TextProps } from "@artsy/palette"
+import type * as React from "react"
+import { Text, type TextProps } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 import { useEventTiming } from "Utils/Hooks/useEventTiming"
-import { ShowsShowDates_show$data } from "__generated__/ShowsShowDates_show.graphql"
+import type { ShowsShowDates_show$data } from "__generated__/ShowsShowDates_show.graphql"
 
 interface ShowsShowDatesProps extends TextProps {
   show: ShowsShowDates_show$data
 }
 
-const ShowsShowDates: React.FC<React.PropsWithChildren<ShowsShowDatesProps>> = ({ show, ...rest }) => {
+const ShowsShowDates: React.FC<
+  React.PropsWithChildren<ShowsShowDatesProps>
+> = ({ show, ...rest }) => {
   const { formattedTime, closesSoon, closesToday, hasEnded } = useEventTiming({
     currentTime: useCurrentTime(),
     startAt: show.startAt!,

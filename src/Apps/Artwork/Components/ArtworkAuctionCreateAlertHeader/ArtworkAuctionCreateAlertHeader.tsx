@@ -1,13 +1,21 @@
-import { Box, Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Column,
+  GridColumns,
+  Spacer,
+  Stack,
+  Text,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
+import type { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
-import { FC } from "react"
+import type { FC } from "react"
 import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
-import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { compact } from "lodash"
-import {
+import type {
   SavedSearchEntity,
   SavedSearchEntityCriteria,
   SearchCriteriaAttributes,
@@ -25,9 +33,9 @@ interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
 }
 
-const ArtworkAuctionCreateAlertHeader: FC<React.PropsWithChildren<ArtworkAuctionCreateAlertHeaderProps>> = ({
-  artwork,
-}) => {
+const ArtworkAuctionCreateAlertHeader: FC<
+  React.PropsWithChildren<ArtworkAuctionCreateAlertHeaderProps>
+> = ({ artwork }) => {
   const biddingEndAt =
     artwork?.saleArtwork?.extendedBiddingEndAt ?? artwork?.saleArtwork?.endAt
   const { hasEnded } = useTimer(
@@ -103,65 +111,67 @@ const ArtworkAuctionCreateAlertHeader: FC<React.PropsWithChildren<ArtworkAuction
       entity={entity}
       artistSlug={artistSlug}
     >
-      <GridColumns py={[4, 4, 6]}>
-        <Column span={12}>
-          <Text
-            variant={["lg-display", "md", "lg"]}
-            textAlign={["left", "center"]}
-          >
-            Bidding for <i>{artwork.title?.trim()}</i>
-            {artistName} has ended.
-          </Text>
-          <Media lessThan="sm">
-            <Spacer y={1} />
-          </Media>
-          <Text
-            variant={["sm-display", "md", "lg"]}
-            textAlign={["left", "center"]}
-            textColor={["black60", "black100"]}
-          >
-            {hasLostBid
-              ? "We’ve created an alert for you for similar works."
-              : "Create an alert to get notified when similar works become available."}
-          </Text>
-        </Column>
-        <Column span={12}>
-          <Media lessThan="sm">
-            <Spacer y={1} />
-          </Media>
-          <Box mx="auto" width={["100%", 209]}>
-            {hasLostBid ? (
-              <Button
-                width={["100%", 220]}
-                variant="secondaryBlack"
-                Icon={BellStrokeIcon}
-                // @ts-ignore
-                as={RouterLink}
-                to={"/favorites/alerts"}
-              >
-                Manage your alerts
-              </Button>
-            ) : (
-              <ProgressiveOnboardingAlertCreateSimple>
-                <CreateAlertButton
-                  width="100%"
-                  size="large"
-                  backgroundColor="black100"
-                  color="white100"
-                />
-              </ProgressiveOnboardingAlertCreateSimple>
-            )}
-          </Box>
-        </Column>
+      <Stack py={[4, 4, 6]} gap={[1, 4]}>
+        <GridColumns>
+          <Column span={12}>
+            <Text
+              variant={["lg-display", "md", "lg"]}
+              textAlign={["left", "center"]}
+            >
+              Bidding for <i>{artwork.title?.trim()}</i>
+              {artistName} has ended.
+            </Text>
+            <Media lessThan="sm">
+              <Spacer y={1} />
+            </Media>
+            <Text
+              variant={["sm-display", "md", "lg"]}
+              textAlign={["left", "center"]}
+              textColor={["black60", "black100"]}
+            >
+              {hasLostBid
+                ? "We’ve created an alert for you for similar works."
+                : "Create an alert to get notified when similar works become available."}
+            </Text>
+          </Column>
+
+          <Column span={12}>
+            <Media lessThan="sm">
+              <Spacer y={1} />
+            </Media>
+            <Box mx="auto" width={["100%", 209]}>
+              {hasLostBid ? (
+                <Button
+                  width={["100%", 220]}
+                  variant="secondaryBlack"
+                  Icon={BellStrokeIcon}
+                  // @ts-ignore
+                  as={RouterLink}
+                  to={"/favorites/alerts"}
+                >
+                  Manage your alerts
+                </Button>
+              ) : (
+                <ProgressiveOnboardingAlertCreateSimple>
+                  <CreateAlertButton
+                    width="100%"
+                    size="large"
+                    backgroundColor="black100"
+                    color="white100"
+                  />
+                </ProgressiveOnboardingAlertCreateSimple>
+              )}
+            </Box>
+          </Column>
+        </GridColumns>
 
         <SuggestedArtworksShelfQueryRenderer {...criteria} />
-      </GridColumns>
+      </Stack>
     </SavedSearchAlertContextProvider>
   )
 }
-export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentContainer(
-  ArtworkAuctionCreateAlertHeader,
-  {
+export const ArtworkAuctionCreateAlertHeaderFragmentContainer =
+  createFragmentContainer(ArtworkAuctionCreateAlertHeader, {
     artwork: graphql`
       fragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {
         slug
@@ -199,5 +209,4 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
         }
       }
     `,
-  }
-)
+  })

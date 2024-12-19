@@ -1,5 +1,5 @@
 import { Box, Spacer, Text } from "@artsy/palette"
-import { NotificationType } from "./types"
+import type { NotificationType } from "./types"
 import { RouterLink } from "System/Components/RouterLink"
 
 interface NotificationsEmptyStateByTypeProps {
@@ -31,9 +31,9 @@ const emptyStateByType: Record<
   offers: {},
 }
 
-export const NotificationsEmptyStateByType: React.FC<React.PropsWithChildren<NotificationsEmptyStateByTypeProps>> = ({
-  type,
-}) => {
+export const NotificationsEmptyStateByType: React.FC<
+  React.PropsWithChildren<NotificationsEmptyStateByTypeProps>
+> = ({ type }) => {
   const state = emptyStateByType[type]
 
   return (

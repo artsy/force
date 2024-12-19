@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { Join, Skeleton, Spacer } from "@artsy/palette"
 import { PartnerArtistDetailsPlaceholder } from "Apps/Partner/Components/PartnerArtists/PartnerArtistDetails/PartnerArtistDetailsPlaceholder"
 
@@ -6,9 +6,9 @@ export interface PartnerArtistDetailsListPlaceholderProps {
   count: number
 }
 
-export const PartnerArtistDetailsListPlaceholder: React.FC<React.PropsWithChildren<PartnerArtistDetailsListPlaceholderProps>> = ({
-  count,
-}) => {
+export const PartnerArtistDetailsListPlaceholder: React.FC<
+  React.PropsWithChildren<PartnerArtistDetailsListPlaceholderProps>
+> = ({ count }) => {
   return (
     <Skeleton>
       <Join separator={<Spacer y={4} />}>

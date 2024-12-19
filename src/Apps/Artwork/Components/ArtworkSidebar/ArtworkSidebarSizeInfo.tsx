@@ -3,15 +3,15 @@ import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-import { ArtworkSidebarSizeInfo_piece$data } from "__generated__/ArtworkSidebarSizeInfo_piece.graphql"
+import type { ArtworkSidebarSizeInfo_piece$data } from "__generated__/ArtworkSidebarSizeInfo_piece.graphql"
 
 interface ArtworkSidebarSizeInfoProps {
   piece: ArtworkSidebarSizeInfo_piece$data
 }
 
-const ArtworkSidebarSizeInfo: React.FC<React.PropsWithChildren<ArtworkSidebarSizeInfoProps>> = ({
-  piece,
-}) => {
+const ArtworkSidebarSizeInfo: React.FC<
+  React.PropsWithChildren<ArtworkSidebarSizeInfoProps>
+> = ({ piece }) => {
   const { dimensions, editionOf } = piece
 
   const {

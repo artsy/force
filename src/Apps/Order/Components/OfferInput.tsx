@@ -1,5 +1,5 @@
 import { Input } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 
 export interface OfferInputProps {
   id: string
@@ -28,7 +28,7 @@ export const OfferInput: FC<React.PropsWithChildren<OfferInputProps>> = ({
   }
 
   return (
-    (<Input
+    <Input
       id={id}
       title={noTitle ? "" : "Your offer"}
       type="text"
@@ -43,6 +43,6 @@ export const OfferInput: FC<React.PropsWithChildren<OfferInputProps>> = ({
         const cleanedValue = currentValue.replace(/[^\d]/g, "") // Remove non-digits
         onChange(Number(cleanedValue))
       }}
-    />)
-  );
+    />
+  )
 }

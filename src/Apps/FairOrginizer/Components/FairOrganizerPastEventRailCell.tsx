@@ -1,14 +1,16 @@
 import { Box, Image, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
-import { FairOrganizerPastEventRailCell_fair$data } from "__generated__/FairOrganizerPastEventRailCell_fair.graphql"
+import type { FairOrganizerPastEventRailCell_fair$data } from "__generated__/FairOrganizerPastEventRailCell_fair.graphql"
 
 interface FairOrganizerPastEventRailCellProps {
   fair: FairOrganizerPastEventRailCell_fair$data
 }
 
-export const FairOrganizerPastEventRailCell: React.FC<React.PropsWithChildren<FairOrganizerPastEventRailCellProps>> = props => {
+export const FairOrganizerPastEventRailCell: React.FC<
+  React.PropsWithChildren<FairOrganizerPastEventRailCellProps>
+> = props => {
   const { fair } = props
 
   return (
@@ -32,9 +34,8 @@ export const FairOrganizerPastEventRailCell: React.FC<React.PropsWithChildren<Fa
   )
 }
 
-export const FairOrganizerPastEventRailCellFragmentContainer = createFragmentContainer(
-  FairOrganizerPastEventRailCell,
-  {
+export const FairOrganizerPastEventRailCellFragmentContainer =
+  createFragmentContainer(FairOrganizerPastEventRailCell, {
     fair: graphql`
       fragment FairOrganizerPastEventRailCell_fair on Fair {
         slug
@@ -49,5 +50,4 @@ export const FairOrganizerPastEventRailCellFragmentContainer = createFragmentCon
         }
       }
     `,
-  }
-)
+  })

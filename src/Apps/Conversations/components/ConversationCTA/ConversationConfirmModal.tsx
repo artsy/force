@@ -11,7 +11,7 @@ import {
   Box,
 } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
-import {
+import type {
   ConversationConfirmModal_artwork$data,
   ConversationConfirmModal_artwork$key,
 } from "__generated__/ConversationConfirmModal_artwork.graphql"
@@ -21,7 +21,7 @@ import { useState } from "react"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { ConversationMakeOfferButton } from "Apps/Conversations/components/ConversationCTA/ConversationMakeOfferButton"
 import { ConversationPurchaseButton } from "Apps/Conversations/components/ConversationCTA/ConversationPurchaseButton"
-import { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
+import type { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
 
 interface ConversationConfirmModalProps {
   artwork: ConversationConfirmModal_artwork$key
@@ -29,11 +29,9 @@ interface ConversationConfirmModalProps {
   partnerOffer: { internalID: string } | null
 }
 
-export const ConversationConfirmModal: React.FC<React.PropsWithChildren<ConversationConfirmModalProps>> = ({
-  artwork,
-  conversation,
-  partnerOffer,
-}) => {
+export const ConversationConfirmModal: React.FC<
+  React.PropsWithChildren<ConversationConfirmModalProps>
+> = ({ artwork, conversation, partnerOffer }) => {
   const data = useFragment(FRAGMENT, artwork)
 
   const {

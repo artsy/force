@@ -18,7 +18,7 @@ import { SellMeta } from "Apps/Sell/Routes/MarketingLanding/Components/SellMeta"
 import { RouterLink } from "System/Components/RouterLink"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { cropped } from "Utils/resized"
-import * as React from "react"
+import type * as React from "react"
 
 export const IntroRoute: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { trackTappedNewSubmission } = useSubmissionTracking()

@@ -1,15 +1,17 @@
 import {
   CreateNewListModal,
-  ArtworkList,
+  type ArtworkList,
 } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/CreateNewListModal"
 import {
   ListKey,
   ModalKey,
   useManageArtworkForSavesContext,
 } from "Components/Artwork/ManageArtworkForSaves"
-import { FC } from "react"
+import type { FC } from "react"
 
-export const CreateNewListModalForManageArtwork: FC<React.PropsWithChildren<unknown>> = () => {
+export const CreateNewListModalForManageArtwork: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { state, dispatch } = useManageArtworkForSavesContext()
   const artwork = state.artwork!
 

@@ -6,9 +6,9 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { useFormikContext } from "formik"
-import { DocumentsFormValues } from "Apps/Sell/Routes/AdditionalRoutes/AdditionalDocumentsRoute"
+import type { DocumentsFormValues } from "Apps/Sell/Routes/AdditionalRoutes/AdditionalDocumentsRoute"
 import DocumentIcon from "@artsy/icons/DocumentIcon"
-import { DropzoneFile } from "Components/FileUpload/types"
+import type { DropzoneFile } from "Components/FileUpload/types"
 
 const logger = createLogger("Sell/DocumentPreviewItem.tsx")
 const IMAGE_SIZES = [100, 140]
@@ -17,13 +17,12 @@ interface DocumentPreviewItemProps {
   document: DropzoneFile
 }
 
-export const DocumentPreviewItem: React.FC<React.PropsWithChildren<DocumentPreviewItemProps>> = ({
-  document,
-}) => {
+export const DocumentPreviewItem: React.FC<
+  React.PropsWithChildren<DocumentPreviewItemProps>
+> = ({ document }) => {
   const { isLoggedIn } = useSystemContext()
-  const {
-    submitMutation: removeAsset,
-  } = useRemoveAssetFromConsignmentSubmission()
+  const { submitMutation: removeAsset } =
+    useRemoveAssetFromConsignmentSubmission()
   const { setFieldValue, values } = useFormikContext<DocumentsFormValues>()
 
   const handleDocumentDelete = (document: DropzoneFile) => {

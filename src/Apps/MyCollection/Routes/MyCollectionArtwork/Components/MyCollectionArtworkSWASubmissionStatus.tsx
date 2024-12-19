@@ -10,7 +10,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import {
+import type {
   MyCollectionArtworkSWASubmissionStatus_artwork$data,
   MyCollectionArtworkSWASubmissionStatus_artwork$key,
 } from "__generated__/MyCollectionArtworkSWASubmissionStatus_artwork.graphql"
@@ -23,7 +23,8 @@ import {
   useTestSubmissionState,
 } from "Apps/Sell/SellFlowContext"
 import { usePreviousSubmission } from "Apps/Sell/Utils/previousSubmissionUtils"
-import React, { useState } from "react"
+import type React from "react"
+import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
@@ -34,13 +35,13 @@ interface Props {
   artwork: MyCollectionArtworkSWASubmissionStatus_artwork$key
 }
 
-export const MyCollectionArtworkSWASubmissionStatus: React.FC<React.PropsWithChildren<Props>> = props => {
+export const MyCollectionArtworkSWASubmissionStatus: React.FC<
+  React.PropsWithChildren<Props>
+> = props => {
   const { trackEvent } = useTracking()
   const { testSubmissionState } = useTestSubmissionState()
-  const [
-    isSubmissionStatusModalOpen,
-    setIsSubmissionStatusModalOpen,
-  ] = useState(false)
+  const [isSubmissionStatusModalOpen, setIsSubmissionStatusModalOpen] =
+    useState(false)
 
   const artwork = useFragment(submissionStatusFragment, props.artwork)
 
@@ -223,10 +224,8 @@ const useGetButtonURL = (
   artwork: MyCollectionArtworkSWASubmissionStatus_artwork$data
 ): string | null => {
   const { submissionID, step } = usePreviousSubmission()
-  const {
-    testSubmissionQueryParams,
-    testSubmissionState,
-  } = useTestSubmissionState()
+  const { testSubmissionQueryParams, testSubmissionState } =
+    useTestSubmissionState()
 
   const submission = artwork.consignmentSubmission
 

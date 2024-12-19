@@ -13,9 +13,9 @@ import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { PROVENANCE_LIST } from "Apps/Sell/Utils/formUtils"
-import { PurchaseHistoryRoute_submission$key } from "__generated__/PurchaseHistoryRoute_submission.graphql"
+import type { PurchaseHistoryRoute_submission$key } from "__generated__/PurchaseHistoryRoute_submission.graphql"
 import { Formik } from "formik"
-import * as React from "react"
+import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
 
@@ -40,7 +40,9 @@ interface PurchaseHistoryRouteProps {
   submission: PurchaseHistoryRoute_submission$key
 }
 
-export const PurchaseHistoryRoute: React.FC<React.PropsWithChildren<PurchaseHistoryRouteProps>> = props => {
+export const PurchaseHistoryRoute: React.FC<
+  React.PropsWithChildren<PurchaseHistoryRouteProps>
+> = props => {
   const { actions } = useSellFlowContext()
   const submission = useFragment(FRAGMENT, props.submission)
 

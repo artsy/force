@@ -1,15 +1,17 @@
 import { Box, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-import { ShowContextualLink_show$data } from "__generated__/ShowContextualLink_show.graphql"
+import type { ShowContextualLink_show$data } from "__generated__/ShowContextualLink_show.graphql"
 import { RouterLink } from "System/Components/RouterLink"
 
 interface Props {
   show: ShowContextualLink_show$data
 }
 
-export const ShowContextualLink: React.FC<React.PropsWithChildren<Props>> = ({ show }) => {
+export const ShowContextualLink: React.FC<React.PropsWithChildren<Props>> = ({
+  show,
+}) => {
   return (
     <>
       <Media at="xs">
@@ -24,7 +26,9 @@ export const ShowContextualLink: React.FC<React.PropsWithChildren<Props>> = ({ s
   )
 }
 
-export const ContextualLink: React.FC<React.PropsWithChildren<Props>> = ({ show }) => {
+export const ContextualLink: React.FC<React.PropsWithChildren<Props>> = ({
+  show,
+}) => {
   const { isFairBooth, partner, fair } = show
 
   if (!partner && !fair) return null

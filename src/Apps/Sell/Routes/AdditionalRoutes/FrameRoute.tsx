@@ -13,9 +13,9 @@ import { SubmissionLayout } from "Apps/Sell/Components/SubmissionLayout"
 import { SubmissionStepTitle } from "Apps/Sell/Components/SubmissionStepTitle"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { FrameRoute_submission$key } from "__generated__/FrameRoute_submission.graphql"
+import type { FrameRoute_submission$key } from "__generated__/FrameRoute_submission.graphql"
 import { Formik } from "formik"
-import * as React from "react"
+import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
 
@@ -54,9 +54,9 @@ interface FrameRouteProps {
   submission: FrameRoute_submission$key
 }
 
-export const FrameRoute: React.FC<React.PropsWithChildren<
-  FrameRouteProps
->> = props => {
+export const FrameRoute: React.FC<
+  React.PropsWithChildren<FrameRouteProps>
+> = props => {
   const submission = useFragment(FRAGMENT, props.submission)
   const artwork = submission.myCollectionArtwork
   const { actions } = useSellFlowContext()

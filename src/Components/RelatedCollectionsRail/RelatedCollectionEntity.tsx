@@ -1,8 +1,8 @@
 import { Box, Flex, Image, Text } from "@artsy/palette"
-import { RelatedCollectionEntity_collection$data } from "__generated__/RelatedCollectionEntity_collection.graphql"
+import type { RelatedCollectionEntity_collection$data } from "__generated__/RelatedCollectionEntity_collection.graphql"
 import { useTracking } from "react-tracking"
 import currency from "currency.js"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -16,28 +16,17 @@ export interface RelatedCollectionEntityProps {
   slideIndex: number
 }
 
-export const RelatedCollectionEntity: React.FC<React.PropsWithChildren<RelatedCollectionEntityProps>> = ({
-  lazyLoad,
-  collection,
-  slideIndex,
-}) => {
-  const {
-    artworksConnection,
-    headerImage,
-    priceGuidance,
-    id,
-    slug,
-    title,
-  } = collection
+export const RelatedCollectionEntity: React.FC<
+  React.PropsWithChildren<RelatedCollectionEntityProps>
+> = ({ lazyLoad, collection, slideIndex }) => {
+  const { artworksConnection, headerImage, priceGuidance, id, slug, title } =
+    collection
 
   const artworks = extractNodes(artworksConnection)
 
   const { trackEvent } = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const onLinkClick = () => {
     trackEvent(

@@ -1,15 +1,15 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairOrganizerHeaderImage_fairOrganizer$data } from "__generated__/FairOrganizerHeaderImage_fairOrganizer.graphql"
+import type { FairOrganizerHeaderImage_fairOrganizer$data } from "__generated__/FairOrganizerHeaderImage_fairOrganizer.graphql"
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 
 interface FairOrganizerHeaderImageProps {
   fairOrganizer: FairOrganizerHeaderImage_fairOrganizer$data
 }
 
-export const FairOrganizerHeaderImage: React.FC<React.PropsWithChildren<FairOrganizerHeaderImageProps>> = ({
-  fairOrganizer: { profile },
-}) => {
+export const FairOrganizerHeaderImage: React.FC<
+  React.PropsWithChildren<FairOrganizerHeaderImageProps>
+> = ({ fairOrganizer: { profile } }) => {
   if (profile?.image?.url) {
     return <FullBleedHeader src={profile?.image.url} />
   }
@@ -17,9 +17,8 @@ export const FairOrganizerHeaderImage: React.FC<React.PropsWithChildren<FairOrga
   return null
 }
 
-export const FairOrganizerHeaderImageFragmentContainer = createFragmentContainer(
-  FairOrganizerHeaderImage,
-  {
+export const FairOrganizerHeaderImageFragmentContainer =
+  createFragmentContainer(FairOrganizerHeaderImage, {
     fairOrganizer: graphql`
       fragment FairOrganizerHeaderImage_fairOrganizer on FairOrganizer {
         profile {
@@ -29,5 +28,4 @@ export const FairOrganizerHeaderImageFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+  })

@@ -1,5 +1,5 @@
 import * as Yup from "yup"
-import { FC } from "react"
+import type { FC } from "react"
 import {
   Button,
   Clickable,
@@ -15,7 +15,9 @@ import { forgotPassword } from "Utils/auth"
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 
-export const AuthDialogForgotPassword: FC<React.PropsWithChildren<unknown>> = () => {
+export const AuthDialogForgotPassword: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const {
     dispatch,
     state: { options, values },

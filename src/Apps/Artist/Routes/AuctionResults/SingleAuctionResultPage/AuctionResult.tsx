@@ -1,5 +1,5 @@
 import { Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
-import { AuctionResult_auctionResult$data } from "__generated__/AuctionResult_auctionResult.graphql"
+import type { AuctionResult_auctionResult$data } from "__generated__/AuctionResult_auctionResult.graphql"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { AuctionResultImage } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultImage"
 import { AuctionResultMetaData } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultMetaData"
@@ -14,9 +14,9 @@ interface AuctionResultProps {
   auctionResult: AuctionResult_auctionResult$data
 }
 
-export const AuctionResult: React.FC<React.PropsWithChildren<AuctionResultProps>> = ({
-  auctionResult,
-}) => {
+export const AuctionResult: React.FC<
+  React.PropsWithChildren<AuctionResultProps>
+> = ({ auctionResult }) => {
   const { comparableAuctionResults, title, artist, internalID } = auctionResult
 
   const results = extractNodes(comparableAuctionResults)

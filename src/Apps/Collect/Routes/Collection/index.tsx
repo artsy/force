@@ -1,17 +1,17 @@
 import { Spacer } from "@artsy/palette"
-import { Collection_collection$data } from "__generated__/Collection_collection.graphql"
-import { CollectionArtworksQuery } from "__generated__/CollectionArtworksQuery.graphql"
+import type { Collection_collection$data } from "__generated__/Collection_collection.graphql"
+import type { CollectionArtworksQuery } from "__generated__/CollectionArtworksQuery.graphql"
 import { CollectionHeaderFragmentContainer } from "Apps/Collect/Routes/Collection/Components/Header"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
 import { RelatedCollectionsRailQueryRenderer } from "Components/RelatedCollectionsRail/RelatedCollectionsRail"
-import * as React from "react"
+import type * as React from "react"
 import { graphql, createFragmentContainer } from "react-relay"
 import { truncate } from "lodash"
 import { CollectionsHubRailsQueryRenderer } from "./Components/CollectionsHubRails"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { ErrorPage } from "Components/ErrorPage"
 import { CollectionArtworksFilterRefetchContainer } from "./Components/CollectionArtworksFilter"
-import {
+import type {
   Counts,
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
@@ -29,7 +29,9 @@ interface CollectionAppProps {
   collection: Collection_collection$data
 }
 
-export const CollectionApp: React.FC<React.PropsWithChildren<CollectionAppProps>> = props => {
+export const CollectionApp: React.FC<
+  React.PropsWithChildren<CollectionAppProps>
+> = props => {
   const { collection } = props
 
   const context = useAnalyticsContext()

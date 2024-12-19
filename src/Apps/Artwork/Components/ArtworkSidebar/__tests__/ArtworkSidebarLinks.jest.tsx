@@ -2,7 +2,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { ArtworkSidebarLinksFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarLinks"
 import { fireEvent, screen } from "@testing-library/react"
-import { ArtworkSidebarLinks_Test_Query } from "__generated__/ArtworkSidebarLinks_Test_Query.graphql"
+import type { ArtworkSidebarLinks_Test_Query } from "__generated__/ArtworkSidebarLinks_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
@@ -23,20 +23,19 @@ describe("ArtworkSidebarLinks", () => {
     trackEvent.mockClear()
   })
 
-  const { renderWithRelay } = setupTestWrapperTL<
-    ArtworkSidebarLinks_Test_Query
-  >({
-    Component: ({ artwork }) => (
-      <ArtworkSidebarLinksFragmentContainer artwork={artwork!} />
-    ),
-    query: graphql`
+  const { renderWithRelay } =
+    setupTestWrapperTL<ArtworkSidebarLinks_Test_Query>({
+      Component: ({ artwork }) => (
+        <ArtworkSidebarLinksFragmentContainer artwork={artwork!} />
+      ),
+      query: graphql`
       query ArtworkSidebarLinks_Test_Query @relay_test_operation {
         artwork(id: "josef-albers-homage-to-the-square-85") {
           ...ArtworkSidebarLinks_artwork
         }
       }
     `,
-  })
+    })
 
   it("renders sell with Artsy Section", () => {
     renderWithRelay({})

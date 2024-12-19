@@ -11,7 +11,7 @@ import {
 } from "@artsy/palette"
 import { ViewingRoomArtworkDetailsFragmentContainer as ViewingRoomArtworkDetails } from "./Components/ViewingRoomArtworkDetails"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomWorksRoute_viewingRoom$data } from "__generated__/ViewingRoomWorksRoute_viewingRoom.graphql"
+import type { ViewingRoomWorksRoute_viewingRoom$data } from "__generated__/ViewingRoomWorksRoute_viewingRoom.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { compact } from "lodash"
 import { Media } from "Utils/Responsive"
@@ -20,7 +20,9 @@ interface WorksRouteProps {
   viewingRoom: ViewingRoomWorksRoute_viewingRoom$data
 }
 
-const ViewingRoomWorksRoute: React.FC<React.PropsWithChildren<WorksRouteProps>> = ({ viewingRoom }) => {
+const ViewingRoomWorksRoute: React.FC<
+  React.PropsWithChildren<WorksRouteProps>
+> = ({ viewingRoom }) => {
   const artworks = extractNodes(viewingRoom.artworksConnection)
 
   return (

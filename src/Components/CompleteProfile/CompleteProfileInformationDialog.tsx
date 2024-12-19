@@ -7,17 +7,21 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { FC, Suspense } from "react"
+import { type FC, Suspense } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
-import { CompleteProfileInformationDialogQuery } from "__generated__/CompleteProfileInformationDialogQuery.graphql"
+import type { CompleteProfileInformationDialogQuery } from "__generated__/CompleteProfileInformationDialogQuery.graphql"
 import { Form, Formik } from "formik"
 import {
-  Location,
+  type Location,
   LocationAutocompleteInput,
   normalizePlace,
 } from "Components/LocationAutocompleteInput"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import { ActionType, ContextModule, EditedUserProfile } from "@artsy/cohesion"
+import {
+  ActionType,
+  ContextModule,
+  type EditedUserProfile,
+} from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
@@ -25,9 +29,9 @@ interface CompleteProfileInformationDialogProps {
   onClose(): void
 }
 
-export const CompleteProfileInformationDialog: FC<React.PropsWithChildren<CompleteProfileInformationDialogProps>> = ({
-  onClose,
-}) => {
+export const CompleteProfileInformationDialog: FC<
+  React.PropsWithChildren<CompleteProfileInformationDialogProps>
+> = ({ onClose }) => {
   return (
     <ModalDialog
       width={550}
@@ -45,9 +49,9 @@ interface CompleteProfileInformationDialogFormProps {
   onSuccess(): void
 }
 
-const CompleteProfileInformationDialogForm: FC<React.PropsWithChildren<CompleteProfileInformationDialogFormProps>> = ({
-  onSuccess,
-}) => {
+const CompleteProfileInformationDialogForm: FC<
+  React.PropsWithChildren<CompleteProfileInformationDialogFormProps>
+> = ({ onSuccess }) => {
   const { me } = useLazyLoadQuery<CompleteProfileInformationDialogQuery>(
     QUERY,
     {},
@@ -173,7 +177,9 @@ const CompleteProfileInformationDialogForm: FC<React.PropsWithChildren<CompleteP
   )
 }
 
-const CompleteProfileInformationDialogFormSkeleton: FC<React.PropsWithChildren<unknown>> = () => {
+const CompleteProfileInformationDialogFormSkeleton: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <Stack gap={4}>
       <Stack gap={2}>

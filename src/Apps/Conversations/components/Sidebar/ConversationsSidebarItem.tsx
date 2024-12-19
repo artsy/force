@@ -4,7 +4,7 @@ import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
-import { ConversationsSidebarItem_conversation$key } from "__generated__/ConversationsSidebarItem_conversation.graphql"
+import type { ConversationsSidebarItem_conversation$key } from "__generated__/ConversationsSidebarItem_conversation.graphql"
 import { getSidebarTotal } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
 import { useEffect, useRef } from "react"
 import { getENV } from "Utils/getENV"
@@ -14,10 +14,9 @@ interface ConversationsSidebarItemProps {
   index: number
 }
 
-export const ConversationsSidebarItem: React.FC<React.PropsWithChildren<ConversationsSidebarItemProps>> = ({
-  conversation,
-  index,
-}) => {
+export const ConversationsSidebarItem: React.FC<
+  React.PropsWithChildren<ConversationsSidebarItemProps>
+> = ({ conversation, index }) => {
   const data = useFragment(FRAGMENT, conversation)
   const { match } = useRouter()
   const { trackEvent } = useTracking()
@@ -50,8 +49,8 @@ export const ConversationsSidebarItem: React.FC<React.PropsWithChildren<Conversa
     orders.length === 0
       ? "Inquiry"
       : orders[0].__typename === "CommerceBuyOrder"
-      ? "Order"
-      : "Offer"
+        ? "Order"
+        : "Offer"
 
   return (
     <StackableBorderBox

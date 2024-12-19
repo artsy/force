@@ -1,6 +1,6 @@
 import {
-  OrderPaymentState,
-  OrderPaymentAction,
+  type OrderPaymentState,
+  type OrderPaymentAction,
   OrderPaymentActions,
 } from "./OrderPaymentContext"
 

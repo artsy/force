@@ -1,7 +1,9 @@
 import { Flex, Spacer } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 
-export const AdminApp: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+export const AdminApp: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   return (
     <>
       <Flex gap={1} mt={2}>

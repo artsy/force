@@ -1,7 +1,7 @@
 import { Button, Join, ModalDialog, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AuctionRegistrationRoute_me$data } from "__generated__/AuctionRegistrationRoute_me.graphql"
-import { AuctionRegistrationRoute_sale$data } from "__generated__/AuctionRegistrationRoute_sale.graphql"
+import type { AuctionRegistrationRoute_me$data } from "__generated__/AuctionRegistrationRoute_me.graphql"
+import type { AuctionRegistrationRoute_sale$data } from "__generated__/AuctionRegistrationRoute_sale.graphql"
 import { Form, Formik } from "formik"
 import { CreditCardInputProvider } from "Components/CreditCardInput"
 import { useRouter } from "System/Hooks/useRouter"
@@ -12,9 +12,9 @@ import { AddressFormWithCreditCard } from "Apps/Auction/Components/Form/AddressF
 import { IdentityVerificationWarning } from "Apps/Auction/Components/Form/IdentityVerificationWarning"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { ErrorStatus } from "Apps/Auction/Components/Form/ErrorStatus"
-import { AuctionConfirmRegistrationRoute_sale$data } from "__generated__/AuctionConfirmRegistrationRoute_sale.graphql"
+import type { AuctionConfirmRegistrationRoute_sale$data } from "__generated__/AuctionConfirmRegistrationRoute_sale.graphql"
 import {
-  AuctionFormValues,
+  type AuctionFormValues,
   initialValuesForRegistration,
 } from "Apps/Auction/Components/Form/Utils/initialValues"
 import { registrationValidationSchema } from "Apps/Auction/Components/Form/Utils/validationSchemas"
@@ -24,10 +24,9 @@ export interface AuctionRegistrationRouteProps {
   sale: AuctionRegistrationRoute_sale$data
 }
 
-const AuctionRegistrationRoute: React.FC<React.PropsWithChildren<AuctionRegistrationRouteProps>> = ({
-  me,
-  sale,
-}) => {
+const AuctionRegistrationRoute: React.FC<
+  React.PropsWithChildren<AuctionRegistrationRouteProps>
+> = ({ me, sale }) => {
   const { tracking } = useAuctionTracking()
   const { router } = useRouter()
   const { needsIdentityVerification } = computeProps({ sale, me })
@@ -102,24 +101,25 @@ const AuctionRegistrationRoute: React.FC<React.PropsWithChildren<AuctionRegistra
   )
 }
 
-export const AuctionRegistrationRouteFragmentContainer = createFragmentContainer(
-  (props: AuctionRegistrationRouteProps) => {
-    return (
-      // Wrap the provider down here as we need it for our hooks
-      (<CreditCardInputProvider>
-        <AuctionRegistrationRoute {...props} />
-      </CreditCardInputProvider>)
-    );
-  },
-  {
-    me: graphql`
+export const AuctionRegistrationRouteFragmentContainer =
+  createFragmentContainer(
+    (props: AuctionRegistrationRouteProps) => {
+      return (
+        // Wrap the provider down here as we need it for our hooks
+        <CreditCardInputProvider>
+          <AuctionRegistrationRoute {...props} />
+        </CreditCardInputProvider>
+      )
+    },
+    {
+      me: graphql`
       fragment AuctionRegistrationRoute_me on Me {
         internalID
         isIdentityVerified
         hasQualifiedCreditCards
       }
     `,
-    sale: graphql`
+      sale: graphql`
       fragment AuctionRegistrationRoute_sale on Sale {
         slug
         name
@@ -133,8 +133,8 @@ export const AuctionRegistrationRouteFragmentContainer = createFragmentContainer
         }
       }
     `,
-  }
-)
+    }
+  )
 
 const computeProps = ({ sale, me }: AuctionRegistrationRouteProps) => {
   const needsIdentityVerification =

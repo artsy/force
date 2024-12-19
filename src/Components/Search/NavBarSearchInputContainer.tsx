@@ -1,4 +1,4 @@
-import { LabeledInput, Clickable, LabeledInputProps } from "@artsy/palette"
+import { LabeledInput, Clickable, type LabeledInputProps } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { isEmpty } from "lodash"
 import * as React from "react"

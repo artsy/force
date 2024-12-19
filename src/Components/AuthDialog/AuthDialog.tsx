@@ -1,12 +1,12 @@
 import { ModalDialog, Image, Box } from "@artsy/palette"
 import {
-  AuthDialogMode,
+  type AuthDialogMode,
   useAuthDialogContext,
 } from "Components/AuthDialog/AuthDialogContext"
 import { AuthDialogLogin } from "Components/AuthDialog/Views/AuthDialogLogin"
 import { AuthDialogForgotPassword } from "Components/AuthDialog/Views/AuthDialogForgotPassword"
 import { AuthDialogSignUp } from "Components/AuthDialog/Views/AuthDialogSignUp"
-import { FC, useEffect } from "react"
+import { type FC, useEffect } from "react"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { resized } from "Utils/resized"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
@@ -17,7 +17,9 @@ export interface AuthDialogProps {
   onClose: () => void
 }
 
-export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({ onClose }) => {
+export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({
+  onClose,
+}) => {
   useRecaptcha()
 
   const {
@@ -83,8 +85,7 @@ export const DEFAULT_TITLES: Record<AuthDialogMode, string> = {
 const IMAGE = {
   width: 900,
   height: 2030,
-  src:
-    "https://files.artsy.net/images/2x_Evergreen-Artist-Page-Sign-Up-Modal.jpg",
+  src: "https://files.artsy.net/images/2x_Evergreen-Artist-Page-Sign-Up-Modal.jpg",
 }
 
 const AuthDialogLeftPanel: FC<React.PropsWithChildren<unknown>> = () => {

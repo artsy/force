@@ -4,7 +4,7 @@ import { useTimer } from "Utils/Hooks/useTimer"
 import { Text } from "@artsy/palette"
 import { DateTime } from "luxon"
 import { graphql, useFragment } from "react-relay"
-import { BidTimerLine_artwork$key } from "__generated__/BidTimerLine_artwork.graphql"
+import type { BidTimerLine_artwork$key } from "__generated__/BidTimerLine_artwork.graphql"
 import { useState } from "react"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 
@@ -12,7 +12,9 @@ interface BidTimerLineProps {
   artwork: BidTimerLine_artwork$key
 }
 
-export const BidTimerLine: React.FC<React.PropsWithChildren<BidTimerLineProps>> = ({ artwork }) => {
+export const BidTimerLine: React.FC<
+  React.PropsWithChildren<BidTimerLineProps>
+> = ({ artwork }) => {
   const data = useFragment(bidTimerLineFragment, artwork)
 
   const { collectorSignals, saleArtwork } = data
@@ -23,10 +25,8 @@ export const BidTimerLine: React.FC<React.PropsWithChildren<BidTimerLineProps>> 
   // Then, update these values when the websocket sends a new event.
   // Use these updated values for timer/rendering.
   const [updatedLotClosesAt, setUpdatedLotClosesAt] = useState(lotClosesAt)
-  const [
-    updatedOnlineBiddingExtended,
-    setUpdatedOnlineBiddingExtended,
-  ] = useState(onlineBiddingExtended)
+  const [updatedOnlineBiddingExtended, setUpdatedOnlineBiddingExtended] =
+    useState(onlineBiddingExtended)
 
   useAuctionWebsocket({
     lotID: saleArtwork?.lotID!,

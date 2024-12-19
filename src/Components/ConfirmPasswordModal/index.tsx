@@ -7,11 +7,11 @@ import {
   PasswordInput,
   Spacer,
 } from "@artsy/palette"
-import { FC } from "react"
-import { Form, Formik, FormikHelpers } from "formik"
+import type { FC } from "react"
+import { Form, Formik, type FormikHelpers } from "formik"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { ConfirmPassword } from "./Mutations/ConfirmPassword"
-import { ConfirmPasswordInput } from "__generated__/ConfirmPasswordMutation.graphql"
+import type { ConfirmPasswordInput } from "__generated__/ConfirmPasswordMutation.graphql"
 import * as Yup from "yup"
 
 interface ConfirmPasswordModalProps {
@@ -26,14 +26,9 @@ interface ConfirmPasswordModalProps {
   title?: string
 }
 
-export const ConfirmPasswordModal: FC<React.PropsWithChildren<ConfirmPasswordModalProps>> = ({
-  buttonText,
-  onCancel,
-  onConfirm,
-  show,
-  subTitle,
-  title,
-}) => {
+export const ConfirmPasswordModal: FC<
+  React.PropsWithChildren<ConfirmPasswordModalProps>
+> = ({ buttonText, onCancel, onConfirm, show, subTitle, title }) => {
   const { relayEnvironment } = useSystemContext()
 
   if (!show) {

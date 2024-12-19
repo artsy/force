@@ -1,6 +1,6 @@
 import { Flex, Separator, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarCreateAlert_artwork$data } from "__generated__/ArtworkSidebarCreateAlert_artwork.graphql"
+import type { ArtworkSidebarCreateAlert_artwork$data } from "__generated__/ArtworkSidebarCreateAlert_artwork.graphql"
 
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
@@ -8,9 +8,9 @@ interface ArtworkSidebarCreateAlertProps {
   artwork: ArtworkSidebarCreateAlert_artwork$data
 }
 
-export const ArtworkSidebarCreateAlert: React.FC<React.PropsWithChildren<ArtworkSidebarCreateAlertProps>> = ({
-  artwork,
-}) => {
+export const ArtworkSidebarCreateAlert: React.FC<
+  React.PropsWithChildren<ArtworkSidebarCreateAlertProps>
+> = ({ artwork }) => {
   if (!artwork.isEligibleToCreateAlert) return null
 
   return (
@@ -32,13 +32,11 @@ export const ArtworkSidebarCreateAlert: React.FC<React.PropsWithChildren<Artwork
   )
 }
 
-export const ArtworkSidebarCreateAlertFragmentContainer = createFragmentContainer(
-  ArtworkSidebarCreateAlert,
-  {
+export const ArtworkSidebarCreateAlertFragmentContainer =
+  createFragmentContainer(ArtworkSidebarCreateAlert, {
     artwork: graphql`
       fragment ArtworkSidebarCreateAlert_artwork on Artwork {
         isEligibleToCreateAlert
       }
     `,
-  }
-)
+  })

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { extractNodes } from "Utils/extractNodes"
 import { sortBy } from "lodash"
 import { fromToday } from "Apps/Conversations/components/Message/Utils/dateFormatters"
-import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
+import type { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 
 interface UseGroupedMessagesProps {
   messagesConnection: NonNullable<

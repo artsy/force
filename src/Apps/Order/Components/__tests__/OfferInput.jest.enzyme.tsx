@@ -1,5 +1,8 @@
-import { ReactWrapper, mount } from "enzyme"
-import { OfferInput, OfferInputProps } from "Apps/Order/Components/OfferInput"
+import { type ReactWrapper, mount } from "enzyme"
+import {
+  OfferInput,
+  type OfferInputProps,
+} from "Apps/Order/Components/OfferInput"
 
 // https://github.com/airbnb/enzyme/issues/218#issuecomment-388481390
 const setInputValue = (

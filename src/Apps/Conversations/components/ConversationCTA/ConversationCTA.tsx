@@ -1,11 +1,11 @@
-import { Box, Flex, FlexProps, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, type FlexProps, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { ConversationMakeOfferButton } from "Apps/Conversations/components/ConversationCTA/ConversationMakeOfferButton"
 import { ConversationPurchaseButton } from "Apps/Conversations/components/ConversationCTA/ConversationPurchaseButton"
 import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "System/Components/RouterLink"
-import { ConversationCTA_conversation$key } from "__generated__/ConversationCTA_conversation.graphql"
+import type { ConversationCTA_conversation$key } from "__generated__/ConversationCTA_conversation.graphql"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { ConversationConfirmModal } from "Apps/Conversations/components/ConversationCTA/ConversationConfirmModal"
 import { ConversationReviewOfferCTA } from "Apps/Conversations/components/ConversationCTA/ConversationReviewOfferCTA"
@@ -17,10 +17,9 @@ interface ConversationCTAProps extends FlexProps {
   conversation: ConversationCTA_conversation$key
 }
 
-export const ConversationCTA: React.FC<React.PropsWithChildren<ConversationCTAProps>> = ({
-  conversation,
-  ...flexProps
-}) => {
+export const ConversationCTA: React.FC<
+  React.PropsWithChildren<ConversationCTAProps>
+> = ({ conversation, ...flexProps }) => {
   const data = useFragment(FRAGMENT, conversation)
   const { findPartnerOffer } = useConversationsContext()
 

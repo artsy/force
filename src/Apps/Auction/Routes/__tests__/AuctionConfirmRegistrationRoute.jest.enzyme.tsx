@@ -6,7 +6,7 @@ import { AuctionConfirmRegistrationRouteFragmentContainer } from "Apps/Auction/R
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { redirectToSaleHome } from "Apps/Auction/Routes/AuctionRegistrationRoute"
-import { AuctionConfirmRegistrationRouteTestQuery } from "__generated__/AuctionConfirmRegistrationRouteTestQuery.graphql"
+import type { AuctionConfirmRegistrationRouteTestQuery } from "__generated__/AuctionConfirmRegistrationRouteTestQuery.graphql"
 import { useCreateBidder } from "Apps/Auction/Queries/useCreateBidder"
 
 jest.unmock("react-relay")
@@ -32,13 +32,12 @@ jest.mock("formik", () => ({
 }))
 
 describe("AuctionConfirmRegistrationRoute", () => {
-  const { getWrapper } = setupTestWrapper<
-    AuctionConfirmRegistrationRouteTestQuery
-  >({
-    Component: (props: any) => {
-      return <AuctionConfirmRegistrationRouteFragmentContainer {...props} />
-    },
-    query: graphql`
+  const { getWrapper } =
+    setupTestWrapper<AuctionConfirmRegistrationRouteTestQuery>({
+      Component: (props: any) => {
+        return <AuctionConfirmRegistrationRouteFragmentContainer {...props} />
+      },
+      query: graphql`
       query AuctionConfirmRegistrationRouteTestQuery @relay_test_operation {
         me {
           ...AuctionConfirmRegistrationRoute_me
@@ -48,7 +47,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
         }
       }
     `,
-  })
+    })
 
   const mockUseAuctionTracking = useAuctionTracking as jest.Mock
   const mockUseRouter = useRouter as jest.Mock
@@ -90,7 +89,8 @@ describe("AuctionConfirmRegistrationRoute", () => {
     }))
 
     // Hack to get around mocking Formik
-    ;(mockFormik as React.FC<React.PropsWithChildren<unknown>>).displayName = "Formik"
+    ;(mockFormik as React.FC<React.PropsWithChildren<unknown>>).displayName =
+      "Formik"
     mockFormik.mockImplementation(({ children }) => {
       return children(defaultFormikProps)
     })
@@ -128,7 +128,6 @@ describe("AuctionConfirmRegistrationRoute", () => {
         hasQualifiedCreditCards: true,
       }),
     })
-
     ;(wrapper.find("ModalDialog").props() as any).onClose()
     expect(spy).toHaveBeenCalledWith("/auction/sale-slug")
   })
@@ -334,7 +333,6 @@ describe("AuctionConfirmRegistrationRoute", () => {
           hasQualifiedCreditCards: true,
         }),
       })
-
       ;(wrapper.find("Formik").props() as any).onSubmit(values, helpers)
       await flushPromiseQueue()
 

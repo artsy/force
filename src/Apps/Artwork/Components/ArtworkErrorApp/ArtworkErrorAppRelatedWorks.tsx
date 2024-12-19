@@ -8,15 +8,17 @@ import ArtworkGrid, {
 } from "Components/ArtworkGrid/ArtworkGrid"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { ArtworkErrorAppRelatedWorksQuery } from "__generated__/ArtworkErrorAppRelatedWorksQuery.graphql"
+import type { ArtworkErrorAppRelatedWorksQuery } from "__generated__/ArtworkErrorAppRelatedWorksQuery.graphql"
 import { graphql, useFragment } from "react-relay"
-import { ArtworkErrorAppRelatedWorks_artwork$key } from "__generated__/ArtworkErrorAppRelatedWorks_artwork.graphql"
+import type { ArtworkErrorAppRelatedWorks_artwork$key } from "__generated__/ArtworkErrorAppRelatedWorks_artwork.graphql"
 
 interface RelatedWorksProps {
   artwork: ArtworkErrorAppRelatedWorks_artwork$key
 }
 
-const RelatedWorks: React.FC<React.PropsWithChildren<RelatedWorksProps>> = ({ artwork }) => {
+const RelatedWorks: React.FC<React.PropsWithChildren<RelatedWorksProps>> = ({
+  artwork,
+}) => {
   const data = useFragment(RelatedWorksFragment, artwork)
 
   const artworksConnection = data.layer?.artworksConnection
@@ -66,9 +68,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const RelatedWorksQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const RelatedWorksQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

@@ -1,9 +1,9 @@
 import {
-  ArtworkFiltersState,
+  type ArtworkFiltersState,
   initialArtworkFilterState,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { allowedSearchCriteriaKeys } from "Components/SavedSearchAlert/constants"
-import {
+import type {
   SavedSearchDefaultCriteria,
   SavedSearchEntity,
   SearchCriteriaAttributes,

@@ -1,6 +1,6 @@
 import { Avatar, Box, Flex, Text } from "@artsy/palette"
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
-import React from "react"
+import type React from "react"
 
 interface ReviewsData {
   reviewText: string
@@ -45,7 +45,9 @@ export const Reviews: React.FC<React.PropsWithChildren<unknown>> = () => {
   )
 }
 
-const ListItem: React.FC<React.PropsWithChildren<{ review: ReviewsData }>> = ({ review }) => {
+const ListItem: React.FC<React.PropsWithChildren<{ review: ReviewsData }>> = ({
+  review,
+}) => {
   const { reviewText, image, reviewerName, galery } = review
   return (
     <Flex alignItems="center" flexDirection="column">

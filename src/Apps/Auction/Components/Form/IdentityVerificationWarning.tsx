@@ -1,6 +1,8 @@
 import { Spacer, Text } from "@artsy/palette"
 
-export const IdentityVerificationWarning: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const IdentityVerificationWarning: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <>
       <Text variant="sm-display">

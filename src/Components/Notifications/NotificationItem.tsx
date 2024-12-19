@@ -6,12 +6,12 @@ import { useNotificationsTracking } from "Components/Notifications/Hooks/useNoti
 import { useMarkNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
 import { SUPPORTED_NOTIFICATION_TYPES } from "Components/Notifications/Notification"
 import { NotificationItemUnreadIndicator } from "Components/Notifications/NotificationItemUnreadIndicator"
-import { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
+import type { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import createLogger from "Utils/logger"
-import { NotificationItem_notification$data } from "__generated__/NotificationItem_notification.graphql"
-import { FC, useCallback } from "react"
+import type { NotificationItem_notification$data } from "__generated__/NotificationItem_notification.graphql"
+import { type FC, useCallback } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { NotificationTypeLabel } from "./NotificationTypeLabel"
@@ -179,12 +179,9 @@ interface NotificationItemWrapperProps {
   onClick: () => void
 }
 
-export const NotificationItemWrapper: FC<React.PropsWithChildren<NotificationItemWrapperProps>> = ({
-  item,
-  mode,
-  children,
-  onClick,
-}) => {
+export const NotificationItemWrapper: FC<
+  React.PropsWithChildren<NotificationItemWrapperProps>
+> = ({ item, mode, children, onClick }) => {
   const {
     state: { currentNotificationId },
   } = useNotificationsContext()

@@ -1,20 +1,20 @@
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { FollowButton } from "./Button"
-import { FollowProfileButton_profile$data } from "__generated__/FollowProfileButton_profile.graphql"
-import { FollowProfileButton_me$data } from "__generated__/FollowProfileButton_me.graphql"
-import { ButtonProps } from "@artsy/palette"
+import type { FollowProfileButton_profile$data } from "__generated__/FollowProfileButton_profile.graphql"
+import type { FollowProfileButton_me$data } from "__generated__/FollowProfileButton_me.graphql"
+import type { ButtonProps } from "@artsy/palette"
 import {
   Intent,
-  AuthContextModule,
+  type AuthContextModule,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useFollowButtonTracking } from "./useFollowButtonTracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { FollowProfileButtonQuery } from "__generated__/FollowProfileButtonQuery.graphql"
+import type { FollowProfileButtonQuery } from "__generated__/FollowProfileButtonQuery.graphql"
 import { useAuthDialog } from "Components/AuthDialog"
 
 interface FollowProfileButtonProps extends Omit<ButtonProps, "variant"> {
@@ -27,7 +27,9 @@ interface FollowProfileButtonProps extends Omit<ButtonProps, "variant"> {
   profile: FollowProfileButton_profile$data
 }
 
-const FollowProfileButton: React.FC<React.PropsWithChildren<FollowProfileButtonProps>> = ({
+const FollowProfileButton: React.FC<
+  React.PropsWithChildren<FollowProfileButtonProps>
+> = ({
   contextModule = ContextModule.partnerHeader,
   me,
   onFollow,
@@ -172,10 +174,9 @@ interface FollowProfileButtonQueryRendererProps
   id: string
 }
 
-export const FollowProfileButtonQueryRenderer: React.FC<React.PropsWithChildren<FollowProfileButtonQueryRendererProps>> = ({
-  id,
-  ...rest
-}) => {
+export const FollowProfileButtonQueryRenderer: React.FC<
+  React.PropsWithChildren<FollowProfileButtonQueryRendererProps>
+> = ({ id, ...rest }) => {
   const { isLoggedIn } = useSystemContext()
 
   return (

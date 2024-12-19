@@ -1,14 +1,14 @@
 import { useToasts } from "@artsy/palette"
-import {
+import type {
   ConsignmentSubmissionStateAggregation,
   CreateSubmissionMutationInput,
 } from "__generated__/CreateConsignSubmissionMutation.graphql"
-import { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
-import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
-import { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
-import { MyCollectionUpdateArtworkInput } from "__generated__/useUpdateArtworkMutation.graphql"
-import { useUpdateMyCollectionArtworkMutation$data } from "__generated__/useUpdateMyCollectionArtworkMutation.graphql"
-import { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
+import type { SubmissionRoute_submission$data } from "__generated__/SubmissionRoute_submission.graphql"
+import type { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
+import type { useCreateSubmissionMutation$data } from "__generated__/useCreateSubmissionMutation.graphql"
+import type { MyCollectionUpdateArtworkInput } from "__generated__/useUpdateArtworkMutation.graphql"
+import type { useUpdateMyCollectionArtworkMutation$data } from "__generated__/useUpdateMyCollectionArtworkMutation.graphql"
+import type { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
 import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
 import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
 import { useUpdateMyCollectionArtwork } from "Apps/Sell/Mutations/useUpdateMyCollectionArtwork"
@@ -64,8 +64,8 @@ export const INITIAL_STEP: SellFlowStep = BASIC_STEPS[0]
 export const INITIAL_EDIT_STEP: SellFlowStep = "title"
 export const INITIAL_POST_APPROVAL_STEP: SellFlowStep = POST_APPROVAL_STEPS[0]
 export type SellFlowStep =
-  | typeof BASIC_STEPS[number]
-  | typeof POST_APPROVAL_STEPS[number]
+  | (typeof BASIC_STEPS)[number]
+  | (typeof POST_APPROVAL_STEPS)[number]
   | typeof THANK_YOU_STEP
   | typeof POST_APPROVAL_THANK_YOU_STEP
 
@@ -111,26 +111,21 @@ interface SellFlowContextProviderProps {
   devMode?: boolean
 }
 
-export const SellFlowContextProvider: React.FC<React.PropsWithChildren<
-  SellFlowContextProviderProps
->> = ({ children, submission, devMode = false }) => {
+export const SellFlowContextProvider: React.FC<
+  React.PropsWithChildren<SellFlowContextProviderProps>
+> = ({ children, submission, devMode = false }) => {
   const enablePostApprovalSubmissionFlow = useFeatureFlag(
     "onyx_post_approval_submission_flow"
   )
-  const {
-    trackConsignmentSubmitted,
-    trackTappedSubmissionBack,
-  } = useSubmissionTracking()
+  const { trackConsignmentSubmitted, trackTappedSubmissionBack } =
+    useSubmissionTracking()
   const { match, router } = useRouter()
-  const {
-    submitMutation: submitUpdateSubmissionMutation,
-  } = useUpdateSubmission()
-  const {
-    submitMutation: submitUpdateMyCollectionArtworkMutation,
-  } = useUpdateMyCollectionArtwork()
-  const {
-    submitMutation: submitCreateSubmissionMutation,
-  } = useCreateSubmission()
+  const { submitMutation: submitUpdateSubmissionMutation } =
+    useUpdateSubmission()
+  const { submitMutation: submitUpdateMyCollectionArtworkMutation } =
+    useUpdateMyCollectionArtwork()
+  const { submitMutation: submitCreateSubmissionMutation } =
+    useCreateSubmission()
   const { sendToast } = useToasts()
   const [loading, setLoading] = useState(false)
 
@@ -141,10 +136,8 @@ export const SellFlowContextProvider: React.FC<React.PropsWithChildren<
     : (match.location.pathname.split("/").pop() as SellFlowStep)
 
   // Setting the submission state as the URL query parameter to allow testing the complete Sell flow with different submission states with integrity.
-  const {
-    testSubmissionState,
-    testSubmissionQueryParams,
-  } = useTestSubmissionState()
+  const { testSubmissionState, testSubmissionQueryParams } =
+    useTestSubmissionState()
 
   const submissionState = testSubmissionState ?? submission?.state
 
@@ -199,9 +192,8 @@ export const SellFlowContextProvider: React.FC<React.PropsWithChildren<
     const newStep = steps[index]
 
     // If we are navigating away from the Sell flow, we don't want to redirect
-    const isSellFlowRoute = match.location.pathname.includes(
-      "/sell/submissions"
-    )
+    const isSellFlowRoute =
+      match.location.pathname.includes("/sell/submissions")
 
     if (
       isNewSubmission ||
@@ -334,9 +326,10 @@ export const useSellFlowContext = () => {
 
 export const useTestSubmissionState = () => {
   const { match } = useRouter()
-  const testSubmissionState = match?.location?.query?.testSubmissionState?.toUpperCase() as
-    | ConsignmentSubmissionStateAggregation
-    | undefined
+  const testSubmissionState =
+    match?.location?.query?.testSubmissionState?.toUpperCase() as
+      | ConsignmentSubmissionStateAggregation
+      | undefined
 
   const testSubmissionQueryParams = testSubmissionState
     ? `?testSubmissionState=${testSubmissionState}`

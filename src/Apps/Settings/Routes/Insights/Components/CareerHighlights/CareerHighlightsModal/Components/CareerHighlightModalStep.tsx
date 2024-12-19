@@ -6,25 +6,24 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { CareerHighlightKindWithPromo } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/config"
+import type { CareerHighlightKindWithPromo } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/config"
 import {
-  CareerHighlightKind,
+  type CareerHighlightKind,
   getCareerHighlight,
 } from "Apps/Settings/Routes/Insights/Utils/getCareerHighlight"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 import { graphql, useFragment } from "react-relay"
-import { CareerHighlightModalStep_careerHighlight$key } from "__generated__/CareerHighlightModalStep_careerHighlight.graphql"
+import type { CareerHighlightModalStep_careerHighlight$key } from "__generated__/CareerHighlightModalStep_careerHighlight.graphql"
 
 interface CareerHighlightModalStepProps {
   careerHighlight: CareerHighlightModalStep_careerHighlight$key
   kind: CareerHighlightKindWithPromo | (string & {})
 }
 
-export const CareerHighlightModalStep: React.FC<React.PropsWithChildren<CareerHighlightModalStepProps>> = ({
-  careerHighlight,
-  kind,
-}) => {
+export const CareerHighlightModalStep: React.FC<
+  React.PropsWithChildren<CareerHighlightModalStepProps>
+> = ({ careerHighlight, kind }) => {
   const careerHighlights = useFragment(careerHighlightFragment, careerHighlight)
   const count = careerHighlights.length
   const { Icon, label } = getCareerHighlight(kind as CareerHighlightKind, count)

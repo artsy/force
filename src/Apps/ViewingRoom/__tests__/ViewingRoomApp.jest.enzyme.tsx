@@ -3,12 +3,12 @@ import { MockBoot } from "DevTools/MockBoot"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { ViewingRoomAppFragmentContainer } from "Apps/ViewingRoom/ViewingRoomApp"
 import { graphql } from "react-relay"
-import { ViewingRoomApp_DraftTest_Query$rawResponse } from "__generated__/ViewingRoomApp_DraftTest_Query.graphql"
-import { ViewingRoomApp_ScheduledTest_Query$rawResponse } from "__generated__/ViewingRoomApp_ScheduledTest_Query.graphql"
-import { ViewingRoomApp_OpenTest_Query$rawResponse } from "__generated__/ViewingRoomApp_OpenTest_Query.graphql"
-import { ViewingRoomApp_ClosedTest_Query$rawResponse } from "__generated__/ViewingRoomApp_ClosedTest_Query.graphql"
-import { ViewingRoomApp_LoggedOutTest_Query$rawResponse } from "__generated__/ViewingRoomApp_LoggedOutTest_Query.graphql"
-import { Breakpoint } from "@artsy/palette"
+import type { ViewingRoomApp_DraftTest_Query$rawResponse } from "__generated__/ViewingRoomApp_DraftTest_Query.graphql"
+import type { ViewingRoomApp_ScheduledTest_Query$rawResponse } from "__generated__/ViewingRoomApp_ScheduledTest_Query.graphql"
+import type { ViewingRoomApp_OpenTest_Query$rawResponse } from "__generated__/ViewingRoomApp_OpenTest_Query.graphql"
+import type { ViewingRoomApp_ClosedTest_Query$rawResponse } from "__generated__/ViewingRoomApp_ClosedTest_Query.graphql"
+import type { ViewingRoomApp_LoggedOutTest_Query$rawResponse } from "__generated__/ViewingRoomApp_LoggedOutTest_Query.graphql"
+import type { Breakpoint } from "@artsy/palette"
 import { mockLocation } from "DevTools/mockLocation"
 
 jest.unmock("react-relay")
@@ -366,29 +366,30 @@ const DraftViewingRoomAppFixture: ViewingRoomApp_DraftTest_Query$rawResponse = {
   },
 }
 
-const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_Query$rawResponse = {
-  viewingRoom: {
-    internalID: "example",
-    href: "/viewing-room/example",
-    pullQuote: "Example pull quote",
-    distanceToClose: null,
-    distanceToOpen: "8 days",
-    image: {
-      imageURLs: {
-        normalized:
-          "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_Query$rawResponse =
+  {
+    viewingRoom: {
+      internalID: "example",
+      href: "/viewing-room/example",
+      pullQuote: "Example pull quote",
+      distanceToClose: null,
+      distanceToOpen: "8 days",
+      image: {
+        imageURLs: {
+          normalized:
+            "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+        },
       },
+      partner: {
+        href: "/partner-demo-gg",
+        id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
+        internalID: "12345",
+        name: "Subscription Demo GG",
+      },
+      status: "scheduled",
+      title: "Guy Yanai",
     },
-    partner: {
-      href: "/partner-demo-gg",
-      id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
-      internalID: "12345",
-      name: "Subscription Demo GG",
-    },
-    status: "scheduled",
-    title: "Guy Yanai",
-  },
-}
+  }
 
 const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_Query$rawResponse = {
   viewingRoom: {
@@ -414,50 +415,52 @@ const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_Query$rawResponse = {
   },
 }
 
-const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_Query$rawResponse = {
-  viewingRoom: {
-    internalID: "example",
-    href: "/viewing-room/example",
-    pullQuote: "Example pull quote",
-    distanceToClose: null,
-    distanceToOpen: null,
-    image: {
-      imageURLs: {
-        normalized:
-          "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_Query$rawResponse =
+  {
+    viewingRoom: {
+      internalID: "example",
+      href: "/viewing-room/example",
+      pullQuote: "Example pull quote",
+      distanceToClose: null,
+      distanceToOpen: null,
+      image: {
+        imageURLs: {
+          normalized:
+            "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+        },
       },
+      partner: {
+        href: "/partner-demo-gg",
+        id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
+        internalID: "212121",
+        name: "Subscription Demo GG",
+      },
+      status: "closed",
+      title: "Guy Yanai",
     },
-    partner: {
-      href: "/partner-demo-gg",
-      id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
-      internalID: "212121",
-      name: "Subscription Demo GG",
-    },
-    status: "closed",
-    title: "Guy Yanai",
-  },
-}
+  }
 
-const LoggedOutViewingRoomAppFixture: ViewingRoomApp_LoggedOutTest_Query$rawResponse = {
-  viewingRoom: {
-    internalID: "example",
-    href: "/viewing-room/example",
-    pullQuote: "Example pull quote",
-    distanceToClose: "1 month",
-    distanceToOpen: null,
-    image: {
-      imageURLs: {
-        normalized:
-          "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+const LoggedOutViewingRoomAppFixture: ViewingRoomApp_LoggedOutTest_Query$rawResponse =
+  {
+    viewingRoom: {
+      internalID: "example",
+      href: "/viewing-room/example",
+      pullQuote: "Example pull quote",
+      distanceToClose: "1 month",
+      distanceToOpen: null,
+      image: {
+        imageURLs: {
+          normalized:
+            "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+        },
       },
+      partner: {
+        href: "/partner-demo-gg",
+        id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
+        internalID: "123123123",
+        name: "Subscription Demo GG",
+      },
+      status: "live",
+      title: "Guy Yanai",
     },
-    partner: {
-      href: "/partner-demo-gg",
-      id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
-      internalID: "123123123",
-      name: "Subscription Demo GG",
-    },
-    status: "live",
-    title: "Guy Yanai",
-  },
-}
+  }

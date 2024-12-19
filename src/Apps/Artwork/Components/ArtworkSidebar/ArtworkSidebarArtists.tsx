@@ -3,7 +3,7 @@ import { themeGet } from "@styled-system/theme-get"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "System/Components/RouterLink"
-import { ArtworkSidebarArtists_artwork$data } from "__generated__/ArtworkSidebarArtists_artwork.graphql"
+import type { ArtworkSidebarArtists_artwork$data } from "__generated__/ArtworkSidebarArtists_artwork.graphql"
 
 const ARTISTS_TO_DISPLAY = 4
 
@@ -19,9 +19,9 @@ const StyledArtistLink = styled(RouterLink)`
   }
 `
 
-export const ArtworkSidebarArtists: React.FC<React.PropsWithChildren<ArtistsProps>> = ({
-  artwork: { artists, culturalMaker },
-}) => {
+export const ArtworkSidebarArtists: React.FC<
+  React.PropsWithChildren<ArtistsProps>
+> = ({ artwork: { artists, culturalMaker } }) => {
   if (!artists) return null
 
   const showMoreText = `${artists.length - ARTISTS_TO_DISPLAY} more`

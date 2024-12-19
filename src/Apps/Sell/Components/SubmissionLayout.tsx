@@ -16,10 +16,9 @@ interface SubmissionLayoutProps {
   loading?: boolean
 }
 
-export const SubmissionLayout: React.FC<React.PropsWithChildren<SubmissionLayoutProps>> = ({
-  children,
-  hideNavigation = false,
-}) => {
+export const SubmissionLayout: React.FC<
+  React.PropsWithChildren<SubmissionLayoutProps>
+> = ({ children, hideNavigation = false }) => {
   const context = useSellFlowContext()
 
   return (

@@ -8,12 +8,12 @@ import {
   useTheme,
 } from "@artsy/palette"
 import { compact } from "lodash"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { AuctionBuyersPremiumDialogQuery } from "__generated__/AuctionBuyersPremiumDialogQuery.graphql"
-import { AuctionBuyersPremiumDialog_sale$data } from "__generated__/AuctionBuyersPremiumDialog_sale.graphql"
+import type { AuctionBuyersPremiumDialogQuery } from "__generated__/AuctionBuyersPremiumDialogQuery.graphql"
+import type { AuctionBuyersPremiumDialog_sale$data } from "__generated__/AuctionBuyersPremiumDialog_sale.graphql"
 import CloseIcon from "@artsy/icons/CloseIcon"
 
 interface AuctionBuyersPremiumDialogProps {
@@ -21,10 +21,9 @@ interface AuctionBuyersPremiumDialogProps {
   sale: AuctionBuyersPremiumDialog_sale$data
 }
 
-const AuctionBuyersPremiumDialog: React.FC<React.PropsWithChildren<AuctionBuyersPremiumDialogProps>> = ({
-  onClose,
-  sale,
-}) => {
+const AuctionBuyersPremiumDialog: React.FC<
+  React.PropsWithChildren<AuctionBuyersPremiumDialogProps>
+> = ({ onClose, sale }) => {
   const schedule = compact(sale.buyersPremium).sort(
     (a, b) => (a.cents ?? 0) - (b.cents ?? 0)
   )
@@ -119,9 +118,8 @@ const AuctionBuyersPremiumDialog: React.FC<React.PropsWithChildren<AuctionBuyers
   )
 }
 
-export const AuctionBuyersPremiumDialogFragmentContainer = createFragmentContainer(
-  AuctionBuyersPremiumDialog,
-  {
+export const AuctionBuyersPremiumDialogFragmentContainer =
+  createFragmentContainer(AuctionBuyersPremiumDialog, {
     sale: graphql`
       fragment AuctionBuyersPremiumDialog_sale on Sale {
         buyersPremium {
@@ -131,18 +129,16 @@ export const AuctionBuyersPremiumDialogFragmentContainer = createFragmentContain
         }
       }
     `,
-  }
-)
+  })
 
 interface AuctionBuyersPremiumDialogQueryRendererProps {
   onClose(): void
   saleID: string
 }
 
-export const AuctionBuyersPremiumDialogQueryRenderer: React.FC<React.PropsWithChildren<AuctionBuyersPremiumDialogQueryRendererProps>> = ({
-  onClose,
-  saleID,
-}) => {
+export const AuctionBuyersPremiumDialogQueryRenderer: React.FC<
+  React.PropsWithChildren<AuctionBuyersPremiumDialogQueryRendererProps>
+> = ({ onClose, saleID }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

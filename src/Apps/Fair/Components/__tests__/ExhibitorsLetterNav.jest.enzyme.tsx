@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ExhibitorsLetterNavFragmentContainer } from "Apps/Fair/Components/ExhibitorsLetterNav"
-import { ExhibitorsLetterNav_Test_Query } from "__generated__/ExhibitorsLetterNav_Test_Query.graphql"
+import type { ExhibitorsLetterNav_Test_Query } from "__generated__/ExhibitorsLetterNav_Test_Query.graphql"
 
 jest.unmock("react-relay")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({

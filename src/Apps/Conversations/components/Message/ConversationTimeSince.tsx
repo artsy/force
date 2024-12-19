@@ -1,5 +1,5 @@
-import * as React from "react"
-import { Box, BoxProps, Text } from "@artsy/palette"
+import type * as React from "react"
+import { Box, type BoxProps, Text } from "@artsy/palette"
 import {
   exactDate,
   relativeDate,
@@ -11,11 +11,9 @@ interface ConversationTimeSinceProps extends Omit<BoxProps, "color"> {
   style?: React.CSSProperties
 }
 
-export const ConversationTimeSince: React.FC<React.PropsWithChildren<ConversationTimeSinceProps>> = ({
-  message,
-  exact,
-  ...props
-}) => {
+export const ConversationTimeSince: React.FC<
+  React.PropsWithChildren<ConversationTimeSinceProps>
+> = ({ message, exact, ...props }) => {
   if (message.__typename !== "Message") {
     return null
   }

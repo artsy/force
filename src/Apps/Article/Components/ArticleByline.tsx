@@ -1,14 +1,16 @@
 import { Box, EntityHeader, Join, Spacer, Text } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArticleByline_article$data } from "__generated__/ArticleByline_article.graphql"
+import type { ArticleByline_article$data } from "__generated__/ArticleByline_article.graphql"
 import { OPTIMAL_READING_WIDTH } from "./Sections/ArticleSectionText"
 
 interface ArticleBylineProps {
   article: ArticleByline_article$data
 }
 
-const ArticleByline: FC<React.PropsWithChildren<ArticleBylineProps>> = ({ article }) => {
+const ArticleByline: FC<React.PropsWithChildren<ArticleBylineProps>> = ({
+  article,
+}) => {
   if (article.authors.length === 0) {
     return (
       <Text

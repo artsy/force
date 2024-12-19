@@ -1,4 +1,4 @@
-import { Variables } from "react-relay"
+import type { Variables } from "react-relay"
 
 const CACHEABLE_DIRECTIVE_REGEX = /@\bcacheable\b/
 export const isRequestCacheable = req => {

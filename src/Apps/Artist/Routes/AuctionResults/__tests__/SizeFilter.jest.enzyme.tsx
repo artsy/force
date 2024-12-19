@@ -1,6 +1,6 @@
 import { mount } from "enzyme"
 import {
-  AuctionResultsFilterContextProps,
+  type AuctionResultsFilterContextProps,
   AuctionResultsFilterContextProvider,
   useAuctionResultsFilterContext,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"

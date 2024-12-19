@@ -1,16 +1,16 @@
-import * as React from "react"
+import type * as React from "react"
 import { Text, Message } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SubscriberBanner_partner$data } from "__generated__/SubscriberBanner_partner.graphql"
+import type { SubscriberBanner_partner$data } from "__generated__/SubscriberBanner_partner.graphql"
 
 export interface SubscriberBannerProps {
   partner: SubscriberBanner_partner$data
 }
 
-export const SubscriberBanner: React.FC<React.PropsWithChildren<SubscriberBannerProps>> = ({
-  partner: { name },
-}) => {
+export const SubscriberBanner: React.FC<
+  React.PropsWithChildren<SubscriberBannerProps>
+> = ({ partner: { name } }) => {
   const title = `${name} does not have a full profile.`
   return (
     <Message mb={4} title={title}>

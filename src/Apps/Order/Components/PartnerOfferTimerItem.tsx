@@ -1,14 +1,16 @@
-import * as React from "react"
+import type * as React from "react"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import { DateTime } from "luxon"
 import { Box, ProgressBar, Text } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
-import { PartnerOfferTimerItem_order$key } from "__generated__/PartnerOfferTimerItem_order.graphql"
+import type { PartnerOfferTimerItem_order$key } from "__generated__/PartnerOfferTimerItem_order.graphql"
 
-export const PartnerOfferTimerItem: React.FC<React.PropsWithChildren<{
-  order: PartnerOfferTimerItem_order$key
-}>> = ({ order }) => {
+export const PartnerOfferTimerItem: React.FC<
+  React.PropsWithChildren<{
+    order: PartnerOfferTimerItem_order$key
+  }>
+> = ({ order }) => {
   const data = useFragment(query, order)
 
   const endTime = data.stateExpiresAt || ""

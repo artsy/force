@@ -1,10 +1,10 @@
 import { useDismissibleContext } from "@artsy/dismissible"
 import {
   ProgressiveOnboardingHighlight,
-  ProgressiveOnboardingHighlightPosition,
+  type ProgressiveOnboardingHighlightPosition,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight"
 import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
-import { FC, useEffect } from "react"
+import { type FC, useEffect } from "react"
 
 const ALERTS = {
   saveFind: PROGRESSIVE_ONBOARDING.saveFind,
@@ -15,10 +15,9 @@ interface ProgressiveOnboardingSaveHighlightProps {
   position: ProgressiveOnboardingHighlightPosition
 }
 
-export const ProgressiveOnboardingSaveHighlight: FC<React.PropsWithChildren<ProgressiveOnboardingSaveHighlightProps>> = ({
-  children,
-  position,
-}) => {
+export const ProgressiveOnboardingSaveHighlight: FC<
+  React.PropsWithChildren<ProgressiveOnboardingSaveHighlightProps>
+> = ({ children, position }) => {
   const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayable =

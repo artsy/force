@@ -1,5 +1,5 @@
 import { Checkbox, Flex } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 import { intersection } from "lodash"
 import {
   SelectedFiltersCountsLabels,
@@ -18,12 +18,11 @@ export interface TimePeriodFilterProps {
 export const getTimePeriodToDisplay = period =>
   isNaN(period) ? period : `${period}s`
 
-export const TimePeriodFilter: FC<React.PropsWithChildren<TimePeriodFilterProps>> = ({ expanded }) => {
-  const {
-    aggregations,
-    selectedFiltersCounts,
-    ...filterContext
-  } = useArtworkFilterContext()
+export const TimePeriodFilter: FC<
+  React.PropsWithChildren<TimePeriodFilterProps>
+> = ({ expanded }) => {
+  const { aggregations, selectedFiltersCounts, ...filterContext } =
+    useArtworkFilterContext()
   const { majorPeriods = [] } = useCurrentlySelectedFilters()
   const timePeriods = aggregations?.find(agg => agg.slice === "MAJOR_PERIOD")
 

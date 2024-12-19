@@ -1,5 +1,5 @@
-import { Image, BoxProps, ResponsiveBox } from "@artsy/palette"
-import * as React from "react"
+import { Image, type BoxProps, ResponsiveBox } from "@artsy/palette"
+import type * as React from "react"
 import { cropped } from "Utils/resized"
 import { Link } from "react-head"
 
@@ -8,7 +8,10 @@ export interface HeaderIconProps extends Omit<BoxProps, "maxWidth"> {
   src: string
 }
 
-export const HeaderIcon: React.FC<React.PropsWithChildren<HeaderIconProps>> = ({ src, ...rest }) => {
+export const HeaderIcon: React.FC<React.PropsWithChildren<HeaderIconProps>> = ({
+  src,
+  ...rest
+}) => {
   const img = cropped(src, { width: 200, height: 200 })
 
   return (

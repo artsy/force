@@ -1,8 +1,8 @@
-import * as React from "react"
+import type * as React from "react"
 import { Column, GridColumns } from "@artsy/palette"
 import { useRouter } from "System/Hooks/useRouter"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomWorks_viewingRoom$data } from "__generated__/ViewingRoomWorks_viewingRoom.graphql"
+import type { ViewingRoomWorks_viewingRoom$data } from "__generated__/ViewingRoomWorks_viewingRoom.graphql"
 import { ViewWorksButton } from "./ViewWorksButton"
 import { extractNodes } from "Utils/extractNodes"
 import { ViewingRoomWorksArtworkFragmentContainer } from "./ViewingRoomWorksArtwork"
@@ -11,7 +11,9 @@ interface ViewingRoomWorksProps {
   viewingRoom: ViewingRoomWorks_viewingRoom$data
 }
 
-const ViewingRoomWorks: React.FC<React.PropsWithChildren<ViewingRoomWorksProps>> = ({ viewingRoom }) => {
+const ViewingRoomWorks: React.FC<
+  React.PropsWithChildren<ViewingRoomWorksProps>
+> = ({ viewingRoom }) => {
   const artworks = extractNodes(viewingRoom.artworksConnection)
 
   const {

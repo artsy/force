@@ -1,17 +1,17 @@
 import { createFragmentContainer, graphql } from "react-relay"
-import { AuthContextModule } from "@artsy/cohesion"
+import type { AuthContextModule } from "@artsy/cohesion"
 import { Box, Text } from "@artsy/palette"
-import * as React from "react"
-import { SoldArtworkDetails_artwork$data } from "__generated__/SoldArtworkDetails_artwork.graphql"
+import type * as React from "react"
+import type { SoldArtworkDetails_artwork$data } from "__generated__/SoldArtworkDetails_artwork.graphql"
 
 interface SoldArtworkDetailsProps {
   artwork: SoldArtworkDetails_artwork$data
   contextModule?: AuthContextModule
 }
 
-const ArtistLine: React.FC<React.PropsWithChildren<SoldArtworkDetailsProps>> = ({
-  artwork: { cultural_maker, artists },
-}) => {
+const ArtistLine: React.FC<
+  React.PropsWithChildren<SoldArtworkDetailsProps>
+> = ({ artwork: { cultural_maker, artists } }) => {
   if (cultural_maker) {
     return (
       <Text variant={["sm-display", "lg-display"]} overflowEllipsis>
@@ -51,7 +51,9 @@ const TitleLine: React.FC<React.PropsWithChildren<SoldArtworkDetailsProps>> = ({
   )
 }
 
-const SoldArtworkDetails: React.FC<React.PropsWithChildren<SoldArtworkDetailsProps>> = ({ artwork }) => {
+const SoldArtworkDetails: React.FC<
+  React.PropsWithChildren<SoldArtworkDetailsProps>
+> = ({ artwork }) => {
   return (
     <Box maxWidth="100%" my={1}>
       <ArtistLine artwork={artwork} />

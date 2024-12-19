@@ -1,17 +1,17 @@
 import { useUpdateEffect } from "@artsy/palette"
 import { useEffect, useRef, useState } from "react"
 import {
-  Disposable,
-  Environment,
+  type Disposable,
+  type Environment,
   fetchQuery,
-  GraphQLTaggedNode,
+  type GraphQLTaggedNode,
 } from "react-relay"
 import {
-  CacheConfig,
+  type CacheConfig,
   createOperationDescriptor,
-  FetchQueryFetchPolicy,
+  type FetchQueryFetchPolicy,
   getRequest,
-  OperationType,
+  type OperationType,
 } from "relay-runtime"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
@@ -50,7 +50,7 @@ export const useClientQuery = <T extends OperationType>({
 
     try {
       const res = await fetchQuery<T>(
-        ((environment || relayEnvironment) as unknown) as Environment,
+        (environment || relayEnvironment) as unknown as Environment,
         query,
         newVariables,
         cacheConfig

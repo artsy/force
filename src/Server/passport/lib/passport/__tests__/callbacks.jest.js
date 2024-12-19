@@ -15,12 +15,12 @@ jest.mock("Server/passport/lib/options", () => ({
 
 /* eslint-disable jest/no-done-callback */
 
-describe("passport callbacks", function () {
+describe("passport callbacks", () => {
   let req
 
-  beforeEach(function () {
+  beforeEach(() => {
     req = { get: jest.fn() }
-    for (let method of [
+    for (const method of [
       "get",
       "end",
       "set",
@@ -33,9 +33,9 @@ describe("passport callbacks", function () {
     }
   })
 
-  it("gets a user with an access token email/password/otp", function (done) {
+  it("gets a user with an access token email/password/otp", done => {
     req.body = { otpRequired: true }
-    cbs.local(req, "craig", "foo", "123456", function (err, user) {
+    cbs.local(req, "craig", "foo", "123456", (err, user) => {
       expect(user.accessToken).toEqual("access-token")
       done()
     })
@@ -47,9 +47,9 @@ describe("passport callbacks", function () {
     request.end.mock.calls[0][0](null, res)
   })
 
-  it("gets a user with an access token email/password without otp", function (done) {
+  it("gets a user with an access token email/password without otp", done => {
     req.body = { otpRequired: false }
-    cbs.local(req, "craig", "foo", null, function (err, user) {
+    cbs.local(req, "craig", "foo", null, (err, user) => {
       expect(user.accessToken).toEqual("access-token")
       done()
     })
@@ -61,8 +61,8 @@ describe("passport callbacks", function () {
     request.end.mock.calls[0][0](null, res)
   })
 
-  it("gets a user with an access token facebook", function (done) {
-    cbs.facebook(req, "foo-token", "refresh-token", {}, function (err, user) {
+  it("gets a user with an access token facebook", done => {
+    cbs.facebook(req, "foo-token", "refresh-token", {}, (err, user) => {
       expect(user.accessToken).toEqual("access-token")
       done()
     })
@@ -76,8 +76,8 @@ describe("passport callbacks", function () {
     request.end.mock.calls[0][0](null, res)
   })
 
-  it("gets a user with an access token google", function (done) {
-    cbs.google(req, "foo-token", "refresh-token", {}, function (err, user) {
+  it("gets a user with an access token google", done => {
+    cbs.google(req, "foo-token", "refresh-token", {}, (err, user) => {
       expect(user.accessToken).toEqual("access-token")
       done()
     })
@@ -91,7 +91,7 @@ describe("passport callbacks", function () {
     request.end.mock.calls[0][0](null, res)
   })
 
-  it("gets a user with an access token apple", function (done) {
+  it("gets a user with an access token apple", done => {
     const decodedIdToken = {
       email: "some-email@some.com",
       sub: "some-apple-uid",
@@ -102,7 +102,7 @@ describe("passport callbacks", function () {
       decodedIdToken,
       "access_token",
       "refresh-token",
-      function (err, user) {
+      (err, user) => {
         expect(user.accessToken).toEqual("access-token")
         done()
       }
@@ -118,7 +118,7 @@ describe("passport callbacks", function () {
     request.end.mock.calls[0][0](null, res)
   })
 
-  it("passes the user agent through login", function () {
+  it("passes the user agent through login", () => {
     req.body = { otpRequired: false }
     req.get.mockReturnValue("chrome-foo")
     cbs.local(req, "craig", "foo")
@@ -127,7 +127,7 @@ describe("passport callbacks", function () {
     })
   })
 
-  it("passes the user agent through facebook signup", function () {
+  it("passes the user agent through facebook signup", () => {
     req.get.mockReturnValue("foo-bar-baz-ua")
     cbs.facebook(req, "foo-token", "token-secret", { displayName: "Craig" })
     const res = {
@@ -138,7 +138,7 @@ describe("passport callbacks", function () {
     expect(request.set.mock.calls[1][0]["User-Agent"]).toEqual("foo-bar-baz-ua")
   })
 
-  it("passes the user agent through apple signup", function () {
+  it("passes the user agent through apple signup", () => {
     req.get.mockReturnValue("foo-bar-baz-ua")
     cbs.apple(req, "foo-token", "refresh-token", "id-token", {})
     const res = {

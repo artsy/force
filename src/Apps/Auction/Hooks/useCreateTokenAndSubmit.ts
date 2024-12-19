@@ -9,10 +9,10 @@ import { useAddCreditCardAndUpdateProfile } from "Apps/Auction/Queries/useAddCre
 import { useCreateBidder } from "Apps/Auction/Queries/useCreateBidder"
 import createLogger from "Utils/logger"
 import { useAuctionTracking } from "./useAuctionTracking"
-import { AuctionRegistrationRoute_me$data } from "__generated__/AuctionRegistrationRoute_me.graphql"
-import { AuctionRegistrationRoute_sale$data } from "__generated__/AuctionRegistrationRoute_sale.graphql"
-import { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
-import { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
+import type { AuctionRegistrationRoute_me$data } from "__generated__/AuctionRegistrationRoute_me.graphql"
+import type { AuctionRegistrationRoute_sale$data } from "__generated__/AuctionRegistrationRoute_sale.graphql"
+import type { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
+import type { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
 import { toStripeAddress } from "Components/Address/utils"
 import { useRefreshUserData } from "Apps/Auction/Queries/useRefreshUserData"
 import {
@@ -20,7 +20,7 @@ import {
   stripeCardElementNotFound,
   stripeNotLoadedErrorMessage,
 } from "Apps/Auction/Components/Form/Utils/errorMessages"
-import {
+import type {
   AuctionFormValues,
   AuctionFormHelpers,
 } from "Apps/Auction/Components/Form/Utils/initialValues"
@@ -42,9 +42,8 @@ export const useCreateTokenAndSubmit = ({
   const elements = useElements()
   const { tracking } = useAuctionTracking()
 
-  const {
-    submitMutation: submitAddCreditCardAndUpdateProfileMutation,
-  } = useAddCreditCardAndUpdateProfile()
+  const { submitMutation: submitAddCreditCardAndUpdateProfileMutation } =
+    useAddCreditCardAndUpdateProfile()
   const { submitMutation: createBidder } = useCreateBidder()
   const { refreshUserData } = useRefreshUserData()
 

@@ -1,17 +1,20 @@
 import {
-  AuthContextModule,
-  AuthIntent,
+  type AuthContextModule,
+  type AuthIntent,
   Intent,
   AuthModalType,
   ContextModule,
-  AuthTrigger,
+  type AuthTrigger,
 } from "@artsy/cohesion"
 import { useToasts } from "@artsy/palette"
-import { AuthDialog, AuthDialogProps } from "Components/AuthDialog/AuthDialog"
+import {
+  AuthDialog,
+  type AuthDialogProps,
+} from "Components/AuthDialog/AuthDialog"
 import { merge } from "lodash"
-import { createContext, FC, useContext, useReducer } from "react"
+import { createContext, type FC, useContext, useReducer } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
+import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
 
 export const AUTH_DIALOG_MODES = [
   "Welcome",
@@ -20,7 +23,7 @@ export const AUTH_DIALOG_MODES = [
   "ForgotPassword",
 ] as const
 
-export type AuthDialogMode = typeof AUTH_DIALOG_MODES[number]
+export type AuthDialogMode = (typeof AUTH_DIALOG_MODES)[number]
 
 export const AUTH_MODAL_TYPES: Record<AuthDialogMode, AuthModalType> = {
   ForgotPassword: AuthModalType.forgot,
@@ -130,9 +133,9 @@ export const reducer = (state: State, action: Action): State => {
   }
 }
 
-export const AuthDialogProvider: FC<React.PropsWithChildren<
-  Omit<AuthDialogProps, "onClose">
->> = ({ children }) => {
+export const AuthDialogProvider: FC<
+  React.PropsWithChildren<Omit<AuthDialogProps, "onClose">>
+> = ({ children }) => {
   const { isLoggedIn } = useSystemContext()
   const { sendToast } = useToasts()
 

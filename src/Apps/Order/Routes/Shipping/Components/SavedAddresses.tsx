@@ -1,17 +1,17 @@
-import { useEffect, useState, FC } from "react"
+import { useEffect, useState, type FC } from "react"
 import styled from "styled-components"
 import { RadioGroup, BorderedRadio, Spacer, Clickable } from "@artsy/palette"
 import {
   AddressModal,
-  AddressModalAction,
+  type AddressModalAction,
 } from "Apps/Order/Routes/Shipping/Components/AddressModal"
 import createLogger from "Utils/logger"
 import { SavedAddressItem } from "Apps/Order/Routes/Shipping/Components/SavedAddressItem"
 import { themeGet } from "@styled-system/theme-get"
 
 import {
-  FulfillmentValues,
-  SavedAddressType,
+  type FulfillmentValues,
+  type SavedAddressType,
   getAddressByID,
   getDefaultUserAddress,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
@@ -24,27 +24,27 @@ export interface SavedAddressesProps {
   onSelect: (address: SavedAddressType) => void
 }
 
-export const SavedAddresses: FC<React.PropsWithChildren<SavedAddressesProps>> = props => {
+export const SavedAddresses: FC<
+  React.PropsWithChildren<SavedAddressesProps>
+> = props => {
   const logger = createLogger("SavedAddresses.tsx")
 
   const shippingContext = useShippingContext()
   const orderTracking = useOrderTracking()
   const formikContext = useFormikContext<FulfillmentValues>()
 
-  const [
-    addressModalAction,
-    setAddressModalAction,
-  ] = useState<AddressModalAction | null>(null)
+  const [addressModalAction, setAddressModalAction] =
+    useState<AddressModalAction | null>(null)
 
   const { addressList } = shippingContext.meData
 
   const savedAddressOnOrder = shippingContext.orderData.savedFulfillmentDetails
     ?.selectedSavedAddressID
-    ? getAddressByID(
+    ? (getAddressByID(
         addressList,
         shippingContext.orderData.savedFulfillmentDetails
           ?.selectedSavedAddressID
-      ) ?? null
+      ) ?? null)
     : null
 
   const selectAndSubmitAddress = (address: SavedAddressType) => {

@@ -1,8 +1,8 @@
 import { useToasts } from "@artsy/palette"
 import { useAddAssetToConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
-import { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
+import type { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
 import { FileDropzone } from "Components/FileUpload/FileDropzone"
-import { DropzoneFile } from "Components/FileUpload/types"
+import type { DropzoneFile } from "Components/FileUpload/types"
 import { getErrorMessage } from "Components/FileUpload/utils/getErrorMessage"
 import {
   normalizePhoto,
@@ -13,14 +13,16 @@ import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { useFormikContext } from "formik"
 import { useCallback, useEffect } from "react"
-import { FileRejection } from "react-dropzone"
+import type { FileRejection } from "react-dropzone"
 
 const logger = createLogger("Sell/UploadPhotosForm.tsx")
 
 const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/heic"]
 const ALLOWED_MIME_TYPES_HUMINIZED = "JPG, PNG or HEIC files"
 
-export const UploadPhotosForm: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const UploadPhotosForm: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const { submitMutation: addAsset } = useAddAssetToConsignmentSubmission()
   const { setFieldValue, values } = useFormikContext<PhotosFormValues>()

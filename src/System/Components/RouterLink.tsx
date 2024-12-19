@@ -1,8 +1,8 @@
-import { Link, LinkPropsSimple } from "found"
+import { Link, type LinkPropsSimple } from "found"
 import * as React from "react"
-import { BoxProps, boxMixin } from "@artsy/palette"
+import { type BoxProps, boxMixin } from "@artsy/palette"
 import styled from "styled-components"
-import { compose, ResponsiveValue, system } from "styled-system"
+import { compose, type ResponsiveValue, system } from "styled-system"
 import { useMemo } from "react"
 import { themeGet } from "@styled-system/theme-get"
 import { useRouter } from "System/Hooks/useRouter"
@@ -34,91 +34,89 @@ export type RouterLinkProps = Omit<
     enablePrefetch?: boolean
   }
 
-export const RouterLink: React.FC<React.PropsWithChildren<
-  React.PropsWithChildren<RouterLinkProps>
->> = React.forwardRef(
-  ({ inline, to, enablePrefetch = true, ...rest }, _ref) => {
-    const systemContext = useSystemContext()
-    const { router } = useRouter()
+export const RouterLink: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<RouterLinkProps>>
+> = React.forwardRef(({ inline, to, enablePrefetch = true, ...rest }, _ref) => {
+  const systemContext = useSystemContext()
+  const { router } = useRouter()
 
-    const isPrefetchOnEnterEnabledLoggedIn =
-      useFeatureFlag("diamond_prefetch-on-enter") && !!systemContext.user
+  const isPrefetchOnEnterEnabledLoggedIn =
+    useFeatureFlag("diamond_prefetch-on-enter") && !!systemContext.user
 
-    const isPrefetchOnEnterEnabledLoggedOut =
-      useFeatureFlag("diamond_prefetch-on-enter-logged-out") &&
-      !systemContext.user
+  const isPrefetchOnEnterEnabledLoggedOut =
+    useFeatureFlag("diamond_prefetch-on-enter-logged-out") &&
+    !systemContext.user
 
-    // TODO: Remove feature flags
-    const isPrefetchOnEnterEnabled =
-      isPrefetchOnEnterEnabledLoggedIn || isPrefetchOnEnterEnabledLoggedOut
+  // TODO: Remove feature flags
+  const isPrefetchOnEnterEnabled =
+    isPrefetchOnEnterEnabledLoggedIn || isPrefetchOnEnterEnabledLoggedOut
 
-    // When a prefetch is completed, propagate that in the router state.
-    const [isPrefetched, setIsPrefetched] = React.useState(false)
-    const { prefetch } = usePrefetchRoute({
-      initialPath: to as string,
-      onComplete: () => setIsPrefetched(true),
-    })
+  // When a prefetch is completed, propagate that in the router state.
+  const [isPrefetched, setIsPrefetched] = React.useState(false)
+  const { prefetch } = usePrefetchRoute({
+    initialPath: to as string,
+    onComplete: () => setIsPrefetched(true),
+  })
 
-    const routes = router?.matcher?.routeConfig ?? []
-    const matcher = router?.matcher
+  const routes = router?.matcher?.routeConfig ?? []
+  const matcher = router?.matcher
 
-    const isSupportedInRouter = useMemo(
-      () => !!matcher?.matchRoutes(routes, to),
-      [matcher, routes, to]
-    )
+  const isSupportedInRouter = useMemo(
+    () => !!matcher?.matchRoutes(routes, to),
+    [matcher, routes, to]
+  )
 
-    // If displaying the linked URL in the same browsing context, e.g. browser tab.
-    const isSameBrowsingContext = !rest.target || rest.target === "_self"
-    const isRouterAware = isSupportedInRouter && isSameBrowsingContext
+  // If displaying the linked URL in the same browsing context, e.g. browser tab.
+  const isSameBrowsingContext = !rest.target || rest.target === "_self"
+  const isRouterAware = isSupportedInRouter && isSameBrowsingContext
 
-    const { ref: intersectionRef } = useIntersectionObserver({
-      once: true,
-      options: {
-        threshold: 0.2,
-      },
-      onIntersection: () => {
-        if (enablePrefetch && isPrefetchOnEnterEnabled) {
-          prefetch()
-        }
-      },
-    })
-
-    const handleMouseOver = () => {
-      if (enablePrefetch) {
+  const { ref: intersectionRef } = useIntersectionObserver({
+    once: true,
+    options: {
+      threshold: 0.2,
+    },
+    onIntersection: () => {
+      if (enablePrefetch && isPrefetchOnEnterEnabled) {
         prefetch()
       }
-    }
+    },
+  })
 
-    const location = router?.createLocation?.((to as string) ?? "") ?? {
-      pathname: to,
-      query: {},
+  const handleMouseOver = () => {
+    if (enablePrefetch) {
+      prefetch()
     }
+  }
 
-    if (isRouterAware) {
-      return (
-        <RouterAwareLink
-          inline={inline}
-          to={{
-            ...location,
-            state: { isPrefetched },
-          }}
-          onMouseOver={handleMouseOver}
-          ref={isPrefetchOnEnterEnabled ? (intersectionRef as any) : null}
-          {...rest}
-        />
-      )
-    }
+  const location = router?.createLocation?.((to as string) ?? "") ?? {
+    pathname: to,
+    query: {},
+  }
 
+  if (isRouterAware) {
     return (
-      <RouterUnawareLink
+      <RouterAwareLink
         inline={inline}
-        href={to ?? ""}
+        to={{
+          ...location,
+          state: { isPrefetched },
+        }}
         onMouseOver={handleMouseOver}
+        ref={isPrefetchOnEnterEnabled ? (intersectionRef as any) : null}
         {...rest}
       />
     )
   }
-)
+
+  return (
+    <RouterUnawareLink
+      inline={inline}
+      href={to ?? ""}
+      onMouseOver={handleMouseOver}
+      {...rest}
+    />
+  )
+})
 
 RouterLink.displayName = "RouterLink"
 
@@ -136,9 +134,9 @@ const routerLinkValidator = (prop: string) => {
   return VALID_ROUTER_LINK_PROPS.includes(prop)
 }
 
-export const RouterAwareLink: React.FC<React.PropsWithChildren<
-  LinkPropsSimple & RouterLinkMixinProps
->> = styled(Link).withConfig({
+export const RouterAwareLink: React.FC<
+  React.PropsWithChildren<LinkPropsSimple & RouterLinkMixinProps>
+> = styled(Link).withConfig({
   shouldForwardProp: (prop: string) => {
     return isPropValid(prop) || routerLinkValidator(prop)
   },
@@ -152,9 +150,11 @@ export const RouterAwareLink: React.FC<React.PropsWithChildren<
   ${routerLinkMixin}
 `
 
-export const RouterUnawareLink: React.FC<React.PropsWithChildren<
-  React.AnchorHTMLAttributes<HTMLAnchorElement> & RouterLinkMixinProps
->> = styled.a`
+export const RouterUnawareLink: React.FC<
+  React.PropsWithChildren<
+    React.AnchorHTMLAttributes<HTMLAnchorElement> & RouterLinkMixinProps
+  >
+> = styled.a`
   :hover {
     color: ${props => props.inline && themeGet("colors.blue100")};
   }

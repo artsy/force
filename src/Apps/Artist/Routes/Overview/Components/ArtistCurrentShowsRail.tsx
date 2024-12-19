@@ -6,8 +6,8 @@ import { useTracking } from "react-tracking"
 import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtistCurrentShowsRail_artist$data } from "__generated__/ArtistCurrentShowsRail_artist.graphql"
-import { ArtistCurrentShowsRailQuery } from "__generated__/ArtistCurrentShowsRailQuery.graphql"
+import type { ArtistCurrentShowsRail_artist$data } from "__generated__/ArtistCurrentShowsRail_artist.graphql"
+import type { ArtistCurrentShowsRailQuery } from "__generated__/ArtistCurrentShowsRailQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   CellShowFragmentContainer,
@@ -18,15 +18,12 @@ interface ArtistCurrentShowsRailProps {
   artist: ArtistCurrentShowsRail_artist$data
 }
 
-const ArtistCurrentShowsRail: React.FC<React.PropsWithChildren<ArtistCurrentShowsRailProps>> = ({
-  artist,
-}) => {
+const ArtistCurrentShowsRail: React.FC<
+  React.PropsWithChildren<ArtistCurrentShowsRailProps>
+> = ({ artist }) => {
   const tracking = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const shows = extractNodes(artist.showsConnection)
 
@@ -124,9 +121,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtistCurrentShowsRailQueryRenderer: React.FC<React.PropsWithChildren<{
-  id: string
-}>> = ({ id }) => {
+export const ArtistCurrentShowsRailQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    id: string
+  }>
+> = ({ id }) => {
   return (
     <SystemQueryRenderer<ArtistCurrentShowsRailQuery>
       lazyLoad

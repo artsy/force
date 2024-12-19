@@ -1,7 +1,7 @@
 import { Box } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { useProgressiveOnboardingTracking } from "Components/ProgressiveOnboarding/useProgressiveOnboardingTracking"
-import { FC } from "react"
+import type { FC } from "react"
 import styled, { keyframes } from "styled-components"
 import { useOnce } from "Utils/Hooks/useOnce"
 
@@ -14,11 +14,9 @@ interface ProgressiveOnboardingHighlightProps {
   position: ProgressiveOnboardingHighlightPosition
 }
 
-export const ProgressiveOnboardingHighlight: FC<React.PropsWithChildren<ProgressiveOnboardingHighlightProps>> = ({
-  children,
-  name,
-  position,
-}) => {
+export const ProgressiveOnboardingHighlight: FC<
+  React.PropsWithChildren<ProgressiveOnboardingHighlightProps>
+> = ({ children, name, position }) => {
   const { trackEvent } = useProgressiveOnboardingTracking({ name })
 
   useOnce(trackEvent)

@@ -1,6 +1,6 @@
 import { Flex, Text, Stack } from "@artsy/palette"
 import { useFragment, graphql } from "react-relay"
-import { ArtworkSidebarCollectorSignal_artwork$key } from "__generated__/ArtworkSidebarCollectorSignal_artwork.graphql"
+import type { ArtworkSidebarCollectorSignal_artwork$key } from "__generated__/ArtworkSidebarCollectorSignal_artwork.graphql"
 import FairIcon from "@artsy/icons/FairIcon"
 import { RouterLink } from "System/Components/RouterLink"
 import TrendingIcon from "@artsy/icons/TrendingIcon"
@@ -10,9 +10,9 @@ interface ArtworkSidebarCollectorSignalProps {
   artwork: ArtworkSidebarCollectorSignal_artwork$key
 }
 
-export const ArtworkSidebarCollectorSignal: React.FC<React.PropsWithChildren<ArtworkSidebarCollectorSignalProps>> = ({
-  artwork,
-}) => {
+export const ArtworkSidebarCollectorSignal: React.FC<
+  React.PropsWithChildren<ArtworkSidebarCollectorSignalProps>
+> = ({ artwork }) => {
   const data = useFragment(artworkSidebarCollectorSignalFragment, artwork)
 
   const isShowingNow = data.collectorSignals?.runningShow ?? false

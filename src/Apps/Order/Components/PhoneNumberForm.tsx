@@ -1,5 +1,5 @@
 import { Flex, Input } from "@artsy/palette"
-import { FC } from "react"
+import type { FC } from "react"
 
 export type PhoneNumber = string
 
@@ -16,14 +16,9 @@ export interface PhoneNumberFormProps {
   tabIndex?: number
 }
 
-export const PhoneNumberForm: FC<React.PropsWithChildren<PhoneNumberFormProps>> = ({
-  onChange,
-  touched,
-  errors,
-  label,
-  value,
-  tabIndex,
-}) => {
+export const PhoneNumberForm: FC<
+  React.PropsWithChildren<PhoneNumberFormProps>
+> = ({ onChange, touched, errors, label, value, tabIndex }) => {
   const changeEventHandler = () => (ev: React.FormEvent<HTMLInputElement>) => {
     onChange(ev.currentTarget.value)
   }

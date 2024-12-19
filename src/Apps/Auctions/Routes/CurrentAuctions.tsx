@@ -1,12 +1,12 @@
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { Box, Button, GridColumns, Column } from "@artsy/palette"
 import {
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
+  type RelayPaginationProp,
 } from "react-relay"
-import { CurrentAuctions_viewer$data } from "__generated__/CurrentAuctions_viewer.graphql"
+import type { CurrentAuctions_viewer$data } from "__generated__/CurrentAuctions_viewer.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { AuctionArtworkRailQueryRenderer } from "Apps/Auctions/Components/AuctionArtworksRail"
 import { AuctionsZeroState } from "Apps/Auctions/Components/AuctionsZeroState"
@@ -16,7 +16,9 @@ export interface CurrentAuctionsProps {
   relay: RelayPaginationProp
 }
 
-const CurrentAuctions: React.FC<React.PropsWithChildren<CurrentAuctionsProps>> = ({ viewer, relay }) => {
+const CurrentAuctions: React.FC<
+  React.PropsWithChildren<CurrentAuctionsProps>
+> = ({ viewer, relay }) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleClick = () => {

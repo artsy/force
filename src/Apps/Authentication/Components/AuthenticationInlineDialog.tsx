@@ -1,15 +1,17 @@
 import { Box, Flex, Stack, Text, useToasts } from "@artsy/palette"
 import { AuthDialogView } from "Components/AuthDialog/AuthDialog"
-import { FC, useEffect } from "react"
+import { type FC, useEffect } from "react"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { useAuthDialogOptions } from "Apps/Authentication/Hooks/useAuthDialogOptions"
 import { MetaTags } from "Components/MetaTags"
 import { AuthenticationInlineDialogProvider } from "Apps/Authentication/Components/AuthenticationInlineDialogProvider"
-import { AuthDialogMode } from "Components/AuthDialog/AuthDialogContext"
+import type { AuthDialogMode } from "Components/AuthDialog/AuthDialogContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { AuthDialogTitle } from "Components/AuthDialog/AuthDialogTitle"
 
-const AuthenticationInlineDialogContents: FC<React.PropsWithChildren<unknown>> = () => {
+const AuthenticationInlineDialogContents: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   useRecaptcha()
   const { title, pageTitle, description } = useAuthDialogOptions()
 
@@ -31,7 +33,7 @@ const AuthenticationInlineDialogContents: FC<React.PropsWithChildren<unknown>> =
       console.error(location.query.error)
     }
 
-    sendToast({ message, variant: "error", ttl: Infinity })
+    sendToast({ message, variant: "error", ttl: Number.POSITIVE_INFINITY })
   }, [
     location.query.error,
     location.query.error_code,
@@ -74,9 +76,9 @@ interface AuthenticationInlineDialogProps {
   mode: AuthDialogMode
 }
 
-export const AuthenticationInlineDialog: FC<React.PropsWithChildren<AuthenticationInlineDialogProps>> = ({
-  mode,
-}) => {
+export const AuthenticationInlineDialog: FC<
+  React.PropsWithChildren<AuthenticationInlineDialogProps>
+> = ({ mode }) => {
   return (
     <AuthenticationInlineDialogProvider mode={mode}>
       <AuthenticationInlineDialogContents />

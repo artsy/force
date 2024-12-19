@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { AuctionsMeta } from "./Components/AuctionsMeta"
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { RecentlyViewed } from "Components/RecentlyViewed"
@@ -9,7 +9,9 @@ import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
 import { CuritorialRailsTabBar } from "Apps/Auctions/Components/CuritorialRailsTabBar"
 
-export const AuctionsApp: React.FC<React.PropsWithChildren<unknown>> = props => {
+export const AuctionsApp: React.FC<
+  React.PropsWithChildren<unknown>
+> = props => {
   const { children } = props
 
   // FIXME: Remove once new filter launches

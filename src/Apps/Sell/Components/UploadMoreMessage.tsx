@@ -1,9 +1,11 @@
 import { Message, Text } from "@artsy/palette"
-import { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
+import type { PhotosFormValues } from "Apps/Sell/Routes/PhotosRoute"
 import { FadeInBox } from "Components/FadeInBox"
 import { useFormikContext } from "formik"
 
-export const UploadMoreMessage: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const UploadMoreMessage: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const {
     values: { photos },
   } = useFormikContext<PhotosFormValues>()

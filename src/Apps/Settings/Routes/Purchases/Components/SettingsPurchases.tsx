@@ -1,12 +1,16 @@
-import { useState, FC } from "react"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import { useState, type FC } from "react"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 import { Join, Spacer, Message } from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
 import {
   SettingsPurchasesRowFragmentContainer,
   SettingsPurchasesRowPlaceholder,
 } from "./SettingsPurchasesRow"
-import { SettingsPurchases_me$data } from "__generated__/SettingsPurchases_me.graphql"
+import type { SettingsPurchases_me$data } from "__generated__/SettingsPurchases_me.graphql"
 import { CommercePaginationFragmentContainer } from "Components/Pagination/CommercePagination"
 
 export interface SettingsPurchasesProps {
@@ -14,10 +18,9 @@ export interface SettingsPurchasesProps {
   relay: RelayRefetchProp
 }
 
-const SettingsPurchases: FC<React.PropsWithChildren<SettingsPurchasesProps>> = ({
-  me,
-  relay,
-}: SettingsPurchasesProps) => {
+const SettingsPurchases: FC<
+  React.PropsWithChildren<SettingsPurchasesProps>
+> = ({ me, relay }: SettingsPurchasesProps) => {
   const [loading, setLoading] = useState(false)
 
   const orders = extractNodes(me.orders)

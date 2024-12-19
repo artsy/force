@@ -1,16 +1,16 @@
 // libs
-import { createRef, FC, useEffect } from "react"
+import { createRef, type FC, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Stripe, StripeElements, StripeError } from "@stripe/stripe-js"
-import { Router } from "found"
+import type { Stripe, StripeElements, StripeError } from "@stripe/stripe-js"
+import type { Router } from "found"
 import { Box, Flex, Spacer } from "@artsy/palette"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 
 // relay generated
-import { Payment_me$data } from "__generated__/Payment_me.graphql"
-import { Payment_order$data } from "__generated__/Payment_order.graphql"
-import { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
+import type { Payment_me$data } from "__generated__/Payment_me.graphql"
+import type { Payment_order$data } from "__generated__/Payment_order.graphql"
+import type { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
 
 // utils, hooks, mutations and system tools
 import { extractNodes } from "Utils/extractNodes"
@@ -18,7 +18,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import createLogger from "Utils/logger"
 import {
-  CommitMutation,
+  type CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import { getInitialPaymentMethodValue } from "Apps/Order/Utils/orderUtils"
@@ -36,8 +36,8 @@ import {
   offerFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import { CreditCardPicker } from "Apps/Order/Components/CreditCardPicker"
-import { Dialog, injectDialog } from "Apps/Order/Dialogs"
+import type { CreditCardPicker } from "Apps/Order/Components/CreditCardPicker"
+import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import { PollAccountBalanceQueryRenderer } from "Apps/Order/Components/PollAccountBalance"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner"
@@ -72,7 +72,9 @@ export interface BankAccountSelection {
   id?: string
 }
 
-export const PaymentRoute: FC<React.PropsWithChildren<PaymentRouteProps>> = props => {
+export const PaymentRoute: FC<
+  React.PropsWithChildren<PaymentRouteProps>
+> = props => {
   const { order, me } = props
   const { trackEvent } = useTracking()
   const { match } = useRouter()

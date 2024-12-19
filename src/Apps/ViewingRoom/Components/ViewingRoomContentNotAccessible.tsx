@@ -1,17 +1,17 @@
-import * as React from "react"
+import type * as React from "react"
 import { Button, Column, GridColumns, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 
-import { ViewingRoomContentNotAccessible_viewingRoom$data } from "__generated__/ViewingRoomContentNotAccessible_viewingRoom.graphql"
+import type { ViewingRoomContentNotAccessible_viewingRoom$data } from "__generated__/ViewingRoomContentNotAccessible_viewingRoom.graphql"
 
 interface ViewingRoomContentNotAccessibleProps {
   viewingRoom: ViewingRoomContentNotAccessible_viewingRoom$data
 }
 
-const ViewingRoomContentNotAccessible: React.FC<React.PropsWithChildren<ViewingRoomContentNotAccessibleProps>> = ({
-  viewingRoom,
-}) => {
+const ViewingRoomContentNotAccessible: React.FC<
+  React.PropsWithChildren<ViewingRoomContentNotAccessibleProps>
+> = ({ viewingRoom }) => {
   const infoText =
     viewingRoom.status === "scheduled"
       ? "This viewing room is not yet open."
@@ -42,9 +42,8 @@ const ViewingRoomContentNotAccessible: React.FC<React.PropsWithChildren<ViewingR
   )
 }
 
-export const ViewingRoomContentNotAccessibleFragmentContainer = createFragmentContainer(
-  ViewingRoomContentNotAccessible,
-  {
+export const ViewingRoomContentNotAccessibleFragmentContainer =
+  createFragmentContainer(ViewingRoomContentNotAccessible, {
     viewingRoom: graphql`
       fragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {
         status
@@ -53,5 +52,4 @@ export const ViewingRoomContentNotAccessibleFragmentContainer = createFragmentCo
         }
       }
     `,
-  }
-)
+  })

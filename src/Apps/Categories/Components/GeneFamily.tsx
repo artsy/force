@@ -1,7 +1,7 @@
 import { Box, Spacer, Text } from "@artsy/palette"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { GeneFamily_geneFamily$data } from "__generated__/GeneFamily_geneFamily.graphql"
+import type { GeneFamily_geneFamily$data } from "__generated__/GeneFamily_geneFamily.graphql"
 import { sortBy } from "lodash"
 import { Masonry } from "Components/Masonry"
 import { RouterLink } from "System/Components/RouterLink"
@@ -11,7 +11,9 @@ interface GeneFamilyProps {
   geneFamily: GeneFamily_geneFamily$data
 }
 
-export const GeneFamily: React.FC<React.PropsWithChildren<GeneFamilyProps>> = ({ geneFamily }) => {
+export const GeneFamily: React.FC<React.PropsWithChildren<GeneFamilyProps>> = ({
+  geneFamily,
+}) => {
   const { name, genes } = geneFamily
 
   if (!genes) {

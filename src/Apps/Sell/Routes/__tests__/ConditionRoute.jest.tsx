@@ -5,7 +5,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { ConditionRoute_Test_Query$rawResponse } from "__generated__/ConditionRoute_Test_Query.graphql"
+import type { ConditionRoute_Test_Query$rawResponse } from "__generated__/ConditionRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
 
 const mockUseRouter = useRouter as jest.Mock

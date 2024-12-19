@@ -1,9 +1,9 @@
-import { ShippingArtaSummaryItem_order$data } from "__generated__/ShippingArtaSummaryItem_order.graphql"
+import type { ShippingArtaSummaryItem_order$data } from "__generated__/ShippingArtaSummaryItem_order.graphql"
 import {
   StepSummaryItem,
-  StepSummaryItemProps,
+  type StepSummaryItemProps,
 } from "Components/StepSummaryItem"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Text } from "@artsy/palette"
 import { startCase } from "lodash"
@@ -13,7 +13,9 @@ interface ShippingArtaSummaryItemProps {
   order: ShippingArtaSummaryItem_order$data
 }
 
-const ShippingArtaSummaryItem: React.FC<React.PropsWithChildren<ShippingArtaSummaryItemProps & StepSummaryItemProps>> = ({ order: { requestedFulfillment, lineItems }, ...others }) => {
+const ShippingArtaSummaryItem: React.FC<
+  React.PropsWithChildren<ShippingArtaSummaryItemProps & StepSummaryItemProps>
+> = ({ order: { requestedFulfillment, lineItems }, ...others }) => {
   const shippingQuote = lineItems?.edges?.[0]?.node?.selectedShippingQuote
 
   if (

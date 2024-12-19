@@ -1,8 +1,11 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import { MockRouter } from "DevTools/MockRouter"
 import { MockBoot } from "DevTools/MockBoot"
-import { NextFunction } from "express"
-import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type { NextFunction } from "express"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 import qs from "qs"
 import { authenticationRoutes } from "Apps/Authentication/authenticationRoutes"
 import { checkForRedirect } from "Apps/Authentication/Middleware/checkForRedirect"
@@ -159,9 +162,8 @@ describe("authenticationRoutes", () => {
         })
 
         it("redirects if no reset_password_token is found", () => {
-          const { res, onServerSideRender } = renderServerRoute(
-            "/reset_password"
-          )
+          const { res, onServerSideRender } =
+            renderServerRoute("/reset_password")
           onServerSideRender()
           expect(res.redirect).toHaveBeenCalledWith("/")
           expect(mockSetReferer).toHaveBeenCalled()

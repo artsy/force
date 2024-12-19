@@ -1,4 +1,4 @@
-import * as React from "react"
+import type * as React from "react"
 import { InquirySignUp } from "./InquirySignUp"
 import { InquiryLogin } from "./InquiryLogin"
 import { InquiryResetPassword } from "./InquiryResetPassword"
@@ -7,10 +7,10 @@ import { createContext } from "react"
 import { useContext } from "react"
 
 export enum Screen {
-  ExistingUser,
-  Login,
-  SignUp,
-  ResetPassword,
+  ExistingUser = 0,
+  Login = 1,
+  SignUp = 2,
+  ResetPassword = 3,
 }
 
 const InquiryAccountContext = createContext<{
@@ -25,7 +25,9 @@ export const useInquiryAccountContext = () => {
   return useContext(InquiryAccountContext)
 }
 
-export const InquiryAccount: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const InquiryAccount: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const [screen, navigateTo] = useState(Screen.SignUp)
 
   return (

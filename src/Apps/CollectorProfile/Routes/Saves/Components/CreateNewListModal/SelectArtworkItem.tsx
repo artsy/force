@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { Box } from "@artsy/palette"
 import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
@@ -9,9 +9,9 @@ interface SelectArtworkItemProps {
 
 const ICON_SIZE = 24
 
-export const SelectArtworkItem: FC<React.PropsWithChildren<SelectArtworkItemProps>> = ({
-  isSelected,
-}) => {
+export const SelectArtworkItem: FC<
+  React.PropsWithChildren<SelectArtworkItemProps>
+> = ({ isSelected }) => {
   return (
     <Box width={ICON_SIZE} height={ICON_SIZE}>
       {isSelected ? (

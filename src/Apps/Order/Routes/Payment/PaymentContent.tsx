@@ -1,4 +1,10 @@
-import { FC, RefObject, ReactElement, useEffect, useRef } from "react"
+import {
+  type FC,
+  type RefObject,
+  type ReactElement,
+  useEffect,
+  useRef,
+} from "react"
 import { useTracking } from "react-tracking"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 import {
@@ -7,19 +13,19 @@ import {
   BorderedRadio,
   RadioGroup,
   Text,
-  RadioProps,
+  type RadioProps,
   Tooltip,
   Flex,
 } from "@artsy/palette"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import { Payment_me$data } from "__generated__/Payment_me.graphql"
-import {
+import type { Payment_me$data } from "__generated__/Payment_me.graphql"
+import type {
   Payment_order$data,
   CommercePaymentMethodEnum,
 } from "__generated__/Payment_order.graphql"
-import { CommitMutation } from "Apps/Order/Utils/commitMutation"
+import type { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import {
-  CreditCardPicker,
+  type CreditCardPicker,
   CreditCardPickerFragmentContainer,
 } from "Apps/Order/Components/CreditCardPicker"
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
@@ -44,10 +50,8 @@ export interface Props {
 export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
   const { commitMutation, onSetPayment, me, order, CreditCardPicker } = props
   const creditCards = extractNodes(me.creditCards)
-  const {
-    selectedPaymentMethod,
-    setSelectedPaymentMethod,
-  } = useOrderPaymentContext()
+  const { selectedPaymentMethod, setSelectedPaymentMethod } =
+    useOrderPaymentContext()
 
   const tracking = useTracking()
   const previousPaymentMethod = useRef<string | null>(null)

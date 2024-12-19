@@ -1,5 +1,5 @@
 import { Flex, ResponsiveBox } from "@artsy/palette"
-import { MyCollectionArtworkImageBrowser_artwork$key } from "__generated__/MyCollectionArtworkImageBrowser_artwork.graphql"
+import type { MyCollectionArtworkImageBrowser_artwork$key } from "__generated__/MyCollectionArtworkImageBrowser_artwork.graphql"
 import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowser"
 import { graphql, useFragment } from "react-relay"
 import { MyCollectionArtworkNoImageComponent } from "./MyCollectionArtworkNoImageComponent"
@@ -8,7 +8,9 @@ interface MyCollectionArtworkImageBrowserProps {
   artwork: MyCollectionArtworkImageBrowser_artwork$key
 }
 
-export const MyCollectionArtworkImageBrowser: React.FC<React.PropsWithChildren<MyCollectionArtworkImageBrowserProps>> = props => {
+export const MyCollectionArtworkImageBrowser: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkImageBrowserProps>
+> = props => {
   const artwork = useFragment(FRAGMENT, props.artwork)
 
   if (artwork?.figures?.length === 0) {

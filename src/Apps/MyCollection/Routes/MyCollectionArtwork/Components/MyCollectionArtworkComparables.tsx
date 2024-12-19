@@ -3,15 +3,15 @@ import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/Auc
 import { MetaTags } from "Components/MetaTags"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { MyCollectionArtworkComparables_artwork$data } from "__generated__/MyCollectionArtworkComparables_artwork.graphql"
+import type { MyCollectionArtworkComparables_artwork$data } from "__generated__/MyCollectionArtworkComparables_artwork.graphql"
 
 interface MyCollectionArtworkComparablesProps {
   artwork: MyCollectionArtworkComparables_artwork$data
 }
 
-const MyCollectionArtworkComparables: React.FC<React.PropsWithChildren<MyCollectionArtworkComparablesProps>> = ({
-  artwork,
-}) => {
+const MyCollectionArtworkComparables: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkComparablesProps>
+> = ({ artwork }) => {
   if (!artwork.auctionResult) {
     return null
   }
@@ -53,9 +53,8 @@ const MyCollectionArtworkComparables: React.FC<React.PropsWithChildren<MyCollect
   )
 }
 
-export const MyCollectionArtworkComparablesFragmentContainer = createFragmentContainer(
-  MyCollectionArtworkComparables,
-  {
+export const MyCollectionArtworkComparablesFragmentContainer =
+  createFragmentContainer(MyCollectionArtworkComparables, {
     artwork: graphql`
       fragment MyCollectionArtworkComparables_artwork on Artwork {
         auctionResult: comparableAuctionResults(first: 6) @optionalField {
@@ -73,5 +72,4 @@ export const MyCollectionArtworkComparablesFragmentContainer = createFragmentCon
         }
       }
     `,
-  }
-)
+  })

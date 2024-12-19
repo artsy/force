@@ -1,11 +1,10 @@
-import { Expandable, ExpandableProps } from "@artsy/palette"
+import { Expandable, type ExpandableProps } from "@artsy/palette"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 
-export const SidebarExpandable: React.FC<React.PropsWithChildren<Pick<
-  ExpandableProps,
-  "label" | "children"
->>> = ({ label, children }) => {
+export const SidebarExpandable: React.FC<
+  React.PropsWithChildren<Pick<ExpandableProps, "label" | "children">>
+> = ({ label, children }) => {
   const { trackEvent } = useTracking()
 
   const handleToggle = (isExpanded: boolean) => {

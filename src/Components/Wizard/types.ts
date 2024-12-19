@@ -1,4 +1,4 @@
-import { FormikHelpers as FormikActions, FormikProps } from "formik"
+import type { FormikHelpers as FormikActions, FormikProps } from "formik"
 
 export type FormValues = { [key: string]: any } | null
 export type FormErrors = { [key: string]: any } | null

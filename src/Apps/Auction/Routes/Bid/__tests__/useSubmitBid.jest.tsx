@@ -5,7 +5,7 @@ import { useCreateBidderPosition } from "Apps/Auction/Queries/useCreateBidderPos
 import { useRouter } from "System/Hooks/useRouter"
 import {
   useSubmitBid,
-  UseSubmitBidProps,
+  type UseSubmitBidProps,
 } from "Apps/Auction/Routes/Bid/useSubmitBid"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useToasts } from "@artsy/palette"
@@ -41,7 +41,7 @@ describe("useSubmitBid", () => {
     setSubmitting: jest.fn(),
   }
 
-  const defaultProps = ({
+  const defaultProps = {
     artwork: {
       slug: "artwork-slug",
       internalID: "artworkID",
@@ -55,7 +55,7 @@ describe("useSubmitBid", () => {
       slug: "test-sale",
     },
     onSuccess: jest.fn(),
-  } as unknown) as UseSubmitBidProps
+  } as unknown as UseSubmitBidProps
 
   const defaultBidderPosition = {
     position: {

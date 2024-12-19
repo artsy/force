@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { PartnerHeader_Test_Query } from "__generated__/PartnerHeader_Test_Query.graphql"
+import type { PartnerHeader_Test_Query } from "__generated__/PartnerHeader_Test_Query.graphql"
 import {
   HeaderImage,
   PartnerHeaderFragmentContainer as PartnerHeader,

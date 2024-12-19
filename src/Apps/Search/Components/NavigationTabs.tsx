@@ -1,16 +1,16 @@
 import { Pill, Stack } from "@artsy/palette"
-import { NavigationTabs_searchableConnection$data } from "__generated__/NavigationTabs_searchableConnection.graphql"
+import type { NavigationTabs_searchableConnection$data } from "__generated__/NavigationTabs_searchableConnection.graphql"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { useIsRouteActive } from "System/Hooks/useRouter"
 import {
   ActionType,
-  ClickedNavigationTab,
-  ContextModule,
+  type ClickedNavigationTab,
+  type ContextModule,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
-import { FC, useMemo } from "react"
+import { type FC, useMemo } from "react"
 import { compact } from "lodash"
 
 export interface NavigationTabsProps {
@@ -114,18 +114,19 @@ interface NavigationTabProps {
   count: number
 }
 
-const NavigationTab: FC<React.PropsWithChildren<NavigationTabProps>> = ({ count, term, tab: _tab }) => {
+const NavigationTab: FC<React.PropsWithChildren<NavigationTabProps>> = ({
+  count,
+  term,
+  tab: _tab,
+}) => {
   const tab = TABS[_tab]
   const to = `/search${tab.path}?term=${encodeURIComponent(term)}`
   const selected = useIsRouteActive(to)
 
   const { trackEvent } = useTracking()
 
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   return (
     <Pill
@@ -154,11 +155,9 @@ const NavigationTab: FC<React.PropsWithChildren<NavigationTabProps>> = ({ count,
   )
 }
 
-export const NavigationTabs: FC<React.PropsWithChildren<NavigationTabsProps>> = ({
-  term,
-  artworkCount,
-  searchableConnection,
-}) => {
+export const NavigationTabs: FC<
+  React.PropsWithChildren<NavigationTabsProps>
+> = ({ term, artworkCount, searchableConnection }) => {
   const counts = useMemo(() => {
     return compact(
       searchableConnection.aggregations?.find(agg => agg?.slice === "TYPE")

@@ -1,8 +1,8 @@
-import { FC, Fragment } from "react"
+import { type FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtQuizResultsRecommendedArtworks_me$data } from "__generated__/ArtQuizResultsRecommendedArtworks_me.graphql"
-import { ArtQuizResultsRecommendedArtworksQuery } from "__generated__/ArtQuizResultsRecommendedArtworksQuery.graphql"
+import type { ArtQuizResultsRecommendedArtworks_me$data } from "__generated__/ArtQuizResultsRecommendedArtworks_me.graphql"
+import type { ArtQuizResultsRecommendedArtworksQuery } from "__generated__/ArtQuizResultsRecommendedArtworksQuery.graphql"
 import { Masonry } from "Components/Masonry"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { Message, Spacer } from "@artsy/palette"
@@ -13,9 +13,9 @@ interface ArtQuizResultsRecommendedArtworksProps {
   me: ArtQuizResultsRecommendedArtworks_me$data
 }
 
-const ArtQuizResultsRecommendedArtworks: FC<React.PropsWithChildren<ArtQuizResultsRecommendedArtworksProps>> = ({
-  me,
-}) => {
+const ArtQuizResultsRecommendedArtworks: FC<
+  React.PropsWithChildren<ArtQuizResultsRecommendedArtworksProps>
+> = ({ me }) => {
   const artworks = useStableShuffle({ items: [...me.quiz.recommendedArtworks] })
 
   if (artworks.shuffled.length === 0) {
@@ -38,9 +38,8 @@ const ArtQuizResultsRecommendedArtworks: FC<React.PropsWithChildren<ArtQuizResul
   )
 }
 
-export const ArtQuizResultsRecommendedArtworksFragmentContainer = createFragmentContainer(
-  ArtQuizResultsRecommendedArtworks,
-  {
+export const ArtQuizResultsRecommendedArtworksFragmentContainer =
+  createFragmentContainer(ArtQuizResultsRecommendedArtworks, {
     me: graphql`
       fragment ArtQuizResultsRecommendedArtworks_me on Me {
         quiz {
@@ -51,14 +50,17 @@ export const ArtQuizResultsRecommendedArtworksFragmentContainer = createFragment
         }
       }
     `,
-  }
-)
+  })
 
-const ArtQuizResultsRecommendedArtworksPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+const ArtQuizResultsRecommendedArtworksPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return <ArtworkGridPlaceholder columnCount={[2, 3, 4]} amount={16} />
 }
 
-export const ArtQuizResultsRecommendedArtworksQueryRenderer: FC<React.PropsWithChildren<unknown>> = () => {
+export const ArtQuizResultsRecommendedArtworksQueryRenderer: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <SystemQueryRenderer<ArtQuizResultsRecommendedArtworksQuery>
       query={graphql`

@@ -1,7 +1,7 @@
 import { Flex, Spacer, Text } from "@artsy/palette"
 import { SavesEntityImage } from "Apps/CollectorProfile/Routes/Saves/Components/SavesEntityImage"
-import { ArtworkEntity } from "Components/Artwork/ManageArtworkForSaves"
-import { FC } from "react"
+import type { ArtworkEntity } from "Components/Artwork/ManageArtworkForSaves"
+import type { FC } from "react"
 
 export type ArtworkModalHeaderInfoEntity = Pick<
   ArtworkEntity,
@@ -12,9 +12,9 @@ interface ArtworkModalHeaderInfoProps {
   artwork: ArtworkModalHeaderInfoEntity
 }
 
-export const ArtworkModalHeaderInfo: FC<React.PropsWithChildren<ArtworkModalHeaderInfoProps>> = ({
-  artwork,
-}) => {
+export const ArtworkModalHeaderInfo: FC<
+  React.PropsWithChildren<ArtworkModalHeaderInfoProps>
+> = ({ artwork }) => {
   const getArtistNames = () => {
     if (!artwork.artistNames) {
       return "Artist Unavailable"

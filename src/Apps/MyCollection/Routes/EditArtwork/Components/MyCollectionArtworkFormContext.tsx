@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react"
-import { LocalImage } from "Utils/localImageHelpers"
+import type { LocalImage } from "Utils/localImageHelpers"
 
 interface MyCollectionArtworkFormContextProps {
   onBack: () => void
@@ -9,20 +9,18 @@ interface MyCollectionArtworkFormContextProps {
   removeLocalImage: (photoID: string) => void
 }
 
-export const MyCollectionArtworkFormContext = createContext<
-  MyCollectionArtworkFormContextProps
->({
-  onBack: () => {},
-  onNext: () => {},
-  onSkip: () => {},
-  addLocalImage: () => {},
-  removeLocalImage: () => {},
-})
+export const MyCollectionArtworkFormContext =
+  createContext<MyCollectionArtworkFormContextProps>({
+    onBack: () => {},
+    onNext: () => {},
+    onSkip: () => {},
+    addLocalImage: () => {},
+    removeLocalImage: () => {},
+  })
 
-export const MyCollectionArtworkFormContextProvider: React.FC<React.PropsWithChildren<MyCollectionArtworkFormContextProps>> = ({
-  children,
-  ...rest
-}) => {
+export const MyCollectionArtworkFormContextProvider: React.FC<
+  React.PropsWithChildren<MyCollectionArtworkFormContextProps>
+> = ({ children, ...rest }) => {
   return (
     <MyCollectionArtworkFormContext.Provider value={rest}>
       {children}
@@ -39,7 +37,7 @@ export const useMyCollectionArtworkFormContext = () => {
 export const useLocalImageState = () => {
   const [localImages, setLocalImages] = useState<Array<LocalImage>>([])
 
-  const addLocalImage = (image: LocalImage, index: number = -1) => {
+  const addLocalImage = (image: LocalImage, index = -1) => {
     // Don't add duplicates
     if (localImages.find(localImage => localImage.photoID === image.photoID)) {
       return

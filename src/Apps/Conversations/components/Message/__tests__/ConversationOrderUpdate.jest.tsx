@@ -1,22 +1,21 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { ConversationOrderUpdate_Test_Query } from "__generated__/ConversationOrderUpdate_Test_Query.graphql"
+import type { ConversationOrderUpdate_Test_Query } from "__generated__/ConversationOrderUpdate_Test_Query.graphql"
 import { screen } from "@testing-library/react"
 import { ConversationOrderUpdate } from "Apps/Conversations/components/Message/ConversationOrderUpdate"
 
 jest.unmock("react-relay")
 
 describe("testing different statuses", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    ConversationOrderUpdate_Test_Query
-  >({
-    Component: props => {
-      const event = props.conversation?.orderConnection?.edges?.[0]?.node!
-        .orderHistory[0]
+  const { renderWithRelay } =
+    setupTestWrapperTL<ConversationOrderUpdate_Test_Query>({
+      Component: props => {
+        const event =
+          props.conversation?.orderConnection?.edges?.[0]?.node!.orderHistory[0]
 
-      return <ConversationOrderUpdate event={event!} />
-    },
-    query: graphql`
+        return <ConversationOrderUpdate event={event!} />
+      },
+      query: graphql`
       query ConversationOrderUpdate_Test_Query($conversationID: String!)
         @relay_test_operation {
         conversation(id: $conversationID) {
@@ -33,7 +32,7 @@ describe("testing different statuses", () => {
         }
       }
     `,
-  })
+    })
 
   it("render offer", () => {
     renderWithRelay({

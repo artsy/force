@@ -1,7 +1,7 @@
-import { Clickable, ClickableProps, Flex, Text } from "@artsy/palette"
+import { Clickable, type ClickableProps, Flex, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import {
-  CareerHighlightKind,
+  type CareerHighlightKind,
   getCareerHighlight,
 } from "Apps/Settings/Routes/Insights/Utils/getCareerHighlight"
 import styled from "styled-components"
@@ -12,11 +12,9 @@ interface InsightsCareerHighlightCardProps {
   onClick(): void
 }
 
-export const InsightsCareerHighlightCard: React.FC<React.PropsWithChildren<InsightsCareerHighlightCardProps>> = ({
-  count,
-  kind,
-  onClick,
-}) => {
+export const InsightsCareerHighlightCard: React.FC<
+  React.PropsWithChildren<InsightsCareerHighlightCardProps>
+> = ({ count, kind, onClick }) => {
   const { label, Icon } = getCareerHighlight(kind, count)
 
   return (

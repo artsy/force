@@ -6,7 +6,7 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { InvoiceDetailRoute_invoice$key } from "__generated__/InvoiceDetailRoute_invoice.graphql"
+import type { InvoiceDetailRoute_invoice$key } from "__generated__/InvoiceDetailRoute_invoice.graphql"
 import { InvoiceLineItems } from "Apps/Invoice/Components/InvoiceLineItems"
 import { InvoicePayments } from "Apps/Invoice/Components/InvoicePayments"
 import { graphql, useFragment } from "react-relay"
@@ -17,9 +17,9 @@ interface InvoiceDetailRouteProps {
   invoice: InvoiceDetailRoute_invoice$key
 }
 
-export const InvoiceDetailRoute: React.FC<React.PropsWithChildren<InvoiceDetailRouteProps>> = ({
-  invoice,
-}) => {
+export const InvoiceDetailRoute: React.FC<
+  React.PropsWithChildren<InvoiceDetailRouteProps>
+> = ({ invoice }) => {
   const data = useFragment(InvoiceDetailRouteFragment, invoice)
 
   const { name, email, state, payments, externalNote, remaining } = data

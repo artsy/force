@@ -1,5 +1,5 @@
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -9,8 +9,8 @@ import {
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtistWorksForSaleRail_artist$data } from "__generated__/ArtistWorksForSaleRail_artist.graphql"
-import { ArtistWorksForSaleRailQuery } from "__generated__/ArtistWorksForSaleRailQuery.graphql"
+import type { ArtistWorksForSaleRail_artist$data } from "__generated__/ArtistWorksForSaleRail_artist.graphql"
+import type { ArtistWorksForSaleRailQuery } from "__generated__/ArtistWorksForSaleRailQuery.graphql"
 import { Rail } from "Components/Rail/Rail"
 import { Box, Skeleton } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -20,15 +20,12 @@ interface ArtistWorksForSaleRailProps {
   artist: ArtistWorksForSaleRail_artist$data
 }
 
-const ArtistWorksForSaleRail: React.FC<React.PropsWithChildren<ArtistWorksForSaleRailProps>> = ({
-  artist,
-}) => {
+const ArtistWorksForSaleRail: React.FC<
+  React.PropsWithChildren<ArtistWorksForSaleRailProps>
+> = ({ artist }) => {
   const tracking = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const { jumpTo } = useJump({ offset: 20 })
 
@@ -126,9 +123,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const ArtistWorksForSaleRailQueryRenderer: React.FC<React.PropsWithChildren<{
-  slug: string
-}>> = ({ slug }) => {
+export const ArtistWorksForSaleRailQueryRenderer: React.FC<
+  React.PropsWithChildren<{
+    slug: string
+  }>
+> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (

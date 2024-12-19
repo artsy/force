@@ -1,8 +1,8 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { ArtistBackLink_artist$data } from "__generated__/ArtistBackLink_artist.graphql"
+import type { ArtistBackLink_artist$data } from "__generated__/ArtistBackLink_artist.graphql"
 import { TopContextBar } from "Components/TopContextBar"
 import { useRouter } from "System/Hooks/useRouter"
 import { sanitizeURL } from "Utils/sanitizeURL"
@@ -11,7 +11,9 @@ interface ArtistBackLinkProps {
   artist: ArtistBackLink_artist$data
 }
 
-const ArtistBackLink: React.FC<React.PropsWithChildren<ArtistBackLinkProps>> = ({ artist }) => {
+const ArtistBackLink: React.FC<
+  React.PropsWithChildren<ArtistBackLinkProps>
+> = ({ artist }) => {
   const { trackEvent } = useTracking()
 
   const router = useRouter()

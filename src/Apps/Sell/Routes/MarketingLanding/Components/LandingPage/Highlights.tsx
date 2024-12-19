@@ -1,5 +1,5 @@
 import { Box, Column, GridColumns, Text } from "@artsy/palette"
-import { ReactElement } from "react"
+import type { ReactElement } from "react"
 
 const reasons = [
   {
@@ -14,8 +14,7 @@ const reasons = [
       </Box>
     ),
     title: "Earn more from your sale",
-    text:
-      "With lower fees than traditional auction houses and dealers, you take home more of the final sale price.",
+    text: "With lower fees than traditional auction houses and dealers, you take home more of the final sale price.",
   },
   {
     icon: (
@@ -29,8 +28,7 @@ const reasons = [
       </Box>
     ),
     title: "Tap into our expertise",
-    text:
-      "Our team has a wealth of experience in the secondary art market. A dedicated specialist will be with you every step of the way.",
+    text: "Our team has a wealth of experience in the secondary art market. A dedicated specialist will be with you every step of the way.",
   },
   {
     icon: (
@@ -44,8 +42,7 @@ const reasons = [
       </Box>
     ),
     title: "Reach a global network",
-    text:
-      "With the world’s largest network of collectors, we match your work with the most interested buyers in over 190 countries.",
+    text: "With the world’s largest network of collectors, we match your work with the most interested buyers in over 190 countries.",
   },
 ]
 
@@ -69,10 +66,14 @@ interface RowItemProps {
   title: string
   text: string
 }
-const RowItem: React.FC<React.PropsWithChildren<RowItemProps>> = ({ icon, title, text }) => {
+const RowItem: React.FC<React.PropsWithChildren<RowItemProps>> = ({
+  icon,
+  title,
+  text,
+}) => {
   return (
     // FIXME: Remove external margins
-    (<Column span={4} mb={[2, 0]}>
+    <Column span={4} mb={[2, 0]}>
       {icon}
       <Text mt={[0.5, 2]} variant={["md", "lg-display", "xl"]}>
         {title}
@@ -80,6 +81,6 @@ const RowItem: React.FC<React.PropsWithChildren<RowItemProps>> = ({ icon, title,
       <Text mt={[0.5, 1]} variant={["xs", "sm"]}>
         {text}
       </Text>
-    </Column>)
-  );
+    </Column>
+  )
 }
