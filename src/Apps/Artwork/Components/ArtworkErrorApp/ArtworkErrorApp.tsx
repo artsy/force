@@ -46,10 +46,9 @@ export const ArtworkErrorApp: React.FC<
     }
   }, [])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     trackPageview()
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

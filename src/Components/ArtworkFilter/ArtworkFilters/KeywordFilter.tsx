@@ -26,9 +26,9 @@ export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
     setFilterRef.current("keyword", textOrUndefined)
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleDebounce = useMemo(
     () => debounce(updateKeywordFilter, DEBOUNCE_DELAY),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
@@ -38,11 +38,12 @@ export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
   }
 
   // Stop the invocation of the debounced function after unmounting
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     return () => handleDebounce.cancel?.()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setValue(keyword ?? "")
   }, [keyword, setValue])

@@ -14,6 +14,7 @@ const getFirstFieldErrorName = errors => {
 export const ScrollToFieldError = () => {
   const { submitCount, isValid, errors } = useFormikContext()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (isValid) return
 
@@ -26,7 +27,6 @@ export const ScrollToFieldError = () => {
     if (!field) return
 
     field.scrollIntoView({ behavior: "smooth", block: "center" })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitCount])
 
   return null

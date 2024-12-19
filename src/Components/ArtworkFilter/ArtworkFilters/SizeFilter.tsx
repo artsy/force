@@ -157,15 +157,14 @@ export const SizeFilter: React.FC<React.PropsWithChildren<SizeFilterProps>> = ({
     setFilters?.(updatedFilters, { force: false })
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (width == "*-*" || height === "*-*") {
+    if (width === "*-*" || height === "*-*") {
       setCustomSize({
         width: parseSizeRange(width, metric),
         height: parseSizeRange(height, metric),
       })
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width, height])
 
   useEffect(() => {

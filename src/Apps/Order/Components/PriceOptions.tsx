@@ -63,15 +63,13 @@ export const PriceOptions: React.FC<
     selectedPriceOption || "price-option-max"
   )
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (lastOffer) {
       onChange(lastOffer)
     } else {
       onChange(selectedPriceValue!)
     }
-
-    // need this to run only once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -83,7 +81,6 @@ export const PriceOptions: React.FC<
 
   useEffect(() => {
     if (toggle) trackClick("Different amount", 0)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toggle])
 
   const trackClick = (offer: string, amount: number) => {

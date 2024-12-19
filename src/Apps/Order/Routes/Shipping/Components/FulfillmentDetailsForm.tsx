@@ -113,9 +113,10 @@ const FulfillmentDetailsFormLayout = (
    * Expose formik context to entire shipping route
    * via `shippingContext.state.fulfillmentDetailsCtx`
    */
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     shippingContext.actions.setFulfillmentDetailsFormikContext(formikContext)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formikContext.values, formikContext.isValid])
 
   // Wrapper for change handlers that sets the stage to fulfillment_details
@@ -136,6 +137,7 @@ const FulfillmentDetailsFormLayout = (
 
   const serializedValues = JSON.stringify(formikContext.values)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleSelectSavedAddress = useCallback(
     async (address: SavedAddressType) => {
       shippingContext.actions.setStage("fulfillment_details")
@@ -150,7 +152,6 @@ const FulfillmentDetailsFormLayout = (
 
       await formikContext.submitForm()
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [formikContext.setValues, formikContext.submitForm, serializedValues]
   )
 
@@ -339,7 +340,7 @@ const FulfillmentDetailsFormLayout = (
                   tabIndex={tabbableIf("new_address")}
                   selected={values.attributes.country}
                   onSelect={withBackToFulfillmentDetails(selected => {
-                    setFieldValue(`attributes.country`, selected)
+                    setFieldValue("attributes.country", selected)
                   })}
                   disabled={
                     !!shippingContext.orderData.lockShippingCountryTo &&
@@ -595,6 +596,7 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 
   attributes: Yup.object().when("fulfillmentType", {
     is: FulfillmentType.SHIP,
+    // biome-ignore lint/suspicious/noThenProperty: <explanation>
     then: schema => schema.shape(ADDRESS_VALIDATION_SHAPE),
     otherwise: schema => schema.shape(BASIC_PHONE_VALIDATION_SHAPE),
   }),

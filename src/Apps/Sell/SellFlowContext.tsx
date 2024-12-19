@@ -188,6 +188,7 @@ export const SellFlowContextProvider: React.FC<
     handleNext()
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const newStep = steps[index]
 
@@ -205,10 +206,8 @@ export const SellFlowContextProvider: React.FC<
       return
 
     router.push(
-      `/sell/submissions/${submission?.externalId}/${newStep}` +
-        testSubmissionQueryParams
+      `/sell/submissions/${submission?.externalId}/${newStep}${testSubmissionQueryParams}`
     )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index, isNewSubmission, submission, steps])
 
   const createSubmission = (values: CreateSubmissionMutationInput) => {
@@ -227,7 +226,7 @@ export const SellFlowContextProvider: React.FC<
       logger.error("Error creating submission.", err)
       sendToast({
         variant: "error",
-        message: "Something went wrong." + ` ${err?.[0]?.message} || ""`,
+        message: `Something went wrong. ${err?.[0]?.message} || ""`,
       })
       throw err
     })
@@ -252,7 +251,7 @@ export const SellFlowContextProvider: React.FC<
       logger.error("Error updating submission.", err)
       sendToast({
         variant: "error",
-        message: "Something went wrong." + ` ${err?.[0]?.message || ""}`,
+        message: `Something went wrong. ${err?.[0]?.message || ""}`,
       })
       throw err
     })
@@ -282,7 +281,7 @@ export const SellFlowContextProvider: React.FC<
         logger.error("Error updating submission's my collection artwork..", err)
         sendToast({
           variant: "error",
-          message: "Something went wrong." + ` ${err?.[0]?.message || ""}`,
+          message: `Something went wrong. ${err?.[0]?.message || ""}`,
         })
         throw err
       })

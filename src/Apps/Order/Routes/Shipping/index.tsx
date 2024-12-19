@@ -72,11 +72,11 @@ const ShippingRouteLayout: FC<
 
   const { jumpTo } = useJump()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (shippingContext.state.stage === "shipping_quotes") {
       jumpTo("shippingOptionsTop", { behavior: "smooth" })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shippingContext.state.stage])
 
   return (
