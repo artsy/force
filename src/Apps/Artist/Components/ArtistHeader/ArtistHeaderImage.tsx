@@ -34,16 +34,17 @@ export const ArtistHeaderImage: FC<
 
   return (
     <>
+      <Link
+        rel="preload"
+        // always hint at mobile 2x image, to inform Link: headers
+        href={mobile.quality2x}
+        as="image"
+        imagesrcset={isMobile ? mobile.srcSet : desktop.srcSet}
+        fetchPriority="high"
+      />
+
       {isMobile ? (
         <>
-          <Link
-            rel="preload"
-            href={mobile.src}
-            as="image"
-            imagesrcset={mobile.srcSet}
-            fetchPriority="high"
-          />
-
           <FullBleed>
             <ResponsiveBox
               aspectWidth={MOBILE_SIZE.width}
@@ -70,14 +71,6 @@ export const ArtistHeaderImage: FC<
       ) : (
         // Desktop
         <>
-          <Link
-            rel="preload"
-            href={desktop.src}
-            as="image"
-            imagesrcset={desktop.srcSet}
-            fetchPriority="high"
-          />
-
           <ResponsiveBox
             aspectWidth={image.width}
             aspectHeight={image.height}
