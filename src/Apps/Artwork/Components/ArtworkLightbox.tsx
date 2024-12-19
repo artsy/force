@@ -7,7 +7,6 @@ import {
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
 import { useLocalImage } from "Utils/localImageHelpers"
-import { resized as resizer } from "Utils/resized"
 import { userIsTeam } from "Utils/user"
 import type { ArtworkLightbox_artwork$data } from "__generated__/ArtworkLightbox_artwork.graphql"
 import { compact } from "lodash"
@@ -44,23 +43,27 @@ const ArtworkLightbox: React.FC<
 
   if (!images?.[activeIndex]) return null
 
-  const { fallback, internalID, isDefault, placeholder, resized } =
-    images[activeIndex]
+  const {
+    fallback,
+    internalID,
+    isDefault,
+    placeholder,
+    resized,
+    mobileLightboxSource,
+  } = images[activeIndex]
 
   const image = resizedLocalImage ?? (hasGeometry ? resized : fallback)
 
   if (!image) return null
 
   let lightboxImage = image
-  const mobileLightboxSource = images[activeIndex].mobileLightboxSource
 
   if (getENV("IS_MOBILE") && mobileLightboxSource) {
-    lightboxImage = resizer(mobileLightboxSource, {
-      width: image.width as number,
-      height: image.height as number,
-      quality: 50,
-    }) as typeof image
+    lightboxImage = mobileLightboxSource
   }
+
+  // Always preload the 2x image for mobile lightbox if available
+  const preloadImage = mobileLightboxSource?.srcSet?.match(/ ([^ ]+) 2x/)?.[1]
 
   return (
     <>
@@ -68,7 +71,7 @@ const ArtworkLightbox: React.FC<
         <Link
           rel="preload"
           as="image"
-          href={lightboxImage.src}
+          href={preloadImage}
           imageSrcSet={lightboxImage.srcSet}
           fetchPriority="high"
         />
@@ -141,9 +144,6 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
           internalID
           isDefault
           placeholder: url(version: ["small", "medium"])
-          mobileLightboxSource: url(
-            version: ["main", "normalized", "larger", "large"]
-          )
           fallback: cropped(
             quality: 80
             width: 800
@@ -157,6 +157,17 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
           }
           resized(
             quality: 80
+            width: 800
+            height: 800
+            version: ["main", "normalized", "larger", "large"]
+          ) {
+            width
+            height
+            src
+            srcSet
+          }
+          mobileLightboxSource: resized(
+            quality: 50
             width: 800
             height: 800
             version: ["main", "normalized", "larger", "large"]
