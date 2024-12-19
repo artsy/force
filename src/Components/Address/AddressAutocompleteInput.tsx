@@ -293,6 +293,7 @@ export const AddressAutocompleteInput = ({
   const serializedOptions = JSON.stringify(autocompleteOptions)
   const serializedPreviousOptions = JSON.stringify(previousOptions)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (
       serviceAvailability?.enabled &&
@@ -303,7 +304,6 @@ export const AddressAutocompleteInput = ({
         providerSuggestions.length
       )
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [serviceAvailability, serializedOptions, serializedPreviousOptions])
 
   if (definitelyDisabled) {
@@ -371,9 +371,7 @@ const fetchSuggestionsWithThrottle = throttle(
       params["selected"] = selected
     }
 
-    const url =
-      "https://us-autocomplete-pro.api.smarty.com/lookup?" +
-      new URLSearchParams(params).toString()
+    const url = `https://us-autocomplete-pro.api.smarty.com/lookup?${new URLSearchParams(params).toString()}`
 
     const response = await fetch(url)
     const json = await response.json()

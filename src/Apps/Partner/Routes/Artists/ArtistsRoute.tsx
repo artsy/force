@@ -24,11 +24,11 @@ export const ArtistsRoute: React.FC<
 
   const { jumpTo } = useJump()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (match.params.artistId && isLoaded && isMobile !== null) {
       jumpTo("PartnerArtistDetails")
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoaded, isMobile, match.params.artistId])
 
   return (

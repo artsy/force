@@ -34,6 +34,7 @@ export const useLoadMore = ({
     return isFunction(isLoadingNext) ? isLoadingNext() : isLoadingNext
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (shouldLoadMore && hasMore() && !isLoading() && when !== false) {
       loadNext(pageSize, () => {
@@ -42,7 +43,6 @@ export const useLoadMore = ({
     } else {
       setLoadMore(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldLoadMore, isLoadingNext, loadNext, when, pageSize])
 
   const loadMore = useCallback(() => {

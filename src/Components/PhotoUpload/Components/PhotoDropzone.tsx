@@ -50,12 +50,11 @@ export const PhotoDropzone: React.FC<
     multiple: true,
   })
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const errors = concatDropzoneErrors(fileRejections, customErrors)
 
     onReject(errors)
-    // FIXME: Remove this disable
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customErrors, fileRejections])
 
   return (

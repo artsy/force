@@ -94,14 +94,13 @@ export const ArtistsFilter: FC<React.PropsWithChildren<ArtistsFilterProps>> = ({
   )
   const label = `Artists${filtersCount}`
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (artists?.counts && relayEnvironment && user) {
       fetchFollowedArtists({ relayEnvironment, fairID }).then(data => {
         setFollowedArtists?.(data)
       })
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!(artists && artists.counts)) {

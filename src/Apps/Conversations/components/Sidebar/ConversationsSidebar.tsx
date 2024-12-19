@@ -44,6 +44,7 @@ export const ConversationsSidebar: React.FC<
     totalDisplayedCount = SIDEBAR_FETCH_PAGE_SIZE
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!match.params.conversationId) {
       return
@@ -72,7 +73,6 @@ export const ConversationsSidebar: React.FC<
 
     // No need for conversationID, as we want to preserve the sidebar state
     // across renders.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalDisplayedCount])
 
   // Refetch messages in the background, but only when a user has scrolled to

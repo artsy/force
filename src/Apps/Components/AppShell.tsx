@@ -33,6 +33,7 @@ export const AppShell: React.FC<
   // Check to see if a route has a onServerSideRender key; if so call it. Used
   // typically to preload bundle-split components (import()) while the route is
   // fetching data in the background.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     try {
       if (match) {
@@ -44,8 +45,6 @@ export const AppShell: React.FC<
     } catch (error) {
       logger.error(error)
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routeConfig])
 
   // Let our end-to-end tests know that the app is hydrated and ready to go

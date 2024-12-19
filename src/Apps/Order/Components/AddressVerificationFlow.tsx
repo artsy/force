@@ -151,6 +151,7 @@ const AddressVerificationFlow: React.FC<
   >(addressOptions[0]?.key)
 
   // perform only once when the flow first loads
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (verificationPath === VerificationPath.ERROR_IMMEDIATE_CONFIRM) {
       const fallbackOption = fallbackFromFormValues(verificationInput)
@@ -168,7 +169,6 @@ const AddressVerificationFlow: React.FC<
             : "review and confirm",
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const chooseAddress = useCallback(() => {
@@ -187,6 +187,7 @@ const AddressVerificationFlow: React.FC<
       setShowModal(false)
       onChosenAddress(verifiedBy, selectedAddress.address)
     }
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   }, [addressOptions, onChosenAddress, selectedAddressKey])
 
   const handleCloseModal = ({
@@ -210,7 +211,7 @@ const AddressVerificationFlow: React.FC<
       VerificationPath.IMMEDIATE_CONFIRM,
     ].includes(verificationPath)
   ) {
-    return <div data-testid="emptyAddressVerification"></div>
+    return <div data-testid="emptyAddressVerification" />
   }
 
   return !showModal ? null : (

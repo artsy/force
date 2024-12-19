@@ -79,6 +79,7 @@ export const SubmissionHeader: React.FC<
 
   const submitForm = formik?.submitForm
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const submitAndSaveCallback = useCallback(async () => {
     if (!submission) return
 
@@ -96,8 +97,6 @@ export const SubmissionHeader: React.FC<
     } finally {
       setIsSubmitting(false)
     }
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitForm, submission, step, routerPush])
 
   const onAfterAuthCallback = useCallback(async () => {
