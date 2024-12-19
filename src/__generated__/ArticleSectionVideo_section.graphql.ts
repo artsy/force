@@ -115,6 +115,7 @@ const node: ReaderFragment = {
   type: "ArticleSectionVideo",
   abstractKey: null,
 }
+
 ;(node as any).hash = "efd503a2f10aa94d7d0d86d131a47e4f"
 
 export default node

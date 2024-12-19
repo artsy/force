@@ -41,6 +41,7 @@ const node: ReaderFragment = {
   type: "GeneFamilyConnection",
   abstractKey: null,
 }
+
 ;(node as any).hash = "855564f4196c746eaf076bb5a27d9fa5"
 
 export default node

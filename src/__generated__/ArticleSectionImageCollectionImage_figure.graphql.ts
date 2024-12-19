@@ -114,6 +114,7 @@ const node: ReaderFragment = (function () {
     abstractKey: "__isArticleSectionImageCollectionFigure",
   }
 })()
+
 ;(node as any).hash = "a0adfbaa26fa9727ad3addb1be35366c"
 
 export default node

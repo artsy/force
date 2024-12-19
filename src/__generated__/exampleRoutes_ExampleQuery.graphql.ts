@@ -111,6 +111,7 @@ const node: ConcreteRequest = {
     text: "query exampleRoutes_ExampleQuery {\n  system {\n    ...ExampleApp_system\n  }\n}\n\nfragment ExampleApp_system on System {\n  time {\n    day\n    month\n    year\n  }\n}\n",
   },
 }
+
 ;(node as any).hash = "5878a11299e2592a0669ac8089848737"
 
 export default node

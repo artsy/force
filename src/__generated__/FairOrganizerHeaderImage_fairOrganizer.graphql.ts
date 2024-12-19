@@ -74,6 +74,7 @@ const node: ReaderFragment = {
   type: "FairOrganizer",
   abstractKey: null,
 }
+
 ;(node as any).hash = "3fdef7d19c13faad6f174fc62c51b7a5"
 
 export default node

@@ -138,6 +138,7 @@ const node: ReaderFragment = (function () {
     abstractKey: null,
   }
 })()
+
 ;(node as any).hash = "9dc86e34eac5c73602df7eecbbd17bfa"
 
 export default node

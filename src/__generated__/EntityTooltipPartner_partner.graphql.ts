@@ -155,6 +155,7 @@ const node: ReaderFragment = {
   type: "Partner",
   abstractKey: null,
 }
+
 ;(node as any).hash = "82bb31bb03b675a6c87f8734d20e1534"
 
 export default node

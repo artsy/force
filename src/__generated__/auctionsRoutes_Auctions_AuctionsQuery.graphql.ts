@@ -191,6 +191,7 @@ const node: ConcreteRequest = {
     text: "query auctionsRoutes_Auctions_AuctionsQuery {\n  viewer {\n    ...AuctionsRoute_viewer\n  }\n}\n\nfragment AuctionsRoute_viewer on Viewer {\n  salesConnection(first: 10, live: true, published: true, sort: TIMELY_AT_NAME_ASC, auctionState: OPEN) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        isLiveOpen\n        id\n      }\n    }\n  }\n}\n",
   },
 }
+
 ;(node as any).hash = "8238d88063273ae63f5b86b4a7980789"
 
 export default node

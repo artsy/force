@@ -138,6 +138,7 @@ const node: ConcreteRequest = {
     text: "query AppSecondFactorRefetchQuery {\n  me {\n    ...AppSecondFactor_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n",
   },
 }
+
 ;(node as any).hash = "6fe77b566e0c28ba19ba5573a354fc5d"
 
 export default node

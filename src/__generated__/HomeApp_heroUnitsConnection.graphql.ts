@@ -34,6 +34,7 @@ const node: ReaderFragment = {
   type: "HeroUnitConnection",
   abstractKey: null,
 }
+
 ;(node as any).hash = "fbd2d764b807d5397771d7aefc78b6d1"
 
 export default node

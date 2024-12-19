@@ -122,6 +122,7 @@ const node: ReaderFragment = {
   type: "FilterArtworksConnection",
   abstractKey: null,
 }
+
 ;(node as any).hash = "0af65d4d9404f73410d348f01049c2a9"
 
 export default node

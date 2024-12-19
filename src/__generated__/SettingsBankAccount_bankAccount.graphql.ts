@@ -44,6 +44,7 @@ const node: ReaderFragment = {
   type: "BankAccount",
   abstractKey: null,
 }
+
 ;(node as any).hash = "35ab302f8b7ff6a657c572d98be2ee2b"
 
 export default node

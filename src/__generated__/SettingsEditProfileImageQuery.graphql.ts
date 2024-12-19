@@ -154,6 +154,7 @@ const node: ConcreteRequest = {
     text: "query SettingsEditProfileImageQuery {\n  me {\n    ...SettingsEditProfileImage_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n",
   },
 }
+
 ;(node as any).hash = "647d60297741b7586b38fee93bac01a7"
 
 export default node

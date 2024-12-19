@@ -69,6 +69,7 @@ const node: ReaderFragment = {
   type: "OrderedSet",
   abstractKey: null,
 }
+
 ;(node as any).hash = "9abad1fb8178f5116a85377d4da39f91"
 
 export default node

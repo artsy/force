@@ -68,6 +68,7 @@ const node: ReaderFragment = {
   type: "Job",
   abstractKey: null,
 }
+
 ;(node as any).hash = "ec690c0f899637fd65f90e8e81104f88"
 
 export default node

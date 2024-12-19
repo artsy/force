@@ -44,6 +44,7 @@ const node: ReaderFragment = {
   type: "CommerceBankAccountBalance",
   abstractKey: null,
 }
+
 ;(node as any).hash = "b7a2606227ff11331e639422e5981bce"
 
 export default node

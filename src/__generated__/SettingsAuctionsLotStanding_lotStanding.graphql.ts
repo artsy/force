@@ -173,6 +173,7 @@ const node: ReaderFragment = {
   type: "LotStanding",
   abstractKey: null,
 }
+
 ;(node as any).hash = "a7f0f63cb1451e8d704b21be1a14f99f"
 
 export default node

@@ -137,6 +137,7 @@ const node: ReaderFragment = {
   type: "Artist",
   abstractKey: null,
 }
+
 ;(node as any).hash = "cee9c910b20208edbd1c2c1b8d1b5f75"
 
 export default node

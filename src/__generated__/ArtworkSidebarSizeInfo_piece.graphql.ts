@@ -68,6 +68,7 @@ const node: ReaderFragment = {
   type: "Sellable",
   abstractKey: "__isSellable",
 }
+
 ;(node as any).hash = "a986776b32a0b3f3f9bab3199809c7e2"
 
 export default node

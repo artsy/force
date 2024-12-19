@@ -60,6 +60,7 @@ const node: ReaderFragment = {
   type: "LocationEdge",
   abstractKey: null,
 }
+
 ;(node as any).hash = "af0d7a85ad8f8b54b7edeb3589f41ff3"
 
 export default node

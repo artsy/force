@@ -58,6 +58,7 @@ const node: ReaderFragment = {
   type: "Invoice",
   abstractKey: null,
 }
+
 ;(node as any).hash = "dd89c4ffd0c09a71a3e0c18d5128d57c"
 
 export default node

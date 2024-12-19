@@ -93,6 +93,7 @@ const node: ConcreteRequest = {
     text: "query FlashBannerQuery {\n  me {\n    ...FlashBanner_me\n    id\n  }\n}\n\nfragment FlashBanner_me on Me {\n  canRequestEmailConfirmation\n}\n",
   },
 }
+
 ;(node as any).hash = "80d5e50618c947db10b2ada290fdf74b"
 
 export default node

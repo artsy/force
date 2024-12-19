@@ -44,6 +44,7 @@ const node: ReaderFragment = {
   type: "IdentityVerification",
   abstractKey: null,
 }
+
 ;(node as any).hash = "2f42fce8d99c04ba8268fcaff52184a1"
 
 export default node

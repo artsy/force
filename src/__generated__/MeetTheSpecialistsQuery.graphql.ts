@@ -177,6 +177,7 @@ const node: ConcreteRequest = {
     text: "query MeetTheSpecialistsQuery {\n  viewer {\n    staticContent {\n      ...MeetTheSpecialists_staticContent\n      id\n    }\n  }\n}\n\nfragment MeetTheSpecialists_staticContent on StaticContent {\n  specialistBios {\n    name\n    firstName\n    jobTitle\n    bio\n    email\n    image {\n      imageURL\n    }\n  }\n}\n",
   },
 }
+
 ;(node as any).hash = "5ef3e3b0aa428a922854b7f4e8ad92b0"
 
 export default node
