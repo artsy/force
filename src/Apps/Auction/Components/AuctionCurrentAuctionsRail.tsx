@@ -1,8 +1,8 @@
-import { createFragmentContainer, graphql } from "react-relay"
 import { CellSaleFragmentContainer } from "Components/Cells/CellSale"
 import { Rail } from "Components/Rail/Rail"
 import { extractNodes } from "Utils/extractNodes"
 import type { AuctionCurrentAuctionsRail_viewer$data } from "__generated__/AuctionCurrentAuctionsRail_viewer.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface AuctionCurrentAuctionsRailProps {
   viewer: AuctionCurrentAuctionsRail_viewer$data

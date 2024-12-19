@@ -1,10 +1,10 @@
-import { TagAppFragmentContainer } from "Apps/Tag/TagApp"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
-import type { TagApp_Test_Query } from "__generated__/TagApp_Test_Query.graphql"
-import { MockBoot } from "DevTools/MockBoot"
 import { screen } from "@testing-library/react"
+import { TagAppFragmentContainer } from "Apps/Tag/TagApp"
+import { MockBoot } from "DevTools/MockBoot"
 import { findMetaTagBySelector } from "DevTools/findMetaTagBySelector"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { TagApp_Test_Query } from "__generated__/TagApp_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("../Components/TagArtworkFilter", () => ({

@@ -1,7 +1,7 @@
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { AuctionInfoSidebarFragmentContainer } from "Apps/Auction/Components/AuctionDetails/AuctionInfoSidebar"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import type { AuctionInfoSidebarTestQuery } from "__generated__/AuctionInfoSidebarTestQuery.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

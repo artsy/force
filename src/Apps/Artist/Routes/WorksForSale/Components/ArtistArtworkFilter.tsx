@@ -1,24 +1,24 @@
-import type { ArtistArtworkFilter_artist$data } from "__generated__/ArtistArtworkFilter_artist.graphql"
+import { OwnerType } from "@artsy/cohesion"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
+import { ArtworkFilterAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterAlertContextProvider"
 import {
   ArtworkFilterContextProvider,
   type Counts,
   type SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtworkFilterSavedSearchAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterSavedSearchAlertContextProvider"
+import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { ArtistArtworkFilter_artist$data } from "__generated__/ArtistArtworkFilter_artist.graphql"
 import type { Match } from "found"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
   graphql,
 } from "react-relay"
-import { useRouter } from "System/Hooks/useRouter"
-import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
-import { OwnerType } from "@artsy/cohesion"
-import { ZeroState } from "./ZeroState"
 import { ArtistArtworkFilters } from "./ArtistArtworkFilters"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { ArtworkFilterSavedSearchAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterSavedSearchAlertContextProvider"
-import { ArtworkFilterAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterAlertContextProvider"
+import { ZeroState } from "./ZeroState"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]

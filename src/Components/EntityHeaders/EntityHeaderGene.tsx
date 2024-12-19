@@ -1,9 +1,9 @@
-import { type BoxProps, Flex, Text, Avatar } from "@artsy/palette"
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { Avatar, type BoxProps, Flex, Text } from "@artsy/palette"
+import { FollowGeneButtonQueryRenderer } from "Components/FollowButton/FollowGeneButton"
 import { RouterLink } from "System/Components/RouterLink"
 import type { EntityHeaderGene_gene$data } from "__generated__/EntityHeaderGene_gene.graphql"
-import { FollowGeneButtonQueryRenderer } from "Components/FollowButton/FollowGeneButton"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface EntityHeaderGeneProps extends BoxProps {
   gene: EntityHeaderGene_gene$data

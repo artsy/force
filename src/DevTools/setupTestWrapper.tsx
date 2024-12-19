@@ -4,7 +4,7 @@ import * as React from "react"
 import { act } from "react-dom/test-utils"
 import { type GraphQLTaggedNode, QueryRenderer } from "react-relay"
 import type { OperationType } from "relay-runtime"
-import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
+import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 import type { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 
 type SetupTestWrapper<T extends OperationType> = {

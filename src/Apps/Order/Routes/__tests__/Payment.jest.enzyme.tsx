@@ -1,27 +1,27 @@
 import { BorderedRadio, Checkbox } from "@artsy/palette"
+import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import type { PaymentTestQuery$rawResponse } from "__generated__/PaymentTestQuery.graphql"
-import {
-  BuyOrderWithShippingDetails,
-  PrivateSaleOrderWithShippingDetails,
-  BuyOrderWithBankDebitDetails,
-  OfferOrderWithShippingDetails,
-} from "Apps/__tests__/Fixtures/Order"
-import { AddressForm } from "Components/Address/AddressForm"
-import { graphql } from "react-relay"
-import { PaymentFragmentContainer } from "Apps/Order/Routes/Payment"
-import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useTracking } from "react-tracking"
 import { CreditCardPickerFragmentContainer } from "Apps/Order/Components/CreditCardPicker"
 import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
-import type { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
+import { PaymentFragmentContainer } from "Apps/Order/Routes/Payment"
+import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+import { settingOrderPaymentFailed } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderPayment"
+import {
+  BuyOrderWithBankDebitDetails,
+  BuyOrderWithShippingDetails,
+  OfferOrderWithShippingDetails,
+  PrivateSaleOrderWithShippingDetails,
+} from "Apps/__tests__/Fixtures/Order"
+import { AddressForm } from "Components/Address/AddressForm"
 import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
-import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
-import { settingOrderPaymentFailed } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderPayment"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { PaymentTestQuery$rawResponse } from "__generated__/PaymentTestQuery.graphql"
+import type { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")

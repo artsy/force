@@ -1,4 +1,4 @@
-import { ModalDialog, Text, Spacer, Button, Join } from "@artsy/palette"
+import { Button, Join, ModalDialog, Spacer, Text } from "@artsy/palette"
 
 interface ConditionInfoModalProps {
   onClose: () => void

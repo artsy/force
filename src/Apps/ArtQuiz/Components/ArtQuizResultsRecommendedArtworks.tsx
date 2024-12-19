@@ -1,13 +1,13 @@
+import { Message, Spacer } from "@artsy/palette"
+import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
+import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
+import { Masonry } from "Components/Masonry"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useStableShuffle } from "Utils/Hooks/useStableShuffle"
+import type { ArtQuizResultsRecommendedArtworksQuery } from "__generated__/ArtQuizResultsRecommendedArtworksQuery.graphql"
+import type { ArtQuizResultsRecommendedArtworks_me$data } from "__generated__/ArtQuizResultsRecommendedArtworks_me.graphql"
 import { type FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { ArtQuizResultsRecommendedArtworks_me$data } from "__generated__/ArtQuizResultsRecommendedArtworks_me.graphql"
-import type { ArtQuizResultsRecommendedArtworksQuery } from "__generated__/ArtQuizResultsRecommendedArtworksQuery.graphql"
-import { Masonry } from "Components/Masonry"
-import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
-import { Message, Spacer } from "@artsy/palette"
-import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
-import { useStableShuffle } from "Utils/Hooks/useStableShuffle"
 
 interface ArtQuizResultsRecommendedArtworksProps {
   me: ArtQuizResultsRecommendedArtworks_me$data

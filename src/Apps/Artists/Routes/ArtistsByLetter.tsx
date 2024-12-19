@@ -1,28 +1,28 @@
 import {
   Box,
+  Breadcrumbs,
+  Column,
+  GridColumns,
+  Spacer,
   Text,
   media,
   space,
-  GridColumns,
-  Breadcrumbs,
-  Spacer,
-  Column,
 } from "@artsy/palette"
-import { useState } from "react"
-import type * as React from "react"
-import {
-  graphql,
-  createRefetchContainer,
-  type RelayRefetchProp,
-} from "react-relay"
-import styled from "styled-components"
-import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Hooks/useRouter"
-import { PaginationFragmentContainer } from "Components/Pagination"
-import type { ArtistsByLetter_viewer$data } from "__generated__/ArtistsByLetter_viewer.graphql"
 import { ArtistsByLetterMeta } from "Apps/Artists/Components/ArtistsByLetterMeta"
 import { ArtistsLetterNav } from "Apps/Artists/Components/ArtistsLetterNav"
 import { LoadingArea } from "Components/LoadingArea"
+import { PaginationFragmentContainer } from "Components/Pagination"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
+import type { ArtistsByLetter_viewer$data } from "__generated__/ArtistsByLetter_viewer.graphql"
+import { useState } from "react"
+import type * as React from "react"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
+import styled from "styled-components"
 
 const Columns = styled(Box)`
   column-count: 4;

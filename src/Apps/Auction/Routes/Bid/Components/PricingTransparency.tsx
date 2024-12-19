@@ -1,21 +1,21 @@
-import type * as React from "react"
-import { graphql } from "react-relay"
+import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type {
   PricingTransparencyQuery,
   PricingTransparencyQuery$data,
   PricingTransparencyQuery$variables,
 } from "__generated__/PricingTransparencyQuery.graphql"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
+import type * as React from "react"
+import { graphql } from "react-relay"
 
 import {
-  Text,
+  Flex,
+  Join,
   Skeleton,
   SkeletonText,
   Spacer,
-  Join,
-  Flex,
+  Text,
 } from "@artsy/palette"
 import { useMemo } from "react"
 

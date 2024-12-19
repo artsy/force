@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
-import { graphql } from "react-relay"
 import type { RouteProps } from "System/Router/Route"
+import { graphql } from "react-relay"
 
 const ArticlesApp = loadable(
   () => import(/* webpackChunkName: "articlesBundle" */ "./ArticlesApp"),

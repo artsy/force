@@ -1,7 +1,7 @@
 import { uniqBy } from "lodash"
 import { useState } from "react"
-import { useInquiryContext } from "./useInquiryContext"
 import { logger } from "../util"
+import { useInquiryContext } from "./useInquiryContext"
 
 type Option = { text: string; value: string }
 

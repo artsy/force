@@ -1,10 +1,10 @@
-import { graphql } from "react-relay"
-import { useState } from "react"
 import { AutocompleteInput } from "@artsy/palette"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
-import type { PriceDatabaseArtistAutosuggestQuery } from "__generated__/PriceDatabaseArtistAutosuggestQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
+import type { PriceDatabaseArtistAutosuggestQuery } from "__generated__/PriceDatabaseArtistAutosuggestQuery.graphql"
 import { compact } from "lodash"
+import { useState } from "react"
+import { graphql } from "react-relay"
 
 interface ArtistAutosuggestProps {
   onChange: (slug: string) => void

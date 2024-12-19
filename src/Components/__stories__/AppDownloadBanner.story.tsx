@@ -1,5 +1,5 @@
-import { AppDownloadBanner } from "Components/AppDownloadBanner"
 import { Input, Stack } from "@artsy/palette"
+import { AppDownloadBanner } from "Components/AppDownloadBanner"
 import { useState } from "react"
 
 export default {

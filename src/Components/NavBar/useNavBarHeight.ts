@@ -1,5 +1,5 @@
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT } from "./constants"
+import { DESKTOP_NAV_BAR_HEIGHT, MOBILE_NAV_HEIGHT } from "./constants"
 
 export const useNavBarHeight = (): {
   height: [number, number]

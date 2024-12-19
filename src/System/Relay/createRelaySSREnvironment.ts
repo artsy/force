@@ -13,19 +13,19 @@ import {
   urlMiddleware,
 } from "react-relay-network-modern/node8"
 import "regenerator-runtime/runtime"
-import { Environment, type INetwork, RecordSource, Store } from "relay-runtime"
-import type { Environment as IEnvironment } from "react-relay"
-import { metaphysicsErrorHandlerMiddleware } from "./middleware/metaphysicsErrorHandlerMiddleware"
-import { metaphysicsExtensionsLoggerMiddleware } from "./middleware/metaphysicsExtensionsLoggerMiddleware"
-import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFieldErrorHandlerMiddleware"
 import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
-import { cacheHeaderMiddleware } from "System/Relay/middleware/cacheHeaderMiddleware"
-import { cacheLoggerMiddleware } from "System/Relay/middleware/cacheLoggerMiddleware"
 import {
   hasNoCacheParamPresent,
   hasPersonalizedArguments,
   isRequestCacheable,
 } from "System/Relay/isRequestCacheable"
+import { cacheHeaderMiddleware } from "System/Relay/middleware/cacheHeaderMiddleware"
+import { cacheLoggerMiddleware } from "System/Relay/middleware/cacheLoggerMiddleware"
+import type { Environment as IEnvironment } from "react-relay"
+import { Environment, type INetwork, RecordSource, Store } from "relay-runtime"
+import { metaphysicsErrorHandlerMiddleware } from "./middleware/metaphysicsErrorHandlerMiddleware"
+import { metaphysicsExtensionsLoggerMiddleware } from "./middleware/metaphysicsExtensionsLoggerMiddleware"
+import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFieldErrorHandlerMiddleware"
 
 const logger = createLogger("System/Relay/createRelaySSREnvironment")
 

@@ -1,8 +1,8 @@
-import { type FC, useCallback, useEffect } from "react"
 import { THEME } from "@artsy/palette-tokens"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { getOffsetTopForSticky, useSticky } from "Components/Sticky"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import { type FC, useCallback, useEffect } from "react"
 
 interface UseJump {
   behavior?: ScrollBehavior

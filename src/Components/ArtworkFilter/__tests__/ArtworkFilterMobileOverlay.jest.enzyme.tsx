@@ -1,5 +1,3 @@
-import { mount } from "enzyme"
-import { useTracking } from "react-tracking"
 import {
   ArtworkFilterContextProvider,
   initialArtworkFilterState,
@@ -7,6 +5,8 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkFilterMobileOverlay } from "Components/ArtworkFilter/ArtworkFilterMobileOverlay"
 import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilters"
+import { mount } from "enzyme"
+import { useTracking } from "react-tracking"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({ sm: true }),

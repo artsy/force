@@ -1,4 +1,9 @@
 import {
+  ActionType,
+  ContextModule,
+  type EditedUserProfile,
+} from "@artsy/cohesion"
+import {
   Button,
   Input,
   ModalDialog,
@@ -7,23 +12,18 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { type FC, Suspense } from "react"
-import { graphql, useLazyLoadQuery } from "react-relay"
-import type { CompleteProfileInformationDialogQuery } from "__generated__/CompleteProfileInformationDialogQuery.graphql"
-import { Form, Formik } from "formik"
 import {
   type Location,
   LocationAutocompleteInput,
   normalizePlace,
 } from "Components/LocationAutocompleteInput"
-import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import {
-  ActionType,
-  ContextModule,
-  type EditedUserProfile,
-} from "@artsy/cohesion"
-import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import type { CompleteProfileInformationDialogQuery } from "__generated__/CompleteProfileInformationDialogQuery.graphql"
+import { Form, Formik } from "formik"
+import { type FC, Suspense } from "react"
+import { graphql, useLazyLoadQuery } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface CompleteProfileInformationDialogProps {
   onClose(): void

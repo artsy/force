@@ -1,10 +1,10 @@
 import type * as React from "react"
-import { InquirySignUp } from "./InquirySignUp"
-import { InquiryLogin } from "./InquiryLogin"
-import { InquiryResetPassword } from "./InquiryResetPassword"
 import { useState } from "react"
 import { createContext } from "react"
 import { useContext } from "react"
+import { InquiryLogin } from "./InquiryLogin"
+import { InquiryResetPassword } from "./InquiryResetPassword"
+import { InquirySignUp } from "./InquirySignUp"
 
 export enum Screen {
   ExistingUser = 0,

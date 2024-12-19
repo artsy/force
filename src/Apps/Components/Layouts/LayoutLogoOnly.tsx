@@ -1,12 +1,12 @@
-import type { FC } from "react"
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
+import { Spacer } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { AppToasts } from "Apps/Components/AppToasts"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { RouterLink } from "System/Components/RouterLink"
-import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
-import { Spacer } from "@artsy/palette"
 import type { BaseLayoutProps } from "Apps/Components/Layouts"
 import { LayoutMain } from "Apps/Components/Layouts/Components/LayoutMain"
+import { RouterLink } from "System/Components/RouterLink"
+import type { FC } from "react"
 
 export const LayoutLogoOnly: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
   children,

@@ -2,8 +2,8 @@
 const tokenLogin = require("../token_login")
 const { headerLogin, trustTokenLogin } = tokenLogin
 
-import request from "superagent"
 import options from "Server/passport/lib/options"
+import request from "superagent"
 
 jest.mock("superagent")
 jest.mock("Server/passport/lib/options", () => ({

@@ -1,11 +1,11 @@
+import { fireEvent, screen } from "@testing-library/react"
+import { ArtworkSidebarPartnerInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPartnerInfo"
 import {
   ArtworkFromPartnerWithLocations,
   ArtworkInNonAuctionSale,
 } from "Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarPartnerInfo"
-import { ArtworkSidebarPartnerInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPartnerInfo"
-import { screen, fireEvent } from "@testing-library/react"
-import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")

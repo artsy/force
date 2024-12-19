@@ -1,8 +1,8 @@
 import { Button, useToasts } from "@artsy/palette"
-import { type FC, useState } from "react"
-import { graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { type FC, useState } from "react"
+import { graphql } from "react-relay"
 
 // This button can be used for any email campaign that is triggered by a button click.
 export const TriggerCampaignButton: FC<

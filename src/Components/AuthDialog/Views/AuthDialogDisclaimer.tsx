@@ -1,10 +1,10 @@
-import type { FC } from "react"
 import { SkeletonText, Stack, Text } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
-import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
-import { isTouch } from "Utils/device"
-import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
+import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
+import { RouterLink } from "System/Components/RouterLink"
+import { isTouch } from "Utils/device"
+import type { FC } from "react"
+import styled from "styled-components"
 
 type AuthDialogDisclaimerProps = {}
 

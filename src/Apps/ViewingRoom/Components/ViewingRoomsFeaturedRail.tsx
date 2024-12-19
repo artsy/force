@@ -1,12 +1,12 @@
-import type * as React from "react"
 import { Card, Shelf } from "@artsy/palette"
-import type { ViewingRoomsFeaturedRail_featuredViewingRooms$data } from "__generated__/ViewingRoomsFeaturedRail_featuredViewingRooms.graphql"
-import { createFragmentContainer, graphql } from "react-relay"
-import { cropped } from "Utils/resized"
-import { extractNodes } from "Utils/extractNodes"
-import { RouterLink } from "System/Components/RouterLink"
 import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
+import { RouterLink } from "System/Components/RouterLink"
 import { useStableShuffle } from "Utils/Hooks/useStableShuffle"
+import { extractNodes } from "Utils/extractNodes"
+import { cropped } from "Utils/resized"
+import type { ViewingRoomsFeaturedRail_featuredViewingRooms$data } from "__generated__/ViewingRoomsFeaturedRail_featuredViewingRooms.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ViewingRoomsFeaturedRailProps {
   featuredViewingRooms: ViewingRoomsFeaturedRail_featuredViewingRooms$data

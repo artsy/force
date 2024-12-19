@@ -1,34 +1,34 @@
 import {
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  Image,
-  Text,
-  Column,
-} from "@artsy/palette"
-import {
-  type ClickedArticleGroup,
   ActionType,
+  type ClickedArticleGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import {
+  Column,
+  Image,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Text,
+} from "@artsy/palette"
 import { GridColumns, ResponsiveBox } from "@artsy/palette"
 import {
   CellArticleFragmentContainer,
   CellArticlePlaceholder,
 } from "Components/Cells/CellArticle"
 import { Masonry } from "Components/Masonry"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
+import type { ArtistEditorialNewsGridQuery } from "__generated__/ArtistEditorialNewsGridQuery.graphql"
+import type { ArtistEditorialNewsGrid_artist$data } from "__generated__/ArtistEditorialNewsGrid_artist.graphql"
 import { take } from "lodash"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import type { ArtistEditorialNewsGrid_artist$data } from "__generated__/ArtistEditorialNewsGrid_artist.graphql"
-import type { ArtistEditorialNewsGridQuery } from "__generated__/ArtistEditorialNewsGridQuery.graphql"
-import type { FC } from "react"
 
 const ARTICLE_COUNT = 6
 

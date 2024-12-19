@@ -1,11 +1,11 @@
+import { ContextModule, OwnerType, clickedEntityGroup } from "@artsy/cohesion"
+import { Box, Image, Spacer, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import type { MyBidsBidHeader_sale$data } from "__generated__/MyBidsBidHeader_sale.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { MyBidsBidHeader_sale$data } from "__generated__/MyBidsBidHeader_sale.graphql"
-import { Box, Image, Text, Spacer } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
-import { ContextModule, clickedEntityGroup, OwnerType } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 interface MyBidsBidHeaderProps {
   sale: MyBidsBidHeader_sale$data

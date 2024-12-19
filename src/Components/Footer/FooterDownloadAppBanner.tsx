@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import {
   Button,
   Column,
@@ -6,17 +7,16 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { resized } from "Utils/resized"
-import { Media } from "Utils/Responsive"
+import { DownloadAppBadge } from "Components/DownloadAppBadges/DownloadAppBadge"
 import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
 import {
   DOWNLOAD_APP_URLS,
   Device,
   useDeviceDetection,
 } from "Utils/Hooks/useDeviceDetection"
-import { DownloadAppBadge } from "Components/DownloadAppBadges/DownloadAppBadge"
-import { ContextModule } from "@artsy/cohesion"
-import { useRouter } from "System/Hooks/useRouter"
+import { Media } from "Utils/Responsive"
+import { resized } from "Utils/resized"
 
 const IGNORE_PATHS = ["/meet-your-new-art-advisor"]
 

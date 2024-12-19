@@ -1,11 +1,11 @@
-import type { Details_Test_Query$rawResponse } from "__generated__/Details_Test_Query.graphql"
-import { renderRelayTree } from "DevTools/renderRelayTree"
-import { graphql } from "react-relay"
+import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
-import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthDialog } from "Components/AuthDialog"
+import { renderRelayTree } from "DevTools/renderRelayTree"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { Details_Test_Query$rawResponse } from "__generated__/Details_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useSystemContext")

@@ -6,9 +6,9 @@ import {
   DEFAULT_AUTH_MODAL_INTENTS,
   useAuthDialogContext,
 } from "Components/AuthDialog/AuthDialogContext"
-import { useEffect } from "react"
 import { useRouter } from "System/Hooks/useRouter"
 import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
+import { useEffect } from "react"
 
 /**
  * Converts query params into auth dialog options and sets them.

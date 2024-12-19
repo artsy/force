@@ -1,7 +1,7 @@
-import type * as React from "react"
-import { RouterLink } from "System/Components/RouterLink"
 import { Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import { useJump } from "Utils/Hooks/useJump"
+import type * as React from "react"
 
 export const ViewAllButton: React.FC<
   React.PropsWithChildren<{ to: string }>

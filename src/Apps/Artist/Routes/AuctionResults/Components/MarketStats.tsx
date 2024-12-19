@@ -1,5 +1,7 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import ArrowDownIcon from "@artsy/icons/ArrowDownIcon"
+import ArrowUpIcon from "@artsy/icons/ArrowUpIcon"
 import {
   Column,
   GridColumns,
@@ -10,17 +12,15 @@ import {
   Text,
 } from "@artsy/palette"
 import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
-import { type FC, type ReactNode, useEffect, useRef, useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { formatLargeNumber } from "Utils/formatLargeNumber"
 import type { MarketStatsQuery } from "__generated__/MarketStatsQuery.graphql"
 import type { MarketStats_priceInsightsConnection$data } from "__generated__/MarketStats_priceInsightsConnection.graphql"
+import { type FC, type ReactNode, useEffect, useRef, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import { MarketStatsInfoButton } from "./MarketStatsInfoButton"
-import ArrowUpIcon from "@artsy/icons/ArrowUpIcon"
-import ArrowDownIcon from "@artsy/icons/ArrowDownIcon"
 
 interface MarketStatsProps {
   priceInsightsConnection: MarketStats_priceInsightsConnection$data

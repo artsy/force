@@ -2,10 +2,10 @@ import { Input } from "@artsy/palette"
 import { ArtistAutoComplete } from "Apps/Sell/Components/ArtistAutocomplete"
 import { type FormValues, Schema } from "Apps/Sell/Routes/ArtistRoute"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { mount, type ReactWrapper } from "enzyme"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
+import { type ReactWrapper, mount } from "enzyme"
 import { Form, Formik } from "formik"
 import { fetchQuery } from "react-relay"
-import { SystemContextProvider } from "System/Contexts/SystemContext"
 
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({ match: { params: { id: null } } })),

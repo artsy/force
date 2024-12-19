@@ -1,9 +1,9 @@
-import { createFragmentContainer, graphql } from "react-relay"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { Rail } from "Components/Rail/Rail"
 import { extractNodes } from "Utils/extractNodes"
 import type { AuctionWorksByFollowedArtistsRail_viewer$data } from "__generated__/AuctionWorksByFollowedArtistsRail_viewer.graphql"
-import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface AuctionWorksByFollowedArtistsRailProps {
   viewer: AuctionWorksByFollowedArtistsRail_viewer$data

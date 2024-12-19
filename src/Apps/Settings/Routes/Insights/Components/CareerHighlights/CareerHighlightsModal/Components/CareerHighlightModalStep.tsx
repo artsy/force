@@ -13,8 +13,8 @@ import {
 } from "Apps/Settings/Routes/Insights/Utils/getCareerHighlight"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
-import { graphql, useFragment } from "react-relay"
 import type { CareerHighlightModalStep_careerHighlight$key } from "__generated__/CareerHighlightModalStep_careerHighlight.graphql"
+import { graphql, useFragment } from "react-relay"
 
 interface CareerHighlightModalStepProps {
   careerHighlight: CareerHighlightModalStep_careerHighlight$key

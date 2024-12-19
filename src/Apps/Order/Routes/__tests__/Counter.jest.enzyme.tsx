@@ -1,21 +1,21 @@
-import type { CounterTestQuery$rawResponse } from "__generated__/CounterTestQuery.graphql"
-import {
-  OfferOrderWithShippingDetails,
-  OfferWithTotals,
-  Offers,
-} from "Apps/__tests__/Fixtures/Order"
-import { DateTime } from "luxon"
-import { graphql, commitMutation as _commitMutation } from "react-relay"
+import { CounterFragmentContainer } from "Apps/Order/Routes/Counter"
 import {
   insufficientInventoryResponse,
   submitPendingOfferFailed,
   submitPendingOfferSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/submitPendingOffer"
-import { CounterFragmentContainer } from "Apps/Order/Routes/Counter"
-import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { useTracking } from "react-tracking"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import {
+  OfferOrderWithShippingDetails,
+  OfferWithTotals,
+  Offers,
+} from "Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { CounterTestQuery$rawResponse } from "__generated__/CounterTestQuery.graphql"
+import { DateTime } from "luxon"
+import { commitMutation as _commitMutation, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 
 jest.mock("Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"

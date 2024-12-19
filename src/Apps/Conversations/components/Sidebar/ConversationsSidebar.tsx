@@ -1,19 +1,19 @@
+import { Box, Flex, Spinner, Text } from "@artsy/palette"
+import { ConversationsSidebarEmpty } from "Apps/Conversations/components/Sidebar/ConversationsSidebarEmpty"
+import { ConversationsSidebarItem } from "Apps/Conversations/components/Sidebar/ConversationsSidebarItem"
+import { SIDEBAR_FETCH_PAGE_SIZE } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
+import { useLoadMore } from "Apps/Conversations/hooks/useLoadMore"
+import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
+import { Sentinel } from "Components/Sentinal"
+import { useRouter } from "System/Hooks/useRouter"
+import { extractNodes } from "Utils/extractNodes"
+import type { ConversationsSidebar_viewer$data } from "__generated__/ConversationsSidebar_viewer.graphql"
+import { useEffect, useState } from "react"
 import {
   type RelayPaginationProp,
   createPaginationContainer,
   graphql,
 } from "react-relay"
-import { Box, Flex, Spinner, Text } from "@artsy/palette"
-import { useLoadMore } from "Apps/Conversations/hooks/useLoadMore"
-import { extractNodes } from "Utils/extractNodes"
-import { ConversationsSidebarEmpty } from "Apps/Conversations/components/Sidebar/ConversationsSidebarEmpty"
-import { ConversationsSidebarItem } from "Apps/Conversations/components/Sidebar/ConversationsSidebarItem"
-import type { ConversationsSidebar_viewer$data } from "__generated__/ConversationsSidebar_viewer.graphql"
-import { Sentinel } from "Components/Sentinal"
-import { useEffect, useState } from "react"
-import { useRouter } from "System/Hooks/useRouter"
-import { SIDEBAR_FETCH_PAGE_SIZE } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
-import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
 
 interface ConversationsSidebarProps {
   viewer: ConversationsSidebar_viewer$data

@@ -1,7 +1,7 @@
-import { FairSubAppFragmentContainer } from "Apps/Fair/FairSubApp"
-import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
+import { FairSubAppFragmentContainer } from "Apps/Fair/FairSubApp"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

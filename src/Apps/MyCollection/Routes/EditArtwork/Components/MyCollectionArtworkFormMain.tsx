@@ -19,13 +19,13 @@ import { useDeleteArtwork } from "Apps/MyCollection/Routes/EditArtwork/Mutations
 import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
 import type { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
+import { useRouter } from "System/Hooks/useRouter"
+import { Media } from "Utils/Responsive"
+import createLogger from "Utils/logger"
+import type { MyCollectionArtworkFormMain_artwork$data } from "__generated__/MyCollectionArtworkFormMain_artwork.graphql"
 import { Form, useFormikContext } from "formik"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useRouter } from "System/Hooks/useRouter"
-import createLogger from "Utils/logger"
-import { Media } from "Utils/Responsive"
-import type { MyCollectionArtworkFormMain_artwork$data } from "__generated__/MyCollectionArtworkFormMain_artwork.graphql"
 
 const logger = createLogger("MyCollectionArtworkForm.tsx")
 

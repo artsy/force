@@ -1,11 +1,11 @@
-import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ConversationHeader } from "Apps/Conversations/components/ConversationHeader"
-import type { ConversationHeaderTestQuery } from "__generated__/ConversationHeaderTestQuery.graphql"
-import { MediaContextProvider } from "Utils/Responsive"
-import { useTracking } from "react-tracking"
 import { useMobileLayoutActions } from "Apps/Conversations/hooks/useMobileLayoutActions"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { MediaContextProvider } from "Utils/Responsive"
+import type { ConversationHeaderTestQuery } from "__generated__/ConversationHeaderTestQuery.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

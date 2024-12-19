@@ -1,6 +1,6 @@
-import { graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { CellSaleStoryQuery } from "__generated__/CellSaleStoryQuery.graphql"
+import { graphql } from "react-relay"
 import { CellSaleFragmentContainer, CellSalePlaceholder } from "./CellSale"
 
 export default {

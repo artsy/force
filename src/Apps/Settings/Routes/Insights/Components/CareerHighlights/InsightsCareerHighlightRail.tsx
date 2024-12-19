@@ -3,8 +3,8 @@ import { useCareerHighlightsStoriesModal } from "Apps/Settings/Routes/Insights/C
 import { InsightsCareerHighlightCard } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/InsightsCareerHighlightCard"
 import { InsightsCareerHighlightPromoCard } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/InsightsCareerHighlightPromoCard"
 import type { CareerHighlightKind } from "Apps/Settings/Routes/Insights/Utils/getCareerHighlight"
-import { createFragmentContainer, graphql } from "react-relay"
 import type { InsightsCareerHighlightRail_me$data } from "__generated__/InsightsCareerHighlightRail_me.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface InsightsCareerHighlightRailProps {
   me: InsightsCareerHighlightRail_me$data

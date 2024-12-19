@@ -1,16 +1,3 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useTracking } from "react-tracking"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Shelf, Skeleton } from "@artsy/palette"
-import type { HomeAuctionLotsRail_viewer$data } from "__generated__/HomeAuctionLotsRail_viewer.graphql"
-import type { HomeAuctionLotsRailQuery } from "__generated__/HomeAuctionLotsRailQuery.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import {
-  ShelfArtworkFragmentContainer,
-  ShelfArtworkPlaceholder,
-} from "Components/Artwork/ShelfArtwork"
 import {
   ActionType,
   type AuthContextModule,
@@ -18,6 +5,19 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { Shelf, Skeleton } from "@artsy/palette"
+import {
+  ShelfArtworkFragmentContainer,
+  ShelfArtworkPlaceholder,
+} from "Components/Artwork/ShelfArtwork"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
+import type { HomeAuctionLotsRailQuery } from "__generated__/HomeAuctionLotsRailQuery.graphql"
+import type { HomeAuctionLotsRail_viewer$data } from "__generated__/HomeAuctionLotsRail_viewer.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface HomeAuctionLotsRailProps {
   viewer: HomeAuctionLotsRail_viewer$data

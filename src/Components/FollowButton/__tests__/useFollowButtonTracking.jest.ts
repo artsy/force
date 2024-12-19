@@ -1,7 +1,7 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { act, renderHook } from "@testing-library/react-hooks"
-import { useTracking } from "react-tracking"
 import { useFollowButtonTracking } from "Components/FollowButton/useFollowButtonTracking"
+import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 

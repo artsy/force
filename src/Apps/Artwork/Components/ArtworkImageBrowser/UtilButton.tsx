@@ -1,5 +1,11 @@
-import * as React from "react"
-import styled, { css } from "styled-components"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import DownloadIcon from "@artsy/icons/DownloadIcon"
+import EditIcon from "@artsy/icons/EditIcon"
+import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
+import MagicMagnifyingGlassIcon from "@artsy/icons/MagicMagnifyingGlassIcon"
+import MoreIcon from "@artsy/icons/MoreIcon"
+import ShareIcon from "@artsy/icons/ShareIcon"
+import ShowIcon from "@artsy/icons/ShowIcon"
 import {
   Box,
   Clickable,
@@ -10,14 +16,8 @@ import {
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { getENV } from "Utils/getENV"
-import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
-import DownloadIcon from "@artsy/icons/DownloadIcon"
-import EditIcon from "@artsy/icons/EditIcon"
-import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
-import MoreIcon from "@artsy/icons/MoreIcon"
-import ShareIcon from "@artsy/icons/ShareIcon"
-import ShowIcon from "@artsy/icons/ShowIcon"
-import MagicMagnifyingGlassIcon from "@artsy/icons/MagicMagnifyingGlassIcon"
+import * as React from "react"
+import styled, { css } from "styled-components"
 
 const isTest = getENV("NODE_ENV") === "test"
 

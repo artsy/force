@@ -1,6 +1,6 @@
-import { mount } from "enzyme"
 import { Text } from "@artsy/palette"
 import { InfoSection } from "Components/InfoSection"
+import { mount } from "enzyme"
 
 describe("InfoSection", () => {
   it("shows plain text", () => {

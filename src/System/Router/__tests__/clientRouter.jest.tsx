@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react"
-import { setupClientRouter } from "System/Router/clientRouter"
 import { SystemContextConsumer } from "System/Contexts/SystemContext"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
+import { setupClientRouter } from "System/Router/clientRouter"
 
 jest.mock("Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,

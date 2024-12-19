@@ -1,8 +1,8 @@
 import { FullBleed } from "@artsy/palette"
+import type { ArticleSectionAd_article$data } from "__generated__/ArticleSectionAd_article.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleAd } from "./ArticleAd/ArticleAd"
-import type { ArticleSectionAd_article$data } from "__generated__/ArticleSectionAd_article.graphql"
 
 const IMAGE_SECTIONS = [
   "ArticleSectionImageCollection",

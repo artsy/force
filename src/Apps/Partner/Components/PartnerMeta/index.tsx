@@ -1,11 +1,11 @@
+import { LocalBusiness } from "Components/Seo/LocalBusiness"
+import { useRouter } from "System/Hooks/useRouter"
+import { extractNodes } from "Utils/extractNodes"
+import { getENV } from "Utils/getENV"
+import type { PartnerMeta_partner$data } from "__generated__/PartnerMeta_partner.graphql"
 import type * as React from "react"
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { PartnerMeta_partner$data } from "__generated__/PartnerMeta_partner.graphql"
-import { getENV } from "Utils/getENV"
-import { useRouter } from "System/Hooks/useRouter"
-import { LocalBusiness } from "Components/Seo/LocalBusiness"
-import { extractNodes } from "Utils/extractNodes"
 
 interface PartnerMetaProps {
   partner: PartnerMeta_partner$data

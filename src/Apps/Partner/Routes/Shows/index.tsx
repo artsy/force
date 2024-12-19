@@ -1,12 +1,12 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { Shows_partner$data } from "__generated__/Shows_partner.graphql"
-import { ShowPaginatedEventsRenderer } from "Apps/Partner/Components/PartnerShows/ShowPaginatedEvents"
+import { Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
 import { ShowBannerFragmentContainer } from "Apps/Partner/Components/PartnerShows"
+import { ShowPaginatedEventsRenderer } from "Apps/Partner/Components/PartnerShows/ShowPaginatedEvents"
+import { CellShowFragmentContainer } from "Components/Cells/CellShow"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
-import { Text, Column, GridColumns, Join, Spacer } from "@artsy/palette"
-import { CellShowFragmentContainer } from "Components/Cells/CellShow"
+import type { Shows_partner$data } from "__generated__/Shows_partner.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface PartnerShowsProps {
   partner: Shows_partner$data

@@ -1,11 +1,11 @@
 import { AppContainer } from "Apps/Components/AppContainer"
-import { Z } from "Apps/Components/constants"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { Z } from "Apps/Components/constants"
 import { AppDownloadFooter } from "Components/AppDownloadFooter"
 import { Footer } from "Components/Footer/Footer"
-import type { FC } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Media } from "Utils/Responsive"
+import type { FC } from "react"
 
 export const LayoutFooter: FC<React.PropsWithChildren<unknown>> = () => {
   const { isEigen } = useSystemContext()

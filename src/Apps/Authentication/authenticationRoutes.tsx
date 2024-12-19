@@ -1,11 +1,11 @@
-import { flow } from "lodash"
-import { stringify } from "qs"
 import loadable from "@loadable/component"
-import type { RouteProps } from "System/Router/Route"
 import { checkForRedirect } from "Apps/Authentication/Middleware/checkForRedirect"
-import { setReferer } from "Apps/Authentication/Middleware/setReferer"
 import { redirectIfLoggedIn } from "Apps/Authentication/Middleware/redirectIfLoggedIn"
 import { redirectPostAuth } from "Apps/Authentication/Middleware/redirectPostAuth"
+import { setReferer } from "Apps/Authentication/Middleware/setReferer"
+import type { RouteProps } from "System/Router/Route"
+import { flow } from "lodash"
+import { stringify } from "qs"
 
 const ForgotPasswordRoute = loadable(
   () =>

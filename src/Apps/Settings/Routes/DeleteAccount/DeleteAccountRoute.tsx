@@ -10,13 +10,13 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
+import { RouterLink } from "System/Components/RouterLink"
+import { logout } from "Utils/auth"
+import type { DeleteAccountRoute_me$data } from "__generated__/DeleteAccountRoute_me.graphql"
 import { Form, Formik } from "formik"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Components/RouterLink"
-import { logout } from "Utils/auth"
 import * as Yup from "yup"
-import type { DeleteAccountRoute_me$data } from "__generated__/DeleteAccountRoute_me.graphql"
 import { useDeleteAccount } from "./useDeleteAccount"
 
 interface DeleteAccountRouteProps {

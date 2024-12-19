@@ -1,5 +1,5 @@
-import { Flex, Spacer, Text } from "@artsy/palette"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
+import { Flex, Spacer, Text } from "@artsy/palette"
 
 interface Props {
   last4: string

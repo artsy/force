@@ -1,5 +1,5 @@
-import { mount } from "enzyme"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
+import { mount } from "enzyme"
 
 describe("RouteTabs", () => {
   const getWrapper = () => {

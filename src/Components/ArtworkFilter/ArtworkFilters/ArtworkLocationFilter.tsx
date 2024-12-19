@@ -1,5 +1,5 @@
-import type * as React from "react"
 import { SelectedFiltersCountsLabels } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type * as React from "react"
 import { ResultsFilter } from "./ResultsFilter"
 
 export interface ArtworkLocationFilterProps {

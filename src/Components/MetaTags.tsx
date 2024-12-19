@@ -1,7 +1,7 @@
-import type * as React from "react"
-import { Title, Meta, Link } from "react-head"
 import { getENV } from "Utils/getENV"
 import { cropped } from "Utils/resized"
+import type * as React from "react"
+import { Link, Meta, Title } from "react-head"
 
 const DEFAULT_TITLE = "Artsy — Discover, Buy, and Sell Fine Art"
 const DEFAULT_DESCRIPTION =

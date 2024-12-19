@@ -1,4 +1,4 @@
-import { Box, Text, GridColumns, Column, Button } from "@artsy/palette"
+import { Box, Button, Column, GridColumns, Text } from "@artsy/palette"
 import { Masonry } from "../Masonry"
 import { ContentHeaderExample } from "./Components/ContentHeaderExample"
 import { ContentMetadataExample } from "./Components/ContentMetadataExample"

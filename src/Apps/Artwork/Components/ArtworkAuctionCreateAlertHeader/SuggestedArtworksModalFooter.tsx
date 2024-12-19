@@ -1,9 +1,9 @@
 import { Button } from "@artsy/palette"
 import type { FC } from "react"
 
+import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { RouterLink } from "System/Components/RouterLink"
 import { NUMBER_OF_ARTWORKS_TO_SHOW } from "./SuggestedArtworksModalGrid"
-import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 
 interface SuggestedArtworksModalFooterProps {
   artworksCount: number

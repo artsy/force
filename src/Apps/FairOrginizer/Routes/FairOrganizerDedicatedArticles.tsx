@@ -1,22 +1,22 @@
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import { DedicatedArticlesBreadcrumbsFragmentContainer as DedicatedArticlesBreadcrumbs } from "Apps/FairOrginizer/Components/DedicatedArticlesBreadcrumbs"
+import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
+import { LoadingArea } from "Components/LoadingArea"
+import { MetaTags } from "Components/MetaTags"
+import { PaginationFragmentContainer } from "Components/Pagination"
+import { Jump } from "Utils/Hooks/useJump"
+import { extractNodes } from "Utils/extractNodes"
+import createLogger from "Utils/logger"
+import type { FairOrganizerDedicatedArticles_fairOrganizer$data } from "__generated__/FairOrganizerDedicatedArticles_fairOrganizer.graphql"
 import { useEffect, useState } from "react"
 import type * as React from "react"
 import {
+  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
-import { PaginationFragmentContainer } from "Components/Pagination"
-import { extractNodes } from "Utils/extractNodes"
-import { DedicatedArticlesBreadcrumbsFragmentContainer as DedicatedArticlesBreadcrumbs } from "Apps/FairOrginizer/Components/DedicatedArticlesBreadcrumbs"
 import { FairOrganizerDedicatedArticlesQuery } from "./FairOrganizerDedicatedArticlesQuery"
-import type { FairOrganizerDedicatedArticles_fairOrganizer$data } from "__generated__/FairOrganizerDedicatedArticles_fairOrganizer.graphql"
-import createLogger from "Utils/logger"
-import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { LoadingArea } from "Components/LoadingArea"
-import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
-import { MetaTags } from "Components/MetaTags"
-import { Jump } from "Utils/Hooks/useJump"
 
 const PAGE_SIZE = 16
 

@@ -1,17 +1,17 @@
-import { screen, fireEvent } from "@testing-library/react"
-import { useTracking } from "react-tracking"
+import { fireEvent, screen } from "@testing-library/react"
 import {
   ArtworkFilter,
   BaseArtworkFilter,
   getTotalCountLabel,
 } from "Components/ArtworkFilter"
+import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtworkQueryFilter } from "Components/ArtworkFilter/ArtworkQueryFilter"
 import { MockBoot } from "DevTools/MockBoot"
 import { renderToString } from "DevTools/__tests__/MockRelayRendererFixtures"
-import { ArtworkQueryFilter } from "Components/ArtworkFilter/ArtworkQueryFilter"
-import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
-import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { omit } from "lodash"
+import { useTracking } from "react-tracking"
+import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

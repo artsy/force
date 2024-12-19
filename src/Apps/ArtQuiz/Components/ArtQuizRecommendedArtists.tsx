@@ -1,14 +1,14 @@
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { ArtQuizRecommendedArtists_me$data } from "__generated__/ArtQuizRecommendedArtists_me.graphql"
-import type { ArtQuizRecommendedArtistsQuery } from "__generated__/ArtQuizRecommendedArtistsQuery.graphql"
-import { compact, uniq } from "lodash"
+import { Join, Skeleton, Spacer } from "@artsy/palette"
 import {
   ArtQuizRecommendedArtistFragmentContainer,
   ArtQuizRecommendedArtistPlaceholder,
 } from "Apps/ArtQuiz/Components/ArtQuizRecommendedArtist"
-import { Join, Skeleton, Spacer } from "@artsy/palette"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { ArtQuizRecommendedArtistsQuery } from "__generated__/ArtQuizRecommendedArtistsQuery.graphql"
+import type { ArtQuizRecommendedArtists_me$data } from "__generated__/ArtQuizRecommendedArtists_me.graphql"
+import { compact, uniq } from "lodash"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtQuizRecommendedArtistsProps {
   me: ArtQuizRecommendedArtists_me$data

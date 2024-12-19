@@ -1,5 +1,5 @@
-import { HomePersonalizeMore } from "./HomePersonalizeMore"
 import { States } from "storybook-states"
+import { HomePersonalizeMore } from "./HomePersonalizeMore"
 
 export default {
   title: "Components/HomePersonalizeMore",

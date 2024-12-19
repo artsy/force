@@ -1,26 +1,26 @@
-import type * as React from "react"
-import {
-  createRefetchContainer,
-  type RelayRefetchProp,
-  graphql,
-} from "react-relay"
-import { useRouter } from "System/Hooks/useRouter"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
   type Counts,
-  initialArtworkFilterState,
   type SharedArtworkFilterContextProps,
+  initialArtworkFilterState,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
+import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import type { TagArtworkFilter_tag$data } from "__generated__/TagArtworkFilter_tag.graphql"
+import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
+import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
-import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import type { TagArtworkFilterQuery } from "__generated__/TagArtworkFilterQuery.graphql"
-import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
+import type { TagArtworkFilter_tag$data } from "__generated__/TagArtworkFilter_tag.graphql"
+import type * as React from "react"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 
 interface TagArtworkFilterProps {
   tag: TagArtworkFilter_tag$data

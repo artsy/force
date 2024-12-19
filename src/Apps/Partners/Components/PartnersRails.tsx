@@ -1,14 +1,14 @@
+import { Join, Skeleton, Spacer } from "@artsy/palette"
+import { CellPartnerPlaceholder } from "Components/Cells/CellPartner"
+import { Rail } from "Components/Rail/Rail"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { PartnersRailsQuery } from "__generated__/PartnersRailsQuery.graphql"
+import type { PartnersRails_viewer$data } from "__generated__/PartnersRails_viewer.graphql"
+import { compact, shuffle } from "lodash"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnersRailQueryRenderer } from "./PartnersRail"
-import type { PartnersRails_viewer$data } from "__generated__/PartnersRails_viewer.graphql"
-import type { PartnersRailsQuery } from "__generated__/PartnersRailsQuery.graphql"
-import { compact, shuffle } from "lodash"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Join, Skeleton, Spacer } from "@artsy/palette"
-import { Rail } from "Components/Rail/Rail"
-import { CellPartnerPlaceholder } from "Components/Cells/CellPartner"
 
 interface PartnersRailsProps {
   viewer: PartnersRails_viewer$data

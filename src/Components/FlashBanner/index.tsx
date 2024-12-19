@@ -1,13 +1,13 @@
-import { type FC, useMemo } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { EmailConfirmationCTA } from "Components/FlashBanner/EmailConfirmationCTA"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { EmailConfirmationLinkExpired } from "./EmailConfirmationLinkExpired"
-import type { FlashBannerQuery } from "__generated__/FlashBannerQuery.graphql"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { FlashBannerQuery } from "__generated__/FlashBannerQuery.graphql"
 import type { FlashBanner_me$data } from "__generated__/FlashBanner_me.graphql"
+import { type FC, useMemo } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { EmailConfirmationLinkExpired } from "./EmailConfirmationLinkExpired"
 
 interface FlashBannerProps {
   me?: FlashBanner_me$data | null

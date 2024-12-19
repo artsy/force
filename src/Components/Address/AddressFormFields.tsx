@@ -7,8 +7,8 @@ import {
   yupAddressValidator,
 } from "Components/Address/utils"
 import { CountrySelect } from "Components/CountrySelect"
-import { useFormikContext } from "formik"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useFormikContext } from "formik"
 
 export interface FormikContextWithAddress {
   address: Address

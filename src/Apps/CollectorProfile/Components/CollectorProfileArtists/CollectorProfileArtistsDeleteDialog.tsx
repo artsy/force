@@ -1,9 +1,9 @@
 import { Button, ModalDialog, Stack, Text, useToasts } from "@artsy/palette"
-import { type FC, useState } from "react"
-import { graphql } from "react-relay"
+import { useRouter } from "System/Hooks/useRouter"
 import { useMutation } from "Utils/Hooks/useMutation"
 import type { CollectorProfileArtistsDeleteDialogMutation } from "__generated__/CollectorProfileArtistsDeleteDialogMutation.graphql"
-import { useRouter } from "System/Hooks/useRouter"
+import { type FC, useState } from "react"
+import { graphql } from "react-relay"
 
 interface CollectorProfileArtistsDeleteDialogProps {
   id: string

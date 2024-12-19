@@ -1,8 +1,8 @@
-import { useEffect } from "react"
-import { fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { logout } from "Utils/auth"
 import type { useAuthValidationQuery } from "__generated__/useAuthValidationQuery.graphql"
+import { useEffect } from "react"
+import { fetchQuery, graphql } from "react-relay"
 
 export const useAuthValidation = () => {
   const { relayEnvironment } = useSystemContext()

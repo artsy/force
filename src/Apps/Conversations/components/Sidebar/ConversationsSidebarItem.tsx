@@ -1,13 +1,13 @@
 import { Box, Flex, Image, StackableBorderBox, Text } from "@artsy/palette"
-import { graphql, useFragment } from "react-relay"
-import { useTracking } from "react-tracking"
+import { getSidebarTotal } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
-import type { ConversationsSidebarItem_conversation$key } from "__generated__/ConversationsSidebarItem_conversation.graphql"
-import { getSidebarTotal } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
-import { useEffect, useRef } from "react"
 import { getENV } from "Utils/getENV"
+import type { ConversationsSidebarItem_conversation$key } from "__generated__/ConversationsSidebarItem_conversation.graphql"
+import { useEffect, useRef } from "react"
+import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ConversationsSidebarItemProps {
   conversation: ConversationsSidebarItem_conversation$key

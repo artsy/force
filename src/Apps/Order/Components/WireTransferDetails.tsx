@@ -1,5 +1,5 @@
-import { Flex, Text } from "@artsy/palette"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
+import { Flex, Text } from "@artsy/palette"
 
 export const WireTransferDetails = ({
   responsive = true,

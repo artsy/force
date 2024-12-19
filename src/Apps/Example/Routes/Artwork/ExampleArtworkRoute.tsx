@@ -1,11 +1,11 @@
 import { Box, Flex, Image, Text } from "@artsy/palette"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { Analytics } from "System/Contexts/AnalyticsContext"
-import type { ExampleArtworkRoute_artwork$data } from "__generated__/ExampleArtworkRoute_artwork.graphql"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { MetaTags } from "Components/MetaTags"
+import { Analytics } from "System/Contexts/AnalyticsContext"
 import { extractNodes } from "Utils/extractNodes"
+import type { ExampleArtworkRoute_artwork$data } from "__generated__/ExampleArtworkRoute_artwork.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface ExampleArtworkRouteProps {
   artwork: ExampleArtworkRoute_artwork$data

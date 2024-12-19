@@ -1,9 +1,9 @@
 import { screen } from "@testing-library/react"
-import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { PartnersSpecialtyAutocompleteFragmentContainer } from "Apps/Partners/Components/PartnersSpecialtyAutocomplete"
-import type { PartnersSpecialtyAutocomplete_Test_Query } from "__generated__/PartnersSpecialtyAutocomplete_Test_Query.graphql"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
+import type { PartnersSpecialtyAutocomplete_Test_Query } from "__generated__/PartnersSpecialtyAutocomplete_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter")

@@ -1,8 +1,4 @@
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtistSellWithArtsy_artist$data } from "__generated__/ArtistSellWithArtsy_artist.graphql"
-import type { ArtistSellWithArtsyQuery } from "__generated__/ArtistSellWithArtsyQuery.graphql"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Box,
   Button,
@@ -15,8 +11,12 @@ import {
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { RouterLink } from "System/Components/RouterLink"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { ArtistSellWithArtsyQuery } from "__generated__/ArtistSellWithArtsyQuery.graphql"
+import type { ArtistSellWithArtsy_artist$data } from "__generated__/ArtistSellWithArtsy_artist.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import styled from "styled-components"
 
 interface ArtistSellWithArtsyProps {

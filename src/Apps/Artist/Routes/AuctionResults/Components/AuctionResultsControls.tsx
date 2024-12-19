@@ -1,7 +1,7 @@
+import FilterIcon from "@artsy/icons/FilterIcon"
 import { Button, Flex } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
 import { SortSelect } from "./SortSelect"
-import FilterIcon from "@artsy/icons/FilterIcon"
 
 export const AuctionResultsControls = ({ toggleMobileActionSheet }) => {
   return (

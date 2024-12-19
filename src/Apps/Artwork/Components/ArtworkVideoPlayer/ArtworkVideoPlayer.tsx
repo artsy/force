@@ -2,10 +2,10 @@ import { ActionType, type ClickedPlayVideo, OwnerType } from "@artsy/cohesion"
 import type { ViewedVideo } from "@artsy/cohesion/dist/Schema/Events/Video"
 import { type BoxProps, Flex, ResponsiveBox } from "@artsy/palette"
 import { MAX_DIMENSION } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowser"
+import type { ArtworkVideoPlayer_artwork$data } from "__generated__/ArtworkVideoPlayer_artwork.graphql"
 import { type FC, useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import type { ArtworkVideoPlayer_artwork$data } from "__generated__/ArtworkVideoPlayer_artwork.graphql"
 
 interface ArtworkVideoPlayerProps extends BoxProps {
   activeIndex: number

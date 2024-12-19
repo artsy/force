@@ -9,11 +9,15 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
 import { allowedAuctionResultFilters } from "Apps/Artist/Utils/allowedAuctionResultFilters"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { useAuthDialog } from "Components/AuthDialog"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
+import { SystemContext } from "System/Contexts/SystemContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump, useJump } from "Utils/Hooks/useJump"
@@ -21,11 +25,12 @@ import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
+import type { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
 import type { ArtistAuctionResults_artist$data } from "__generated__/ArtistAuctionResults_artist.graphql"
 import { isEqual } from "lodash"
 import type * as React from "react"
 import { useContext, useState } from "react"
-import { Title, Meta } from "react-head"
+import { Meta, Title } from "react-head"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
@@ -40,18 +45,13 @@ import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
 } from "./AuctionResultsFilterContext"
+import { ArtistAuctionResultsEmptyState } from "./Components/ArtistAuctionResultsEmptyState"
 import { AuctionFilterMobileActionSheet } from "./Components/AuctionFilterMobileActionSheet"
 import { AuctionFilters } from "./Components/AuctionFilters"
 import { AuctionResultsControls } from "./Components/AuctionResultsControls"
 import { MarketStatsQueryRenderer } from "./Components/MarketStats"
 import { SortSelect } from "./Components/SortSelect"
 import { TableSidebar } from "./Components/TableSidebar"
-import { ArtistAuctionResultsEmptyState } from "./Components/ArtistAuctionResultsEmptyState"
-import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
-import type { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
-import { SystemContext } from "System/Contexts/SystemContext"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
-import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 

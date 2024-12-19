@@ -1,9 +1,9 @@
+import { ContextModule } from "@artsy/cohesion"
+import { Link } from "@artsy/palette"
+import { DownloadAppBadge } from "Components/DownloadAppBadges/DownloadAppBadge"
+import { Device } from "Utils/Hooks/useDeviceDetection"
 import { mount } from "enzyme"
 import { useTracking } from "react-tracking"
-import { Link } from "@artsy/palette"
-import { ContextModule } from "@artsy/cohesion"
-import { Device } from "Utils/Hooks/useDeviceDetection"
-import { DownloadAppBadge } from "Components/DownloadAppBadges/DownloadAppBadge"
 
 describe("DownloadAppBadge", () => {
   const trackEvent = jest.fn()

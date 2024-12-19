@@ -1,4 +1,3 @@
-import { compact, difference, find, flatten, keyBy } from "lodash"
 import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ATTRIBUTION_CLASS_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { COLOR_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
@@ -6,7 +5,7 @@ import { MEDIUM_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/MediumFi
 import { getTimePeriodToDisplay } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { isCustomValue } from "Components/ArtworkFilter/ArtworkFilters/Utils/isCustomValue"
 import { WAYS_TO_BUY_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
+import { priceRangeToLabel } from "Components/PriceRange/Utils/priceRangeToLabel"
 import { shouldExtractValueNamesFromAggregation } from "Components/SavedSearchAlert/constants"
 import type {
   FilterPill,
@@ -14,12 +13,13 @@ import type {
   SavedSearchEntity,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
-import { aggregationForFilter } from "./aggregationForFilter"
 import {
   getPredefinedSizesByMetric,
   parseSizeRange,
 } from "Utils/customSizeUtils"
-import { priceRangeToLabel } from "Components/PriceRange/Utils/priceRangeToLabel"
+import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
+import { compact, difference, find, flatten, keyBy } from "lodash"
+import { aggregationForFilter } from "./aggregationForFilter"
 
 export const extractPillFromAggregation = (
   filter: {

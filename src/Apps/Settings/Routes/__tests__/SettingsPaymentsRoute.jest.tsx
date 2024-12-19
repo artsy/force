@@ -1,10 +1,10 @@
-import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { SettingsPaymentsRouteFragmentContainer } from "Apps/Settings/Routes/Payments/SettingsPaymentsRoute"
-import type { SettingsPaymentsRoute_Test_Query } from "__generated__/SettingsPaymentsRoute_Test_Query.graphql"
-import { useDeleteCreditCard } from "Apps/Settings/Routes/Payments/useDeleteCreditCard"
 import { useDeleteBankAccount } from "Apps/Settings/Routes/Payments/useDeleteBankAccount"
+import { useDeleteCreditCard } from "Apps/Settings/Routes/Payments/useDeleteCreditCard"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { SettingsPaymentsRoute_Test_Query } from "__generated__/SettingsPaymentsRoute_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("Apps/Settings/Routes/Payments/useDeleteBankAccount")

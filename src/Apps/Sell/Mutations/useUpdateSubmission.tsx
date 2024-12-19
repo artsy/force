@@ -1,6 +1,6 @@
 import { useMutation } from "Utils/Hooks/useMutation"
-import { graphql } from "react-relay"
 import type { useUpdateSubmissionMutation } from "__generated__/useUpdateSubmissionMutation.graphql"
+import { graphql } from "react-relay"
 
 export const useUpdateSubmission = () => {
   return useMutation<useUpdateSubmissionMutation>({

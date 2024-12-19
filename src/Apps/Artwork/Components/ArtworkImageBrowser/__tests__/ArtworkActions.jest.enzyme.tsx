@@ -1,16 +1,16 @@
-import { ArtworkActionsFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActions"
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { userIsAdmin, userIsTeam } from "Utils/user"
-import { MockBoot } from "DevTools/MockBoot"
-import type { Breakpoint } from "@artsy/palette/dist/themes/types"
 import DownloadIcon from "@artsy/icons/DownloadIcon"
 import EditIcon from "@artsy/icons/EditIcon"
-import MagicMagnifyingGlassIcon from "@artsy/icons/MagicMagnifyingGlassIcon"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
+import MagicMagnifyingGlassIcon from "@artsy/icons/MagicMagnifyingGlassIcon"
 import MoreIcon from "@artsy/icons/MoreIcon"
 import ShareIcon from "@artsy/icons/ShareIcon"
 import ShowIcon from "@artsy/icons/ShowIcon"
+import type { Breakpoint } from "@artsy/palette/dist/themes/types"
+import { ArtworkActionsFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActions"
+import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { userIsAdmin, userIsTeam } from "Utils/user"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

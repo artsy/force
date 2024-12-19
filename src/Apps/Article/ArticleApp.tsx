@@ -1,17 +1,17 @@
 import { FullBleed, Join, Separator, Spacer } from "@artsy/palette"
+import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
+import type { ArticleApp_article$data } from "__generated__/ArticleApp_article.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { ArticleApp_article$data } from "__generated__/ArticleApp_article.graphql"
+import { ArticleAdProvider } from "./Components/ArticleAd/ArticleAd"
 import { ArticleBodyFragmentContainer } from "./Components/ArticleBody"
 import { ArticleChannelRelatedArticlesQueryRenderer } from "./Components/ArticleChannelRelatedArticles"
 import { ArticleInfiniteScrollQueryRenderer } from "./Components/ArticleInfiniteScroll"
+import { ArticleMetaTagsFragmentContainer } from "./Components/ArticleMetaTags"
 import { ArticleSeriesFragmentContainer } from "./Components/ArticleSeries"
 import { ArticleVerticalRelatedArticlesQueryRenderer } from "./Components/ArticleVerticalRelatedArticles"
 import { ArticleVideoFragmentContainer } from "./Components/ArticleVideo"
-import { ArticleAdProvider } from "./Components/ArticleAd/ArticleAd"
 import { ArticleVisibilityMetadataFragmentContainer } from "./Components/ArticleVisibilityMetadata"
-import { ArticleMetaTagsFragmentContainer } from "./Components/ArticleMetaTags"
-import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
 
 interface ArticleAppProps {
   article: ArticleApp_article$data

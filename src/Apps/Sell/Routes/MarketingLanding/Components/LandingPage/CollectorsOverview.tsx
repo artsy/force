@@ -1,4 +1,4 @@
-import { Column, GridColumns, Text, Box, Image, Spacer } from "@artsy/palette"
+import { Box, Column, GridColumns, Image, Spacer, Text } from "@artsy/palette"
 import { resized } from "Utils/resized"
 
 const DATA: { value: string; title: string }[] = [

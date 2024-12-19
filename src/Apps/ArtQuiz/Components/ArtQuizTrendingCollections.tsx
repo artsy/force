@@ -1,13 +1,13 @@
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { ArtQuizTrendingCollections_viewer$data } from "__generated__/ArtQuizTrendingCollections_viewer.graphql"
-import type { ArtQuizTrendingCollectionsQuery } from "__generated__/ArtQuizTrendingCollectionsQuery.graphql"
 import { Join, Skeleton, Spacer } from "@artsy/palette"
 import {
   ArtQuizTrendingCollectionFragmentContainer,
   ArtQuizTrendingCollectionPlaceholder,
 } from "Apps/ArtQuiz/Components/ArtQuizTrendingCollection"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { ArtQuizTrendingCollectionsQuery } from "__generated__/ArtQuizTrendingCollectionsQuery.graphql"
+import type { ArtQuizTrendingCollections_viewer$data } from "__generated__/ArtQuizTrendingCollections_viewer.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtQuizTrendingCollectionsProps {
   viewer: ArtQuizTrendingCollections_viewer$data

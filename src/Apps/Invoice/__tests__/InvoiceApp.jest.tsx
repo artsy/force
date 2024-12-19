@@ -1,9 +1,9 @@
-import { InvoiceApp } from "Apps/Invoice/InvoiceApp"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
-import type { InvoiceApp_Test_Query } from "__generated__/InvoiceApp_Test_Query.graphql"
-import { MockBoot } from "DevTools/MockBoot"
 import { screen } from "@testing-library/react"
+import { InvoiceApp } from "Apps/Invoice/InvoiceApp"
+import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { InvoiceApp_Test_Query } from "__generated__/InvoiceApp_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

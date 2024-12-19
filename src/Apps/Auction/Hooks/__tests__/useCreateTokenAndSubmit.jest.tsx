@@ -1,15 +1,15 @@
+import { useElements, useStripe } from "@stripe/react-stripe-js"
 /* eslint-disable react-hooks/rules-of-hooks */
 import { renderHook } from "@testing-library/react-hooks"
-import { useElements, useStripe } from "@stripe/react-stripe-js"
+import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
+import {
+  type UseCreateTokenAndSubmitProps,
+  useCreateTokenAndSubmit,
+} from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
 import { useAddCreditCardAndUpdateProfile } from "Apps/Auction/Queries/useAddCreditCardAndUpdateProfile"
 import { useCreateBidder } from "Apps/Auction/Queries/useCreateBidder"
-import {
-  useCreateTokenAndSubmit,
-  type UseCreateTokenAndSubmitProps,
-} from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useRefreshUserData } from "Apps/Auction/Queries/useRefreshUserData"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.mock("Components/Address/utils", () => {
   const actual = jest.requireActual("Components/Address/utils")

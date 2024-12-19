@@ -1,10 +1,10 @@
 import { Button, Column, Separator, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
+import type { UserRegistrationAuctions_me$data } from "__generated__/UserRegistrationAuctions_me.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
-import { extractNodes } from "Utils/extractNodes"
-import type { UserRegistrationAuctions_me$data } from "__generated__/UserRegistrationAuctions_me.graphql"
 
 interface UserRegistrationAuctionsProps {
   me: UserRegistrationAuctions_me$data

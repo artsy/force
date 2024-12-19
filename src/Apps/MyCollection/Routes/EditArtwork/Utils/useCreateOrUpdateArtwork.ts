@@ -1,13 +1,13 @@
 import { useCreateArtwork } from "Apps/MyCollection/Routes/EditArtwork/Mutations/useCreateArtwork"
 import { useUpdateArtwork } from "Apps/MyCollection/Routes/EditArtwork/Mutations/useUpdateArtwork"
 import type { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
-import { compact } from "lodash"
 import type { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
 import type {
   ArtworkAttributionClassType,
   MyCollectionCreateArtworkInput,
 } from "__generated__/useCreateArtworkMutation.graphql"
 import type { MyCollectionUpdateArtworkInput } from "__generated__/useUpdateArtworkMutation.graphql"
+import { compact } from "lodash"
 
 export type ArtworkInput =
   | MyCollectionCreateArtworkInput

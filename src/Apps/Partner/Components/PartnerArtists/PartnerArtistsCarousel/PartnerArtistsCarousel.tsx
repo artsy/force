@@ -1,13 +1,13 @@
-import type * as React from "react"
 import { Shelf } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import { CellPartnerArtistFragmentContainer } from "Components/Cells/CellPartnerArtist"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { PartnerArtistsCarouselRendererQuery } from "__generated__/PartnerArtistsCarouselRendererQuery.graphql"
 import type { PartnerArtistsCarousel_partner$data } from "__generated__/PartnerArtistsCarousel_partner.graphql"
-import { PartnerArtistsCarouselPlaceholder } from "./PartnerArtistsCarouselPlaceholder"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { CellPartnerArtistFragmentContainer } from "Components/Cells/CellPartnerArtist"
 import { compact } from "lodash"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { PartnerArtistsCarouselPlaceholder } from "./PartnerArtistsCarouselPlaceholder"
 
 const PAGE_SIZE = 20
 

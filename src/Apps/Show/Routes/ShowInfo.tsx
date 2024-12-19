@@ -1,4 +1,3 @@
-import type * as React from "react"
 import {
   Box,
   Column,
@@ -9,12 +8,13 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ShowInfo_show$data } from "__generated__/ShowInfo_show.graphql"
-import { ShowInfoLocationFragmentContainer as ShowInfoLocation } from "Apps/Show/Components/ShowInfoLocation"
-import { Media } from "Utils/Responsive"
 import { ShowHoursFragmentContainer } from "Apps/Show/Components/ShowHours"
+import { ShowInfoLocationFragmentContainer as ShowInfoLocation } from "Apps/Show/Components/ShowInfoLocation"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
+import { Media } from "Utils/Responsive"
+import type { ShowInfo_show$data } from "__generated__/ShowInfo_show.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ShowInfoProps {
   show: ShowInfo_show$data

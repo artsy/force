@@ -1,8 +1,8 @@
-import { data as sd } from "sharify"
 import { timeOnPage } from "@artsy/cohesion"
 import { getContextPageFromClient } from "Server/getContextPage"
-import { setAnalyticsClientReferrerOptions } from "./setAnalyticsClientReferrerOptions"
+import { data as sd } from "sharify"
 import { trackEvent } from "./helpers"
+import { setAnalyticsClientReferrerOptions } from "./setAnalyticsClientReferrerOptions"
 
 let interval
 

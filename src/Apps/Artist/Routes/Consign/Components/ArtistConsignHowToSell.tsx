@@ -1,16 +1,16 @@
-import type * as React from "react"
-import { Button, Text, Spacer, GridColumns, Column } from "@artsy/palette"
-import type { ArtistConsignHowToSell_artist$data } from "__generated__/ArtistConsignHowToSell_artist.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { useTracking } from "react-tracking"
+import EditIcon from "@artsy/icons/EditIcon"
+import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
+import GavelIcon from "@artsy/icons/GavelIcon"
+import { Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import type { ArtistConsignHowToSell_artist$data } from "__generated__/ArtistConsignHowToSell_artist.graphql"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
 import { getConsignSubmissionUrl } from "./Utils/getConsignSubmissionUrl"
-import GavelIcon from "@artsy/icons/GavelIcon"
-import EditIcon from "@artsy/icons/EditIcon"
-import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
 
 interface ArtistConsignHowtoSellProps {
   artist: ArtistConsignHowToSell_artist$data

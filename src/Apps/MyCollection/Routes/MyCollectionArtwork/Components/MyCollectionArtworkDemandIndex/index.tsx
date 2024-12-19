@@ -1,10 +1,10 @@
+import InfoIcon from "@artsy/icons/InfoIcon"
 import { Clickable, Flex, Spacer, Text, Tooltip } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
 import type { MyCollectionArtworkDemandIndex_marketPriceInsights$data } from "__generated__/MyCollectionArtworkDemandIndex_marketPriceInsights.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 import { DemandIndexBar } from "./DemandIndexBar"
 import { HighDemandIcon } from "./HighDemandIcon"
-import InfoIcon from "@artsy/icons/InfoIcon"
 
 interface MyCollectionArtworkDemandIndexProps {
   marketPriceInsights: MyCollectionArtworkDemandIndex_marketPriceInsights$data

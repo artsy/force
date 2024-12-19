@@ -1,22 +1,22 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
 import type { AuthContextModule } from "@artsy/cohesion"
-import { extractNodes } from "Utils/extractNodes"
+import { Skeleton } from "@artsy/palette"
+import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
-import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
-import type { TrendingLotsRailQuery } from "__generated__/TrendingLotsRailQuery.graphql"
-import type { TrendingLotsRail_viewer$data } from "__generated__/TrendingLotsRail_viewer.graphql"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { trackHelpers } from "Utils/cohesionHelpers"
-import { CuratorialRailsZeroState } from "./CuritorialRailsTabBar"
 import { Rail } from "Components/Rail/Rail"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Skeleton } from "@artsy/palette"
+import { trackHelpers } from "Utils/cohesionHelpers"
+import { extractNodes } from "Utils/extractNodes"
+import type { TrendingLotsRailQuery } from "__generated__/TrendingLotsRailQuery.graphql"
+import type { TrendingLotsRail_viewer$data } from "__generated__/TrendingLotsRail_viewer.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { CuratorialRailsZeroState } from "./CuritorialRailsTabBar"
 export interface TrendingLotsRailProps {
   viewer: TrendingLotsRail_viewer$data
 }

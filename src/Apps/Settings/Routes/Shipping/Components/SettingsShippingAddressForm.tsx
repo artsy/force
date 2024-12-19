@@ -1,4 +1,3 @@
-import * as Yup from "yup"
 import {
   Button,
   Checkbox,
@@ -8,17 +7,18 @@ import {
   Message,
   ModalDialog,
   PhoneInput,
-  useToasts,
   VisuallyHidden,
+  useToasts,
 } from "@artsy/palette"
-import { Formik, Form } from "formik"
-import type { FC } from "react"
-import { CountrySelect } from "Components/CountrySelect"
 import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
 import { useEditAddress } from "Apps/Settings/Routes/Shipping/useEditAddress"
 import { useSetDefaultAddress } from "Apps/Settings/Routes/Shipping/useSetDefaultAddress"
+import { CountrySelect } from "Components/CountrySelect"
 import { validatePhoneNumber } from "Components/PhoneNumberInput"
 import { countries } from "Utils/countries"
+import { Form, Formik } from "formik"
+import type { FC } from "react"
+import * as Yup from "yup"
 
 export const INITIAL_ADDRESS = {
   name: "",

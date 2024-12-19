@@ -9,10 +9,10 @@ import {
 
 import type { MyCollectionArtworkSWASectionSubmitted_submissionState$key } from "__generated__/MyCollectionArtworkSWASectionSubmitted_submissionState.graphql"
 
-import { useState } from "react"
-import { graphql, useFragment } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
+import { useState } from "react"
+import { graphql, useFragment } from "react-relay"
 
 interface Props {
   artwork: MyCollectionArtworkSWASectionSubmitted_submissionState$key

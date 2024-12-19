@@ -1,7 +1,7 @@
 import { type BoxProps, Button, Flex, Spacer } from "@artsy/palette"
+import { useMode } from "Utils/Hooks/useMode"
 import type React from "react"
 import { useEffect } from "react"
-import { useMode } from "Utils/Hooks/useMode"
 
 interface SettingsEditSettingsTwoFactorBackupCodesActionsProps
   extends BoxProps {

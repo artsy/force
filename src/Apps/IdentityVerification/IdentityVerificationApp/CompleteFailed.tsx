@@ -1,6 +1,6 @@
 import { Button, Message, Spacer, Text } from "@artsy/palette"
-import type * as React from "react"
 import { RouterLink } from "System/Components/RouterLink"
+import type * as React from "react"
 
 export const CompleteFailed: React.FC<
   React.PropsWithChildren<unknown>

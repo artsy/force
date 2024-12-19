@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
-import type { MyCollectionArtworkArtistMarket_Test_Query } from "__generated__/MyCollectionArtworkArtistMarket_Test_Query.graphql"
 import { MyCollectionArtworkArtistMarketFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkArtistMarket"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { MyCollectionArtworkArtistMarket_Test_Query } from "__generated__/MyCollectionArtworkArtistMarket_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

@@ -1,8 +1,8 @@
-import { States } from "storybook-states"
 import {
   BrandCreditCardIcon,
   type BrandCreditCardIconProps,
 } from "Components/BrandCreditCardIcon"
+import { States } from "storybook-states"
 
 export default {
   title: "Components/BrandCreditCardIcon",

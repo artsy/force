@@ -5,15 +5,15 @@ import type { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/ar
 import { PhotoDropzone } from "Components/PhotoUpload/Components/PhotoDropzone"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
 import {
+  type Photo,
   getErrorMessage,
   normalizePhoto,
-  type Photo,
   uploadPhotoToS3,
 } from "Components/PhotoUpload/Utils/fileUtils"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useFormikContext } from "formik"
 import { useEffect, useState } from "react"
 import type { FileRejection } from "react-dropzone"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 
 interface MyCollectionArtworkFormImagesProps {
   isEditing?: boolean

@@ -1,13 +1,13 @@
-import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
+import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import type { FC } from "react"
 
-import { createFragmentContainer, graphql } from "react-relay"
-import type { SelectArtworkListItem_item$data } from "__generated__/SelectArtworkListItem_item.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import { SavesEntityImage } from "Apps/CollectorProfile/Routes/Saves/Components/SavesEntityImage"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 import HideIcon from "@artsy/icons/HideIcon"
+import { SavesEntityImage } from "Apps/CollectorProfile/Routes/Saves/Components/SavesEntityImage"
+import { extractNodes } from "Utils/extractNodes"
+import type { SelectArtworkListItem_item$data } from "__generated__/SelectArtworkListItem_item.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 const ICON_SIZE = 24
 

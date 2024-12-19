@@ -6,13 +6,13 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
-import type { CellShow_show$data } from "__generated__/CellShow_show.graphql"
-import { DEFAULT_CELL_WIDTH } from "./constants"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 import { useEventTiming } from "Utils/Hooks/useEventTiming"
+import type { CellShow_show$data } from "__generated__/CellShow_show.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { DEFAULT_CELL_WIDTH } from "./constants"
 
 export interface CellShowProps extends Omit<RouterLinkProps, "to"> {
   show: CellShow_show$data

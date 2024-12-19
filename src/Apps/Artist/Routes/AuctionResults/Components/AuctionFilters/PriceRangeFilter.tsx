@@ -1,16 +1,16 @@
 import { Checkbox, Expandable, Spacer } from "@artsy/palette"
+import {
+  useAuctionResultsFilterContext,
+  useCurrentlySelectedFiltersForAuctionResults,
+} from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
+import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { aggregationsToHistogram } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { PriceRange } from "Components/PriceRange/PriceRange"
 import {
   type CustomRange,
   DEFAULT_PRICE_RANGE,
 } from "Components/PriceRange/constants"
 import type { FC } from "react"
-import {
-  useAuctionResultsFilterContext,
-  useCurrentlySelectedFiltersForAuctionResults,
-} from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
-import { aggregationsToHistogram } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
-import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 
 export const PriceRangeFilter: FC<React.PropsWithChildren<unknown>> = () => {
   const { setFilter, aggregations } = useAuctionResultsFilterContext()

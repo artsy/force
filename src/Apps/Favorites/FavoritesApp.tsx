@@ -1,7 +1,7 @@
-import type { ReactNode, FC } from "react"
-import { TopContextBar } from "Components/TopContextBar"
 import { Spacer, Text } from "@artsy/palette"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
+import { TopContextBar } from "Components/TopContextBar"
+import type { FC, ReactNode } from "react"
 
 interface FavoritesAppProps {
   children: ReactNode

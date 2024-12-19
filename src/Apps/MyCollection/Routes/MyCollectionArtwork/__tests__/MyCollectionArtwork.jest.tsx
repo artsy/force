@@ -1,9 +1,9 @@
 import type { Breakpoint } from "@artsy/palette"
 import { screen } from "@testing-library/react"
-import type { MyCollectionArtworkTestQuery } from "__generated__/MyCollectionArtworkTestQuery.graphql"
 import { MyCollectionArtworkFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtwork"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { MyCollectionArtworkTestQuery } from "__generated__/MyCollectionArtworkTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

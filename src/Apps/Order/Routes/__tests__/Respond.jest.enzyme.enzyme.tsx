@@ -1,4 +1,10 @@
 import { BorderedRadio, Button } from "@artsy/palette"
+import { OfferHistoryItemFragmentContainer } from "Apps/Order/Components/OfferHistoryItem"
+import { RespondFragmentContainer } from "Apps/Order/Routes/Respond"
+import {
+  buyerCounterOfferFailed,
+  buyerCounterOfferSuccess,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/buyerCounterOffer"
 import {
   Buyer,
   OfferOrderWithShippingDetails,
@@ -6,18 +12,12 @@ import {
   OfferWithTotals,
   Offers,
 } from "Apps/__tests__/Fixtures/Order"
-import { OfferHistoryItemFragmentContainer } from "Apps/Order/Components/OfferHistoryItem"
-import { DateTime } from "luxon"
-import { RespondFragmentContainer } from "Apps/Order/Routes/Respond"
-import { expectOne } from "DevTools/RootTestPage"
-import { graphql } from "react-relay"
-import {
-  buyerCounterOfferFailed,
-  buyerCounterOfferSuccess,
-} from "Apps/Order/Routes/__fixtures__/MutationResults/buyerCounterOffer"
-import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { MockBoot } from "DevTools/MockBoot"
+import { expectOne } from "DevTools/RootTestPage"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { DateTime } from "luxon"
+import { graphql } from "react-relay"
+import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 
 // Need to mock Utils/Events instead of using mockTracking because
 // Boot's `dispatch` tracking prop overrides the one injected by

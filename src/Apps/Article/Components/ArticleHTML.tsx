@@ -1,9 +1,9 @@
 import { Box, type BoxProps, THEME } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { toStyle } from "Utils/toStyle"
 import { type FC, useEffect, useState } from "react"
 import styled from "styled-components"
 import { ArticleTooltip, isSupportedArticleTooltip } from "./ArticleTooltip"
-import { toStyle } from "Utils/toStyle"
 
 interface ArticleHTMLProps extends BoxProps {
   children: string

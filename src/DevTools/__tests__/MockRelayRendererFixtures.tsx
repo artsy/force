@@ -1,14 +1,14 @@
+import { render } from "@testing-library/react"
+import { SystemContextConsumer } from "System/Contexts/SystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
+import type { MockRelayRendererFixturesArtistQuery } from "__generated__/MockRelayRendererFixturesArtistQuery.graphql"
 /* eslint-disable jsx-a11y/alt-text */
 import type { MockRelayRendererFixtures_artist$data } from "__generated__/MockRelayRendererFixtures_artist.graphql"
 import type { MockRelayRendererFixtures_artwork$data } from "__generated__/MockRelayRendererFixtures_artwork.graphql"
 import type { MockRelayRendererFixtures_artworkMetadata$data } from "__generated__/MockRelayRendererFixtures_artworkMetadata.graphql"
-import type { MockRelayRendererFixturesArtistQuery } from "__generated__/MockRelayRendererFixturesArtistQuery.graphql"
-import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import cheerio from "cheerio"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SystemContextConsumer } from "System/Contexts/SystemContext"
-import { render } from "@testing-library/react"
 
 const Metadata = createFragmentContainer(
   (props: {

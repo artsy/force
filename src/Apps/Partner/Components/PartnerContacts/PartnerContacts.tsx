@@ -1,8 +1,8 @@
-import type * as React from "react"
-import type { PartnerContacts_edges$data } from "__generated__/PartnerContacts_edges.graphql"
 import { Column, GridColumns } from "@artsy/palette"
-import { PartnerContactCardFragmentContainer as PartnerContactCard } from "./PartnerContactCard"
+import type { PartnerContacts_edges$data } from "__generated__/PartnerContacts_edges.graphql"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { PartnerContactCardFragmentContainer as PartnerContactCard } from "./PartnerContactCard"
 
 export interface ContactRouteProps {
   edges: PartnerContacts_edges$data

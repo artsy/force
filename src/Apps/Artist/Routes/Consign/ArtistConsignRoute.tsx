@@ -1,6 +1,8 @@
+import { Spacer } from "@artsy/palette"
+import type { ArtistConsignRoute_artist$data } from "__generated__/ArtistConsignRoute_artist.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtistConsignRoute_artist$data } from "__generated__/ArtistConsignRoute_artist.graphql"
+import track from "react-tracking"
 import { ArtistConsignFAQFragmentContainer } from "./Components/ArtistConsignFAQ"
 import { ArtistConsignHeaderFragmentContainer } from "./Components/ArtistConsignHeader"
 import { ArtistConsignHowtoSellFragmentContainer } from "./Components/ArtistConsignHowToSell"
@@ -9,8 +11,6 @@ import { ArtistConsignMetaFragmentContainer } from "./Components/ArtistConsignMe
 import { ArtistConsignPageViewsFragmentContainer } from "./Components/ArtistConsignPageViews"
 import { ArtistConsignRecentlySoldFragmentContainer } from "./Components/ArtistConsignRecentlySold"
 import { ArtistConsignSellArtFragmentContainer } from "./Components/ArtistConsignSellArt"
-import { Spacer } from "@artsy/palette"
-import track from "react-tracking"
 
 export interface ConsignRouteProps {
   artist: ArtistConsignRoute_artist$data

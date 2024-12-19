@@ -1,22 +1,22 @@
+import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import {
-  Flex,
-  Text,
-  Image,
-  Button,
   Box,
+  Button,
   Clickable,
+  Flex,
+  Image,
   Spacer,
+  Text,
   useTheme,
 } from "@artsy/palette"
-import { graphql, useFragment } from "react-relay"
-import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
-import { useTracking } from "react-tracking"
-import { Media } from "Utils/Responsive"
-import { RouterLink } from "System/Components/RouterLink"
-import type { ConversationHeader_conversation$key } from "__generated__/ConversationHeader_conversation.graphql"
-import { useMobileLayoutActions } from "Apps/Conversations/hooks/useMobileLayoutActions"
-import { extractNodes } from "Utils/extractNodes"
 import { ReviewOrderButton } from "Apps/Conversations/components/Details/OrderInformation/ReviewOrderButton"
+import { useMobileLayoutActions } from "Apps/Conversations/hooks/useMobileLayoutActions"
+import { RouterLink } from "System/Components/RouterLink"
+import { Media } from "Utils/Responsive"
+import { extractNodes } from "Utils/extractNodes"
+import type { ConversationHeader_conversation$key } from "__generated__/ConversationHeader_conversation.graphql"
+import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ConversationHeaderProps {
   conversation: ConversationHeader_conversation$key

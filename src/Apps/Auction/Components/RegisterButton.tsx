@@ -1,13 +1,13 @@
-import { Button, Flex, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { RegisterButton_sale$data } from "__generated__/RegisterButton_sale.graphql"
-import type { RegisterButton_me$data } from "__generated__/RegisterButton_me.graphql"
-import { RouterLink } from "System/Components/RouterLink"
-import createLogger from "Utils/logger"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { useRouter } from "System/Hooks/useRouter"
+import { Button, Flex, Text } from "@artsy/palette"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useAuthDialog } from "Components/AuthDialog"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
+import createLogger from "Utils/logger"
+import type { RegisterButton_me$data } from "__generated__/RegisterButton_me.graphql"
+import type { RegisterButton_sale$data } from "__generated__/RegisterButton_sale.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 const logger = createLogger("RegisterButton")
 

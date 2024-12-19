@@ -7,21 +7,21 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import type { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
+import { BackupSecondFactorReminder } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/BackupSecondFactorReminder"
+import { EnableSecondFactor } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/Mutation/EnableSecondFactor"
+import { redirectMessage } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
+import { CountrySelect } from "Components/CountrySelect"
+import { Step, Wizard } from "Components/Wizard"
+import type { FormValues, StepElement } from "Components/Wizard/types"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { CreateSmsSecondFactorMutation$data } from "__generated__/CreateSmsSecondFactorMutation.graphql"
 import type { FormikHelpers as FormikActions } from "formik"
 import { useState } from "react"
 import type * as React from "react"
 import * as Yup from "yup"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { CountrySelect } from "Components/CountrySelect"
-import { Step, Wizard } from "Components/Wizard"
-import type { FormValues, StepElement } from "Components/Wizard/types"
-import type { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
-import { EnableSecondFactor } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/Mutation/EnableSecondFactor"
 import { DeliverSecondFactor } from "./Mutation/DeliverSecondFactor"
 import { UpdateSmsSecondFactor } from "./Mutation/UpdateSmsSecondFactor"
-import { BackupSecondFactorReminder } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/BackupSecondFactorReminder"
-import type { CreateSmsSecondFactorMutation$data } from "__generated__/CreateSmsSecondFactorMutation.graphql"
-import { redirectMessage } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
 interface SmsSecondFactorModalProps {
   onClose: () => void

@@ -1,6 +1,6 @@
 import type { NotificationType } from "Components/Notifications/types"
 import { useRouter } from "System/Hooks/useRouter"
-import { createContext, type FC, useState, useContext, useEffect } from "react"
+import { type FC, createContext, useContext, useEffect, useState } from "react"
 
 export type State = {
   currentNotificationId: string | null

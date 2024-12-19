@@ -1,21 +1,21 @@
 import {
+  Box,
+  Button,
   Flex,
+  Image,
+  ResponsiveBox,
   Spacer,
   Text,
-  Box,
-  ResponsiveBox,
-  Image,
-  Button,
 } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
-import type { FC } from "react"
-import { useFragment, graphql } from "react-relay"
-import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
-import type { ArticleFeaturedArtistNotification_notification$key } from "__generated__/ArticleFeaturedArtistNotification_notification.graphql"
-import { extractNodes } from "Utils/extractNodes"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
+import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
+import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
+import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
+import type { ArticleFeaturedArtistNotification_notification$key } from "__generated__/ArticleFeaturedArtistNotification_notification.graphql"
+import type { FC } from "react"
+import { graphql, useFragment } from "react-relay"
 
 interface ArticleFeaturedArtistNotificationProps {
   notification: ArticleFeaturedArtistNotification_notification$key

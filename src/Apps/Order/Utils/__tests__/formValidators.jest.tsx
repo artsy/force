@@ -1,9 +1,9 @@
-import type { Address } from "Components/Address/utils"
 import {
   validateAddress,
-  validatePresence,
   validatePostalCode,
+  validatePresence,
 } from "Apps/Order/Utils/formValidators"
+import type { Address } from "Components/Address/utils"
 
 describe("formValidators/validatePostalCode", () => {
   it("returns error when postal code is invalid for US", () => {

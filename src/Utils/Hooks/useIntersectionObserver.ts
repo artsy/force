@@ -1,4 +1,4 @@
-import { useEffect, useState, type RefObject, useRef } from "react"
+import { type RefObject, useEffect, useRef, useState } from "react"
 
 interface UseIntersectionObserverProperties {
   ref?: RefObject<Element> | null

@@ -1,7 +1,7 @@
+import NoArtIcon from "@artsy/icons/NoArtIcon"
 import type { FlexProps } from "@artsy/palette"
 import { ArtworkListImageBorder } from "Apps/CollectorProfile/Routes/Saves/Components/Images/ArtworkListImageBorder"
 import type { FC } from "react"
-import NoArtIcon from "@artsy/icons/NoArtIcon"
 
 const NO_ICON_SIZE = 18
 

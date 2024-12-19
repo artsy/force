@@ -2,21 +2,21 @@
  * @jest-environment node
  */
 
-import { render } from "enzyme"
-import ReactDOMServer from "react-dom/server"
-import { Title } from "react-head"
-import { graphql } from "react-relay"
-import { Media } from "Utils/Responsive"
-import type { NextFunction, Request } from "express"
-import type { ArtsyResponse } from "Server/middleware/artsyExpress"
 import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
-import { useTracking } from "react-tracking"
+import type { ArtsyResponse } from "Server/middleware/artsyExpress"
+import { SystemContextConsumer } from "System/Contexts/SystemContext"
+import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 import {
   __TEST_INTERNAL_SERVER_APP__,
   setupServerRouter,
 } from "System/Router/serverRouter"
-import { findRoutesByPath } from "System/Router/Utils/routeUtils"
-import { SystemContextConsumer } from "System/Contexts/SystemContext"
+import { Media } from "Utils/Responsive"
+import { render } from "enzyme"
+import type { NextFunction, Request } from "express"
+import ReactDOMServer from "react-dom/server"
+import { Title } from "react-head"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 

@@ -1,6 +1,6 @@
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import type * as React from "react"
 import { RecentlyViewedQueryRenderer } from "./RecentlyViewed"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 
 export const RecentlyViewed: React.FC<
   React.PropsWithChildren<unknown>

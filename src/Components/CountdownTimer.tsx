@@ -2,9 +2,9 @@ import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import { Flex, Spacer, StackableBorderBox, Text } from "@artsy/palette"
 import { ProgressBarTimer } from "Components/ProgressBarTimer"
 import { TimeRemaining } from "Components/TimeRemaining"
+import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 import { DateTime } from "luxon"
 import type React from "react"
-import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 
 const FIVE_HOURS_IN_SECONDS = 60 * 60 * 5
 

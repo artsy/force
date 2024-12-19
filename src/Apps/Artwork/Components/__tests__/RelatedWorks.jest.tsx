@@ -1,9 +1,9 @@
-import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
+import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { RelatedWorksFragmentContainer } from "Apps/Artwork/Components/RelatedWorks"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { RelatedWorks_Test_Query } from "__generated__/RelatedWorks_Test_Query.graphql"
 
 jest.unmock("react-relay")

@@ -1,6 +1,7 @@
-import type * as React from "react"
-import { useTracking } from "react-tracking"
-import { type TappedViewOffer, ActionType, OwnerType } from "@artsy/cohesion"
+import { ActionType, OwnerType, type TappedViewOffer } from "@artsy/cohesion"
+import AlertFillIcon from "@artsy/icons/AlertFillIcon"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
+import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
 import {
   Clickable,
   Flex,
@@ -9,15 +10,14 @@ import {
   ModalDialog,
   Text,
 } from "@artsy/palette"
-import styled from "styled-components"
-import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
-import AlertFillIcon from "@artsy/icons/AlertFillIcon"
-import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
-import { graphql, useFragment } from "react-relay"
-import type { ConversationReviewOfferCTA_conversation$key } from "__generated__/ConversationReviewOfferCTA_conversation.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import { useState } from "react"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
+import { extractNodes } from "Utils/extractNodes"
+import type { ConversationReviewOfferCTA_conversation$key } from "__generated__/ConversationReviewOfferCTA_conversation.graphql"
+import type * as React from "react"
+import { useState } from "react"
+import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
+import styled from "styled-components"
 
 export interface ConversationReviewOfferCTAProps {
   conversation: ConversationReviewOfferCTA_conversation$key

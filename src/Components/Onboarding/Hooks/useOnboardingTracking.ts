@@ -1,12 +1,12 @@
-import { useTracking } from "react-tracking"
 import {
   ActionType,
-  ContextModule,
-  type StartedOnboarding,
   type CompletedOnboarding,
+  ContextModule,
   type OnboardingUserInputData,
+  type StartedOnboarding,
 } from "@artsy/cohesion"
 import { useCallback } from "react"
+import { useTracking } from "react-tracking"
 
 export const useOnboardingTracking = () => {
   const { trackEvent } = useTracking()

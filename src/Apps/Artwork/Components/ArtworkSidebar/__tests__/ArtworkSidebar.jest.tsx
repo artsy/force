@@ -1,9 +1,9 @@
-import { useTracking } from "react-tracking"
-import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ArtworkSidebarFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebar"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { DateTime } from "luxon"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 

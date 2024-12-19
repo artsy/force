@@ -1,10 +1,10 @@
-import { graphql } from "react-relay"
-import type { PageApp_Test_Query } from "__generated__/PageApp_Test_Query.graphql"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { PageAppFragmentContainer } from "Apps/Page/PageApp"
 import { screen } from "@testing-library/react"
-import { HttpError } from "found"
+import { PageAppFragmentContainer } from "Apps/Page/PageApp"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { userIsAdmin } from "Utils/user"
+import type { PageApp_Test_Query } from "__generated__/PageApp_Test_Query.graphql"
+import { HttpError } from "found"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("found")

@@ -1,9 +1,9 @@
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import type {
   markNotificationAsReadMutation,
   markNotificationAsReadMutation$data,
 } from "__generated__/markNotificationAsReadMutation.graphql"
 import { type Environment, commitMutation, graphql } from "react-relay"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 
 const updater = (id: string, store: any) => {
   const notification = store.get(id)

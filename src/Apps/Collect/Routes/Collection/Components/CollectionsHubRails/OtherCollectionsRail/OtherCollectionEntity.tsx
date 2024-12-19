@@ -1,12 +1,12 @@
-import { Text, Image } from "@artsy/palette"
-import type { OtherCollectionEntity_member$data } from "__generated__/OtherCollectionEntity_member.graphql"
-import { useTracking } from "react-tracking"
-import { RouterLink } from "System/Components/RouterLink"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
+import { Image, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { cropped } from "Utils/resized"
+import type { OtherCollectionEntity_member$data } from "__generated__/OtherCollectionEntity_member.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 export interface CollectionProps {
   member: OtherCollectionEntity_member$data

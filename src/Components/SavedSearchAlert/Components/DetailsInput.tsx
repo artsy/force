@@ -1,4 +1,4 @@
-import { TextArea, Text, Spacer } from "@artsy/palette"
+import { Spacer, Text, TextArea } from "@artsy/palette"
 import type { SavedSearchAlertFormValues } from "Components/SavedSearchAlert/types"
 import { useFormikContext } from "formik"
 

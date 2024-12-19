@@ -1,11 +1,11 @@
 import { Button, MultiSelect } from "@artsy/palette"
-import { mount, type ReactWrapper } from "enzyme"
+import { MockBoot } from "DevTools/MockBoot"
+import { type ReactWrapper, mount } from "enzyme"
 import { HeadProvider } from "react-head"
+import { useTracking } from "react-tracking"
 import { createMockEnvironment } from "relay-test-utils"
 import { PriceDatabaseArtistAutosuggest } from "./../Components/PriceDatabaseArtistAutosuggest"
 import { PriceDatabase } from "./../PriceDatabase"
-import { useTracking } from "react-tracking"
-import { MockBoot } from "DevTools/MockBoot"
 
 jest.mock("System/Hooks/useRouter", () => {
   return {

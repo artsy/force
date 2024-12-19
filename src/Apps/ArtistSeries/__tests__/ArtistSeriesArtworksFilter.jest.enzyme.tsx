@@ -1,10 +1,10 @@
-import { MockBoot } from "DevTools/MockBoot"
 import { ArtistSeriesArtworksFilterRefetchContainer } from "Apps/ArtistSeries/Components/ArtistSeriesArtworksFilter"
-import { graphql } from "react-relay"
-import type { ArtistSeriesArtworksFilter_Query } from "__generated__/ArtistSeriesArtworksFilter_Query.graphql"
-import { useTracking } from "react-tracking"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import type { ArtistSeriesArtworksFilter_Query } from "__generated__/ArtistSeriesArtworksFilter_Query.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({

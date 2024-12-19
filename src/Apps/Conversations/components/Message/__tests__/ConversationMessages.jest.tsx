@@ -1,11 +1,11 @@
-import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { act, fireEvent, screen, waitFor } from "@testing-library/react"
 import { ConversationMessagesPaginationContainer } from "Apps/Conversations/components/Message/ConversationMessages"
+import { useLoadMore } from "Apps/Conversations/hooks/useLoadMore"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { intersect } from "Utils/Hooks/__tests__/mockIntersectionObserver"
 import type { ConversationMessagesTestQuery } from "__generated__/ConversationMessagesTestQuery.graphql"
 import { format, subDays } from "date-fns"
-import { act, fireEvent, screen, waitFor } from "@testing-library/react"
-import { intersect } from "Utils/Hooks/__tests__/mockIntersectionObserver"
-import { useLoadMore } from "Apps/Conversations/hooks/useLoadMore"
+import { graphql } from "react-relay"
 
 jest.mock("Apps/Conversations/hooks/useLoadMore")
 

@@ -1,20 +1,20 @@
 import {
   type AuthContextModule,
   type AuthIntent,
-  Intent,
   AuthModalType,
-  ContextModule,
   type AuthTrigger,
+  ContextModule,
+  Intent,
 } from "@artsy/cohesion"
 import { useToasts } from "@artsy/palette"
 import {
   AuthDialog,
   type AuthDialogProps,
 } from "Components/AuthDialog/AuthDialog"
-import { merge } from "lodash"
-import { createContext, type FC, useContext, useReducer } from "react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
+import { merge } from "lodash"
+import { type FC, createContext, useContext, useReducer } from "react"
 
 export const AUTH_DIALOG_MODES = [
   "Welcome",

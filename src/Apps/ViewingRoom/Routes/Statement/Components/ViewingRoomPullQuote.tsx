@@ -1,7 +1,7 @@
-import type * as React from "react"
 import { Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
 import type { ViewingRoomPullQuote_viewingRoom$data } from "__generated__/ViewingRoomPullQuote_viewingRoom.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ViewingRoomPullQuoteProps {
   viewingRoom: ViewingRoomPullQuote_viewingRoom$data

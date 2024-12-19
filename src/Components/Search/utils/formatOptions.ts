@@ -1,5 +1,5 @@
-import { getLabel } from "./getLabel"
 import type { SuggestionItemOptionProps } from "Components/Search/SuggestionItem/SuggestionItem"
+import { getLabel } from "./getLabel"
 
 export interface SearchNodeOption {
   __typename: string

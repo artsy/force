@@ -1,4 +1,3 @@
-import * as Yup from "yup"
 import {
   Box,
   Button,
@@ -12,15 +11,16 @@ import {
   Text,
 } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
+import { AuthDialogSignUpPlaceholder } from "Components/AuthDialog/Components/AuthDialogSignUpPlaceholder"
+import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
+import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
+import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
+import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
+import { AuthDialogDisclaimer } from "Components/AuthDialog/Views/AuthDialogDisclaimer"
+import { signUp } from "Utils/auth"
 import { Form, Formik } from "formik"
 import type { FC } from "react"
-import { signUp } from "Utils/auth"
-import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
-import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
-import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
-import { AuthDialogSignUpPlaceholder } from "Components/AuthDialog/Components/AuthDialogSignUpPlaceholder"
-import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
-import { AuthDialogDisclaimer } from "Components/AuthDialog/Views/AuthDialogDisclaimer"
+import * as Yup from "yup"
 
 export const AuthDialogSignUp: FC<React.PropsWithChildren<unknown>> = () => {
   const {

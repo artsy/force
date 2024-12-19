@@ -14,11 +14,11 @@ import {
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtQuizRecommendedArtist_artist$data } from "__generated__/ArtQuizRecommendedArtist_artist.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtQuizRecommendedArtistProps {
   artist: ArtQuizRecommendedArtist_artist$data

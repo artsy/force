@@ -6,10 +6,10 @@ import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
 import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
 import type { SaveArtworkToListsButton_Test_Query } from "__generated__/SaveArtworkToListsButton_Test_Query.graphql"
-import { fetchQuery } from "react-relay"
 import { act } from "react-dom/test-utils"
+import { graphql } from "react-relay"
+import { fetchQuery } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("Components/Artwork/SaveButton/SaveArtworkMutation")

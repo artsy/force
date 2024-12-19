@@ -1,12 +1,12 @@
-import * as React from "react"
-import { ErrorWithMetadata } from "Utils/errors"
-import createLogger from "Utils/logger"
-import { ErrorPage } from "Components/ErrorPage"
 import { Button, Spacer } from "@artsy/palette"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
+import { ErrorPage } from "Components/ErrorPage"
+import { ErrorWithMetadata } from "Utils/errors"
 import { getENV } from "Utils/getENV"
-import type { ErrorInfo } from "react"
+import createLogger from "Utils/logger"
 import { HttpError } from "found"
+import * as React from "react"
+import type { ErrorInfo } from "react"
 
 const logger = createLogger()
 

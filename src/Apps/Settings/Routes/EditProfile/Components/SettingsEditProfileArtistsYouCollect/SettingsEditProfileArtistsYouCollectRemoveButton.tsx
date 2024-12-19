@@ -1,7 +1,7 @@
+import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
+import CloseIcon from "@artsy/icons/CloseIcon"
 import { Clickable, type ClickableProps } from "@artsy/palette"
 import { type FC, useState } from "react"
-import CloseIcon from "@artsy/icons/CloseIcon"
-import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 
 export const SettingsEditProfileArtistsYouCollectRemoveButton: FC<
   React.PropsWithChildren<ClickableProps>

@@ -1,7 +1,7 @@
 import { Box, Flex, Image, ResponsiveBox } from "@artsy/palette"
+import { cropped } from "Utils/resized"
 import { type FC, forwardRef } from "react"
 import styled, { keyframes } from "styled-components"
-import { cropped } from "Utils/resized"
 
 export const OnboardingWelcomeAnimatedPanel = forwardRef(
   (_props, forwardedRef) => {

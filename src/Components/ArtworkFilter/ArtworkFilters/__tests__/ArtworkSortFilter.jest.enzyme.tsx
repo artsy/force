@@ -1,9 +1,9 @@
-import { mount } from "enzyme"
 import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkSortFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkSortFilter"
+import { mount } from "enzyme"
 
 describe("ArtworkSortFilter", () => {
   let context

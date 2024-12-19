@@ -1,19 +1,19 @@
-import type * as React from "react"
 import {
   Box,
   type BoxProps,
+  FullBleed,
   HTML,
   Join,
   Spacer,
   Text,
-  FullBleed,
 } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { FeatureHeaderFull_feature$data } from "__generated__/FeatureHeaderFull_feature.graphql"
 import {
   FullBleedHeader,
   FullBleedHeaderOverlay,
 } from "Components/FullBleedHeader/FullBleedHeader"
+import type { FeatureHeaderFull_feature$data } from "__generated__/FeatureHeaderFull_feature.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface FeatureHeaderFullProps extends BoxProps {
   feature: FeatureHeaderFull_feature$data

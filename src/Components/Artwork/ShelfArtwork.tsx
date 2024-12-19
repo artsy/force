@@ -1,14 +1,14 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
-import type { ShelfArtwork_artwork$data } from "__generated__/ShelfArtwork_artwork.graphql"
-import Metadata, { MetadataPlaceholder } from "Components/Artwork/Metadata"
 import type { AuthContextModule } from "@artsy/cohesion"
 import { Box, Image, SkeletonBox } from "@artsy/palette"
-import { useHoverMetadata } from "Components/Artwork/useHoverMetadata"
-import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
-import { maxDimensionsByArea, resized } from "Utils/resized"
 import { ExclusiveAccessBadge } from "Components/Artwork/ExclusiveAccessBadge"
+import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
+import Metadata, { MetadataPlaceholder } from "Components/Artwork/Metadata"
+import { useHoverMetadata } from "Components/Artwork/useHoverMetadata"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import { maxDimensionsByArea, resized } from "Utils/resized"
+import type { ShelfArtwork_artwork$data } from "__generated__/ShelfArtwork_artwork.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 const DEFAULT_AREA = 200 * 200
 const DEFAULT_MAX_IMG_HEIGHT = 250

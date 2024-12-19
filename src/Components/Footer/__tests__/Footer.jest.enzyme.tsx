@@ -1,10 +1,10 @@
-import { MockBoot } from "DevTools/MockBoot"
-import { mount } from "enzyme"
-import { Footer } from "Components/Footer/Footer"
 import type { Breakpoint } from "@artsy/palette/dist/themes/types"
-import { useRouter } from "System/Hooks/useRouter"
-import { fetchQuery } from "react-relay"
+import { Footer } from "Components/Footer/Footer"
+import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { useRouter } from "System/Hooks/useRouter"
+import { mount } from "enzyme"
+import { fetchQuery } from "react-relay"
 
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn().mockReturnValue({

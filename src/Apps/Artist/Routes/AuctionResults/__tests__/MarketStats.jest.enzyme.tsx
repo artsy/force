@@ -1,8 +1,8 @@
-import { graphql } from "react-relay"
-import { useTracking } from "react-tracking"
+import { MarketStatsFragmentContainer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import type { MarketStats_Test_Query } from "__generated__/MarketStats_Test_Query.graphql"
-import { MarketStatsFragmentContainer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

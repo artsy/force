@@ -1,14 +1,14 @@
-import express from "express"
-import { fetchQuery } from "react-relay"
-import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import { RSS_ARTICLES_QUERY } from "./queries/RssArticlesQuery"
-import type { RssArticlesQuery } from "__generated__/RssArticlesQuery.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import { getENV } from "Utils/getENV"
 import {
   ARTSY_EDITORIAL_CHANNEL,
   GALLERY_PARTNER_UPDATES_CHANNEL,
 } from "Server/config"
+import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
+import { extractNodes } from "Utils/extractNodes"
+import { getENV } from "Utils/getENV"
+import type { RssArticlesQuery } from "__generated__/RssArticlesQuery.graphql"
+import express from "express"
+import { fetchQuery } from "react-relay"
+import { RSS_ARTICLES_QUERY } from "./queries/RssArticlesQuery"
 
 const rssServerApp = express()
 

@@ -1,6 +1,6 @@
-import { mount } from "enzyme"
 import { AddressFormWithCreditCard } from "Apps/Auction/Components/Form/AddressFormWithCreditCard"
 import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
+import { mount } from "enzyme"
 
 jest.mock("Apps/Auction/Hooks/useAuctionFormContext")
 

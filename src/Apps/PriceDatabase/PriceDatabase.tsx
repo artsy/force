@@ -1,12 +1,12 @@
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { Separator, Spacer } from "@artsy/palette"
+import { AuctionResultsFilterContextProvider } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
+import { Media } from "Utils/Responsive"
 import { useEffect } from "react"
 import { useTracking } from "react-tracking"
 import { PriceDatabaseBenefits } from "./Components/PriceDatabaseBenefits"
-import { PriceDatabaseSearch } from "./Components/PriceDatabaseSearch"
 import { PriceDatabaseMeta } from "./Components/PriceDatabaseMeta"
-import { AuctionResultsFilterContextProvider } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
-import { Media } from "Utils/Responsive"
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import { PriceDatabaseSearch } from "./Components/PriceDatabaseSearch"
 
 export const PriceDatabase = () => {
   const { trackEvent } = useTracking()

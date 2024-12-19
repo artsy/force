@@ -1,9 +1,9 @@
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { PriceOptionsFragmentContainer } from "Apps/Order/Components/PriceOptions"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
-import { fireEvent, screen, waitFor, within } from "@testing-library/react"
-import { useTracking } from "react-tracking"
 import type { PriceOptions_Test_Query } from "__generated__/PriceOptions_Test_Query.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 

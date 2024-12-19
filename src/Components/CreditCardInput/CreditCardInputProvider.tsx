@@ -1,7 +1,7 @@
-import type { FC } from "react"
-import { loadStripe } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
+import { loadStripe } from "@stripe/stripe-js"
 import { getENV } from "Utils/getENV"
+import type { FC } from "react"
 
 export const CreditCardInputProvider: FC<React.PropsWithChildren<unknown>> = ({
   children,

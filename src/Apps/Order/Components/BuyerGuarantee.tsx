@@ -1,9 +1,9 @@
 import { ActionType, type ContextModule } from "@artsy/cohesion"
-import { Flex, Text, StackableBorderBox, Spacer } from "@artsy/palette"
+import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
+import { Flex, Spacer, StackableBorderBox, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type * as React from "react"
 import { useTracking } from "react-tracking"
-import { RouterLink } from "System/Components/RouterLink"
-import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 
 export const BUYER_GUARANTEE_URL =
   "https://support.artsy.net/s/article/The-Artsy-Guarantee"

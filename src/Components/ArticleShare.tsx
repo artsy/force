@@ -1,10 +1,10 @@
+import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
+import FacebookIcon from "@artsy/icons/FacebookIcon"
+import XIcon from "@artsy/icons/XIcon"
 import { Box, type BoxProps, Flex, Join, Spacer } from "@artsy/palette"
-import type { FC } from "react"
 import { useArticleTracking } from "Apps/Article/useArticleTracking"
 import { getENV } from "Utils/getENV"
-import XIcon from "@artsy/icons/XIcon"
-import FacebookIcon from "@artsy/icons/FacebookIcon"
-import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
+import type { FC } from "react"
 
 interface ArticleShareProps extends BoxProps {
   description: string | null | undefined

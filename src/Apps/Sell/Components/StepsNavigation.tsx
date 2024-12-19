@@ -1,7 +1,7 @@
 import { Join, Spacer } from "@artsy/palette"
 import { useSellFlowContext } from "Apps/Sell/SellFlowContext"
-import type React from "react"
 import { RouterLink } from "System/Components/RouterLink"
+import type React from "react"
 
 export const StepsNavigation: React.FC<
   React.PropsWithChildren<unknown>

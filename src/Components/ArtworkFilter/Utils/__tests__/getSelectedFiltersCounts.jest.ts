@@ -1,6 +1,6 @@
 import {
-  initialArtworkFilterState,
   getSelectedFiltersCounts,
+  initialArtworkFilterState,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { MultiSelectArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 

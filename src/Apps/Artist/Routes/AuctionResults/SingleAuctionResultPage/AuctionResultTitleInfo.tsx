@@ -1,7 +1,7 @@
 import { Box, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type { AuctionResultTitleInfo_auctionResult$key } from "__generated__/AuctionResultTitleInfo_auctionResult.graphql"
 import { graphql, useFragment } from "react-relay"
-import { RouterLink } from "System/Components/RouterLink"
 
 interface AuctionResultTitleInfoProps {
   auctionResult: AuctionResultTitleInfo_auctionResult$key

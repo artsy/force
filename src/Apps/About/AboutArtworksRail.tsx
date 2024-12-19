@@ -1,14 +1,14 @@
-import { createFragmentContainer, graphql } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { AboutArtworksRailQuery } from "__generated__/AboutArtworksRailQuery.graphql"
-import type { AboutArtworksRail_marketingCollection$data } from "__generated__/AboutArtworksRail_marketingCollection.graphql"
-import { Rail } from "Components/Rail/Rail"
-import { extractNodes } from "Utils/extractNodes"
+import { Skeleton } from "@artsy/palette"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
-import { Skeleton } from "@artsy/palette"
+import { Rail } from "Components/Rail/Rail"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
+import type { AboutArtworksRailQuery } from "__generated__/AboutArtworksRailQuery.graphql"
+import type { AboutArtworksRail_marketingCollection$data } from "__generated__/AboutArtworksRail_marketingCollection.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface AboutArtworksRailProps {
   marketingCollection: AboutArtworksRail_marketingCollection$data

@@ -1,17 +1,17 @@
 import { Box, Clickable, Flex, Text, Tooltip } from "@artsy/palette"
+import type { FC } from "react"
 import { FourUpImageLayout } from "./Images/FourUpImageLayout"
 import { StackedImageLayout } from "./Images/StackedImageLayout"
-import type { FC } from "react"
 
-import { createFragmentContainer, graphql } from "react-relay"
+import HideIcon from "@artsy/icons/HideIcon"
+import { themeGet } from "@styled-system/theme-get"
+import { useArtworkListVisibilityContext } from "Apps/CollectorProfile/Routes/Saves/Utils/useArtworkListVisibility"
+import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtworkListItem_item$data } from "__generated__/ArtworkListItem_item.graphql"
-import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
+import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
-import { useArtworkListVisibilityContext } from "Apps/CollectorProfile/Routes/Saves/Utils/useArtworkListVisibility"
-import { themeGet } from "@styled-system/theme-get"
-import HideIcon from "@artsy/icons/HideIcon"
 
 interface ArtworkListItemProps {
   isSelected?: boolean

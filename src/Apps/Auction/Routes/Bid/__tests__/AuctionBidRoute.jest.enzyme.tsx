@@ -1,12 +1,12 @@
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { AuctionBidRouteFragmentContainer } from "Apps/Auction/Routes/Bid/AuctionBidRoute"
-import type { AuctionBidRouteTestQuery } from "__generated__/AuctionBidRouteTestQuery.graphql"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import { useRouter } from "System/Hooks/useRouter"
+import { AuctionBidRouteFragmentContainer } from "Apps/Auction/Routes/Bid/AuctionBidRoute"
 import { useSubmitBid } from "Apps/Auction/Routes/Bid/useSubmitBid"
-import { Formik } from "formik"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { useRouter } from "System/Hooks/useRouter"
+import type { AuctionBidRouteTestQuery } from "__generated__/AuctionBidRouteTestQuery.graphql"
+import { Formik } from "formik"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

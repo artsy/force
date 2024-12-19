@@ -5,8 +5,8 @@ import {
   type FarceRedirectResult,
   getFarceResult,
 } from "found/server"
-import { Environment, RecordSource, Store } from "relay-runtime"
 import type { Environment as IEnvironment } from "react-relay"
+import { Environment, RecordSource, Store } from "relay-runtime"
 
 import { identityVerificationRoutes } from "Apps/IdentityVerification/identityVerificationRoutes"
 

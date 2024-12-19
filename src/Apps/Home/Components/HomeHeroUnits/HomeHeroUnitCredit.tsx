@@ -1,5 +1,5 @@
-import type * as React from "react"
 import { Text, useTheme } from "@artsy/palette"
+import type * as React from "react"
 import { useState } from "react"
 
 export const HomeHeroUnitCredit: React.FC<React.PropsWithChildren<unknown>> = ({

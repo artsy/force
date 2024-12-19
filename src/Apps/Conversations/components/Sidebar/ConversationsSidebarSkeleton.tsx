@@ -1,12 +1,12 @@
 import {
   Box,
   Flex,
+  Pill,
   Skeleton,
   SkeletonBox,
   SkeletonText,
   StackableBorderBox,
   Text,
-  Pill,
 } from "@artsy/palette"
 
 export const ConversationsSidebarSkeleton = () => {

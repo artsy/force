@@ -1,4 +1,11 @@
 import {
+  ActionType,
+  AuthModalType,
+  ContextModule,
+  type CreatedAccount,
+  Intent,
+} from "@artsy/cohesion"
+import {
   Box,
   Button,
   Clickable,
@@ -8,30 +15,23 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import type * as React from "react"
-import { useState } from "react"
-import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import { EnableRecaptcha } from "Utils/EnableRecaptcha"
-import { wait } from "Utils/wait"
-import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
-import { signUp } from "Utils/auth"
-import { logger } from "Components/Inquiry/util"
-import {
-  ActionType,
-  AuthModalType,
-  ContextModule,
-  type CreatedAccount,
-  Intent,
-} from "@artsy/cohesion"
-import { useTracking } from "react-tracking"
-import { useMode } from "Utils/Hooks/useMode"
-import { RouterLink } from "System/Components/RouterLink"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import {
   Screen,
   useInquiryAccountContext,
 } from "Components/Inquiry/Views/InquiryAccount"
-import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
+import { logger } from "Components/Inquiry/util"
+import { RouterLink } from "System/Components/RouterLink"
+import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
+import { EnableRecaptcha } from "Utils/EnableRecaptcha"
+import { useMode } from "Utils/Hooks/useMode"
+import { signUp } from "Utils/auth"
+import { wait } from "Utils/wait"
+import type * as React from "react"
+import { useState } from "react"
+import { useTracking } from "react-tracking"
 
 type Mode = "Pending" | "Loading" | "Error" | "Done" | "Success"
 

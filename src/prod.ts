@@ -4,8 +4,8 @@ import "./Server/loadenv"
 import "./Server/datadog"
 
 import path from "path"
-import express from "express"
 import chalk from "chalk"
+import express from "express"
 import { startServer } from "./Server/startServer"
 
 console.log(chalk.green(`\n[Force] NODE_ENV=${process.env.NODE_ENV}\n`))

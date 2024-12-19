@@ -1,7 +1,7 @@
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ArtistCurrentArticlesRailFragmentContainer } from "Components/ArtistCurrentArticlesRail"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import type { ArtistCurrentArticlesRail_Test_Query } from "__generated__/ArtistCurrentArticlesRail_Test_Query.graphql"
+import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")

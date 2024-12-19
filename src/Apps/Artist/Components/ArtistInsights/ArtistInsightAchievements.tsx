@@ -1,6 +1,4 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { type FC, useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import {
   Clickable,
   Column,
@@ -10,6 +8,8 @@ import {
   Text,
 } from "@artsy/palette"
 import type { ArtistInsightAchievements_artist$data } from "__generated__/ArtistInsightAchievements_artist.graphql"
+import { type FC, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
 interface ArtistInsightAchievementsProps {

@@ -1,12 +1,12 @@
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { EntityHeaderGeneStoryQuery } from "__generated__/EntityHeaderGeneStoryQuery.graphql"
 import { graphql } from "react-relay"
 import { States } from "storybook-states"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   EntityHeaderGeneFragmentContainer,
   type EntityHeaderGeneProps,
 } from "./EntityHeaderGene"
 import { EntityHeaderPlaceholder } from "./EntityHeaderPlaceholder"
-import type { EntityHeaderGeneStoryQuery } from "__generated__/EntityHeaderGeneStoryQuery.graphql"
 
 export default {
   title: "Components/EntityHeader",

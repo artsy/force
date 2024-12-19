@@ -12,23 +12,23 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
-import styled from "styled-components"
-import { type FC, Fragment } from "react"
-import {
-  createPaginationContainer,
-  graphql,
-  type RelayPaginationProp,
-} from "react-relay"
+import { themeGet } from "@styled-system/theme-get"
+import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useMode } from "Utils/Hooks/useMode"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArticleInfiniteScrollQuery } from "__generated__/ArticleInfiniteScrollQuery.graphql"
+import type { ArticleInfiniteScroll_viewer$data } from "__generated__/ArticleInfiniteScroll_viewer.graphql"
+import { type FC, Fragment } from "react"
+import {
+  type RelayPaginationProp,
+  createPaginationContainer,
+  graphql,
+} from "react-relay"
+import styled from "styled-components"
 import { ArticleBodyFragmentContainer } from "./ArticleBody"
 import { ArticleVerticalRelatedArticlesQueryRenderer } from "./ArticleVerticalRelatedArticles"
-import type { ArticleInfiniteScroll_viewer$data } from "__generated__/ArticleInfiniteScroll_viewer.graphql"
-import { useMode } from "Utils/Hooks/useMode"
-import { themeGet } from "@styled-system/theme-get"
 import { ArticleVisibilityMetadataFragmentContainer } from "./ArticleVisibilityMetadata"
-import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 
 interface ArticleInfiniteScrollProps {
   viewer: ArticleInfiniteScroll_viewer$data

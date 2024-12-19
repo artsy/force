@@ -1,50 +1,50 @@
-// libs
-import { createRef, type FC, useEffect } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import { Box, Flex, Spacer } from "@artsy/palette"
 import type { Stripe, StripeElements, StripeError } from "@stripe/stripe-js"
 import type { Router } from "found"
-import { Box, Flex, Spacer } from "@artsy/palette"
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+// libs
+import { type FC, createRef, useEffect } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
+import type { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
 // relay generated
 import type { Payment_me$data } from "__generated__/Payment_me.graphql"
 import type { Payment_order$data } from "__generated__/Payment_order.graphql"
-import type { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
 
-// utils, hooks, mutations and system tools
-import { extractNodes } from "Utils/extractNodes"
-import { useRouter } from "System/Hooks/useRouter"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
-import createLogger from "Utils/logger"
+import { useStripePaymentBySetupIntentId } from "Apps/Order/Hooks/useStripePaymentBySetupIntentId"
+import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import {
   type CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import { getInitialPaymentMethodValue } from "Apps/Order/Utils/orderUtils"
-import { useStripePaymentBySetupIntentId } from "Apps/Order/Hooks/useStripePaymentBySetupIntentId"
-import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useRouter } from "System/Hooks/useRouter"
+// utils, hooks, mutations and system tools
+import { extractNodes } from "Utils/extractNodes"
+import createLogger from "Utils/logger"
 import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
 
-// components
-import { PartnerOfferTimerItem } from "Apps/Order/Components/PartnerOfferTimerItem"
-import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { AdditionalArtworkDetailsFragmentContainer as AdditionalArtworkDetails } from "Apps/Order/Components/AdditionalArtworkDetails"
+import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
+import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
+import type { CreditCardPicker } from "Apps/Order/Components/CreditCardPicker"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import {
   buyNowFlowSteps,
-  privateFlowSteps,
   offerFlowSteps,
+  privateFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
-import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import type { CreditCardPicker } from "Apps/Order/Components/CreditCardPicker"
-import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
+// components
+import { PartnerOfferTimerItem } from "Apps/Order/Components/PartnerOfferTimerItem"
 import { PollAccountBalanceQueryRenderer } from "Apps/Order/Components/PollAccountBalance"
-import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
-import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
-import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
-import { PaymentContent } from "./PaymentContent"
+import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner"
+import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
+import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import { useJump } from "Utils/Hooks/useJump"
+import { PaymentContent } from "./PaymentContent"
 
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 

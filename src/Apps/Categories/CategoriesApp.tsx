@@ -1,13 +1,13 @@
+import { FullBleed, Spacer, useTheme } from "@artsy/palette"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { MetaTags } from "Components/MetaTags"
+import { Sticky } from "Components/Sticky"
+import type { CategoriesApp_geneFamiliesConnection$data } from "__generated__/CategoriesApp_geneFamiliesConnection.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { MetaTags } from "Components/MetaTags"
 import { CategoriesIntro } from "./Components/CategoriesIntro"
 import { GeneFamiliesFragmentContainer } from "./Components/GeneFamilies"
-import type { CategoriesApp_geneFamiliesConnection$data } from "__generated__/CategoriesApp_geneFamiliesConnection.graphql"
 import { StickyNavFragmentContainer } from "./Components/StickyNav"
-import { FullBleed, Spacer, useTheme } from "@artsy/palette"
-import { Sticky } from "Components/Sticky"
-import { AppContainer } from "Apps/Components/AppContainer"
 
 interface CategoriesAppProps {
   geneFamiliesConnection: CategoriesApp_geneFamiliesConnection$data

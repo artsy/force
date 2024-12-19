@@ -1,30 +1,30 @@
+import { ActionType, ContextModule, Intent, OwnerType } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import HelpIcon from "@artsy/icons/HelpIcon"
 import {
   Box,
   Button,
   Flex,
   Link,
-  Select,
   type Option,
+  Select,
   Separator,
   Spacer,
   Text,
   Tooltip,
 } from "@artsy/palette"
-import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtworkSidebarBidAction_artwork$data } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
-import type { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSidebarBidAction_me.graphql"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { type TrackingProp, useTracking } from "react-tracking"
-import { getENV } from "Utils/getENV"
-import { bidderQualifications } from "Utils/identityVerificationRequirements"
-import { compact } from "lodash"
-import type { Router } from "found"
-import { useRouter } from "System/Hooks/useRouter"
-import { ActionType, ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { type ShowAuthDialog, withAuthDialog } from "Components/AuthDialog"
-import HelpIcon from "@artsy/icons/HelpIcon"
+import { useRouter } from "System/Hooks/useRouter"
+import { getENV } from "Utils/getENV"
+import { bidderQualifications } from "Utils/identityVerificationRequirements"
+import type { ArtworkSidebarBidAction_artwork$data } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
+import type { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSidebarBidAction_me.graphql"
+import type { Router } from "found"
+import { compact } from "lodash"
+import * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { type TrackingProp, useTracking } from "react-tracking"
 
 export interface ArtworkSidebarBidActionProps {
   artwork: ArtworkSidebarBidAction_artwork$data

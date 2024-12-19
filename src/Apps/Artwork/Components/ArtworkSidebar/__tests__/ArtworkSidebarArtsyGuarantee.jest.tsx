@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/react"
 import { ArtworkSidebarArtsyGuarantee } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarArtsyGuarantee"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
 import type { ArtworkSidebarArtsyGuarantee_Test_Query } from "__generated__/ArtworkSidebarArtsyGuarantee_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

@@ -1,24 +1,24 @@
-import type { Router } from "found"
-import { useRef } from "react"
-import { useRouter } from "System/Hooks/useRouter"
-import createLogger from "Utils/logger"
-import { useBidderPosition } from "Apps/Auction/Queries/useBidderPosition"
-import { useCreateBidderPosition } from "Apps/Auction/Queries/useCreateBidderPosition"
-import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
-import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import type { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
-import type { AuctionBidRoute_artwork$data } from "__generated__/AuctionBidRoute_artwork.graphql"
-import type { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
-import type { RelayRefetchProp } from "react-relay"
 import { useToasts } from "@artsy/palette"
-import type {
-  AuctionFormHelpers,
-  AuctionFormValues,
-} from "Apps/Auction/Components/Form/Utils/initialValues"
 import {
   type BiddingStatus,
   errorMessageForBidding,
 } from "Apps/Auction/Components/Form/Utils/errorMessages"
+import type {
+  AuctionFormHelpers,
+  AuctionFormValues,
+} from "Apps/Auction/Components/Form/Utils/initialValues"
+import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
+import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
+import { useBidderPosition } from "Apps/Auction/Queries/useBidderPosition"
+import { useCreateBidderPosition } from "Apps/Auction/Queries/useCreateBidderPosition"
+import { useRouter } from "System/Hooks/useRouter"
+import createLogger from "Utils/logger"
+import type { AuctionBidRoute_artwork$data } from "__generated__/AuctionBidRoute_artwork.graphql"
+import type { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
+import type { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
+import type { Router } from "found"
+import { useRef } from "react"
+import type { RelayRefetchProp } from "react-relay"
 
 const logger = createLogger("useSubmitBid")
 

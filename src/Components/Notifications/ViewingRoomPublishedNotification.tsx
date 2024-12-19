@@ -1,13 +1,13 @@
-import { Flex, Spacer, Text } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
-import type { FC } from "react"
-import { useFragment, graphql } from "react-relay"
-import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
-import type { ViewingRoomPublishedNotification_notification$key } from "__generated__/ViewingRoomPublishedNotification_notification.graphql"
 import { ContextModule } from "@artsy/cohesion"
+import { Flex, Spacer, Text } from "@artsy/palette"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
-import { NotificationViewingRoomsList } from "Components/Notifications/NotificationViewingRoomsList"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
+import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
+import { NotificationViewingRoomsList } from "Components/Notifications/NotificationViewingRoomsList"
+import { RouterLink } from "System/Components/RouterLink"
+import type { ViewingRoomPublishedNotification_notification$key } from "__generated__/ViewingRoomPublishedNotification_notification.graphql"
+import type { FC } from "react"
+import { graphql, useFragment } from "react-relay"
 
 interface ViewingRoomPublishedNotificationProps {
   notification: ViewingRoomPublishedNotification_notification$key

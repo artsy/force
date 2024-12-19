@@ -1,5 +1,5 @@
-import { ArtQuizResultsFragmentContainer } from "Apps/ArtQuiz/Routes/ArtQuizResults"
 import { screen } from "@testing-library/react"
+import { ArtQuizResultsFragmentContainer } from "Apps/ArtQuiz/Routes/ArtQuizResults"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 

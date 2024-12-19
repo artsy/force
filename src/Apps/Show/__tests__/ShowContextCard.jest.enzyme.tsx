@@ -1,8 +1,8 @@
 import { ShowContextCardFragmentContainer } from "Apps/Show/Components/ShowContextCard"
-import { graphql } from "react-relay"
-import type { ShowContextCard_Test_Query } from "__generated__/ShowContextCard_Test_Query.graphql"
-import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
+import type { ShowContextCard_Test_Query } from "__generated__/ShowContextCard_Test_Query.graphql"
+import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")

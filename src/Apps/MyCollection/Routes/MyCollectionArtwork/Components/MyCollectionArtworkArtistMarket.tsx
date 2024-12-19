@@ -11,10 +11,10 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import type { MyCollectionArtworkArtistMarket_marketPriceInsights$data } from "__generated__/MyCollectionArtworkArtistMarket_marketPriceInsights.graphql"
 import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
-import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
+import type { MyCollectionArtworkArtistMarket_marketPriceInsights$data } from "__generated__/MyCollectionArtworkArtistMarket_marketPriceInsights.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export const MyCollectionArtworkArtistMarket = ({
   marketPriceInsights,

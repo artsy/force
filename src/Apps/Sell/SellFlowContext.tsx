@@ -1,4 +1,12 @@
 import { useToasts } from "@artsy/palette"
+import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
+import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
+import { useUpdateMyCollectionArtwork } from "Apps/Sell/Mutations/useUpdateMyCollectionArtwork"
+import { useUpdateSubmission } from "Apps/Sell/Mutations/useUpdateSubmission"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useRouter } from "System/Hooks/useRouter"
+import { getENV } from "Utils/getENV"
+import createLogger from "Utils/logger"
 import type {
   ConsignmentSubmissionStateAggregation,
   CreateSubmissionMutationInput,
@@ -9,16 +17,8 @@ import type { useCreateSubmissionMutation$data } from "__generated__/useCreateSu
 import type { MyCollectionUpdateArtworkInput } from "__generated__/useUpdateArtworkMutation.graphql"
 import type { useUpdateMyCollectionArtworkMutation$data } from "__generated__/useUpdateMyCollectionArtworkMutation.graphql"
 import type { useUpdateSubmissionMutation$data } from "__generated__/useUpdateSubmissionMutation.graphql"
-import { useSubmissionTracking } from "Apps/Sell/Hooks/useSubmissionTracking"
-import { useCreateSubmission } from "Apps/Sell/Mutations/useCreateSubmission"
-import { useUpdateMyCollectionArtwork } from "Apps/Sell/Mutations/useUpdateMyCollectionArtwork"
-import { useUpdateSubmission } from "Apps/Sell/Mutations/useUpdateSubmission"
 import { createContext, useContext, useEffect, useMemo, useState } from "react"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
-import { useRouter } from "System/Hooks/useRouter"
 import { useCursor } from "use-cursor"
-import { getENV } from "Utils/getENV"
-import createLogger from "Utils/logger"
 
 const logger = createLogger("SellFlowContext.tsx")
 

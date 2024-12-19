@@ -1,8 +1,8 @@
-import { Box, Column, GridColumns, Text, Spacer, Button } from "@artsy/palette"
-import type { FC } from "react"
+import { Box, Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { FullBleedHeaderFader } from "Components/FullBleedHeader/FullBleedHeaderFader"
+import type { FC } from "react"
 
 export const InstitutionPartnershipsHero: FC<
   React.PropsWithChildren<unknown>

@@ -1,7 +1,7 @@
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ArtistEditorialNewsGridFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import type { ArtistEditorialNewsGrid_Test_Query } from "__generated__/ArtistEditorialNewsGrid_Test_Query.graphql"
+import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")

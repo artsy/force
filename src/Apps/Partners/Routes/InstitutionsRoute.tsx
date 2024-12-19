@@ -8,16 +8,16 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { MetaTags } from "Components/MetaTags"
-import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Hooks/useRouter"
-import type { InstitutionsRoute_viewer$data } from "__generated__/InstitutionsRoute_viewer.graphql"
 import { PartnersFeaturedCarouselFragmentContainer } from "Apps/Partners/Components/PartnersFeaturedCarousel"
 import { PartnersFilteredCellsQueryRenderer } from "Apps/Partners/Components/PartnersFilteredCells"
 import { PartnersFilters } from "Apps/Partners/Components/PartnersFilters"
 import { PartnersRailsQueryRenderer } from "Apps/Partners/Components/PartnersRails"
+import { MetaTags } from "Components/MetaTags"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
+import type { InstitutionsRoute_viewer$data } from "__generated__/InstitutionsRoute_viewer.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface InstitutionsRouteProps {
   viewer: InstitutionsRoute_viewer$data

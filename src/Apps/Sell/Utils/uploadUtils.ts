@@ -1,11 +1,11 @@
+import type { DropzoneFile } from "Components/FileUpload/types"
+import { getConvectionGeminiKey } from "Components/PhotoUpload/Mutations/getConvectionGeminiKey"
+import { getGeminiCredentialsForEnvironment } from "Components/PhotoUpload/Mutations/getGeminiCredentialsForEnvironment"
 import { normalizePhoto } from "Components/PhotoUpload/Utils/fileUtils"
+import { uploadFileToS3 } from "Components/PhotoUpload/Utils/uploadFileToS3"
 import createLogger from "Utils/logger"
 import type { PhotosRoute_submission$data } from "__generated__/PhotosRoute_submission.graphql"
 import type { Environment } from "react-relay"
-import { uploadFileToS3 } from "Components/PhotoUpload/Utils/uploadFileToS3"
-import { getConvectionGeminiKey } from "Components/PhotoUpload/Mutations/getConvectionGeminiKey"
-import { getGeminiCredentialsForEnvironment } from "Components/PhotoUpload/Mutations/getGeminiCredentialsForEnvironment"
-import type { DropzoneFile } from "Components/FileUpload/types"
 
 const logger = createLogger("Sell/uploadUtils.ts")
 

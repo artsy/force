@@ -2,8 +2,8 @@ import { ContextModule } from "@artsy/cohesion"
 import { SaveButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveButton"
 import { useAuthDialog } from "Components/AuthDialog/useAuthDialog"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { graphql } from "react-relay"
 import type { SaveButtonTestQuery } from "__generated__/SaveButtonTestQuery.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

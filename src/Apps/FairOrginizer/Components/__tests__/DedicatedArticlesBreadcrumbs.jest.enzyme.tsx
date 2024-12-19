@@ -1,7 +1,7 @@
-import { graphql } from "react-relay"
-import type { DedicatedArticlesBreadcrumbs_Test_Query } from "__generated__/DedicatedArticlesBreadcrumbs_Test_Query.graphql"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { DedicatedArticlesBreadcrumbsFragmentContainer } from "Apps/FairOrginizer/Components/DedicatedArticlesBreadcrumbs"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { DedicatedArticlesBreadcrumbs_Test_Query } from "__generated__/DedicatedArticlesBreadcrumbs_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

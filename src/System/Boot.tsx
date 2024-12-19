@@ -1,30 +1,30 @@
-import { Theme, injectGlobalStyles, ToastsProvider } from "@artsy/palette"
+import { DismissibleProvider } from "@artsy/dismissible"
+import { Theme, ToastsProvider, injectGlobalStyles } from "@artsy/palette"
+import isPropValid from "@emotion/is-prop-valid"
+import {
+  AppPreferencesProvider,
+  useAppPreferences,
+} from "Apps/AppPreferences/useAppPreferences"
+import { AuthDialogProvider } from "Components/AuthDialog/AuthDialogContext"
+import { CookieConsentManager } from "Components/CookieConsentManager/CookieConsentManager"
+import { PROGRESSIVE_ONBOARDING_KEYS } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
+import { StickyProvider } from "Components/Sticky"
+import { ErrorBoundary } from "System/Components/ErrorBoundary"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
-import { type FC, useEffect } from "react"
-import { HeadProvider } from "react-head"
-import { type Environment, RelayEnvironmentProvider } from "react-relay"
+import type { ClientContext } from "System/Router/Utils/clientAppContext"
 import Events from "Utils/Events"
+import { AuthIntentProvider } from "Utils/Hooks/useAuthIntent"
 import {
   type MatchingMediaQueries,
   MediaContextProvider,
 } from "Utils/Responsive"
 import { SiftContainer } from "Utils/SiftContainer"
+import { type FC, useEffect } from "react"
+import { HeadProvider } from "react-head"
+import { type Environment, RelayEnvironmentProvider } from "react-relay"
 import track from "react-tracking"
-import { StickyProvider } from "Components/Sticky"
-import { AuthIntentProvider } from "Utils/Hooks/useAuthIntent"
-import { AuthDialogProvider } from "Components/AuthDialog/AuthDialogContext"
-import { CookieConsentManager } from "Components/CookieConsentManager/CookieConsentManager"
-import { DismissibleProvider } from "@artsy/dismissible"
-import { PROGRESSIVE_ONBOARDING_KEYS } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
-import {
-  AppPreferencesProvider,
-  useAppPreferences,
-} from "Apps/AppPreferences/useAppPreferences"
-import type { ClientContext } from "System/Router/Utils/clientAppContext"
-import { ErrorBoundary } from "System/Components/ErrorBoundary"
-import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { StyleSheetManager } from "styled-components"
-import isPropValid from "@emotion/is-prop-valid"
 
 export interface BootProps extends React.PropsWithChildren {
   context: ClientContext

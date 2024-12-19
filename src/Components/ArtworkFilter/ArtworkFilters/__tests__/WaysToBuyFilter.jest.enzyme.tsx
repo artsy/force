@@ -1,4 +1,3 @@
-import { mount } from "enzyme"
 import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
@@ -7,6 +6,7 @@ import {
   WaysToBuyFilter,
   type WaysToBuyFilterProps,
 } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
+import { mount } from "enzyme"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

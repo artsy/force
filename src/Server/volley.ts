@@ -1,6 +1,6 @@
 import type { PageOwnerType } from "@artsy/cohesion"
-import { compact } from "lodash"
 import { getENV } from "Utils/getENV"
+import { compact } from "lodash"
 import {
   getDomComplete,
   getDomContentLoadedEnd,

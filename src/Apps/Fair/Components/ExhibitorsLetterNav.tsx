@@ -1,16 +1,16 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import {
-  Text,
+  type BoxProps,
+  Clickable,
   Flex,
   HorizontalOverflow,
-  Clickable,
-  type BoxProps,
+  Text,
 } from "@artsy/palette"
-import type { ExhibitorsLetterNav_fair$data } from "__generated__/ExhibitorsLetterNav_fair.graphql"
 import { getExhibitorSectionId } from "Apps/Fair/Utils/getExhibitorSectionId"
 import { useJump } from "Utils/Hooks/useJump"
 import { Media } from "Utils/Responsive"
+import type { ExhibitorsLetterNav_fair$data } from "__generated__/ExhibitorsLetterNav_fair.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#".split("")
 

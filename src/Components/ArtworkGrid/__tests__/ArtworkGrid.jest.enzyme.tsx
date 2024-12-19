@@ -1,8 +1,4 @@
-import type { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
-import { MockBoot } from "DevTools/MockBoot"
-import { graphql } from "react-relay"
 import GridItem, { ArtworkGridItem } from "Components/Artwork/GridItem"
-import { ArtworkGridFixture } from "./ArtworkGridFixture"
 import ArtworkGrid, {
   ArtworkGridContainer,
   type ArtworkGridContainerState,
@@ -12,7 +8,11 @@ import {
   ArtworkGridEmptyState,
   ResetFilterLink,
 } from "Components/ArtworkGrid/ArtworkGridEmptyState"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
+import { graphql } from "react-relay"
+import { ArtworkGridFixture } from "./ArtworkGridFixture"
 
 jest.unmock("react-relay")
 global.clearInterval = jest.fn()

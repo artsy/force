@@ -1,5 +1,5 @@
-import { mount } from "enzyme"
 import { Product } from "Components/Seo/Product"
+import { mount } from "enzyme"
 import { HeadProvider } from "react-head"
 
 describe("Product", () => {

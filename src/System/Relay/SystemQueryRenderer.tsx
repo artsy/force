@@ -1,15 +1,8 @@
-import type * as React from "react"
-import {
-  type Environment,
-  type FetchPolicy,
-  QueryRenderer,
-  type QueryRendererProps,
-} from "react-relay"
-import type { CacheConfig, OperationType } from "relay-runtime"
-import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import createLogger from "Utils/logger"
+import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
+import createLogger from "Utils/logger"
+import type * as React from "react"
 import {
   type JSXElementConstructor,
   type ReactElement,
@@ -17,6 +10,13 @@ import {
   useState,
 } from "react"
 import { isForwardRef } from "react-is"
+import {
+  type Environment,
+  type FetchPolicy,
+  QueryRenderer,
+  type QueryRendererProps,
+} from "react-relay"
+import type { CacheConfig, OperationType } from "relay-runtime"
 
 export type SystemQueryRendererProps<T extends OperationType> = Omit<
   QueryRendererProps<T>,

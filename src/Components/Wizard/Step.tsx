@@ -1,4 +1,4 @@
-import { createElement, Component } from "react"
+import { Component, createElement } from "react"
 import type { StepProps } from "./types"
 
 /**

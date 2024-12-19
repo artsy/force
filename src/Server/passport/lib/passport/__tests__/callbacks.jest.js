@@ -3,8 +3,8 @@ const rewire = require("rewire")
 const cbs = require("../callbacks")
 
 import options from "Server/passport/lib/options"
-import request from "superagent"
 import passport from "passport"
+import request from "superagent"
 
 jest.mock("superagent")
 jest.mock("Server/passport/lib/options", () => ({

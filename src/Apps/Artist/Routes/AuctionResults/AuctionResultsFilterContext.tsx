@@ -2,11 +2,11 @@ import {
   type AuctionResultsFilters,
   initialAuctionResultsFilterState,
 } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
+import { type Metric, getSupportedMetric } from "Utils/metrics"
 import { omit } from "lodash"
 import * as React from "react"
 import { useContext, useReducer, useState } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { getSupportedMetric, type Metric } from "Utils/metrics"
 
 export type Slice =
   | "SIMPLE_PRICE_HISTOGRAM"

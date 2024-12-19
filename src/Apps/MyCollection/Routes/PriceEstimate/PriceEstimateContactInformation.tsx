@@ -1,8 +1,6 @@
 import { ActionType } from "@artsy/cohesion"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 import { Button, Flex, Spacer, Text, useToasts } from "@artsy/palette"
-import type { PriceEstimateContactInformation_artwork$data } from "__generated__/PriceEstimateContactInformation_artwork.graphql"
-import type { PriceEstimateContactInformation_me$data } from "__generated__/PriceEstimateContactInformation_me.graphql"
 import { AppContainer } from "Apps/Components/AppContainer"
 import {
   ContactInformationFormFragmentContainer,
@@ -15,12 +13,14 @@ import {
 } from "Apps/MyCollection/Routes/PriceEstimate/utils/contactInformationValidationSchema"
 import { BackLink } from "Components/Links/BackLink"
 import { MetaTags } from "Components/MetaTags"
-import { Form, Formik } from "formik"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { COUNTRY_CODES } from "Utils/countries"
+import type { PriceEstimateContactInformation_artwork$data } from "__generated__/PriceEstimateContactInformation_artwork.graphql"
+import type { PriceEstimateContactInformation_me$data } from "__generated__/PriceEstimateContactInformation_me.graphql"
+import { Form, Formik } from "formik"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 const getContactInformationFormInitialValues = (
   me: PriceEstimateContactInformation_me$data

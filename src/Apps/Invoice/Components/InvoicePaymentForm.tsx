@@ -1,5 +1,3 @@
-import { Formik, Form } from "formik"
-import * as Yup from "yup"
 import { Button, Spacer } from "@artsy/palette"
 import type { AddressFormValues } from "Apps/Invoice/Components/AddressFormWithCreditCard"
 import { AddressFormWithCreditCard } from "Apps/Invoice/Components/AddressFormWithCreditCard"
@@ -7,6 +5,8 @@ import { useCreateTokenAndSubmit } from "Apps/Invoice/Hooks/useCreateTokenAndSub
 import { addressFormFieldsValidator } from "Components/Address/AddressFormFields"
 import { emptyAddress } from "Components/Address/utils"
 import { useRouter } from "System/Hooks/useRouter"
+import { Form, Formik } from "formik"
+import * as Yup from "yup"
 
 export interface InvoicePaymentFormProps {
   invoiceID: string

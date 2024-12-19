@@ -8,10 +8,10 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import styled from "styled-components"
 import { RouterLink } from "System/Components/RouterLink"
-import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
+import { resized } from "Utils/resized"
+import styled from "styled-components"
 
 export const InsightsCareerHighlightPromoCard: React.FC<
   React.PropsWithChildren<{

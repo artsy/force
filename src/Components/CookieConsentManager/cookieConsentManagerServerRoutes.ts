@@ -1,6 +1,6 @@
 import { COOKIE_CONSENT_MANAGER_COOKIE_NAME } from "Components/CookieConsentManager/CookieConsentManager"
-import { Router } from "express"
 import type { ArtsyRequest } from "Server/middleware/artsyExpress"
+import { Router } from "express"
 
 const COOKIE_CONFIGURATION = {
   maxAge: 1000 * 60 * 60 * 24 * 365,

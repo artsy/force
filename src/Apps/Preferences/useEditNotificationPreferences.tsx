@@ -1,6 +1,6 @@
 import { useMutation } from "Utils/Hooks/useMutation"
-import { graphql } from "react-relay"
 import type { useEditNotificationPreferencesMutation } from "__generated__/useEditNotificationPreferencesMutation.graphql"
+import { graphql } from "react-relay"
 
 export const useEditNotificationPreferences = () => {
   return useMutation<useEditNotificationPreferencesMutation>({

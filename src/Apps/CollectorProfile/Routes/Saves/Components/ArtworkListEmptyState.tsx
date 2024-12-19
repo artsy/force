@@ -1,8 +1,8 @@
 import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import type { ArtworkListEmptyState_me$data } from "__generated__/ArtworkListEmptyState_me.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtworkListEmptyStateProps {
   me: ArtworkListEmptyState_me$data

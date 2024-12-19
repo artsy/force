@@ -1,5 +1,5 @@
-import { Visited } from "../Visited"
 import { get, set } from "cookies-js"
+import { Visited } from "../Visited"
 
 jest.mock("cookies-js")
 

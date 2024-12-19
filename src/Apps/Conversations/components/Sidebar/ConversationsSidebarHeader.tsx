@@ -1,4 +1,4 @@
-import { Text, Box } from "@artsy/palette"
+import { Box, Text } from "@artsy/palette"
 
 export const ConversationsSidebarHeader: React.FC<
   React.PropsWithChildren<unknown>

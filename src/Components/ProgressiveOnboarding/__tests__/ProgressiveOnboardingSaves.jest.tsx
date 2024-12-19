@@ -1,15 +1,15 @@
+import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
 import { render, screen } from "@testing-library/react"
-import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { __ProgressiveOnboardingSaveArtwork__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
 import { __ProgressiveOnboardingSaveFind__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
+import {
+  PROGRESSIVE_ONBOARDING,
+  PROGRESSIVE_ONBOARDING_KEYS,
+} from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
+import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { type FC, useEffect } from "react"
-import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
-import {
-  PROGRESSIVE_ONBOARDING_KEYS,
-  PROGRESSIVE_ONBOARDING,
-} from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 
 jest.mock(
   "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight",

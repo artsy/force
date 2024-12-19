@@ -1,6 +1,6 @@
+import type { AuctionsRoute_viewer$data } from "__generated__/AuctionsRoute_viewer.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { AuctionsRoute_viewer$data } from "__generated__/AuctionsRoute_viewer.graphql"
 
 interface AuctionsRouteProps {
   viewer: AuctionsRoute_viewer$data

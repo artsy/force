@@ -1,9 +1,9 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { AuthenticationResetPasswordRoute } from "Apps/Authentication/Routes/AuthenticationResetPasswordRoute"
 import { MockBoot } from "DevTools/MockBoot"
 import { mockLocation, resetMockLocation } from "DevTools/mockLocation"
 import { useRouter } from "System/Hooks/useRouter"
 import { resetPassword } from "Utils/auth"
-import { AuthenticationResetPasswordRoute } from "Apps/Authentication/Routes/AuthenticationResetPasswordRoute"
 import { getENV } from "Utils/getENV"
 
 jest.mock("System/Hooks/useRouter")

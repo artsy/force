@@ -1,5 +1,5 @@
-import { mount } from "enzyme"
 import { Rail } from "Components/Rail/Rail"
+import { mount } from "enzyme"
 
 describe("Rail", () => {
   const getWrapper = props => {

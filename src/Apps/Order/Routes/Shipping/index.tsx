@@ -1,32 +1,32 @@
-import { type FC, useEffect } from "react"
-import { graphql, useFragment } from "react-relay"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Flex, Spacer } from "@artsy/palette"
-import type {
-  Shipping_order$data,
-  Shipping_order$key,
-} from "__generated__/Shipping_order.graphql"
-import type {
-  Shipping_me$data,
-  Shipping_me$key,
-} from "__generated__/Shipping_me.graphql"
-import { Media } from "Utils/Responsive"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
+import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import {
   buyNowFlowSteps,
   offerFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
-import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
-import { ShippingQuotes } from "Apps/Order/Routes/Shipping/Components/ShippingQuotes"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
-import { Analytics } from "System/Contexts/AnalyticsContext"
 import { FulfillmentDetails } from "Apps/Order/Routes/Shipping/Components/FulfillmentDetails"
-import { ShippingContextProvider } from "Apps/Order/Routes/Shipping/ShippingContext"
-import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import { SaveAndContinueButton } from "Apps/Order/Routes/Shipping/Components/SaveAndContinueButton"
-import { useJump, Jump } from "Utils/Hooks/useJump"
+import { ShippingQuotes } from "Apps/Order/Routes/Shipping/Components/ShippingQuotes"
+import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
+import { ShippingContextProvider } from "Apps/Order/Routes/Shipping/ShippingContext"
+import { Analytics } from "System/Contexts/AnalyticsContext"
+import { Jump, useJump } from "Utils/Hooks/useJump"
+import { Media } from "Utils/Responsive"
+import type {
+  Shipping_me$data,
+  Shipping_me$key,
+} from "__generated__/Shipping_me.graphql"
+import type {
+  Shipping_order$data,
+  Shipping_order$key,
+} from "__generated__/Shipping_order.graphql"
+import { type FC, useEffect } from "react"
+import { graphql, useFragment } from "react-relay"
 
 export type ShippingStage =
   // User choosing fulfillment type

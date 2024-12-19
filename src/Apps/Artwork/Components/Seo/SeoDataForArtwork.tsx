@@ -1,12 +1,12 @@
 import { trim } from "lodash"
 import type * as React from "react"
 
-import type { SeoDataForArtwork_artwork$data } from "__generated__/SeoDataForArtwork_artwork.graphql"
 import { CreativeWork } from "Components/Seo/CreativeWork"
 import { Product } from "Components/Seo/Product"
-import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "Utils/get"
 import { getENV } from "Utils/getENV"
+import type { SeoDataForArtwork_artwork$data } from "__generated__/SeoDataForArtwork_artwork.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface SeoDataForArtworkProps {
   artwork: SeoDataForArtwork_artwork$data

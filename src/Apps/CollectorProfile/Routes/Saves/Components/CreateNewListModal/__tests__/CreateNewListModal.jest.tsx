@@ -1,13 +1,13 @@
-import { screen, fireEvent, waitFor } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import {
   CreateNewListModalContainer,
   type CreateNewListModalContainerProps,
 } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/CreateNewListModal"
 import { render } from "DevTools/renderWithMockBoot"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useTracking } from "react-tracking"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => false),

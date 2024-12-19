@@ -1,6 +1,6 @@
 import { useMutation } from "Utils/Hooks/useMutation"
-import { graphql } from "react-relay"
 import type { useDeleteAddressMutation } from "__generated__/useDeleteAddressMutation.graphql"
+import { graphql } from "react-relay"
 
 export const useDeleteAddress = () => {
   return useMutation<useDeleteAddressMutation>({

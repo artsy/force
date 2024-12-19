@@ -1,8 +1,8 @@
 import loadable from "@loadable/component"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
+import type { RouteProps } from "System/Router/Route"
 import { Redirect } from "found"
 import { graphql } from "react-relay"
-import type { RouteProps } from "System/Router/Route"
-import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 
 const AuctionApp = loadable(
   () => import(/* webpackChunkName: "auctionBundle" */ "./AuctionApp"),

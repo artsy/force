@@ -1,8 +1,8 @@
-import { useTracking } from "react-tracking"
-import { graphql } from "react-relay"
+import { screen } from "@testing-library/react"
 import { ArtistConsignRouteFragmentContainer } from "Apps/Artist/Routes/Consign/ArtistConsignRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

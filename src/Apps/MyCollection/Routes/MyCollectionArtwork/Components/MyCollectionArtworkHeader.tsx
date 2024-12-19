@@ -1,10 +1,10 @@
 import { Button, Flex } from "@artsy/palette"
-import type { MyCollectionArtworkHeader_artwork$key } from "__generated__/MyCollectionArtworkHeader_artwork.graphql"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkBackButton } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkBackButton"
-import { graphql, useFragment } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
+import type { MyCollectionArtworkHeader_artwork$key } from "__generated__/MyCollectionArtworkHeader_artwork.graphql"
+import { graphql, useFragment } from "react-relay"
 
 interface MyCollectionArtworkHeaderProps {
   artwork: MyCollectionArtworkHeader_artwork$key

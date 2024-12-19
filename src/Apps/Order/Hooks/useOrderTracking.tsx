@@ -7,11 +7,11 @@ import {
   type ErrorMessageViewed,
   OwnerType,
 } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import type { FulfillmentType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useMemo } from "react"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
-import type { FulfillmentType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 
 export const useOrderTracking = () => {
   const { trackEvent } = useTracking()

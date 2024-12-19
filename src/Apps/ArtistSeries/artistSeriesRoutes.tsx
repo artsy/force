@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
-import { graphql } from "react-relay"
-import type { RouteProps } from "System/Router/Route"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
+import type { RouteProps } from "System/Router/Route"
+import { graphql } from "react-relay"
 
 const ArtistSeriesApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistSeriesApp"),

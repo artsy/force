@@ -1,10 +1,10 @@
-import { renderRelayTree } from "DevTools/renderRelayTree"
-import { graphql } from "react-relay"
 import { FairCollectionFragmentContainer } from "Apps/Fair/Components/FairCollections/FairCollection"
-import type { FairCollection_Query$rawResponse } from "__generated__/FairCollection_Query.graphql"
-import { useTracking } from "react-tracking"
+import { renderRelayTree } from "DevTools/renderRelayTree"
 import { RouterLink } from "System/Components/RouterLink"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
+import type { FairCollection_Query$rawResponse } from "__generated__/FairCollection_Query.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

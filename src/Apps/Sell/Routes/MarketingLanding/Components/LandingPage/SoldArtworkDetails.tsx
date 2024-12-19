@@ -1,8 +1,8 @@
-import { createFragmentContainer, graphql } from "react-relay"
 import type { AuthContextModule } from "@artsy/cohesion"
 import { Box, Text } from "@artsy/palette"
-import type * as React from "react"
 import type { SoldArtworkDetails_artwork$data } from "__generated__/SoldArtworkDetails_artwork.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface SoldArtworkDetailsProps {
   artwork: SoldArtworkDetails_artwork$data

@@ -1,4 +1,7 @@
-import { type BoxProps, Flex, HTML, FullBleed, Box } from "@artsy/palette"
+import { Box, type BoxProps, Flex, FullBleed, HTML } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
+import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
+import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
 import {
   type FC,
   type HTMLAttributes,
@@ -7,10 +10,7 @@ import {
   useRef,
 } from "react"
 import styled from "styled-components"
-import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
-import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { FullBleedHeaderPicture } from "./FullBleedHeaderPicture"
-import { themeGet } from "@styled-system/theme-get"
 
 export type FullBleedHeaderProps = BoxProps &
   Pick<HTMLAttributes<HTMLDivElement>, "style"> & {

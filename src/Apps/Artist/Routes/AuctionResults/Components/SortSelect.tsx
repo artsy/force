@@ -1,6 +1,6 @@
 import { Select, type SelectProps } from "@artsy/palette"
-import { Media } from "Utils/Responsive"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
+import { Media } from "Utils/Responsive"
 
 // TODO: move this to sortOptions?
 const SORTS = [

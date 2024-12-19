@@ -1,31 +1,3 @@
-import { graphql, useFragment } from "react-relay"
-import {
-  ArtworkSidebarEditionSetFragmentContainer,
-  type EditionSet,
-} from "./ArtworkSidebarEditionSets"
-import {
-  Box,
-  Button,
-  Flex,
-  Join,
-  Image,
-  Separator,
-  Spacer,
-  Text,
-  useToasts,
-  useTheme,
-} from "@artsy/palette"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { useCallback, useEffect, useState } from "react"
-import { useInquiry } from "Components/Inquiry/useInquiry"
-import { ErrorWithMetadata } from "Utils/errors"
-import { logger } from "@sentry/utils"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import type { ArtworkSidebarCommercialButtons_artwork$key } from "__generated__/ArtworkSidebarCommercialButtons_artwork.graphql"
-import type { ArtworkSidebarCommercialButtons_me$key } from "__generated__/ArtworkSidebarCommercialButtons_me.graphql"
-import type { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
-import type { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOfferOrderMutation.graphql"
-import { useTracking } from "react-tracking"
 import {
   ActionType,
   type ClickedBuyNow,
@@ -34,19 +6,47 @@ import {
   Intent,
   OwnerType,
 } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  Join,
+  Separator,
+  Spacer,
+  Text,
+  useTheme,
+  useToasts,
+} from "@artsy/palette"
+import { logger } from "@sentry/utils"
+import { useInquiry } from "Components/Inquiry/useInquiry"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { ErrorWithMetadata } from "Utils/errors"
+import type { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOfferOrderMutation.graphql"
+import type { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
+import type { ArtworkSidebarCommercialButtons_artwork$key } from "__generated__/ArtworkSidebarCommercialButtons_artwork.graphql"
+import type { ArtworkSidebarCommercialButtons_me$key } from "__generated__/ArtworkSidebarCommercialButtons_me.graphql"
+import { useCallback, useEffect, useState } from "react"
+import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
+import {
+  ArtworkSidebarEditionSetFragmentContainer,
+  type EditionSet,
+} from "./ArtworkSidebarEditionSets"
 
-import { useAuthDialog } from "Components/AuthDialog"
-import { useRouter } from "System/Hooks/useRouter"
-import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
-import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
+import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 import { usePartnerOfferCheckoutMutation } from "Apps/PartnerOffer/Routes/Mutations/UsePartnerOfferCheckoutMutation"
+import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
+import { useAuthDialog } from "Components/AuthDialog"
+import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
+import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
+import { useRouter } from "System/Hooks/useRouter"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { extractNodes } from "Utils/extractNodes"
-import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
-import type { ResponsiveValue } from "styled-system"
-import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 import { getSignalLabel } from "Utils/getSignalLabel"
+import type { ResponsiveValue } from "styled-system"
 
 interface ArtworkSidebarCommercialButtonsProps {
   artwork: ArtworkSidebarCommercialButtons_artwork$key

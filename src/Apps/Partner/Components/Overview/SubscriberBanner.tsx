@@ -1,8 +1,8 @@
-import type * as React from "react"
-import { Text, Message } from "@artsy/palette"
+import { Message, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import { createFragmentContainer, graphql } from "react-relay"
 import type { SubscriberBanner_partner$data } from "__generated__/SubscriberBanner_partner.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface SubscriberBannerProps {
   partner: SubscriberBanner_partner$data

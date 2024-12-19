@@ -1,12 +1,12 @@
-import { act, fireEvent, screen } from "@testing-library/react"
-import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ConversationReplyTestQuery } from "__generated__/ConversationReplyTestQuery.graphql"
-import { ConversationReply } from "Apps/Conversations/components/ConversationReply"
-import * as formik from "formik"
-import { useTracking } from "react-tracking"
 import { sentConversationMessage } from "@artsy/cohesion"
 import { useToasts } from "@artsy/palette"
+import { act, fireEvent, screen } from "@testing-library/react"
+import { ConversationReply } from "Apps/Conversations/components/ConversationReply"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { ConversationReplyTestQuery } from "__generated__/ConversationReplyTestQuery.graphql"
+import * as formik from "formik"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

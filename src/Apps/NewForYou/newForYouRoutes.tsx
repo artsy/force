@@ -1,6 +1,6 @@
+import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
-import loadable from "@loadable/component"
 
 const NewForYouApp = loadable(
   () => import(/* webpackChunkName: "newForYouBundle" */ "./NewForYouApp"),

@@ -1,6 +1,6 @@
-import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
 import type { useDislikeArtworkMutation } from "__generated__/useDislikeArtworkMutation.graphql"
+import { graphql } from "react-relay"
 
 export const useDislikeArtwork = () => {
   return useMutation<useDislikeArtworkMutation>({

@@ -1,14 +1,14 @@
-import { type FC, Fragment, useEffect } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { OnboardingMarketingCollection_marketingCollection$data } from "__generated__/OnboardingMarketingCollection_marketingCollection.graphql"
-import type { OnboardingMarketingCollectionQuery } from "__generated__/OnboardingMarketingCollectionQuery.graphql"
+import { Box, Flex, Message, Spacer, Text } from "@artsy/palette"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
 import { Masonry } from "Components/Masonry"
-import { extractNodes } from "Utils/extractNodes"
-import { Box, Flex, Message, Spacer, Text } from "@artsy/palette"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { OnboardingThankYou } from "Components/Onboarding/Views/OnboardingThankYou"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
+import type { OnboardingMarketingCollectionQuery } from "__generated__/OnboardingMarketingCollectionQuery.graphql"
+import type { OnboardingMarketingCollection_marketingCollection$data } from "__generated__/OnboardingMarketingCollection_marketingCollection.graphql"
+import { type FC, Fragment, useEffect } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface OnboardingMarketingCollectionProps {
   marketingCollection: OnboardingMarketingCollection_marketingCollection$data

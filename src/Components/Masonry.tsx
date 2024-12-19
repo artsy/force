@@ -2,9 +2,9 @@ import { Box } from "@artsy/palette"
 import styled from "styled-components"
 import {
   type GridColumnGapProps,
+  compose,
   gridColumnGap,
   style,
-  compose,
 } from "styled-system"
 
 const columnCount = style({

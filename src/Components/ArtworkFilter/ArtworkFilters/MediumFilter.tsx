@@ -1,14 +1,14 @@
 import { Checkbox, Flex } from "@artsy/palette"
-import type { FC } from "react"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { ShowMore, INITIAL_ITEMS_TO_SHOW } from "./ShowMore"
-import { intersection } from "lodash"
-import { FilterExpandable } from "./FilterExpandable"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import { intersection } from "lodash"
+import type { FC } from "react"
+import { FilterExpandable } from "./FilterExpandable"
+import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 import { sortResults } from "./Utils/sortResults"
 
 export interface MediumFilterProps {

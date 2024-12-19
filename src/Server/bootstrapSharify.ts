@@ -11,9 +11,9 @@
 // See this doc for more details: https://github.com/artsy/force/blob/master/docs/env_configuration.md
 //
 import _ from "lodash"
-import * as config from "./config"
 // eslint-disable-next-line
 import sharify from "sharify"
+import * as config from "./config"
 
 export const bootstrapSharify = () => {
   const publicClientEnvVars = _.extend(

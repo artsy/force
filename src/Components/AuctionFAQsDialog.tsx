@@ -1,9 +1,9 @@
+import CloseIcon from "@artsy/icons/CloseIcon"
 import { Box, Clickable, HTML, Tab, Tabs, Text, useTheme } from "@artsy/palette"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import type { AuctionFAQsDialog_viewer$data } from "__generated__/AuctionFAQsDialog_viewer.graphql"
-import CloseIcon from "@artsy/icons/CloseIcon"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface AuctionFAQsDialogProps {
   onClose(): void

@@ -1,11 +1,11 @@
-import { SystemContextProvider } from "System/Contexts/SystemContext"
-import { useTracking } from "react-tracking"
-import { mount } from "enzyme"
 import {
-  StickyFooterWithInquiry,
   StickyFooter,
+  StickyFooterWithInquiry,
 } from "Apps/Order/Components/StickyFooter"
 import { MockBoot } from "DevTools/MockBoot"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
+import { mount } from "enzyme"
+import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 

@@ -1,3 +1,5 @@
+import { OwnerType } from "@artsy/cohesion"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import {
   Box,
   Button,
@@ -7,27 +9,25 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
-import { useTimer } from "Utils/Hooks/useTimer"
+import { SuggestedArtworksShelfQueryRenderer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksShelf"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
-import type { FC } from "react"
-import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
+import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { compact } from "lodash"
+import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
+import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
+import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import type {
   SavedSearchEntity,
   SavedSearchEntityCriteria,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
-import { OwnerType } from "@artsy/cohesion"
-import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
-import { SuggestedArtworksShelfQueryRenderer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksShelf"
-import { Media } from "Utils/Responsive"
 import { RouterLink } from "System/Components/RouterLink"
-import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
-import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
-import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
+import { useTimer } from "Utils/Hooks/useTimer"
+import { Media } from "Utils/Responsive"
+import type { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
+import { compact } from "lodash"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data

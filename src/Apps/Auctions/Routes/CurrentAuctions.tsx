@@ -1,15 +1,15 @@
-import { useState } from "react"
-import type * as React from "react"
-import { Box, Button, GridColumns, Column } from "@artsy/palette"
-import {
-  createPaginationContainer,
-  graphql,
-  type RelayPaginationProp,
-} from "react-relay"
-import type { CurrentAuctions_viewer$data } from "__generated__/CurrentAuctions_viewer.graphql"
-import { extractNodes } from "Utils/extractNodes"
+import { Box, Button, Column, GridColumns } from "@artsy/palette"
 import { AuctionArtworkRailQueryRenderer } from "Apps/Auctions/Components/AuctionArtworksRail"
 import { AuctionsZeroState } from "Apps/Auctions/Components/AuctionsZeroState"
+import { extractNodes } from "Utils/extractNodes"
+import type { CurrentAuctions_viewer$data } from "__generated__/CurrentAuctions_viewer.graphql"
+import { useState } from "react"
+import type * as React from "react"
+import {
+  type RelayPaginationProp,
+  createPaginationContainer,
+  graphql,
+} from "react-relay"
 
 export interface CurrentAuctionsProps {
   viewer: CurrentAuctions_viewer$data

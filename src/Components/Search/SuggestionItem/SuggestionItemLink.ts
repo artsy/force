@@ -1,6 +1,6 @@
+import { themeGet } from "@styled-system/theme-get"
 import { RouterLink } from "System/Components/RouterLink"
 import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
 
 export const SuggestionItemLink = styled(RouterLink).attrs({
   color: "black100",

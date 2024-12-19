@@ -1,6 +1,6 @@
 import { Join, Separator } from "@artsy/palette"
-import type React from "react"
 import type { SettingsAuctionsRoute_me$data } from "__generated__/SettingsAuctionsRoute_me.graphql"
+import type React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { UserActiveBidsFragmentContainer } from "./Components/UserActiveBids"
 import { UserBidHistoryFragmentContainer } from "./Components/UserBidHistory"

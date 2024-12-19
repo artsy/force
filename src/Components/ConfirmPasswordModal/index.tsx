@@ -3,16 +3,16 @@ import {
   Button,
   Flex,
   ModalDialog,
-  Text,
   PasswordInput,
   Spacer,
+  Text,
 } from "@artsy/palette"
-import type { FC } from "react"
-import { Form, Formik, type FormikHelpers } from "formik"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { ConfirmPassword } from "./Mutations/ConfirmPassword"
 import type { ConfirmPasswordInput } from "__generated__/ConfirmPasswordMutation.graphql"
+import { Form, Formik, type FormikHelpers } from "formik"
+import type { FC } from "react"
 import * as Yup from "yup"
+import { ConfirmPassword } from "./Mutations/ConfirmPassword"
 
 interface ConfirmPasswordModalProps {
   buttonText?: string

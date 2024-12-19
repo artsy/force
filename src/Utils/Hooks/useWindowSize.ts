@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
 import { getViewportDimensions } from "Utils/viewport"
+import { useEffect, useState } from "react"
 
 export const useWindowSize = () => {
   const [size, setSize] = useState({ width: 0, height: 0 })

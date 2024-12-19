@@ -6,12 +6,12 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import type { InvoiceDetailRoute_invoice$key } from "__generated__/InvoiceDetailRoute_invoice.graphql"
 import { InvoiceLineItems } from "Apps/Invoice/Components/InvoiceLineItems"
 import { InvoicePayments } from "Apps/Invoice/Components/InvoicePayments"
-import { graphql, useFragment } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
+import type { InvoiceDetailRoute_invoice$key } from "__generated__/InvoiceDetailRoute_invoice.graphql"
+import { graphql, useFragment } from "react-relay"
 
 interface InvoiceDetailRouteProps {
   invoice: InvoiceDetailRoute_invoice$key

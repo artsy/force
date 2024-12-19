@@ -1,6 +1,6 @@
-import { graphql } from "react-relay"
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen, within, fireEvent, waitFor } from "@testing-library/react"
+import { graphql } from "react-relay"
 import { SubmittedOrderModalFragmentContainer } from ".."
 
 jest.unmock("react-relay")

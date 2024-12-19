@@ -1,13 +1,13 @@
-import type * as React from "react"
-import { graphql, useFragment } from "react-relay"
-import { type Color, Flex, type FlexProps, Text, THEME } from "@artsy/palette"
-import { ConversationTimeSince } from "./ConversationTimeSince"
+import AlertFillIcon from "@artsy/icons/AlertFillIcon"
+import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
+import { type Color, Flex, type FlexProps, THEME, Text } from "@artsy/palette"
 import type {
   ConversationOrderUpdate_event$data,
   ConversationOrderUpdate_event$key,
 } from "__generated__/ConversationOrderUpdate_event.graphql"
-import AlertFillIcon from "@artsy/icons/AlertFillIcon"
-import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
+import type * as React from "react"
+import { graphql, useFragment } from "react-relay"
+import { ConversationTimeSince } from "./ConversationTimeSince"
 
 export interface OrderUpdateProps extends FlexProps {
   event: ConversationOrderUpdate_event$key

@@ -1,28 +1,28 @@
 import { AutocompleteInput, useDidMount, useUpdateEffect } from "@artsy/palette"
 import { type ChangeEvent, type FC, useEffect, useRef, useState } from "react"
 
-import { graphql } from "react-relay"
+import { ActionType } from "@artsy/cohesion"
+import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
+import { useRouter } from "System/Hooks/useRouter"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { useDebounce } from "Utils/Hooks/useDebounce"
 import { extractNodes } from "Utils/extractNodes"
 import type {
   SearchBarInputSuggestQuery,
   SearchEntity,
 } from "__generated__/SearchBarInputSuggestQuery.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { SearchBarFooter } from "./SearchBarFooter"
 import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
-import { type PillType, TOP_PILL, SEARCH_DEBOUNCE_DELAY } from "./constants"
+import { StaticSearchContainer } from "./StaticSearchContainer"
 import {
   SuggestionItem,
   type SuggestionItemOptionProps,
 } from "./SuggestionItem/SuggestionItem"
-import { useTracking } from "react-tracking"
-import { StaticSearchContainer } from "./StaticSearchContainer"
-import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
-import { useRouter } from "System/Hooks/useRouter"
-import { useDebounce } from "Utils/Hooks/useDebounce"
-import { shouldStartSearching } from "./utils/shouldStartSearching"
+import { type PillType, SEARCH_DEBOUNCE_DELAY, TOP_PILL } from "./constants"
 import { getLabel } from "./utils/getLabel"
-import { ActionType } from "@artsy/cohesion"
-import { SearchBarFooter } from "./SearchBarFooter"
-import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { shouldStartSearching } from "./utils/shouldStartSearching"
 
 export interface SearchBarInputProps {
   searchTerm: string

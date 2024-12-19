@@ -1,6 +1,6 @@
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ViewInRoomArtworkFragmentContainer } from "Components/ViewInRoom/ViewInRoomArtwork"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

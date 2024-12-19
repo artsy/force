@@ -1,14 +1,14 @@
 import { Toasts, ToastsProvider } from "@artsy/palette"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
-import type { AdditionalDocumentsRoute_Test_Query$rawResponse } from "__generated__/AdditionalDocumentsRoute_Test_Query.graphql"
 import { AdditionalDocumentsRoute } from "Apps/Sell/Routes/AdditionalRoutes/AdditionalDocumentsRoute"
 import { SubmissionRoute } from "Apps/Sell/Routes/SubmissionRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
-import { type MockEnvironment, createMockEnvironment } from "relay-test-utils"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { AdditionalDocumentsRoute_Test_Query$rawResponse } from "__generated__/AdditionalDocumentsRoute_Test_Query.graphql"
+import { graphql } from "react-relay"
+import { type MockEnvironment, createMockEnvironment } from "relay-test-utils"
 
 const mockUseRouter = useRouter as jest.Mock
 const mockPush = jest.fn()

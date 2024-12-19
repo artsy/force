@@ -1,9 +1,9 @@
+import { ActionType, type ClickedPartnerLink, OwnerType } from "@artsy/cohesion"
 import { Column, GridColumns, Text } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
-import { createFragmentContainer, graphql } from "react-relay"
 import type { AboutPartner_partner$data } from "__generated__/AboutPartner_partner.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { ActionType, type ClickedPartnerLink, OwnerType } from "@artsy/cohesion"
 
 export interface AboutPartnerProps {
   partner: AboutPartner_partner$data

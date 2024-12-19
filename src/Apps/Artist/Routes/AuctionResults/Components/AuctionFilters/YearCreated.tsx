@@ -1,4 +1,3 @@
-import type * as React from "react"
 import { Checkbox, Flex, Select, Spacer } from "@artsy/palette"
 import {
   useAuctionResultsFilterContext,
@@ -6,6 +5,7 @@ import {
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
+import type * as React from "react"
 
 export const YearCreated: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { setFilter, aggregations } = useAuctionResultsFilterContext()

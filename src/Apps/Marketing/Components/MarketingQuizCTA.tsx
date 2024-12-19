@@ -1,12 +1,12 @@
 import {
+  Box,
+  Button,
   Column,
   FullBleed,
   GridColumns,
-  Text,
   Image,
   Spacer,
-  Button,
-  Box,
+  Text,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"

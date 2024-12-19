@@ -1,14 +1,14 @@
+import { useToasts } from "@artsy/palette"
 import { renderHook } from "@testing-library/react-hooks"
+import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
 import { useBidderPosition } from "Apps/Auction/Queries/useBidderPosition"
 import { useCreateBidderPosition } from "Apps/Auction/Queries/useCreateBidderPosition"
-import { useRouter } from "System/Hooks/useRouter"
 import {
-  useSubmitBid,
   type UseSubmitBidProps,
+  useSubmitBid,
 } from "Apps/Auction/Routes/Bid/useSubmitBid"
-import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import { useToasts } from "@artsy/palette"
+import { useRouter } from "System/Hooks/useRouter"
 
 jest.mock("@artsy/palette")
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")

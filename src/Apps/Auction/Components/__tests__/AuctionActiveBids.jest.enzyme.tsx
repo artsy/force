@@ -1,11 +1,11 @@
 import type { Breakpoint } from "@artsy/palette"
-import { graphql } from "react-relay"
+import { AuctionActiveBidsRefetchContainer } from "Apps/Auction/Components/AuctionActiveBids"
+import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { AuctionActiveBidsRefetchContainer } from "Apps/Auction/Components/AuctionActiveBids"
-import type { AuctionActiveBidsTestQuery } from "__generated__/AuctionActiveBidsTestQuery.graphql"
-import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useRouter } from "System/Hooks/useRouter"
+import type { AuctionActiveBidsTestQuery } from "__generated__/AuctionActiveBidsTestQuery.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

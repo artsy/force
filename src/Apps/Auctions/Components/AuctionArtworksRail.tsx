@@ -1,9 +1,3 @@
-import type * as React from "react"
-import { type BoxProps, Skeleton } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { AuctionArtworksRail_sale$data } from "__generated__/AuctionArtworksRail_sale.graphql"
-import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
-import { useTracking } from "react-tracking"
 import {
   ActionType,
   type AuthContextModule,
@@ -12,17 +6,23 @@ import {
   OwnerType,
   type PageOwnerType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Rail } from "Components/Rail/Rail"
-import { extractNodes } from "Utils/extractNodes"
+import { type BoxProps, Skeleton } from "@artsy/palette"
+import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
-import { trackHelpers } from "Utils/cohesionHelpers"
+import { Rail } from "Components/Rail/Rail"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { trackHelpers } from "Utils/cohesionHelpers"
+import { extractNodes } from "Utils/extractNodes"
 import type { AuctionArtworksRailQuery } from "__generated__/AuctionArtworksRailQuery.graphql"
+import type { AuctionArtworksRail_sale$data } from "__generated__/AuctionArtworksRail_sale.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 export type TabType =
   | "current"

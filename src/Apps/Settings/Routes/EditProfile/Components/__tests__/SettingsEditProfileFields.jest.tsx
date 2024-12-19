@@ -1,11 +1,11 @@
-import { screen, fireEvent, waitFor } from "@testing-library/react"
-import { graphql } from "react-relay"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { SettingsEditProfileFieldsFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileFields"
+import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
+import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import { SettingsEditProfileFieldsFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileFields"
+import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
-import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

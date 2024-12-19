@@ -1,25 +1,25 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import {
   Box,
-  GridColumns,
-  Column,
-  Text,
   Breadcrumbs,
-  Shelf,
+  Column,
+  GridColumns,
   Join,
+  Shelf,
   Spacer,
+  Text,
 } from "@artsy/palette"
+import { ArtistsCarouselCellFragmentContainer } from "Apps/Artists/Components/ArtistsCarouselCell"
+import { ArtistsIndexMeta } from "Apps/Artists/Components/ArtistsIndexMeta"
+import { ArtistsLetterNav } from "Apps/Artists/Components/ArtistsLetterNav"
+import { CellArtistFragmentContainer } from "Components/Cells/CellArtist"
+import { RouterLink } from "System/Components/RouterLink"
+import { Media } from "Utils/Responsive"
+import { getENV } from "Utils/getENV"
 import type { ArtistsIndex_featuredArtists$data } from "__generated__/ArtistsIndex_featuredArtists.graphql"
 import type { ArtistsIndex_featuredGenes$data } from "__generated__/ArtistsIndex_featuredGenes.graphql"
-import { RouterLink } from "System/Components/RouterLink"
-import { ArtistsIndexMeta } from "Apps/Artists/Components/ArtistsIndexMeta"
-import { ArtistsCarouselCellFragmentContainer } from "Apps/Artists/Components/ArtistsCarouselCell"
-import { ArtistsLetterNav } from "Apps/Artists/Components/ArtistsLetterNav"
-import { Media } from "Utils/Responsive"
 import { compact } from "lodash"
-import { CellArtistFragmentContainer } from "Components/Cells/CellArtist"
-import { getENV } from "Utils/getENV"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtistsIndexProps {
   featuredArtists: ArtistsIndex_featuredArtists$data | null

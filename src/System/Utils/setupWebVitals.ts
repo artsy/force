@@ -1,5 +1,5 @@
 import { getENV } from "Utils/getENV"
-import { onLCP, onFCP, onTTFB, onINP, type Metric } from "web-vitals"
+import { type Metric, onFCP, onINP, onLCP, onTTFB } from "web-vitals"
 
 export const setupWebVitals = () => {
   if (!getENV("ENABLE_WEB_VITALS_LOGGING")) {

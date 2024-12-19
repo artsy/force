@@ -1,8 +1,8 @@
-import { buildUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import {
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { buildUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { useRouter } from "System/Hooks/useRouter"
 import { stringify } from "qs"
 

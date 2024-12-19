@@ -1,3 +1,4 @@
+import type { ArticleSection_section$data } from "__generated__/ArticleSection_section.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleSectionEmbedFragmentContainer } from "./Sections/ArticleSectionEmbed"
@@ -6,7 +7,6 @@ import { ArticleSectionImageSetFragmentContainer } from "./Sections/ArticleSecti
 import { ArticleSectionSocialEmbedFragmentContainer } from "./Sections/ArticleSectionSocialEmbed"
 import { ArticleSectionTextFragmentContainer } from "./Sections/ArticleSectionText"
 import { ArticleSectionVideoFragmentContainer } from "./Sections/ArticleSectionVideo"
-import type { ArticleSection_section$data } from "__generated__/ArticleSection_section.graphql"
 
 interface ArticleSectionProps {
   section: ArticleSection_section$data

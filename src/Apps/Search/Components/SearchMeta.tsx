@@ -1,5 +1,5 @@
-import type * as React from "react"
 import { MetaTags } from "Components/MetaTags"
+import type * as React from "react"
 
 interface SearchMetaProps {
   term: string

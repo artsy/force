@@ -1,18 +1,18 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { FairEditorialRailArticles_fair$data } from "__generated__/FairEditorialRailArticles_fair.graphql"
-import { Flex, Shelf, Spacer, Text } from "@artsy/palette"
-import { extractNodes } from "Utils/extractNodes"
-import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useTracking } from "react-tracking"
 import {
   ActionType,
   type ClickedArticleGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { Flex, Shelf, Spacer, Text } from "@artsy/palette"
+import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { extractNodes } from "Utils/extractNodes"
+import type { FairEditorialRailArticles_fair$data } from "__generated__/FairEditorialRailArticles_fair.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 export interface FairBoothRailArtworksProps {
   fair: FairEditorialRailArticles_fair$data

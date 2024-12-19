@@ -1,8 +1,8 @@
 import { Spinner, type SpinnerProps } from "@artsy/palette"
+import createLogger from "Utils/logger"
 import type * as React from "react"
 import type { QueryRenderer, Container as RelayContainer } from "react-relay"
 import styled from "styled-components"
-import createLogger from "Utils/logger"
 
 type ReadyState = Parameters<
   React.ComponentProps<typeof QueryRenderer>["render"]

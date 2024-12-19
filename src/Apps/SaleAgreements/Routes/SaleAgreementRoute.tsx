@@ -1,11 +1,11 @@
-import type { FC } from "react"
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
-import { graphql, useFragment } from "react-relay"
-import type { SaleAgreementRoute_saleAgreement$key } from "__generated__/SaleAgreementRoute_saleAgreement.graphql"
 import { PageHTML } from "Apps/Page/Components/PageHTML"
 import { TopContextBar } from "Components/TopContextBar"
-import { HttpError } from "found"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import type { SaleAgreementRoute_saleAgreement$key } from "__generated__/SaleAgreementRoute_saleAgreement.graphql"
+import { HttpError } from "found"
+import type { FC } from "react"
+import { graphql, useFragment } from "react-relay"
 
 interface SaleAgreementRouteProps {
   saleAgreement: SaleAgreementRoute_saleAgreement$key

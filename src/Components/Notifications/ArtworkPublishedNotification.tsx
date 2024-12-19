@@ -1,12 +1,12 @@
 import { Flex, Spacer, Text } from "@artsy/palette"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { RouterLink } from "System/Components/RouterLink"
-import type { FC } from "react"
-import { useFragment, graphql } from "react-relay"
-import type { ArtworkPublishedNotification_notification$key } from "__generated__/ArtworkPublishedNotification_notification.graphql"
-import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
 import { NotificationArtworkList } from "Components/Notifications/NotificationArtworkList"
 import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
+import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
+import { RouterLink } from "System/Components/RouterLink"
+import type { ArtworkPublishedNotification_notification$key } from "__generated__/ArtworkPublishedNotification_notification.graphql"
+import type { FC } from "react"
+import { graphql, useFragment } from "react-relay"
 
 interface ArtworkPublishedNotificationProps {
   notification: ArtworkPublishedNotification_notification$key

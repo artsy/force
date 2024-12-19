@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
-import type { InsightsOverviewTestQuery } from "__generated__/InsightsOverviewTestQuery.graphql"
 import { InsightsOverviewFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsOverview"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { InsightsOverviewTestQuery } from "__generated__/InsightsOverviewTestQuery.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

@@ -1,4 +1,3 @@
-import type * as React from "react"
 import {
   BorderedRadio,
   Column,
@@ -8,13 +7,14 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { graphql, useFragment } from "react-relay"
-import type { ShippingQuotes_order$key } from "__generated__/ShippingQuotes_order.graphql"
+import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
+import { CollapseDetails } from "Apps/Order/Routes/Shipping/Components/CollapseDetails"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import { extractNodes } from "Utils/extractNodes"
-import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
+import type { ShippingQuotes_order$key } from "__generated__/ShippingQuotes_order.graphql"
+import type * as React from "react"
 import { useEffect } from "react"
-import { CollapseDetails } from "Apps/Order/Routes/Shipping/Components/CollapseDetails"
+import { graphql, useFragment } from "react-relay"
 
 export interface ShippingQuotesProps {
   order: ShippingQuotes_order$key

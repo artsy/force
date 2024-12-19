@@ -1,3 +1,4 @@
+import { Spacer } from "@artsy/palette"
 import { CollectorProfileHeaderFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/CollectorProfileHeader"
 import { EmptyMyCollectionPage } from "Apps/Settings/Routes/MyCollection/Components/EmptyMyCollectionPage"
 import { MetaTags } from "Components/MetaTags"
@@ -6,7 +7,6 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { Spacer } from "@artsy/palette"
 
 interface CollectorProfileAppProps {
   me: CollectorProfileApp_me$data

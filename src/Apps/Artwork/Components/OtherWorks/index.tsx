@@ -1,27 +1,27 @@
 import { ContextModule } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Join, Skeleton, Spacer } from "@artsy/palette"
-import type { OtherWorks_artwork$data } from "__generated__/OtherWorks_artwork.graphql"
 import { OtherAuctionsQueryRenderer } from "Apps/Artwork/Components/OtherAuctions"
 import {
   Header,
   HeaderPlaceholder,
 } from "Apps/Artwork/Components/OtherWorks/Header"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import ArtworkGrid, {
   ArtworkGridPlaceholder,
 } from "Components/ArtworkGrid/ArtworkGrid"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { get } from "Utils/get"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { OtherWorksQuery } from "__generated__/OtherWorksQuery.graphql"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { compact } from "lodash"
-import track, { useTracking } from "react-tracking"
 import {
   type SystemContextProps,
   withSystemContext,
 } from "System/Contexts/SystemContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { get } from "Utils/get"
+import type { OtherWorksQuery } from "__generated__/OtherWorksQuery.graphql"
+import type { OtherWorks_artwork$data } from "__generated__/OtherWorks_artwork.graphql"
+import { compact } from "lodash"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import track, { useTracking } from "react-tracking"
 
 /**
  * Check to see if a connection's edges have a length; if false hide the grid.

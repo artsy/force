@@ -1,6 +1,6 @@
-import { mount } from "enzyme"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { getENV } from "Utils/getENV"
+import { mount } from "enzyme"
 
 jest.mock("Utils/getENV")
 

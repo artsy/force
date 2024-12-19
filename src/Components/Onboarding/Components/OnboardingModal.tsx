@@ -1,13 +1,13 @@
-import type React from "react"
 import {
+  Box,
   ModalBase,
   type ModalBaseProps,
+  ModalClose,
   splitBoxProps,
   useDidMount,
-  Box,
-  ModalClose,
   useTheme,
 } from "@artsy/palette"
+import type React from "react"
 
 export type OnboardingModalProps = ModalBaseProps
 

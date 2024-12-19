@@ -1,12 +1,12 @@
 import { Column, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
-import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Components/RouterLink"
-import { FollowGeneButtonQueryRenderer } from "Components/FollowButton/FollowGeneButton"
-import type { GeneShow_gene$data } from "__generated__/GeneShow_gene.graphql"
 import { GeneArtworkFilterQueryRenderer } from "Apps/Gene/Components/GeneArtworkFilter"
 import { GeneMetaFragmentContainer } from "Apps/Gene/Components/GeneMeta"
+import { FollowGeneButtonQueryRenderer } from "Components/FollowButton/FollowGeneButton"
+import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
+import type { GeneShow_gene$data } from "__generated__/GeneShow_gene.graphql"
+import * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface GeneShowProps {
   gene: GeneShow_gene$data

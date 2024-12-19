@@ -1,5 +1,5 @@
-import { mount } from "enzyme"
 import { CountrySelect } from "Components/CountrySelect"
+import { mount } from "enzyme"
 
 describe("CountrySelect", () => {
   // TODO: Chris, this test needs finishing.

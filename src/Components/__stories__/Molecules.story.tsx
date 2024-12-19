@@ -1,12 +1,12 @@
-import { Spacer, Join } from "@artsy/palette"
+import { Join, Spacer } from "@artsy/palette"
 
 import {
-  HeaderWithCoverImage,
-  HeaderWithCarousel,
   HeaderArtist,
   HeaderGeneral,
   HeaderImageLeft,
   HeaderImageRight,
+  HeaderWithCarousel,
+  HeaderWithCoverImage,
 } from "./Headers.story"
 
 import {
@@ -17,23 +17,23 @@ import {
 } from "./Content.story"
 
 import {
+  CarouselArtists,
   CarouselArtworkLarge,
   CarouselArtworkMedium,
   CarouselArtworkSmall,
-  CarouselEditorial,
   CarouselAuctions,
-  CarouselViewingRoomsGrid,
+  CarouselEditorial,
   CarouselGalleries,
-  CarouselArtists,
   CarouselShows,
+  CarouselViewingRoomsGrid,
 } from "./Carousels.story"
 
+import { Page } from "./Components/Page"
 import {
   TextCentered,
   TextFixedLeftScrollRight,
   TextScrollLeftFixedRight,
 } from "./Editorial.story"
-import { Page } from "./Components/Page"
 
 export default {
   title: "Molecules/Kitchen Sink",

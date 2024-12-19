@@ -1,9 +1,9 @@
-import type * as React from "react"
 import { Box, type BoxProps, Join, Spacer, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ShowHeader_show$data } from "__generated__/ShowHeader_show.graphql"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 import { useEventTiming } from "Utils/Hooks/useEventTiming"
+import type { ShowHeader_show$data } from "__generated__/ShowHeader_show.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { ShowContextualLinkFragmentContainer } from "./ShowContextualLink"
 
 interface ShowHeaderProps extends BoxProps {

@@ -1,10 +1,10 @@
-import type * as React from "react"
-import type { PartnerArtistList_partner$data } from "__generated__/PartnerArtistList_partner.graphql"
-import { createFragmentContainer, graphql } from "react-relay"
-import { Box, Join, media, Spacer, Text } from "@artsy/palette"
-import { compact } from "lodash"
-import styled from "styled-components"
+import { Box, Join, Spacer, Text, media } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import type { PartnerArtistList_partner$data } from "__generated__/PartnerArtistList_partner.graphql"
+import { compact } from "lodash"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
 
 export interface PartnerArtistListProps {
   partner: PartnerArtistList_partner$data

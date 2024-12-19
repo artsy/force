@@ -1,8 +1,8 @@
 import { Box, Button, Flex, Separator, Spacer, Text } from "@artsy/palette"
 import { Timer } from "Components/Timer"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ArtworkAuctionRegistrationPanel_artwork$data } from "__generated__/ArtworkAuctionRegistrationPanel_artwork.graphql"
 import { RouterLink } from "System/Components/RouterLink"
+import type { ArtworkAuctionRegistrationPanel_artwork$data } from "__generated__/ArtworkAuctionRegistrationPanel_artwork.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtworkAuctionRegistrationPanelProps {
   artwork: ArtworkAuctionRegistrationPanel_artwork$data

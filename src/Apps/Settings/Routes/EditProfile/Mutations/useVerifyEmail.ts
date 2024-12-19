@@ -1,6 +1,6 @@
-import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
 import type { useVerifyEmailMutation } from "__generated__/useVerifyEmailMutation.graphql"
+import { graphql } from "react-relay"
 
 export const useVerifyEmail = () => {
   return useMutation<useVerifyEmailMutation>({

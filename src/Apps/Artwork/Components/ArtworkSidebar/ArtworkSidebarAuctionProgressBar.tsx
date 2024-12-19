@@ -1,6 +1,6 @@
-import type * as React from "react"
 import { type BoxProps, ProgressBar } from "@artsy/palette"
 import type { Time } from "Utils/getSaleOrLotTimerInfo"
+import type * as React from "react"
 
 export interface ArtworkSidebarAuctionProgressBarProps extends BoxProps {
   time: Time

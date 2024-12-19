@@ -10,16 +10,16 @@ import {
 } from "@artsy/palette"
 import { PRICE_BUCKETS } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileAboutYou"
 import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
-import { Form, Formik } from "formik"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import * as Yup from "yup"
-import type { SettingsEditSettingsInformation_me$data } from "__generated__/SettingsEditSettingsInformation_me.graphql"
-import { useUpdateSettingsInformation } from "./useUpdateSettingsInformation"
 import {
   PhoneNumberInput,
   validatePhoneNumber,
 } from "Components/PhoneNumberInput"
+import type { SettingsEditSettingsInformation_me$data } from "__generated__/SettingsEditSettingsInformation_me.graphql"
+import { Form, Formik } from "formik"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import * as Yup from "yup"
+import { useUpdateSettingsInformation } from "./useUpdateSettingsInformation"
 
 interface SettingsEditSettingsInformationProps {
   me: SettingsEditSettingsInformation_me$data

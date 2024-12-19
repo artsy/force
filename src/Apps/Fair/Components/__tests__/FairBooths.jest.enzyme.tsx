@@ -1,12 +1,12 @@
-import { FairBoothsFragmentContainer } from "Apps/Fair/Components/FairBooths"
-import type { FairBooths_Test_Query } from "__generated__/FairBooths_Test_Query.graphql"
 import { FairBoothRail } from "Apps/Fair/Components/FairBoothRail"
-import { graphql } from "react-relay"
 import { FairBoothSortFilter } from "Apps/Fair/Components/FairBoothSortFilter"
-import { SortFilter } from "Components/SortFilter"
+import { FairBoothsFragmentContainer } from "Apps/Fair/Components/FairBooths"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { SortFilter } from "Components/SortFilter"
 import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import type { FairBooths_Test_Query } from "__generated__/FairBooths_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({

@@ -1,7 +1,7 @@
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { OnboardingOrderedSetFragmentContainer } from "Components/Onboarding/Components/OnboardingOrderedSet"
-import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
+import { OnboardingOrderedSetFragmentContainer } from "Components/Onboarding/Components/OnboardingOrderedSet"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("Components/EntityHeaders/EntityHeaderArtist", () => {

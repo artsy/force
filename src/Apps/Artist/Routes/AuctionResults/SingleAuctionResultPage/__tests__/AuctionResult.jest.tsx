@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/react"
-import type { AuctionResultTestQuery } from "__generated__/AuctionResultTestQuery.graphql"
 import { AuctionResultFragmentContainer } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResult"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { AuctionResultTestQuery } from "__generated__/AuctionResultTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

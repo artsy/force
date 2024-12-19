@@ -1,11 +1,11 @@
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
+import type { useRecordArtworkViewMutation } from "__generated__/useRecordArtworkViewMutation.graphql"
 import { useCallback, useEffect } from "react"
 import type * as React from "react"
 import { graphql } from "react-relay"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useRouter } from "System/Hooks/useRouter"
-import type { useRecordArtworkViewMutation } from "__generated__/useRecordArtworkViewMutation.graphql"
 import { commitMutation } from "react-relay"
-import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 
 export const useRecordArtworkView = () => {
   const { user, isLoggedIn } = useSystemContext()

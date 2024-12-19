@@ -1,4 +1,4 @@
-import { Text, Button, GridColumns, Column } from "@artsy/palette"
+import { Button, Column, GridColumns, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 
 export const ArtistAuctionResultsEmptyState: React.FC<

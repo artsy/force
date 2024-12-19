@@ -1,12 +1,12 @@
-import type { Request, NextFunction } from "express"
+import type { NextFunction, Request } from "express"
 import {
-  handlePartnerOverview,
-  handlePartnerWorks,
+  type ResWithProfile,
+  handleFair,
+  handleFairArtworks,
   handlePartnerArtist,
   handlePartnerGenericRedirect,
-  handleFairArtworks,
-  handleFair,
-  type ResWithProfile,
+  handlePartnerOverview,
+  handlePartnerWorks,
 } from "../redirectsServerRoutes"
 
 describe("handlePartnerOverview", () => {

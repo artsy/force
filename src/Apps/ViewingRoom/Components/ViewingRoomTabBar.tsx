@@ -1,7 +1,7 @@
-import type * as React from "react"
-import { useRouter } from "System/Hooks/useRouter"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
+import { useRouter } from "System/Hooks/useRouter"
 import { Jump } from "Utils/Hooks/useJump"
+import type * as React from "react"
 
 export const ViewingRoomTabBar: React.FC<
   React.PropsWithChildren<unknown>

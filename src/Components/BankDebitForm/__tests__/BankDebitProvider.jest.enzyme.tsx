@@ -1,7 +1,7 @@
-import { mount } from "enzyme"
-import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
-import { BankDebitForm } from "Components/BankDebitForm/BankDebitForm"
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+import { BankDebitForm } from "Components/BankDebitForm/BankDebitForm"
+import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
+import { mount } from "enzyme"
 
 jest.mock("Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext")
 

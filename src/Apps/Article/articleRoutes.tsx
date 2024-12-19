@@ -1,8 +1,8 @@
 import loadable from "@loadable/component"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
+import type { RouteProps } from "System/Router/Route"
 import { RedirectException, type RouteRenderArgs } from "found"
 import { graphql } from "react-relay"
-import type { RouteProps } from "System/Router/Route"
 
 const ArticleApp = loadable(
   () => import(/* webpackChunkName: "articleBundle" */ "./ArticleApp"),

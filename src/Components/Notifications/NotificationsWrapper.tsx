@@ -1,9 +1,9 @@
 import { Box, Flex, Separator, useTheme } from "@artsy/palette"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
-import { Sticky } from "Components/Sticky"
-import { NotificationsListQueryRenderer } from "Components/Notifications/NotificationsList"
-import { NotificationsHeader } from "Components/Notifications/NotificationsHeader"
 import type { MarkAllAsReadPanelProps } from "Components/Notifications/MarkAllAsReadPanel"
+import { NotificationsHeader } from "Components/Notifications/NotificationsHeader"
+import { NotificationsListQueryRenderer } from "Components/Notifications/NotificationsList"
+import { Sticky } from "Components/Sticky"
 
 const DROPDOWN_HEADER_HEIGHT = 113
 const VERTICAL_OFFSET = 10

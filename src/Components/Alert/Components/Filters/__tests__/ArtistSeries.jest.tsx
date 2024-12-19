@@ -1,9 +1,9 @@
 import { screen, waitFor } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { ArtistSeriesQueryRenderer } from "Components/Alert/Components/Filters/ArtistSeries"
-import type { ArtistSeriesOptionsQuery$data } from "__generated__/ArtistSeriesOptionsQuery.graphql"
-import { AlertProvider } from "Components/Alert/AlertProvider"
 import userEvent from "@testing-library/user-event"
+import { AlertProvider } from "Components/Alert/AlertProvider"
+import { ArtistSeriesQueryRenderer } from "Components/Alert/Components/Filters/ArtistSeries"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { ArtistSeriesOptionsQuery$data } from "__generated__/ArtistSeriesOptionsQuery.graphql"
 
 jest.unmock("react-relay")
 

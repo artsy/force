@@ -1,9 +1,9 @@
-import { Box, Flex, SkeletonText, Sup, Text as BaseText } from "@artsy/palette"
-import { useRouter } from "found"
-import type * as React from "react"
+import { Text as BaseText, Box, Flex, SkeletonText, Sup } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { getENV } from "Utils/getENV"
 import { getInternalHref } from "Utils/url"
+import { useRouter } from "found"
+import type * as React from "react"
 
 export interface RailHeaderProps {
   countLabel?: number

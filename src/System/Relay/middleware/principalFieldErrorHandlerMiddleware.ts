@@ -1,5 +1,5 @@
-import { HttpError } from "found"
 import { get } from "Utils/get"
+import { HttpError } from "found"
 
 export function principalFieldErrorHandlerMiddleware() {
   return next => async req => {

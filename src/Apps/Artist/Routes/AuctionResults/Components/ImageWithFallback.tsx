@@ -1,6 +1,6 @@
+import NoArtIcon from "@artsy/icons/NoArtIcon"
 import { Box, Flex } from "@artsy/palette"
 import { useState } from "react"
-import NoArtIcon from "@artsy/icons/NoArtIcon"
 
 export const ImageWithFallback = ({ Fallback, ...props }) => {
   const [useFallback, setFallback] = useState(false)

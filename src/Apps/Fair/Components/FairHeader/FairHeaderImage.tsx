@@ -1,11 +1,11 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { FairHeaderImage_fair$data } from "__generated__/FairHeaderImage_fair.graphql"
+import { FullBleed, Image, ResponsiveBox } from "@artsy/palette"
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { BREAKPOINTS, Media } from "Utils/Responsive"
-import { FullBleed, Image, ResponsiveBox } from "@artsy/palette"
-import { Link } from "react-head"
 import { resized } from "Utils/resized"
+import type { FairHeaderImage_fair$data } from "__generated__/FairHeaderImage_fair.graphql"
+import type * as React from "react"
+import { Link } from "react-head"
+import { createFragmentContainer, graphql } from "react-relay"
 
 const MOBILE_SIZE = {
   width: 350,

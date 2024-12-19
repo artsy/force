@@ -1,8 +1,8 @@
 import { Separator, Spacer, Text } from "@artsy/palette"
-import { graphql, useFragment } from "react-relay"
-import { ReviewOrderButton } from "./ReviewOrderButton"
 import { ConversationOrderState } from "Apps/Conversations/components/Details/OrderState/ConversationOrderState"
 import type { ConversationOrderInformation_order$key } from "__generated__/ConversationOrderInformation_order.graphql"
+import { graphql, useFragment } from "react-relay"
+import { ReviewOrderButton } from "./ReviewOrderButton"
 
 interface OrderInformationProps {
   order: ConversationOrderInformation_order$key

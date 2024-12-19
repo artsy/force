@@ -1,14 +1,14 @@
-import { Clickable, Flex } from "@artsy/palette"
-import { graphql, useFragment } from "react-relay"
-import { ConversationOrderInformation } from "./OrderInformation/ConversationOrderInformation"
-import { ConversationArtwork } from "./ConversationArtwork"
 import CloseIcon from "@artsy/icons/CloseIcon"
-import styled from "styled-components"
-import { extractNodes } from "Utils/extractNodes"
-import { Media } from "Utils/Responsive"
-import type { ConversationDetails_conversation$key } from "__generated__/ConversationDetails_conversation.graphql"
-import { ConversationSupport } from "Apps/Conversations/components/Details/ConversationSupport"
+import { Clickable, Flex } from "@artsy/palette"
 import { ConversationAttachments } from "Apps/Conversations/components/Details/ConversationAttachments"
+import { ConversationSupport } from "Apps/Conversations/components/Details/ConversationSupport"
+import { Media } from "Utils/Responsive"
+import { extractNodes } from "Utils/extractNodes"
+import type { ConversationDetails_conversation$key } from "__generated__/ConversationDetails_conversation.graphql"
+import { graphql, useFragment } from "react-relay"
+import styled from "styled-components"
+import { ConversationArtwork } from "./ConversationArtwork"
+import { ConversationOrderInformation } from "./OrderInformation/ConversationOrderInformation"
 
 interface ConversationDetailsProps {
   conversation: ConversationDetails_conversation$key

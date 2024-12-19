@@ -1,5 +1,5 @@
-import type { useUpdateSavedAddressMutation$data } from "__generated__/useUpdateSavedAddressMutation.graphql"
 import type { useCreateSavedAddressMutation$data } from "__generated__/useCreateSavedAddressMutation.graphql"
+import type { useUpdateSavedAddressMutation$data } from "__generated__/useUpdateSavedAddressMutation.graphql"
 
 export const saveAddressSuccess: useCreateSavedAddressMutation$data = {
   createUserAddress: {

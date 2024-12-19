@@ -1,9 +1,9 @@
+import { fromToday } from "Apps/Conversations/components/Message/Utils/dateFormatters"
+import { extractNodes } from "Utils/extractNodes"
+import type { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
+import { sortBy } from "lodash"
 import { DateTime } from "luxon"
 import { useEffect, useState } from "react"
-import { extractNodes } from "Utils/extractNodes"
-import { sortBy } from "lodash"
-import { fromToday } from "Apps/Conversations/components/Message/Utils/dateFormatters"
-import type { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 
 interface UseGroupedMessagesProps {
   messagesConnection: NonNullable<

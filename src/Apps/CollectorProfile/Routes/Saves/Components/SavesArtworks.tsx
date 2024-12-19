@@ -1,21 +1,21 @@
 import { Box, Dropdown, Pill, Select, Stack } from "@artsy/palette"
-import { type FC, useMemo, useState } from "react"
-import type { CustomRangeSegment } from "Components/PriceRange/constants"
-import { PriceRange } from "Components/PriceRange/PriceRange"
 import {
   SavesArtworksGrid,
   SavesArtworksGridEmptyState,
   SavesArtworksGridPlaceholder,
 } from "Apps/CollectorProfile/Routes/Saves/Components/SavesArtworksGrid"
-import { ClientSuspense } from "Components/ClientSuspense"
 import { FilterQuickDropdownAnchor } from "Components/ArtworkFilter/ArtworkFiltersQuick/FilterQuick"
-import { Jump } from "Utils/Hooks/useJump"
-import type { CollectionArtworkSorts } from "__generated__/SavesArtworksGridQuery.graphql"
+import { ClientSuspense } from "Components/ClientSuspense"
+import { PriceRange } from "Components/PriceRange/PriceRange"
+import { priceRangeToLabel } from "Components/PriceRange/Utils/priceRangeToLabel"
+import type { CustomRangeSegment } from "Components/PriceRange/constants"
 import {
   type ErrorFallbackProps,
   FallbackErrorBoundary,
 } from "System/Components/FallbackErrorBoundary"
-import { priceRangeToLabel } from "Components/PriceRange/Utils/priceRangeToLabel"
+import { Jump } from "Utils/Hooks/useJump"
+import type { CollectionArtworkSorts } from "__generated__/SavesArtworksGridQuery.graphql"
+import { type FC, useMemo, useState } from "react"
 
 interface SavesArtworksProps {
   id: string

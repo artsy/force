@@ -1,6 +1,6 @@
-import { type FC, useMemo } from "react"
 import { ArticleHTML } from "Apps/Article/Components/ArticleHTML"
 import type { ArticleSectionText_section$data } from "__generated__/ArticleSectionText_section.graphql"
+import { type FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 

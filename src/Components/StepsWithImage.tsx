@@ -1,10 +1,10 @@
 import {
   Column,
+  type ColumnSpan,
   GridColumns,
+  Image,
   ResponsiveBox,
   Text,
-  Image,
-  type ColumnSpan,
 } from "@artsy/palette"
 
 const imageHeight = 320

@@ -1,5 +1,5 @@
-import { Box, Spacer, Text, Tooltip } from "@artsy/palette"
 import HelpIcon from "@artsy/icons/HelpIcon"
+import { Box, Spacer, Text, Tooltip } from "@artsy/palette"
 
 interface LiveAuctionToolTipProps {
   show: boolean

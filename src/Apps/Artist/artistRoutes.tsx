@@ -1,14 +1,14 @@
 import loadable from "@loadable/component"
+import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
+import { serverCacheTTLs } from "Apps/serverCacheTTLs"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
+import type { RouteProps } from "System/Router/Route"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
-import type { RouteProps } from "System/Router/Route"
+import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
 import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
 import { redirectWithCanonicalParams } from "./Server/redirect"
 import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters"
-import { serverCacheTTLs } from "Apps/serverCacheTTLs"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
-import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
-import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
 
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),

@@ -1,10 +1,10 @@
-import type * as React from "react"
-import { Flex, Text, Shelf } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { ArticlesRail_partner$data } from "__generated__/ArticlesRail_partner.graphql"
-import { ViewAllButton } from "./ViewAllButton"
-import { extractNodes } from "Utils/extractNodes"
+import { Flex, Shelf, Text } from "@artsy/palette"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
+import { extractNodes } from "Utils/extractNodes"
+import type { ArticlesRail_partner$data } from "__generated__/ArticlesRail_partner.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ViewAllButton } from "./ViewAllButton"
 
 interface ArticlesRailProps {
   partner: ArticlesRail_partner$data

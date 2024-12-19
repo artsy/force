@@ -1,10 +1,10 @@
 import {
   Flex,
-  Text,
-  Spacer,
-  SkeletonText,
-  SkeletonBox,
   Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+  Text,
 } from "@artsy/palette"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { CriteriaPillsPlaceholder } from "Components/Alert/Components/CriteriaPills"

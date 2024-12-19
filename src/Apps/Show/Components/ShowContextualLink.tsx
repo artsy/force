@@ -1,9 +1,9 @@
 import { Box, Text } from "@artsy/palette"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import type { ShowContextualLink_show$data } from "__generated__/ShowContextualLink_show.graphql"
-import { RouterLink } from "System/Components/RouterLink"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface Props {
   show: ShowContextualLink_show$data

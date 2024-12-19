@@ -1,8 +1,8 @@
-import type * as React from "react"
 import { type BoxProps, Column, Flex, GridColumns, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { FairHeader_fair$data } from "__generated__/FairHeader_fair.graphql"
 import { HeaderIcon } from "Components/HeaderIcon"
+import type { FairHeader_fair$data } from "__generated__/FairHeader_fair.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface FairHeaderProps extends BoxProps {
   fair: FairHeader_fair$data

@@ -4,8 +4,8 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { BackLink } from "Components/Links/BackLink"
 import { Sticky } from "Components/Sticky"
-import type { ReactNode } from "react"
 import { RouterLink } from "System/Components/RouterLink"
+import type { ReactNode } from "react"
 
 interface MyCollectionArtworkFormHeaderProps {
   NextButton?: ReactNode

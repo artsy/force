@@ -1,8 +1,8 @@
-import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { CellArtistFragmentContainer_Test_Query } from "__generated__/CellArtistFragmentContainer_Test_Query.graphql"
 import { screen } from "@testing-library/react"
 import { CellArtistFragmentContainer } from "Components/Cells/CellArtist"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { CellArtistFragmentContainer_Test_Query } from "__generated__/CellArtistFragmentContainer_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

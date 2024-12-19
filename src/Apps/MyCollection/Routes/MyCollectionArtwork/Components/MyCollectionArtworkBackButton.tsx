@@ -1,7 +1,7 @@
+import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import { Flex, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
-import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 
 export const MyCollectionArtworkBackButton = () => {
   return (

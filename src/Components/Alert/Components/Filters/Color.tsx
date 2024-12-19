@@ -1,16 +1,16 @@
 import {
-  Checkbox,
   Box,
-  Text,
-  Spacer,
-  GridColumns,
+  Checkbox,
   Column,
+  GridColumns,
+  Spacer,
+  Text,
 } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import { COLOR_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import type * as React from "react"
 import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
-import { COLOR_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
-import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 
 type ColorOption = (typeof COLOR_OPTIONS)[number]
 

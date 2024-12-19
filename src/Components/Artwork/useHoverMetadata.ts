@@ -1,5 +1,5 @@
-import { useState } from "react"
 import { isTouch } from "Utils/device"
+import { useState } from "react"
 
 export const useHoverMetadata = () => {
   const [isHovered, setIsHovered] = useState(false)

@@ -1,7 +1,7 @@
-import type * as React from "react"
 import { Box, type BoxProps, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
 import type { ShowAbout_show$data } from "__generated__/ShowAbout_show.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ShowAboutProps extends BoxProps {
   show: ShowAbout_show$data

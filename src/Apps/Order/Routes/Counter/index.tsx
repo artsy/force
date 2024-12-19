@@ -1,10 +1,12 @@
+import { ContextModule, OwnerType } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Button, Flex, Spacer } from "@artsy/palette"
-import type { Counter_order$data } from "__generated__/Counter_order.graphql"
-import type { CounterSubmitMutation } from "__generated__/CounterSubmitMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
+import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
-import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { counterofferFlowSteps } from "Apps/Order/Components/OrderStepper"
+import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
@@ -12,17 +14,15 @@ import {
   type CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { CountdownTimer } from "Components/CountdownTimer"
+import { Media } from "Utils/Responsive"
+import createLogger from "Utils/logger"
+import type { CounterSubmitMutation } from "__generated__/CounterSubmitMutation.graphql"
+import type { Counter_order$data } from "__generated__/Counter_order.graphql"
 import type { Router } from "found"
 import type { FC } from "react"
 import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
-import createLogger from "Utils/logger"
-import { Media } from "Utils/Responsive"
-import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
-import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 
 export interface CounterProps {
   order: Counter_order$data

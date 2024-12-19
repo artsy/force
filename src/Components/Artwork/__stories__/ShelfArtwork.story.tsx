@@ -1,4 +1,3 @@
-import { States } from "storybook-states"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
@@ -6,6 +5,7 @@ import {
 } from "Components/Artwork/ShelfArtwork"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { graphql } from "react-relay"
+import { States } from "storybook-states"
 
 export default {
   title: "Components/ShelfArtwork",

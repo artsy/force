@@ -5,13 +5,13 @@ import {
   type PageOwnerType,
 } from "@artsy/cohesion"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useJump } from "Utils/Hooks/useJump"
+import type { FairTabs_fair$data } from "__generated__/FairTabs_fair.graphql"
 import { type FC, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useJump } from "Utils/Hooks/useJump"
-import type { FairTabs_fair$data } from "__generated__/FairTabs_fair.graphql"
 
 interface FairTabsProps {
   fair: FairTabs_fair$data

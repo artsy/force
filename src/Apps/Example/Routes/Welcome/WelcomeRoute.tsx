@@ -1,9 +1,9 @@
-import { useState } from "react"
-import type * as React from "react"
+import { ContextModule, clickedShowMore } from "@artsy/cohesion"
 import { Button, Flex, ModalDialog, Text } from "@artsy/palette"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useState } from "react"
+import type * as React from "react"
 import { useTracking } from "react-tracking"
-import { ContextModule, clickedShowMore } from "@artsy/cohesion"
 
 export const WelcomeRoute: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { trackEvent } = useTracking()

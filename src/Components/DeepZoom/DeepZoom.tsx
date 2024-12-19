@@ -1,17 +1,17 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Flex, ModalBase, Spinner } from "@artsy/palette"
+import { useDetectActivity } from "Utils/Hooks/useDetectActivity"
+import { useDidMount } from "Utils/Hooks/useDidMount"
+import type { DeepZoom_image$data } from "__generated__/DeepZoom_image.graphql"
 import { once } from "lodash"
 import type * as React from "react"
-import { DeepZoomCloseButton } from "./DeepZoomCloseButton"
-import { DeepZoomSlider } from "./DeepZoomSlider"
 import { useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { DeepZoom_image$data } from "__generated__/DeepZoom_image.graphql"
 import { useRef } from "react"
 import { useEffect } from "react"
-import { useDidMount } from "Utils/Hooks/useDidMount"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useDetectActivity } from "Utils/Hooks/useDetectActivity"
+import { DeepZoomCloseButton } from "./DeepZoomCloseButton"
+import { DeepZoomSlider } from "./DeepZoomSlider"
 
 const ZOOM_PER_CLICK = 1.4
 

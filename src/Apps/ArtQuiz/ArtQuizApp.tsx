@@ -1,5 +1,5 @@
-import type { FC } from "react"
 import { MetaTags } from "Components/MetaTags"
+import type { FC } from "react"
 
 export const ArtQuizApp: FC<React.PropsWithChildren<unknown>> = ({
   children,

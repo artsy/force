@@ -1,13 +1,13 @@
 import { screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
-import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
-import { useEffect } from "react"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import { useEffect } from "react"
 
 jest.mock("Utils/Hooks/useMatchMedia")
 

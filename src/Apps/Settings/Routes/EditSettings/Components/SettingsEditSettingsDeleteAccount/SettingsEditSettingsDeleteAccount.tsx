@@ -1,6 +1,6 @@
 import { Text } from "@artsy/palette"
-import type { FC } from "react"
 import { RouterLink } from "System/Components/RouterLink"
+import type { FC } from "react"
 
 export const SettingsEditSettingsDeleteAccount: FC<
   React.PropsWithChildren<unknown>

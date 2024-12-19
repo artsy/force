@@ -1,6 +1,10 @@
 import { useToasts } from "@artsy/palette"
 import { useAddAssetToConsignmentSubmission } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
 import type { DocumentsFormValues } from "Apps/Sell/Routes/AdditionalRoutes/AdditionalDocumentsRoute"
+import { uploadDocument as uploadDocumentToS3 } from "Apps/Sell/Utils/uploadUtils"
+import { FileDropzone } from "Components/FileUpload/FileDropzone"
+import type { DropzoneFile } from "Components/FileUpload/types"
+import { getErrorMessage } from "Components/FileUpload/utils/getErrorMessage"
 import { normalizePhoto } from "Components/PhotoUpload/Utils/fileUtils"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
@@ -8,10 +12,6 @@ import createLogger from "Utils/logger"
 import { useFormikContext } from "formik"
 import { useCallback, useEffect } from "react"
 import type { FileRejection } from "react-dropzone"
-import { uploadDocument as uploadDocumentToS3 } from "Apps/Sell/Utils/uploadUtils"
-import type { DropzoneFile } from "Components/FileUpload/types"
-import { FileDropzone } from "Components/FileUpload/FileDropzone"
-import { getErrorMessage } from "Components/FileUpload/utils/getErrorMessage"
 
 const logger = createLogger("Sell/UploadDocumentsForm.tsx")
 

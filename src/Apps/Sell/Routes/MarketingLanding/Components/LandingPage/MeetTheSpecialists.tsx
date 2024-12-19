@@ -10,16 +10,16 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { resized } from "Utils/resized"
-import { useTracking } from "react-tracking"
-import styled from "styled-components"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { createFragmentContainer, graphql } from "react-relay"
+import { resized } from "Utils/resized"
 import type { MeetTheSpecialistsQuery } from "__generated__/MeetTheSpecialistsQuery.graphql"
 import type { MeetTheSpecialists_staticContent$data } from "__generated__/MeetTheSpecialists_staticContent.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import styled from "styled-components"
 
 export const CARD_WIDTH = 404
 export const CARD_HEIGHT = 610

@@ -1,7 +1,7 @@
+import { MetaTags } from "Components/MetaTags"
+import type { ShowMeta_show$data } from "__generated__/ShowMeta_show.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { ShowMeta_show$data } from "__generated__/ShowMeta_show.graphql"
-import { MetaTags } from "Components/MetaTags"
 
 interface ShowMetaProps {
   show: ShowMeta_show$data

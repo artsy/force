@@ -1,8 +1,8 @@
-import type React from "react"
-import { useState, useEffect, useRef } from "react"
-import styled, { keyframes, css } from "styled-components"
 import { Box } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
+import type React from "react"
+import { useEffect, useRef, useState } from "react"
+import styled, { keyframes, css } from "styled-components"
 
 interface PageLoadingBarProps {
   loadingState: "resting" | "loading" | "complete"

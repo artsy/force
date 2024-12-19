@@ -1,11 +1,11 @@
-import { screen, fireEvent, waitFor, act } from "@testing-library/react"
-import { useMutation } from "Utils/Hooks/useMutation"
+import { act, fireEvent, screen, waitFor } from "@testing-library/react"
 import { AddArtworksModal } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/AddArtworksModal"
-import { useTracking } from "react-tracking"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { render } from "DevTools/renderWithMockBoot"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useMutation } from "Utils/Hooks/useMutation"
+import { useTracking } from "react-tracking"
+import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 
 jest.mock("Utils/Hooks/useMutation")
 jest.mock("System/Hooks/useSystemContext")

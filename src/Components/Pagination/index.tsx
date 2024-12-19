@@ -1,15 +1,15 @@
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { Pagination_pageCursors$data } from "__generated__/Pagination_pageCursors.graphql"
-import type { CommercePagination_pageCursors$data } from "__generated__/CommercePagination_pageCursors.graphql"
 import {
-  Pagination as PaginationBase,
   type PaginationProps as BasePaginationProps,
   type BoxProps,
+  Pagination as PaginationBase,
 } from "@artsy/palette"
-import { useComputeHref } from "./useComputeHref"
 import { userIsForcingNavigation } from "System/Router/Utils/catchLinks"
 import { useJump } from "Utils/Hooks/useJump"
+import type { CommercePagination_pageCursors$data } from "__generated__/CommercePagination_pageCursors.graphql"
+import type { Pagination_pageCursors$data } from "__generated__/Pagination_pageCursors.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useComputeHref } from "./useComputeHref"
 
 export interface PaginationProps
   extends Pick<BasePaginationProps, "getHref">,

@@ -5,25 +5,25 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js"
-import { useAddCreditCardAndUpdateProfile } from "Apps/Auction/Queries/useAddCreditCardAndUpdateProfile"
-import { useCreateBidder } from "Apps/Auction/Queries/useCreateBidder"
-import createLogger from "Utils/logger"
-import { useAuctionTracking } from "./useAuctionTracking"
-import type { AuctionRegistrationRoute_me$data } from "__generated__/AuctionRegistrationRoute_me.graphql"
-import type { AuctionRegistrationRoute_sale$data } from "__generated__/AuctionRegistrationRoute_sale.graphql"
-import type { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
-import type { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
-import { toStripeAddress } from "Components/Address/utils"
-import { useRefreshUserData } from "Apps/Auction/Queries/useRefreshUserData"
 import {
   errorMessageForCard,
   stripeCardElementNotFound,
   stripeNotLoadedErrorMessage,
 } from "Apps/Auction/Components/Form/Utils/errorMessages"
 import type {
-  AuctionFormValues,
   AuctionFormHelpers,
+  AuctionFormValues,
 } from "Apps/Auction/Components/Form/Utils/initialValues"
+import { useAddCreditCardAndUpdateProfile } from "Apps/Auction/Queries/useAddCreditCardAndUpdateProfile"
+import { useCreateBidder } from "Apps/Auction/Queries/useCreateBidder"
+import { useRefreshUserData } from "Apps/Auction/Queries/useRefreshUserData"
+import { toStripeAddress } from "Components/Address/utils"
+import createLogger from "Utils/logger"
+import type { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
+import type { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
+import type { AuctionRegistrationRoute_me$data } from "__generated__/AuctionRegistrationRoute_me.graphql"
+import type { AuctionRegistrationRoute_sale$data } from "__generated__/AuctionRegistrationRoute_sale.graphql"
+import { useAuctionTracking } from "./useAuctionTracking"
 
 const logger = createLogger("useCreateTokenAndSubmit")
 

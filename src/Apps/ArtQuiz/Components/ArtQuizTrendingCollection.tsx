@@ -3,10 +3,10 @@ import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtQuizTrendingCollection_collection$data } from "__generated__/ArtQuizTrendingCollection_collection.graphql"
+import type { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtQuizTrendingCollectionProps {
   collection: ArtQuizTrendingCollection_collection$data

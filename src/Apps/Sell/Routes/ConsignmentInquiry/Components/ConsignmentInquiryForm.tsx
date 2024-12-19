@@ -1,6 +1,6 @@
 import { Box, Input, PhoneInput, TextArea } from "@artsy/palette"
-import { useFormikContext } from "formik"
 import { countries } from "Utils/countries"
+import { useFormikContext } from "formik"
 
 export interface ConsignmentInquiryFormModel {
   name: string

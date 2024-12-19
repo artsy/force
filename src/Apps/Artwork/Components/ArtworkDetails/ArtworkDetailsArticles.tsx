@@ -1,8 +1,8 @@
 import { BorderBox, Box, Flex, Image, Join, Spacer, Text } from "@artsy/palette"
-import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import type { ArtworkDetailsArticles_artwork$data } from "__generated__/ArtworkDetailsArticles_artwork.graphql"
+import type * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface ArtworkDetailsArticlesProps {
   artwork: ArtworkDetailsArticles_artwork$data

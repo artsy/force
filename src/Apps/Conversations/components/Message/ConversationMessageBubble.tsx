@@ -1,9 +1,9 @@
+import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"
 import { Avatar, Box, Flex, Text, useTheme } from "@artsy/palette"
 import { type FC, isValidElement } from "react"
 import Linkify from "react-linkify"
 import { ConversationMessageImage } from "./ConversationMessageImage"
-import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 
 /**
  * The following props can be used together, details:

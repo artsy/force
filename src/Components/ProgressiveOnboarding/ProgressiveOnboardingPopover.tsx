@@ -1,8 +1,8 @@
-import { type FC, useEffect, useState } from "react"
 import { Box, Popover, type PopoverProps } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { useProgressiveOnboardingTracking } from "Components/ProgressiveOnboarding/useProgressiveOnboardingTracking"
 import { isTouch } from "Utils/device"
+import { type FC, useEffect, useState } from "react"
 
 interface ProgressiveOnboardingPopoverProps
   extends Omit<PopoverProps, "children"> {

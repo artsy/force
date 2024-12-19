@@ -1,6 +1,6 @@
 import {
-  CreateNewListModal,
   type ArtworkList,
+  CreateNewListModal,
 } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/CreateNewListModal"
 import {
   ListKey,

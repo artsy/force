@@ -7,21 +7,21 @@ import {
   Skeleton,
   Stack,
 } from "@artsy/palette"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { type FC, useState } from "react"
-import { graphql } from "react-relay"
-import type {
-  SuggestedArtworksShelfQuery,
-  SuggestedArtworksShelfQuery$data,
-} from "__generated__/SuggestedArtworksShelfQuery.graphql"
+import { ArtworkAuctionCreateAlertTooltip } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
+import { SuggestedArtworksModal } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksModal"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtworkAuctionCreateAlertTooltip } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
-import { SuggestedArtworksModal } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksModal"
+import type {
+  SuggestedArtworksShelfQuery,
+  SuggestedArtworksShelfQuery$data,
+} from "__generated__/SuggestedArtworksShelfQuery.graphql"
+import { type FC, useState } from "react"
+import { graphql } from "react-relay"
 
 export const NUMBER_OF_ARTWORKS_TO_SHOW = 5
 

@@ -1,9 +1,9 @@
 import { Box, Flex, type FlexProps, Image, Spacer } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import {
-  useDeviceDetection,
-  Device,
   DOWNLOAD_APP_URLS,
+  Device,
+  useDeviceDetection,
 } from "Utils/Hooks/useDeviceDetection"
 
 export const DownloadAppBadgesDark: React.FC<

@@ -1,12 +1,12 @@
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { EntityHeaderFairOrganizerStoryQuery } from "__generated__/EntityHeaderFairOrganizerStoryQuery.graphql"
 import { graphql } from "react-relay"
 import { States } from "storybook-states"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   EntityHeaderFairOrganizerFragmentContainer,
   type EntityHeaderFairOrganizerProps,
 } from "./EntityHeaderFairOrganizer"
 import { EntityHeaderPlaceholder } from "./EntityHeaderPlaceholder"
-import type { EntityHeaderFairOrganizerStoryQuery } from "__generated__/EntityHeaderFairOrganizerStoryQuery.graphql"
 
 export default {
   title: "Components/EntityHeader",

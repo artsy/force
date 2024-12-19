@@ -1,32 +1,32 @@
-import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { Title } from "react-head"
-import type { Match } from "found"
 import {
+  Box,
   Button,
   Flex,
   Join,
   Message,
-  Text,
   Spacer,
+  Text,
   media,
-  Box,
 } from "@artsy/palette"
-import styled from "styled-components"
-import { RouterLink } from "System/Components/RouterLink"
-import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import { TwoColumnLayout } from "Apps/Order/Components/TwoColumnLayout"
-import createLogger from "Utils/logger"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
+import { BackToConversationBanner } from "Apps/Order/Components/BackToConversationBanner"
 import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import type { Status_order$data } from "__generated__/Status_order.graphql"
+import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
+import { TwoColumnLayout } from "Apps/Order/Components/TwoColumnLayout"
 import {
-  getStatusCopy,
   continueToInboxText,
+  getStatusCopy,
 } from "Apps/Order/Utils/getStatusCopy"
-import { BackToConversationBanner } from "Apps/Order/Components/BackToConversationBanner"
+import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import createLogger from "Utils/logger"
+import type { Status_order$data } from "__generated__/Status_order.graphql"
+import type { Match } from "found"
+import type { FC } from "react"
+import { Title } from "react-head"
+import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
 
 const logger = createLogger("Order/Routes/Status/index.tsx")
 

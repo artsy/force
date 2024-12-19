@@ -1,4 +1,4 @@
-import { Box, Flex, Button, Select } from "@artsy/palette"
+import { Box, Button, Flex, Select } from "@artsy/palette"
 import type { FC } from "react"
 
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"

@@ -1,10 +1,10 @@
-import { CollectionHubFixture } from "Apps/__tests__/Fixtures/Collections"
-import { useTracking } from "react-tracking"
-import { mount } from "enzyme"
-import { OtherCollectionEntity } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/OtherCollectionsRail/OtherCollectionEntity"
-import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { Image } from "@artsy/palette"
+import { OtherCollectionEntity } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/OtherCollectionsRail/OtherCollectionEntity"
+import { CollectionHubFixture } from "Apps/__tests__/Fixtures/Collections"
 import { RouterLink } from "System/Components/RouterLink"
+import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
+import { mount } from "enzyme"
+import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 jest.mock("found", () => ({

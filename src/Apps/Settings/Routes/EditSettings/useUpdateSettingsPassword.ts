@@ -1,10 +1,10 @@
-import { commitMutation, graphql } from "react-relay"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type {
-  useUpdateSettingsPasswordMutation,
   UpdateMyPasswordMutationInput,
+  useUpdateSettingsPasswordMutation,
   useUpdateSettingsPasswordMutation$data,
 } from "__generated__/useUpdateSettingsPasswordMutation.graphql"
+import { commitMutation, graphql } from "react-relay"
 
 export const useUpdateSettingsPassword = () => {
   const { relayEnvironment } = useSystemContext()

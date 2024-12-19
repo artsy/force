@@ -1,7 +1,7 @@
-import { Text, Flex, Button } from "@artsy/palette"
+import { Button, Flex, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type React from "react"
 import type { ReactElement } from "react"
-import { RouterLink } from "System/Components/RouterLink"
 
 export const ConfirmationScreenComponent: React.FC<
   React.PropsWithChildren<{

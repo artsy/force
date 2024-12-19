@@ -1,4 +1,10 @@
 import {
+  ActionType,
+  type ClickedVerifiedRepresentative,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import {
   Box,
   Column,
   Flex,
@@ -12,26 +18,20 @@ import {
   Text,
 } from "@artsy/palette"
 import {
-  ActionType,
-  type ClickedVerifiedRepresentative,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
-import { createFragmentContainer, graphql } from "react-relay"
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import type { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
-import styled from "styled-components"
-import { RouterLink } from "System/Components/RouterLink"
-import {
   ArtistHeaderImage,
   isValidImage,
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
-import { formatFollowerCount } from "Utils/formatFollowerCount"
-import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
 import { FollowButtonInlineCount } from "Components/FollowButton/Button"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
+import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { formatFollowerCount } from "Utils/formatFollowerCount"
+import type { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import styled from "styled-components"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist$data

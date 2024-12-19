@@ -1,7 +1,7 @@
-import { Flex, Text, Spacer, FullBleed, Spinner, Box } from "@artsy/palette"
+import { Box, Flex, FullBleed, Spacer, Spinner, Text } from "@artsy/palette"
 import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
 import { SplitLayout } from "Components/SplitLayout"
-import { useState, useEffect, type FC } from "react"
+import { type FC, useEffect, useState } from "react"
 
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 

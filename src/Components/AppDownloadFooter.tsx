@@ -1,3 +1,6 @@
+import { ActionType } from "@artsy/cohesion"
+import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
+import CloseIcon from "@artsy/icons/CloseIcon"
 import {
   Box,
   Button,
@@ -6,19 +9,16 @@ import {
   Text,
   useDidMount,
 } from "@artsy/palette"
-import { type FC, useEffect, useRef } from "react"
-import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
-import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
-import { Z } from "Apps/Components/constants"
-import CloseIcon from "@artsy/icons/CloseIcon"
-import Cookies from "cookies-js"
-import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
-import { useTracking } from "react-tracking"
-import { ActionType } from "@artsy/cohesion"
-import { useSystemContext } from "System/Hooks/useSystemContext"
+import { Z } from "Apps/Components/constants"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
+import Cookies from "cookies-js"
+import { type FC, useEffect, useRef } from "react"
+import { useTracking } from "react-tracking"
+import styled from "styled-components"
 
 const APP_DOWNLOAD_FOOTER_KEY = "AppDownloadFooter"
 

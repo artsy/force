@@ -1,7 +1,7 @@
-import { Box, Flex, Pill, Text, Tooltip } from "@artsy/palette"
 import InfoIcon from "@artsy/icons/InfoIcon"
-import type { FC } from "react"
+import { Box, Flex, Pill, Text, Tooltip } from "@artsy/palette"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
+import type { FC } from "react"
 
 export const ArtworkAuctionCreateAlertTooltip: FC<
   React.PropsWithChildren<unknown>

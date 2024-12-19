@@ -1,4 +1,17 @@
 import { Box, type BoxProps, Flex, Spinner } from "@artsy/palette"
+import { ConversationMessageArtwork } from "Apps/Conversations/components/Message/ConversationMessageArtwork"
+import { ConversationOrderUpdate } from "Apps/Conversations/components/Message/ConversationOrderUpdate"
+import { ConversationTimeSince } from "Apps/Conversations/components/Message/ConversationTimeSince"
+import { LatestMessagesFlyOut } from "Apps/Conversations/components/Message/LatestMessagesFlyOut"
+import {
+  type Message,
+  isRelevantEvent,
+  useGroupedMessages,
+} from "Apps/Conversations/hooks/useGroupedMessages"
+import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
+import { Sentinel } from "Components/Sentinal"
+import { extractNodes } from "Utils/extractNodes"
+import type { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 import type React from "react"
 import {
   type FC,
@@ -9,25 +22,12 @@ import {
   useState,
 } from "react"
 import {
+  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
-  type RelayPaginationProp,
 } from "react-relay"
-import { ConversationMessage, type Messages } from "./ConversationMessage"
-import { extractNodes } from "Utils/extractNodes"
-import type { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
-import { Sentinel } from "Components/Sentinal"
-import {
-  type Message,
-  isRelevantEvent,
-  useGroupedMessages,
-} from "Apps/Conversations/hooks/useGroupedMessages"
-import { ConversationOrderUpdate } from "Apps/Conversations/components/Message/ConversationOrderUpdate"
-import { ConversationTimeSince } from "Apps/Conversations/components/Message/ConversationTimeSince"
-import { ConversationMessageArtwork } from "Apps/Conversations/components/Message/ConversationMessageArtwork"
-import { LatestMessagesFlyOut } from "Apps/Conversations/components/Message/LatestMessagesFlyOut"
-import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
 import styled from "styled-components"
+import { ConversationMessage, type Messages } from "./ConversationMessage"
 
 const PAGE_SIZE = 15
 
