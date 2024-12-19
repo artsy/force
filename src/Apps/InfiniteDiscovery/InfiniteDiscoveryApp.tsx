@@ -1,14 +1,24 @@
-import { Flex, Button, Text, Separator } from "@artsy/palette"
+import {
+  Flex,
+  Button,
+  Text,
+  Separator,
+  Input,
+  Expandable,
+  Label,
+} from "@artsy/palette"
 import React, { useEffect } from "react"
 import { sampleSize } from "lodash"
 import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
 
-const buildMetaphysicsQuery = (likedArtworks, dismissedArtworks) => {
+const buildMetaphysicsQuery = (likedArtworks, dismissedArtworks, weight) => {
   const likedArtworkIds = likedArtworks.map(artwork => artwork.id)
   const dismissedArtworkIds = dismissedArtworks.map(artwork => artwork.id)
 
   // Adjust query variables based on conditions
   const variables = {
+    osWeights: weight,
+    useOpenSearch: true,
     likedArtworkIds: likedArtworkIds.length > 2 ? likedArtworkIds : [],
     dismissedArtworkIds:
       likedArtworkIds.length < 3
@@ -18,9 +28,10 @@ const buildMetaphysicsQuery = (likedArtworks, dismissedArtworks) => {
 
   return {
     query: `
-      query InfiniteDiscoveryAppQuery($likedArtworkIds: [String], $dismissedArtworkIds: [String]) {
+      query InfiniteDiscoveryAppQuery($likedArtworkIds: [String], $dismissedArtworkIds: [String], $osWeights: [Float], $useOpenSearch: Boolean) {
         discoverArtworks(
-          useOpenSearch: true,
+          useOpenSearch: $useOpenSearch,
+          osWeights: $osWeights,
           likedArtworkIds: $likedArtworkIds,
           excludeArtworkIds: $dismissedArtworkIds
         ) {
@@ -29,6 +40,7 @@ const buildMetaphysicsQuery = (likedArtworks, dismissedArtworks) => {
               id: internalID
               title
               artistNames
+              medium
               image {
                 url
               }
@@ -70,6 +82,8 @@ export const InfiniteDiscoveryApp = () => {
   const [likedArtworks, setLikedArtworks] = React.useState([]) as any
   const [dismissedArtworks, setDismissedArtworks] = React.useState([]) as any
   const [loading, setLoading] = React.useState(false)
+  const [mltWeight, setMltWeight] = React.useState(0.6)
+  const [knnWeight, setKnnWeight] = React.useState(0.4)
 
   const onLike = artwork => {
     setLikedArtworks([...likedArtworks, artwork])
@@ -82,7 +96,7 @@ export const InfiniteDiscoveryApp = () => {
   const initialArtworks = async () => {
     const response = await request(getMetaphysicsEndpoint(), {
       body: JSON.stringify(
-        buildMetaphysicsQuery(likedArtworks, dismissedArtworks)
+        buildMetaphysicsQuery(likedArtworks, dismissedArtworks, [0.6, 0.4])
       ),
     })
 
@@ -103,7 +117,10 @@ export const InfiniteDiscoveryApp = () => {
 
     const response = await request(getMetaphysicsEndpoint(), {
       body: JSON.stringify(
-        buildMetaphysicsQuery(likedArtworks, dismissedArtworks)
+        buildMetaphysicsQuery(likedArtworks, dismissedArtworks, [
+          mltWeight,
+          knnWeight,
+        ])
       ),
     })
 
@@ -133,7 +150,7 @@ export const InfiniteDiscoveryApp = () => {
             preferences.
           </Text>
           <br />
-          <Flex>
+          <Flex flexDirection={"row"}>
             <Button
               onClick={submitSearch}
               loading={loading}
@@ -145,6 +162,34 @@ export const InfiniteDiscoveryApp = () => {
             >
               Get Recommendations
             </Button>
+            <Flex flexDirection={"row"}>
+              <Expandable
+                marginLeft={20}
+                marginBottom={20}
+                label="Advanced Options (enabled after 3 likes)"
+                width={400}
+                disabled={likedArtworks.length <= 2}
+              >
+                <Label>MLT weight</Label>
+                <Input
+                  type="number"
+                  value={mltWeight.toString()}
+                  placeholder="MLT Weight"
+                  onChange={e => setMltWeight(parseFloat(e.target.value))}
+                  max={1}
+                  min={0}
+                />
+                <Label>KNN weight</Label>
+                <Input
+                  value={knnWeight.toString()}
+                  type="number"
+                  placeholder="KNN Weight default. 0.4"
+                  onChange={e => setKnnWeight(parseFloat(e.target.value))}
+                  max={1}
+                  min={0}
+                />
+              </Expandable>
+            </Flex>
             <br />
             <br />
             <br />
@@ -233,6 +278,7 @@ const Artwork = ({ onLike, onDismiss, viewed = false, artworkResource }) => {
       <h3 style={{ fontSize: "13px" }}>
         <i>{artwork?.artistNames}</i>
       </h3>
+      <h3 style={{ fontSize: "13px" }}>{artwork.medium}</h3>
       <h3 style={{ fontSize: "13px" }}>{artwork.id}</h3>
       {viewed ||
         (artwork.title !== "Artwork not available" && (
