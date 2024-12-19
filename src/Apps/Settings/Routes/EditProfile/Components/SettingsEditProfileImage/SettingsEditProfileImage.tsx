@@ -9,7 +9,11 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { type ChangeEvent, type FC, useState } from "react"
-import { createRefetchContainer, graphql, type RelayRefetchProp } from "react-relay"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import styled from "styled-components"
 import type { SettingsEditProfileImage_me$data } from "__generated__/SettingsEditProfileImage_me.graphql"
 import { Media } from "Utils/Responsive"

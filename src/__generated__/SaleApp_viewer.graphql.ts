@@ -8,45 +8,45 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type SaleApp_viewer$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"SaleArtworksFilter_viewer">
-  readonly " $fragmentType": "SaleApp_viewer"
-}
+  readonly " $fragmentSpreads": FragmentRefs<"SaleArtworksFilter_viewer">;
+  readonly " $fragmentType": "SaleApp_viewer";
+};
 export type SaleApp_viewer$key = {
-  readonly " $data"?: SaleApp_viewer$data
-  readonly " $fragmentSpreads": FragmentRefs<"SaleApp_viewer">
-}
+  readonly " $data"?: SaleApp_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SaleApp_viewer">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [
+  "argumentDefinitions": [
     {
-      defaultValue: null,
-      kind: "LocalArgument",
-      name: "input",
-    },
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "input"
+    }
   ],
-  kind: "Fragment",
-  metadata: null,
-  name: "SaleApp_viewer",
-  selections: [
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "SaleApp_viewer",
+  "selections": [
     {
-      args: [
+      "args": [
         {
-          kind: "Variable",
-          name: "input",
-          variableName: "input",
-        },
+          "kind": "Variable",
+          "name": "input",
+          "variableName": "input"
+        }
       ],
-      kind: "FragmentSpread",
-      name: "SaleArtworksFilter_viewer",
-    },
+      "kind": "FragmentSpread",
+      "name": "SaleArtworksFilter_viewer"
+    }
   ],
-  type: "Viewer",
-  abstractKey: null,
-}
+  "type": "Viewer",
+  "abstractKey": null
+};
 
-;(node as any).hash = "6ab51d042899b9ce64ed82719c11e35d"
+(node as any).hash = "6ab51d042899b9ce64ed82719c11e35d";
 
-export default node
+export default node;

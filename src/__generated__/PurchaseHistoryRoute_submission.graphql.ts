@@ -8,43 +8,43 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type PurchaseHistoryRoute_submission$data = {
-  readonly provenance: string | null | undefined
-  readonly signature: boolean | null | undefined
-  readonly " $fragmentType": "PurchaseHistoryRoute_submission"
-}
+  readonly provenance: string | null | undefined;
+  readonly signature: boolean | null | undefined;
+  readonly " $fragmentType": "PurchaseHistoryRoute_submission";
+};
 export type PurchaseHistoryRoute_submission$key = {
-  readonly " $data"?: PurchaseHistoryRoute_submission$data
-  readonly " $fragmentSpreads": FragmentRefs<"PurchaseHistoryRoute_submission">
-}
+  readonly " $data"?: PurchaseHistoryRoute_submission$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PurchaseHistoryRoute_submission">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "PurchaseHistoryRoute_submission",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "PurchaseHistoryRoute_submission",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "provenance",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "provenance",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "signature",
-      storageKey: null,
-    },
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "signature",
+      "storageKey": null
+    }
   ],
-  type: "ConsignmentSubmission",
-  abstractKey: null,
-}
+  "type": "ConsignmentSubmission",
+  "abstractKey": null
+};
 
-;(node as any).hash = "a36cbcb3ae9a2f7a8c56017c6803fd20"
+(node as any).hash = "a36cbcb3ae9a2f7a8c56017c6803fd20";
 
-export default node
+export default node;

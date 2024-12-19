@@ -8,51 +8,51 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type ArticleSponsor_sponsor$data = {
-  readonly partnerDarkLogo: string | null | undefined
-  readonly partnerLightLogo: string | null | undefined
-  readonly partnerLogoLink: string | null | undefined
-  readonly " $fragmentType": "ArticleSponsor_sponsor"
-}
+  readonly partnerDarkLogo: string | null | undefined;
+  readonly partnerLightLogo: string | null | undefined;
+  readonly partnerLogoLink: string | null | undefined;
+  readonly " $fragmentType": "ArticleSponsor_sponsor";
+};
 export type ArticleSponsor_sponsor$key = {
-  readonly " $data"?: ArticleSponsor_sponsor$data
-  readonly " $fragmentSpreads": FragmentRefs<"ArticleSponsor_sponsor">
-}
+  readonly " $data"?: ArticleSponsor_sponsor$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleSponsor_sponsor">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "ArticleSponsor_sponsor",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArticleSponsor_sponsor",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "partnerLightLogo",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "partnerLightLogo",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "partnerDarkLogo",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "partnerDarkLogo",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "partnerLogoLink",
-      storageKey: null,
-    },
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "partnerLogoLink",
+      "storageKey": null
+    }
   ],
-  type: "ArticleSponsor",
-  abstractKey: null,
-}
+  "type": "ArticleSponsor",
+  "abstractKey": null
+};
 
-;(node as any).hash = "d51ce9d47167c32f0ec3435c942a9380"
+(node as any).hash = "d51ce9d47167c32f0ec3435c942a9380";
 
-export default node
+export default node;

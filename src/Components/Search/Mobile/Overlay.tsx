@@ -7,7 +7,11 @@ import {
   TOP_PILL,
   SEARCH_DEBOUNCE_DELAY,
 } from "Components/Search/constants"
-import { createRefetchContainer, type RelayRefetchProp, graphql } from "react-relay"
+import {
+  createRefetchContainer,
+  type RelayRefetchProp,
+  graphql,
+} from "react-relay"
 import createLogger from "Utils/logger"
 import { SearchInputPillsFragmentContainer } from "Components/Search/SearchInputPills"
 import { reportPerformanceMeasurement } from "Components/Search/utils/reportPerformanceMeasurement"

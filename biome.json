@@ -3,7 +3,7 @@
   "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["**/__generated__"]
+    "ignore": ["src/__generated__/**/*"]
   },
   "formatter": {
     "enabled": true,
@@ -15,7 +15,7 @@
     "lineWidth": 80,
     "attributePosition": "auto",
     "bracketSpacing": true,
-    "ignore": ["**/__generated__", "**/*.ejs", "hokusai/*.yml"]
+    "ignore": ["**/__generated__", "hokusai/*.yml"]
   },
   "organizeImports": { "enabled": true },
   "linter": {
@@ -52,7 +52,7 @@
         "noImplicitAnyLet": "off"
       }
     },
-    "include": ["src/**/*"]
+    "ignore": ["src/__generated__/**/*"]
   },
   "javascript": {
     "formatter": {

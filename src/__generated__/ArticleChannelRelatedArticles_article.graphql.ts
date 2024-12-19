@@ -8,86 +8,83 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type ArticleChannelRelatedArticles_article$data = {
-  readonly byline: string | null | undefined
-  readonly channel:
-    | {
-        readonly name: string
-      }
-    | null
-    | undefined
+  readonly byline: string | null | undefined;
+  readonly channel: {
+    readonly name: string;
+  } | null | undefined;
   readonly channelArticles: ReadonlyArray<{
-    readonly internalID: string
-    readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">
-  }>
-  readonly " $fragmentType": "ArticleChannelRelatedArticles_article"
-}
+    readonly internalID: string;
+    readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
+  }>;
+  readonly " $fragmentType": "ArticleChannelRelatedArticles_article";
+};
 export type ArticleChannelRelatedArticles_article$key = {
-  readonly " $data"?: ArticleChannelRelatedArticles_article$data
-  readonly " $fragmentSpreads": FragmentRefs<"ArticleChannelRelatedArticles_article">
-}
+  readonly " $data"?: ArticleChannelRelatedArticles_article$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleChannelRelatedArticles_article">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "ArticleChannelRelatedArticles_article",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArticleChannelRelatedArticles_article",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "byline",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "byline",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: null,
-      concreteType: "Channel",
-      kind: "LinkedField",
-      name: "channel",
-      plural: false,
-      selections: [
+      "alias": null,
+      "args": null,
+      "concreteType": "Channel",
+      "kind": "LinkedField",
+      "name": "channel",
+      "plural": false,
+      "selections": [
         {
-          alias: null,
-          args: null,
-          kind: "ScalarField",
-          name: "name",
-          storageKey: null,
-        },
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        }
       ],
-      storageKey: null,
+      "storageKey": null
     },
     {
-      alias: null,
-      args: null,
-      concreteType: "Article",
-      kind: "LinkedField",
-      name: "channelArticles",
-      plural: true,
-      selections: [
+      "alias": null,
+      "args": null,
+      "concreteType": "Article",
+      "kind": "LinkedField",
+      "name": "channelArticles",
+      "plural": true,
+      "selections": [
         {
-          alias: null,
-          args: null,
-          kind: "ScalarField",
-          name: "internalID",
-          storageKey: null,
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
         },
         {
-          args: null,
-          kind: "FragmentSpread",
-          name: "CellArticle_article",
-        },
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "CellArticle_article"
+        }
       ],
-      storageKey: null,
-    },
+      "storageKey": null
+    }
   ],
-  type: "Article",
-  abstractKey: null,
-}
+  "type": "Article",
+  "abstractKey": null
+};
 
-;(node as any).hash = "b8121df23a966cee47209d2ddd3c20a3"
+(node as any).hash = "b8121df23a966cee47209d2ddd3c20a3";
 
-export default node
+export default node;

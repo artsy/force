@@ -8,55 +8,51 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type SettingsEditSettingsTwoFactor_me$data = {
-  readonly hasSecondFactorEnabled: boolean
-  readonly " $fragmentSpreads": FragmentRefs<
-    | "AppSecondFactor_me"
-    | "SettingsEditSettingsTwoFactorBackupCodes_me"
-    | "SmsSecondFactor_me"
-  >
-  readonly " $fragmentType": "SettingsEditSettingsTwoFactor_me"
-}
+  readonly hasSecondFactorEnabled: boolean;
+  readonly " $fragmentSpreads": FragmentRefs<"AppSecondFactor_me" | "SettingsEditSettingsTwoFactorBackupCodes_me" | "SmsSecondFactor_me">;
+  readonly " $fragmentType": "SettingsEditSettingsTwoFactor_me";
+};
 export type SettingsEditSettingsTwoFactor_me$key = {
-  readonly " $data"?: SettingsEditSettingsTwoFactor_me$data
-  readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsTwoFactor_me">
-}
+  readonly " $data"?: SettingsEditSettingsTwoFactor_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsTwoFactor_me">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "SettingsEditSettingsTwoFactor_me",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "SettingsEditSettingsTwoFactor_me",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "hasSecondFactorEnabled",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hasSecondFactorEnabled",
+      "storageKey": null
     },
     {
-      args: null,
-      kind: "FragmentSpread",
-      name: "AppSecondFactor_me",
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AppSecondFactor_me"
     },
     {
-      args: null,
-      kind: "FragmentSpread",
-      name: "SmsSecondFactor_me",
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SmsSecondFactor_me"
     },
     {
-      args: null,
-      kind: "FragmentSpread",
-      name: "SettingsEditSettingsTwoFactorBackupCodes_me",
-    },
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SettingsEditSettingsTwoFactorBackupCodes_me"
+    }
   ],
-  type: "Me",
-  abstractKey: null,
-}
+  "type": "Me",
+  "abstractKey": null
+};
 
-;(node as any).hash = "7176ddcf512b6018b12a55a8ad4cedd1"
+(node as any).hash = "7176ddcf512b6018b12a55a8ad4cedd1";
 
-export default node
+export default node;

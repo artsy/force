@@ -23,7 +23,13 @@ interface QuickMultipleSelectAlertFilterProps {
 
 export const QuickMultipleSelectAlertFilter: FC<
   React.PropsWithChildren<QuickMultipleSelectAlertFilterProps>
-> = ({ criteriaKey, description, label, options, truncate = Number.POSITIVE_INFINITY }) => {
+> = ({
+  criteriaKey,
+  description,
+  label,
+  options,
+  truncate = Number.POSITIVE_INFINITY,
+}) => {
   const { state, dispatch } = useAlertContext()
 
   const [isExpanded, setExpanded] = useState(false)

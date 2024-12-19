@@ -8,45 +8,45 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type ExampleArtworkFilterRoute_viewer$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilter_viewer">
-  readonly " $fragmentType": "ExampleArtworkFilterRoute_viewer"
-}
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilter_viewer">;
+  readonly " $fragmentType": "ExampleArtworkFilterRoute_viewer";
+};
 export type ExampleArtworkFilterRoute_viewer$key = {
-  readonly " $data"?: ExampleArtworkFilterRoute_viewer$data
-  readonly " $fragmentSpreads": FragmentRefs<"ExampleArtworkFilterRoute_viewer">
-}
+  readonly " $data"?: ExampleArtworkFilterRoute_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ExampleArtworkFilterRoute_viewer">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [
+  "argumentDefinitions": [
     {
-      defaultValue: null,
-      kind: "LocalArgument",
-      name: "input",
-    },
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "input"
+    }
   ],
-  kind: "Fragment",
-  metadata: null,
-  name: "ExampleArtworkFilterRoute_viewer",
-  selections: [
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ExampleArtworkFilterRoute_viewer",
+  "selections": [
     {
-      args: [
+      "args": [
         {
-          kind: "Variable",
-          name: "input",
-          variableName: "input",
-        },
+          "kind": "Variable",
+          "name": "input",
+          "variableName": "input"
+        }
       ],
-      kind: "FragmentSpread",
-      name: "ArtworkFilter_viewer",
-    },
+      "kind": "FragmentSpread",
+      "name": "ArtworkFilter_viewer"
+    }
   ],
-  type: "Viewer",
-  abstractKey: null,
-}
+  "type": "Viewer",
+  "abstractKey": null
+};
 
-;(node as any).hash = "0e6d20842a68ec0818614320b0aca562"
+(node as any).hash = "0e6d20842a68ec0818614320b0aca562";
 
-export default node
+export default node;

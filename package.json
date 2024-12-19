@@ -34,7 +34,7 @@
     "docker:force": "yarn docker -t force",
     "docker:clean": "docker rmi force force:builder force:electron",
     "format-project": "yarn biome format --write src",
-    "format": "yarn biome format --write",
+    "format": "yarn biome format --write --no-errors-on-unmatched",
     "jest": "node_modules/.bin/jest --config jest.config.js",
     "jest:debug": "node --inspect node_modules/.bin/jest --runInBand",
     "jest-enzyme": "node_modules/.bin/jest --config jest.legacy.config.js",

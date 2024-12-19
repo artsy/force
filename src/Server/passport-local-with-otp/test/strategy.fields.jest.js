@@ -19,7 +19,7 @@ describe.skip("Strategy", () => {
     let user, info
 
     // eslint-disable-next-line jest/no-done-callback
-    beforeAll((done) => {
+    beforeAll(done => {
       chai.passport
         .use(strategy)
         .success((u, i) => {
@@ -27,7 +27,7 @@ describe.skip("Strategy", () => {
           info = i
           done()
         })
-        .request((req) => {
+        .request(req => {
           req.body = {}
           req.body.userid = "johndoe"
           req.body.passwd = "secret"
@@ -63,7 +63,7 @@ describe.skip("Strategy", () => {
     let user, info
 
     // eslint-disable-next-line jest/no-done-callback
-    beforeAll((done) => {
+    beforeAll(done => {
       chai.passport
         .use(strategy)
         .success((u, i) => {
@@ -71,7 +71,7 @@ describe.skip("Strategy", () => {
           info = i
           done()
         })
-        .request((req) => {
+        .request(req => {
           req.body = {}
           req.body.user = {}
           req.body.user.username = "johndoe"

@@ -8,60 +8,58 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type ArtworkApp_artworkResult$data = {
-  readonly __typename: string
-  readonly " $fragmentSpreads": FragmentRefs<
-    "ArtworkApp_artwork" | "ArtworkErrorApp_artworkError"
-  >
-  readonly " $fragmentType": "ArtworkApp_artworkResult"
-}
+  readonly __typename: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkApp_artwork" | "ArtworkErrorApp_artworkError">;
+  readonly " $fragmentType": "ArtworkApp_artworkResult";
+};
 export type ArtworkApp_artworkResult$key = {
-  readonly " $data"?: ArtworkApp_artworkResult$data
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkApp_artworkResult">
-}
+  readonly " $data"?: ArtworkApp_artworkResult$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkApp_artworkResult">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [
+  "argumentDefinitions": [
     {
-      defaultValue: null,
-      kind: "LocalArgument",
-      name: "loadSidebar",
-    },
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "loadSidebar"
+    }
   ],
-  kind: "Fragment",
-  metadata: null,
-  name: "ArtworkApp_artworkResult",
-  selections: [
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtworkApp_artworkResult",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "__typename",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "__typename",
+      "storageKey": null
     },
     {
-      args: [
+      "args": [
         {
-          kind: "Variable",
-          name: "loadSidebar",
-          variableName: "loadSidebar",
-        },
+          "kind": "Variable",
+          "name": "loadSidebar",
+          "variableName": "loadSidebar"
+        }
       ],
-      kind: "FragmentSpread",
-      name: "ArtworkApp_artwork",
+      "kind": "FragmentSpread",
+      "name": "ArtworkApp_artwork"
     },
     {
-      args: null,
-      kind: "FragmentSpread",
-      name: "ArtworkErrorApp_artworkError",
-    },
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkErrorApp_artworkError"
+    }
   ],
-  type: "ArtworkResult",
-  abstractKey: "__isArtworkResult",
-}
+  "type": "ArtworkResult",
+  "abstractKey": "__isArtworkResult"
+};
 
-;(node as any).hash = "fe33fd7414d66bb701069c248014f8b9"
+(node as any).hash = "fe33fd7414d66bb701069c248014f8b9";
 
-export default node
+export default node;

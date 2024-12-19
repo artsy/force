@@ -10,7 +10,11 @@ import {
 } from "@artsy/palette"
 import type * as React from "react"
 import { useState } from "react"
-import { createRefetchContainer, graphql, type RelayRefetchProp } from "react-relay"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 // eslint-disable-next-line no-restricted-imports
 import request from "superagent"

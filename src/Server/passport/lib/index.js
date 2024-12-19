@@ -8,7 +8,7 @@ const opts = require("./options")
 const setupApp = require("./app/index")
 const setupPassport = require("./passport/index")
 
-module.exports = (options) => {
+module.exports = options => {
   extend(opts, options)
   setupPassport()
   return setupApp()

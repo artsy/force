@@ -9,7 +9,11 @@ import {
 } from "@artsy/palette"
 import { useMemo, useState } from "react"
 import type * as React from "react"
-import { createRefetchContainer, graphql, type RelayRefetchProp } from "react-relay"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { ShowsHeaderFragmentContainer } from "Apps/Shows/Components/ShowsHeader"
 import type { ShowsCity_viewer$data } from "__generated__/ShowsCity_viewer.graphql"
 import type { ShowsCity_city$data } from "__generated__/ShowsCity_city.graphql"

@@ -4,7 +4,7 @@ if (typeof Promise.prototype.done !== "function") {
   Promise.prototype.done = function (onFulfilled, onRejected) {
     // eslint-disable-next-line
     var self = arguments.length ? this.then.apply(this, arguments) : this
-    self.then(null, (err) => {
+    self.then(null, err => {
       setTimeout(() => {
         throw err
       }, 0)

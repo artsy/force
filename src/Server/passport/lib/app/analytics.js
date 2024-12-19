@@ -17,30 +17,29 @@ module.exports.setCampaign = (req, _res, next) => {
   next()
 }
 
-module.exports.trackSignup = service =>
-  (req, _res, next) => {
-    const { acquisitionInitiative, modalId } = req.session
+module.exports.trackSignup = service => (req, _res, next) => {
+  const { acquisitionInitiative, modalId } = req.session
 
-    delete req.session.acquisitionInitiative
-    delete req.session.modalId
+  delete req.session.acquisitionInitiative
+  delete req.session.modalId
 
-    if (!sd.SEGMENT_WRITE_KEY) {
-      return next()
-    }
-
-    analytics.track({
-      event: "Created account",
-      userId: req.user.id,
-      properties: {
-        modal_id: modalId,
-        acquisition_initiative: acquisitionInitiative,
-        signup_service: service,
-        user_id: req.user.id,
-      },
-    })
-
-    next()
+  if (!sd.SEGMENT_WRITE_KEY) {
+    return next()
   }
+
+  analytics.track({
+    event: "Created account",
+    userId: req.user.id,
+    properties: {
+      modal_id: modalId,
+      acquisition_initiative: acquisitionInitiative,
+      signup_service: service,
+      user_id: req.user.id,
+    },
+  })
+
+  next()
+}
 
 module.exports.trackLogin = (req, _res, next) => {
   if (!sd.SEGMENT_WRITE_KEY) {

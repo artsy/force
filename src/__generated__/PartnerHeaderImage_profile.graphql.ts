@@ -8,57 +8,54 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type PartnerHeaderImage_profile$data = {
-  readonly image:
-    | {
-        readonly url: string | null | undefined
-      }
-    | null
-    | undefined
-  readonly " $fragmentType": "PartnerHeaderImage_profile"
-}
+  readonly image: {
+    readonly url: string | null | undefined;
+  } | null | undefined;
+  readonly " $fragmentType": "PartnerHeaderImage_profile";
+};
 export type PartnerHeaderImage_profile$key = {
-  readonly " $data"?: PartnerHeaderImage_profile$data
-  readonly " $fragmentSpreads": FragmentRefs<"PartnerHeaderImage_profile">
-}
+  readonly " $data"?: PartnerHeaderImage_profile$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerHeaderImage_profile">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "PartnerHeaderImage_profile",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "PartnerHeaderImage_profile",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      concreteType: "Image",
-      kind: "LinkedField",
-      name: "image",
-      plural: false,
-      selections: [
+      "alias": null,
+      "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
+      "plural": false,
+      "selections": [
         {
-          alias: null,
-          args: [
+          "alias": null,
+          "args": [
             {
-              kind: "Literal",
-              name: "version",
-              value: "wide",
-            },
+              "kind": "Literal",
+              "name": "version",
+              "value": "wide"
+            }
           ],
-          kind: "ScalarField",
-          name: "url",
-          storageKey: 'url(version:"wide")',
-        },
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:\"wide\")"
+        }
       ],
-      storageKey: null,
-    },
+      "storageKey": null
+    }
   ],
-  type: "Profile",
-  abstractKey: null,
-}
+  "type": "Profile",
+  "abstractKey": null
+};
 
-;(node as any).hash = "2892c6c4bdbfac989e8badf63f150514"
+(node as any).hash = "2892c6c4bdbfac989e8badf63f150514";
 
-export default node
+export default node;

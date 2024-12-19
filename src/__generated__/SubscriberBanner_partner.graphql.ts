@@ -8,35 +8,35 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type SubscriberBanner_partner$data = {
-  readonly name: string | null | undefined
-  readonly " $fragmentType": "SubscriberBanner_partner"
-}
+  readonly name: string | null | undefined;
+  readonly " $fragmentType": "SubscriberBanner_partner";
+};
 export type SubscriberBanner_partner$key = {
-  readonly " $data"?: SubscriberBanner_partner$data
-  readonly " $fragmentSpreads": FragmentRefs<"SubscriberBanner_partner">
-}
+  readonly " $data"?: SubscriberBanner_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SubscriberBanner_partner">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "SubscriberBanner_partner",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "SubscriberBanner_partner",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "name",
-      storageKey: null,
-    },
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    }
   ],
-  type: "Partner",
-  abstractKey: null,
-}
+  "type": "Partner",
+  "abstractKey": null
+};
 
-;(node as any).hash = "1384c5a732dffbf0db39e472e863aea8"
+(node as any).hash = "1384c5a732dffbf0db39e472e863aea8";
 
-export default node
+export default node;

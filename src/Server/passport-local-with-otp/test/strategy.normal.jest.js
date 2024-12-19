@@ -18,7 +18,7 @@ describe.skip("Strategy", () => {
       let user, info
 
       // eslint-disable-next-line jest/no-done-callback
-      beforeAll((done) => {
+      beforeAll(done => {
         chai.passport
           .use(strategy)
           .success((u, i) => {
@@ -26,7 +26,7 @@ describe.skip("Strategy", () => {
             info = i
             done()
           })
-          .request((req) => {
+          .request(req => {
             req.body = {}
             req.body.username = "johndoe"
             req.body.password = "secret"
@@ -54,7 +54,7 @@ describe.skip("Strategy", () => {
 
       let user, info
 
-      beforeAll((done) => {
+      beforeAll(done => {
         chai.passport
           .use(strategy)
           .success((u, i) => {
@@ -62,7 +62,7 @@ describe.skip("Strategy", () => {
             info = i
             done()
           })
-          .request((req) => {
+          .request(req => {
             req.query = {}
             req.query.username = "johndoe"
             req.query.password = "secret"
@@ -92,7 +92,7 @@ describe.skip("Strategy", () => {
 
       let user, info
 
-      beforeAll((done) => {
+      beforeAll(done => {
         chai.passport
           .use(strategy)
           .success((u, i) => {
@@ -100,7 +100,7 @@ describe.skip("Strategy", () => {
             info = i
             done()
           })
-          .request((req) => {
+          .request(req => {
             req.body = {}
             req.body.username = "johndoe"
             req.body.password = "secret"
@@ -128,7 +128,7 @@ describe.skip("Strategy", () => {
       let user, info
 
       // eslint-disable-next-line jest/no-done-callback
-      beforeAll((done) => {
+      beforeAll(done => {
         chai.passport
           .use(strategy)
           .success((u, i) => {
@@ -136,7 +136,7 @@ describe.skip("Strategy", () => {
             info = i
             done()
           })
-          .request((req) => {
+          .request(req => {
             req.query = {}
             req.query.username = "johndoe"
             req.query.password = "secret"
@@ -161,7 +161,7 @@ describe.skip("Strategy", () => {
 
     let info, status
 
-    beforeAll((done) => {
+    beforeAll(done => {
       chai.passport
         .use(strategy)
         .fail((i, s) => {
@@ -185,7 +185,7 @@ describe.skip("Strategy", () => {
 
     let info, status
 
-    beforeAll((done) => {
+    beforeAll(done => {
       chai.passport
         .use(strategy)
         .fail((i, s) => {
@@ -193,7 +193,7 @@ describe.skip("Strategy", () => {
           status = s
           done()
         })
-        .request((req) => {
+        .request(req => {
           req.body = {}
         })
         .authenticate()
@@ -212,7 +212,7 @@ describe.skip("Strategy", () => {
 
     let info, status
 
-    beforeAll((done) => {
+    beforeAll(done => {
       chai.passport
         .use(strategy)
         .fail((i, s) => {
@@ -220,7 +220,7 @@ describe.skip("Strategy", () => {
           status = s
           done()
         })
-        .request((req) => {
+        .request(req => {
           req.body = {}
           req.body.username = "johndoe"
         })
@@ -240,7 +240,7 @@ describe.skip("Strategy", () => {
 
     let info, status
 
-    beforeAll((done) => {
+    beforeAll(done => {
       chai.passport
         .use(strategy)
         .fail((i, s) => {
@@ -248,7 +248,7 @@ describe.skip("Strategy", () => {
           status = s
           done()
         })
-        .request((req) => {
+        .request(req => {
           req.body = {}
           req.body.password = "secret"
         })

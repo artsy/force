@@ -33,7 +33,7 @@ describe("passport callbacks", () => {
     }
   })
 
-  it("gets a user with an access token email/password/otp", (done) => {
+  it("gets a user with an access token email/password/otp", done => {
     req.body = { otpRequired: true }
     cbs.local(req, "craig", "foo", "123456", (err, user) => {
       expect(user.accessToken).toEqual("access-token")
@@ -47,7 +47,7 @@ describe("passport callbacks", () => {
     request.end.mock.calls[0][0](null, res)
   })
 
-  it("gets a user with an access token email/password without otp", (done) => {
+  it("gets a user with an access token email/password without otp", done => {
     req.body = { otpRequired: false }
     cbs.local(req, "craig", "foo", null, (err, user) => {
       expect(user.accessToken).toEqual("access-token")
@@ -61,7 +61,7 @@ describe("passport callbacks", () => {
     request.end.mock.calls[0][0](null, res)
   })
 
-  it("gets a user with an access token facebook", (done) => {
+  it("gets a user with an access token facebook", done => {
     cbs.facebook(req, "foo-token", "refresh-token", {}, (err, user) => {
       expect(user.accessToken).toEqual("access-token")
       done()
@@ -76,7 +76,7 @@ describe("passport callbacks", () => {
     request.end.mock.calls[0][0](null, res)
   })
 
-  it("gets a user with an access token google", (done) => {
+  it("gets a user with an access token google", done => {
     cbs.google(req, "foo-token", "refresh-token", {}, (err, user) => {
       expect(user.accessToken).toEqual("access-token")
       done()
@@ -91,7 +91,7 @@ describe("passport callbacks", () => {
     request.end.mock.calls[0][0](null, res)
   })
 
-  it("gets a user with an access token apple", (done) => {
+  it("gets a user with an access token apple", done => {
     const decodedIdToken = {
       email: "some-email@some.com",
       sub: "some-apple-uid",

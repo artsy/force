@@ -1,5 +1,8 @@
 import * as Sentry from "@sentry/node"
-import type { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import type { RouteProps } from "System/Router/Route"
 import { matchingMediaQueriesForUserAgent } from "System/Router/Utils/matchingMediaQueriesForUserAgent"

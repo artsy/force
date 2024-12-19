@@ -8,33 +8,33 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type HomeApp_featuredEventsOrderedSet$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedEventsRail_orderedSet">
-  readonly " $fragmentType": "HomeApp_featuredEventsOrderedSet"
-}
+  readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedEventsRail_orderedSet">;
+  readonly " $fragmentType": "HomeApp_featuredEventsOrderedSet";
+};
 export type HomeApp_featuredEventsOrderedSet$key = {
-  readonly " $data"?: HomeApp_featuredEventsOrderedSet$data
-  readonly " $fragmentSpreads": FragmentRefs<"HomeApp_featuredEventsOrderedSet">
-}
+  readonly " $data"?: HomeApp_featuredEventsOrderedSet$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeApp_featuredEventsOrderedSet">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "HomeApp_featuredEventsOrderedSet",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "HomeApp_featuredEventsOrderedSet",
+  "selections": [
     {
-      args: null,
-      kind: "FragmentSpread",
-      name: "HomeFeaturedEventsRail_orderedSet",
-    },
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "HomeFeaturedEventsRail_orderedSet"
+    }
   ],
-  type: "OrderedSet",
-  abstractKey: null,
-}
+  "type": "OrderedSet",
+  "abstractKey": null
+};
 
-;(node as any).hash = "e5316349296555e9aaf1e6896746cc3f"
+(node as any).hash = "e5316349296555e9aaf1e6896746cc3f";
 
-export default node
+export default node;

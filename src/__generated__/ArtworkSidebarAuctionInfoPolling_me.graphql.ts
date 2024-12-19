@@ -8,33 +8,33 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarAuctionInfoPolling_me$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarBidAction_me">
-  readonly " $fragmentType": "ArtworkSidebarAuctionInfoPolling_me"
-}
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarBidAction_me">;
+  readonly " $fragmentType": "ArtworkSidebarAuctionInfoPolling_me";
+};
 export type ArtworkSidebarAuctionInfoPolling_me$key = {
-  readonly " $data"?: ArtworkSidebarAuctionInfoPolling_me$data
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuctionInfoPolling_me">
-}
+  readonly " $data"?: ArtworkSidebarAuctionInfoPolling_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuctionInfoPolling_me">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "ArtworkSidebarAuctionInfoPolling_me",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtworkSidebarAuctionInfoPolling_me",
+  "selections": [
     {
-      args: null,
-      kind: "FragmentSpread",
-      name: "ArtworkSidebarBidAction_me",
-    },
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebarBidAction_me"
+    }
   ],
-  type: "Me",
-  abstractKey: null,
-}
+  "type": "Me",
+  "abstractKey": null
+};
 
-;(node as any).hash = "eb6cccc7691a64ac03d767b1a2ff730c"
+(node as any).hash = "eb6cccc7691a64ac03d767b1a2ff730c";
 
-export default node
+export default node;
