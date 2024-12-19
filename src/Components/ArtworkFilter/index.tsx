@@ -31,7 +31,11 @@ import { Media } from "Utils/Responsive"
 import { isEqual } from "lodash"
 import type React from "react"
 import { useMemo, useState } from "react"
-import { type RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import {
+  type RelayRefetchProp,
+  createRefetchContainer,
+  graphql,
+} from "react-relay"
 import { useTracking } from "react-tracking"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { ArtworkFilterArtworkGridRefetchContainer as ArtworkFilterArtworkGrid } from "./ArtworkFilterArtworkGrid"

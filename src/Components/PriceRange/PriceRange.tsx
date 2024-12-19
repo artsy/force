@@ -1,7 +1,10 @@
 import { type FC, useState, type FormEvent, useEffect } from "react"
 import { Flex, Spacer, Box, Text, Range, usePrevious } from "@artsy/palette"
 import { Histogram, type HistogramBarEntity } from "./Histogram"
-import { type CustomRange, DEFAULT_RANGE } from "Components/PriceRange/constants"
+import {
+  type CustomRange,
+  DEFAULT_RANGE,
+} from "Components/PriceRange/constants"
 import { NumericInput } from "Components/NumericInput"
 import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
 import { parseSliderPriceRange } from "Components/PriceRange/Utils/parseSliderPriceRange"

@@ -9,7 +9,11 @@ import {
 } from "@artsy/palette"
 import type { CreateAppSecondFactorMutation$data } from "__generated__/CreateAppSecondFactorMutation.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Formik, type FormikHelpers as FormikActions, type FormikProps } from "formik"
+import {
+  Formik,
+  type FormikHelpers as FormikActions,
+  type FormikProps,
+} from "formik"
 import QRCode from "qrcode.react"
 import { useState } from "react"
 import type * as React from "react"

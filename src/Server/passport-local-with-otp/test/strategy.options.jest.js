@@ -13,7 +13,7 @@ describe.skip("Strategy", () => {
     let info, status
 
     // eslint-disable-next-line jest/no-done-callback
-    beforeAll((done) => {
+    beforeAll(done => {
       chai.passport
         .use(strategy)
         .fail((i, s) => {
@@ -21,7 +21,7 @@ describe.skip("Strategy", () => {
           status = s
           done()
         })
-        .request((req) => {
+        .request(req => {
           req.body = {}
         })
         .authenticate({

@@ -38,10 +38,7 @@ const convertRangeToInches = (range: CustomRange) => {
   })
 }
 
-export const parseSizeRange = (
-  range = "",
-  metric: Metric
-): Numeric[] => {
+export const parseSizeRange = (range = "", metric: Metric): Numeric[] => {
   return range.split("-").map(s => {
     if (s === "*") return s
     const value = Number.parseFloat(s)

@@ -10,7 +10,10 @@ import { AppShell } from "Apps/Components/AppShell"
 import type { Environment } from "react-relay"
 import type { RouteProps } from "System/Router/Route"
 import type { HistoryEnhancerOptions } from "farce"
-import { type RouterConfig, setupClientRouter } from "System/Router/clientRouter"
+import {
+  type RouterConfig,
+  setupClientRouter,
+} from "System/Router/clientRouter"
 import type { SystemContextProps } from "System/Contexts/SystemContext"
 
 interface MockRouterProps {

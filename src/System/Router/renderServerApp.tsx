@@ -1,4 +1,7 @@
-import type { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 import { getServerParam } from "Utils/getServerParam"
 import { renderToString } from "react-dom/server"
 import { loadAssetManifest } from "Server/manifest"

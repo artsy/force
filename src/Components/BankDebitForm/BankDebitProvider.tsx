@@ -1,5 +1,9 @@
 import { type FC, useEffect, useState } from "react"
-import { type Appearance, loadStripe, type StripeError } from "@stripe/stripe-js"
+import {
+  type Appearance,
+  loadStripe,
+  type StripeError,
+} from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
 import { getENV } from "Utils/getENV"
 import { BankDebitForm } from "./BankDebitForm"

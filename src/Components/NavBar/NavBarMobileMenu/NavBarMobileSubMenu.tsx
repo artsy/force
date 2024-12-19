@@ -2,7 +2,11 @@ import { Box, Flex, Separator, Text } from "@artsy/palette"
 import type * as React from "react"
 import { useTracking } from "react-tracking"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { isMenuLinkData, type LinkData, type MenuData } from "Components/NavBar/menuData"
+import {
+  isMenuLinkData,
+  type LinkData,
+  type MenuData,
+} from "Components/NavBar/menuData"
 import {
   NavBarMobileMenuItemButton,
   NavBarMobileMenuItemLink,

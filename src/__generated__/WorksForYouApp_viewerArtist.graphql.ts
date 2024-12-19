@@ -8,44 +8,45 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type WorksForYouApp_viewerArtist$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"WorksForYouArtistFeed_viewer">
-  readonly " $fragmentType": "WorksForYouApp_viewerArtist"
-}
+  readonly " $fragmentSpreads": FragmentRefs<"WorksForYouArtistFeed_viewer">;
+  readonly " $fragmentType": "WorksForYouApp_viewerArtist";
+};
 export type WorksForYouApp_viewerArtist$key = {
-  readonly " $data"?: WorksForYouApp_viewerArtist$data
-  readonly " $fragmentSpreads": FragmentRefs<"WorksForYouApp_viewerArtist">
-}
+  readonly " $data"?: WorksForYouApp_viewerArtist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"WorksForYouApp_viewerArtist">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [
+  "argumentDefinitions": [
     {
-      defaultValue: "",
-      kind: "LocalArgument",
-      name: "artistSlug",
-    },
+      "defaultValue": "",
+      "kind": "LocalArgument",
+      "name": "artistSlug"
+    }
   ],
-  kind: "Fragment",
-  metadata: null,
-  name: "WorksForYouApp_viewerArtist",
-  selections: [
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "WorksForYouApp_viewerArtist",
+  "selections": [
     {
-      args: [
+      "args": [
         {
-          kind: "Variable",
-          name: "artistSlug",
-          variableName: "artistSlug",
-        },
+          "kind": "Variable",
+          "name": "artistSlug",
+          "variableName": "artistSlug"
+        }
       ],
-      kind: "FragmentSpread",
-      name: "WorksForYouArtistFeed_viewer",
-    },
+      "kind": "FragmentSpread",
+      "name": "WorksForYouArtistFeed_viewer"
+    }
   ],
-  type: "Viewer",
-  abstractKey: null,
-}
-;(node as any).hash = "1324655321f954a4c25f9ae98a758282"
+  "type": "Viewer",
+  "abstractKey": null
+};
 
-export default node
+(node as any).hash = "1324655321f954a4c25f9ae98a758282";
+
+export default node;

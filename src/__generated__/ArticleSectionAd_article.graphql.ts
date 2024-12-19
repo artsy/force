@@ -8,63 +8,57 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-export type ArticleLayout =
-  | "CLASSIC"
-  | "FEATURE"
-  | "NEWS"
-  | "SERIES"
-  | "STANDARD"
-  | "VIDEO"
-  | "%future added value"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDARD" | "VIDEO" | "%future added value";
+import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionAd_article$data = {
-  readonly layout: ArticleLayout
+  readonly layout: ArticleLayout;
   readonly sections: ReadonlyArray<{
-    readonly __typename: string
-  }>
-  readonly " $fragmentType": "ArticleSectionAd_article"
-}
+    readonly __typename: string;
+  }>;
+  readonly " $fragmentType": "ArticleSectionAd_article";
+};
 export type ArticleSectionAd_article$key = {
-  readonly " $data"?: ArticleSectionAd_article$data
-  readonly " $fragmentSpreads": FragmentRefs<"ArticleSectionAd_article">
-}
+  readonly " $data"?: ArticleSectionAd_article$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleSectionAd_article">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "ArticleSectionAd_article",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArticleSectionAd_article",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "layout",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "layout",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: null,
-      concreteType: null,
-      kind: "LinkedField",
-      name: "sections",
-      plural: true,
-      selections: [
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "sections",
+      "plural": true,
+      "selections": [
         {
-          alias: null,
-          args: null,
-          kind: "ScalarField",
-          name: "__typename",
-          storageKey: null,
-        },
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
+        }
       ],
-      storageKey: null,
-    },
+      "storageKey": null
+    }
   ],
-  type: "Article",
-  abstractKey: null,
-}
-;(node as any).hash = "b4afe561e61651706142323e85372e06"
+  "type": "Article",
+  "abstractKey": null
+};
 
-export default node
+(node as any).hash = "b4afe561e61651706142323e85372e06";
+
+export default node;

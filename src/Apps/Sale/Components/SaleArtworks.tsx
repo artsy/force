@@ -1,5 +1,9 @@
 import { useRouter } from "System/Hooks/useRouter"
-import { createRefetchContainer, graphql, type RelayRefetchProp } from "react-relay"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   type Aggregations,

@@ -8,50 +8,48 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type CareerHighlightModalStep_careerHighlight$data = ReadonlyArray<{
-  readonly artist:
-    | {
-        readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">
-      }
-    | null
-    | undefined
-  readonly " $fragmentType": "CareerHighlightModalStep_careerHighlight"
-}>
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
+  } | null | undefined;
+  readonly " $fragmentType": "CareerHighlightModalStep_careerHighlight";
+}>;
 export type CareerHighlightModalStep_careerHighlight$key = ReadonlyArray<{
-  readonly " $data"?: CareerHighlightModalStep_careerHighlight$data
-  readonly " $fragmentSpreads": FragmentRefs<"CareerHighlightModalStep_careerHighlight">
-}>
+  readonly " $data"?: CareerHighlightModalStep_careerHighlight$data;
+  readonly " $fragmentSpreads": FragmentRefs<"CareerHighlightModalStep_careerHighlight">;
+}>;
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: {
-    plural: true,
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": {
+    "plural": true
   },
-  name: "CareerHighlightModalStep_careerHighlight",
-  selections: [
+  "name": "CareerHighlightModalStep_careerHighlight",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      concreteType: "Artist",
-      kind: "LinkedField",
-      name: "artist",
-      plural: false,
-      selections: [
+      "alias": null,
+      "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
+      "plural": false,
+      "selections": [
         {
-          args: null,
-          kind: "FragmentSpread",
-          name: "EntityHeaderArtist_artist",
-        },
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "EntityHeaderArtist_artist"
+        }
       ],
-      storageKey: null,
-    },
+      "storageKey": null
+    }
   ],
-  type: "ArtistInsight",
-  abstractKey: null,
-}
-;(node as any).hash = "8843f9cb8141b83515dfcde750e8aa50"
+  "type": "ArtistInsight",
+  "abstractKey": null
+};
 
-export default node
+(node as any).hash = "8843f9cb8141b83515dfcde750e8aa50";
+
+export default node;

@@ -8,34 +8,35 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type ArtistConsignHowToSell_artist$data = {
-  readonly href: string | null | undefined
-  readonly " $fragmentType": "ArtistConsignHowToSell_artist"
-}
+  readonly href: string | null | undefined;
+  readonly " $fragmentType": "ArtistConsignHowToSell_artist";
+};
 export type ArtistConsignHowToSell_artist$key = {
-  readonly " $data"?: ArtistConsignHowToSell_artist$data
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistConsignHowToSell_artist">
-}
+  readonly " $data"?: ArtistConsignHowToSell_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistConsignHowToSell_artist">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "ArtistConsignHowToSell_artist",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtistConsignHowToSell_artist",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "href",
-      storageKey: null,
-    },
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "href",
+      "storageKey": null
+    }
   ],
-  type: "Artist",
-  abstractKey: null,
-}
-;(node as any).hash = "4c7974a321e83d875e6ce77d5ea43b66"
+  "type": "Artist",
+  "abstractKey": null
+};
 
-export default node
+(node as any).hash = "4c7974a321e83d875e6ce77d5ea43b66";
+
+export default node;

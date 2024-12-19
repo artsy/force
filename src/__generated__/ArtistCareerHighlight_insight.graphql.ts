@@ -8,56 +8,57 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type ArtistCareerHighlight_insight$data = {
-  readonly description: string | null | undefined
-  readonly entities: ReadonlyArray<string>
-  readonly label: string
-  readonly " $fragmentType": "ArtistCareerHighlight_insight"
-}
+  readonly description: string | null | undefined;
+  readonly entities: ReadonlyArray<string>;
+  readonly label: string;
+  readonly " $fragmentType": "ArtistCareerHighlight_insight";
+};
 export type ArtistCareerHighlight_insight$key = {
-  readonly " $data"?: ArtistCareerHighlight_insight$data
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistCareerHighlight_insight">
-}
+  readonly " $data"?: ArtistCareerHighlight_insight$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistCareerHighlight_insight">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "ArtistCareerHighlight_insight",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtistCareerHighlight_insight",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "label",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "label",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "entities",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "entities",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: [
+      "alias": null,
+      "args": [
         {
-          kind: "Literal",
-          name: "format",
-          value: "HTML",
-        },
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        }
       ],
-      kind: "ScalarField",
-      name: "description",
-      storageKey: 'description(format:"HTML")',
-    },
+      "kind": "ScalarField",
+      "name": "description",
+      "storageKey": "description(format:\"HTML\")"
+    }
   ],
-  type: "ArtistInsight",
-  abstractKey: null,
-}
-;(node as any).hash = "e5d94b27789f176069d79a2c94fda745"
+  "type": "ArtistInsight",
+  "abstractKey": null
+};
 
-export default node
+(node as any).hash = "e5d94b27789f176069d79a2c94fda745";
+
+export default node;

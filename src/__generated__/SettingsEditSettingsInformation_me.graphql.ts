@@ -8,120 +8,118 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type SettingsEditSettingsInformation_me$data = {
-  readonly email: string | null | undefined
-  readonly name: string | null | undefined
-  readonly paddleNumber: string | null | undefined
-  readonly phoneNumber:
-    | {
-        readonly display: string | null | undefined
-        readonly originalNumber: string | null | undefined
-        readonly regionCode: string | null | undefined
-      }
-    | null
-    | undefined
-  readonly priceRange: string | null | undefined
-  readonly priceRangeMax: number | null | undefined
-  readonly priceRangeMin: number | null | undefined
-  readonly " $fragmentType": "SettingsEditSettingsInformation_me"
-}
+  readonly email: string | null | undefined;
+  readonly name: string | null | undefined;
+  readonly paddleNumber: string | null | undefined;
+  readonly phoneNumber: {
+    readonly display: string | null | undefined;
+    readonly originalNumber: string | null | undefined;
+    readonly regionCode: string | null | undefined;
+  } | null | undefined;
+  readonly priceRange: string | null | undefined;
+  readonly priceRangeMax: number | null | undefined;
+  readonly priceRangeMin: number | null | undefined;
+  readonly " $fragmentType": "SettingsEditSettingsInformation_me";
+};
 export type SettingsEditSettingsInformation_me$key = {
-  readonly " $data"?: SettingsEditSettingsInformation_me$data
-  readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsInformation_me">
-}
+  readonly " $data"?: SettingsEditSettingsInformation_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsInformation_me">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "SettingsEditSettingsInformation_me",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "SettingsEditSettingsInformation_me",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "email",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "email",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "name",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "paddleNumber",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "paddleNumber",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: null,
-      concreteType: "PhoneNumberType",
-      kind: "LinkedField",
-      name: "phoneNumber",
-      plural: false,
-      selections: [
+      "alias": null,
+      "args": null,
+      "concreteType": "PhoneNumberType",
+      "kind": "LinkedField",
+      "name": "phoneNumber",
+      "plural": false,
+      "selections": [
         {
-          alias: null,
-          args: null,
-          kind: "ScalarField",
-          name: "regionCode",
-          storageKey: null,
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "regionCode",
+          "storageKey": null
         },
         {
-          alias: null,
-          args: [
+          "alias": null,
+          "args": [
             {
-              kind: "Literal",
-              name: "format",
-              value: "NATIONAL",
-            },
+              "kind": "Literal",
+              "name": "format",
+              "value": "NATIONAL"
+            }
           ],
-          kind: "ScalarField",
-          name: "display",
-          storageKey: 'display(format:"NATIONAL")',
+          "kind": "ScalarField",
+          "name": "display",
+          "storageKey": "display(format:\"NATIONAL\")"
         },
         {
-          alias: null,
-          args: null,
-          kind: "ScalarField",
-          name: "originalNumber",
-          storageKey: null,
-        },
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "originalNumber",
+          "storageKey": null
+        }
       ],
-      storageKey: null,
+      "storageKey": null
     },
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "priceRange",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "priceRange",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "priceRangeMin",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "priceRangeMin",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "priceRangeMax",
-      storageKey: null,
-    },
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "priceRangeMax",
+      "storageKey": null
+    }
   ],
-  type: "Me",
-  abstractKey: null,
-}
-;(node as any).hash = "fbb818810bac72dbd9d8a6ce15e57002"
+  "type": "Me",
+  "abstractKey": null
+};
 
-export default node
+(node as any).hash = "fbb818810bac72dbd9d8a6ce15e57002";
+
+export default node;

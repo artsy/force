@@ -8,81 +8,80 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type Shipping_me$data = {
-  readonly " $fragmentSpreads": FragmentRefs<
-    "FulfillmentDetailsForm_me" | "ShippingContext_me"
-  >
-  readonly " $fragmentType": "Shipping_me"
-}
+  readonly " $fragmentSpreads": FragmentRefs<"FulfillmentDetailsForm_me" | "ShippingContext_me">;
+  readonly " $fragmentType": "Shipping_me";
+};
 export type Shipping_me$key = {
-  readonly " $data"?: Shipping_me$data
-  readonly " $fragmentSpreads": FragmentRefs<"Shipping_me">
-}
+  readonly " $data"?: Shipping_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Shipping_me">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [
+  "argumentDefinitions": [
     {
-      defaultValue: null,
-      kind: "LocalArgument",
-      name: "after",
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after"
     },
     {
-      defaultValue: null,
-      kind: "LocalArgument",
-      name: "before",
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "before"
     },
     {
-      defaultValue: 30,
-      kind: "LocalArgument",
-      name: "first",
+      "defaultValue": 30,
+      "kind": "LocalArgument",
+      "name": "first"
     },
     {
-      defaultValue: null,
-      kind: "LocalArgument",
-      name: "last",
-    },
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "last"
+    }
   ],
-  kind: "Fragment",
-  metadata: null,
-  name: "Shipping_me",
-  selections: [
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "Shipping_me",
+  "selections": [
     {
-      args: null,
-      kind: "FragmentSpread",
-      name: "FulfillmentDetailsForm_me",
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FulfillmentDetailsForm_me"
     },
     {
-      args: [
+      "args": [
         {
-          kind: "Variable",
-          name: "after",
-          variableName: "after",
+          "kind": "Variable",
+          "name": "after",
+          "variableName": "after"
         },
         {
-          kind: "Variable",
-          name: "before",
-          variableName: "before",
+          "kind": "Variable",
+          "name": "before",
+          "variableName": "before"
         },
         {
-          kind: "Variable",
-          name: "first",
-          variableName: "first",
+          "kind": "Variable",
+          "name": "first",
+          "variableName": "first"
         },
         {
-          kind: "Variable",
-          name: "last",
-          variableName: "last",
-        },
+          "kind": "Variable",
+          "name": "last",
+          "variableName": "last"
+        }
       ],
-      kind: "FragmentSpread",
-      name: "ShippingContext_me",
-    },
+      "kind": "FragmentSpread",
+      "name": "ShippingContext_me"
+    }
   ],
-  type: "Me",
-  abstractKey: null,
-}
-;(node as any).hash = "333ca775bab381e61be0a76ce53046c1"
+  "type": "Me",
+  "abstractKey": null
+};
 
-export default node
+(node as any).hash = "333ca775bab381e61be0a76ce53046c1";
+
+export default node;

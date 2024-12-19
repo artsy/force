@@ -8,64 +8,65 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type PageApp_page$data = {
-  readonly content: string | null | undefined
-  readonly internalID: string
-  readonly name: string
-  readonly published: boolean
-  readonly " $fragmentType": "PageApp_page"
-}
+  readonly content: string | null | undefined;
+  readonly internalID: string;
+  readonly name: string;
+  readonly published: boolean;
+  readonly " $fragmentType": "PageApp_page";
+};
 export type PageApp_page$key = {
-  readonly " $data"?: PageApp_page$data
-  readonly " $fragmentSpreads": FragmentRefs<"PageApp_page">
-}
+  readonly " $data"?: PageApp_page$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PageApp_page">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "PageApp_page",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "PageApp_page",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "internalID",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: [
+      "alias": null,
+      "args": [
         {
-          kind: "Literal",
-          name: "format",
-          value: "HTML",
-        },
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        }
       ],
-      kind: "ScalarField",
-      name: "content",
-      storageKey: 'content(format:"HTML")',
+      "kind": "ScalarField",
+      "name": "content",
+      "storageKey": "content(format:\"HTML\")"
     },
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "name",
-      storageKey: null,
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
     },
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "published",
-      storageKey: null,
-    },
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "published",
+      "storageKey": null
+    }
   ],
-  type: "Page",
-  abstractKey: null,
-}
-;(node as any).hash = "7f0f1470be702d44404830b317cffc00"
+  "type": "Page",
+  "abstractKey": null
+};
 
-export default node
+(node as any).hash = "7f0f1470be702d44404830b317cffc00";
+
+export default node;

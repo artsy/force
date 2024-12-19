@@ -8,133 +8,125 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type AuctionAssociatedSale_sale$data = {
-  readonly associatedSale:
-    | {
-        readonly coverImage:
-          | {
-              readonly cropped:
-                | {
-                    readonly src: string
-                    readonly srcSet: string
-                  }
-                | null
-                | undefined
-            }
-          | null
-          | undefined
-        readonly displayTimelyAt: string | null | undefined
-        readonly href: string | null | undefined
-        readonly name: string | null | undefined
-        readonly slug: string
-      }
-    | null
-    | undefined
-  readonly " $fragmentType": "AuctionAssociatedSale_sale"
-}
+  readonly associatedSale: {
+    readonly coverImage: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null | undefined;
+    } | null | undefined;
+    readonly displayTimelyAt: string | null | undefined;
+    readonly href: string | null | undefined;
+    readonly name: string | null | undefined;
+    readonly slug: string;
+  } | null | undefined;
+  readonly " $fragmentType": "AuctionAssociatedSale_sale";
+};
 export type AuctionAssociatedSale_sale$key = {
-  readonly " $data"?: AuctionAssociatedSale_sale$data
-  readonly " $fragmentSpreads": FragmentRefs<"AuctionAssociatedSale_sale">
-}
+  readonly " $data"?: AuctionAssociatedSale_sale$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionAssociatedSale_sale">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "AuctionAssociatedSale_sale",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "AuctionAssociatedSale_sale",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      concreteType: "Sale",
-      kind: "LinkedField",
-      name: "associatedSale",
-      plural: false,
-      selections: [
+      "alias": null,
+      "args": null,
+      "concreteType": "Sale",
+      "kind": "LinkedField",
+      "name": "associatedSale",
+      "plural": false,
+      "selections": [
         {
-          alias: null,
-          args: null,
-          concreteType: "Image",
-          kind: "LinkedField",
-          name: "coverImage",
-          plural: false,
-          selections: [
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "coverImage",
+          "plural": false,
+          "selections": [
             {
-              alias: null,
-              args: [
+              "alias": null,
+              "args": [
                 {
-                  kind: "Literal",
-                  name: "height",
-                  value: 250,
+                  "kind": "Literal",
+                  "name": "height",
+                  "value": 250
                 },
                 {
-                  kind: "Literal",
-                  name: "width",
-                  value: 445,
-                },
+                  "kind": "Literal",
+                  "name": "width",
+                  "value": 445
+                }
               ],
-              concreteType: "CroppedImageUrl",
-              kind: "LinkedField",
-              name: "cropped",
-              plural: false,
-              selections: [
+              "concreteType": "CroppedImageUrl",
+              "kind": "LinkedField",
+              "name": "cropped",
+              "plural": false,
+              "selections": [
                 {
-                  alias: null,
-                  args: null,
-                  kind: "ScalarField",
-                  name: "src",
-                  storageKey: null,
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "src",
+                  "storageKey": null
                 },
                 {
-                  alias: null,
-                  args: null,
-                  kind: "ScalarField",
-                  name: "srcSet",
-                  storageKey: null,
-                },
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "srcSet",
+                  "storageKey": null
+                }
               ],
-              storageKey: "cropped(height:250,width:445)",
-            },
+              "storageKey": "cropped(height:250,width:445)"
+            }
           ],
-          storageKey: null,
+          "storageKey": null
         },
         {
-          alias: null,
-          args: null,
-          kind: "ScalarField",
-          name: "displayTimelyAt",
-          storageKey: null,
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "displayTimelyAt",
+          "storageKey": null
         },
         {
-          alias: null,
-          args: null,
-          kind: "ScalarField",
-          name: "href",
-          storageKey: null,
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "href",
+          "storageKey": null
         },
         {
-          alias: null,
-          args: null,
-          kind: "ScalarField",
-          name: "slug",
-          storageKey: null,
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "slug",
+          "storageKey": null
         },
         {
-          alias: null,
-          args: null,
-          kind: "ScalarField",
-          name: "name",
-          storageKey: null,
-        },
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        }
       ],
-      storageKey: null,
-    },
+      "storageKey": null
+    }
   ],
-  type: "Sale",
-  abstractKey: null,
-}
-;(node as any).hash = "834abac48e3175cdd56f6627bd3cde6d"
+  "type": "Sale",
+  "abstractKey": null
+};
 
-export default node
+(node as any).hash = "834abac48e3175cdd56f6627bd3cde6d";
+
+export default node;
