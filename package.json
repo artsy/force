@@ -185,7 +185,7 @@
     "use-deep-compare-effect": "^1.2.0",
     "uuid": "3.3.2",
     "web-vitals": "^4.2.4",
-    "yargs": "13",
+    "yargs": "^17.7.2",
     "yup": "0.32.6"
   },
   "devDependencies": {
