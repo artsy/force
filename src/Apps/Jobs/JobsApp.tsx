@@ -90,6 +90,21 @@ const JobsApp: FC<React.PropsWithChildren<JobsAppProps>> = ({ viewer }) => {
               LinkedIn
             </RouterLink>
           </Text>
+
+          <Spacer y={2} />
+
+          <Text variant="sm">
+            Not seeing the right job, but are still passionate about
+            contributing to Artsy’s growing marketplace?{" "}
+            <RouterLink
+              inline
+              to="https://jobs.ashbyhq.com/artsy/form/join-our-talent-pool"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Join our talent pool.
+            </RouterLink>
+          </Text>
         </Column>
       </GridColumns>
 
