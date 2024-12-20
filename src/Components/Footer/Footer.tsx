@@ -65,7 +65,7 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
               </FooterLink>
 
               <FooterLink my={2} to="/about/jobs">
-                Jobs
+                Gigs
               </FooterLink>
 
               <FooterLink my={2} to="/about/press">
