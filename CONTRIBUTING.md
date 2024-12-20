@@ -24,10 +24,18 @@ Execute the setup script:
 ./scripts/setup.sh
 ```
 
+This should install various dependencies, including the Artsy VSCode extension pack for linting, formatting, and Relay.js.
+
 Start the server:
 
 ```sh
 yarn start
+
+# Start and open browser automatically
+yarn start --open
+
+# With a specific url
+yarn start --open=http://local.artsy.net
 ```
 
 Force should now be running at [http://localhost:4000/](http://localhost:4000/).
@@ -37,6 +45,7 @@ Force should now be running at [http://localhost:4000/](http://localhost:4000/).
 ```sh
 yarn type-check
 yarn jest
+yarn jest-enzyme # for legacy tests
 ```
 
 ## Running a local copy of Force in Production mode
@@ -46,13 +55,6 @@ yarn start:prod
 ```
 
 This creates a production-ready bundle of client and server-side code and boots the server. (This will take a while to compile.)
-
-In case you want to ease debugging the server-side code, you can set the `DEBUG`
-environment variable to disable webpack optimizations.
-
-```sh
-env DEBUG=true yarn start:prod
-```
 
 <details>
    <summary>Do you see an error about not providing a secure connection?</summary>
@@ -68,17 +70,17 @@ Your browser has probably cached a redirect to `https://...`. Clear your browser
 
 ## Creating a Review App
 
-See [the docs](docs/creating_review_app.md).
-
-## Create a Topic Branch
-
-Make sure your fork is up-to-date and create a topic branch for your feature or bug fix.
-
 ```sh
-git checkout main
-git pull upstream main
-git checkout -b my-feature-branch
+git checkout -b review-app-<some-name>
+
+# Add commits
+git push
+
+# Once CI is done running, review app should be viewable at
+https://some-name.artsy.net
 ```
+
+See [the docs](docs/creating_review_app.md).
 
 ## Write Tests
 

@@ -13,6 +13,15 @@ else
   echo "Skipping language dependencies installation (asdf not found)"
 fi
 
+if command -v code >/dev/null; then
+  echo "Installing Artsy VSCode extensions..."
+  code --install-extension Artsy.artsy-studio-extension-pack
+  # TODO: Move this into artsy-studio-extension-pack
+  code --install-extension biomejs.biome
+else
+  echo "Skipping VSCode extensions installation (VSCode not found)"
+fi
+
 echo "Installing dependencies from Homebrew..."
 brew bundle --file=- <<EOF
 brew 'watchman'
