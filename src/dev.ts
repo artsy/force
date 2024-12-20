@@ -46,12 +46,8 @@ export async function startDevServer() {
     const url = (() => {
       const defaultURL = `http://localhost:${rsbuildServer.port}`
 
-      if (args.open) {
-        if (isString(args.open)) {
-          return args.open
-        } else {
-          return defaultURL
-        }
+      if (isString(args.open)) {
+        return args.open
       }
 
       return defaultURL
