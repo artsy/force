@@ -40,6 +40,7 @@ const DeepZoom: React.FC<React.PropsWithChildren<DeepZoomProps>> = ({
     }))
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!deepZoomRef.current) return
 
@@ -96,7 +97,6 @@ const DeepZoom: React.FC<React.PropsWithChildren<DeepZoomProps>> = ({
       osdViewerRef.current.destroy()
       osdViewerRef.current = null
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [image.deepZoom, deepZoomRef?.current])
 
   const zoomBy = (amount: number) => {

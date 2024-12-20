@@ -103,6 +103,7 @@ export const PaymentRoute: FC<
 
   const { jumpTo } = useJump()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const bankAccountsArray =
       selectedPaymentMethod !== "SEPA_DEBIT"
@@ -119,12 +120,11 @@ export const PaymentRoute: FC<
         id: bankAccountOnOrder.internalID,
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order])
 
   /*
@@ -361,6 +361,7 @@ export const PaymentRoute: FC<
   }
 
   // complete payment when balance check is disabled and bank account is set
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (
       !balanceCheckEnabled &&
@@ -370,7 +371,6 @@ export const PaymentRoute: FC<
     ) {
       handlePaymentStepComplete()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     isPaymentSetupSuccessful,
     selectedBankAccountId,
@@ -379,6 +379,7 @@ export const PaymentRoute: FC<
   ])
 
   // show error modal when payment setup error is set
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (paymentSetupError) {
       let title = "An error occurred"
@@ -411,7 +412,6 @@ export const PaymentRoute: FC<
         width,
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paymentSetupError])
 
   const setOrderPayment = (

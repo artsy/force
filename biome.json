@@ -27,6 +27,7 @@
       },
       "complexity": {
         "noBannedTypes": "off",
+        "noExtraBooleanCast": "off",
         "noExcessiveNestedTestSuites": "off",
         "noForEach": "off",
         "noUselessFragments": "off",

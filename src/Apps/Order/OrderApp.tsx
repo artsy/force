@@ -45,6 +45,7 @@ const OrderApp: FC<React.PropsWithChildren<OrderAppProps>> = props => {
 
   const removeNavigationListenerRef = useRef<null | (() => void)>(null)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!removeNavigationListenerRef.current) {
       removeNavigationListenerRef.current = router.addNavigationListener(
@@ -61,7 +62,6 @@ const OrderApp: FC<React.PropsWithChildren<OrderAppProps>> = props => {
       }
       window.removeEventListener("beforeunload", preventHardReload)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleTransition = () => newLocation => {

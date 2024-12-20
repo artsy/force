@@ -28,6 +28,7 @@ export const ArtworkFilterMobileOverlay: React.FC<
     contentRef.current.scrollTop = 0
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     // While mobile sheet is mounted, the effect of the user's filter selections
     // should be merely staged until the Apply button is pressed, rather than
@@ -46,7 +47,6 @@ export const ArtworkFilterMobileOverlay: React.FC<
     }
     // FIXME: Unclear how to unwind this hack at the moment; satisfying the deps causes
     // this to immediately un-apply the changes. Leaving it as-is for now.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Enumerate the difference between prior and currently selected filters

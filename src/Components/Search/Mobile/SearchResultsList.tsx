@@ -38,6 +38,7 @@ const SearchResultsList: FC<
   const tracking = useTracking()
   const options = extractNodes(viewer.searchConnection)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (viewer.searchConnection) {
       tracking.trackEvent({
@@ -50,7 +51,6 @@ const SearchResultsList: FC<
       })
     }
     // When selecting another pill - this effect shouldn't be executed again, so we disable the linting rule
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewer.searchConnection])
 
   const formattedOptions: SuggestionItemOptionProps[] = formatOptions(

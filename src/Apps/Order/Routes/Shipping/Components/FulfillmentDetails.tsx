@@ -68,6 +68,8 @@ export const FulfillmentDetails: FC<
    * If the view ever has no saved addresses, force new address form mode for
    * the rest of its life and reset values
    */
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const formLoaded =
       typeof shippingContext.state.fulfillmentDetailsFormikContext.setValues ===
@@ -88,13 +90,14 @@ export const FulfillmentDetails: FC<
       )
       shippingContext.actions.setShippingFormMode("new_address")
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasSavedAddresses])
 
   /*
    * Re-save fulfillment details on load if they are already saved &
    * require artsy shipping
    */
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const { savedFulfillmentDetails } = shippingContext.orderData
 
@@ -125,7 +128,6 @@ export const FulfillmentDetails: FC<
 
       refreshShippingQuotes()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   /**

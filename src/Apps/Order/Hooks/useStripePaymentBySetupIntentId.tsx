@@ -21,6 +21,7 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
     null
   )
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     // pull necessary params from Stripe redirect URL
     const {
@@ -51,7 +52,6 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
     }
 
     setIsProcessingRedirect(false)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orderId, match])
 
   const setPaymentBySetupIntentId = async (

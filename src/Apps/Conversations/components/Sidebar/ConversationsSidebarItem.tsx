@@ -28,12 +28,11 @@ export const ConversationsSidebarItem: React.FC<
   // sends the user to the messages view.
   const isHighlighted = isSelected && !getENV("IS_MOBILE")
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (isSelected) {
       scrollRef.current?.scrollIntoView?.({ block: "center" })
     }
-    // Only want this to fire on mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const item = data?.items?.[0]?.item

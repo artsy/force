@@ -112,9 +112,9 @@ export const ArtistAutoComplete: React.FC<
     }
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleSuggestionsFetchRequested = useMemo(
     () => debounce(updateSuggestions, DEBOUNCE_DELAY),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 

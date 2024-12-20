@@ -115,11 +115,11 @@ export const AddressForm: React.FC<
     onChangeValue(key, value)
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   React.useEffect(() => {
     if (key) {
       onChange(address, key)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, key])
 
   const onChangeValue = (key: keyof Address, value: string) => {

@@ -19,6 +19,7 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
   const { saveArtworkToLists: saveToLists, openSelectListsForArtworkModal } =
     useSaveArtworkToLists(options)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (
       !value ||
@@ -59,7 +60,6 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
 
     clearValue()
     fetchSavedStatusAndPerformAction()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, clearValue])
 
   const showToastByAction = (action: ResultAction, isInAuction: boolean) => {
