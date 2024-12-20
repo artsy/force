@@ -217,8 +217,11 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
       // this.props.router.replace(this.props.match.location.pathname)
       silentPush(props.match.location.pathname)
     }
-    track()
   }, [])
+
+  useEffect(() => {
+    track()
+  }, [track])
 
   if (match?.location?.query?.creating_order) {
     return (
