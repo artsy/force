@@ -91,6 +91,7 @@ export const bootstrapSharify = () => {
       "TARGET_CAMPAIGN_URL",
       "TEAM_BLOGS",
       "THIRD_PARTIES_DISABLED,",
+      "TOOLS_URL",
       "TRACK_PAGELOAD_PATHS",
       "USER_PREFERENCES",
       "VOLLEY_ENDPOINT",
