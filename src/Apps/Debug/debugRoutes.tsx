@@ -35,11 +35,11 @@ export const debugRoutes: RouteProps[] = [
     children: [
       {
         path: "baseline",
-        Component: DebugBaselineRoute,
+        getComponent: () => DebugBaselineRoute,
       },
       {
         path: "auth",
-        Component: DebugAuthRoute,
+        getComponent: () => DebugAuthRoute,
       },
       {
         path: "error-404",
@@ -49,7 +49,7 @@ export const debugRoutes: RouteProps[] = [
       },
       {
         path: "client-error-404",
-        Component: DebugClientError404Route,
+        getComponent: () => DebugClientError404Route,
       },
       {
         path: "error-500",
@@ -59,7 +59,7 @@ export const debugRoutes: RouteProps[] = [
       },
       {
         path: "client-error-500",
-        Component: DebugClientError500Route,
+        getComponent: () => DebugClientError500Route,
       },
     ],
   },
