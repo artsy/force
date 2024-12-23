@@ -3,6 +3,15 @@ import { execSync } from "child_process"
 import { createReloadable } from "@artsy/express-reloadable"
 import { createRsbuild, loadConfig, logger } from "@rsbuild/core"
 import express from "express"
+import { isString } from "lodash"
+import { hideBin } from "yargs/helpers"
+import yargs from "yargs/yargs"
+
+interface CLIArguments {
+  open?: string
+}
+
+const args = yargs(hideBin(process.argv)).argv as CLIArguments
 
 export async function startDevServer() {
   // Wait for multienv to load envs
@@ -34,14 +43,24 @@ export async function startDevServer() {
   mountAndReload(outputPath)
 
   const httpServer = await startServer(app, () => {
-    const url = `http://localhost:${rsbuildServer.port}`
+    const url = (() => {
+      const defaultURL = `http://localhost:${rsbuildServer.port}`
+
+      if (isString(args.open)) {
+        return args.open
+      }
+
+      return defaultURL
+    })()
 
     rsbuildServer.afterListen()
 
     logger.log(`[Force] Server started at ${url}`)
 
     // Open the browser
-    execSync(`open ${url}`)
+    if (args.open) {
+      execSync(`open ${url}`)
+    }
   })
 
   rsbuildServer.connectWebSocket({ server: httpServer })
