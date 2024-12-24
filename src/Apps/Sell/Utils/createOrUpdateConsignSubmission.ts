@@ -12,7 +12,7 @@ export type SubmissionInput =
 
 export const createOrUpdateConsignSubmission = async (
   relayEnvironment: Environment,
-  submission: SubmissionInput
+  submission: SubmissionInput,
 ) => {
   let submissionId: string
   const input = submission as UpdateSubmissionMutationInput
@@ -22,7 +22,7 @@ export const createOrUpdateConsignSubmission = async (
       input as CreateSubmissionMutationInput
     submissionId = await updateConsignSubmissionMutation(
       relayEnvironment,
-      updateInput
+      updateInput,
     )
   } else {
     submissionId = await createConsignSubmissionMutation(relayEnvironment, {

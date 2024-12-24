@@ -36,7 +36,7 @@ export const PartnersFeaturedCarouselFragmentContainer =
   createFragmentContainer(PartnersFeaturedCarousel, {
     viewer: graphql`
       fragment PartnersFeaturedCarousel_viewer on Viewer
-        @argumentDefinitions(id: { type: "String!" }) {
+      @argumentDefinitions(id: { type: "String!" }) {
         orderedSet(id: $id) {
           orderedItemsConnection(first: 50) {
             edges {

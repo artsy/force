@@ -183,7 +183,7 @@ export const HomeFeaturedMarketNewsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const PLACEHOLDER = (

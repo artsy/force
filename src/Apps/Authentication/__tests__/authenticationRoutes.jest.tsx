@@ -46,7 +46,7 @@ describe("authenticationRoutes", () => {
     render(
       <MockBoot>
         <MockRouter initialRoute={route} routes={authenticationRoutes} />
-      </MockBoot>
+      </MockBoot>,
     )
   }
 
@@ -107,7 +107,7 @@ describe("authenticationRoutes", () => {
           onServerSideRender()
 
           expect(res.locals.sd.RESET_PASSWORD_REDIRECT_TO).toEqual(
-            req.query.reset_password_redirect_to
+            req.query.reset_password_redirect_to,
           )
         })
 
@@ -155,7 +155,7 @@ describe("authenticationRoutes", () => {
       describe("onServerSideRender", () => {
         it("runs middleware if query param found", () => {
           const { res, onServerSideRender } = renderServerRoute(
-            "/reset_password?reset_password_token=foo&set_password=bar&reset_password_redirect_to=/home"
+            "/reset_password?reset_password_token=foo&set_password=bar&reset_password_redirect_to=/home",
           )
           onServerSideRender()
           expect(res.redirect).toHaveBeenCalled()
@@ -215,7 +215,7 @@ describe("authenticationRoutes", () => {
         })
 
         const { res, onServerSideRender } = renderServerRoute(
-          "/auth-redirect?redirectTo=https://off.artsy.net/blah"
+          "/auth-redirect?redirectTo=https://off.artsy.net/blah",
         )
         onServerSideRender()
         expect(res.redirect).toHaveBeenCalledWith("https://off.artsy.net/blah")

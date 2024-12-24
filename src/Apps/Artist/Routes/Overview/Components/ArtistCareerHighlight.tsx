@@ -44,7 +44,7 @@ export const ArtistCareerHighlightFragmentContainer = createFragmentContainer(
         description(format: HTML)
       }
     `,
-  }
+  },
 )
 
 // remove paragraph margins from markdown

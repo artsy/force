@@ -120,7 +120,7 @@ describe("FrameRoute", () => {
                 framedDepth: "1",
               },
             },
-          })
+          }),
         )
       })
     })
@@ -140,7 +140,7 @@ describe("FrameRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            "/sell/submissions/externalId/shipping-location"
+            "/sell/submissions/externalId/shipping-location",
           )
         })
       })
@@ -157,7 +157,7 @@ describe("FrameRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            "/sell/submissions/externalId/additional-documents"
+            "/sell/submissions/externalId/additional-documents",
           )
         })
       })

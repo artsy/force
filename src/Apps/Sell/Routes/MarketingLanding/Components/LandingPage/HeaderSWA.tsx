@@ -19,7 +19,7 @@ export const HeaderSWA = () => {
 
   const image = resized(
     "https://files.artsy.net/images/content-card-swa-landing-page.jpg",
-    { width: 1104, height: 833 }
+    { width: 1104, height: 833 },
   )
 
   return (

@@ -15,8 +15,8 @@ const { getWrapper } = setupTestWrapper<NavigationTabs_Test_PartnerQuery>({
   },
   query: graphql`
     query NavigationTabs_Test_PartnerQuery
-      @raw_response_type
-      @relay_test_operation {
+    @raw_response_type
+    @relay_test_operation {
       partner(id: "white-cube") {
         ...NavigationTabs_partner
       }

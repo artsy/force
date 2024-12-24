@@ -62,5 +62,5 @@ export const ArtistConsignRouteFragmentContainer = createFragmentContainer(
         ...ArtistConsignSellArt_artist
       }
     `,
-  }
+  },
 )

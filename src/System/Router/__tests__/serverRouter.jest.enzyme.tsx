@@ -98,7 +98,7 @@ describe("serverRouter", () => {
 
   const getWrapper = async (
     Component = defaultComponent,
-    passedOptions = options
+    passedOptions = options,
   ) => {
     const result = await setupServerRouter({
       routes: [
@@ -123,7 +123,7 @@ describe("serverRouter", () => {
 
     const ServerRouter = Object.getOwnPropertyDescriptor(
       result,
-      __TEST_INTERNAL_SERVER_APP__ as any
+      __TEST_INTERNAL_SERVER_APP__ as any,
     )?.value
 
     return {
@@ -243,7 +243,7 @@ describe("serverRouter", () => {
         wrapper
           .find("span")
           .map((_, el) => el.firstChild.data)
-          .get()
+          .get(),
       ).toEqual(["xs", "lg", "hover", "notHover"])
     })
 
@@ -255,7 +255,7 @@ describe("serverRouter", () => {
         wrapper
           .find("span")
           .map((_, el) => el.firstChild.data)
-          .get()
+          .get(),
       ).toEqual(["xs", "lg", "hover", "notHover"])
     })
 
@@ -269,7 +269,7 @@ describe("serverRouter", () => {
         wrapper
           .find("span")
           .map((_, el) => el.firstChild.data)
-          .get()
+          .get(),
       ).toEqual(["xs", "notHover"])
     })
   })
@@ -342,7 +342,7 @@ describe("serverRouter", () => {
       expect.objectContaining({
         ...options,
         route,
-      })
+      }),
     )
   })
 })

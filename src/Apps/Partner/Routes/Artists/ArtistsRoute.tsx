@@ -65,5 +65,5 @@ export const ArtistsRouteFragmentContainer = createFragmentContainer(
         ...PartnerArtists_partner
       }
     `,
-  }
+  },
 )

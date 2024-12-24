@@ -22,12 +22,12 @@ describe("PartnersFilter", () => {
 
   const getWrapper = (
     contextProps = {},
-    filterProps: PartnersFilterProps = { expanded: true }
+    filterProps: PartnersFilterProps = { expanded: true },
   ) => {
     return mount(
       <ArtworkFilterContextProvider {...contextProps}>
         <PartnersFilter {...filterProps} />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
   }
 

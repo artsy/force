@@ -64,7 +64,7 @@ export const addressFormFieldsValidator = (args: Props = {}) => ({
  *
  */
 export const AddressFormFields = <V extends FormikContextWithAddress>(
-  props: Props
+  props: Props,
 ) => {
   const {
     handleChange,

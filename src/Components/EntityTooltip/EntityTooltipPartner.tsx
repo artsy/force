@@ -110,7 +110,7 @@ const EntityTooltipPartnerFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const EntityTooltipPartnerPlaceholder: FC<

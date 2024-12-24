@@ -31,7 +31,7 @@ describe("ArtworkVideoPlayer", () => {
           }
         }
       `,
-    }
+    },
   )
 
   beforeEach(() => {

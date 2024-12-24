@@ -81,7 +81,7 @@ describe("ArtworkSidebarPartnerInfo", () => {
       })
 
       expect(
-        screen.getByText("New York, Beverly Hills, +8 more")
+        screen.getByText("New York, Beverly Hills, +8 more"),
       ).toBeInTheDocument()
     })
 

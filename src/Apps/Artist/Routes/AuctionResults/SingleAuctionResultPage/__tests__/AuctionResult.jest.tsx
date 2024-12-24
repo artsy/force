@@ -33,8 +33,8 @@ describe("AuctionResult", () => {
         expect(screen.getByText("Carrie Mae Weems")).toBeInTheDocument()
         expect(
           screen.getByText(
-            "Some Said You Were the Spitting Image of Evil, 1995"
-          )
+            "Some Said You Were the Spitting Image of Evil, 1995",
+          ),
         ).toBeInTheDocument()
 
         expect(screen.getByText("Sale Price")).toBeInTheDocument()
@@ -47,8 +47,8 @@ describe("AuctionResult", () => {
         expect(screen.getByText("Medium")).toBeInTheDocument()
         expect(
           screen.getByText(
-            "chromogenic print and etched glass in an artist's frame"
-          )
+            "chromogenic print and etched glass in an artist's frame",
+          ),
         ).toBeInTheDocument()
 
         expect(screen.getByText("Dimensions")).toBeInTheDocument()
@@ -85,8 +85,8 @@ describe("AuctionResult", () => {
         expect(screen.getByText("Carrie Mae Weems")).toBeInTheDocument()
         expect(
           screen.getByText(
-            "Some Said You Were the Spitting Image of Evil, 1995"
-          )
+            "Some Said You Were the Spitting Image of Evil, 1995",
+          ),
         ).toBeInTheDocument()
 
         expect(screen.getByText("Sale Price")).toBeInTheDocument()
@@ -106,8 +106,8 @@ describe("AuctionResult", () => {
         expect(screen.getByText("Carrie Mae Weems")).toBeInTheDocument()
         expect(
           screen.getByText(
-            "Some Said You Were the Spitting Image of Evil, 1995"
-          )
+            "Some Said You Were the Spitting Image of Evil, 1995",
+          ),
         ).toBeInTheDocument()
 
         expect(screen.getByText("Sale Price")).toBeInTheDocument()
@@ -126,8 +126,8 @@ describe("AuctionResult", () => {
         expect(screen.getByText("Carrie Mae Weems")).toBeInTheDocument()
         expect(
           screen.getByText(
-            "Some Said You Were the Spitting Image of Evil, 1995"
-          )
+            "Some Said You Were the Spitting Image of Evil, 1995",
+          ),
         ).toBeInTheDocument()
 
         expect(screen.getByText("Sale Price")).toBeInTheDocument()
@@ -149,8 +149,8 @@ describe("AuctionResult", () => {
         expect(screen.getByText("Carrie Mae Weems")).toBeInTheDocument()
         expect(
           screen.getByText(
-            "Some Said You Were the Spitting Image of Evil, 1995"
-          )
+            "Some Said You Were the Spitting Image of Evil, 1995",
+          ),
         ).toBeInTheDocument()
 
         expect(screen.getByText("Sale Price")).toBeInTheDocument()
@@ -167,8 +167,8 @@ describe("AuctionResult", () => {
         expect(screen.getByText("Carrie Mae Weems")).toBeInTheDocument()
         expect(
           screen.getByText(
-            "Some Said You Were the Spitting Image of Evil, 1995"
-          )
+            "Some Said You Were the Spitting Image of Evil, 1995",
+          ),
         ).toBeInTheDocument()
 
         expect(screen.queryByText("Sale Price")).not.toBeInTheDocument()
@@ -179,8 +179,8 @@ describe("AuctionResult", () => {
         expect(screen.getByText("Medium")).toBeInTheDocument()
         expect(
           screen.getByText(
-            "chromogenic print and etched glass in an artist's frame"
-          )
+            "chromogenic print and etched glass in an artist's frame",
+          ),
         ).toBeInTheDocument()
 
         expect(screen.getByText("Dimensions")).toBeInTheDocument()

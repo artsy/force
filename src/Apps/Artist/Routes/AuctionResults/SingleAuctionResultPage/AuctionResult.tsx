@@ -102,5 +102,5 @@ export const AuctionResultFragmentContainer = createFragmentContainer(
         ...AuctionResultTitleInfo_auctionResult
       }
     `,
-  }
+  },
 )

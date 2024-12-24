@@ -55,12 +55,12 @@ describe("SaveArtworkToListsButton", () => {
         )
       },
       query: graphql`
-      query SaveArtworkToListsButton_Test_Query @relay_test_operation {
-        artwork(id: "artworkID") {
-          ...SaveArtworkToListsButton_artwork
+        query SaveArtworkToListsButton_Test_Query @relay_test_operation {
+          artwork(id: "artworkID") {
+            ...SaveArtworkToListsButton_artwork
+          }
         }
-      }
-    `,
+      `,
     })
 
   it("should display `Save` label", () => {
@@ -93,8 +93,8 @@ describe("SaveArtworkToListsButton", () => {
       expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
       expect(
         await screen.findByText(
-          "Saving an artwork signals interest to galleries."
-        )
+          "Saving an artwork signals interest to galleries.",
+        ),
       ).toBeInTheDocument()
       expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })
@@ -133,7 +133,7 @@ describe("SaveArtworkToListsButton", () => {
 
       expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
       expect(
-        screen.queryByText("Saving an artwork signals interest to galleries.")
+        screen.queryByText("Saving an artwork signals interest to galleries."),
       ).not.toBeInTheDocument()
       expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })

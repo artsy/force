@@ -23,7 +23,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
 const getContactInformationFormInitialValues = (
-  me: PriceEstimateContactInformation_me$data
+  me: PriceEstimateContactInformation_me$data,
 ): ContactInformationFormModel => {
   const userRegionCode = me?.phoneNumber?.regionCode ?? ""
   const countryCode = COUNTRY_CODES[userRegionCode.toLocaleUpperCase()]
@@ -56,7 +56,7 @@ export const PriceEstimateContactInformation: React.FC<
   const initialValue = getContactInformationFormInitialValues(me)
   const initialErrors = validateContactInformationValidationSchema(
     initialValue,
-    contactInformationValidationSchema
+    contactInformationValidationSchema,
   )
 
   const handleSubmit = async ({
@@ -90,10 +90,10 @@ export const PriceEstimateContactInformation: React.FC<
       })
 
       router.replace(
-        `/collector-profile/my-collection/artwork/${artwork.internalID}`
+        `/collector-profile/my-collection/artwork/${artwork.internalID}`,
       )
       router.push(
-        `/collector-profile/my-collection/artwork/${artwork.internalID}/price-estimate/success`
+        `/collector-profile/my-collection/artwork/${artwork.internalID}/price-estimate/success`,
       )
     } catch (error) {
       console.error(error)

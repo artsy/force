@@ -8,7 +8,7 @@ describe("ShowMore", () => {
         <div>is visible</div>
         <div>is visible</div>
         <div>is hidden</div>
-      </ShowMore>
+      </ShowMore>,
     )
 
     expect(wrapper.html()).toContain("is visible")
@@ -26,7 +26,7 @@ describe("ShowMore", () => {
         <div>is visible</div>
         <div>is visible</div>
         <div>is hidden</div>
-      </ShowMore>
+      </ShowMore>,
     )
 
     expect(wrapper.html()).toContain("is visible")

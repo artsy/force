@@ -35,12 +35,12 @@ describe("MaterialsTermFilter", () => {
 
   const getWrapper = (
     contextProps = {},
-    filterProps: MaterialsFilterProps = { expanded: true }
+    filterProps: MaterialsFilterProps = { expanded: true },
   ) => {
     return mount(
       <ArtworkFilterContextProvider {...contextProps}>
         <MaterialsFilterTest {...filterProps} />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
   }
 

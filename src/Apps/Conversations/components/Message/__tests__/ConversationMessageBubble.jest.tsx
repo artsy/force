@@ -7,7 +7,7 @@ describe("ConversationMessageBubble", () => {
     render(
       <ConversationMessageBubble fromViewer time="10:00AM" seenBy="Gumball">
         test message
-      </ConversationMessageBubble>
+      </ConversationMessageBubble>,
     )
 
     expect(screen.getByText("test message")).toBeInTheDocument()
@@ -19,7 +19,7 @@ describe("ConversationMessageBubble", () => {
     render(
       <ConversationMessageBubble fromViewer simplified seenBy="Gumball">
         test message
-      </ConversationMessageBubble>
+      </ConversationMessageBubble>,
     )
 
     expect(screen.getByText("test message")).toBeInTheDocument()
@@ -34,7 +34,7 @@ describe("ConversationMessageBubble", () => {
         avatarUrl="https://images.com/gumbal.webp"
       >
         test message
-      </ConversationMessageBubble>
+      </ConversationMessageBubble>,
     )
 
     expect(screen.getByText("test message")).toBeInTheDocument()
@@ -42,7 +42,7 @@ describe("ConversationMessageBubble", () => {
     expect(screen.getByText("Gumball")).toBeInTheDocument()
     expect(screen.getByRole("presentation")).toHaveAttribute(
       "src",
-      "https://images.com/gumbal.webp"
+      "https://images.com/gumbal.webp",
     )
   })
 
@@ -50,7 +50,7 @@ describe("ConversationMessageBubble", () => {
     render(
       <ConversationMessageBubble time="11:00AM" name="Gumball">
         test message
-      </ConversationMessageBubble>
+      </ConversationMessageBubble>,
     )
 
     expect(screen.getByText("test message")).toBeInTheDocument()
@@ -63,7 +63,7 @@ describe("ConversationMessageBubble", () => {
     render(
       <ConversationMessageBubble simplified>
         test message
-      </ConversationMessageBubble>
+      </ConversationMessageBubble>,
     )
 
     expect(screen.getByText("test message")).toBeInTheDocument()
@@ -74,7 +74,7 @@ describe("ConversationMessageBubble", () => {
     render(
       <ConversationMessageBubble time="11:00AM" name="Gumball">
         Link here: https://artsy.net
-      </ConversationMessageBubble>
+      </ConversationMessageBubble>,
     )
     const link = screen.getByRole("link")
     expect(link).toHaveAttribute("href", "https://artsy.net")

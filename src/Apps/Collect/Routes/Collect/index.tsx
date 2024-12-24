@@ -115,7 +115,7 @@ export const CollectApp: React.FC<React.PropsWithChildren<CollectAppProps>> = ({
               `}
               variables={initializeVariablesWithFilterState(
                 match.params,
-                match
+                match,
               )}
               fetchPolicy="store-and-network"
               placeholder={<ArtworkFilterPlaceholder />}
@@ -163,7 +163,7 @@ export const CollectApp: React.FC<React.PropsWithChildren<CollectAppProps>> = ({
 export const CollectAppFragmentContainer = createFragmentContainer(CollectApp, {
   marketingCollections: graphql`
     fragment Collect_marketingCollections on MarketingCollection
-      @relay(plural: true) {
+    @relay(plural: true) {
       ...CollectionsHubsNav_marketingCollections
     }
   `,

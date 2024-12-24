@@ -6,7 +6,7 @@ import type { AuthIntentMutation } from "./types"
 export const createOfferOrderMutation: AuthIntentMutation = (
   relayEnvironment: Environment,
   id: string,
-  secondaryId: string | null | undefined
+  secondaryId: string | null | undefined,
 ) => {
   return new Promise((resolve, reject) => {
     commitMutation<AuthIntentCreateOfferOrderMutation>(relayEnvironment, {

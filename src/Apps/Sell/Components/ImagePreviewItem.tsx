@@ -26,7 +26,7 @@ export const ImagePreviewItem: React.FC<
   const { setFieldValue, values } = useFormikContext<PhotosFormValues>()
   const [photoSrc, setPhotoSrc] = useState<string>(photo.url || "")
   const [isProcessing, setIsProcessing] = useState(
-    !!photo.geminiToken && !photoSrc
+    !!photo.geminiToken && !photoSrc,
   )
 
   useEffect(() => {

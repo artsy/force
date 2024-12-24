@@ -113,7 +113,7 @@ export const reducer =
 
         if (Array.isArray(criteriaValue)) {
           criteriaValue = criteriaValue.filter(
-            currentValue => currentValue !== action.payload.value
+            currentValue => currentValue !== action.payload.value,
           )
         } else {
           criteriaValue = null
@@ -179,5 +179,5 @@ export interface AlertContextProps {
 }
 
 export const AlertContext = createContext<AlertContextProps>(
-  {} as unknown as AlertContextProps
+  {} as unknown as AlertContextProps,
 )

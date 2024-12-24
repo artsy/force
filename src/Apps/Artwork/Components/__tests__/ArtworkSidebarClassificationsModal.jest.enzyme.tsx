@@ -24,7 +24,7 @@ const getWrapperWithResponsibilityMessage = (showDisclaimer?: boolean) =>
     },
     query: graphql`
       query ArtworkSidebarClassificationsModal_test_Query
-        @relay_test_operation {
+      @relay_test_operation {
         viewer {
           ...ArtworkSidebarClassificationsModal_viewer
         }
@@ -47,7 +47,7 @@ describe("ArtworkSidebarClassificationsModal", () => {
     expect(html).toContain("Unique")
     expect(html).toContain("One of a kind piece, created by the artist.")
     expect(html).toContain(
-      "Our partners are responsible for providing accurate classification information for all works."
+      "Our partners are responsible for providing accurate classification information for all works.",
     )
   })
 
@@ -65,7 +65,7 @@ describe("ArtworkSidebarClassificationsModal", () => {
     expect(html).toContain("Unique")
     expect(html).toContain("One of a kind piece, created by the artist.")
     expect(html).not.toContain(
-      "Our partners are responsible for providing accurate classification information for all works."
+      "Our partners are responsible for providing accurate classification information for all works.",
     )
   })
 })

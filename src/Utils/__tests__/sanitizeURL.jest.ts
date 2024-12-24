@@ -13,9 +13,9 @@ describe("sanitizeURL", () => {
     expect(
       sanitizeURL(
         `data:text/html;charset=utf-8,${encodeURIComponent(
-          "<script>alert(1)</script>"
-        )}`
-      )
+          "<script>alert(1)</script>",
+        )}`,
+      ),
     ).toEqual("/")
   })
 
@@ -37,7 +37,7 @@ describe("sanitizeURL", () => {
 
   it("optionally enforces internal urls", () => {
     expect(
-      sanitizeURL("http://example.com", { enforceInternal: true })
+      sanitizeURL("http://example.com", { enforceInternal: true }),
     ).toEqual("/")
   })
 })

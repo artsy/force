@@ -42,7 +42,7 @@ export interface ArtworkSidebarProps {
 }
 
 const checkIfArtworkIsOnLoanOrPermanentCollection = (
-  saleMessage: string | null | undefined
+  saleMessage: string | null | undefined,
 ) => {
   switch (saleMessage) {
     case "On loan":
@@ -294,12 +294,12 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
     `,
     me: graphql`
       fragment ArtworkSidebar_me on Me
-        @argumentDefinitions(artworkID: { type: "String!" }) {
+      @argumentDefinitions(artworkID: { type: "String!" }) {
         ...ArtworkSidebarAuctionInfoPolling_me
         ...ArtworkSidebarCommercialButtons_me @arguments(artworkID: $artworkID)
       }
     `,
-  }
+  },
 )
 
 interface ArtworkSidebarQueryRendererProps {

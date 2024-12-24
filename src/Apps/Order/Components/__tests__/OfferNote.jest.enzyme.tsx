@@ -30,7 +30,7 @@ describe("OfferNote", () => {
     return mount(
       <SystemContextProvider>
         <OfferNote onChange={onChange} artworkId="artwork-id" {...props} />
-      </SystemContextProvider>
+      </SystemContextProvider>,
     )
   }
 
@@ -49,7 +49,7 @@ describe("OfferNote", () => {
     const text = getWrapper().text()
     expect(text).toContain("Note (recommended)")
     expect(text).toContain(
-      "Add additional information to help the gallery to evaluate your offer."
+      "Add additional information to help the gallery to evaluate your offer.",
     )
   })
 })

@@ -36,7 +36,7 @@ describe.skip("ArtistSeriesEntity", () => {
         path="/collection/slug"
       >
         <ArtistSeriesEntity {...passedProps} />
-      </AnalyticsCombinedContextProvider>
+      </AnalyticsCombinedContextProvider>,
     )
   }
 
@@ -46,7 +46,7 @@ describe.skip("ArtistSeriesEntity", () => {
     expect(component.text()).toMatch("From $1,000")
     expect(component.find(Image).length).toBe(3)
     expect(component.find(Image).at(0).getElement().props.src).toBe(
-      "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg"
+      "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg",
     )
   })
 
@@ -73,7 +73,7 @@ describe.skip("ArtistSeriesEntity", () => {
   it("uses the hit title for alt text if there is no artist", () => {
     const component = getWrapper()
     expect(component.find(Image).at(0).getElement().props.alt).toMatch(
-      "A great flag from Jasper"
+      "A great flag from Jasper",
     )
   })
 
@@ -81,7 +81,7 @@ describe.skip("ArtistSeriesEntity", () => {
     props.member.artworksConnection.edges[0].node.artist.name = "Jasper Johns"
     const component = getWrapper()
     expect(component.find(Image).at(0).getElement().props.alt).toMatch(
-      "Jasper Johns, A great flag from Jasper"
+      "Jasper Johns, A great flag from Jasper",
     )
   })
 

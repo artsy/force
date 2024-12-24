@@ -23,7 +23,7 @@ describe("ArtworkSortFilter", () => {
         ]}
       >
         <SortFilterFilterTest />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
   }
 

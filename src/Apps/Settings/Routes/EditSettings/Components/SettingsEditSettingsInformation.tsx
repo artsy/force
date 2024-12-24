@@ -85,7 +85,7 @@ export const SettingsEditSettingsInformation: React.FC<
             priceRangeMin,
             priceRangeMax,
           },
-          { setFieldValue }
+          { setFieldValue },
         ) => {
           try {
             const { updateMyUserProfile } = await submitMutation({
@@ -130,7 +130,7 @@ export const SettingsEditSettingsInformation: React.FC<
             setFieldValue("phoneNumber", updatedPhoneNumber ?? phoneNumber)
             setFieldValue(
               "phoneCountryCode",
-              updatedPhoneCountryCode ?? phoneCountryCode
+              updatedPhoneCountryCode ?? phoneCountryCode,
             )
 
             setFieldValue("password", "")

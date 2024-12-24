@@ -12,12 +12,12 @@ const { renderWithRelay } =
   setupTestWrapperTL<PartnersSpecialtyAutocomplete_Test_Query>({
     Component: PartnersSpecialtyAutocompleteFragmentContainer,
     query: graphql`
-    query PartnersSpecialtyAutocomplete_Test_Query @relay_test_operation {
-      viewer {
-        ...PartnersSpecialtyAutocomplete_viewer
+      query PartnersSpecialtyAutocomplete_Test_Query @relay_test_operation {
+        viewer {
+          ...PartnersSpecialtyAutocomplete_viewer
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("PartnersSpecialtyAutocomplete", () => {

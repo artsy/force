@@ -390,7 +390,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ArtworkApp_artwork on Artwork
-        @argumentDefinitions(loadSidebar: { type: "Boolean!" }) {
+      @argumentDefinitions(loadSidebar: { type: "Boolean!" }) {
         ...ArtworkMeta_artwork
         ...ArtworkTopContextBar_artwork
         ...ArtworkImageBrowser_artwork
@@ -442,7 +442,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface ArtworkResultProps extends RenderProps {
@@ -468,7 +468,7 @@ export const ArtworkResultFragmentContainer = createFragmentContainer(
   {
     artworkResult: graphql`
       fragment ArtworkApp_artworkResult on ArtworkResult
-        @argumentDefinitions(loadSidebar: { type: "Boolean!" }) {
+      @argumentDefinitions(loadSidebar: { type: "Boolean!" }) {
         __typename
 
         ...ArtworkApp_artwork @arguments(loadSidebar: $loadSidebar)
@@ -478,15 +478,15 @@ export const ArtworkResultFragmentContainer = createFragmentContainer(
 
     me: graphql`
       fragment ArtworkApp_me on Me
-        @argumentDefinitions(
-          artworkID: { type: "String!" }
-          loadSidebar: { type: "Boolean!" }
-        ) {
+      @argumentDefinitions(
+        artworkID: { type: "String!" }
+        loadSidebar: { type: "Boolean!" }
+      ) {
         ...ArtworkSidebar_me
           @include(if: $loadSidebar)
           @arguments(artworkID: $artworkID)
         ...ArtworkPageBanner_me @arguments(artworkID: $artworkID)
       }
     `,
-  }
+  },
 )

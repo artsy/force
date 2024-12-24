@@ -91,12 +91,12 @@ const ArtistInfo: React.FC<ArtistInfoProps> = ({ artist }) => {
 export const ArtistInfoFragmentContainer = createFragmentContainer(ArtistInfo, {
   artist: graphql`
     fragment ArtistInfo_artist on Artist
-      @argumentDefinitions(
-        partnerCategory: {
-          type: "[String]"
-          defaultValue: ["blue-chip", "top-established", "top-emerging"]
-        }
-      ) {
+    @argumentDefinitions(
+      partnerCategory: {
+        type: "[String]"
+        defaultValue: ["blue-chip", "top-established", "top-emerging"]
+      }
+    ) {
       ...EntityHeaderArtist_artist
       internalID
       slug

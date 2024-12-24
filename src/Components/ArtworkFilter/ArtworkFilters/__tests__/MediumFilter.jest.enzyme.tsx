@@ -17,12 +17,12 @@ describe("MediumFilter", () => {
 
   const getWrapper = (
     contextProps = {},
-    filterProps: MediumFilterProps = { expanded: true }
+    filterProps: MediumFilterProps = { expanded: true },
   ) => {
     return mount(
       <ArtworkFilterContextProvider {...contextProps}>
         <MediumFilterTest {...filterProps} />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
   }
 

@@ -63,7 +63,7 @@ export const ArtworkSidebarCollectorSignal: React.FC<
     }
 
     const startAt = formatDate(
-      data.collectorSignals?.runningShow?.startAt ?? ""
+      data.collectorSignals?.runningShow?.startAt ?? "",
     )
     const endAt = formatDate(data.collectorSignals?.runningShow?.endAt ?? "")
 

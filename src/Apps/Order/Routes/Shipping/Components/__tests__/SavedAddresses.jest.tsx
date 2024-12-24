@@ -255,13 +255,13 @@ describe("Saved Addresses", () => {
           userEvent.click(screen.getByText("Save"))
         },
         // Bottleneck waiting for form updates
-        { timeout: 4000 }
+        { timeout: 4000 },
       )
 
       await waitFor(() =>
         expect(testProps.onSelect).toHaveBeenCalledWith(
-          expect.objectContaining(validAddress)
-        )
+          expect.objectContaining(validAddress),
+        ),
       )
       expect(testProps.onSelect).toHaveBeenCalledTimes(1)
     })
@@ -286,7 +286,7 @@ describe("Saved Addresses", () => {
       expect(await screen.findByText("Edit address")).toBeInTheDocument()
       expect(screen.getByDisplayValue("Test Name")).toBeInTheDocument()
       expect(screen.getByPlaceholderText("Add street address")).toHaveValue(
-        "1 Main St"
+        "1 Main St",
       )
     })
   })

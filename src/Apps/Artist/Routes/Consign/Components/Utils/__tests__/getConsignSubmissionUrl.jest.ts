@@ -6,9 +6,9 @@ describe("getConsignSubmissionUrl", () => {
       getConsignSubmissionUrl({
         contextPath: "/artist/pablo-picasso",
         subject: "baz",
-      })
+      }),
     ).toEqual(
-      "/consign/submission?contextPath=%2Fartist%2Fpablo-picasso%2Fconsign&subject=baz"
+      "/consign/submission?contextPath=%2Fartist%2Fpablo-picasso%2Fconsign&subject=baz",
     )
   })
 })

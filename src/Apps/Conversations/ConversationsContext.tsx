@@ -43,7 +43,7 @@ export const ConversationsProvider: React.FC<
   const { me } = useFragment(VIEWER_FRAGMENT, viewer)
 
   const partnerOfferMap: Record<string, PartnerOffer> = extractNodes(
-    me?.partnerOffersConnection
+    me?.partnerOffersConnection,
   ).reduce((acc, offer) => {
     if (offer.artworkId) {
       acc[offer.artworkId] = offer
@@ -80,7 +80,7 @@ export const useConversationsContext = () => {
 
   if (!context) {
     throw new Error(
-      "useConversationsContext must be used within a ConversationsProvider"
+      "useConversationsContext must be used within a ConversationsProvider",
     )
   }
 

@@ -64,8 +64,8 @@ describe("ArtistNotEligibleRoute", () => {
 
     expect(
       screen.getByText(
-        "This artist isn’t currently eligible to sell on our platform"
-      )
+        "This artist isn’t currently eligible to sell on our platform",
+      ),
     ).toBeInTheDocument()
 
     expect(screen.getByText("Add to My Collection")).toBeInTheDocument()
@@ -74,7 +74,7 @@ describe("ArtistNotEligibleRoute", () => {
 
     expect(screen.getByTestId("view-collection")).toHaveAttribute(
       "href",
-      "/sell/submissions/new"
+      "/sell/submissions/new",
     )
   })
 
@@ -83,11 +83,11 @@ describe("ArtistNotEligibleRoute", () => {
 
     expect(screen.getByText("contact an advisor")).toHaveAttribute(
       "href",
-      "/sell/inquiry"
+      "/sell/inquiry",
     )
 
     expect(
-      screen.getByText("what our specialists are looking for")
+      screen.getByText("what our specialists are looking for"),
     ).toHaveAttribute("href", "/sell/faq")
   })
 

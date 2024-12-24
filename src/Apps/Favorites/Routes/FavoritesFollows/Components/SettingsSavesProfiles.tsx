@@ -125,34 +125,35 @@ export const SettingsSavesProfilesPaginationContainer =
     SettingsSavesProfiles,
     {
       me: graphql`
-      fragment SettingsSavesProfiles_me on Me
+        fragment SettingsSavesProfiles_me on Me
         @argumentDefinitions(after: { type: "String" }) {
-        followsAndSaves {
-          profilesConnection(first: 12, after: $after)
-            @connection(key: "SettingsSavesProfiles_profilesConnection") {
-            totalCount
-            edges {
-              node {
-                internalID
-                profile {
-                  name
-                  href
-                  avatar: image {
-                    cropped(width: 45, height: 45) {
-                      src
-                      srcSet
+          followsAndSaves {
+            profilesConnection(first: 12, after: $after)
+              @connection(key: "SettingsSavesProfiles_profilesConnection") {
+              totalCount
+              edges {
+                node {
+                  internalID
+                  profile {
+                    name
+                    href
+                    avatar: image {
+                      cropped(width: 45, height: 45) {
+                        src
+                        srcSet
+                      }
                     }
-                  }
-                  owner {
-                    __typename
-                    ... on Partner {
-                      ...EntityHeaderPartner_partner
-                    }
-                    ... on Fair {
-                      ...EntityHeaderFair_fair
-                    }
-                    ... on FairOrganizer {
-                      ...EntityHeaderFairOrganizer_fairOrganizer
+                    owner {
+                      __typename
+                      ... on Partner {
+                        ...EntityHeaderPartner_partner
+                      }
+                      ... on Fair {
+                        ...EntityHeaderFair_fair
+                      }
+                      ... on FairOrganizer {
+                        ...EntityHeaderFairOrganizer_fairOrganizer
+                      }
                     }
                   }
                 }
@@ -160,8 +161,7 @@ export const SettingsSavesProfilesPaginationContainer =
             }
           }
         }
-      }
-    `,
+      `,
     },
     {
       direction: "forward",
@@ -172,7 +172,7 @@ export const SettingsSavesProfilesPaginationContainer =
         return { ...fragmentVariables, after }
       },
       query: SETTINGS_SAVES_PROFILES_QUERY,
-    }
+    },
   )
 
 const SETTINGS_SAVES_PROFILES_PLACEHOLDER = (

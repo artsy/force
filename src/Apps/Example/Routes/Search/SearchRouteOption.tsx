@@ -49,5 +49,5 @@ export const SearchRouteOptionFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

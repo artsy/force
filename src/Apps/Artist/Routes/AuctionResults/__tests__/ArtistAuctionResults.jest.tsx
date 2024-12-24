@@ -68,7 +68,7 @@ describe("AuctionResults", () => {
     ),
     query: graphql`
       query ArtistAuctionResults_Test_Query($artistID: String!)
-        @raw_response_type {
+      @raw_response_type {
         artist(id: $artistID) {
           ...ArtistAuctionResultsRoute_artist
         }
@@ -232,13 +232,13 @@ describe("AuctionResults", () => {
         expect(checkedCheckboxes[2]).toHaveTextContent("Small (under 40cm)")
         expect(checkedCheckboxes[3]).toHaveTextContent("Large (over 100cm)")
         expect(checkedCheckboxes[4]).toHaveTextContent(
-          "Include unspecified dates"
+          "Include unspecified dates",
         )
         expect(checkedCheckboxes[5]).toHaveTextContent(
-          "Include unknown and unavailable prices"
+          "Include unknown and unavailable prices",
         )
         expect(checkedCheckboxes[6]).toHaveTextContent(
-          "Include unspecified sale dates"
+          "Include unspecified sale dates",
         )
         expect(checkedCheckboxes[7]).toHaveTextContent("Phillips")
         expect(checkedCheckboxes[8]).toHaveTextContent("Bonhams")
@@ -271,7 +271,7 @@ describe("AuctionResults", () => {
 
           expect(screen.getAllByText("Sign up to see price")).toHaveLength(10)
           expect(
-            operationVariables.categories.includes("Work on Paper")
+            operationVariables.categories.includes("Work on Paper"),
           ).toBeTruthy()
           expect(operationVariables.after).toBe("cursor2")
         })
@@ -348,7 +348,7 @@ describe("AuctionResults", () => {
             const { env } = renderWithRelay(mockedResolver)
 
             fireEvent.click(
-              screen.getAllByText("Christie's", { exact: false })[0]
+              screen.getAllByText("Christie's", { exact: false })[0],
             )
             act(() => {
               env.mock.resolveMostRecentOperation(operation => {
@@ -359,7 +359,7 @@ describe("AuctionResults", () => {
             expect(operationVariables.organizations).toContain("Christie's")
 
             fireEvent.click(
-              screen.getAllByText("Phillips", { exact: false })[0]
+              screen.getAllByText("Phillips", { exact: false })[0],
             )
             act(() => {
               env.mock.resolveMostRecentOperation(operation => {
@@ -370,7 +370,7 @@ describe("AuctionResults", () => {
             expect(operationVariables.organizations).toContain("Phillips")
 
             fireEvent.click(
-              screen.getAllByText("Christie's", { exact: false })[0]
+              screen.getAllByText("Christie's", { exact: false })[0],
             )
             act(() => {
               env.mock.resolveMostRecentOperation(operation => {

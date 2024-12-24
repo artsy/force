@@ -50,7 +50,7 @@ describe("PhotoDropzone", () => {
             onReject={onRejectMock}
           />
         </Formik>
-      </MediaContextProvider>
+      </MediaContextProvider>,
     )
   }
 
@@ -113,7 +113,7 @@ describe("PhotoDropzone", () => {
               code: "file-invalid-type",
             },
           ],
-        }))
+        })),
       )
     })
 
@@ -199,7 +199,7 @@ describe("PhotoDropzone", () => {
       expect(onDropMock).toHaveBeenCalled()
 
       expect(onDropMock).toHaveBeenCalledWith(
-        [...Array(5)].map(() => validImage)
+        [...Array(5)].map(() => validImage),
       )
       expect(onRejectMock).toHaveBeenCalled()
       expect(onRejectMock).toHaveBeenCalledWith([
@@ -271,7 +271,7 @@ describe("PhotoDropzone", () => {
               code: "file-invalid-type",
             },
           ],
-        }))
+        })),
       )
     })
 
@@ -351,7 +351,7 @@ describe("PhotoDropzone", () => {
       expect(onDropMock).toHaveBeenCalled()
 
       expect(onDropMock).toHaveBeenCalledWith(
-        [...Array(5)].map(() => validImage)
+        [...Array(5)].map(() => validImage),
       )
       expect(onRejectMock).toHaveBeenCalled()
       expect(onRejectMock).toHaveBeenCalledWith([

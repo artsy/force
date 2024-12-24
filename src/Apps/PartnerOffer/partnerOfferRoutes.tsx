@@ -8,7 +8,7 @@ const PartnerOfferCheckoutRoute = loadable(
     ),
   {
     resolveComponent: component => component.PartnerOfferCheckout,
-  }
+  },
 )
 
 export const partnerOfferRoutes: RouteProps[] = [

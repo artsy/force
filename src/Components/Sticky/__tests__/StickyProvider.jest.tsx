@@ -16,7 +16,7 @@ describe("getOffsetTopForSticky", () => {
     expect(
       ["example1", "example2", "example3", "example4", "example5"].map(id => {
         return getOffsetTopForSticky({ id, stickies: EXAMPLE_STICKIES })
-      })
+      }),
     ).toEqual([0, 80, 280, 295, 628])
   })
 })

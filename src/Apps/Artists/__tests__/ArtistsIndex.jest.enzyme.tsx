@@ -15,15 +15,15 @@ const { getWrapper } =
       </MockBoot>
     ),
     query: graphql`
-    query ArtistsIndexFragmentContainer_Test_Query @relay_test_operation {
-      featuredArtists: orderedSets(key: "homepage:featured-artists") {
-        ...ArtistsIndex_featuredArtists
+      query ArtistsIndexFragmentContainer_Test_Query @relay_test_operation {
+        featuredArtists: orderedSets(key: "homepage:featured-artists") {
+          ...ArtistsIndex_featuredArtists
+        }
+        featuredGenes: orderedSets(key: "artists:featured-genes") {
+          ...ArtistsIndex_featuredGenes
+        }
       }
-      featuredGenes: orderedSets(key: "artists:featured-genes") {
-        ...ArtistsIndex_featuredGenes
-      }
-    }
-  `,
+    `,
   })
 
 describe("ArtistsIndex", () => {

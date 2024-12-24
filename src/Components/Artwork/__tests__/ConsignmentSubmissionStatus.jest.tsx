@@ -18,12 +18,12 @@ describe("ConsignmentSubmissionStatus", () => {
         return null
       },
       query: graphql`
-      query ConsignmentSubmissionStatusTestQuery @relay_test_operation {
-        artwork(id: "artwork-id") {
-          ...ConsignmentSubmissionStatus_artwork
+        query ConsignmentSubmissionStatusTestQuery @relay_test_operation {
+          artwork(id: "artwork-id") {
+            ...ConsignmentSubmissionStatus_artwork
+          }
         }
-      }
-    `,
+      `,
     })
 
   it("displayas submission status when Approved", () => {

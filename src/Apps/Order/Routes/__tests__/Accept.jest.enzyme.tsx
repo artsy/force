@@ -152,19 +152,19 @@ describe("Accept seller offer", () => {
       expect(page.orderStepper.text()).toMatchInlineSnapshot(`"RespondReview"`)
       expect(page.orderStepperCurrentStep).toBe(`Review`)
       expect(page.transactionSummary.text()).toMatch(
-        "Accept seller's offerChange"
+        "Accept seller's offerChange",
       )
       expect(page.transactionSummary.text()).toMatch(
-        "Seller's offerUS$sellers.offer"
+        "Seller's offerUS$sellers.offer",
       )
       expect(page.artworkSummary.text()).toMatch(
-        "Lisa BreslowGramercy Park South"
+        "Lisa BreslowGramercy Park South",
       )
       expect(page.shippingSummary.text()).toMatch(
-        "Ship toJoelle Van Dyne401 Broadway"
+        "Ship toJoelle Van Dyne401 Broadway",
       )
       expect(page.paymentSummary.text()).toMatchInlineSnapshot(
-        `"•••• 4444   Exp 03/21"`
+        `"•••• 4444   Exp 03/21"`,
       )
       expect(page.buyerGuarantee.length).toBe(1)
       expect(page.submitButton.text()).toBe("Submit")
@@ -189,7 +189,7 @@ describe("Accept seller offer", () => {
 
       await page.clickSubmit()
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/status`
+        `/orders/${testOrder.internalID}/status`,
       )
     })
 
@@ -235,10 +235,10 @@ describe("Accept seller offer", () => {
       await page.clickSubmit()
       await page.expectAndDismissErrorDialogMatching(
         "Charge failed",
-        "Payment has been declined. Please contact your card provider or bank institution, then press “Submit” again. Alternatively, use another payment method."
+        "Payment has been declined. Please contact your card provider or bank institution, then press “Submit” again. Alternatively, use another payment method.",
       )
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/payment/new`
+        `/orders/${testOrder.internalID}/payment/new`,
       )
     })
 
@@ -252,10 +252,10 @@ describe("Accept seller offer", () => {
       await page.clickSubmit()
       await page.expectAndDismissErrorDialogMatching(
         "Insufficient funds",
-        "There aren’t enough funds available on the card you provided. Please use a new card. Alternatively, contact your card provider, then press “Submit” again."
+        "There aren’t enough funds available on the card you provided. Please use a new card. Alternatively, contact your card provider, then press “Submit” again.",
       )
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/payment/new`
+        `/orders/${testOrder.internalID}/payment/new`,
       )
     })
 
@@ -269,7 +269,7 @@ describe("Accept seller offer", () => {
       await page.clickSubmit()
       await page.expectAndDismissErrorDialogMatching(
         "Not available",
-        "Sorry, the work is no longer available."
+        "Sorry, the work is no longer available.",
       )
       const artworkId = testOrder.lineItems.edges[0].node.artwork.slug
       expect(pushMock).toHaveBeenCalledWith(`/artwork/${artworkId}`)

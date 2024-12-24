@@ -24,13 +24,13 @@ describe("extendedBiddingInfoCopy", () => {
       const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
       const text = wrapper.text()
       expect(text).toContain(
-        "*Closure times may be extended to accommodate last-minute bids"
+        "*Closure times may be extended to accommodate last-minute bids",
       )
     })
     describe("a bid has extended the auction", () => {
       beforeAll(() => {
         Settings.now = jest.fn(() =>
-          new Date("2022-03-08T12:33:37.000Z").getTime()
+          new Date("2022-03-08T12:33:37.000Z").getTime(),
         )
       })
       it("shows the extended next to the timer", () => {
@@ -64,7 +64,7 @@ describe("extendedBiddingInfoCopy", () => {
         const endDate = new Date()
         const saleArtwork: LotTimer_saleArtwork$data = {
           endAt: new Date(
-            endDate.setMinutes(endDate.getMinutes() + 1)
+            endDate.setMinutes(endDate.getMinutes() + 1),
           ).toISOString(),
           formattedStartDateTime: "",
           extendedBiddingEndAt: "",
@@ -104,7 +104,7 @@ describe("extendedBiddingInfoCopy", () => {
       const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
       const text = wrapper.text()
       expect(text).not.toContain(
-        "*Closure times may be extended to accommodate last-minute bids"
+        "*Closure times may be extended to accommodate last-minute bids",
       )
     })
   })

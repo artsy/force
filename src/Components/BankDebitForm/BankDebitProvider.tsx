@@ -66,7 +66,7 @@ export const BankDebitProvider: FC<React.PropsWithChildren<Props>> = ({
         ) {
           setStripeClient(
             orderOrError.commerceCreateBankDebitSetupForOrder?.actionOrError
-              .actionData.clientSecret
+              .actionData.clientSecret,
           )
         }
 
@@ -157,7 +157,7 @@ export const BankDebitProvider: FC<React.PropsWithChildren<Props>> = ({
   return (
     <div
       data-test={`paymentSection${upperFirst(
-        camelCase(selectedPaymentMethod)
+        camelCase(selectedPaymentMethod),
       )}`}
     >
       <LoadingArea

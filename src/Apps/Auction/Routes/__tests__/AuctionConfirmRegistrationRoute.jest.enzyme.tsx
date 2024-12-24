@@ -38,15 +38,15 @@ describe("AuctionConfirmRegistrationRoute", () => {
         return <AuctionConfirmRegistrationRouteFragmentContainer {...props} />
       },
       query: graphql`
-      query AuctionConfirmRegistrationRouteTestQuery @relay_test_operation {
-        me {
-          ...AuctionConfirmRegistrationRoute_me
+        query AuctionConfirmRegistrationRouteTestQuery @relay_test_operation {
+          me {
+            ...AuctionConfirmRegistrationRoute_me
+          }
+          sale(id: "foo") {
+            ...AuctionConfirmRegistrationRoute_sale
+          }
         }
-        sale(id: "foo") {
-          ...AuctionConfirmRegistrationRoute_sale
-        }
-      }
-    `,
+      `,
     })
 
   const mockUseAuctionTracking = useAuctionTracking as jest.Mock
@@ -107,7 +107,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
     })
 
     expect((wrapper.find("ModalDialog").props() as any).title).toEqual(
-      "Register for Sale Name"
+      "Register for Sale Name",
     )
   })
 
@@ -178,10 +178,10 @@ describe("AuctionConfirmRegistrationRoute", () => {
       })
 
       expect(wrapper.text()).not.toContain(
-        "Phone Number*Required for shipping logistics"
+        "Phone Number*Required for shipping logistics",
       )
       expect(wrapper.text()).not.toContain("and provide a valid phone number")
-    }
+    },
   )
 
   it.each([[true], [false]])(
@@ -201,7 +201,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
 
       expect(wrapper.text()).toContain("Phone Number*Required")
       expect(wrapper.text()).toContain("Required for shipping logistics")
-    }
+    },
   )
 
   it("renders correct components", () => {
@@ -211,7 +211,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
       }),
     })
     expect(wrapper.text()).toContain(
-      "Welcome back. To complete your registration, please confirm that you agree to the Conditions of Sale."
+      "Welcome back. To complete your registration, please confirm that you agree to the Conditions of Sale.",
     )
     expect(wrapper.find("ConditionsOfSaleCheckbox")).toHaveLength(1)
     expect(wrapper.find("Button")).toHaveLength(1)
@@ -347,11 +347,11 @@ describe("AuctionConfirmRegistrationRoute", () => {
       expect(trackingSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           bidderID: "bidderInternalID",
-        })
+        }),
       )
 
       expect(routerSpy).toHaveBeenCalledWith(
-        "/auction/sale-slug?accepted-conditions=true"
+        "/auction/sale-slug?accepted-conditions=true",
       )
     })
   })

@@ -75,7 +75,7 @@ export const ArtworkArtistSeriesFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const PLACEHOLDER = (

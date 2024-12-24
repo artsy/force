@@ -48,7 +48,7 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<
 
     const filteredFormValues = omit(
       pickBy(artwork, value => value !== null),
-      ["images"]
+      ["images"],
     )
 
     Object.entries(filteredFormValues).forEach(([key, value]) => {

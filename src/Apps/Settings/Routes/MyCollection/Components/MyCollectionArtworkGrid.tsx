@@ -19,7 +19,7 @@ const MyCollectionArtworksGrid: FC<
   React.PropsWithChildren<MyCollectionArtworkGridProps>
 > = ({ artworks, onLoadMore }) => {
   const enablePostApprovalSubmissionFlow = useFeatureFlag(
-    "onyx_post_approval_submission_flow"
+    "onyx_post_approval_submission_flow",
   )
 
   const { dismiss, isDismissed } = useDismissibleContext()
@@ -91,5 +91,5 @@ export const MyCollectionArtworkGrid = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

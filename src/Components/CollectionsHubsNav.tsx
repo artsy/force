@@ -76,11 +76,11 @@ export const CollectionsHubsNavFragmentContainer = createFragmentContainer(
   {
     marketingCollections: graphql`
       fragment CollectionsHubsNav_marketingCollections on MarketingCollection
-        @relay(plural: true) {
+      @relay(plural: true) {
         slug
         title
         thumbnail
       }
     `,
-  }
+  },
 )

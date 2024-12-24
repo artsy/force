@@ -4,7 +4,7 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 export function setTimingHeader(
   res: ArtsyResponse,
   name: string,
-  durationMilli: number | null = null
+  durationMilli: number | null = null,
 ) {
   if (!res.serverTimingHeaders) {
     return
@@ -12,7 +12,7 @@ export function setTimingHeader(
 
   if (res.serverTimingHeadersWritten) {
     console.warn(
-      `Header: ${name} will not be sent, response headers have already been sent.`
+      `Header: ${name} will not be sent, response headers have already been sent.`,
     )
   }
   res.serverTimingHeaders.set(name, durationMilli)
@@ -21,7 +21,7 @@ export function setTimingHeader(
 export function serverTimingHeaders(
   req: ArtsyRequest,
   res: ArtsyResponse,
-  next: NextFunction
+  next: NextFunction,
 ) {
   if (req.query.serverTiming !== "true") {
     return next()

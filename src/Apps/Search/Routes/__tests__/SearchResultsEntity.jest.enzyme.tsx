@@ -19,7 +19,7 @@ describe("SearchResultsEntity", () => {
     return mount(
       <MockBoot>
         <SearchResultsEntity {...searchProps} />
-      </MockBoot>
+      </MockBoot>,
     )
   }
 

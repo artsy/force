@@ -61,7 +61,7 @@ const FollowGeneButton: React.FC<
   const { showAuthDialog } = useAuthDialog()
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault()
 
@@ -114,9 +114,9 @@ export const FollowGeneButtonFragmentContainer = createFragmentContainer(
   {
     gene: graphql`
       fragment FollowGeneButton_gene on Gene
-        @argumentDefinitions(
-          isLoggedIn: { type: "Boolean", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        isLoggedIn: { type: "Boolean", defaultValue: false }
+      ) {
         id
         slug
         name
@@ -124,7 +124,7 @@ export const FollowGeneButtonFragmentContainer = createFragmentContainer(
         isFollowed @include(if: $isLoggedIn)
       }
     `,
-  }
+  },
 )
 
 interface FollowGeneButtonQueryRendererProps

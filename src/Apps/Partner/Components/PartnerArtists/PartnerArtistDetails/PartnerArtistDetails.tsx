@@ -108,7 +108,7 @@ export const PartnerArtistDetailsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const PartnerArtistDetailsRenderer: React.FC<

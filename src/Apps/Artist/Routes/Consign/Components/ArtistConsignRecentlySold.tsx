@@ -16,7 +16,7 @@ export const ArtistConsignRecentlySold: React.FC<
   React.PropsWithChildren<ArtistConsignRecentlySoldProps>
 > = ({ artist }) => {
   const artworks = extractNodes(
-    artist.targetSupply?.microfunnel?.artworksConnection
+    artist.targetSupply?.microfunnel?.artworksConnection,
   )
 
   if (artworks.length === 0) {

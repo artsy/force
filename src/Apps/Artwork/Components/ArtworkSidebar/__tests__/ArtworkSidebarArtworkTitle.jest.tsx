@@ -12,12 +12,12 @@ const { renderWithRelay } =
       return <ArtworkSidebarArtworkTitleFragmentContainer artwork={artwork!} />
     },
     query: graphql`
-    query ArtworkSidebarArtworkTitle_Test_Query @relay_test_operation {
-      artwork(id: "josef-albers-homage-to-the-square-85") {
-        ...ArtworkSidebarArtworkTitle_artwork
+      query ArtworkSidebarArtworkTitle_Test_Query @relay_test_operation {
+        artwork(id: "josef-albers-homage-to-the-square-85") {
+          ...ArtworkSidebarArtworkTitle_artwork
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("ArtworkSidebarArtworkTitle", () => {

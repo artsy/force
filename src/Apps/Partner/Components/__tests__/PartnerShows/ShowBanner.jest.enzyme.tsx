@@ -53,10 +53,10 @@ describe("ShowBanner", () => {
       expect(el.props().href).toEqual("/show/white-cube-ellen-altfest-nature")
     })
     expect(wrapper.find("img").props().src).toEqual(
-      "https://d7hftxdivxxvm.cloudfront.net?example-1.jpg"
+      "https://d7hftxdivxxvm.cloudfront.net?example-1.jpg",
     )
     expect(wrapper.find("img").props().srcSet).toEqual(
-      "https://d7hftxdivxxvm.cloudfront.net?example-2.jpg"
+      "https://d7hftxdivxxvm.cloudfront.net?example-2.jpg",
     )
     expect(wrapper.find("img").props().alt).toEqual("Ellen Altfest | Nature")
 
@@ -112,6 +112,6 @@ describe("ShowBanner", () => {
       })
 
       expect(wrapper.text()).toContain(result)
-    }
+    },
   )
 })

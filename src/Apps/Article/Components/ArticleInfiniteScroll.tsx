@@ -103,30 +103,30 @@ export const ArticleInfiniteScrollPaginationContainer =
     ArticleInfiniteScroll,
     {
       viewer: graphql`
-      fragment ArticleInfiniteScroll_viewer on Viewer
+        fragment ArticleInfiniteScroll_viewer on Viewer
         @argumentDefinitions(
           after: { type: "String" }
           channelID: { type: "String!" }
           articleID: { type: "String!" }
         ) {
-        articlesConnection(
-          first: 1
-          after: $after
-          channelId: $channelID
-          omit: [$articleID]
-          sort: PUBLISHED_AT_DESC
-          layout: STANDARD
-        ) @connection(key: "ArticleInfiniteScroll_articlesConnection") {
-          edges {
-            node {
-              ...ArticleBody_article
-              ...ArticleVisibilityMetadata_article
-              internalID
+          articlesConnection(
+            first: 1
+            after: $after
+            channelId: $channelID
+            omit: [$articleID]
+            sort: PUBLISHED_AT_DESC
+            layout: STANDARD
+          ) @connection(key: "ArticleInfiniteScroll_articlesConnection") {
+            edges {
+              node {
+                ...ArticleBody_article
+                ...ArticleVisibilityMetadata_article
+                internalID
+              }
             }
           }
         }
-      }
-    `,
+      `,
     },
     {
       direction: "forward",
@@ -137,7 +137,7 @@ export const ArticleInfiniteScrollPaginationContainer =
         return { ...fragmentVariables, count, after: cursor }
       },
       query: ARTICLE_NEXT_QUERY,
-    }
+    },
   )
 
 interface ArticleInfiniteScrollQueryRendererProps {

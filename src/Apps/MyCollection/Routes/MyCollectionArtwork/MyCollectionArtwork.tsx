@@ -26,7 +26,7 @@ const MyCollectionArtwork: React.FC<
   React.PropsWithChildren<MyCollectionArtworkProps>
 > = ({ artwork }) => {
   const enablePostApprovalSubmissionFlow = useFeatureFlag(
-    "onyx_post_approval_submission_flow"
+    "onyx_post_approval_submission_flow",
   )
 
   const showComparables = !!artwork.comparables?.totalCount
@@ -181,5 +181,5 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

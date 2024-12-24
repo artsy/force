@@ -62,7 +62,7 @@ const { _mockStripe, _mockReset } = require("@stripe/stripe-js")
 
 _mockReset()
 _mockStripe().createToken.mockImplementation(() =>
-  Promise.resolve({ error: "bad error" })
+  Promise.resolve({ error: "bad error" }),
 )
 
 const fillAddressForm = (component: any, address: Address) => {
@@ -96,7 +96,7 @@ class CreditCardPickerTestPage extends RootTestPage {
 
   get sameAddressCheckbox() {
     return this.find(Checkbox).filterWhere(cb =>
-      cb.text().includes("are the same")
+      cb.text().includes("are the same"),
     )
   }
 
@@ -193,7 +193,7 @@ describe("CreditCardPickerFragmentContainer", () => {
     mockCommitMutation.mockClear()
     _mockReset()
     _mockStripe().createToken.mockImplementation(() =>
-      Promise.resolve({ error: "bad error" })
+      Promise.resolve({ error: "bad error" }),
     )
     isEigen = false
   })
@@ -242,7 +242,7 @@ describe("CreditCardPickerFragmentContainer", () => {
 
     expect(page.sameAddressCheckbox).toHaveLength(0)
     expect(page.text()).not.toMatch(
-      "Billing and shipping addresses are the same."
+      "Billing and shipping addresses are the same.",
     )
     expect(page.addressFormIsVisible).toBe(true)
   })
@@ -372,7 +372,7 @@ describe("CreditCardPickerFragmentContainer", () => {
             oneTimeUse: false,
           },
         },
-      })
+      }),
     )
   })
 
@@ -480,13 +480,13 @@ describe("CreditCardPickerFragmentContainer", () => {
         expect(page.radios).toHaveLength(2)
         expect(page.find(Link)).toHaveLength(1)
         expect(page.find(Link).props().href).toMatchInlineSnapshot(
-          `"/user/payments"`
+          `"/user/payments"`,
         )
         expect(page.radios.at(0).text()).toMatchInlineSnapshot(
-          `"•••• 1234   Exp 01/18"`
+          `"•••• 1234   Exp 01/18"`,
         )
         expect(page.radios.at(1).text()).toMatchInlineSnapshot(
-          `"Add another card."`
+          `"Add another card."`,
         )
         expect(page.radios.at(0).props().selected).toBeTruthy()
         expect(page.radios.at(1).props().selected).toBeFalsy()
@@ -557,16 +557,16 @@ describe("CreditCardPickerFragmentContainer", () => {
         expect(page.radios).toHaveLength(3)
         expect(page.find(Link)).toHaveLength(1)
         expect(page.find(Link).props().href).toMatchInlineSnapshot(
-          `"/user/payments"`
+          `"/user/payments"`,
         )
         expect(page.radios.at(0).text()).toMatchInlineSnapshot(
-          `"•••• 1234   Exp 01/18"`
+          `"•••• 1234   Exp 01/18"`,
         )
         expect(page.radios.at(1).text()).toMatchInlineSnapshot(
-          `"•••• 2345   Exp 01/19"`
+          `"•••• 2345   Exp 01/19"`,
         )
         expect(page.radios.at(2).text()).toMatchInlineSnapshot(
-          `"Add another card."`
+          `"Add another card."`,
         )
         expect(page.radios.at(0).props().selected).toBeTruthy()
         expect(page.radios.at(1).props().selected).toBeFalsy()
@@ -662,7 +662,7 @@ describe("CreditCardPickerFragmentContainer", () => {
 
           expect(page.radios).toHaveLength(4)
           expect(page.radios.at(0).text()).toMatchInlineSnapshot(
-            `"•••• 6789   Exp 12/22"`
+            `"•••• 6789   Exp 12/22"`,
           )
           expect(page.radios.at(0).props().selected).toBeTruthy()
           expect(page.radios.at(1).props().selected).toBeFalsy()
@@ -677,7 +677,7 @@ describe("CreditCardPickerFragmentContainer", () => {
     it("by default saves new cards", async () => {
       mockCommitMutation.mockResolvedValue(creatingCreditCardSuccess)
       _mockStripe().createToken.mockReturnValue(
-        Promise.resolve({ token: { id: "tokenId", postalCode: "1324" } })
+        Promise.resolve({ token: { id: "tokenId", postalCode: "1324" } }),
       )
       const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
@@ -695,13 +695,13 @@ describe("CreditCardPickerFragmentContainer", () => {
               oneTimeUse: false,
             },
           },
-        })
+        }),
       )
     })
 
     it("can also not save new cards", async () => {
       _mockStripe().createToken.mockReturnValue(
-        Promise.resolve({ token: { id: "tokenId" } })
+        Promise.resolve({ token: { id: "tokenId" } }),
       )
       const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
@@ -724,7 +724,7 @@ describe("CreditCardPickerFragmentContainer", () => {
               oneTimeUse: true,
             },
           },
-        })
+        }),
       )
     })
   })
@@ -799,7 +799,9 @@ describe("CreditCardPickerFragmentContainer", () => {
       page.root.update()
 
       const [addressInput, cityInput] = ["Address line 1", "City"].map(label =>
-        page.find(Input).filterWhere(wrapper => wrapper.props().title === label)
+        page
+          .find(Input)
+          .filterWhere(wrapper => wrapper.props().title === label),
       )
 
       expect(addressInput.props().error).toBeTruthy()
@@ -854,7 +856,7 @@ describe("CreditCardPickerFragmentContainer", () => {
     it("allows a missing postal code if the selected country is not US or Canada", async () => {
       mockCommitMutation.mockResolvedValue(creatingCreditCardSuccess)
       _mockStripe().createToken.mockReturnValue(
-        Promise.resolve({ token: { id: "tokenId" } })
+        Promise.resolve({ token: { id: "tokenId" } }),
       )
       const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
@@ -884,7 +886,7 @@ describe("CreditCardPickerFragmentContainer", () => {
     it("allows a missing state/province if the selected country is not US or Canada", async () => {
       mockCommitMutation.mockResolvedValue(creatingCreditCardSuccess)
       _mockStripe().createToken.mockReturnValue(
-        Promise.resolve({ token: { id: "tokenId" } })
+        Promise.resolve({ token: { id: "tokenId" } }),
       )
       const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
@@ -932,7 +934,7 @@ describe("CreditCardPickerFragmentContainer", () => {
         null,
         expect.objectContaining({
           address_line2: "",
-        })
+        }),
       )
     })
   })

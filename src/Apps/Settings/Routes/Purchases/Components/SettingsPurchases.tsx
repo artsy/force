@@ -57,7 +57,7 @@ const SettingsPurchases: FC<
         }
 
         setLoading(false)
-      }
+      },
     )
   }
 
@@ -99,21 +99,21 @@ export const SettingsPurchasesFragmentContainer = createRefetchContainer(
   {
     me: graphql`
       fragment SettingsPurchases_me on Me
-        @argumentDefinitions(
-          after: { type: "String" }
-          first: { type: "Int", defaultValue: 10 }
-          states: {
-            type: "[CommerceOrderStateEnum!]"
-            defaultValue: [
-              APPROVED
-              CANCELED
-              FULFILLED
-              REFUNDED
-              SUBMITTED
-              PROCESSING_APPROVAL
-            ]
-          }
-        ) {
+      @argumentDefinitions(
+        after: { type: "String" }
+        first: { type: "Int", defaultValue: 10 }
+        states: {
+          type: "[CommerceOrderStateEnum!]"
+          defaultValue: [
+            APPROVED
+            CANCELED
+            FULFILLED
+            REFUNDED
+            SUBMITTED
+            PROCESSING_APPROVAL
+          ]
+        }
+      ) {
         name
         orders(states: $states, first: $first, after: $after) {
           totalCount
@@ -145,5 +145,5 @@ export const SettingsPurchasesFragmentContainer = createRefetchContainer(
           @arguments(states: $states, first: $first, after: $after)
       }
     }
-  `
+  `,
 )

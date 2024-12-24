@@ -93,10 +93,10 @@ describe("DetailsRoute", () => {
 
     await waitFor(() => {
       expect(screen.getByTestId("year-input")).toHaveValue(
-        '<mock-value-for-field-"year">'
+        '<mock-value-for-field-"year">',
       )
       expect(screen.getByTestId("medium-input")).toHaveValue(
-        '<mock-value-for-field-"medium">'
+        '<mock-value-for-field-"medium">',
       )
     })
   })
@@ -110,7 +110,7 @@ describe("DetailsRoute", () => {
 
     await waitFor(() => {
       expect(mockPush).toHaveBeenCalledWith(
-        '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history'
+        '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history',
       )
 
       expect(submitMutation).toHaveBeenCalledWith(
@@ -123,7 +123,7 @@ describe("DetailsRoute", () => {
               medium: '<mock-value-for-field-"medium">',
             },
           },
-        })
+        }),
       )
     })
   })
@@ -137,7 +137,7 @@ describe("DetailsRoute", () => {
 
     await waitFor(() => {
       expect(mockPush).toHaveBeenCalledWith(
-        '/sell/submissions/<mock-value-for-field-"externalId">/photos'
+        '/sell/submissions/<mock-value-for-field-"externalId">/photos',
       )
 
       expect(submitMutation).toHaveBeenCalledWith(
@@ -150,7 +150,7 @@ describe("DetailsRoute", () => {
               medium: '<mock-value-for-field-"medium">',
             },
           },
-        })
+        }),
       )
     })
   })
@@ -187,7 +187,7 @@ describe("DetailsRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history'
+            '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history',
           )
         })
       })
@@ -201,7 +201,7 @@ describe("DetailsRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            '/sell/submissions/<mock-value-for-field-"externalId">/photos'
+            '/sell/submissions/<mock-value-for-field-"externalId">/photos',
           )
         })
       })
@@ -220,7 +220,7 @@ describe("DetailsRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history'
+            '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history',
           )
         })
       })

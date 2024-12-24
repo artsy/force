@@ -135,7 +135,7 @@ const ArtworkListArtworksGrid: FC<
         const isChanged = !isEqual(currentFilter, previousFilter)
 
         return isChanged
-      }
+      },
     )
     const filtersHaveUpdated = !!changedFilterEntity
 
@@ -201,11 +201,11 @@ export const ArtworkListArtworksGridFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment ArtworkListArtworksGrid_me on Me
-        @argumentDefinitions(
-          listID: { type: "String!" }
-          page: { type: "Int", defaultValue: 1 }
-          sort: { type: "CollectionArtworkSorts" }
-        ) {
+      @argumentDefinitions(
+        listID: { type: "String!" }
+        page: { type: "Int", defaultValue: 1 }
+        sort: { type: "CollectionArtworkSorts" }
+      ) {
         artworkList: collection(id: $listID) {
           internalID
 
@@ -227,5 +227,5 @@ export const ArtworkListArtworksGridFragmentContainer = createFragmentContainer(
         ...ArtworkListEmptyState_me @arguments(listID: $listID)
       }
     `,
-  }
+  },
 )

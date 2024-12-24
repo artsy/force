@@ -30,7 +30,7 @@ describe.skip("RelatedCollectionEntity", () => {
         path="/collection/slug"
       >
         <RelatedCollectionEntity {...passedProps} />
-      </AnalyticsCombinedContextProvider>
+      </AnalyticsCombinedContextProvider>,
     )
   }
 
@@ -43,7 +43,7 @@ describe.skip("RelatedCollectionEntity", () => {
     expect(component.find("img").length).toBe(3)
     const artworkImage = component.find("img").at(0).getElement().props
     expect(artworkImage.src).toBe(
-      "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg"
+      "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg",
     )
     expect(artworkImage.alt).toBe("Flag")
   })

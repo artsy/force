@@ -67,7 +67,7 @@ export const MyCollectionArtworkAuctionResultsFragmentContainer =
   createFragmentContainer(MyCollectionAuctionResultsContainer, {
     artist: graphql`
       fragment MyCollectionArtworkAuctionResults_artist on Artist
-        @argumentDefinitions(first: { type: "Int", defaultValue: 6 }) {
+      @argumentDefinitions(first: { type: "Int", defaultValue: 6 }) {
         slug
         internalID
         auctionResultsConnection(first: $first) {

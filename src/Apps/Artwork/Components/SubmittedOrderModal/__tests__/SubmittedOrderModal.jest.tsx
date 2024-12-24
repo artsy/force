@@ -62,7 +62,7 @@ describe("SubmittedOrderModal", () => {
     fireEvent.click(screen.getByLabelText("Close"))
 
     await waitFor(() =>
-      expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
     )
   })
 

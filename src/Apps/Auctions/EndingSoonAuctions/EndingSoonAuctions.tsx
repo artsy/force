@@ -41,5 +41,5 @@ export const EndingSoonAuctionsFragmentContainer = createFragmentContainer(
         ...EndingSoonAuctionsGrid_viewer
       }
     `,
-  }
+  },
 )

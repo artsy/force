@@ -16,7 +16,7 @@ describe("SystemQueryRenderer", () => {
         render={null as any} // we don't need to test underlying QueryRenderer
         environment={true as any}
         {...props}
-      />
+      />,
     )
   }
 

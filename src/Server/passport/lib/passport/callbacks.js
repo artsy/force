@@ -90,7 +90,7 @@ module.exports.facebook = (req, token, refreshToken, profile, done) => {
         oauth_token: token,
         provider: "facebook",
         name: profile != null ? profile.displayName : undefined,
-      })
+      }),
     )
   }
 }
@@ -128,7 +128,7 @@ module.exports.google = (req, accessToken, refreshToken, profile, done) => {
         oauth_token: accessToken,
         provider: "google",
         name: profile != null ? profile.displayName : undefined,
-      })
+      }),
     )
   }
 }
@@ -139,7 +139,7 @@ module.exports.apple = (
   decodedIdToken,
   accessToken,
   refreshToken,
-  done
+  done,
 ) => {
   const user = req.appleProfile
 
@@ -187,7 +187,7 @@ module.exports.apple = (
         name: displayName,
         id_token: idToken,
         email: decodedIdToken.email,
-      })
+      }),
     )
   }
 }
@@ -273,7 +273,7 @@ const onAccessToken = (req, done, params) => (err, res) => {
             extend(auth_params, {
               client_id: opts.ARTSY_ID,
               client_secret: opts.ARTSY_SECRET,
-            })
+            }),
           )
 
         if (req && req.connection && req.connection.remoteAddress) {

@@ -37,7 +37,7 @@ export function userIsAdmin(user?: User): boolean {
 
 export function userIsTeam(user?: User): boolean {
   const isTeam = Boolean(
-    user && user.roles && user.roles.includes("team") ? true : false
+    user && user.roles && user.roles.includes("team") ? true : false,
   )
   return isTeam
 }

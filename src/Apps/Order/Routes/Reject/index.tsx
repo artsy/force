@@ -191,5 +191,5 @@ export const RejectFragmentContainer = createFragmentContainer(
         ...OrderStepper_order
       }
     `,
-  }
+  },
 )

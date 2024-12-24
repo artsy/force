@@ -26,12 +26,12 @@ const { renderWithRelay } =
       )
     },
     query: graphql`
-    query PrivateArtworkAdditionalInfo_Test_Query @relay_test_operation {
-      artwork(id: "xxx") {
-        ...PrivateArtworkAdditionalInfo_artwork
+      query PrivateArtworkAdditionalInfo_Test_Query @relay_test_operation {
+        artwork(id: "xxx") {
+          ...PrivateArtworkAdditionalInfo_artwork
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("PrivateArtworkAdditionalInfo", () => {

@@ -74,7 +74,7 @@ describe("ConversationMessage", () => {
     })
 
     expect(
-      screen.getByText("This message is no longer available.")
+      screen.getByText("This message is no longer available."),
     ).toBeInTheDocument()
     expect(screen.getByText("Collector Collectorson")).toBeInTheDocument()
   })
@@ -97,7 +97,7 @@ describe("ConversationMessage", () => {
     expect(screen.getByAltText("Attached image")).toBeInTheDocument()
     expect(screen.getByAltText("Attached image")).toHaveAttribute(
       "src",
-      "https://image.png"
+      "https://image.png",
     )
   })
 

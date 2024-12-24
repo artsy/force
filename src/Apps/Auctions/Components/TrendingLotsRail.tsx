@@ -55,8 +55,8 @@ const TrendingLotsRail: React.FC<
                     contextPageOwnerType,
                     node.internalID,
                     node.slug,
-                    index
-                  )
+                    index,
+                  ),
                 )
               }}
             />
@@ -94,7 +94,7 @@ export const TrendingLotsRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const TrendingLotsRailQueryRenderer: React.FC<

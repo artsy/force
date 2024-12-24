@@ -114,35 +114,35 @@ export const FairOrganizerDedicatedArticlesFragmentContainer =
     FairOrganizerDedicatedArticles,
     {
       fairOrganizer: graphql`
-      fragment FairOrganizerDedicatedArticles_fairOrganizer on FairOrganizer
+        fragment FairOrganizerDedicatedArticles_fairOrganizer on FairOrganizer
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 16 }
           page: { type: "Int", defaultValue: 1 }
         ) {
-        slug
-        name
-        articlesConnection(
-          first: $first
-          page: $page
-          sort: PUBLISHED_AT_DESC
-        ) {
-          totalCount
-          pageInfo {
-            hasNextPage
-          }
-          pageCursors {
-            ...Pagination_pageCursors
-          }
-          edges {
-            node {
-              ...CellArticle_article
-              id
+          slug
+          name
+          articlesConnection(
+            first: $first
+            page: $page
+            sort: PUBLISHED_AT_DESC
+          ) {
+            totalCount
+            pageInfo {
+              hasNextPage
+            }
+            pageCursors {
+              ...Pagination_pageCursors
+            }
+            edges {
+              node {
+                ...CellArticle_article
+                id
+              }
             }
           }
+          ...DedicatedArticlesBreadcrumbs_fairOrganizer
         }
-        ...DedicatedArticlesBreadcrumbs_fairOrganizer
-      }
-    `,
+      `,
     },
-    FairOrganizerDedicatedArticlesQuery
+    FairOrganizerDedicatedArticlesQuery,
   )

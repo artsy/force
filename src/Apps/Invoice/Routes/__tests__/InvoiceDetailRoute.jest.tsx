@@ -83,7 +83,7 @@ describe("InvoiceDetailRoute", () => {
 
     expect(screen.getByRole("link", { name: "Make Payment" })).toHaveAttribute(
       "href",
-      "/invoice/cool-token/payment"
+      "/invoice/cool-token/payment",
     )
   })
 })

@@ -45,7 +45,7 @@ const SettingsEditSettingsTwoFactorBackupCodesDialog: FC<
           <SettingsEditSettingsTwoFactorBackupCodesActions
             mt={4}
             backupSecondFactors={me.backupSecondFactors!.map(factor =>
-              factor!.code!.toString()
+              factor!.code!.toString(),
             )}
           />
         </>
@@ -87,12 +87,12 @@ export const SettingsEditSettingsTwoFactorBackupCodesDialogQueryRenderer =
           <SettingsEditSettingsTwoFactorBackupCodesDialogFragmentContainer />
         }
         query={graphql`
-        query SettingsEditSettingsTwoFactorBackupCodesDialogQuery {
-          me {
-            ...SettingsEditSettingsTwoFactorBackupCodesDialog_me
+          query SettingsEditSettingsTwoFactorBackupCodesDialogQuery {
+            me {
+              ...SettingsEditSettingsTwoFactorBackupCodesDialog_me
+            }
           }
-        }
-      `}
+        `}
         render={({ error, props }) => {
           if (error) {
             console.error(error)

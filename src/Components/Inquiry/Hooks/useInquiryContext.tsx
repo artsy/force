@@ -69,7 +69,7 @@ const InquiryContext = createContext<{
   setInquiry: React.Dispatch<React.SetStateAction<InquiryState>>
   /** Set an updated Relay environment once the user is authenticated */
   setRelayEnvironment: (
-    updatedEnvironment: Environment
+    updatedEnvironment: Environment,
   ) => React.RefObject<Environment>
   View: React.FC
   visited: Visited
@@ -233,7 +233,7 @@ const InquiryContextContextFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const InquiryContextContextQueryRenderer: React.FC<

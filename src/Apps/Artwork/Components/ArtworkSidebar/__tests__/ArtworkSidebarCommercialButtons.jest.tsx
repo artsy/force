@@ -45,16 +45,16 @@ describe("ArtworkSidebarCommercialButtons", () => {
         )
       },
       query: graphql`
-      query ArtworkSidebarCommercialButtons_Test_Query @relay_test_operation {
-        artwork(id: "josef-albers-homage-to-the-square-85") {
-          ...ArtworkSidebarCommercialButtons_artwork
+        query ArtworkSidebarCommercialButtons_Test_Query @relay_test_operation {
+          artwork(id: "josef-albers-homage-to-the-square-85") {
+            ...ArtworkSidebarCommercialButtons_artwork
+          }
+          me {
+            ...ArtworkSidebarCommercialButtons_me
+              @arguments(artworkID: "josef-albers-homage-to-the-square-85")
+          }
         }
-        me {
-          ...ArtworkSidebarCommercialButtons_me
-            @arguments(artworkID: "josef-albers-homage-to-the-square-85")
-        }
-      }
-    `,
+      `,
     })
 
   beforeEach(() => {
@@ -92,7 +92,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       expect(screen.queryByText("Purchase")).toBeInTheDocument()
@@ -119,7 +119,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
@@ -144,7 +144,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       expect(screen.queryByText("Purchase")).toBeInTheDocument()
@@ -171,7 +171,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       expect(screen.queryByText("Purchase")).toBeInTheDocument()
@@ -198,7 +198,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       expect(screen.queryByText("Purchase")).toBeInTheDocument()
@@ -420,7 +420,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
         }),
       },
       null,
-      mockEnvironment
+      mockEnvironment,
     )
 
     expect(screen.queryByText("Limited-Time Offer")).toBeInTheDocument()
@@ -450,7 +450,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
         }),
       },
       null,
-      mockEnvironment
+      mockEnvironment,
     )
 
     expect(screen.queryByText("Limited-Time Offer")).not.toBeInTheDocument()
@@ -483,7 +483,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
         }),
       },
       null,
-      mockEnvironment
+      mockEnvironment,
     )
 
     expect(screen.queryByText('"This is a note"')).toBeInTheDocument()
@@ -613,7 +613,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       await waitFor(() => {
@@ -624,7 +624,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
         const { operationName } = await mockResolveLastOperation({})
 
         expect(operationName).toBe(
-          "ArtworkSidebarCommercialButtonsOfferOrderMutation"
+          "ArtworkSidebarCommercialButtonsOfferOrderMutation",
         )
       })
     })
@@ -646,7 +646,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       await waitFor(() => {
@@ -657,7 +657,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
         const { operationName } = await mockResolveLastOperation({})
 
         expect(operationName).toBe(
-          "ArtworkSidebarCommercialButtonsOrderMutation"
+          "ArtworkSidebarCommercialButtonsOrderMutation",
         )
       })
     })
@@ -687,7 +687,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       await waitFor(() => {
@@ -732,7 +732,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
       jest.advanceTimersByTime(1010)
 

@@ -20,7 +20,7 @@ const OfferHistoryItem: React.FC<
   const offerItem = getOfferItemFromOrder(lineItems)
   const previousOffers = offers?.edges?.filter(
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    ({ node: { internalID } }) => internalID !== lastOffer.internalID
+    ({ node: { internalID } }) => internalID !== lastOffer.internalID,
   )
   const currency = currencyCode!
 
@@ -142,5 +142,5 @@ export const OfferHistoryItemFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

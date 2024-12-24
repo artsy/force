@@ -3,7 +3,7 @@ import type { RouteProps } from "System/Router/Route"
 
 const PriceDatabaseApp = loadable(
   () => import(/* webpackChunkName: "priceDatabaseBundle" */ "./PriceDatabase"),
-  { resolveComponent: component => component.PriceDatabase }
+  { resolveComponent: component => component.PriceDatabase },
 )
 
 export const priceDatabaseRoutes: RouteProps[] = [

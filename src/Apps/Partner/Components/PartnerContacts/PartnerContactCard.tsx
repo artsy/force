@@ -33,5 +33,5 @@ export const PartnerContactCardFragmentContainer = createFragmentContainer(
         ...PartnerContactMap_location
       }
     `,
-  }
+  },
 )

@@ -49,7 +49,7 @@ describe("TagApp", () => {
     })
 
     const descriptionMeta = await findMetaTagBySelector(
-      "meta[name=description]"
+      "meta[name=description]",
     )
 
     expect(descriptionMeta).toHaveAttribute("content", "Tag Description")
@@ -64,12 +64,12 @@ describe("TagApp", () => {
     })
 
     const descriptionMeta = await findMetaTagBySelector(
-      "meta[name=description]"
+      "meta[name=description]",
     )
 
     expect(descriptionMeta).toHaveAttribute(
       "content",
-      "Browse all artworks with the Example tag on Artsy. Artsy has the largest collection of art on the Web; browse art by subject matter, medium, size and price."
+      "Browse all artworks with the Example tag on Artsy. Artsy has the largest collection of art on the Web; browse art by subject matter, medium, size and price.",
     )
   })
 })

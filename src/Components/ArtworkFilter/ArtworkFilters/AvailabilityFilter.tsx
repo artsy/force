@@ -18,7 +18,7 @@ export const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({
   const currentSelectedFilters = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.forSale
+    SelectedFiltersCountsLabels.forSale,
   )
   const label = `Availability${filtersCount}`
 

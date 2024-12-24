@@ -148,12 +148,12 @@ const ORDER_FRAGMENT = graphql`
 `
 const ME_FRAGMENT = graphql`
   fragment Shipping_me on Me
-    @argumentDefinitions(
-      first: { type: "Int", defaultValue: 30 }
-      last: { type: "Int" }
-      after: { type: "String" }
-      before: { type: "String" }
-    ) {
+  @argumentDefinitions(
+    first: { type: "Int", defaultValue: 30 }
+    last: { type: "Int" }
+    after: { type: "String" }
+    before: { type: "String" }
+  ) {
     ...FulfillmentDetailsForm_me
     ...ShippingContext_me
       @arguments(first: $first, last: $last, before: $before, after: $after)

@@ -142,7 +142,7 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface ShelfArtworkPlaceholderProps

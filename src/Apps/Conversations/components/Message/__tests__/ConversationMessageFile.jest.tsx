@@ -8,7 +8,7 @@ describe("ConversationMessageFile", () => {
         src="https://file.com/file.pdf"
         name="Edgar.pdf"
         size="10.0 Kb"
-      />
+      />,
     )
 
     expect(screen.getByRole("button")).toBeInTheDocument()
@@ -25,7 +25,7 @@ describe("ConversationMessageFile", () => {
         src="https://file.com/file.pdf"
         name="Edgar.pdf"
         size="10.0 Kb"
-      />
+      />,
     )
 
     fireEvent.click(screen.getByRole("button"))

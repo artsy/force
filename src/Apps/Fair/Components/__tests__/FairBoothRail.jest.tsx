@@ -79,12 +79,12 @@ describe("FairBoothRail", () => {
 
     const link = screen.getAllByRole("link")[0]
     const endcodedUrl = encodeURIComponent(
-      "/fair/slug?sort=NAME_ASC&page=2&focused_booths=true"
+      "/fair/slug?sort=NAME_ASC&page=2&focused_booths=true",
     )
 
     expect(link).toHaveAttribute(
       "href",
-      `/show/slug?back_to_fair_href=${endcodedUrl}`
+      `/show/slug?back_to_fair_href=${endcodedUrl}`,
     )
   })
 

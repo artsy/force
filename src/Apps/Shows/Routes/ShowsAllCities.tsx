@@ -65,5 +65,5 @@ export const ShowsAllCitiesFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

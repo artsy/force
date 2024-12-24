@@ -104,5 +104,5 @@ export const CellArtistSeriesFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

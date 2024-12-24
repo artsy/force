@@ -34,7 +34,7 @@ export const useRecordArtworkView = () => {
         `,
       })
     },
-    [relayEnvironment]
+    [relayEnvironment],
   )
 
   useEffect(() => {

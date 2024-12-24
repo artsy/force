@@ -22,7 +22,7 @@ export const NavBarSubMenu: React.FC<
   const { trackEvent } = useTracking()
 
   const handleClick = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {
     const link = event.currentTarget
     const text = link.innerText

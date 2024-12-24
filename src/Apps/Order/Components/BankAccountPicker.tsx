@@ -49,7 +49,7 @@ export const BankAccountPicker: FC<React.PropsWithChildren<Props>> = props => {
   if (order?.paymentMethodDetails?.internalID) {
     // if account on order is not saved on user's profile
     const isOrderBankSaved = bankAccountsArray.find(
-      bank => bank.internalID === order.paymentMethodDetails?.internalID
+      bank => bank.internalID === order.paymentMethodDetails?.internalID,
     )
 
     if (!isOrderBankSaved) {
@@ -205,7 +205,7 @@ export const BankAccountPicker: FC<React.PropsWithChildren<Props>> = props => {
           <Spacer y={4} />
           <SaveAndContinueButton
             testId={`saveExisting${upperFirst(
-              camelCase(selectedPaymentMethod)
+              camelCase(selectedPaymentMethod),
             )}`}
             onClick={handleContinue}
             disabled={!bankAccountSelection?.type}
@@ -245,5 +245,5 @@ export const BankAccountPickerFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

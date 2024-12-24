@@ -9,7 +9,7 @@ describe("StructuredData", () => {
     const wrapper = mount(
       <HeadProvider>
         <StructuredData {...defaultProps} {...props} />
-      </HeadProvider>
+      </HeadProvider>,
     )
 
     return wrapper

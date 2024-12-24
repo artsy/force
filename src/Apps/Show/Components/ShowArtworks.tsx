@@ -46,7 +46,7 @@ const ShowArtworksFilter: React.FC<
       sort: "partner_show_position",
       ...(match && match.location.query),
     },
-    "from_show_guide" // TODO: Investigate if we need this param.
+    "from_show_guide", // TODO: Investigate if we need this param.
   )
 
   return (
@@ -86,11 +86,11 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
   {
     show: graphql`
       fragment ShowArtworks_show on Show
-        @argumentDefinitions(
-          input: { type: "FilterArtworksInput" }
-          aggregations: { type: "[ArtworkAggregation]" }
-          shouldFetchCounts: { type: "Boolean!", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        input: { type: "FilterArtworksInput" }
+        aggregations: { type: "[ArtworkAggregation]" }
+        shouldFetchCounts: { type: "Boolean!", defaultValue: false }
+      ) {
         sidebar: filterArtworksConnection(
           aggregations: $aggregations
           first: 1
@@ -126,7 +126,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
         ...ShowArtworks_show @arguments(input: $input)
       }
     }
-  `
+  `,
 )
 
 type ShowArtworkFilterQueryRendererProps = {}

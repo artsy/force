@@ -12,12 +12,12 @@ describe("AuctionWorksByFollowedArtistsRail", () => {
         return <AuctionWorksByFollowedArtistsRailFragmentContainer {...props} />
       },
       query: graphql`
-      query AuctionWorksByFollowedArtistsRailTestQuery {
-        viewer {
-          ...AuctionWorksByFollowedArtistsRail_viewer
+        query AuctionWorksByFollowedArtistsRailTestQuery {
+          viewer {
+            ...AuctionWorksByFollowedArtistsRail_viewer
+          }
         }
-      }
-    `,
+      `,
     })
 
   it("renders correct components", () => {

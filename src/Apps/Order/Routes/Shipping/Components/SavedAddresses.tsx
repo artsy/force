@@ -43,7 +43,7 @@ export const SavedAddresses: FC<
     ? (getAddressByID(
         addressList,
         shippingContext.orderData.savedFulfillmentDetails
-          ?.selectedSavedAddressID
+          ?.selectedSavedAddressID,
       ) ?? null)
     : null
 
@@ -71,7 +71,7 @@ export const SavedAddresses: FC<
     const bestAddress = getBestAvailableAddress(
       addressList,
       addressSavedToOrderID,
-      shippingContext.orderData.availableShippingCountries
+      shippingContext.orderData.availableShippingCountries,
     )
     if (bestAddress) {
       selectAndSubmitAddress(bestAddress)
@@ -177,7 +177,7 @@ const AddAddressButton = styled(Clickable)`
 const getBestAvailableAddress = (
   addressList: SavedAddressType[],
   addressID?: string | null,
-  availableShippingCountries?: string[]
+  availableShippingCountries?: string[],
 ) => {
   return (
     (addressID && getAddressByID(addressList, addressID)) ||

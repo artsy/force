@@ -35,10 +35,10 @@ export const ArtistSeries: FC<React.PropsWithChildren<unknown>> = () => {
     artistSeriesOptionsQuery,
     {
       input: { artistIDs, aggregations: ["ARTIST_SERIES"] },
-    }
+    },
   )
   const artistSeries = (data.artworksConnection?.aggregations || []).find(
-    aggs => aggs?.slice === "ARTIST_SERIES"
+    aggs => aggs?.slice === "ARTIST_SERIES",
   )
 
   const options = compact(
@@ -49,7 +49,7 @@ export const ArtistSeries: FC<React.PropsWithChildren<unknown>> = () => {
         name: count.name,
         value: count.value,
       }
-    })
+    }),
   )
 
   if (!options.length) return null

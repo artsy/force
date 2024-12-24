@@ -48,7 +48,7 @@ function developmentAssets(): RequestHandler {
 }
 
 export function assetMiddleware(
-  manifestFileName = "dist/manifest.json"
+  manifestFileName = "dist/manifest.json",
 ): RequestHandler {
   if (NODE_ENV === "production") {
     return productionAssets(manifestFileName)

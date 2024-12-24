@@ -45,7 +45,7 @@ export const PriceRange: FC<React.PropsWithChildren<PriceRangeProps>> = ({
     (nextRange: CustomRange) => {
       onDebouncedUpdate?.(nextRange)
     },
-    250
+    250,
   )
 
   const updateRange = (nextRange: CustomRange) => {

@@ -42,7 +42,7 @@ describe("injectCommitMutation", () => {
     mount(
       <Provider>
         <Injected />
-      </Provider>
+      </Provider>,
     )
 
     expect.assertions(2)
@@ -95,13 +95,13 @@ describe("injectCommitMutation", () => {
             {props.word}
           </div>
         )
-      }
+      },
     )
 
     const wrapper = mount(
       <Provider>
         <Injected word="hello" />
-      </Provider>
+      </Provider>,
     )
     expect(wrapper.text()).toBe("hello")
     expect(wrapper.find("div").props().className).toBe("nothing")

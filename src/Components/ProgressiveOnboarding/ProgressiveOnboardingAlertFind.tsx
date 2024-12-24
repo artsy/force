@@ -49,5 +49,5 @@ export const __ProgressiveOnboardingAlertFind__: FC<
 }
 
 export const ProgressiveOnboardingAlertFind = withProgressiveOnboardingCounts(
-  __ProgressiveOnboardingAlertFind__
+  __ProgressiveOnboardingAlertFind__,
 )

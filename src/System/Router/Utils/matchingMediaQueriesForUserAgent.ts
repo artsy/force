@@ -9,7 +9,7 @@ import {
  * Find the breakpoints and interactions that the server should render
  */
 export function matchingMediaQueriesForUserAgent(
-  userAgent: string
+  userAgent: string,
 ): MatchingMediaQueries {
   // Only return xs breakpoint for mobile googlebot
   const ua = userAgent.toLowerCase()

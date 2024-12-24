@@ -17,7 +17,7 @@ export const crop = (
     width: number
     height: number
     quality?: number
-  }
+  },
 ) => {
   return services[DEFAULT_IMAGE_SERVICE].exec("crop", src, {
     width: options.width,
@@ -32,7 +32,7 @@ export const resize = (
     width?: number
     height?: number
     quality?: number
-  }
+  },
 ) => {
   return services[DEFAULT_IMAGE_SERVICE].exec("resize", src, {
     width: options.width,

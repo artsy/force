@@ -25,7 +25,7 @@ const AuctionBuyersPremiumDialog: React.FC<
   React.PropsWithChildren<AuctionBuyersPremiumDialogProps>
 > = ({ onClose, sale }) => {
   const schedule = compact(sale.buyersPremium).sort(
-    (a, b) => (a.cents ?? 0) - (b.cents ?? 0)
+    (a, b) => (a.cents ?? 0) - (b.cents ?? 0),
   )
 
   const { theme } = useTheme()

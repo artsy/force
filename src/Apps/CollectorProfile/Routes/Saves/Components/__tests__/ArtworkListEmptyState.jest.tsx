@@ -25,12 +25,12 @@ const { renderWithRelay } =
       return <ArtworkListEmptyStateFragmentContainer me={props.me} />
     },
     query: graphql`
-    query ArtworkListEmptyState_Test_Query @relay_test_operation {
-      me {
-        ...ArtworkListEmptyState_me @arguments(listID: "listID")
+      query ArtworkListEmptyState_Test_Query @relay_test_operation {
+        me {
+          ...ArtworkListEmptyState_me @arguments(listID: "listID")
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("ArtworkListEmptyState", () => {

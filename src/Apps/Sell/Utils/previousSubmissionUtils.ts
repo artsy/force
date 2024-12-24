@@ -17,7 +17,7 @@ const parseStep = (step: any): SellFlowStep | null =>
 
 export const storePreviousSubmission = (
   submissionID: string,
-  step: SellFlowStep
+  step: SellFlowStep,
 ) => {
   localStorage.setItem(SUBMISSION_ID_KEY, submissionID)
   localStorage.setItem(SUBMISSION_STEP_KEY, step)

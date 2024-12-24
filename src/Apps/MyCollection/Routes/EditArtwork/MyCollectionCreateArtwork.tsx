@@ -99,7 +99,7 @@ export const MyCollectionCreateArtwork: React.FC<
 
       trackSaveCollectedArtwork(
         values.artistId,
-        values.artist?.targetSupply?.isP1 ?? false
+        values.artist?.targetSupply?.isP1 ?? false,
       )
 
       // Store images locally

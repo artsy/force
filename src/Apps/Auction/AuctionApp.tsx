@@ -150,7 +150,7 @@ export const AuctionApp: React.FC<React.PropsWithChildren<AuctionAppProps>> = ({
 export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
   me: graphql`
     fragment AuctionApp_me on Me
-      @argumentDefinitions(saleID: { type: "String" }) {
+    @argumentDefinitions(saleID: { type: "String" }) {
       ...AuctionActiveBids_me @arguments(saleID: $saleID)
       ...AuctionDetails_me
       internalID
@@ -188,10 +188,10 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
   `,
   viewer: graphql`
     fragment AuctionApp_viewer on Viewer
-      @argumentDefinitions(
-        saleID: { type: "String!" }
-        isLoggedIn: { type: "Boolean!" }
-      ) {
+    @argumentDefinitions(
+      saleID: { type: "String!" }
+      isLoggedIn: { type: "Boolean!" }
+    ) {
       ...AuctionWorksByFollowedArtistsRail_viewer
         @arguments(saleID: $saleID)
         @include(if: $isLoggedIn)

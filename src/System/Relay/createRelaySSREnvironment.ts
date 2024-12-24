@@ -71,7 +71,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
   const relaySSRMiddleware = isServer
     ? new (require("react-relay-network-modern-ssr/node8/server").default)()
     : new (require("react-relay-network-modern-ssr/node8/client").default)(
-        cache
+        cache,
       )
 
   relaySSRMiddleware.debug = false

@@ -25,7 +25,7 @@ describe.skip("CollectionsRail", () => {
         path="/collection/slug"
       >
         <RelatedCollectionsRail {...passedProps} />
-      </AnalyticsCombinedContextProvider>
+      </AnalyticsCombinedContextProvider>,
     )
   }
 

@@ -19,7 +19,7 @@ import type { FC } from "react"
 export const MarketingQuizCTA: FC<React.PropsWithChildren<unknown>> = () => {
   const image = resized(
     "https://files.artsy.net/images/marketing_meet_recs.png",
-    { width: 1445, height: 882 }
+    { width: 1445, height: 882 },
   )
 
   const { ref, height } = useSizeAndPosition()

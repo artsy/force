@@ -226,7 +226,7 @@ export const InquiryBasicInfoFragmentContainer = createFragmentContainer(
         profession
       }
     `,
-  }
+  },
 )
 
 export const InquiryBasicInfoQueryRenderer: React.FC<

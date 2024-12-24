@@ -20,7 +20,7 @@ export const useRecaptcha = () => {
   useLoadScript({
     id: "google-recaptcha-js",
     src: `https://www.google.com/recaptcha/api.js?render=${getENV(
-      "RECAPTCHA_KEY"
+      "RECAPTCHA_KEY",
     )}`,
   })
 }

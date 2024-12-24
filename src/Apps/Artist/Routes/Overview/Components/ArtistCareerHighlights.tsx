@@ -109,7 +109,7 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const PLACEHOLDER = (

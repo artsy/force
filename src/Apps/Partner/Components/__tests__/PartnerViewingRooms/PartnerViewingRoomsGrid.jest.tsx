@@ -17,12 +17,12 @@ const { renderWithRelay } =
       )
     },
     query: graphql`
-    query PartnerViewingRoomsGrid_Test_Query @relay_test_operation {
-      viewingRoomsConnection: partner(id: "white-cube") {
-        ...PartnerViewingRoomsGrid_viewingRoomsConnection
+      query PartnerViewingRoomsGrid_Test_Query @relay_test_operation {
+        viewingRoomsConnection: partner(id: "white-cube") {
+          ...PartnerViewingRoomsGrid_viewingRoomsConnection
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("PartnerViewingRoomsGrid", () => {

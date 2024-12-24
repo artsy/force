@@ -49,7 +49,7 @@ export const DeprecatedSaveButton: React.FC<
   })
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault()
     handleSave()
@@ -126,7 +126,7 @@ export const DeprecatedSaveButtonFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface DeprecatedSaveButtonQueryRendererProps

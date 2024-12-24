@@ -31,7 +31,7 @@ describe("RouterLink", () => {
             },
           },
         ]}
-      />
+      />,
     )
     await flushPromiseQueue()
 
@@ -54,7 +54,7 @@ describe("RouterLink", () => {
             },
           },
         ]}
-      />
+      />,
     )
     await flushPromiseQueue()
 
@@ -77,7 +77,7 @@ describe("RouterLink", () => {
             },
           },
         ]}
-      />
+      />,
     )
     await flushPromiseQueue()
 

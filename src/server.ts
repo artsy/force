@@ -54,7 +54,7 @@ app.get(
       console.error(error)
       next(error)
     }
-  }
+  },
 )
 
 // Common express routes

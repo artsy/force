@@ -84,5 +84,5 @@ export const ArtworkDetailsArticlesFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

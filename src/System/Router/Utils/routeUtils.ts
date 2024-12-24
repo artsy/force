@@ -20,7 +20,7 @@ export function getRoutes(): {
     const INVALID_PATHS = ["/", "*"]
 
     const isInvalid = INVALID_PATHS.some(
-      invalidPath => route.path === invalidPath
+      invalidPath => route.path === invalidPath,
     )
 
     if (!isInvalid) {
@@ -33,7 +33,7 @@ export function getRoutes(): {
 
     if (route.children) {
       return route.children.map(childRoute =>
-        filterRoutes(acc, childRoute, path)
+        filterRoutes(acc, childRoute, path),
       )
     }
   }

@@ -75,5 +75,5 @@ export const HoverDetailsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

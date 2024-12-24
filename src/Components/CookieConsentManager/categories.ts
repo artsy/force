@@ -109,7 +109,7 @@ export type DestinationId = keyof typeof DESTINATION_MAPPING
 
 export const mapCustomPreferences = (
   destinations: Destination[],
-  preferences: CategoryPreferences
+  preferences: CategoryPreferences,
 ) => {
   const allDestinations = [...destinations, ...CUSTOM_DESTINATIONS]
 
@@ -122,7 +122,7 @@ export const mapCustomPreferences = (
         [preferenceName]: typeof value === "boolean" ? value : true,
       }
     },
-    {}
+    {},
   )
 
   const destinationPreferences = allDestinations.reduce((acc, destination) => {

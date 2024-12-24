@@ -18,7 +18,7 @@ export const AuctionFilterMobileActionSheet: FC<
   // This reflects our zero state for this UI which doesn't include the keyword
   const isReset = isEqual(
     omit(filterContext.stagedFilters, "reset", "keyword"),
-    initialAuctionResultsFilterState
+    initialAuctionResultsFilterState,
   )
 
   const handleScrollToTop = () => {
@@ -28,7 +28,7 @@ export const AuctionFilterMobileActionSheet: FC<
 
   const isFiltersChanged = !isEqual(
     filterContext.filters,
-    filterContext.stagedFilters
+    filterContext.stagedFilters,
   )
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>

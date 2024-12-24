@@ -20,7 +20,7 @@ describe("IdentityVerification/routes", () => {
     IdentityVerificationAppQueryResponseFixture.identityVerification.internalID
   async function render(
     url,
-    mockData: identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse
+    mockData: identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse,
   ) {
     const network = createMockNetworkLayer2({ mockData })
     const source = new RecordSource()
@@ -38,7 +38,7 @@ describe("IdentityVerification/routes", () => {
   it("renders the Identity Verification landing page", async () => {
     const { status } = await render(
       `/identity-verification/${idvID}`,
-      IdentityVerificationAppQueryResponseFixture
+      IdentityVerificationAppQueryResponseFixture,
     )
 
     expect(status).toBe(200)
@@ -47,7 +47,7 @@ describe("IdentityVerification/routes", () => {
   it("renders the Identity Verification processing page", async () => {
     const { status } = await render(
       "/identity-verification/processing",
-      IdentityVerificationAppQueryResponseFixture
+      IdentityVerificationAppQueryResponseFixture,
     )
 
     expect(status).toBe(200)
@@ -56,7 +56,7 @@ describe("IdentityVerification/routes", () => {
   it("renders the Identity Verification error page", async () => {
     const { status } = await render(
       "/identity-verification/error",
-      IdentityVerificationAppQueryResponseFixture
+      IdentityVerificationAppQueryResponseFixture,
     )
 
     expect(status).toBe(200)

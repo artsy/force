@@ -33,7 +33,7 @@ export const UploadPhotosForm: React.FC<
       photo.progress = progress
       setFieldValue("photos", values.photos)
     },
-    [values.photos, setFieldValue]
+    [values.photos, setFieldValue],
   )
 
   const uploadImage = useCallback(
@@ -45,7 +45,7 @@ export const UploadPhotosForm: React.FC<
           values.submissionId,
           relayEnvironment,
           photo,
-          handlePhotoUploadingProgress(photo)
+          handlePhotoUploadingProgress(photo),
         )
 
         if (!geminiToken) {
@@ -95,12 +95,12 @@ export const UploadPhotosForm: React.FC<
       values.submissionId,
       values.photos,
       sendToast,
-    ]
+    ],
   )
 
   useEffect(() => {
     const imagesToUpload = values.photos.filter(
-      c => !(c.geminiToken || c.url) && !c.loading && !c.errorMessage
+      c => !(c.geminiToken || c.url) && !c.loading && !c.errorMessage,
     )
 
     if (imagesToUpload.length) {
@@ -122,7 +122,7 @@ export const UploadPhotosForm: React.FC<
       rejections.forEach(rejection => {
         const errorMessage = getErrorMessage(
           rejection,
-          ALLOWED_MIME_TYPES_HUMINIZED
+          ALLOWED_MIME_TYPES_HUMINIZED,
         )
         sendToast({
           variant: "error",
@@ -130,7 +130,7 @@ export const UploadPhotosForm: React.FC<
         })
       })
     },
-    [sendToast]
+    [sendToast],
   )
 
   return (

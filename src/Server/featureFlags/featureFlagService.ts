@@ -14,7 +14,7 @@ export interface FeatureFlagService {
 const registeredFeatureFlagService = new Map<symbol, any>()
 
 export async function createFeatureFlagService(
-  type: symbol
+  type: symbol,
 ): Promise<FeatureFlagService> {
   if (!registeredFeatureFlagService.has(type)) {
     throw new Error(`The type provider ${type.toString()} is not registered.`)
@@ -38,7 +38,7 @@ type ConstructorType<T> = Function & { prototype: T }
 
 export function registerFeatureFlagService<T extends FeatureFlagService>(
   type: symbol,
-  featureFlagClass: ConstructorType<T>
+  featureFlagClass: ConstructorType<T>,
 ) {
   registeredFeatureFlagService.set(type, featureFlagClass)
 }

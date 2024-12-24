@@ -7,7 +7,7 @@ import { useTracking } from "react-tracking"
 import { requestEmailConfirmation } from "./requestEmailConfirmationMutation"
 
 const logger = createLogger(
-  "Components/FlashBanner/EmailConfirmationLinkExpired"
+  "Components/FlashBanner/EmailConfirmationLinkExpired",
 )
 
 // TODO: Rewrite

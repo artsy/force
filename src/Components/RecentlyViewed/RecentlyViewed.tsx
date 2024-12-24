@@ -71,7 +71,7 @@ export const RecentlyViewedFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const RecentlyViewedQueryRenderer = () => {

@@ -36,8 +36,8 @@ export const MyBidsBidItem: React.FC<
             contextPageOwnerType!,
             saleArtwork.internalID,
             saleArtwork.slug,
-            horizontalSlidePosition
-          )
+            horizontalSlidePosition,
+          ),
         )
       }}
     >
@@ -170,5 +170,5 @@ export const MyBidsBidItemFragmentContainer = createFragmentContainer(
         slug
       }
     `,
-  }
+  },
 )

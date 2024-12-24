@@ -88,7 +88,7 @@ const AuctionResultsContainer: React.FC<
   const { match } = useRouter()
 
   const { scrollToMarketSignals } = paramsToCamelCase(
-    match?.location.query
+    match?.location.query,
   ) as { scrollToMarketSignals?: boolean }
 
   const { jumpTo } = useJump()
@@ -122,7 +122,7 @@ const AuctionResultsContainer: React.FC<
   const tracking = useTracking()
 
   const lotsByCreatedYear = aggregations?.find(
-    aggregation => aggregation?.slice === "LOTS_BY_CREATED_YEAR"
+    aggregation => aggregation?.slice === "LOTS_BY_CREATED_YEAR",
   )?.counts
 
   const startAt = lotsByCreatedYear?.[0]?.value || null
@@ -136,7 +136,7 @@ const AuctionResultsContainer: React.FC<
   // Is current filter state different from the default (reset) state?
   const filtersAtDefault = isEqual(
     selectedFilters,
-    auctionResultsFilterResetState
+    auctionResultsFilterResetState,
   )
 
   const previousFilters = usePrevious(filters) ?? {}
@@ -218,7 +218,7 @@ const AuctionResultsContainer: React.FC<
     // Scroll to auction results if the market signals section is not visible
     setTimeout(
       visible ? scrollToMarketSignalsTop : scrollToAuctionResultsTop,
-      0
+      0,
     )
   }
 
@@ -375,7 +375,7 @@ const AuctionResultsContainer: React.FC<
 export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
   (props: AuctionResultsProps) => {
     const lotsByCreatedYear = props.aggregations?.find(
-      aggregation => aggregation?.slice === "LOTS_BY_CREATED_YEAR"
+      aggregation => aggregation?.slice === "LOTS_BY_CREATED_YEAR",
     )?.counts
 
     const startAt = lotsByCreatedYear?.[0]?.value || null
@@ -406,29 +406,29 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
   {
     artist: graphql`
       fragment ArtistAuctionResults_artist on Artist
-        @argumentDefinitions(
-          sort: { type: "AuctionResultSorts", defaultValue: DATE_DESC }
-          first: { type: "Int", defaultValue: 50 }
-          last: { type: "Int" }
-          page: { type: "Int" }
-          size: { type: "Int" }
-          before: { type: "String" }
-          organizations: { type: "[String]" }
-          keyword: { type: "String" }
-          priceRange: { type: "String" }
-          currency: { type: "String" }
-          includeEstimateRange: { type: "Boolean" }
-          includeUnknownPrices: { type: "Boolean" }
-          saleStartYear: { type: "Int" }
-          saleEndYear: { type: "Int" }
-          allowUnspecifiedSaleDates: { type: "Boolean" }
-          categories: { type: "[String]" }
-          sizes: { type: "[ArtworkSizes]" }
-          createdAfterYear: { type: "Int" }
-          createdBeforeYear: { type: "Int" }
-          allowEmptyCreatedDates: { type: "Boolean" }
-          state: { type: "AuctionResultsState", defaultValue: ALL }
-        ) {
+      @argumentDefinitions(
+        sort: { type: "AuctionResultSorts", defaultValue: DATE_DESC }
+        first: { type: "Int", defaultValue: 50 }
+        last: { type: "Int" }
+        page: { type: "Int" }
+        size: { type: "Int" }
+        before: { type: "String" }
+        organizations: { type: "[String]" }
+        keyword: { type: "String" }
+        priceRange: { type: "String" }
+        currency: { type: "String" }
+        includeEstimateRange: { type: "Boolean" }
+        includeUnknownPrices: { type: "Boolean" }
+        saleStartYear: { type: "Int" }
+        saleEndYear: { type: "Int" }
+        allowUnspecifiedSaleDates: { type: "Boolean" }
+        categories: { type: "[String]" }
+        sizes: { type: "[ArtworkSizes]" }
+        createdAfterYear: { type: "Int" }
+        createdBeforeYear: { type: "Int" }
+        allowEmptyCreatedDates: { type: "Boolean" }
+        state: { type: "AuctionResultsState", defaultValue: ALL }
+      ) {
         slug
         internalID
         name
@@ -570,5 +570,5 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           )
       }
     }
-  `
+  `,
 )

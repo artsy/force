@@ -3,11 +3,11 @@ import { aggregationNameFromFilter } from "Components/SavedSearchAlert/constants
 
 export const aggregationForFilter = (
   filterKey: string,
-  aggregations: Aggregations
+  aggregations: Aggregations,
 ) => {
   const aggregationName = aggregationNameFromFilter[filterKey]
   const aggregation = aggregations!.find(
-    value => value.slice === aggregationName
+    value => value.slice === aggregationName,
   )
   return aggregation
 }

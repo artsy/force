@@ -57,7 +57,7 @@ export const PrivateArtworkAboutArtist: React.FC<
         }
       }
     `,
-    artwork
+    artwork,
   )
 
   const followCount = (artist): number => {
@@ -185,7 +185,7 @@ export const PrivateArtworkAboutArtist: React.FC<
                 )}
               </>
             </>
-          )
+          ),
       )}
     </Box>
   )

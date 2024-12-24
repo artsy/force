@@ -40,7 +40,7 @@ const PartnersRails: FC<React.PropsWithChildren<PartnersRailsProps>> = ({
 const PartnersRailsFragmentContainer = createFragmentContainer(PartnersRails, {
   viewer: graphql`
     fragment PartnersRails_viewer on Viewer
-      @argumentDefinitions(categoryType: { type: "PartnerCategoryType" }) {
+    @argumentDefinitions(categoryType: { type: "PartnerCategoryType" }) {
       partnerCategories(
         categoryType: $categoryType
         size: 50

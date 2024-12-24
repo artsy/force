@@ -110,7 +110,7 @@ describe("FairBooths", () => {
       const { wrapper } = getWrapper()
       const refetchSpy = jest.spyOn(
         (wrapper.find("FairBooths").props() as any).relay,
-        "refetch"
+        "refetch",
       )
 
       const sort = wrapper.find(SortFilter)
@@ -122,7 +122,7 @@ describe("FairBooths", () => {
           first: 15,
           sort: "NAME_ASC",
           page: 1,
-        })
+        }),
       )
     })
   })

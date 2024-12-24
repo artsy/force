@@ -140,7 +140,7 @@ describe("AuctionBidRoute", () => {
     })
 
     expect((wrapper.find("ModalDialog").props() as any).title).toEqual(
-      "Confirm Your Bid"
+      "Confirm Your Bid",
     )
   })
 
@@ -248,14 +248,14 @@ describe("AuctionBidRoute", () => {
 
     expect(defaultFormikProps.setFieldError).toHaveBeenCalledWith(
       "selectedBid",
-      undefined
+      undefined,
     )
     expect(defaultFormikProps.setFieldValue).toHaveBeenCalledWith(
       "selectedBid",
-      "1000"
+      "1000",
     )
     expect(defaultFormikProps.setFieldTouched).toHaveBeenCalledWith(
-      "selectedBid"
+      "selectedBid",
     )
   })
 })

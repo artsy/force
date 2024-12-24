@@ -40,7 +40,7 @@ describe("TrendingLotsRail", () => {
     })
 
     expect(
-      screen.queryByText("Works with the most bids today")
+      screen.queryByText("Works with the most bids today"),
     ).not.toBeInTheDocument()
     expect(screen.getByText("No Works To Show")).toBeInTheDocument()
     expect(screen.queryByTestId("ShelfArtwork")).not.toBeInTheDocument()
@@ -54,7 +54,7 @@ describe("TrendingLotsRail", () => {
     })
 
     expect(
-      screen.queryByText("Works with the most bids today")
+      screen.queryByText("Works with the most bids today"),
     ).not.toBeInTheDocument()
     expect(screen.queryByText("No Works To Show")).toBeInTheDocument()
     expect(screen.queryByTestId("ShelfArtwork")).not.toBeInTheDocument()
@@ -67,7 +67,7 @@ describe("TrendingLotsRail", () => {
       }),
     })
     expect(
-      screen.getByText("Works with the most bids today")
+      screen.getByText("Works with the most bids today"),
     ).toBeInTheDocument()
     expect(screen.queryByText("No Works To Show")).not.toBeInTheDocument()
     expect(screen.queryByTestId("ShelfArtwork")).toBeInTheDocument()
@@ -102,7 +102,7 @@ describe("TrendingLotsRail", () => {
       new MouseEvent("click", {
         bubbles: true,
         cancelable: true,
-      })
+      }),
     )
 
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`

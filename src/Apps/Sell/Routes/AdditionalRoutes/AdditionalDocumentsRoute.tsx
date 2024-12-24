@@ -50,7 +50,7 @@ export const AdditionalDocumentsRoute: React.FC<
   } = useSellFlowContext()
 
   const documents: DropzoneFile[] = ((submission.assets as Asset[]) || []).map(
-    dropzoneFileFromAsset
+    dropzoneFileFromAsset,
   )
 
   const initialValues: DocumentsFormValues = {
@@ -67,7 +67,7 @@ export const AdditionalDocumentsRoute: React.FC<
     >
       {({ values }) => {
         const isAnyDocumentLoading = values.documents.some(
-          (document: DropzoneFile) => document.loading
+          (document: DropzoneFile) => document.loading,
         )
         setLoading(isAnyDocumentLoading)
 

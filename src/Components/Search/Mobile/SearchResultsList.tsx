@@ -59,7 +59,7 @@ const SearchResultsList: FC<
         ...option,
         imageUrl: option.coverArtwork?.image?.src || option.imageUrl,
       }
-    }) as SearchNodeOption[]
+    }) as SearchNodeOption[],
   )
 
   if (!viewer.searchConnection) {
@@ -84,7 +84,7 @@ const SearchResultsList: FC<
 
   const handleRedirect = (
     option: SuggestionItemOptionProps,
-    quickNavigation = false
+    quickNavigation = false,
   ) => {
     if (!quickNavigation) {
       tracking.trackEvent({
@@ -129,12 +129,12 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
   {
     viewer: graphql`
       fragment SearchResultsList_viewer on Viewer
-        @argumentDefinitions(
-          first: { type: "Int", defaultValue: 10 }
-          after: { type: "String" }
-          term: { type: "String!", defaultValue: "" }
-          entities: { type: "[SearchEntity]" }
-        ) {
+      @argumentDefinitions(
+        first: { type: "Int", defaultValue: 10 }
+        after: { type: "String" }
+        term: { type: "String!", defaultValue: "" }
+        entities: { type: "[SearchEntity]" }
+      ) {
         searchConnection(
           query: $term
           entities: $entities
@@ -197,5 +197,5 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
         }
       }
     `,
-  }
+  },
 )

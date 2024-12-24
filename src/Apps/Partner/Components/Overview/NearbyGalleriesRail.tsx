@@ -46,14 +46,14 @@ const NearbyGalleriesRailFragmentContainer = createFragmentContainer(
   {
     partners: graphql`
       fragment NearbyGalleriesRail_partners on PartnerEdge
-        @relay(plural: true) {
+      @relay(plural: true) {
         node {
           ...CellPartner_partner
           internalID
         }
       }
     `,
-  }
+  },
 )
 
 export const NearbyGalleriesRailRenderer: React.FC<

@@ -288,7 +288,7 @@ describe("RegisterButton", () => {
       })
       ;(wrapper.find("ButtonAction").props() as any).onClick()
       expect(spy).toHaveBeenCalledWith(
-        "/auction/sale-slug/confirm-registration"
+        "/auction/sale-slug/confirm-registration",
       )
     })
   })

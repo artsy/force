@@ -123,7 +123,7 @@ export const SeoDataForArtworkFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const offerAttributes = (artwork: SeoDataForArtwork_artwork$data) => {
@@ -131,7 +131,7 @@ export const offerAttributes = (artwork: SeoDataForArtwork_artwork$data) => {
   const galleryProfileImage = get(
     artwork,
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    a => a.partner.profile.image.resized.url
+    a => a.partner.profile.image.resized.url,
   )
   const seller = galleryProfileImage && {
     "@type": "ArtGallery",

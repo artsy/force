@@ -7,7 +7,7 @@ const OnboardingDialog = loadable(
       /* webpackChunkName: "onboardingBundle" */
       "Components/Onboarding/Components/OnboardingDialog"
     ),
-  { resolveComponent: component => component.OnboardingDialog }
+  { resolveComponent: component => component.OnboardingDialog },
 )
 
 interface UseOnboarding {

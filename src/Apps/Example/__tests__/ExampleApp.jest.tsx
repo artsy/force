@@ -37,7 +37,7 @@ describe("ExampleApp", () => {
           year: 2022,
         },
       }),
-    })
+    }),
   )
 
   it("renders correctly", () => {
@@ -50,12 +50,12 @@ describe("ExampleApp", () => {
 
   it("renders meta description", async () => {
     const descriptionMeta = await findMetaTagBySelector(
-      "meta[name=description]"
+      "meta[name=description]",
     )
 
     expect(descriptionMeta).toHaveAttribute(
       "content",
-      "Fill this with a proper description"
+      "Fill this with a proper description",
     )
   })
 

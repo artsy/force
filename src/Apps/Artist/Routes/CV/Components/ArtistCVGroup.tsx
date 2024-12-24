@@ -130,15 +130,15 @@ export const ArtistCVGroupRefetchContainer = createPaginationContainer(
   {
     artist: graphql`
       fragment ArtistCVGroup_artist on Artist
-        @argumentDefinitions(
-          count: { type: "Int", defaultValue: 10 }
-          cursor: { type: "String" }
-          sort: { type: "ShowSorts", defaultValue: START_AT_DESC }
-          atAFair: { type: "Boolean", defaultValue: false }
-          soloShow: { type: "Boolean" }
-          isReference: { type: "Boolean", defaultValue: true }
-          visibleToPublic: { type: "Boolean", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        count: { type: "Int", defaultValue: 10 }
+        cursor: { type: "String" }
+        sort: { type: "ShowSorts", defaultValue: START_AT_DESC }
+        atAFair: { type: "Boolean", defaultValue: false }
+        soloShow: { type: "Boolean" }
+        isReference: { type: "Boolean", defaultValue: true }
+        visibleToPublic: { type: "Boolean", defaultValue: false }
+      ) {
         slug
         showsConnection(
           first: $count
@@ -209,5 +209,5 @@ export const ArtistCVGroupRefetchContainer = createPaginationContainer(
         }
       }
     `,
-  }
+  },
 )

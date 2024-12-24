@@ -23,14 +23,14 @@ describe("MyCollectionArtworkDemandIndex", () => {
         return null
       },
       query: graphql`
-      query MyCollectionArtworkDemandIndexTestQuery @relay_test_operation {
-        artwork(id: "artwork-ID") {
-          marketPriceInsights {
-            ...MyCollectionArtworkDemandIndex_marketPriceInsights
+        query MyCollectionArtworkDemandIndexTestQuery @relay_test_operation {
+          artwork(id: "artwork-ID") {
+            marketPriceInsights {
+              ...MyCollectionArtworkDemandIndex_marketPriceInsights
+            }
           }
         }
-      }
-    `,
+      `,
     })
 
   describe("when there is no demand rank", () => {

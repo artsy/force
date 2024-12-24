@@ -12,7 +12,7 @@ export const useSubmissionTracking = () => {
 
   const trackTappedContinueSubmission = (
     submission_id: string | null | undefined,
-    destination_step: string
+    destination_step: string,
   ) => {
     trackEvent({
       action: "tappedContinueSubmission",
@@ -41,7 +41,7 @@ export const useSubmissionTracking = () => {
 
   const trackTappedSubmissionSaveExit = (
     submission_id: string | null | undefined,
-    currentStep: SellFlowStep
+    currentStep: SellFlowStep,
   ) => {
     trackEvent({
       action: "tappedSubmissionSaveExit",
@@ -54,7 +54,7 @@ export const useSubmissionTracking = () => {
 
   const trackTappedSubmissionBack = (
     submission_id: string | null | undefined,
-    currentStep: SellFlowStep
+    currentStep: SellFlowStep,
   ) => {
     trackEvent({
       action: "tappedSubmissionBack",
@@ -67,7 +67,7 @@ export const useSubmissionTracking = () => {
 
   const trackConsignmentSubmitted = (
     submission_id: string | null | undefined,
-    currentStep: SellFlowStep
+    currentStep: SellFlowStep,
   ) => {
     trackEvent({
       action: "consignmentSubmitted",
@@ -80,7 +80,7 @@ export const useSubmissionTracking = () => {
 
   const trackTappedSubmitAnotherWork = (
     submission_id: string | null | undefined,
-    currentStep: SellFlowStep
+    currentStep: SellFlowStep,
   ) => {
     trackEvent({
       action: "tappedSubmitAnotherWork",
@@ -92,7 +92,7 @@ export const useSubmissionTracking = () => {
 
   const trackTappedViewArtworkInMyCollection = (
     submission_id: string | null | undefined,
-    currentStep: SellFlowStep
+    currentStep: SellFlowStep,
   ) => {
     trackEvent({
       action: "tappedViewArtworkInMyCollection",
@@ -104,7 +104,7 @@ export const useSubmissionTracking = () => {
 
   const trackTappedContactAdvisor = (
     userId: string | undefined,
-    userEmail: string | undefined
+    userEmail: string | undefined,
   ) => {
     trackEvent({
       action: ActionType.tappedConsignmentInquiry,

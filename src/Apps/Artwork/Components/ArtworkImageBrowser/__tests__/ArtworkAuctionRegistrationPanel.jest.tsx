@@ -11,12 +11,12 @@ const { renderWithRelay } =
   setupTestWrapperTL<ArtworkAuctionRegistrationPanelQuery>({
     Component: ArtworkAuctionRegistrationPanelFragmentContainer,
     query: graphql`
-    query ArtworkAuctionRegistrationPanelQuery {
-      artwork(id: "example") {
-        ...ArtworkAuctionRegistrationPanel_artwork
+      query ArtworkAuctionRegistrationPanelQuery {
+        artwork(id: "example") {
+          ...ArtworkAuctionRegistrationPanel_artwork
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("ArtworkAuctionRegistrationPanel", () => {

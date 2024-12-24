@@ -61,9 +61,7 @@ const CollectorProfileArtistsListArtists: FC<
   const {
     router,
     match,
-    match: {
-      location: { query },
-    } = {
+    match: { location: { query } } = {
       location: { query: { page: "1" } },
     },
   } = useRouter()
@@ -73,12 +71,12 @@ const CollectorProfileArtistsListArtists: FC<
   const data = useLazyLoadQuery<CollectorProfileArtistsListArtistsQuery>(
     QUERY,
     { page, size: PAGE_SIZE },
-    { fetchPolicy: "network-only" }
+    { fetchPolicy: "network-only" },
   )
 
   const me = useFragment(
     FRAGMENT,
-    data.me as CollectorProfileArtistsList_me$key
+    data.me as CollectorProfileArtistsList_me$key,
   )
 
   const userInterestEdges = compact(me?.userInterestsConnection?.edges)
@@ -127,7 +125,7 @@ const CollectorProfileArtistsListArtists: FC<
 
 const FRAGMENT = graphql`
   fragment CollectorProfileArtistsList_me on Me
-    @argumentDefinitions(page: { type: "Int" }, size: { type: "Int" }) {
+  @argumentDefinitions(page: { type: "Int" }, size: { type: "Int" }) {
     userInterestsConnection(page: $page, size: $size, interestType: ARTIST) {
       totalCount
       pageCursors {

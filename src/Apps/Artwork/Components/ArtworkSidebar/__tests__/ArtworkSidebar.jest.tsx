@@ -13,7 +13,7 @@ jest.mock(
   "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer",
   () => ({
     ArtworkSidebarAuctionTimerFragmentContainer: () => <div>AuctionTimer</div>,
-  })
+  }),
 )
 
 const ArtworkSidebar_TEST_QUERY = graphql`
@@ -55,7 +55,7 @@ describe("ArtworkSidebarArtists", () => {
 
       expect(screen.queryByText(/Create Alert/i)).toBeInTheDocument()
       expect(
-        screen.queryByText(/Get notifications for similar works/i)
+        screen.queryByText(/Get notifications for similar works/i),
       ).toBeInTheDocument()
     })
 
@@ -69,7 +69,7 @@ describe("ArtworkSidebarArtists", () => {
 
       const button = screen.queryByText(/Create Alert/i)
       const description = screen.queryByText(
-        /Get notifications for similar works/i
+        /Get notifications for similar works/i,
       )
 
       expect(button).toBeInTheDocument()
@@ -86,7 +86,7 @@ describe("ArtworkSidebarArtists", () => {
 
       const button = screen.queryByText(/Create Alert/i)
       const description = screen.queryByText(
-        /Get notifications for similar works/i
+        /Get notifications for similar works/i,
       )
 
       expect(button).toBeInTheDocument()
@@ -108,7 +108,7 @@ describe("ArtworkSidebarArtists", () => {
 
       const button = screen.queryByText(/Create Alert/i)
       const description = screen.queryByText(
-        /Get notifications for similar works/i
+        /Get notifications for similar works/i,
       )
 
       expect(button).not.toBeInTheDocument()
@@ -124,7 +124,7 @@ describe("ArtworkSidebarArtists", () => {
 
       const button = screen.queryByText(/Create Alert/i)
       const description = screen.queryByText(
-        /Get notifications for similar works/i
+        /Get notifications for similar works/i,
       )
 
       expect(button).not.toBeInTheDocument()
@@ -142,8 +142,8 @@ describe("ArtworkSidebarArtists", () => {
 
       expect(
         screen.queryByText(
-          "Be covered by the Artsy Guarantee when you check out with Artsy"
-        )
+          "Be covered by the Artsy Guarantee when you check out with Artsy",
+        ),
       ).toBeInTheDocument()
     })
 
@@ -156,8 +156,8 @@ describe("ArtworkSidebarArtists", () => {
 
       expect(
         screen.queryByText(
-          "Be covered by the Artsy Guarantee when you check out with Artsy"
-        )
+          "Be covered by the Artsy Guarantee when you check out with Artsy",
+        ),
       ).not.toBeInTheDocument()
     })
 
@@ -169,7 +169,7 @@ describe("ArtworkSidebarArtists", () => {
       })
 
       const button = screen.getByText(
-        "Be covered by the Artsy Guarantee when you check out with Artsy"
+        "Be covered by the Artsy Guarantee when you check out with Artsy",
       )
 
       fireEvent.click(button)

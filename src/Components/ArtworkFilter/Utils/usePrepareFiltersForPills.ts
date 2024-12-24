@@ -16,7 +16,7 @@ export const usePrepareFiltersForPills = () => {
     const followedArtistSlugs = followedArtists.map(artist => artist.slug)
     const artistSlugs = filterArtistSlugsByAggregation(
       followedArtistSlugs,
-      aggregations ?? []
+      aggregations ?? [],
     )
 
     preparedFilters = {
@@ -29,7 +29,7 @@ export const usePrepareFiltersForPills = () => {
   if (artistIDs.length > 0) {
     const artistSlugs = filterArtistSlugsByAggregation(
       artistIDs,
-      aggregations ?? []
+      aggregations ?? [],
     )
 
     preparedFilters = {

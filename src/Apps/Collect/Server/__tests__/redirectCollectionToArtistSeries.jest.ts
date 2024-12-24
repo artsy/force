@@ -20,7 +20,7 @@ describe("redirectCollectionToArtistSeries", () => {
     redirectCollectionToArtistSeries(
       req as unknown as ArtsyRequest,
       res as unknown as ArtsyResponse,
-      next
+      next,
     )
     expect(res.redirect).not.toHaveBeenCalled()
   })
@@ -43,12 +43,12 @@ describe("redirectCollectionToArtistSeries", () => {
     redirectCollectionToArtistSeries(
       req as unknown as ArtsyRequest,
       res as unknown as ArtsyResponse,
-      next
+      next,
     )
 
     expect(spy).toHaveBeenCalledWith(
       301,
-      "/artist-series/kaws-4-foot-companion"
+      "/artist-series/kaws-4-foot-companion",
     )
   })
 })

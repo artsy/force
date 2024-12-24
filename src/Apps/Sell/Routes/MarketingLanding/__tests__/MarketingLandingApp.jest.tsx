@@ -55,12 +55,12 @@ describe("MarketingLandingApp", () => {
       render(
         <HeadProvider>
           <MarketingLandingApp />
-        </HeadProvider>
+        </HeadProvider>,
       )
 
       expect(sessionStorage.setItem).toHaveBeenCalledWith(
         "utmParams",
-        JSON.stringify({ ...savedQueryUtmParams })
+        JSON.stringify({ ...savedQueryUtmParams }),
       )
     })
 
@@ -70,7 +70,7 @@ describe("MarketingLandingApp", () => {
       render(
         <HeadProvider>
           <MarketingLandingApp />
-        </HeadProvider>
+        </HeadProvider>,
       )
 
       expect(sessionStorage.setItem).toHaveBeenCalledTimes(0)

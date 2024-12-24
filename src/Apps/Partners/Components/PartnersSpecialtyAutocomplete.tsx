@@ -37,8 +37,8 @@ const PartnersSpecialtyAutocomplete: FC<
   }: React.ChangeEvent<HTMLInputElement>) => {
     setOptions(
       specialties.filter(({ text }) =>
-        text.toLowerCase().includes(value.toLowerCase())
-      )
+        text.toLowerCase().includes(value.toLowerCase()),
+      ),
     )
   }
 
@@ -117,10 +117,10 @@ export const PartnersSpecialtyAutocompleteFragmentContainer =
   createFragmentContainer(PartnersSpecialtyAutocomplete, {
     viewer: graphql`
       fragment PartnersSpecialtyAutocomplete_viewer on Viewer
-        @argumentDefinitions(
-          near: { type: "String" }
-          type: { type: "[PartnerClassification]" }
-        ) {
+      @argumentDefinitions(
+        near: { type: "String" }
+        type: { type: "[PartnerClassification]" }
+      ) {
         allOptions: filterPartners(
           aggregations: [CATEGORY]
           defaultProfilePublic: true

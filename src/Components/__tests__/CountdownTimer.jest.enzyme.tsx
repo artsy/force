@@ -52,7 +52,7 @@ describe("CountdownTimer", () => {
 
       const text = timer.text()
       expect(text).toMatchInlineSnapshot(
-        `"01d 00h 00m 00s leftRespond by Dec 4, 8:50am ESTExpired offers end the negotiation process permanently."`
+        `"01d 00h 00m 00s leftRespond by Dec 4, 8:50am ESTExpired offers end the negotiation process permanently."`,
       )
     })
 
@@ -62,7 +62,7 @@ describe("CountdownTimer", () => {
 
       const text = timer.text()
       expect(text).toMatchInlineSnapshot(
-        `"01d 00h 00m 00s leftRespond by Dec 4, 1:50pm UTCExpired offers end the negotiation process permanently."`
+        `"01d 00h 00m 00s leftRespond by Dec 4, 1:50pm UTCExpired offers end the negotiation process permanently."`,
       )
     })
   })
@@ -76,7 +76,7 @@ describe("CountdownTimer", () => {
 
       const text = timer.text()
       expect(text).toMatchInlineSnapshot(
-        `"01d 00h 00m 00s leftRespond by Aug 4, 9:50am EDTExpired offers end the negotiation process permanently."`
+        `"01d 00h 00m 00s leftRespond by Aug 4, 9:50am EDTExpired offers end the negotiation process permanently."`,
       )
     })
 
@@ -86,7 +86,7 @@ describe("CountdownTimer", () => {
 
       const text = timer.text()
       expect(text).toMatchInlineSnapshot(
-        `"01d 00h 00m 00s leftRespond by Aug 4, 1:50pm UTCExpired offers end the negotiation process permanently."`
+        `"01d 00h 00m 00s leftRespond by Aug 4, 1:50pm UTCExpired offers end the negotiation process permanently."`,
       )
     })
   })
@@ -100,12 +100,12 @@ describe("CountdownTimer", () => {
 
     const timer = await renderUntil(
       _wrapper => timeIsSynced,
-      <CountdownTimer {...defaultProps} />
+      <CountdownTimer {...defaultProps} />,
     )
 
     const text = timer.text()
     expect(text).toMatchInlineSnapshot(
-      `"01d 00h 30m 00s leftRespond by Dec 4, 8:50am ESTExpired offers end the negotiation process permanently."`
+      `"01d 00h 30m 00s leftRespond by Dec 4, 8:50am ESTExpired offers end the negotiation process permanently."`,
     )
   })
 
@@ -114,56 +114,61 @@ describe("CountdownTimer", () => {
       mount(
         <CountdownTimer
           {...getPropsWithTimeRemaining(
-            Duration.fromObject({ days: 1, hours: 15, minutes: 10, seconds: 5 })
+            Duration.fromObject({
+              days: 1,
+              hours: 15,
+              minutes: 10,
+              seconds: 5,
+            }),
           )}
-        />
-      ).text()
+        />,
+      ).text(),
     ).toMatchInlineSnapshot(
-      `"01d 15h 10m 05s leftRespond by Dec 5, 12:00am ESTExpired offers end the negotiation process permanently."`
+      `"01d 15h 10m 05s leftRespond by Dec 5, 12:00am ESTExpired offers end the negotiation process permanently."`,
     )
 
     expect(
       mount(
         <CountdownTimer
           {...getPropsWithTimeRemaining(
-            Duration.fromObject({ hours: 15, minutes: 10, seconds: 5 })
+            Duration.fromObject({ hours: 15, minutes: 10, seconds: 5 }),
           )}
-        />
-      ).text()
+        />,
+      ).text(),
     ).toMatchInlineSnapshot(
-      `"00d 15h 10m 05s leftRespond by Dec 4, 12:00am ESTExpired offers end the negotiation process permanently."`
+      `"00d 15h 10m 05s leftRespond by Dec 4, 12:00am ESTExpired offers end the negotiation process permanently."`,
     )
 
     expect(
       mount(
         <CountdownTimer
           {...getPropsWithTimeRemaining(
-            Duration.fromObject({ minutes: 15, seconds: 10 })
+            Duration.fromObject({ minutes: 15, seconds: 10 }),
           )}
-        />
-      ).text()
+        />,
+      ).text(),
     ).toMatchInlineSnapshot(
-      `"00d 00h 15m 10s leftRespond by Dec 3, 9:05am ESTExpired offers end the negotiation process permanently."`
+      `"00d 00h 15m 10s leftRespond by Dec 3, 9:05am ESTExpired offers end the negotiation process permanently."`,
     )
 
     expect(
       mount(
         <CountdownTimer
           {...getPropsWithTimeRemaining(Duration.fromObject({ seconds: 1 }))}
-        />
-      ).text()
+        />,
+      ).text(),
     ).toMatchInlineSnapshot(
-      `"00d 00h 00m 01s leftRespond by Dec 3, 8:50am ESTExpired offers end the negotiation process permanently."`
+      `"00d 00h 00m 01s leftRespond by Dec 3, 8:50am ESTExpired offers end the negotiation process permanently."`,
     )
 
     expect(
       mount(
         <CountdownTimer
           {...getPropsWithTimeRemaining(Duration.fromObject({ seconds: -1 }))}
-        />
-      ).text()
+        />,
+      ).text(),
     ).toMatchInlineSnapshot(
-      `"0 days leftRespond by Dec 3, 8:50am ESTExpired offers end the negotiation process permanently."`
+      `"0 days leftRespond by Dec 3, 8:50am ESTExpired offers end the negotiation process permanently."`,
     )
   })
 })

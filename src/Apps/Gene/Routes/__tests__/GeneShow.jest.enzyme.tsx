@@ -62,11 +62,11 @@ describe("GeneShow", () => {
     })
 
     expect(wrapper.find('Meta[name="description"]').first().html()).toEqual(
-      '<meta name="description" content="Gene Meta Description">'
+      '<meta name="description" content="Gene Meta Description">',
     )
 
     expect(wrapper.find('Meta[name="title"]').first().html()).toEqual(
-      '<meta name="title" content="Display Name | Artsy">'
+      '<meta name="title" content="Display Name | Artsy">',
     )
   })
 
@@ -80,11 +80,11 @@ describe("GeneShow", () => {
     })
 
     expect(wrapper.find('Meta[name="description"]').first().html()).toEqual(
-      '<meta name="description" content="Explore Design art on Artsy. Browse works by size, price, and medium.">'
+      '<meta name="description" content="Explore Design art on Artsy. Browse works by size, price, and medium.">',
     )
 
     expect(wrapper.find('Meta[name="title"]').first().html()).toEqual(
-      '<meta name="title" content="Design | Artsy">'
+      '<meta name="title" content="Design | Artsy">',
     )
   })
 })

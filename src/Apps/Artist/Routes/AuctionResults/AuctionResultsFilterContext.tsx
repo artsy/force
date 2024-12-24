@@ -61,7 +61,7 @@ export interface AuctionResultsFilterContextProps {
   onFilterClick?: (
     key: ChangableFilter,
     value: string,
-    filterState: AuctionResultsFilters
+    filterState: AuctionResultsFilters,
   ) => void
   shouldStageFilterChanges?: boolean
   setShouldStageFilterChanges?: (value: boolean) => void
@@ -136,11 +136,11 @@ export const AuctionResultsFilterContextProvider: React.FC<
 
   const [auctionResultsFilterState, dispatch] = useReducer(
     AuctionResultsFilterReducer,
-    initialFilterState
+    initialFilterState,
   )
   const [stagedAuctionResultsFilterState, stage] = useReducer(
     AuctionResultsFilterReducer,
-    {}
+    {},
   )
   const [shouldStageFilterChanges, setShouldStageFilterChanges] =
     useState(false)
@@ -247,7 +247,7 @@ export const AuctionResultsFilterContextProvider: React.FC<
 
 const AuctionResultsFilterReducer = (
   state: AuctionResultsFiltersState,
-  action: AuctionResultsFiltersAction
+  action: AuctionResultsFiltersAction,
 ): AuctionResultsFiltersState => {
   const arrayFilterTypes: Array<keyof AuctionResultsFilters> = [
     "organizations",

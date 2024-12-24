@@ -45,7 +45,7 @@ export const ArtworkSidebarAuctionPolling: React.FC<
         { artworkID: artwork.internalID },
         null,
         {},
-        { force: true }
+        { force: true },
       )
     },
     intervalTime: 10000,
@@ -74,37 +74,37 @@ export const ArtworkSidebarAuctionPollingRefetchContainer =
     ArtworkSidebarAuctionPolling,
     {
       artwork: graphql`
-      fragment ArtworkSidebarAuctionInfoPolling_artwork on Artwork {
-        internalID
-        sale {
-          isClosed
-        }
-        saleArtwork {
-          currentBid {
-            display
+        fragment ArtworkSidebarAuctionInfoPolling_artwork on Artwork {
+          internalID
+          sale {
+            isClosed
           }
+          saleArtwork {
+            currentBid {
+              display
+            }
+          }
+          ...ArtworkSidebarCurrentBidInfo_artwork
+          ...ArtworkSidebarBidAction_artwork
         }
-        ...ArtworkSidebarCurrentBidInfo_artwork
-        ...ArtworkSidebarBidAction_artwork
-      }
-    `,
+      `,
       me: graphql`
-      fragment ArtworkSidebarAuctionInfoPolling_me on Me {
-        ...ArtworkSidebarBidAction_me
-      }
-    `,
+        fragment ArtworkSidebarAuctionInfoPolling_me on Me {
+          ...ArtworkSidebarBidAction_me
+        }
+      `,
     },
     graphql`
-    query ArtworkSidebarAuctionInfoPollingQuery($artworkID: String!) {
-      artwork(id: $artworkID) {
-        internalID
-        ...ArtworkSidebarCurrentBidInfo_artwork
-        ...ArtworkSidebarBidAction_artwork
-      }
+      query ArtworkSidebarAuctionInfoPollingQuery($artworkID: String!) {
+        artwork(id: $artworkID) {
+          internalID
+          ...ArtworkSidebarCurrentBidInfo_artwork
+          ...ArtworkSidebarBidAction_artwork
+        }
 
-      me {
-        ...ArtworkSidebarAuctionInfoPolling_me
+        me {
+          ...ArtworkSidebarAuctionInfoPolling_me
+        }
       }
-    }
-  `
+    `,
   )

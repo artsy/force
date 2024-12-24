@@ -124,17 +124,17 @@ describe("ShippingLocationRoute", () => {
 
     await waitFor(() => {
       expect(screen.getByPlaceholderText("Add address")).toHaveValue(
-        "addressLine1"
+        "addressLine1",
       )
       expect(screen.getByPlaceholderText("Add address line 2")).toHaveValue(
-        "addressLine2"
+        "addressLine2",
       )
       expect(screen.getByPlaceholderText("Enter city")).toHaveValue("city")
       expect(screen.getByPlaceholderText("Add postal code")).toHaveValue(
-        "postalCode"
+        "postalCode",
       )
       expect(
-        screen.getByPlaceholderText("Add state, province, or region")
+        screen.getByPlaceholderText("Add state, province, or region"),
       ).toHaveValue("region")
     })
   })
@@ -163,7 +163,7 @@ describe("ShippingLocationRoute", () => {
         screen.getByPlaceholderText("Add state, province, or region"),
         {
           target: { value: "new state" },
-        }
+        },
       )
 
       screen.getByText("Continue").click()
@@ -206,7 +206,7 @@ describe("ShippingLocationRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            '/sell/submissions/<mock-value-for-field-"externalId">/frame'
+            '/sell/submissions/<mock-value-for-field-"externalId">/frame',
           )
         })
       })

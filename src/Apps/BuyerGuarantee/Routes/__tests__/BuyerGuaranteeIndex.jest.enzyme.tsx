@@ -10,7 +10,7 @@ describe("BuyerGuaranteeIndex", () => {
   const wrapper = mount(
     <MockBoot>
       <BuyerGuaranteeIndex />
-    </MockBoot>
+    </MockBoot>,
   )
 
   it("renders correctly", () => {

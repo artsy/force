@@ -97,7 +97,7 @@ const ORDER_COLORS = {
 } as const
 
 const getPaymentMethodText = (
-  paymentMethodDetails: SettingsPurchasesRow_order$data["paymentMethodDetails"]
+  paymentMethodDetails: SettingsPurchasesRow_order$data["paymentMethodDetails"],
 ) => {
   switch (paymentMethodDetails?.__typename) {
     case "BankAccount":
@@ -468,7 +468,7 @@ export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const SettingsPurchasesRowPlaceholder: FC<

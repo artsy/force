@@ -14,7 +14,7 @@ describe("SearchResultsArtworks", () => {
         <SystemContextProvider>
           <SearchResultsArtists {...searchProps} />
         </SystemContextProvider>
-      </MockBoot>
+      </MockBoot>,
     )
   }
 

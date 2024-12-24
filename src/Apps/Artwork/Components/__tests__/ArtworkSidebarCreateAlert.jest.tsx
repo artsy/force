@@ -32,12 +32,12 @@ const { renderWithRelay } =
       )
     },
     query: graphql`
-    query ArtworkSidebarCreateAlert_Test_Query @relay_test_operation {
-      artwork(id: "test-artwork-id") {
-        ...ArtworkSidebarCreateAlert_artwork
+      query ArtworkSidebarCreateAlert_Test_Query @relay_test_operation {
+        artwork(id: "test-artwork-id") {
+          ...ArtworkSidebarCreateAlert_artwork
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("ArtworkSidebarCreateAlert", () => {
@@ -74,7 +74,7 @@ describe("ArtworkSidebarCreateAlert", () => {
         Artwork: () => Artwork,
       },
       {},
-      relayEnv
+      relayEnv,
     )
 
     fireEvent.click(screen.getByText("Create Alert"))

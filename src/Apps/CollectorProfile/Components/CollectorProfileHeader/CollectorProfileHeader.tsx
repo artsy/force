@@ -144,7 +144,7 @@ export const CollectorProfileHeaderFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 /**

@@ -19,7 +19,7 @@ export class UnleashFeatureFlagService implements FeatureFlagService {
     private appName = UNLEASH_APP_NAME,
     private serverKey = UNLEASH_SERVER_KEY,
     private environment = NODE_ENV,
-    private refreshInterval = 60000
+    private refreshInterval = 60000,
   ) {}
 
   async init(): Promise<void> {

@@ -112,9 +112,9 @@ export const ArtworkVideoPlayerFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ArtworkVideoPlayer_artwork on Artwork
-        @argumentDefinitions(
-          includeAllImages: { type: "Boolean", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        includeAllImages: { type: "Boolean", defaultValue: false }
+      ) {
         internalID
         slug
         figures(includeAll: $includeAllImages) {
@@ -128,5 +128,5 @@ export const ArtworkVideoPlayerFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

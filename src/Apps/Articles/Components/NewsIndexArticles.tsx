@@ -85,7 +85,7 @@ export const NewsIndexArticlesPaginationContainer = createPaginationContainer(
   {
     viewer: graphql`
       fragment NewsIndexArticles_viewer on Viewer
-        @argumentDefinitions(after: { type: "String" }) {
+      @argumentDefinitions(after: { type: "String" }) {
         articlesConnection(
           first: 15
           after: $after
@@ -111,5 +111,5 @@ export const NewsIndexArticlesPaginationContainer = createPaginationContainer(
       return { ...fragmentVariables, after }
     },
     query: NEWS_INDEX_ARTICLES_QUERY,
-  }
+  },
 )

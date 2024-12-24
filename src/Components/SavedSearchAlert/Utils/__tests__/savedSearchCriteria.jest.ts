@@ -46,7 +46,7 @@ describe("getSearchCriteriaFromFilters", () => {
   it("returns correct criteria", () => {
     const result = getSearchCriteriaFromFilters(
       mockedSavedSearchEntity,
-      mockedFilters
+      mockedFilters,
     )
 
     expect(result).toEqual(
@@ -56,7 +56,7 @@ describe("getSearchCriteriaFromFilters", () => {
         colors: ["black"],
         inquireableOnly: true,
         priceRange: "1000-5000",
-      })
+      }),
     )
   })
 
@@ -86,7 +86,7 @@ describe("getSearchCriteriaFromFilters", () => {
         colors: ["black"],
         inquireableOnly: true,
         priceRange: "1000-5000",
-      })
+      }),
     )
   })
 })

@@ -17,7 +17,7 @@ describe("SizeFilter", () => {
     return mount(
       <AuctionResultsFilterContextProvider>
         <SizeFilterTest />
-      </AuctionResultsFilterContextProvider>
+      </AuctionResultsFilterContextProvider>,
     )
   }
 

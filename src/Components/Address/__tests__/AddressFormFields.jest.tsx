@@ -41,7 +41,7 @@ describe("AddressFormFields", () => {
               </Button>
             </>
           )}
-        </Formik>
+        </Formik>,
       )
     })
 
@@ -78,7 +78,7 @@ describe("AddressFormFields", () => {
             region: "NY",
           },
         },
-        expect.anything()
+        expect.anything(),
       )
     })
 
@@ -93,7 +93,7 @@ describe("AddressFormFields", () => {
       screen.getByText("Street address is required")
       screen.getByText("City is required")
       expect(
-        screen.queryByText("Phone number is required")
+        screen.queryByText("Phone number is required"),
       ).not.toBeInTheDocument()
       expect(screen.queryByText("State is required")).not.toBeInTheDocument()
     })
@@ -120,7 +120,7 @@ describe("AddressFormFields", () => {
               </Button>
             </>
           )}
-        </Formik>
+        </Formik>,
       )
     })
 
@@ -170,7 +170,7 @@ describe("AddressFormFields", () => {
           },
           phoneNumber: "5555937743",
         },
-        expect.anything()
+        expect.anything(),
       )
     })
 
@@ -193,7 +193,7 @@ describe("AddressFormFields", () => {
 
       await waitFor(() => {
         expect(
-          screen.queryByText("Country is required")
+          screen.queryByText("Country is required"),
         ).not.toBeInTheDocument()
         expect(mockOnSubmit).not.toHaveBeenCalled()
       })

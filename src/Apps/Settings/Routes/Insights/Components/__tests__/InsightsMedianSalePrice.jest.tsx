@@ -23,12 +23,12 @@ describe("InsightsMedianSalePrice", () => {
     setupTestWrapperTL<InsightsMedianSalePriceTestQuery>({
       Component: InsightsMedianSalePriceFragmentContainer,
       query: graphql`
-      query InsightsMedianSalePriceTestQuery @relay_test_operation {
-        me {
-          ...InsightsMedianSalePrice_me
+        query InsightsMedianSalePriceTestQuery @relay_test_operation {
+          me {
+            ...InsightsMedianSalePrice_me
+          }
         }
-      }
-    `,
+      `,
     })
 
   beforeAll(() => {
@@ -47,7 +47,7 @@ describe("InsightsMedianSalePrice", () => {
         renderWithRelay(mockResolver)
 
         expect(
-          screen.getByText("Median Auction Price in the Last 3 Years")
+          screen.getByText("Median Auction Price in the Last 3 Years"),
         ).toBeInTheDocument()
 
         expect(screen.getByText("Takashi Murakami")).toBeInTheDocument()
@@ -78,7 +78,7 @@ describe("InsightsMedianSalePrice", () => {
       fireEvent.click(artistRow)
 
       expect(mockPush).toHaveBeenCalledWith(
-        "/collector-profile/my-collection/median-sale-price-at-auction/takashi-murakami-id?medium=Print"
+        "/collector-profile/my-collection/median-sale-price-at-auction/takashi-murakami-id?medium=Print",
       )
     })
 
@@ -98,7 +98,7 @@ describe("InsightsMedianSalePrice", () => {
       fireEvent.click(artistRow)
 
       expect(mockPush).toHaveBeenCalledWith(
-        "/collector-profile/my-collection/median-sale-price-at-auction/takashi-murakami-id?medium=Print"
+        "/collector-profile/my-collection/median-sale-price-at-auction/takashi-murakami-id?medium=Print",
       )
     })
   })
@@ -108,7 +108,7 @@ describe("InsightsMedianSalePrice", () => {
       renderWithRelay(mockEmptyResolver)
 
       expect(
-        screen.queryByText("Median Auction Price in the Last 3 Years")
+        screen.queryByText("Median Auction Price in the Last 3 Years"),
       ).not.toBeInTheDocument()
     })
   })

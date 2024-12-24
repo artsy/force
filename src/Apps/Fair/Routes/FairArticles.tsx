@@ -88,7 +88,7 @@ export const FairArticlesPaginationContainer = createRefetchContainer(
   {
     fair: graphql`
       fragment FairArticles_fair on Fair
-        @argumentDefinitions(page: { type: "Int", defaultValue: 1 }) {
+      @argumentDefinitions(page: { type: "Int", defaultValue: 1 }) {
         slug
         articlesConnection(page: $page, size: 12) {
           pageInfo {
@@ -113,5 +113,5 @@ export const FairArticlesPaginationContainer = createRefetchContainer(
         ...FairArticles_fair @arguments(page: $page)
       }
     }
-  `
+  `,
 )

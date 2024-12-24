@@ -46,5 +46,5 @@ export const SaleDetailTimerFragmentContainer = createFragmentContainer(
         startAt
       }
     `,
-  }
+  },
 )

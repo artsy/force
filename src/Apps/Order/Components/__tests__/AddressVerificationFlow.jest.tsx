@@ -52,13 +52,13 @@ const { renderWithRelay } =
   setupTestWrapperTL<AddressVerificationFlow_Test_Query>({
     Component: AddressVerificationFlowFragmentContainer,
     query: graphql`
-    query AddressVerificationFlow_Test_Query($address: VerifyAddressInput!)
+      query AddressVerificationFlow_Test_Query($address: VerifyAddressInput!)
       @relay_test_operation {
-      verifyAddress(input: $address) {
-        ...AddressVerificationFlow_verifyAddress
+        verifyAddress(input: $address) {
+          ...AddressVerificationFlow_verifyAddress
+        }
       }
-    }
-  `,
+    `,
     variables: { address: mockInputAddress },
   })
 
@@ -90,7 +90,7 @@ describe("AddressVerificationFlow", () => {
       {
         VerifyAddressMutationType: () => result,
       },
-      componentProps
+      componentProps,
     )
   }
 
@@ -199,7 +199,7 @@ describe("AddressVerificationFlow", () => {
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
       expect(mockOnChosenAddress).toHaveBeenCalledWith(
         "USER",
-        mockResult.inputAddress.address
+        mockResult.inputAddress.address,
       )
 
       expect(trackEvent).toHaveBeenCalledTimes(2)
@@ -226,7 +226,7 @@ describe("AddressVerificationFlow", () => {
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
       expect(mockOnChosenAddress).toHaveBeenCalledWith(
         "ARTSY",
-        mockInputAddress
+        mockInputAddress,
       )
       expect(trackEvent).not.toHaveBeenCalled()
     })
@@ -310,7 +310,7 @@ describe("AddressVerificationFlow", () => {
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
       expect(mockOnChosenAddress).toHaveBeenCalledWith(
         "ARTSY",
-        mockResult.suggestedAddresses[0].address
+        mockResult.suggestedAddresses[0].address,
       )
     })
 
@@ -345,7 +345,7 @@ describe("AddressVerificationFlow", () => {
         expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
         expect(mockOnChosenAddress).toHaveBeenCalledWith(
           "USER",
-          mockInputAddress
+          mockInputAddress,
         )
       })
     })

@@ -23,7 +23,7 @@ export const QuickNavigationItem: FC<
   const { trackEvent } = useTracking()
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     onClick?.(event)
 

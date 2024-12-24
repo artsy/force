@@ -89,5 +89,5 @@ export const AboutPartnerFragmentContainer = createFragmentContainer(
         internalID
       }
     `,
-  }
+  },
 )

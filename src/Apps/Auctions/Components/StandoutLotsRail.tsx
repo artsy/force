@@ -53,8 +53,8 @@ export const StandoutLotsRail: React.FC<
                       contextPageOwnerType,
                       artwork.internalID,
                       artwork.slug,
-                      index
-                    )
+                      index,
+                    ),
                   )
                 }}
               />
@@ -86,7 +86,7 @@ export const StandoutLotsRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const StandoutLotsRailQueryRenderer: React.FC<

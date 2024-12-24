@@ -191,7 +191,7 @@ export const ArtistEditorialNewsGridFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const PLACEHOLDER = (

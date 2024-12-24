@@ -16,12 +16,12 @@ describe("MyCollectionArtworkDetails", () => {
         return null
       },
       query: graphql`
-      query MyCollectionArtworkDetailsTestQuery @relay_test_operation {
-        artwork(id: "foo") {
-          ...MyCollectionArtworkDetails_artwork
+        query MyCollectionArtworkDetailsTestQuery @relay_test_operation {
+          artwork(id: "foo") {
+            ...MyCollectionArtworkDetails_artwork
+          }
         }
-      }
-    `,
+      `,
     })
 
   describe("for artwork with metadata", () => {
@@ -31,15 +31,15 @@ describe("MyCollectionArtworkDetails", () => {
 
     it("displays metadata", () => {
       expect(
-        screen.getByText("Acrylic on cotton sweatshirt.")
+        screen.getByText("Acrylic on cotton sweatshirt."),
       ).toBeInTheDocument()
       expect(
-        screen.getByText("Drawing, Collage or other Work on Paper")
+        screen.getByText("Drawing, Collage or other Work on Paper"),
       ).toBeInTheDocument()
       expect(
         screen.getByText("22 × 16 1/2 in", {
           collapseWhitespace: true,
-        })
+        }),
       ).toBeInTheDocument()
       expect(screen.getByText("Bought in a gallery")).toBeInTheDocument()
       expect(screen.getByText("Unique work")).toBeInTheDocument()
@@ -74,7 +74,7 @@ describe("MyCollectionArtworkDetails", () => {
         expect(
           screen.getByText("Part of a limited edition set Edition 7/11", {
             collapseWhitespace: true,
-          })
+          }),
         ).toBeInTheDocument()
       })
     })
@@ -90,7 +90,7 @@ describe("MyCollectionArtworkDetails", () => {
         expect(
           screen.getByText("55.9 × 41.9 cm", {
             collapseWhitespace: true,
-          })
+          }),
         ).toBeInTheDocument()
       })
     })
@@ -103,10 +103,10 @@ describe("MyCollectionArtworkDetails", () => {
 
     it("displays minimal metadata", () => {
       expect(
-        screen.getByText("Acrylic on cotton sweatshirt.")
+        screen.getByText("Acrylic on cotton sweatshirt."),
       ).toBeInTheDocument()
       expect(
-        screen.getByText("Drawing, Collage or other Work on Paper")
+        screen.getByText("Drawing, Collage or other Work on Paper"),
       ).toBeInTheDocument()
 
       // shows labels when no data are available

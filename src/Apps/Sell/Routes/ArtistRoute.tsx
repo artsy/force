@@ -122,7 +122,7 @@ export const ArtistRoute: React.FC<
 
   const onSelect = async (
     artist: AutocompleteArtist,
-    formik: FormikProps<FormValues>
+    formik: FormikProps<FormValues>,
   ) => {
     if (!artist?.internalID) {
       return

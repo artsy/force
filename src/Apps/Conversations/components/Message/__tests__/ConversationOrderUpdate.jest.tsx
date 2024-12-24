@@ -16,22 +16,22 @@ describe("testing different statuses", () => {
         return <ConversationOrderUpdate event={event!} />
       },
       query: graphql`
-      query ConversationOrderUpdate_Test_Query($conversationID: String!)
+        query ConversationOrderUpdate_Test_Query($conversationID: String!)
         @relay_test_operation {
-        conversation(id: $conversationID) {
-          orderConnection(first: 10, participantType: BUYER) {
-            edges {
-              node {
-                orderHistory {
-                  __typename
-                  ...ConversationOrderUpdate_event
+          conversation(id: $conversationID) {
+            orderConnection(first: 10, participantType: BUYER) {
+              edges {
+                node {
+                  orderHistory {
+                    __typename
+                    ...ConversationOrderUpdate_event
+                  }
                 }
               }
             }
           }
         }
-      }
-    `,
+      `,
     })
 
   it("render offer", () => {
@@ -91,7 +91,7 @@ describe("testing different statuses", () => {
     })
 
     expect(
-      screen.getByText("You sent a counteroffer for $40000")
+      screen.getByText("You sent a counteroffer for $40000"),
     ).toBeInTheDocument()
   })
 
@@ -123,7 +123,7 @@ describe("testing different statuses", () => {
     })
 
     expect(
-      screen.getByText("You received a counteroffer for $40000")
+      screen.getByText("You received a counteroffer for $40000"),
     ).toBeInTheDocument()
     expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
@@ -156,7 +156,7 @@ describe("testing different statuses", () => {
     })
 
     expect(
-      screen.getByText("Offer Accepted - Pending Action")
+      screen.getByText("Offer Accepted - Pending Action"),
     ).toBeInTheDocument()
     expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
@@ -206,7 +206,7 @@ describe("testing different statuses", () => {
       }),
     })
     expect(
-      screen.getByText("Offer accepted. Payment processing")
+      screen.getByText("Offer accepted. Payment processing"),
     ).toBeInTheDocument()
   })
 

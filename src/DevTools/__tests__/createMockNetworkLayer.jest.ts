@@ -19,7 +19,7 @@ jest.unmock("react-relay")
 describe("createMockNetworkLayer", () => {
   async function _fetchQueryWithResolvers<T extends OperationType>(
     options: Parameters<typeof createMockNetworkLayer2>[0],
-    query: GraphQLTaggedNode
+    query: GraphQLTaggedNode,
   ) {
     const network = createMockNetworkLayer2(options)
 
@@ -31,7 +31,7 @@ describe("createMockNetworkLayer", () => {
   }
 
   function fetchArtworkQueryWithResolvers(
-    options: Parameters<typeof createMockNetworkLayer2>[0]
+    options: Parameters<typeof createMockNetworkLayer2>[0],
   ) {
     return _fetchQueryWithResolvers<createMockNetworkLayerTestQuery>(
       options,
@@ -42,7 +42,7 @@ describe("createMockNetworkLayer", () => {
             title
           }
         }
-      `
+      `,
     )
   }
 
@@ -109,7 +109,7 @@ describe("createMockNetworkLayer", () => {
     } catch (e) {
       // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
       expect(e.message).toMatchInlineSnapshot(
-        `"RelayMockNetworkLayerError: A mock for field at path 'artwork/title' of type 'String' was expected for operation 'createMockNetworkLayerTestQuery', but none was found."`
+        `"RelayMockNetworkLayerError: A mock for field at path 'artwork/title' of type 'String' was expected for operation 'createMockNetworkLayerTestQuery', but none was found."`,
       )
     }
   })
@@ -141,7 +141,7 @@ describe("createMockNetworkLayer", () => {
     } catch (e) {
       // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
       expect(e.message).toMatchInlineSnapshot(
-        `"RelayMockNetworkLayerError: Expected mock value of type 'String' but got 'object' at path 'artwork/title' for operation 'createMockNetworkLayerTestQuery'"`
+        `"RelayMockNetworkLayerError: Expected mock value of type 'String' but got 'object' at path 'artwork/title' for operation 'createMockNetworkLayerTestQuery'"`,
       )
     }
   })
@@ -156,7 +156,7 @@ describe("createMockNetworkLayer", () => {
     } catch (e) {
       // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
       expect(e.message).toMatchInlineSnapshot(
-        `"RelayMockNetworkLayerError: The value at path 'artwork' for operation 'createMockNetworkLayerTestQuery' should be an object but is a number."`
+        `"RelayMockNetworkLayerError: The value at path 'artwork' for operation 'createMockNetworkLayerTestQuery' should be an object but is a number."`,
       )
     }
   })
@@ -186,25 +186,25 @@ describe("createMockNetworkLayer", () => {
           },
         },
         graphql`
-        query createMockNetworkLayerTestAliasQuery {
-          artist(id: "banksy") {
-            forSaleArtworks: artworksConnection(filter: IS_FOR_SALE) {
-              edges {
-                node {
-                  id
+          query createMockNetworkLayerTestAliasQuery {
+            artist(id: "banksy") {
+              forSaleArtworks: artworksConnection(filter: IS_FOR_SALE) {
+                edges {
+                  node {
+                    id
+                  }
                 }
               }
-            }
-            notForSaleArtworks: artworksConnection(filter: IS_NOT_FOR_SALE) {
-              edges {
-                node {
-                  id
+              notForSaleArtworks: artworksConnection(filter: IS_NOT_FOR_SALE) {
+                edges {
+                  node {
+                    id
+                  }
                 }
               }
             }
           }
-        }
-      `
+        `,
       )
     expect(data?.artist?.forSaleArtworks?.edges?.[0]?.node).toEqual({
       id: "for-sale-work",
@@ -227,18 +227,18 @@ describe("createMockNetworkLayer", () => {
           },
         },
         graphql`
-        query createMockNetworkLayerTestAliasPrecendenceQuery {
-          artist(id: "banksy") {
-            forSaleArtworks: artworksConnection(filter: IS_FOR_SALE) {
-              edges {
-                node {
-                  id
+          query createMockNetworkLayerTestAliasPrecendenceQuery {
+            artist(id: "banksy") {
+              forSaleArtworks: artworksConnection(filter: IS_FOR_SALE) {
+                edges {
+                  node {
+                    id
+                  }
                 }
               }
             }
           }
-        }
-      `
+        `,
       )
     expect(data?.artist?.forSaleArtworks?.edges?.[0]?.node!).toEqual({
       id: "for-sale-work",
@@ -295,11 +295,11 @@ describe("createMockNetworkLayer", () => {
                 offerId: "offer-id",
               },
             },
-          }
+          },
         )
 
       expect(data.commerceBuyerAcceptOffer.orderOrError.order.state).toBe(
-        "ABANDONED"
+        "ABANDONED",
       )
     })
 
@@ -325,11 +325,11 @@ describe("createMockNetworkLayer", () => {
                 offerId: "offer-id",
               },
             },
-          }
+          },
         )
 
       expect(data.commerceBuyerAcceptOffer.orderOrError.order.state).toBe(
-        "ABANDONED"
+        "ABANDONED",
       )
     })
 
@@ -354,12 +354,12 @@ describe("createMockNetworkLayer", () => {
                 offerId: "offer-id",
               },
             },
-          }
+          },
         )
       } catch (e) {
         // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
         expect(e.message).toMatchInlineSnapshot(
-          `"RelayMockNetworkLayerError: Ambiguous object at path 'commerceBuyerAcceptOffer/orderOrError/order' for operation 'createMockNetworkLayerTestMutationResultsMutation'. Add a __typename from this list: [CommerceBuyOrder, CommerceOfferOrder]"`
+          `"RelayMockNetworkLayerError: Ambiguous object at path 'commerceBuyerAcceptOffer/orderOrError/order' for operation 'createMockNetworkLayerTestMutationResultsMutation'. Add a __typename from this list: [CommerceBuyOrder, CommerceOfferOrder]"`,
         )
       }
     })
@@ -386,10 +386,10 @@ describe("createMockNetworkLayer", () => {
                 offerId: "offer-id",
               },
             },
-          }
+          },
         )
       expect(data.commerceBuyerAcceptOffer.orderOrError.order.state).toBe(
-        "ABANDONED"
+        "ABANDONED",
       )
     })
 
@@ -417,7 +417,7 @@ describe("createMockNetworkLayer", () => {
               },
             },
             mockNetworkFailure: true,
-          }
+          },
         )
       } catch (e) {
         // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
@@ -443,12 +443,12 @@ describe("createMockNetworkLayer", () => {
                 offerId: "offer-id",
               },
             },
-          }
+          },
         )
       } catch (e) {
         // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
         expect(e.message).toMatchInlineSnapshot(
-          `"RelayMockNetworkLayerError: Expected object of type 'CommerceOrder!' but got 'string' at path 'commerceBuyerAcceptOffer/orderOrError/order' for operation 'createMockNetworkLayerTestMutationResultsMutation'"`
+          `"RelayMockNetworkLayerError: Expected object of type 'CommerceOrder!' but got 'string' at path 'commerceBuyerAcceptOffer/orderOrError/order' for operation 'createMockNetworkLayerTestMutationResultsMutation'"`,
         )
       }
     })

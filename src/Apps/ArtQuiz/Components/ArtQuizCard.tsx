@@ -27,7 +27,9 @@ export const ArtQuizCard: FC<React.PropsWithChildren<ArtQuizCardProps>> = ({
 }
 
 const Container = styled(Box)<{ mode: Mode }>`
-  transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
+  transition:
+    transform 300ms ease-in-out,
+    opacity 300ms ease-in-out;
 
   ${({ mode }) => {
     switch (mode) {

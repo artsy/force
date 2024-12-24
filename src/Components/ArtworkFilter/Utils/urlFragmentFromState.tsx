@@ -16,7 +16,7 @@ export const urlFragmentFromState = (state: ArtworkFilters) => {
         return { ...acc, [key]: value }
       }
     },
-    {}
+    {},
   )
 
   return qs.stringify({

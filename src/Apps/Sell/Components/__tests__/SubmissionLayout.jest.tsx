@@ -61,14 +61,14 @@ describe("SubmissionLayout", () => {
         <SellFlowContextProvider>
           <SubmissionLayout />
         </SellFlowContextProvider>
-      </Formik>
+      </Formik>,
     )
 
     expect(screen.queryByText("Back")).not.toBeInTheDocument()
     expect(screen.getByText("Continue")).toBeInTheDocument()
     expect(screen.getByText("Exit")).toBeInTheDocument()
     expect(screen.getByTestId("exit-link").attributes["href"].value).toBe(
-      "/sell"
+      "/sell",
     )
     expect(screen.getByRole("progressbar")).toBeInTheDocument()
 
@@ -82,12 +82,12 @@ describe("SubmissionLayout", () => {
           <SellFlowContextProvider>
             <SubmissionLayout hideNavigation />
           </SellFlowContextProvider>
-        </Formik>
+        </Formik>,
       )
 
       expect(screen.getByText("Exit")).toBeInTheDocument()
       expect(screen.getByTestId("exit-link").attributes["href"].value).toBe(
-        "/sell"
+        "/sell",
       )
       expect(screen.getByRole("progressbar")).toBeInTheDocument()
 
@@ -103,7 +103,7 @@ describe("SubmissionLayout", () => {
           <SellFlowContextProvider submission={submissionMock}>
             <SubmissionLayout />
           </SellFlowContextProvider>
-        </Formik>
+        </Formik>,
       )
 
       expect(screen.queryByText("Exit")).not.toBeInTheDocument()
@@ -119,7 +119,7 @@ describe("SubmissionLayout", () => {
           <SellFlowContextProvider submission={submissionMock}>
             <SubmissionLayout />
           </SellFlowContextProvider>
-        </Formik>
+        </Formik>,
       )
 
       const backButton = screen.getByText("Back")
@@ -152,7 +152,7 @@ describe("SubmissionLayout", () => {
             <SellFlowContextProvider submission={submissionMock}>
               <SubmissionLayout />
             </SellFlowContextProvider>
-          </Formik>
+          </Formik>,
         )
 
         const artsyLogo = screen.getByTestId("artsy-logo")
@@ -161,7 +161,7 @@ describe("SubmissionLayout", () => {
 
         await waitFor(() => {
           expect(
-            screen.queryByText("Leave Without Saving")
+            screen.queryByText("Leave Without Saving"),
           ).not.toBeInTheDocument()
         })
       })
@@ -180,7 +180,7 @@ describe("SubmissionLayout", () => {
             <SellFlowContextProvider submission={submissionMock}>
               <SubmissionLayout />
             </SellFlowContextProvider>
-          </Formik>
+          </Formik>,
         )
 
         const artsyLogo = screen.getByTestId("artsy-logo")
@@ -210,7 +210,7 @@ describe("SubmissionLayout", () => {
             <SellFlowContextProvider submission={submissionMock}>
               <SubmissionLayout />
             </SellFlowContextProvider>
-          </Formik>
+          </Formik>,
         )
 
         const saveAndExitButton = screen.getByText("Save & Exit")
@@ -228,11 +228,11 @@ describe("SubmissionLayout", () => {
 
           expect(setMock).toHaveBeenCalledWith(
             "previousSubmissionID",
-            "external-id"
+            "external-id",
           )
           expect(setMock).toHaveBeenCalledWith(
             "previousSubmissionStep",
-            "dimensions"
+            "dimensions",
           )
 
           expect(onSubmitMock).toHaveBeenCalled()
@@ -259,7 +259,7 @@ describe("SubmissionLayout", () => {
             <SellFlowContextProvider submission={submissionMock}>
               <SubmissionLayout />
             </SellFlowContextProvider>
-          </Formik>
+          </Formik>,
         )
 
         const saveAndExitButton = screen.getByText("Save & Exit")

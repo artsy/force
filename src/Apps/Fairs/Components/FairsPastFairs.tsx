@@ -73,10 +73,10 @@ export const FairsPastFairsPaginationContainer = createPaginationContainer(
   {
     viewer: graphql`
       fragment FairsPastFairs_viewer on Viewer
-        @argumentDefinitions(
-          first: { type: "Int", defaultValue: 15 }
-          after: { type: "String" }
-        ) {
+      @argumentDefinitions(
+        first: { type: "Int", defaultValue: 15 }
+        after: { type: "String" }
+      ) {
         pastFairs: fairsConnection(
           hasListing: true
           hasFullFeature: true
@@ -105,5 +105,5 @@ export const FairsPastFairsPaginationContainer = createPaginationContainer(
     getVariables(_, { cursor: after }, { first }) {
       return { after, first }
     },
-  }
+  },
 )

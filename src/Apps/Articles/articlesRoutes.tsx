@@ -5,16 +5,16 @@ import { graphql } from "react-relay"
 
 const ArticlesApp = loadable(
   () => import(/* webpackChunkName: "articlesBundle" */ "./ArticlesApp"),
-  { resolveComponent: component => component.ArticlesAppFragmentContainer }
+  { resolveComponent: component => component.ArticlesAppFragmentContainer },
 )
 
 const NewsApp = loadable(
   () => import(/* webpackChunkName: "articlesBundle" */ "./NewsApp"),
-  { resolveComponent: component => component.NewsAppFragmentContainer }
+  { resolveComponent: component => component.NewsAppFragmentContainer },
 )
 const ChannelApp = loadable(
   () => import(/* webpackChunkName: "articlesBundle" */ "./ChannelApp"),
-  { resolveComponent: component => component.ChannelAppFragmentContainer }
+  { resolveComponent: component => component.ChannelAppFragmentContainer },
 )
 
 export const articlesRoutes: RouteProps[] = [

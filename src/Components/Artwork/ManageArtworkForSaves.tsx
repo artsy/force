@@ -87,7 +87,7 @@ export const INITIAL_STATE: State = {
 
 export const ManageArtworkForSaves =
   createContext<ManageArtworkForSavesContextState>(
-    null as unknown as ManageArtworkForSavesContextState
+    null as unknown as ManageArtworkForSavesContextState,
   )
 
 export const useManageArtworkForSavesContext = () => {

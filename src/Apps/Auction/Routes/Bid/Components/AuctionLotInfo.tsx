@@ -74,10 +74,10 @@ export const AuctionLotInfoFragmentContainer = createFragmentContainer(
   {
     saleArtwork: graphql`
       fragment AuctionLotInfo_saleArtwork on SaleArtwork
-        @argumentDefinitions(
-          imageWidth: { type: "Int", defaultValue: 100 }
-          imageHeight: { type: "Int", defaultValue: 100 }
-        ) {
+      @argumentDefinitions(
+        imageWidth: { type: "Int", defaultValue: 100 }
+        imageHeight: { type: "Int", defaultValue: 100 }
+      ) {
         counts {
           bidderPositions
         }
@@ -108,5 +108,5 @@ export const AuctionLotInfoFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

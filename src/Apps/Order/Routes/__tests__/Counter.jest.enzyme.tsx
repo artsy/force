@@ -127,22 +127,25 @@ describe("Submit Pending Counter Offer", () => {
       expect(page.orderStepper.text()).toMatchInlineSnapshot(`"RespondReview"`)
       expect(page.orderStepperCurrentStep).toBe("Review")
       expect(
-        page.transactionSummary.find("Entry").find("[data-test='offer']").text()
+        page.transactionSummary
+          .find("Entry")
+          .find("[data-test='offer']")
+          .text(),
       ).toMatch("Your offerUS$your.offer")
       expect(
-        page.transactionSummary.find("TransactionDetailsSummaryItem").text()
+        page.transactionSummary.find("TransactionDetailsSummaryItem").text(),
       ).toMatch("Your counterofferChange")
       expect(page.transactionSummary.text()).toMatch(
-        "Seller's offerUS$sellers.offer"
+        "Seller's offerUS$sellers.offer",
       )
       expect(page.artworkSummary.text()).toMatch(
-        "Lisa BreslowGramercy Park South"
+        "Lisa BreslowGramercy Park South",
       )
       expect(page.shippingSummary.text()).toMatch(
-        "Ship toJoelle Van Dyne401 Broadway"
+        "Ship toJoelle Van Dyne401 Broadway",
       )
       expect(page.paymentSummary.text()).toMatchInlineSnapshot(
-        `"•••• 4444   Exp 03/21"`
+        `"•••• 4444   Exp 03/21"`,
       )
       expect(page.buyerGuarantee.length).toBe(1)
       expect(page.submitButton.text()).toBe("Submit")
@@ -177,7 +180,7 @@ describe("Submit Pending Counter Offer", () => {
 
       await page.clickSubmit()
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder?.internalID}/status`
+        `/orders/${testOrder?.internalID}/status`,
       )
     })
 

@@ -25,7 +25,7 @@ describe("ViewInRoomArtwork", () => {
     })
 
     expect(wrapper.html()).toContain(
-      "width: 93.01181102362204px; height: 69.75885826771653px; margin-bottom: 301.77682086614175px;"
+      "width: 93.01181102362204px; height: 69.75885826771653px; margin-bottom: 301.77682086614175px;",
     )
   })
 })

@@ -65,7 +65,7 @@ describe("Artsy context", () => {
             return <div />
           }}
         </SystemContextConsumer>
-      </SystemContextProvider>
+      </SystemContextProvider>,
     )
   })
 
@@ -82,7 +82,7 @@ describe("Artsy context", () => {
               return null
             }}
           </SystemContextConsumer>
-        </SystemContextProvider>
+        </SystemContextProvider>,
       )
       expect.assertions(1)
     })
@@ -107,7 +107,7 @@ describe("Artsy context", () => {
       const wrapper = render(
         <SystemContextProvider user={user}>
           <WithCurrentUser />
-        </SystemContextProvider>
+        </SystemContextProvider>,
       )
       expect(wrapper.text()).toEqual("andy-warhol")
     })
@@ -116,7 +116,7 @@ describe("Artsy context", () => {
       const wrapper = render(
         <SystemContextProvider>
           <WithCurrentUser />
-        </SystemContextProvider>
+        </SystemContextProvider>,
       )
       expect(wrapper.text()).toEqual("user-id-from-env")
     })
@@ -125,7 +125,7 @@ describe("Artsy context", () => {
       const wrapper = render(
         <SystemContextProvider user={null}>
           <WithCurrentUser />
-        </SystemContextProvider>
+        </SystemContextProvider>,
       )
       expect(wrapper.text()).toEqual("no-current-user")
     })
@@ -135,7 +135,7 @@ describe("Artsy context", () => {
     const wrapper = render(
       <SystemContextProvider user={user}>
         <WithRelayEnvironment />
-      </SystemContextProvider>
+      </SystemContextProvider>,
     )
     expect(wrapper.text()).toEqual("A mocked env for andy-warhol")
   })
@@ -145,7 +145,7 @@ describe("Artsy context", () => {
     const wrapper = render(
       <SystemContextProvider user={user} relayEnvironment={mockedEnv}>
         <WithRelayEnvironment />
-      </SystemContextProvider>
+      </SystemContextProvider>,
     )
     expect(wrapper.text()).toEqual("A passed in mocked env")
   })
@@ -154,7 +154,7 @@ describe("Artsy context", () => {
     const wrapper = render(
       <SystemContextProvider user={user}>
         <WithCurrentUser additionalProp="friends" />
-      </SystemContextProvider>
+      </SystemContextProvider>,
     )
     expect(wrapper.text()).toEqual("andy-warhol & friends")
   })

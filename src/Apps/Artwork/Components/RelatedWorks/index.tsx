@@ -88,7 +88,7 @@ export const RelatedWorksFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const RelatedWorksQueryRenderer: React.FC<

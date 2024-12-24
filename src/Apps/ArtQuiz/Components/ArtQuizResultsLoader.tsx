@@ -22,7 +22,7 @@ export const ArtQuizResultsLoader: FC<
       setTimeout(() => {
         setLoading(false)
         timeouts.push(setTimeout(onReady, 1000))
-      }, 2000)
+      }, 2000),
     )
 
     return () => {

@@ -21,7 +21,7 @@ export const CollectorsOverview: React.FC<
 > = () => {
   const image = resized(
     "https://files.artsy.net/images/world-map-with-circles.jpg",
-    { width: 1277, height: 634, quality: 100 }
+    { width: 1277, height: 634, quality: 100 },
   )
 
   return (

@@ -71,7 +71,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
   const trackErrorMessageEvent = (
     title: string,
     message: string | undefined,
-    code?: string
+    code?: string,
   ) => {
     return trackEvent({
       action: ActionType.errorMessageViewed,
@@ -122,7 +122,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
               trackErrorMessageEvent(
                 "An error occurred",
                 result.error.message,
-                result.error.code
+                result.error.code,
               )
 
               props.dialog.showErrorDialog({
@@ -146,7 +146,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
               trackErrorMessageEvent(
                 "An error occurred",
                 result.error.message,
-                result.error.code
+                result.error.code,
               )
 
               props.dialog.showErrorDialog({
@@ -165,7 +165,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
 
         const artworkId = get(
           order,
-          o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
+          o => o.lineItems?.edges?.[0]?.node?.artwork?.slug,
         )
 
         if (isEigen) {
@@ -178,7 +178,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
                 JSON.stringify({
                   key: "orderSuccessful",
                   orderCode: order.code,
-                })
+                }),
               )
             } else if (order.source === "artwork_page") {
               window?.ReactNativeWebView?.postMessage(
@@ -186,7 +186,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
                   key: "goToInboxOnMakeOfferSubmission",
                   orderCode: order.code,
                   message: `The seller will respond to your offer by ${order.stateExpiresAtFormatted}. Keep in mind making an offer doesn’t guarantee you the work.`,
-                })
+                }),
               )
               // We cannot expect Eigen to respond all the time to messages sent from the webview
               // a default fallback page is safer for old/broken Eigen versions
@@ -199,7 +199,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
 
           if (order.mode === "BUY") {
             window?.ReactNativeWebView?.postMessage(
-              JSON.stringify({ key: "orderSuccessful", orderCode: order.code })
+              JSON.stringify({ key: "orderSuccessful", orderCode: order.code }),
             )
           }
         }
@@ -281,7 +281,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
         },
         // TODO: Inputs to the mutation might have changed case of the keys!
         mutation: submitOfferOrderWithConversation,
-      }
+      },
     )
   }
 
@@ -355,7 +355,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
           })
         } else if (data.decline_code === "currency_not_supported") {
           const { title, message, formattedMessage } = getErrorDialogCopy(
-            ErrorDialogs.CurrencyNotSupported
+            ErrorDialogs.CurrencyNotSupported,
           )
 
           trackErrorMessageEvent(title, message, data.decline_code)
@@ -463,7 +463,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
   const routeToArtworkPage = () => {
     const artworkId = get(
       props.order,
-      o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
+      o => o.lineItems?.edges?.[0]?.node?.artwork?.slug,
     )
     props.router.push(`/artwork/${artworkId}`)
   }
@@ -620,7 +620,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
 
 export const ReviewFragmentContainer = createFragmentContainer(
   withSystemContext(
-    createStripeWrapper(injectCommitMutation(injectDialog(ReviewRoute)) as any)
+    createStripeWrapper(injectCommitMutation(injectDialog(ReviewRoute)) as any),
   ),
   {
     order: graphql`
@@ -671,7 +671,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
         ...OrderStepper_order
       }
     `,
-  }
+  },
 )
 
 const submitOfferOrderWithConversation = graphql`

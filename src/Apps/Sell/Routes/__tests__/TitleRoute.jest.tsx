@@ -129,7 +129,7 @@ describe("TitleRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            '/sell/submissions/<mock-value-for-field-"externalId">/photos'
+            '/sell/submissions/<mock-value-for-field-"externalId">/photos',
           )
         })
       })
@@ -153,7 +153,7 @@ describe("TitleRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            '/sell/submissions/<mock-value-for-field-"externalId">/photos'
+            '/sell/submissions/<mock-value-for-field-"externalId">/photos',
           )
         })
       })

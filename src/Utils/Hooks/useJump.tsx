@@ -25,7 +25,7 @@ export const useJump = ({ behavior = "smooth", offset = 0 }: UseJump = {}) => {
   const jumpTo = useCallback(
     (
       id: string,
-      options: { behavior?: ScrollBehavior; offset?: number } = {}
+      options: { behavior?: ScrollBehavior; offset?: number } = {},
     ) => {
       const el = document.querySelector(`#${NAMESPACE}--${id}`)
 
@@ -45,7 +45,7 @@ export const useJump = ({ behavior = "smooth", offset = 0 }: UseJump = {}) => {
 
       window.scrollTo({ top: position, behavior: options.behavior ?? behavior })
     },
-    [behavior, desktop, isMobile, mobile, offset, stickies]
+    [behavior, desktop, isMobile, mobile, offset, stickies],
   )
 
   return { jumpTo }

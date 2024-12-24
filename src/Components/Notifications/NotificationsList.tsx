@@ -43,7 +43,7 @@ export const NotificationsList: React.FC<
   const [loading, setLoading] = useState(false)
 
   const nodes = extractNodes(viewer.notifications).filter(node =>
-    shouldDisplayNotification(node)
+    shouldDisplayNotification(node),
   )
 
   const { state } = useNotificationsContext()
@@ -126,11 +126,11 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
   {
     viewer: graphql`
       fragment NotificationsList_viewer on Viewer
-        @argumentDefinitions(
-          count: { type: "Int", defaultValue: 10 }
-          cursor: { type: "String" }
-          types: { type: "[NotificationTypesEnum]" }
-        ) {
+      @argumentDefinitions(
+        count: { type: "Int", defaultValue: 10 }
+        cursor: { type: "String" }
+        types: { type: "[NotificationTypesEnum]" }
+      ) {
         notifications: notificationsConnection(
           first: $count
           after: $cursor
@@ -181,7 +181,7 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
         cursor,
       }
     },
-  }
+  },
 )
 
 export const NotificationsListQueryRenderer: React.FC<
@@ -235,7 +235,7 @@ export const NotificationsListQueryRenderer: React.FC<
 }
 
 const getNotificationTypes = (
-  type: NotificationType
+  type: NotificationType,
 ): NotificationTypesEnum[] | undefined => {
   if (type === "alerts") {
     return ["ARTWORK_ALERT"]

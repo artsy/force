@@ -178,7 +178,7 @@ export class ArtworkSidebarBidAction extends React.Component<
       sale.registrationStatus &&
         ({
           qualifiedForBidding: sale.registrationStatus.qualified_for_bidding,
-        } as any)
+        } as any),
     )
 
     if (sale.is_preview) {
@@ -302,8 +302,8 @@ export class ArtworkSidebarBidAction extends React.Component<
 
       const increments = compact(
         artwork.sale_artwork?.increments?.filter(
-          increment => (increment?.cents ?? 0) > (myLastMaxBid || 0)
-        )
+          increment => (increment?.cents ?? 0) > (myLastMaxBid || 0),
+        ),
       )
 
       const firstIncrement = increments[0]
@@ -432,6 +432,6 @@ export const ArtworkSidebarBidActionFragmentContainer = withAuthDialog(
           }
         }
       `,
-    }
-  )
+    },
+  ),
 )

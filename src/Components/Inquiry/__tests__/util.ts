@@ -3,7 +3,7 @@ import type { mount } from "enzyme"
 export const fill = (
   wrapper: ReturnType<typeof mount>,
   name: string,
-  value: string
+  value: string,
 ) => {
   let input = wrapper.find(`input[name="${name}"]`)
 

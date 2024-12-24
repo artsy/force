@@ -12,12 +12,12 @@ import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters
 
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
-  { resolveComponent: component => component.ArtistAppFragmentContainer }
+  { resolveComponent: component => component.ArtistAppFragmentContainer },
 )
 
 const ArtistSubApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistSubApp"),
-  { resolveComponent: component => component.ArtistSubAppFragmentContainer }
+  { resolveComponent: component => component.ArtistSubAppFragmentContainer },
 )
 
 const OverviewRoute = loadable(
@@ -28,7 +28,7 @@ const OverviewRoute = loadable(
   {
     resolveComponent: component =>
       component.ArtistOverviewRouteFragmentContainer,
-  }
+  },
 )
 
 const WorksForSaleRoute = loadable(
@@ -39,13 +39,13 @@ const WorksForSaleRoute = loadable(
   {
     resolveComponent: component =>
       component.ArtistWorksForSaleRouteFragmentContainer,
-  }
+  },
 )
 
 const CVRoute = loadable(
   () =>
     import(/* webpackChunkName: "artistBundle" */ "./Routes/CV/ArtistCVRoute"),
-  { resolveComponent: component => component.ArtistCVRouteFragmentContainer }
+  { resolveComponent: component => component.ArtistCVRouteFragmentContainer },
 )
 
 const ArticlesRoute = loadable(
@@ -56,7 +56,7 @@ const ArticlesRoute = loadable(
   {
     resolveComponent: component =>
       component.ArtistArticlesRouteFragmentContainer,
-  }
+  },
 )
 
 const ArtistSeriesRoute = loadable(
@@ -67,7 +67,7 @@ const ArtistSeriesRoute = loadable(
   {
     resolveComponent: component =>
       component.ArtistArtistSeriesRouteFragmentContainer,
-  }
+  },
 )
 
 const ShowsRoute = loadable(
@@ -75,7 +75,9 @@ const ShowsRoute = loadable(
     import(
       /* webpackChunkName: "artistBundle" */ "./Routes/Shows/ArtistShowsRoute"
     ),
-  { resolveComponent: component => component.ArtistShowsRouteFragmentContainer }
+  {
+    resolveComponent: component => component.ArtistShowsRouteFragmentContainer,
+  },
 )
 
 const AuctionResultsRoute = loadable(
@@ -86,7 +88,7 @@ const AuctionResultsRoute = loadable(
   {
     resolveComponent: component =>
       component.AuctionResultsRouteFragmentContainer,
-  }
+  },
 )
 
 const ConsignRoute = loadable(
@@ -97,7 +99,7 @@ const ConsignRoute = loadable(
   {
     resolveComponent: component =>
       component.ArtistConsignRouteFragmentContainer,
-  }
+  },
 )
 
 const AuctionResultRoute = loadable(
@@ -105,7 +107,7 @@ const AuctionResultRoute = loadable(
     import(
       /* webpackChunkName: "artistBundle" */ "./Routes/AuctionResults/SingleAuctionResultPage/AuctionResult"
     ),
-  { resolveComponent: component => component.AuctionResultFragmentContainer }
+  { resolveComponent: component => component.AuctionResultFragmentContainer },
 )
 
 export const artistRoutes: RouteProps[] = [
@@ -162,7 +164,7 @@ export const artistRoutes: RouteProps[] = [
         },
         prepareVariables: ({ artistID }, props) => {
           const urlFilterState = paramsToCamelCase(
-            props.location ? props.location.query : {}
+            props.location ? props.location.query : {},
           )
 
           const initialInput = {
@@ -339,7 +341,7 @@ export const artistRoutes: RouteProps[] = [
         render: ({ match }) => {
           throw new RedirectException(
             `/artist/${match.params.artistID}${match.location.search}`,
-            301
+            301,
           )
         },
       },
@@ -355,7 +357,7 @@ export const artistRoutes: RouteProps[] = [
     },
     query: graphql`
       query artistRoutes_AuctionResultQuery($auctionResultId: String!)
-        @cacheable {
+      @cacheable {
         auctionResult(id: $auctionResultId) @principalField {
           ...AuctionResult_auctionResult
         }

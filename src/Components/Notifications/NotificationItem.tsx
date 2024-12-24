@@ -169,7 +169,7 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
         ...NotificationTypeLabel_notification
       }
     `,
-  }
+  },
 )
 
 interface NotificationItemWrapperProps {
@@ -240,7 +240,7 @@ NotificationItemLink.defaultProps = {
  */
 const getNotificationUrl = (
   notification: NotificationItem_notification$data,
-  mode: NotificationListMode = "page"
+  mode: NotificationListMode = "page",
 ) => {
   // Notification response has targetHref field (computed on backend), which for
   // most notifications accounts for "objectsCount". If there is only one object,

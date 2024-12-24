@@ -53,12 +53,12 @@ export const ArtistShowsRouteFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment ArtistShowsRoute_viewer on Viewer
-        @argumentDefinitions(
-          currentShowsStatus: { type: "String", defaultValue: "running" }
-          currentShowsSort: { type: "ShowSorts", defaultValue: END_AT_ASC }
-          upcomingShowsStatus: { type: "String", defaultValue: "upcoming" }
-          upcomingShowsSort: { type: "ShowSorts", defaultValue: START_AT_ASC }
-        ) {
+      @argumentDefinitions(
+        currentShowsStatus: { type: "String", defaultValue: "running" }
+        currentShowsSort: { type: "ShowSorts", defaultValue: END_AT_ASC }
+        upcomingShowsStatus: { type: "String", defaultValue: "upcoming" }
+        upcomingShowsSort: { type: "ShowSorts", defaultValue: START_AT_ASC }
+      ) {
         artist(id: $artistID) @principalField {
           name
           # TODO: 'status' should be an enum and accept multiple statuses
@@ -81,5 +81,5 @@ export const ArtistShowsRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

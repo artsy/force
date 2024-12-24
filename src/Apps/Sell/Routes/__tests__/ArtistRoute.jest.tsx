@@ -85,7 +85,7 @@ describe("ArtistRoute", () => {
       renderWithRelay({})
 
       expect(screen.getByText("Learn more.").attributes["href"].value).toBe(
-        "https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell"
+        "https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell",
       )
     })
   })

@@ -54,8 +54,8 @@ describe("RequestConditionReport", () => {
     ),
     query: graphql`
       query RequestConditionReportTestQuery
-        @raw_response_type
-        @relay_test_operation {
+      @raw_response_type
+      @relay_test_operation {
         me {
           ...RequestConditionReport_me
         }
@@ -93,14 +93,14 @@ describe("RequestConditionReport", () => {
         Artwork: () => artwork,
       },
       {},
-      relayEnv
+      relayEnv,
     )
     const page = new RequestConditionReportTestPage(wrapper)
 
     await page.clickRequestConditionReportButton()
 
     relayEnv.mock.resolveMostRecentOperation(operation =>
-      MockPayloadGenerator.generate(operation)
+      MockPayloadGenerator.generate(operation),
     )
     await page.update()
 
@@ -119,7 +119,7 @@ describe("RequestConditionReport", () => {
         Artwork: () => artwork,
       },
       {},
-      relayEnv
+      relayEnv,
     )
     const page = new RequestConditionReportTestPage(wrapper)
 
@@ -148,7 +148,7 @@ describe("RequestConditionReport", () => {
           Artwork: () => artwork,
         },
         {},
-        relayEnv
+        relayEnv,
       )
       const page = new RequestConditionReportTestPage(wrapper)
 

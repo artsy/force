@@ -36,7 +36,7 @@ export const AuthDialogWelcome: FC<
           const res = await fetchQuery<AuthDialogWelcomeQuery>(
             relayEnvironment,
             QUERY,
-            { email, recaptchaToken: recaptchaToken ?? "" }
+            { email, recaptchaToken: recaptchaToken ?? "" },
           ).toPromise()
 
           const verifyUser = res?.verifyUser

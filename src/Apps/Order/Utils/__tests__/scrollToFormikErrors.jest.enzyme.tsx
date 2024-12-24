@@ -36,7 +36,7 @@ describe("ScrollToFieldError", () => {
     expect(wrapper.isEmptyRender()).toBe(true)
 
     expect(document.querySelector).toHaveBeenCalledWith(
-      "input[name='attributes.firstName']"
+      "input[name='attributes.firstName']",
     )
 
     expect(mockScrollIntoView).toHaveBeenCalledWith({

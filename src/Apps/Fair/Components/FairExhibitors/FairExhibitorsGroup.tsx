@@ -49,5 +49,5 @@ export const FairExhibitorsGroupFragmentContainer = createFragmentContainer(
         ...FairExhibitorCard_fair
       }
     `,
-  }
+  },
 )

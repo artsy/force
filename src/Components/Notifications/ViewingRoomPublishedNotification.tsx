@@ -18,7 +18,7 @@ export const ViewingRoomPublishedNotification: FC<
 > = ({ notification }) => {
   const notificationData = useFragment(
     ViewingRoomPublishedNotificationFragment,
-    notification
+    notification,
   )
 
   const { headline, item } = notificationData

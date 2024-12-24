@@ -64,5 +64,5 @@ export const AuctionInfoSidebarFragmentContainer = createFragmentContainer(
         liveStartAt
       }
     `,
-  }
+  },
 )

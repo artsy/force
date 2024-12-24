@@ -21,7 +21,7 @@ export interface BoothFilterContextProps {
   onFilterClick?: (
     key: keyof BoothFilters,
     value: string,
-    filterState: BoothFilters
+    filterState: BoothFilters,
   ) => void
 }
 
@@ -58,7 +58,7 @@ export const BoothFilterContextProvider: React.FC<
 
   const [boothFilterState, dispatch] = useReducer(
     boothFilterReducer,
-    initialFilterState
+    initialFilterState,
   )
 
   const boothFilterContext = {
@@ -102,7 +102,7 @@ export const BoothFilterContextProvider: React.FC<
 
 const boothFilterReducer = (
   state: BoothFiltersState,
-  action: BoothFiltersAction
+  action: BoothFiltersAction,
 ): BoothFiltersState => {
   switch (action.type) {
     case "SET": {

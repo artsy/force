@@ -1,5 +1,5 @@
 export const allowedAuctionResultFilters = (
-  filterParams: Record<string, string | boolean> = {}
+  filterParams: Record<string, string | boolean> = {},
 ): Record<string, string> => {
   return Object.keys(filterParams).reduce((obj, key) => {
     // Filter out unsupported arguments

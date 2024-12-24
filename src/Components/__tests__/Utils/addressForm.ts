@@ -18,7 +18,7 @@ export const validAddress: Address = {
 
 export const fillIn = (
   component: any,
-  inputData: { title: string; value: string }
+  inputData: { title: string; value: string },
 ) => {
   const input = component
     .find(Input)
@@ -28,7 +28,7 @@ export const fillIn = (
 
 export const fillInPhoneNumber = (
   component: any,
-  inputData: { isPickup?: boolean; value: string }
+  inputData: { isPickup?: boolean; value: string },
 ) => {
   const index = inputData.isPickup ? 0 : 1
   const input = component
@@ -56,7 +56,7 @@ export const fillAddressForm = async (address: Address) => {
   const region = screen.getByPlaceholderText("State, province, or region")
   const postalCode = screen.getByPlaceholderText("ZIP/postal code")
   const phoneNumber = screen.getAllByPlaceholderText(
-    "Add phone number including country code"
+    "Add phone number including country code",
   )[0]
 
   userEvent.paste(name, address.name)

@@ -39,8 +39,8 @@ describe("FairArtworks", () => {
     },
     query: graphql`
       query FairArtworks_Query($slug: String!)
-        @raw_response_type
-        @relay_test_operation {
+      @raw_response_type
+      @relay_test_operation {
         fair(id: $slug) {
           ...FairArtworks_fair
         }
@@ -68,7 +68,7 @@ describe("FairArtworks", () => {
 
     artistFilter.find("button").simulate("click")
     expect(artistFilter.find("Checkbox").at(0).text()).toMatch(
-      "Artists You Follow"
+      "Artists You Follow",
     )
   })
 })

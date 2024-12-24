@@ -221,7 +221,7 @@ const submissionStatusFragment = graphql`
 `
 
 const useGetButtonURL = (
-  artwork: MyCollectionArtworkSWASubmissionStatus_artwork$data
+  artwork: MyCollectionArtworkSWASubmissionStatus_artwork$data,
 ): string | null => {
   const { submissionID, step } = usePreviousSubmission()
   const { testSubmissionQueryParams, testSubmissionState } =

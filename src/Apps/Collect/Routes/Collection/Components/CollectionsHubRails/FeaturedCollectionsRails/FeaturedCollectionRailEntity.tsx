@@ -33,7 +33,7 @@ export const FeaturedCollectionRailEntity: FC<
         destinationPageOwnerId: id,
         destinationPageOwnerSlug: slug,
         horizontalSlidePosition: index,
-      })
+      }),
     )
   }
 

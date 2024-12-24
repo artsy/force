@@ -82,10 +82,10 @@ export const PastAuctionsPaginationContainer = createPaginationContainer(
   {
     viewer: graphql`
       fragment PastAuctions_viewer on Viewer
-        @argumentDefinitions(
-          first: { type: "Int", defaultValue: 10 }
-          after: { type: "String" }
-        ) {
+      @argumentDefinitions(
+        first: { type: "Int", defaultValue: 10 }
+        after: { type: "String" }
+      ) {
         salesConnection(
           first: $first
           after: $after
@@ -128,5 +128,5 @@ export const PastAuctionsPaginationContainer = createPaginationContainer(
         }
       }
     `,
-  }
+  },
 )

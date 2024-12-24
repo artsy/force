@@ -24,7 +24,7 @@ const { renderWithRelay } = setupTestWrapperTL({
   Component: NewForYouAppFragmentContainer,
   query: graphql`
     query NewForYouApp_test_Query($first: Int, $includeBackfill: Boolean!)
-      @relay_test_operation {
+    @relay_test_operation {
       viewer: viewer {
         ...NewForYouArtworksGrid_viewer
           @arguments(first: $first, includeBackfill: $includeBackfill)
@@ -47,7 +47,7 @@ describe("NewForYouApp", () => {
 
     expect(screen.getByText(/(^Log in)/g)).toBeInTheDocument()
     expect(
-      screen.getByText(/(to see your personalized recommendations\.$)/g)
+      screen.getByText(/(to see your personalized recommendations\.$)/g),
     ).toBeInTheDocument()
   })
 
@@ -55,11 +55,11 @@ describe("NewForYouApp", () => {
     renderWithRelay()
 
     expect(
-      screen.queryByText(/(^Already have an account\?)/g)
+      screen.queryByText(/(^Already have an account\?)/g),
     ).not.toBeInTheDocument()
     expect(screen.queryByText(/(^Log in)/g)).not.toBeInTheDocument()
     expect(
-      screen.queryByText(/(to see your personalized recommendations\.$)/g)
+      screen.queryByText(/(to see your personalized recommendations\.$)/g),
     ).not.toBeInTheDocument()
   })
 

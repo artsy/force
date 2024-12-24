@@ -12,7 +12,9 @@ const ForgotPasswordRoute = loadable(
     import(
       /* webpackChunkName: "authenticationBundle" */ "./Routes/AuthenticationForgotPasswordRoute"
     ),
-  { resolveComponent: component => component.AuthenticationForgotPasswordRoute }
+  {
+    resolveComponent: component => component.AuthenticationForgotPasswordRoute,
+  },
 )
 
 const ResetPasswordRoute = loadable(
@@ -20,7 +22,7 @@ const ResetPasswordRoute = loadable(
     import(
       /* webpackChunkName: "authenticationBundle" */ "./Routes/AuthenticationResetPasswordRoute"
     ),
-  { resolveComponent: component => component.AuthenticationResetPasswordRoute }
+  { resolveComponent: component => component.AuthenticationResetPasswordRoute },
 )
 
 const LoginRoute = loadable(
@@ -28,7 +30,7 @@ const LoginRoute = loadable(
     import(
       /* webpackChunkName: "authenticationBundle" */ "./Routes/AuthenticationLoginRoute"
     ),
-  { resolveComponent: component => component.AuthenticationLoginRoute }
+  { resolveComponent: component => component.AuthenticationLoginRoute },
 )
 
 const SignupRoute = loadable(
@@ -36,7 +38,7 @@ const SignupRoute = loadable(
     import(
       /* webpackChunkName: "authenticationBundle" */ "./Routes/AuthenticationSignUpRoute"
     ),
-  { resolveComponent: component => component.AuthenticationSignUpRoute }
+  { resolveComponent: component => component.AuthenticationSignUpRoute },
 )
 
 const runAuthMiddleware = flow(checkForRedirect, setReferer)
@@ -85,7 +87,7 @@ export const authenticationRoutes: RouteProps[] = [
           `/reset_password${
             // Pass along any other query params
             Object.keys(rest).length > 0 ? `?${stringify(rest)}` : ""
-          }`
+          }`,
         )
         return
       }

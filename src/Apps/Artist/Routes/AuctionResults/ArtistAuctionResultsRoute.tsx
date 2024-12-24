@@ -23,23 +23,23 @@ export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistAuctionResultsRoute_artist on Artist
-        @argumentDefinitions(
-          page: { type: "Int" }
-          state: { type: "AuctionResultsState", defaultValue: ALL }
-          organizations: { type: "[String]" }
-          categories: { type: "[String]" }
-          sizes: { type: "[ArtworkSizes]" }
-          priceRange: { type: "String" }
-          currency: { type: "String" }
-          saleEndYear: { type: "Int" }
-          saleStartYear: { type: "Int" }
-          allowUnspecifiedSaleDates: { type: "Boolean" }
-          includeEstimateRange: { type: "Boolean" }
-          includeUnknownPrices: { type: "Boolean" }
-          createdAfterYear: { type: "Int" }
-          createdBeforeYear: { type: "Int" }
-          allowEmptyCreatedDates: { type: "Boolean" }
-        ) {
+      @argumentDefinitions(
+        page: { type: "Int" }
+        state: { type: "AuctionResultsState", defaultValue: ALL }
+        organizations: { type: "[String]" }
+        categories: { type: "[String]" }
+        sizes: { type: "[ArtworkSizes]" }
+        priceRange: { type: "String" }
+        currency: { type: "String" }
+        saleEndYear: { type: "Int" }
+        saleStartYear: { type: "Int" }
+        allowUnspecifiedSaleDates: { type: "Boolean" }
+        includeEstimateRange: { type: "Boolean" }
+        includeUnknownPrices: { type: "Boolean" }
+        createdAfterYear: { type: "Int" }
+        createdBeforeYear: { type: "Int" }
+        allowEmptyCreatedDates: { type: "Boolean" }
+      ) {
         ...ArtistAuctionResults_artist
           @arguments(
             page: $page
@@ -77,5 +77,5 @@ export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

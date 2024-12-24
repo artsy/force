@@ -152,11 +152,11 @@ export const ArtistsByLetterFragmentContainer = createRefetchContainer(
   {
     viewer: graphql`
       fragment ArtistsByLetter_viewer on Viewer
-        @argumentDefinitions(
-          letter: { type: "String", defaultValue: "a" }
-          page: { type: "Int", defaultValue: 1 }
-          size: { type: "Int", defaultValue: 100 }
-        ) {
+      @argumentDefinitions(
+        letter: { type: "String", defaultValue: "a" }
+        page: { type: "Int", defaultValue: 1 }
+        size: { type: "Int", defaultValue: 100 }
+      ) {
         artistsConnection(letter: $letter, page: $page, size: $size) {
           pageInfo {
             endCursor
@@ -176,5 +176,5 @@ export const ArtistsByLetterFragmentContainer = createRefetchContainer(
       }
     `,
   },
-  ARTISTS_BY_LETTER_QUERY
+  ARTISTS_BY_LETTER_QUERY,
 )

@@ -8,7 +8,7 @@ import { type ReactWrapper, mount } from "enzyme"
 const setInputValue = (
   inputWrapper: ReactWrapper,
   value: string,
-  setSelectionRangeMock = jest.fn()
+  setSelectionRangeMock = jest.fn(),
 ) => {
   ;(inputWrapper.getDOMNode() as any).value = value
   ;(inputWrapper.getDOMNode() as any).setSelectionRange = setSelectionRangeMock
@@ -23,7 +23,7 @@ describe("Offer input", () => {
         showError={false}
         onChange={() => undefined}
         {...props}
-      />
+      />,
     )
 
   it("calls onChange when the user enters values", () => {

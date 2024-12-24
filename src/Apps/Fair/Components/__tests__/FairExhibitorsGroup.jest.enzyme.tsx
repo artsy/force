@@ -17,7 +17,7 @@ describe("FairExhibitorsGroup", () => {
       <FairExhibitorsGroupFragmentContainer
         exhibitorsGroup={FAIR_EXHIBITORS_FIXTURE as any}
         fair={FAIR_FIXTURE as any}
-      />
+      />,
     )
   }
 

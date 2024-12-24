@@ -56,7 +56,7 @@ const SettingsEditProfileImage: FC<
       const uploadUrl = await uploadPhotoToS3(
         relayEnvironment,
         photo,
-        setProgress
+        setProgress,
       )
 
       await submitMutation({ variables: { input: { iconUrl: uploadUrl } } })
@@ -196,7 +196,7 @@ const MUTATION = graphql`
 export const SettingsEditProfileImageRefetchContainer = createRefetchContainer(
   SettingsEditProfileImage,
   { me: FRAGMENT },
-  QUERY
+  QUERY,
 )
 
 const FileInput = styled.input`

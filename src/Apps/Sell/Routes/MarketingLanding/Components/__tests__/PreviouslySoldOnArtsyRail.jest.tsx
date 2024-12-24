@@ -41,7 +41,7 @@ describe("PreviouslySoldOnArtsyRail", () => {
     expect(screen.getAllByTestId("previouslySoldItem").length).toEqual(1)
 
     expect(
-      screen.queryByTestId("previouslySoldItem-estimate")
+      screen.queryByTestId("previouslySoldItem-estimate"),
     ).toBeInTheDocument()
   })
 

@@ -105,29 +105,29 @@ export const PartnerArtistDetailsListPaginationContainer =
     PartnerArtistDetailsList,
     {
       partner: graphql`
-      fragment PartnerArtistDetailsList_partner on Partner
+        fragment PartnerArtistDetailsList_partner on Partner
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 10 }
           after: { type: "String" }
         ) {
-        slug
-        artists: artistsConnection(
-          first: $first
-          after: $after
-          hasPublishedArtworks: true
-          displayOnPartnerProfile: true
-        ) @connection(key: "PartnerArtistDetailsList_artists") {
-          edges {
-            id
-            representedBy
-            counts {
-              artworks
+          slug
+          artists: artistsConnection(
+            first: $first
+            after: $after
+            hasPublishedArtworks: true
+            displayOnPartnerProfile: true
+          ) @connection(key: "PartnerArtistDetailsList_artists") {
+            edges {
+              id
+              representedBy
+              counts {
+                artworks
+              }
+              ...PartnerArtistDetails_partnerArtist
             }
-            ...PartnerArtistDetails_partnerArtist
           }
         }
-      }
-    `,
+      `,
     },
     {
       query: ARTISTS_DETAILS_QUERY,
@@ -135,11 +135,11 @@ export const PartnerArtistDetailsListPaginationContainer =
       getVariables(
         { partner: { slug: partnerId } },
         { cursor: after },
-        { first }
+        { first },
       ) {
         return { partnerId, after, first }
       },
-    }
+    },
   )
 
 export const PartnerArtistDetailsListRenderer: React.FC<

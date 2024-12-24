@@ -63,5 +63,5 @@ export const FeatureSetContainerFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

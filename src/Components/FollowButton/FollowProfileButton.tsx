@@ -90,7 +90,7 @@ const FollowProfileButton: React.FC<
   const { showAuthDialog } = useAuthDialog()
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault()
 
@@ -153,9 +153,9 @@ export const FollowProfileButtonFragmentContainer = createFragmentContainer(
     `,
     profile: graphql`
       fragment FollowProfileButton_profile on Profile
-        @argumentDefinitions(
-          isLoggedIn: { type: "Boolean", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        isLoggedIn: { type: "Boolean", defaultValue: false }
+      ) {
         id
         slug
         name
@@ -166,7 +166,7 @@ export const FollowProfileButtonFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface FollowProfileButtonQueryRendererProps

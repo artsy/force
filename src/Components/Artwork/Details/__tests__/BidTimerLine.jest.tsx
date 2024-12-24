@@ -18,7 +18,7 @@ const mockTimer = (
   days: string,
   hours: string,
   minutes: string,
-  seconds: string
+  seconds: string,
 ) => {
   mockUseTimer.mockReturnValue({
     time: { days, hours, minutes, seconds },

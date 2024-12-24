@@ -135,14 +135,14 @@ export class OrderAppTestPage extends RootTestPage {
   async expectAndDismissDefaultErrorDialog() {
     await this.expectAndDismissErrorDialogMatching(
       "An error occurred",
-      "Something went wrong. Please try again or contact orders@artsy.net."
+      "Something went wrong. Please try again or contact orders@artsy.net.",
     )
   }
 
   async expectAndDismissErrorDialogMatching(
     title: string,
     message: string,
-    buttonText?: string
+    buttonText?: string,
   ) {
     expect(this.modalDialog.text()).toContain(title)
     expect(this.modalDialog.text()).toContain(message)

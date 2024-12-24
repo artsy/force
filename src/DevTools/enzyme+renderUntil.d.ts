@@ -3,7 +3,7 @@ import type * as React from "react"
 
 declare module "enzyme" {
   export type RenderUntilPredicate<P, S, C> = (
-    wrapper: ReactWrapper<P, S, C>
+    wrapper: ReactWrapper<P, S, C>,
   ) => boolean
 
   export interface ReactWrapper<P = {}, S = {}, C = React.Component> {
@@ -49,7 +49,7 @@ declare module "enzyme" {
     *
     */
     renderUntil(
-      predicate: RenderUntilPredicate<P, S, C>
+      predicate: RenderUntilPredicate<P, S, C>,
     ): Promise<ReactWrapper<P, S, C>>
   }
 }

@@ -33,7 +33,7 @@
     "docker:electron": "yarn docker --target electron-runner -t force:electron",
     "docker:force": "yarn docker -t force",
     "docker:clean": "docker rmi force force:builder force:electron",
-    "format-project": "yarn biome format --write 'src/**/*.{ts,tsx,js,jsx}'",
+    "format-project": "yarn prettier format --write 'src/**/*.{ts,tsx,js,jsx}'",
     "format": "yarn prettier --write",
     "jest": "node_modules/.bin/jest --config jest.config.js",
     "jest:debug": "node --inspect node_modules/.bin/jest --runInBand",

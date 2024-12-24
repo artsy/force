@@ -82,5 +82,5 @@ export const FairExhibitorsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

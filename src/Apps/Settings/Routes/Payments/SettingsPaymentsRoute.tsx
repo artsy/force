@@ -21,5 +21,5 @@ export const SettingsPaymentsRouteFragmentContainer = createFragmentContainer(
         ...SettingsPaymentsMethods_me
       }
     `,
-  }
+  },
 )

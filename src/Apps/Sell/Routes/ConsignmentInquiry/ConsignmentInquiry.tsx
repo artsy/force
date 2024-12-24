@@ -26,7 +26,7 @@ import { useTracking } from "react-tracking"
 const logger = createLogger("ConsignmentInquiry/ConsignmentInquiry.tsx")
 
 const getContactInformationFormInitialValues = (
-  me: ConsignmentInquiry_me$data
+  me: ConsignmentInquiry_me$data,
 ): ConsignmentInquiryFormModel => {
   const userRegionCode = me?.phoneNumber?.regionCode ?? ""
   const countryCode = COUNTRY_CODES[userRegionCode.toLocaleUpperCase()]
@@ -62,7 +62,7 @@ export const ConsignmentInquiry: React.FC<
   const initialValue = getContactInformationFormInitialValues(me)
   const initialErrors = validateContactInformationValidationSchema(
     initialValue,
-    consignmentInquiryValidationSchema
+    consignmentInquiryValidationSchema,
   )
 
   const recipientEmail = match.params.recipientEmail ?? null
@@ -126,7 +126,7 @@ export const ConsignmentInquiry: React.FC<
         router.push(
           !!recipientEmail
             ? `/sell/inquiry/${recipientEmail}/sent`
-            : "/sell/inquiry/sent"
+            : "/sell/inquiry/sent",
         )
       }
     } catch (error) {
@@ -262,12 +262,12 @@ export const ConsignmentInquiryFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const tracks = {
   sentConsignmentInquiry: (
-    consignmentInquiryId: number
+    consignmentInquiryId: number,
   ): SentConsignmentInquiry => ({
     action: ActionType.sentConsignmentInquiry,
     context_module: ContextModule.consignmentInquiryForm,

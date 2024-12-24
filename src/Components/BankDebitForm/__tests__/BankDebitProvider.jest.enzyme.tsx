@@ -33,7 +33,7 @@ describe("BankDebitProvider", () => {
           " $fragmentType": "BankAccountPicker_order",
         }}
         onError={jest.fn()}
-      />
+      />,
     )
 
   it("renders bank debit form", () => {
@@ -47,7 +47,7 @@ describe("BankDebitProvider", () => {
     })
     const wrapper = getWrapper()
     expect(wrapper.html()).toMatch(
-      "Bank transfer is not available at the moment"
+      "Bank transfer is not available at the moment",
     )
   })
 })

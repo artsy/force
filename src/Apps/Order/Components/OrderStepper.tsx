@@ -14,7 +14,7 @@ export const offerFlowSteps = typedArray(
   "Offer",
   "Shipping",
   "Payment",
-  "Review"
+  "Review",
 )
 export const buyNowFlowSteps = typedArray("Shipping", "Payment", "Review")
 export const privateFlowSteps = typedArray("Payment", "Review")
@@ -45,7 +45,7 @@ export const OrderStepper: FC<React.PropsWithChildren<OrderStepperProps>> = ({
     if (
       order.requestedFulfillment ||
       extractNodes(
-        extractNodes(order.lineItems)?.[0].shippingQuoteOptions
+        extractNodes(order.lineItems)?.[0].shippingQuoteOptions,
       ).find(shippingQuote => shippingQuote.isSelected)
     ) {
       completedSteps.push("Shipping")
@@ -166,5 +166,5 @@ export const OrderStepperFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

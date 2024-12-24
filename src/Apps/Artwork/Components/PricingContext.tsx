@@ -203,7 +203,7 @@ export const PricingContextFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const PLACEHOLDER = (

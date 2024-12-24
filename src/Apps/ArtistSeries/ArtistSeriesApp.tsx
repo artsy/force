@@ -57,5 +57,5 @@ export const ArtistSeriesAppFragmentContainer = createFragmentContainer(
         slug
       }
     `,
-  }
+  },
 )

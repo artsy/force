@@ -41,7 +41,7 @@ describe("NavBarTracking", () => {
       const wrapper = mount(
         <Wrapper>
           <NavBarUserMenu />
-        </Wrapper>
+        </Wrapper>,
       )
 
       const menuItems = wrapper.find("a")
@@ -62,7 +62,7 @@ describe("NavBarTracking", () => {
       const wrapper = mount(
         <Wrapper>
           <NavBar />
-        </Wrapper>
+        </Wrapper>,
       )
 
       wrapper.find("a").find({ href: "/art-fairs" }).first().simulate("click")
@@ -94,7 +94,7 @@ describe("NavBarTracking", () => {
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         <Wrapper user={null}>
           <NavBar />
-        </Wrapper>
+        </Wrapper>,
       )
 
       wrapper.find('[aria-label="Menu"]').first().simulate("click")

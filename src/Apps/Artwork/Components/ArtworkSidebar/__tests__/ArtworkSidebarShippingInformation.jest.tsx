@@ -12,12 +12,12 @@ const { renderWithRelay } =
       <ArtworkSidebarShippingInformationFragmentContainer artwork={artwork!} />
     ),
     query: graphql`
-    query ArtworkSidebarShippingInformation_Test_Query @relay_test_operation {
-      artwork(id: "josef-albers-homage-to-the-square-85") {
-        ...ArtworkSidebarShippingInformation_artwork
+      query ArtworkSidebarShippingInformation_Test_Query @relay_test_operation {
+        artwork(id: "josef-albers-homage-to-the-square-85") {
+          ...ArtworkSidebarShippingInformation_artwork
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("ArtworkSidebarShippingInformation", () => {
@@ -56,7 +56,7 @@ describe("ArtworkSidebarShippingInformation", () => {
 
       expect(screen.queryByText(/New York, NY US/)).toBeInTheDocument()
       expect(
-        screen.queryByText(/Shipping: Calculated in checkout/)
+        screen.queryByText(/Shipping: Calculated in checkout/),
       ).toBeInTheDocument()
     })
   })

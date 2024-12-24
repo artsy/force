@@ -20,7 +20,7 @@ describe("ViewingRoomsApp", () => {
   describe("with viewing rooms", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomsApp_Test_Query$rawResponse = ViewingRoomsAppFixture
+      response: ViewingRoomsApp_Test_Query$rawResponse = ViewingRoomsAppFixture,
     ) => {
       return renderRelayTree({
         Component: ({ allViewingRooms, featuredViewingRooms }) => {
@@ -36,8 +36,8 @@ describe("ViewingRoomsApp", () => {
         mockData: response,
         query: graphql`
           query ViewingRoomsApp_Test_Query
-            @raw_response_type
-            @relay_test_operation {
+          @raw_response_type
+          @relay_test_operation {
             allViewingRooms: viewer {
               ...ViewingRoomsApp_allViewingRooms
             }
@@ -54,10 +54,10 @@ describe("ViewingRoomsApp", () => {
       expect(wrapper.html()).toContain("Viewing Rooms")
       expect(wrapper.find("ViewingRoomsMeta").length).toBe(1)
       expect(wrapper.find("ViewingRoomsMeta").html()).toContain(
-        "Artsy Viewing Rooms"
+        "Artsy Viewing Rooms",
       )
       expect(wrapper.find("ViewingRoomsMeta").html()).toContain(
-        "Discover in-demand works and storytelling from the world’s leading galleries and artists — all in one place."
+        "Discover in-demand works and storytelling from the world’s leading galleries and artists — all in one place.",
       )
     })
 

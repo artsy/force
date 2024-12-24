@@ -14,12 +14,12 @@ const { renderWithRelay } =
       )
     },
     query: graphql`
-    query ArtworkAuctionCreateAlertHeader_Test_Query @relay_test_operation {
-      artwork(id: "emily-ludwig-shaffer-untitled-3") {
-        ...ArtworkAuctionCreateAlertHeader_artwork
+      query ArtworkAuctionCreateAlertHeader_Test_Query @relay_test_operation {
+        artwork(id: "emily-ludwig-shaffer-untitled-3") {
+          ...ArtworkAuctionCreateAlertHeader_artwork
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("ArtworkAuctionCreateAlertHeader", () => {

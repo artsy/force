@@ -13,7 +13,7 @@ const { renderWithRelay } = setupTestWrapperTL({
   Component: ArticlesIndexArticlesPaginationContainer,
   query: graphql`
     query ArticlesIndexArticles_test_Query($after: String)
-      @relay_test_operation {
+    @relay_test_operation {
       viewer {
         ...ArticlesIndexArticles_viewer @arguments(after: $after)
       }

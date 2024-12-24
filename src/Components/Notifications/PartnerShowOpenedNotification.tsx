@@ -19,7 +19,7 @@ export const PartnerShowOpenedNotification: FC<
 > = ({ notification }) => {
   const notificationData = useFragment(
     PartnerShowOpenedNotificationFragment,
-    notification
+    notification,
   )
 
   const { headline, item } = notificationData

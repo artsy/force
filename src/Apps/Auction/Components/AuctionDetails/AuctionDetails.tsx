@@ -130,5 +130,5 @@ export const AuctionDetailsFragmentContainer = createFragmentContainer(
         ...RegisterButton_me
       }
     `,
-  }
+  },
 )

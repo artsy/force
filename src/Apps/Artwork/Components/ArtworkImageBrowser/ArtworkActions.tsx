@@ -212,9 +212,9 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ArtworkActions_artwork on Artwork
-        @argumentDefinitions(
-          includeAllImages: { type: "Boolean", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        includeAllImages: { type: "Boolean", defaultValue: false }
+      ) {
         ...ArtworkActionsSaveButton_artwork
         ...ArtworkDownloadButton_artwork
         ...ArtworkSharePanel_artwork
@@ -230,7 +230,7 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const Container = styled(Flex)`

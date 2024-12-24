@@ -111,7 +111,7 @@ describe("AddressModal", () => {
             isDefault: true,
           },
         },
-      }
+      },
     )
     await screen.findByText("Edit address")
 
@@ -126,7 +126,7 @@ describe("AddressModal", () => {
         addressModalAction: {
           type: "create",
         },
-      }
+      },
     )
 
     await screen.findByText("Add address")
@@ -142,7 +142,7 @@ describe("AddressModal", () => {
     const { mockResolveLastOperation } = renderWithRelay(
       {},
       testAddressModalProps,
-      mockRelayEnv
+      mockRelayEnv,
     )
 
     await screen.findByText("Edit address")
@@ -153,7 +153,7 @@ describe("AddressModal", () => {
     const dialog = await screen.findByTestId("deleteAddressDialog")
 
     expect(dialog).toHaveTextContent(
-      "This will remove this address from your saved addresses"
+      "This will remove this address from your saved addresses",
     )
 
     await userEvent.click(screen.getByText("Delete"))
@@ -176,14 +176,14 @@ describe("AddressModal", () => {
       const { mockResolveLastOperation } = renderWithRelay(
         {},
         testAddressModalProps,
-        mockRelayEnv
+        mockRelayEnv,
       )
 
       await screen.findByText("Edit address")
 
       await fillAddressFormFields(
         { postalCode: "90210" },
-        { clearInputs: true }
+        { clearInputs: true },
       )
 
       const saveAsDefault = screen.getByTestId("setAsDefault")
@@ -228,7 +228,7 @@ describe("AddressModal", () => {
       })
 
       expect(saveAsDefaultOperation.operationName).toBe(
-        "useUpdateUserDefaultAddressMutation"
+        "useUpdateUserDefaultAddressMutation",
       )
       expect(saveAsDefaultOperation.operationVariables).toMatchObject({
         input: {
@@ -242,7 +242,7 @@ describe("AddressModal", () => {
         expect.objectContaining({
           ...mockSavedAddress,
           postalCode: "90210",
-        })
+        }),
       )
       expect(testAddressModalProps.closeModal).toHaveBeenCalled()
     })
@@ -251,7 +251,7 @@ describe("AddressModal", () => {
       const { mockResolveLastOperation } = renderWithRelay(
         {},
         testAddressModalProps,
-        mockRelayEnv
+        mockRelayEnv,
       )
 
       await screen.findByText("Edit address")
@@ -274,7 +274,7 @@ describe("AddressModal", () => {
       })
 
       const errorMessage = await screen.findByText(
-        "Sorry, there has been an issue saving your address. Please try again."
+        "Sorry, there has been an issue saving your address. Please try again.",
       )
       expect(errorMessage).toBeInTheDocument()
     })
@@ -283,7 +283,7 @@ describe("AddressModal", () => {
       const { mockRejectLastOperation } = renderWithRelay(
         {},
         testAddressModalProps,
-        mockRelayEnv
+        mockRelayEnv,
       )
 
       await screen.findByText("Edit address")
@@ -296,7 +296,7 @@ describe("AddressModal", () => {
       await flushPromiseQueue()
 
       const errorMessage = screen.getByText(
-        "Sorry, there has been an issue saving your address. Please try again."
+        "Sorry, there has been an issue saving your address. Please try again.",
       )
 
       expect(errorMessage).toBeInTheDocument()
@@ -306,7 +306,7 @@ describe("AddressModal", () => {
       const { mockResolveLastOperation } = renderWithRelay(
         {},
         testAddressModalProps,
-        mockRelayEnv
+        mockRelayEnv,
       )
 
       await screen.findByText("Edit address")
@@ -330,7 +330,7 @@ describe("AddressModal", () => {
       })
 
       expect(
-        await screen.findByText("Please enter a valid phone number")
+        await screen.findByText("Please enter a valid phone number"),
       ).toBeInTheDocument()
     })
   })

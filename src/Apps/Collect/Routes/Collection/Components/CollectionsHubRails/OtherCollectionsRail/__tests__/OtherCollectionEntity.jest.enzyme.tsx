@@ -35,7 +35,7 @@ describe.skip("OtherCollectionEntity", () => {
         path="/collection/slug"
       >
         <OtherCollectionEntity {...passedProps} />
-      </AnalyticsCombinedContextProvider>
+      </AnalyticsCombinedContextProvider>,
     )
   }
 
@@ -46,7 +46,7 @@ describe.skip("OtherCollectionEntity", () => {
 
     const thumbnailImage = component.find(Image).at(0).getElement().props
     expect(thumbnailImage.src).toContain(
-      "posters_thumbnail.png&width=60&height=60&quality=80&convert_to=jpg"
+      "posters_thumbnail.png&width=60&height=60&quality=80&convert_to=jpg",
     )
 
     const link = component.find(RouterLink).at(0).getElement().props

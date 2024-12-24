@@ -29,7 +29,7 @@ export interface SystemContextProps extends SystemContextState {
 }
 
 export const SystemContext = createContext<SystemContextProps>(
-  {} as unknown as SystemContextProps
+  {} as unknown as SystemContextProps,
 )
 
 export const SystemContextProvider: React.FC<
@@ -38,7 +38,7 @@ export const SystemContextProvider: React.FC<
   const [router, setRouter] = useState<SystemContextProps["router"]>(null)
 
   const [user, setUser] = useState<SystemContextProps["user"]>(
-    getUser(props.user)
+    getUser(props.user),
   )
 
   const relayEnvironment =

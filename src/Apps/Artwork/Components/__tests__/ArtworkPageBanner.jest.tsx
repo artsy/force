@@ -67,7 +67,7 @@ describe("ArtworkPageBanner", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("This work is not currently published on Artsy.")
+        screen.getByText("This work is not currently published on Artsy."),
       ).toBeInTheDocument()
       expect(getAllBannerTexts()).toEqual([
         "This work is not currently published on Artsy.",
@@ -90,7 +90,7 @@ describe("ArtworkPageBanner", () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText("Lots close at 10-minute intervals.")
+          screen.getByText("Lots close at 10-minute intervals."),
         ).toBeInTheDocument()
         expect(getAllBannerTexts()).toEqual([
           "Lots close at 10-minute intervals.",
@@ -117,8 +117,8 @@ describe("ArtworkPageBanner", () => {
 
     expect(
       screen.getByText(
-        "Sorry, this artwork is no longer available. Please create an alert or contact the gallery to find similar artworks."
-      )
+        "Sorry, this artwork is no longer available. Please create an alert or contact the gallery to find similar artworks.",
+      ),
     ).toBeInTheDocument()
   })
 
@@ -151,8 +151,8 @@ describe("ArtworkPageBanner", () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          "This offer has expired. Please make an offer, purchase, or contact the gallery."
-        )
+          "This offer has expired. Please make an offer, purchase, or contact the gallery.",
+        ),
       ).toBeInTheDocument()
       expect(getAllBannerTexts()).toEqual([
         "This offer has expired. Please make an offer, purchase, or contact the gallery.",
@@ -194,8 +194,8 @@ describe("ArtworkPageBanner", () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            "This offer has expired. Please make an offer, purchase, or contact the gallery."
-          )
+            "This offer has expired. Please make an offer, purchase, or contact the gallery.",
+          ),
         ).toBeInTheDocument()
 
         expect(getAllBannerTexts()).toEqual([
@@ -224,8 +224,8 @@ describe("ArtworkPageBanner", () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            "Sorry, this artwork is no longer available. Please create an alert or contact the gallery to find similar artworks."
-          )
+            "Sorry, this artwork is no longer available. Please create an alert or contact the gallery to find similar artworks.",
+          ),
         ).toBeInTheDocument()
 
         expect(getAllBannerTexts()).toEqual([
@@ -248,8 +248,8 @@ describe("ArtworkPageBanner", () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            "Sorry, this artwork is no longer available. Please create an alert or contact the gallery to find similar artworks."
-          )
+            "Sorry, this artwork is no longer available. Please create an alert or contact the gallery to find similar artworks.",
+          ),
         ).toBeInTheDocument()
 
         expect(getAllBannerTexts()).toEqual([
@@ -277,7 +277,7 @@ describe("ArtworkPageBanner", () => {
 
       await flushPromiseQueue()
       expect(
-        screen.queryByText("This offer has expired.")
+        screen.queryByText("This offer has expired."),
       ).not.toBeInTheDocument()
 
       expect(getAllBannerTexts()).toEqual([])

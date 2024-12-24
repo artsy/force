@@ -43,7 +43,7 @@ describe("ViewingRoomApp", () => {
 
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_DraftTest_Query$rawResponse = DraftViewingRoomAppFixture
+      response: ViewingRoomApp_DraftTest_Query$rawResponse = DraftViewingRoomAppFixture,
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -60,8 +60,8 @@ describe("ViewingRoomApp", () => {
         mockData: response,
         query: graphql`
           query ViewingRoomApp_DraftTest_Query($slug: ID!)
-            @raw_response_type
-            @relay_test_operation {
+          @raw_response_type
+          @relay_test_operation {
             viewingRoom(id: $slug) {
               ...ViewingRoomApp_viewingRoom
             }
@@ -88,7 +88,7 @@ describe("ViewingRoomApp", () => {
   describe("with scheduled viewing room", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_ScheduledTest_Query$rawResponse = ScheduledViewingRoomAppFixture
+      response: ViewingRoomApp_ScheduledTest_Query$rawResponse = ScheduledViewingRoomAppFixture,
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -105,8 +105,8 @@ describe("ViewingRoomApp", () => {
         mockData: response,
         query: graphql`
           query ViewingRoomApp_ScheduledTest_Query($slug: ID!)
-            @raw_response_type
-            @relay_test_operation {
+          @raw_response_type
+          @relay_test_operation {
             viewingRoom(id: $slug) {
               ...ViewingRoomApp_viewingRoom
             }
@@ -156,7 +156,7 @@ describe("ViewingRoomApp", () => {
   describe("with open viewing room", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_OpenTest_Query$rawResponse = OpenViewingRoomAppFixture
+      response: ViewingRoomApp_OpenTest_Query$rawResponse = OpenViewingRoomAppFixture,
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -173,8 +173,8 @@ describe("ViewingRoomApp", () => {
         mockData: response,
         query: graphql`
           query ViewingRoomApp_OpenTest_Query($slug: ID!)
-            @raw_response_type
-            @relay_test_operation {
+          @raw_response_type
+          @relay_test_operation {
             viewingRoom(id: $slug) {
               ...ViewingRoomApp_viewingRoom
             }
@@ -235,7 +235,7 @@ describe("ViewingRoomApp", () => {
   describe("with closed viewing room", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_ClosedTest_Query$rawResponse = ClosedViewingRoomAppFixture
+      response: ViewingRoomApp_ClosedTest_Query$rawResponse = ClosedViewingRoomAppFixture,
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -252,8 +252,8 @@ describe("ViewingRoomApp", () => {
         mockData: response,
         query: graphql`
           query ViewingRoomApp_ClosedTest_Query($slug: ID!)
-            @raw_response_type
-            @relay_test_operation {
+          @raw_response_type
+          @relay_test_operation {
             viewingRoom(id: $slug) {
               ...ViewingRoomApp_viewingRoom
             }
@@ -302,7 +302,7 @@ describe("ViewingRoomApp", () => {
   describe("with logged out user", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_LoggedOutTest_Query$rawResponse = LoggedOutViewingRoomAppFixture
+      response: ViewingRoomApp_LoggedOutTest_Query$rawResponse = LoggedOutViewingRoomAppFixture,
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -317,8 +317,8 @@ describe("ViewingRoomApp", () => {
         mockData: response,
         query: graphql`
           query ViewingRoomApp_LoggedOutTest_Query($slug: ID!)
-            @raw_response_type
-            @relay_test_operation {
+          @raw_response_type
+          @relay_test_operation {
             viewingRoom(id: $slug) {
               ...ViewingRoomApp_viewingRoom
             }

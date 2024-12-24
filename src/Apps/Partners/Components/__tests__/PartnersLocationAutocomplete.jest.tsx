@@ -12,12 +12,12 @@ const { renderWithRelay } =
   setupTestWrapperTL<PartnersLocationAutocomplete_Test_Query>({
     Component: PartnersLocationAutocompleteFragmentContainer,
     query: graphql`
-    query PartnersLocationAutocomplete_Test_Query @relay_test_operation {
-      viewer {
-        ...PartnersLocationAutocomplete_viewer
+      query PartnersLocationAutocomplete_Test_Query @relay_test_operation {
+        viewer {
+          ...PartnersLocationAutocomplete_viewer
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("PartnersLocationAutocomplete", () => {

@@ -60,7 +60,7 @@ export const PartnerArtistsCarouselFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const PartnerArtistsCarouselRenderer: React.FC<

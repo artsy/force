@@ -74,5 +74,5 @@ export const AuctionAssociatedSaleFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

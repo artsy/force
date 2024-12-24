@@ -63,7 +63,7 @@ const Articles: React.FC<React.PropsWithChildren<ArticlesProps>> = ({
         setIsLoading(false)
 
         router.push({ pathname: location.pathname, query })
-      }
+      },
     )
   }
 
@@ -106,13 +106,13 @@ export const ArticlesPaginationContainer = createRefetchContainer(
   {
     partner: graphql`
       fragment Articles_partner on Partner
-        @argumentDefinitions(
-          first: { type: "Int", defaultValue: 18 }
-          last: { type: "Int" }
-          after: { type: "String" }
-          before: { type: "String" }
-          page: { type: "Int" }
-        ) {
+      @argumentDefinitions(
+        first: { type: "Int", defaultValue: 18 }
+        last: { type: "Int" }
+        after: { type: "String" }
+        before: { type: "String" }
+        page: { type: "Int" }
+      ) {
         slug
         articlesConnection(
           first: $first
@@ -151,5 +151,5 @@ export const ArticlesPaginationContainer = createRefetchContainer(
           @arguments(first: $first, last: $last, after: $after, before: $before)
       }
     }
-  `
+  `,
 )

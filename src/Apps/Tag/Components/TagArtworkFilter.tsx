@@ -63,11 +63,11 @@ export const TagArtworkFilterRefetchContainer = createRefetchContainer(
   {
     tag: graphql`
       fragment TagArtworkFilter_tag on Tag
-        @argumentDefinitions(
-          input: { type: "FilterArtworksInput" }
-          aggregations: { type: "[ArtworkAggregation]" }
-          shouldFetchCounts: { type: "Boolean!", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        input: { type: "FilterArtworksInput" }
+        aggregations: { type: "[ArtworkAggregation]" }
+        shouldFetchCounts: { type: "Boolean!", defaultValue: false }
+      ) {
         slug
         internalID
         sidebar: filterArtworksConnection(
@@ -105,7 +105,7 @@ export const TagArtworkFilterRefetchContainer = createRefetchContainer(
         ...TagArtworkFilter_tag @arguments(input: $input)
       }
     }
-  `
+  `,
 )
 
 type TagArtworkFilterQueryRendererProps = {}

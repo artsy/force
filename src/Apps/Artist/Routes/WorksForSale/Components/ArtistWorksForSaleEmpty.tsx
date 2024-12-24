@@ -47,5 +47,5 @@ export const ArtistWorksForSaleEmptyFragmentContainer = createFragmentContainer(
         name
       }
     `,
-  }
+  },
 )

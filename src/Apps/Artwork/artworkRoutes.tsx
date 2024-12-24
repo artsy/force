@@ -8,7 +8,7 @@ const ArtworkApp = loadable(
   () => import(/* webpackChunkName: "artworkBundle" */ "./ArtworkApp"),
   {
     resolveComponent: component => component.ArtworkResultFragmentContainer,
-  }
+  },
 )
 
 export const artworkRoutes: RouteProps[] = [
