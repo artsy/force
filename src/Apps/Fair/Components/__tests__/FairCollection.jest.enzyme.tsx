@@ -13,7 +13,7 @@ describe("FairCollection", () => {
   let trackEvent
 
   const getWrapper = async (
-    response: FairCollection_Query$rawResponse = FAIR_COLLECTION_FIXTURE
+    response: FairCollection_Query$rawResponse = FAIR_COLLECTION_FIXTURE,
   ) => {
     return renderRelayTree({
       Component: ({ marketingCollection: collection }) => {
@@ -31,8 +31,8 @@ describe("FairCollection", () => {
       },
       query: graphql`
         query FairCollection_Query($slug: String!)
-          @raw_response_type
-          @relay_test_operation {
+        @raw_response_type
+        @relay_test_operation {
           marketingCollection(slug: $slug) {
             ...FairCollection_collection
           }

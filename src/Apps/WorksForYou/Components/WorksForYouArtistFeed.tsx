@@ -77,7 +77,7 @@ export const WorksForYouArtistFeedPaginationContainer =
     WorksForYouArtistFeed,
     {
       viewer: graphql`
-      fragment WorksForYouArtistFeed_viewer on Viewer
+        fragment WorksForYouArtistFeed_viewer on Viewer
         @argumentDefinitions(
           count: { type: "Int", defaultValue: 25 }
           cursor: { type: "String" }
@@ -87,40 +87,40 @@ export const WorksForYouArtistFeedPaginationContainer =
             defaultValue: [IS_FOR_SALE]
           }
         ) {
-        artist(id: $artistSlug) {
-          internalID
-          name
-          href
-          counts {
-            artworks
-            forSaleArtworks
-          }
-          image {
-            resized(height: 80, width: 80) {
-              src
-              srcSet
+          artist(id: $artistSlug) {
+            internalID
+            name
+            href
+            counts {
+              artworks
+              forSaleArtworks
             }
-          }
-          artworksConnection(
-            sort: PUBLISHED_AT_DESC
-            first: $count
-            after: $cursor
-            filter: $filter
-          ) @connection(key: "WorksForYouArtistFeed_artworksConnection") {
-            ...ArtworkGrid_artworks
-            pageInfo {
-              hasNextPage
-              endCursor
+            image {
+              resized(height: 80, width: 80) {
+                src
+                srcSet
+              }
             }
-            edges {
-              node {
-                id
+            artworksConnection(
+              sort: PUBLISHED_AT_DESC
+              first: $count
+              after: $cursor
+              filter: $filter
+            ) @connection(key: "WorksForYouArtistFeed_artworksConnection") {
+              ...ArtworkGrid_artworks
+              pageInfo {
+                hasNextPage
+                endCursor
+              }
+              edges {
+                node {
+                  id
+                }
               }
             }
           }
         }
-      }
-    `,
+      `,
     },
     {
       direction: "forward",
@@ -138,22 +138,22 @@ export const WorksForYouArtistFeedPaginationContainer =
         }
       },
       query: graphql`
-      query WorksForYouArtistFeedPaginationQuery(
-        $artistSlug: String!
-        $count: Int!
-        $cursor: String
-        $filter: [ArtistArtworksFilters]
-      ) {
-        viewer {
-          ...WorksForYouArtistFeed_viewer
-            @arguments(
-              artistSlug: $artistSlug
-              count: $count
-              cursor: $cursor
-              filter: $filter
-            )
+        query WorksForYouArtistFeedPaginationQuery(
+          $artistSlug: String!
+          $count: Int!
+          $cursor: String
+          $filter: [ArtistArtworksFilters]
+        ) {
+          viewer {
+            ...WorksForYouArtistFeed_viewer
+              @arguments(
+                artistSlug: $artistSlug
+                count: $count
+                cursor: $cursor
+                filter: $filter
+              )
+          }
         }
-      }
-    `,
-    }
+      `,
+    },
   )

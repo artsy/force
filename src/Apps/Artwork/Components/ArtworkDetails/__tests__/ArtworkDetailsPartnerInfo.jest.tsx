@@ -10,7 +10,7 @@ const { renderWithRelay } = setupTestWrapperTL({
   Component: ArtworkDetailsPartnerInfoFragmentContainer,
   query: graphql`
     query ArtworkDetailsPartnerInfo_Test_Query($slug: String!)
-      @relay_test_operation {
+    @relay_test_operation {
       artwork(id: $slug) {
         ...ArtworkDetailsPartnerInfo_artwork
       }
@@ -34,7 +34,7 @@ describe("ArtworkDetailsAboutTheWorkFromPartner", () => {
     expect(screen.queryByText("Nice Gallery")).toBeInTheDocument()
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
-      "/partner/nice-gallery"
+      "/partner/nice-gallery",
     )
   })
 

@@ -64,7 +64,7 @@ export const ArtworkImageBrowser: React.FC<
             return MAX_DIMENSION
           }
         }
-      })
+      }),
     )
   }, [figures])
 
@@ -129,9 +129,9 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ArtworkImageBrowser_artwork on Artwork
-        @argumentDefinitions(
-          includeAllImages: { type: "Boolean", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        includeAllImages: { type: "Boolean", defaultValue: false }
+      ) {
         ...ArtworkActions_artwork
           @arguments(includeAllImages: $includeAllImages)
         ...ArtworkImageBrowserSmall_artwork
@@ -154,5 +154,5 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

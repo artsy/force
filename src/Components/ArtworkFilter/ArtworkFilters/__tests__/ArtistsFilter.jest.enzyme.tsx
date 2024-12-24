@@ -33,12 +33,12 @@ describe("ArtistsFilter", () => {
 
   const getWrapper = (
     contextProps = {},
-    filterProps: ArtistsFilterProps = { expanded: true }
+    filterProps: ArtistsFilterProps = { expanded: true },
   ) => {
     return mount(
       <ArtworkFilterContextProvider {...contextProps}>
         <ArtistsFilterTest {...filterProps} />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
   }
 

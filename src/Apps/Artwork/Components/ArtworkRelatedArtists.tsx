@@ -122,30 +122,30 @@ export const ArtworkRelatedArtistsPaginationContainer =
     ArtworkRelatedArtists,
     {
       artwork: graphql`
-      fragment ArtworkRelatedArtists_artwork on Artwork
+        fragment ArtworkRelatedArtists_artwork on Artwork
         @argumentDefinitions(
           count: { type: "Int", defaultValue: 6 }
           cursor: { type: "String", defaultValue: "" }
         ) {
-        slug
-        artist(shallow: true) {
-          href
-          related {
-            artistsConnection(kind: MAIN, first: $count, after: $cursor)
-              @connection(key: "ArtworkRelatedArtists_artistsConnection") {
-              pageInfo {
-                hasNextPage
-              }
-              edges {
-                node {
-                  ...EntityHeaderArtist_artist
+          slug
+          artist(shallow: true) {
+            href
+            related {
+              artistsConnection(kind: MAIN, first: $count, after: $cursor)
+                @connection(key: "ArtworkRelatedArtists_artistsConnection") {
+                pageInfo {
+                  hasNextPage
+                }
+                edges {
+                  node {
+                    ...EntityHeaderArtist_artist
+                  }
                 }
               }
             }
           }
         }
-      }
-    `,
+      `,
     },
     {
       direction: "forward",
@@ -167,18 +167,18 @@ export const ArtworkRelatedArtistsPaginationContainer =
         }
       },
       query: graphql`
-      query ArtworkRelatedArtistsPaginationQuery(
-        $count: Int!
-        $cursor: String
-        $artworkID: String!
-      ) {
-        artwork(id: $artworkID) {
-          ...ArtworkRelatedArtists_artwork
-            @arguments(count: $count, cursor: $cursor)
+        query ArtworkRelatedArtistsPaginationQuery(
+          $count: Int!
+          $cursor: String
+          $artworkID: String!
+        ) {
+          artwork(id: $artworkID) {
+            ...ArtworkRelatedArtists_artwork
+              @arguments(count: $count, cursor: $cursor)
+          }
         }
-      }
-    `,
-    }
+      `,
+    },
   )
 
 const PLACEHOLDER = (

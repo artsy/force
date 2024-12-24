@@ -56,7 +56,7 @@ describe("ShowContextualLink", () => {
 
       expect(wrapper.find("RouterLink").length).toBeTruthy()
       expect(wrapper.find("RouterLink").first().props().to).toEqual(
-        "/catty-partner"
+        "/catty-partner",
       )
       expect(wrapper.text()).toContain("Presented by Catty Partner")
     })

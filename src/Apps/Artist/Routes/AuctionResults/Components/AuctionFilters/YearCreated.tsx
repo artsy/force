@@ -28,13 +28,14 @@ export const YearCreated: React.FC<React.PropsWithChildren<unknown>> = () => {
   const startOptions = options.filter(
     option =>
       Number.parseInt(option.value) <=
-      (createdBeforeYear || Number.parseInt(options[options.length - 1]?.value))
+      (createdBeforeYear ||
+        Number.parseInt(options[options.length - 1]?.value)),
   )
 
   const endOptions = options.filter(
     option =>
       Number.parseInt(option.value) >=
-      (createdAfterYear || Number.parseInt(options[0]?.value))
+      (createdAfterYear || Number.parseInt(options[0]?.value)),
   )
 
   return (

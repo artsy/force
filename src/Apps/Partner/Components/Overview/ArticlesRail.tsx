@@ -64,5 +64,5 @@ export const ArticlesRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

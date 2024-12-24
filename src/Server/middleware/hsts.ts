@@ -12,7 +12,7 @@ import { APP_URL } from "Server/config"
 export function hstsMiddleware(
   req: ArtsyRequest,
   res: ArtsyResponse,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const protocol = req.get("X-Forwarded-Proto") || req.protocol
   if (protocol === "https" && parse(APP_URL).protocol === "https:") {

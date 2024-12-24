@@ -214,7 +214,7 @@ describe("Review", () => {
 
     it("shows a modal that redirects to the artwork page if there is an artwork_version_mismatch", async () => {
       mockCommitMutation.mockResolvedValue(
-        submitOrderWithVersionMismatchFailure
+        submitOrderWithVersionMismatchFailure,
       )
       const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
@@ -262,7 +262,7 @@ describe("Review", () => {
 
     it("shows a modal with a helpful error message if the user's card is declined due to insufficient funds", async () => {
       mockCommitMutation.mockResolvedValue(
-        submitOrderWithFailureInsufficientFunds
+        submitOrderWithFailureInsufficientFunds,
       )
       const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
@@ -279,7 +279,7 @@ describe("Review", () => {
 
     it("shows a modal with a helpful error message if the user's card is declined due to currency not supported", async () => {
       mockCommitMutation.mockResolvedValue(
-        submitOrderWithFailureCurrencyNotSupported
+        submitOrderWithFailureCurrencyNotSupported,
       )
       const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
@@ -390,7 +390,7 @@ describe("Review", () => {
       const page = new ReviewTestPage(wrapper)
 
       expect(page.orderStepper.text()).toMatchInlineSnapshot(
-        `"OfferShippingPaymentReview"`
+        `"OfferShippingPaymentReview"`,
       )
       expect(page.orderStepperCurrentStep).toBe("Review")
       expect(page.offerSummary.text()).not.toMatch("Your note")
@@ -431,7 +431,7 @@ describe("Review", () => {
 
       expect(mockCommitMutation).toHaveBeenCalledTimes(1)
       expect(pushMock).toBeCalledWith(
-        "/artwork/artworkId?order-submitted=offer-order-id"
+        "/artwork/artworkId?order-submitted=offer-order-id",
       )
     })
 
@@ -459,7 +459,7 @@ describe("Review", () => {
 
     it("shows a modal that redirects to the artwork page if there is an artwork_version_mismatch", async () => {
       mockCommitMutation.mockResolvedValue(
-        submitOfferOrderWithVersionMismatchFailure
+        submitOfferOrderWithVersionMismatchFailure,
       )
       const { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
@@ -493,7 +493,7 @@ describe("Review", () => {
 
     it("shows a modal that redirects to the artist page if there is an insufficient inventory", async () => {
       mockCommitMutation.mockResolvedValue(
-        submitOfferOrderWithNoInventoryFailure
+        submitOfferOrderWithNoInventoryFailure,
       )
       const { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
@@ -543,11 +543,13 @@ describe("Review", () => {
             orderCode: "abcdefg",
             message:
               "The seller will respond to your offer by Jan 15. Keep in mind making an offer doesn’t guarantee you the work.",
-          })
+          }),
         )
 
         await waitFor(() =>
-          expect(pushMock).toHaveBeenCalledWith("/orders/offer-order-id/status")
+          expect(pushMock).toHaveBeenCalledWith(
+            "/orders/offer-order-id/status",
+          ),
         )
       })
     })
@@ -555,7 +557,7 @@ describe("Review", () => {
 
   describe("Arta shipping", () => {
     const buyOrderWithArtaShippingDetails = cloneDeep(
-      BuyOrderWithArtaShippingDetails
+      BuyOrderWithArtaShippingDetails,
     ) as any
     buyOrderWithArtaShippingDetails.lineItems.edges[0].node.selectedShippingQuote =
       buyOrderWithArtaShippingDetails.lineItems.edges[0].node.shippingQuoteOptions.edges[0].node
@@ -611,10 +613,10 @@ describe("Review", () => {
       const page = new ReviewTestPage(wrapper)
 
       expect(page.root.find(TransactionDetailsSummaryItem).text()).toMatch(
-        "Waiting for final costs"
+        "Waiting for final costs",
       )
       expect(page.text()).toMatch(
-        "*Shipping costs to be confirmed by gallery. You will be able to review the total price before payment."
+        "*Shipping costs to be confirmed by gallery. You will be able to review the total price before payment.",
       )
     })
 
@@ -628,7 +630,7 @@ describe("Review", () => {
       const page = new ReviewTestPage(wrapper)
 
       expect(page.text()).not.toMatch(
-        "*Shipping and taxes to be confirmed by gallery"
+        "*Shipping and taxes to be confirmed by gallery",
       )
     })
 
@@ -677,7 +679,7 @@ describe("Review", () => {
       const page = new ReviewTestPage(wrapper)
 
       expect(page.root.find(PaymentMethodSummaryItem).text()).toMatch(
-        "Bank transfer •••• 1234"
+        "Bank transfer •••• 1234",
       )
     })
   })
@@ -693,7 +695,7 @@ describe("Review", () => {
       const page = new ReviewTestPage(wrapper)
 
       expect(page.root.find(PaymentMethodSummaryItem).text()).toMatch(
-        "Wire transfer"
+        "Wire transfer",
       )
     })
   })
@@ -727,31 +729,31 @@ describe("Review", () => {
 
     it("renders Artsy Private Sales conditions complete message", () => {
       expect(page.text()).toContain(
-        "Artsy Private Sales LLC Conditions of Sale"
+        "Artsy Private Sales LLC Conditions of Sale",
       )
       expect(page.text()).toContain(
-        "and any Additional Conditions of Sale specified on this page and in the order confirmation email."
+        "and any Additional Conditions of Sale specified on this page and in the order confirmation email.",
       )
     })
 
     it("displays additional artwork details from order", () => {
       expect(page.text()).toContain("Artwork Description")
       expect(page.text()).toContain(
-        "additional artwork details provided by admin"
+        "additional artwork details provided by admin",
       )
     })
 
     it("displays artwork provenance", () => {
       expect(page.text()).toContain("Artwork Description")
       expect(page.text()).toContain(
-        "Provenance: Artwork acquired via an auction in 2000"
+        "Provenance: Artwork acquired via an auction in 2000",
       )
     })
 
     it("displays artwork condition description", () => {
       expect(page.text()).toContain("Artwork Description")
       expect(page.text()).toContain(
-        "Condition: Artwork is in perfect condition"
+        "Condition: Artwork is in perfect condition",
       )
     })
   })
@@ -800,7 +802,7 @@ describe("Review", () => {
 
         expect(mockCommitMutation).toHaveBeenCalledTimes(1)
         expect(pushMock).toBeCalledWith(
-          "/user/conversations/impulse-conversation-id"
+          "/user/conversations/impulse-conversation-id",
         )
       })
     })
@@ -828,13 +830,13 @@ describe("Review", () => {
             JSON.stringify({
               key: "orderSuccessful",
               orderCode: "abcdefg",
-            })
+            }),
           )
 
           await waitFor(() =>
             expect(pushMock).toHaveBeenCalledWith(
-              "/orders/offer-order-id/status"
-            )
+              "/orders/offer-order-id/status",
+            ),
           )
         })
       })
@@ -857,8 +859,8 @@ describe("Review", () => {
 
           await waitFor(() =>
             expect(pushMock).toHaveBeenCalledWith(
-              "/orders/offer-order-id/status"
-            )
+              "/orders/offer-order-id/status",
+            ),
           )
         })
       })

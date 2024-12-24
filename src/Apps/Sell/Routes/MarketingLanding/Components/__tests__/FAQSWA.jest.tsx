@@ -17,8 +17,8 @@ describe("FAQSWA", () => {
 
     expect(
       screen.getByText(
-        "No upfront fees, clear pricing estimates, and competitive commission structures."
-      )
+        "No upfront fees, clear pricing estimates, and competitive commission structures.",
+      ),
     ).toBeInTheDocument()
     expect(screen.getByText("Have more questions?")).toBeInTheDocument()
   })
@@ -33,7 +33,7 @@ describe("FAQSWA", () => {
       expect(link).toHaveTextContent("Read FAQs")
       expect(link).toHaveAttribute(
         "href",
-        "https://support.artsy.net/s/topic/0TO3b000000UesxGAC/sell"
+        "https://support.artsy.net/s/topic/0TO3b000000UesxGAC/sell",
       )
     })
   })

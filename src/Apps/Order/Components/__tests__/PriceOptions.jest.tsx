@@ -45,7 +45,7 @@ let radios: HTMLElement[]
 const getTrackingObject = (
   offer: string,
   amount: number,
-  currency: string
+  currency: string,
 ) => ({
   action: "clickedOfferOption",
   flow: "Make offer",
@@ -124,15 +124,15 @@ describe("PriceOptions", () => {
           getTrackingObject(
             "Top-end of range (high chance of acceptance)",
             200,
-            "USD"
-          )
-        )
+            "USD",
+          ),
+        ),
       )
       fireEvent.click(radios[1])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("Midpoint (good chance of acceptance)", 150, "USD")
-        )
+          getTrackingObject("Midpoint (good chance of acceptance)", 150, "USD"),
+        ),
       )
       fireEvent.click(radios[2])
       expect(trackEvent).toHaveBeenLastCalledWith(
@@ -140,27 +140,29 @@ describe("PriceOptions", () => {
           getTrackingObject(
             "Low-end of range (lower chance of acceptance)",
             100,
-            "USD"
-          )
-        )
+            "USD",
+          ),
+        ),
       )
       fireEvent.click(radios[3])
       expect(trackEvent).toHaveBeenCalledWith(
-        expect.objectContaining(getTrackingObject("Different amount", 0, "USD"))
+        expect.objectContaining(
+          getTrackingObject("Different amount", 0, "USD"),
+        ),
       )
     })
     it("correctly displays and tracks the offer too low notice", async () => {
       fireEvent.click(radios[3])
       const input = await within(radios[3]).findByRole("textbox")
       const notice = await screen.findByText(
-        "Offers lower than the displayed price range are often declined. We recommend increasing your offer to US$100.00."
+        "Offers lower than the displayed price range are often declined. We recommend increasing your offer to US$100.00.",
       )
       expect(notice).toBeInTheDocument()
       expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining({
           action_type: "Viewed offer too low",
           flow: "Make offer",
-        })
+        }),
       )
       fireEvent.change(input, { target: { value: 200 } })
       expect(notice).not.toBeInTheDocument()
@@ -207,9 +209,9 @@ describe("PriceOptions", () => {
           getTrackingObject(
             "List price (high chance of acceptance)",
             100,
-            "EUR"
-          )
-        )
+            "EUR",
+          ),
+        ),
       )
 
       fireEvent.click(radios[1])
@@ -218,9 +220,9 @@ describe("PriceOptions", () => {
           getTrackingObject(
             "10% below the list price (good chance of acceptance)",
             90,
-            "EUR"
-          )
-        )
+            "EUR",
+          ),
+        ),
       )
 
       fireEvent.click(radios[2])
@@ -229,17 +231,19 @@ describe("PriceOptions", () => {
           getTrackingObject(
             "20% below the list price (substantial reduction, lower chance of acceptance)",
             80,
-            "EUR"
-          )
-        )
+            "EUR",
+          ),
+        ),
       )
 
       fireEvent.click(radios[3])
       expect(trackEvent).toHaveBeenCalledWith(
-        expect.objectContaining(getTrackingObject("Different amount", 0, "EUR"))
+        expect.objectContaining(
+          getTrackingObject("Different amount", 0, "EUR"),
+        ),
       )
       const notice = await screen.findByText(
-        "Offers less than 20% off the list price are often declined. We recommend increasing your offer to €80.00."
+        "Offers less than 20% off the list price are often declined. We recommend increasing your offer to €80.00.",
       )
       expect(notice).toBeInTheDocument()
     })
@@ -268,7 +272,7 @@ describe("PriceOptions", () => {
 
     it("doesn't display an error when none is passed", () => {
       expect(
-        screen.queryByText("Offer amount missing or invalid.")
+        screen.queryByText("Offer amount missing or invalid."),
       ).not.toBeInTheDocument()
     })
     it("displays the error and automatically selects the custom value option when an error is passed", async () => {

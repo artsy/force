@@ -30,7 +30,7 @@ describe("useFadeTransition", () => {
     render(<Example />)
 
     expect(
-      result.current.refs.current.map(ref => ref.current!.innerHTML)
+      result.current.refs.current.map(ref => ref.current!.innerHTML),
     ).toEqual(["one", "two", "three"])
   })
 

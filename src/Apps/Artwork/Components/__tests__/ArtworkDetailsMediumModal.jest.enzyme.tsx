@@ -45,7 +45,7 @@ describe("ArtworkDetailsMediumModal", () => {
     })
 
     expect(wrapper.html()).toContain(
-      "Includes collages; drawings; figure drawing; pen and ink; sketch."
+      "Includes collages; drawings; figure drawing; pen and ink; sketch.",
     )
   })
 })

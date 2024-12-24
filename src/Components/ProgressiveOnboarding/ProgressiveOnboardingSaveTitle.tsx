@@ -45,5 +45,5 @@ export const __ProgressiveOnboardingSaveTitle__: FC<
 }
 
 export const ProgressiveOnboardingSaveTitle = withProgressiveOnboardingCounts(
-  __ProgressiveOnboardingSaveTitle__
+  __ProgressiveOnboardingSaveTitle__,
 )

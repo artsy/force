@@ -5,7 +5,7 @@ import type { AuthIntentMutation } from "./types"
 
 export const saveArtworkMutation: AuthIntentMutation = (
   relayEnvironment: Environment,
-  id: string
+  id: string,
 ) => {
   return new Promise((resolve, reject) => {
     commitMutation<AuthIntentSaveArtworkMutation>(relayEnvironment, {
@@ -19,7 +19,7 @@ export const saveArtworkMutation: AuthIntentMutation = (
       },
       mutation: graphql`
         mutation AuthIntentSaveArtworkMutation($input: SaveArtworkInput!)
-          @raw_response_type {
+        @raw_response_type {
           saveArtwork(input: $input) {
             artwork {
               id

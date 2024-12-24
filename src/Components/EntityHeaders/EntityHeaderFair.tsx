@@ -91,5 +91,5 @@ export const EntityHeaderFairFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

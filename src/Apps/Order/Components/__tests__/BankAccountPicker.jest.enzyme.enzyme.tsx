@@ -23,7 +23,7 @@ jest.unmock("react-tracking")
 
 jest.mock("../../Mutations/useSetPayment", () => {
   const originalUseSetPayment = jest.requireActual(
-    "../../Mutations/useSetPayment"
+    "../../Mutations/useSetPayment",
   )
 
   return {
@@ -186,13 +186,13 @@ describe("BankAccountFragmentContainer", () => {
       const page = new BankAccountPickerTestPage(wrapper)
       expect(page.radios).toHaveLength(3)
       expect(page.radios.at(0).text()).toMatchInlineSnapshot(
-        `"Bank transfer •••• 1234"`
+        `"Bank transfer •••• 1234"`,
       )
       expect(page.radios.at(1).text()).toMatchInlineSnapshot(
-        `"Bank transfer •••• 2345"`
+        `"Bank transfer •••• 2345"`,
       )
       expect(page.radios.at(2).text()).toMatchInlineSnapshot(
-        `"Add another bank account."`
+        `"Add another bank account."`,
       )
     })
 

@@ -95,8 +95,8 @@ export const bootstrapSharify = () => {
       "TRACK_PAGELOAD_PATHS",
       "USER_PREFERENCES",
       "VOLLEY_ENDPOINT",
-      "WEBFONT_URL"
-    )
+      "WEBFONT_URL",
+    ),
   )
 
   // @ts-expect-error - sharify.data is "read only"

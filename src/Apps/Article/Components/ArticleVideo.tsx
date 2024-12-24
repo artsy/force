@@ -263,7 +263,7 @@ export const ArticleVideoFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const Cover = styled(Clickable)`

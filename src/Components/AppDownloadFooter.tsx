@@ -51,7 +51,7 @@ export const AppDownloadFooter: FC<
 
       const animation = ref.current.animate(
         [{ transform: "translateY(100%)" }, { transform: "translateY(0)" }],
-        { duration: 250, easing: "ease-out", fill: "forwards" }
+        { duration: 250, easing: "ease-out", fill: "forwards" },
       )
 
       await animation.finished
@@ -88,7 +88,7 @@ export const AppDownloadFooter: FC<
 
     const animation = ref.current.animate(
       [{ transform: "translateY(0)" }, { transform: "translateY(100%)" }],
-      { duration: 250, easing: "ease-out", fill: "forwards" }
+      { duration: 250, easing: "ease-out", fill: "forwards" },
     )
 
     await animation.finished

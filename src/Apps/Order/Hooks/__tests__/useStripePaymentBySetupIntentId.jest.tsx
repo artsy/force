@@ -55,7 +55,7 @@ describe("useStripePaymentBySetupIntentId", () => {
 
     it("returns a result object", async () => {
       const { result } = renderHook(() =>
-        useStripePaymentBySetupIntentId("order-id")
+        useStripePaymentBySetupIntentId("order-id"),
       )
 
       await flushPromiseQueue()
@@ -80,7 +80,7 @@ describe("useStripePaymentBySetupIntentId", () => {
 
     it("returns a result object", async () => {
       const { result } = renderHook(() =>
-        useStripePaymentBySetupIntentId("order-id")
+        useStripePaymentBySetupIntentId("order-id"),
       )
 
       await flushPromiseQueue()

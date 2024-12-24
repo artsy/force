@@ -31,7 +31,7 @@ describe("AuthenticationResetPasswordRoute", () => {
     render(
       <MockBoot>
         <AuthenticationResetPasswordRoute />
-      </MockBoot>
+      </MockBoot>,
     )
   })
 

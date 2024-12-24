@@ -29,9 +29,9 @@ const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({
         viewer.jobs
           .flatMap(job => job.location.split(","))
           .map(location => location.trim())
-          .filter(location => location !== LEADGEN_LOCATION)
+          .filter(location => location !== LEADGEN_LOCATION),
       ).sort(),
-    [viewer.jobs]
+    [viewer.jobs],
   )
 
   const departments = useMemo(() => {
@@ -42,7 +42,7 @@ const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({
         acc[job.departmentName].push(job)
         return acc
       },
-      {} as Record<string, any[]>
+      {} as Record<string, any[]>,
     )
   }, [viewer.jobs])
 

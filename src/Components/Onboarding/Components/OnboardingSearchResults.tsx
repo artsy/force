@@ -87,10 +87,10 @@ export const OnboardingSearchResultsFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment OnboardingSearchResults_viewer on Viewer
-        @argumentDefinitions(
-          term: { type: "String!", defaultValue: "" }
-          entities: { type: "[SearchEntity!]!", defaultValue: [] }
-        ) {
+      @argumentDefinitions(
+        term: { type: "String!", defaultValue: "" }
+        entities: { type: "[SearchEntity!]!", defaultValue: [] }
+      ) {
         matchConnection(
           term: $term
           entities: $entities
@@ -118,7 +118,7 @@ export const OnboardingSearchResultsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface OnboardingOrderedSetQueryRendererProps {

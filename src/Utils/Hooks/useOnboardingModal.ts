@@ -15,7 +15,7 @@ export const useOnboardingModal = () => {
       onClose: () => {
         hideOnboarding()
       },
-    }
+    },
   )
 
   // Check to see if we should open onboarding (logged in + ?onboarding=true),

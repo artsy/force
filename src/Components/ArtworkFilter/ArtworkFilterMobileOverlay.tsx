@@ -20,7 +20,7 @@ export const ArtworkFilterMobileOverlay: React.FC<
   // This reflects our zero state for this UI which doesn't include the keyword
   const isReset = isEqual(
     omit(filterContext.stagedFilters, "reset", "keyword"),
-    filterContext.defaultFilters
+    filterContext.defaultFilters,
   )
 
   const handleScrollToTop = () => {

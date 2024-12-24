@@ -16,12 +16,12 @@ const { renderWithRelay } =
       return <SettingsPaymentsRouteFragmentContainer me={me as any} />
     },
     query: graphql`
-    query SettingsPaymentsRoute_Test_Query @relay_test_operation {
-      me {
-        ...SettingsPaymentsRoute_me
+      query SettingsPaymentsRoute_Test_Query @relay_test_operation {
+        me {
+          ...SettingsPaymentsRoute_me
+        }
       }
-    }
-  `,
+    `,
   })
 
 const mockUseDeleteBankAccount = useDeleteBankAccount as jest.Mock
@@ -54,8 +54,8 @@ describe("SettingsPaymentsRoute", () => {
     expect(screen.getByText("Credit cards")).toBeInTheDocument()
     expect(
       screen.getByText(
-        "Please add a payment method for faster checkout in the future."
-      )
+        "Please add a payment method for faster checkout in the future.",
+      ),
     ).toBeInTheDocument()
   })
 

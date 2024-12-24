@@ -40,7 +40,7 @@ export const useArtworkGridContext = () => {
 }
 
 export const withArtworkGridContext = <T,>(
-  Component: React.ComponentType<React.PropsWithChildren<T>>
+  Component: React.ComponentType<React.PropsWithChildren<T>>,
 ) => {
   return (props: T) => {
     return (

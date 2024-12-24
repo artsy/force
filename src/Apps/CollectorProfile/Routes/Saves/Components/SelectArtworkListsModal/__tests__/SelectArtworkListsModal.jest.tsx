@@ -50,12 +50,12 @@ const { renderWithRelay } =
       )
     },
     query: graphql`
-    query SelectArtworkListsModal_Test_Query @relay_test_operation {
-      me {
-        ...SelectArtworkListsModal_me @arguments(artworkID: "artworkID")
+      query SelectArtworkListsModal_Test_Query @relay_test_operation {
+        me {
+          ...SelectArtworkListsModal_me @arguments(artworkID: "artworkID")
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("SelectArtworkListsModal", () => {
@@ -278,7 +278,7 @@ describe("SelectArtworkListsModal", () => {
           context_owner_type: "artist",
           artwork_ids: [artwork.internalID],
           owner_ids: ["collection-one"],
-        })
+        }),
       )
     })
 
@@ -301,7 +301,7 @@ describe("SelectArtworkListsModal", () => {
           context_owner_type: "artist",
           artwork_ids: [artwork.internalID],
           owner_ids: ["collection-one", "collection-two"],
-        })
+        }),
       )
     })
   })

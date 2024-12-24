@@ -33,7 +33,7 @@ describe("ArticleVideo", () => {
     expect(screen.getByText("About the Film")).toBeInTheDocument()
     expect(screen.getByText("Example description")).toBeInTheDocument()
     expect(
-      screen.getByText("Presented in Partnership with")
+      screen.getByText("Presented in Partnership with"),
     ).toBeInTheDocument()
   })
 })

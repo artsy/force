@@ -79,7 +79,7 @@ describe("MyCollection Artwork SWA Submission Status", () => {
       expect(screen.getByText("Submission Status")).toBeInTheDocument()
       expect(screen.getByText("View Listing")).toBeInTheDocument()
       expect(
-        screen.getByText("Your artwork has been successfully listed on Artsy.")
+        screen.getByText("Your artwork has been successfully listed on Artsy."),
       ).toBeInTheDocument()
       expect(screen.getByText("Listed")).toBeInTheDocument()
     })

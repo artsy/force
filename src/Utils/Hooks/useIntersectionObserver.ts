@@ -25,7 +25,7 @@ export const useIntersectionObserver = ({
 
     if (once) {
       const hasIntersected = entries.some(
-        ({ isIntersecting }) => isIntersecting
+        ({ isIntersecting }) => isIntersecting,
       )
 
       if (hasIntersected) {
@@ -51,7 +51,7 @@ export const useIntersectionObserver = ({
   const [observer] = useState(() =>
     isClientSide
       ? new IntersectionObserver(handleIntersect, options)
-      : undefined
+      : undefined,
   )
 
   useEffect(() => {

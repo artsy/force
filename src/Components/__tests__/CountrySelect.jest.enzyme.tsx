@@ -9,7 +9,7 @@ describe("CountrySelect", () => {
         onSelect={() => {
           done()
         }}
-      />
+      />,
     )
 
     wrapper.find("select").simulate("change")

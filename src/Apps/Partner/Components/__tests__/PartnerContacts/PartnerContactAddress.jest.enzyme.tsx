@@ -12,7 +12,7 @@ describe("PartnerContactAddress", () => {
             phone: "123",
           } as PartnerContactAddress_location$data
         }
-      />
+      />,
     )
 
     const html = wrapper.html()
@@ -29,7 +29,7 @@ describe("PartnerContactAddress", () => {
             address: "address",
           } as PartnerContactAddress_location$data
         }
-      />
+      />,
     )
 
     const html = wrapper.html()

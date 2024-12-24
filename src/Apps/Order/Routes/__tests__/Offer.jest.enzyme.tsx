@@ -281,7 +281,7 @@ describe("Offer InitialMutation", () => {
       await page.setOfferAmount(0)
 
       expect(page.offerInput.text()).not.toMatch(
-        "Offer amount missing or invalid."
+        "Offer amount missing or invalid.",
       )
       await page.clickSubmit()
       expect(mockCommitMutation).not.toHaveBeenCalled()

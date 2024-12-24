@@ -72,11 +72,11 @@ export const ArtworksRefetchContainer = createRefetchContainer(
   {
     partner: graphql`
       fragment Works_partner on Partner
-        @argumentDefinitions(
-          input: { type: "FilterArtworksInput" }
-          aggregations: { type: "[ArtworkAggregation]" }
-          shouldFetchCounts: { type: "Boolean!", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        input: { type: "FilterArtworksInput" }
+        aggregations: { type: "[ArtworkAggregation]" }
+        shouldFetchCounts: { type: "Boolean!", defaultValue: false }
+      ) {
         slug
         internalID
         featuredKeywords
@@ -115,7 +115,7 @@ export const ArtworksRefetchContainer = createRefetchContainer(
         ...Works_partner @arguments(input: $input)
       }
     }
-  `
+  `,
 )
 
 type PartnerArtworkFilterQueryRendererProps = {}

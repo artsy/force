@@ -71,7 +71,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<
                   )}
                 </HTML>
               </ArtworkDefinitionList>
-            )
+            ),
           )}
         </Join>
       </Container>
@@ -108,7 +108,7 @@ export const useArtworkDetailsAdditionalInfoFields = ({
   const { selectedEditionSet } = useSelectedEditionSetContext()
 
   const { dimensionsLabel } = useArtworkDimensions(
-    selectedEditionSet ? selectedEditionSet?.dimensions : dimensions
+    selectedEditionSet ? selectedEditionSet?.dimensions : dimensions,
   )
 
   const { trackEvent } = useTracking()

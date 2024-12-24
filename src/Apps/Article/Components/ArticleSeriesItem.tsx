@@ -137,7 +137,7 @@ export const ArticleSeriesItemFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const Play = styled(Box)`

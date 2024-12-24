@@ -25,7 +25,7 @@ export const setupTestWrapper = <T extends OperationType>({
   const getWrapper = (
     mockResolvers: MockResolvers = {},
     componentProps: {} = {},
-    mockedEnv?: ReturnType<typeof createMockEnvironment>
+    mockedEnv?: ReturnType<typeof createMockEnvironment>,
   ) => {
     const env = mockedEnv ?? createMockEnvironment()
 
@@ -54,7 +54,7 @@ export const setupTestWrapper = <T extends OperationType>({
       act(() => {
         env.mock.resolve(
           operation,
-          MockPayloadGenerator.generate(operation, mockResolvers)
+          MockPayloadGenerator.generate(operation, mockResolvers),
         )
       })
 
@@ -79,7 +79,7 @@ export const setupTestWrapper = <T extends OperationType>({
     const wrapper = mount(
       <ErrorBoundary>
         <TestRenderer />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     )
 
     env.mock.resolveMostRecentOperation(operation => {

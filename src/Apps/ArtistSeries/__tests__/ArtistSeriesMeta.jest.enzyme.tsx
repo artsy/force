@@ -8,7 +8,7 @@ jest.unmock("react-relay")
 
 describe("ArtistSeriesMeta", () => {
   const getWrapper = async (
-    response: ArtistSeriesMeta_TestQuery$rawResponse = ArtistSeriesMetaFixture
+    response: ArtistSeriesMeta_TestQuery$rawResponse = ArtistSeriesMetaFixture,
   ) => {
     return renderRelayTree({
       Component: ({ artistSeries }) => {
@@ -20,8 +20,8 @@ describe("ArtistSeriesMeta", () => {
       },
       query: graphql`
         query ArtistSeriesMeta_TestQuery($slug: ID!)
-          @raw_response_type
-          @relay_test_operation {
+        @raw_response_type
+        @relay_test_operation {
           artistSeries(id: $slug) {
             ...ArtistSeriesMeta_artistSeries
           }
@@ -39,10 +39,10 @@ describe("ArtistSeriesMeta", () => {
     const expectedTitle = "Yayoi Kusama’s Pumpkins - For Sale on Artsy"
     expect(wrapper.find("Title").text()).toBe(expectedTitle)
     expect(wrapper.find('Meta[property="og:title"]').prop("content")).toBe(
-      expectedTitle
+      expectedTitle,
     )
     expect(wrapper.find('Meta[property="twitter:title"]').prop("content")).toBe(
-      expectedTitle
+      expectedTitle,
     )
   })
 
@@ -51,13 +51,13 @@ describe("ArtistSeriesMeta", () => {
     const expectedDescription =
       "Discover and collect art from Yayoi Kusama’s iconic Pumpkins series and more. Yayoi Kusama's instantly recognizable pumpkins have become fixtures of..."
     expect(wrapper.find('Meta[name="description"]').prop("content")).toBe(
-      expectedDescription
+      expectedDescription,
     )
     expect(
-      wrapper.find('Meta[property="og:description"]').prop("content")
+      wrapper.find('Meta[property="og:description"]').prop("content"),
     ).toBe(expectedDescription)
     expect(
-      wrapper.find('Meta[property="twitter:description"]').prop("content")
+      wrapper.find('Meta[property="twitter:description"]').prop("content"),
     ).toBe(expectedDescription)
   })
 
@@ -68,7 +68,7 @@ describe("ArtistSeriesMeta", () => {
       "Discover and collect art from iconic Squashes series and more. Squashes are a lot like pumpkins except that they don't belong to any particular holiday. The..."
     expect(wrapper.find("Title").text()).toBe(expectedTitle)
     expect(wrapper.find('Meta[name="description"]').prop("content")).toBe(
-      expectedDescription
+      expectedDescription,
     )
   })
 

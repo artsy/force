@@ -415,9 +415,9 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
 export const DetailsFragmentContainer = createFragmentContainer(Details, {
   artwork: graphql`
     fragment Details_artwork on Artwork
-      @argumentDefinitions(
-        includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
-      ) {
+    @argumentDefinitions(
+      includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
+    ) {
       internalID
       href
       title

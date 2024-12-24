@@ -195,7 +195,7 @@ describe("useCreateTokenAndSubmit", () => {
               phone: values.phoneNumber,
             },
           },
-        })
+        }),
       )
     })
   })
@@ -223,7 +223,7 @@ describe("useCreateTokenAndSubmit", () => {
             saleID: props.sale.slug,
           },
         },
-      })
+      }),
     )
   })
 
@@ -242,7 +242,7 @@ describe("useCreateTokenAndSubmit", () => {
     expect(spy).toHaveBeenCalledWith(
       expect.objectContaining({
         bidderID: "bidderInternalID",
-      })
+      }),
     )
   })
 

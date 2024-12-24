@@ -26,7 +26,7 @@ describe("FeaturedCollectionsRails", () => {
         path="/collection/slug"
       >
         <FeaturedCollectionsRails {...passedProps} />
-      </AnalyticsCombinedContextProvider>
+      </AnalyticsCombinedContextProvider>,
     )
   }
 

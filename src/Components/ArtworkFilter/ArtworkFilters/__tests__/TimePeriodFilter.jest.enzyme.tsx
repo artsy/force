@@ -37,12 +37,12 @@ describe("TimePeriodFilter", () => {
 
   const getWrapper = (
     contextProps = {},
-    filterProps: TimePeriodFilterProps = { expanded: true }
+    filterProps: TimePeriodFilterProps = { expanded: true },
   ) => {
     return mount(
       <ArtworkFilterContextProvider {...contextProps}>
         <TimePeriodFilterFilterTest {...filterProps} />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
   }
 

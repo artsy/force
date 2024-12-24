@@ -132,5 +132,5 @@ export const GalleriesRouteFragmentContainer = createFragmentContainer(
           @arguments(id: "5638fdfb7261690296000031")
       }
     `,
-  }
+  },
 )

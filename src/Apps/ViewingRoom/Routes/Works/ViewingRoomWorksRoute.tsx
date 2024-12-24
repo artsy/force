@@ -135,5 +135,5 @@ export const ViewingRoomWorksRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

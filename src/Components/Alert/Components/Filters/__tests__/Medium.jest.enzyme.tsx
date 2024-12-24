@@ -20,7 +20,7 @@ describe("MediumFilter", () => {
     return mount(
       <AlertProvider initialCriteria={initialCriteria}>
         <MediumFilterTestComponent />
-      </AlertProvider>
+      </AlertProvider>,
     )
   }
 

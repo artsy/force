@@ -130,7 +130,7 @@ describe("ConditionRoute", () => {
                 conditionDescription: "description",
               },
             },
-          })
+          }),
         )
       })
     })
@@ -164,7 +164,7 @@ describe("ConditionRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            "/sell/submissions/externalId/additional-documents"
+            "/sell/submissions/externalId/additional-documents",
           )
         })
       })
@@ -191,7 +191,7 @@ describe("ConditionRoute", () => {
                   conditionDescription: "description",
                 },
               },
-            })
+            }),
           )
 
           expect(submitMutation).toHaveBeenCalledWith(
@@ -203,11 +203,11 @@ describe("ConditionRoute", () => {
                   state: "RESUBMITTED",
                 },
               },
-            })
+            }),
           )
 
           expect(mockPush).toHaveBeenCalledWith(
-            "/sell/submissions/externalId/thank-you-post-approval"
+            "/sell/submissions/externalId/thank-you-post-approval",
           )
         })
       })

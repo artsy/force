@@ -18,7 +18,7 @@ describe("ConversationMessageImage", () => {
 
     expect(mockOpen).toHaveBeenCalledWith(
       "https://image.com/img.webp",
-      "_blank"
+      "_blank",
     )
   })
 })

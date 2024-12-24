@@ -37,7 +37,7 @@ describe("ArtworkFilterMobileOverlay", () => {
     return mount(
       <ArtworkFilterContextProvider {...props}>
         <ArtworkFilterMobileOverlayTest />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
   }
 

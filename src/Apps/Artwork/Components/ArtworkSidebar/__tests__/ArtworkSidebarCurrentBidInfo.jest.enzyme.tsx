@@ -26,17 +26,17 @@ jest.unmock("react-tracking")
 
 describe("ArtworkSidebarCurrentBidInfo", () => {
   const { Component, dispatch: mockTrack } = mockTracking(
-    ArtworkSidebarCurrentBidInfoFragmentContainer
+    ArtworkSidebarCurrentBidInfoFragmentContainer,
   )
   const getWrapper = async (
-    response: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"]
+    response: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"],
   ) => {
     return renderRelayTree({
       Component,
       query: graphql`
         query ArtworkSidebarCurrentBidInfo_Test_Query
-          @raw_response_type
-          @relay_test_operation {
+        @raw_response_type
+        @relay_test_operation {
           artwork(id: "auction_artwork_estimate_premium") {
             ...ArtworkSidebarCurrentBidInfo_artwork
           }
@@ -171,7 +171,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
 
       expect(wrapper.text()).toContain("This auction has a buyer’s premium.")
       expect(wrapper.text()).toContain(
-        "Shipping, taxes, and additional fees may apply."
+        "Shipping, taxes, and additional fees may apply.",
       )
     })
   })

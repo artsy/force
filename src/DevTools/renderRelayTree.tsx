@@ -101,7 +101,7 @@ export function renderRelayTree<
   params: MockRelayRendererProps<any> & {
     renderUntil?: RenderUntilPredicate<P, S, C>
     wrapper?: (renderer: JSX.Element) => JSX.Element
-  }
+  },
 ) {
   const {
     renderUntil: renderUntilPredicate,
@@ -110,6 +110,6 @@ export function renderRelayTree<
   } = params
   const renderer = <MockRelayRenderer {...rendererProps} />
   return mount<C, P, S>(wrapper ? wrapper(renderer) : renderer).renderUntil(
-    renderUntilPredicate || RelayFinishedLoading
+    renderUntilPredicate || RelayFinishedLoading,
   )
 }

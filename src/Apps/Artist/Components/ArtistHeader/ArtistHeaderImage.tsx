@@ -110,7 +110,7 @@ interface MaybeValidImage {
 }
 
 export const isValidImage = (
-  image?: MaybeValidImage | null
+  image?: MaybeValidImage | null,
 ): image is ValidImage => {
   return Boolean(image && image.src && image.width && image.height)
 }

@@ -12,7 +12,7 @@ export const trackHelpers = {
     contextPageOwnerType: PageOwnerType,
     artworkID: string,
     artworkSlug: string,
-    horizontalSlidePosition: number
+    horizontalSlidePosition: number,
   ): ClickedArtworkGroup => ({
     action: ActionType.clickedArtworkGroup,
     destination_page_owner_id: artworkID,

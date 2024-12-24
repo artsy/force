@@ -60,7 +60,7 @@ const VALIDATION_SCHEMA = Yup.object().shape({
         },
       }),
     phoneNumberCountryCode: Yup.string().required(
-      "Phone Number Country Code is required"
+      "Phone Number Country Code is required",
     ),
   }),
   isDefault: Yup.boolean().optional(),
@@ -308,7 +308,7 @@ export const SettingsShippingAddressForm: FC<
                     onSelect={option => {
                       setFieldValue(
                         "attributes.phoneNumberCountryCode",
-                        option.value
+                        option.value,
                       )
                     }}
                     name="attributes.phoneNumber"

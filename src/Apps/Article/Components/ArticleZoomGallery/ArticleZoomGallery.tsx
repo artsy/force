@@ -44,7 +44,7 @@ const ArticleZoomGallery: FC<
         ) {
           return section.figures.map(figure => ({ ...figure, section }))
         }
-      })
+      }),
     )
   }, [article])
 
@@ -201,7 +201,7 @@ export const ArticleZoomGalleryFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const ArticleZoomGalleryPlaceholder: FC<

@@ -107,7 +107,7 @@ export class ArtworkGridContainer extends React.Component<
 
   columnBreakpointProps = memoizeOnce(
     (columnCount: number[]) => valuesWithBreakpointProps(columnCount),
-    isEqual
+    isEqual,
   )
 
   // TODO: This will still re-calculate column layout from scratch when new
@@ -115,17 +115,17 @@ export class ArtworkGridContainer extends React.Component<
   //       calculations from where it finished last time.
   sectionedArtworksForAllBreakpoints: (
     artworks: Artworks,
-    columnCount: number[]
+    columnCount: number[],
   ) => SectionedArtworks[] = memoizeOnce(
     (artworks, columnCount) =>
       columnCount.map(n =>
         createSectionedArtworks(
           artworks,
           n,
-          this.props.showArtworksWithoutImages
-        )
+          this.props.showArtworksWithoutImages,
+        ),
       ),
-    areSectionedArtworksEqual
+    areSectionedArtworksEqual,
   )
 
   maybeLoadMore() {
@@ -139,7 +139,7 @@ export class ArtworkGridContainer extends React.Component<
 
   renderSectionsForSingleBreakpoint(
     columnCount: number,
-    sectionedArtworks: SectionedArtworks
+    sectionedArtworks: SectionedArtworks,
   ) {
     const {
       contextModule,
@@ -160,7 +160,7 @@ export class ArtworkGridContainer extends React.Component<
     const firstP1Artwork = extractNodes(this.props.artworks).find(
       artwork =>
         (artwork as any)?.artist?.targetSupply?.priority === "TRUE" &&
-        !(artwork as any).consignmentSubmission
+        !(artwork as any).consignmentSubmission,
     )
 
     for (let column = 0; column < columnCount; column++) {
@@ -206,13 +206,16 @@ export class ArtworkGridContainer extends React.Component<
             }
             onPopoverDismiss={this.props.onPopoverDismiss}
             showSubmissionStatus={showSubmissionStatus}
-          />
+          />,
         )
         // Setting a marginBottom on the artwork component didn’t work, so using a spacer view instead.
         if (row < sectionedArtworks[column].length - 1) {
           artworkComponents.push(
             // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            <div style={spacerStyle} key={"spacer-" + row + "-" + artwork.id} />
+            <div
+              style={spacerStyle}
+              key={"spacer-" + row + "-" + artwork.id}
+            />,
           )
         }
       }
@@ -227,7 +230,7 @@ export class ArtworkGridContainer extends React.Component<
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         <div style={sectionSpecificStyle} key={column}>
           {artworkComponents}
-        </div>
+        </div>,
       )
     }
     return sections
@@ -259,8 +262,8 @@ export class ArtworkGridContainer extends React.Component<
         columnCount[0],
         this.sectionedArtworksForAllBreakpoints(
           this.props.artworks,
-          columnCount
-        )[0]
+          columnCount,
+        )[0],
       )
     }
 
@@ -268,7 +271,7 @@ export class ArtworkGridContainer extends React.Component<
     const sectionedArtworksForAllBreakpoints =
       this.sectionedArtworksForAllBreakpoints(
         this.props.artworks,
-        columnBreakpointProps.map(([n]) => n)
+        columnBreakpointProps.map(([n]) => n),
       )
 
     return columnBreakpointProps.map(([count, props], i) => (
@@ -283,7 +286,7 @@ export class ArtworkGridContainer extends React.Component<
               {renderChildren &&
                 this.renderSectionsForSingleBreakpoint(
                   count,
-                  sectionedArtworksForAllBreakpoints[i]
+                  sectionedArtworksForAllBreakpoints[i],
                 )}
             </InnerContainer>
           )
@@ -335,11 +338,11 @@ const InnerContainer = styled(Flex)`
 export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
   artworks: graphql`
     fragment ArtworkGrid_artworks on ArtworkConnectionInterface
-      @argumentDefinitions(
-        includeAllImages: { type: "Boolean", defaultValue: false }
-        includeBlurHash: { type: "Boolean!", defaultValue: true }
-        includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
-      ) {
+    @argumentDefinitions(
+      includeAllImages: { type: "Boolean", defaultValue: false }
+      includeBlurHash: { type: "Boolean!", defaultValue: true }
+      includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
+    ) {
       edges {
         node {
           id
@@ -381,7 +384,7 @@ function areSectionedArtworksEqual(current: any, previous: any) {
 export function createSectionedArtworks(
   artworksConnection: Artworks,
   columnCount: number,
-  showArtworksWithoutImages = false
+  showArtworksWithoutImages = false,
 ): SectionedArtworks {
   const sectionedArtworks: SectionedArtworks = []
   const sectionRatioSums = []

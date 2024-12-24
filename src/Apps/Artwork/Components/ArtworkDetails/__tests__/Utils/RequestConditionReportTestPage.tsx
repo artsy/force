@@ -4,7 +4,7 @@ import { RootTestPage } from "DevTools/RootTestPage"
 export class RequestConditionReportTestPage extends RootTestPage {
   get requestButton() {
     return this.find("button").filterWhere(btn =>
-      btn.text().includes("Request condition report")
+      btn.text().includes("Request condition report"),
     )
   }
   get loginButton() {

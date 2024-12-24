@@ -38,7 +38,7 @@ export const RelatedCollectionEntity: React.FC<
         destinationPageOwnerId: id,
         destinationPageOwnerSlug: slug,
         horizontalSlidePosition: slideIndex,
-      })
+      }),
     )
   }
 
@@ -139,5 +139,5 @@ export const RelatedCollectionEntityFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

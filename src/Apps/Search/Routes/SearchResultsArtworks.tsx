@@ -25,7 +25,7 @@ export const SearchResultsArtworksRoute: React.FC<
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
   const [searchFilterKey, setSearchFilterKey] = useState(
-    match.location.query.term
+    match.location.query.term,
   )
   const { viewer } = props
   const { sidebar } = viewer
@@ -71,11 +71,11 @@ export const SearchResultsArtworksRouteFragmentContainer =
   createFragmentContainer(SearchResultsArtworksRoute, {
     viewer: graphql`
       fragment SearchResultsArtworks_viewer on Viewer
-        @argumentDefinitions(
-          input: { type: "FilterArtworksInput" }
-          sidebarInput: { type: "FilterArtworksInput" }
-          shouldFetchCounts: { type: "Boolean!", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        input: { type: "FilterArtworksInput" }
+        sidebarInput: { type: "FilterArtworksInput" }
+        shouldFetchCounts: { type: "Boolean!", defaultValue: false }
+      ) {
         sidebar: artworksConnection(first: 1, input: $sidebarInput) {
           counts @include(if: $shouldFetchCounts) {
             followedArtists

@@ -19,7 +19,7 @@ export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
   const handleChangeText = useMemo(
     () => debounce(updateKeywordFilter, DEBOUNCE_DELAY),
     // FIXME:
-    [filterContext]
+    [filterContext],
   )
 
   // Stop the invocation of the debounced function after unmounting

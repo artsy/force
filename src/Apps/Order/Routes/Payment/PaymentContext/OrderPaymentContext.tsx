@@ -94,7 +94,7 @@ export const OrderPaymentContextProvider: React.FC<
 > = ({ children }) => {
   const [state, dispatch] = useReducer(
     orderPaymentReducer,
-    initialOrderPaymentState
+    initialOrderPaymentState,
   )
 
   // for developers' convenience only

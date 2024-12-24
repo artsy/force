@@ -72,5 +72,5 @@ export const OfferSummaryItemFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

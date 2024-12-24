@@ -17,8 +17,8 @@ export const NetworkTimeout: React.FC<
     const timeout = setTimeout(() => {
       logger.error(
         new ErrorWithMetadata(
-          `[Router/NetworkTimeout] Error: Network request timed out after ${NETWORK_TIMEOUT_MS}ms`
-        )
+          `[Router/NetworkTimeout] Error: Network request timed out after ${NETWORK_TIMEOUT_MS}ms`,
+        ),
       )
 
       sendToast({

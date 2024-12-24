@@ -19,7 +19,7 @@ export const ArtistConsignMeta: React.FC<
 
   const imageURL = get(
     targetSupply,
-    p => p?.microfunnel?.artworksConnection?.edges?.[0]?.node?.image?.imageURL
+    p => p?.microfunnel?.artworksConnection?.edges?.[0]?.node?.image?.imageURL,
   )
 
   const title = `Sell Works by ${name}`
@@ -64,5 +64,5 @@ export const ArtistConsignMetaFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

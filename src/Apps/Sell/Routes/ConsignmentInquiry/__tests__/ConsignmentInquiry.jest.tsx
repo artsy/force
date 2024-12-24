@@ -115,7 +115,7 @@ describe("ConsignmentInquiry", () => {
     expect(screen.getByText("Contact a specialist")).toBeInTheDocument()
 
     expect(
-      screen.getAllByRole("button").find(c => c.textContent?.includes("Back"))
+      screen.getAllByRole("button").find(c => c.textContent?.includes("Back")),
     ).toBeInTheDocument()
 
     expect(await getSubmitButton()).toBeInTheDocument()
@@ -142,7 +142,7 @@ describe("ConsignmentInquiry", () => {
     expect(screen.getByText("Contact Jessica")).toBeInTheDocument()
 
     expect(
-      screen.getAllByRole("button").find(c => c.textContent?.includes("Back"))
+      screen.getAllByRole("button").find(c => c.textContent?.includes("Back")),
     ).toBeInTheDocument()
 
     expect(await getSubmitButton()).toBeInTheDocument()
@@ -189,11 +189,11 @@ describe("ConsignmentInquiry", () => {
               userId: mockMe.internalID,
             },
           },
-        })
+        }),
       )
       expect(mockRouterPush).toHaveBeenCalledWith("/sell/inquiry/sent")
       expect(mockTrackEvent).toBeCalledWith(
-        expect.objectContaining({ consignment_inquiry_id: 9 })
+        expect.objectContaining({ consignment_inquiry_id: 9 }),
       )
     })
   })

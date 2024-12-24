@@ -5,7 +5,7 @@ import type {
 import { graphql, useFragment } from "react-relay"
 
 export const useConversationPurchaseButtonData = (
-  conversation: useConversationPurchaseButtonData_conversation$key
+  conversation: useConversationPurchaseButtonData_conversation$key,
 ) => {
   const conversationData = useFragment(
     graphql`
@@ -28,7 +28,7 @@ export const useConversationPurchaseButtonData = (
         }
       }
     `,
-    conversation
+    conversation,
   )
 
   if (!conversationData) {

@@ -76,7 +76,7 @@ const Cell: ForwardRefExoticComponent<SwiperCellProps> = forwardRef(
         pr={0}
       />
     )
-  }
+  },
 )
 
 const Rail: FC<React.PropsWithChildren<SwiperRailProps>> = props => {

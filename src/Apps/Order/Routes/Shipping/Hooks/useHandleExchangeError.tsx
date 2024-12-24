@@ -23,7 +23,7 @@ export const useHandleExchangeError = ({
 
   const handleExchangeError = (
     error: { code: string; data: string | null | undefined },
-    logger: ReturnType<typeof createLogger>
+    logger: ReturnType<typeof createLogger>,
   ) => {
     logger.error(error)
 
@@ -64,7 +64,7 @@ export const useHandleExchangeError = ({
       })
     } else if (error.code === "destination_could_not_be_geocoded") {
       const { title, message, formattedMessage } = getErrorDialogCopy(
-        ErrorDialogs.DestinationCouldNotBeGeocoded
+        ErrorDialogs.DestinationCouldNotBeGeocoded,
       )
 
       orderTracking.errorMessageViewed({

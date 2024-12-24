@@ -67,7 +67,7 @@ const AuctionFAQsDialog: React.FC<
                 <HTML variant="sm" html={page.content} />
               </Tab>
             )
-          }
+          },
         )}
       </Tabs>
     </Box>
@@ -105,5 +105,5 @@ export const AuctionFAQsDialogFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

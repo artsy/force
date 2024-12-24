@@ -43,10 +43,10 @@ interface Actions {
       code: string
       data: string | null | undefined
     },
-    logger: ReturnType<typeof createLogger>
+    logger: ReturnType<typeof createLogger>,
   ) => void
   setFulfillmentDetailsFormikContext: (
-    payload: FormikProps<FulfillmentValues>
+    payload: FormikProps<FulfillmentValues>,
   ) => void
   setSelectedShippingQuote: (payload: string | null) => void
   setNewSavedAddressID: (payload: string | null) => void
@@ -79,10 +79,10 @@ export const ShippingContextProvider: FC<
   const meData = useMemo(
     () => ({
       addressList: compact<SavedAddressType>(
-        extractNodes(meFragmentData?.addressConnection) ?? []
+        extractNodes(meFragmentData?.addressConnection) ?? [],
       ),
     }),
-    [meFragmentData.addressConnection]
+    [meFragmentData.addressConnection],
   )
 
   const orderData = computeOrderData(orderFragmentData, meData)
@@ -129,7 +129,7 @@ export const ShippingContextProvider: FC<
 
   const dispatchActions = {
     setFulfillmentDetailsFormikContext: (
-      formHelpers: FormikProps<FulfillmentValues>
+      formHelpers: FormikProps<FulfillmentValues>,
     ) => {
       dispatch({ type: "SET_FULFILLMENT_DETAILS_CTX", payload: formHelpers })
     },
@@ -300,12 +300,12 @@ const ORDER_FRAGMENT = graphql`
 
 const ME_FRAGMENT = graphql`
   fragment ShippingContext_me on Me
-    @argumentDefinitions(
-      first: { type: "Int", defaultValue: 30 }
-      last: { type: "Int" }
-      after: { type: "String" }
-      before: { type: "String" }
-    ) {
+  @argumentDefinitions(
+    first: { type: "Int", defaultValue: 30 }
+    last: { type: "Int" }
+    after: { type: "String" }
+    before: { type: "String" }
+  ) {
     addressConnection(
       first: $first
       last: $last

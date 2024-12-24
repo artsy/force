@@ -23,7 +23,7 @@ export const MyCollectionArtworkSubmitForSale: React.FC<
 
   const artwork = useFragment(
     MyCollectionArtworkSubmitForSaleFragment,
-    props.artwork
+    props.artwork,
   )
 
   const isHighDemand = (artwork?.marketPriceInsights?.demandRank || 0) >= 0.9

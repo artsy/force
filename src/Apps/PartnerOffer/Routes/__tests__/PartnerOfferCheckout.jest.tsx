@@ -50,11 +50,11 @@ describe("PartnerOfferCheckout", () => {
         variables: {
           input: { partnerOfferId: "123" },
         },
-      })
+      }),
     )
     await waitFor(() => {
       expect(mockRouterPush).toHaveBeenCalledWith(
-        "/artwork/1234?expired_offer=true"
+        "/artwork/1234?expired_offer=true",
       )
     })
   })
@@ -81,11 +81,11 @@ describe("PartnerOfferCheckout", () => {
         variables: {
           input: { partnerOfferId: "123" },
         },
-      })
+      }),
     )
     await waitFor(() => {
       expect(mockRouterPush).toHaveBeenCalledWith(
-        "/artwork/1235?unavailable=true"
+        "/artwork/1235?unavailable=true",
       )
     })
   })
@@ -112,7 +112,7 @@ describe("PartnerOfferCheckout", () => {
         variables: {
           input: { partnerOfferId: "123" },
         },
-      })
+      }),
     )
     await waitFor(() => {
       expect(mockRouterPush).toHaveBeenCalledWith("/orders/1236")
@@ -141,7 +141,7 @@ describe("PartnerOfferCheckout", () => {
         variables: {
           input: { partnerOfferId: "123" },
         },
-      })
+      }),
     )
     await waitFor(() => {
       expect(mockRouterPush).toHaveBeenCalledWith("/")

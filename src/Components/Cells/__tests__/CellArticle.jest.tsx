@@ -10,12 +10,12 @@ const { renderWithRelay } =
   setupTestWrapperTL<CellArticleFragmentContainer_Test_Query>({
     Component: CellArticleFragmentContainer,
     query: graphql`
-    query CellArticleFragmentContainer_Test_Query @relay_test_operation {
-      article(id: "example") {
-        ...CellArticle_article
+      query CellArticleFragmentContainer_Test_Query @relay_test_operation {
+        article(id: "example") {
+          ...CellArticle_article
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("CellArticle", () => {

@@ -80,10 +80,10 @@ describe("MyCollectionArtwork", () => {
       renderWithRelay(mockResolversNotP1)
 
       expect(
-        screen.queryByText("Artwork has been submitted for sale")
+        screen.queryByText("Artwork has been submitted for sale"),
       ).not.toBeInTheDocument()
       expect(
-        screen.queryByText("Interested in Selling This Work?")
+        screen.queryByText("Interested in Selling This Work?"),
       ).not.toBeInTheDocument()
     })
 
@@ -104,10 +104,10 @@ describe("MyCollectionArtwork", () => {
         expect(
           screen
             .getAllByRole("link")
-            .find(c => c.textContent?.includes("Request a Price Estimate"))
+            .find(c => c.textContent?.includes("Request a Price Estimate")),
         ).toHaveAttribute(
           "href",
-          `/collector-profile/my-collection/artwork/63035a6b41808b000c7e2933/price-estimate`
+          `/collector-profile/my-collection/artwork/63035a6b41808b000c7e2933/price-estimate`,
         )
       })
     })
@@ -118,10 +118,10 @@ describe("MyCollectionArtwork", () => {
         renderWithRelay(mockResolversWithPriceEstimateRequest)
 
         expect(
-          screen.queryByText("Request a Price Estimate")
+          screen.queryByText("Request a Price Estimate"),
         ).not.toBeInTheDocument()
         expect(
-          screen.getByText("Price estimate request sent")
+          screen.getByText("Price estimate request sent"),
         ).toBeInTheDocument()
       })
     })
@@ -132,7 +132,7 @@ describe("MyCollectionArtwork", () => {
         renderWithRelay(mockResolversNotP1)
 
         expect(
-          screen.queryByText("Request a Price Estimate")
+          screen.queryByText("Request a Price Estimate"),
         ).not.toBeInTheDocument()
       })
     })

@@ -90,7 +90,7 @@ export const AppPreferencesProvider: FC<
         }
       })
     },
-    [processQueue]
+    [processQueue],
   )
 
   return (

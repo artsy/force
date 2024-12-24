@@ -17,12 +17,12 @@ describe("AttributionClassFilter", () => {
   let context: ArtworkFilterContextProps
 
   const getWrapper = (
-    props: AttributionClassFilterProps = { expanded: true }
+    props: AttributionClassFilterProps = { expanded: true },
   ) => {
     return mount(
       <ArtworkFilterContextProvider>
         <AttributionClassFilterTest {...props} />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
   }
 

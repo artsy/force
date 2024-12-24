@@ -19,10 +19,10 @@ const InsightsRoute: React.FC<React.PropsWithChildren<InsightsRouteProps>> = ({
   me,
 }) => {
   const isCareerHighlightEnabled = useFeatureFlag(
-    "my-collection-web-phase-7-career-highlights"
+    "my-collection-web-phase-7-career-highlights",
   )
   const isMedianSalePriceEnabled = useFeatureFlag(
-    "my-collection-web-phase-7-median-sale-price"
+    "my-collection-web-phase-7-median-sale-price",
   )
 
   if (!me.myCollectionInfo?.artworksCount) {
@@ -87,5 +87,5 @@ export const InsightsRouteFragmentContainer = createFragmentContainer(
         ...InsightsMedianSalePrice_me
       }
     `,
-  }
+  },
 )

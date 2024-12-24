@@ -13,7 +13,7 @@ describe("FilterQuick", () => {
           options={ATTRIBUTION_CLASS_OPTIONS}
           visible
         />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
 
     expect(screen.getByText("Rarity")).toBeInTheDocument()
@@ -43,7 +43,7 @@ describe("FilterQuick", () => {
             options={[]}
             visible
           />
-        </ArtworkFilterContextProvider>
+        </ArtworkFilterContextProvider>,
       )
 
       expect(screen.getByText("Example Medium")).toBeInTheDocument()

@@ -21,7 +21,7 @@ export const PrivateArtworkDetails: React.FC<
         ...PrivateArtworkMetadata_artwork
       }
     `,
-    artwork
+    artwork,
   )
 
   return (

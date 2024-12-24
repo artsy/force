@@ -14,7 +14,7 @@ type PhoneNumber = {
 const validator = debounce(
   async (
     { national, regionCode }: PhoneNumber,
-    resolve: (value: boolean) => void
+    resolve: (value: boolean) => void,
   ) => {
     if (!national || national.length < 5 || !regionCode) {
       return resolve(false)
@@ -33,7 +33,7 @@ const validator = debounce(
             }
           }
         `,
-        { phoneNumber: national, regionCode }
+        { phoneNumber: national, regionCode },
       ).toPromise()
 
       if (!response?.phoneNumber) {
@@ -49,12 +49,12 @@ const validator = debounce(
       return resolve(true)
     }
   },
-  200
+  200,
 )
 
 // Since the validator is debounced, we need to wrap in a parent promise
 export const validatePhoneNumber = (
-  phoneNumber: PhoneNumber
+  phoneNumber: PhoneNumber,
 ): Promise<boolean> => {
   return new Promise(resolve => {
     validator(phoneNumber, resolve)

@@ -53,7 +53,7 @@ export const SearchApp: React.FC<React.PropsWithChildren<SearchAppProps>> = ({
 
   const term = query.term
   const typeAggregation = aggregations?.find(
-    agg => agg?.slice === "TYPE"
+    agg => agg?.slice === "TYPE",
   )?.counts
 
   const artworkCount = artworksConnection?.counts?.total ?? 0
@@ -130,7 +130,7 @@ export const SearchApp: React.FC<React.PropsWithChildren<SearchAppProps>> = ({
 export const SearchAppFragmentContainer = createFragmentContainer(SearchApp, {
   viewer: graphql`
     fragment SearchApp_viewer on Viewer
-      @argumentDefinitions(term: { type: "String!", defaultValue: "" }) {
+    @argumentDefinitions(term: { type: "String!", defaultValue: "" }) {
       searchConnection(query: $term, first: 1, aggregations: [TYPE]) {
         aggregations {
           slice

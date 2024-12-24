@@ -87,7 +87,7 @@ describe("Meta", () => {
   >["node"]
 
   const artistWithArtworkOverrides = (
-    artwork: Partial<ArtworkMeta>
+    artwork: Partial<ArtworkMeta>,
   ): ArtistMeta_artist$data => {
     return {
       ...artist,

@@ -19,7 +19,7 @@ export const OnboardingFigure = forwardRef(
     }: OnboardingFigureProps & {
       ref?: React.Ref<HTMLDivElement>
     },
-    forwardedRef
+    forwardedRef,
   ) => {
     const img = resized(src, { width: 400 })
 
@@ -61,5 +61,5 @@ export const OnboardingFigure = forwardRef(
         </ResponsiveBox>
       </Flex>
     )
-  }
+  },
 )

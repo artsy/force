@@ -33,12 +33,12 @@ export const NewForYouArtworksGridFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment NewForYouArtworksGrid_viewer on Viewer
-        @argumentDefinitions(
-          first: { type: "Int" }
-          includeBackfill: { type: "Boolean!" }
-          version: { type: "String" }
-          maxWorksPerArtist: { type: "Int" }
-        ) {
+      @argumentDefinitions(
+        first: { type: "Int" }
+        includeBackfill: { type: "Boolean!" }
+        version: { type: "String" }
+        maxWorksPerArtist: { type: "Int" }
+      ) {
         artworksForUser(
           first: $first
           includeBackfill: $includeBackfill
@@ -54,5 +54,5 @@ export const NewForYouArtworksGridFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

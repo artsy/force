@@ -10,12 +10,12 @@ describe("SettingsAuctionsRoute", () => {
     setupTestWrapper<SettingsAuctionsRouteQuery_Test_Query>({
       Component: SettingsAuctionsRouteFragmentContainer,
       query: graphql`
-      query SettingsAuctionsRouteQuery_Test_Query @relay_test_operation {
-        me {
-          ...SettingsAuctionsRoute_me
+        query SettingsAuctionsRouteQuery_Test_Query @relay_test_operation {
+          me {
+            ...SettingsAuctionsRoute_me
+          }
         }
-      }
-    `,
+      `,
     })
 
   it("renders correctly", () => {

@@ -53,7 +53,7 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<
             contextPageOwnerType: contextPageOwnerType,
             destinationPageOwnerType: OwnerType.newWorksFromGalleriesYouFollow,
             type: "viewAll",
-          })
+          }),
         )
       }}
       getItems={() => {

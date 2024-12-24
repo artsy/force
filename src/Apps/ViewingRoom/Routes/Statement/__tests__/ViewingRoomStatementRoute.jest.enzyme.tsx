@@ -24,7 +24,7 @@ describe("ViewingRoomStatementRoute", () => {
 
   const getWrapper = async (
     breakpoint: Breakpoint = "lg",
-    response: ViewingRoomStatementRoute_Test_Query$rawResponse = ViewingRoomStatmentRouteFixture
+    response: ViewingRoomStatementRoute_Test_Query$rawResponse = ViewingRoomStatmentRouteFixture,
   ) => {
     return await renderRelayTree({
       Component: ({ viewingRoom }) => {
@@ -38,8 +38,8 @@ describe("ViewingRoomStatementRoute", () => {
       },
       query: graphql`
         query ViewingRoomStatementRoute_Test_Query($slug: ID!)
-          @raw_response_type
-          @relay_test_operation {
+        @raw_response_type
+        @relay_test_operation {
           viewingRoom(id: $slug) {
             ...ViewingRoomStatementRoute_viewingRoom
           }
@@ -75,7 +75,7 @@ describe("ViewingRoomStatementRoute", () => {
     it("renders an intro statement", async () => {
       const wrapper = (await getWrapper()).find("ViewingRoomIntro")
       expect(wrapper.text()).toContain(
-        "Checked into a Club Med in the French Alps"
+        "Checked into a Club Med in the French Alps",
       )
     })
   })
@@ -155,7 +155,7 @@ describe("ViewingRoomStatementRoute", () => {
     it("displays the correct text", async () => {
       const wrapper = (await getWrapper()).find("ViewingRoomBody")
       expect(wrapper.html()).toContain(
-        "Life can only be understood backwards; but it must be lived forwards."
+        "Life can only be understood backwards; but it must be lived forwards.",
       )
     })
   })

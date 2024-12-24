@@ -13,7 +13,7 @@ export interface SearchNodeOption {
 }
 
 export const formatOptions = (
-  options: SearchNodeOption[]
+  options: SearchNodeOption[],
 ): SuggestionItemOptionProps[] => {
   return options.map((option, index) => {
     return {

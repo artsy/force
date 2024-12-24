@@ -16,7 +16,7 @@ export const SpeakToTheTeam: React.FC<
 
   const image = resized(
     "https://files.artsy.net/images/SWA-landing-FAQ-section-speak-to-the-team-image-x2.jpg",
-    { width: 949, height: 420 }
+    { width: 949, height: 420 },
   )
   const getInTouchRoute = "/sell/inquiry"
 

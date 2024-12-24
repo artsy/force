@@ -7,7 +7,7 @@ describe("Two factor authentication enrollment", () => {
   }
   const getWrapper = (passedProps = props) => {
     return mount(
-      <SettingsEditSettingsTwoFactorBackupCodesActions {...passedProps} />
+      <SettingsEditSettingsTwoFactorBackupCodesActions {...passedProps} />,
     )
   }
 

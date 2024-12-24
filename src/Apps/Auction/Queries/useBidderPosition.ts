@@ -43,7 +43,7 @@ export const useBidderPosition = () => {
       variables,
       {
         fetchPolicy: "network-only",
-      }
+      },
     ).toPromise()
   }
 

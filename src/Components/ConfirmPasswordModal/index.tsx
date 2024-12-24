@@ -19,7 +19,7 @@ interface ConfirmPasswordModalProps {
   onCancel: () => void
   onConfirm: (
     password: string,
-    formikHelpers: FormikHelpers<ConfirmPasswordInput>
+    formikHelpers: FormikHelpers<ConfirmPasswordInput>,
   ) => void
   show: boolean
   subTitle?: string

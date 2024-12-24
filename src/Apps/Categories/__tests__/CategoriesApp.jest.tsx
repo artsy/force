@@ -52,7 +52,7 @@ describe("CategoriesApp", () => {
     })
 
     expect(
-      screen.getByRole("heading", { name: "Styles and Movements" })
+      screen.getByRole("heading", { name: "Styles and Movements" }),
     ).toBeInTheDocument()
   })
 })

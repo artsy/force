@@ -63,11 +63,11 @@ export const GeneArtworkFilterRefetchContainer = createRefetchContainer(
   {
     gene: graphql`
       fragment GeneArtworkFilter_gene on Gene
-        @argumentDefinitions(
-          input: { type: "FilterArtworksInput" }
-          aggregations: { type: "[ArtworkAggregation]" }
-          shouldFetchCounts: { type: "Boolean!", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        input: { type: "FilterArtworksInput" }
+        aggregations: { type: "[ArtworkAggregation]" }
+        shouldFetchCounts: { type: "Boolean!", defaultValue: false }
+      ) {
         slug
         internalID
         sidebar: filterArtworksConnection(
@@ -105,7 +105,7 @@ export const GeneArtworkFilterRefetchContainer = createRefetchContainer(
         ...GeneArtworkFilter_gene @arguments(input: $input)
       }
     }
-  `
+  `,
 )
 
 type GeneArtworkFilterQueryRendererProps = {}

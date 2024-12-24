@@ -41,7 +41,7 @@ export const ReviewOrderButton: React.FC<
         }
       }
     `,
-    order
+    order,
   )
 
   if (!data) {

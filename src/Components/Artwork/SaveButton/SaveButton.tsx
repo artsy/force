@@ -56,7 +56,7 @@ export const SaveButtonBase: React.FC<
   }
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault()
 
@@ -132,7 +132,7 @@ export const SaveButton: React.FC<React.PropsWithChildren<SaveButtonProps>> = ({
   })
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault()
     handleSave()

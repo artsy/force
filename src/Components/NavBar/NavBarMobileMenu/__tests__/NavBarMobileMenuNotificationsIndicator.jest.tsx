@@ -9,7 +9,7 @@ const { renderWithRelay } = setupTestWrapperTL({
   Component: NavBarMobileMenuNotificationsIndicatorFragmentContainer,
   query: graphql`
     query NavBarMobileMenuNotificationsIndicator_test_Query
-      @relay_test_operation {
+    @relay_test_operation {
       me {
         ...NavBarMobileMenuNotificationsIndicator_me
       }

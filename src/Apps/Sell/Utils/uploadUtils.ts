@@ -21,7 +21,7 @@ export interface Asset {
 }
 
 export const photosFromMyCollectionArtwork = (
-  myCollectionArtwork: PhotosRoute_submission$data["myCollectionArtwork"]
+  myCollectionArtwork: PhotosRoute_submission$data["myCollectionArtwork"],
 ): DropzoneFile[] => {
   if (!myCollectionArtwork) return []
 
@@ -57,7 +57,7 @@ export const uploadDocument = async (
   relayEnvironment: Environment,
   document: DropzoneFile,
   updateProgress: (progress: number) => void,
-  acl = "private"
+  acl = "private",
 ) => {
   try {
     const convectionKey = await getConvectionGeminiKey(relayEnvironment)
@@ -70,7 +70,7 @@ export const uploadDocument = async (
       {
         acl: acl,
         name: convectionKey,
-      }
+      },
     )
 
     // upload photo to S3
@@ -78,7 +78,7 @@ export const uploadDocument = async (
       document,
       acl,
       assetCredentials,
-      updateProgress
+      updateProgress,
     )
 
     return sourceKey

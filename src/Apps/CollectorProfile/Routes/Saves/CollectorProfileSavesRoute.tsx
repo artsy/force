@@ -57,7 +57,7 @@ const CollectorProfileSavesRoute: FC<
 
   if (initialArtworkListId.current !== undefined) {
     const index = customArtworkLists.findIndex(
-      artworkList => artworkList.internalID === initialArtworkListId.current
+      artworkList => artworkList.internalID === initialArtworkListId.current,
     )
 
     if (index !== -1) {
@@ -84,7 +84,7 @@ const CollectorProfileSavesRoute: FC<
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const selectedArtworkList = useMemo(() => {
     return artworkLists.find(
-      artworkList => artworkList.internalID === selectedArtworkListId
+      artworkList => artworkList.internalID === selectedArtworkListId,
     )
   }, [selectedArtworkListId])
 

@@ -57,7 +57,7 @@ export const AboutArtworksRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const AboutArtworksRailQueryRenderer: React.FC<

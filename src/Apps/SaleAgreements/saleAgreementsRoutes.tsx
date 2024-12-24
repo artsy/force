@@ -6,7 +6,7 @@ const SaleAgreementsApp = loadable(
   () => import(/* webpackChunkName: "jobsBundle" */ "./SaleAgreementsApp"),
   {
     resolveComponent: component => component.SaleAgreementsApp,
-  }
+  },
 )
 
 const SaleAgreementRoute = loadable(
@@ -14,7 +14,7 @@ const SaleAgreementRoute = loadable(
     import(/* webpackChunkName: "jobsBundle" */ "./Routes/SaleAgreementRoute"),
   {
     resolveComponent: component => component.SaleAgreementRoute,
-  }
+  },
 )
 
 export const saleAgreementsRoutes: RouteProps[] = [

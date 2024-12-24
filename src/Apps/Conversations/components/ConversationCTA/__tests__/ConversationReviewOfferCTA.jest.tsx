@@ -40,8 +40,8 @@ describe("ConversationReviewOfferCTA", () => {
     expect(screen.getByText("Payment Failed")).toBeInTheDocument()
     expect(
       screen.getByText(
-        "Unable to process payment for accepted offer. Update payment method."
-      )
+        "Unable to process payment for accepted offer. Update payment method.",
+      ),
     ).toBeInTheDocument()
 
     // Modal details
@@ -51,7 +51,7 @@ describe("ConversationReviewOfferCTA", () => {
       expect(screen.getByText("Update Payment Details")).toBeInTheDocument()
       expect(screen.getByTestId("orderModalIframe")).toHaveAttribute(
         "src",
-        "/orders/orderID/payment/new?isModal=true"
+        "/orders/orderID/payment/new?isModal=true",
       )
     })
   })
@@ -76,7 +76,7 @@ describe("ConversationReviewOfferCTA", () => {
       expect(screen.getByText("Review Offer")).toBeInTheDocument()
       expect(screen.getByTestId("orderModalIframe")).toHaveAttribute(
         "src",
-        "/orders/orderID/respond?isModal=true"
+        "/orders/orderID/respond?isModal=true",
       )
     })
   })
@@ -93,7 +93,7 @@ describe("ConversationReviewOfferCTA", () => {
     })
 
     expect(
-      screen.getByText("Congratulations! Offer Accepted")
+      screen.getByText("Congratulations! Offer Accepted"),
     ).toBeInTheDocument()
     expect(screen.getByText("Tap to view")).toBeInTheDocument()
 
@@ -104,7 +104,7 @@ describe("ConversationReviewOfferCTA", () => {
       expect(screen.getByText("Offer Accepted")).toBeInTheDocument()
       expect(screen.getByTestId("orderModalIframe")).toHaveAttribute(
         "src",
-        "/orders/orderID/status?isModal=true"
+        "/orders/orderID/status?isModal=true",
       )
     })
   })
@@ -126,7 +126,7 @@ describe("ConversationReviewOfferCTA", () => {
     })
 
     expect(
-      screen.getByText("Offer Accepted - Confirm total")
+      screen.getByText("Offer Accepted - Confirm total"),
     ).toBeInTheDocument()
 
     // Modal details
@@ -136,7 +136,7 @@ describe("ConversationReviewOfferCTA", () => {
       expect(screen.getByText("Review Offer")).toBeInTheDocument()
       expect(screen.getByTestId("orderModalIframe")).toHaveAttribute(
         "src",
-        "/orders/orderID/respond?isModal=true"
+        "/orders/orderID/respond?isModal=true",
       )
     })
   })
@@ -158,7 +158,7 @@ describe("ConversationReviewOfferCTA", () => {
     })
 
     expect(
-      screen.getByText("Counteroffer Received - Confirm Total")
+      screen.getByText("Counteroffer Received - Confirm Total"),
     ).toBeInTheDocument()
 
     // Modal details
@@ -168,7 +168,7 @@ describe("ConversationReviewOfferCTA", () => {
       expect(screen.getByText("Review Offer")).toBeInTheDocument()
       expect(screen.getByTestId("orderModalIframe")).toHaveAttribute(
         "src",
-        "/orders/orderID/respond?isModal=true"
+        "/orders/orderID/respond?isModal=true",
       )
     })
   })
@@ -199,7 +199,7 @@ describe("ConversationReviewOfferCTA", () => {
       expect(screen.getAllByText("Offer Accepted")[1]).toBeInTheDocument()
       expect(screen.getByTestId("orderModalIframe")).toHaveAttribute(
         "src",
-        "/orders/orderID/status?isModal=true"
+        "/orders/orderID/status?isModal=true",
       )
     })
   })

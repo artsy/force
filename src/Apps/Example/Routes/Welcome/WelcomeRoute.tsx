@@ -22,7 +22,7 @@ export const WelcomeRoute: React.FC<React.PropsWithChildren<unknown>> = () => {
         context_page_owner_slug: contextPageOwnerSlug,
         context_page_owner_id: contextPageOwnerId,
         subject: e.currentTarget.textContent,
-      })
+      }),
     )
   }
 

@@ -9,7 +9,7 @@ import { NODE_ENV } from "Server/config"
 export function localsMiddleware(
   req: ArtsyRequest,
   res: ArtsyResponse,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const ua = req.get("user-agent") || ""
 

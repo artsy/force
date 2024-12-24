@@ -21,7 +21,7 @@ export const MyCollectionArtworkInsights: React.FC<
   React.PropsWithChildren<MyCollectionArtworkInsightsProps>
 > = ({ ...restProps }) => {
   const enablePostApprovalSubmissionFlow = useFeatureFlag(
-    "onyx_post_approval_submission_flow"
+    "onyx_post_approval_submission_flow",
   )
 
   const artwork = useFragment(FRAGMENT, restProps.artwork)

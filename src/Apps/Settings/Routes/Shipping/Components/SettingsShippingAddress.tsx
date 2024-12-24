@@ -156,5 +156,5 @@ export const SettingsShippingAddressFragmentContainer = createFragmentContainer(
         region
       }
     `,
-  }
+  },
 )

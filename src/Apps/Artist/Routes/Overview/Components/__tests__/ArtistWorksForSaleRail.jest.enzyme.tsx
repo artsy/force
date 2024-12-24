@@ -50,7 +50,7 @@ describe("ArtistWorksForSaleRail", () => {
     expect(wrapper.text()).toContain("Works For Sale")
     expect(wrapper.find("RouterLink").length).toBe(3)
     expect(wrapper.find("RouterLink").at(0).props().to).toContain(
-      "/artist/artistSlug"
+      "/artist/artistSlug",
     )
     expect(wrapper.text()).toContain("View All Works")
     expect(wrapper.find("Shelf").length).toBe(1)
@@ -68,7 +68,7 @@ describe("ArtistWorksForSaleRail", () => {
         context_module: "worksForSaleRail",
         destination_page_owner_type: "artist",
         type: "viewAll",
-      })
+      }),
     )
   })
 
@@ -82,7 +82,7 @@ describe("ArtistWorksForSaleRail", () => {
         destination_page_owner_type: "artwork",
         horizontal_slide_position: 1,
         type: "thumbnail",
-      })
+      }),
     )
   })
 })

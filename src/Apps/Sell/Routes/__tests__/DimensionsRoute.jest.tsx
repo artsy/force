@@ -93,13 +93,13 @@ describe("DimensionsRoute", () => {
 
     await waitFor(() => {
       expect(screen.getByTestId("width-input")).toHaveValue(
-        '<mock-value-for-field-"width">'
+        '<mock-value-for-field-"width">',
       )
       expect(screen.getByTestId("height-input")).toHaveValue(
-        '<mock-value-for-field-"height">'
+        '<mock-value-for-field-"height">',
       )
       expect(screen.getByTestId("depth-input")).toHaveValue(
-        '<mock-value-for-field-"depth">'
+        '<mock-value-for-field-"depth">',
       )
     })
   })
@@ -136,11 +136,11 @@ describe("DimensionsRoute", () => {
                 width: '<mock-value-for-field-"width">',
               },
             },
-          })
+          }),
         )
 
         expect(mockPush).toHaveBeenCalledWith(
-          '/sell/submissions/<mock-value-for-field-"externalId">/phone-number'
+          '/sell/submissions/<mock-value-for-field-"externalId">/phone-number',
         )
       })
     })
@@ -160,7 +160,7 @@ describe("DimensionsRoute", () => {
 
       await waitFor(() => {
         expect(mockPush).toHaveBeenCalledWith(
-          '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history'
+          '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history',
         )
 
         expect(submitMutation).toHaveBeenCalledWith(
@@ -174,7 +174,7 @@ describe("DimensionsRoute", () => {
                 dimensionsMetric: "in",
               },
             },
-          })
+          }),
         )
       })
     })
@@ -212,7 +212,7 @@ describe("DimensionsRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            '/sell/submissions/<mock-value-for-field-"externalId">/phone-number'
+            '/sell/submissions/<mock-value-for-field-"externalId">/phone-number',
           )
         })
       })
@@ -226,7 +226,7 @@ describe("DimensionsRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history'
+            '/sell/submissions/<mock-value-for-field-"externalId">/purchase-history',
           )
         })
       })
@@ -245,7 +245,7 @@ describe("DimensionsRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            '/sell/submissions/<mock-value-for-field-"externalId">/phone-number'
+            '/sell/submissions/<mock-value-for-field-"externalId">/phone-number',
           )
         })
       })

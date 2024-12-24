@@ -14,7 +14,7 @@ export type AssetCredentials =
 
 export const getGeminiCredentialsForEnvironment = (
   relayEnvironment: Environment,
-  input: RequestCredentialsForAssetUploadInput
+  input: RequestCredentialsForAssetUploadInput,
 ) => {
   return new Promise<AssetCredentials>((resolve, reject) => {
     commitMutation<getGeminiCredentialsForEnvironmentMutation>(
@@ -56,7 +56,7 @@ export const getGeminiCredentialsForEnvironment = (
             resolve(response.requestCredentialsForAssetUpload?.asset)
           }
         },
-      }
+      },
     )
   })
 }

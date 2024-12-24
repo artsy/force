@@ -104,7 +104,7 @@ describe("appPreferencesPost", () => {
         maxAge: 31536000000,
         httpOnly: false,
         secure: true,
-      }
+      },
     )
     expect(send).toHaveBeenCalledWith({ theme: "dark" })
   })

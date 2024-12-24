@@ -13,7 +13,7 @@ export const uploadFileToS3 = (
   photo: Photo,
   acl: string,
   asset: AssetCredentials,
-  updateProgress: (progress: number) => void
+  updateProgress: (progress: number) => void,
 ): Promise<string | undefined> =>
   new Promise(async (resolve, reject) => {
     if (!asset) {

@@ -26,12 +26,12 @@ export const useTimer = (endDate: string, startAt = ""): Timer => {
   const currentTime = useCurrentTime({ syncWithServer: true })
 
   const timeBeforeEnd = Duration.fromISO(
-    DateTime.fromISO(endDate).diff(DateTime.fromISO(currentTime)).toString()
+    DateTime.fromISO(endDate).diff(DateTime.fromISO(currentTime)).toString(),
   )
   const hasEnded = Math.floor(timeBeforeEnd.seconds) <= 0
 
   const timeBeforeStart = Duration.fromISO(
-    DateTime.fromISO(startAt).diff(DateTime.fromISO(currentTime)).toString()
+    DateTime.fromISO(startAt).diff(DateTime.fromISO(currentTime)).toString(),
   )
   const hasStarted = Math.floor(timeBeforeStart.seconds) <= 0
 

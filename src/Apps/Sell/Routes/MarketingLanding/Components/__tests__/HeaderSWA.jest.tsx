@@ -38,7 +38,7 @@ describe("HeaderSWA", () => {
     render(<HeaderSWA />)
 
     expect(
-      screen.getByText("Sell art from your collection")
+      screen.getByText("Sell art from your collection"),
     ).toBeInTheDocument()
     expect(screen.getByText("Start Selling")).toBeInTheDocument()
     expect(screen.getByText("Get in Touch")).toBeInTheDocument()
@@ -99,7 +99,7 @@ describe("HeaderSWA", () => {
     describe("with previous draft submission", () => {
       beforeEach(() => {
         getMock.mockImplementation(key =>
-          key === "previousSubmissionID" ? "test-id" : "test-step"
+          key === "previousSubmissionID" ? "test-id" : "test-step",
         )
       })
 
@@ -109,7 +109,7 @@ describe("HeaderSWA", () => {
         expect(getMock).toHaveBeenCalledWith("previousSubmissionID")
 
         expect(
-          screen.queryByText("Finish previous submission:")
+          screen.queryByText("Finish previous submission:"),
         ).not.toBeInTheDocument()
       })
     })

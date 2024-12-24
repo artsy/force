@@ -61,7 +61,7 @@ interface ExternalFile {
 export function normalizePhoto(
   file: File | ExternalFile,
   errorMessage?: string,
-  externalUrl?: string
+  externalUrl?: string,
 ): Photo {
   return {
     id: uuid(),
@@ -103,7 +103,7 @@ export const uploadSubmissionPhoto = async (
   relayEnvironment: Environment,
   photo: Photo,
   updateProgress: (progress: number) => void,
-  acl = "private"
+  acl = "private",
 ) => {
   try {
     const convectionKey = await getConvectionGeminiKey(relayEnvironment)
@@ -116,7 +116,7 @@ export const uploadSubmissionPhoto = async (
       {
         acl: acl,
         name: convectionKey,
-      }
+      },
     )
 
     if (photo.removed) return
@@ -126,7 +126,7 @@ export const uploadSubmissionPhoto = async (
       photo,
       acl,
       assetCredentials,
-      updateProgress
+      updateProgress,
     )
 
     if (!sourceKey) return
@@ -151,7 +151,7 @@ export const uploadPhotoToS3 = async (
   relayEnvironment: Environment,
   photo: Photo,
   updateProgress: (progress: number) => void,
-  acl = "private"
+  acl = "private",
 ) => {
   const convectionKey = await getConvectionGeminiKey(relayEnvironment)
 
@@ -160,7 +160,7 @@ export const uploadPhotoToS3 = async (
     {
       acl,
       name: convectionKey || "",
-    }
+    },
   )
 
   if (!assetCredentials) {

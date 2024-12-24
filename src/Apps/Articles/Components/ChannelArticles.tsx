@@ -72,7 +72,7 @@ export const ChannelArticlesPaginationContainer = createPaginationContainer(
   {
     channel: graphql`
       fragment ChannelArticles_channel on Channel
-        @argumentDefinitions(after: { type: "String" }) {
+      @argumentDefinitions(after: { type: "String" }) {
         articlesConnection(first: 9, after: $after, sort: PUBLISHED_AT_DESC)
           @connection(key: "ChannelArticles_articlesConnection") {
           edges {
@@ -94,5 +94,5 @@ export const ChannelArticlesPaginationContainer = createPaginationContainer(
       return { ...fragmentVariables, after }
     },
     query: CHANNEL_ARTICLES_QUERY,
-  }
+  },
 )

@@ -51,13 +51,13 @@ describe("ViewingRoomCard", () => {
     })
 
     expect(wrapper.find("a").props().href).toEqual(
-      "/viewing-room/antonio-colombo-ceramic-girl-s"
+      "/viewing-room/antonio-colombo-ceramic-girl-s",
     )
     expect(wrapper.find("img").props().src).toEqual(
-      "?height=222&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=263"
+      "?height=222&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=263",
     )
     expect(wrapper.find("img").props().srcSet).toEqual(
-      "?height=222&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=263 1x, ?height=444&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=526 2x"
+      "?height=222&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=263 1x, ?height=444&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=526 2x",
     )
     expect(wrapper.find("img").props().alt).toEqual("Ceramic Girl(s)")
     expect(wrapper.find("h5").first().text()).toEqual("Viewing Room")

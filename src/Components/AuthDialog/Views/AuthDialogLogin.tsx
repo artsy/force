@@ -38,7 +38,7 @@ export const AuthDialogLogin: FC<React.PropsWithChildren<unknown>> = () => {
       }}
       onSubmit={async (
         { email, password, authenticationCode },
-        { setStatus, setFieldValue }
+        { setStatus, setFieldValue },
       ) => {
         setStatus({ error: null })
         setFieldValue("mode", "Loading")

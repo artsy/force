@@ -201,7 +201,7 @@ export const HomeCurrentFairsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const HomeCurrentFairsQueryRenderer: React.FC<

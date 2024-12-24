@@ -123,5 +123,5 @@ export const SettingsPaymentsMethodsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

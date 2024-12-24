@@ -75,5 +75,5 @@ export const SettingsAppFragmentContainer = createFragmentContainer(
         name
       }
     `,
-  }
+  },
 )

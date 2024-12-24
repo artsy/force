@@ -5,7 +5,7 @@ import type { AuthIntentMutation } from "./types"
 
 export const followProfileMutation: AuthIntentMutation = (
   relayEnvironment: Environment,
-  id: string
+  id: string,
 ) => {
   return new Promise((resolve, reject) => {
     commitMutation<AuthIntentFollowProfileMutation>(relayEnvironment, {
@@ -19,7 +19,7 @@ export const followProfileMutation: AuthIntentMutation = (
       },
       mutation: graphql`
         mutation AuthIntentFollowProfileMutation($input: FollowProfileInput!)
-          @raw_response_type {
+        @raw_response_type {
           followProfile(input: $input) {
             profile {
               id

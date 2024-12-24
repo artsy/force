@@ -22,12 +22,12 @@ describe("PriceRangeFilterNew", () => {
 
   const renderPriceRangeFilter = (
     props: PriceRangeFilterProps = { expanded: true },
-    contextProps = {}
+    contextProps = {},
   ) => {
     return render(
       <ArtworkFilterContextProvider {...contextProps}>
         <PriceRangeFilterTest {...props} />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
   }
 

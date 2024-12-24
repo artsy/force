@@ -42,24 +42,24 @@ describe("IntroRoute", () => {
       expect(screen.getByText("Tell us about your work")).toBeInTheDocument()
       expect(
         screen.getByText(
-          "Start by adding an artist from our list of high demand artists. Include information such as year, medium, dimensions and materials."
-        )
+          "Start by adding an artist from our list of high demand artists. Include information such as year, medium, dimensions and materials.",
+        ),
       ).toBeInTheDocument()
       expect(screen.getByText("Upload artwork images")).toBeInTheDocument()
       expect(
         screen.getByText(
-          "Improve your chances of selling by including photographs of the front, back, frame, signature, and other details."
-        )
+          "Improve your chances of selling by including photographs of the front, back, frame, signature, and other details.",
+        ),
       ).toBeInTheDocument()
       expect(screen.getByText("Complete submission")).toBeInTheDocument()
       expect(
         screen.getByText(
-          "Your work will be submitted to an Artsy advisor who will assess whether your work is eligible and help guide you on next steps."
-        )
+          "Your work will be submitted to an Artsy advisor who will assess whether your work is eligible and help guide you on next steps.",
+        ),
       ).toBeInTheDocument()
       expect(screen.getByText("Start New Submission")).toBeInTheDocument()
       expect(
-        screen.queryByText("New from My Collection")
+        screen.queryByText("New from My Collection"),
       ).not.toBeInTheDocument()
     })
   })
@@ -72,7 +72,7 @@ describe("IntroRoute", () => {
     expect(startNewSubmissionButton).toBeInTheDocument()
     expect(startNewSubmissionButton).toHaveAttribute(
       "href",
-      "/sell/submissions/new"
+      "/sell/submissions/new",
     )
 
     fireEvent.click(startNewSubmissionButton)

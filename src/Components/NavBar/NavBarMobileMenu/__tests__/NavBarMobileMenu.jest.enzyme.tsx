@@ -28,14 +28,14 @@ describe("NavBarMobileMenu", () => {
         featureFlags={props.featureFlags}
       >
         <NavBarMobileMenu isOpen onClose={noop} />
-      </SystemContextProvider>
+      </SystemContextProvider>,
     )
   }
 
   const getMobileMenuLinkContainer = (
     userType: string | null = null,
     lab_features: string[] = [],
-    featureFlags?: FeatureFlags
+    featureFlags?: FeatureFlags,
   ) =>
     getWrapper({
       user: userType ? { userType, lab_features } : null,
@@ -52,7 +52,7 @@ describe("NavBarMobileMenu", () => {
 
   it("calls logout auth action on logout menu click", () => {
     mockLogout.mockImplementationOnce(() =>
-      jest.fn().mockResolvedValue(Promise.resolve())
+      jest.fn().mockResolvedValue(Promise.resolve()),
     )
 
     const wrapper = getWrapper({ user: { type: "NotAdmin" } })

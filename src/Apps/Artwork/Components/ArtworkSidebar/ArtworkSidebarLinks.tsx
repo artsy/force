@@ -81,5 +81,5 @@ export const ArtworkSidebarLinksFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

@@ -81,7 +81,7 @@ export const usePrefetchRoute = ({
                 maxAge: serverCacheTTL,
               },
             },
-          }
+          },
         ).subscribe({
           start: () => {
             if (isDevelopment) {
@@ -108,7 +108,7 @@ export const usePrefetchRoute = ({
 
       return querySubscriptions
     },
-    [initialPath, prefetchDisabled]
+    [initialPath, prefetchDisabled],
   )
 
   return { prefetch }

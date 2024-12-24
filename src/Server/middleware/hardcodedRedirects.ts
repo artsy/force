@@ -175,7 +175,7 @@ const router = express.Router()
 
 export const getRedirectUrl = (
   req: ArtsyRequest,
-  redirects: Record<string, string>
+  redirects: Record<string, string>,
 ) => {
   const fromPath = req.route.path
   const toPath = redirects[fromPath]
@@ -183,7 +183,7 @@ export const getRedirectUrl = (
   const queryString = url.parse(req.url).search || ""
   const redirectUrl = toPath.replace(
     /:(\w+)/g,
-    (_, key) => req.params[key] || ":unknown"
+    (_, key) => req.params[key] || ":unknown",
   )
 
   return redirectUrl + queryString

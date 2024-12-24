@@ -7,7 +7,7 @@ describe("Rail", () => {
       <Rail
         getItems={() => [<div>slide-1</div>, <div>slide-2</div>]}
         {...props}
-      />
+      />,
     )
   }
 

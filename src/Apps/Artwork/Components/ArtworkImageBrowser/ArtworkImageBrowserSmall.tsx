@@ -110,7 +110,7 @@ const Cell: React.ForwardRefExoticComponent<SwiperCellProps> = React.forwardRef(
         pr={0}
       />
     )
-  }
+  },
 )
 
 const Rail: React.FC<React.PropsWithChildren<SwiperRailProps>> = props => {
@@ -121,9 +121,9 @@ export const ArtworkImageBrowserSmallFragmentContainer =
   createFragmentContainer(ArtworkImageBrowserSmall, {
     artwork: graphql`
       fragment ArtworkImageBrowserSmall_artwork on Artwork
-        @argumentDefinitions(
-          includeAllImages: { type: "Boolean", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        includeAllImages: { type: "Boolean", defaultValue: false }
+      ) {
         ...ArtworkLightbox_artwork
           @arguments(includeAllImages: $includeAllImages)
         ...ArtworkVideoPlayer_artwork

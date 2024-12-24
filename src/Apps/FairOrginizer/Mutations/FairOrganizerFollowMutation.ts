@@ -8,12 +8,12 @@ export type FollowFairOrganizerMutationProps = (
     id: string
     profileID: string
     isFollowed?: boolean
-  }
+  },
 ) => Promise<unknown>
 
 export const fairOrganizerFollowMutation: FollowFairOrganizerMutationProps = (
   relayEnvironment: Environment,
-  values
+  values,
 ) => {
   return new Promise((resolve, reject) => {
     commitMutation<FairOrganizerFollowMutation>(relayEnvironment, {
@@ -27,7 +27,7 @@ export const fairOrganizerFollowMutation: FollowFairOrganizerMutationProps = (
       },
       mutation: graphql`
         mutation FairOrganizerFollowMutation($input: FollowProfileInput!)
-          @raw_response_type {
+        @raw_response_type {
           followProfile(input: $input) {
             profile {
               id

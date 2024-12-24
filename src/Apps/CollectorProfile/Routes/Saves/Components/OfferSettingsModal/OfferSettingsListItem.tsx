@@ -98,7 +98,7 @@ export const OfferSettingsListItemFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const ArtworkImagePlaceholder = () => {

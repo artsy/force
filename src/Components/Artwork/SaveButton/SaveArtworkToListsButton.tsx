@@ -65,7 +65,7 @@ const SaveArtworkToListsButton: FC<
   }
 
   const handleClick = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault()
     handleSave()

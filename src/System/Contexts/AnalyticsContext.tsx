@@ -49,7 +49,7 @@ export const AnalyticsContextProvider: FC<
 > = ({ children, path }) => {
   const [_type, contextPageOwnerSlug] = useMemo(
     () => tokenize(path ?? ""),
-    [path]
+    [path],
   )
 
   const contextPageOwnerType = useMemo(() => {
@@ -61,7 +61,7 @@ export const AnalyticsContextProvider: FC<
 
     if (!Object.values(OwnerType).includes(ownerType) && SHOW_ANALYTICS_CALLS) {
       console.warn(
-        `OwnerType "${ownerType}" is not part of @artsy/cohesion's schema.`
+        `OwnerType "${ownerType}" is not part of @artsy/cohesion's schema.`,
       )
     }
     return ownerType

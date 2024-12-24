@@ -20,7 +20,7 @@ const Metadata = createFragmentContainer(
         title
       }
     `,
-  }
+  },
 )
 
 export const Artwork = createFragmentContainer(
@@ -47,7 +47,7 @@ export const Artwork = createFragmentContainer(
         ...MockRelayRendererFixtures_artworkMetadata
       }
     `,
-  }
+  },
 )
 
 const Artist = createFragmentContainer(
@@ -60,7 +60,7 @@ const Artist = createFragmentContainer(
         name
       }
     `,
-  }
+  },
 )
 
 const ArtistQueryRenderer = (props: { id: string }) => (
@@ -72,7 +72,7 @@ const ArtistQueryRenderer = (props: { id: string }) => (
           variables={props}
           query={graphql`
             query MockRelayRendererFixturesArtistQuery($id: String!)
-              @raw_response_type {
+            @raw_response_type {
               artist(id: $id) {
                 ...MockRelayRendererFixtures_artist
               }

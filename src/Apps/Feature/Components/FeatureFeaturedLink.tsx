@@ -128,7 +128,7 @@ export const FeatureFeaturedLinkFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const Figure = styled(RouterLink)<RouterLinkProps>`

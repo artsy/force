@@ -9,7 +9,7 @@ describe("FilterExpandable", () => {
     return mount(
       <FilterExpandable expanded>
         <span>Some render content</span>
-      </FilterExpandable>
+      </FilterExpandable>,
     )
   }
 

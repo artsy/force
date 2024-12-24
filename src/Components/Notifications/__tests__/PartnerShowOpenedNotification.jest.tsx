@@ -19,16 +19,16 @@ const { renderWithRelay } =
       return null
     },
     query: graphql`
-    query PartnerShowOpenedNotification_test_Query @relay_test_operation {
-      notificationsConnection(first: 1) {
-        edges {
-          node {
-            ...PartnerShowOpenedNotification_notification
+      query PartnerShowOpenedNotification_test_Query @relay_test_operation {
+        notificationsConnection(first: 1) {
+          edges {
+            node {
+              ...PartnerShowOpenedNotification_notification
+            }
           }
         }
       }
-    }
-  `,
+    `,
   })
 
 describe("PartnerShowOpenedNotification", () => {
@@ -58,11 +58,11 @@ describe("PartnerShowOpenedNotification", () => {
 
     expect(screen.getByTestId("partner-link")).toHaveAttribute(
       "href",
-      "/partner/theo"
+      "/partner/theo",
     )
     expect(screen.getByTestId("view-show-button")).toHaveAttribute(
       "href",
-      "/show/theo-theo-at-art-ono"
+      "/show/theo-theo-at-art-ono",
     )
   })
 })

@@ -50,20 +50,20 @@ describe("SuggestedArtworksShelf", () => {
         )
       },
       query: graphql`
-      query SuggestedArtworksShelf_Test_Query @relay_test_operation {
-        artworksConnection(first: 5, sort: "-published_at", forSale: true) {
-          counts {
-            total
-          }
-          edges {
-            node {
-              ...ShelfArtwork_artwork
-              internalID
+        query SuggestedArtworksShelf_Test_Query @relay_test_operation {
+          artworksConnection(first: 5, sort: "-published_at", forSale: true) {
+            counts {
+              total
+            }
+            edges {
+              node {
+                ...ShelfArtwork_artwork
+                internalID
+              }
             }
           }
         }
-      }
-    `,
+      `,
     })
 
   it("renders SuggestedArtworkShelf", async () => {
@@ -74,7 +74,7 @@ describe("SuggestedArtworksShelf", () => {
     })
     expect(screen.queryByTestId("ShelfSuggestedArtworks")).toBeInTheDocument()
     expect(
-      screen.queryByText(/You may be interested in these similar works/)
+      screen.queryByText(/You may be interested in these similar works/),
     ).toBeInTheDocument()
     expect(screen.getByText("See more")).toBeInTheDocument()
   })
@@ -86,11 +86,11 @@ describe("SuggestedArtworksShelf", () => {
       }),
     })
     expect(
-      screen.queryByTestId("ShelfSuggestedArtworks")
+      screen.queryByTestId("ShelfSuggestedArtworks"),
     ).not.toBeInTheDocument()
     expect(screen.queryByText("See more")).not.toBeInTheDocument()
     expect(
-      screen.queryByText(/You may be interested in these similar works/)
+      screen.queryByText(/You may be interested in these similar works/),
     ).not.toBeInTheDocument()
   })
 

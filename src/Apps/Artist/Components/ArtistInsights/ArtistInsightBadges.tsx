@@ -62,7 +62,7 @@ export const ArtistInsightBadgesFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const ArtistInsightBadgesPlaceholder: FC<

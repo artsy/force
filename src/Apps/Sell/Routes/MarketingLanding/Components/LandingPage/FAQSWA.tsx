@@ -6,7 +6,7 @@ import { resized } from "Utils/resized"
 export const FAQSWA: React.FC<React.PropsWithChildren<unknown>> = () => {
   const image = resized(
     "https://files.artsy.net/images/SWA-landing-FAQ-section-x2.jpg",
-    { width: 950, height: 419 }
+    { width: 950, height: 419 },
   )
   const supportUrl = "https://support.artsy.net/s/topic/0TO3b000000UesxGAC/sell"
 

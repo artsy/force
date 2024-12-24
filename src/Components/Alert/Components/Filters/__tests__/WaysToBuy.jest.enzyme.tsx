@@ -20,7 +20,7 @@ describe("WaysToBuyFilter", () => {
     return mount(
       <AlertProvider initialCriteria={initialCriteria}>
         <WaysToBuyFilterTestComponent />
-      </AlertProvider>
+      </AlertProvider>,
     )
   }
 

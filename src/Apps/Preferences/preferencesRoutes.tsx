@@ -6,7 +6,7 @@ const PreferencesApp = loadable(
   () => import(/* webpackChunkName: "preferencesBundle" */ "./PreferencesApp"),
   {
     resolveComponent: component => component.PreferencesAppFragmentContainer,
-  }
+  },
 )
 
 export const preferencesRoutes: RouteProps[] = [

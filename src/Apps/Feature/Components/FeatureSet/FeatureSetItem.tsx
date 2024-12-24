@@ -55,5 +55,5 @@ export const FeatureSetItemFragmentContainer = createFragmentContainer(
         ...FeatureFeaturedLink_featuredLink
       }
     `,
-  }
+  },
 )

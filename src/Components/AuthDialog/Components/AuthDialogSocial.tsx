@@ -34,7 +34,7 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
       accepted_terms_of_service: true,
       agreed_to_receive_emails: true,
     },
-    { skipNulls: true }
+    { skipNulls: true },
   )
 
   const handleClick = (service: "facebook" | "apple" | "google") => () => {

@@ -60,7 +60,7 @@ const FairBooths: React.FC<React.PropsWithChildren<FairBoothsProps>> = ({
       ([filterKey, currentFilter]) => {
         const previousFilter = previousFilters[filterKey]
         return !isEqual(currentFilter, previousFilter)
-      }
+      },
     )
 
     if (filtersHaveUpdated) {
@@ -187,11 +187,11 @@ export const FairBoothsFragmentContainer = createRefetchContainer(
   {
     fair: graphql`
       fragment FairBooths_fair on Fair
-        @argumentDefinitions(
-          sort: { type: "ShowSorts", defaultValue: FEATURED_DESC }
-          first: { type: "Int", defaultValue: 15 }
-          page: { type: "Int", defaultValue: 1 }
-        ) {
+      @argumentDefinitions(
+        sort: { type: "ShowSorts", defaultValue: FEATURED_DESC }
+        first: { type: "Int", defaultValue: 15 }
+        page: { type: "Int", defaultValue: 1 }
+      ) {
         slug
         exhibitors: showsConnection(
           sort: $sort
@@ -237,7 +237,7 @@ export const FairBoothsFragmentContainer = createRefetchContainer(
         ...FairBooths_fair @arguments(first: $first, page: $page, sort: $sort)
       }
     }
-  `
+  `,
 )
 
 export const FairBoothsQueryRenderer: React.FC<

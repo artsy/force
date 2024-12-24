@@ -41,7 +41,7 @@ jest.mock("Apps/Order/Hooks/useStripePaymentBySetupIntentId", () => ({
 
 jest.mock("../../Mutations/useSetPayment", () => {
   const originalUseSetPayment = jest.requireActual(
-    "../../Mutations/useSetPayment"
+    "../../Mutations/useSetPayment",
   )
 
   return {
@@ -52,7 +52,7 @@ jest.mock("../../Mutations/useSetPayment", () => {
 })
 
 const CreditCardPickerMock = jest.requireActual(
-  "../../Components/__mocks__/CreditCardPicker"
+  "../../Components/__mocks__/CreditCardPicker",
 )
 
 jest.mock(
@@ -61,7 +61,7 @@ jest.mock(
   // should just work without this extra argument
   () => {
     return jest.requireActual("../../Components/__mocks__/CreditCardPicker")
-  }
+  },
 )
 jest.mock(
   "Components/BankDebitForm/BankDebitProvider",
@@ -69,7 +69,7 @@ jest.mock(
   // should just work without this extra argument
   () => {
     return jest.requireActual("../../Components/__mocks__/BankDebitProvider")
-  }
+  },
 )
 jest.mock("System/Hooks/useSystemContext")
 jest.mock("react-tracking")
@@ -269,7 +269,7 @@ describe("Payment", () => {
               id: "1234",
             },
           },
-        })
+        }),
       )
     })
 
@@ -319,7 +319,7 @@ describe("Payment", () => {
         .closest(Collapse)
 
       expect(creditCardCollapse.text()).not.toContain(
-        "To change the co-badged card network for this purchase, select “Add another card”."
+        "To change the co-badged card network for this purchase, select “Add another card”.",
       )
     })
 
@@ -328,7 +328,7 @@ describe("Payment", () => {
         .find(CreditCardPickerFragmentContainer)
         .closest(Collapse)
       expect(creditCardCollapse.text()).toContain(
-        "To change the co-badged card network for this purchase, select “Add another card”."
+        "To change the co-badged card network for this purchase, select “Add another card”.",
       )
     })
   })
@@ -345,7 +345,7 @@ describe("Payment", () => {
 
     it("shows an active offer stepper if the order is an Offer Order", () => {
       expect(page.orderStepper.text()).toMatchInlineSnapshot(
-        `"OfferShippingPaymentReview"`
+        `"OfferShippingPaymentReview"`,
       )
       expect(page.orderStepperCurrentStep).toBe("Payment")
     })
@@ -418,14 +418,14 @@ describe("Payment", () => {
 
     it("renders description body for bank transfer", () => {
       expect(page.text()).toContain(
-        "• Payment processing will take 4-7 business days once the gallery accepts the order."
+        "• Payment processing will take 4-7 business days once the gallery accepts the order.",
       )
       expect(page.text()).toContain("• Bank transfer is powered by Stripe.")
       expect(page.text()).toContain(
-        "• If you can not find your bank, please check your spelling or choose"
+        "• If you can not find your bank, please check your spelling or choose",
       )
       expect(page.text()).toContain(
-        "• Search for your bank institution or select from the options below."
+        "• Search for your bank institution or select from the options below.",
       )
     })
 
@@ -518,13 +518,13 @@ describe("Payment", () => {
     it("renders description body for SEPA when selected", () => {
       expect(page.text()).toContain("• Bank transfer is powered by Stripe.")
       expect(page.text()).toContain(
-        "• Enter your billing address in the form below."
+        "• Enter your billing address in the form below.",
       )
       expect(page.text()).toContain(
-        "• Your bank account must be denominated in EUR and located in one of the SEPA countries."
+        "• Your bank account must be denominated in EUR and located in one of the SEPA countries.",
       )
       expect(page.text()).toContain(
-        "• Once your order is accepted, please allow 7-10 business days for processing your payment. After processing, your order will be prepared for pickup or packed and shipped, depending on your chosen delivery type."
+        "• Once your order is accepted, please allow 7-10 business days for processing your payment. After processing, your order will be prepared for pickup or packed and shipped, depending on your chosen delivery type.",
       )
     })
 
@@ -610,10 +610,10 @@ describe("Payment", () => {
 
     it("renders description body correctly", () => {
       expect(page.text()).toContain(
-        "• To pay by wire transfer, complete checkout"
+        "• To pay by wire transfer, complete checkout",
       )
       expect(page.text()).toContain(
-        "• Please inform your bank that you will be responsible"
+        "• Please inform your bank that you will be responsible",
       )
     })
 
@@ -687,39 +687,39 @@ describe("Payment", () => {
             .find(CreditCardPickerFragmentContainer)
             .closest(Collapse)
             .first()
-            .props().open
+            .props().open,
         ).toBe(true)
       },
       WIRE_TRANSFER: () => {
         expect(page.text()).toContain(
-          "• To pay by wire transfer, complete checkout to view banking"
+          "• To pay by wire transfer, complete checkout to view banking",
         )
         expect(page.text()).toContain(
-          "• Please inform your bank that you will be responsible for all wire transfer fees."
+          "• Please inform your bank that you will be responsible for all wire transfer fees.",
         )
       },
       US_BANK_ACCOUNT: () => {
         expect(page.text()).toContain(
-          "Search for your bank institution or select from the options below."
+          "Search for your bank institution or select from the options below.",
         )
         expect(
           page
             .find(BankAccountPickerFragmentContainer)
             .closest(Collapse)
             .first()
-            .props().open
+            .props().open,
         ).toBe(true)
       },
       SEPA_DEBIT: () => {
         expect(page.text()).toContain(
-          "Your bank account must be denominated in EUR and located in one of the SEPA countries."
+          "Your bank account must be denominated in EUR and located in one of the SEPA countries.",
         )
         expect(
           page
             .find(BankAccountPickerFragmentContainer)
             .closest(Collapse)
             .first()
-            .props().open
+            .props().open,
         ).toBe(true)
       },
     }
@@ -749,21 +749,21 @@ describe("Payment", () => {
     it("displays additional artwork details from order", () => {
       expect(page.text()).toContain("Artwork Description")
       expect(page.text()).toContain(
-        "additional artwork details provided by admin"
+        "additional artwork details provided by admin",
       )
     })
 
     it("displays artwork provenance", () => {
       expect(page.text()).toContain("Artwork Description")
       expect(page.text()).toContain(
-        "Provenance: Artwork acquired via an auction in 2000"
+        "Provenance: Artwork acquired via an auction in 2000",
       )
     })
 
     it("displays artwork condition description", () => {
       expect(page.text()).toContain("Artwork Description")
       expect(page.text()).toContain(
-        "Condition: Artwork is in perfect condition"
+        "Condition: Artwork is in perfect condition",
       )
     })
 
@@ -774,7 +774,9 @@ describe("Payment", () => {
     })
 
     it.each(
-      Object.keys(paymentMethodExpectsMap).map(paymentMethod => [paymentMethod])
+      Object.keys(paymentMethodExpectsMap).map(paymentMethod => [
+        paymentMethod,
+      ]),
     )(
       "shows content for %s if only this payment method avaliable",
       paymentMethod => {
@@ -801,9 +803,9 @@ describe("Payment", () => {
         paymentMethodExpectsMap[paymentMethod]()
         expect(page.find("[data-test='payment-methods']").length).toEqual(0)
         expect(
-          page.find(Collapse).filterWhere(x => x.prop("open")).length
+          page.find(Collapse).filterWhere(x => x.prop("open")).length,
         ).toEqual(1)
-      }
+      },
     )
   })
 })

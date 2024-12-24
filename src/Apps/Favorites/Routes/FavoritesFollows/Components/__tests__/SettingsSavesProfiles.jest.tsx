@@ -9,7 +9,7 @@ const { renderWithRelay } = setupTestWrapperTL({
   Component: SettingsSavesProfilesPaginationContainer,
   query: graphql`
     query SettingsSavesProfiles_test_Query($after: String)
-      @relay_test_operation {
+    @relay_test_operation {
       me {
         ...SettingsSavesProfiles_me @arguments(after: $after)
       }
@@ -25,7 +25,7 @@ describe("SettingsSavesProfiles", () => {
     })
 
     expect(
-      screen.getByText("Followed Galleries & Institutions")
+      screen.getByText("Followed Galleries & Institutions"),
     ).toBeInTheDocument()
     expect(screen.getByText("Example Profile")).toBeInTheDocument()
   })
@@ -38,7 +38,7 @@ describe("SettingsSavesProfiles", () => {
     })
 
     expect(
-      screen.getByText("Followed Galleries & Institutions")
+      screen.getByText("Followed Galleries & Institutions"),
     ).toBeInTheDocument()
     expect(screen.getByText("Nothing yet.")).toBeInTheDocument()
   })

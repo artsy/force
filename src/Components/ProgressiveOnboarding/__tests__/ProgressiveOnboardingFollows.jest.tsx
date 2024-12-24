@@ -24,7 +24,7 @@ jest.mock(
         {children}
       </>
     ),
-  })
+  }),
 )
 
 jest.mock("Components/ProgressiveOnboarding/withProgressiveOnboardingCounts")
@@ -41,10 +41,10 @@ jest.mock("System/Hooks/useRouter", () => ({
 
 const Example: FC<React.PropsWithChildren<unknown>> = () => {
   const ProgressiveOnboardingFollowFind = withProgressiveOnboardingCounts(
-    __ProgressiveOnboardingFollowFind__
+    __ProgressiveOnboardingFollowFind__,
   )
   const ProgressiveOnboardingFollowArtist = withProgressiveOnboardingCounts(
-    __ProgressiveOnboardingFollowArtist__
+    __ProgressiveOnboardingFollowArtist__,
   )
 
   return (
@@ -166,7 +166,7 @@ describe("ProgressiveOnboardingFollowHighlight", () => {
         <ProgressiveOnboardingFollowHighlight position="center">
           <div>Example</div>
         </ProgressiveOnboardingFollowHighlight>
-      </DismissibleProvider>
+      </DismissibleProvider>,
     )
 
     expect(screen.getByText("Example")).toBeInTheDocument()

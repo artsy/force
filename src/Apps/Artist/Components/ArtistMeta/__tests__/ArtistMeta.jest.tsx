@@ -30,7 +30,7 @@ const { renderWithRelay } = setupTestWrapperTL({
 
 const getMetaBy = (selectors): Element | null => {
   const attributeSelectors = Object.entries(selectors).map(
-    ([key, value]) => `[${key}='${value}']`
+    ([key, value]) => `[${key}='${value}']`,
   )
   const querySelector = `meta${attributeSelectors.join("")}`
   const matchingTag = document.querySelector(querySelector) // eslint-disable no-node-access
@@ -58,15 +58,15 @@ describe("AdminMeta", () => {
       const defaultDescription = `Artsy is the world’s largest online art marketplace. Browse over 1 million artworks by iconic and emerging artists from 4000+ galleries and top auction houses.`
 
       expect(
-        getMetaBy({ name: "description" })?.getAttribute("content")
+        getMetaBy({ name: "description" })?.getAttribute("content"),
       ).toEqual(defaultDescription)
 
       expect(
-        getMetaBy({ property: "og:description" })?.getAttribute("content")
+        getMetaBy({ property: "og:description" })?.getAttribute("content"),
       ).toEqual(defaultDescription)
 
       expect(
-        getMetaBy({ property: "twitter:description" })?.getAttribute("content")
+        getMetaBy({ property: "twitter:description" })?.getAttribute("content"),
       ).toEqual(defaultDescription)
     })
   })
@@ -80,21 +80,21 @@ describe("AdminMeta", () => {
         getMetaBy({
           name: "description",
           content: artist.meta.description,
-        })
+        }),
       ).not.toBeNull()
 
       expect(
         getMetaBy({
           property: "og:description",
           content: artist.meta.description,
-        })
+        }),
       ).not.toBeNull()
 
       expect(
         getMetaBy({
           property: "twitter:description",
           content: artist.meta.description,
-        })
+        }),
       ).not.toBeNull()
     })
   })
@@ -108,11 +108,11 @@ describe("AdminMeta", () => {
         getMetaBy({
           property: "og:url",
           href: "undefined/artist/andy-warhol",
-        })
+        }),
       ).not.toBeNull()
 
       expect(
-        getMetaBy({ property: "og:type", href: "undefined:artist" })
+        getMetaBy({ property: "og:type", href: "undefined:artist" }),
       ).not.toBeNull()
     })
   })
@@ -136,13 +136,13 @@ describe("AdminMeta", () => {
       renderWithRelay({ Artist: () => artist })
 
       expect(
-        getMetaBy({ property: "og:birthyear", content: artist.birthday })
+        getMetaBy({ property: "og:birthyear", content: artist.birthday }),
       ).not.toBeNull()
       expect(
-        getMetaBy({ property: "og:deathyear", content: artist.deathday })
+        getMetaBy({ property: "og:deathyear", content: artist.deathday }),
       ).not.toBeNull()
       expect(
-        getMetaBy({ property: "og:nationality", content: artist.nationality })
+        getMetaBy({ property: "og:nationality", content: artist.nationality }),
       ).not.toBeNull()
     })
   })
@@ -158,7 +158,7 @@ describe("AdminMeta", () => {
       const artist = { alternateNames: ["Bonnie", "Betty"] }
       renderWithRelay({ Artist: () => artist })
       expect(
-        getMetaBy({ name: "skos:prefLabel", content: "Bonnie; Betty" })
+        getMetaBy({ name: "skos:prefLabel", content: "Bonnie; Betty" }),
       ).not.toBeNull()
     })
   })
@@ -168,7 +168,7 @@ describe("AdminMeta", () => {
       const artist = {}
       renderWithRelay({ Artist: () => artist })
       const structuredDataTag = document.querySelector(
-        "script[type='application/ld+json']"
+        "script[type='application/ld+json']",
       ) // eslint-disable no-node-access
       expect(structuredDataTag).not.toBeNull()
     })

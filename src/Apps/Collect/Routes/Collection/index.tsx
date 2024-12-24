@@ -119,7 +119,7 @@ export const CollectionApp: React.FC<
                   if (error) {
                     console.error(
                       "[collection]: Error loading artwork grid",
-                      error
+                      error,
                     )
                     return null
                   }
@@ -170,5 +170,5 @@ export const CollectionFragmentContainer = createFragmentContainer(
         showFeaturedArtists
       }
     `,
-  }
+  },
 )

@@ -51,5 +51,5 @@ export const SettingsEditRouteFragmentContainer = createFragmentContainer(
         ...SettingsEditSettingsLinkedAccounts_me
       }
     `,
-  }
+  },
 )

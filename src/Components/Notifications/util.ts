@@ -16,7 +16,7 @@ export const shouldDisplayNotification = (
         "notificationType" | "artworks" | "item"
       >
     | null
-    | undefined
+    | undefined,
 ) => {
   if (!notification) return false
 
@@ -43,7 +43,7 @@ export const shouldDisplayNotification = (
 }
 
 export const isArtworksBasedNotification = (
-  notificationType: NotificationTypesEnum
+  notificationType: NotificationTypesEnum,
 ) => {
   return [
     "ARTWORK_ALERT",
@@ -69,7 +69,7 @@ export const formattedTimeLeft = (time: {
   if (parsedDays >= 1 && parsedHours >= 1) {
     copy = `${parsedDays} ${pluralize(
       "day",
-      parsedDays
+      parsedDays,
     )} ${parsedHours} ${pluralize("hour", parsedHours)}`
   } else if (parsedDays >= 1) {
     copy = `${parsedDays} ${pluralize("day", parsedDays)}`

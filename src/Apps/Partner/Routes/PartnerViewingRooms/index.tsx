@@ -57,5 +57,5 @@ export const PartnerViewingRoomsFragmentContainer = createFragmentContainer(
           @arguments(count: 12, statuses: [closed])
       }
     `,
-  }
+  },
 )

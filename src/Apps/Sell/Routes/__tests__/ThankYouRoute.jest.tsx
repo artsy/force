@@ -72,18 +72,18 @@ describe("ThankYouRoute", () => {
       renderWithRelay({ ConsignmentSubmission: () => ({ state: "SUBMITTED" }) })
 
       expect(
-        screen.getByText("Thank you for submitting your artwork")
+        screen.getByText("Thank you for submitting your artwork"),
       ).toBeInTheDocument()
 
       expect(
         screen.getByText(
-          "An Artsy Advisor will email you within 3-5 days to review your submission and discuss next steps. In the meantime your submission will appear in the feature, My Collection."
-        )
+          "An Artsy Advisor will email you within 3-5 days to review your submission and discuss next steps. In the meantime your submission will appear in the feature, My Collection.",
+        ),
       ).toBeInTheDocument()
 
       expect(screen.getByText("Submit Another Work")).toBeInTheDocument()
       expect(
-        screen.getByText("View Artwork in My Collection")
+        screen.getByText("View Artwork in My Collection"),
       ).toBeInTheDocument()
     })
   })
@@ -93,18 +93,18 @@ describe("ThankYouRoute", () => {
       renderWithRelay({ ConsignmentSubmission: () => ({ state: "APPROVED" }) })
 
       expect(
-        screen.getByText("Thank you for submitting additional information")
+        screen.getByText("Thank you for submitting additional information"),
       ).toBeInTheDocument()
 
       expect(
         screen.getByText(
-          "This will be used to list, sell and fulfill your work. Additional information may be requested."
-        )
+          "This will be used to list, sell and fulfill your work. Additional information may be requested.",
+        ),
       ).toBeInTheDocument()
 
       expect(screen.getByText("Submit Another Work")).toBeInTheDocument()
       expect(
-        screen.getByText("View Artwork in My Collection")
+        screen.getByText("View Artwork in My Collection"),
       ).toBeInTheDocument()
     })
   })
@@ -115,7 +115,7 @@ describe("ThankYouRoute", () => {
     const submitAnotherWorkButton = screen.getByTestId("submit-another-work")
     expect(submitAnotherWorkButton).toHaveAttribute(
       "href",
-      "/sell/submissions/new"
+      "/sell/submissions/new",
     )
 
     submitAnotherWorkButton.click()
@@ -133,13 +133,13 @@ describe("ThankYouRoute", () => {
       renderWithRelay()
 
       expect(
-        screen.getByText("View Artwork in My Collection")
+        screen.getByText("View Artwork in My Collection"),
       ).toBeInTheDocument()
 
       const viewCollectionButton = screen.getByTestId("view-collection")
       expect(viewCollectionButton).toHaveAttribute(
         "href",
-        '/my-collection/artwork/<mock-value-for-field-"myCollectionArtworkID">'
+        '/my-collection/artwork/<mock-value-for-field-"myCollectionArtworkID">',
       )
 
       viewCollectionButton.click()
@@ -160,7 +160,7 @@ describe("ThankYouRoute", () => {
         })
 
         expect(
-          screen.getByText("View Artwork in My Collection")
+          screen.getByText("View Artwork in My Collection"),
         ).toBeInTheDocument()
 
         const viewCollectionButton = screen.getByTestId("view-collection")

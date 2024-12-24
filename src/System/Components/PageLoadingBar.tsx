@@ -104,7 +104,8 @@ const LoadingBar = styled(Box)<{
   ${({ loading }) =>
     loading === "loading" &&
     css`
-      animation: ${loadingAnimation} 12s ${startEase} forwards,
+      animation:
+        ${loadingAnimation} 12s ${startEase} forwards,
         ${fadeInAnimation} 0.1s linear;
     `}
   ${({ isComplete }) =>

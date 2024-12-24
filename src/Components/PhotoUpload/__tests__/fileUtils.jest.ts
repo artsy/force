@@ -64,7 +64,7 @@ describe("fileUtils", () => {
         submission.id,
         relayEnvironment,
         photo,
-        updateProgress
+        updateProgress,
       )
 
       expect(getConvectionGeminiKey).toHaveBeenCalled()
@@ -74,21 +74,21 @@ describe("fileUtils", () => {
         {
           acl: "private",
           name: "convectionKey",
-        }
+        },
       )
     })
 
     it("use assetCredentials to upload file to S3", async () => {
       const assetCredentials = {}
       ;(getGeminiCredentialsForEnvironment as jest.Mock).mockResolvedValue(
-        assetCredentials
+        assetCredentials,
       )
 
       await uploadSubmissionPhoto(
         submission.id,
         relayEnvironment,
         photo,
-        updateProgress
+        updateProgress,
       )
 
       expect(getGeminiCredentialsForEnvironment).toHaveBeenCalled()
@@ -97,7 +97,7 @@ describe("fileUtils", () => {
         photo,
         "private",
         assetCredentials,
-        updateProgress
+        updateProgress,
       )
     })
 
@@ -106,7 +106,7 @@ describe("fileUtils", () => {
         submission.id,
         relayEnvironment,
         photo,
-        updateProgress
+        updateProgress,
       )
 
       expect(createGeminiAssetWithS3Credentials).toHaveBeenCalled()
@@ -120,7 +120,7 @@ describe("fileUtils", () => {
             id: "1",
             _type: "Consignment",
           },
-        }
+        },
       )
     })
 
@@ -131,7 +131,7 @@ describe("fileUtils", () => {
         submission.id,
         relayEnvironment,
         photo,
-        updateProgress
+        updateProgress,
       )
 
       expect(uploadFileToS3).not.toHaveBeenCalled()
@@ -139,7 +139,7 @@ describe("fileUtils", () => {
 
     it("does not attempt to get gemini credentials or file upload if no conviction key found", async () => {
       ;(getConvectionGeminiKey as jest.Mock).mockRejectedValueOnce(
-        "no key found"
+        "no key found",
       )
 
       expect(getGeminiCredentialsForEnvironment).toHaveBeenCalledTimes(0)
@@ -153,7 +153,7 @@ describe("fileUtils", () => {
         submission.id,
         relayEnvironment,
         photo,
-        updateProgress
+        updateProgress,
       )
 
       expect(uploadPhotoResult).toBe(undefined)

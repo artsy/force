@@ -82,7 +82,7 @@ export const AddressModal: FC<React.PropsWithChildren<AddressModalProps>> = ({
           ? addressModalAction.address
           : {
               country: shippingContext.orderData.shipsFrom,
-            }
+            },
       ),
     },
     setAsDefault: false,
@@ -90,7 +90,7 @@ export const AddressModal: FC<React.PropsWithChildren<AddressModalProps>> = ({
 
   const handleSubmit = async (
     values: FormValues,
-    helpers: FormikHelpers<FormValues>
+    helpers: FormikHelpers<FormValues>,
   ) => {
     if (!addressModalAction) {
       return
@@ -328,7 +328,7 @@ const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
 }
 
 const validationSchema = Yup.object().shape(
-  addressFormFieldsValidator({ withPhoneNumber: true })
+  addressFormFieldsValidator({ withPhoneNumber: true }),
 )
 
 export const GENERIC_FAIL_MESSAGE =
@@ -339,7 +339,7 @@ const handleGravityErrors = (
   helpers: {
     setFieldError: (field: string, message: string) => void
     setStatus: (message: string) => void
-  }
+  },
 ) => {
   if (!errors?.length) return
 

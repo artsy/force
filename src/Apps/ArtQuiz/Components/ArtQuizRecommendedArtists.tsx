@@ -18,7 +18,7 @@ const ArtQuizRecommendedArtists: FC<
   React.PropsWithChildren<ArtQuizRecommendedArtistsProps>
 > = ({ me }) => {
   const likedArtists = compact(
-    uniq(me.quiz.savedArtworks.map(artwork => artwork.artist))
+    uniq(me.quiz.savedArtworks.map(artwork => artwork.artist)),
   )
 
   return (
@@ -51,7 +51,7 @@ const ArtQuizRecommendedArtistsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const ArtQuizRecommendedArtistsPlaceholder = () => {

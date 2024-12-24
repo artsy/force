@@ -8,7 +8,7 @@ export const FairsPhonePromo: React.FC<
 > = props => {
   const img = resized(
     "https://files.artsy.net/images/fair-iphone-promo-large.jpg",
-    { width: 155, height: 223 }
+    { width: 155, height: 223 },
   )
 
   return (

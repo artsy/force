@@ -21,16 +21,16 @@ describe("CareerHighlightModalStep", () => {
         return null
       },
       query: graphql`
-      query CareerHighlightModalStepTestQuery @relay_test_operation {
-        me {
-          myCollectionInfo {
-            BIENNIAL: artistInsights(kind: BIENNIAL) {
-              ...CareerHighlightModalStep_careerHighlight
+        query CareerHighlightModalStepTestQuery @relay_test_operation {
+          me {
+            myCollectionInfo {
+              BIENNIAL: artistInsights(kind: BIENNIAL) {
+                ...CareerHighlightModalStep_careerHighlight
+              }
             }
           }
         }
-      }
-    `,
+      `,
     })
 
   it("renders the career highlights data", () => {
@@ -38,7 +38,7 @@ describe("CareerHighlightModalStep", () => {
 
     expect(screen.getByText("3")).toBeInTheDocument()
     expect(
-      screen.getByText("Artists were included in major biennials.")
+      screen.getByText("Artists were included in major biennials."),
     ).toBeInTheDocument()
 
     expect(screen.getByText("Yayoi Kusama")).toBeInTheDocument()

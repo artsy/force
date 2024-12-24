@@ -86,7 +86,7 @@ export const ArtistArticlesRouteFragmentContainer = createRefetchContainer(
   {
     artist: graphql`
       fragment ArtistArticlesRoute_artist on Artist
-        @argumentDefinitions(page: { type: "Int", defaultValue: 1 }) {
+      @argumentDefinitions(page: { type: "Int", defaultValue: 1 }) {
         name
         slug
         articlesConnection(page: $page, size: 12, sort: PUBLISHED_AT_DESC) {
@@ -112,5 +112,5 @@ export const ArtistArticlesRouteFragmentContainer = createRefetchContainer(
         ...ArtistArticlesRoute_artist @arguments(page: $page)
       }
     }
-  `
+  `,
 )

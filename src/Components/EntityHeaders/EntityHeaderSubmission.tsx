@@ -83,5 +83,5 @@ export const EntityHeaderSubmissionFragmentContainer = createFragmentContainer(
         title
       }
     `,
-  }
+  },
 )

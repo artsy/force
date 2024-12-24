@@ -44,9 +44,9 @@ export const ExampleArtworkFilterFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment ExampleArtworkFilterRoute_viewer on Viewer
-        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+      @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
         ...ArtworkFilter_viewer @arguments(input: $input)
       }
     `,
-  }
+  },
 )

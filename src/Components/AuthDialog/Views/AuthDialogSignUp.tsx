@@ -49,7 +49,7 @@ export const AuthDialogSignUp: FC<React.PropsWithChildren<unknown>> = () => {
       validationSchema={VALIDATION_SCHEMA}
       onSubmit={async (
         { name, email, password, agreedToReceiveEmails },
-        { setFieldValue, setStatus }
+        { setFieldValue, setStatus },
       ) => {
         setStatus({ error: null })
         setFieldValue("mode", "Loading")

@@ -48,7 +48,7 @@ describe("AddressForm", () => {
     render(<Page />)
 
     const line1 = screen.getByPlaceholderText(
-      "Street address"
+      "Street address",
     ) as HTMLInputElement
     expect(line1.value).toBe("Before update")
 
@@ -63,7 +63,7 @@ describe("AddressForm", () => {
   describe("address autocomplete is enabled", () => {
     beforeAll(() => {
       ;(useFeatureFlag as jest.Mock).mockImplementation(
-        featureName => featureName === "address_autocomplete_us"
+        featureName => featureName === "address_autocomplete_us",
       )
 
       const mockFetch = jest.fn().mockResolvedValue({
@@ -117,7 +117,7 @@ describe("AddressForm", () => {
             errors={{}}
             touched={{}}
             value={{}}
-          />
+          />,
         )
 
         const countryInput = screen.getByLabelText("Country")
@@ -133,7 +133,7 @@ describe("AddressForm", () => {
         const listbox = await screen.findByRole("listbox", { hidden: true })
 
         expect(listbox).toHaveTextContent(
-          "401 Broadway Fl 25, New York NY 10013"
+          "401 Broadway Fl 25, New York NY 10013",
         )
         fireEvent.click(listbox)
         expect(line1Input).toHaveValue("401 Broadway")

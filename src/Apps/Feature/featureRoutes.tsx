@@ -6,7 +6,7 @@ const FeatureApp = loadable(
   () => import(/* webpackChunkName: "featureBundle" */ "./FeatureApp"),
   {
     resolveComponent: component => component.FeatureAppFragmentContainer,
-  }
+  },
 )
 
 export const featureRoutes: RouteProps[] = [

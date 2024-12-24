@@ -30,13 +30,13 @@ export const SaleEndYearFilter: React.FC<
   const startOptions = options.filter(
     option =>
       Number.parseInt(option.value) <=
-      (saleEndYear || Number.parseInt(options[options.length - 1]?.value))
+      (saleEndYear || Number.parseInt(options[options.length - 1]?.value)),
   )
 
   const endOptions = options.filter(
     option =>
       Number.parseInt(option.value) >=
-      (saleStartYear || Number.parseInt(options[0]?.value))
+      (saleStartYear || Number.parseInt(options[0]?.value)),
   )
 
   return (

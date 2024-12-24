@@ -13,7 +13,7 @@ const cdnUrl = (() => {
 })()
 
 export const getEarlyHints = (
-  headTags: any[]
+  headTags: any[],
 ): {
   linkHeaders: string[]
   linkPreloadTags: string[]
@@ -29,11 +29,11 @@ export const getEarlyHints = (
       tag.type === "link" &&
       tag.props?.rel === "preload" &&
       tag.props?.as === "image" &&
-      !!tag.props?.href
+      !!tag.props?.href,
   )
   for (const linkTag of linkTags) {
     results.linkHeaders.push(
-      `<${linkTag.props?.href}>; rel=preload; as=${linkTag.props?.as}`
+      `<${linkTag.props?.href}>; rel=preload; as=${linkTag.props?.as}`,
     )
   }
 
@@ -43,7 +43,7 @@ export const getEarlyHints = (
     for (const file of chunkFiles) {
       results.linkHeaders.push(`<${cdnUrl}${file}>; rel=preload; as=script`)
       results.linkPreloadTags.push(
-        `<link rel="preload" as="script" href="${cdnUrl}${file}">`
+        `<link rel="preload" as="script" href="${cdnUrl}${file}">`,
       )
     }
   } catch (error) {

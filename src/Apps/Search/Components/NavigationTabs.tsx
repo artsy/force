@@ -161,7 +161,7 @@ export const NavigationTabs: FC<
   const counts = useMemo(() => {
     return compact(
       searchableConnection.aggregations?.find(agg => agg?.slice === "TYPE")
-        ?.counts
+        ?.counts,
     )
   }, [searchableConnection.aggregations])
 
@@ -169,7 +169,7 @@ export const NavigationTabs: FC<
     return compact(
       TAB_ORDER.map(tab => {
         return counts.find(count => count.name === tab && count.count > 0)
-      })
+      }),
     )
   }, [counts])
 
@@ -179,7 +179,7 @@ export const NavigationTabs: FC<
         const count = counts.find(count => count.name === key)?.count ?? 0
         return count ? (prev += count) : prev
       }, 0),
-    [counts]
+    [counts],
   )
 
   return (
@@ -214,5 +214,5 @@ export const NavigationTabsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

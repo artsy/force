@@ -50,5 +50,5 @@ export const __ProgressiveOnboardingFollowFind__: FC<
 }
 
 export const ProgressiveOnboardingFollowFind = withProgressiveOnboardingCounts(
-  __ProgressiveOnboardingFollowFind__
+  __ProgressiveOnboardingFollowFind__,
 )

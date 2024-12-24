@@ -20,17 +20,17 @@ jest.mock(
         {children}
       </>
     ),
-  })
+  }),
 )
 
 jest.mock("Components/ProgressiveOnboarding/withProgressiveOnboardingCounts")
 
 const Example: FC<React.PropsWithChildren<unknown>> = () => {
   const ProgressiveOnboardingSaveFind = withProgressiveOnboardingCounts(
-    __ProgressiveOnboardingSaveFind__
+    __ProgressiveOnboardingSaveFind__,
   )
   const ProgressiveOnboardingSaveArtwork = withProgressiveOnboardingCounts(
-    __ProgressiveOnboardingSaveArtwork__
+    __ProgressiveOnboardingSaveArtwork__,
   )
 
   return (
@@ -138,7 +138,7 @@ describe("ProgressiveOnboardingSaveHighlight", () => {
         <ProgressiveOnboardingSaveHighlight position="center">
           <div>Example</div>
         </ProgressiveOnboardingSaveHighlight>
-      </DismissibleProvider>
+      </DismissibleProvider>,
     )
 
     expect(screen.getByText("Example")).toBeInTheDocument()

@@ -125,10 +125,10 @@ export const MyCollectionRoutePaginationContainer = createPaginationContainer(
   {
     me: graphql`
       fragment MyCollectionRoute_me on Me
-        @argumentDefinitions(
-          count: { type: "Int", defaultValue: 25 }
-          cursor: { type: "String" }
-        ) {
+      @argumentDefinitions(
+        count: { type: "Int", defaultValue: 25 }
+        cursor: { type: "String" }
+      ) {
         myCollectionConnection(
           first: $count
           after: $cursor
@@ -171,5 +171,5 @@ export const MyCollectionRoutePaginationContainer = createPaginationContainer(
         }
       }
     `,
-  }
+  },
 )

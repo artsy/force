@@ -19,7 +19,7 @@ describe("LogInPrompt", () => {
           ContextModule.auctionLotsEndingSoonRail ||
           (ContextModule.newWorksForYouRail as AuthContextModule)
         }
-      />
+      />,
     )
   }
 

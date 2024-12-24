@@ -107,7 +107,7 @@ export const HomeTrendingArtistsRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const HomeTrendingArtistsRailQueryRenderer: React.FC<

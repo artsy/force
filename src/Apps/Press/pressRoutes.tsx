@@ -6,7 +6,7 @@ const PressApp = loadable(
   () => import(/* webpackChunkName: "pressBundle" */ "./PressApp"),
   {
     resolveComponent: component => component.PressAppFragmentContainer,
-  }
+  },
 )
 
 export const pressRoutes: RouteProps[] = [

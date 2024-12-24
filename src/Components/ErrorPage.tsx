@@ -79,8 +79,8 @@ export const ErrorPage: React.FC<React.PropsWithChildren<ErrorPageProps>> = ({
 // TODO: Consider extracting a code/monospace font variant in Palette
 const Code = styled(Box)`
   font-size: 13px;
-  font-family: "Menlo", "Monaco", "Andale Mono", "lucida console", "Courier New",
-    monospace;
+  font-family: "Menlo", "Monaco", "Andale Mono", "lucida console",
+    "Courier New", monospace;
   line-height: 1.6;
   text-align: left;
   word-break: break-word;

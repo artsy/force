@@ -65,31 +65,31 @@ export const EndingSoonAuctionsGridPaginationContainer =
     EndingSoonAuctionsGrid,
     {
       viewer: graphql`
-      fragment EndingSoonAuctionsGrid_viewer on Viewer
+        fragment EndingSoonAuctionsGrid_viewer on Viewer
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 10 }
           after: { type: "String" }
         ) {
-        saleArtworksConnection(
-          includeArtworksByFollowedArtists: true
-          isAuction: true
-          liveSale: true
-          first: $first
-          after: $after
-        ) @connection(key: "EndingSoonAuctionsGrid_saleArtworksConnection") {
-          pageInfo {
-            hasNextPage
-            endCursor
-          }
-          ...ArtworkGrid_artworks
-          edges {
-            node {
-              id
+          saleArtworksConnection(
+            includeArtworksByFollowedArtists: true
+            isAuction: true
+            liveSale: true
+            first: $first
+            after: $after
+          ) @connection(key: "EndingSoonAuctionsGrid_saleArtworksConnection") {
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+            ...ArtworkGrid_artworks
+            edges {
+              node {
+                id
+              }
             }
           }
         }
-      }
-    `,
+      `,
     },
     {
       direction: "forward",
@@ -107,12 +107,12 @@ export const EndingSoonAuctionsGridPaginationContainer =
         }
       },
       query: graphql`
-      query EndingSoonAuctionsGridQuery($first: Int!, $after: String) {
-        viewer {
-          ...EndingSoonAuctionsGrid_viewer
-            @arguments(first: $first, after: $after)
+        query EndingSoonAuctionsGridQuery($first: Int!, $after: String) {
+          viewer {
+            ...EndingSoonAuctionsGrid_viewer
+              @arguments(first: $first, after: $after)
+          }
         }
-      }
-    `,
-    }
+      `,
+    },
   )

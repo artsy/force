@@ -3,7 +3,7 @@ import { RootTestPage } from "DevTools/RootTestPage"
 export class IdentityVerificationAppTestPage extends RootTestPage {
   get startVerificationButton() {
     return this.find("button").filterWhere(btn =>
-      btn.text().includes("Continue to verification")
+      btn.text().includes("Continue to verification"),
     )
   }
 
@@ -13,7 +13,7 @@ export class IdentityVerificationAppTestPage extends RootTestPage {
 
   get contactSupportButton() {
     return this.find("a").filterWhere(btn =>
-      btn.text().includes("Contact support")
+      btn.text().includes("Contact support"),
     )
   }
 

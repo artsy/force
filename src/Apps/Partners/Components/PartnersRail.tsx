@@ -22,7 +22,7 @@ const PartnersRail: React.FC<React.PropsWithChildren<PartnersRailProps>> = ({
   const partners = useMemo(() => {
     return mergeBuckets(
       compact(partnerCategory.primary),
-      compact(partnerCategory.secondary)
+      compact(partnerCategory.secondary),
     )
   }, [partnerCategory.primary, partnerCategory.secondary])
 
@@ -70,10 +70,10 @@ export const PartnersRailFragmentContainer = createFragmentContainer(
   {
     partnerCategory: graphql`
       fragment PartnersRail_partnerCategory on PartnerCategory
-        @argumentDefinitions(
-          category: { type: "[String]" }
-          type: { type: "[PartnerClassification!]!" }
-        ) {
+      @argumentDefinitions(
+        category: { type: "[String]" }
+        type: { type: "[PartnerClassification!]!" }
+      ) {
         name
         primary: partners(
           defaultProfilePublic: true
@@ -99,7 +99,7 @@ export const PartnersRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface PartnersRailQueryRendererProps {

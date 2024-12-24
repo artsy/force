@@ -40,7 +40,7 @@ export const FulfillmentDetails: FC<
   const { handleSaveFulfillmentDetails } = useHandleSaveFulfillmentDetails()
 
   const addressVerificationUSEnabled = !!useFeatureFlag(
-    "address_verification_us"
+    "address_verification_us",
   )
 
   // Trigger address verification by setting this to true
@@ -52,7 +52,7 @@ export const FulfillmentDetails: FC<
 
   const initialValues = getInitialValues(
     shippingContext.meData,
-    shippingContext.orderData
+    shippingContext.orderData,
   )
 
   const availableFulfillmentTypes: FulfillmentType[] =
@@ -82,11 +82,11 @@ export const FulfillmentDetails: FC<
       const emptyFormValues = getInitialShippingValues(
         shippingContext.meData.addressList,
         shippingContext.orderData.shipsFrom,
-        shippingContext.orderData.availableShippingCountries
+        shippingContext.orderData.availableShippingCountries,
       )
 
       shippingContext.state.fulfillmentDetailsFormikContext.setValues(
-        emptyFormValues
+        emptyFormValues,
       )
       shippingContext.actions.setShippingFormMode("new_address")
     }
@@ -156,7 +156,7 @@ export const FulfillmentDetails: FC<
    */
   const handleSubmit = async (
     values: FulfillmentValues,
-    _helpers: FormikHelpers<FulfillmentValues>
+    _helpers: FormikHelpers<FulfillmentValues>,
   ) => {
     // Trigger address verification and return early if appropriate
     if (shouldVerifyAddressOnSubmit(values)) {
@@ -170,7 +170,7 @@ export const FulfillmentDetails: FC<
         shippingContext.state.newSavedAddressID
       ) {
         shippingContext.actions.setSelectedSavedAddressID(
-          shippingContext.state.selectedSavedAddressID
+          shippingContext.state.selectedSavedAddressID,
         )
       }
     }
@@ -194,7 +194,7 @@ export const FulfillmentDetails: FC<
           } else {
             if (userAddressUpdateResult.actionType === "create") {
               shippingContext.actions.setNewSavedAddressID(
-                userAddressUpdateResult.data.internalID
+                userAddressUpdateResult.data.internalID,
               )
             } else if (userAddressUpdateResult.actionType === "delete") {
               shippingContext.actions.setNewSavedAddressID(null)
@@ -204,7 +204,7 @@ export const FulfillmentDetails: FC<
               shippingContext.state.shippingFormMode === "new_address"
             ) {
               shippingContext.actions.setNewSavedAddressID(
-                userAddressUpdateResult.data.internalID
+                userAddressUpdateResult.data.internalID,
               )
             }
           }
@@ -234,7 +234,7 @@ export const FulfillmentDetails: FC<
       } else {
         resetSelectedSavedAddress()
         logger.error(
-          "No request for saveFulfillmentDetails - this should not happen"
+          "No request for saveFulfillmentDetails - this should not happen",
         )
       }
     } catch (error) {
@@ -285,12 +285,12 @@ const ORDER_FRAGMENT = graphql`
 
 const ME_FRAGMENT = graphql`
   fragment FulfillmentDetailsForm_me on Me
-    @argumentDefinitions(
-      first: { type: "Int", defaultValue: 30 }
-      last: { type: "Int" }
-      after: { type: "String" }
-      before: { type: "String" }
-    ) {
+  @argumentDefinitions(
+    first: { type: "Int", defaultValue: 30 }
+    last: { type: "Int" }
+    after: { type: "String" }
+    before: { type: "String" }
+  ) {
     name
     email
     id
@@ -313,14 +313,14 @@ const ME_FRAGMENT = graphql`
  */
 const getInitialValues = (
   meData: ShippingContextProps["meData"],
-  orderData: ShippingContextProps["orderData"]
+  orderData: ShippingContextProps["orderData"],
 ): FulfillmentValues => {
   if (orderData.savedFulfillmentDetails) {
     return {
       fulfillmentType: orderData.savedFulfillmentDetails.fulfillmentType,
       attributes: {
         ...addressWithFallbackValues(
-          orderData.savedFulfillmentDetails.attributes
+          orderData.savedFulfillmentDetails.attributes,
         ),
       },
       meta: {
@@ -336,6 +336,6 @@ const getInitialValues = (
   return getInitialShippingValues(
     savedAddresses,
     orderData.shipsFrom,
-    orderData.availableShippingCountries
+    orderData.availableShippingCountries,
   )
 }

@@ -33,12 +33,12 @@ describe("InvoiceApp", () => {
         number: "123",
         readyAt: "Oct 17, 2024",
       }),
-    })
+    }),
   )
 
   it("renders correctly", () => {
     expect(
-      screen.getByTestId("invoice-info").textContent
+      screen.getByTestId("invoice-info").textContent,
     ).toMatchInlineSnapshot(`"Oct 17, 2024"`)
   })
 })

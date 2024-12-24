@@ -13,12 +13,12 @@ describe("ArtworkSidebarArtsyGuarantee", () => {
         return <ArtworkSidebarArtsyGuarantee artwork={artwork!} />
       },
       query: graphql`
-      query ArtworkSidebarArtsyGuarantee_Test_Query @relay_test_operation {
-        artwork(id: "josef-albers-homage-to-the-square-85") {
-          ...ArtworkSidebarArtsyGuarantee_artwork
+        query ArtworkSidebarArtsyGuarantee_Test_Query @relay_test_operation {
+          artwork(id: "josef-albers-homage-to-the-square-85") {
+            ...ArtworkSidebarArtsyGuarantee_artwork
+          }
         }
-      }
-    `,
+      `,
     })
   it("renders the Artsy Guarantee section", async () => {
     renderWithRelay()

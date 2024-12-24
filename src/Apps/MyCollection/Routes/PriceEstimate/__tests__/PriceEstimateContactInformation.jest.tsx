@@ -113,14 +113,14 @@ describe("Price Estimate Contact Information", () => {
       })
 
       expect(
-        screen.getByText("Let us know how to reach you")
+        screen.getByText("Let us know how to reach you"),
       ).toBeInTheDocument()
       expect(screen.getByText("Back")).toBeInTheDocument()
       expect(
-        screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
+        screen.getAllByRole("link").find(c => c.textContent?.includes("Back")),
       ).toHaveAttribute(
         "href",
-        `/collector-profile/my-collection/artwork/${mockArtwork.internalID}`
+        `/collector-profile/my-collection/artwork/${mockArtwork.internalID}`,
       )
 
       expect(screen.getByTestId("submit-button")).toBeInTheDocument()
@@ -146,14 +146,14 @@ describe("Price Estimate Contact Information", () => {
       })
 
       expect(
-        screen.getByText("Let us know how to reach you")
+        screen.getByText("Let us know how to reach you"),
       ).toBeInTheDocument()
       expect(screen.getByText("Back")).toBeInTheDocument()
       expect(
-        screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
+        screen.getAllByRole("link").find(c => c.textContent?.includes("Back")),
       ).toHaveAttribute(
         "href",
-        `/collector-profile/my-collection/artwork/${mockArtwork.internalID}`
+        `/collector-profile/my-collection/artwork/${mockArtwork.internalID}`,
       )
 
       expect(screen.getByTestId("submit-button")).toBeInTheDocument()
@@ -204,10 +204,10 @@ describe("Price Estimate Contact Information", () => {
           },
         })
         expect(mockRouterReplace).toHaveBeenCalledWith(
-          `/collector-profile/my-collection/artwork/${mockArtwork.internalID}`
+          `/collector-profile/my-collection/artwork/${mockArtwork.internalID}`,
         )
         expect(mockRouterPush).toHaveBeenCalledWith(
-          `/collector-profile/my-collection/artwork/${mockArtwork.internalID}/price-estimate/success`
+          `/collector-profile/my-collection/artwork/${mockArtwork.internalID}/price-estimate/success`,
         )
       })
     })
@@ -233,10 +233,10 @@ describe("Price Estimate Contact Information", () => {
           },
         })
         expect(mockRouterReplace).toHaveBeenCalledWith(
-          `/collector-profile/my-collection/artwork/${mockArtwork.internalID}`
+          `/collector-profile/my-collection/artwork/${mockArtwork.internalID}`,
         )
         expect(mockRouterPush).toHaveBeenCalledWith(
-          `/collector-profile/my-collection/artwork/${mockArtwork.internalID}/price-estimate/success`
+          `/collector-profile/my-collection/artwork/${mockArtwork.internalID}/price-estimate/success`,
         )
       })
     })

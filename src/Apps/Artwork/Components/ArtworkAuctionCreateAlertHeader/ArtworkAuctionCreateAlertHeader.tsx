@@ -40,7 +40,7 @@ const ArtworkAuctionCreateAlertHeader: FC<
     artwork?.saleArtwork?.extendedBiddingEndAt ?? artwork?.saleArtwork?.endAt
   const { hasEnded } = useTimer(
     biddingEndAt as string,
-    artwork?.sale?.startAt as string
+    artwork?.sale?.startAt as string,
   )
 
   const isLotClosed = hasEnded || lotIsClosed(artwork.sale, artwork.saleArtwork)
@@ -58,7 +58,7 @@ const ArtworkAuctionCreateAlertHeader: FC<
     artist => ({
       value: artist.internalID,
       displayValue: artist.name ?? "",
-    })
+    }),
   )
   const entity: SavedSearchEntity = {
     defaultCriteria: {

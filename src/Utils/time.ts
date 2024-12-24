@@ -6,7 +6,7 @@ const getLocalTimestampInMilliSeconds = () => {
 }
 
 export async function getOffsetBetweenGravityClock(
-  relayEnvironment: Environment
+  relayEnvironment: Environment,
 ): Promise<number> {
   const query = graphql`
     query timeQuery {
@@ -25,7 +25,7 @@ export async function getOffsetBetweenGravityClock(
       {},
       {
         fetchPolicy: "network-only",
-      }
+      },
     ).toPromise()
   }
 

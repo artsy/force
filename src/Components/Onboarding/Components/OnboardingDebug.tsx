@@ -21,7 +21,7 @@ export const OnboardingDebug: FC<React.PropsWithChildren<unknown>> = () => {
             progress: `${progress}%`,
           },
           null,
-          2
+          2,
         )}
       </Box>
 

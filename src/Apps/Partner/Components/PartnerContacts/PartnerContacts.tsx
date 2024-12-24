@@ -41,5 +41,5 @@ export const PartnerContactsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

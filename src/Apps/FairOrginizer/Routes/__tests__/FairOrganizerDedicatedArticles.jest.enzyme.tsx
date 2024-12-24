@@ -28,12 +28,12 @@ const { getWrapper } =
       )
     },
     query: graphql`
-    query FairOrganizerDedicatedArticles_Test_Query @relay_test_operation {
-      fairOrganizer(id: "example") {
-        ...FairOrganizerDedicatedArticles_fairOrganizer
+      query FairOrganizerDedicatedArticles_Test_Query @relay_test_operation {
+        fairOrganizer(id: "example") {
+          ...FairOrganizerDedicatedArticles_fairOrganizer
+        }
       }
-    }
-  `,
+    `,
     variables: {
       // @ts-ignore
       first: 10,
@@ -49,7 +49,7 @@ describe("FairOrganizerDedicatedArticles", () => {
     })
 
     expect(wrapper.text()).toContain(
-      "All Articles for The Armory Show on Artsy"
+      "All Articles for The Armory Show on Artsy",
     )
   })
 

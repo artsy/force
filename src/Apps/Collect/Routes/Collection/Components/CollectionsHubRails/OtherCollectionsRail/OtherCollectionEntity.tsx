@@ -30,7 +30,7 @@ export const OtherCollectionEntity: React.FC<
         destinationPageOwnerId: id,
         destinationPageOwnerSlug: slug,
         horizontalSlidePosition: itemNumber,
-      })
+      }),
     )
   }
 
@@ -75,5 +75,5 @@ export const OtherCollectionsRailsContainer = createFragmentContainer(
         title
       }
     `,
-  }
+  },
 )

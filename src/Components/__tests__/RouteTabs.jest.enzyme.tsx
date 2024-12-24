@@ -8,7 +8,7 @@ describe("RouteTabs", () => {
         <RouteTab to="/overview">Overview</RouteTab>
         <RouteTab to="/cv">CV</RouteTab>
         <RouteTab to="/shows">Shows</RouteTab>
-      </RouteTabs>
+      </RouteTabs>,
     )
   }
 

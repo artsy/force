@@ -77,7 +77,7 @@ describe("CreateNewListModalWizard", () => {
     fireEvent.click(createButton)
 
     const title = await screen.findByText(
-      "Photography created. Add saved works to the list."
+      "Photography created. Add saved works to the list.",
     )
     expect(title).toBeInTheDocument()
   })

@@ -29,19 +29,19 @@ describe("ArtworkSidebarLinks", () => {
         <ArtworkSidebarLinksFragmentContainer artwork={artwork!} />
       ),
       query: graphql`
-      query ArtworkSidebarLinks_Test_Query @relay_test_operation {
-        artwork(id: "josef-albers-homage-to-the-square-85") {
-          ...ArtworkSidebarLinks_artwork
+        query ArtworkSidebarLinks_Test_Query @relay_test_operation {
+          artwork(id: "josef-albers-homage-to-the-square-85") {
+            ...ArtworkSidebarLinks_artwork
+          }
         }
-      }
-    `,
+      `,
     })
 
   it("renders sell with Artsy Section", () => {
     renderWithRelay({})
 
     expect(
-      screen.queryByText(/Want to sell a work by this artist?/i)
+      screen.queryByText(/Want to sell a work by this artist?/i),
     ).toBeInTheDocument()
     expect(screen.queryByText(/Sell with Artsy/i)).toBeInTheDocument()
   })
@@ -78,12 +78,12 @@ describe("ArtworkSidebarLinks", () => {
 
       it("shows conditions of sale link", () => {
         expect(
-          screen.queryByText("By placing your bid you agree to Artsy's")
+          screen.queryByText("By placing your bid you agree to Artsy's"),
         ).toBeInTheDocument()
         expect(
           screen.getByRole("link", {
             name: "General Terms and Conditions of Sale",
-          })
+          }),
         ).toHaveAttribute("href", "/terms")
       })
 
@@ -92,7 +92,7 @@ describe("ArtworkSidebarLinks", () => {
           expect(
             screen.getByRole("link", {
               name: "General Terms and Conditions of Sale",
-            })
+            }),
           ).toHaveAttribute("href", "/terms")
         })
       })
@@ -132,7 +132,7 @@ describe("ArtworkSidebarLinks", () => {
       })
 
       expect(
-        screen.queryByText(/By placing your bid you agree to Artsy's/i)
+        screen.queryByText(/By placing your bid you agree to Artsy's/i),
       ).not.toBeInTheDocument()
       expect(screen.queryByText(/Conditions of Sale/i)).not.toBeInTheDocument()
     })
@@ -148,7 +148,7 @@ describe("ArtworkSidebarLinks", () => {
       })
 
       expect(
-        screen.queryByText(/By placing your bid you agree to Artsy's/i)
+        screen.queryByText(/By placing your bid you agree to Artsy's/i),
       ).not.toBeInTheDocument()
       expect(screen.queryByText(/Conditions of Sale/i)).not.toBeInTheDocument()
     })

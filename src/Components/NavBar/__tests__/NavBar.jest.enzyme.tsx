@@ -37,21 +37,21 @@ jest.mock(
   "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind",
   () => ({
     ProgressiveOnboardingFollowFind: ({ children }) => children,
-  })
+  }),
 )
 
 jest.mock(
   "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind",
   () => ({
     ProgressiveOnboardingSaveFind: ({ children }) => children,
-  })
+  }),
 )
 
 jest.mock(
   "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind",
   () => ({
     ProgressiveOnboardingAlertFind: ({ children }) => children,
-  })
+  }),
 )
 
 describe("NavBar", () => {
@@ -61,7 +61,7 @@ describe("NavBar", () => {
     return mount(
       <SystemContextProvider user={user} isEigen={isEigen}>
         <NavBar />
-      </SystemContextProvider>
+      </SystemContextProvider>,
     )
   }
 
@@ -163,7 +163,7 @@ describe("NavBar", () => {
         user: { type: "NotAdmin" },
       })
       expect(wrapper.find(NavBarMobileMenuNotificationsIndicator).length).toBe(
-        1
+        1,
       )
     })
   })
@@ -171,10 +171,10 @@ describe("NavBar", () => {
   describe("eigen", () => {
     it("renders null", () => {
       expect(
-        getWrapper({ isEigen: false }).find(NavBar).isEmptyRender()
+        getWrapper({ isEigen: false }).find(NavBar).isEmptyRender(),
       ).toBeFalsy()
       expect(
-        getWrapper({ isEigen: true }).find(NavBar).isEmptyRender()
+        getWrapper({ isEigen: true }).find(NavBar).isEmptyRender(),
       ).toBeTruthy()
     })
   })

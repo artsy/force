@@ -131,7 +131,7 @@ describe("PartnerHeader", () => {
 
     expect(Address.length).toEqual(1)
     expect(Address.text()).toContain(
-      "Jeddah\u00a0\u00a0•\u00a0 New York\u00a0\u00a0•\u00a0 San Francisco"
+      "Jeddah\u00a0\u00a0•\u00a0 New York\u00a0\u00a0•\u00a0 San Francisco",
     )
   })
 
@@ -179,7 +179,7 @@ describe("PartnerHeader", () => {
       .filterWhere(
         c =>
           c.children().find(HeaderImage).length > 0 &&
-          c.children().find(HeaderImage).prop("src") === "/img.png"
+          c.children().find(HeaderImage).prop("src") === "/img.png",
       )
 
     expect(PartnerNameLink.length).toEqual(1)

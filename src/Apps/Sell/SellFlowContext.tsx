@@ -74,13 +74,13 @@ interface Actions {
   goToNextStep: () => void
   finishFlow: () => void
   createSubmission: (
-    values: CreateSubmissionMutationInput
+    values: CreateSubmissionMutationInput,
   ) => Promise<useCreateSubmissionMutation$data>
   updateSubmission: (
-    values: UpdateSubmissionMutationInput
+    values: UpdateSubmissionMutationInput,
   ) => Promise<useUpdateSubmissionMutation$data>
   updateMyCollectionArtwork: (
-    values: MyCollectionUpdateArtworkInput
+    values: MyCollectionUpdateArtworkInput,
   ) => Promise<useUpdateMyCollectionArtworkMutation$data>
   setLoading: (loading: boolean) => void
 }
@@ -115,7 +115,7 @@ export const SellFlowContextProvider: React.FC<
   React.PropsWithChildren<SellFlowContextProviderProps>
 > = ({ children, submission, devMode = false }) => {
   const enablePostApprovalSubmissionFlow = useFeatureFlag(
-    "onyx_post_approval_submission_flow"
+    "onyx_post_approval_submission_flow",
   )
   const { trackConsignmentSubmitted, trackTappedSubmissionBack } =
     useSubmissionTracking()
@@ -152,7 +152,7 @@ export const SellFlowContextProvider: React.FC<
       ...(isExtended ? POST_APPROVAL_STEPS : []),
       isExtended ? POST_APPROVAL_THANK_YOU_STEP : THANK_YOU_STEP,
     ],
-    [isExtended]
+    [isExtended],
   )
 
   const initialIndex = steps.indexOf(stepFromURL || INITIAL_STEP)
@@ -206,7 +206,7 @@ export const SellFlowContextProvider: React.FC<
       return
 
     router.push(
-      `/sell/submissions/${submission?.externalId}/${newStep}${testSubmissionQueryParams}`
+      `/sell/submissions/${submission?.externalId}/${newStep}${testSubmissionQueryParams}`,
     )
   }, [index, isNewSubmission, submission, steps])
 
@@ -235,7 +235,7 @@ export const SellFlowContextProvider: React.FC<
   }
 
   const updateSubmission = (
-    values: UpdateSubmissionMutationInput
+    values: UpdateSubmissionMutationInput,
   ): Promise<useUpdateSubmissionMutation$data> => {
     const response = submitUpdateSubmissionMutation({
       variables: {
@@ -260,7 +260,7 @@ export const SellFlowContextProvider: React.FC<
   }
 
   const updateMyCollectionArtwork = (
-    values: MyCollectionUpdateArtworkInput
+    values: MyCollectionUpdateArtworkInput,
   ): Promise<useUpdateMyCollectionArtworkMutation$data> => {
     const response = submitUpdateMyCollectionArtworkMutation({
       variables: {

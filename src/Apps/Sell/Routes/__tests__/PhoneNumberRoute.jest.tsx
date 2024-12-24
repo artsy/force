@@ -127,7 +127,7 @@ describe("PhoneNumberRoute", () => {
                     userPhone: "+49 017659574333",
                   },
                 },
-              })
+              }),
             )
 
             expect(submitMutation).toHaveBeenCalledWith(
@@ -138,11 +138,11 @@ describe("PhoneNumberRoute", () => {
                     state: "SUBMITTED",
                   },
                 },
-              })
+              }),
             )
 
             expect(mockPush).toHaveBeenCalledWith(
-              '/sell/submissions/<mock-value-for-field-"externalId">/thank-you'
+              '/sell/submissions/<mock-value-for-field-"externalId">/thank-you',
             )
           })
         })
@@ -197,7 +197,7 @@ describe("PhoneNumberRoute", () => {
 
           await waitFor(() => {
             expect(mockPush).toHaveBeenCalledWith(
-              '/sell/submissions/<mock-value-for-field-"externalId">/dimensions'
+              '/sell/submissions/<mock-value-for-field-"externalId">/dimensions',
             )
           })
         })
@@ -217,7 +217,7 @@ describe("PhoneNumberRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            '/sell/submissions/<mock-value-for-field-"externalId">/shipping-location'
+            '/sell/submissions/<mock-value-for-field-"externalId">/shipping-location',
           )
         })
       })

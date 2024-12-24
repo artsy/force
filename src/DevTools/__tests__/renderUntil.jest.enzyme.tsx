@@ -15,7 +15,7 @@ class Component extends React.Component<React.PropsWithChildren> {
       () =>
         setTimeout(() => {
           this.setState({ data: "ohai" })
-        }, 0)
+        }, 0),
     )
   }
 
@@ -44,7 +44,7 @@ describe("renderUntil", () => {
 
     it("resolves the promise with an enzyme wrapper with the final state", async () => {
       const wrapper = await mount(<Component />).renderUntil(
-        tree => tree.find("div").text() !== "Loading"
+        tree => tree.find("div").text() !== "Loading",
       )
       expect(wrapper.find("div").text()).toEqual("ohai")
     })
@@ -60,7 +60,7 @@ describe("renderUntil", () => {
           states.push(text)
           return text !== "Loading"
         },
-        <Component />
+        <Component />,
       )
       expect(states).toEqual(["Loading", "ohai"])
     })
@@ -68,7 +68,7 @@ describe("renderUntil", () => {
     it("resolves the promise with an enzyme wrapper with the final state", async () => {
       const tree = await renderUntil(
         wrapper => wrapper.find("div").text() !== "Loading",
-        <Component />
+        <Component />,
       )
       expect(tree.find("div").text()).toEqual("ohai")
     })

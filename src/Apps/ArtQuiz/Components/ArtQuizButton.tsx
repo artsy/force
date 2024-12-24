@@ -38,7 +38,7 @@ export type ArtQuizButtonRef = { triggerAnimation(): void }
 export const ArtQuizButton = forwardRef(
   (
     { variant, children, onClick, ...rest }: ArtQuizButtonProps,
-    forwardedRef: Ref<ArtQuizButtonRef>
+    forwardedRef: Ref<ArtQuizButtonRef>,
   ) => {
     const [mode, setMode] = useMode<Mode>("Pending")
 
@@ -58,7 +58,7 @@ export const ArtQuizButton = forwardRef(
       // Animation plays on
       animationRef.current = nodeRef.current.animate(
         KEYFRAMES,
-        KEYFRAME_ANIMATION_OPTIONS
+        KEYFRAME_ANIMATION_OPTIONS,
       )
 
       await animationRef.current.finished
@@ -66,16 +66,12 @@ export const ArtQuizButton = forwardRef(
       setMode("Pending")
     }, [setMode])
 
-    useImperativeHandle(
-      forwardedRef,
-      () => {
-        return { triggerAnimation }
-      },
-      [triggerAnimation]
-    )
+    useImperativeHandle(forwardedRef, () => {
+      return { triggerAnimation }
+    }, [triggerAnimation])
 
     const handleClick = (
-      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+      event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     ) => {
       // Click executes immediately
       onClick(event)
@@ -103,5 +99,5 @@ export const ArtQuizButton = forwardRef(
         )}
       </Clickable>
     )
-  }
+  },
 )

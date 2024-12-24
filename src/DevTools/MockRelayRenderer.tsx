@@ -154,7 +154,7 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
     if (mockNetwork) {
       if (mockResolvers || mockData || mockMutationResults) {
         throw new Error(
-          "You cannot use mockNetwork with mockResolvers, mockData, or mockMutationResults"
+          "You cannot use mockNetwork with mockResolvers, mockData, or mockMutationResults",
         )
       }
       return mockNetwork
@@ -162,7 +162,7 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
 
     if ((mockData || mockMutationResults) && mockResolvers) {
       throw new Error(
-        "You cannot use mockResolvers with either mockData or mockMutationResults"
+        "You cannot use mockResolvers with either mockData or mockMutationResults",
       )
     }
 
@@ -193,7 +193,7 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
     ) {
       throw new Error(
         "The `react-relay` module has been mocked, be sure to unmock it with: " +
-          '`jest.unmock("react-relay")`'
+          '`jest.unmock("react-relay")`',
       )
     }
 
@@ -231,7 +231,7 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
               // that will need to be handled explicitly.
               render={renderWithLoadProgress(
                 Component as any,
-                this.props.componentProps
+                this.props.componentProps,
               )}
             />
           </SystemContextProvider>

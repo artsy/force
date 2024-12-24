@@ -142,9 +142,9 @@ export const ArtworkImageBrowserLargeFragmentContainer =
   createFragmentContainer(ArtworkImageBrowserLarge, {
     artwork: graphql`
       fragment ArtworkImageBrowserLarge_artwork on Artwork
-        @argumentDefinitions(
-          includeAllImages: { type: "Boolean", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        includeAllImages: { type: "Boolean", defaultValue: false }
+      ) {
         ...ArtworkLightbox_artwork
           @arguments(includeAllImages: $includeAllImages)
         ...ArtworkVideoPlayer_artwork
@@ -174,7 +174,9 @@ const NextPrevious = styled(Clickable)`
   justify-content: center;
   color: ${themeGet("colors.black60")};
   mix-blend-mode: difference;
-  transition: color 250ms, opacity 250ms;
+  transition:
+    color 250ms,
+    opacity 250ms;
   z-index: 1;
 
   &:hover,

@@ -65,7 +65,7 @@ export const AppSecondFactorModal: React.FC<
 
   const handleMutationError = (
     actions: FormikActions<FormValues>,
-    errors: ApiError[]
+    errors: ApiError[],
   ) => {
     if (!Array.isArray(errors)) {
       throw errors
@@ -88,7 +88,7 @@ export const AppSecondFactorModal: React.FC<
 
   const handleSubmit = async (
     values: FormValues,
-    actions: FormikActions<FormValues>
+    actions: FormikActions<FormValues>,
   ) => {
     try {
       await UpdateAppSecondFactor(relayEnvironment, {

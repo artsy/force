@@ -6,7 +6,7 @@ jest.unmock("react-relay")
 
 describe("ArtworkLightbox", () => {
   const setup = (
-    passedProps: { activeIndex: number | null } = { activeIndex: 0 }
+    passedProps: { activeIndex: number | null } = { activeIndex: 0 },
   ) => {
     const { getWrapper } = setupTestWrapper({
       Component: (props: any) => (

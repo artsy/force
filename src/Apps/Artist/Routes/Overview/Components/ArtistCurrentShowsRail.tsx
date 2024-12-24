@@ -49,7 +49,7 @@ const ArtistCurrentShowsRail: React.FC<
               destinationPageOwnerId: artist.internalID,
               destinationPageOwnerSlug: artist.slug,
               type: "viewAll",
-            })
+            }),
           )
         }}
         getItems={() => {
@@ -104,7 +104,7 @@ export const ArtistCurrentShowsRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const PLACEHOLDER = (

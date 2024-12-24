@@ -67,7 +67,7 @@ export const AddArtworksModalContent: FC<
 
         setIsLoading(false)
       },
-      { sort: option }
+      { sort: option },
     )
   }
 
@@ -129,11 +129,11 @@ const AddArtworksModalContentPaginationContainer = createPaginationContainer(
   {
     me: graphql`
       fragment AddArtworksModalContent_me on Me
-        @argumentDefinitions(
-          first: { type: "Int", defaultValue: 30 }
-          after: { type: "String" }
-          sort: { type: CollectionArtworkSorts, defaultValue: POSITION_DESC }
-        ) {
+      @argumentDefinitions(
+        first: { type: "Int", defaultValue: 30 }
+        after: { type: "String" }
+        sort: { type: CollectionArtworkSorts, defaultValue: POSITION_DESC }
+      ) {
         collection(id: "saved-artwork") {
           artworksCount(onlyVisible: true)
           artworksConnection(first: $first, after: $after, sort: $sort)
@@ -177,7 +177,7 @@ const AddArtworksModalContentPaginationContainer = createPaginationContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const AddArtworksModalContentQueryRender: FC<

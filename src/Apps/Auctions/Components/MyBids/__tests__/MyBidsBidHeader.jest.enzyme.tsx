@@ -55,7 +55,7 @@ describe("MyBidsBidHeaderFragmentContainer", () => {
     expect(wrapper.find("Image")).toBeDefined()
     expect(wrapper.find("Image").props().src).toEqual("coverImageResizedSrc")
     expect(wrapper.find("Image").props().srcSet).toEqual(
-      "coverImageResizedSrcSet"
+      "coverImageResizedSrcSet",
     )
 
     const text = wrapper.text()

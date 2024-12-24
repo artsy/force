@@ -268,5 +268,5 @@ export const IdentityVerificationAppFragmentContainer = createFragmentContainer(
         state
       }
     `,
-  }
+  },
 )

@@ -12,7 +12,7 @@ export const SettingsEditSettingsTwoFactorBackupCodesActions: React.FC<
   React.PropsWithChildren<SettingsEditSettingsTwoFactorBackupCodesActionsProps>
 > = ({ backupSecondFactors, ...rest }) => {
   const [mode, setMode] = useMode<"Unsupported" | "Supported" | "Copied">(
-    "Unsupported"
+    "Unsupported",
   )
 
   useEffect(() => {

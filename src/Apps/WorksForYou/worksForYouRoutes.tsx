@@ -6,7 +6,7 @@ const WorksForYouApp = loadable(
   () => import(/* webpackChunkName: "worksForYouBundle" */ "./WorksForYouApp"),
   {
     resolveComponent: component => component.WorksForYouAppFragmentContainer,
-  }
+  },
 )
 
 export const worksForYouRoutes: RouteProps[] = [

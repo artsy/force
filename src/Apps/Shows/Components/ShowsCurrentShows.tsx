@@ -81,10 +81,10 @@ const ShowsCurrentShowsPaginationContainer = createPaginationContainer(
   {
     viewer: graphql`
       fragment ShowsCurrentShows_viewer on Viewer
-        @argumentDefinitions(
-          first: { type: "Int", defaultValue: 10 }
-          after: { type: "String" }
-        ) {
+      @argumentDefinitions(
+        first: { type: "Int", defaultValue: 10 }
+        after: { type: "String" }
+      ) {
         showsConnection(
           first: $first
           after: $after
@@ -117,7 +117,7 @@ const ShowsCurrentShowsPaginationContainer = createPaginationContainer(
       return props.viewer.showsConnection
     },
     query: SHOWS_CURRENT_SHOWS_QUERY,
-  }
+  },
 )
 
 const SHOWS_CURRENT_SHOWS_PLACEHOLDER = (

@@ -99,7 +99,7 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
   {
     artist: graphql`
       fragment ArtistArtworkFilter_artist on Artist
-        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+      @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
         name
         counts {
           partner_shows: partnerShows
@@ -131,5 +131,5 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
         ...ArtistArtworkFilter_artist @arguments(input: $input)
       }
     }
-  `
+  `,
 )

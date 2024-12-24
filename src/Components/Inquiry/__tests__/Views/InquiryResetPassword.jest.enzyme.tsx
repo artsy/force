@@ -34,7 +34,7 @@ describe("InquiryResetPassword", () => {
     await flushPromiseQueue()
 
     expect(wrapper.html()).toContain(
-      "We've sent a link to reset your password if an account is associated with this email."
+      "We've sent a link to reset your password if an account is associated with this email.",
     )
   })
 

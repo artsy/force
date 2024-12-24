@@ -117,7 +117,7 @@ export const ArtworkListItemFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface ArtworkListItemLinkProps extends RouterLinkProps {

@@ -18,7 +18,7 @@ export const ArtistSeriesMeta: React.FC<
   const descriptionFirstSentence = `Discover and collect art from ${artistName}iconic ${artistSeries.title} series and more. `
   const description = truncate(
     `${descriptionFirstSentence}${artistSeries.description}`,
-    { length: 160, separator: " " }
+    { length: 160, separator: " " },
   )
 
   return (
@@ -43,5 +43,5 @@ export const ArtistSeriesMetaFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

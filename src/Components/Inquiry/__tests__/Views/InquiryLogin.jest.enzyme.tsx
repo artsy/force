@@ -60,7 +60,7 @@ describe("InquiryLogin", () => {
   describe("without two-factor auth", () => {
     beforeAll(() => {
       ;(login as jest.Mock).mockImplementation(() =>
-        Promise.resolve({ user: { id: "example-id", access_token: "token" } })
+        Promise.resolve({ user: { id: "example-id", access_token: "token" } }),
       )
     })
 
@@ -109,7 +109,7 @@ describe("InquiryLogin", () => {
 
       // Login will error asking for 2fa code
       ;(login as jest.Mock).mockImplementation(() =>
-        Promise.reject(new Error("missing two-factor authentication code"))
+        Promise.reject(new Error("missing two-factor authentication code")),
       )
 
       // Submit form
@@ -122,7 +122,7 @@ describe("InquiryLogin", () => {
 
       // Login works now
       ;(login as jest.Mock).mockImplementation(() =>
-        Promise.resolve({ user: { id: "id", access_token: "token" } })
+        Promise.resolve({ user: { id: "id", access_token: "token" } }),
       )
 
       // Submit form again
@@ -146,7 +146,7 @@ describe("InquiryLogin", () => {
 
       // Login will error asking for 2fa code
       ;(login as jest.Mock).mockImplementation(() =>
-        Promise.reject(new Error("missing on-demand authentication code"))
+        Promise.reject(new Error("missing on-demand authentication code")),
       )
 
       // Submit form
@@ -155,7 +155,7 @@ describe("InquiryLogin", () => {
       wrapper.update()
 
       expect(wrapper.text()).toContain(
-        "Your safety and security are important to us. Please check your email for a one-time authentication code to complete your login."
+        "Your safety and security are important to us. Please check your email for a one-time authentication code to complete your login.",
       )
 
       // Input two factor auth code
@@ -163,7 +163,7 @@ describe("InquiryLogin", () => {
 
       // Login works now
       ;(login as jest.Mock).mockImplementation(() =>
-        Promise.resolve({ user: { id: "id", access_token: "token" } })
+        Promise.resolve({ user: { id: "id", access_token: "token" } }),
       )
 
       // Submit form again

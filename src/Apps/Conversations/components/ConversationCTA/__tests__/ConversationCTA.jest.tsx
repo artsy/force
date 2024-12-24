@@ -88,7 +88,7 @@ describe("ConversationCTA", () => {
     })
 
     expect(
-      screen.getByText("Congratulations! Offer Accepted")
+      screen.getByText("Congratulations! Offer Accepted"),
     ).toBeInTheDocument()
   })
 
@@ -102,7 +102,7 @@ describe("ConversationCTA", () => {
     })
 
     expect(
-      screen.getByText("Offer Accepted - Confirm total")
+      screen.getByText("Offer Accepted - Confirm total"),
     ).toBeInTheDocument()
   })
 
@@ -116,7 +116,7 @@ describe("ConversationCTA", () => {
     })
 
     expect(
-      screen.getByText("Counteroffer Received - Confirm Total")
+      screen.getByText("Counteroffer Received - Confirm Total"),
     ).toBeInTheDocument()
   })
 

@@ -37,7 +37,7 @@ describe("MetaTags", () => {
     mount(
       <MockBoot>
         <MetaTags />
-      </MockBoot>
+      </MockBoot>,
     )
 
     const tags = getTags()
@@ -121,7 +121,7 @@ describe("MetaTags", () => {
           imageURL="https://example.com/example.jpg"
           pathname="/artist/example-artist"
         />
-      </MockBoot>
+      </MockBoot>,
     )
 
     const tags = getTags()
@@ -193,7 +193,7 @@ describe("MetaTags", () => {
     mount(
       <MockBoot>
         <MetaTags blockRobots />
-      </MockBoot>
+      </MockBoot>,
     )
 
     const tags = getTags()
@@ -209,7 +209,7 @@ describe("MetaTags", () => {
     mount(
       <MockBoot>
         <MetaTags pathname="foobar" />
-      </MockBoot>
+      </MockBoot>,
     )
 
     const tags = getTags()
@@ -229,7 +229,7 @@ describe("MetaTags", () => {
           imageURL={null}
           pathname={null}
         />
-      </MockBoot>
+      </MockBoot>,
     )
 
     const tags = getTags()

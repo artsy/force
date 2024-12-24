@@ -97,7 +97,7 @@ beforeEach(() => {
   mockRemoveAsset.mockImplementation(() => Promise.resolve())
   ;(useFeatureFlag as jest.Mock).mockImplementation(
     (featureName: string) =>
-      featureName === "onyx_post_approval_submission_flow"
+      featureName === "onyx_post_approval_submission_flow",
   )
 })
 
@@ -137,8 +137,8 @@ describe("AdditionalDocumentsRoute", () => {
     expect(screen.getByText("Additional Documents")).toBeInTheDocument()
     expect(
       screen.getByText(
-        /Please add any of the following if you have them: Proof of Purchase, Certificate of Authentication, Fact Sheet, Condition Report/
-      )
+        /Please add any of the following if you have them: Proof of Purchase, Certificate of Authentication, Fact Sheet, Condition Report/,
+      ),
     ).toBeInTheDocument()
 
     expect(screen.getByText("Continue")).toBeInTheDocument()
@@ -224,8 +224,8 @@ describe("AdditionalDocumentsRoute", () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            "Whoa, you've reached the size limit! Please delete or upload smaller files."
-          )
+            "Whoa, you've reached the size limit! Please delete or upload smaller files.",
+          ),
         ).toBeInTheDocument()
       })
     })
@@ -251,8 +251,8 @@ describe("AdditionalDocumentsRoute", () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            "File format not supported. Please upload images (JPG, PNG or HEIC) or PDF or Microsoft Office files."
-          )
+            "File format not supported. Please upload images (JPG, PNG or HEIC) or PDF or Microsoft Office files.",
+          ),
         ).toBeInTheDocument()
       })
     })
@@ -274,7 +274,7 @@ describe("AdditionalDocumentsRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            "/sell/submissions/externalId/condition"
+            "/sell/submissions/externalId/condition",
           )
         })
       })

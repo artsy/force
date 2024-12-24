@@ -10,12 +10,12 @@ const { renderWithRelay } =
   setupTestWrapperTL<CellShowFragmentContainer_Test_Query>({
     Component: CellShowFragmentContainer,
     query: graphql`
-    query CellShowFragmentContainer_Test_Query @relay_test_operation {
-      show(id: "example") {
-        ...CellShow_show
+      query CellShowFragmentContainer_Test_Query @relay_test_operation {
+        show(id: "example") {
+          ...CellShow_show
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("CellShow", () => {

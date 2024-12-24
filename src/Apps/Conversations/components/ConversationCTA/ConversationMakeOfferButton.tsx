@@ -71,7 +71,7 @@ export const ConversationMakeOfferButton: React.FC<
         "CommerceOrderWithMutationSuccess"
       ) {
         router.push(
-          `/orders/${response.createInquiryOfferOrder.orderOrError.order.internalID}/offer?backToConversationId=${data.conversation.internalID}`
+          `/orders/${response.createInquiryOfferOrder.orderOrError.order.internalID}/offer?backToConversationId=${data.conversation.internalID}`,
         )
       }
     } catch (error) {

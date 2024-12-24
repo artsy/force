@@ -24,8 +24,8 @@ describe("SWAFooter", () => {
 
     expect(
       screen.getByText(
-        "Sell with Artsy is the simple, contemporary way to sell art from your collection."
-      )
+        "Sell with Artsy is the simple, contemporary way to sell art from your collection.",
+      ),
     ).toBeInTheDocument()
     expect(screen.getByText("Start Selling")).toBeInTheDocument()
   })

@@ -20,7 +20,7 @@ describe("ErrorBoundary", () => {
     const wrapper = mount(
       <ErrorBoundary>
         <div>found child</div>
-      </ErrorBoundary>
+      </ErrorBoundary>,
     )
 
     expect(wrapper.text()).toContain("found child")
@@ -37,7 +37,7 @@ describe("ErrorBoundary", () => {
     mount(
       <ErrorBoundary>
         <ErrorComponent />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     )
 
     expect(ErrorBoundary.prototype.componentDidCatch).toHaveBeenCalled()
@@ -52,7 +52,7 @@ describe("ErrorBoundary", () => {
     const wrapper = mount(
       <ErrorBoundary>
         <ErrorComponent />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     )
 
     const state = wrapper.state() as any
@@ -64,7 +64,7 @@ describe("ErrorBoundary", () => {
     const wrapper = mount(
       <ErrorBoundary>
         <div>erroneous render</div>
-      </ErrorBoundary>
+      </ErrorBoundary>,
     )
 
     wrapper.setState({
@@ -80,7 +80,7 @@ describe("ErrorBoundary", () => {
     const wrapper = mount(
       <ErrorBoundary>
         <div>erroneous render</div>
-      </ErrorBoundary>
+      </ErrorBoundary>,
     )
 
     wrapper.setState({

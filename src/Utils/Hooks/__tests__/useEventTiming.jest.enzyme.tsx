@@ -32,7 +32,7 @@ const Wrapper = ({ currentTime, startAt, endAt }: WrapperProps) => {
             year: 2000,
             ...endAt,
           }).toISO(),
-        })
+        }),
       )}
     </>
   )
@@ -48,7 +48,7 @@ describe("useEventTiming", () => {
         currentTime: { seconds: 21 },
         startAt: { seconds: 0 },
         endAt: { seconds: 20 },
-      })
+      }),
     ).toStrictEqual({
       closesSoon: false,
       closesToday: false,
@@ -71,7 +71,7 @@ describe("useEventTiming", () => {
         currentTime: { seconds: 0 },
         startAt: { seconds: 10 },
         endAt: { seconds: 20 },
-      })
+      }),
     ).toStrictEqual({
       closesSoon: false,
       closesToday: true,
@@ -94,7 +94,7 @@ describe("useEventTiming", () => {
         currentTime: { seconds: 10 },
         startAt: { seconds: 0 },
         endAt: { day: 2, seconds: 10 },
-      })
+      }),
     ).toStrictEqual({
       closesSoon: true,
       closesToday: false,
@@ -117,7 +117,7 @@ describe("useEventTiming", () => {
         currentTime: { seconds: 10 },
         startAt: { seconds: 0 },
         endAt: { seconds: 20 },
-      })
+      }),
     ).toStrictEqual({
       closesSoon: false,
       closesToday: true,

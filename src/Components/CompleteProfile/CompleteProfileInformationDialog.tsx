@@ -55,7 +55,7 @@ const CompleteProfileInformationDialogForm: FC<
   const { me } = useLazyLoadQuery<CompleteProfileInformationDialogQuery>(
     QUERY,
     {},
-    { fetchPolicy: "network-only" }
+    { fetchPolicy: "network-only" },
   )
 
   const { contextPageOwnerType } = useAnalyticsContext()
@@ -66,7 +66,7 @@ const CompleteProfileInformationDialogForm: FC<
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
 
   const handleSubmit = async (
-    values: CompleteProfileInformationDialogFormInput
+    values: CompleteProfileInformationDialogFormInput,
   ) => {
     try {
       const location = {

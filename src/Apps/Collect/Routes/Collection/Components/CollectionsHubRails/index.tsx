@@ -63,14 +63,14 @@ export const CollectionsHubRailsContainer = createFragmentContainer(
   {
     linkedCollections: graphql`
       fragment CollectionsHubRails_linkedCollections on MarketingCollectionGroup
-        @relay(plural: true) {
+      @relay(plural: true) {
         groupType
         ...FeaturedCollectionsRails_collectionGroup
         ...OtherCollectionsRail_collectionGroup
         ...ArtistSeriesRail_collectionGroup
       }
     `,
-  }
+  },
 )
 
 export const CollectionsHubRailsQueryRenderer: React.FC<
@@ -96,7 +96,7 @@ export const CollectionsHubRailsQueryRenderer: React.FC<
         if (error) {
           console.error(
             "[CollectionFeaturedArtists]: Error fetching featured artists",
-            error
+            error,
           )
           return null
         }

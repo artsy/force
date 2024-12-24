@@ -5,18 +5,18 @@ import { mount } from "enzyme"
 describe("InfoSection", () => {
   it("shows plain text", () => {
     const wrapper = mount(
-      <InfoSection info={"<strong>Info example</strong>"} type="text" />
+      <InfoSection info={"<strong>Info example</strong>"} type="text" />,
     )
     expect(wrapper.find("HTML").length).toEqual(0)
     expect(wrapper.find("TextWithNewlines").length).toEqual(1)
     expect(wrapper.find("TextWithNewlines").text()).toEqual(
-      "<strong>Info example</strong>"
+      "<strong>Info example</strong>",
     )
   })
 
   it("shows html", () => {
     const wrapper = mount(
-      <InfoSection info={"<strong>Info example</strong>"} type="html" />
+      <InfoSection info={"<strong>Info example</strong>"} type="html" />,
     )
     expect(wrapper.find("TextWithNewlines").length).toEqual(0)
     expect(wrapper.find("HTML").length).toEqual(1)
@@ -32,7 +32,7 @@ describe("InfoSection", () => {
             <Text>Another item</Text>
           </>
         }
-      />
+      />,
     )
     expect(wrapper.find("TextWithNewlines").length).toEqual(0)
     expect(wrapper.find("HTML").length).toEqual(0)
@@ -43,7 +43,7 @@ describe("InfoSection", () => {
 
   it("shows label", () => {
     const wrapper = mount(
-      <InfoSection info={"Info example"} type="text" label="About:" />
+      <InfoSection info={"Info example"} type="text" label="About:" />,
     )
     expect(wrapper.find("Text").length).toEqual(1)
     expect(wrapper.find("Text").text()).toEqual("About:")

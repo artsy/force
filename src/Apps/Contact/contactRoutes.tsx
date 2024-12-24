@@ -5,7 +5,7 @@ const ContactApp = loadable(
   () => import(/* webpackChunkName: "contactBundle" */ "./ContactApp"),
   {
     resolveComponent: component => component.ContactApp,
-  }
+  },
 )
 
 export const contactRoutes: RouteProps[] = [

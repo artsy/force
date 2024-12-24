@@ -6,7 +6,7 @@ export interface MenuData {
 export type LinkData = MenuLinkData | SimpleLinkData
 
 export const isMenuLinkData = (
-  linkData: LinkData
+  linkData: LinkData,
 ): linkData is MenuLinkData => {
   return "menu" in linkData
 }

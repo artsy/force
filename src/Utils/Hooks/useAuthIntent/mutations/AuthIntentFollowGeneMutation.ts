@@ -5,7 +5,7 @@ import type { AuthIntentMutation } from "./types"
 
 export const followGeneMutation: AuthIntentMutation = (
   relayEnvironment: Environment,
-  id: string
+  id: string,
 ) => {
   return new Promise((resolve, reject) => {
     commitMutation<AuthIntentFollowGeneMutation>(relayEnvironment, {
@@ -19,7 +19,7 @@ export const followGeneMutation: AuthIntentMutation = (
       },
       mutation: graphql`
         mutation AuthIntentFollowGeneMutation($input: FollowGeneInput!)
-          @raw_response_type {
+        @raw_response_type {
           followGene(input: $input) {
             gene {
               id

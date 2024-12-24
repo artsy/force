@@ -19,7 +19,7 @@ jest.mock("System/Hooks/useSystemContext", () => ({
 
 const Example: FC<React.PropsWithChildren<unknown>> = () => {
   const ProgressiveOnboardingAlertCreate = withProgressiveOnboardingCounts(
-    __ProgressiveOnboardingAlertCreate__
+    __ProgressiveOnboardingAlertCreate__,
   )
 
   return (

@@ -99,7 +99,7 @@ export const FairFollowedArtists: React.FC<
                     artworkID: artwork.internalID,
                     artworkSlug: artwork.slug,
                     carouselIndex: index,
-                  })
+                  }),
                 )
               }
             />
@@ -131,7 +131,7 @@ export const FairFollowedArtistsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface FairFollowedArtistsQueryRendererProps {

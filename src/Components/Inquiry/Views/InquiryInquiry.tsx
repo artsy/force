@@ -227,7 +227,7 @@ const InquiryInquiryFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const InquiryInquiryPlaceholder: React.FC<

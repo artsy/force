@@ -65,7 +65,7 @@ const handleError = error => {
 
 export type LoadProgressRenderer<P> = (
   // FIXME: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37950
-  readyState: ReadyState
+  readyState: ReadyState,
 ) => React.ReactElement<RelayContainer<P>> | null
 
 export function renderWithLoadProgress<P>(
@@ -74,7 +74,7 @@ export function renderWithLoadProgress<P>(
   wrapperProps: object = {},
   spinnerProps: SpinnerProps = {
     delay: 1000,
-  }
+  },
 ): LoadProgressRenderer<P> {
   // TODO: We need design for retrying or the approval to use the iOS design.
   // See also: https://artsyproduct.atlassian.net/browse/PLATFORM-1272

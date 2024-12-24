@@ -17,7 +17,7 @@ describe("PricingContextModal", () => {
     expect(component.find(HelpIcon).length).toEqual(1)
 
     expect(component.text()).not.toContain(
-      "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points."
+      "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points.",
     )
   })
 
@@ -32,7 +32,7 @@ describe("PricingContextModal", () => {
     expect(component.find("a").length).toBe(2)
 
     expect(component.find("a").first().props().href).toEqual(
-      "/article/artsy-editorial-artworks-prices"
+      "/article/artsy-editorial-artworks-prices",
     )
   })
 
@@ -45,7 +45,7 @@ describe("PricingContextModal", () => {
     component.update()
 
     expect(component.find("a").at(1).props().href).toEqual(
-      "mailto:support@artsy.net"
+      "mailto:support@artsy.net",
     )
   })
 
@@ -58,7 +58,7 @@ describe("PricingContextModal", () => {
     component.update()
 
     expect(component.text()).toContain(
-      "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points."
+      "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points.",
     )
   })
 
@@ -71,7 +71,7 @@ describe("PricingContextModal", () => {
     component.update()
 
     expect(component.text()).toContain(
-      "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points."
+      "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points.",
     )
 
     const button = component.find(Button)

@@ -39,12 +39,13 @@ const { renderWithRelay } =
       )
     },
     query: graphql`
-    query InstitutionsRouteFragmentContainer_Test_Query @relay_test_operation {
-      viewer {
-        ...InstitutionsRoute_viewer
+      query InstitutionsRouteFragmentContainer_Test_Query
+      @relay_test_operation {
+        viewer {
+          ...InstitutionsRoute_viewer
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("InstitutionsRoute", () => {
@@ -67,7 +68,7 @@ describe("InstitutionsRoute", () => {
     renderWithRelay()
 
     expect(
-      screen.getByText("Interested in Listing Your Museum on Artsy?")
+      screen.getByText("Interested in Listing Your Museum on Artsy?"),
     ).toBeInTheDocument()
 
     expect(screen.getByText("PartnersRailsQueryRenderer")).toBeInTheDocument()
@@ -84,11 +85,11 @@ describe("InstitutionsRoute", () => {
       renderWithRelay()
 
       expect(
-        screen.getByText("Interested in Listing Your Museum on Artsy?")
+        screen.getByText("Interested in Listing Your Museum on Artsy?"),
       ).toBeInTheDocument()
 
       expect(
-        screen.getByText("PartnersFilteredCellsQueryRenderer")
+        screen.getByText("PartnersFilteredCellsQueryRenderer"),
       ).toBeInTheDocument()
     })
   })

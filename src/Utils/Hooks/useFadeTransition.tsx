@@ -74,7 +74,7 @@ export const useFadeTransition = ({
       setStatus((fromStatus ?? status) === "In" ? "Out" : "In")
       setMode("Resting")
     },
-    [duration, mode, setMode, setStatus, status]
+    [duration, mode, setMode, setStatus, status],
   )
 
   return {

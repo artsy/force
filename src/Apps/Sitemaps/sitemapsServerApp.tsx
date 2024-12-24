@@ -18,7 +18,7 @@ sitemapsServerApp
   .get("/robots.txt", (_req, res) => {
     res.type("text/plain")
     res.send(
-      getENV("ENABLE_WEB_CRAWLING") ? ENABLED_ROBOTS_TXT : DISABLED_ROBOTS_TXT
+      getENV("ENABLE_WEB_CRAWLING") ? ENABLED_ROBOTS_TXT : DISABLED_ROBOTS_TXT,
     )
   })
   .get("/sitemap-misc.xml", (req, res) => {
@@ -93,7 +93,7 @@ sitemapsServerApp
     (req, res) => {
       req.headers.host = new URL(SITEMAP_BASE_URL).host
       sitemapProxy.web(req, res)
-    }
+    },
   )
 
 const ENABLED_ROBOTS_TXT = `User-agent: *

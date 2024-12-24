@@ -28,7 +28,7 @@ describe("Footer", () => {
     mount(
       <MockBoot breakpoint={breakpoint}>
         <Footer />
-      </MockBoot>
+      </MockBoot>,
     )
 
   describe("large screen size", () => {
@@ -51,7 +51,7 @@ describe("Footer", () => {
 
       expect(wrapper.text()).toContain("Artsy for Fairs")
       expect(wrapper.html()).toContain(
-        "https://partners.artsy.net/artsy-fair-partnerships/"
+        "https://partners.artsy.net/artsy-fair-partnerships/",
       )
     })
 
@@ -60,12 +60,12 @@ describe("Footer", () => {
 
       expect(wrapper.text()).toContain("iOS App")
       expect(wrapper.html()).toContain(
-        "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
+        "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080",
       )
 
       expect(wrapper.text()).toContain("Android App")
       expect(wrapper.html()).toContain(
-        "https://play.google.com/store/apps/details?id=net.artsy.app"
+        "https://play.google.com/store/apps/details?id=net.artsy.app",
       )
     })
 
@@ -74,7 +74,7 @@ describe("Footer", () => {
       expect(
         wrapper.find("button").map(button => {
           return button.text()
-        })
+        }),
       ).toContain("Do not sell my personal information")
     })
 
@@ -141,7 +141,7 @@ describe("Footer", () => {
       expect(
         wrapper.find("button").map(button => {
           return button.text()
-        })
+        }),
       ).toContain("Do not sell my personal information")
     })
 

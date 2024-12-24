@@ -56,7 +56,7 @@ export function featureFlagMiddleware(serviceType: symbol) {
 }
 
 export function createFeatureFlagsCachePrefix(
-  featureFlags: FeatureFlags
+  featureFlags: FeatureFlags,
 ): string {
   const flagsEnabledList: string[] = []
 

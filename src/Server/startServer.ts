@@ -13,7 +13,7 @@ const { HEADERS_TIMEOUT_SECONDS, KEEPALIVE_TIMEOUT_SECONDS } = process.env
  */
 export async function startServer(
   app,
-  onStart?: () => void
+  onStart?: () => void,
 ): Promise<http.Server> {
   setupExpressErrorHandler(app)
 
@@ -35,14 +35,14 @@ export async function startServer(
 
       if (KEEPALIVE_TIMEOUT_SECONDS) {
         console.log(
-          "Setting keepAliveTimeout to " + KEEPALIVE_TIMEOUT_SECONDS + " sec."
+          "Setting keepAliveTimeout to " + KEEPALIVE_TIMEOUT_SECONDS + " sec.",
         )
         server.keepAliveTimeout = Number(KEEPALIVE_TIMEOUT_SECONDS) * 1000
       }
 
       if (HEADERS_TIMEOUT_SECONDS) {
         console.log(
-          "Setting headersTimeout to " + HEADERS_TIMEOUT_SECONDS + " sec."
+          "Setting headersTimeout to " + HEADERS_TIMEOUT_SECONDS + " sec.",
         )
 
         // @ts-ignore -- FIXME: Property 'headersTimeout' does not exist on type 'Server & WithShutdown'.

@@ -11,12 +11,12 @@ describe("FairOrganizerPastEventsRail", () => {
     setupTestWrapper<FairOrganizerPastEventsRail_Test_Query>({
       Component: FairOrganizerPastEventsRail,
       query: graphql`
-      query FairOrganizerPastEventsRail_Test_Query @relay_test_operation {
-        fairOrganizer(id: "the-armory-show") {
-          ...FairOrganizerPastEventsRail_fairOrganizer
+        query FairOrganizerPastEventsRail_Test_Query @relay_test_operation {
+          fairOrganizer(id: "the-armory-show") {
+            ...FairOrganizerPastEventsRail_fairOrganizer
+          }
         }
-      }
-    `,
+      `,
     })
 
   it("renders correctly", () => {
@@ -47,7 +47,7 @@ describe("FairOrganizerPastEventsRail", () => {
     expect(wrapper.find("RouterLink").length).toBe(2)
 
     expect(wrapper.find("RouterLink").at(0).html()).toContain(
-      `href="/fair/banksy"`
+      `href="/fair/banksy"`,
     )
   })
 

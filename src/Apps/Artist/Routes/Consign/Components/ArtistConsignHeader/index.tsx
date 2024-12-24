@@ -26,7 +26,7 @@ export const ArtistConsignHeader: React.FC<
   const tracking = useTracking()
 
   const [leftArtwork, rightArtwork] = extractNodes(
-    artist.targetSupply?.microfunnel?.artworksConnection
+    artist.targetSupply?.microfunnel?.artworksConnection,
   )
 
   return (
@@ -149,5 +149,5 @@ export const ArtistConsignHeaderFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

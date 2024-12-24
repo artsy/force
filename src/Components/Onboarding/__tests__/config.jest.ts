@@ -25,7 +25,7 @@ describe("config", () => {
             followedIds: [],
           },
         },
-      })
+      }),
     )
 
     expect(workflowEngine.current()).toEqual("VIEW_WELCOME")

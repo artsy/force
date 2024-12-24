@@ -30,7 +30,7 @@ export type AddressErrors = Partial<Address>
 export type AddressTouched = Partial<{ [T in keyof Address]: boolean }>
 export type AddressChangeHandler = (
   address: Address,
-  key: keyof Address
+  key: keyof Address,
 ) => void
 
 export interface AddressFormProps {
@@ -130,7 +130,7 @@ export const AddressForm: React.FC<
     (key: keyof Address) => {
       return (touched && touched[key] && errors && errors[key]) || ""
     },
-    [errors, touched]
+    [errors, touched],
   )
 
   const phoneNumberInputDescription = (): string | undefined => {

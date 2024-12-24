@@ -53,7 +53,7 @@ export const parseSizeRange = (range = "", metric: Metric): Numeric[] => {
 
 export const getCustomSizeRangeInInches = (
   customSize: CustomSize,
-  sourceMetric: Metric
+  sourceMetric: Metric,
 ) => {
   let sizes = customSize
 

@@ -37,5 +37,5 @@ export const PartnerContactAddressFragmentContainer = createFragmentContainer(
         displayCountry
       }
     `,
-  }
+  },
 )

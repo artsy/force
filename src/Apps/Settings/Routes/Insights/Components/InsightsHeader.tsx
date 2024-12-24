@@ -41,7 +41,7 @@ export const InsightsHeader: React.FC<
                         to={"/collector-profile/my-collection/artworks/new"}
                         onClick={() =>
                           trackAddCollectedArtwork(
-                            OwnerType.myCollectionInsights
+                            OwnerType.myCollectionInsights,
                           )
                         }
                       >

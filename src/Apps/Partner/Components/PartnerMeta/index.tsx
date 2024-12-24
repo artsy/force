@@ -81,5 +81,5 @@ export const PartnerMetaFragmentContainer = createFragmentContainer(
         slug
       }
     `,
-  }
+  },
 )

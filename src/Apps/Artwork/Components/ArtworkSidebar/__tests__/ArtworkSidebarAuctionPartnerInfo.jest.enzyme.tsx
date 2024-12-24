@@ -7,14 +7,14 @@ jest.unmock("react-relay")
 
 describe("ArtworkSidebarAuctionPartnerInfo", () => {
   const getWrapper = async (
-    response: ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse["artwork"]
+    response: ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse["artwork"],
   ) => {
     return renderRelayTree({
       Component: ArtworkSidebarAuctionPartnerInfoFragmentContainer,
       query: graphql`
         query ArtworkSidebarAuctionPartnerInfo_Test_Query
-          @raw_response_type
-          @relay_test_operation {
+        @raw_response_type
+        @relay_test_operation {
           artwork(id: "auction_artwork_estimate_premium") {
             ...ArtworkSidebarAuctionPartnerInfo_artwork
           }
@@ -32,7 +32,7 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
 
       expect(wrapper.text()).toContain("Bruun Rasmussen")
       expect(wrapper.text()).toContain(
-        "Estimated value: DKK 100,000–DKK 125,000"
+        "Estimated value: DKK 100,000–DKK 125,000",
       )
     })
 

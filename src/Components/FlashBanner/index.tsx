@@ -77,7 +77,7 @@ export const FlashBannerFragmentContainer = createFragmentContainer(
         canRequestEmailConfirmation
       }
     `,
-  }
+  },
 )
 
 export const FlashBannerQueryRenderer: FC<

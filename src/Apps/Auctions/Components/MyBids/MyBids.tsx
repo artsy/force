@@ -89,7 +89,7 @@ const MyBids: React.FC<React.PropsWithChildren<MyBidsProps>> = props => {
                               contextPageOwnerType,
                               destinationPageOwnerType: OwnerType.sale,
                               type: "thumbnail",
-                            })
+                            }),
                           )
                         }}
                       >

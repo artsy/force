@@ -68,7 +68,7 @@ const FairBoothRailArtworks: React.FC<
                   artworkID: artwork.internalID,
                   artworkSlug: artwork.slug,
                   carouselIndex: index,
-                })
+                }),
               )
             }
           />
@@ -102,7 +102,7 @@ export const FairBoothRailArtworksFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const FairBoothRailArtworksQueryRenderer: React.FC<

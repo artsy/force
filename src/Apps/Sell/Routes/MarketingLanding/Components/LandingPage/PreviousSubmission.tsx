@@ -44,7 +44,7 @@ const PreviousSubmission: React.FC<
     {
       id: submissionID,
     },
-    { fetchPolicy: "store-and-network" }
+    { fetchPolicy: "store-and-network" },
   )
 
   const handlePreviousSubmissionClick = () => {

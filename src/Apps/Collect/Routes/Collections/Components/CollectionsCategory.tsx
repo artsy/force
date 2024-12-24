@@ -26,7 +26,7 @@ export const CollectionsCategory: React.FC<
   const [showAll, toggleShowAll] = useState(false)
 
   const sortedCollections = [...collections].sort((a, b) =>
-    a.title.localeCompare(b.title)
+    a.title.localeCompare(b.title),
   )
 
   return (
@@ -101,7 +101,7 @@ export const CollectionsCategoryFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const TRUNCATED_AMOUNT = 16
