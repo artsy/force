@@ -111,7 +111,7 @@ export const ShippingLocationRoute: React.FC<
   const onSubmit = async (values: FormValues) => {
     // Looking up the country name from the country code
     const locationCountry = COUNTRY_SELECT_OPTIONS.find(
-      option => option.value === values.location.countryCode
+      option => option.value === values.location.countryCode,
     )?.text
 
     return actions.updateSubmission({

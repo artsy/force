@@ -13,7 +13,7 @@ describe("Meta tags", () => {
     return mount(
       <MockBoot>
         <SearchMeta term="cats" />
-      </MockBoot>
+      </MockBoot>,
     )
   }
 
@@ -28,7 +28,7 @@ describe("Meta tags", () => {
     const link = component.find(Link).at(0).html()
 
     expect(link).toEqual(
-      '<link rel="canonical" href="test-url/search?term=cats">'
+      '<link rel="canonical" href="test-url/search?term=cats">',
     )
   })
 })

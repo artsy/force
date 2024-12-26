@@ -23,7 +23,7 @@ describe("ViewingRoomWorksRoute", () => {
 
   const getWrapper = async (
     breakpoint: Breakpoint = "lg",
-    response: ViewingRoomWorksRoute_Test_Query$rawResponse = ViewingRoomWorksRouteFixture
+    response: ViewingRoomWorksRoute_Test_Query$rawResponse = ViewingRoomWorksRouteFixture,
   ) => {
     return await renderRelayTree({
       Component: ({ viewingRoom }) => {
@@ -35,8 +35,8 @@ describe("ViewingRoomWorksRoute", () => {
       },
       query: graphql`
         query ViewingRoomWorksRoute_Test_Query($slug: ID!)
-          @raw_response_type
-          @relay_test_operation {
+        @raw_response_type
+        @relay_test_operation {
           viewingRoom(id: $slug) {
             ...ViewingRoomWorksRoute_viewingRoom
           }

@@ -13,7 +13,7 @@ describe(QuickMultipleSelectAlertFilter, () => {
         description="Custom description text"
         criteriaKey="colors"
         options={someOptions}
-      />
+      />,
     )
 
     expect(screen.getByText("Custom Label")).toBeInTheDocument()
@@ -28,7 +28,7 @@ describe(QuickMultipleSelectAlertFilter, () => {
         label="Custom Label"
         criteriaKey="colors"
         options={someOptions}
-      />
+      />,
     )
 
     expect(screen.getByText("Custom Label")).toBeInTheDocument()
@@ -51,7 +51,7 @@ describe(QuickMultipleSelectAlertFilter, () => {
         criteriaKey="colors"
         options={someOptions}
         truncate={4}
-      />
+      />,
     )
 
     // truncate initially
@@ -114,7 +114,7 @@ function currentAlertContext(): AlertContextProps {
   } catch (error) {
     if (error.name === "TestingLibraryElementError")
       throw new Error(
-        `The currentAlertContext() helper function requires an <AlertStateInspector /> to be mounted in the current DOM.`
+        `The currentAlertContext() helper function requires an <AlertStateInspector /> to be mounted in the current DOM.`,
       )
   }
   return JSON.parse(contextInspector!.textContent!)

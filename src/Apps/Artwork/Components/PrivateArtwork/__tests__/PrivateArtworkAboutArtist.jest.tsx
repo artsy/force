@@ -13,12 +13,12 @@ describe("ArtworkSidebarPrivateArtwork", () => {
         <PrivateArtworkAboutArtist artwork={props.artwork!} />
       ),
       query: graphql`
-      query PrivateArtworkAboutArtistQuery {
-        artwork(id: "foo") {
-          ...PrivateArtworkAboutArtist_artwork
+        query PrivateArtworkAboutArtistQuery {
+          artwork(id: "foo") {
+            ...PrivateArtworkAboutArtist_artwork
+          }
         }
-      }
-    `,
+      `,
     })
 
   it("renders correctly", () => {

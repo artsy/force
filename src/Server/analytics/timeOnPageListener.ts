@@ -24,7 +24,7 @@ export const timeOnPageListener = (delay = 15000) => {
           contextPageOwnerSlug,
           contextPageOwnerType: pageType,
         }),
-        trackingOptions
+        trackingOptions,
       )
     }
   }, delay)

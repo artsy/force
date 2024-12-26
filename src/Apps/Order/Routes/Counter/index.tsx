@@ -42,7 +42,7 @@ export const CounterRoute: FC<
   const { trackEvent } = useTracking()
 
   const submitPendingOffer = (
-    variables: CounterSubmitMutation["variables"]
+    variables: CounterSubmitMutation["variables"],
   ) => {
     return commitMutation<CounterSubmitMutation>({
       mutation: graphql`
@@ -230,5 +230,5 @@ export const CounterFragmentContainer = createFragmentContainer(
         ...OfferHistoryItem_order
       }
     `,
-  }
+  },
 )

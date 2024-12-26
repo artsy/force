@@ -80,7 +80,7 @@ export const offersAttributes = (artist: ArtistMeta_artist$data) => {
 
 export const productAttributes = (
   artist: ArtistMeta_artist$data,
-  artwork: ArtworkNode
+  artwork: ArtworkNode,
 ) => {
   const image = imageObjectAttributes(artwork)
   const offers = offerAttributes(artwork)

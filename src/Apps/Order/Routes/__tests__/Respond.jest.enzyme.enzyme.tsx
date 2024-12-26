@@ -151,13 +151,13 @@ describe("The respond page", () => {
       expect(page.text()).not.toContain("Your note")
       expect(page.transactionSummary.text()).toMatch("Seller's offerUS$14,000")
       expect(page.artworkSummary.text()).toMatch(
-        "Lisa BreslowGramercy Park South"
+        "Lisa BreslowGramercy Park South",
       )
       expect(page.shippingSummary.text()).toMatch(
-        "Ship toJoelle Van Dyne401 Broadway"
+        "Ship toJoelle Van Dyne401 Broadway",
       )
       expect(page.paymentSummary.text()).toMatchInlineSnapshot(
-        `"•••• 4444   Exp 03/21"`
+        `"•••• 4444   Exp 03/21"`,
       )
       expect(page.buyerGuarantee.length).toBe(1)
       expect(page.submitButton.text()).toBe("Continue")
@@ -193,7 +193,7 @@ describe("The respond page", () => {
       page.showOfferHistoryButton.props().onClick({})
 
       expect(page.offerHistory.text()).toMatch(
-        "You (May 21)US$1,200.00Seller (Apr 30)US$1,500.00You (Apr 5)US$1,100.00"
+        "You (May 21)US$1,200.00Seller (Apr 30)US$1,500.00You (Apr 5)US$1,100.00",
       )
     })
 
@@ -232,7 +232,7 @@ describe("The respond page", () => {
       await page.clickSubmit()
 
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/review/accept`
+        `/orders/${testOrder.internalID}/review/accept`,
       )
     })
 
@@ -246,7 +246,7 @@ describe("The respond page", () => {
       await page.clickSubmit()
 
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/review/decline`
+        `/orders/${testOrder.internalID}/review/decline`,
       )
     })
 
@@ -309,7 +309,7 @@ describe("The respond page", () => {
                 note: "",
               },
             },
-          })
+          }),
         )
         expect(pushMock).toHaveBeenCalledWith("/orders/2939023/review/counter")
       })
@@ -336,7 +336,7 @@ describe("The respond page", () => {
                 note: "",
               },
             },
-          })
+          }),
         )
         expect(pushMock).toHaveBeenCalledWith("/orders/2939023/review/counter")
       })

@@ -27,7 +27,7 @@ describe("PrivateArtworkAboutWork", () => {
       },
     })
     expect(
-      screen.getByText("Additional Artwork Information")
+      screen.getByText("Additional Artwork Information"),
     ).toBeInTheDocument()
   })
 
@@ -40,7 +40,7 @@ describe("PrivateArtworkAboutWork", () => {
       },
     })
     expect(
-      screen.queryByText("Additional Artwork Information")
+      screen.queryByText("Additional Artwork Information"),
     ).not.toBeInTheDocument()
   })
 })

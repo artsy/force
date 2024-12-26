@@ -100,11 +100,11 @@ describe("SettingsEditProfileFields", () => {
     })
     fireEvent.change(
       screen.getByPlaceholderText(
-        "Add a brief bio, so galleries know which artists or genres you collect."
+        "Add a brief bio, so galleries know which artists or genres you collect.",
       ),
       {
         target: { name: "bio", value: "I collect" },
-      }
+      },
     )
 
     fireEvent.click(screen.getByText("Save"))
@@ -142,12 +142,12 @@ describe("SettingsEditProfileFields", () => {
       const faqLink = screen.getByText("FAQs")
       expect(faqLink).toHaveAttribute(
         "href",
-        expect.stringContaining("/identity-verification-faq")
+        expect.stringContaining("/identity-verification-faq"),
       )
       const mailLink = screen.getByText("verification@artsy.net")
       expect(mailLink).toHaveAttribute(
         "href",
-        expect.stringContaining("mailto:verification@artsy.net")
+        expect.stringContaining("mailto:verification@artsy.net"),
       )
     })
 
@@ -191,7 +191,7 @@ describe("SettingsEditProfileFields", () => {
               input: { initiatorID: "1234" },
             },
             rejectIf: expect.any(Function),
-          })
+          }),
         )
       })
 
@@ -224,7 +224,7 @@ describe("SettingsEditProfileFields", () => {
               input: { initiatorID: "1234" },
             },
             rejectIf: expect.any(Function),
-          })
+          }),
         )
       })
 
@@ -245,8 +245,8 @@ describe("SettingsEditProfileFields", () => {
       expect(screen.getByText("Verify Your Email")).toBeInTheDocument()
       expect(
         screen.getByText(
-          "Secure your account and receive updates about your transactions on Artsy."
-        )
+          "Secure your account and receive updates about your transactions on Artsy.",
+        ),
       ).toBeInTheDocument()
     })
 
@@ -281,7 +281,7 @@ describe("SettingsEditProfileFields", () => {
               input: {},
             },
             rejectIf: expect.any(Function),
-          })
+          }),
         )
       })
 
@@ -314,7 +314,7 @@ describe("SettingsEditProfileFields", () => {
               input: {},
             },
             rejectIf: expect.any(Function),
-          })
+          }),
         )
       })
 

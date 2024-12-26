@@ -16,7 +16,7 @@ export const contactInformationValidationSchema = yup.object().shape({
 
 export const validateContactInformationValidationSchema = <T>(
   values: T,
-  validationSchema: yup.AnySchema
+  validationSchema: yup.AnySchema,
 ) => {
   let errors: FormikErrors<T> = {}
 

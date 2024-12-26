@@ -113,27 +113,27 @@ export const AuctionRegistrationRouteFragmentContainer =
     },
     {
       me: graphql`
-      fragment AuctionRegistrationRoute_me on Me {
-        internalID
-        isIdentityVerified
-        hasQualifiedCreditCards
-      }
-    `,
-      sale: graphql`
-      fragment AuctionRegistrationRoute_sale on Sale {
-        slug
-        name
-        internalID
-        status
-        requireIdentityVerification
-        isClosed
-        isLiveOpen
-        bidder {
-          qualifiedForBidding
+        fragment AuctionRegistrationRoute_me on Me {
+          internalID
+          isIdentityVerified
+          hasQualifiedCreditCards
         }
-      }
-    `,
-    }
+      `,
+      sale: graphql`
+        fragment AuctionRegistrationRoute_sale on Sale {
+          slug
+          name
+          internalID
+          status
+          requireIdentityVerification
+          isClosed
+          isLiveOpen
+          bidder {
+            qualifiedForBidding
+          }
+        }
+      `,
+    },
   )
 
 const computeProps = ({ sale, me }: AuctionRegistrationRouteProps) => {
@@ -150,7 +150,7 @@ const computeProps = ({ sale, me }: AuctionRegistrationRouteProps) => {
 export const redirectToSaleHome = (
   sale:
     | AuctionRegistrationRoute_sale$data
-    | AuctionConfirmRegistrationRoute_sale$data
+    | AuctionConfirmRegistrationRoute_sale$data,
 ) => {
   const redirectToSaleHome =
     sale?.bidder?.qualifiedForBidding || sale.isClosed || sale.isLiveOpen

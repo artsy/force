@@ -18,7 +18,7 @@ describe("ArtistCurrentArticlesRail", () => {
           }
         }
       `,
-    }
+    },
   )
 
   const mockuseTracking = useTracking as jest.Mock
@@ -51,7 +51,7 @@ describe("ArtistCurrentArticlesRail", () => {
     expect(wrapper.text()).toContain("Articles Featuring artistName")
     expect(wrapper.find("RouterLink").length).toBe(3)
     expect(wrapper.find("RouterLink").at(0).props().to).toContain(
-      "/artist/artistSlug/articles"
+      "/artist/artistSlug/articles",
     )
     expect(wrapper.find("Shelf").length).toBe(1)
     expect(wrapper.find("Image").length).toBe(1)
@@ -77,7 +77,7 @@ describe("ArtistCurrentArticlesRail", () => {
         destination_page_owner_slug: "test-artist-slug",
         destination_page_owner_type: "artist",
         type: "viewAll",
-      })
+      }),
     )
   })
 
@@ -103,7 +103,7 @@ describe("ArtistCurrentArticlesRail", () => {
         horizontalSlidePosition: 1,
         subject: "showCarouselSlide",
         type: "thumbnail",
-      })
+      }),
     )
   })
 })

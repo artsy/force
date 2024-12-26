@@ -26,7 +26,7 @@ const ShowBannersRail: React.FC<
 
   let shows = take(
     uniqBy([...featured, ...current, ...upcoming], "node.id"),
-    10
+    10,
   )
 
   // Display past shows only if no Featured, Current, or Upcoming shows.
@@ -117,7 +117,7 @@ const ShowBannersRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const ShowBannersRailRenderer: React.FC<

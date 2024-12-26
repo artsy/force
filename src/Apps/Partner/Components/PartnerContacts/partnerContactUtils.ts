@@ -8,7 +8,7 @@ import { data as sd } from "sharify"
 export function getContactAddressLines(
   location:
     | PartnerContactMap_location$data
-    | PartnerContactAddress_location$data
+    | PartnerContactAddress_location$data,
 ) {
   if (!location) return []
 
@@ -43,7 +43,7 @@ export function getGoogleMapUrl(location: PartnerContactMap_location$data) {
 export function getGoogleStaticMapImageUrl(
   location: PartnerContactMap_location$data,
   width = 480,
-  height = 480
+  height = 480,
 ) {
   if (!location) return null
 
@@ -68,6 +68,6 @@ export function getGoogleStaticMapImageUrl(
   }
 
   return `https://maps.googleapis.com/maps/api/staticmap?${qs.stringify(
-    options
+    options,
   )}`
 }

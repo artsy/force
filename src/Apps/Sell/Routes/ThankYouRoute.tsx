@@ -28,7 +28,7 @@ export const ThankYouRoute: React.FC<
   } = useSellFlowContext()
   const { myCollectionArtworkID, internalID, state } = useFragment(
     FRAGMENT,
-    props.submission
+    props.submission,
   )
 
   const { trackTappedSubmitAnotherWork, trackTappedViewArtworkInMyCollection } =

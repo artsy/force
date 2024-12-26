@@ -48,7 +48,7 @@ const InstitutionPartnershipsShowsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const InstitutionPartnershipsShowsPlaceholder: FC<

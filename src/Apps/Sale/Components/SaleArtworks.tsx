@@ -69,7 +69,7 @@ export const SaleArtworkFilterRefetchContainer = createRefetchContainer(
   {
     viewer: graphql`
       fragment SaleArtworksFilter_viewer on Viewer
-        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+      @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
         filtered_artworks: artworksConnection(input: $input) {
           id
           counts {
@@ -100,5 +100,5 @@ export const SaleArtworkFilterRefetchContainer = createRefetchContainer(
         ...SaleArtworksFilter_viewer @arguments(input: $input)
       }
     }
-  `
+  `,
 )

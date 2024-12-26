@@ -233,7 +233,7 @@ export const AuctionBidRouteFragmentContainer = createRefetchContainer(
         ...AuctionBidRoute_sale
       }
     }
-  `
+  `,
 )
 
 const computeProps = ({
@@ -254,7 +254,7 @@ const computeProps = ({
     increment => {
       // @ts-ignore
       return increment.cents < artwork.saleArtwork?.minimumNextBid!.cents!
-    }
+    },
   ).map(increment => {
     return {
       value: increment!.cents!.toString(),

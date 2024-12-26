@@ -26,7 +26,7 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<
 
   const { consignmentSubmission } = useFragment(
     submissionStateFragment,
-    artwork
+    artwork,
   )
   if (!consignmentSubmission) return null
 

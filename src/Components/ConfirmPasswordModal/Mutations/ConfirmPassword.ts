@@ -7,13 +7,13 @@ import { type Environment, commitMutation, graphql } from "react-relay"
 
 export const ConfirmPassword = (
   environment: Environment,
-  input: ConfirmPasswordInput
+  input: ConfirmPasswordInput,
 ) => {
   return new Promise<ConfirmPasswordMutation$data>(async (resolve, reject) => {
     commitMutation<ConfirmPasswordMutation>(environment, {
       mutation: graphql`
         mutation ConfirmPasswordMutation($input: ConfirmPasswordInput!)
-          @raw_response_type {
+        @raw_response_type {
           confirmPassword(input: $input) {
             valid
           }

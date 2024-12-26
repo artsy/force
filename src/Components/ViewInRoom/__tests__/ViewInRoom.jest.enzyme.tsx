@@ -33,7 +33,7 @@ describe("ViewInRoom", () => {
     })
 
     expect(wrapper.html()).toContain(
-      'src="example.jpg" srcset="example.jpg 1x"'
+      'src="example.jpg" srcset="example.jpg 1x"',
     )
   })
 })

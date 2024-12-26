@@ -213,7 +213,7 @@ export const MeetTheSpecialistsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const PLACEHOLDER = (

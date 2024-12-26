@@ -75,23 +75,23 @@ export const ArticlesIndexArticlesPaginationContainer =
     ArticlesIndexArticles,
     {
       viewer: graphql`
-      fragment ArticlesIndexArticles_viewer on Viewer
+        fragment ArticlesIndexArticles_viewer on Viewer
         @argumentDefinitions(after: { type: "String" }) {
-        articlesConnection(
-          first: 15
-          after: $after
-          sort: PUBLISHED_AT_DESC
-          featured: true
-        ) @connection(key: "ArticlesIndexArticles_articlesConnection") {
-          edges {
-            node {
-              internalID
-              ...ArticlesIndexArticle_article
+          articlesConnection(
+            first: 15
+            after: $after
+            sort: PUBLISHED_AT_DESC
+            featured: true
+          ) @connection(key: "ArticlesIndexArticles_articlesConnection") {
+            edges {
+              node {
+                internalID
+                ...ArticlesIndexArticle_article
+              }
             }
           }
         }
-      }
-    `,
+      `,
     },
     {
       direction: "forward",
@@ -102,5 +102,5 @@ export const ArticlesIndexArticlesPaginationContainer =
         return { ...fragmentVariables, after }
       },
       query: ARTICLES_INDEX_ARTICLES_QUERY,
-    }
+    },
   )

@@ -51,7 +51,7 @@ export const ConversationsSidebar: React.FC<
     }
 
     const url = new URL(
-      `${window.location.origin}/user/conversations/${match.params.conversationId}`
+      `${window.location.origin}/user/conversations/${match.params.conversationId}`,
     )
 
     const existingParams = match.location.query
@@ -62,7 +62,7 @@ export const ConversationsSidebar: React.FC<
 
     url.searchParams.set(
       "sidebarTotal",
-      String(totalDisplayedCount ?? SIDEBAR_FETCH_PAGE_SIZE)
+      String(totalDisplayedCount ?? SIDEBAR_FETCH_PAGE_SIZE),
     )
 
     // TODO:
@@ -94,7 +94,7 @@ export const ConversationsSidebar: React.FC<
         {},
         {
           first: fetchSize,
-        }
+        },
       )
     },
   })
@@ -148,26 +148,26 @@ export const ConversationsSidebarPaginationContainer =
     ConversationsSidebar,
     {
       viewer: graphql`
-      fragment ConversationsSidebar_viewer on Viewer
+        fragment ConversationsSidebar_viewer on Viewer
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 10 }
           after: { type: "String" }
         )
         @refetchable(queryName: "ConversationsSidebar2PaginationQuery") {
-        conversationsConnection(first: $first, after: $after, type: USER)
-          @connection(
-            key: "ConversationsSidebar_viewer_conversationsConnection"
-          ) {
-          edges {
-            cursor
-            node {
-              internalID
-              ...ConversationsSidebarItem_conversation
+          conversationsConnection(first: $first, after: $after, type: USER)
+            @connection(
+              key: "ConversationsSidebar_viewer_conversationsConnection"
+            ) {
+            edges {
+              cursor
+              node {
+                internalID
+                ...ConversationsSidebarItem_conversation
+              }
             }
           }
         }
-      }
-    `,
+      `,
     },
     {
       direction: "forward",
@@ -178,12 +178,15 @@ export const ConversationsSidebarPaginationContainer =
         return { ...fragmentVariables, after }
       },
       query: graphql`
-      query ConversationsSidebarPaginationQuery($first: Int!, $after: String) {
-        viewer {
-          ...ConversationsSidebar_viewer
-            @arguments(first: $first, after: $after)
+        query ConversationsSidebarPaginationQuery(
+          $first: Int!
+          $after: String
+        ) {
+          viewer {
+            ...ConversationsSidebar_viewer
+              @arguments(first: $first, after: $after)
+          }
         }
-      }
-    `,
-    }
+      `,
+    },
   )

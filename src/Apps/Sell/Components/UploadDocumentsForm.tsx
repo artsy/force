@@ -39,7 +39,7 @@ export const UploadDocumentsForm: React.FC<
       document.progress = progress
       setFieldValue("documents", values.documents)
     },
-    [values.documents, setFieldValue]
+    [values.documents, setFieldValue],
   )
 
   const uploadDocument = useCallback(
@@ -50,7 +50,7 @@ export const UploadDocumentsForm: React.FC<
         const sourceKey = await uploadDocumentToS3(
           relayEnvironment,
           document,
-          handleDocumentUploadingProgress(document)
+          handleDocumentUploadingProgress(document),
         )
 
         if (!sourceKey) {
@@ -103,12 +103,12 @@ export const UploadDocumentsForm: React.FC<
       values.submissionId,
       values.documents,
       sendToast,
-    ]
+    ],
   )
 
   useEffect(() => {
     const documentsToUpload = values.documents.filter(
-      c => !(c.sourceKey || c.url) && !c.loading && !c.errorMessage
+      c => !(c.sourceKey || c.url) && !c.loading && !c.errorMessage,
     )
 
     if (documentsToUpload.length) {
@@ -130,7 +130,7 @@ export const UploadDocumentsForm: React.FC<
       rejections.forEach(rejection => {
         const errorMessage = getErrorMessage(
           rejection,
-          ALLOWED_MIME_TYPES_HUMINIZED
+          ALLOWED_MIME_TYPES_HUMINIZED,
         )
         sendToast({
           variant: "error",
@@ -138,7 +138,7 @@ export const UploadDocumentsForm: React.FC<
         })
       })
     },
-    [sendToast]
+    [sendToast],
   )
 
   return (

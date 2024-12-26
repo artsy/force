@@ -97,7 +97,7 @@ export const CellArticleFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 type CellArticlePlaceholderProps = Pick<CellArticleProps, "mode"> & BoxProps

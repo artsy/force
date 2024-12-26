@@ -121,7 +121,7 @@ describe("ShowApp", () => {
     })
 
     expect(wrapper.find("BackToFairBanner").text()).toContain(
-      "Back to Example Fair"
+      "Back to Example Fair",
     )
   })
 })

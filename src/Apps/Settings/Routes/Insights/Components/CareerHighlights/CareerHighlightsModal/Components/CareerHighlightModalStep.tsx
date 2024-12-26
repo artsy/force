@@ -105,7 +105,7 @@ export const STEPS_PLACEHOLDER = (
 
 const careerHighlightFragment = graphql`
   fragment CareerHighlightModalStep_careerHighlight on ArtistInsight
-    @relay(plural: true) {
+  @relay(plural: true) {
     artist {
       ...EntityHeaderArtist_artist
     }

@@ -40,5 +40,5 @@ export const ArtworkDownloadButtonFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

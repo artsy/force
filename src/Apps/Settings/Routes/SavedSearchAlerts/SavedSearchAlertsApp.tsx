@@ -225,7 +225,7 @@ export const SavedSearchAlertsApp: React.FC<
           }
         }
       `,
-      { alertID }
+      { alertID },
     )
       ?.toPromise()
       .then(data => {
@@ -295,7 +295,7 @@ export const SavedSearchAlertsApp: React.FC<
         )}
       </>
     ),
-    [alerts, editAlertEntity, handleLoadMore, loading, relay, silentPush]
+    [alerts, editAlertEntity, handleLoadMore, loading, relay, silentPush],
   )
 
   return (
@@ -394,7 +394,7 @@ export const SavedSearchAlertsAppPaginationContainer =
     SavedSearchAlertsApp,
     {
       me: graphql`
-      fragment SavedSearchAlertsApp_me on Me
+        fragment SavedSearchAlertsApp_me on Me
         @argumentDefinitions(
           after: { type: "String" }
           count: { type: "Int", defaultValue: 10 }
@@ -403,25 +403,25 @@ export const SavedSearchAlertsAppPaginationContainer =
             defaultValue: ENABLED_AT_DESC
           }
         ) {
-        alertsConnection(first: $count, after: $after, sort: $sort)
-          @connection(key: "SavedSearchAlertsApp_alertsConnection") {
-          edges {
-            node {
-              internalID
-              artistIDs
-              ...SavedSearchAlertListItem_item
-              title: displayName(only: [artistIDs])
-              subtitle: displayName(except: [artistIDs])
-              artworksConnection(first: 10) {
-                counts {
-                  total
+          alertsConnection(first: $count, after: $after, sort: $sort)
+            @connection(key: "SavedSearchAlertsApp_alertsConnection") {
+            edges {
+              node {
+                internalID
+                artistIDs
+                ...SavedSearchAlertListItem_item
+                title: displayName(only: [artistIDs])
+                subtitle: displayName(except: [artistIDs])
+                artworksConnection(first: 10) {
+                  counts {
+                    total
+                  }
                 }
               }
             }
           }
         }
-      }
-    `,
+      `,
     },
     {
       direction: "forward",
@@ -436,16 +436,16 @@ export const SavedSearchAlertsAppPaginationContainer =
         }
       },
       query: graphql`
-      query SavedSearchAlertsAppRefetchQuery(
-        $after: String
-        $count: Int!
-        $sort: AlertsConnectionSortEnum
-      ) {
-        me {
-          ...SavedSearchAlertsApp_me
-            @arguments(after: $after, count: $count, sort: $sort)
+        query SavedSearchAlertsAppRefetchQuery(
+          $after: String
+          $count: Int!
+          $sort: AlertsConnectionSortEnum
+        ) {
+          me {
+            ...SavedSearchAlertsApp_me
+              @arguments(after: $after, count: $count, sort: $sort)
+          }
         }
-      }
-    `,
-    }
+      `,
+    },
   )

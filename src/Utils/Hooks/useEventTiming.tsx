@@ -26,7 +26,7 @@ export const useEventTiming = ({
   endAt,
 }: UseEventTiming) => {
   const durationTilEnd = Duration.fromISO(
-    DateTime.fromISO(endAt).diff(DateTime.fromISO(currentTime)).toString()
+    DateTime.fromISO(endAt).diff(DateTime.fromISO(currentTime)).toString(),
   )
   const daysTilEnd = durationTilEnd.as("days")
   const hoursTillEnd = durationTilEnd.as("hours")
@@ -34,17 +34,17 @@ export const useEventTiming = ({
 
   const hasStarted =
     Duration.fromISO(
-      DateTime.fromISO(startAt).diff(DateTime.fromISO(currentTime)).toString()
+      DateTime.fromISO(startAt).diff(DateTime.fromISO(currentTime)).toString(),
     ).seconds < 0
 
   const hasEnded = Math.floor(secondsTilEnd) <= 0
   const closesSoon = daysTilEnd <= 3 && daysTilEnd >= 1
   const closesToday = daysTilEnd < 1 && !hasEnded
   const hours = padWithZero(
-    Math.max(0, Math.floor(durationTilEnd.as("hours") % 24))
+    Math.max(0, Math.floor(durationTilEnd.as("hours") % 24)),
   )
   const minutes = padWithZero(
-    Math.max(0, Math.floor(durationTilEnd.as("minutes") % 60))
+    Math.max(0, Math.floor(durationTilEnd.as("minutes") % 60)),
   )
   const seconds = padWithZero(Math.max(0, Math.floor(secondsTilEnd % 60)))
 
@@ -59,7 +59,7 @@ export const useEventTiming = ({
 
     if (closesSoon) {
       return `${isLiveSale ? "Opens" : "Closes"} in ${Math.ceil(
-        daysTilEnd
+        daysTilEnd,
       )} day${Math.ceil(daysTilEnd) === 1 ? "" : "s"}`
     }
 

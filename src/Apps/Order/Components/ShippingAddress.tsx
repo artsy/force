@@ -70,5 +70,5 @@ export const ShippingAddressFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

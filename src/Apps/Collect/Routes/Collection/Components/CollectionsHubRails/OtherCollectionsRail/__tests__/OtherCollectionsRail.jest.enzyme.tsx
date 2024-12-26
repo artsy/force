@@ -46,7 +46,7 @@ describe("CollectionsRail", () => {
         path="/collection/slug"
       >
         <OtherCollectionsRail {...passedProps} />
-      </AnalyticsCombinedContextProvider>
+      </AnalyticsCombinedContextProvider>,
     )
   }
 

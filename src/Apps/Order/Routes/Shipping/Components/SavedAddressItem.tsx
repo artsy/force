@@ -49,7 +49,7 @@ export const SavedAddressItem: React.FC<
                     {line}
                   </Text>
                 </Flex>
-              )
+              ),
           )}
         <Text textColor="black60" textTransform="capitalize" variant="sm">
           {formattedAddressLine}

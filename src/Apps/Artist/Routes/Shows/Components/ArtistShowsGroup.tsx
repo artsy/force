@@ -42,7 +42,7 @@ const ArtistShowsGroup: React.FC<
         }
 
         setIsLoading(false)
-      }
+      },
     )
   }
 
@@ -91,11 +91,11 @@ export const ArtistShowsGroupRefetchContainer = createRefetchContainer(
   {
     artist: graphql`
       fragment ArtistShowsGroup_artist on Artist
-        @argumentDefinitions(
-          page: { type: "Int", defaultValue: 1 }
-          sort: { type: "ShowSorts" }
-          status: { type: "String" }
-        ) {
+      @argumentDefinitions(
+        page: { type: "Int", defaultValue: 1 }
+        sort: { type: "ShowSorts" }
+        status: { type: "String" }
+      ) {
         slug
         showsConnection(first: 12, page: $page, sort: $sort, status: $status) {
           pageInfo {
@@ -126,5 +126,5 @@ export const ArtistShowsGroupRefetchContainer = createRefetchContainer(
           @arguments(page: $page, sort: $sort, status: $status)
       }
     }
-  `
+  `,
 )

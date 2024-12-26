@@ -136,9 +136,9 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ArtworkLightbox_artwork on Artwork
-        @argumentDefinitions(
-          includeAllImages: { type: "Boolean", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        includeAllImages: { type: "Boolean", defaultValue: false }
+      ) {
         formattedMetadata
         images(includeAll: $includeAllImages) {
           internalID
@@ -181,5 +181,5 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

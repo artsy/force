@@ -30,7 +30,7 @@ const CollectorProfileArtistsSearchResultsArtists: FC<
 > = ({ term }) => {
   const { me } = useLazyLoadQuery<CollectorProfileArtistsSearchResultsQuery>(
     QUERY,
-    {}
+    {},
   )
 
   const results = useMemo(() => {
@@ -39,7 +39,7 @@ const CollectorProfileArtistsSearchResultsArtists: FC<
     return compact(
       me?.userInterestsConnection?.edges?.filter(edge => {
         return edge?.node?.name?.toLowerCase().includes(term.toLowerCase())
-      })
+      }),
     )
   }, [me, term])
 

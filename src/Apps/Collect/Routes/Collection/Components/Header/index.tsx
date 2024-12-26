@@ -65,5 +65,5 @@ export const CollectionHeaderFragmentContainer = createFragmentContainer(
         title
       }
     `,
-  }
+  },
 )

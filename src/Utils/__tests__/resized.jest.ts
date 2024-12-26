@@ -72,7 +72,7 @@ describe("maxDimensionsByArea", () => {
         width: 100,
         height: 100,
         area: 10000,
-      }).width
+      }).width,
     ).toEqual(100)
 
     expect(
@@ -80,7 +80,7 @@ describe("maxDimensionsByArea", () => {
         width: 200,
         height: 100,
         area: 10000,
-      }).width
+      }).width,
     ).toEqual(141)
 
     expect(
@@ -88,7 +88,7 @@ describe("maxDimensionsByArea", () => {
         width: 100,
         height: 200,
         area: 10000,
-      }).width
+      }).width,
     ).toEqual(71)
 
     expect(
@@ -96,7 +96,7 @@ describe("maxDimensionsByArea", () => {
         width: 10,
         height: 200,
         area: 10000,
-      }).width
+      }).width,
     ).toEqual(22)
   })
 
@@ -106,7 +106,7 @@ describe("maxDimensionsByArea", () => {
         width: 100,
         height: 100,
         area: 10000,
-      }).height
+      }).height,
     ).toEqual(100)
 
     expect(
@@ -114,7 +114,7 @@ describe("maxDimensionsByArea", () => {
         width: 200,
         height: 100,
         area: 10000,
-      }).height
+      }).height,
     ).toEqual(71)
 
     expect(
@@ -122,7 +122,7 @@ describe("maxDimensionsByArea", () => {
         width: 100,
         height: 200,
         area: 10000,
-      }).height
+      }).height,
     ).toEqual(141)
 
     expect(
@@ -130,7 +130,7 @@ describe("maxDimensionsByArea", () => {
         width: 10,
         height: 200,
         area: 10000,
-      }).height
+      }).height,
     ).toEqual(447)
   })
 })

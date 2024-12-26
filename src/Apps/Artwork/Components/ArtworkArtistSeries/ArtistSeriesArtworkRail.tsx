@@ -125,5 +125,5 @@ export const ArtistSeriesArtworkRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

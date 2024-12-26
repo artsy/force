@@ -7,7 +7,7 @@ const ArtistSeriesApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistSeriesApp"),
   {
     resolveComponent: component => component.ArtistSeriesAppFragmentContainer,
-  }
+  },
 )
 
 export const artistSeriesRoutes: RouteProps[] = [

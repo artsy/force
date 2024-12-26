@@ -13,12 +13,12 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
 
   const [isProcessingRedirect, setIsProcessingRedirect] = useState(false)
   const [stripeSetupIntentId, setStripeSetupIntentId] = useState<null | string>(
-    null
+    null,
   )
   const [isPaymentSetupSuccessful, setIsPaymentSetupSuccessful] =
     useState(false)
   const [paymentSetupError, setPaymentSetupError] = useState<null | object>(
-    null
+    null,
   )
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -56,7 +56,7 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
 
   const setPaymentBySetupIntentId = async (
     setupIntentId: string,
-    oneTimeUse: boolean
+    oneTimeUse: boolean,
   ) => {
     try {
       const orderOrError = (

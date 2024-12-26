@@ -9,7 +9,7 @@ describe("CreativeWork", () => {
     const wrapper = mount(
       <HeadProvider>
         <CreativeWork {...defaultProps} {...props} />
-      </HeadProvider>
+      </HeadProvider>,
     )
 
     return wrapper

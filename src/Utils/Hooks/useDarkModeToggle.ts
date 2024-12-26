@@ -24,7 +24,7 @@ export const useDarkModeToggle = ({
         toggleDarkMode()
       }
     },
-    [toggleDarkMode]
+    [toggleDarkMode],
   )
 
   useEffect(() => {

@@ -19,7 +19,7 @@ describe("AuctionsApp", () => {
     const wrapper = mount(
       <MockBoot>
         <AuctionsApp />
-      </MockBoot>
+      </MockBoot>,
     )
 
     return { wrapper }
@@ -74,7 +74,7 @@ describe("AuctionsApp", () => {
     const { wrapper } = getWrapper()
     expect(wrapper.find("RouterLink")).toBeDefined()
     expect(wrapper.find("RouterLink").first().props().to).toBe(
-      "https://support.artsy.net/s/article/How-do-I-place-a-bid-in-an-auction"
+      "https://support.artsy.net/s/article/How-do-I-place-a-bid-in-an-auction",
     )
   })
 
@@ -118,7 +118,7 @@ describe("AuctionsApp", () => {
 
     expect(wrapper.find("MyBidsFragmentContainer").length).toBe(0)
     expect(
-      wrapper.find("WorksByArtistsYouFollowRailFragmentContainer").length
+      wrapper.find("WorksByArtistsYouFollowRailFragmentContainer").length,
     ).toBe(0)
   })
 })

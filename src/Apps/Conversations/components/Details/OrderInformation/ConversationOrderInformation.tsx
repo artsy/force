@@ -24,7 +24,7 @@ export const ConversationOrderInformation: React.FC<
         }
       }
     `,
-    order
+    order,
   )
 
   if (!data) return null

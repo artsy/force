@@ -28,7 +28,7 @@ export const DevDebug: React.FC<React.PropsWithChildren<unknown>> = () => {
                 dirty: formik.dirty,
               },
               null,
-              2
+              2,
             )}
           </pre>
         </Box>

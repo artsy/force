@@ -71,5 +71,5 @@ export const ArticleSectionFragmentContainer = createFragmentContainer(
         ...ArticleSectionEmbed_section
       }
     `,
-  }
+  },
 )

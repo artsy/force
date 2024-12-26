@@ -8,7 +8,7 @@ export const getFeatureFlag = (featureName: string): boolean | null => {
   if (flagEnabled === undefined) {
     warnInDevelopment(
       `[Force] Warning: cannot find ${featureName} in featureFlags: `,
-      featureFlags
+      featureFlags,
     )
 
     return null

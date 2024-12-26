@@ -69,7 +69,7 @@ const ShowPaginatedEvents: React.FC<
         router.push({ pathname: location.pathname, query })
 
         setIsLoading(false)
-      }
+      },
     )
   }
 
@@ -119,15 +119,15 @@ export const ShowEventsRefetchContainer = createRefetchContainer(
   {
     partner: graphql`
       fragment ShowPaginatedEvents_partner on Partner
-        @argumentDefinitions(
-          first: { type: "Int", defaultValue: 40 }
-          last: { type: "Int" }
-          page: { type: "Int" }
-          after: { type: "String" }
-          before: { type: "String" }
-          status: { type: "EventStatus", defaultValue: CLOSED }
-          isDisplayable: { type: "Boolean", defaultValue: true }
-        ) {
+      @argumentDefinitions(
+        first: { type: "Int", defaultValue: 40 }
+        last: { type: "Int" }
+        page: { type: "Int" }
+        after: { type: "String" }
+        before: { type: "String" }
+        status: { type: "EventStatus", defaultValue: CLOSED }
+        isDisplayable: { type: "Boolean", defaultValue: true }
+      ) {
         slug
         showsConnection(
           first: $first
@@ -175,7 +175,7 @@ export const ShowEventsRefetchContainer = createRefetchContainer(
           )
       }
     }
-  `
+  `,
 )
 
 interface ShowPaginatedEventsRendererProps {

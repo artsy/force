@@ -20,7 +20,7 @@ export const ArtworkPageBanner: FC<
   const me = useFragment(ME_FRAGMENT, props.me)
   const { match } = useRouter()
   const allowExpiredPartnerOffers = useFeatureFlag(
-    "emerald_allow-expired-partner-offers"
+    "emerald_allow-expired-partner-offers",
   )
 
   const expectedPartnerOfferID = match?.location?.query?.partner_offer_id as
@@ -100,7 +100,7 @@ const UnpublishedArtworkBanner = () => (
 
 const ME_FRAGMENT = graphql`
   fragment ArtworkPageBanner_me on Me
-    @argumentDefinitions(artworkID: { type: "String!" }) {
+  @argumentDefinitions(artworkID: { type: "String!" }) {
     partnerOffersConnection(artworkID: $artworkID, first: 1) {
       edges {
         node {

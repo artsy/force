@@ -140,7 +140,7 @@ const ArtistSellWithArtsyFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface ArtistSellWithArtsyQueryRendererProps {

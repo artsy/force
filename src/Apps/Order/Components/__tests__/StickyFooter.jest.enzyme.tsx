@@ -29,14 +29,14 @@ describe("Sticky footer", () => {
           artworkID="whatever"
           orderSource="artwork_page"
         />
-      </MockBoot>
+      </MockBoot>,
     )
 
     component.find("Clickable[data-test='help-center-link']").simulate("click")
 
     expect(window.open).toHaveBeenCalledWith(
       "https://support.artsy.net/s/topic/0TO3b000000UessGAC/buy",
-      "_blank"
+      "_blank",
     )
   })
 
@@ -56,7 +56,7 @@ describe("Sticky footer", () => {
             inquiryComponent={<></>}
           />
         </SystemContextProvider>
-      </MockBoot>
+      </MockBoot>,
     )
 
     component.find("Clickable[data-test='ask-question-link']").simulate("click")
@@ -72,10 +72,10 @@ describe("Sticky footer", () => {
           orderType="OFFER"
           artworkID="whatever"
         />
-      </MockBoot>
+      </MockBoot>,
     )
     expect(component.text()).toContain(
-      "Need help? Visit our help center or ask a question."
+      "Need help? Visit our help center or ask a question.",
     )
   })
 
@@ -88,10 +88,10 @@ describe("Sticky footer", () => {
             orderType="BUY"
             artworkID="whatever"
           />
-        </MockBoot>
+        </MockBoot>,
       )
       const privateSalesEmail = component.find(
-        "Clickable[data-test='private-sales-email-link']"
+        "Clickable[data-test='private-sales-email-link']",
       )
 
       expect(privateSalesEmail).toBeTruthy()
@@ -109,7 +109,7 @@ describe("Sticky footer", () => {
               orderType="OFFER"
               artworkID="whatever"
             />
-          </MockBoot>
+          </MockBoot>,
         )
         component
           .find("Clickable[data-test='help-center-link']")
@@ -132,7 +132,7 @@ describe("Sticky footer", () => {
                 artworkID="whatever"
               />
             </SystemContextProvider>
-          </MockBoot>
+          </MockBoot>,
         )
         component
           .find("Clickable[data-test='ask-question-link']")
@@ -156,7 +156,7 @@ describe("Sticky footer", () => {
               orderType="BUY"
               artworkID="whatever"
             />
-          </MockBoot>
+          </MockBoot>,
         )
         component
           .find("Clickable[data-test='help-center-link']")
@@ -179,7 +179,7 @@ describe("Sticky footer", () => {
                 artworkID="whatever"
               />
             </SystemContextProvider>
-          </MockBoot>
+          </MockBoot>,
         )
         component
           .find("Clickable[data-test='ask-question-link']")

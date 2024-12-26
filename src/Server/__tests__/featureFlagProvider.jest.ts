@@ -31,7 +31,7 @@ describe("featureFlag tests", () => {
   it("feature is enabled", async () => {
     registerFeatureFlagService<TestFeatureFlagService>(
       TestServiceSymbol,
-      TestFeatureFlagService
+      TestFeatureFlagService,
     )
 
     const service = await createFeatureFlagService(TestServiceSymbol)

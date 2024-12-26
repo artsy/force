@@ -34,7 +34,7 @@ import { waitFor } from "@testing-library/react"
 export async function findMetaTagBySelector(selector: string) {
   await waitFor(() =>
     /* eslint-disable testing-library/no-node-access */
-    expect(document.querySelectorAll("meta").length).toBeGreaterThan(0)
+    expect(document.querySelectorAll("meta").length).toBeGreaterThan(0),
   )
   return document.querySelector(selector)
 }

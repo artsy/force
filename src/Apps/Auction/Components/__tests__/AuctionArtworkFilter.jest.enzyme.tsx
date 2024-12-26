@@ -50,7 +50,7 @@ describe("AuctionArtworkFilter", () => {
     expect(wrapper.find("ArtworkGridContextProvider")).toHaveLength(1)
     expect(
       (wrapper.find("ArtworkGridContextProvider").props() as any)
-        .isAuctionArtwork
+        .isAuctionArtwork,
     ).toBe(true)
     expect(wrapper.find("ArtworkFilter")).toHaveLength(1)
   })
@@ -58,7 +58,7 @@ describe("AuctionArtworkFilter", () => {
   it("displays correct default sort", () => {
     const { wrapper } = getWrapper()
     expect(
-      (wrapper.find("ArtworkFilter").props() as any).sortOptions[0]
+      (wrapper.find("ArtworkFilter").props() as any).sortOptions[0],
     ).toEqual({
       text: "Lot Number (asc.)",
       value: "sale_position",
@@ -68,11 +68,11 @@ describe("AuctionArtworkFilter", () => {
   it("passes in correct slug from router into relayRefetchInputVariables", () => {
     const { wrapper } = getWrapper()
     expect(
-      (wrapper.find("ArtworkFilter").props() as any).relayRefetchInputVariables
+      (wrapper.find("ArtworkFilter").props() as any).relayRefetchInputVariables,
     ).toEqual(
       expect.objectContaining({
         saleID: "test-sale",
-      })
+      }),
     )
   })
 

@@ -7,14 +7,12 @@ jest.useFakeTimers()
 jest.mock("Utils/getCurrentTimeAsIsoString")
 
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(
-  "2018-05-10T20:22:32.000Z"
+  "2018-05-10T20:22:32.000Z",
 )
 
 const getTimerText = timerComponent =>
   // eslint-disable-next-line testing-library/await-async-query
-  timerComponent.root
-    .findAllByType(Text)[0]
-    .props.children.join("")
+  timerComponent.root.findAllByType(Text)[0].props.children.join("")
 
 describe("when the end date is set", () => {
   it("formats the remaining time in '00d  00h  00m  00s'", () => {
@@ -81,7 +79,7 @@ describe("when the start and the end dates are set", () => {
       <Timer
         startDate="2018-05-12T10:24:31+00:00"
         endDate="2018-05-14T10:24:31+00:00"
-      />
+      />,
     )
     expect(getTimerText(timer)).toMatch("01d")
     expect(getTimerText(timer)).toMatch("14h")
@@ -93,7 +91,7 @@ describe("when the start and the end dates are set", () => {
       <Timer
         startDate="2018-05-10T20:42:32+00:00"
         endDate="2018-05-12T20:42:32+00:00"
-      />
+      />,
     )
     expect(getTimerText(timer)).toMatch("00d")
     expect(getTimerText(timer)).toMatch("00h")
@@ -105,7 +103,7 @@ describe("when the start and the end dates are set", () => {
       <Timer
         startDate="2018-05-10T20:22:42+00:00"
         endDate="2018-05-12T20:22:42+00:00"
-      />
+      />,
     )
     expect(getTimerText(timer)).toMatch("00d")
     expect(getTimerText(timer)).toMatch("00h")
@@ -118,7 +116,7 @@ describe("when the start and the end dates are set", () => {
       <Timer
         startDate="2018-04-10T20:22:42+00:00"
         endDate="2018-05-10T20:22:42+00:00"
-      />
+      />,
     )
     expect(getTimerText(timer)).toMatch("00d")
     expect(getTimerText(timer)).toMatch("00h")
@@ -128,7 +126,7 @@ describe("when the start and the end dates are set", () => {
 
   it("counts down to zero when the start date is populated", () => {
     let timer = renderer.create(
-      <Timer startDate="2018-05-14T10:23:10+00:00" endDate="" />
+      <Timer startDate="2018-05-14T10:23:10+00:00" endDate="" />,
     )
     expect(getTimerText(timer)).toMatch("03d")
     expect(getTimerText(timer)).toMatch("14h")
@@ -136,7 +134,7 @@ describe("when the start and the end dates are set", () => {
     expect(getTimerText(timer)).toMatch("38s")
 
     timer = renderer.create(
-      <Timer startDate="2018-05-14T10:23:08+00:00" endDate="" />
+      <Timer startDate="2018-05-14T10:23:08+00:00" endDate="" />,
     )
     jest.runOnlyPendingTimers()
     expect(getTimerText(timer)).toMatch("03d")
@@ -145,7 +143,7 @@ describe("when the start and the end dates are set", () => {
     expect(getTimerText(timer)).toMatch("36s")
 
     timer = renderer.create(
-      <Timer startDate="2018-05-14T10:22:08+00:00" endDate="" />
+      <Timer startDate="2018-05-14T10:22:08+00:00" endDate="" />,
     )
     jest.runOnlyPendingTimers()
     expect(getTimerText(timer)).toMatch("03d")

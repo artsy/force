@@ -61,12 +61,12 @@ describe("MyBidsBidItem", () => {
 
     expect(wrapper.find("RouterLink")).toBeDefined()
     expect(wrapper.find("RouterLink").props().to).toBe(
-      "/artwork/saleArtworkSlug"
+      "/artwork/saleArtworkSlug",
     )
     expect(wrapper.find("Image")).toBeDefined()
     expect(wrapper.find("Image").props().src).toEqual("artworkImageResizedSrc")
     expect(wrapper.find("Image").props().srcSet).toEqual(
-      "artworkImageResizedSrcSet"
+      "artworkImageResizedSrcSet",
     )
 
     const text = wrapper.text()

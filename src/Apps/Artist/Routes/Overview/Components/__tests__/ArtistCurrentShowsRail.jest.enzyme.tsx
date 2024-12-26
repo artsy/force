@@ -49,7 +49,7 @@ describe("ArtistCurrentShowsRail", () => {
     expect(wrapper.text()).toContain("Shows Featuring artistName")
     expect(wrapper.find("RouterLink").length).toBe(3)
     expect(wrapper.find("RouterLink").at(0).props().to).toContain(
-      "/artist/artistSlug/shows"
+      "/artist/artistSlug/shows",
     )
     expect(wrapper.text()).toContain("View All Shows")
     expect(wrapper.find("Shelf").length).toBe(1)
@@ -67,7 +67,7 @@ describe("ArtistCurrentShowsRail", () => {
         context_module: "currentShowsRail",
         destination_page_owner_type: "artist",
         type: "viewAll",
-      })
+      }),
     )
   })
 

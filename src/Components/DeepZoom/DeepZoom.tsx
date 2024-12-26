@@ -88,9 +88,9 @@ const DeepZoom: React.FC<React.PropsWithChildren<DeepZoomProps>> = ({
               max: viewer.viewport.getMaxZoom(),
               value: viewer.viewport.getHomeZoom(),
             }))
-          })
+          }),
         )
-      }
+      },
     )
 
     return () => {

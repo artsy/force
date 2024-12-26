@@ -30,8 +30,8 @@ describe("SpeakToTheTeam", () => {
 
     expect(
       screen.getByText(
-        "Selling multiple artworks? Get in touch to connect with a specialist."
-      )
+        "Selling multiple artworks? Get in touch to connect with a specialist.",
+      ),
     ).toBeInTheDocument()
     expect(screen.getByText("Get in Touch")).toBeInTheDocument()
   })

@@ -15,12 +15,12 @@ const { renderWithRelay } =
   setupTestWrapperTL<CollectorProfileSavesRoute_Test_Query>({
     Component: CollectorProfileSavesRouteFragmentContainer,
     query: graphql`
-    query CollectorProfileSavesRoute_Test_Query @relay_test_operation {
-      me {
-        ...CollectorProfileSavesRoute_me
+      query CollectorProfileSavesRoute_Test_Query @relay_test_operation {
+        me {
+          ...CollectorProfileSavesRoute_me
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("CollectorProfileSavesRoute", () => {
@@ -138,7 +138,7 @@ describe("CollectorProfileSavesRoute", () => {
         action: "viewedArtworkList",
         context_owner_type: "saves",
         owner_id: "saved-artwork",
-      })
+      }),
     )
   })
 

@@ -40,5 +40,5 @@ export const BackToFairBannerFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

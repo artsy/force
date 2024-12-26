@@ -104,7 +104,7 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
             },
           },
         },
-      }
+      },
     )
   }
 
@@ -126,15 +126,15 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
         await fetchQuery<useSaveArtworkToListsArtworkListInclusionQuery>(
           relayEnvironment,
           graphql`
-          query useSaveArtworkToListsArtworkListInclusionQuery(
-            $artworkID: String!
-          ) {
-            artwork(id: $artworkID) {
-              isSavedToList(default: false)
+            query useSaveArtworkToListsArtworkListInclusionQuery(
+              $artworkID: String!
+            ) {
+              artwork(id: $artworkID) {
+                isSavedToList(default: false)
+              }
             }
-          }
-        `,
-          { artworkID: artwork.internalID }
+          `,
+          { artworkID: artwork.internalID },
         ).toPromise()
 
       if (data?.artwork?.isSavedToList) {

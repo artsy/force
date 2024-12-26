@@ -120,7 +120,7 @@ describe("AuctionApp", () => {
   it("renders auction details", () => {
     const { wrapper } = getWrapper()
     expect(
-      wrapper.find("AuctionDetailsFragmentContainer").exists()
+      wrapper.find("AuctionDetailsFragmentContainer").exists(),
     ).toBeTruthy()
   })
 
@@ -134,7 +134,7 @@ describe("AuctionApp", () => {
       })
 
       expect(wrapper.text()).toContain(
-        "Closing times may be extended due to last-minute competitive bidding"
+        "Closing times may be extended due to last-minute competitive bidding",
       )
     })
 
@@ -146,7 +146,7 @@ describe("AuctionApp", () => {
       })
 
       expect(wrapper.text()).not.toContain(
-        "Closing times may be extended due to last-minute competitive bidding"
+        "Closing times may be extended due to last-minute competitive bidding",
       )
     })
   })
@@ -175,7 +175,7 @@ describe("AuctionApp", () => {
         wrapper.find("Tabs Clickable").at(0).simulate("click")
         wrapper.update()
         expect(
-          wrapper.find("AuctionAssociatedSaleFragmentContainer").exists()
+          wrapper.find("AuctionAssociatedSaleFragmentContainer").exists(),
         ).toBeTruthy()
       })
 
@@ -186,7 +186,7 @@ describe("AuctionApp", () => {
           }),
         })
         expect(
-          wrapper.find("AuctionAssociatedSaleFragmentContainer").exists()
+          wrapper.find("AuctionAssociatedSaleFragmentContainer").exists(),
         ).toBeFalsy()
       })
     })
@@ -205,7 +205,7 @@ describe("AuctionApp", () => {
         expect(wrapper.text()).toContain("Your Active Bids")
         wrapper.update()
         expect(
-          wrapper.find("AuctionActiveBidsRefetchContainer").exists()
+          wrapper.find("AuctionActiveBidsRefetchContainer").exists(),
         ).toBeTruthy()
       })
 
@@ -217,7 +217,7 @@ describe("AuctionApp", () => {
         })
         expect(wrapper.text()).not.toContain("Your Active Bids")
         expect(
-          wrapper.find("AuctionActiveBidsRefetchContainer").exists()
+          wrapper.find("AuctionActiveBidsRefetchContainer").exists(),
         ).toBeFalsy()
       })
     })
@@ -244,7 +244,7 @@ describe("AuctionApp", () => {
         expect(
           wrapper
             .find("AuctionWorksByFollowedArtistsRailFragmentContainer")
-            .exists()
+            .exists(),
         ).toBeTruthy()
       })
 
@@ -258,7 +258,7 @@ describe("AuctionApp", () => {
         expect(
           wrapper
             .find("AuctionWorksByFollowedArtistsRailFragmentContainer")
-            .exists()
+            .exists(),
         ).toBeFalsy()
       })
     })
@@ -278,7 +278,7 @@ describe("AuctionApp", () => {
         wrapper.find("Tabs Clickable").at(3).simulate("click")
         wrapper.update()
         expect(
-          wrapper.find("AuctionBuyNowRailFragmentContainer").exists()
+          wrapper.find("AuctionBuyNowRailFragmentContainer").exists(),
         ).toBeTruthy()
       })
 
@@ -290,7 +290,7 @@ describe("AuctionApp", () => {
         })
         expect(wrapper.text()).not.toContain("Inquire")
         expect(
-          wrapper.find("AuctionBuyNowRailFragmentContainer").exists()
+          wrapper.find("AuctionBuyNowRailFragmentContainer").exists(),
         ).toBeFalsy()
       })
     })
@@ -305,7 +305,7 @@ describe("AuctionApp", () => {
         }),
       })
       expect(wrapper.text()).not.toContain(
-        "Registration for this auction is currently open"
+        "Registration for this auction is currently open",
       )
       expect(wrapper.find("AuctionArtworkFilterQueryRenderer").length).toBe(1)
     })
@@ -318,11 +318,11 @@ describe("AuctionApp", () => {
         }),
       })
       expect(wrapper.text()).toContain(
-        "Registration for this auction is currently open"
+        "Registration for this auction is currently open",
       )
       expect(wrapper.text()).toContain("Auction lots will be published soon.")
       expect(wrapper.find("AuctionArtworkFilterRefetchContainer").length).toBe(
-        0
+        0,
       )
     })
 

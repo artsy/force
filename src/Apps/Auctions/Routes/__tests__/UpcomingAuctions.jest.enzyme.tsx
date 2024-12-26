@@ -42,7 +42,7 @@ describe("UpcomingAuctions", () => {
         SaleConnection: () => ({
           edges: null,
         }),
-      })
+      }),
     ).not.toThrowError()
   })
 

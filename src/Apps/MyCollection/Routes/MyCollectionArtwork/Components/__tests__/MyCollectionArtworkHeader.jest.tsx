@@ -16,12 +16,12 @@ describe("MyCollectionArtworkHeader", () => {
         return null
       },
       query: graphql`
-      query MyCollectionArtworkHeaderTestQuery @relay_test_operation {
-        artwork(id: "foo") {
-          ...MyCollectionArtworkHeader_artwork
+        query MyCollectionArtworkHeaderTestQuery @relay_test_operation {
+          artwork(id: "foo") {
+            ...MyCollectionArtworkHeader_artwork
+          }
         }
-      }
-    `,
+      `,
     })
 
   it("displays Edit Artwork Details CTA", () => {
@@ -33,10 +33,10 @@ describe("MyCollectionArtworkHeader", () => {
     expect(
       screen
         .getAllByRole("link")
-        .find(c => c.textContent?.includes("Edit Artwork Details"))
+        .find(c => c.textContent?.includes("Edit Artwork Details")),
     ).toHaveAttribute(
       "href",
-      `/collector-profile/my-collection/artworks/artwork-id/edit`
+      `/collector-profile/my-collection/artworks/artwork-id/edit`,
     )
   })
 

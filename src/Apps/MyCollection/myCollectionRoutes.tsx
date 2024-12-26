@@ -10,7 +10,7 @@ const MyCollectionArtwork = loadable(
   {
     resolveComponent: component =>
       component.MyCollectionArtworkFragmentContainer,
-  }
+  },
 )
 
 const PriceEstimateContactInformation = loadable(
@@ -21,7 +21,7 @@ const PriceEstimateContactInformation = loadable(
   {
     resolveComponent: component =>
       component.PriceEstimateContactInformationFragmentContainer,
-  }
+  },
 )
 
 const PriceEstimateConfirmation = loadable(
@@ -31,7 +31,7 @@ const PriceEstimateConfirmation = loadable(
     ),
   {
     resolveComponent: component => component.PriceEstimateConfirmation,
-  }
+  },
 )
 
 const MyCollectionCreateArtwork = loadable(
@@ -42,7 +42,7 @@ const MyCollectionCreateArtwork = loadable(
   {
     resolveComponent: component =>
       component.MyCollectionCreateArtworkFragmentContainer,
-  }
+  },
 )
 
 const MyCollectionEditArtwork = loadable(
@@ -53,7 +53,7 @@ const MyCollectionEditArtwork = loadable(
   {
     resolveComponent: component =>
       component.MyCollectionEditArtworkFragmentContainer,
-  }
+  },
 )
 
 export const myCollectionRoutes: RouteProps[] = [

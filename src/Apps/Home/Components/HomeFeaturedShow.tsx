@@ -49,5 +49,5 @@ export const HomeFeaturedShowFragmentContainer = createFragmentContainer(
         slug
       }
     `,
-  }
+  },
 )

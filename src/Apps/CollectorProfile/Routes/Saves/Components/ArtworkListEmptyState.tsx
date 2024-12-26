@@ -51,7 +51,7 @@ export const ArtworkListEmptyStateFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment ArtworkListEmptyState_me on Me
-        @argumentDefinitions(listID: { type: "String!" }) {
+      @argumentDefinitions(listID: { type: "String!" }) {
         artworkList: collection(id: $listID) {
           default
         }
@@ -61,7 +61,7 @@ export const ArtworkListEmptyStateFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const getText = (isDefaultArtworkList: boolean, savedArtworksCount: number) => {

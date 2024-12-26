@@ -32,7 +32,7 @@ function maskParams(initialUrl: string): string {
   const cleaned = BANNED_PARAMS.reduce((prevUrl, bannedParam) => {
     const paramToMask = new RegExp(`${bannedParam}=([^&]+)`)
     const url = prevUrl.replace(paramToMask, (match, matchedValue) =>
-      match.replace(matchedValue, "[FILTERED]")
+      match.replace(matchedValue, "[FILTERED]"),
     )
     return url
   }, initialUrl)
@@ -43,7 +43,7 @@ function maskParams(initialUrl: string): string {
 export function logFormat(
   tokens: any,
   req: ArtsyRequest,
-  res: ArtsyResponse
+  res: ArtsyResponse,
 ): string {
   const url = maskParams(tokens.url(req, res))
   const status = tokens.status(req, res)

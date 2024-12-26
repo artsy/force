@@ -26,7 +26,7 @@ export const MyCollectionEmptyState: React.FC<
 
   const image = resized(
     "https://files.artsy.net/images/my-coll-get-app-img.jpg",
-    { width: 910, height: 770 } // TODO: Source image should be 4:3, ideally. Is currently 709:600
+    { width: 910, height: 770 }, // TODO: Source image should be 4:3, ideally. Is currently 709:600
   )
 
   const { showAuthDialog } = useAuthDialog()

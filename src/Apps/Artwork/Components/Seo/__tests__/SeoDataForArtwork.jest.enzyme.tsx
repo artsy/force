@@ -20,15 +20,15 @@ jest.mock("sharify", () => ({
 
 describe("SeoDataForArtwork", () => {
   const getWrapper = async (
-    artwork: SeoDataForArtwork_Test_Query$rawResponse["artwork"]
+    artwork: SeoDataForArtwork_Test_Query$rawResponse["artwork"],
   ) => {
     return await renderRelayTree({
       Component: SeoDataForArtworkFragmentContainer,
       wrapper: renderer => <MockBoot>{renderer}</MockBoot>,
       query: graphql`
         query SeoDataForArtwork_Test_Query
-          @raw_response_type
-          @relay_test_operation {
+        @raw_response_type
+        @relay_test_operation {
           artwork(id: "richard-anuszkiewicz-lino-yellow-318") {
             ...SeoDataForArtwork_artwork
           }
@@ -130,7 +130,7 @@ describe("SeoDataForArtwork", () => {
         })
 
         expect(getProductData(wrapper).offers.availability).toEqual(
-          AVAILABILITY["for sale"]
+          AVAILABILITY["for sale"],
         )
       })
 
@@ -147,7 +147,7 @@ describe("SeoDataForArtwork", () => {
         })
 
         expect(getProductData(wrapper).offers.availability).toEqual(
-          AVAILABILITY.sold
+          AVAILABILITY.sold,
         )
       })
     })
@@ -395,7 +395,7 @@ describe("SeoDataForArtwork", () => {
       it("successfully handles case when no dimensions are present", async () => {
         expect(() =>
           // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          getWrapper({ ...SeoDataForArtworkFixture, dimensions: undefined })
+          getWrapper({ ...SeoDataForArtworkFixture, dimensions: undefined }),
         ).not.toThrow()
       })
     })

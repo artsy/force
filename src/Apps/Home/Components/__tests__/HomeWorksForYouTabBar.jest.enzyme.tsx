@@ -27,7 +27,7 @@ describe("HomeWorksForYouTabBar", () => {
 
     expect(wrapper.find("HomeNewWorksForYouRailQueryRenderer")).toHaveLength(1)
     expect(
-      wrapper.find("HomeWorksByArtistsYouFollowRailQueryRenderer")
+      wrapper.find("HomeWorksByArtistsYouFollowRailQueryRenderer"),
     ).toHaveLength(0)
     expect(wrapper.find("HomeRecentlyViewedRailQueryRenderer")).toHaveLength(0)
   })
@@ -38,7 +38,7 @@ describe("HomeWorksForYouTabBar", () => {
     expect(wrapper.find("HomeRecentlyViewedRailQueryRenderer")).toHaveLength(1)
     wrapper.find("button").at(1).simulate("click")
     expect(
-      wrapper.find("HomeWorksByArtistsYouFollowRailQueryRenderer")
+      wrapper.find("HomeWorksByArtistsYouFollowRailQueryRenderer"),
     ).toHaveLength(1)
     wrapper.find("button").at(0).simulate("click")
     expect(wrapper.find("HomeNewWorksForYouRailQueryRenderer")).toHaveLength(1)

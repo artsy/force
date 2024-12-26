@@ -4,7 +4,7 @@ import { FourUpImageLayout } from "Apps/CollectorProfile/Routes/Saves/Components
 describe("FourUpImageLayout", () => {
   it("should render all passed images", () => {
     render(
-      <FourUpImageLayout imageURLs={["url-1", "url-2", "url-3", "url-4"]} />
+      <FourUpImageLayout imageURLs={["url-1", "url-2", "url-3", "url-4"]} />,
     )
 
     expect(screen.getAllByAltText("")).toHaveLength(4)

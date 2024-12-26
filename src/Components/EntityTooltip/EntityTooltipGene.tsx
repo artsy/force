@@ -102,7 +102,7 @@ const EntityTooltipGeneFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const EntityTooltipGenePlaceholder: FC<

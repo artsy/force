@@ -128,11 +128,11 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment FlatGridItem_artwork on Artwork
-        @argumentDefinitions(
-          includeBlurHash: { type: "Boolean", defaultValue: true }
-          includeAllImages: { type: "Boolean", defaultValue: false }
-          includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        includeBlurHash: { type: "Boolean", defaultValue: true }
+        includeAllImages: { type: "Boolean", defaultValue: false }
+        includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
+      ) {
         ...Metadata_artwork
           @arguments(
             includeConsignmentSubmission: $includeConsignmentSubmission
@@ -165,5 +165,5 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
         href
       }
     `,
-  }
+  },
 )

@@ -20,7 +20,7 @@ export const getSaleOrLotTimerInfo = (
     isSaleInfo?: boolean
     urgencyIntervalMinutes?: number | null
     extendedBiddingEndAt?: string | null
-  }
+  },
 ): TimerInfo => {
   const { days, hours, minutes, seconds } = time
   const {

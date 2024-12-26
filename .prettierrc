@@ -1,0 +1,8 @@
+{
+  "singleQuote": false,
+  "printWidth": 80,
+  "trailingComma": "all",
+  "parser": "typescript",
+  "semi": false,
+  "arrowParens": "avoid"
+}

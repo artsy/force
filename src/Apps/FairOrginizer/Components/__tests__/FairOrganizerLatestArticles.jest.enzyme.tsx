@@ -19,7 +19,7 @@ const { getWrapper } = setupTestWrapper<FairOrganizerLatestArticles_Test_Query>(
         }
       }
     `,
-  }
+  },
 )
 
 describe("FairOrganizerLatestArticles", () => {

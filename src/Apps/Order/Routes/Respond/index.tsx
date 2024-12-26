@@ -177,7 +177,7 @@ export const RespondRoute: FC<React.PropsWithChildren<RespondProps>> = ({
   }
 
   const createCounterOffer = (
-    variables: RespondCounterOfferMutation["variables"]
+    variables: RespondCounterOfferMutation["variables"],
   ) => {
     return commitMutation<RespondCounterOfferMutation>({
       // TODO: Inputs to the mutation might have changed case of the keys!
@@ -379,5 +379,5 @@ export const RespondFragmentContainer = createFragmentContainer(
         ...OrderStepper_order
       }
     `,
-  }
+  },
 )

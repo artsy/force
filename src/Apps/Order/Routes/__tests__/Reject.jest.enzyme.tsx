@@ -112,7 +112,7 @@ describe("Buyer rejects seller offer", () => {
       expect(page.orderStepper.text()).toMatchInlineSnapshot(`"RespondReview"`)
       expect(page.orderStepperCurrentStep).toBe("Review")
       expect(page.find(StepSummaryItem).text()).toContain(
-        "Declining an offer permanently ends the negotiation process."
+        "Declining an offer permanently ends the negotiation process.",
       )
     })
 
@@ -124,7 +124,7 @@ describe("Buyer rejects seller offer", () => {
 
       page.root.find("Clickable[data-test='change-link']").simulate("click")
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder?.internalID}/respond`
+        `/orders/${testOrder?.internalID}/respond`,
       )
     })
   })
@@ -147,7 +147,7 @@ describe("Buyer rejects seller offer", () => {
 
       await page.clickSubmit()
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder?.internalID}/status`
+        `/orders/${testOrder?.internalID}/status`,
       )
     })
 

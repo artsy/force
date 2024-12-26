@@ -10,7 +10,7 @@ type Sized = { src: string; srcSet: string; quality2x: string }
 type Resize = Parameters<typeof resize>
 
 function normalizeQuality(
-  quality: number | [number, number] = optimizedQuality()
+  quality: number | [number, number] = optimizedQuality(),
 ) {
   let quality1x
   let quality2x
@@ -38,7 +38,7 @@ export const resized = (
     height?: number
     quality?: number | [number, number]
     width?: number
-  }
+  },
 ): Sized => {
   const [quality1x, quality2x] = normalizeQuality(quality)
 
@@ -74,7 +74,7 @@ export const cropped = (
     height: number
     quality?: number | [number, number]
     width: number
-  }
+  },
 ): Sized => {
   const [quality1x, quality2x] = normalizeQuality(quality)
 

@@ -20,7 +20,7 @@ describe("ColorFilter", () => {
     return mount(
       <AlertProvider initialCriteria={initialCriteria}>
         <ColorFilterTestComponent />
-      </AlertProvider>
+      </AlertProvider>,
     )
   }
 

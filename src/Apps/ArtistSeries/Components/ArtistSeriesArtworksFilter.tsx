@@ -106,56 +106,56 @@ const ArtistSeriesArtworksFilter: React.FC<
 export const ArtistSeriesArtworksFilterRefetchContainer =
   createRefetchContainer(
     withRouter<ArtistSeriesArtworksFilterProps & RouterState>(
-      ArtistSeriesArtworksFilter
+      ArtistSeriesArtworksFilter,
     ),
     {
       artistSeries: graphql`
-      fragment ArtistSeriesArtworksFilter_artistSeries on ArtistSeries
+        fragment ArtistSeriesArtworksFilter_artistSeries on ArtistSeries
         @argumentDefinitions(
           input: { type: "FilterArtworksInput" }
           aggregations: { type: "[ArtworkAggregation]" }
         ) {
-        sidebar: filterArtworksConnection(
-          aggregations: $aggregations
-          first: 1
-        ) {
-          aggregations {
-            slice
-            counts {
-              name
-              value
-              count
+          sidebar: filterArtworksConnection(
+            aggregations: $aggregations
+            first: 1
+          ) {
+            aggregations {
+              slice
+              counts {
+                name
+                value
+                count
+              }
             }
           }
-        }
-        artists {
-          internalID
-          name
-          slug
-        }
-        internalID
-
-        filtered_artworks: filterArtworksConnection(input: $input) {
-          id
-          counts {
-            total(format: "0,0")
+          artists {
+            internalID
+            name
+            slug
           }
-          ...ArtworkFilterArtworkGrid_filtered_artworks
+          internalID
+
+          filtered_artworks: filterArtworksConnection(input: $input) {
+            id
+            counts {
+              total(format: "0,0")
+            }
+            ...ArtworkFilterArtworkGrid_filtered_artworks
+          }
+          title
         }
-        title
-      }
-    `,
+      `,
     },
     graphql`
-    query ArtistSeriesArtworksFilterRefetchQuery(
-      $input: FilterArtworksInput
-      $slug: ID!
-    ) {
-      artistSeries(id: $slug) {
-        ...ArtistSeriesArtworksFilter_artistSeries @arguments(input: $input)
+      query ArtistSeriesArtworksFilterRefetchQuery(
+        $input: FilterArtworksInput
+        $slug: ID!
+      ) {
+        artistSeries(id: $slug) {
+          ...ArtistSeriesArtworksFilter_artistSeries @arguments(input: $input)
+        }
       }
-    }
-  `
+    `,
   )
 
 type ArtistSeriesArtworkFilterQueryRendererProps = {}

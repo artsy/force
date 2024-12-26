@@ -7,7 +7,7 @@ import { type Environment, commitMutation, graphql } from "react-relay"
 
 export const EnableSecondFactor = (
   environment: Environment,
-  input: EnableSecondFactorInput
+  input: EnableSecondFactorInput,
 ) => {
   return new Promise<EnableSecondFactorMutation$data>(
     async (resolve, reject) => {
@@ -32,7 +32,7 @@ export const EnableSecondFactor = (
         },
         mutation: graphql`
           mutation EnableSecondFactorMutation($input: EnableSecondFactorInput!)
-            @raw_response_type {
+          @raw_response_type {
             enableSecondFactor(input: $input) {
               secondFactorOrErrors {
                 ... on SmsSecondFactor {
@@ -59,6 +59,6 @@ export const EnableSecondFactor = (
           input,
         },
       })
-    }
+    },
   )
 }

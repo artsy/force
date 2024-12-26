@@ -19,7 +19,7 @@ const { renderWithRelay } = setupTestWrapperTL({
   },
   query: graphql`
     query HomeNewWorksFromGalleriesYouFollowRail_Test_Query
-      @relay_test_operation {
+    @relay_test_operation {
       me {
         newWorksFromGalleriesYouFollowConnection(first: 20) {
           ...HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection
@@ -45,10 +45,10 @@ describe("HomeNewWorksFromGalleriesYouFollowRail", () => {
 
     expect(screen.getAllByRole("link")[1]).toHaveAttribute(
       "href",
-      "/new-works-from-galleries-you-follow"
+      "/new-works-from-galleries-you-follow",
     )
     expect(
-      screen.getByText("New Works from Galleries You Follow")
+      screen.getByText("New Works from Galleries You Follow"),
     ).toBeInTheDocument()
   })
 

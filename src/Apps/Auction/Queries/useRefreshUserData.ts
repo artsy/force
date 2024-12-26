@@ -19,7 +19,7 @@ export const useRefreshUserData = () => {
           }
         }
       `,
-      {}
+      {},
     ).toPromise()
   }
 

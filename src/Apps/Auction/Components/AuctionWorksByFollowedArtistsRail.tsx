@@ -46,7 +46,7 @@ export const AuctionWorksByFollowedArtistsRailFragmentContainer =
   createFragmentContainer(AuctionWorksByFollowedArtistsRail, {
     viewer: graphql`
       fragment AuctionWorksByFollowedArtistsRail_viewer on Viewer
-        @argumentDefinitions(saleID: { type: "String" }) {
+      @argumentDefinitions(saleID: { type: "String" }) {
         saleArtworksConnection(
           first: 30
           aggregations: [TOTAL]

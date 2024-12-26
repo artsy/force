@@ -22,7 +22,7 @@ export const ArtworkSidebarArtsyGuarantee: React.FC<
         isUnlisted
       }
     `,
-    artwork
+    artwork,
   )
 
   const { trackEvent } = useTracking()

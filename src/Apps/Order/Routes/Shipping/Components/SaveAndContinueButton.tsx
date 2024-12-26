@@ -19,7 +19,7 @@ export const SaveAndContinueButton: React.FC<
         internalID
       }
     `,
-    order
+    order,
   )
 
   const { router } = useRouter()

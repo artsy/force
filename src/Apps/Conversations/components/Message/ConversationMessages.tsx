@@ -93,7 +93,7 @@ export const ConversationMessages: FC<
         },
         {
           first: PAGE_SIZE,
-        }
+        },
       )
     }
 
@@ -128,7 +128,7 @@ export const ConversationMessages: FC<
                 },
                 {
                   first: totalCount,
-                }
+                },
               )
             }}
           />
@@ -218,87 +218,88 @@ export const ConversationMessagesPaginationContainer =
     ConversationMessages,
     {
       conversation: graphql`
-      fragment ConversationMessages_conversation on Conversation
+        fragment ConversationMessages_conversation on Conversation
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 15 }
           after: { type: "String" }
         ) {
-        fromLastViewedMessageID
+          fromLastViewedMessageID
 
-        messagesConnection(first: $first, after: $after, sort: DESC)
-          @required(action: NONE)
-          @connection(
-            key: "ConversationMessages_conversation_messagesConnection"
-          ) {
-          totalCount
-          pageInfo {
-            hasNextPage
-            hasPreviousPage
-            startCursor
-          }
+          messagesConnection(first: $first, after: $after, sort: DESC)
+            @required(action: NONE)
+            @connection(
+              key: "ConversationMessages_conversation_messagesConnection"
+            ) {
+            totalCount
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+              startCursor
+            }
 
-          edges {
-            node {
-              id
-              internalID
-              createdAt
-              isFromUser
-              ...ConversationMessage_message
-            }
-          }
-        }
-        inquiryRequest {
-          formattedFirstMessage
-        }
-        items {
-          item {
-            __typename
-            ... on Artwork {
-              id
-              isOfferable
-              isOfferableFromInquiry
-              internalID
-            }
-            ...ConversationMessageArtwork_item
-          }
-        }
-        orderEvents: orderConnection(
-          first: 10
-          states: [
-            APPROVED
-            FULFILLED
-            SUBMITTED
-            REFUNDED
-            CANCELED
-            PROCESSING_APPROVAL
-          ]
-          participantType: BUYER
-        ) @required(action: NONE) {
-          edges {
-            node {
-              internalID
-              updatedAt
-              ... on CommerceOfferOrder {
-                buyerAction
+            edges {
+              node {
+                id
+                internalID
+                createdAt
+                isFromUser
+                ...ConversationMessage_message
               }
-              orderHistory {
-                ...ConversationOrderUpdate_event
-                __typename
-                ... on CommerceOrderStateChangedEvent {
-                  createdAt
-                  orderUpdateState
-                  state
-                  stateReason
+            }
+          }
+          inquiryRequest {
+            formattedFirstMessage
+          }
+          items {
+            item {
+              __typename
+              ... on Artwork {
+                id
+                isOfferable
+                isOfferableFromInquiry
+                internalID
+              }
+              ...ConversationMessageArtwork_item
+            }
+          }
+          orderEvents: orderConnection(
+            first: 10
+            states: [
+              APPROVED
+              FULFILLED
+              SUBMITTED
+              REFUNDED
+              CANCELED
+              PROCESSING_APPROVAL
+            ]
+            participantType: BUYER
+          ) @required(action: NONE) {
+            edges {
+              node {
+                internalID
+                updatedAt
+                ... on CommerceOfferOrder {
+                  buyerAction
                 }
-                ... on CommerceOfferSubmittedEvent {
-                  createdAt
-                  offer {
-                    amount
-                    fromParticipant
-                    definesTotal
-                    offerAmountChanged
-                    respondsTo {
+                orderHistory {
+                  ...ConversationOrderUpdate_event
+                  __typename
+                  ... on CommerceOrderStateChangedEvent {
+                    createdAt
+                    orderUpdateState
+                    state
+                    stateReason
+                  }
+                  ... on CommerceOfferSubmittedEvent {
+                    createdAt
+                    offer {
+                      amount
                       fromParticipant
+                      definesTotal
+                      offerAmountChanged
+                      respondsTo {
+                        fromParticipant
+                      }
                     }
                   }
                 }
@@ -306,8 +307,7 @@ export const ConversationMessagesPaginationContainer =
             }
           }
         }
-      }
-    `,
+      `,
     },
     {
       direction: "forward",
@@ -318,18 +318,18 @@ export const ConversationMessagesPaginationContainer =
         return { ...fragmentVariables, after }
       },
       query: graphql`
-      query ConversationMessagesPaginationQuery(
-        $conversationId: String!
-        $first: Int!
-        $after: String
-      ) {
-        conversation(id: $conversationId) {
-          ...ConversationMessages_conversation
-            @arguments(first: $first, after: $after)
+        query ConversationMessagesPaginationQuery(
+          $conversationId: String!
+          $first: Int!
+          $after: String
+        ) {
+          conversation(id: $conversationId) {
+            ...ConversationMessages_conversation
+              @arguments(first: $first, after: $after)
+          }
         }
-      }
-    `,
-    }
+      `,
+    },
   )
 
 interface UseAutoScrollToBottomProps {
@@ -353,7 +353,7 @@ const useAutoScrollToBottom = ({
         })
       }, 0)
     },
-    [autoScrollToBottomRef]
+    [autoScrollToBottomRef],
   )
 
   useEffect(() => {
@@ -398,7 +398,9 @@ const SpinnerWrapper = styled(Box)`
   height: 0;
   opacity: 0;
   overflow: hidden;
-  transition: height 0.5s ease, opacity 0.5s ease;
+  transition:
+    height 0.5s ease,
+    opacity 0.5s ease;
 
   &.active {
     height: 60px;

@@ -106,7 +106,7 @@ export const setupTestWrapperTL = <T extends OperationType>({
   const renderWithRelay = (
     mockResolvers: MockResolvers = {},
     componentProps?: any,
-    mockedEnv?: ReturnType<typeof createMockEnvironment>
+    mockedEnv?: ReturnType<typeof createMockEnvironment>,
   ): RenderWithRelay => {
     const env = mockedEnv ?? createMockEnvironment()
 
@@ -140,7 +140,7 @@ export const setupTestWrapperTL = <T extends OperationType>({
       act(() => {
         env.mock.resolve(
           operation,
-          MockPayloadGenerator.generate(operation, mockResolvers)
+          MockPayloadGenerator.generate(operation, mockResolvers),
         )
       })
 

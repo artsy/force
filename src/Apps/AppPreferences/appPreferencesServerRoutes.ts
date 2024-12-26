@@ -38,7 +38,7 @@ export const appPreferencesPost = (req: ArtsyRequest, res: ArtsyResponse) => {
 
     const updatedPreferences = appPreferencesSchema.validateSync(
       { ...previousPreferences, ...body },
-      { stripUnknown: true }
+      { stripUnknown: true },
     )
 
     const payload = JSON.stringify(updatedPreferences)
@@ -46,7 +46,7 @@ export const appPreferencesPost = (req: ArtsyRequest, res: ArtsyResponse) => {
     res.cookie(
       APP_PREFERENCES_COOKIE_NAME,
       payload,
-      APP_PREFERENCES_COOKIE_CONFIGURATION
+      APP_PREFERENCES_COOKIE_CONFIGURATION,
     )
 
     res.send(body)

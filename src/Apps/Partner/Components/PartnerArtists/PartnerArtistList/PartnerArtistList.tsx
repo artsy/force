@@ -122,7 +122,7 @@ export const PartnerArtistListFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const Columns = styled(Text)`

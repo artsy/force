@@ -20,14 +20,14 @@ describe("MyCollectionArtworkArtistMarket", () => {
         return null
       },
       query: graphql`
-      query MyCollectionArtworkArtistMarket_Test_Query @relay_test_operation {
-        artwork(id: "foo") {
-          marketPriceInsights {
-            ...MyCollectionArtworkArtistMarket_marketPriceInsights
+        query MyCollectionArtworkArtistMarket_Test_Query @relay_test_operation {
+          artwork(id: "foo") {
+            marketPriceInsights {
+              ...MyCollectionArtworkArtistMarket_marketPriceInsights
+            }
           }
         }
-      }
-    `,
+      `,
     })
 
   it("renders the market price insights for an artwork", () => {

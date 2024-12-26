@@ -96,24 +96,24 @@ export const SettingsSavesArtistsPaginationContainer =
     SettingsSavesArtists,
     {
       me: graphql`
-      fragment SettingsSavesArtists_me on Me
+        fragment SettingsSavesArtists_me on Me
         @argumentDefinitions(after: { type: "String" }) {
-        followsAndSaves {
-          artistsConnection(first: 4, after: $after)
-            @connection(key: "SettingsSavesArtists_artistsConnection") {
-            totalCount
-            edges {
-              node {
-                internalID
-                artist {
-                  ...ArtistRail_artist
+          followsAndSaves {
+            artistsConnection(first: 4, after: $after)
+              @connection(key: "SettingsSavesArtists_artistsConnection") {
+              totalCount
+              edges {
+                node {
+                  internalID
+                  artist {
+                    ...ArtistRail_artist
+                  }
                 }
               }
             }
           }
         }
-      }
-    `,
+      `,
     },
     {
       direction: "forward",
@@ -124,7 +124,7 @@ export const SettingsSavesArtistsPaginationContainer =
         return { ...fragmentVariables, after }
       },
       query: SETTINGS_SAVES_ARTISTS_QUERY,
-    }
+    },
   )
 
 const SETTINGS_SAVES_ARTISTS_PLACEHOLDER = (

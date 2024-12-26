@@ -57,7 +57,7 @@ describe("EditArtworkListModal", () => {
       <EditArtworkListModal
         artworkList={artworkList}
         onClose={closeEditModal}
-      />
+      />,
     )
 
     expect(screen.getByText("Edit your list")).toBeInTheDocument()
@@ -72,7 +72,7 @@ describe("EditArtworkListModal", () => {
       <EditArtworkListModal
         artworkList={artworkList}
         onClose={closeEditModal}
-      />
+      />,
     )
     const { cancelButton } = setup()
 
@@ -86,7 +86,7 @@ describe("EditArtworkListModal", () => {
       <EditArtworkListModal
         artworkList={artworkList}
         onClose={closeEditModal}
-      />
+      />,
     )
     const { nameInputField, saveButton } = setup()
 
@@ -107,7 +107,7 @@ describe("EditArtworkListModal", () => {
             shareableWithPartners: false,
           },
         },
-      })
+      }),
     )
   })
 
@@ -116,7 +116,7 @@ describe("EditArtworkListModal", () => {
       <EditArtworkListModal
         artworkList={artworkList}
         onClose={closeEditModal}
-      />
+      />,
     )
     const { nameInputField, saveButton } = setup()
 
@@ -139,7 +139,7 @@ describe("EditArtworkListModal", () => {
             shareableWithPartners: true,
           },
         },
-      })
+      }),
     )
   })
 
@@ -148,7 +148,7 @@ describe("EditArtworkListModal", () => {
       <EditArtworkListModal
         artworkList={artworkList}
         onClose={closeEditModal}
-      />
+      />,
     )
     const { nameInputField, saveButton } = setup()
 
@@ -169,7 +169,7 @@ describe("EditArtworkListModal", () => {
             shareableWithPartners: false,
           },
         },
-      })
+      }),
     )
   })
 
@@ -178,7 +178,7 @@ describe("EditArtworkListModal", () => {
       <EditArtworkListModal
         artworkList={artworkList}
         onClose={closeEditModal}
-      />
+      />,
     )
     const { nameInputField, saveButton } = setup()
 
@@ -198,7 +198,7 @@ describe("EditArtworkListModal", () => {
       <EditArtworkListModal
         artworkList={artworkList}
         onClose={closeEditModal}
-      />
+      />,
     )
     const { nameInputField, saveButton } = setup()
 
@@ -228,7 +228,7 @@ describe("EditArtworkListModal", () => {
       <EditArtworkListModal
         artworkList={artworkList}
         onClose={closeEditModal}
-      />
+      />,
     )
     const { nameInputField, saveButton } = setup()
 
@@ -243,7 +243,7 @@ describe("EditArtworkListModal", () => {
         action: "editedArtworkList",
         context_owner_type: "saves",
         owner_id: artworkList.internalID,
-      })
+      }),
     )
   })
 })

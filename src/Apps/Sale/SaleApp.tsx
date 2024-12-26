@@ -92,7 +92,7 @@ export const SaleAppFragmentContainer = createFragmentContainer(SaleApp, {
   `,
   viewer: graphql`
     fragment SaleApp_viewer on Viewer
-      @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+    @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
       ...SaleArtworksFilter_viewer @arguments(input: $input)
     }
   `,

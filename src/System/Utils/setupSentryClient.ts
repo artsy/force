@@ -76,7 +76,7 @@ export const setupSentryRouterTracing = sentryClient => {
         initialPageLoadSpan.updateName(routeId)
         initialPageLoadSpan.setAttribute(
           SEMANTIC_ATTRIBUTE_SENTRY_SOURCE,
-          "route"
+          "route",
         )
 
         initialPageLoadSpan = null
@@ -109,7 +109,7 @@ export const setupSentryRouterTracing = sentryClient => {
 }
 
 function routeMatchToParamSpanAttributes(
-  params: Match["params"]
+  params: Match["params"],
 ): Record<string, string> {
   if (!params) {
     return {}

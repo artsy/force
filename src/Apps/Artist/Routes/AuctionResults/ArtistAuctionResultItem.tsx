@@ -55,7 +55,7 @@ export const ArtistAuctionResultItem: React.FC<
   const artistName = artist?.name
 
   const onAuctionResultClick = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {
     if (!user) {
       event.preventDefault()
@@ -230,7 +230,7 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
         isUpcoming
       }
     `,
-  }
+  },
 )
 
 const ArtistAuctionResultItemPrice: React.FC<
@@ -369,6 +369,6 @@ const getDisplaySaleDate = (saleDate: string | null | undefined) => {
   if (!saleDate) return null
 
   return DateTime.fromISO(saleDate, { zone: "utc" }).toLocaleString(
-    DateTime.DATE_MED as LocaleOptions
+    DateTime.DATE_MED as LocaleOptions,
   )
 }

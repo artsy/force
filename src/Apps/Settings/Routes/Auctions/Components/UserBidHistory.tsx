@@ -49,5 +49,5 @@ export const UserBidHistoryFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

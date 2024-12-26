@@ -99,7 +99,7 @@ export const DebugAuthRoute: FC<React.PropsWithChildren<unknown>> = () => {
           }))}
           onSelect={(intent: AuthIntent) => {
             setState(prevState =>
-              merge({}, prevState, { analytics: { intent } })
+              merge({}, prevState, { analytics: { intent } }),
             )
           }}
         />

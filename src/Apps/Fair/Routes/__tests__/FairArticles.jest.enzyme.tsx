@@ -8,7 +8,7 @@ const { getWrapper } = setupTestWrapper({
   Component: FairArticlesPaginationContainer,
   query: graphql`
     query FairArticles_test_Query($id: String!, $page: Int!)
-      @relay_test_operation {
+    @relay_test_operation {
       fair(id: $id) {
         ...FairArticles_fair @arguments(page: $page)
       }

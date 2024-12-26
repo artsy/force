@@ -86,7 +86,7 @@ describe("lifecycle", () => {
         }
         lifecycle.onLocalLogin(req, res, next)
         expect(res.redirect).toHaveBeenCalledWith(
-          "/login?error=Invalid email or password."
+          "/login?error=Invalid email or password.",
         )
       })
 
@@ -94,7 +94,7 @@ describe("lifecycle", () => {
         err = new Error("moo")
         lifecycle.onLocalLogin(req, res, next)
         expect(next).toHaveBeenCalledWith(
-          expect.objectContaining({ message: "moo" })
+          expect.objectContaining({ message: "moo" }),
         )
       })
 
@@ -183,9 +183,9 @@ describe("lifecycle", () => {
       req.body.recaptcha_token = "recaptcha_token"
       lifecycle.onLocalSignup(req, res, next)
       expect(
-        (request as unknown as SuperAgentRequest).send
+        (request as unknown as SuperAgentRequest).send,
       ).toHaveBeenCalledWith(
-        expect.objectContaining({ recaptcha_token: "recaptcha_token" })
+        expect.objectContaining({ recaptcha_token: "recaptcha_token" }),
       )
     })
 
@@ -193,9 +193,9 @@ describe("lifecycle", () => {
       req.get.mockReturnValue("foo-agent")
       lifecycle.onLocalSignup(req, res, next)
       expect(
-        (request as unknown as SuperAgentRequest).set
+        (request as unknown as SuperAgentRequest).set,
       ).toHaveBeenCalledWith(
-        expect.objectContaining({ "User-Agent": "foo-agent" })
+        expect.objectContaining({ "User-Agent": "foo-agent" }),
       )
     })
   })
@@ -207,7 +207,7 @@ describe("lifecycle", () => {
       expect(req.session.redirectTo).toEqual("/foobar")
       expect(passport.authenticate).toHaveBeenCalledWith(
         "facebook",
-        expect.objectContaining({ scope: "email" })
+        expect.objectContaining({ scope: "email" }),
       )
     })
 
@@ -230,21 +230,21 @@ describe("lifecycle", () => {
 
     it("surfaces blocked by facebook errors", () => {
       passport.authenticate.mockReturnValueOnce((req, res, next) =>
-        next(new Error("Unauthorized source IP address"))
+        next(new Error("Unauthorized source IP address")),
       )
       lifecycle.afterSocialAuth("facebook")(req, res, next)
       expect(res.redirect).toHaveBeenCalledWith(
-        "/login?error_code=IP_BLOCKED&provider=facebook"
+        "/login?error_code=IP_BLOCKED&provider=facebook",
       )
     })
 
     it("passes random errors to be rendered on the login screen", () => {
       passport.authenticate.mockReturnValueOnce((req, res, next) =>
-        next(new Error("Facebook authorization failed"))
+        next(new Error("Facebook authorization failed")),
       )
       lifecycle.afterSocialAuth("facebook")(req, res, next)
       expect(res.redirect).toHaveBeenCalledWith(
-        "/login?error_code=UNKNOWN&error=Facebook authorization failed"
+        "/login?error_code=UNKNOWN&error=Facebook authorization failed",
       )
     })
 
@@ -266,7 +266,7 @@ describe("lifecycle", () => {
       lifecycle.afterSocialAuth("facebook")(req, res, next)
 
       expect(res.redirect).toHaveBeenCalledWith(
-        "/settings?error_code=UNKNOWN&error=Unable to link third-party authentication if account has Artsy two-factor authentication enabled"
+        "/settings?error_code=UNKNOWN&error=Unable to link third-party authentication if account has Artsy two-factor authentication enabled",
       )
     })
   })
@@ -291,7 +291,7 @@ describe("lifecycle", () => {
       req.user = { toJSON: jest.fn() }
       lifecycle.ssoAndRedirectBack(req, res, next)
       expect(res.send).toHaveBeenCalledWith(
-        expect.objectContaining({ success: true })
+        expect.objectContaining({ success: true }),
       )
     })
 
@@ -301,7 +301,7 @@ describe("lifecycle", () => {
       req.query["redirect-to"] = "/artwork/andy-warhol-skull"
       lifecycle.ssoAndRedirectBack(req, res, next)
       expect(request.post).toHaveBeenCalledWith(
-        expect.stringContaining("me/trust_token")
+        expect.stringContaining("me/trust_token"),
       )
       const endCallback = (request as unknown as jest.Mocked<SuperAgentRequest>)
         .end.mock.calls[0][0] as unknown as (err: any, res: any) => void
@@ -311,7 +311,7 @@ describe("lifecycle", () => {
       expect(res.redirect).toHaveBeenCalledWith(
         "https://api.artsy.net/users/sign_in" +
           "?trust_token=foo-trust-token" +
-          "&redirect_uri=https://www.artsy.net/artwork/andy-warhol-skull"
+          "&redirect_uri=https://www.artsy.net/artwork/andy-warhol-skull",
       )
     })
   })

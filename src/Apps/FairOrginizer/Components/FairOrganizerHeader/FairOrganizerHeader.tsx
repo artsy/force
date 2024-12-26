@@ -116,5 +116,5 @@ export const FairOrganizerHeaderFragmentContainer = createFragmentContainer(
         ...FairOrganizerInfo_fairOrganizer
       }
     `,
-  }
+  },
 )

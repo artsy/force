@@ -46,7 +46,7 @@ interface AddressVerificationFlowProps {
   verifyAddress: AddressVerificationFlow_verifyAddress$data
   onChosenAddress: (
     verifiedBy: AddressVerifiedBy,
-    address: AddressValues
+    address: AddressValues,
   ) => void
   onClose: () => void
   /* used only as a fallback if verification is unavailable */
@@ -175,7 +175,7 @@ const AddressVerificationFlow: React.FC<
     if (!selectedAddressKey) return
 
     const selectedAddress = addressOptions.find(
-      option => option.key === selectedAddressKey
+      option => option.key === selectedAddressKey,
     )
 
     const verifiedBy =
@@ -258,7 +258,7 @@ const AddressVerificationFlow: React.FC<
                       ))}
                     </Flex>
                   </BorderedRadio>
-                )
+                ),
             )}
           </RadioGroup>
           <Spacer y={4} />
@@ -400,7 +400,7 @@ export const AddressVerificationFlowFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const AddressVerificationFlowQueryRenderer: React.FC<
@@ -408,7 +408,7 @@ export const AddressVerificationFlowQueryRenderer: React.FC<
     address: AddressValues
     onChosenAddress: (
       verifiedBy: AddressVerifiedBy,
-      address: AddressValues
+      address: AddressValues,
     ) => void
     onClose: () => void
   }>
@@ -483,7 +483,7 @@ const useAddressVerificationTracking = () => {
           option,
         } as ValidationAddressViewed)
       },
-      [contextPageOwnerId, trackEvent, userId]
+      [contextPageOwnerId, trackEvent, userId],
     ),
 
     trackSelectedAddress: useCallback(
@@ -508,7 +508,7 @@ const useAddressVerificationTracking = () => {
         }
         trackEvent(event)
       },
-      [contextPageOwnerId, trackEvent, userId]
+      [contextPageOwnerId, trackEvent, userId],
     ),
 
     trackClosedModal: useCallback(
@@ -533,7 +533,7 @@ const useAddressVerificationTracking = () => {
         }
         trackEvent(event)
       },
-      [contextPageOwnerId, trackEvent]
+      [contextPageOwnerId, trackEvent],
     ),
   }
 }

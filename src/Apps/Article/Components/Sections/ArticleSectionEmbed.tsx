@@ -81,5 +81,5 @@ export const ArticleSectionEmbedFragmentContainer = createFragmentContainer(
         _layout: layout
       }
     `,
-  }
+  },
 )

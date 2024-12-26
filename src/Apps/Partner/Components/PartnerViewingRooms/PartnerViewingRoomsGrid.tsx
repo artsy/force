@@ -24,7 +24,7 @@ const PartnerViewingRoomsGrid: React.FC<
   const [loading, setLoading] = useState(false)
 
   const viewingRoomNodes = extractNodes(
-    viewingRoomsConnection.viewingRoomsConnection
+    viewingRoomsConnection.viewingRoomsConnection,
   )
 
   const loadMore = () => {
@@ -77,26 +77,26 @@ export const PartnerViewingRoomsGridFragmentContainer =
     PartnerViewingRoomsGrid,
     {
       viewingRoomsConnection: graphql`
-      fragment PartnerViewingRoomsGrid_viewingRoomsConnection on Partner
+        fragment PartnerViewingRoomsGrid_viewingRoomsConnection on Partner
         @argumentDefinitions(
           count: { type: "Int" }
           after: { type: "String" }
           statuses: { type: "[ViewingRoomStatusEnum!]" }
         ) {
-        viewingRoomsConnection(
-          first: $count
-          after: $after
-          statuses: $statuses
-        ) @connection(key: "PartnerViewingRoomsGrid_viewingRoomsConnection") {
-          edges {
-            node {
-              internalID
-              ...ViewingRoomCard_viewingRoom
+          viewingRoomsConnection(
+            first: $count
+            after: $after
+            statuses: $statuses
+          ) @connection(key: "PartnerViewingRoomsGrid_viewingRoomsConnection") {
+            edges {
+              node {
+                internalID
+                ...ViewingRoomCard_viewingRoom
+              }
             }
           }
         }
-      }
-    `,
+      `,
     },
     {
       direction: "forward",
@@ -117,17 +117,17 @@ export const PartnerViewingRoomsGridFragmentContainer =
         }
       },
       query: graphql`
-      query PartnerViewingRoomsGrid_ViewingRoomsQuery(
-        $count: Int!
-        $after: String
-        $partnerId: String!
-        $statuses: [ViewingRoomStatusEnum!]
-      ) {
-        viewingRoomsConnection: partner(id: $partnerId) {
-          ...PartnerViewingRoomsGrid_viewingRoomsConnection
-            @arguments(count: $count, after: $after, statuses: $statuses)
+        query PartnerViewingRoomsGrid_ViewingRoomsQuery(
+          $count: Int!
+          $after: String
+          $partnerId: String!
+          $statuses: [ViewingRoomStatusEnum!]
+        ) {
+          viewingRoomsConnection: partner(id: $partnerId) {
+            ...PartnerViewingRoomsGrid_viewingRoomsConnection
+              @arguments(count: $count, after: $after, statuses: $statuses)
+          }
         }
-      }
-    `,
-    }
+      `,
+    },
   )

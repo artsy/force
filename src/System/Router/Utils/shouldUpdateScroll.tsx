@@ -14,7 +14,7 @@ const getRouteIndiceByScrollChildrenFlag = renderArgs => {
 
   if (Array.isArray(routes) && Array.isArray(routeIndices)) {
     const routeIndex = routes.findIndex(
-      currentRoute => currentRoute.ignoreScrollBehaviorBetweenChildren
+      currentRoute => currentRoute.ignoreScrollBehaviorBetweenChildren,
     )
 
     if (routeIndex !== -1) {

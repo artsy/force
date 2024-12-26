@@ -39,6 +39,6 @@ also could be gravity being down. Retrying...`)
         console.log("[Force] Successfully fetched xapp token.")
         startServerCallback()
       }
-    }
+    },
   )
 }

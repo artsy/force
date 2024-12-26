@@ -85,11 +85,11 @@ export const AuctionArtworkFilterRefetchContainer = createRefetchContainer(
   {
     viewer: graphql`
       fragment AuctionArtworkFilter_viewer on Viewer
-        @argumentDefinitions(
-          input: { type: "FilterArtworksInput" }
-          saleID: { type: "String!" }
-          isLoggedIn: { type: "Boolean!" }
-        ) {
+      @argumentDefinitions(
+        input: { type: "FilterArtworksInput" }
+        saleID: { type: "String!" }
+        isLoggedIn: { type: "Boolean!" }
+      ) {
         ...ArtworkFilter_viewer @arguments(input: $input)
         sale(id: $saleID) {
           featuredKeywords
@@ -121,7 +121,7 @@ export const AuctionArtworkFilterRefetchContainer = createRefetchContainer(
           @arguments(input: $input, saleID: $saleID, isLoggedIn: $isLoggedIn)
       }
     }
-  `
+  `,
 )
 
 type AuctionArtworkFilterQueryRendererProps = {}
@@ -178,7 +178,7 @@ const initializeVariablesWithFilterState = (params, props) => {
   }
 
   const initialFilterStateFromUrl = getInitialFilterState(
-    props.location?.query ?? {}
+    props.location?.query ?? {},
   )
 
   const userSpecificFilterState = getArtworkFilterInputArgs(props.context.user)

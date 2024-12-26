@@ -69,7 +69,7 @@ const ArtistWorksForSaleRoute: React.FC<
           variables={{
             ...getWorksForSaleRouteVariables(
               match.params as { artistID: string },
-              match
+              match,
             ),
             artistID: artist.slug,
           }}
@@ -78,7 +78,7 @@ const ArtistWorksForSaleRoute: React.FC<
             if (error) {
               console.error(
                 "[ArtistWorksForSaleRoute]: Error loading artwork grid",
-                error
+                error,
               )
               return null
             }
@@ -114,10 +114,10 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistWorksForSaleRoute_artist on Artist
-        @argumentDefinitions(
-          isPrefetched: { type: "Boolean!", defaultValue: false }
-          aggregations: { type: "[ArtworkAggregation]" }
-        ) {
+      @argumentDefinitions(
+        isPrefetched: { type: "Boolean!", defaultValue: false }
+        aggregations: { type: "[ArtworkAggregation]" }
+      ) {
         ...ArtistArtworkFilter_artist @include(if: $isPrefetched)
         ...ArtistWorksForSaleEmpty_artist
         slug
@@ -143,5 +143,5 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

@@ -111,7 +111,7 @@ export const PaymentRoute: FC<
         : []
 
     const bankAccountOnOrder = bankAccountsArray.find(
-      bank => bank.internalID === order.bankAccountId
+      bank => bank.internalID === order.bankAccountId,
     )
 
     if (bankAccountOnOrder?.internalID) {
@@ -173,7 +173,7 @@ export const PaymentRoute: FC<
   // fired when balance check is done: either sets error state or moves to /review
   const handleBalanceCheckComplete = (
     displayInsufficientFundsError: boolean,
-    checkResult: BalanceCheckResult
+    checkResult: BalanceCheckResult,
   ) => {
     const event = {
       subject: "balance_account_check",
@@ -415,7 +415,7 @@ export const PaymentRoute: FC<
   }, [paymentSetupError])
 
   const setOrderPayment = (
-    variables: PaymentRouteSetOrderPaymentMutation["variables"]
+    variables: PaymentRouteSetOrderPaymentMutation["variables"],
   ) => {
     return props.commitMutation<PaymentRouteSetOrderPaymentMutation>({
       variables,
@@ -621,5 +621,5 @@ export const PaymentFragmentContainer = createFragmentContainer(
         ...OrderStepper_order
       }
     `,
-  }
+  },
 )

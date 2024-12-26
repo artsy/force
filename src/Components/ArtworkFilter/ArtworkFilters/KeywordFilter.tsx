@@ -29,7 +29,7 @@ export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleDebounce = useMemo(
     () => debounce(updateKeywordFilter, DEBOUNCE_DELAY),
-    []
+    [],
   )
 
   const handleChangeText = text => {

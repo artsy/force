@@ -175,7 +175,7 @@ describe("useTrackFeatureVariantView", () => {
 
     expect(window?.analytics?.track).toHaveBeenCalledWith(
       "experiment_viewed",
-      analyticsPayload
+      analyticsPayload,
     )
   })
 
@@ -192,13 +192,13 @@ describe("useTrackFeatureVariantView", () => {
     expect(window?.analytics?.track).toHaveBeenNthCalledWith(
       1,
       "experiment_viewed",
-      analyticsPayload
+      analyticsPayload,
     )
 
     expect(window?.analytics?.track).toHaveBeenNthCalledWith(
       2,
       "experiment_viewed",
-      analyticsPayload
+      analyticsPayload,
     )
 
     expect(window?.analytics?.track).toHaveBeenCalledTimes(2)

@@ -45,7 +45,7 @@ const Schema = Yup.object().shape({
     .of(
       Yup.object().shape({
         geminiToken: Yup.string().required(),
-      })
+      }),
     ),
 })
 
@@ -72,7 +72,7 @@ export const PhotosRoute: React.FC<
     submission.myCollectionArtwork && (submission.assets || []).length === 0
       ? photosFromMyCollectionArtwork(submission.myCollectionArtwork)
       : (submission.assets as Asset[]).map(asset =>
-          dropzoneFileFromAsset(asset)
+          dropzoneFileFromAsset(asset),
         )
 
   const initialValues: PhotosFormValues = {
@@ -89,7 +89,7 @@ export const PhotosRoute: React.FC<
     >
       {({ values }) => {
         const isAnyPhotoLoading = values.photos.some(
-          (document: DropzoneFile) => document.loading
+          (document: DropzoneFile) => document.loading,
         )
         setLoading(isAnyPhotoLoading)
 

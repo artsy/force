@@ -10,6 +10,6 @@ export const compactObject = <T extends object>(obj: T) => {
 
       return { ...acc, [key]: obj[key] }
     },
-    {} as { [Key in keyof T]?: NonNullable<T[Key]> }
+    {} as { [Key in keyof T]?: NonNullable<T[Key]> },
   )
 }

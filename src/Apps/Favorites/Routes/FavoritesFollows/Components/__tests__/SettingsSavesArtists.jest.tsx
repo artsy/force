@@ -9,7 +9,7 @@ const { renderWithRelay } = setupTestWrapperTL({
   Component: SettingsSavesArtistsPaginationContainer,
   query: graphql`
     query SettingsSavesArtists_test_Query($after: String)
-      @relay_test_operation {
+    @relay_test_operation {
       me {
         ...SettingsSavesArtists_me @arguments(after: $after)
       }

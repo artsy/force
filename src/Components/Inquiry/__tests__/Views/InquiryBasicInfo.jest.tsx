@@ -57,7 +57,7 @@ describe("InquiryBasicInfo", () => {
     })
 
     expect(
-      screen.getByText("Tell Example Partner a little bit about yourself.")
+      screen.getByText("Tell Example Partner a little bit about yourself."),
     ).toBeInTheDocument()
   })
 
@@ -78,7 +78,7 @@ describe("InquiryBasicInfo", () => {
     expect(mockNext).not.toBeCalled()
 
     const input = screen.getByPlaceholderText(
-      "Memberships, institutions, positions"
+      "Memberships, institutions, positions",
     )
     fireEvent.change(input, { target: { value: "Collector" } })
 
@@ -125,7 +125,7 @@ describe("InquiryBasicInfo", () => {
     fireEvent.change(professionInput, { target: { value: "Carpenter" } })
 
     const otherRelevantPositionsInput = screen.getByPlaceholderText(
-      "Memberships, institutions, positions"
+      "Memberships, institutions, positions",
     )
     fireEvent.change(otherRelevantPositionsInput, {
       target: { value: "Artist" },

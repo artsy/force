@@ -14,16 +14,17 @@ const { renderWithRelay } =
       />
     ),
     query: graphql`
-    query CellPartnerArtistFragmentContainer_Test_Query @relay_test_operation {
-      partner(id: "foo") {
-        artistsConnection {
-          edges {
-            ...CellPartnerArtist_partnerArtist
+      query CellPartnerArtistFragmentContainer_Test_Query
+      @relay_test_operation {
+        partner(id: "foo") {
+          artistsConnection {
+            edges {
+              ...CellPartnerArtist_partnerArtist
+            }
           }
         }
       }
-    }
-  `,
+    `,
   })
 
 describe("CellPartnerArtist", () => {
@@ -48,7 +49,7 @@ describe("CellPartnerArtist", () => {
     const displayedImage = screen.getByRole("presentation") as HTMLImageElement
     expect(displayedImage.src).toContain("https://example.com/right_image.jpg")
     expect(displayedImage.src).not.toContain(
-      "https://example.com/wrong_image.jpg"
+      "https://example.com/wrong_image.jpg",
     )
   })
 })

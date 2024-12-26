@@ -166,7 +166,7 @@ export const ArtistConsignFAQFragmentContainer = createFragmentContainer(
         href
       }
     `,
-  }
+  },
 )
 
 const Question: React.FC<

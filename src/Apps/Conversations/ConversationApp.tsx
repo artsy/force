@@ -66,7 +66,7 @@ export const ConversationAppFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment ConversationApp_viewer on Viewer
-        @argumentDefinitions(first: { type: "Int", defaultValue: 10 }) {
+      @argumentDefinitions(first: { type: "Int", defaultValue: 10 }) {
         ...ConversationsSidebar_viewer @arguments(first: $first)
         ...ConversationsContext_viewer
       }
@@ -79,5 +79,5 @@ export const ConversationAppFragmentContainer = createFragmentContainer(
         ...ConversationMessages_conversation
       }
     `,
-  }
+  },
 )

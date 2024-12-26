@@ -52,7 +52,7 @@ describe("InquirySpecialist", () => {
       const html = wrapper.html()
 
       expect(html).toContain(
-        "An Artsy Specialist is available to answer your questions and help you collect through Artsy."
+        "An Artsy Specialist is available to answer your questions and help you collect through Artsy.",
       )
       expect(html).toContain("Your email address")
     })
@@ -91,7 +91,7 @@ describe("InquirySpecialist", () => {
       const html = wrapper.html()
 
       expect(html).toContain(
-        "An Artsy Specialist is available to answer your questions and help you collect through Artsy."
+        "An Artsy Specialist is available to answer your questions and help you collect through Artsy.",
       )
       expect(html).not.toContain("Your email address")
       expect(html).toContain("Logged In")

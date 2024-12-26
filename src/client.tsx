@@ -20,7 +20,7 @@ setupWebVitals()
   loadableReady().then(() => {
     hydrateRoot(
       document.getElementById("root") as HTMLElement,
-      <ClientRouter />
+      <ClientRouter />,
     )
   })
 })()

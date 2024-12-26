@@ -48,7 +48,7 @@ describe("ArtworkDetails", () => {
 
       expect(wrapper.html()).toContain("Condition")
       expect(wrapper.html()).not.toContain(
-        "Slight discoloration from sun exposure"
+        "Slight discoloration from sun exposure",
       )
     })
 
@@ -99,7 +99,7 @@ describe("ArtworkDetails", () => {
       expect(wrapper.html()).toContain("Size")
       expect(wrapper.html()).toContain("Material")
       expect(
-        wrapper.find("ArtworkDetailsAdditionalInfo").find("dl").length
+        wrapper.find("ArtworkDetailsAdditionalInfo").find("dl").length,
       ).toBe(7)
     })
   })
@@ -126,7 +126,7 @@ describe("ArtworkDetails", () => {
     const { wrapper } = getWrapper(emptyData)
 
     expect(wrapper.find("ArtworkDetailsAdditionalInfo").find("dl").length).toBe(
-      0
+      0,
     )
   })
 
@@ -152,7 +152,7 @@ describe("ArtworkDetails", () => {
       })
 
       expect(wrapper.html()).toContain(
-        "Here is some additional info for this work"
+        "Here is some additional info for this work",
       )
     })
 

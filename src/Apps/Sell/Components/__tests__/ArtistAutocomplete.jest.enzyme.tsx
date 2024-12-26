@@ -75,7 +75,7 @@ const renderArtistAutosuggest = (values: FormValues) =>
           )
         }}
       </Formik>
-    </SystemContextProvider>
+    </SystemContextProvider>,
   )
 
 const inputSelector = "input[data-test-id='autocomplete-input']"

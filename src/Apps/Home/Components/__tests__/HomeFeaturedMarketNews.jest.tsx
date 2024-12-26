@@ -42,7 +42,7 @@ describe("HomeFeaturedMarketNews", () => {
     expect(screen.getByText("Explore Editorial")).toBeInTheDocument()
     expect(screen.getAllByRole("link")[1]).toHaveAttribute(
       "href",
-      "/article/example-article"
+      "/article/example-article",
     )
   })
 

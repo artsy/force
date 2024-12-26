@@ -87,13 +87,13 @@ describe("Status", () => {
         const page = new StatusTestPage(wrapper)
 
         expect(page.text()).toContain(
-          "Thank you, your offer has been submitted"
+          "Thank you, your offer has been submitted",
         )
         expect(page.text()).toContain(
-          "The seller will respond to your offer by Jan 15"
+          "The seller will respond to your offer by Jan 15",
         )
         expect(page.text()).not.toContain(
-          "Negotiation with the gallery will continue in the Inbox."
+          "Negotiation with the gallery will continue in the Inbox.",
         )
         expect(page.getMessageLength()).toBe(2)
         expect(page.text()).toContain("Kathryn Markel Fine Arts")
@@ -110,13 +110,13 @@ describe("Status", () => {
         const page = new StatusTestPage(wrapper)
 
         expect(page.text()).toContain(
-          "Thank you, your offer has been submitted"
+          "Thank you, your offer has been submitted",
         )
         expect(page.text()).toContain(
-          "The seller will respond to your offer by Jan 15"
+          "The seller will respond to your offer by Jan 15",
         )
         expect(page.text()).toContain(
-          "Negotiation with the gallery will continue in the Inbox."
+          "Negotiation with the gallery will continue in the Inbox.",
         )
         expect(page.getMessageLength()).toBe(1)
         expect(page.text()).not.toContain("Kathryn Markel Fine Arts")
@@ -136,13 +136,13 @@ describe("Status", () => {
         const page = new StatusTestPage(wrapper)
 
         expect(page.text()).toContain(
-          "Thank you, your offer has been submitted"
+          "Thank you, your offer has been submitted",
         )
         expect(page.text()).toContain(
-          "The seller will respond to your offer by Jan 15"
+          "The seller will respond to your offer by Jan 15",
         )
         expect(page.text()).not.toContain(
-          "Negotiation with the gallery will continue in the Inbox."
+          "Negotiation with the gallery will continue in the Inbox.",
         )
         expect(page.getMessageLength()).toBe(2)
         expect(page.text()).toContain("Kathryn Markel Fine Arts")
@@ -163,13 +163,13 @@ describe("Status", () => {
         const page = new StatusTestPage(wrapper)
 
         expect(page.text()).toContain(
-          "Thank you, your offer has been submitted"
+          "Thank you, your offer has been submitted",
         )
         expect(page.text()).toContain(
-          "The seller will respond to your offer by Jan 15"
+          "The seller will respond to your offer by Jan 15",
         )
         expect(page.text()).toContain(
-          "Negotiation with the gallery will continue in the Inbox."
+          "Negotiation with the gallery will continue in the Inbox.",
         )
         expect(page.getMessageLength()).toBe(1)
         expect(page.text()).not.toContain("Kathryn Markel Fine Arts")
@@ -220,7 +220,7 @@ describe("Status", () => {
           const page = new StatusTestPage(wrapper)
 
           expect(page.text()).toContain(
-            "Thank you, your offer has been accepted"
+            "Thank you, your offer has been accepted",
           )
           expect(page.getMessageLength()).toBe(1)
         })
@@ -236,7 +236,7 @@ describe("Status", () => {
           const page = new StatusTestPage(wrapper)
 
           expect(page.text()).toContain(
-            "Please proceed with the wire transfer within 7 days to complete your purchase."
+            "Please proceed with the wire transfer within 7 days to complete your purchase.",
           )
 
           const message = page.getMessage()
@@ -254,13 +254,13 @@ describe("Status", () => {
           const page = new StatusTestPage(wrapper)
 
           expect(page.text()).toContain(
-            "Find the total amount due and Artsy’s banking details below."
+            "Find the total amount due and Artsy’s banking details below.",
           )
           expect(page.text()).toContain(
-            "Please inform your bank that you are responsible for all wire transfer fees."
+            "Please inform your bank that you are responsible for all wire transfer fees.",
           )
           expect(page.text()).toContain(
-            "Please make the transfer in the currency displayed on the order breakdown and then email proof of payment to orders@artsy.net."
+            "Please make the transfer in the currency displayed on the order breakdown and then email proof of payment to orders@artsy.net.",
           )
         })
 
@@ -312,7 +312,7 @@ describe("Status", () => {
           const page = new StatusTestPage(wrapper)
 
           expect(page.text()).toContain(
-            "More delivery information will be available once your order ships."
+            "More delivery information will be available once your order ships.",
           )
         })
 
@@ -346,7 +346,7 @@ describe("Status", () => {
         expect(page.getMessageLength()).toBe(1)
         expect(page.text()).toContain("steve")
         expect(
-          page.find(Message).find("Message").find("RouterLink").html()
+          page.find(Message).find("Message").find("RouterLink").html(),
         ).toContain(`href="steves-house"`)
       })
 
@@ -361,7 +361,7 @@ describe("Status", () => {
 
         expect(page.text()).toContain("oxa")
         expect(
-          page.find(Message).find("Message").find("RouterLink").length
+          page.find(Message).find("Message").find("RouterLink").length,
         ).toBe(0)
       })
 
@@ -376,7 +376,7 @@ describe("Status", () => {
         const page = new StatusTestPage(wrapper)
 
         expect(page.text()).toContain(
-          "Our delivery provider will call you to provide a delivery window when it arrives in your area."
+          "Our delivery provider will call you to provide a delivery window when it arrives in your area.",
         )
       })
     })
@@ -537,10 +537,10 @@ describe("Status", () => {
         const page = new StatusTestPage(wrapper)
 
         expect(page.text()).toContain(
-          "Thank you, your order has been submitted"
+          "Thank you, your order has been submitted",
         )
         expect(page.text()).toContain(
-          "You will receive a confirmation email by Jan 15"
+          "You will receive a confirmation email by Jan 15",
         )
         expect(page.getMessageLength()).toBe(2)
       })
@@ -572,7 +572,7 @@ describe("Status", () => {
         const page = new StatusTestPage(wrapper)
 
         expect(page.text()).toContain(
-          "Thank you for working with Artsy Private Sales."
+          "Thank you for working with Artsy Private Sales.",
         )
       })
 
@@ -588,7 +588,7 @@ describe("Status", () => {
         const page = new StatusTestPage(wrapper)
 
         expect(page.text()).toContain(
-          "You will receive an email from our team with next steps."
+          "You will receive an email from our team with next steps.",
         )
       })
 
@@ -620,7 +620,7 @@ describe("Status", () => {
           const page = new StatusTestPage(wrapper)
 
           expect(page.text()).toContain(
-            "Thank you, your order has been accepted"
+            "Thank you, your order has been accepted",
           )
           expect(page.getMessageLength()).toBe(1)
         })
@@ -637,7 +637,7 @@ describe("Status", () => {
           const page = new StatusTestPage(wrapper)
 
           expect(page.text()).toContain(
-            "Thank you for your purchase with Artsy Private Sales."
+            "Thank you for your purchase with Artsy Private Sales.",
           )
         })
 
@@ -652,7 +652,7 @@ describe("Status", () => {
           const page = new StatusTestPage(wrapper)
 
           expect(page.text()).toContain(
-            "Please proceed with the wire transfer within 7 days to complete your purchase."
+            "Please proceed with the wire transfer within 7 days to complete your purchase.",
           )
 
           const message = page.getMessage()
@@ -698,13 +698,13 @@ describe("Status", () => {
           const page = new StatusTestPage(wrapper)
 
           expect(page.text()).toContain(
-            "Find the total amount due and Artsy’s banking details below."
+            "Find the total amount due and Artsy’s banking details below.",
           )
           expect(page.text()).toContain(
-            "Please inform your bank that you are responsible for all wire transfer fees."
+            "Please inform your bank that you are responsible for all wire transfer fees.",
           )
           expect(page.text()).toContain(
-            "Please make the transfer in the currency displayed on the order breakdown and then email proof of payment to orders@artsy.net."
+            "Please make the transfer in the currency displayed on the order breakdown and then email proof of payment to orders@artsy.net.",
           )
         })
 
@@ -790,7 +790,7 @@ describe("Status", () => {
           const page = new StatusTestPage(wrapper)
 
           expect(page.text()).toContain(
-            "Your order is confirmed. Payment processing."
+            "Your order is confirmed. Payment processing.",
           )
           expect(page.getMessageLength()).toBe(1)
         })
@@ -807,7 +807,7 @@ describe("Status", () => {
           const page = new StatusTestPage(wrapper)
 
           expect(page.text()).toContain(
-            "Thank you for your purchase with Artsy Private Sales."
+            "Thank you for your purchase with Artsy Private Sales.",
           )
         })
 
@@ -822,7 +822,7 @@ describe("Status", () => {
           const page = new StatusTestPage(wrapper)
 
           expect(page.text()).toContain(
-            "More delivery information will be available once your order ships."
+            "More delivery information will be available once your order ships.",
           )
         })
 
@@ -838,7 +838,7 @@ describe("Status", () => {
           const page = new StatusTestPage(wrapper)
 
           expect(page.text()).toContain(
-            "You will receive an email from our team with next steps."
+            "You will receive an email from our team with next steps.",
           )
           expect(page.text()).toContain("privatesales@artsy.net.")
         })

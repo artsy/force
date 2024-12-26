@@ -104,7 +104,7 @@ export const HomeNewWorksForYouRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const HomeNewWorksForYouRailQueryRenderer: React.FC<

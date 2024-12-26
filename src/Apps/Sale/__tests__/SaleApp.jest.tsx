@@ -17,7 +17,7 @@ jest.mock(
   "Apps/Auction/Components/AuctionDetails/AuctionDetailsStartTime",
   () => ({
     AuctionDetailsStartTimeQueryRenderer: () => null,
-  })
+  }),
 )
 
 const { renderWithRelay } = setupTestWrapperTL({

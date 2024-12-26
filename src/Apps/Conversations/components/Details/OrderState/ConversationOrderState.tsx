@@ -39,7 +39,7 @@ export const ConversationOrderState: React.FC<
         ...ConversationStatusWithCounter_order
       }
     `,
-    order
+    order,
   )
 
   if (!data) {

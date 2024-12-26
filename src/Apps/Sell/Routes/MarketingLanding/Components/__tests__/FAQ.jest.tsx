@@ -23,13 +23,13 @@ describe("FAQ", () => {
     const question = screen.getByText("What does it cost to sell with Artsy?")
     expect(question).toBeInTheDocument()
     expect(
-      screen.queryByText(/^There are no upfront fees./)
+      screen.queryByText(/^There are no upfront fees./),
     ).not.toBeInTheDocument()
 
     fireEvent.click(question)
 
     expect(
-      screen.queryByText(/^There are no upfront fees./)
+      screen.queryByText(/^There are no upfront fees./),
     ).toBeInTheDocument()
   })
 

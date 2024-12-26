@@ -3,7 +3,7 @@ import { ErrorCode, type FileRejection } from "react-dropzone"
 
 export const getErrorMessage = (
   fileRejection: FileRejection,
-  allowedFileFormats = ""
+  allowedFileFormats = "",
 ) => {
   const errorCodes = fileRejection.errors.map(e => e.code)
   let errorMessage

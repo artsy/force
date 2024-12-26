@@ -47,7 +47,7 @@ export const WaysToBuyFilter: FC<
   const currentSelectedFilters = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.waysToBuy
+    SelectedFiltersCountsLabels.waysToBuy,
   )
   const label = `Ways to Buy${filtersCount}`
 
@@ -72,7 +72,7 @@ export const WaysToBuyFilter: FC<
       })
       return acc
     },
-    [] as WayToBuy[]
+    [] as WayToBuy[],
   )
 
   const hasSelection = checkboxes.some(checkbox => checkbox.selected)

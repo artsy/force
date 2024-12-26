@@ -113,7 +113,7 @@ export const CollectionArtworksFilterRefetchContainer = createRefetchContainer(
   {
     collection: graphql`
       fragment CollectionArtworksFilter_collection on MarketingCollection
-        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+      @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
         slug
         query {
           artistIDs
@@ -137,5 +137,5 @@ export const CollectionArtworksFilterRefetchContainer = createRefetchContainer(
         ...CollectionArtworksFilter_collection @arguments(input: $input)
       }
     }
-  `
+  `,
 )

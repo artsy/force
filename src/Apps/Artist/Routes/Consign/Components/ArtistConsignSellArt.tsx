@@ -64,5 +64,5 @@ export const ArtistConsignSellArtFragmentContainer = createFragmentContainer(
         href
       }
     `,
-  }
+  },
 )

@@ -15,7 +15,7 @@ export const InsightsLandingPage = () => {
     {
       height: 800,
       width: 1360,
-    }
+    },
   )
 
   return (

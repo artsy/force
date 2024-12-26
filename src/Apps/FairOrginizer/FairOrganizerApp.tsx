@@ -65,5 +65,5 @@ export const FairOrganizerAppFragmentContainer = createFragmentContainer(
         ...FairOrganizerLatestArticles_fairOrganizer
       }
     `,
-  }
+  },
 )

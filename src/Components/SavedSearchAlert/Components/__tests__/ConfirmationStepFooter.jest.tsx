@@ -12,16 +12,16 @@ describe("ConfirmationStepFooter", () => {
     setupTestWrapperTL<ConfirmationStepFooter_Test_Query>({
       Component: ConfirmationStepFooter,
       query: graphql`
-      query ConfirmationStepFooter_Test_Query($alertID: String!)
+        query ConfirmationStepFooter_Test_Query($alertID: String!)
         @relay_test_operation {
-        me {
-          internalID
-          alert(id: $alertID) {
-            href
+          me {
+            internalID
+            alert(id: $alertID) {
+              href
+            }
           }
         }
-      }
-    `,
+      `,
     })
 
   const renderComponent = (artworksCount: number) => {
@@ -34,7 +34,7 @@ describe("ConfirmationStepFooter", () => {
           },
         }),
       },
-      { artworksCount }
+      { artworksCount },
     )
   }
 
@@ -69,11 +69,11 @@ describe("ConfirmationStepFooter", () => {
 
       expect(screen.getByTestId("seeAllMatchingWorksButton")).toHaveAttribute(
         "href",
-        "/artist/banksy?sort=-published_at&attribution_class%5B0%5D=unique&additional_gene_ids%5B0%5D=prints&for_sale=true&search_criteria_id=289e87de-97e7-4c36-87aa-9fcd479b46b7"
+        "/artist/banksy?sort=-published_at&attribution_class%5B0%5D=unique&additional_gene_ids%5B0%5D=prints&for_sale=true&search_criteria_id=289e87de-97e7-4c36-87aa-9fcd479b46b7",
       )
       expect(screen.getByTestId("manageYourAlertsButton")).toHaveAttribute(
         "href",
-        "/favorites/alerts"
+        "/favorites/alerts",
       )
     })
   })

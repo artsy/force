@@ -28,7 +28,7 @@ export const trackEvent = (data: any, options: object = {}) => {
     window?.analytics?.track(actionName, trackingData, trackingOptions)
   } else {
     console.error(
-      `Unknown analytics schema being used: ${JSON.stringify(data)}`
+      `Unknown analytics schema being used: ${JSON.stringify(data)}`,
     )
   }
 }
@@ -75,7 +75,7 @@ const onClickedReadMore = data => {
   const pathname = data.pathname || location.pathname
   window?.analytics?.page(
     { path: pathname },
-    { integrations: { Marketo: false } }
+    { integrations: { Marketo: false } },
   )
   // Return early because we don't want to make a Segment call for read more
   return
@@ -100,7 +100,7 @@ const logAnalyticsCalls = () => {
     "identify",
     (userId: string, data: object, context: any) => {
       console.info(`${mobileText}ANALYTICS IDENTIFY:`, userId, data, context)
-    }
+    },
   )
 }
 

@@ -107,5 +107,5 @@ export const ShowViewingRoomFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

@@ -17,14 +17,14 @@ describe("FairOrganizerFollowButton", () => {
       Component: FairOrganizerFollowButtonFragmentContainer,
       query: graphql`
         query FairOrganizerFollowButton_Test_Query($id: String!)
-          @relay_test_operation {
+        @relay_test_operation {
           fairOrganizer(id: $id) {
             ...FairOrganizerFollowButton_fairOrganizer
           }
         }
       `,
       variables: { id: "fair" },
-    }
+    },
   )
 
   const mockUseSystemContext = useSystemContext as jest.Mock
@@ -116,7 +116,7 @@ describe("FairOrganizerFollowButton", () => {
         id: "profileId",
         profileID: "profileInternalID",
         isFollowed: false,
-      }
+      },
     )
   })
 })

@@ -81,7 +81,7 @@ export const NotificationPreferencesFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment NotificationPreferences_viewer on Viewer
-        @argumentDefinitions(authenticationToken: { type: "String" }) {
+      @argumentDefinitions(authenticationToken: { type: "String" }) {
         notificationPreferences(authenticationToken: $authenticationToken) {
           channel
           name
@@ -89,7 +89,7 @@ export const NotificationPreferencesFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface NotificationPreferencesQueryRendererProps {

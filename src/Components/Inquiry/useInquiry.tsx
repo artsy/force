@@ -12,7 +12,7 @@ export const useInquiry = ({ artworkID }: UseInquiryProps) => {
   const [enableCreateAlert, setEnableCreateAlert] = useState(false)
 
   const showInquiry = (
-    options: { askSpecialist?: boolean; enableCreateAlert?: boolean } = {}
+    options: { askSpecialist?: boolean; enableCreateAlert?: boolean } = {},
   ) => {
     if (options.askSpecialist) setAskSpecialist(true)
     if (options.enableCreateAlert) setEnableCreateAlert(true)
@@ -56,7 +56,7 @@ export type WithInquiryProps = ReturnType<typeof useInquiry> & UseInquiryProps
 
 /** Also exposed as a HOC for older class components */
 export function withInquiry<T extends WithInquiryProps = WithInquiryProps>(
-  WrappedComponent: React.ComponentType<React.PropsWithChildren<T>>
+  WrappedComponent: React.ComponentType<React.PropsWithChildren<T>>,
 ) {
   const ComponentWithInquiry: React.FC<
     React.PropsWithChildren<Omit<T, keyof WithInquiryProps> & UseInquiryProps>

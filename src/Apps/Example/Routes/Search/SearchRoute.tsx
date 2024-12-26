@@ -26,7 +26,7 @@ export const SearchRoute: FC<React.PropsWithChildren<unknown>> = () => {
         // Pass on the node for the fragment container
         artist: node,
       }
-    })
+    }),
   )
 
   const handleChange = useMemo(
@@ -35,7 +35,7 @@ export const SearchRoute: FC<React.PropsWithChildren<unknown>> = () => {
         console.log("setting value", value)
         setQuery(value)
       }, 250),
-    []
+    [],
   )
 
   return (

@@ -47,7 +47,7 @@ describe("ArtistApp", () => {
             },
           }),
         },
-        { match: { params: { artworkId: undefined } } }
+        { match: { params: { artworkId: undefined } } },
       )
 
       expect(wrapper.find("ArtistMetaFragmentContainer").length).toBe(1)
@@ -70,16 +70,16 @@ describe("ArtistApp", () => {
             },
           }),
         },
-        { match: { params: { artworkId: undefined } } }
+        { match: { params: { artworkId: undefined } } },
       )
       expect(wrapper.find("RouteTab").at(0).html()).toContain(
-        'href="/artist/artist-slug"'
+        'href="/artist/artist-slug"',
       )
       expect(wrapper.find("RouteTab").at(1).html()).toContain(
-        'href="/artist/artist-slug/auction-results"'
+        'href="/artist/artist-slug/auction-results"',
       )
       expect(wrapper.find("RouteTab").at(2).html()).toContain(
-        'href="/artist/artist-slug/about"'
+        'href="/artist/artist-slug/about"',
       )
     })
   })

@@ -30,12 +30,12 @@ const { renderWithRelay } =
       )
     },
     query: graphql`
-    query ArtworkDetailsAdditionalInfo_Test_Query @relay_test_operation {
-      artwork(id: "xxx") {
-        ...ArtworkDetailsAdditionalInfo_artwork
+      query ArtworkDetailsAdditionalInfo_Test_Query @relay_test_operation {
+        artwork(id: "xxx") {
+          ...ArtworkDetailsAdditionalInfo_artwork
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("ArtworkDetailsAdditionalInfo", () => {
@@ -81,12 +81,12 @@ describe("ArtworkDetailsAdditionalInfo", () => {
 
     expect(
       screen.queryByText(
-        "Oil on cotton, hand-dyed silk organza, backed with vintage kantha quilt"
-      )
+        "Oil on cotton, hand-dyed silk organza, backed with vintage kantha quilt",
+      ),
     ).toBeInTheDocument()
     expect(screen.queryByText("Unique")).toBeInTheDocument()
     expect(
-      screen.queryByText("53 1/4 × 33 1/4 in | 135.3 × 84.5 cm")
+      screen.queryByText("53 1/4 × 33 1/4 in | 135.3 × 84.5 cm"),
     ).toBeInTheDocument()
   })
 

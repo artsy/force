@@ -21,19 +21,19 @@ describe("SelectedExhibitions", () => {
     const small = mount(
       <MockBoot breakpoint="xs">
         <SelectedExhibitions {...props} />
-      </MockBoot>
+      </MockBoot>,
     )
     expect(
-      (small.find("SelectedExhibitionsContainer").props() as any).collapsible
+      (small.find("SelectedExhibitionsContainer").props() as any).collapsible,
     ).toBe(true)
 
     const large = mount(
       <MockBoot>
         <SelectedExhibitions {...props} />
-      </MockBoot>
+      </MockBoot>,
     )
     expect(
-      (large.find("SelectedExhibitionsContainer").props() as any).collapsible
+      (large.find("SelectedExhibitionsContainer").props() as any).collapsible,
     ).toBe(undefined)
   })
 
@@ -41,7 +41,7 @@ describe("SelectedExhibitions", () => {
     const wrapper = mount(
       <MockBoot breakpoint="xs">
         <SelectedExhibitions {...props} />
-      </MockBoot>
+      </MockBoot>,
     )
 
     expect(wrapper.html()).toContain("Selected exhibitions (3)")
@@ -52,7 +52,7 @@ describe("SelectedExhibitions", () => {
     const wrapper = mount(
       <MockBoot breakpoint="xs">
         <SelectedExhibitions {...props} />
-      </MockBoot>
+      </MockBoot>,
     )
 
     expect(wrapper.html()).toContain("Selected exhibitions (3)")

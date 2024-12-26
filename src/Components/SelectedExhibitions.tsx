@@ -221,5 +221,5 @@ export const SelectedExhibitionFragmentContainer = createFragmentContainer(
         city
       }
     `,
-  }
+  },
 )

@@ -77,7 +77,7 @@ describe("HomeAuctionLotsRail", () => {
         new MouseEvent("click", {
           bubbles: true,
           cancelable: true,
-        })
+        }),
       )
 
       expect(trackEvent).toBeCalledWith({

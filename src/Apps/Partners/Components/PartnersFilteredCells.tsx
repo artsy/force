@@ -105,13 +105,13 @@ const PartnersFilteredCellsPaginationContainer = createPaginationContainer(
   {
     viewer: graphql`
       fragment PartnersFilteredCells_viewer on Viewer
-        @argumentDefinitions(
-          after: { type: "String" }
-          category: { type: "[String]" }
-          first: { type: "Int", defaultValue: 12 }
-          near: { type: "String" }
-          type: { type: "[PartnerClassification]" }
-        ) {
+      @argumentDefinitions(
+        after: { type: "String" }
+        category: { type: "[String]" }
+        first: { type: "Int", defaultValue: 12 }
+        near: { type: "String" }
+        type: { type: "[PartnerClassification]" }
+      ) {
         partnersConnection(
           after: $after
           defaultProfilePublic: true
@@ -145,7 +145,7 @@ const PartnersFilteredCellsPaginationContainer = createPaginationContainer(
       return { ...fragmentVariables, after }
     },
     query: PARTNERS_FILTERED_CELLS_QUERY,
-  }
+  },
 )
 
 const PartnersFilteredCellsPlaceholder: FC<

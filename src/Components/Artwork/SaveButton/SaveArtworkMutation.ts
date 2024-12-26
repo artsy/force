@@ -8,13 +8,13 @@ import { type Environment, commitMutation, graphql } from "react-relay"
 export const SaveArtwork = (
   environment: Environment,
   input: SaveArtworkInput,
-  optimisticResponse: SaveArtworkMutation$data
+  optimisticResponse: SaveArtworkMutation$data,
 ) => {
   return new Promise<SaveArtworkMutation$data>(async (resolve, reject) => {
     commitMutation<SaveArtworkMutation>(environment, {
       mutation: graphql`
         mutation SaveArtworkMutation($input: SaveArtworkInput!)
-          @raw_response_type {
+        @raw_response_type {
           saveArtwork(input: $input) {
             artwork {
               id

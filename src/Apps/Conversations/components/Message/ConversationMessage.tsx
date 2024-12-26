@@ -199,7 +199,7 @@ export const defineSeenBy = (
   message: Pick<
     NonNullable<ConversationMessage_message$data>,
     "deliveries" | "to" | "cc"
-  >
+  >,
 ): string | undefined => {
   // FIXME: Disabling this feature for now. NX will redefine how it should work.
   return undefined

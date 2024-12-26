@@ -8,7 +8,7 @@ describe("ContextualMenu", () => {
       <ContextualMenu>
         <ContextualMenuItem>Do the first thing</ContextualMenuItem>
         <ContextualMenuItem>Do the second thing</ContextualMenuItem>
-      </ContextualMenu>
+      </ContextualMenu>,
     )
 
     expect(screen.getByRole("button")).toBeInTheDocument()
@@ -21,7 +21,7 @@ describe("ContextualMenu", () => {
       <ContextualMenu>
         <ContextualMenuItem>Do the first thing</ContextualMenuItem>
         <ContextualMenuItem>Do the second thing</ContextualMenuItem>
-      </ContextualMenu>
+      </ContextualMenu>,
     )
 
     fireEvent.click(screen.getByRole("button"))
@@ -43,7 +43,7 @@ describe("ContextualMenu", () => {
         <ContextualMenuItem onClick={secondHandler}>
           Do the second thing
         </ContextualMenuItem>
-      </ContextualMenu>
+      </ContextualMenu>,
     )
 
     fireEvent.click(screen.getByRole("button"))
@@ -65,10 +65,10 @@ describe("ContextualMenu", () => {
           <ContextualMenuItem>Do the first thing</ContextualMenuItem>
           <ContextualMenuItem>Do the second thing</ContextualMenuItem>
           <div>Do the third thing</div>
-        </ContextualMenu>
+        </ContextualMenu>,
       )
     }).toThrowError(
-      /ContextualMenu accepts only ContextualMenuItem and ContextualMenuDivider/
+      /ContextualMenu accepts only ContextualMenuItem and ContextualMenuDivider/,
     )
   })
 })

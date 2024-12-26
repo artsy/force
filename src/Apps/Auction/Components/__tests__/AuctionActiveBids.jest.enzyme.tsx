@@ -69,7 +69,7 @@ describe("AuctionActiveBids", () => {
       const { wrapper } = getWrapper()
       expect(wrapper.text()).toContain("Your Active Bids")
       expect(
-        wrapper.find("AuctionLotInfoFragmentContainer").exists()
+        wrapper.find("AuctionLotInfoFragmentContainer").exists(),
       ).toBeTruthy()
       expect(wrapper.find("BidStatus").exists()).toBeTruthy()
       expect(wrapper.find("BidButton").exists()).toBeTruthy()
@@ -83,7 +83,7 @@ describe("AuctionActiveBids", () => {
       const { wrapper } = getWrapper()
       expect(wrapper.text()).toContain("Your Active Bids")
       expect(
-        wrapper.find("AuctionLotInfoFragmentContainer").exists()
+        wrapper.find("AuctionLotInfoFragmentContainer").exists(),
       ).toBeTruthy()
     })
 
@@ -205,7 +205,7 @@ describe("AuctionActiveBids", () => {
     wrapper.find("Button").simulate("click")
 
     expect(spy).toBeCalledWith(
-      "/auction/saleID/bid/sale-artwork-slug?redirectTo=/auction/saleID"
+      "/auction/saleID/bid/sale-artwork-slug?redirectTo=/auction/saleID",
     )
   })
 

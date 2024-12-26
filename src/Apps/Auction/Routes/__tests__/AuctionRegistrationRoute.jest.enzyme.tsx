@@ -174,7 +174,7 @@ describe("AuctionRegistrationRoute", () => {
   it("has the correct ModalDialog title", () => {
     const { wrapper } = getWrapper()
     expect((wrapper.find("ModalDialog").props() as any).title).toEqual(
-      "Register to Bid on Artsy"
+      "Register to Bid on Artsy",
     )
   })
 

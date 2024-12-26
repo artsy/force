@@ -6,7 +6,7 @@ import { type Environment, commitMutation, graphql } from "react-relay"
 import type { RecordSourceSelectorProxy } from "relay-runtime"
 
 const updater = (
-  store: RecordSourceSelectorProxy<markNotificationsAsSeenMutation$data>
+  store: RecordSourceSelectorProxy<markNotificationsAsSeenMutation$data>,
 ) => {
   const root = store.getRoot()
   const me = root.getLinkedRecord("me")
@@ -20,7 +20,7 @@ const updater = (
 
 export const markNotificationsAsSeen = (
   until: string,
-  environment: Environment
+  environment: Environment,
 ): Promise<markNotificationsAsSeenMutation$data> => {
   return new Promise((resolve, reject) => {
     commitMutation<markNotificationsAsSeenMutation>(environment, {

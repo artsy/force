@@ -23,7 +23,7 @@ export const InsightsCareerHighlightPromoCard: React.FC<
     {
       height: 712,
       width: 428,
-    }
+    },
   )
 
   const { src: mSrc, srcSet: mSrcSet } = resized(
@@ -31,7 +31,7 @@ export const InsightsCareerHighlightPromoCard: React.FC<
     {
       height: 405,
       width: 165,
-    }
+    },
   )
 
   return (

@@ -13,7 +13,7 @@ export const ConsignmentInquiryContainer: React.FC<
   const { router, match } = useRouter()
 
   const handleLogoClick = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {
     event.preventDefault
     if (match.location.pathname == "/sell/inquiry/sent") {

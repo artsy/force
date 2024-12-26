@@ -122,18 +122,18 @@ describe("PhotosRoute", () => {
     })
 
     expect(
-      screen.getByText("Upload photos of your artwork")
+      screen.getByText("Upload photos of your artwork"),
     ).toBeInTheDocument()
     expect(
       screen.getByText(
-        /Make your work stand out and get your submission evaluated faster by uploading high-quality photos of the work's front and back./
-      )
+        /Make your work stand out and get your submission evaluated faster by uploading high-quality photos of the work's front and back./,
+      ),
     ).toBeInTheDocument()
     expect(
-      screen.getByRole("link", { name: "Tips for taking photos." })
+      screen.getByRole("link", { name: "Tips for taking photos." }),
     ).toHaveAttribute(
       "href",
-      "https://help.artsy.net/s/article/How-to-Take-Photos-That-Sell"
+      "https://help.artsy.net/s/article/How-to-Take-Photos-That-Sell",
     )
     expect(screen.getByText("Continue")).toBeInTheDocument()
     expect(screen.getByText("Back")).toBeInTheDocument()
@@ -155,12 +155,12 @@ describe("PhotosRoute", () => {
       })
 
       expect(
-        screen.getByText("Increase your chance of selling")
+        screen.getByText("Increase your chance of selling"),
       ).toBeInTheDocument()
       expect(
         screen.getByText(
-          "Make sure to include images of the back, corners, frame and any other details if you can."
-        )
+          "Make sure to include images of the back, corners, frame and any other details if you can.",
+        ),
       ).toBeInTheDocument()
     })
 
@@ -177,7 +177,7 @@ describe("PhotosRoute", () => {
       })
 
       expect(
-        screen.queryByText("Increase your chance of selling")
+        screen.queryByText("Increase your chance of selling"),
       ).not.toBeInTheDocument()
     })
   })
@@ -252,8 +252,8 @@ describe("PhotosRoute", () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            "Whoa, you've reached the size limit! Please delete or upload smaller files."
-          )
+            "Whoa, you've reached the size limit! Please delete or upload smaller files.",
+          ),
         ).toBeInTheDocument()
       })
     })
@@ -279,8 +279,8 @@ describe("PhotosRoute", () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            "File format not supported. Please upload JPG, PNG or HEIC files."
-          )
+            "File format not supported. Please upload JPG, PNG or HEIC files.",
+          ),
         ).toBeInTheDocument()
       })
     })
@@ -299,7 +299,7 @@ describe("PhotosRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            "/sell/submissions/externalId/details"
+            "/sell/submissions/externalId/details",
           )
         })
       })
@@ -315,7 +315,7 @@ describe("PhotosRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            "/sell/submissions/externalId/title"
+            "/sell/submissions/externalId/title",
           )
         })
       })
@@ -336,7 +336,7 @@ describe("PhotosRoute", () => {
 
         await waitFor(() => {
           expect(mockPush).toHaveBeenCalledWith(
-            "/sell/submissions/externalId/details"
+            "/sell/submissions/externalId/details",
           )
         })
       })

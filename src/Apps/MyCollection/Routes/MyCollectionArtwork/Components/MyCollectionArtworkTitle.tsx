@@ -12,7 +12,7 @@ export const MyCollectionArtworkTitle: React.FC<
 > = props => {
   const { artistNames, date, title, artist } = useFragment(
     FRAGMENT,
-    props.artwork
+    props.artwork,
   )
 
   return (

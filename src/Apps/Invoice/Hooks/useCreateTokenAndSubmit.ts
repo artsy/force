@@ -35,7 +35,7 @@ export const useCreateTokenAndSubmit = ({
 
   const createToken = async (
     values: AddressFormValues,
-    helpers: FormikHelpers<AddressFormValues>
+    helpers: FormikHelpers<AddressFormValues>,
   ) => {
     if (!stripe || !elements) {
       logger.error(stripeNotLoadedErrorMessage)
@@ -58,7 +58,7 @@ export const useCreateTokenAndSubmit = ({
     try {
       const { error, token } = await stripe.createToken(
         cardNumberElement,
-        toStripeAddress(values.address)
+        toStripeAddress(values.address),
       )
 
       if (error) {

@@ -64,14 +64,14 @@ export const ArtworkGridItem: React.FC<
   }
 
   const handleMouseEnter = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
     onMouseEnter()
     rest.onMouseEnter?.(event)
   }
 
   const handleMouseLeave = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
     onMouseLeave()
     rest.onMouseLeave?.(event)
@@ -301,11 +301,11 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment GridItem_artwork on Artwork
-        @argumentDefinitions(
-          includeAllImages: { type: "Boolean", defaultValue: false }
-          includeBlurHash: { type: "Boolean", defaultValue: true }
-          includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        includeAllImages: { type: "Boolean", defaultValue: false }
+        includeBlurHash: { type: "Boolean", defaultValue: true }
+        includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
+      ) {
         internalID
         title
         imageTitle
@@ -326,7 +326,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         ...ExclusiveAccessBadge_artwork
       }
     `,
-  }
+  },
 )
 
 export default ArtworkGridItemFragmentContainer

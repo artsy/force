@@ -13,7 +13,7 @@ const phoneNumber = Yup.string().required("Phone Number is required")
 
 const agreeToTerms = Yup.bool().oneOf(
   [true],
-  "You must agree to the Conditions of Sale"
+  "You must agree to the Conditions of Sale",
 )
 const creditCard = Yup.bool().oneOf([true], "")
 const selectedBid = Yup.string().required()

@@ -25,7 +25,7 @@ export const PreviouslySoldOnArtsyRail: React.FC<
   }
 
   const artworks = shuffle(extractNodes(recentlySoldArtworks)).filter(
-    ({ artwork }) => !!artwork
+    ({ artwork }) => !!artwork,
   )
 
   const trackArtworkItemClick = (artwork, horizontalSlidePosition) => () => {
@@ -35,8 +35,8 @@ export const PreviouslySoldOnArtsyRail: React.FC<
         OwnerType.consign,
         artwork.internalID,
         artwork.slug,
-        horizontalSlidePosition
-      )
+        horizontalSlidePosition,
+      ),
     )
   }
 
@@ -58,7 +58,7 @@ export const PreviouslySoldOnArtsyRail: React.FC<
                 priceRealized,
                 performance,
               },
-              i
+              i,
             ) => {
               if (!artwork) return <></>
 
@@ -95,7 +95,7 @@ export const PreviouslySoldOnArtsyRail: React.FC<
                   </Text>
                 </SoldArtworkFragmentContainer>
               )
-            }
+            },
           )
         }}
       />

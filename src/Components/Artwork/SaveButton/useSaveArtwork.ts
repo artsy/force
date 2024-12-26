@@ -60,7 +60,7 @@ export const useSaveArtwork = ({
                 },
               },
             },
-          }
+          },
         )
 
         onSave?.({

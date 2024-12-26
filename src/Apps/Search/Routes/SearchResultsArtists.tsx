@@ -94,7 +94,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
         // TODO: use silentPush from useRouter if this class component is
         // converted to a function component
         window.history.pushState({}, "", `/search/artists?${urlParams}`)
-      }
+      },
     )
   }
 
@@ -166,50 +166,50 @@ export const SearchResultsArtistsRouteFragmentContainer =
     >,
     {
       viewer: graphql`
-      fragment SearchResultsArtists_viewer on Viewer
+        fragment SearchResultsArtists_viewer on Viewer
         @argumentDefinitions(
           term: { type: "String!", defaultValue: "" }
           first: { type: "Int", defaultValue: 10 }
           page: { type: "Int" }
         ) {
-        searchConnection(
-          query: $term
-          first: $first
-          page: $page
-          entities: [ARTIST]
-        ) @principalField {
-          pageInfo {
-            hasNextPage
-          }
-          pageCursors {
-            ...Pagination_pageCursors
-          }
-          edges {
-            node {
-              ... on Artist {
-                name
-                internalID
-                href
-                bio
-                imageUrl
-                coverArtwork {
-                  image {
-                    src: url(version: ["square"])
+          searchConnection(
+            query: $term
+            first: $first
+            page: $page
+            entities: [ARTIST]
+          ) @principalField {
+            pageInfo {
+              hasNextPage
+            }
+            pageCursors {
+              ...Pagination_pageCursors
+            }
+            edges {
+              node {
+                ... on Artist {
+                  name
+                  internalID
+                  href
+                  bio
+                  imageUrl
+                  coverArtwork {
+                    image {
+                      src: url(version: ["square"])
+                    }
                   }
                 }
               }
             }
           }
         }
-      }
-    `,
+      `,
     },
     graphql`
-    query SearchResultsArtistsQuery($first: Int, $term: String!, $page: Int) {
-      viewer {
-        ...SearchResultsArtists_viewer
-          @arguments(first: $first, term: $term, page: $page)
+      query SearchResultsArtistsQuery($first: Int, $term: String!, $page: Int) {
+        viewer {
+          ...SearchResultsArtists_viewer
+            @arguments(first: $first, term: $term, page: $page)
+        }
       }
-    }
-  `
+    `,
   )

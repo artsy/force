@@ -52,7 +52,7 @@ export const FairCollection: React.FC<
 
   const imageUrls = compact(
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    collection.artworks.edges.map(({ node }) => node?.image?.url)
+    collection.artworks.edges.map(({ node }) => node?.image?.url),
   )
 
   const images = imageUrls.map((url, i) => {
@@ -114,5 +114,5 @@ export const FairCollectionFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

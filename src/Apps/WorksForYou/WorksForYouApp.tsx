@@ -38,14 +38,14 @@ const WorksForYouApp: React.FC<React.PropsWithChildren<WorksForYouProps>> = ({
   const { router } = useRouter()
 
   const followedArtists = extractNodes(
-    viewerMe.me?.followsAndSaves?.artistsConnection
+    viewerMe.me?.followsAndSaves?.artistsConnection,
   ).map(item => ({
     label: item.artist?.name,
     value: item.artist?.slug,
   })) as FilterSelectItems
 
   const savedArtworks = extractNodes(
-    viewerMe.me?.followsAndSaves?.bundledArtworksByArtistConnection
+    viewerMe.me?.followsAndSaves?.bundledArtworksByArtistConnection,
   )
 
   const handleResultsFilterChange = (state: FilterSelectChangeState) => {
@@ -155,9 +155,7 @@ export const WorksForYouAppFragmentContainer = createFragmentContainer(
   {
     viewerArtist: graphql`
       fragment WorksForYouApp_viewerArtist on Viewer
-        @argumentDefinitions(
-          artistSlug: { type: "String!", defaultValue: "" }
-        ) {
+      @argumentDefinitions(artistSlug: { type: "String!", defaultValue: "" }) {
         ...WorksForYouArtistFeed_viewer @arguments(artistSlug: $artistSlug)
       }
     `,
@@ -192,5 +190,5 @@ export const WorksForYouAppFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

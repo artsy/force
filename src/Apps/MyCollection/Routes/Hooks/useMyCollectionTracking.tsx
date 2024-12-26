@@ -20,7 +20,7 @@ export const useMyCollectionTracking = () => {
     addCollectedArtwork: (
       context_owner_type:
         | OwnerType.myCollection
-        | OwnerType.myCollectionInsights = OwnerType.myCollection
+        | OwnerType.myCollectionInsights = OwnerType.myCollection,
     ) => {
       const payload: AddCollectedArtwork = {
         action: ActionType.addCollectedArtwork,

@@ -69,5 +69,5 @@ export const CategoriesAppFragmentContainer = createFragmentContainer(
         ...GeneFamilies_geneFamiliesConnection
       }
     `,
-  }
+  },
 )

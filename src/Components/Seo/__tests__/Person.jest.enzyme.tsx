@@ -9,7 +9,7 @@ describe("Person", () => {
     const wrapper = mount(
       <HeadProvider>
         <Person {...defaultProps} {...props} />
-      </HeadProvider>
+      </HeadProvider>,
     )
 
     return wrapper

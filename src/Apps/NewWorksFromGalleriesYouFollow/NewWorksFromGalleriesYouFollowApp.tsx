@@ -87,25 +87,28 @@ export const NewWorksFromGalleriesYouFollowAppPaginationContainer =
     NewWorksFromGalleriesYouFollowApp,
     {
       me: graphql`
-      fragment NewWorksFromGalleriesYouFollowApp_me on Me
+        fragment NewWorksFromGalleriesYouFollowApp_me on Me
         @argumentDefinitions(
           count: { type: "Int", defaultValue: 25 }
           cursor: { type: "String" }
         ) {
-        newWorksFromGalleriesYouFollowConnection(first: $count, after: $cursor)
-          @connection(
-            key: "NewWorksFromGalleriesYouFollowApp_newWorksFromGalleriesYouFollowConnection"
-          ) {
-          ...ArtworkGrid_artworks
-          totalCount
-          edges {
-            node {
-              id
+          newWorksFromGalleriesYouFollowConnection(
+            first: $count
+            after: $cursor
+          )
+            @connection(
+              key: "NewWorksFromGalleriesYouFollowApp_newWorksFromGalleriesYouFollowConnection"
+            ) {
+            ...ArtworkGrid_artworks
+            totalCount
+            edges {
+              node {
+                id
+              }
             }
           }
         }
-      }
-    `,
+      `,
     },
     {
       direction: "forward",
@@ -123,15 +126,15 @@ export const NewWorksFromGalleriesYouFollowAppPaginationContainer =
         }
       },
       query: graphql`
-      query NewWorksFromGalleriesYouFollowAppQuery(
-        $count: Int!
-        $cursor: String
-      ) {
-        me {
-          ...NewWorksFromGalleriesYouFollowApp_me
-            @arguments(count: $count, cursor: $cursor)
+        query NewWorksFromGalleriesYouFollowAppQuery(
+          $count: Int!
+          $cursor: String
+        ) {
+          me {
+            ...NewWorksFromGalleriesYouFollowApp_me
+              @arguments(count: $count, cursor: $cursor)
+          }
         }
-      }
-    `,
-    }
+      `,
+    },
   )

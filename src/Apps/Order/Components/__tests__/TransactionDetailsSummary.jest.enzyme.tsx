@@ -94,8 +94,8 @@ describe("TransactionDetailsSummaryItem", () => {
     ),
     query: graphql`
       query TransactionDetailsSummaryItemTestQuery
-        @raw_response_type
-        @relay_test_operation {
+      @raw_response_type
+      @relay_test_operation {
         order: commerceOrder(id: "whatevs") {
           ...TransactionDetailsSummaryItem_order
         }
@@ -170,7 +170,7 @@ describe("TransactionDetailsSummaryItem", () => {
       const text = wrapper.text()
 
       expect(text).toMatch(
-        "*Shipping costs to be confirmed by gallery. You will be able to review the total price before payment."
+        "*Shipping costs to be confirmed by gallery. You will be able to review the total price before payment.",
       )
     })
 
@@ -260,7 +260,7 @@ describe("TransactionDetailsSummaryItem", () => {
         expect(text).toMatch("ShippingWaiting for final costs")
         expect(text).toMatch("Tax*Waiting for final costs")
         expect(text).toMatch(
-          "*Additional duties and taxes may apply at import."
+          "*Additional duties and taxes may apply at import.",
         )
       })
 
@@ -299,10 +299,10 @@ describe("TransactionDetailsSummaryItem", () => {
         expect(text).toMatch("Premium delivery*")
         expect(text).toMatch("Tax†US$120")
         expect(text).toMatch(
-          "*Estimate only. Price may vary once offer is finalized."
+          "*Estimate only. Price may vary once offer is finalized.",
         )
         expect(text).toMatch(
-          "†Additional duties and taxes may apply at import."
+          "†Additional duties and taxes may apply at import.",
         )
       })
     })
@@ -316,10 +316,10 @@ describe("TransactionDetailsSummaryItem", () => {
       const textWrappers = wrapper.find(Text)
 
       expect(textWrappers.map(text => text.text())).toContain(
-        "Congratulations! This artwork will be added to your Collection once the gallery confirms the order."
+        "Congratulations! This artwork will be added to your Collection once the gallery confirms the order.",
       )
       expect(textWrappers.map(text => text.text())).toContain(
-        "View and manage all artworks in your Collection on the Artsy app."
+        "View and manage all artworks in your Collection on the Artsy app.",
       )
     })
   })

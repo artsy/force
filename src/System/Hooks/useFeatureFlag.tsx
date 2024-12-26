@@ -32,7 +32,7 @@ export function useFeatureFlag(featureName: string): boolean | null {
   if (flagEnabled === undefined) {
     warnInDevelopment(
       `[Force] Warning: cannot find ${featureName} in featureFlags: `,
-      featureFlags
+      featureFlags,
     )
     return null
   }
@@ -47,7 +47,7 @@ export function useFeatureVariant(featureName: string): Variant | null {
   if (!variant) {
     warnInDevelopment(
       "[Force] Warning: cannot find variant on featureFlags: ",
-      featureFlags
+      featureFlags,
     )
 
     return null
@@ -57,7 +57,7 @@ export function useFeatureVariant(featureName: string): Variant | null {
 }
 
 export const getFeatureVariant = (
-  featureName: string
+  featureName: string,
 ): Variant | DisabledVariant | null => {
   const featureFlags = getENV("FEATURE_FLAGS")
   const variant = featureFlags?.[featureName]?.variant
@@ -65,7 +65,7 @@ export const getFeatureVariant = (
   if (!variant) {
     warnInDevelopment(
       "[Force] Warning: cannot find variant on featureFlags: ",
-      featureFlags
+      featureFlags,
     )
 
     return null

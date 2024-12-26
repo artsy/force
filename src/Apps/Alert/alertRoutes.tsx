@@ -5,7 +5,7 @@ const AlertApp = loadable(
   () => import(/* webpackChunkName: "alertBundle" */ "./AlertApp"),
   {
     resolveComponent: component => component.AlertApp,
-  }
+  },
 )
 
 export const alertRoutes: RouteProps[] = [

@@ -91,7 +91,7 @@ export const PartnersSearchQueryRenderer: FC<
             ({ text, value }) => ({
               text: text!,
               value,
-            })
+            }),
           )
 
           return (

@@ -38,7 +38,7 @@ export const ViewingRoomsLatestGrid: React.FC<
   }
 
   const viewingRooms = extractNodes(
-    props.viewingRooms?.viewingRoomsConnection
+    props.viewingRooms?.viewingRoomsConnection,
   ).filter(viewingRoom => {
     return viewingRoom.status === "scheduled" || viewingRoom.status === "live"
   })
@@ -56,7 +56,7 @@ export const ViewingRoomsLatestGrid: React.FC<
             {
               height: 490,
               width: 490,
-            }
+            },
           )
 
           const status = getStatus({
@@ -105,33 +105,33 @@ export const ViewingRoomsLatestGridFragmentContainer =
     ViewingRoomsLatestGrid,
     {
       viewingRooms: graphql`
-      fragment ViewingRoomsLatestGrid_viewingRooms on Viewer
+        fragment ViewingRoomsLatestGrid_viewingRooms on Viewer
         @argumentDefinitions(
           count: { type: "Int" }
           after: { type: "String" }
         ) {
-        viewingRoomsConnection(first: $count, after: $after)
-          @connection(key: "ViewingRoomsLatestGrid_viewingRoomsConnection") {
-          edges {
-            node {
-              slug
-              status
-              title
-              image {
-                imageURLs {
-                  normalized
+          viewingRoomsConnection(first: $count, after: $after)
+            @connection(key: "ViewingRoomsLatestGrid_viewingRoomsConnection") {
+            edges {
+              node {
+                slug
+                status
+                title
+                image {
+                  imageURLs {
+                    normalized
+                  }
                 }
-              }
-              distanceToOpen(short: true)
-              distanceToClose(short: true)
-              partner {
-                name
+                distanceToOpen(short: true)
+                distanceToClose(short: true)
+                partner {
+                  name
+                }
               }
             }
           }
         }
-      }
-    `,
+      `,
     },
     {
       direction: "forward",
@@ -154,15 +154,15 @@ export const ViewingRoomsLatestGridFragmentContainer =
         }
       },
       query: graphql`
-      query ViewingRoomsLatestGrid_ViewingRoomsAppQuery(
-        $count: Int!
-        $after: String
-      ) {
-        allViewingRooms: viewer {
-          ...ViewingRoomsApp_allViewingRooms
-            @arguments(count: $count, after: $after)
+        query ViewingRoomsLatestGrid_ViewingRoomsAppQuery(
+          $count: Int!
+          $after: String
+        ) {
+          allViewingRooms: viewer {
+            ...ViewingRoomsApp_allViewingRooms
+              @arguments(count: $count, after: $after)
+          }
         }
-      }
-    `,
-    }
+      `,
+    },
   )

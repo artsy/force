@@ -79,7 +79,7 @@ export const FulfillmentDetailsForm = ({
 }
 
 const FulfillmentDetailsFormLayout = (
-  props: FulfillmentDetailsFormLayoutProps
+  props: FulfillmentDetailsFormLayoutProps,
 ) => {
   const { contextPageOwnerId } = useAnalyticsContext()
 
@@ -152,12 +152,12 @@ const FulfillmentDetailsFormLayout = (
 
       await formikContext.submitForm()
     },
-    [formikContext.setValues, formikContext.submitForm, serializedValues]
+    [formikContext.setValues, formikContext.submitForm, serializedValues],
   )
 
   const handleChooseAddressForVerification = async (
     verifiedBy,
-    chosenAddress
+    chosenAddress,
   ) => {
     const newValues = {
       ...values,
@@ -214,8 +214,8 @@ const FulfillmentDetailsFormLayout = (
         getInitialShippingValues(
           savedAddresses,
           shippingContext.orderData.shipsFrom,
-          shippingContext.orderData.availableShippingCountries
-        )
+          shippingContext.orderData.availableShippingCountries,
+        ),
       )
     }
   }

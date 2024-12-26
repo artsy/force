@@ -80,7 +80,7 @@ export const useFollowButtonTracking = ({
       ownerId,
       ownerSlug,
       trackEvent,
-    ]
+    ],
   )
 
   return { trackFollow }

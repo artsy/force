@@ -70,5 +70,5 @@ export const __ProgressiveOnboardingSaveArtwork__: FC<
 }
 
 export const ProgressiveOnboardingSaveArtwork = withProgressiveOnboardingCounts(
-  __ProgressiveOnboardingSaveArtwork__
+  __ProgressiveOnboardingSaveArtwork__,
 )

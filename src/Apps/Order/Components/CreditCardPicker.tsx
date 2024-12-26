@@ -127,7 +127,7 @@ export class CreditCardPicker extends React.Component<
         this.props.elements.getElement(CardNumberElement)!
       return await this.props.stripe.createToken(
         cardNumberElement,
-        stripeBillingAddress
+        stripeBillingAddress,
       )
     } finally {
       this.setState({ isCreatingStripeToken: false })
@@ -376,7 +376,7 @@ export class CreditCardPicker extends React.Component<
       {},
       emptyAddress,
       this.props.order.requestedFulfillment,
-      (o, s) => (isNull(s) ? o : s)
+      (o, s) => (isNull(s) ? o : s),
     )
     const selectedBillingAddress = (
       this.needsAddress() ? this.state.address : shippingAddress
@@ -402,7 +402,7 @@ export class CreditCardPicker extends React.Component<
   }
 
   private createCreditCard(
-    variables: CreditCardPickerCreateCreditCardMutation["variables"]
+    variables: CreditCardPickerCreateCreditCardMutation["variables"],
   ) {
     return this.props.commitMutation<CreditCardPickerCreateCreditCardMutation>({
       variables,
@@ -575,5 +575,5 @@ export const CreditCardPickerFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

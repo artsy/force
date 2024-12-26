@@ -315,5 +315,5 @@ export const HomeHeroUnitFragmentContainer = createFragmentContainer(
         title
       }
     `,
-  }
+  },
 )

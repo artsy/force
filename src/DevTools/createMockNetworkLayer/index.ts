@@ -24,7 +24,7 @@ export const createMockNetworkLayer = (mockResolvers: IMocks) => {
     getNetworkLayer({
       schema,
       mocks: { FormattedNumber: () => FormattedNumber, ...mockResolvers },
-    })
+    }),
   )
 }
 
@@ -75,7 +75,7 @@ export const createMockFetchQuery = ({
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const operationName = get(info, i => i.operation.name.value)
         throw new Error(
-          `The value at path '${parentPath}' for operation '${operationName}' should be an object but is a ${typeof source}.`
+          `The value at path '${parentPath}' for operation '${operationName}' should be an object but is a ${typeof source}.`,
         )
       }
 
@@ -84,7 +84,7 @@ export const createMockFetchQuery = ({
       if (alias && alias.value in source) {
         return inferUnionOrInterfaceType(
           checkLeafType(source[alias.value], info),
-          info
+          info,
         )
       }
 
@@ -92,7 +92,7 @@ export const createMockFetchQuery = ({
       if (info.fieldName in source) {
         return inferUnionOrInterfaceType(
           checkLeafType(source[info.fieldName], info),
-          info
+          info,
         )
       }
 
@@ -118,7 +118,7 @@ export const createMockFetchQuery = ({
       throw error(
         info,
         ({ type, path, operationName }) =>
-          `A mock for field at path '${path}' of type '${type}' was expected for operation '${operationName}', but none was found.`
+          `A mock for field at path '${path}' of type '${type}' was expected for operation '${operationName}', but none was found.`,
       )
     }) as GraphQLFieldResolver<any, any>,
     schema,
@@ -132,7 +132,7 @@ export const createMockFetchQuery = ({
           ...acc,
           [k]: typeof v === "function" ? v : () => v,
         }),
-        {}
+        {},
       ),
     },
   })
@@ -150,7 +150,7 @@ const checkLeafType = (value: unknown, info: GraphQLResolveInfo) => {
       throw error(
         info,
         ({ type, path, operationName }) =>
-          `Expected mock value of type '${type}' but got '${typeof value}' at path '${path}' for operation '${operationName}'`
+          `Expected mock value of type '${type}' but got '${typeof value}' at path '${path}' for operation '${operationName}'`,
       )
     }
   }
@@ -161,7 +161,7 @@ const checkLeafType = (value: unknown, info: GraphQLResolveInfo) => {
 // in a position whose type is either a union or an interface
 const inferUnionOrInterfaceType = (
   value: unknown,
-  info: GraphQLResolveInfo
+  info: GraphQLResolveInfo,
 ) => {
   let returnType = info.returnType
 
@@ -178,7 +178,7 @@ const inferUnionOrInterfaceType = (
     throw error(
       info,
       ({ type, path, operationName }) =>
-        `Expected object of type '${type}' but got '${typeof value}' at path '${path}' for operation '${operationName}'`
+        `Expected object of type '${type}' but got '${typeof value}' at path '${path}' for operation '${operationName}'`,
     )
   }
 
@@ -201,7 +201,7 @@ const inferUnionOrInterfaceType = (
   throw error(
     info,
     ({ path, operationName }) =>
-      `Ambiguous object at path '${path}' for operation '${operationName}'. Add a __typename from this list: [${possibleTypes}]`
+      `Ambiguous object at path '${path}' for operation '${operationName}'. Add a __typename from this list: [${possibleTypes}]`,
   )
 }
 
@@ -211,7 +211,7 @@ function error(
     type: string
     path: string
     operationName: string
-  }) => string
+  }) => string,
 ) {
   return new Error(
     renderMessage({
@@ -219,6 +219,6 @@ function error(
       type: info.returnType.inspect(),
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       operationName: get(info, i => i.operation.name.value, "(unknown)"),
-    })
+    }),
   )
 }

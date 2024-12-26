@@ -12,7 +12,7 @@ describe("LocalBusiness", () => {
     const wrapper = mount(
       <HeadProvider>
         <LocalBusiness {...defaultProps} {...props} />
-      </HeadProvider>
+      </HeadProvider>,
     )
 
     return wrapper

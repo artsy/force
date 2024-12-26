@@ -34,8 +34,8 @@ describe("IdentityVerification route", () => {
     },
     query: graphql`
       query IdentityVerificationAppTestQuery
-        @raw_response_type
-        @relay_test_operation {
+      @raw_response_type
+      @relay_test_operation {
         identityVerification(id: "identity-verification-id") {
           ...IdentityVerificationApp_identityVerification
         }
@@ -94,7 +94,7 @@ describe("IdentityVerification route", () => {
         const page = new IdentityVerificationAppTestPage(wrapper)
 
         expect(page.text()).toContain(
-          "Artsy is reviewing your identity verification"
+          "Artsy is reviewing your identity verification",
         )
         expect(page.startVerificationButton.exists()).toBeFalsy()
         expect(page.returnHomeButton.exists()).toBeTruthy()
@@ -143,7 +143,7 @@ describe("IdentityVerification route", () => {
                 mutationError: null,
               },
             }),
-          })
+          }),
         )
         await page.update()
 
@@ -169,12 +169,12 @@ describe("IdentityVerification route", () => {
                 },
               },
             }),
-          })
+          }),
         )
         await page.update()
 
         expect(page.text()).toContain(
-          "Something went wrong. Please try again or contact verification@artsy.net."
+          "Something went wrong. Please try again or contact verification@artsy.net.",
         )
       })
 
@@ -189,7 +189,7 @@ describe("IdentityVerification route", () => {
         await page.update()
 
         expect(page.text()).toContain(
-          "Something went wrong. Please try again or contact verification@artsy.net."
+          "Something went wrong. Please try again or contact verification@artsy.net.",
         )
       })
     })

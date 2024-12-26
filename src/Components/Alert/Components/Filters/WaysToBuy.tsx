@@ -19,7 +19,7 @@ export const WaysToBuy: FC<React.PropsWithChildren<unknown>> = () => {
       key: key as SearchCriteriaAttributeKeys,
       name: value.name,
       selected: state.criteria[key],
-    })
+    }),
   )
 
   return (

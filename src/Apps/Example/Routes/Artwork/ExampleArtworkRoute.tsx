@@ -92,5 +92,5 @@ export const ExampleArtworkRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

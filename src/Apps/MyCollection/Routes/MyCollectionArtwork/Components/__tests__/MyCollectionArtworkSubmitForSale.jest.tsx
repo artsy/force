@@ -67,7 +67,7 @@ describe("MyCollection Artwork SWA Section", () => {
         fireEvent.click(screen.getByTestId("submit-for-sale-link"))
 
         expect(mockPush).toBeCalledWith(
-          '/sell/submissions/<mock-value-for-field-"internalID">/artist'
+          '/sell/submissions/<mock-value-for-field-"internalID">/artist',
         )
 
         expect(createOrUpdateConsignSubmission).not.toBeCalled()
@@ -93,7 +93,7 @@ describe("MyCollection Artwork SWA Section", () => {
           expect(createOrUpdateConsignSubmission).toHaveBeenCalled()
 
           expect(mockPush).toBeCalledWith(
-            "/sell/submissions/submission-id/artist"
+            "/sell/submissions/submission-id/artist",
           )
         })
       })
@@ -113,10 +113,10 @@ describe("MyCollection Artwork SWA Section", () => {
       })
 
       expect(
-        screen.queryByText("Interested in Selling This Work?")
+        screen.queryByText("Interested in Selling This Work?"),
       ).not.toBeInTheDocument()
       expect(
-        screen.queryByTestId("submit-for-sale-link")
+        screen.queryByTestId("submit-for-sale-link"),
       ).not.toBeInTheDocument()
     })
   })

@@ -118,7 +118,7 @@ describe("ArtworkApp", () => {
           }),
         },
         {},
-        mockRelayEnv
+        mockRelayEnv,
       )
 
       await flushPromiseQueue()
@@ -139,7 +139,7 @@ describe("ArtworkApp", () => {
 
       expect(mockShowAuthDialog).not.toHaveBeenCalled()
       expect(routerMock.silentReplace).toHaveBeenCalledWith(
-        "https://artsy.net/artwork/test-artwork"
+        "https://artsy.net/artwork/test-artwork",
       )
     })
   })

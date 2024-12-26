@@ -28,7 +28,7 @@ export const SoldRecentlyOnArtsy: React.FC<
   }
 
   const artworks = shuffle(extractNodes(recentlySoldArtworks)).filter(
-    ({ artwork }) => !!artwork
+    ({ artwork }) => !!artwork,
   )
 
   const trackArtworkItemClick = (artwork, horizontalSlidePosition) => () => {
@@ -38,8 +38,8 @@ export const SoldRecentlyOnArtsy: React.FC<
         OwnerType.consign,
         artwork.internalID,
         artwork.slug,
-        horizontalSlidePosition
-      )
+        horizontalSlidePosition,
+      ),
     )
   }
 
@@ -95,7 +95,7 @@ export const SoldRecentlyOnArtsy: React.FC<
                 </Flex>
               </ShelfArtworkFragmentContainer>
             )
-          }
+          },
         )
       }}
     />
@@ -128,7 +128,7 @@ export const SoldRecentlyOnArtsyFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const PLACEHOLDER = (

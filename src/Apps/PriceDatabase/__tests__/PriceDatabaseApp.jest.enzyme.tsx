@@ -34,7 +34,7 @@ describe("PriceDatabaseApp", () => {
         <HeadProvider>
           <PriceDatabase />
         </HeadProvider>
-      </MockBoot>
+      </MockBoot>,
     )
   })
   afterEach(() => {
@@ -64,7 +64,7 @@ describe("PriceDatabaseApp", () => {
     wrapper.find(Button).simulate("click")
 
     expect(mockRouterPush).toHaveBeenCalledWith(
-      "/artist/gerhard-richter/auction-results?scroll_to_market_signals=true"
+      "/artist/gerhard-richter/auction-results?scroll_to_market_signals=true",
     )
 
     expect(trackEvent).toHaveBeenCalledTimes(1)
@@ -97,7 +97,7 @@ describe("PriceDatabaseApp", () => {
     wrapper.find(Button).simulate("click")
 
     expect(mockRouterPush).toHaveBeenCalledWith(
-      "/artist/banksy/auction-results?categories%5B0%5D=Painting&sizes%5B0%5D=SMALL&sizes%5B1%5D=MEDIUM&scroll_to_market_signals=true"
+      "/artist/banksy/auction-results?categories%5B0%5D=Painting&sizes%5B0%5D=SMALL&sizes%5B1%5D=MEDIUM&scroll_to_market_signals=true",
     )
 
     expect(trackEvent.mock.calls[3][0]).toMatchInlineSnapshot(`

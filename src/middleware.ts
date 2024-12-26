@@ -141,7 +141,7 @@ export function initializeMiddleware(app) {
         "roles",
         "type",
       ],
-    })
+    }),
   )
 
   // Require a user for these routes
@@ -157,7 +157,7 @@ export function initializeMiddleware(app) {
     morganMiddleware({
       development: process.env.NODE_ENV === "development",
       logAssets: process.env.LOG_ASSETS === "true",
-    })
+    }),
   )
 
   // Redirect requests before they even have to deal with Force routing
@@ -178,7 +178,7 @@ export function initializeMiddleware(app) {
    * Routes for pinging system time and up
    */
   app.get("/system/time", (req, res) =>
-    res.status(200).send({ time: Date.now() })
+    res.status(200).send({ time: Date.now() }),
   )
   app.get("/system/up", (req, res) => {
     res.status(200).send({ nodejs: true })

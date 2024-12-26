@@ -30,7 +30,7 @@ export const PartnerOfferCheckout: FC<
         if (orderOrError?.error) {
           const errorCode = orderOrError.error.code
           const errorData = JSON.parse(
-            orderOrError.error.data?.toString() ?? ""
+            orderOrError.error.data?.toString() ?? "",
           )
 
           switch (errorCode) {

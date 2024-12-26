@@ -163,12 +163,12 @@ describe("NotificationItem", () => {
                 targetHref: "/partner-offer-url",
               }),
             },
-            { mode: "dropdown" }
+            { mode: "dropdown" },
           )
 
           expect(screen.getByRole("link")).toHaveAttribute(
             "href",
-            "/notification/notification-internal-id"
+            "/notification/notification-internal-id",
           )
         })
       })
@@ -176,8 +176,8 @@ describe("NotificationItem", () => {
       describe("other notifications", () => {
         it.each(
           SUPPORTED_NOTIFICATION_TYPES.filter(
-            type => type !== "PARTNER_OFFER_CREATED"
-          )
+            type => type !== "PARTNER_OFFER_CREATED",
+          ),
         )("navigates to targetHref for %s", notificationType => {
           renderWithRelay(
             {
@@ -188,12 +188,12 @@ describe("NotificationItem", () => {
                 targetHref: "/target-href",
               }),
             },
-            { mode: "dropdown" }
+            { mode: "dropdown" },
           )
 
           expect(screen.getByRole("link")).toHaveAttribute(
             "href",
-            "/target-href"
+            "/target-href",
           )
         })
       })
@@ -214,9 +214,9 @@ describe("NotificationItem", () => {
 
           expect(screen.getByRole("link")).toHaveAttribute(
             "href",
-            "/notification/notification-internal-id"
+            "/notification/notification-internal-id",
           )
-        }
+        },
       )
     })
   })

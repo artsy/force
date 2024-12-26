@@ -19,7 +19,7 @@ describe("ColorFilter", () => {
     return mount(
       <ArtworkFilterContextProvider>
         <ColorFilterTest {...filterProps} />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
   }
 

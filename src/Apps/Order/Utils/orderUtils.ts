@@ -18,5 +18,5 @@ export const getInitialPaymentMethodValue = ({
   paymentSet
     ? paymentMethod!
     : initialPaymentMethods.find(method =>
-        availablePaymentMethods.includes(method)
+        availablePaymentMethods.includes(method),
       )!

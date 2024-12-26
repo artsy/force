@@ -48,9 +48,8 @@ const OrderApp: FC<React.PropsWithChildren<OrderAppProps>> = props => {
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!removeNavigationListenerRef.current) {
-      removeNavigationListenerRef.current = router.addNavigationListener(
-        handleTransition()
-      )
+      removeNavigationListenerRef.current =
+        router.addNavigationListener(handleTransition())
     }
 
     window.addEventListener("beforeunload", preventHardReload)

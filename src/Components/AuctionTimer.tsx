@@ -77,5 +77,5 @@ export const AuctionTimerFragmentContainer = createFragmentContainer(
         endAt
       }
     `,
-  }
+  },
 )

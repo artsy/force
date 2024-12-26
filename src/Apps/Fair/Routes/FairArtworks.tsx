@@ -115,10 +115,10 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
   {
     fair: graphql`
       fragment FairArtworks_fair on Fair
-        @argumentDefinitions(
-          input: { type: "FilterArtworksInput" }
-          aggregations: { type: "[ArtworkAggregation]" }
-        ) {
+      @argumentDefinitions(
+        input: { type: "FilterArtworksInput" }
+        aggregations: { type: "[ArtworkAggregation]" }
+      ) {
         slug
         internalID
         featuredKeywords
@@ -155,7 +155,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
         ...FairArtworks_fair @arguments(input: $input)
       }
     }
-  `
+  `,
 )
 
 type FairArtworkFilterQueryRendererProps = {}

@@ -6,7 +6,7 @@ import { type Environment, commitMutation, graphql } from "react-relay"
 
 export const createConsignSubmissionMutation = (
   relayEnvironment: Environment,
-  input: CreateSubmissionMutationInput
+  input: CreateSubmissionMutationInput,
 ) => {
   return new Promise<string>((resolve, reject) => {
     commitMutation<CreateConsignSubmissionMutation>(relayEnvironment, {
@@ -33,7 +33,7 @@ export const createConsignSubmissionMutation = (
 
         resolve(
           res.createConsignmentSubmission?.consignmentSubmission
-            ?.externalId as string
+            ?.externalId as string,
         )
       },
     })

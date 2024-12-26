@@ -8,56 +8,56 @@ const IntroRoute = loadable(
   () => import(/* webpackChunkName: "sellBundle" */ "./Routes/IntroRoute"),
   {
     resolveComponent: component => component.IntroRoute,
-  }
+  },
 )
 
 const SubmissionRoute = loadable(
   () => import(/* webpackChunkName: "sellBundle" */ "./Routes/SubmissionRoute"),
   {
     resolveComponent: component => component.SubmissionRoute,
-  }
+  },
 )
 
 const NewRoute = loadable(
   () => import(/* webpackChunkName: "sellBundle" */ "./Routes/NewRoute"),
   {
     resolveComponent: component => component.NewRoute,
-  }
+  },
 )
 
 const ArtistRoute = loadable(
   () => import(/* webpackChunkName: "sellBundle" */ "./Routes/ArtistRoute"),
   {
     resolveComponent: component => component.ArtistRouteFragmentContainer,
-  }
+  },
 )
 
 const TitleRoute = loadable(
   () => import(/* webpackChunkName: "sellBundle" */ "./Routes/TitleRoute"),
   {
     resolveComponent: component => component.TitleRoute,
-  }
+  },
 )
 
 const PhotosRoute = loadable(
   () => import(/* webpackChunkName: "sellBundle" */ "./Routes/PhotosRoute"),
   {
     resolveComponent: component => component.PhotosRoute,
-  }
+  },
 )
 
 const DetailsRoute = loadable(
   () => import(/* webpackChunkName: "sellBundle" */ "./Routes/DetailsRoute"),
   {
     resolveComponent: component => component.DetailsRoute,
-  }
+  },
 )
 
 const DimensionsRoute = loadable(
   () => import(/* webpackChunkName: "sellBundle" */ "./Routes/DimensionsRoute"),
   {
     resolveComponent: component => component.DimensionsRoute,
-  }
+  },
 )
 
 const PhoneNumberRoute = loadable(
@@ -65,7 +65,7 @@ const PhoneNumberRoute = loadable(
     import(/* webpackChunkName: "sellBundle" */ "./Routes/PhoneNumberRoute"),
   {
     resolveComponent: component => component.PhoneNumberRoute,
-  }
+  },
 )
 
 const PurchaseHistoryRoute = loadable(
@@ -75,7 +75,7 @@ const PurchaseHistoryRoute = loadable(
     ),
   {
     resolveComponent: component => component.PurchaseHistoryRoute,
-  }
+  },
 )
 
 const NewFromMyCollectionRoute = loadable(
@@ -85,14 +85,14 @@ const NewFromMyCollectionRoute = loadable(
     ),
   {
     resolveComponent: component => component.NewFromMyCollectionRoute,
-  }
+  },
 )
 
 const ThankYouRoute = loadable(
   () => import(/* webpackChunkName: "sellBundle" */ "./Routes/ThankYouRoute"),
   {
     resolveComponent: component => component.ThankYouRoute,
-  }
+  },
 )
 
 const ArtistNotEligibleRoute = loadable(
@@ -102,7 +102,7 @@ const ArtistNotEligibleRoute = loadable(
     ),
   {
     resolveComponent: component => component.ArtistNotEligibleRoute,
-  }
+  },
 )
 
 const AdditionalDocumentsRoute = loadable(
@@ -112,7 +112,7 @@ const AdditionalDocumentsRoute = loadable(
     ),
   {
     resolveComponent: component => component.AdditionalDocumentsRoute,
-  }
+  },
 )
 
 const ConditionRoute = loadable(
@@ -122,7 +122,7 @@ const ConditionRoute = loadable(
     ),
   {
     resolveComponent: component => component.ConditionRoute,
-  }
+  },
 )
 
 const ShippingLocationRoute = loadable(
@@ -132,7 +132,7 @@ const ShippingLocationRoute = loadable(
     ),
   {
     resolveComponent: component => component.ShippingLocationRoute,
-  }
+  },
 )
 
 const FrameRoute = loadable(
@@ -142,7 +142,7 @@ const FrameRoute = loadable(
     ),
   {
     resolveComponent: component => component.FrameRoute,
-  }
+  },
 )
 
 const MarketingLandingApp = loadable(
@@ -152,14 +152,14 @@ const MarketingLandingApp = loadable(
     ),
   {
     resolveComponent: component => component.MarketingLandingApp,
-  }
+  },
 )
 
 const FAQApp = loadable(
   () => import(/* webpackChunkName: "consignBundle" */ "./Routes/FAQ/FAQApp"),
   {
     resolveComponent: component => component.FAQApp,
-  }
+  },
 )
 
 const ConsignmentInquiryApp = loadable(
@@ -170,7 +170,7 @@ const ConsignmentInquiryApp = loadable(
   {
     resolveComponent: component =>
       component.ConsignmentInquiryFragmentContainer,
-  }
+  },
 )
 const ConsignmentInquiryConfirmationApp = loadable(
   () =>
@@ -179,7 +179,7 @@ const ConsignmentInquiryConfirmationApp = loadable(
     ),
   {
     resolveComponent: component => component.ConsignmentInquiryConfirmation,
-  }
+  },
 )
 
 const ConsignmentInquiryContainer = loadable(
@@ -189,7 +189,7 @@ const ConsignmentInquiryContainer = loadable(
     ),
   {
     resolveComponent: component => component.ConsignmentInquiryContainer,
-  }
+  },
 )
 
 export const sellRoutes: RouteProps[] = [

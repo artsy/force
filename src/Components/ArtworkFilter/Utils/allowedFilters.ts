@@ -1,5 +1,5 @@
 export const allowedFilters = (
-  filterParams: Record<string, any> = {}
+  filterParams: Record<string, any> = {},
 ): Record<string, any> => {
   return Object.keys(filterParams).reduce((obj, key) => {
     // Filter out unsupported arguments

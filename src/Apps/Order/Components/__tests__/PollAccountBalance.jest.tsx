@@ -24,13 +24,13 @@ const { renderWithRelay } =
       )
     },
     query: graphql`
-    query PollAccountBalanceQuery_Test_Query($setupIntentId: ID!)
+      query PollAccountBalanceQuery_Test_Query($setupIntentId: ID!)
       @relay_test_operation {
-      commerceBankAccountBalance(setupIntentId: $setupIntentId) {
-        ...PollAccountBalance_commerceBankAccountBalance
+        commerceBankAccountBalance(setupIntentId: $setupIntentId) {
+          ...PollAccountBalance_commerceBankAccountBalance
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("Poll account balance", () => {

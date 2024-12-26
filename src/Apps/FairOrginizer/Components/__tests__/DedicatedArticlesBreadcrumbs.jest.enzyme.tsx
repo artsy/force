@@ -13,12 +13,12 @@ const { getWrapper } =
       )
     },
     query: graphql`
-    query DedicatedArticlesBreadcrumbs_Test_Query @relay_test_operation {
-      fairOrganizer(id: "example") {
-        ...DedicatedArticlesBreadcrumbs_fairOrganizer
+      query DedicatedArticlesBreadcrumbs_Test_Query @relay_test_operation {
+        fairOrganizer(id: "example") {
+          ...DedicatedArticlesBreadcrumbs_fairOrganizer
+        }
       }
-    }
-  `,
+    `,
   })
 
 describe("DedicatedArticlesBreadcrumbs", () => {
@@ -29,7 +29,7 @@ describe("DedicatedArticlesBreadcrumbs", () => {
 
     expect(wrapper.find("RouterLink").length).toBe(1)
     expect(wrapper.find("RouterLink").prop("to")).toEqual(
-      "/fair-organizer/organizer"
+      "/fair-organizer/organizer",
     )
   })
 

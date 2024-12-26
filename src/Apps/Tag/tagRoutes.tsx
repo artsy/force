@@ -6,7 +6,7 @@ const TagApp = loadable(
   () => import(/* webpackChunkName: "tagBundle" */ "./TagApp"),
   {
     resolveComponent: component => component.TagAppFragmentContainer,
-  }
+  },
 )
 
 export const tagRoutes: RouteProps[] = [

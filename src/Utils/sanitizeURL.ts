@@ -1,6 +1,6 @@
 export const sanitizeURL = (
   path: string,
-  options = { enforceInternal: false }
+  options = { enforceInternal: false },
 ) => {
   if (!path || typeof path !== "string") return ""
 

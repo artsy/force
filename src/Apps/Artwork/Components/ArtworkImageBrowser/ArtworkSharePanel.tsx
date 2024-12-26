@@ -172,9 +172,9 @@ export const ArtworkSharePanelFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ArtworkSharePanel_artwork on Artwork
-        @argumentDefinitions(
-          includeAllImages: { type: "Boolean", defaultValue: false }
-        ) {
+      @argumentDefinitions(
+        includeAllImages: { type: "Boolean", defaultValue: false }
+      ) {
         href
         images(includeAll: $includeAllImages) {
           url
@@ -184,7 +184,7 @@ export const ArtworkSharePanelFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const ICONS = {

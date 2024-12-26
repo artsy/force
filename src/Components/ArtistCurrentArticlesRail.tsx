@@ -52,7 +52,7 @@ const ArtistCurrentArticlesRail: React.FC<
             destinationPageOwnerId: artist.internalID,
             destinationPageOwnerSlug: artist.slug,
             type: "viewAll",
-          })
+          }),
         )
       }}
       getItems={() => {

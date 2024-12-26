@@ -84,10 +84,10 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
           }
 
           scrollToTop()
-        }
+        },
       )
     },
-    [relay]
+    [relay],
   )
 
   const debouncedSearchRequest = useDebounce({
@@ -154,11 +154,11 @@ export const OverlayRefetchContainer = createRefetchContainer(
   {
     viewer: graphql`
       fragment Overlay_viewer on Viewer
-        @argumentDefinitions(
-          term: { type: "String!", defaultValue: "" }
-          hasTerm: { type: "Boolean!", defaultValue: false }
-          entities: { type: "[SearchEntity]" }
-        ) {
+      @argumentDefinitions(
+        term: { type: "String!", defaultValue: "" }
+        hasTerm: { type: "Boolean!", defaultValue: false }
+        entities: { type: "[SearchEntity]" }
+      ) {
         ...SearchInputPills_viewer @arguments(term: $term)
         ...SearchResultsList_viewer
           @arguments(term: $term, entities: $entities)
@@ -177,5 +177,5 @@ export const OverlayRefetchContainer = createRefetchContainer(
           @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
       }
     }
-  `
+  `,
 )

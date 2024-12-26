@@ -63,7 +63,7 @@ describe("LocationAutocompleteInput", () => {
         placeholder="Enter city where artwork is located"
         defaultValue={defaultValue}
         onChange={mockOnChange}
-      />
+      />,
     )
   })
 
@@ -75,7 +75,7 @@ describe("LocationAutocompleteInput", () => {
     const input = wrapper.find(Input)
     expect(wrapper.find(inputSelector).length).toBe(1)
     expect(input.prop("placeholder")).toBe(
-      "Enter city where artwork is located"
+      "Enter city where artwork is located",
     )
     expect(input.prop("title")).toBe("Location")
   })
@@ -116,7 +116,7 @@ describe("LocationAutocompleteInput", () => {
       await simulateTyping(wrapper, "New")
       await simulateSelectSuggestion(wrapper, 0)
       expect(wrapper.find(inputSelector).prop("value")).toBe(
-        "New York, NY, USA"
+        "New York, NY, USA",
       )
 
       expect(mockGeocode.mock.calls[0][0].placeId).toBe("111")
@@ -127,7 +127,7 @@ describe("LocationAutocompleteInput", () => {
 
       expect(mockGeocode.mock.calls[1][0].placeId).toBe("222")
       expect(wrapper.find(inputSelector).prop("value")).toBe(
-        "New Orleans, LA, USA"
+        "New Orleans, LA, USA",
       )
 
       expect(wrapper.find(optionsSelector).length).toBe(0)

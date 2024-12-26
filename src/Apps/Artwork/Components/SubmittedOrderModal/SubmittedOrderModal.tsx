@@ -54,7 +54,7 @@ export const SubmittedOrderModalFragmentContainer = createFragmentContainer(
         impulseConversationId
       }
     `,
-  }
+  },
 )
 
 export const SubmittedOrderModalQueryRenderer: FC<

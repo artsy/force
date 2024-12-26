@@ -99,7 +99,7 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
         // TODO: use silentPush from useRouter if this class component is
         // converted to a function component
         window.history.pushState({}, "", `${location.pathname}?${urlParams}`)
-      }
+      },
     )
   }
 
@@ -188,15 +188,15 @@ export const SearchResultsEntityRouteFragmentContainer = createRefetchContainer(
   {
     viewer: graphql`
       fragment SearchResultsEntity_viewer on Viewer
-        @argumentDefinitions(
-          term: { type: "String!", defaultValue: "" }
-          first: { type: "Int", defaultValue: 10 }
-          last: { type: "Int" }
-          after: { type: "String" }
-          before: { type: "String" }
-          page: { type: "Int" }
-          entities: { type: "[SearchEntity]" }
-        ) {
+      @argumentDefinitions(
+        term: { type: "String!", defaultValue: "" }
+        first: { type: "Int", defaultValue: 10 }
+        last: { type: "Int" }
+        after: { type: "String" }
+        before: { type: "String" }
+        page: { type: "Int" }
+        entities: { type: "[SearchEntity]" }
+      ) {
         searchConnection(
           query: $term
           first: $first
@@ -252,5 +252,5 @@ export const SearchResultsEntityRouteFragmentContainer = createRefetchContainer(
           )
       }
     }
-  `
+  `,
 )

@@ -67,5 +67,5 @@ export const ArtworkSidebarSizeInfoFragmentContainer = createFragmentContainer(
         editionOf
       }
     `,
-  }
+  },
 )

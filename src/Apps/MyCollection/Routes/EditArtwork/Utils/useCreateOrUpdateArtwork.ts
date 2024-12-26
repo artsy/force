@@ -19,7 +19,7 @@ export const useCreateOrUpdateArtwork = () => {
 
   const createOrUpdateArtwork = async (
     values: ArtworkModel,
-    artwork?: MyCollectionEditArtwork_artwork$data
+    artwork?: MyCollectionEditArtwork_artwork$data,
   ) => {
     const artworkInputValues = formValuesToMutationInput(values, artwork)
 
@@ -50,7 +50,7 @@ export const useCreateOrUpdateArtwork = () => {
 
 const formValuesToMutationInput = (
   values: ArtworkModel,
-  artwork?: MyCollectionEditArtwork_artwork$data
+  artwork?: MyCollectionEditArtwork_artwork$data,
 ): ArtworkInput => {
   // Set edition values for attribution class
 
@@ -60,7 +60,7 @@ const formValuesToMutationInput = (
   }
 
   const externalImageUrls = compact(
-    values.newPhotos.flatMap(photo => photo.url || null)
+    values.newPhotos.flatMap(photo => photo.url || null),
   )
 
   const collectorLocation = {

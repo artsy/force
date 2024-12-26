@@ -85,7 +85,7 @@ describe("PricingContext", () => {
       artwork: {
         ...mockArtwork,
       },
-    }
+    },
   ) {
     return renderRelayTree({
       Component: (props: PricingContextTestQuery$data) => (
@@ -111,7 +111,7 @@ describe("PricingContext", () => {
     const wrapper = await getWrapper()
     expect(wrapper.text()).toContain("Browse works in this category")
     expect(wrapper.text()).toContain(
-      "Price ranges of small mocks by David Sheldrick"
+      "Price ranges of small mocks by David Sheldrick",
     )
   })
 
@@ -123,7 +123,7 @@ describe("PricingContext", () => {
       },
     })
     expect(wrapper.text()).not.toContain(
-      "Price ranges of small mocks by David Sheldrick"
+      "Price ranges of small mocks by David Sheldrick",
     )
   })
 
@@ -135,7 +135,7 @@ describe("PricingContext", () => {
     await flushPromiseQueue()
 
     expect(wrapper.text()).toContain(
-      "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points."
+      "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points.",
     )
   })
 
@@ -180,7 +180,7 @@ describe("PricingContext", () => {
     })
 
     expect(wrapper.find("HighlightLabel").text()).toMatchInlineSnapshot(
-      `"$247+This work"`
+      `"$247+This work"`,
     )
   })
 

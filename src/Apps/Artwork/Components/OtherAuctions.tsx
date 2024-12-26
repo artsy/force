@@ -52,7 +52,7 @@ export const OtherAuctionsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const OtherAuctionsQueryRenderer = () => {

@@ -38,7 +38,7 @@ export const LotTimer: React.FC<React.PropsWithChildren<LotTimerProps>> = ({
 
   const { hasEnded, time, hasStarted } = useTimer(
     updatedBiddingEndAt!,
-    startAt!
+    startAt!,
   )
 
   if (!endAt) {

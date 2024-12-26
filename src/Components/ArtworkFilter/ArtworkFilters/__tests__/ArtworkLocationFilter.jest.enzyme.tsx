@@ -28,12 +28,12 @@ describe("ArtworkLocationFilter", () => {
 
   const getWrapper = (
     contextProps = {},
-    filterProps: ArtworkLocationFilterProps = { expanded: true }
+    filterProps: ArtworkLocationFilterProps = { expanded: true },
   ) => {
     return mount(
       <ArtworkFilterContextProvider {...contextProps}>
         <ArtworkLocationFilter {...filterProps} />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
   }
 
@@ -41,7 +41,7 @@ describe("ArtworkLocationFilter", () => {
     it("renders locations", () => {
       const wrapper = getWrapper({ aggregations })
       expect(wrapper.find("Checkbox").first().text()).toContain(
-        "Cattown, Cat City, Nowhere USA"
+        "Cattown, Cat City, Nowhere USA",
       )
     })
   })

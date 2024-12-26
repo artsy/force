@@ -100,7 +100,7 @@ export const __ProgressiveOnboardingAlertCreate__: FC<
 }
 
 export const ProgressiveOnboardingAlertCreate = withProgressiveOnboardingCounts(
-  __ProgressiveOnboardingAlertCreate__
+  __ProgressiveOnboardingAlertCreate__,
 )
 
 const IMAGE = {

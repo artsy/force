@@ -19,7 +19,7 @@ describe("WaysToBuyFilter", () => {
     return mount(
       <ArtworkFilterContextProvider>
         <WaysToBuyFilterFilterTest {...props} />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
   }
 

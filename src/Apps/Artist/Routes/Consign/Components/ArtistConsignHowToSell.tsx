@@ -83,7 +83,7 @@ export const ArtistConsignHowtoSellFragmentContainer = createFragmentContainer(
         href
       }
     `,
-  }
+  },
 )
 
 const Section: React.FC<

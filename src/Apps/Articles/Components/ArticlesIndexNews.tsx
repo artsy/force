@@ -68,5 +68,5 @@ export const ArticlesIndexNewsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

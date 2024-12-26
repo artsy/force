@@ -8,7 +8,7 @@ export const CareerHighlightSteps = () => {
   const { current } = useCareerHighlightsStoriesContext()
   const { me } = useLazyLoadQuery<CareerHighlightsStepsQuery>(
     careerHighlightsStepsQuery,
-    {}
+    {},
   )
 
   switch (current) {

@@ -16,7 +16,7 @@ jest.mock("Components/Artwork/SaveButton/SaveButton", () => ({
 }))
 
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(
-  "2022-03-18T05:22:32.000Z"
+  "2022-03-18T05:22:32.000Z",
 )
 
 describe("Details", () => {
@@ -36,7 +36,7 @@ describe("Details", () => {
       contextModule?: AuthContextModule
       showSaveButton?: boolean
       showSubmissionStatus?: boolean
-    }
+    },
   ) => {
     return await renderRelayTree({
       Component: props => (
@@ -46,8 +46,8 @@ describe("Details", () => {
       ),
       query: graphql`
         query Details_Test_Query($includeConsignmentSubmission: Boolean!)
-          @raw_response_type
-          @relay_test_operation {
+        @raw_response_type
+        @relay_test_operation {
           artwork(id: "gerhard-richter-bagdad-ii-flow-p10-1") {
             ...Details_artwork
               @arguments(

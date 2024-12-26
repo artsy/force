@@ -23,7 +23,7 @@ describe("ShowArtworksEmptyState", () => {
       const html = wrapper.html()
 
       expect(html).toContain(
-        "This fair booth is currently unavailable. Please check back closer to the fair for artworks."
+        "This fair booth is currently unavailable. Please check back closer to the fair for artworks.",
       )
     })
 
@@ -35,7 +35,7 @@ describe("ShowArtworksEmptyState", () => {
 
       expect(html).toContain("This fair booth is currently unavailable.")
       expect(html).not.toContain(
-        "Please check back closer to the fair for artworks."
+        "Please check back closer to the fair for artworks.",
       )
     })
   })
@@ -46,7 +46,7 @@ describe("ShowArtworksEmptyState", () => {
       const html = wrapper.html()
 
       expect(html).toContain(
-        "This show is currently unavailable. Please check back closer to the show for artworks."
+        "This show is currently unavailable. Please check back closer to the show for artworks.",
       )
     })
 
@@ -58,7 +58,7 @@ describe("ShowArtworksEmptyState", () => {
 
       expect(html).toContain("This show is currently unavailable.")
       expect(html).not.toContain(
-        "Please check back closer to the show for artworks."
+        "Please check back closer to the show for artworks.",
       )
     })
   })

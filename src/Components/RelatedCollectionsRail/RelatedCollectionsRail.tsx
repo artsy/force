@@ -23,7 +23,7 @@ export const RelatedCollectionsRail: React.FC<
   const { trackEvent } = useTracking()
 
   const collectionsWithArtworks = collections.filter(collection =>
-    Boolean(collection.artworksConnection)
+    Boolean(collection.artworksConnection),
   )
   const { contextPageOwnerId, contextPageOwnerSlug } = useAnalyticsContext()
 
@@ -77,7 +77,7 @@ export const RelatedCollectionsRailFragmentContainer = createFragmentContainer(
   {
     collections: graphql`
       fragment RelatedCollectionsRail_collections on MarketingCollection
-        @relay(plural: true) {
+      @relay(plural: true) {
         ...RelatedCollectionEntity_collection
         # We need this so we can filter out collections w/o artworks that would
         # otherwise break the carousel.
@@ -94,7 +94,7 @@ export const RelatedCollectionsRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const RelatedCollectionsRailQueryRenderer: React.FC<

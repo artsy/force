@@ -40,7 +40,7 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
             }
           }
         `,
-        { artworkID: artwork.internalID }
+        { artworkID: artwork.internalID },
       ).toPromise()
 
       // The user clicked the save button while logged out.

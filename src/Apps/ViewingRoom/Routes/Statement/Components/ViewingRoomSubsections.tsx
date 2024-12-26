@@ -93,5 +93,5 @@ export const ViewingRoomSubsectionsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

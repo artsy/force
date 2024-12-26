@@ -89,7 +89,7 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
             defaultValue={selectedPaymentMethod}
           >
             {getAvailablePaymentMethods(order.availablePaymentMethods).map(
-              method => method
+              method => method,
             )}
           </RadioGroup>
           <Spacer y={4} />
@@ -105,7 +105,7 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
           getPaymentMethodInfo(
             selectedPaymentMethod,
             order.source,
-            order.availablePaymentMethods
+            order.availablePaymentMethods,
           )}
         <Spacer y={2} />
         <Flex
@@ -136,7 +136,7 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
         {getPaymentMethodInfo(
           selectedPaymentMethod,
           order.source,
-          order.availablePaymentMethods
+          order.availablePaymentMethods,
         )}
         <Spacer y={2} />
         {selectedPaymentMethod === "US_BANK_ACCOUNT" && (
@@ -160,7 +160,7 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
         {getPaymentMethodInfo(
           selectedPaymentMethod,
           order.source,
-          order.availablePaymentMethods
+          order.availablePaymentMethods,
         )}
         <Spacer y={2} />
         <Flex
@@ -183,7 +183,7 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
         {getPaymentMethodInfo(
           selectedPaymentMethod,
           order.source,
-          order.availablePaymentMethods
+          order.availablePaymentMethods,
         )}
         <Spacer y={4} />
         <SaveAndContinueButton
@@ -202,7 +202,7 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
  * by checking order's availablePaymentMethods
  */
 const getAvailablePaymentMethods = (
-  availablePaymentMethods: readonly CommercePaymentMethodEnum[]
+  availablePaymentMethods: readonly CommercePaymentMethodEnum[],
 ): ReactElement<RadioProps<string>>[] => {
   let paymentMethod: CommercePaymentMethodEnum = "CREDIT_CARD"
   const paymentMethods: Array<ReactElement<RadioProps<string>>> = []
@@ -221,7 +221,7 @@ const getAvailablePaymentMethods = (
             </Text>
           </>
         }
-      />
+      />,
     )
   }
 
@@ -240,7 +240,7 @@ const getAvailablePaymentMethods = (
             </Text>
           </>
         }
-      />
+      />,
     )
   }
 
@@ -263,7 +263,7 @@ const getAvailablePaymentMethods = (
         <Text ml="24px" variant="xs" color="black60">
           US bank account only
         </Text>
-      </BorderedRadio>
+      </BorderedRadio>,
     )
   }
 
@@ -286,7 +286,7 @@ const getAvailablePaymentMethods = (
         <Text ml="24px" variant="xs" color="black60">
           Your bank account must be denominated in EUR
         </Text>
-      </BorderedRadio>
+      </BorderedRadio>,
     )
   }
 
@@ -296,7 +296,7 @@ const getAvailablePaymentMethods = (
 const getPaymentMethodInfo = (
   paymentMethod: CommercePaymentMethodEnum | string,
   orderSource?: string,
-  availablePaymentMethods?: readonly CommercePaymentMethodEnum[]
+  availablePaymentMethods?: readonly CommercePaymentMethodEnum[],
 ) => {
   switch (paymentMethod) {
     case "CREDIT_CARD":

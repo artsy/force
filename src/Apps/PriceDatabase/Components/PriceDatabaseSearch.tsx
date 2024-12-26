@@ -70,12 +70,12 @@ export const PriceDatabaseSearch: FC<React.PropsWithChildren<unknown>> = () => {
             context_owner_type: OwnerType.priceDatabase,
             changed: `{${key}: ${selected.value}}`,
             current: JSON.stringify(
-              filterSearchFilters(filters, ALLOWED_FILTERS)
+              filterSearchFilters(filters, ALLOWED_FILTERS),
             ),
           })
 
           return selected.value
-        })
+        }),
       )
     }
   }

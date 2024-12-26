@@ -51,15 +51,15 @@ describe("SuggestedArtworksModalGrid", () => {
         )
       },
       query: graphql`
-      query SuggestedArtworksModalGrid_Test_Query @relay_test_operation {
-        artworksConnection(first: 10, sort: "-published_at", forSale: true) {
-          counts {
-            total
+        query SuggestedArtworksModalGrid_Test_Query @relay_test_operation {
+          artworksConnection(first: 10, sort: "-published_at", forSale: true) {
+            counts {
+              total
+            }
+            ...ArtworkGrid_artworks
           }
-          ...ArtworkGrid_artworks
         }
-      }
-    `,
+      `,
     })
 
   it("renders artwork grid and explore more button", async () => {

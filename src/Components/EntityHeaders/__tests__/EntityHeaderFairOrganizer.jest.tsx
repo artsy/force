@@ -8,7 +8,7 @@ jest.unmock("react-relay")
 
 const QUERY = graphql`
   query EntityHeaderFairOrganizerFragmentContainer_Test_Query
-    @relay_test_operation {
+  @relay_test_operation {
     fairOrganizer(id: "example") {
       ...EntityHeaderFairOrganizer_fairOrganizer
     }

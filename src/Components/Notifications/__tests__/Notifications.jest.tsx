@@ -22,7 +22,7 @@ describe("Notifications with pills", () => {
     render(
       <MockBoot relayEnvironment={environment}>
         <Notifications mode="page" unreadCounts={0} />
-      </MockBoot>
+      </MockBoot>,
     )
 
     act(() => {
