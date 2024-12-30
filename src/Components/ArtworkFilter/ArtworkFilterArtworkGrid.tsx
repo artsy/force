@@ -14,6 +14,8 @@ import {
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { LoadingArea } from "Components/LoadingArea"
+import { getSignalLabel } from "Utils/getSignalLabel"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface ArtworkFilterArtworkGridProps {
   columnCount: number[]
@@ -23,7 +25,9 @@ interface ArtworkFilterArtworkGridProps {
   relay: RelayProp
 }
 
-const ArtworkFilterArtworkGrid: React.FC<React.PropsWithChildren<ArtworkFilterArtworkGridProps>> = props => {
+const ArtworkFilterArtworkGrid: React.FC<React.PropsWithChildren<
+  ArtworkFilterArtworkGridProps
+>> = props => {
   const { user } = useSystemContext()
   const { trackEvent } = useTracking()
   const {
@@ -32,6 +36,7 @@ const ArtworkFilterArtworkGrid: React.FC<React.PropsWithChildren<ArtworkFilterAr
     contextPageOwnerId,
   } = useAnalyticsContext()
   const context = useArtworkFilterContext()
+  const { signals, hideSignals } = useArtworkGridContext()
 
   const {
     columnCount,
@@ -82,6 +87,10 @@ const ArtworkFilterArtworkGrid: React.FC<React.PropsWithChildren<ArtworkFilterAr
               position: artworkIndex,
               sort: context?.filters?.sort,
               type: "thumbnail",
+              signal_label: getSignalLabel({
+                signals: signals?.[artwork.internalID] ?? [],
+                hideSignals: hideSignals,
+              }),
             }
             trackEvent(event)
           }}
