@@ -124,7 +124,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<
       context_owner_type: OwnerType.artwork,
       context_owner_slug: artwork.slug,
       context_owner_id: artwork.internalID,
-      signal_label: getSignalLabel(signals) ?? "",
+      signal_label: getSignalLabel({ signals: signals }) ?? "",
     }
     trackEvent(event)
 
@@ -138,7 +138,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<
       context_owner_id: artwork.internalID,
       context_owner_slug: artwork.slug,
       flow: "Partner offer",
-      signal_label: getSignalLabel(signals) ?? "",
+      signal_label: getSignalLabel({ signals: signals }) ?? "",
     }
 
     trackEvent(event)
@@ -194,7 +194,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<React.PropsWithChildren<
       context_owner_id: artwork.internalID,
       context_owner_slug: artwork.slug,
       flow: "Buy now",
-      signal_label: getSignalLabel(signals) ?? "",
+      signal_label: getSignalLabel({ signals: signals }) ?? "",
     }
 
     trackEvent(event)

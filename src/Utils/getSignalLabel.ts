@@ -1,4 +1,9 @@
-export const getSignalLabel = (signals: string[]) => {
+interface SignalLabelProps {
+  signals: string[]
+  hideSignals?: boolean
+}
+
+export const getSignalLabel = ({ signals, hideSignals }: SignalLabelProps) => {
   if (!signals) {
     return ""
   }
@@ -7,11 +12,11 @@ export const getSignalLabel = (signals: string[]) => {
     return "Limited-Time Offer"
   }
 
-  if (signals.includes("CURATORS_PICK")) {
+  if (signals.includes("CURATORS_PICK") && !hideSignals) {
     return "Curators’ Pick"
   }
 
-  if (signals.includes("INCREASED_INTEREST")) {
+  if (signals.includes("INCREASED_INTEREST") && !hideSignals) {
     return "Increased Interest"
   }
 

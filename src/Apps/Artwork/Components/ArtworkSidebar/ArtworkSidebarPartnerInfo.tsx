@@ -56,7 +56,9 @@ const ArtworkSidebarPartnerInfo: React.FC<React.PropsWithChildren<
       context_owner_type: OwnerType.artwork,
       context_owner_slug: slug,
       context_owner_id: internalID,
-      signal_label: getSignalLabel(signals?.[artwork.internalID] ?? []),
+      signal_label: getSignalLabel({
+        signals: signals?.[artwork.internalID] ?? [],
+      }),
     }
 
     trackEvent(event)

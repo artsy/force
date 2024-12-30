@@ -77,9 +77,9 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<React.PropsWithChildren<
                 destination_page_owner_id: artwork.internalID,
                 destination_page_owner_slug: artwork.slug,
                 type: "thumbnail",
-                signal_label: getSignalLabel(
-                  signals?.[artwork.internalID] ?? []
-                ),
+                signal_label: getSignalLabel({
+                  signals: signals?.[artwork.internalID] ?? [],
+                }),
                 signal_bid_count:
                   artwork.collectorSignals?.auction?.bidCount ?? undefined,
                 signal_lot_watcher_count:

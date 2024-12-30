@@ -56,9 +56,9 @@ const HomeRecentlyViewedRail: React.FC<React.PropsWithChildren<
                 destination_page_owner_slug: artwork.slug,
                 destination_page_owner_type: OwnerType.artwork,
                 type: "thumbnail",
-                signal_label: getSignalLabel(
-                  signals?.[artwork.internalID] ?? []
-                ),
+                signal_label: getSignalLabel({
+                  signals: signals?.[artwork.internalID] ?? [],
+                }),
                 signal_bid_count:
                   artwork.collectorSignals?.auction?.bidCount ?? undefined,
                 signal_lot_watcher_count:

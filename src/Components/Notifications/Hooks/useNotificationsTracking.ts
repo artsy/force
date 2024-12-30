@@ -51,7 +51,7 @@ export const useNotificationsTracking = () => {
         context_owner_id: artworkID,
         context_owner_slug: artworkSlug,
         flow: "Partner Offer",
-        signal_label: getSignalLabel(signals?.[artworkID] ?? []),
+        signal_label: getSignalLabel({ signals: signals?.[artworkID] ?? [] }),
       }
 
       trackEvent(event)
