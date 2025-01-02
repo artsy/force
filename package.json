@@ -290,7 +290,7 @@
   "lint-staged": {
     "*": "yarn detect-secrets:hook",
     "*.@(md)": [
-      "yarn format"
+      "yarn format --parser markdown"
     ],
     "*.@(js|jsx|ts|tsx)": [
       "yarn format"

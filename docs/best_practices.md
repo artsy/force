@@ -71,11 +71,34 @@ Data should be loaded from [Metaphysics](https://github.com/artsy/metaphysics), 
 - [Artsy JavaScriptures seminar on Relay](https://github.com/artsy/javascriptures/tree/main/4_intro-to-relay)
 - Examples
   - [A top-level route-based Relay request](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/Apps/Consign/consignRoutes.tsx#L28-L34)
-  - [A fragment container](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/Apps/Consign/Routes/Offer/OfferDetailApp.tsx#L47-L57)
 
-### Prefer Relay containers (higher order components) over relay-hooks
+### Prefer Relay hooks over relay containers
 
-We have a preference for Relay containers due to [`relay-hooks`](https://github.com/relay-tools/relay-hooks) hooks not being compatible with Relay containers which represent the majority of our components using Relay. (This could change once Relay releases its official hooks implementation.)
+Rather than writing Relay code using now deprecated higher-order-components patterns, use relay hooks. (There is one caveat to this; see below.)
+
+Example:
+
+```tsx
+interface ArtistProps {
+  artist: Foo_artist$key
+}
+
+const Artist: React.FC<ArtistProps> = ({ artist }) => {
+  const data = useFragment(FRAGMENT, artist)
+
+  return <>{artist.name}</>
+}
+
+const FRAGMENT = graphql`
+  fragment Artist_artist on Artist {
+    name
+  }
+`
+```
+
+### Prefer artsy-specific `SystemQueryRenderer` over `useLazyLoadQuery`
+
+Our `SystemQueryRenderer` has a lot of custom functionality built in for things like SSR rendering, lazyloading when scrolling into view, placeholders and more. Use it over vanilla Relay `useLazyLoadQuery` hooks.
 
 ## Code organization
 
