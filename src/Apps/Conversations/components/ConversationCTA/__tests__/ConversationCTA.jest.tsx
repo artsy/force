@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { ConversationsProvider } from "Apps/Conversations/ConversationsContext"
 import { ConversationCTA } from "Apps/Conversations/components/ConversationCTA/ConversationCTA"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -130,22 +130,6 @@ describe("ConversationCTA", () => {
     })
 
     expect(screen.getByText("Offer Accepted")).toBeInTheDocument()
-  })
-
-  it("clicking the review offer CTA opens the order modal", async () => {
-    renderWithRelay({
-      Conversation: () => ({
-        activeOrders: {
-          edges: [{ node: { buyerAction: "OFFER_RECEIVED" } }],
-        },
-      }),
-    })
-
-    fireEvent.click(screen.getByText("Offer Received"))
-
-    await waitFor(() => {
-      expect(screen.getByTestId("orderModal")).toBeInTheDocument()
-    })
   })
 
   describe("With no active orders", () => {

@@ -1,4 +1,8 @@
-import { ActionType, OwnerType, type TappedViewOffer } from "@artsy/cohesion"
+import {
+  ActionType,
+  OwnerType,
+  type TappedViewOffer,
+} from "@artsy/cohesion"
 import AlertFillIcon from "@artsy/icons/AlertFillIcon"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
@@ -7,17 +11,15 @@ import {
   Flex,
   Message,
   type MessageProps,
-  ModalDialog,
   Text,
 } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import { extractNodes } from "Utils/extractNodes"
 import type { ConversationReviewOfferCTA_conversation$key } from "__generated__/ConversationReviewOfferCTA_conversation.graphql"
 import type * as React from "react"
-import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
-import styled from "styled-components"
 
 export interface ConversationReviewOfferCTAProps {
   conversation: ConversationReviewOfferCTA_conversation$key
@@ -28,7 +30,6 @@ export const ConversationReviewOfferCTA: React.FC<
 > = ({ conversation }) => {
   const data = useFragment(FRAGMENT, conversation)
   const activeOrder = extractNodes(data.activeOrders)[0]
-  const [showOrderModal, setShowOrderModal] = useState(false)
   const { trackEvent } = useTracking()
 
   const { remainingTime } = useCountdownTimer({
@@ -57,50 +58,37 @@ export const ConversationReviewOfferCTA: React.FC<
     }
 
     trackEvent(trackingProps)
-
-    setShowOrderModal(true)
   }
 
-  return (
-    <>
-      {showOrderModal && (
-        <ModalDialog
-          width={900}
-          onClose={() => setShowOrderModal(false)}
-          title={props.modalTitle}
-          data-testid="orderModal"
-        >
-          <IFrame
-            src={`${props.modalUrl}?isModal=true`}
-            data-testid="orderModalIframe"
-          ></IFrame>
-        </ModalDialog>
-      )}
-
-      <AlertMessage {...props} onClick={handleCTAClick} />
-    </>
-  )
+  return <AlertMessage {...props} onClick={handleCTAClick} />
 }
 
 const AlertMessage = (props: GetCTAReturnProps & { onClick: () => void }) => {
   return (
     <Clickable onClick={props.onClick}>
-      <Flex
-        flexDirection="row"
-        justifyContent="space-between"
-        alignContent="center"
-        alignItems="center"
+      <RouterLink
+        to={`${props.actionUrl}`}
+        target="_blank"
+        textDecoration="none"
+        data-testid="orderActionLink"
       >
-        <Message variant={props.variant} title={props.message} width="100%">
-          <Text variant="sm">{props.subMessage}</Text>
-        </Message>
-        <ChevronRightIcon
-          fill="black100"
-          position="absolute"
-          right={0}
-          pr={4}
-        />
-      </Flex>
+        <Flex
+          flexDirection="row"
+          justifyContent="space-between"
+          alignContent="center"
+          alignItems="center"
+        >
+          <Message variant={props.variant} title={props.message} width="100%">
+            <Text variant="sm">{props.subMessage}</Text>
+          </Message>
+          <ChevronRightIcon
+            fill="black100"
+            position="absolute"
+            right={0}
+            pr={4}
+          />
+        </Flex>
+      </RouterLink>
     </Clickable>
   )
 }
@@ -113,8 +101,7 @@ interface GetCTAAttributesProps {
 interface GetCTAReturnProps {
   message: string
   subMessage: string
-  modalUrl: string
-  modalTitle: string
+  actionUrl: string
   variant: MessageProps["variant"]
   Icon: React.FC<React.PropsWithChildren<any>>
 }
@@ -133,8 +120,7 @@ const getProps = ({
         message: "Payment Failed",
         subMessage:
           "Unable to process payment for accepted offer. Update payment method.",
-        modalUrl: `/orders/${activeOrder.internalID}/payment/new`,
-        modalTitle: "Update Payment Details",
+        actionUrl: `/orders/${activeOrder.internalID}/payment/new`,
         Icon: AlertFillIcon,
       }
     }
@@ -143,8 +129,7 @@ const getProps = ({
         variant: "info",
         message: `${offerType} Received`,
         subMessage: `The offer expires in ${remainingTime}`,
-        modalUrl: `/orders/${activeOrder.internalID}/respond`,
-        modalTitle: "Review Offer",
+        actionUrl: `/orders/${activeOrder.internalID}/respond`,
         Icon: AlertFillIcon,
       }
     }
@@ -153,38 +138,34 @@ const getProps = ({
         variant: "info",
         message: `Congratulations! ${offerType} Accepted`,
         subMessage: "Tap to view",
-        modalUrl: `/orders/${activeOrder.internalID}/status`,
-        modalTitle: "Offer Accepted",
+        actionUrl: `/orders/${activeOrder.internalID}/status`,
         Icon: MoneyFillIcon,
       }
     }
     case "OFFER_ACCEPTED_CONFIRM_NEEDED": {
       return {
         variant: "warning",
-        message: `Offer Accepted - Confirm total`,
+        message: "Offer Accepted - Confirm total",
         subMessage: `The offer expires in ${remainingTime}`,
-        modalUrl: `/orders/${activeOrder.internalID}/respond`,
-        modalTitle: "Review Offer",
+        actionUrl: `/orders/${activeOrder.internalID}/respond`,
         Icon: AlertFillIcon,
       }
     }
     case "OFFER_RECEIVED_CONFIRM_NEEDED": {
       return {
         variant: "warning",
-        message: `Counteroffer Received - Confirm Total`,
+        message: "Counteroffer Received - Confirm Total",
         subMessage: `The offer expires in ${remainingTime}`,
-        modalUrl: `/orders/${activeOrder.internalID}/respond`,
-        modalTitle: "Review Offer",
+        actionUrl: `/orders/${activeOrder.internalID}/respond`,
         Icon: AlertFillIcon,
       }
     }
     case "PROVISIONAL_OFFER_ACCEPTED": {
       return {
         variant: "info",
-        message: `Offer Accepted`,
+        message: "Offer Accepted",
         subMessage: "Tap to view",
-        modalUrl: `/orders/${activeOrder.internalID}/status`,
-        modalTitle: "Offer Accepted",
+        actionUrl: `/orders/${activeOrder.internalID}/status`,
         Icon: MoneyFillIcon,
       }
     }
@@ -228,10 +209,4 @@ const FRAGMENT = graphql`
       }
     }
   }
-`
-
-export const IFrame = styled("iframe")`
-  height: 60vh;
-  width: 100%;
-  border: none;
 `

@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { ConversationReviewOfferCTA } from "Apps/Conversations/components/ConversationCTA/ConversationReviewOfferCTA"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
@@ -44,16 +44,10 @@ describe("ConversationReviewOfferCTA", () => {
       ),
     ).toBeInTheDocument()
 
-    // Modal details
-    fireEvent.click(screen.getByText("Payment Failed"))
-
-    await waitFor(() => {
-      expect(screen.getByText("Update Payment Details")).toBeInTheDocument()
-      expect(screen.getByTestId("orderModalIframe")).toHaveAttribute(
-        "src",
-        "/orders/orderID/payment/new?isModal=true",
-      )
-    })
+    expect(screen.getByTestId("orderActionLink")).toHaveAttribute(
+      "href",
+      "/orders/orderID/payment/new",
+    )
   })
 
   it("OFFER_RECEIVED", async () => {
@@ -69,16 +63,10 @@ describe("ConversationReviewOfferCTA", () => {
 
     expect(screen.getByText("Offer Received")).toBeInTheDocument()
 
-    // Modal details
-    fireEvent.click(screen.getByText("Offer Received"))
-
-    await waitFor(() => {
-      expect(screen.getByText("Review Offer")).toBeInTheDocument()
-      expect(screen.getByTestId("orderModalIframe")).toHaveAttribute(
-        "src",
-        "/orders/orderID/respond?isModal=true",
-      )
-    })
+    expect(screen.getByTestId("orderActionLink")).toHaveAttribute(
+      "href",
+      "/orders/orderID/respond",
+    )
   })
 
   it("OFFER_ACCEPTED", async () => {
@@ -96,17 +84,10 @@ describe("ConversationReviewOfferCTA", () => {
       screen.getByText("Congratulations! Offer Accepted"),
     ).toBeInTheDocument()
     expect(screen.getByText("Tap to view")).toBeInTheDocument()
-
-    // Modal details
-    fireEvent.click(screen.getByText("Tap to view"))
-
-    await waitFor(() => {
-      expect(screen.getByText("Offer Accepted")).toBeInTheDocument()
-      expect(screen.getByTestId("orderModalIframe")).toHaveAttribute(
-        "src",
-        "/orders/orderID/status?isModal=true",
-      )
-    })
+    expect(screen.getByTestId("orderActionLink")).toHaveAttribute(
+      "href",
+      "/orders/orderID/status",
+    )
   })
 
   it("OFFER_ACCEPTED_CONFIRM_NEEDED", async () => {
@@ -129,16 +110,10 @@ describe("ConversationReviewOfferCTA", () => {
       screen.getByText("Offer Accepted - Confirm total"),
     ).toBeInTheDocument()
 
-    // Modal details
-    fireEvent.click(screen.getByText("Offer Accepted - Confirm total"))
-
-    await waitFor(() => {
-      expect(screen.getByText("Review Offer")).toBeInTheDocument()
-      expect(screen.getByTestId("orderModalIframe")).toHaveAttribute(
-        "src",
-        "/orders/orderID/respond?isModal=true",
-      )
-    })
+    expect(screen.getByTestId("orderActionLink")).toHaveAttribute(
+      "href",
+      "/orders/orderID/respond",
+    )
   })
 
   it("OFFER_RECEIVED_CONFIRM_NEEDED", async () => {
@@ -161,16 +136,10 @@ describe("ConversationReviewOfferCTA", () => {
       screen.getByText("Counteroffer Received - Confirm Total"),
     ).toBeInTheDocument()
 
-    // Modal details
-    fireEvent.click(screen.getByText("Counteroffer Received - Confirm Total"))
-
-    await waitFor(() => {
-      expect(screen.getByText("Review Offer")).toBeInTheDocument()
-      expect(screen.getByTestId("orderModalIframe")).toHaveAttribute(
-        "src",
-        "/orders/orderID/respond?isModal=true",
-      )
-    })
+    expect(screen.getByTestId("orderActionLink")).toHaveAttribute(
+      "href",
+      "/orders/orderID/respond",
+    )
   })
 
   it("PROVISIONAL_OFFER_ACCEPTED", async () => {
@@ -192,15 +161,9 @@ describe("ConversationReviewOfferCTA", () => {
     expect(screen.getByText("Offer Accepted")).toBeInTheDocument()
     expect(screen.getByText("Tap to view")).toBeInTheDocument()
 
-    // Modal details
-    fireEvent.click(screen.getByText("Tap to view"))
-
-    await waitFor(() => {
-      expect(screen.getAllByText("Offer Accepted")[1]).toBeInTheDocument()
-      expect(screen.getByTestId("orderModalIframe")).toHaveAttribute(
-        "src",
-        "/orders/orderID/status?isModal=true",
-      )
-    })
+    expect(screen.getByTestId("orderActionLink")).toHaveAttribute(
+      "href",
+      "/orders/orderID/status",
+    )
   })
 })

@@ -63,14 +63,14 @@ export const ReviewOrderButton: React.FC<
 
   switch (counterOfferState) {
     case "COUNTER_OFFER_BUYER":
-      ctaSubmittedText = `Review Counteroffer`
+      ctaSubmittedText = "Review Counteroffer"
       break
     case "COUNTER_OFFER_SELLER":
       variant = "secondaryBlack"
-      ctaSubmittedText = `View Offer`
+      ctaSubmittedText = "View Offer"
       break
     case "OFFER_BUYER":
-      ctaSubmittedText = `Review Offer`
+      ctaSubmittedText = "Review Offer"
       break
     default:
       ctaSubmittedText = `${data.state === "SUBMITTED" ? "Review" : "View"} ${
