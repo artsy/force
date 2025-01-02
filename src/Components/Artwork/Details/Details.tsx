@@ -16,6 +16,9 @@ import styled from "styled-components"
 import { BidTimerLine } from "./BidTimerLine"
 import { PrimaryLabelLineQueryRenderer } from "./PrimaryLabelLine"
 import { SaleMessageQueryRenderer } from "./SaleMessage"
+import { useTimer } from "Utils/Hooks/useTimer"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { LegacyPrimaryLabelLine } from "./LegacyPrimaryLabelLine"
 
 export interface DetailsProps {
   artwork: Details_artwork$data
@@ -228,6 +231,104 @@ const BidInfo: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   )
 }
 
+interface LegacySaleMessageProps extends DetailsProps {
+  showActivePartnerOffer: boolean
+}
+
+const LegacySaleMessage: React.FC<
+  React.PropsWithChildren<LegacySaleMessageProps>
+> = props => {
+  const {
+    artwork: { sale, sale_message, sale_artwork, collectorSignals },
+    showActivePartnerOffer,
+  } = props
+
+  if (sale?.is_auction && !sale?.is_closed) {
+    const highestBid_display = sale_artwork?.highest_bid?.display
+    const openingBid_display = sale_artwork?.opening_bid?.display
+
+    return <>{highestBid_display || openingBid_display || ""}</>
+  }
+
+  if (showActivePartnerOffer) {
+    return <>{collectorSignals?.partnerOffer?.priceWithDiscount?.display}</>
+  }
+
+  // NBSP is used to prevent un-aligned carousels
+  return <>{sale_message ?? " "}</>
+}
+
+interface LegacySaleInfoLineProps extends DetailsProps {
+  showActivePartnerOffer: boolean
+}
+
+const LegacySaleInfoLine: React.FC<
+  React.PropsWithChildren<LegacySaleInfoLineProps>
+> = props => {
+  const { showActivePartnerOffer } = props
+  const { lotClosesAt } = props.artwork.collectorSignals?.auction ?? {}
+  const { liveBiddingStarted } = props.artwork.collectorSignals?.auction ?? {}
+
+  if (lotClosesAt && new Date(lotClosesAt) <= new Date()) {
+    return (
+      <Text
+        variant="sm-display"
+        lineHeight={LINE_HEIGHT_PX}
+        color="black100"
+        fontWeight="bold"
+      >
+        Bidding closed
+      </Text>
+    )
+  }
+
+  if (liveBiddingStarted) {
+    return (
+      <Text variant="sm-display" lineHeight={LINE_HEIGHT_PX} color="blue100">
+        Bidding live now
+      </Text>
+    )
+  }
+
+  return (
+    <Flex flexDirection="row" alignItems="center">
+      <Text
+        variant="sm-display"
+        lineHeight={LINE_HEIGHT_PX}
+        color="black100"
+        fontWeight="bold"
+        overflowEllipsis
+      >
+        <LegacySaleMessage {...props} /> <BidInfo {...props} />
+      </Text>
+      {showActivePartnerOffer && <LegacyActivePartnerOfferTimer {...props} />}
+    </Flex>
+  )
+}
+
+const LegacyActivePartnerOfferTimer: React.FC<
+  React.PropsWithChildren<DetailsProps>
+> = ({ artwork: { collectorSignals } }) => {
+  const SEPARATOR = <>&nbsp;</>
+  const { endAt } = collectorSignals?.partnerOffer ?? {}
+  const { time } = useTimer(endAt ?? "")
+  const { days, hours } = time
+
+  return (
+    <Text
+      variant="sm-display"
+      lineHeight={LINE_HEIGHT_PX}
+      color="blue100"
+      px={0.5}
+      alignSelf="flex-start"
+    >
+      Exp.{SEPARATOR}
+      {Number(days)}d{SEPARATOR}
+      {Number(hours)}h{SEPARATOR}
+    </Text>
+  )
+}
+
 export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   contextModule,
   hideArtistName,
@@ -241,6 +342,9 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   renderSaveButton,
   ...rest
 }) => {
+  const clientsideSignalsEnabled = useFeatureFlag(
+    "emerald_clientside-collector-signals",
+  )
   const { isAuctionArtwork, hideLotLabel, saveOnlyToDefaultList } =
     useArtworkGridContext()
 
@@ -261,6 +365,11 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
 
   const primaryLabel = rest?.artwork?.collectorSignals?.primaryLabel
   const showPrimaryLabelLine: boolean = !isAuction
+
+  const partnerOffer = rest?.artwork?.collectorSignals?.partnerOffer
+  const showActivePartnerOffer: boolean =
+    !isAuction && !!partnerOffer && contextModule !== "activity"
+  const legacyShowPrimaryLabelLine: boolean = !!primaryLabel && !isAuction
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {
@@ -315,12 +424,16 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
           maxWidth={showPrimaryLabelLine ? "95%" : "75%"}
           overflow="hidden"
         >
-          {showPrimaryLabelLine && (
+          {clientsideSignalsEnabled && showPrimaryLabelLine && (
             <PrimaryLabelLineQueryRenderer
               id={artworkId}
               label={primaryLabel}
             />
           )}
+          {!clientsideSignalsEnabled && legacyShowPrimaryLabelLine && (
+            <LegacyPrimaryLabelLine artwork={rest.artwork} />
+          )}
+
           {!hideArtistName && (
             <ArtistLine showSaveButton={showSaveButton} {...rest} />
           )}
@@ -344,7 +457,13 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
         <ConsignmentSubmissionStatusFragmentContainer artwork={rest.artwork} />
       )}
 
-      {!hideSaleInfo && <SaleInfoLine {...rest} />}
+      {clientsideSignalsEnabled && !hideSaleInfo && <SaleInfoLine {...rest} />}
+      {!clientsideSignalsEnabled && !hideSaleInfo && (
+        <LegacySaleInfoLine
+          showActivePartnerOffer={showActivePartnerOffer}
+          {...rest}
+        />
+      )}
 
       {isAuction && <BidTimerLine artwork={rest.artwork} />}
     </Box>
@@ -369,6 +488,12 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           liveBiddingStarted
           registrationEndsAt
           onlineBiddingExtended
+        }
+        partnerOffer {
+          endAt
+          priceWithDiscount {
+            display
+          }
         }
       }
       sale_message: saleMessage
@@ -418,6 +543,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       consignmentSubmission @include(if: $includeConsignmentSubmission) {
         internalID
       }
+      ...LegacyPrimaryLabelLine_artwork
       ...PrimaryLabelLine_artwork
       ...BidTimerLine_artwork
       ...HoverDetails_artwork
