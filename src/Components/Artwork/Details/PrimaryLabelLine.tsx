@@ -1,24 +1,24 @@
 import { Text } from "@artsy/palette"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
-import type { PrimaryLabelLine_artwork$key } from "__generated__/PrimaryLabelLine_artwork.graphql"
-import { graphql, useFragment } from "react-relay"
+import { graphql, createFragmentContainer } from "react-relay"
+import { PrimaryLabelLine_artwork$data } from "__generated__/PrimaryLabelLine_artwork.graphql"
+import { FC } from "react"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { PrimaryLabelLineQuery } from "__generated__/PrimaryLabelLineQuery.graphql"
 
 interface PrimaryLabelLineProps {
-  artwork: PrimaryLabelLine_artwork$key
+  label: string | null | undefined
+  artwork?: PrimaryLabelLine_artwork$data
 }
 
-export const PrimaryLabelLine: React.FC<
-  React.PropsWithChildren<PrimaryLabelLineProps>
-> = ({ artwork }) => {
-  const data = useFragment(primaryLabelLineFragment, artwork)
-  const primaryLabel = data.collectorSignals?.primaryLabel
+export const PrimaryLabelLine: React.FC<React.PropsWithChildren<PrimaryLabelLineProps>> = ({
+  label,
+  artwork,
+}) => {
   const { hideSignals } = useArtworkGridContext()
+  const partnerOffer = artwork?.collectorSignals?.partnerOffer
 
-  if (!primaryLabel) {
-    return null
-  }
-
-  if (primaryLabel === "PARTNER_OFFER") {
+  if (!!partnerOffer) {
     return (
       <Text
         variant="xs"
@@ -27,6 +27,7 @@ export const PrimaryLabelLine: React.FC<
         px={0.5}
         alignSelf="flex-start"
         borderRadius={3}
+        my="1px"
         style={{ whiteSpace: "nowrap" }}
       >
         Limited-Time Offer
@@ -34,7 +35,7 @@ export const PrimaryLabelLine: React.FC<
     )
   }
 
-  if (primaryLabel === "INCREASED_INTEREST" && !hideSignals) {
+  if (label === "INCREASED_INTEREST" && !hideSignals) {
     return (
       <Text
         variant="xs"
@@ -52,7 +53,7 @@ export const PrimaryLabelLine: React.FC<
     )
   }
 
-  if (primaryLabel === "CURATORS_PICK" && !hideSignals) {
+  if (label === "CURATORS_PICK" && !hideSignals) {
     return (
       <Text
         variant="xs"
@@ -73,10 +74,58 @@ export const PrimaryLabelLine: React.FC<
   return null
 }
 
-const primaryLabelLineFragment = graphql`
-  fragment PrimaryLabelLine_artwork on Artwork {
-    collectorSignals {
-      primaryLabel
-    }
+export const PrimaryLabelLineFragmentContainer = createFragmentContainer(
+  PrimaryLabelLine,
+  {
+    artwork: graphql`
+      fragment PrimaryLabelLine_artwork on Artwork {
+        collectorSignals {
+          primaryLabel
+          partnerOffer {
+            endAt
+            priceWithDiscount {
+              display
+            }
+          }
+        }
+      }
+    `,
   }
-`
+)
+
+interface PrimaryLabelLineQueryRendererProps {
+  id: string
+  label: string | null | undefined
+}
+
+export const PrimaryLabelLineQueryRenderer: FC<PrimaryLabelLineQueryRendererProps> = ({
+  id,
+  label,
+}) => {
+  return (
+    <SystemQueryRenderer<PrimaryLabelLineQuery>
+      lazyLoad
+      query={graphql`
+        query PrimaryLabelLineQuery($id: String!) {
+          artwork(id: $id) {
+            ...PrimaryLabelLine_artwork
+          }
+        }
+      `}
+      placeholder={<PrimaryLabelLine label={label} />}
+      variables={{ id }}
+      render={({ error, props }) => {
+        if (error || !props?.artwork) {
+          return <PrimaryLabelLine label={label} />
+        }
+
+        return (
+          <PrimaryLabelLineFragmentContainer
+            label={label}
+            artwork={props.artwork}
+          />
+        )
+      }}
+    />
+  )
+}

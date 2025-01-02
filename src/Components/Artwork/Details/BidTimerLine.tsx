@@ -1,5 +1,4 @@
 import { Text } from "@artsy/palette"
-import { EmptyLine } from "Components/Artwork/Details/Details"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { useTimer } from "Utils/Hooks/useTimer"
@@ -64,7 +63,7 @@ export const BidTimerLine: React.FC<
   }
 
   if (!lotClosesAt || numDays > 5 || hasBiddingEnded) {
-    return <EmptyLine />
+    return null
   }
 
   const renderLotCloseTime = [
