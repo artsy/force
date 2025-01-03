@@ -9258,7 +9258,7 @@ type Delivery {
 
 type Department {
   id: ID!
-  jobs: [Job!]!
+  jobs: [Job!]! @deprecated
   name: String!
 }
 
@@ -12218,7 +12218,7 @@ type Job {
   content: String!
   departmentName: String!
 
-  # The url of the job listing on Greenhouse
+  # The url of the job listing
   externalURL: String!
   id: ID!
   location: String!
