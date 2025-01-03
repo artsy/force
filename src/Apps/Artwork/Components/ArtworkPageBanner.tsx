@@ -1,7 +1,6 @@
 import { Text } from "@artsy/palette"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
 import { FullBleedBanner } from "Components/FullBleedBanner"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtworkPageBanner_artwork$key } from "__generated__/ArtworkPageBanner_artwork.graphql"
@@ -13,15 +12,12 @@ interface ArtworkPageBannerProps {
   artwork: ArtworkPageBanner_artwork$key
   me: ArtworkPageBanner_me$key
 }
-export const ArtworkPageBanner: FC<
-  React.PropsWithChildren<ArtworkPageBannerProps>
-> = props => {
+export const ArtworkPageBanner: FC<React.PropsWithChildren<
+  ArtworkPageBannerProps
+>> = props => {
   const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
   const me = useFragment(ME_FRAGMENT, props.me)
   const { match } = useRouter()
-  const allowExpiredPartnerOffers = useFeatureFlag(
-    "emerald_allow-expired-partner-offers",
-  )
 
   const expectedPartnerOfferID = match?.location?.query?.partner_offer_id as
     | string
@@ -55,17 +51,10 @@ export const ArtworkPageBanner: FC<
       return <ArtworkUnavailableBanner />
     }
 
-    if (allowExpiredPartnerOffers) {
-      if (
-        partnerOffer &&
-        partnerOffer.internalID == expectedPartnerOfferID &&
-        !partnerOffer.isActive
-      ) {
-        return <ExpiredOfferBanner />
-      }
-    } else if (
-      me &&
-      (!partnerOffer || partnerOffer.internalID !== expectedPartnerOfferID)
+    if (
+      partnerOffer &&
+      partnerOffer.internalID == expectedPartnerOfferID &&
+      !partnerOffer.isActive
     ) {
       return <ExpiredOfferBanner />
     }
@@ -100,7 +89,7 @@ const UnpublishedArtworkBanner = () => (
 
 const ME_FRAGMENT = graphql`
   fragment ArtworkPageBanner_me on Me
-  @argumentDefinitions(artworkID: { type: "String!" }) {
+    @argumentDefinitions(artworkID: { type: "String!" }) {
     partnerOffersConnection(artworkID: $artworkID, first: 1) {
       edges {
         node {
