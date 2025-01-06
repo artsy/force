@@ -45,8 +45,7 @@ export const PartnerOfferArtwork: FC<
     (artwork.title ?? "Artwork") +
     (artwork.artistNames ? ` by ${artwork.artistNames}` : "")
   const partnerIcon = artwork.partner?.profile?.icon?.url
-  const artworkListingHref =
-    artwork.href + "?partner_offer_id=" + partnerOfferID
+  const artworkListingHref = `${artwork.href}?partner_offer_id=${partnerOfferID}`
 
   let buttonText = "Purchase"
   if (hasEnded) buttonText = "View Work"
@@ -224,7 +223,11 @@ const partnerOfferArtworkFragment = graphql`
       }
     }
     collectorSignals {
-      primaryLabel
+      partnerOffer {
+        endAt
+      }
+      increasedInterest
+      curatorsPick
     }
     ...Metadata_artwork
   }
