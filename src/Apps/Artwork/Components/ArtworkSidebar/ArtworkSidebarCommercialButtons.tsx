@@ -45,7 +45,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { extractNodes } from "Utils/extractNodes"
-import { getSignalLabel } from "Utils/getSignalLabel"
+import { getSignalLabel, signalsToArray } from "Utils/getSignalLabel"
 import type { ResponsiveValue } from "styled-system"
 
 interface ArtworkSidebarCommercialButtonsProps {
@@ -64,6 +64,8 @@ export const ArtworkSidebarCommercialButtons: React.FC<
 
   const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
   const me = useFragment(ME_FRAGMENT, props.me)
+
+  const signals = signalsToArray(artwork.collectorSignals)
 
   // Get the first partner offer
   const partnerOffer =
@@ -120,9 +122,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
       context_owner_type: OwnerType.artwork,
       context_owner_slug: artwork.slug,
       context_owner_id: artwork.internalID,
-      signal_label: artwork.collectorSignals
-        ? getSignalLabel(artwork.collectorSignals)
-        : "",
+      signal_label: getSignalLabel({ signals }) ?? "",
     }
     trackEvent(event)
 
@@ -136,9 +136,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
       context_owner_id: artwork.internalID,
       context_owner_slug: artwork.slug,
       flow: "Partner offer",
-      signal_label: artwork.collectorSignals
-        ? getSignalLabel(artwork.collectorSignals)
-        : "",
+      signal_label: getSignalLabel({ signals }) ?? "",
     }
 
     trackEvent(event)
@@ -195,9 +193,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
       context_owner_id: artwork.internalID,
       context_owner_slug: artwork.slug,
       flow: "Buy now",
-      signal_label: artwork.collectorSignals
-        ? getSignalLabel(artwork.collectorSignals)
-        : "",
+      signal_label: getSignalLabel({ signals }) ?? "",
     }
 
     trackEvent(event)
@@ -334,11 +330,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
     setSelectedEditionSetInContext(
       firstAvailableEcommerceEditionSet() as EditionSet,
     )
-  }, [
-    artwork.editionSets,
-    firstAvailableEcommerceEditionSet,
-    setSelectedEditionSetInContext,
-  ])
+  }, [firstAvailableEcommerceEditionSet, setSelectedEditionSetInContext])
 
   const isCreateAlertAvailable =
     artwork.isEligibleToCreateAlert && artwork.isSold
@@ -353,7 +345,9 @@ export const ArtworkSidebarCommercialButtons: React.FC<
   }
   if (artwork.isOfferable && !(activePartnerOffer && artwork.isInquireable)) {
     renderButtons.makeOffer =
-      Object.keys(renderButtons).length == 0 ? "primaryBlack" : "secondaryBlack"
+      Object.keys(renderButtons).length === 0
+        ? "primaryBlack"
+        : "secondaryBlack"
   }
   if (artwork.isInquireable && Object.keys(renderButtons).length < 2) {
     renderButtons.contactGallery =
@@ -697,7 +691,11 @@ const ARTWORK_FRAGMENT = graphql`
       }
     }
     collectorSignals {
-      primaryLabel(ignore: [PARTNER_OFFER])
+      partnerOffer {
+        endAt
+      }
+      increasedInterest
+      curatorsPick
     }
   }
 `
