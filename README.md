@@ -32,7 +32,7 @@ Since then it has evolved into what we regard as a fairly bullet-proof stack: [R
 See [CONTRIBUTING](CONTRIBUTING.md).
 
 ```
-                  ._,.
+                  ._,
             ."..-..pf
             -L   ..#'
           .+_L  ."]#
