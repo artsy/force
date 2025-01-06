@@ -10,6 +10,7 @@ import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -32,7 +33,7 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<
   const { trackEvent } = useTracking()
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
     useAnalyticsContext()
-
+  const { signals } = useArtworkGridContext()
   const artworks = extractNodes(newWorksFromGalleriesYouFollowConnection)
 
   if (!artworks || artworks?.length === 0) {
@@ -72,9 +73,9 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<
                 destination_page_owner_id: artwork.internalID,
                 destination_page_owner_slug: artwork.slug,
                 type: "thumbnail",
-                signal_label: artwork.collectorSignals
-                  ? getSignalLabel(artwork.collectorSignals)
-                  : "",
+                signal_label: getSignalLabel({
+                  signals: signals?.[artwork.internalID] ?? [],
+                }),
                 signal_bid_count:
                   artwork.collectorSignals?.auction?.bidCount ?? undefined,
                 signal_lot_watcher_count:

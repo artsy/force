@@ -1,18 +1,41 @@
-export interface CollectorSignals {
-  primaryLabel?: string | null | undefined
+interface SignalLabelProps {
+  signals: string[]
+  hideSignals?: boolean
+}
+export const getSignalLabel = ({ signals, hideSignals }: SignalLabelProps) => {
+  if (!signals) {
+    return ""
+  }
+
+  if (signals.includes("PARTNER_OFFER")) {
+    return "Limited-Time Offer"
+  }
+
+  if (signals.includes("CURATORS_PICK") && !hideSignals) {
+    return "Curators’ Pick"
+  }
+
+  if (signals.includes("INCREASED_INTEREST") && !hideSignals) {
+    return "Increased Interest"
+  }
+
+  return ""
 }
 
-export const getSignalLabel = (collectorSignals: CollectorSignals) => {
-  const { primaryLabel } = collectorSignals
+export const signalsToArray = collectorSignals => {
+  const signals: string[] = []
 
-  switch (primaryLabel) {
-    case "PARTNER_OFFER":
-      return "Limited-Time Offer"
-    case "INCREASED_INTEREST":
-      return "Increased Interest"
-    case "CURATORS_PICK":
-      return "Curators’ Pick"
-    default:
-      return ""
+  if (collectorSignals.partnerOffer) {
+    signals.push("PARTNER_OFFER")
   }
+
+  if (collectorSignals.curatorsPick) {
+    signals.push("CURATORS_PICK")
+  }
+
+  if (collectorSignals.increasedInterest) {
+    signals.push("INCREASED_INTEREST")
+  }
+
+  return signals
 }
