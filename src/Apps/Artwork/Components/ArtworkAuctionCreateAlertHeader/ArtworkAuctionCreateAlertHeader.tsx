@@ -38,16 +38,20 @@ const ArtworkAuctionCreateAlertHeader: FC<
 > = ({ artwork }) => {
   const biddingEndAt =
     artwork?.saleArtwork?.extendedBiddingEndAt ?? artwork?.saleArtwork?.endAt
-  const { hasEnded } = useTimer(
-    biddingEndAt as string,
-    artwork?.sale?.startAt as string,
-  )
+
+  const initialIsLotClosedCheck = lotIsClosed(artwork.sale, artwork.saleArtwork)
+
+  const { hasEnded } = useTimer({
+    endDate: biddingEndAt as string,
+    startAt: artwork?.sale?.startAt as string,
+    enabled: !initialIsLotClosedCheck,
+  })
 
   const isLotClosed = hasEnded || lotIsClosed(artwork.sale, artwork.saleArtwork)
   const displayAuctionCreateAlertHeader =
     artwork.isEligibleToCreateAlert && artwork.isInAuction && isLotClosed
 
-  const artistName = artwork.artistNames ? ", " + artwork.artistNames : ""
+  const artistName = artwork.artistNames ? `, ${artwork.artistNames}` : ""
   const artistSlug = artwork.artists?.[0]?.slug
   let aggregations: Aggregations = []
   let additionalGeneIDs: string[] = []

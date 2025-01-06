@@ -35,7 +35,7 @@ export const PartnerOfferArtwork: FC<
   const { theme } = useTheme()
 
   const { tracking } = useNotificationsTracking()
-  const { hasEnded } = useTimer(endAt || "")
+  const { hasEnded } = useTimer({ endDate: endAt || "" })
   const fullyAvailable = !!(available && !hasEnded && priceWithDiscount)
 
   const artwork = useFragment(partnerOfferArtworkFragment, artworkProp)
@@ -45,8 +45,7 @@ export const PartnerOfferArtwork: FC<
     (artwork.title ?? "Artwork") +
     (artwork.artistNames ? ` by ${artwork.artistNames}` : "")
   const partnerIcon = artwork.partner?.profile?.icon?.url
-  const artworkListingHref =
-    artwork.href + "?partner_offer_id=" + partnerOfferID
+  const artworkListingHref = `${artwork.href}?partner_offer_id=${partnerOfferID}`
 
   let buttonText = "Purchase"
   if (hasEnded) buttonText = "View Work"

@@ -27,9 +27,9 @@ export const ConversationCTA: React.FC<
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
 
   const partnerOffer = artwork && findPartnerOffer(artwork.internalID)
-  const partnerOfferTimer = useTimer(
-    partnerOffer?.endAt ?? new Date(0).toISOString(),
-  )
+  const partnerOfferTimer = useTimer({
+    endDate: partnerOffer?.endAt ?? new Date(0).toISOString(),
+  })
 
   const activeOrder = extractNodes(data.activeOrderCTA)[0]
   const activePartnerOffer =

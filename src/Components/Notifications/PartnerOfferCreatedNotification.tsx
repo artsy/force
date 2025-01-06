@@ -27,7 +27,7 @@ export const PartnerOfferCreatedNotification: FC<
 
   const partnerOffer = item?.partnerOffer
   const artwork = extractNodes(offerArtworksConnection)[0]
-  const { hasEnded } = useTimer(partnerOffer?.endAt || "")
+  const { hasEnded } = useTimer({ endDate: partnerOffer?.endAt || "" })
   const isOfferFromSaves = partnerOffer?.source === "SAVE"
 
   let subtitle = isOfferFromSaves
@@ -78,7 +78,7 @@ export const PartnerOfferCreatedNotification: FC<
           <Text
             variant="xs"
             fontWeight="bold"
-            aria-label={`Notification type: Offer`}
+            aria-label="Notification type: Offer"
           >
             Offer
           </Text>

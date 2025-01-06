@@ -36,6 +36,7 @@ import {
 } from "./ArtworkSidebarEditionSets"
 
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
+import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { usePartnerOfferCheckoutMutation } from "Apps/PartnerOffer/Routes/Mutations/UsePartnerOfferCheckoutMutation"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 import { useAuthDialog } from "Components/AuthDialog"
@@ -71,8 +72,13 @@ export const ArtworkSidebarCommercialButtons: React.FC<
       extractNodes(me.partnerOffersConnection)[0]) ||
     null
 
+  const isLotClosed = lotIsClosed(artwork.sale, artwork.saleArtwork)
+
   // Fall back to a definitely past value because the timer hook doesn't like nulls
-  const partnerOfferTimer = useTimer(partnerOffer?.endAt || THE_PAST)
+  const partnerOfferTimer = useTimer({
+    endDate: partnerOffer?.endAt || THE_PAST,
+    enabled: !isLotClosed,
+  })
   const partnerIcon = artwork.partner?.profile?.icon?.url
 
   const activePartnerOffer =
@@ -329,6 +335,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
   const { setSelectedEditionSet: setSelectedEditionSetInContext } =
     useSelectedEditionSetContext()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setSelectedEditionSet(firstAvailableEcommerceEditionSet())
     setSelectedEditionSetInContext(
@@ -353,7 +360,9 @@ export const ArtworkSidebarCommercialButtons: React.FC<
   }
   if (artwork.isOfferable && !(activePartnerOffer && artwork.isInquireable)) {
     renderButtons.makeOffer =
-      Object.keys(renderButtons).length == 0 ? "primaryBlack" : "secondaryBlack"
+      Object.keys(renderButtons).length === 0
+        ? "primaryBlack"
+        : "secondaryBlack"
   }
   if (artwork.isInquireable && Object.keys(renderButtons).length < 2) {
     renderButtons.contactGallery =
@@ -698,6 +707,12 @@ const ARTWORK_FRAGMENT = graphql`
     }
     collectorSignals {
       primaryLabel(ignore: [PARTNER_OFFER])
+    }
+    sale {
+      isClosed
+    }
+    saleArtwork {
+      endedAt
     }
   }
 `

@@ -31,6 +31,7 @@ export const ArtworkSidebarAuctionPolling: React.FC<
   const isMounted = useRef(false)
   const tracking = useTracking()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (isMounted.current) {
       setCurrentBidChanged(true)

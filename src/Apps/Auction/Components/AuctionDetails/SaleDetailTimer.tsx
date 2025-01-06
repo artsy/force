@@ -17,7 +17,10 @@ export const SaleDetailTimer: React.FC<
   const endedAt = sale?.endedAt
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const { hasEnded, time, hasStarted } = useTimer(endAt!, startAt!)
+  const { hasEnded, time, hasStarted } = useTimer({
+    endDate: endAt!,
+    startAt: startAt!,
+  })
 
   if (!endAt || endedAt) {
     return null

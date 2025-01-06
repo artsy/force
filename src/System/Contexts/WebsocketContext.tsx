@@ -7,6 +7,7 @@ interface ReceivedData {
 
 export interface WebsocketContextProps {
   data: ReceivedData
+  enabled?: boolean
 }
 
 interface WebsocketContextProviderProps {
@@ -19,6 +20,7 @@ interface WebsocketContextProviderProps {
 
 const initialValues = {
   data: {} as ReceivedData,
+  enabled: true,
 }
 
 export const WebsocketContext =
@@ -26,11 +28,17 @@ export const WebsocketContext =
 
 export const WebsocketContextProvider: React.FC<
   React.PropsWithChildren<WebsocketContextProviderProps>
-> = ({ channelInfo, enabled, children }) => {
-  const [receivedData, setReceivedData] = useState(initialValues)
+> = ({ channelInfo, enabled = true, children }) => {
+  const [receivedData, setReceivedData] = useState<WebsocketContextProps>({
+    ...initialValues,
+    enabled,
+  })
   const xapp_token = getENV("ARTSY_XAPP_TOKEN")
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!enabled) return
+
     const actionCable = require("actioncable")
     const cable = actionCable.createConsumer(getENV("GRAVITY_WEBSOCKET_URL"))
     cable.subscriptions.create(

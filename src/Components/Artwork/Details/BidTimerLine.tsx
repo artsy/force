@@ -35,10 +35,14 @@ export const BidTimerLine: React.FC<
     },
   })
 
-  const { time, hasEnded: hasBiddingEnded } = useTimer(updatedLotClosesAt!)
+  const { time, hasEnded: hasBiddingEnded } = useTimer({
+    endDate: updatedLotClosesAt!,
+  })
   const { days, hours, minutes, seconds } = time
   const { isAuctionArtwork } = useArtworkGridContext()
-  const { hasEnded: hasRegistrationEnded } = useTimer(registrationEndsAt!)
+  const { hasEnded: hasRegistrationEnded } = useTimer({
+    endDate: registrationEndsAt!,
+  })
 
   const numDays = Number(days)
   const numHours = Number(hours)

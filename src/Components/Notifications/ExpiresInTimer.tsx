@@ -18,7 +18,7 @@ const WatchIcon: FC<React.PropsWithChildren<{ fill?: string }>> = ({
 export const ExpiresInTimer: FC<
   React.PropsWithChildren<ExpiresInTimerProps>
 > = ({ expiresAt = "", available = false }) => {
-  const { hasEnded, time } = useTimer(expiresAt ?? "")
+  const { hasEnded, time } = useTimer({ endDate: expiresAt ?? "" })
 
   if (!available) {
     return (

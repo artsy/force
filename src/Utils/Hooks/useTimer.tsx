@@ -14,16 +14,19 @@ interface Timer {
   hasStarted: boolean
 }
 
-const padWithZero = (num: number) => {
-  return num.toString().padStart(2, "0")
+interface UseTimerProps {
+  endDate: string
+  startAt?: string
+  enabled?: boolean
 }
 
-const extractTime = (time: number) => {
-  return padWithZero(Math.max(0, Math.floor(time)))
-}
+export const useTimer = (props: UseTimerProps): Timer => {
+  const { endDate = "", startAt = "", enabled = true } = props
 
-export const useTimer = (endDate: string, startAt = ""): Timer => {
-  const currentTime = useCurrentTime({ syncWithServer: true })
+  const currentTime = useCurrentTime({
+    enabled,
+    syncWithServer: true,
+  })
 
   const timeBeforeEnd = Duration.fromISO(
     DateTime.fromISO(endDate).diff(DateTime.fromISO(currentTime)).toString(),
@@ -53,4 +56,12 @@ export const useTimer = (endDate: string, startAt = ""): Timer => {
   }
 
   return { hasEnded, time, hasStarted }
+}
+
+const padWithZero = (num: number) => {
+  return num.toString().padStart(2, "0")
+}
+
+const extractTime = (time: number) => {
+  return padWithZero(Math.max(0, Math.floor(time)))
 }

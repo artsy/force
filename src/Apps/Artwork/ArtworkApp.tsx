@@ -15,6 +15,7 @@ import { ArtworkErrorApp } from "Apps/Artwork/Components/ArtworkErrorApp/Artwork
 import { ArtworkPageBanner } from "Apps/Artwork/Components/ArtworkPageBanner"
 import { PrivateArtworkDetails } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkDetails"
 import { SelectedEditionSetProvider } from "Apps/Artwork/Components/SelectedEditionSetContext"
+import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RecentlyViewed } from "Components/RecentlyViewed"
@@ -334,7 +335,14 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
 
 const WrappedArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
   const {
-    artwork: { artists, attributionClass, internalID, mediumType, sale },
+    artwork: {
+      artists,
+      attributionClass,
+      internalID,
+      mediumType,
+      sale,
+      saleArtwork,
+    },
   } = props
 
   const {
@@ -346,8 +354,10 @@ const WrappedArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
   // Check to see if referrer comes from link interception.
   // @see interceptLinks.ts
   const referrer = state && state.previousHref
+  const isLotClosed = lotIsClosed(sale, saleArtwork)
 
-  const websocketEnabled = !!sale?.extendedBiddingIntervalMinutes
+  const websocketEnabled =
+    !!sale?.extendedBiddingIntervalMinutes && isLotClosed === false
 
   const initialAlertCriteria = {
     attributionClass: compact([attributionClass?.internalID]),
@@ -433,6 +443,10 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
           internalID
           slug
           extendedBiddingIntervalMinutes
+          isClosed
+        }
+        saleArtwork {
+          endedAt
         }
         saleMessage
         artists(shallow: true) {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8699d0891b292dfba7484484ce76cf01>>
+ * @generated SignedSource<<1a2a3da8b44cc385b2d6fcc80a12534b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -54,6 +54,12 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
     } | null | undefined;
   } | null | undefined;
   readonly priceListedDisplay: string | null | undefined;
+  readonly sale: {
+    readonly isClosed: boolean | null | undefined;
+  } | null | undefined;
+  readonly saleArtwork: {
+    readonly endedAt: string | null | undefined;
+  } | null | undefined;
   readonly saleMessage: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarEditionSets_artwork">;
@@ -346,6 +352,42 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Sale",
+      "kind": "LinkedField",
+      "name": "sale",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isClosed",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "SaleArtwork",
+      "kind": "LinkedField",
+      "name": "saleArtwork",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "endedAt",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -353,6 +395,6 @@ return {
 };
 })();
 
-(node as any).hash = "2f0076dcb4ef9a7117fa8806021078f7";
+(node as any).hash = "b74718e50a6ab1115f9821c79f26b0fe";
 
 export default node;
