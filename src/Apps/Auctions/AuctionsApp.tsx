@@ -41,7 +41,7 @@ export const AuctionsApp: React.FC<
           <Spacer y={2} />
 
           <RouterLink
-            to="https://support.artsy.net/s/article/How-do-I-place-a-bid-in-an-auction"
+            to="https://support.artsy.net/s/article/The-Complete-Guide-to-Auctions-on-Artsy"
             textDecoration="none"
             display="flex"
             alignItems="center"
