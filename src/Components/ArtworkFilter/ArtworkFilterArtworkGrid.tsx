@@ -5,10 +5,12 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { getSignalLabel } from "Utils/getSignalLabel"
 import type { ArtworkFilterArtworkGrid_filtered_artworks$data } from "__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
 import type * as React from "react"
 import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
@@ -31,6 +33,7 @@ const ArtworkFilterArtworkGrid: React.FC<
   const { contextPageOwnerType, contextPageOwnerSlug, contextPageOwnerId } =
     useAnalyticsContext()
   const context = useArtworkFilterContext()
+  const { signals, hideSignals } = useArtworkGridContext()
 
   const {
     columnCount,
@@ -81,6 +84,10 @@ const ArtworkFilterArtworkGrid: React.FC<
               position: artworkIndex,
               sort: context?.filters?.sort,
               type: "thumbnail",
+              signal_label: getSignalLabel({
+                signals: signals?.[artwork.internalID] ?? [],
+                hideSignals: hideSignals,
+              }),
             }
             trackEvent(event)
           }}
