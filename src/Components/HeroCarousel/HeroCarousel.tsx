@@ -1,5 +1,11 @@
 import { Media } from "Utils/Responsive"
-import type { FC, ReactNode } from "react"
+import {
+  Children,
+  type FC,
+  type ReactNode,
+  isValidElement,
+  useMemo,
+} from "react"
 import { HeroCarouselLarge } from "./HeroCarouselLarge"
 import { HeroCarouselSmall } from "./HeroCarouselSmall"
 
@@ -17,6 +23,11 @@ export const HeroCarousel: FC<React.PropsWithChildren<HeroCarouselProps>> = ({
   progressbarVariant,
   onChange,
 }) => {
+  const cells = useMemo(
+    () => Children.toArray(children).filter(isValidElement),
+    [children],
+  )
+
   return (
     <>
       <Media at="xs">
@@ -24,7 +35,7 @@ export const HeroCarousel: FC<React.PropsWithChildren<HeroCarouselProps>> = ({
           onChange={onChange}
           progressbarVariant={progressbarVariant}
         >
-          {children}
+          {cells}
         </HeroCarouselSmall>
       </Media>
 
@@ -34,7 +45,7 @@ export const HeroCarousel: FC<React.PropsWithChildren<HeroCarouselProps>> = ({
           fullBleed={fullBleed}
           progressbarVariant={progressbarVariant}
         >
-          {children}
+          {cells}
         </HeroCarouselLarge>
       </Media>
     </>
