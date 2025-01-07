@@ -23,7 +23,7 @@ export const usePrefetchRoute = ({
 
   const { match } = useRouter()
 
-  const prefetchFeatureFlagEnabled = useFeatureFlag("diamond_prefetch-hover")
+  const prefetchFeatureFlagEnabled = true // useFeatureFlag("diamond_prefetch-hover")
 
   // If we're transitioning routes, we don't want to prefetch
   const prefetchDisabled = !prefetchFeatureFlagEnabled || !match?.elements

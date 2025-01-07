@@ -48,8 +48,7 @@ export const RouterLink: React.FC<
     !systemContext.user
 
   // TODO: Remove feature flags
-  const isPrefetchOnEnterEnabled =
-    isPrefetchOnEnterEnabledLoggedIn || isPrefetchOnEnterEnabledLoggedOut
+  const isPrefetchOnEnterEnabled = true // isPrefetchOnEnterEnabledLoggedIn || isPrefetchOnEnterEnabledLoggedOut
 
   // When a prefetch is completed, propagate that in the router state.
   const [isPrefetched, setIsPrefetched] = React.useState(false)

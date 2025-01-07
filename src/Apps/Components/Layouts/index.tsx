@@ -6,7 +6,8 @@ import { LayoutFullBleed } from "Apps/Components/Layouts/LayoutFullBleed"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
 import { LayoutNavOnly } from "Apps/Components/Layouts/LayoutNavOnly"
 import { useRouter } from "System/Hooks/useRouter"
-import type { FC, ReactNode } from "react"
+import type React from "react"
+import { type FC, Fragment, type ReactNode, useEffect, useState } from "react"
 
 export interface BaseLayoutProps {
   children: ReactNode
@@ -32,11 +33,8 @@ export const Layout: FC<React.PropsWithChildren<LayoutProps>> = ({
   children,
 }) => {
   const { match } = useRouter()
-
   const isFetching = !match.elements
 
-  // If we're fetching, we want to render the previous layout and not execute
-  // the new one right away.
   const previousVariant = usePrevious(variant)
   const Previous = LAYOUTS[previousVariant]
 
@@ -46,5 +44,48 @@ export const Layout: FC<React.PropsWithChildren<LayoutProps>> = ({
 
   const Component = LAYOUTS[variant]
 
-  return <Component>{children}</Component>
+  const enableINPHack = /^\/(artwork|artist)\/[^/]+$/i.test(
+    match.location.pathname,
+  )
+
+  return (
+    <Component>
+      <INPHack
+        {...(enableINPHack ? { key: match.location.pathname } : {})}
+        enabled={enableINPHack}
+      >
+        {children}
+      </INPHack>
+    </Component>
+  )
+}
+
+interface INPHackProps {
+  enabled: boolean
+}
+
+const INPHack: React.FC<React.PropsWithChildren<INPHackProps>> = ({
+  children,
+  enabled,
+}) => {
+  const { match } = useRouter()
+  const [isSecondRender, setIsSecondRender] = useState(false)
+
+  const isPrefetched = match?.location?.state?.isPrefetched === true
+
+  useEffect(() => {
+    if (isPrefetched) {
+      setIsSecondRender(true)
+    }
+  }, [isPrefetched])
+
+  if (isPrefetched && !isSecondRender) {
+    return null
+  }
+
+  if (!enabled) {
+    return children
+  }
+
+  return <Fragment key={match.location.pathname}>{children}</Fragment>
 }

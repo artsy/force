@@ -7,16 +7,23 @@ import {
 } from "@artsy/palette"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import { useIsRouteActive } from "System/Hooks/useRouter"
+import { useRouter } from "found"
 import type * as React from "react"
 import { useTracking } from "react-tracking"
 
 export const RouteTab: React.FC<
   React.PropsWithChildren<BaseTabProps & RouterLinkProps>
 > = ({ children, to, ...rest }) => {
+  const { router } = useRouter()
   const tracking = useTracking()
 
   const options = {
     exact: rest.exact !== undefined ? rest.exact : true,
+  }
+
+  const location = router?.createLocation?.((to as string) ?? "") ?? {
+    pathname: to,
+    query: {},
   }
 
   return (
@@ -25,7 +32,13 @@ export const RouteTab: React.FC<
       // @ts-ignore
       to={to}
       active={useIsRouteActive(to, options)}
-      onClick={() => {
+      onClick={event => {
+        event.preventDefault()
+        router?.push({
+          ...location,
+          state: { isPrefetched: false },
+        })
+
         tracking.trackEvent({
           action_type: DeprecatedAnalyticsSchema.ActionType.Click,
           destination_path: to,
