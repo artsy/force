@@ -1,7 +1,13 @@
+import type { ArtworkSidebarPartnerInfo_artwork$data } from "__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
+
+export type CollectorSignals =
+  ArtworkSidebarPartnerInfo_artwork$data["collectorSignals"]
+
 interface SignalLabelProps {
   signals: string[]
   hideSignals?: boolean
 }
+
 export const getSignalLabel = ({ signals, hideSignals }: SignalLabelProps) => {
   if (!signals) {
     return ""
@@ -22,8 +28,12 @@ export const getSignalLabel = ({ signals, hideSignals }: SignalLabelProps) => {
   return ""
 }
 
-export const signalsToArray = collectorSignals => {
+export const signalsToArray = (collectorSignals: CollectorSignals) => {
   const signals: string[] = []
+
+  if (!collectorSignals) {
+    return signals
+  }
 
   if (collectorSignals.partnerOffer) {
     signals.push("PARTNER_OFFER")
