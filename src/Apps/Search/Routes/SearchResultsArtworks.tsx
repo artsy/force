@@ -6,6 +6,7 @@ import type {
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { SearchResultsArtworks_viewer$data } from "__generated__/SearchResultsArtworks_viewer.graphql"
@@ -41,29 +42,31 @@ export const SearchResultsArtworksRoute: React.FC<
   }, [match.location.query.term])
 
   return (
-    <ArtworkFilter
-      key={searchFilterKey}
-      mt={4}
-      viewer={viewer}
-      filters={match.location.query}
-      onChange={updateUrl}
-      ZeroState={ZeroState}
-      aggregations={
-        sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
-      }
-      counts={sidebar?.counts as Counts}
-      sortOptions={[
-        { value: "-decayed_merch", text: "Recommended" },
-        { value: "-has_price,-prices", text: "Price (High to Low)" },
-        { value: "-has_price,prices", text: "Price (Low to High)" },
-        { value: "-partner_updated_at", text: "Recently Updated" },
-        { value: "-published_at", text: "Recently Added" },
-        { value: "-year", text: "Artwork Year (Descending)" },
-        { value: "year", text: "Artwork Year (Ascending)" },
-      ]}
-      Filters={<SearchResultsArtworksFilters />}
-      userPreferredMetric={userPreferences?.metric}
-    />
+    <ArtworkGridContextProvider>
+      <ArtworkFilter
+        key={searchFilterKey}
+        mt={4}
+        viewer={viewer}
+        filters={match.location.query}
+        onChange={updateUrl}
+        ZeroState={ZeroState}
+        aggregations={
+          sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+        }
+        counts={sidebar?.counts as Counts}
+        sortOptions={[
+          { value: "-decayed_merch", text: "Recommended" },
+          { value: "-has_price,-prices", text: "Price (High to Low)" },
+          { value: "-has_price,prices", text: "Price (Low to High)" },
+          { value: "-partner_updated_at", text: "Recently Updated" },
+          { value: "-published_at", text: "Recently Added" },
+          { value: "-year", text: "Artwork Year (Descending)" },
+          { value: "year", text: "Artwork Year (Ascending)" },
+        ]}
+        Filters={<SearchResultsArtworksFilters />}
+        userPreferredMetric={userPreferences?.metric}
+      />
+    </ArtworkGridContextProvider>
   )
 }
 
