@@ -9,7 +9,10 @@ import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
-import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
+import {
+  ArtworkGridContextProvider,
+  useArtworkGridContext,
+} from "Components/ArtworkGrid/ArtworkGridContext"
 import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
@@ -27,7 +30,7 @@ export const HomeEmergingPicksArtworksRail: React.FC<
   React.PropsWithChildren<HomeEmergingPicksArtworksRailProps>
 > = ({ viewer }) => {
   const { trackEvent } = useTracking()
-
+  const { signals } = useArtworkGridContext()
   const artworks = extractNodes(viewer.artworksConnection)
 
   if (artworks.length === 0) {
@@ -71,9 +74,10 @@ export const HomeEmergingPicksArtworksRail: React.FC<
                   destination_page_owner_id: artwork.internalID,
                   destination_page_owner_slug: artwork.slug,
                   type: "thumbnail",
-                  signal_label: artwork.collectorSignals
-                    ? getSignalLabel(artwork.collectorSignals)
-                    : "",
+                  signal_label: getSignalLabel({
+                    signals: signals?.[artwork.internalID] ?? [],
+                    hideSignals: true,
+                  }),
                   signal_bid_count:
                     artwork.collectorSignals?.auction?.bidCount ?? undefined,
                   signal_lot_watcher_count:

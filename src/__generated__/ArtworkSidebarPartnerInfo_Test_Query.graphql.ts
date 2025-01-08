@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4647b290164199a65806af6e4e387534>>
+ * @generated SignedSource<<2137accc7df1902fb114dabbd36c058a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -59,9 +59,9 @@ v4 = {
 },
 v5 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
-  "type": "ID"
+  "type": "Boolean"
 },
 v6 = {
   "enumValues": null,
@@ -74,6 +74,12 @@ v7 = {
   "nullable": true,
   "plural": false,
   "type": "String"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -184,18 +190,36 @@ return {
             "selections": [
               {
                 "alias": null,
-                "args": [
+                "args": null,
+                "concreteType": "PartnerOfferToCollector",
+                "kind": "LinkedField",
+                "name": "partnerOffer",
+                "plural": false,
+                "selections": [
                   {
-                    "kind": "Literal",
-                    "name": "ignore",
-                    "value": [
-                      "PARTNER_OFFER"
-                    ]
-                  }
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "endAt",
+                    "storageKey": null
+                  },
+                  (v4/*: any*/)
                 ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "kind": "ScalarField",
-                "name": "primaryLabel",
-                "storageKey": "primaryLabel(ignore:[\"PARTNER_OFFER\"])"
+                "name": "increasedInterest",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "curatorsPick",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -207,7 +231,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3e50fbf1f0fd0bb8c957874a7af447ac",
+    "cacheID": "bcf9b8cd3394f37c9a200c2504b75e00",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -223,24 +247,19 @@ return {
           "plural": false,
           "type": "CollectorSignals"
         },
-        "artwork.collectorSignals.primaryLabel": {
-          "enumValues": [
-            "CURATORS_PICK",
-            "INCREASED_INTEREST",
-            "PARTNER_OFFER"
-          ],
-          "nullable": true,
-          "plural": false,
-          "type": "LabelSignalEnum"
-        },
-        "artwork.id": (v5/*: any*/),
-        "artwork.internalID": (v5/*: any*/),
-        "artwork.isInquireable": {
+        "artwork.collectorSignals.curatorsPick": (v5/*: any*/),
+        "artwork.collectorSignals.increasedInterest": (v6/*: any*/),
+        "artwork.collectorSignals.partnerOffer": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "Boolean"
+          "type": "PartnerOfferToCollector"
         },
+        "artwork.collectorSignals.partnerOffer.endAt": (v7/*: any*/),
+        "artwork.collectorSignals.partnerOffer.id": (v8/*: any*/),
+        "artwork.id": (v8/*: any*/),
+        "artwork.internalID": (v8/*: any*/),
+        "artwork.isInquireable": (v5/*: any*/),
         "artwork.isUnlisted": (v6/*: any*/),
         "artwork.partner": {
           "enumValues": null,
@@ -255,7 +274,7 @@ return {
           "type": "String"
         },
         "artwork.partner.href": (v7/*: any*/),
-        "artwork.partner.id": (v5/*: any*/),
+        "artwork.partner.id": (v8/*: any*/),
         "artwork.partner.isInquireable": (v6/*: any*/),
         "artwork.partner.name": (v7/*: any*/),
         "artwork.sale": {
@@ -265,14 +284,14 @@ return {
           "type": "Sale"
         },
         "artwork.sale.href": (v7/*: any*/),
-        "artwork.sale.id": (v5/*: any*/),
+        "artwork.sale.id": (v8/*: any*/),
         "artwork.sale.name": (v7/*: any*/),
-        "artwork.slug": (v5/*: any*/)
+        "artwork.slug": (v8/*: any*/)
       }
     },
     "name": "ArtworkSidebarPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isUnlisted\n  partner {\n    name\n    href\n    cities\n    isInquireable\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n  collectorSignals {\n    primaryLabel(ignore: [PARTNER_OFFER])\n  }\n}\n"
+    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isUnlisted\n  partner {\n    name\n    href\n    cities\n    isInquireable\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n  collectorSignals {\n    partnerOffer {\n      endAt\n      id\n    }\n    increasedInterest\n    curatorsPick\n  }\n}\n"
   }
 };
 })();

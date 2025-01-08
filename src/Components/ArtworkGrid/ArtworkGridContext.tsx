@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react"
+import { createContext, useContext, useState } from "react"
 
 /**
  * Used to configure internal details of the Artwork Grid / Brick without
@@ -15,6 +15,10 @@ interface ArtworkGridContextProps {
   saveOnlyToDefaultList?: boolean
 
   hideSignals?: boolean
+
+  signals?: { [id: string]: string[] }
+
+  updateSignals?: (id: string, newSignals: string[]) => void
 }
 
 const ArtworkGridContext = createContext<ArtworkGridContextProps>({
@@ -22,13 +26,30 @@ const ArtworkGridContext = createContext<ArtworkGridContextProps>({
   hideLotLabel: false,
   saveOnlyToDefaultList: false,
   hideSignals: false,
+  signals: {},
+  updateSignals: () => {},
 })
 
 export const ArtworkGridContextProvider: React.FC<
   React.PropsWithChildren<ArtworkGridContextProps>
 > = ({ children, ...rest }) => {
+  const [signals, setSignals] = useState<{ [id: string]: string[] }>({})
+
+  const updateSignals = (id: string, newSignals: string[]) => {
+    setSignals(prevSignals => ({
+      ...prevSignals,
+      [id]: newSignals,
+    }))
+  }
+
   return (
-    <ArtworkGridContext.Provider value={rest}>
+    <ArtworkGridContext.Provider
+      value={{
+        ...rest,
+        signals,
+        updateSignals,
+      }}
+    >
       {children}
     </ArtworkGridContext.Provider>
   )
