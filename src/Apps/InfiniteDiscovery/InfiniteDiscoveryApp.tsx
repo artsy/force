@@ -1,17 +1,22 @@
 import {
-  Flex,
   Button,
-  Text,
-  Separator,
-  Input,
   Expandable,
+  Flex,
+  Input,
   Label,
+  Separator,
+  Text,
 } from "@artsy/palette"
-import React, { useEffect } from "react"
-import { sampleSize } from "lodash"
 import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
+import { sampleSize } from "lodash"
+import React, { useEffect } from "react"
 
-const buildMetaphysicsQuery = (likedArtworks, dismissedArtworks, weight) => {
+const buildMetaphysicsQuery = (
+  likedArtworks,
+  dismissedArtworks,
+  weight,
+  artworksCountForTaste = 3,
+) => {
   const likedArtworkIds = likedArtworks.map(artwork => artwork.id)
   const dismissedArtworkIds = dismissedArtworks.map(artwork => artwork.id)
 
@@ -19,21 +24,24 @@ const buildMetaphysicsQuery = (likedArtworks, dismissedArtworks, weight) => {
   const variables = {
     osWeights: weight,
     useOpenSearch: true,
-    likedArtworkIds: likedArtworkIds.length > 2 ? likedArtworkIds : [],
-    dismissedArtworkIds:
-      likedArtworkIds.length < 3
+    likedArtworkIds:
+      likedArtworkIds.length > artworksCountForTaste - 1
+        ? likedArtworkIds.slice(-artworksCountForTaste)
+        : [],
+    excludeArtworkIds:
+      likedArtworkIds.length < artworksCountForTaste
         ? [...likedArtworkIds, ...dismissedArtworkIds]
         : dismissedArtworkIds,
   }
 
   return {
     query: `
-      query InfiniteDiscoveryAppQuery($likedArtworkIds: [String], $dismissedArtworkIds: [String], $osWeights: [Float], $useOpenSearch: Boolean) {
+      query InfiniteDiscoveryAppQuery($likedArtworkIds: [String], $excludeArtworkIds: [String], $osWeights: [Float], $useOpenSearch: Boolean) {
         discoverArtworks(
           useOpenSearch: $useOpenSearch,
           osWeights: $osWeights,
           likedArtworkIds: $likedArtworkIds,
-          excludeArtworkIds: $dismissedArtworkIds
+          excludeArtworkIds: $excludeArtworkIds
         ) {
           edges {
             node {
@@ -84,6 +92,7 @@ export const InfiniteDiscoveryApp = () => {
   const [loading, setLoading] = React.useState(false)
   const [mltWeight, setMltWeight] = React.useState(0.6)
   const [knnWeight, setKnnWeight] = React.useState(0.4)
+  const [tasteArtworks, setTasteArtworks] = React.useState(3)
 
   const onLike = artwork => {
     setLikedArtworks([...likedArtworks, artwork])
@@ -96,12 +105,17 @@ export const InfiniteDiscoveryApp = () => {
   const initialArtworks = async () => {
     const response = await request(getMetaphysicsEndpoint(), {
       body: JSON.stringify(
-        buildMetaphysicsQuery(likedArtworks, dismissedArtworks, [0.6, 0.4])
+        buildMetaphysicsQuery(
+          likedArtworks,
+          dismissedArtworks,
+          [0.6, 0.4],
+          tasteArtworks,
+        ),
       ),
     })
 
     const artworks = response?.data?.discoverArtworks?.edges.map(
-      edge => edge.node
+      edge => edge.node,
     )
     setArtworks(sampleSize(artworks, 10))
     setLoading(false)
@@ -117,15 +131,17 @@ export const InfiniteDiscoveryApp = () => {
 
     const response = await request(getMetaphysicsEndpoint(), {
       body: JSON.stringify(
-        buildMetaphysicsQuery(likedArtworks, dismissedArtworks, [
-          mltWeight,
-          knnWeight,
-        ])
+        buildMetaphysicsQuery(
+          likedArtworks,
+          dismissedArtworks,
+          [mltWeight, knnWeight],
+          tasteArtworks,
+        ),
       ),
     })
 
     const artworks = response?.data?.discoverArtworks?.edges.map(
-      edge => edge.node
+      edge => edge.node,
     )
     setArtworks(artworks)
     setLoading(false)
@@ -166,28 +182,51 @@ export const InfiniteDiscoveryApp = () => {
               <Expandable
                 marginLeft={20}
                 marginBottom={20}
-                label="Advanced Options (enabled after 3 likes)"
+                label="Advanced Options"
                 width={400}
-                disabled={likedArtworks.length <= 2}
               >
-                <Label>MLT weight</Label>
-                <Input
-                  type="number"
-                  value={mltWeight.toString()}
-                  placeholder="MLT Weight"
-                  onChange={e => setMltWeight(parseFloat(e.target.value))}
-                  max={1}
-                  min={0}
-                />
-                <Label>KNN weight</Label>
-                <Input
-                  value={knnWeight.toString()}
-                  type="number"
-                  placeholder="KNN Weight default. 0.4"
-                  onChange={e => setKnnWeight(parseFloat(e.target.value))}
-                  max={1}
-                  min={0}
-                />
+                <Flex flexDirection={"row"} justifyContent="space-between">
+                  <Flex flexDirection={"column"}>
+                    <Label>MLT weight</Label>
+                    <Input
+                      width={200}
+                      type="number"
+                      value={mltWeight.toString()}
+                      placeholder="MLT Weight"
+                      onChange={e =>
+                        setMltWeight(Number.parseFloat(e.target.value))
+                      }
+                      max={1}
+                      min={0}
+                    />
+                    <Separator marginY={5} />
+                    <Label>KNN weight</Label>
+                    <Input
+                      value={knnWeight.toString()}
+                      type="number"
+                      placeholder="KNN Weight default. 0.4"
+                      onChange={e =>
+                        setKnnWeight(Number.parseFloat(e.target.value))
+                      }
+                      max={1}
+                      min={0}
+                    />
+                  </Flex>
+                  <Flex flexDirection={"column"} marginLeft={20}>
+                    <Label>
+                      How many liked artworks to consider for recommendations
+                    </Label>
+                    <Input
+                      typeof="number"
+                      placeholder="Number of liked artworks to consider for recommendations"
+                      value={tasteArtworks.toString()}
+                      type="number"
+                      onChange={e =>
+                        setTasteArtworks(Number.parseInt(e.target.value))
+                      }
+                    />
+                  </Flex>
+                </Flex>
               </Expandable>
             </Flex>
             <br />
@@ -265,6 +304,7 @@ const Artwork = ({ onLike, onDismiss, viewed = false, artworkResource }) => {
       <a
         href={`https://staging.artsy.net/artwork/${artwork.id}`}
         target="_blank"
+        rel="noreferrer"
       >
         <img
           src={`https://d7hftxdivxxvm.cloudfront.net/?src=${artwork?.image?.url}&resize_to=fit&width=200&height=200&grow=false`}
