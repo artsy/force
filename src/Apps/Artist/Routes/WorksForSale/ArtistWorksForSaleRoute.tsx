@@ -117,8 +117,11 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
       @argumentDefinitions(
         isPrefetched: { type: "Boolean!", defaultValue: false }
         aggregations: { type: "[ArtworkAggregation]" }
+        input: { type: "FilterArtworksInput" }
       ) {
-        ...ArtistArtworkFilter_artist @include(if: $isPrefetched)
+        ...ArtistArtworkFilter_artist
+          @arguments(input: $input)
+          @include(if: $isPrefetched)
         ...ArtistWorksForSaleEmpty_artist
         slug
         meta(page: ARTWORKS) {
