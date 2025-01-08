@@ -144,12 +144,14 @@ export const artistRoutes: RouteProps[] = [
             $artistID: String!
             $isPrefetched: Boolean!
             $aggregations: [ArtworkAggregation]
+            $input: FilterArtworksInput
           ) {
             artist(id: $artistID) @principalField {
               ...ArtistWorksForSaleRoute_artist
                 @arguments(
                   isPrefetched: $isPrefetched
                   aggregations: $aggregations
+                  input: $input
                 )
             }
           }

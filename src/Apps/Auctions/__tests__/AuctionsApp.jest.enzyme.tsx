@@ -74,7 +74,7 @@ describe("AuctionsApp", () => {
     const { wrapper } = getWrapper()
     expect(wrapper.find("RouterLink")).toBeDefined()
     expect(wrapper.find("RouterLink").first().props().to).toBe(
-      "https://support.artsy.net/s/article/How-do-I-place-a-bid-in-an-auction",
+      "https://support.artsy.net/s/article/The-Complete-Guide-to-Auctions-on-Artsy",
     )
   })
 
