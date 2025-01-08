@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4e0529a6ff76ab04b2327c23812debb0>>
+ * @generated SignedSource<<01a5eaa6271b1df6ee8b69f9d6405da1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -46,6 +46,11 @@ const node: ReaderFragment = {
       "name": "aggregations"
     },
     {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "input"
+    },
+    {
       "defaultValue": false,
       "kind": "LocalArgument",
       "name": "isPrefetched"
@@ -61,7 +66,13 @@ const node: ReaderFragment = {
       "passingValue": true,
       "selections": [
         {
-          "args": null,
+          "args": [
+            {
+              "kind": "Variable",
+              "name": "input",
+              "variableName": "input"
+            }
+          ],
           "kind": "FragmentSpread",
           "name": "ArtistArtworkFilter_artist"
         },
@@ -205,6 +216,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2c8c6a3fb495ca2922aae8991575ce6c";
+(node as any).hash = "1f34f26d1a343711d35a84e84d16a2df";
 
 export default node;
