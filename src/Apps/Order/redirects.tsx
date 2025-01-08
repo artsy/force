@@ -160,18 +160,18 @@ const goToRespondIfMyLastOfferIsNotMostRecentOffer: OrderPredicate = ({
 }
 
 const goToRespondIfAwaitingBuyerResponse: OrderPredicate = ({ order }) => {
-  if (order.awaitingResponseFrom === "BUYER")
+  if (order.awaitingResponseFrom === "BUYER") {
     if (order.displayState === "PAYMENT_FAILED") {
       return {
         path: `/orders/${order.internalID}/payment/new`,
         reason: "Payment failed",
       }
-    } else {
-      return {
-        path: `/orders/${order.internalID}/respond`,
-        reason: "Still awaiting buyer response",
-      }
     }
+    return {
+      path: `/orders/${order.internalID}/respond`,
+      reason: "Still awaiting buyer response",
+    }
+  }
 }
 
 export const redirects: RedirectRecord<OrderQuery> = {
