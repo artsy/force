@@ -43,12 +43,13 @@ const buildMetaphysicsQuery = (
 
   return {
     query: `
-      query InfiniteDiscoveryAppQuery($likedArtworkIds: [String], $excludeArtworkIds: [String], $osWeights: [Float], $useOpenSearch: Boolean) {
+      query InfiniteDiscoveryAppQuery($likedArtworkIds: [String], $excludeArtworkIds: [String], $osWeights: [Float], $useOpenSearch: Boolean, $mltFields: [String]) {
         discoverArtworks(
           useOpenSearch: $useOpenSearch,
           osWeights: $osWeights,
           likedArtworkIds: $likedArtworkIds,
-          excludeArtworkIds: $excludeArtworkIds
+          excludeArtworkIds: $excludeArtworkIds,
+          mltFields: $mltFields
         ) {
           edges {
             node {
