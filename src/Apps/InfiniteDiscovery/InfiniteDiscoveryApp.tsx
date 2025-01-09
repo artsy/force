@@ -33,7 +33,11 @@ const buildMetaphysicsQuery = (
     excludeArtworkIds:
       likedArtworkIds.length < artworksCountForTaste
         ? [...likedArtworkIds, ...dismissedArtworkIds]
-        : dismissedArtworkIds,
+        : // split artworks after the last artworksCountForTaste liked artwork
+          [
+            ...likedArtworkIds.slice(0, -artworksCountForTaste),
+            ...dismissedArtworkIds,
+          ],
     ...(mltFields.length > 0 && { mltFields }),
   }
 
