@@ -1,5 +1,6 @@
 import {
   Button,
+  Checkbox,
   Expandable,
   Flex,
   Input,
@@ -16,6 +17,7 @@ const buildMetaphysicsQuery = (
   dismissedArtworks,
   weight,
   artworksCountForTaste = 3,
+  mltFields = [],
 ) => {
   const likedArtworkIds = likedArtworks.map(artwork => artwork.id)
   const dismissedArtworkIds = dismissedArtworks.map(artwork => artwork.id)
@@ -32,6 +34,7 @@ const buildMetaphysicsQuery = (
       likedArtworkIds.length < artworksCountForTaste
         ? [...likedArtworkIds, ...dismissedArtworkIds]
         : dismissedArtworkIds,
+    ...(mltFields.length > 0 && { mltFields }),
   }
 
   return {
@@ -93,6 +96,12 @@ export const InfiniteDiscoveryApp = () => {
   const [mltWeight, setMltWeight] = React.useState(0.6)
   const [knnWeight, setKnnWeight] = React.useState(0.4)
   const [tasteArtworks, setTasteArtworks] = React.useState(3)
+  const [mltFields, setMltFields] = React.useState([
+    "genes",
+    "materials",
+    "tags",
+    "medium",
+  ])
 
   const onLike = artwork => {
     setLikedArtworks([...likedArtworks, artwork])
@@ -100,6 +109,15 @@ export const InfiniteDiscoveryApp = () => {
 
   const onDismiss = artwork => {
     setDismissedArtworks([...dismissedArtworks, artwork])
+  }
+
+  const handleCheckboxChange = field => {
+    setMltFields(prevFields => {
+      const updatedFields = prevFields.includes(field)
+        ? prevFields.filter(f => f !== field)
+        : [...prevFields, field]
+      return updatedFields
+    })
   }
 
   const initialArtworks = async () => {
@@ -136,6 +154,7 @@ export const InfiniteDiscoveryApp = () => {
           dismissedArtworks,
           [mltWeight, knnWeight],
           tasteArtworks,
+          mltFields as any,
         ),
       ),
     })
@@ -225,6 +244,17 @@ export const InfiniteDiscoveryApp = () => {
                         setTasteArtworks(Number.parseInt(e.target.value))
                       }
                     />
+                    <>
+                      {["genes", "materials", "tags", "medium"].map(field => (
+                        <Label key={field}>
+                          <Checkbox
+                            selected={mltFields.includes(field)}
+                            onClick={() => handleCheckboxChange(field)}
+                          />
+                          {field}
+                        </Label>
+                      ))}
+                    </>
                   </Flex>
                 </Flex>
               </Expandable>
