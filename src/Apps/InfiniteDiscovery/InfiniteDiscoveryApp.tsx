@@ -18,6 +18,7 @@ const buildMetaphysicsQuery = (
   weight,
   artworksCountForTaste = 3,
   mltFields = [],
+  artworksLimit,
 ) => {
   const likedArtworkIds = likedArtworks.map(artwork => artwork.id)
   const dismissedArtworkIds = dismissedArtworks.map(artwork => artwork.id)
@@ -39,17 +40,19 @@ const buildMetaphysicsQuery = (
             ...dismissedArtworkIds,
           ],
     ...(mltFields.length > 0 && { mltFields }),
+    limit: artworksLimit,
   }
 
   return {
     query: `
-      query InfiniteDiscoveryAppQuery($likedArtworkIds: [String], $excludeArtworkIds: [String], $osWeights: [Float], $useOpenSearch: Boolean, $mltFields: [String]) {
+      query InfiniteDiscoveryAppQuery($likedArtworkIds: [String], $excludeArtworkIds: [String], $osWeights: [Float], $useOpenSearch: Boolean, $mltFields: [String], $limit: Int) {
         discoverArtworks(
           useOpenSearch: $useOpenSearch,
           osWeights: $osWeights,
           likedArtworkIds: $likedArtworkIds,
           excludeArtworkIds: $excludeArtworkIds,
-          mltFields: $mltFields
+          mltFields: $mltFields,
+          limit: $limit
         ) {
           edges {
             node {
@@ -107,6 +110,7 @@ export const InfiniteDiscoveryApp = () => {
     "tags",
     "medium",
   ])
+  const [artworksLimit, setArtworksLimit] = React.useState(10)
 
   const onLike = artwork => {
     setLikedArtworks([...likedArtworks, artwork])
@@ -133,6 +137,8 @@ export const InfiniteDiscoveryApp = () => {
           dismissedArtworks,
           [0.6, 0.4],
           tasteArtworks,
+          mltFields as any,
+          artworksLimit,
         ),
       ),
     })
@@ -160,6 +166,7 @@ export const InfiniteDiscoveryApp = () => {
           [mltWeight, knnWeight],
           tasteArtworks,
           mltFields as any,
+          artworksLimit,
         ),
       ),
     })
@@ -249,17 +256,32 @@ export const InfiniteDiscoveryApp = () => {
                         setTasteArtworks(Number.parseInt(e.target.value))
                       }
                     />
-                    <>
+                    <Separator marginY={5} />
+                    <Text>Fields to consider for MLT</Text>
+                    <Flex flexDirection={"row"}>
                       {["genes", "materials", "tags", "medium"].map(field => (
-                        <Label key={field}>
+                        <>
+                          <Label key={field}>{field}</Label>
                           <Checkbox
                             selected={mltFields.includes(field)}
                             onClick={() => handleCheckboxChange(field)}
                           />
-                          {field}
-                        </Label>
+                        </>
                       ))}
-                    </>
+                    </Flex>
+                  </Flex>
+                  <Separator marginLeft={10} border={0} />
+                  <Flex flexDirection={"column"}>
+                    <Label>How many artworks to consider for batch</Label>
+                    <Input
+                      typeof="number"
+                      placeholder="Number artworks for batch"
+                      value={artworksLimit.toString()}
+                      type="number"
+                      onChange={e =>
+                        setArtworksLimit(Number.parseInt(e.target.value))
+                      }
+                    />
                   </Flex>
                 </Flex>
               </Expandable>
@@ -270,7 +292,7 @@ export const InfiniteDiscoveryApp = () => {
           </Flex>
         </div>
       </Flex>
-      <Flex justifyContent={"space-between"} flexWrap={"wrap"}>
+      <Flex justifyContent="space-between" flexWrap={"wrap"}>
         {artworks.map((artwork: any) => {
           return (
             <Artwork
