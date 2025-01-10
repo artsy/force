@@ -26,7 +26,7 @@ export const Timer: React.FC<
   color = "blue100",
   ...rest
 }) => {
-  const { hasEnded, time } = useTimer(endDate, startDate)
+  const { hasEnded, time } = useTimer({ endDate, startAt: startDate })
   const { days, hours, minutes, seconds } = time
 
   return (

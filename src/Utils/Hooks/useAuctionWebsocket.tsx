@@ -14,13 +14,13 @@ export const useAuctionWebsocket = ({
   onChange,
   lotID,
 }: AuctionWebsocketParams) => {
-  const { data } = useWebsocketContext()
+  const { enabled, data } = useWebsocketContext()
   const { lot_id } = data
   const receivedMessageForThisLot = lot_id === lotID
 
   useEffect(() => {
-    if (receivedMessageForThisLot) {
+    if (enabled && receivedMessageForThisLot) {
       onChange(data)
     }
-  }, [onChange, receivedMessageForThisLot, data])
+  }, [onChange, receivedMessageForThisLot, data, enabled])
 }

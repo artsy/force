@@ -20,11 +20,13 @@ import { useEffect, useRef, useState } from "react"
 interface UseCurrentTimeProps {
   interval?: number
   syncWithServer?: boolean
+  enabled?: boolean
 }
 
 export const useCurrentTime = ({
-  interval = 1000,
+  interval = 5000,
   syncWithServer = false,
+  enabled = true,
 }: UseCurrentTimeProps = {}): string => {
   const { relayEnvironment } = useSystemContext()
 
@@ -34,6 +36,14 @@ export const useCurrentTime = ({
   const intervalId = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
+    if (!enabled) {
+      if (intervalId.current) {
+        clearInterval(intervalId.current)
+      }
+
+      return
+    }
+
     if (syncWithServer) {
       getOffsetBetweenGravityClock(relayEnvironment).then(offset => {
         setTimeOffsetInMilliseconds(offset)
@@ -48,7 +58,7 @@ export const useCurrentTime = ({
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       clearInterval(intervalId.current)
     }
-  }, [interval, relayEnvironment, syncWithServer])
+  }, [enabled, interval, relayEnvironment, syncWithServer])
 
   return DateTime.fromISO(currentTime)
     .minus({ millisecond: timeOffsetInMilliseconds })

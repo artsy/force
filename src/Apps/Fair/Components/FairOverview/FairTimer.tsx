@@ -12,7 +12,7 @@ interface FairTimerProps {
 export const FairTimer: React.FC<React.PropsWithChildren<FairTimerProps>> = ({
   fair: { endAt },
 }) => {
-  const { hasEnded } = useTimer(endAt!)
+  const { hasEnded } = useTimer({ endDate: endAt! })
 
   return (
     <Box my={[2, 0]}>

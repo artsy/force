@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8d5086cb9857a08b188621860193b141>>
+ * @generated SignedSource<<3aaf42f1a4a23d77b606a6eaa3d3bca1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,9 +39,20 @@ export type ArtworkApp_artwork$data = {
   } | null | undefined;
   readonly published: boolean;
   readonly sale: {
+    readonly endAt: string | null | undefined;
     readonly extendedBiddingIntervalMinutes: number | null | undefined;
     readonly internalID: string;
+    readonly isAuction: boolean | null | undefined;
+    readonly isClosed: boolean | null | undefined;
     readonly slug: string;
+    readonly startAt: string | null | undefined;
+  } | null | undefined;
+  readonly saleArtwork: {
+    readonly endAt: string | null | undefined;
+    readonly endedAt: string | null | undefined;
+    readonly extendedBiddingEndAt: string | null | undefined;
+    readonly lotID: string | null | undefined;
+    readonly lotLabel: string | null | undefined;
   } | null | undefined;
   readonly saleMessage: string | null | undefined;
   readonly slug: string;
@@ -77,7 +88,14 @@ v2 = [
     "name": "display",
     "storageKey": null
   }
-];
+],
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "endAt",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [
     {
@@ -275,6 +293,68 @@ return {
           "kind": "ScalarField",
           "name": "extendedBiddingIntervalMinutes",
           "storageKey": null
+        },
+        (v3/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "startAt",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isClosed",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isAuction",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "SaleArtwork",
+      "kind": "LinkedField",
+      "name": "saleArtwork",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "lotID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "lotLabel",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "extendedBiddingEndAt",
+          "storageKey": null
+        },
+        (v3/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "endedAt",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -318,6 +398,6 @@ return {
 };
 })();
 
-(node as any).hash = "4ac112d83688bc28ff3548df974d07ea";
+(node as any).hash = "815a88c21517b3b8ac94496a2d2eb8af";
 
 export default node;

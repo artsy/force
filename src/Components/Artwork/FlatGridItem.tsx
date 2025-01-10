@@ -56,7 +56,10 @@ const FlatGridItem: React.FC<React.PropsWithChildren<FlatGridItemProps>> = ({
     },
   })
 
-  const { time, hasEnded } = useTimer(updatedBiddingEndAt!, startAt!)
+  const { time, hasEnded } = useTimer({
+    endDate: updatedBiddingEndAt!,
+    startAt: startAt!,
+  })
 
   const { isAuctionArtwork } = useArtworkGridContext()
   const shouldRenderProgressBar =

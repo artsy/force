@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3d0313a4ab07293f6e271748b324b072>>
+ * @generated SignedSource<<7b48764595ffb4eb3fc0ba1f584f66ae>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -417,6 +417,44 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Sale",
+            "kind": "LinkedField",
+            "name": "sale",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isClosed",
+                "storageKey": null
+              },
+              (v4/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "SaleArtwork",
+            "kind": "LinkedField",
+            "name": "saleArtwork",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "endedAt",
+                "storageKey": null
+              },
+              (v4/*: any*/)
+            ],
+            "storageKey": null
+          },
           (v4/*: any*/)
         ],
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
@@ -509,7 +547,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "99958eed1bf84ad2d81096eba1ab93b3",
+    "cacheID": "7b3e4cd6975d01db8f149fdbf5448131",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -628,6 +666,22 @@ return {
         "artwork.partner.profile.icon.url": (v12/*: any*/),
         "artwork.partner.profile.id": (v10/*: any*/),
         "artwork.priceListedDisplay": (v12/*: any*/),
+        "artwork.sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
+        },
+        "artwork.sale.id": (v10/*: any*/),
+        "artwork.sale.isClosed": (v13/*: any*/),
+        "artwork.saleArtwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtwork"
+        },
+        "artwork.saleArtwork.endedAt": (v12/*: any*/),
+        "artwork.saleArtwork.id": (v10/*: any*/),
         "artwork.saleMessage": (v12/*: any*/),
         "artwork.slug": (v10/*: any*/),
         "me": {
@@ -671,7 +725,7 @@ return {
     },
     "name": "ArtworkSidebarCommercialButtons_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarCommercialButtons_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarCommercialButtons_artwork\n    id\n  }\n  me {\n    ...ArtworkSidebarCommercialButtons_me_4G3fWC\n    id\n  }\n}\n\nfragment ArtworkSidebarCommercialButtons_artwork on Artwork {\n  ...ArtworkSidebarEditionSets_artwork\n  isEligibleToCreateAlert\n  artists(shallow: true) {\n    internalID\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  internalID\n  slug\n  saleMessage\n  isInquireable\n  isAcquireable\n  isOfferable\n  isSold\n  priceListedDisplay\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  mediumType {\n    filterGene {\n      slug\n      id\n    }\n  }\n  editionSets {\n    id\n    internalID\n    isAcquireable\n    isOfferable\n    saleMessage\n    dimensions {\n      in\n      cm\n    }\n  }\n  partner {\n    profile {\n      icon {\n        url(version: \"square140\")\n      }\n      id\n    }\n    id\n  }\n  collectorSignals {\n    primaryLabel(ignore: [PARTNER_OFFER])\n  }\n}\n\nfragment ArtworkSidebarCommercialButtons_me_4G3fWC on Me {\n  partnerOffersConnection(artworkID: \"josef-albers-homage-to-the-square-85\", first: 1) {\n    edges {\n      node {\n        endAt\n        internalID\n        isAvailable\n        note\n        priceWithDiscount {\n          display\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ArtworkSidebarEditionSets_artwork on Artwork {\n  isInquireable\n  isOfferable\n  isAcquireable\n  editionSets {\n    id\n    internalID\n    isOfferable\n    isAcquireable\n    saleMessage\n    dimensions {\n      cm\n      in\n    }\n    ...ArtworkSidebarSizeInfo_piece\n  }\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  editionOf\n}\n"
+    "text": "query ArtworkSidebarCommercialButtons_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarCommercialButtons_artwork\n    id\n  }\n  me {\n    ...ArtworkSidebarCommercialButtons_me_4G3fWC\n    id\n  }\n}\n\nfragment ArtworkSidebarCommercialButtons_artwork on Artwork {\n  ...ArtworkSidebarEditionSets_artwork\n  isEligibleToCreateAlert\n  artists(shallow: true) {\n    internalID\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  internalID\n  slug\n  saleMessage\n  isInquireable\n  isAcquireable\n  isOfferable\n  isSold\n  priceListedDisplay\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  mediumType {\n    filterGene {\n      slug\n      id\n    }\n  }\n  editionSets {\n    id\n    internalID\n    isAcquireable\n    isOfferable\n    saleMessage\n    dimensions {\n      in\n      cm\n    }\n  }\n  partner {\n    profile {\n      icon {\n        url(version: \"square140\")\n      }\n      id\n    }\n    id\n  }\n  collectorSignals {\n    primaryLabel(ignore: [PARTNER_OFFER])\n  }\n  sale {\n    isClosed\n    id\n  }\n  saleArtwork {\n    endedAt\n    id\n  }\n}\n\nfragment ArtworkSidebarCommercialButtons_me_4G3fWC on Me {\n  partnerOffersConnection(artworkID: \"josef-albers-homage-to-the-square-85\", first: 1) {\n    edges {\n      node {\n        endAt\n        internalID\n        isAvailable\n        note\n        priceWithDiscount {\n          display\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ArtworkSidebarEditionSets_artwork on Artwork {\n  isInquireable\n  isOfferable\n  isAcquireable\n  editionSets {\n    id\n    internalID\n    isOfferable\n    isAcquireable\n    saleMessage\n    dimensions {\n      cm\n      in\n    }\n    ...ArtworkSidebarSizeInfo_piece\n  }\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  editionOf\n}\n"
   }
 };
 })();

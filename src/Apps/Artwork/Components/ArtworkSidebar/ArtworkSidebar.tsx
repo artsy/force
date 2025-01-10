@@ -73,6 +73,7 @@ export const ArtworkSidebar: React.FC<
   const extendedBiddingEndAt = saleArtwork?.extendedBiddingEndAt
   const biddingEndAt = extendedBiddingEndAt ?? endAt
   const isUnlisted = artwork?.isUnlisted
+  const isLotClosed = lotIsClosed(sale, saleArtwork)
 
   const [updatedBiddingEndAt, setUpdatedBiddingEndAt] = useState(biddingEndAt)
 
@@ -87,7 +88,11 @@ export const ArtworkSidebar: React.FC<
 
   const timerEndAt = sale?.isAuction ? updatedBiddingEndAt : sale?.endAt
 
-  const { hasEnded } = useTimer(timerEndAt as string, startAt as string)
+  const { hasEnded } = useTimer({
+    endDate: timerEndAt as string,
+    startAt: startAt as string,
+    enabled: !isLotClosed,
+  })
 
   const shouldHideDetailsCreateAlertCTA =
     isUnlisted ||
