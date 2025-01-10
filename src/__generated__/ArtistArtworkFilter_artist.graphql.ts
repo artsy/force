@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2ad66759d1701d1e3b5d46d8c1059ef2>>
+ * @generated SignedSource<<d8429b030b3bc38c2915f581bef04567>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,9 @@ export type ArtistArtworkFilter_artist$data = {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
   } | null | undefined;
   readonly internalID: string;
+  readonly meta: {
+    readonly title: string;
+  };
   readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtistArtworkFilter_artist";
@@ -48,13 +51,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtistArtworkFilter_artist",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -177,14 +173,45 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "page",
+          "value": "ARTWORKS"
+        }
+      ],
+      "concreteType": "ArtistMeta",
+      "kind": "LinkedField",
+      "name": "meta",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "title",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "meta(page:\"ARTWORKS\")"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "44474a8e0f69fe658c8e8df3e2bc4ceb";
+(node as any).hash = "e03f15c1d9bc9ae5ffa8c3e9f500f665";
 
 export default node;

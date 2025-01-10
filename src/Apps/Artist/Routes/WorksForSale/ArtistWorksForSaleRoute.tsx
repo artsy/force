@@ -1,3 +1,4 @@
+import { ArtistMediumsTitle } from "Apps/Artist/Routes/WorksForSale/Components/ArtistMediumsTitle"
 import { ArtistWorksForSaleEmptyFragmentContainer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistWorksForSaleEmpty"
 import { getWorksForSaleRouteVariables } from "Apps/Artist/Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
 import type { SharedArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
@@ -7,7 +8,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ArtistWorksForSaleRouteArtworksQuery } from "__generated__/ArtistWorksForSaleRouteArtworksQuery.graphql"
 import type { ArtistWorksForSaleRoute_artist$data } from "__generated__/ArtistWorksForSaleRoute_artist.graphql"
 import type React from "react"
-import { Meta, Title } from "react-head"
+import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistArtworkFilterRefetchContainer } from "./Components/ArtistArtworkFilter"
 
@@ -24,8 +25,11 @@ const ArtistWorksForSaleRoute: React.FC<
 
   return (
     <>
-      <Title>{title}</Title>
-      <Meta name="title" content={title} />
+      <ArtistMediumsTitle
+        defaultTitle={title}
+        name={artist.name ?? "Unknown Artist"}
+      />
+
       <Meta name="description" content={description} />
 
       {isPrefetched ? (
@@ -46,7 +50,6 @@ const ArtistWorksForSaleRoute: React.FC<
             ) {
               artist(id: $artistID) {
                 ...ArtistArtworkFilter_artist @arguments(input: $input)
-
                 sidebarAggregations: filterArtworksConnection(
                   aggregations: $aggregations
                   first: 1
@@ -124,6 +127,7 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
           @include(if: $isPrefetched)
         ...ArtistWorksForSaleEmpty_artist
         slug
+        name
         meta(page: ARTWORKS) {
           description
           title
