@@ -26,7 +26,6 @@ const buildMetaphysicsQuery = (
   // Adjust query variables based on conditions
   const variables = {
     osWeights: weight,
-    useOpenSearch: true,
     likedArtworkIds:
       likedArtworkIds.length > artworksCountForTaste - 1
         ? likedArtworkIds.slice(-artworksCountForTaste)
@@ -45,9 +44,8 @@ const buildMetaphysicsQuery = (
 
   return {
     query: `
-      query InfiniteDiscoveryAppQuery($likedArtworkIds: [String], $excludeArtworkIds: [String], $osWeights: [Float], $useOpenSearch: Boolean, $mltFields: [String], $limit: Int) {
+      query InfiniteDiscoveryAppQuery($likedArtworkIds: [String], $excludeArtworkIds: [String], $osWeights: [Float], $mltFields: [String], $limit: Int) {
         discoverArtworks(
-          useOpenSearch: $useOpenSearch,
           osWeights: $osWeights,
           likedArtworkIds: $likedArtworkIds,
           excludeArtworkIds: $excludeArtworkIds,
