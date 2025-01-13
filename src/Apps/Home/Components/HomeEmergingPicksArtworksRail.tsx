@@ -9,10 +9,7 @@ import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
-import {
-  ArtworkGridContextProvider,
-  useArtworkGridContext,
-} from "Components/ArtworkGrid/ArtworkGridContext"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
@@ -38,59 +35,59 @@ export const HomeEmergingPicksArtworksRail: React.FC<
   }
 
   return (
-    <ArtworkGridContextProvider hideSignals>
-      <Rail
-        title="Curators’ Picks"
-        subTitle="The best works by rising talents on Artsy, all available now."
-        viewAllLabel="View All Works"
-        viewAllHref="/collection/curators-picks-emerging"
-        viewAllOnClick={() => {
-          const trackingEvent: ClickedArtworkGroup = {
-            action: ActionType.clickedArtworkGroup,
-            context_module: ContextModule.troveArtworksRail,
-            context_page_owner_type: OwnerType.home,
-            destination_page_owner_type: OwnerType.collection,
-            destination_page_owner_id: "932d0b13-3cf1-46d1-8e49-18b186230347",
-            destination_page_owner_slug: "curators-picks-emerging",
-            type: "viewAll",
-          }
-          trackEvent(trackingEvent)
-        }}
-        getItems={() => {
-          return artworks.map(artwork => (
-            <ShelfArtworkFragmentContainer
-              artwork={artwork}
-              key={artwork.internalID}
-              lazyLoad
-              // TODO: add troveArtworksRail to the union type of auth context module
-              // @ts-ignore
-              contextModule={ContextModule.troveArtworksRail}
-              onClick={() => {
-                const trackingEvent: ClickedArtworkGroup = {
-                  action: ActionType.clickedArtworkGroup,
-                  context_module: ContextModule.troveArtworksRail,
-                  context_page_owner_type: OwnerType.home,
-                  destination_page_owner_type: OwnerType.artwork,
-                  destination_page_owner_id: artwork.internalID,
-                  destination_page_owner_slug: artwork.slug,
-                  type: "thumbnail",
-                  signal_label: getSignalLabel({
-                    signals: signals?.[artwork.internalID] ?? [],
-                    hideSignals: true,
-                  }),
-                  signal_bid_count:
-                    artwork.collectorSignals?.auction?.bidCount ?? undefined,
-                  signal_lot_watcher_count:
-                    artwork.collectorSignals?.auction?.lotWatcherCount ??
-                    undefined,
-                }
-                trackEvent(trackingEvent)
-              }}
-            />
-          ))
-        }}
-      />
-    </ArtworkGridContextProvider>
+    <Rail
+      title="Curators’ Picks"
+      subTitle="The best works by rising talents on Artsy, all available now."
+      viewAllLabel="View All Works"
+      viewAllHref="/collection/curators-picks-emerging"
+      viewAllOnClick={() => {
+        const trackingEvent: ClickedArtworkGroup = {
+          action: ActionType.clickedArtworkGroup,
+          context_module: ContextModule.troveArtworksRail,
+          context_page_owner_type: OwnerType.home,
+          destination_page_owner_type: OwnerType.collection,
+          destination_page_owner_id: "932d0b13-3cf1-46d1-8e49-18b186230347",
+          destination_page_owner_slug: "curators-picks-emerging",
+          type: "viewAll",
+        }
+
+        trackEvent(trackingEvent)
+      }}
+      getItems={() => {
+        return artworks.map(artwork => (
+          <ShelfArtworkFragmentContainer
+            artwork={artwork}
+            key={artwork.internalID}
+            lazyLoad
+            // TODO: add troveArtworksRail to the union type of auth context module
+            // @ts-ignore
+            contextModule={ContextModule.troveArtworksRail}
+            onClick={() => {
+              const trackingEvent: ClickedArtworkGroup = {
+                action: ActionType.clickedArtworkGroup,
+                context_module: ContextModule.troveArtworksRail,
+                context_page_owner_type: OwnerType.home,
+                destination_page_owner_type: OwnerType.artwork,
+                destination_page_owner_id: artwork.internalID,
+                destination_page_owner_slug: artwork.slug,
+                type: "thumbnail",
+                signal_label: getSignalLabel({
+                  signals: signals?.[artwork.internalID] ?? [],
+                  hideSignals: true,
+                }),
+                signal_bid_count:
+                  artwork.collectorSignals?.auction?.bidCount ?? undefined,
+                signal_lot_watcher_count:
+                  artwork.collectorSignals?.auction?.lotWatcherCount ??
+                  undefined,
+              }
+
+              trackEvent(trackingEvent)
+            }}
+          />
+        ))
+      }}
+    />
   )
 }
 
