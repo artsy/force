@@ -1,7 +1,7 @@
 import type { BoxProps } from "@artsy/palette"
 import { TopContextBar } from "Components/TopContextBar"
 import { useRouter } from "System/Hooks/useRouter"
-import { sanitizeURL } from "Utils/sanitizeURL"
+import { sanitizeRedirect } from "Utils/sanitizeRedirect"
 import type { BackToFairBanner_show$data } from "__generated__/BackToFairBanner_show.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -16,7 +16,9 @@ const BackToFairBanner: React.FC<
   const { back_to_fair_href } = match.location.query
   const { fair } = show
 
-  const link = back_to_fair_href ? sanitizeURL(back_to_fair_href) : fair?.href
+  const link = back_to_fair_href
+    ? sanitizeRedirect(back_to_fair_href)
+    : fair?.href
 
   if (!fair?.name) {
     return null
