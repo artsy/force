@@ -53,7 +53,9 @@ export const HomeApp: React.FC<React.PropsWithChildren<HomeAppProps>> = ({
 
           <HomeWorksForYouTabBar />
 
-          <HomeEmergingPicksArtworksRailQueryRenderer />
+          <ArtworkGridContextProvider hideSignals>
+            <HomeEmergingPicksArtworksRailQueryRenderer />
+          </ArtworkGridContextProvider>
 
           <HomeFeaturedMarketNewsQueryRenderer />
 
