@@ -108,7 +108,7 @@ export const InfiniteDiscoveryApp = () => {
     "tags",
     "medium",
   ])
-  const [artworksLimit, setArtworksLimit] = React.useState(10)
+  const [artworksLimit, setArtworksLimit] = React.useState(5)
 
   const onLike = artwork => {
     setLikedArtworks([...likedArtworks, artwork])
