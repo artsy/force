@@ -7,6 +7,7 @@ import type {
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 import { CollectionsHubsNavFragmentContainer as CollectionsHubsNav } from "Components/CollectionsHubsNav"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
@@ -49,7 +50,7 @@ export const CollectApp: React.FC<React.PropsWithChildren<CollectAppProps>> = ({
   } else if (color) {
     canonicalHref = `collect/color/${color}`
   } else {
-    canonicalHref = `collect`
+    canonicalHref = "collect"
   }
 
   return (
@@ -84,76 +85,80 @@ export const CollectApp: React.FC<React.PropsWithChildren<CollectAppProps>> = ({
         </Box>
 
         <Box>
-          <LazyArtworkGrid>
-            <SystemQueryRenderer<CollectArtworkFilterQuery>
-              query={graphql`
-                query CollectArtworkFilterQuery(
-                  $input: FilterArtworksInput
-                  $aggregations: [ArtworkAggregation]
-                  $shouldFetchCounts: Boolean!
-                ) {
-                  viewer {
-                    ...ArtworkFilter_viewer @arguments(input: $input)
-                    artworksConnection(
-                      aggregations: $aggregations
-                      input: $input
-                    ) {
-                      counts @include(if: $shouldFetchCounts) {
-                        followedArtists
-                      }
-                      aggregations {
-                        slice
-                        counts {
-                          value
-                          name
-                          count
+          <ArtworkGridContextProvider>
+            <LazyArtworkGrid>
+              <SystemQueryRenderer<CollectArtworkFilterQuery>
+                query={graphql`
+                  query CollectArtworkFilterQuery(
+                    $input: FilterArtworksInput
+                    $aggregations: [ArtworkAggregation]
+                    $shouldFetchCounts: Boolean!
+                  ) {
+                    viewer {
+                      ...ArtworkFilter_viewer @arguments(input: $input)
+                      artworksConnection(
+                        aggregations: $aggregations
+                        input: $input
+                      ) {
+                        counts @include(if: $shouldFetchCounts) {
+                          followedArtists
+                        }
+                        aggregations {
+                          slice
+                          counts {
+                            value
+                            name
+                            count
+                          }
                         }
                       }
                     }
                   }
-                }
-              `}
-              variables={initializeVariablesWithFilterState(
-                match.params,
-                match,
-              )}
-              fetchPolicy="store-and-network"
-              placeholder={<ArtworkFilterPlaceholder />}
-              render={({ props }) => {
-                if (!props?.viewer) {
-                  return <ArtworkFilterPlaceholder />
-                }
+                `}
+                variables={initializeVariablesWithFilterState(
+                  match.params,
+                  match,
+                )}
+                fetchPolicy="store-and-network"
+                placeholder={<ArtworkFilterPlaceholder />}
+                render={({ props }) => {
+                  if (!props?.viewer) {
+                    return <ArtworkFilterPlaceholder />
+                  }
 
-                return (
-                  <ArtworkFilter
-                    viewer={props.viewer}
-                    aggregations={
-                      props.viewer?.artworksConnection
-                        ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
-                    }
-                    counts={props.viewer?.artworksConnection?.counts as Counts}
-                    filters={location.query as any}
-                    sortOptions={[
-                      { text: "Recommended", value: "-decayed_merch" },
-                      {
-                        text: "Recently Updated",
-                        value: "-partner_updated_at",
-                      },
-                      { text: "Recently Added", value: "-published_at" },
-                      { text: "Artwork Year (Descending)", value: "-year" },
-                      { text: "Artwork Year (Ascending)", value: "year" },
-                    ]}
-                    onChange={filters => {
-                      const url = buildUrlForCollectApp(filters)
+                  return (
+                    <ArtworkFilter
+                      viewer={props.viewer}
+                      aggregations={
+                        props.viewer?.artworksConnection
+                          ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+                      }
+                      counts={
+                        props.viewer?.artworksConnection?.counts as Counts
+                      }
+                      filters={location.query as any}
+                      sortOptions={[
+                        { text: "Recommended", value: "-decayed_merch" },
+                        {
+                          text: "Recently Updated",
+                          value: "-partner_updated_at",
+                        },
+                        { text: "Recently Added", value: "-published_at" },
+                        { text: "Artwork Year (Descending)", value: "-year" },
+                        { text: "Artwork Year (Ascending)", value: "year" },
+                      ]}
+                      onChange={filters => {
+                        const url = buildUrlForCollectApp(filters)
 
-                      silentReplace(url)
-                    }}
-                    userPreferredMetric={userPreferences?.metric}
-                  />
-                )
-              }}
-            />
-          </LazyArtworkGrid>
+                        silentReplace(url)
+                      }}
+                      userPreferredMetric={userPreferences?.metric}
+                    />
+                  )
+                }}
+              />
+            </LazyArtworkGrid>
+          </ArtworkGridContextProvider>
         </Box>
       </FrameWithRecentlyViewed>
     </>
