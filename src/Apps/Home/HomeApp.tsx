@@ -39,9 +39,8 @@ export const HomeApp: React.FC<React.PropsWithChildren<HomeAppProps>> = ({
       <HomeHeroUnitsFragmentContainer heroUnits={heroUnitsConnection} />
 
       <Spacer y={[4, 6]} />
-
-      <Join separator={<Spacer y={[6, 12]} />}>
-        <ArtworkGridContextProvider>
+      <ArtworkGridContextProvider>
+        <Join separator={<Spacer y={[6, 12]} />}>
           {featuredEventsOrderedSet && (
             <>
               <HomeFeaturedEventsRailFragmentContainer
@@ -69,8 +68,8 @@ export const HomeApp: React.FC<React.PropsWithChildren<HomeAppProps>> = ({
           <HomeNewWorksFromGalleriesYouFollowRailQueryRenderer />
 
           <HomeTrendingArtistsRailQueryRenderer />
-        </ArtworkGridContextProvider>
-      </Join>
+        </Join>
+      </ArtworkGridContextProvider>
     </>
   )
 }

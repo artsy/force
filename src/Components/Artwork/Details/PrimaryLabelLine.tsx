@@ -20,9 +20,11 @@ export const PrimaryLabelLine: React.FC<
   useEffect(() => {
     if (updateSignals && artwork) {
       const signals: string[] = []
+
       if (partnerOffer) {
         signals.push("PARTNER_OFFER")
       }
+
       if (label) {
         signals.push(label)
       }

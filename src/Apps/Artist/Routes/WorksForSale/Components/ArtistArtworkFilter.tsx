@@ -7,6 +7,7 @@ import {
   type SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkFilterSavedSearchAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterSavedSearchAlertContextProvider"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -80,14 +81,16 @@ const ArtistArtworkFilter: React.FC<
         <ArtworkFilterSavedSearchAlertContextProvider
           entity={savedSearchEntity}
         >
-          <BaseArtworkFilter
-            relay={relay}
-            viewer={artist}
-            Filters={<ArtistArtworkFilters />}
-            relayVariables={{
-              aggregations: ["TOTAL"],
-            }}
-          />
+          <ArtworkGridContextProvider>
+            <BaseArtworkFilter
+              relay={relay}
+              viewer={artist}
+              Filters={<ArtistArtworkFilters />}
+              relayVariables={{
+                aggregations: ["TOTAL"],
+              }}
+            />
+          </ArtworkGridContextProvider>
         </ArtworkFilterSavedSearchAlertContextProvider>
       </ArtworkFilterAlertContextProvider>
     </ArtworkFilterContextProvider>
