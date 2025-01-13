@@ -80,7 +80,7 @@ describe("AuctionArtworkFilter", () => {
     it("returns default arguments", () => {
       expect(getArtworkFilterInputArgs()).toEqual({
         aggregations: ["ARTIST", "MEDIUM", "TOTAL", "MATERIALS_TERMS"],
-        first: 39,
+        first: 40,
       })
     })
   })
