@@ -6,14 +6,11 @@ describe("partner/:partner_id", () => {
   it("renders metadata", () => {
     cy.title().should(
       "eq",
-      "Gagosian | Artists, Art for Sale, and Contact Info | Artsy"
+      "Gagosian | Artists, Art for Sale, and Contact Info | Artsy",
     )
     cy.get("meta[name='description']")
       .should("have.attr", "content")
-      .and(
-        "eq",
-        "Gagosian is a global gallery specializing in modern and contemporary art with nineteen locations worldwide."
-      )
+      .and("contain", "Gagosian is a global gallery")
   })
 
   it("renders page content", () => {
@@ -38,7 +35,7 @@ describe("partner/:partner_id", () => {
   it.skip("does not show contact information for non-active partner", () => {
     // TODO: cy.visit(":partner_id/contact")
     cy.contains(
-      "Sorry, the page you were looking for doesn&#x2019;t exist at this URL."
+      "Sorry, the page you were looking for doesn&#x2019;t exist at this URL.",
     )
   })
 

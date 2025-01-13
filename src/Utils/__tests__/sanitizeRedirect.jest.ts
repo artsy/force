@@ -92,4 +92,10 @@ attacker.com/`),
       "http://artsy.net?foo=bar",
     )
   })
+
+  it("blocks obfuscated javascript", () => {
+    const obfuscatedXSS =
+      "javascrip%09t%3Ac%3Dself%5B%27documen%27%2B%27t%27%5D%2Ch%3Dc.head%2Cx%3Dh.part%2Cp%3Dg%3Dh.id%2Ch.valueOf%3Dp.sub%2Cx.valueOf%3Dp.at%2Co%3Dg%2B%2B%2Cl%3Dg%2B%2B%2Cz%3Dg%2B%2B%2Ce%3Dg%2B%2B%2Ca%3Dg%2B%2B%2Cs%3Dg%2B%2B%2Cd%3Dg%2B%2B%2Cj%3Dg%2B%2B%2Cb%3Dg%2B%2B%2Ch.part%3Dh%2Bp%2Cy%3Dh%5B%27innerHTM%27%2B%27L%27%5D%3Dx%2Bp%2Ch.part%3Dh%5B%27innerHTM%27%2B%27L%27%5D%2Cp%2B%3Dx%2Ch.part%3Dc.nodeName%2Cp%2B%3Dx%2Ck%3Do%2Bp%2Cu%3Dl%2Bp%2Cw%3Dp%2Bl%2Ct%3Dw%2Bl%2Cf%3Dw%2Bo%2Bb%2Bw%2Ch%5B%27innerHTM%27%2B%27L%27%5D%3Dt%2Bs%2Bt%2Bd%2Bw%2Bz%2Bl%2Bf%2Bo%2Bu%2Ba%2Bj%2Bt%2Bl%2Bt%2Bo%2Bf%2Bl%2Bu%2Bg%2Bj%2Bw%2Bo%2Bk%2Bd%2Bl%2Ch%5B%27innerHTM%27%2B%27L%27%5D%3Dy%2Bh.innerHTML%2Bp%2Bg%2Bj%2Bf%2Bo%2Bl%2Bt%2Ba%2Bw%2Bl%2Bd%2Bp%2Ba%2Bk%2Bs%2Bk%2Bs%2Bu%2Ba%2Bu%2Ba%2Bj%2Bp%2Ba%2Bj%2Bh%2Bh"
+    expect(sanitizeRedirect(decodeURIComponent(obfuscatedXSS))).toEqual("/")
+  })
 })

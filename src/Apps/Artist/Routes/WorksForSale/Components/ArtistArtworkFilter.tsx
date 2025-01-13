@@ -1,4 +1,5 @@
 import { OwnerType } from "@artsy/cohesion"
+import { ArtistMediumsTitle } from "Apps/Artist/Routes/WorksForSale/Components/ArtistMediumsTitle"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import { ArtworkFilterAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterAlertContextProvider"
 import {
@@ -58,39 +59,46 @@ const ArtistArtworkFilter: React.FC<
   }
 
   return (
-    <ArtworkFilterContextProvider
-      aggregations={aggregations}
-      counts={artist.counts as Counts}
-      filters={match.location.query}
-      sortOptions={[
-        { value: "-decayed_merch", text: "Recommended" },
-        { value: "-has_price,-prices", text: "Price (High to Low)" },
-        { value: "-has_price,prices", text: "Price (Low to High)" },
-        { value: "-partner_updated_at", text: "Recently Updated" },
-        { value: "-published_at", text: "Recently Added" },
-        { value: "-year", text: "Artwork Year (Descending)" },
-        { value: "year", text: "Artwork Year (Ascending)" },
-      ]}
-      ZeroState={ZeroState}
-      userPreferredMetric={userPreferences?.metric}
-    >
-      <ArtworkFilterAlertContextProvider
-        initialCriteria={{ artistIDs: [artist.internalID] }}
+    <>
+      <ArtworkFilterContextProvider
+        aggregations={aggregations}
+        counts={artist.counts as Counts}
+        filters={match.location.query}
+        sortOptions={[
+          { value: "-decayed_merch", text: "Recommended" },
+          { value: "-has_price,-prices", text: "Price (High to Low)" },
+          { value: "-has_price,prices", text: "Price (Low to High)" },
+          { value: "-partner_updated_at", text: "Recently Updated" },
+          { value: "-published_at", text: "Recently Added" },
+          { value: "-year", text: "Artwork Year (Descending)" },
+          { value: "year", text: "Artwork Year (Ascending)" },
+        ]}
+        ZeroState={ZeroState}
+        userPreferredMetric={userPreferences?.metric}
       >
-        <ArtworkFilterSavedSearchAlertContextProvider
-          entity={savedSearchEntity}
+        <ArtistMediumsTitle
+          defaultTitle={artist.meta.title}
+          name={artist.name ?? "Unknown Artist"}
+        />
+
+        <ArtworkFilterAlertContextProvider
+          initialCriteria={{ artistIDs: [artist.internalID] }}
         >
-          <BaseArtworkFilter
-            relay={relay}
-            viewer={artist}
-            Filters={<ArtistArtworkFilters />}
-            relayVariables={{
-              aggregations: ["TOTAL"],
-            }}
-          />
-        </ArtworkFilterSavedSearchAlertContextProvider>
-      </ArtworkFilterAlertContextProvider>
-    </ArtworkFilterContextProvider>
+          <ArtworkFilterSavedSearchAlertContextProvider
+            entity={savedSearchEntity}
+          >
+            <BaseArtworkFilter
+              relay={relay}
+              viewer={artist}
+              Filters={<ArtistArtworkFilters />}
+              relayVariables={{
+                aggregations: ["TOTAL"],
+              }}
+            />
+          </ArtworkFilterSavedSearchAlertContextProvider>
+        </ArtworkFilterAlertContextProvider>
+      </ArtworkFilterContextProvider>
+    </>
   )
 }
 
@@ -100,7 +108,6 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
     artist: graphql`
       fragment ArtistArtworkFilter_artist on Artist
       @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
-        name
         counts {
           partner_shows: partnerShows
           for_sale_artworks: forSaleArtworks
@@ -119,6 +126,9 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
         internalID
         name
         slug
+        meta(page: ARTWORKS) {
+          title
+        }
       }
     `,
   },

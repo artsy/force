@@ -122,6 +122,7 @@ const ArticleZoomGalleryFigure: FC<
               as="image"
               imagesrcset={source.img.srcSet}
               media={source.media.preload}
+              fetchPriority="high"
             />
           )
         })}

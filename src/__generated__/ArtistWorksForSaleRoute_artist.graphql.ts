@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<01a5eaa6271b1df6ee8b69f9d6405da1>>
+ * @generated SignedSource<<47a0b5d7ce55cf1ae3c4daed5fd7d457>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type ArtistWorksForSaleRoute_artist$data = {
     readonly description: string;
     readonly title: string;
   };
+  readonly name: string | null | undefined;
   readonly sidebarAggregations?: {
     readonly aggregations: ReadonlyArray<{
       readonly counts: ReadonlyArray<{
@@ -38,7 +39,15 @@ export type ArtistWorksForSaleRoute_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistWorksForSaleRoute_artist">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -136,13 +145,7 @@ const node: ReaderFragment = {
                   "name": "counts",
                   "plural": true,
                   "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "name",
-                      "storageKey": null
-                    },
+                    (v0/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -180,6 +183,7 @@ const node: ReaderFragment = {
       "name": "slug",
       "storageKey": null
     },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": [
@@ -215,7 +219,8 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "1f34f26d1a343711d35a84e84d16a2df";
+(node as any).hash = "b4ac2ab5fe9e92b59fc2f900ce6b6d4e";
 
 export default node;
