@@ -10,7 +10,7 @@ import {
 } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { cropped } from "Utils/resized"
-import { sanitizeURL } from "Utils/sanitizeURL"
+import { sanitizeRedirect } from "Utils/sanitizeRedirect"
 import type * as React from "react"
 
 export interface TopContextBarProps {
@@ -35,7 +35,7 @@ export const TopContextBar: React.FC<
   hideSeparator = false,
 }) => {
   const image = src ? cropped(src, { width: 60, height: 60 }) : null
-  const href = _href ? sanitizeURL(_href, { enforceInternal: true }) : null
+  const href = _href ? sanitizeRedirect(_href) : null
 
   return (
     <>
