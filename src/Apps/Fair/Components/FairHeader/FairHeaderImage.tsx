@@ -37,6 +37,7 @@ export const FairHeaderImage: React.FC<
         as="image"
         imagesrcset={mobile.srcSet}
         media={`(max-width: ${BREAKPOINTS.sm}px)`}
+        fetchPriority="high"
       />
 
       <Media at="xs">

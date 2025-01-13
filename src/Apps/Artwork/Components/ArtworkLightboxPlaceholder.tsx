@@ -24,7 +24,14 @@ export const ArtworkLightboxPlaceholder: React.FC<
 
   return (
     <>
-      {preload && <Link rel="preload" as="image" href={placeholder.src} />}
+      {preload && (
+        <Link
+          rel="preload"
+          as="image"
+          href={placeholder.src}
+          fetchPriority="high"
+        />
+      )}
 
       <Box
         position="absolute"

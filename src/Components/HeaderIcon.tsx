@@ -16,7 +16,13 @@ export const HeaderIcon: React.FC<React.PropsWithChildren<HeaderIconProps>> = ({
 
   return (
     <>
-      <Link rel="preload" as="image" href={img.src} imagesrcset={img.srcSet} />
+      <Link
+        rel="preload"
+        as="image"
+        href={img.src}
+        imagesrcset={img.srcSet}
+        fetchPriority="high"
+      />
 
       <ResponsiveBox
         aspectWidth={1}
