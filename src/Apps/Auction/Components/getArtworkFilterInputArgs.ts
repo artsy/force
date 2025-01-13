@@ -4,6 +4,6 @@ export const getArtworkFilterInputArgs = (user?: User) => {
   // Shared with auctionRoutes
   return {
     aggregations,
-    first: 39,
+    first: 40,
   }
 }
