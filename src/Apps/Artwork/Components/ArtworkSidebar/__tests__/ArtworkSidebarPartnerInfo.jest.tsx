@@ -165,7 +165,9 @@ describe("ArtworkSidebarPartnerInfo", () => {
             isInquireable: true,
           },
           collectorSignals: {
-            primaryLabel: null,
+            partnerOffer: null,
+            increasedInterest: false,
+            curatorsPick: false,
           },
         }),
       })

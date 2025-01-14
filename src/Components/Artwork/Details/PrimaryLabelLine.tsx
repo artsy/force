@@ -1,22 +1,36 @@
 import { Text } from "@artsy/palette"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
-import { graphql, createFragmentContainer } from "react-relay"
-import { PrimaryLabelLine_artwork$data } from "__generated__/PrimaryLabelLine_artwork.graphql"
-import { FC } from "react"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { PrimaryLabelLineQuery } from "__generated__/PrimaryLabelLineQuery.graphql"
+import type { PrimaryLabelLineQuery } from "__generated__/PrimaryLabelLineQuery.graphql"
+import type { PrimaryLabelLine_artwork$data } from "__generated__/PrimaryLabelLine_artwork.graphql"
+import { type FC, useEffect } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface PrimaryLabelLineProps {
   label: string | null | undefined
   artwork?: PrimaryLabelLine_artwork$data
 }
 
-export const PrimaryLabelLine: React.FC<React.PropsWithChildren<PrimaryLabelLineProps>> = ({
-  label,
-  artwork,
-}) => {
-  const { hideSignals } = useArtworkGridContext()
+export const PrimaryLabelLine: React.FC<
+  React.PropsWithChildren<PrimaryLabelLineProps>
+> = ({ label, artwork }) => {
+  const { hideSignals, updateSignals } = useArtworkGridContext()
   const partnerOffer = artwork?.collectorSignals?.partnerOffer
+
+  useEffect(() => {
+    if (updateSignals && artwork) {
+      const signals: string[] = []
+
+      if (partnerOffer) {
+        signals.push("PARTNER_OFFER")
+      }
+
+      if (label) {
+        signals.push(label)
+      }
+      updateSignals(artwork.internalID, signals)
+    }
+  }, [updateSignals, partnerOffer, label, artwork])
 
   if (!!partnerOffer) {
     return (
@@ -79,6 +93,7 @@ export const PrimaryLabelLineFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment PrimaryLabelLine_artwork on Artwork {
+        internalID
         collectorSignals {
           primaryLabel
           partnerOffer {
@@ -90,7 +105,7 @@ export const PrimaryLabelLineFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface PrimaryLabelLineQueryRendererProps {
@@ -98,10 +113,9 @@ interface PrimaryLabelLineQueryRendererProps {
   label: string | null | undefined
 }
 
-export const PrimaryLabelLineQueryRenderer: FC<PrimaryLabelLineQueryRendererProps> = ({
-  id,
-  label,
-}) => {
+export const PrimaryLabelLineQueryRenderer: FC<
+  PrimaryLabelLineQueryRendererProps
+> = ({ id, label }) => {
   return (
     <SystemQueryRenderer<PrimaryLabelLineQuery>
       lazyLoad
