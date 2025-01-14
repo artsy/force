@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<60b893d8875afa01a2df95bb9fbfa51a>>
+ * @generated SignedSource<<e84ac81848ffce97f40251720ce5885e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,11 +9,14 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
-export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPartnerInfo_artwork$data = {
   readonly collectorSignals: {
-    readonly primaryLabel: LabelSignalEnum | null | undefined;
+    readonly curatorsPick: boolean | null | undefined;
+    readonly increasedInterest: boolean;
+    readonly partnerOffer: {
+      readonly endAt: string | null | undefined;
+    } | null | undefined;
   } | null | undefined;
   readonly internalID: string;
   readonly isInquireable: boolean | null | undefined;
@@ -130,18 +133,35 @@ return {
       "selections": [
         {
           "alias": null,
-          "args": [
+          "args": null,
+          "concreteType": "PartnerOfferToCollector",
+          "kind": "LinkedField",
+          "name": "partnerOffer",
+          "plural": false,
+          "selections": [
             {
-              "kind": "Literal",
-              "name": "ignore",
-              "value": [
-                "PARTNER_OFFER"
-              ]
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endAt",
+              "storageKey": null
             }
           ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "kind": "ScalarField",
-          "name": "primaryLabel",
-          "storageKey": "primaryLabel(ignore:[\"PARTNER_OFFER\"])"
+          "name": "increasedInterest",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "curatorsPick",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -152,6 +172,6 @@ return {
 };
 })();
 
-(node as any).hash = "f060c1b5ce683b88cc2eadd546404c51";
+(node as any).hash = "0025d0f623d534998f22376b7ecae3ff";
 
 export default node;

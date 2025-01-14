@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b35e659205ce64f9fae4a225986d3bb4>>
+ * @generated SignedSource<<c518e52f97bd9d9d630740246184c367>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -89,6 +89,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "CollectorSignals",
             "kind": "LinkedField",
             "name": "collectorSignals",
@@ -148,12 +155,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9482ce43f89cf7a5343d9c1491db122d",
+    "cacheID": "fd30898d6af84caa7aca88d2f5c65f7b",
     "id": null,
     "metadata": {},
     "name": "PrimaryLabelLineQuery",
     "operationKind": "query",
-    "text": "query PrimaryLabelLineQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...PrimaryLabelLine_artwork\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query PrimaryLabelLineQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...PrimaryLabelLine_artwork\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

@@ -9,7 +9,7 @@ import {
 } from "@artsy/cohesion"
 import { themeGet } from "@styled-system/theme-get"
 import { RouterLink } from "System/Components/RouterLink"
-import { getSignalLabel } from "Utils/getSignalLabel"
+import { getSignalLabel, signalsToArray } from "Utils/getSignalLabel"
 import type { ArtworkSidebarPartnerInfo_artwork$data } from "__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -50,6 +50,8 @@ const ArtworkSidebarPartnerInfo: React.FC<
     collectorSignals,
   } = artwork
 
+  const signals = signalsToArray(artwork.collectorSignals)
+
   const { trackEvent } = useTracking()
 
   const { showInquiry, inquiryComponent } = useInquiry({
@@ -65,7 +67,7 @@ const ArtworkSidebarPartnerInfo: React.FC<
       context_owner_type: OwnerType.artwork,
       context_owner_slug: slug,
       context_owner_id: internalID,
-      signal_label: collectorSignals ? getSignalLabel(collectorSignals) : "",
+      signal_label: collectorSignals ? getSignalLabel({ signals }) : "",
     }
 
     trackEvent(event)
@@ -172,7 +174,11 @@ export const ArtworkSidebarPartnerInfoFragmentContainer =
           href
         }
         collectorSignals {
-          primaryLabel(ignore: [PARTNER_OFFER])
+          partnerOffer {
+            endAt
+          }
+          increasedInterest
+          curatorsPick
         }
       }
     `,
