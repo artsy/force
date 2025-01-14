@@ -337,7 +337,10 @@ export const NewPaymentRoute: FC<
         <Flex flexDirection="column">
           <Flex flexDirection="column">
             <ArtworkSummaryItem order={order} />
-            <TransactionDetailsSummaryItem order={order} />
+            <TransactionDetailsSummaryItem
+              order={order}
+              useLastSubmittedOffer
+            />
           </Flex>
           <BuyerGuarantee
             contextModule={ContextModule.ordersNewPayment}
