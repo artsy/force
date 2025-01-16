@@ -5,6 +5,7 @@ import type { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.gra
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { structuredDataAttributes } from "./helpers"
+import { useCanonicalHref } from "./useCanonicalHref"
 
 interface Props {
   artist: ArtistMeta_artist$data
@@ -15,13 +16,18 @@ export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   const alternateNames = artist?.alternateNames || []
 
+  const pathname = useCanonicalHref({
+    isInSeoExperiment: !!artist.isInSeoExperiment,
+    href: artist.href ?? "/",
+  })
+
   return (
     <>
       <MetaTags
         title={artist.meta.title}
         description={artist.meta.description}
         imageURL={artist.coverArtwork?.image?.large}
-        pathname={artist.href}
+        pathname={pathname}
       />
 
       <Meta
@@ -64,6 +70,7 @@ export const ArtistMetaFragmentContainer = createFragmentContainer(ArtistMeta, {
       deathday
       gender
       href
+      isInSeoExperiment
       meta(page: ABOUT) {
         description
         title

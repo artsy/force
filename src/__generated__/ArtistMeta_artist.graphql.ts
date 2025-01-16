@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ff731262d4a2cac376127e9bcfd0730b>>
+ * @generated SignedSource<<43680365f4a594f3926f31d191e7e592>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -70,6 +70,7 @@ export type ArtistMeta_artist$data = {
   readonly deathday: string | null | undefined;
   readonly gender: string | null | undefined;
   readonly href: string | null | undefined;
+  readonly isInSeoExperiment: boolean | null | undefined;
   readonly meta: {
     readonly description: string;
     readonly title: string;
@@ -211,6 +212,13 @@ return {
       "storageKey": null
     },
     (v1/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isInSeoExperiment",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": [
@@ -450,6 +458,6 @@ return {
 };
 })();
 
-(node as any).hash = "317d787474ecc45eac65f861049794ed";
+(node as any).hash = "4412bb39087fb21cfe9cd103c737e621";
 
 export default node;

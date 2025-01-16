@@ -5,9 +5,11 @@ import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
+const mockLocation = { pathname: "example", query: {} }
+
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
-    match: { location: { pathname: "example" } },
+    match: { location: mockLocation },
   }),
 }))
 
@@ -53,9 +55,15 @@ describe("AdminMeta", () => {
 
   describe("without an artist description", () => {
     it("renders the default description", () => {
-      renderWithRelay({ Artist: () => ({ meta: { description: null } }) })
+      renderWithRelay({
+        Artist: () => ({
+          href: "/artist/example-artist",
+          meta: { description: null, title: "Example Artist" },
+        }),
+      })
 
-      const defaultDescription = `Artsy is the world’s largest online art marketplace. Browse over 1 million artworks by iconic and emerging artists from 4000+ galleries and top auction houses.`
+      const defaultDescription =
+        "Artsy is the world’s largest online art marketplace. Browse over 1 million artworks by iconic and emerging artists from 4000+ galleries and top auction houses."
 
       expect(
         getMetaBy({ name: "description" })?.getAttribute("content"),
@@ -73,7 +81,13 @@ describe("AdminMeta", () => {
 
   describe("with an artist that has a description", () => {
     it("renders meta tags with that description", () => {
-      const artist = { meta: { description: "Very important painter!" } }
+      const artist = {
+        href: "/artist/example-artist",
+        meta: {
+          description: "Very important painter!",
+          title: "Example Artist",
+        },
+      }
       renderWithRelay({ Artist: () => artist })
 
       expect(
@@ -101,7 +115,11 @@ describe("AdminMeta", () => {
 
   describe("og tags", () => {
     it("renders them", () => {
-      const artist = { slug: "andy-warhol" }
+      const artist = {
+        slug: "andy-warhol",
+        href: "/artist/andy-warhol",
+        meta: { description: null, title: "Andy Warhol" },
+      }
       renderWithRelay({ Artist: () => artist })
 
       expect(
@@ -112,14 +130,23 @@ describe("AdminMeta", () => {
       ).not.toBeNull()
 
       expect(
-        getMetaBy({ property: "og:type", href: "undefined:artist" }),
+        getMetaBy({
+          property: "og:type",
+          href: "undefined:artist",
+        }),
       ).not.toBeNull()
     })
   })
 
   describe("optional og tags", () => {
     it("skips rendering them without the data", () => {
-      const artist = { birthday: null, deathday: null, nationality: null }
+      const artist = {
+        birthday: null,
+        deathday: null,
+        nationality: null,
+        href: "/artist/example-artist",
+        meta: { description: null, title: "Example Artist" },
+      }
       renderWithRelay({ Artist: () => artist })
 
       expect(getMetaBy({ property: "og:birthyear" })).toBeNull()
@@ -132,6 +159,8 @@ describe("AdminMeta", () => {
         birthday: "March 9",
         deathday: "June 7",
         nationality: "American",
+        href: "/artist/example-artist",
+        meta: { description: null, title: "Example Artist" },
       }
       renderWithRelay({ Artist: () => artist })
 
@@ -149,13 +178,21 @@ describe("AdminMeta", () => {
 
   describe("alternate names", () => {
     it("skips rendering them without the data", () => {
-      const artist = { alternateNames: [] }
+      const artist = {
+        alternateNames: [],
+        href: "/artist/example-artist",
+        meta: { description: null, title: "Example Artist" },
+      }
       renderWithRelay({ Artist: () => artist })
       expect(getMetaBy({ name: "skos:prefLabel" })).toBeNull()
     })
 
     it("renders them with the data", () => {
-      const artist = { alternateNames: ["Bonnie", "Betty"] }
+      const artist = {
+        alternateNames: ["Bonnie", "Betty"],
+        href: "/artist/example-artist",
+        meta: { description: null, title: "Example Artist" },
+      }
       renderWithRelay({ Artist: () => artist })
       expect(
         getMetaBy({ name: "skos:prefLabel", content: "Bonnie; Betty" }),
@@ -165,11 +202,14 @@ describe("AdminMeta", () => {
 
   describe("structured data", () => {
     it("renders", () => {
-      const artist = {}
+      const artist = {
+        href: "/artist/example-artist",
+        meta: { description: null, title: "Example Artist" },
+      }
       renderWithRelay({ Artist: () => artist })
       const structuredDataTag = document.querySelector(
         "script[type='application/ld+json']",
-      ) // eslint-disable no-node-access
+      )
       expect(structuredDataTag).not.toBeNull()
     })
   })

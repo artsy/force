@@ -59,6 +59,7 @@ input AckTaskMutationInput {
 
 type AckTaskMutationPayload {
   clientMutationId: String
+  homeViewTasksSection: HomeViewSectionTasks
 
   # On success: the new state of the Task
   taskOrError: AckTaskResponseOrError!
@@ -9288,6 +9289,7 @@ input DismissTaskMutationInput {
 
 type DismissTaskMutationPayload {
   clientMutationId: String
+  homeViewTasksSection: HomeViewSectionTasks
 
   # On success: the new state of the Task
   taskOrError: DismissTaskResponseOrError!
@@ -16817,7 +16819,7 @@ type Query {
     first: Int
 
     # Which index to use to display initial batch of artworks
-    initialArtworksIndexName: String = "infinite_discovery_initial_artworks"
+    initialArtworksIndexName: String
     last: Int
 
     # These artworks are used to calculate the taste profile vector. Such artworks are excluded from the response
@@ -21459,7 +21461,7 @@ type Viewer {
     first: Int
 
     # Which index to use to display initial batch of artworks
-    initialArtworksIndexName: String = "infinite_discovery_initial_artworks"
+    initialArtworksIndexName: String
     last: Int
 
     # These artworks are used to calculate the taste profile vector. Such artworks are excluded from the response
