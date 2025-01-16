@@ -85,8 +85,11 @@ export class ArtworkGridContainer extends React.Component<
 
   private get _columnCount(): number[] {
     const columnCount = this.props.columnCount
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    return typeof columnCount === "number" ? [columnCount] : columnCount
+
+    if (typeof columnCount === "number") {
+      return [columnCount]
+    }
+    return Array.isArray(columnCount) ? columnCount : []
   }
 
   componentDidMount() {
@@ -100,7 +103,6 @@ export class ArtworkGridContainer extends React.Component<
 
   componentWillUnmount() {
     if (this.state.interval) {
-      // @ts-ignore
       clearInterval(this.state.interval)
     }
   }
@@ -164,7 +166,7 @@ export class ArtworkGridContainer extends React.Component<
     )
 
     for (let column = 0; column < columnCount; column++) {
-      const artworkComponents = []
+      const artworkComponents: React.ReactNode[] = []
       for (let row = 0; row < sectionedArtworks[column].length; row++) {
         /**
          * The position of the image in the grid represented
@@ -176,14 +178,17 @@ export class ArtworkGridContainer extends React.Component<
         const artwork = sectionedArtworks[column][row]
 
         artworkComponents.push(
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           <GridItem
             contextModule={contextModule}
             artwork={artwork}
             hideSaleInfo={hideSaleInfo}
             key={artwork.id}
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            lazyLoad={artworkIndex >= preloadImageCount}
+            lazyLoad={
+              !!(
+                typeof preloadImageCount === "number" &&
+                artworkIndex >= preloadImageCount
+              )
+            }
             onClick={() => {
               if (this.props.onBrickClick) {
                 this.props.onBrickClick(artwork, artworkIndex)
@@ -200,7 +205,7 @@ export class ArtworkGridContainer extends React.Component<
             savedListId={this.props.savedListId}
             renderSaveButton={this.props.renderSaveButton}
             popoverContent={
-              firstP1Artwork?.id == artwork.id
+              firstP1Artwork?.id === artwork.id
                 ? this.props.popoverContent
                 : null
             }
@@ -210,11 +215,13 @@ export class ArtworkGridContainer extends React.Component<
         )
         // Setting a marginBottom on the artwork component didn’t work, so using a spacer view instead.
         if (row < sectionedArtworks[column].length - 1) {
+          const safeRow = row ?? "default-row"
+          const safeArtworkId = artwork.id ?? "default-id"
+
           artworkComponents.push(
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             <div
               style={spacerStyle}
-              key={"spacer-" + row + "-" + artwork.id}
+              key={`spacer-${safeRow}-${safeArtworkId}`}
             />,
           )
         }
@@ -277,10 +284,7 @@ export class ArtworkGridContainer extends React.Component<
     return columnBreakpointProps.map(([count, props], i) => (
       // We always create all Media instances, so using i as key is fine.
       <Media {...props} key={i}>
-        {/*
-        FIXME: REACT_18_MIGRATION
-        @ts-ignore */}
-        {(className, renderChildren) => {
+        {(className: string, renderChildren: boolean) => {
           return (
             <InnerContainer className={className}>
               {renderChildren &&
