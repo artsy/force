@@ -21,7 +21,6 @@ const ArtistWorksForSaleRoute: React.FC<
 > = ({ artist }) => {
   const { title, description } = artist.meta
   const { match } = useRouter()
-  const isPrefetched = !!match.location.state?.isPrefetched
 
   return (
     <>
@@ -29,85 +28,74 @@ const ArtistWorksForSaleRoute: React.FC<
         defaultTitle={title}
         name={artist.name ?? "Unknown Artist"}
       />
-
       <Meta name="description" content={description} />
-
-      {isPrefetched ? (
-        <ArtistArtworkFilterRefetchContainer
-          artist={artist}
-          aggregations={
-            artist.sidebarAggregations
-              ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
-          }
-        />
-      ) : (
-        <SystemQueryRenderer<ArtistWorksForSaleRouteArtworksQuery>
-          query={graphql`
-            query ArtistWorksForSaleRouteArtworksQuery(
-              $artistID: String!
-              $aggregations: [ArtworkAggregation]
-              $input: FilterArtworksInput!
-            ) {
-              artist(id: $artistID) {
-                ...ArtistArtworkFilter_artist @arguments(input: $input)
-                sidebarAggregations: filterArtworksConnection(
-                  aggregations: $aggregations
-                  first: 1
-                ) {
+      <SystemQueryRenderer<ArtistWorksForSaleRouteArtworksQuery>
+        query={graphql`
+          query ArtistWorksForSaleRouteArtworksQuery(
+            $artistID: String!
+            $aggregations: [ArtworkAggregation]
+            $input: FilterArtworksInput!
+          ) {
+            artist(id: $artistID) {
+              ...ArtistArtworkFilter_artist @arguments(input: $input)
+              sidebarAggregations: filterArtworksConnection(
+                aggregations: $aggregations
+                first: 1
+              ) {
+                counts {
+                  total
+                }
+                aggregations {
+                  slice
                   counts {
-                    total
-                  }
-                  aggregations {
-                    slice
-                    counts {
-                      name
-                      value
-                      count
-                    }
+                    name
+                    value
+                    count
                   }
                 }
               }
             }
-          `}
-          variables={{
-            ...getWorksForSaleRouteVariables(
-              match.params as { artistID: string },
-              match,
-            ),
-            artistID: artist.slug,
-          }}
-          placeholder={<ArtworkFilterPlaceholder showCreateAlert />}
-          render={({ error, props }) => {
-            if (error) {
-              console.error(
-                "[ArtistWorksForSaleRoute]: Error loading artwork grid",
-                error,
-              )
-              return null
-            }
-
-            if (!props || !props.artist) {
-              return <ArtworkFilterPlaceholder showCreateAlert />
-            }
-
-            return (
-              <>
-                {props.artist.sidebarAggregations?.counts?.total === 0 ? (
-                  <ArtistWorksForSaleEmptyFragmentContainer artist={artist} />
-                ) : (
-                  <ArtistArtworkFilterRefetchContainer
-                    artist={props.artist}
-                    aggregations={
-                      props.artist.sidebarAggregations
-                        ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
-                    }
-                  />
-                )}
-              </>
+          }
+        `}
+        variables={{
+          ...getWorksForSaleRouteVariables(
+            match.params as { artistID: string },
+            match,
+          ),
+          artistID: artist.slug,
+        }}
+        placeholder={<ArtworkFilterPlaceholder showCreateAlert />}
+        render={({ error, props }) => {
+          if (error) {
+            console.error(
+              "[ArtistWorksForSaleRoute]: Error loading artwork grid",
+              error,
             )
-          }}
-        />
-      )}
+            return null
+          }
+
+          if (!props || !props.artist) {
+            return <ArtworkFilterPlaceholder showCreateAlert />
+          }
+
+          return (
+            <>
+              {props.artist.sidebarAggregations?.counts?.total === 0 ? (
+                <ArtistWorksForSaleEmptyFragmentContainer artist={artist} />
+              ) : (
+                <ArtistArtworkFilterRefetchContainer
+                  artist={props.artist}
+                  aggregations={
+                    props.artist.sidebarAggregations
+                      ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+                  }
+                />
+              )}
+            </>
+          )
+        }}
+      />
+      )
     </>
   )
 }
@@ -116,37 +104,13 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
   ArtistWorksForSaleRoute,
   {
     artist: graphql`
-      fragment ArtistWorksForSaleRoute_artist on Artist
-      @argumentDefinitions(
-        isPrefetched: { type: "Boolean!", defaultValue: false }
-        aggregations: { type: "[ArtworkAggregation]" }
-        input: { type: "FilterArtworksInput" }
-      ) {
-        ...ArtistArtworkFilter_artist
-          @arguments(input: $input)
-          @include(if: $isPrefetched)
+      fragment ArtistWorksForSaleRoute_artist on Artist {
         ...ArtistWorksForSaleEmpty_artist
         slug
         name
         meta(page: ARTWORKS) {
           description
           title
-        }
-        sidebarAggregations: filterArtworksConnection(
-          aggregations: $aggregations
-          first: 1
-        ) @include(if: $isPrefetched) {
-          counts {
-            total
-          }
-          aggregations {
-            slice
-            counts {
-              name
-              value
-              count
-            }
-          }
         }
       }
     `,
