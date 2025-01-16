@@ -15,42 +15,10 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 "@artsy/cohesion@4.224.0":
   version "4.224.0"
   resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.224.0.tgz#b5aeb84cc5f5550714840456185e4ade0879b96d"
   integrity sha512-ZKrFCjALTE77R07k9bYz+LURR/4NtKFh38v+DUEev4yzEzGemDZePx7hDd4wwPcs626aL/bPeYdo1I2m9KxqlQ==
-=======
-=======
->>>>>>> c85e46a665 (update)
-<<<<<<< HEAD
-=======
->>>>>>> 45c3d80f5d (update)
-"@artsy/cohesion@4.223.0":
-  version "4.223.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.223.0.tgz#5817e34184f22780df2195207fc27126d4406009"
-  integrity sha512-IvUIECyARCldivlGldVVmr3ckBZU9uaT7MZL3A2zjuj9uUPlRdnQGrLY2t4qFavhdr3f5jixQ871rUciGo7j7w==
-<<<<<<< HEAD
-=======
-"@artsy/cohesion@4.219.0":
-  version "4.219.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.219.0.tgz#331cdd7ea0b0f76754cac65c17ac8c0a145d1392"
-  integrity sha512-KzDpewJfnuZ+WoGqlVlFcE307yALyWtzdtw58QjCW1JAZZOGUi4inEf4zpVsqcmeARJCzVHvqySej+ZBkbtkjg==
->>>>>>> f9c0b891ef (use open search)
-<<<<<<< HEAD
->>>>>>> 634bbde307 (use open search)
-=======
-=======
-"@artsy/cohesion@4.222.0":
-  version "4.222.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.222.0.tgz#3cfaedb2c20b942293a7e9dcb731ef6e1e18f49c"
-  integrity sha512-B0GdaXIYCINZ3BzHJC0Zu/dkfeGwq/dkFNzG6tNXaAyrhKN6dfgGrdJpbQxOt+IJA1cQk9EOQek6V/bskemmiw==
->>>>>>> 4a7edf88bc (update)
->>>>>>> c85e46a665 (update)
-=======
->>>>>>> 45c3d80f5d (update)
   dependencies:
     core-js "3"
 
