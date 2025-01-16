@@ -36,9 +36,10 @@ export interface DetailsProps {
 }
 
 const LINE_HEIGHT = 22
+const LINE_HEIGHT_PX = `${LINE_HEIGHT}px`
 const NUM_OF_LINES = 5
 const CONTAINER_HEIGHT = LINE_HEIGHT * NUM_OF_LINES
-const LINE_HEIGHT_PX = LINE_HEIGHT + "px"
+const CONTAINER_HEIGHT_PX = `${CONTAINER_HEIGHT}px`
 
 const StyledConditionalLink = styled(RouterLink)`
   color: ${themeGet("colors.black100")};
@@ -401,7 +402,7 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   }
 
   return (
-    <Box height={CONTAINER_HEIGHT + "px"}>
+    <Box height={CONTAINER_HEIGHT_PX}>
       {isAuctionArtwork && (
         <Flex flexDirection="row">
           <Join separator={<Spacer x={1} />}>
@@ -562,11 +563,7 @@ export const DetailsPlaceholder: React.FC<
   React.PropsWithChildren<DetailsPlaceholderProps>
 > = ({ hideArtistName, hidePartnerName, hideSaleInfo }) => {
   return (
-    <>
-      <SkeletonText variant="sm-display" lineHeight={LINE_HEIGHT_PX}>
-        Primary Label
-      </SkeletonText>
-
+    <Box height={CONTAINER_HEIGHT_PX}>
       {!hideArtistName && (
         <SkeletonText variant="sm-display" lineHeight={LINE_HEIGHT_PX}>
           Artist Name
@@ -588,6 +585,6 @@ export const DetailsPlaceholder: React.FC<
           Price
         </SkeletonText>
       )}
-    </>
+    </Box>
   )
 }
