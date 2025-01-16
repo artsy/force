@@ -286,7 +286,6 @@ export const InfiniteDiscoveryApp = () => {
             </Flex>
             <br />
             <br />
-            <br />
           </Flex>
         </div>
       </Flex>
