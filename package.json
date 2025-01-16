@@ -89,7 +89,7 @@
     "@sentry/node": "^8.32.0",
     "@sentry/profiling-node": "^8.32.0",
     "@stripe/react-stripe-js": "^3.1.1",
-    "@stripe/stripe-js": "^4.1.0",
+    "@stripe/stripe-js": "^5.5.0",
     "@styled-system/theme-get": "5.1.2",
     "@swc-node/register": "^1.10.9",
     "@swc/helpers": "^0.5.15",
