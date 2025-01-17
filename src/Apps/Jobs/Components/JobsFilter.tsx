@@ -14,7 +14,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { JobLinkFragmentContainer } from "./JobLink"
 
 export const LEADGEN_LOCATION = "Don't See Your Dream Job?"
-export const LEADGEN_DEPARTMENT_ID = "84312"
 
 interface JobsFilterProps {
   viewer: JobsFilter_viewer$data
@@ -34,12 +33,12 @@ const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({
     [viewer.jobs],
   )
 
-  const departments = useMemo(() => {
-    // Jobs grouped by department
+  const teams = useMemo(() => {
+    // Jobs grouped by team
     return viewer.jobs.reduce(
       (acc, job) => {
-        acc[job.departmentName] = acc[job.departmentName] || []
-        acc[job.departmentName].push(job)
+        acc[job.teamName] = acc[job.teamName] || []
+        acc[job.teamName].push(job)
         return acc
       },
       {} as Record<string, any[]>,
@@ -111,15 +110,15 @@ const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({
 
       {/* Unfiltered results, grouped by department */}
       {selection.length === 0 &&
-        Object.entries(departments).map(([departmentName, jobs]) => {
+        Object.entries(teams).map(([teamName, jobs]) => {
           if (jobs.length === 0) {
             return null
           }
 
           return (
-            <Fragment key={departmentName}>
+            <Fragment key={teamName}>
               <Column span={4}>
-                <Text variant="lg-display">{departmentName}</Text>
+                <Text variant="lg-display">{teamName}</Text>
 
                 <Text variant="lg-display" color="black60">
                   {jobs.length} open position
@@ -148,7 +147,7 @@ export const JobsFilterFragmentContainer = createFragmentContainer(JobsFilter, {
         ...JobLink_job
         id
         location
-        departmentName
+        teamName
       }
     }
   `,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2a71ef57164d680ca40592d1a6764a64>>
+ * @generated SignedSource<<b72a60f762ad325dd7837b5339a9f4cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,9 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type JobsFilter_viewer$data = {
   readonly jobs: ReadonlyArray<{
-    readonly departmentName: string;
     readonly id: string;
     readonly location: string;
+    readonly teamName: string;
     readonly " $fragmentSpreads": FragmentRefs<"JobLink_job">;
   }>;
   readonly " $fragmentType": "JobsFilter_viewer";
@@ -61,7 +61,7 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "departmentName",
+          "name": "teamName",
           "storageKey": null
         }
       ],
@@ -72,6 +72,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "1e422c2a88d8fb876274311737f8873b";
+(node as any).hash = "b7580339d984370a7ab56d5e1bb2457f";
 
 export default node;
