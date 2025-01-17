@@ -44,9 +44,15 @@ export const Layout: FC<React.PropsWithChildren<LayoutProps>> = ({
 
   const Component = LAYOUTS[variant]
 
-  const enableINPHack = /^\/(artwork|artist)\/[^/]+$/i.test(
-    match.location.pathname,
-  )
+  const enableINPHack = (() => {
+    // Don't enable if BACK/FORWARD navigation/buttons clicked
+    if (match.location.action === "POP") {
+      return false
+    }
+
+    // Only enable for select pages that have bad INP scores
+    return /^\/(artwork|artist)\/[^/]+$/i.test(match.location.pathname)
+  })()
 
   return (
     <Component>
@@ -87,5 +93,5 @@ const INPHack: React.FC<React.PropsWithChildren<INPHackProps>> = ({
     return children
   }
 
-  return <Fragment key={match.location.pathname}>{children}</Fragment>
+  return <Fragment>{children}</Fragment>
 }
