@@ -127,7 +127,7 @@ export const InfiniteDiscoveryApp = () => {
   }
 
   const initialArtworks = async () => {
-    const response = await request(getMetaphysicsEndpoint(), {
+    const response = await request("https://metaphysics-staging.artsy.net/v2", {
       body: JSON.stringify(
         buildMetaphysicsQuery(
           likedArtworks,
@@ -155,7 +155,7 @@ export const InfiniteDiscoveryApp = () => {
       return initialArtworks()
     }
 
-    const response = await request(getMetaphysicsEndpoint(), {
+    const response = await request("https://metaphysics-staging.artsy.net/v2", {
       body: JSON.stringify(
         buildMetaphysicsQuery(
           likedArtworks,
