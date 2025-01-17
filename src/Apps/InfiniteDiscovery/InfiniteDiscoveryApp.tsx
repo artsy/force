@@ -8,7 +8,6 @@ import {
   Separator,
   Text,
 } from "@artsy/palette"
-import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
 import { sampleSize } from "lodash"
 import React, { useEffect } from "react"
 
@@ -75,6 +74,7 @@ const request = async (url, opts) => {
       method: opts.method || "POST",
       headers: {
         "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
       },
       body: opts.body,
     }
