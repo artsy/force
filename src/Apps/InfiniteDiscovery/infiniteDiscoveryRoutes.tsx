@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { RouteProps } from "System/Router/Route"
+import type { RouteProps } from "System/Router/Route"
 
 const InfiniteDiscoveryApp = loadable(
   () =>
@@ -8,12 +8,13 @@ const InfiniteDiscoveryApp = loadable(
     ),
   {
     resolveComponent: component => component.InfiniteDiscoveryApp,
-  }
+  },
 )
 
 export const infiniteDiscoveryRoutes: RouteProps[] = [
   {
     path: "/infinite-discovery",
+    serverCacheTTL: 0,
     getComponent: () => InfiniteDiscoveryApp,
     onClientSideRender: () => {
       InfiniteDiscoveryApp.preload()
