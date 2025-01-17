@@ -72,11 +72,6 @@ export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
         case shouldSkipCDNCache(req, props?.user, ttl, url): {
           return { "Cache-Control": "no-cache" }
         }
-        case !!ttl: {
-          return {
-            "Cache-Control": `max-age=${ttl}`,
-          }
-        }
         default: {
           return {}
         }
