@@ -23,7 +23,6 @@ const buildMetaphysicsQuery = (
   const likedArtworkIds = likedArtworks.map(artwork => artwork.id)
   const dismissedArtworkIds = dismissedArtworks.map(artwork => artwork.id)
 
-  // Adjust query variables based on conditions
   const variables = {
     osWeights: weight,
     likedArtworkIds:
