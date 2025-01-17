@@ -14,7 +14,9 @@ const InfiniteDiscoveryApp = loadable(
 export const infiniteDiscoveryRoutes: RouteProps[] = [
   {
     path: "/infinite-discovery",
-    serverCacheTTL: 0,
+    cacheConfig: {
+      force: true,
+    },
     getComponent: () => InfiniteDiscoveryApp,
     onClientSideRender: () => {
       InfiniteDiscoveryApp.preload()
