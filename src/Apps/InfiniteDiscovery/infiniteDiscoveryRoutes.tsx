@@ -17,6 +17,7 @@ export const infiniteDiscoveryRoutes: RouteProps[] = [
     cacheConfig: {
       force: true,
     },
+    serverCacheTTL: 0,
     getComponent: () => InfiniteDiscoveryApp,
     onClientSideRender: () => {
       InfiniteDiscoveryApp.preload()
