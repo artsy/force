@@ -145,16 +145,6 @@ Framework code is located in [`/System`](https://github.com/artsy/force/tree/mai
 
 ### Naming, imports and exports
 
-Verbose is better than concise:
-
-```js
-// avoid
-export const Thing = createFragmentContainer(...)
-
-// good
-export const ThingFragmentContainer = createFragmentContainer(...)
-```
-
 Avoid default exports:
 
 ```js
