@@ -180,7 +180,7 @@ export const InfiniteDiscoveryApp = () => {
   }, []) // eslint-disable-line
 
   if (artworks.length === 0) {
-    return <h1>Nothing to show</h1>
+    return <h1>Loading...</h1>
   }
 
   return (
