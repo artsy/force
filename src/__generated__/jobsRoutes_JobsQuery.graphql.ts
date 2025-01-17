@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ae431bf074879bc4c7bf972f676770c0>>
+ * @generated SignedSource<<f87c22240352ab10cd9c59a86c1f313a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -95,7 +95,7 @@ const node: ConcreteRequest = {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "departmentName",
+                "name": "teamName",
                 "storageKey": null
               }
             ],
@@ -107,12 +107,12 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "24fc6f2cb565c686b6c7ed1f7a187e4a",
+    "cacheID": "8aac8cdcd52889529e2d4d00bd5f4b53",
     "id": null,
     "metadata": {},
     "name": "jobsRoutes_JobsQuery",
     "operationKind": "query",
-    "text": "query jobsRoutes_JobsQuery @cacheable {\n  viewer {\n    ...JobsApp_viewer\n  }\n}\n\nfragment JobLink_job on Job {\n  id\n  title\n  location\n}\n\nfragment JobsApp_viewer on Viewer {\n  ...JobsFilter_viewer\n}\n\nfragment JobsFilter_viewer on Viewer {\n  jobs {\n    ...JobLink_job\n    id\n    location\n    departmentName\n  }\n}\n"
+    "text": "query jobsRoutes_JobsQuery @cacheable {\n  viewer {\n    ...JobsApp_viewer\n  }\n}\n\nfragment JobLink_job on Job {\n  id\n  title\n  location\n}\n\nfragment JobsApp_viewer on Viewer {\n  ...JobsFilter_viewer\n}\n\nfragment JobsFilter_viewer on Viewer {\n  jobs {\n    ...JobLink_job\n    id\n    location\n    teamName\n  }\n}\n"
   }
 };
 
