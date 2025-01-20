@@ -95,7 +95,6 @@ const ArtistWorksForSaleRoute: React.FC<
           )
         }}
       />
-      )
     </>
   )
 }
