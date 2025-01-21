@@ -32,6 +32,7 @@ export const APPLE_KEY_ID: any = null
 export const APPLE_PRIVATE_KEY: any = null
 export const APPLE_TEAM_ID: any = null
 export const APPLICATION_NAME: any = "force-staging"
+export const ARTA_API_KEY: string | null = null
 export const ARTSY_EDITORIAL_CHANNEL: any = "5759e3efb5989e6f98f77993"
 export const ARTSY_MERCHANDISING_PARTNER_SLUGS: any = null
 export const ALLOWED_REDIRECT_HOSTS: any = "localhost"

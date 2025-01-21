@@ -1,10 +1,10 @@
 import { Spacer, Text } from "@artsy/palette"
 import type { ArtworkSidebarShippingInformation_artwork$data } from "__generated__/ArtworkSidebarShippingInformation_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-
 import { ActionType, type ClickedOnLearnMore } from "@artsy/cohesion"
 import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
+import { ArtsyShippingEstimate } from "Components/ArtsyShippingEstimate"
 
 export interface ShippingInformationProps {
   artwork: ArtworkSidebarShippingInformation_artwork$data
@@ -12,17 +12,18 @@ export interface ShippingInformationProps {
 
 const ArtworkSidebarShippingInformation: React.FC<
   React.PropsWithChildren<ShippingInformationProps>
-> = ({
-  artwork: {
+> = ({ artwork }) => {
+  const {
     isUnlisted,
     priceIncludesTaxDisplay,
     shippingOrigin,
     shippingInfo,
     pickupAvailable,
     taxInfo,
-  },
-}) => {
+  } = artwork
   const { trackEvent } = useTracking()
+  const globalArtsyShipping =
+    !!artwork.artsyShippingDomestic || !!artwork.artsyShippingInternational
 
   const handleMoreInfoClick = () => {
     const payload: ClickedOnLearnMore = {
@@ -59,6 +60,7 @@ const ArtworkSidebarShippingInformation: React.FC<
             </RouterLink>
           </Text>
         )}
+        {globalArtsyShipping && <ArtsyShippingEstimate artwork={artwork} />}
       </>
     )
   }
@@ -110,6 +112,7 @@ const ArtworkSidebarShippingInformation: React.FC<
           </RouterLink>
         </Text>
       )}
+      {globalArtsyShipping && <ArtsyShippingEstimate artwork={artwork} />}
       <Spacer y={1} />
     </>
   )
@@ -119,9 +122,12 @@ export const ArtworkSidebarShippingInformationFragmentContainer =
   createFragmentContainer(ArtworkSidebarShippingInformation, {
     artwork: graphql`
       fragment ArtworkSidebarShippingInformation_artwork on Artwork {
+        ...ArtsyShippingEstimate_artwork
         isUnlisted
         priceIncludesTaxDisplay
         shippingOrigin
+        artsyShippingDomestic
+        artsyShippingInternational
         shippingInfo
         pickupAvailable
         taxInfo {

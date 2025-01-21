@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<149fdfad3ca585c9008736841e2edb66>>
+ * @generated SignedSource<<69d24c02ed75188398ace1189252f6ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,8 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarShippingInformation_artwork$data = {
+  readonly artsyShippingDomestic: boolean | null | undefined;
+  readonly artsyShippingInternational: boolean | null | undefined;
   readonly isUnlisted: boolean;
   readonly pickupAvailable: boolean | null | undefined;
   readonly priceIncludesTaxDisplay: string | null | undefined;
@@ -23,6 +25,7 @@ export type ArtworkSidebarShippingInformation_artwork$data = {
       readonly url: string;
     };
   } | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtsyShippingEstimate_artwork">;
   readonly " $fragmentType": "ArtworkSidebarShippingInformation_artwork";
 };
 export type ArtworkSidebarShippingInformation_artwork$key = {
@@ -45,6 +48,11 @@ return {
   "name": "ArtworkSidebarShippingInformation_artwork",
   "selections": [
     {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtsyShippingEstimate_artwork"
+    },
+    {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
@@ -63,6 +71,20 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "shippingOrigin",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "artsyShippingDomestic",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "artsyShippingInternational",
       "storageKey": null
     },
     {
@@ -116,6 +138,6 @@ return {
 };
 })();
 
-(node as any).hash = "0c2d58cd7eff9f21026945809bdfe879";
+(node as any).hash = "b9432d12dca37956c4a6d14300a4e995";
 
 export default node;

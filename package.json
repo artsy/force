@@ -70,6 +70,7 @@
   },
   "dependencies": {
     "@artsy/cohesion": "4.227.0",
+    "@artaio/arta-browser": "^2.16.1",
     "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.1.0",
     "@artsy/dismissible": "^0.3.2",

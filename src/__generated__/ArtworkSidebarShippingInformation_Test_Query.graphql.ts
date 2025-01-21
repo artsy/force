@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<77015f0161d3e4e451b6a055f471cc2d>>
+ * @generated SignedSource<<cc548afd641b66546d648936ec501e80>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,16 +33,41 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "displayText",
+  "name": "id",
   "storageKey": null
 },
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "displayText",
+  "storageKey": null
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Float"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v3 = {
+v7 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -92,6 +117,71 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Location",
+            "kind": "LinkedField",
+            "name": "location",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "country",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "postalCode",
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "priceCurrency",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Money",
+            "kind": "LinkedField",
+            "name": "priceListed",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "major",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "heightCm",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "widthCm",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "kind": "ScalarField",
             "name": "isUnlisted",
             "storageKey": null
@@ -108,6 +198,20 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "shippingOrigin",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "artsyShippingDomestic",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "artsyShippingInternational",
             "storageKey": null
           },
           {
@@ -132,7 +236,7 @@ return {
             "name": "taxInfo",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -141,7 +245,7 @@ return {
                 "name": "moreInfo",
                 "plural": false,
                 "selections": [
-                  (v1/*: any*/),
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -155,20 +259,14 @@ return {
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v1/*: any*/)
         ],
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
     ]
   },
   "params": {
-    "cacheID": "c83a92052944bec61354fd381b4038d9",
+    "cacheID": "41d2252fc75de31a37c8bdf7d705ac13",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -178,47 +276,63 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.id": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "ID"
-        },
+        "artwork.artsyShippingDomestic": (v3/*: any*/),
+        "artwork.artsyShippingInternational": (v3/*: any*/),
+        "artwork.heightCm": (v4/*: any*/),
+        "artwork.id": (v5/*: any*/),
         "artwork.isUnlisted": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "Boolean"
         },
-        "artwork.pickupAvailable": {
+        "artwork.location": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "Boolean"
+          "type": "Location"
         },
-        "artwork.priceIncludesTaxDisplay": (v2/*: any*/),
-        "artwork.shippingInfo": (v2/*: any*/),
-        "artwork.shippingOrigin": (v2/*: any*/),
+        "artwork.location.country": (v6/*: any*/),
+        "artwork.location.id": (v5/*: any*/),
+        "artwork.location.postalCode": (v6/*: any*/),
+        "artwork.pickupAvailable": (v3/*: any*/),
+        "artwork.priceCurrency": (v6/*: any*/),
+        "artwork.priceIncludesTaxDisplay": (v6/*: any*/),
+        "artwork.priceListed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Money"
+        },
+        "artwork.priceListed.major": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Float"
+        },
+        "artwork.shippingInfo": (v6/*: any*/),
+        "artwork.shippingOrigin": (v6/*: any*/),
         "artwork.taxInfo": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "TaxInfo"
         },
-        "artwork.taxInfo.displayText": (v3/*: any*/),
+        "artwork.taxInfo.displayText": (v7/*: any*/),
         "artwork.taxInfo.moreInfo": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "TaxMoreInfo"
         },
-        "artwork.taxInfo.moreInfo.displayText": (v3/*: any*/),
-        "artwork.taxInfo.moreInfo.url": (v3/*: any*/)
+        "artwork.taxInfo.moreInfo.displayText": (v7/*: any*/),
+        "artwork.taxInfo.moreInfo.url": (v7/*: any*/),
+        "artwork.widthCm": (v4/*: any*/)
       }
     },
     "name": "ArtworkSidebarShippingInformation_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarShippingInformation_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarShippingInformation_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarShippingInformation_artwork on Artwork {\n  isUnlisted\n  priceIncludesTaxDisplay\n  shippingOrigin\n  shippingInfo\n  pickupAvailable\n  taxInfo {\n    displayText\n    moreInfo {\n      displayText\n      url\n    }\n  }\n}\n"
+    "text": "query ArtworkSidebarShippingInformation_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarShippingInformation_artwork\n    id\n  }\n}\n\nfragment ArtsyShippingEstimate_artwork on Artwork {\n  location {\n    country\n    postalCode\n    id\n  }\n  priceCurrency\n  priceListed {\n    major\n  }\n  heightCm\n  widthCm\n}\n\nfragment ArtworkSidebarShippingInformation_artwork on Artwork {\n  ...ArtsyShippingEstimate_artwork\n  isUnlisted\n  priceIncludesTaxDisplay\n  shippingOrigin\n  artsyShippingDomestic\n  artsyShippingInternational\n  shippingInfo\n  pickupAvailable\n  taxInfo {\n    displayText\n    moreInfo {\n      displayText\n      url\n    }\n  }\n}\n"
   }
 };
 })();

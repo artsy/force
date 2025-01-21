@@ -26,6 +26,7 @@ declare module "sharify" {
       APP_PREFERENCES: AppPreferences
       APP_URL: string
       APPLICATION_NAME: string
+      ARTA_API_KEY: string | null
       ARTIST_COLLECTIONS_RAIL?: string // TODO: remove after CollectionsRail a/b test
       ARTIST_PAGE_CTA_ARTIST_ID: string
       ARTIST_PAGE_CTA_ENABLED: string
