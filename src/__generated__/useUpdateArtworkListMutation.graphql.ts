@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<de54a09c2ba3f27456084265be26d8d9>>
+ * @generated SignedSource<<f1862cb431c0e47c60b05e8c40382851>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ export type updateCollectionInput = {
   clientMutationId?: string | null | undefined;
   id: string;
   name: string;
+  private?: boolean | null | undefined;
   shareableWithPartners?: boolean | null | undefined;
 };
 export type useUpdateArtworkListMutation$variables = {
