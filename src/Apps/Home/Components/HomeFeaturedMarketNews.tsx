@@ -86,7 +86,7 @@ const HomeFeaturedMarketNews: React.FC<
               {firstArticle.vertical}
             </Text>
 
-            <Text variant={["lg", "xl"]} mt={0.5}>
+            <Text variant={["lg-display", "xl"]} mt={0.5}>
               {firstArticle.title}
             </Text>
 
