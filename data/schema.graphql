@@ -16615,6 +16615,11 @@ type Query {
     # A slug for the city, conforming to Gravity's city slug naming conventions
     slug: String
   ): City
+  collection(
+    # The ID or slug of the Collection
+    id: String!
+    userID: String!
+  ): Collection
 
   # A collector profile.
   collectorProfile(userID: String): CollectorProfileType
@@ -21368,6 +21373,11 @@ type Viewer {
     # A slug for the city, conforming to Gravity's city slug naming conventions
     slug: String
   ): City
+  collection(
+    # The ID or slug of the Collection
+    id: String!
+    userID: String!
+  ): Collection
 
   # A collector profile.
   collectorProfile(userID: String): CollectorProfileType
