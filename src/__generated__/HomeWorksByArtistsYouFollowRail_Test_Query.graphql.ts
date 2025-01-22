@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<198b8a339eed2a344690e0c8f88786eb>>
+ * @generated SignedSource<<2ea1f91b5c9d1adbf4733c8bb795e487>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -78,13 +78,6 @@ v7 = [
     "alias": null,
     "args": null,
     "kind": "ScalarField",
-    "name": "__typename",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
     "name": "minor",
     "storageKey": null
   }
@@ -133,21 +126,15 @@ v15 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "String"
-},
-v16 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
   "type": "Long"
 },
-v17 = {
+v16 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Int"
 },
-v18 = {
+v17 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -608,28 +595,14 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "pickupAvailable",
+                    "name": "isPurchasable",
                     "storageKey": null
                   },
                   {
-                    "alias": null,
+                    "alias": "countryCode",
                     "args": null,
                     "kind": "ScalarField",
                     "name": "shippingCountry",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "euShippingOrigin",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "processWithArtsyShippingDomestic",
                     "storageKey": null
                   },
                   {
@@ -640,6 +613,13 @@ return {
                     "name": "domesticShippingFee",
                     "plural": false,
                     "selections": (v7/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "euShippingOrigin",
                     "storageKey": null
                   },
                   {
@@ -664,6 +644,13 @@ return {
                     "args": null,
                     "kind": "ScalarField",
                     "name": "artsyShippingInternational",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "pickupAvailable",
                     "storageKey": null
                   },
                   {
@@ -786,7 +773,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ef1ee302d375ea6795083f6d2ebe315d",
+    "cacheID": "b64f439cf8cda85d03a02b8a7573b4b2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -892,11 +879,11 @@ return {
         },
         "homePage.artworkModule.results.collectorSignals.runningShow.city": (v11/*: any*/),
         "homePage.artworkModule.results.collectorSignals.runningShow.id": (v9/*: any*/),
+        "homePage.artworkModule.results.countryCode": (v11/*: any*/),
         "homePage.artworkModule.results.cultural_maker": (v11/*: any*/),
         "homePage.artworkModule.results.date": (v11/*: any*/),
         "homePage.artworkModule.results.domesticShippingFee": (v14/*: any*/),
-        "homePage.artworkModule.results.domesticShippingFee.__typename": (v15/*: any*/),
-        "homePage.artworkModule.results.domesticShippingFee.minor": (v16/*: any*/),
+        "homePage.artworkModule.results.domesticShippingFee.minor": (v15/*: any*/),
         "homePage.artworkModule.results.euShippingOrigin": (v10/*: any*/),
         "homePage.artworkModule.results.href": (v11/*: any*/),
         "homePage.artworkModule.results.id": (v9/*: any*/),
@@ -907,13 +894,13 @@ return {
           "type": "Image"
         },
         "homePage.artworkModule.results.image.blurhashDataURL": (v11/*: any*/),
-        "homePage.artworkModule.results.image.height": (v17/*: any*/),
+        "homePage.artworkModule.results.image.height": (v16/*: any*/),
         "homePage.artworkModule.results.image.src": (v11/*: any*/),
-        "homePage.artworkModule.results.image.width": (v17/*: any*/),
+        "homePage.artworkModule.results.image.width": (v16/*: any*/),
         "homePage.artworkModule.results.internalID": (v9/*: any*/),
         "homePage.artworkModule.results.internationalShippingFee": (v14/*: any*/),
-        "homePage.artworkModule.results.internationalShippingFee.__typename": (v15/*: any*/),
-        "homePage.artworkModule.results.internationalShippingFee.minor": (v16/*: any*/),
+        "homePage.artworkModule.results.internationalShippingFee.minor": (v15/*: any*/),
+        "homePage.artworkModule.results.isPurchasable": (v10/*: any*/),
         "homePage.artworkModule.results.isUnlisted": (v13/*: any*/),
         "homePage.artworkModule.results.marketPriceInsights": {
           "enumValues": null,
@@ -952,25 +939,24 @@ return {
         "homePage.artworkModule.results.partner.id": (v9/*: any*/),
         "homePage.artworkModule.results.partner.name": (v11/*: any*/),
         "homePage.artworkModule.results.pickupAvailable": (v10/*: any*/),
-        "homePage.artworkModule.results.processWithArtsyShippingDomestic": (v10/*: any*/),
         "homePage.artworkModule.results.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "homePage.artworkModule.results.sale.cascadingEndTimeIntervalMinutes": (v17/*: any*/),
+        "homePage.artworkModule.results.sale.cascadingEndTimeIntervalMinutes": (v16/*: any*/),
         "homePage.artworkModule.results.sale.endAt": (v11/*: any*/),
-        "homePage.artworkModule.results.sale.extendedBiddingIntervalMinutes": (v17/*: any*/),
+        "homePage.artworkModule.results.sale.extendedBiddingIntervalMinutes": (v16/*: any*/),
         "homePage.artworkModule.results.sale.id": (v9/*: any*/),
         "homePage.artworkModule.results.sale.isOpen": (v10/*: any*/),
         "homePage.artworkModule.results.sale.is_auction": (v10/*: any*/),
         "homePage.artworkModule.results.sale.is_closed": (v10/*: any*/),
         "homePage.artworkModule.results.sale.startAt": (v11/*: any*/),
-        "homePage.artworkModule.results.saleArtwork": (v18/*: any*/),
+        "homePage.artworkModule.results.saleArtwork": (v17/*: any*/),
         "homePage.artworkModule.results.saleArtwork.id": (v9/*: any*/),
         "homePage.artworkModule.results.saleArtwork.lotID": (v11/*: any*/),
-        "homePage.artworkModule.results.sale_artwork": (v18/*: any*/),
+        "homePage.artworkModule.results.sale_artwork": (v17/*: any*/),
         "homePage.artworkModule.results.sale_artwork.counts": {
           "enumValues": null,
           "nullable": true,
@@ -1004,14 +990,13 @@ return {
         },
         "homePage.artworkModule.results.sale_artwork.opening_bid.display": (v11/*: any*/),
         "homePage.artworkModule.results.sale_message": (v11/*: any*/),
-        "homePage.artworkModule.results.shippingCountry": (v11/*: any*/),
         "homePage.artworkModule.results.slug": (v9/*: any*/),
         "homePage.artworkModule.results.title": (v11/*: any*/)
       }
     },
     "name": "HomeWorksByArtistsYouFollowRail_Test_Query",
     "operationKind": "query",
-    "text": "query HomeWorksByArtistsYouFollowRail_Test_Query {\n  homePage {\n    ...HomeWorksByArtistsYouFollowRail_homePage\n  }\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  saleArtwork {\n    lotID\n    id\n  }\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n\nfragment Details_artwork_1ZRKfT on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    primaryLabel\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...LegacyPrimaryLabelLine_artwork\n  ...PrimaryLabelLine_artwork\n  ...BidTimerLine_artwork\n  ...HoverDetails_artwork\n}\n\nfragment ExclusiveAccessBadge_artwork on Artwork {\n  isUnlisted\n}\n\nfragment HomeWorksByArtistsYouFollowRail_homePage on HomePage {\n  artworkModule(key: FOLLOWED_ARTISTS) {\n    results {\n      internalID\n      slug\n      collectorSignals {\n        primaryLabel\n        auction {\n          bidCount\n          lotWatcherCount\n        }\n      }\n      ...ShelfArtwork_artwork\n      id\n    }\n    id\n  }\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment LegacyPrimaryLabelLine_artwork on Artwork {\n  collectorSignals {\n    primaryLabel\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork_1ZRKfT\n  internalID\n  href\n  sale {\n    isOpen\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  pickupAvailable\n  shippingCountry\n  euShippingOrigin\n  processWithArtsyShippingDomestic\n  domesticShippingFee {\n    __typename\n    minor\n  }\n  internationalShippingFee {\n    __typename\n    minor\n  }\n  artsyShippingDomestic\n  artsyShippingInternational\n  onlyShipsDomestically\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n    curatorsPick\n    increasedInterest\n    runningShow {\n      city\n      id\n    }\n  }\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...ExclusiveAccessBadge_artwork\n  ...Metadata_artwork\n  title\n  href\n  artistNames\n  isUnlisted\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n    blurhashDataURL\n  }\n}\n"
+    "text": "query HomeWorksByArtistsYouFollowRail_Test_Query {\n  homePage {\n    ...HomeWorksByArtistsYouFollowRail_homePage\n  }\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  saleArtwork {\n    lotID\n    id\n  }\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n\nfragment Details_artwork_1ZRKfT on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    primaryLabel\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...LegacyPrimaryLabelLine_artwork\n  ...PrimaryLabelLine_artwork\n  ...BidTimerLine_artwork\n  ...HoverDetails_artwork\n}\n\nfragment ExclusiveAccessBadge_artwork on Artwork {\n  isUnlisted\n}\n\nfragment HomeWorksByArtistsYouFollowRail_homePage on HomePage {\n  artworkModule(key: FOLLOWED_ARTISTS) {\n    results {\n      internalID\n      slug\n      collectorSignals {\n        primaryLabel\n        auction {\n          bidCount\n          lotWatcherCount\n        }\n      }\n      ...ShelfArtwork_artwork\n      id\n    }\n    id\n  }\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment LegacyPrimaryLabelLine_artwork on Artwork {\n  collectorSignals {\n    primaryLabel\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork_1ZRKfT\n  internalID\n  href\n  sale {\n    isOpen\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  ...useFulfillmentOptions_artwork\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n    curatorsPick\n    increasedInterest\n    runningShow {\n      city\n      id\n    }\n  }\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...ExclusiveAccessBadge_artwork\n  ...Metadata_artwork\n  title\n  href\n  artistNames\n  isUnlisted\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n    blurhashDataURL\n  }\n}\n\nfragment useFulfillmentOptions_artwork on Artwork {\n  isPurchasable\n  countryCode: shippingCountry\n  domesticShippingFee {\n    minor\n  }\n  euShippingOrigin\n  internationalShippingFee {\n    minor\n  }\n  artsyShippingDomestic\n  artsyShippingInternational\n  pickupAvailable\n  onlyShipsDomestically\n}\n"
   }
 };
 })();

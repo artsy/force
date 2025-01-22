@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<86be428452dd9f37220c5268deb97a19>>
+ * @generated SignedSource<<8e1336cb4ae51ad0a82609b45d3fe677>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,6 @@ import { ReaderFragment } from 'relay-runtime';
 export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type PrimaryLabelLine_artwork$data = {
-  readonly artsyShippingDomestic: boolean | null | undefined;
-  readonly artsyShippingInternational: boolean | null | undefined;
   readonly collectorSignals: {
     readonly curatorsPick: boolean | null | undefined;
     readonly increasedInterest: boolean;
@@ -28,20 +26,8 @@ export type PrimaryLabelLine_artwork$data = {
       readonly city: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
-  readonly domesticShippingFee: {
-    readonly __typename: "Money";
-    readonly minor: any;
-  } | null | undefined;
-  readonly euShippingOrigin: boolean | null | undefined;
   readonly internalID: string;
-  readonly internationalShippingFee: {
-    readonly __typename: "Money";
-    readonly minor: any;
-  } | null | undefined;
-  readonly onlyShipsDomestically: boolean | null | undefined;
-  readonly pickupAvailable: boolean | null | undefined;
-  readonly processWithArtsyShippingDomestic: boolean | null | undefined;
-  readonly shippingCountry: string | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"useFulfillmentOptions_artwork">;
   readonly " $fragmentType": "PrimaryLabelLine_artwork";
 };
 export type PrimaryLabelLine_artwork$key = {
@@ -49,24 +35,7 @@ export type PrimaryLabelLine_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"PrimaryLabelLine_artwork">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "__typename",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "minor",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -80,73 +49,9 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "pickupAvailable",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "shippingCountry",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "euShippingOrigin",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "processWithArtsyShippingDomestic",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Money",
-      "kind": "LinkedField",
-      "name": "domesticShippingFee",
-      "plural": false,
-      "selections": (v0/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Money",
-      "kind": "LinkedField",
-      "name": "internationalShippingFee",
-      "plural": false,
-      "selections": (v0/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "artsyShippingDomestic",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "artsyShippingInternational",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "onlyShipsDomestically",
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "useFulfillmentOptions_artwork"
     },
     {
       "alias": null,
@@ -238,8 +143,7 @@ return {
   "type": "Artwork",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "40e9717975fe50befa194da797d526a6";
+(node as any).hash = "503a440b297abf523917a38d1988db5d";
 
 export default node;

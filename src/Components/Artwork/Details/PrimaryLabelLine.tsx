@@ -1,60 +1,42 @@
 import { Text } from "@artsy/palette"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useFulfillmentOptionsForArtwork } from "Utils/Hooks/useFulfillmentOptions"
 import type { PrimaryLabelLineQuery } from "__generated__/PrimaryLabelLineQuery.graphql"
 import type { PrimaryLabelLine_artwork$data } from "__generated__/PrimaryLabelLine_artwork.graphql"
+import type { PrimaryLabelLine_me$data } from "__generated__/PrimaryLabelLine_me.graphql"
 import { type FC, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface PrimaryLabelLineProps {
   label: string | null | undefined
   artwork?: PrimaryLabelLine_artwork$data
+  me?: PrimaryLabelLine_me$data
 }
 
-const MY_FAKE_LOCATIONS = ["US", "DE"]
-const EU_COUNTRY_CODES = ["DE", "FR", "IT", "ES", "NL", "BE", "LU", "AT", "PT"]
-
-const getShippingSignal: (
-  artwork?: PrimaryLabelLine_artwork$data,
-) => null | "SHIPS_TO_YOU_FREE" = artwork => {
-  if (artwork) {
-    if (artwork.domesticShippingFee?.minor === 0) {
-      if (
-        artwork.shippingCountry &&
-        MY_FAKE_LOCATIONS.includes(artwork.shippingCountry)
-      ) {
-        return "SHIPS_TO_YOU_FREE"
-      }
-      if (
-        artwork.euShippingOrigin &&
-        MY_FAKE_LOCATIONS.reduce(
-          (prev, current) => prev || EU_COUNTRY_CODES.includes(current),
-          false,
-        )
-      ) {
-        return "SHIPS_TO_YOU_FREE"
-      }
-    } else if (artwork.internationalShippingFee?.minor === 0) {
-      return "SHIPS_TO_YOU_FREE"
-    }
-  }
-  return null
+const doesShipFree = (
+  artwork: PrimaryLabelLine_artwork$data,
+  me?: PrimaryLabelLine_me$data,
+): boolean => {
+  const result = useFulfillmentOptionsForArtwork(artwork, me)
+  const { freeShippingToUserCountry, freeGlobalShipping } = result || {}
+  return !!(freeShippingToUserCountry || freeGlobalShipping)
 }
 
 export const PrimaryLabelLine: React.FC<
   React.PropsWithChildren<PrimaryLabelLineProps>
-> = ({ label, artwork }) => {
+> = ({ label, artwork, me }) => {
   const { hideSignals, updateSignals } = useArtworkGridContext()
   const partnerOffer = artwork?.collectorSignals?.partnerOffer
-  const shippingSignal = getShippingSignal(artwork)
+  const shipsFree = artwork && doesShipFree(artwork, me)
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (updateSignals && artwork?.internalID) {
       const signals: string[] = []
 
-      if (shippingSignal) {
-        signals.push(shippingSignal)
+      if (shipsFree) {
+        signals.push("SHIPS_TO_YOU_FREE")
       }
 
       if (partnerOffer) {
@@ -86,7 +68,7 @@ export const PrimaryLabelLine: React.FC<
     )
   }
 
-  if (shippingSignal === "SHIPS_TO_YOU_FREE") {
+  if (shipsFree) {
     return (
       <Text
         variant="xs"
@@ -145,26 +127,15 @@ export const PrimaryLabelLine: React.FC<
 export const PrimaryLabelLineFragmentContainer = createFragmentContainer(
   PrimaryLabelLine,
   {
+    me: graphql`
+      fragment PrimaryLabelLine_me on Me {
+        ...useFulfillmentOptions_me
+      }
+    `,
     artwork: graphql`
       fragment PrimaryLabelLine_artwork on Artwork {
         internalID
-
-        pickupAvailable
-        shippingCountry
-        euShippingOrigin
-        processWithArtsyShippingDomestic # Maybe mooea
-        domesticShippingFee {
-          __typename
-          minor # 0 = free
-        }
-        internationalShippingFee {
-          __typename
-          minor # 0 = free
-        }
-        artsyShippingDomestic # Artsy shipping domestic
-        artsyShippingInternational # Artsy shipping international
-        onlyShipsDomestically
-
+        ...useFulfillmentOptions_artwork
         collectorSignals {
           primaryLabel
           partnerOffer {
@@ -199,6 +170,9 @@ export const PrimaryLabelLineQueryRenderer: FC<
         query PrimaryLabelLineQuery($id: String!) {
           artwork(id: $id) {
             ...PrimaryLabelLine_artwork
+          }
+          me {
+            ...PrimaryLabelLine_me
           }
         }
       `}

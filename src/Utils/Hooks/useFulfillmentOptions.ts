@@ -2,7 +2,38 @@ import { useFragment } from "react-relay"
 import { useFulfillmentOptions_artwork$key } from "__generated__/useFulfillmentOptions_artwork.graphql"
 import { useFulfillmentOptions_me$key } from "__generated__/useFulfillmentOptions_me.graphql"
 import { graphql } from "relay-runtime"
-import { EU_COUNTRY_CODES } from "Components/CountrySelect"
+
+// import { EU_COUNTRY_CODES } from "Components/CountrySelect"
+
+const EU_COUNTRY_CODES = [
+  "AT",
+  "BE",
+  "BG",
+  "HR",
+  "CY",
+  "CZ",
+  "DK",
+  "EE",
+  "FI",
+  "FR",
+  "DE",
+  "GR",
+  "HU",
+  "IE",
+  "IT",
+  "LV",
+  "LT",
+  "LU",
+  "MT",
+  "NL",
+  "PL",
+  "PT",
+  "RO",
+  "SK",
+  "SI",
+  "ES",
+  "SE",
+] as const
 
 type MPMoney = {
   minor: any

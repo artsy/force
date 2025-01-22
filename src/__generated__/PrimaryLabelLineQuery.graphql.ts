@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<59708ca17608fc99a16f796db2f381ea>>
+ * @generated SignedSource<<9c3ee5db12f4474fa736bbbe768d0d2a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,9 @@ export type PrimaryLabelLineQuery$variables = {
 export type PrimaryLabelLineQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"PrimaryLabelLine_artwork">;
+  } | null | undefined;
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"PrimaryLabelLine_me">;
   } | null | undefined;
 };
 export type PrimaryLabelLineQuery = {
@@ -39,13 +42,6 @@ v1 = [
   }
 ],
 v2 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "__typename",
-    "storageKey": null
-  },
   {
     "alias": null,
     "args": null,
@@ -83,6 +79,22 @@ return {
           }
         ],
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "PrimaryLabelLine_me"
+          }
+        ],
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -113,28 +125,14 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "pickupAvailable",
+            "name": "isPurchasable",
             "storageKey": null
           },
           {
-            "alias": null,
+            "alias": "countryCode",
             "args": null,
             "kind": "ScalarField",
             "name": "shippingCountry",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "euShippingOrigin",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "processWithArtsyShippingDomestic",
             "storageKey": null
           },
           {
@@ -145,6 +143,13 @@ return {
             "name": "domesticShippingFee",
             "plural": false,
             "selections": (v2/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "euShippingOrigin",
             "storageKey": null
           },
           {
@@ -169,6 +174,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "artsyShippingInternational",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "pickupAvailable",
             "storageKey": null
           },
           {
@@ -269,20 +281,51 @@ return {
           (v3/*: any*/)
         ],
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "MyLocation",
+            "kind": "LinkedField",
+            "name": "location",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "countryCode",
+                "storageKey": null
+              },
+              (v3/*: any*/)
+            ],
+            "storageKey": null
+          },
+          (v3/*: any*/)
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "a6c80b8b5012d141466e518a6ed3fe8a",
+    "cacheID": "403c8fcf7d37030af02d07384264627a",
     "id": null,
     "metadata": {},
     "name": "PrimaryLabelLineQuery",
     "operationKind": "query",
-    "text": "query PrimaryLabelLineQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...PrimaryLabelLine_artwork\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  pickupAvailable\n  shippingCountry\n  euShippingOrigin\n  processWithArtsyShippingDomestic\n  domesticShippingFee {\n    __typename\n    minor\n  }\n  internationalShippingFee {\n    __typename\n    minor\n  }\n  artsyShippingDomestic\n  artsyShippingInternational\n  onlyShipsDomestically\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n    curatorsPick\n    increasedInterest\n    runningShow {\n      city\n      id\n    }\n  }\n}\n"
+    "text": "query PrimaryLabelLineQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...PrimaryLabelLine_artwork\n    id\n  }\n  me {\n    ...PrimaryLabelLine_me\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  ...useFulfillmentOptions_artwork\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n    curatorsPick\n    increasedInterest\n    runningShow {\n      city\n      id\n    }\n  }\n}\n\nfragment PrimaryLabelLine_me on Me {\n  ...useFulfillmentOptions_me\n}\n\nfragment useFulfillmentOptions_artwork on Artwork {\n  isPurchasable\n  countryCode: shippingCountry\n  domesticShippingFee {\n    minor\n  }\n  euShippingOrigin\n  internationalShippingFee {\n    minor\n  }\n  artsyShippingDomestic\n  artsyShippingInternational\n  pickupAvailable\n  onlyShipsDomestically\n}\n\nfragment useFulfillmentOptions_me on Me {\n  location {\n    countryCode\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "05a7ad415ba37c52d978d686eb288093";
+(node as any).hash = "1e33e5493940ddbe1fba3643f0e679c0";
 
 export default node;
