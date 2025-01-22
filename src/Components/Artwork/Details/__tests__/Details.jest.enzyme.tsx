@@ -113,6 +113,9 @@ describe("Details", () => {
         collectorSignals: {
           primaryLabel: null,
           partnerOffer: null,
+          curatorsPick: false,
+          increasedInterest: false,
+          runningShow: null,
           auction: {
             ...artworkInAuction?.collectorSignals?.auction,
             liveBiddingStarted: true,
@@ -133,6 +136,9 @@ describe("Details", () => {
         collectorSignals: {
           primaryLabel: null,
           partnerOffer: null,
+          curatorsPick: false,
+          runningShow: null,
+          increasedInterest: false,
           auction: {
             ...artworkInAuction?.collectorSignals?.auction,
             liveBiddingStarted: true,
@@ -465,9 +471,21 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
       onlineBiddingExtended: false,
       registrationEndsAt: "2022-03-5T12:33:37.000Z",
     },
+    curatorsPick: false,
+    increasedInterest: false,
+    runningShow: undefined,
   },
   consignmentSubmission: null,
   isListed: false,
+  artsyShippingDomestic: false,
+  artsyShippingInternational: false,
+  countryCode: "US",
+  domesticShippingFee: null,
+  euShippingOrigin: false,
+  internationalShippingFee: null,
+  isPurchasable: false,
+  onlyShipsDomestically: false,
+  pickupAvailable: false,
 }
 
 const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] =
@@ -539,6 +557,9 @@ const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] =
       primaryLabel: null,
       partnerOffer: null,
       auction: null,
+      curatorsPick: false,
+      increasedInterest: false,
+      runningShow: undefined,
     },
     consignmentSubmission: {
       internalID: "internal-id",
@@ -548,6 +569,15 @@ const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] =
       stateLabelColor: "black100",
     },
     isListed: false,
+    artsyShippingDomestic: false,
+    artsyShippingInternational: false,
+    countryCode: "US",
+    domesticShippingFee: null,
+    euShippingOrigin: false,
+    internationalShippingFee: null,
+    isPurchasable: false,
+    onlyShipsDomestically: false,
+    pickupAvailable: false,
   }
 
 const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
@@ -597,7 +627,19 @@ const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
     primaryLabel: null,
     partnerOffer: null,
     auction: null,
+    curatorsPick: false,
+    increasedInterest: false,
+    runningShow: undefined,
   },
   consignmentSubmission: null,
   isListed: false,
+  artsyShippingDomestic: true,
+  artsyShippingInternational: true,
+  countryCode: null,
+  domesticShippingFee: null,
+  euShippingOrigin: false,
+  internationalShippingFee: null,
+  isPurchasable: false,
+  onlyShipsDomestically: false,
+  pickupAvailable: false,
 }

@@ -91,7 +91,9 @@ export const useFulfillmentOptionsForArtwork = (
         freeShippingToUserCountry = true
       } else if (
         euShippingOrigin &&
-        EU_COUNTRY_CODES.includes(userCountryCode)
+        EU_COUNTRY_CODES.includes(
+          userCountryCode as (typeof EU_COUNTRY_CODES)[number],
+        )
       ) {
         freeShippingToUserCountry = true
       }
