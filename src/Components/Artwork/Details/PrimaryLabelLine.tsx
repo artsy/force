@@ -187,6 +187,7 @@ export const PrimaryLabelLineQueryRenderer: FC<
           <PrimaryLabelLineFragmentContainer
             label={label}
             artwork={props.artwork}
+            me={props.me || undefined}
           />
         )
       }}

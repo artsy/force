@@ -3,8 +3,6 @@ import { useFulfillmentOptions_artwork$key } from "__generated__/useFulfillmentO
 import { useFulfillmentOptions_me$key } from "__generated__/useFulfillmentOptions_me.graphql"
 import { graphql } from "relay-runtime"
 
-// import { EU_COUNTRY_CODES } from "Components/CountrySelect"
-
 const EU_COUNTRY_CODES = [
   "AT",
   "BE",
@@ -118,7 +116,7 @@ export const useFulfillmentOptionsForArtwork = (
         ? internationalShippingFee
         : null
 
-  return {
+  const result = {
     artworkLocation,
     domesticShipping,
     internationalShipping,
@@ -127,6 +125,7 @@ export const useFulfillmentOptionsForArtwork = (
     freeGlobalShipping,
     freeShippingToUserCountry,
   }
+  return result
 }
 
 const ME_FRAGMENT = graphql`
