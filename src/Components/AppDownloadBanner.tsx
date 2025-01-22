@@ -2,6 +2,7 @@ import { ActionType, type ClickedDownloadAppHeader } from "@artsy/cohesion"
 import ChevronSmallRightIcon from "@artsy/icons/ChevronSmallRightIcon"
 import { Box, Text } from "@artsy/palette"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { type FC, useEffect } from "react"
@@ -54,6 +55,12 @@ export const AppDownloadBanner: FC<
     }
 
     trackEvent(trackingEvent)
+  }
+
+  const { match } = useRouter()
+
+  if (match?.location?.pathname === "/") {
+    return null
   }
 
   return (

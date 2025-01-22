@@ -16,7 +16,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import Cookies from "cookies-js"
-import { type FC, useEffect, useRef } from "react"
+import { type FC, useEffect, useRef, useState } from "react"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
 
@@ -28,46 +28,20 @@ export const AppDownloadFooter: FC<
   React.PropsWithChildren<AppDownloadFooterProps>
 > = () => {
   const isMounted = useDidMount()
-
   const { user } = useSystemContext()
-
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
   const { trackEvent } = useTracking()
-
-  const ref = useRef<HTMLDivElement | null>(null)
-
   const { downloadAppUrl } = useDeviceDetection()
   const { match } = useRouter()
 
-  const isVisible = useRef(false)
   const routeChanges = useRef(-1)
 
   useEffect(() => {
-    const showBanner = async () => {
-      if (!ref.current || !("animate" in ref.current) || isVisible.current) {
-        return
-      }
-
-      const animation = ref.current.animate(
-        [{ transform: "translateY(100%)" }, { transform: "translateY(0)" }],
-        { duration: 250, easing: "ease-out", fill: "forwards" },
-      )
-
-      await animation.finished
-      isVisible.current = true
-    }
-
-    // Increment route changes counter when pathname changes
-    if (match.location.pathname) {
+    if (match?.location?.pathname) {
       routeChanges.current++
     }
-
-    // Show banner after second route change
-    if (routeChanges.current === 2) {
-      showBanner()
-    }
-  }, [match.location.pathname])
+  }, [match?.location?.pathname])
 
   const trackAppDownload = () => {
     const trackingEvent = {
@@ -81,25 +55,25 @@ export const AppDownloadFooter: FC<
     trackEvent(trackingEvent)
   }
 
+  const [mode, setMode] = useState<"Idle" | "Dismissed">("Idle")
+
   const handleDismiss = async () => {
+    setMode("Dismissed")
     Cookies.set(APP_DOWNLOAD_FOOTER_KEY, 1, { expires: 0 })
-
-    if (!ref.current) return
-
-    const animation = ref.current.animate(
-      [{ transform: "translateY(0)" }, { transform: "translateY(100%)" }],
-      { duration: 250, easing: "ease-out", fill: "forwards" },
-    )
-
-    await animation.finished
   }
 
-  if (!isMounted || Cookies.get(APP_DOWNLOAD_FOOTER_KEY)) {
+  if (
+    !isMounted ||
+    Cookies.get(APP_DOWNLOAD_FOOTER_KEY) ||
+    mode === "Dismissed" ||
+    match?.location?.pathname === "/" ||
+    routeChanges.current < 2
+  ) {
     return null
   }
 
   return (
-    <AppDownloadFooterPanel ref={ref as any}>
+    <AppDownloadFooterTransition>
       <Box
         display="flex"
         justifyContent="space-between"
@@ -131,7 +105,7 @@ export const AppDownloadFooter: FC<
       >
         Download Artsy
       </Button>
-    </AppDownloadFooterPanel>
+    </AppDownloadFooterTransition>
   )
 }
 
@@ -149,3 +123,28 @@ const AppDownloadFooterPanel = styled(Box)`
   box-shadow: ${themeGet("effects.dropShadow")};
   transform: translateY(100%);
 `
+
+type AppDownloadFooterTransitionProps = {
+  children: React.ReactNode
+}
+
+const AppDownloadFooterTransition: FC<AppDownloadFooterTransitionProps> = ({
+  children,
+}) => {
+  const ref = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (!ref.current || !("animate" in ref.current)) return
+
+    ref.current.animate(
+      [{ transform: "translateY(100%)" }, { transform: "translateY(0)" }],
+      { duration: 250, easing: "ease-out", fill: "forwards" },
+    )
+  }, [])
+
+  return (
+    <AppDownloadFooterPanel ref={ref} bg="yellow">
+      {children}
+    </AppDownloadFooterPanel>
+  )
+}
