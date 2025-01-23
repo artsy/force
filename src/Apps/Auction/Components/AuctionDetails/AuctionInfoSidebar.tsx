@@ -4,6 +4,8 @@ import type { AuctionInfoSidebar_sale$data } from "__generated__/AuctionInfoSide
 import { createFragmentContainer, graphql } from "react-relay"
 import { LiveAuctionToolTip } from "./LiveAuctionToolTip"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useSaleWebsocket } from "Utils/Hooks/useSaleWebsocket"
+import { useState } from "react"
 
 interface AuctionInfoSidebarProps {
   sale: AuctionInfoSidebar_sale$data
@@ -15,6 +17,16 @@ const AuctionInfoSidebar: React.FC<
   const showTotalRaisedFlag = useFeatureFlag(
     "emerald_hackathon-sale-total-raised",
   )
+  const totalRaisedDisplay = sale.totalRaised?.display
+  const [updatedTotalRaisedDisplay, setUpdatedTotalRaisedDisplay] =
+    useState(totalRaisedDisplay)
+
+  useSaleWebsocket({
+    saleID: sale.internalID as string,
+    onChange: data => {
+      setUpdatedTotalRaisedDisplay(data.total_raised_display)
+    },
+  })
 
   return (
     <Join separator={<Spacer y={2} />}>
@@ -24,7 +36,7 @@ const AuctionInfoSidebar: React.FC<
           <Box>
             <Text variant="sm">Total Raised</Text>
             <Text variant="sm" fontWeight="bold">
-              {sale.totalRaised?.display}
+              {updatedTotalRaisedDisplay}
             </Text>
           </Box>
         )}
@@ -77,6 +89,7 @@ export const AuctionInfoSidebarFragmentContainer = createFragmentContainer(
   {
     sale: graphql`
       fragment AuctionInfoSidebar_sale on Sale {
+        internalID
         liveStartAt
         hideTotal
         totalRaised {

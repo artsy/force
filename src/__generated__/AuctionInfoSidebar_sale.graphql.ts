@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cdd1b35a6d50a6cdd193e6a3532744f1>>
+ * @generated SignedSource<<c05d08dfc46b2481c0a8fc70f6c0fca8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionInfoSidebar_sale$data = {
   readonly hideTotal: boolean | null | undefined;
+  readonly internalID: string;
   readonly liveStartAt: string | null | undefined;
   readonly totalRaised: {
     readonly display: string | null | undefined;
@@ -30,6 +31,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "AuctionInfoSidebar_sale",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -74,6 +82,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "cb90cad64e1b1a34c1dd75d87430b891";
+(node as any).hash = "fdfaa5bd34ff9f09c341d6323c52a9b2";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b155480924ff6369c98ca30772199da2>>
+ * @generated SignedSource<<ef372d5a7e551b7021252210f30dfadd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,6 +30,12 @@ var v0 = [
   }
 ],
 v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v2 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -76,6 +82,13 @@ return {
         "name": "sale",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -128,7 +141,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b1c07e024c3d3cdfaf1299eff8665bd2",
+    "cacheID": "e7ac6689c01728d34bd0f9c7db4f841c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -144,20 +157,16 @@ return {
           "plural": false,
           "type": "Boolean"
         },
-        "sale.id": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "ID"
-        },
-        "sale.liveStartAt": (v1/*: any*/),
+        "sale.id": (v1/*: any*/),
+        "sale.internalID": (v1/*: any*/),
+        "sale.liveStartAt": (v2/*: any*/),
         "sale.totalRaised": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Money"
         },
-        "sale.totalRaised.display": (v1/*: any*/),
+        "sale.totalRaised.display": (v2/*: any*/),
         "sale.totalRaised.minor": {
           "enumValues": null,
           "nullable": false,
@@ -168,7 +177,7 @@ return {
     },
     "name": "AuctionInfoSidebarTestQuery",
     "operationKind": "query",
-    "text": "query AuctionInfoSidebarTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionInfoSidebar_sale\n    id\n  }\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n  hideTotal\n  totalRaised {\n    minor\n    display\n  }\n}\n"
+    "text": "query AuctionInfoSidebarTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionInfoSidebar_sale\n    id\n  }\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  internalID\n  liveStartAt\n  hideTotal\n  totalRaised {\n    minor\n    display\n  }\n}\n"
   }
 };
 })();
