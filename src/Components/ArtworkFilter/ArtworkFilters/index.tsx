@@ -1,6 +1,8 @@
 import { Join, Spacer } from "@artsy/palette"
 import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
+import { FramedFilter } from "Components/ArtworkFilter/ArtworkFilters/FramedFilter"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import type * as React from "react"
 import { ArtistNationalityFilter } from "./ArtistNationalityFilter"
 import { ArtistsFilter } from "./ArtistsFilter"
@@ -23,6 +25,9 @@ interface ArtworkFiltersProps {
 export const ArtworkFilters: React.FC<
   React.PropsWithChildren<ArtworkFiltersProps>
 > = props => {
+  const enableShowOnlyFramedArtworksFilter = useFeatureFlag(
+    "onyx_only_framed_artworks_filter",
+  )
   const { user } = props
 
   return (
@@ -41,6 +46,7 @@ export const ArtworkFilters: React.FC<
       <TimePeriodFilter expanded />
       <ColorFilter expanded />
       <PartnersFilter expanded />
+      {enableShowOnlyFramedArtworksFilter && <FramedFilter expanded />}
     </Join>
   )
 }

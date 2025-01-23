@@ -15,24 +15,24 @@ import { rangeToTuple } from "./Utils/rangeToTuple"
  * Initial filter state
  */
 export const initialArtworkFilterState: ArtworkFilters = {
-  majorPeriods: [],
-  page: 1,
-  sizes: [],
-  sort: "-decayed_merch",
+  additionalGeneIDs: [],
   artistIDs: [],
+  artistNationalities: [],
   artistSeriesIDs: [],
   attributionClass: [],
-  keyword: undefined,
-  partnerIDs: [],
-  additionalGeneIDs: [],
   colors: [],
-  locationCities: [],
-  artistNationalities: [],
-  materialsTerms: [],
   height: "*-*",
-  width: "*-*",
-  priceRange: "*-*",
+  keyword: undefined,
+  locationCities: [],
+  majorPeriods: [],
+  materialsTerms: [],
   metric: DEFAULT_METRIC,
+  page: 1,
+  partnerIDs: [],
+  priceRange: "*-*",
+  sizes: [],
+  sort: "-decayed_merch",
+  width: "*-*",
 }
 
 /**
@@ -47,6 +47,7 @@ export enum FilterParamName {
   attributionClass = "attributionClass",
   colors = "colors",
   forSale = "forSale",
+  framed = "framed",
   height = "height",
   keyword = "keyword",
   locationCities = "locationCities",
@@ -138,6 +139,7 @@ export enum SelectedFiltersCountsLabels {
   attributionClass = "attributionClass",
   colors = "colors",
   forSale = "forSale",
+  framed = "framed",
   locationCities = "locationCities",
   materialsTerms = "materialsTerms",
   medium = "medium",
@@ -483,6 +485,7 @@ const artworkFilterReducer = (
         "acquireable",
         "atAuction",
         "forSale",
+        "framed",
         "includeArtworksByFollowedArtists",
         "inquireableOnly",
         "offerable",
@@ -533,6 +536,7 @@ const artworkFilterReducer = (
         "atAuction",
         "color",
         "forSale",
+        "framed",
         "includeArtworksByFollowedArtists",
         "inquireableOnly",
         "offerable",
@@ -642,6 +646,13 @@ export const getSelectedFiltersCounts = (
         break
       }
       case paramName === FilterParamName.forSale: {
+        if (paramValue) {
+          counts[paramName] = 1
+        }
+        break
+      }
+
+      case paramName === FilterParamName.framed: {
         if (paramValue) {
           counts[paramName] = 1
         }

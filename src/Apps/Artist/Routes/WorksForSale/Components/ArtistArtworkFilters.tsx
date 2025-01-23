@@ -6,6 +6,7 @@ import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/A
 import { AttributionClassFilter } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
 import { ColorFilter } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
+import { FramedFilter } from "Components/ArtworkFilter/ArtworkFilters/FramedFilter"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
 import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
@@ -14,6 +15,7 @@ import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceR
 import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
 type ArtistArtworkFiltersProps = {}
@@ -21,6 +23,9 @@ type ArtistArtworkFiltersProps = {}
 export const ArtistArtworkFilters: React.FC<
   React.PropsWithChildren<ArtistArtworkFiltersProps>
 > = props => {
+  const enableShowOnlyFramedArtworksFilter = useFeatureFlag(
+    "onyx_only_framed_artworks_filter",
+  )
   const { user } = useSystemContext()
 
   return (
@@ -40,6 +45,7 @@ export const ArtistArtworkFilters: React.FC<
       <TimePeriodFilter />
       <ColorFilter />
       <PartnersFilter />
+      {enableShowOnlyFramedArtworksFilter && <FramedFilter />}
     </Join>
   )
 }
