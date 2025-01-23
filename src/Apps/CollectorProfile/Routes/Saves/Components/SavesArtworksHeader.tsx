@@ -11,6 +11,7 @@ import {
 import { ArtworkListContextualMenu } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/ArtworkListContextualMenu"
 import { SavesArtworksShareDialog } from "Apps/CollectorProfile/Routes/Saves/Components/SavesArtworksShareDialog"
 import { ClientSuspense } from "Components/ClientSuspense"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import type { SavesArtworksHeaderQuery } from "__generated__/SavesArtworksHeaderQuery.graphql"
 import { type FC, useState } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
@@ -29,6 +30,8 @@ const SavesArtworksHeader: FC<
   const collection = me?.collection
 
   const [mode, setMode] = useState<"Idle" | "Share">("Idle")
+
+  const enableShare = useFeatureFlag("diamond_shareable-artwork-lists")
 
   const handleShare = () => {
     setMode("Share")
@@ -69,14 +72,16 @@ const SavesArtworksHeader: FC<
             )}
           </Stack>
 
-          <Button
-            size="small"
-            variant="secondaryBlack"
-            onClick={handleShare}
-            Icon={ShareIcon}
-          >
-            Share
-          </Button>
+          {enableShare && (
+            <Button
+              size="small"
+              variant="secondaryBlack"
+              onClick={handleShare}
+              Icon={ShareIcon}
+            >
+              Share
+            </Button>
+          )}
         </Stack>
 
         {!collection.default && collection && (

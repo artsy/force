@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c4e16ed046fbfee43ae58f45afcbbafe>>
+ * @generated SignedSource<<51d3d23fdf41faec8644f9892d657b07>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -49,7 +49,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 10
+          "value": 50
         }
       ],
       "concreteType": "ArtworkConnection",
@@ -63,13 +63,13 @@ const node: ReaderFragment = {
           "name": "ArtworkGrid_artworks"
         }
       ],
-      "storageKey": "artworksConnection(first:10)"
+      "storageKey": "artworksConnection(first:50)"
     }
   ],
   "type": "Collection",
   "abstractKey": null
 };
 
-(node as any).hash = "a96cce66b25a20a2ff2b716b131e1da0";
+(node as any).hash = "7507740020decbdb9c7c6f355f077aa2";
 
 export default node;

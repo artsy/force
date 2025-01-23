@@ -39,7 +39,7 @@ export const UserCollectionRouteFragmentContainer = createFragmentContainer(
       fragment UserCollectionRoute_collection on Collection {
         id
         name
-        artworksConnection(first: 10) {
+        artworksConnection(first: 50) {
           ...ArtworkGrid_artworks
         }
       }
