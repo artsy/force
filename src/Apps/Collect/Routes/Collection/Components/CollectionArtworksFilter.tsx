@@ -51,6 +51,7 @@ export const CollectionArtworksFilter: React.FC<
 
   const Filters = (
     <Join separator={<Spacer y={4} />}>
+      <ArtworkLocationFilter expanded />
       {!isArtistCollection && <ArtistsFilter expanded />}
       <AttributionClassFilter expanded />
       <MediumFilter expanded />
@@ -60,7 +61,6 @@ export const CollectionArtworksFilter: React.FC<
       <WaysToBuyFilter expanded />
       <MaterialsFilter expanded />
       {!isArtistCollection && <ArtistNationalityFilter expanded />}
-      <ArtworkLocationFilter expanded />
       <TimePeriodFilter expanded />
       <ColorFilter expanded />
       <PartnersFilter expanded />

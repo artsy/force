@@ -16,6 +16,7 @@ import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToB
 export const SearchResultsArtworksFilters = () => {
   return (
     <Join separator={<Spacer y={4} />}>
+      <ArtworkLocationFilter expanded />
       <ArtistsFilter expanded />
       <AttributionClassFilter expanded />
       <MediumFilter expanded />
@@ -25,7 +26,6 @@ export const SearchResultsArtworksFilters = () => {
       <WaysToBuyFilter expanded />
       <MaterialsFilter expanded />
       <ArtistNationalityFilter expanded />
-      <ArtworkLocationFilter expanded />
       <TimePeriodFilter expanded />
       <ColorFilter expanded />
       <PartnersFilter expanded />

@@ -63,6 +63,7 @@ const FairArtworksFilter: React.FC<
   const Filters = (
     <Join separator={<Spacer y={4} />}>
       <KeywordFilter />
+      <ArtworkLocationFilter expanded />
       <PartnersFilter label="Exhibitors" expanded />
       <ArtistsFilter fairID={fair.internalID} expanded />
       <AttributionClassFilter expanded />
@@ -73,7 +74,6 @@ const FairArtworksFilter: React.FC<
       <WaysToBuyFilter expanded />
       <MaterialsFilter expanded />
       <ArtistNationalityFilter expanded />
-      <ArtworkLocationFilter expanded />
       <TimePeriodFilter expanded />
       <ColorFilter expanded />
     </Join>

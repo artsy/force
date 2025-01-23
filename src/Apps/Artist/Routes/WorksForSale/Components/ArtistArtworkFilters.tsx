@@ -26,6 +26,7 @@ export const ArtistArtworkFilters: React.FC<
   return (
     <Join separator={<Spacer y={4} />}>
       <KeywordFilter />
+      <ArtworkLocationFilter expanded />
       <ArtistsFilter user={user} expanded />
       <AttributionClassFilter expanded />
       <MediumFilter expanded />
@@ -36,7 +37,6 @@ export const ArtistArtworkFilters: React.FC<
       <WaysToBuyFilter expanded />
       <MaterialsFilter />
       <ArtistNationalityFilter />
-      <ArtworkLocationFilter />
       <TimePeriodFilter />
       <ColorFilter />
       <PartnersFilter />
