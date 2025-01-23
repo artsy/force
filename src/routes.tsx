@@ -60,6 +60,7 @@ import { pressRoutes } from "./Apps/Press/pressRoutes"
 import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
 import { saleRoutes } from "./Apps/Sale/saleRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
+import { userRoutes } from "./Apps/User/userRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
 
 const ROUTES = buildAppRoutes([
@@ -120,6 +121,7 @@ const ROUTES = buildAppRoutes([
   showRoutes,
   showsRoutes,
   tagRoutes,
+  userRoutes,
   viewingRoomRoutes,
   worksForYouRoutes,
 
