@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<38f9647c270e2e91651dc10433dd6559>>
+ * @generated SignedSource<<678df72844ff5515b336da12a5c771ab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,10 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PrimaryLabelLine_me$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"useFulfillmentOptions_me">;
+  readonly location: {
+    readonly country: string | null | undefined;
+    readonly countryCode: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "PrimaryLabelLine_me";
 };
 export type PrimaryLabelLine_me$key = {
@@ -26,15 +29,35 @@ const node: ReaderFragment = {
   "name": "PrimaryLabelLine_me",
   "selections": [
     {
+      "alias": null,
       "args": null,
-      "kind": "FragmentSpread",
-      "name": "useFulfillmentOptions_me"
+      "concreteType": "MyLocation",
+      "kind": "LinkedField",
+      "name": "location",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "countryCode",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "country",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 
-(node as any).hash = "fa2910d129890e93418bd531b399aef0";
+(node as any).hash = "df973f68dfe396a387f6bb5f0f4aab7a";
 
 export default node;
