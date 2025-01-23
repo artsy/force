@@ -10,6 +10,7 @@ import { createOfferOrderMutation } from "./mutations/AuthIntentCreateOfferOrder
 import { createOrderMutation } from "./mutations/AuthIntentCreateOrderMutation"
 import { followArtistMutation } from "./mutations/AuthIntentFollowArtistMutation"
 import { followGeneMutation } from "./mutations/AuthIntentFollowGeneMutation"
+import { followMarketingCollectionMutation } from "./mutations/AuthIntentFollowMarketingCollectionMutation"
 import { followProfileMutation } from "./mutations/AuthIntentFollowProfileMutation"
 import { saveArtworkMutation } from "./mutations/AuthIntentSaveArtworkMutation"
 
@@ -22,6 +23,7 @@ export type AfterAuthAction =
   | { action: "createAlert"; kind: "artworks"; objectId: string }
   | { action: "follow"; kind: "artist"; objectId: string }
   | { action: "follow"; kind: "gene"; objectId: string }
+  | { action: "follow"; kind: "marketingCollection"; objectId: string }
   | { action: "follow"; kind: "profile"; objectId: string }
   | { action: "save"; kind: "artworks"; objectId: string }
   | { action: "saveArtworkToLists"; kind: "artworks"; objectId: string }
@@ -89,6 +91,11 @@ export const runAuthIntent = async ({
               return followGeneMutation(relayEnvironment, value.objectId)
             case "profile":
               return followProfileMutation(relayEnvironment, value.objectId)
+            case "marketingCollection":
+              return followMarketingCollectionMutation(
+                relayEnvironment,
+                value.objectId,
+              )
           }
 
           break

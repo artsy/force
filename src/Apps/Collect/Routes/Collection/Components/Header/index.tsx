@@ -7,6 +7,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { FollowMarketingCollectionButtonQueryRenderer } from "Components/FollowButton/FollowMarketingCollectionButton"
 import type { Header_collection$data } from "__generated__/Header_collection.graphql"
 import { Link } from "found"
 import type * as React from "react"
@@ -37,6 +38,11 @@ export const CollectionHeader: React.FC<
               {collection.category}
             </Link>
           </Breadcrumbs>
+
+          <FollowMarketingCollectionButtonQueryRenderer
+            id={collection.slug}
+            mt={2}
+          />
         </Column>
 
         {collection.description && (
