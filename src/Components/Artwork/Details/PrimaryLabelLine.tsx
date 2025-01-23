@@ -1,7 +1,7 @@
 import { Text } from "@artsy/palette"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { processArtworkFulfillmentOptions } from "Utils/processFulfillmentOptions"
+import { useFulfillmentOptionsForArtwork } from "Utils/Hooks/useFulfillmentOptions"
 import type { PrimaryLabelLineQuery } from "__generated__/PrimaryLabelLineQuery.graphql"
 import type { PrimaryLabelLine_artwork$data } from "__generated__/PrimaryLabelLine_artwork.graphql"
 import type { PrimaryLabelLine_me$data } from "__generated__/PrimaryLabelLine_me.graphql"
@@ -14,15 +14,21 @@ interface PrimaryLabelLineProps {
   me?: PrimaryLabelLine_me$data
 }
 
+const doesShipFree = (
+  artwork: PrimaryLabelLine_artwork$data,
+  me?: PrimaryLabelLine_me$data,
+): boolean => {
+  const result = useFulfillmentOptionsForArtwork(artwork, me)
+  const { freeShippingToUserCountry, freeGlobalShipping } = result || {}
+  return !!(freeShippingToUserCountry || freeGlobalShipping)
+}
+
 export const PrimaryLabelLine: React.FC<
   React.PropsWithChildren<PrimaryLabelLineProps>
 > = ({ label, artwork, me }) => {
   const { hideSignals, updateSignals } = useArtworkGridContext()
   const partnerOffer = artwork?.collectorSignals?.partnerOffer
-
-  const { freeShippingToUserCountry, freeGlobalShipping } =
-    processArtworkFulfillmentOptions(artwork, me) || {}
-  const shipsFree = freeShippingToUserCountry || freeGlobalShipping
+  const shipsFree = artwork && doesShipFree(artwork, me)
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -123,16 +129,13 @@ export const PrimaryLabelLineFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment PrimaryLabelLine_me on Me {
-        location {
-          countryCode
-          country
-        }
+        ...useFulfillmentOptions_me
       }
     `,
     artwork: graphql`
       fragment PrimaryLabelLine_artwork on Artwork {
         internalID
-
+        ...useFulfillmentOptions_artwork
         collectorSignals {
           primaryLabel
           partnerOffer {
@@ -147,20 +150,6 @@ export const PrimaryLabelLineFragmentContainer = createFragmentContainer(
             city
           }
         }
-        ## Artwork fulfillment data
-        isPurchasable
-        shippingCountry
-        domesticShippingFee {
-          minor
-        }
-        euShippingOrigin
-        internationalShippingFee {
-          minor
-        }
-        artsyShippingDomestic
-        artsyShippingInternational
-        pickupAvailable
-        onlyShipsDomestically # maybe ignored for make offer?
       }
     `,
   },

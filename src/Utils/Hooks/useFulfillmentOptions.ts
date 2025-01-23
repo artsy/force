@@ -1,3 +1,8 @@
+import { useFragment } from "react-relay"
+import { useFulfillmentOptions_artwork$key } from "__generated__/useFulfillmentOptions_artwork.graphql"
+import { useFulfillmentOptions_me$key } from "__generated__/useFulfillmentOptions_me.graphql"
+import { graphql } from "relay-runtime"
+
 const EU_COUNTRY_CODES = [
   "AT",
   "BE",
@@ -46,46 +51,16 @@ type FulfillmentOptions = {
   freeShippingToUserCountry?: boolean
 }
 
-interface ArtworkFulfillmentData {
-  readonly artsyShippingDomestic: boolean | null | undefined
-  readonly artsyShippingInternational: boolean | null | undefined
-  readonly shippingCountry: string | null | undefined
-  readonly domesticShippingFee:
-    | {
-        readonly minor: any
-      }
-    | null
-    | undefined
-  readonly euShippingOrigin: boolean | null | undefined
-  readonly internationalShippingFee:
-    | {
-        readonly minor: any
-      }
-    | null
-    | undefined
-  readonly isPurchasable: boolean | null | undefined
-  readonly onlyShipsDomestically: boolean | null | undefined
-  readonly pickupAvailable: boolean | null | undefined
-}
-
-type MaybeMe =
-  | {
-      location?: { countryCode?: string | null | undefined } | null | undefined
-    }
-  | null
-  | undefined
-
-export const processArtworkFulfillmentOptions = (
-  artwork?: ArtworkFulfillmentData,
-  me?: MaybeMe,
+export const useFulfillmentOptionsForArtwork = (
+  artwork: useFulfillmentOptions_artwork$key,
+  me?: useFulfillmentOptions_me$key,
 ): FulfillmentOptions | null => {
-  if (!artwork) {
-    return null
-  }
+  const artworkData = useFragment(ARTWORK_FRAGMENT, artwork)
+  const meData = useFragment(ME_FRAGMENT, me)
 
   const {
     isPurchasable,
-    shippingCountry,
+    countryCode,
     domesticShippingFee,
     euShippingOrigin,
     internationalShippingFee,
@@ -93,9 +68,9 @@ export const processArtworkFulfillmentOptions = (
     artsyShippingInternational,
     pickupAvailable,
     onlyShipsDomestically,
-  } = artwork
+  } = artworkData
 
-  if (!isPurchasable || !shippingCountry) {
+  if (!isPurchasable || !countryCode) {
     return null
   }
 
@@ -104,13 +79,13 @@ export const processArtworkFulfillmentOptions = (
 
   let freeShippingToUserCountry
 
-  if (me) {
+  if (meData) {
     let freeShippingToUserCountry = freeGlobalShipping
 
-    const userCountryCode = me?.location?.countryCode
+    const userCountryCode = meData?.location?.countryCode
 
     if (!freeShippingToUserCountry && userCountryCode) {
-      if (userCountryCode === shippingCountry) {
+      if (userCountryCode === countryCode) {
         freeShippingToUserCountry = true
       } else if (
         euShippingOrigin &&
@@ -124,22 +99,22 @@ export const processArtworkFulfillmentOptions = (
   }
 
   const artworkLocation: FulfillmentOptions["artworkLocation"] = {
-    countryCode: shippingCountry,
+    countryCode: countryCode,
   }
 
-  let domesticShipping: FulfillmentOptions["domesticShipping"] = null
-  if (artsyShippingDomestic) {
-    domesticShipping = "ARTSY_SHIPPING"
-  } else if (domesticShippingFee) {
-    domesticShipping = domesticShippingFee
-  }
+  const domesticShipping: FulfillmentOptions["domesticShipping"] =
+    artsyShippingDomestic
+      ? "ARTSY_SHIPPING"
+      : domesticShippingFee
+        ? domesticShippingFee
+        : null
 
-  let internationalShipping: FulfillmentOptions["internationalShipping"] = null
-  if (artsyShippingInternational) {
-    internationalShipping = "ARTSY_SHIPPING"
-  } else if (internationalShippingFee) {
-    internationalShipping = internationalShippingFee
-  }
+  const internationalShipping: FulfillmentOptions["internationalShipping"] =
+    artsyShippingInternational
+      ? "ARTSY_SHIPPING"
+      : internationalShippingFee
+        ? internationalShippingFee
+        : null
 
   const result = {
     artworkLocation,
@@ -152,3 +127,29 @@ export const processArtworkFulfillmentOptions = (
   }
   return result
 }
+
+const ME_FRAGMENT = graphql`
+  fragment useFulfillmentOptions_me on Me {
+    location {
+      countryCode
+    }
+  }
+`
+
+const ARTWORK_FRAGMENT = graphql`
+  fragment useFulfillmentOptions_artwork on Artwork {
+    isPurchasable
+    countryCode: shippingCountry
+    domesticShippingFee {
+      minor
+    }
+    euShippingOrigin
+    internationalShippingFee {
+      minor
+    }
+    artsyShippingDomestic
+    artsyShippingInternational
+    pickupAvailable
+    onlyShipsDomestically # maybe ignored for make offer?
+  }
+`

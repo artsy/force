@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0bf6a1475cf2e1e297111ddbdead23b2>>
+ * @generated SignedSource<<9c3ee5db12f4474fa736bbbe768d0d2a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -41,14 +41,7 @@ v1 = [
     "variableName": "id"
   }
 ],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v3 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -56,7 +49,14 @@ v3 = [
     "name": "minor",
     "storageKey": null
   }
-];
+],
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -124,6 +124,75 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "isPurchasable",
+            "storageKey": null
+          },
+          {
+            "alias": "countryCode",
+            "args": null,
+            "kind": "ScalarField",
+            "name": "shippingCountry",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Money",
+            "kind": "LinkedField",
+            "name": "domesticShippingFee",
+            "plural": false,
+            "selections": (v2/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "euShippingOrigin",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Money",
+            "kind": "LinkedField",
+            "name": "internationalShippingFee",
+            "plural": false,
+            "selections": (v2/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "artsyShippingDomestic",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "artsyShippingInternational",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "pickupAvailable",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "onlyShipsDomestically",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "CollectorSignals",
             "kind": "LinkedField",
             "name": "collectorSignals",
@@ -169,7 +238,7 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v2/*: any*/)
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -202,83 +271,14 @@ return {
                     "name": "city",
                     "storageKey": null
                   },
-                  (v2/*: any*/)
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isPurchasable",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "shippingCountry",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Money",
-            "kind": "LinkedField",
-            "name": "domesticShippingFee",
-            "plural": false,
-            "selections": (v3/*: any*/),
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "euShippingOrigin",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Money",
-            "kind": "LinkedField",
-            "name": "internationalShippingFee",
-            "plural": false,
-            "selections": (v3/*: any*/),
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "artsyShippingDomestic",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "artsyShippingInternational",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "pickupAvailable",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "onlyShipsDomestically",
-            "storageKey": null
-          },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       },
@@ -305,30 +305,23 @@ return {
                 "name": "countryCode",
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "country",
-                "storageKey": null
-              },
-              (v2/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "7f269d74707e8dee7d338485b56eeab0",
+    "cacheID": "403c8fcf7d37030af02d07384264627a",
     "id": null,
     "metadata": {},
     "name": "PrimaryLabelLineQuery",
     "operationKind": "query",
-    "text": "query PrimaryLabelLineQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...PrimaryLabelLine_artwork\n    id\n  }\n  me {\n    ...PrimaryLabelLine_me\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n    curatorsPick\n    increasedInterest\n    runningShow {\n      city\n      id\n    }\n  }\n  isPurchasable\n  shippingCountry\n  domesticShippingFee {\n    minor\n  }\n  euShippingOrigin\n  internationalShippingFee {\n    minor\n  }\n  artsyShippingDomestic\n  artsyShippingInternational\n  pickupAvailable\n  onlyShipsDomestically\n}\n\nfragment PrimaryLabelLine_me on Me {\n  location {\n    countryCode\n    country\n    id\n  }\n}\n"
+    "text": "query PrimaryLabelLineQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...PrimaryLabelLine_artwork\n    id\n  }\n  me {\n    ...PrimaryLabelLine_me\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  ...useFulfillmentOptions_artwork\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n    curatorsPick\n    increasedInterest\n    runningShow {\n      city\n      id\n    }\n  }\n}\n\nfragment PrimaryLabelLine_me on Me {\n  ...useFulfillmentOptions_me\n}\n\nfragment useFulfillmentOptions_artwork on Artwork {\n  isPurchasable\n  countryCode: shippingCountry\n  domesticShippingFee {\n    minor\n  }\n  euShippingOrigin\n  internationalShippingFee {\n    minor\n  }\n  artsyShippingDomestic\n  artsyShippingInternational\n  pickupAvailable\n  onlyShipsDomestically\n}\n\nfragment useFulfillmentOptions_me on Me {\n  location {\n    countryCode\n    id\n  }\n}\n"
   }
 };
 })();
