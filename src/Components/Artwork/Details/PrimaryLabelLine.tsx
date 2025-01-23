@@ -67,15 +67,16 @@ export const PrimaryLabelLine: React.FC<
     return (
       <Text
         variant="xs"
-        color="green100"
-        backgroundColor="green10"
+        color="black100"
+        backgroundColor="white100"
         px={0.5}
         alignSelf="flex-start"
         borderRadius={3}
+        border={"1px solid"}
         my="1px"
-        style={{ whiteSpace: "nowrap" }}
+        style={{ whiteSpace: "nowrap", display: "flex" }}
       >
-        🎁 Free Shipping to YOU!
+        Free Shipping
       </Text>
     )
   }
