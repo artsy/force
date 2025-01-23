@@ -52,15 +52,18 @@ type FulfillmentOptions = {
 }
 
 export const useFulfillmentOptionsForArtwork = (
-  artwork: useFulfillmentOptions_artwork$key,
+  artwork?: useFulfillmentOptions_artwork$key,
   me?: useFulfillmentOptions_me$key,
 ): FulfillmentOptions | null => {
+  if (!artwork) {
+    return null
+  }
   const artworkData = useFragment(ARTWORK_FRAGMENT, artwork)
   const meData = useFragment(ME_FRAGMENT, me)
 
   const {
     isPurchasable,
-    countryCode,
+    shippingCountry,
     domesticShippingFee,
     euShippingOrigin,
     internationalShippingFee,
@@ -70,22 +73,20 @@ export const useFulfillmentOptionsForArtwork = (
     onlyShipsDomestically,
   } = artworkData
 
-  if (!isPurchasable || !countryCode) {
+  if (!isPurchasable || !shippingCountry) {
     return null
   }
 
   const freeGlobalShipping: boolean =
     domesticShippingFee?.minor === 0 && internationalShippingFee?.minor === 0
 
-  let freeShippingToUserCountry
+  let freeShippingToUserCountry = freeGlobalShipping
 
   if (meData) {
-    let freeShippingToUserCountry = freeGlobalShipping
-
     const userCountryCode = meData?.location?.countryCode
 
     if (!freeShippingToUserCountry && userCountryCode) {
-      if (userCountryCode === countryCode) {
+      if (userCountryCode === shippingCountry) {
         freeShippingToUserCountry = true
       } else if (
         euShippingOrigin &&
@@ -99,22 +100,22 @@ export const useFulfillmentOptionsForArtwork = (
   }
 
   const artworkLocation: FulfillmentOptions["artworkLocation"] = {
-    countryCode: countryCode,
+    countryCode: shippingCountry,
   }
 
-  const domesticShipping: FulfillmentOptions["domesticShipping"] =
-    artsyShippingDomestic
-      ? "ARTSY_SHIPPING"
-      : domesticShippingFee
-        ? domesticShippingFee
-        : null
+  let domesticShipping: FulfillmentOptions["domesticShipping"] = null
+  if (artsyShippingDomestic) {
+    domesticShipping = "ARTSY_SHIPPING"
+  } else if (domesticShippingFee) {
+    domesticShipping = domesticShippingFee
+  }
 
-  const internationalShipping: FulfillmentOptions["internationalShipping"] =
-    artsyShippingInternational
-      ? "ARTSY_SHIPPING"
-      : internationalShippingFee
-        ? internationalShippingFee
-        : null
+  let internationalShipping: FulfillmentOptions["internationalShipping"] = null
+  if (artsyShippingInternational) {
+    internationalShipping = "ARTSY_SHIPPING"
+  } else if (internationalShippingFee) {
+    internationalShipping = internationalShippingFee
+  }
 
   const result = {
     artworkLocation,
@@ -139,7 +140,7 @@ const ME_FRAGMENT = graphql`
 const ARTWORK_FRAGMENT = graphql`
   fragment useFulfillmentOptions_artwork on Artwork {
     isPurchasable
-    countryCode: shippingCountry
+    shippingCountry
     domesticShippingFee {
       minor
     }

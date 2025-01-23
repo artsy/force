@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d3780cd7966b42b655ccf843993e4c51>>
+ * @generated SignedSource<<38123c65d8a57981db36b217dcb4ab45>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,6 @@ import { FragmentRefs } from "relay-runtime";
 export type useFulfillmentOptions_artwork$data = {
   readonly artsyShippingDomestic: boolean | null | undefined;
   readonly artsyShippingInternational: boolean | null | undefined;
-  readonly countryCode: string | null | undefined;
   readonly domesticShippingFee: {
     readonly minor: any;
   } | null | undefined;
@@ -24,6 +23,7 @@ export type useFulfillmentOptions_artwork$data = {
   readonly isPurchasable: boolean | null | undefined;
   readonly onlyShipsDomestically: boolean | null | undefined;
   readonly pickupAvailable: boolean | null | undefined;
+  readonly shippingCountry: string | null | undefined;
   readonly " $fragmentType": "useFulfillmentOptions_artwork";
 };
 export type useFulfillmentOptions_artwork$key = {
@@ -55,7 +55,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": "countryCode",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "shippingCountry",
@@ -122,6 +122,6 @@ return {
 };
 })();
 
-(node as any).hash = "01af215d1661aab903671989d3496b98";
+(node as any).hash = "dc73bdc5172a52b0deca786b6ce9f9ac";
 
 export default node;

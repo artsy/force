@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<73f5b7888cae4fc7908662ac6bd2a1dc>>
+ * @generated SignedSource<<c8d23dff734af73f626a67e0c16cdf22>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -617,7 +617,7 @@ return {
                         "storageKey": null
                       },
                       {
-                        "alias": "countryCode",
+                        "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "shippingCountry",
@@ -794,7 +794,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ee7439b1efc75d132ad3d32c043c2ed1",
+    "cacheID": "7c3578b37ba3350b9f52e57da4936aa8",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -905,7 +905,6 @@ return {
         },
         "viewer.artworksConnection.edges.node.collectorSignals.runningShow.city": (v11/*: any*/),
         "viewer.artworksConnection.edges.node.collectorSignals.runningShow.id": (v9/*: any*/),
-        "viewer.artworksConnection.edges.node.countryCode": (v11/*: any*/),
         "viewer.artworksConnection.edges.node.cultural_maker": (v11/*: any*/),
         "viewer.artworksConnection.edges.node.date": (v11/*: any*/),
         "viewer.artworksConnection.edges.node.domesticShippingFee": (v14/*: any*/),
@@ -1016,6 +1015,7 @@ return {
         },
         "viewer.artworksConnection.edges.node.sale_artwork.opening_bid.display": (v11/*: any*/),
         "viewer.artworksConnection.edges.node.sale_message": (v11/*: any*/),
+        "viewer.artworksConnection.edges.node.shippingCountry": (v11/*: any*/),
         "viewer.artworksConnection.edges.node.slug": (v9/*: any*/),
         "viewer.artworksConnection.edges.node.title": (v11/*: any*/),
         "viewer.artworksConnection.id": (v9/*: any*/)
@@ -1023,7 +1023,7 @@ return {
     },
     "name": "HomeEmergingPicksArtworksRail_Test_Query",
     "operationKind": "query",
-    "text": "query HomeEmergingPicksArtworksRail_Test_Query {\n  viewer {\n    ...HomeEmergingPicksArtworksRail_viewer\n  }\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  saleArtwork {\n    lotID\n    id\n  }\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n\nfragment Details_artwork_1ZRKfT on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    primaryLabel\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...LegacyPrimaryLabelLine_artwork\n  ...PrimaryLabelLine_artwork\n  ...BidTimerLine_artwork\n  ...HoverDetails_artwork\n}\n\nfragment ExclusiveAccessBadge_artwork on Artwork {\n  isUnlisted\n}\n\nfragment HomeEmergingPicksArtworksRail_viewer on Viewer {\n  artworksConnection(first: 20, marketingCollectionID: \"curators-picks-emerging\", sort: \"-decayed_merch\") {\n    edges {\n      node {\n        internalID\n        slug\n        href\n        collectorSignals {\n          primaryLabel\n          auction {\n            bidCount\n            lotWatcherCount\n          }\n        }\n        ...ShelfArtwork_artwork\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment LegacyPrimaryLabelLine_artwork on Artwork {\n  collectorSignals {\n    primaryLabel\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork_1ZRKfT\n  internalID\n  href\n  sale {\n    isOpen\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  ...useFulfillmentOptions_artwork\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n    curatorsPick\n    increasedInterest\n    runningShow {\n      city\n      id\n    }\n  }\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...ExclusiveAccessBadge_artwork\n  ...Metadata_artwork\n  title\n  href\n  artistNames\n  isUnlisted\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n    blurhashDataURL\n  }\n}\n\nfragment useFulfillmentOptions_artwork on Artwork {\n  isPurchasable\n  countryCode: shippingCountry\n  domesticShippingFee {\n    minor\n  }\n  euShippingOrigin\n  internationalShippingFee {\n    minor\n  }\n  artsyShippingDomestic\n  artsyShippingInternational\n  pickupAvailable\n  onlyShipsDomestically\n}\n"
+    "text": "query HomeEmergingPicksArtworksRail_Test_Query {\n  viewer {\n    ...HomeEmergingPicksArtworksRail_viewer\n  }\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  saleArtwork {\n    lotID\n    id\n  }\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n\nfragment Details_artwork_1ZRKfT on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    primaryLabel\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...LegacyPrimaryLabelLine_artwork\n  ...PrimaryLabelLine_artwork\n  ...BidTimerLine_artwork\n  ...HoverDetails_artwork\n}\n\nfragment ExclusiveAccessBadge_artwork on Artwork {\n  isUnlisted\n}\n\nfragment HomeEmergingPicksArtworksRail_viewer on Viewer {\n  artworksConnection(first: 20, marketingCollectionID: \"curators-picks-emerging\", sort: \"-decayed_merch\") {\n    edges {\n      node {\n        internalID\n        slug\n        href\n        collectorSignals {\n          primaryLabel\n          auction {\n            bidCount\n            lotWatcherCount\n          }\n        }\n        ...ShelfArtwork_artwork\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment LegacyPrimaryLabelLine_artwork on Artwork {\n  collectorSignals {\n    primaryLabel\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork_1ZRKfT\n  internalID\n  href\n  sale {\n    isOpen\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  ...useFulfillmentOptions_artwork\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n    curatorsPick\n    increasedInterest\n    runningShow {\n      city\n      id\n    }\n  }\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...ExclusiveAccessBadge_artwork\n  ...Metadata_artwork\n  title\n  href\n  artistNames\n  isUnlisted\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n    blurhashDataURL\n  }\n}\n\nfragment useFulfillmentOptions_artwork on Artwork {\n  isPurchasable\n  shippingCountry\n  domesticShippingFee {\n    minor\n  }\n  euShippingOrigin\n  internationalShippingFee {\n    minor\n  }\n  artsyShippingDomestic\n  artsyShippingInternational\n  pickupAvailable\n  onlyShipsDomestically\n}\n"
   }
 };
 })();

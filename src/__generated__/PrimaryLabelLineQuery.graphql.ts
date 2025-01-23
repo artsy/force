@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9c3ee5db12f4474fa736bbbe768d0d2a>>
+ * @generated SignedSource<<66e8fe7a8b561769a9f520557e04eef4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -129,7 +129,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": "countryCode",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "shippingCountry",
@@ -316,12 +316,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "403c8fcf7d37030af02d07384264627a",
+    "cacheID": "755b88ef38b613b799bf9e7e901354b6",
     "id": null,
     "metadata": {},
     "name": "PrimaryLabelLineQuery",
     "operationKind": "query",
-    "text": "query PrimaryLabelLineQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...PrimaryLabelLine_artwork\n    id\n  }\n  me {\n    ...PrimaryLabelLine_me\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  ...useFulfillmentOptions_artwork\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n    curatorsPick\n    increasedInterest\n    runningShow {\n      city\n      id\n    }\n  }\n}\n\nfragment PrimaryLabelLine_me on Me {\n  ...useFulfillmentOptions_me\n}\n\nfragment useFulfillmentOptions_artwork on Artwork {\n  isPurchasable\n  countryCode: shippingCountry\n  domesticShippingFee {\n    minor\n  }\n  euShippingOrigin\n  internationalShippingFee {\n    minor\n  }\n  artsyShippingDomestic\n  artsyShippingInternational\n  pickupAvailable\n  onlyShipsDomestically\n}\n\nfragment useFulfillmentOptions_me on Me {\n  location {\n    countryCode\n    id\n  }\n}\n"
+    "text": "query PrimaryLabelLineQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...PrimaryLabelLine_artwork\n    id\n  }\n  me {\n    ...PrimaryLabelLine_me\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  ...useFulfillmentOptions_artwork\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n    curatorsPick\n    increasedInterest\n    runningShow {\n      city\n      id\n    }\n  }\n}\n\nfragment PrimaryLabelLine_me on Me {\n  ...useFulfillmentOptions_me\n}\n\nfragment useFulfillmentOptions_artwork on Artwork {\n  isPurchasable\n  shippingCountry\n  domesticShippingFee {\n    minor\n  }\n  euShippingOrigin\n  internationalShippingFee {\n    minor\n  }\n  artsyShippingDomestic\n  artsyShippingInternational\n  pickupAvailable\n  onlyShipsDomestically\n}\n\nfragment useFulfillmentOptions_me on Me {\n  location {\n    countryCode\n    id\n  }\n}\n"
   }
 };
 })();

@@ -14,21 +14,16 @@ interface PrimaryLabelLineProps {
   me?: PrimaryLabelLine_me$data
 }
 
-const doesShipFree = (
-  artwork: PrimaryLabelLine_artwork$data,
-  me?: PrimaryLabelLine_me$data,
-): boolean => {
-  const result = useFulfillmentOptionsForArtwork(artwork, me)
-  const { freeShippingToUserCountry, freeGlobalShipping } = result || {}
-  return !!(freeShippingToUserCountry || freeGlobalShipping)
-}
-
 export const PrimaryLabelLine: React.FC<
   React.PropsWithChildren<PrimaryLabelLineProps>
 > = ({ label, artwork, me }) => {
   const { hideSignals, updateSignals } = useArtworkGridContext()
   const partnerOffer = artwork?.collectorSignals?.partnerOffer
-  const shipsFree = artwork && doesShipFree(artwork, me)
+
+  const shippingOptions = useFulfillmentOptionsForArtwork(artwork, me)
+  const shipsFree =
+    shippingOptions?.freeGlobalShipping ||
+    shippingOptions?.freeShippingToUserCountry
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
