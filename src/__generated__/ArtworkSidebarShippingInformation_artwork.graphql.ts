@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<07b9ab0e745a139834411da0a73f5a79>>
+ * @generated SignedSource<<149fdfad3ca585c9008736841e2edb66>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarShippingInformation_artwork$data = {
   readonly isUnlisted: boolean;
+  readonly pickupAvailable: boolean | null | undefined;
   readonly priceIncludesTaxDisplay: string | null | undefined;
   readonly shippingInfo: string | null | undefined;
   readonly shippingOrigin: string | null | undefined;
@@ -74,6 +75,13 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "pickupAvailable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "TaxInfo",
       "kind": "LinkedField",
       "name": "taxInfo",
@@ -108,6 +116,6 @@ return {
 };
 })();
 
-(node as any).hash = "41fc822248c0ef2a098f0fb185131c51";
+(node as any).hash = "0c2d58cd7eff9f21026945809bdfe879";
 
 export default node;

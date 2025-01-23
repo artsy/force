@@ -18,6 +18,7 @@ const ArtworkSidebarShippingInformation: React.FC<
     priceIncludesTaxDisplay,
     shippingOrigin,
     shippingInfo,
+    pickupAvailable,
     taxInfo,
   },
 }) => {
@@ -72,10 +73,22 @@ const ArtworkSidebarShippingInformation: React.FC<
       )}
 
       {!!shippingInfo && (
-        <Text variant="sm" color="black60" data-testid="shipping-info">
+        <Text
+          variant="sm"
+          color="black60"
+          data-testid="shipping-info"
+          style={{ whiteSpace: "pre-line" }}
+        >
           {shippingInfo}
         </Text>
       )}
+      {!!pickupAvailable && (
+        <Text variant="sm" color="black60">
+          Pickup available
+        </Text>
+      )}
+
+      {(!!priceIncludesTaxDisplay || !!taxInfo) && <Spacer y={2} />}
 
       {!!priceIncludesTaxDisplay && (
         <Text variant="sm" color="black60">
@@ -110,6 +123,7 @@ export const ArtworkSidebarShippingInformationFragmentContainer =
         priceIncludesTaxDisplay
         shippingOrigin
         shippingInfo
+        pickupAvailable
         taxInfo {
           displayText
           moreInfo {
