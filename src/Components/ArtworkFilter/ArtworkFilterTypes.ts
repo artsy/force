@@ -36,6 +36,7 @@ export interface ArtworkFilters extends MultiSelectArtworkFilters {
   page?: number
   partnerID?: string
   priceRange?: string
+  signed?: boolean
   sort?: string
   term?: string
   width?: string

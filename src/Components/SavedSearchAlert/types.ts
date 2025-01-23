@@ -20,6 +20,7 @@ export interface SearchCriteriaAttributes {
   offerable?: boolean | null
   partnerIDs?: string[] | null
   priceRange?: string | null
+  signed?: boolean | null
   sizes?: string[] | null
   width?: string | null
 }

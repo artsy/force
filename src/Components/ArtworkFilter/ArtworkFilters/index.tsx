@@ -2,6 +2,7 @@ import { Join, Spacer } from "@artsy/palette"
 import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
 import { FramedFilter } from "Components/ArtworkFilter/ArtworkFilters/FramedFilter"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
+import { SignedFilter } from "Components/ArtworkFilter/ArtworkFilters/SignedFilter"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import type * as React from "react"
 import { ArtistNationalityFilter } from "./ArtistNationalityFilter"
@@ -28,6 +29,9 @@ export const ArtworkFilters: React.FC<
   const enableShowOnlyFramedArtworksFilter = useFeatureFlag(
     "onyx_only_framed_artworks_filter",
   )
+  const enableShowOnlySignedArtworksFilter = useFeatureFlag(
+    "onyx_only_signed_artworks_filter",
+  )
   const { user } = props
 
   return (
@@ -47,6 +51,7 @@ export const ArtworkFilters: React.FC<
       <ColorFilter expanded />
       <PartnersFilter expanded />
       {enableShowOnlyFramedArtworksFilter && <FramedFilter expanded />}
+      {enableShowOnlySignedArtworksFilter && <SignedFilter expanded />}
     </Join>
   )
 }

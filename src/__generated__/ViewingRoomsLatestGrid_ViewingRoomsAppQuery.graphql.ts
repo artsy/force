@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fd8a7c243c0428af734af73799fb62dd>>
+ * @generated SignedSource<<d4f372551afd9afde2ab727fda572f8e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -157,7 +157,7 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "GravityARImage",
+                        "concreteType": "ARImage",
                         "kind": "LinkedField",
                         "name": "image",
                         "plural": false,
@@ -165,7 +165,7 @@ return {
                           {
                             "alias": null,
                             "args": null,
-                            "concreteType": "GravityImageURLs",
+                            "concreteType": "ImageURLs",
                             "kind": "LinkedField",
                             "name": "imageURLs",
                             "plural": false,

@@ -38,6 +38,7 @@ const BOOLEAN_INPUT_ARGS = [
   "keywordMatchExact",
   "marketable",
   "offerable",
+  "signed",
 ]
 
 /**
@@ -89,6 +90,7 @@ const SUPPORTED_INPUT_ARGS = [
   "periods",
   "priceRange",
   "saleID",
+  "signed",
   "size",
   "sizes",
   "sort",
