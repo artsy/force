@@ -26,11 +26,9 @@ export const userRoutes: RouteProps[] = [
       }
     },
     query: graphql`
-      query userRoutes_UserQuery(
-        $userId: String! # $collectionId: String!
-      ) {
-        user(id: $userId) {
-          ...UserCollectionRoute_user
+      query userRoutes_UserQuery($userId: String!, $collectionId: String!) {
+        collection(id: $collectionId, userID: $userId) {
+          ...UserCollectionRoute_collection
         }
       }
     `,

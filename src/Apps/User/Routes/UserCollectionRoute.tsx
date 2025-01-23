@@ -1,20 +1,32 @@
-import { Spacer, Stack, Text } from "@artsy/palette"
-import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
+import { Message, Spacer, Stack, Text } from "@artsy/palette"
+import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { MetaTags } from "Components/MetaTags"
+import type { UserCollectionRoute_collection$data } from "__generated__/UserCollectionRoute_collection.graphql"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "react-relay"
 
-const UserCollectionRoute = () => {
+interface UserCollectionRouteProps {
+  collection: UserCollectionRoute_collection$data
+}
+
+const UserCollectionRoute = ({ collection }: UserCollectionRouteProps) => {
   return (
     <>
-      <MetaTags title="Artsy" pathname="TODO" />
+      <MetaTags title={`${collection.name} | Artsy`} />
 
       <Spacer y={4} />
 
       <Stack gap={4}>
-        <Text variant="lg-display">Collection Name</Text>
+        <Text variant="lg-display">{collection.name}</Text>
 
-        <ArtworkGridPlaceholder columnCount={[2, 3, 4]} amount={6} />
+        {collection.artworksConnection ? (
+          <ArtworkGrid
+            columnCount={[2, 3, 4]}
+            artworks={collection.artworksConnection}
+          />
+        ) : (
+          <Message>No artworks in this collection yet.</Message>
+        )}
       </Stack>
     </>
   )
@@ -23,9 +35,13 @@ const UserCollectionRoute = () => {
 export const UserCollectionRouteFragmentContainer = createFragmentContainer(
   UserCollectionRoute,
   {
-    user: graphql`
-      fragment UserCollectionRoute_user on User {
+    collection: graphql`
+      fragment UserCollectionRoute_collection on Collection {
         id
+        name
+        artworksConnection(first: 10) {
+          ...ArtworkGrid_artworks
+        }
       }
     `,
   },
