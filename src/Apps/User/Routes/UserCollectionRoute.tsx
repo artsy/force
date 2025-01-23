@@ -1,33 +1,47 @@
-import { Message, Spacer, Stack, Text } from "@artsy/palette"
-import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
+import { Spacer, Stack, Sup, Text } from "@artsy/palette"
+import { UserCollectionArtworks } from "Apps/User/Components/UserCollectionArtworks"
+import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
+import { ClientSuspense } from "Components/ClientSuspense"
 import { MetaTags } from "Components/MetaTags"
+import { useRouter } from "System/Hooks/useRouter"
+import { Jump } from "Utils/Hooks/useJump"
 import type { UserCollectionRoute_collection$data } from "__generated__/UserCollectionRoute_collection.graphql"
-import { createFragmentContainer } from "react-relay"
-import { graphql } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface UserCollectionRouteProps {
   collection: UserCollectionRoute_collection$data
 }
 
 const UserCollectionRoute = ({ collection }: UserCollectionRouteProps) => {
+  const {
+    match: { params },
+  } = useRouter()
+
   return (
     <>
       <MetaTags title={`${collection.name} | Artsy`} />
 
       <Spacer y={4} />
 
-      <Stack gap={4}>
-        <Text variant="lg-display">{collection.name}</Text>
+      <Jump id="UserCollectionRoute">
+        <Stack gap={4}>
+          <Text variant="lg-display">
+            {collection.name}{" "}
+            <Sup color="brand">{collection.artworksConnection?.totalCount}</Sup>
+          </Text>
 
-        {collection.artworksConnection ? (
-          <ArtworkGrid
-            columnCount={[2, 3, 4]}
-            artworks={collection.artworksConnection}
-          />
-        ) : (
-          <Message>No artworks in this collection yet.</Message>
-        )}
-      </Stack>
+          <ClientSuspense
+            fallback={
+              <ArtworkGridPlaceholder columnCount={[2, 3, 4]} amount={10} />
+            }
+          >
+            <UserCollectionArtworks
+              id={collection.internalID}
+              userID={params.userID}
+            />
+          </ClientSuspense>
+        </Stack>
+      </Jump>
     </>
   )
 }
@@ -37,10 +51,10 @@ export const UserCollectionRouteFragmentContainer = createFragmentContainer(
   {
     collection: graphql`
       fragment UserCollectionRoute_collection on Collection {
-        id
+        internalID
         name
-        artworksConnection(first: 50) {
-          ...ArtworkGrid_artworks
+        artworksConnection {
+          totalCount
         }
       }
     `,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<51d3d23fdf41faec8644f9892d657b07>>
+ * @generated SignedSource<<58329b984f9adcc7d6f168b325795e04>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,9 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type UserCollectionRoute_collection$data = {
   readonly artworksConnection: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
+    readonly totalCount: number | null | undefined;
   } | null | undefined;
-  readonly id: string;
+  readonly internalID: string;
   readonly name: string;
   readonly " $fragmentType": "UserCollectionRoute_collection";
 };
@@ -33,7 +33,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "id",
+      "name": "internalID",
       "storageKey": null
     },
     {
@@ -45,31 +45,27 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 50
-        }
-      ],
+      "args": null,
       "concreteType": "ArtworkConnection",
       "kind": "LinkedField",
       "name": "artworksConnection",
       "plural": false,
       "selections": [
         {
+          "alias": null,
           "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArtworkGrid_artworks"
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
         }
       ],
-      "storageKey": "artworksConnection(first:50)"
+      "storageKey": null
     }
   ],
   "type": "Collection",
   "abstractKey": null
 };
 
-(node as any).hash = "7507740020decbdb9c7c6f355f077aa2";
+(node as any).hash = "3eda99b742801f942b18f5ae99e689c5";
 
 export default node;

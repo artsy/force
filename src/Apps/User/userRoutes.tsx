@@ -13,21 +13,21 @@ const UserApp = loadable(
 
 export const userRoutes: RouteProps[] = [
   {
-    path: "/user/:userId/collection/:collectionId",
+    path: "/user/:userID/collection/:collectionID",
     fetchPolicy: "store-and-network",
     getComponent: () => UserApp,
     onPreloadJS: () => {
       UserApp.preload()
     },
-    prepareVariables: ({ userId, collectionId }) => {
+    prepareVariables: ({ userID, collectionID }) => {
       return {
-        userId,
-        collectionId,
+        userID,
+        collectionID,
       }
     },
     query: graphql`
-      query userRoutes_UserQuery($userId: String!, $collectionId: String!) {
-        collection(id: $collectionId, userID: $userId) {
+      query userRoutes_UserQuery($userID: String!, $collectionID: String!) {
+        collection(id: $collectionID, userID: $userID) {
           ...UserCollectionRoute_collection
         }
       }
