@@ -34,7 +34,7 @@ const AuctionInfoSidebar: React.FC<
         showTotalRaisedFlag &&
         sale.totalRaised?.minor > 0 && (
           <Box>
-            <Text variant="sm">Total Raised</Text>
+            <Text variant="sm">Bid Total</Text>
             <Text variant="sm" fontWeight="bold">
               {updatedTotalRaisedDisplay}
             </Text>
