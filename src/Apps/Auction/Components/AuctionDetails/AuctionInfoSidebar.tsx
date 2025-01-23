@@ -3,6 +3,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import type { AuctionInfoSidebar_sale$data } from "__generated__/AuctionInfoSidebar_sale.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { LiveAuctionToolTip } from "./LiveAuctionToolTip"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 interface AuctionInfoSidebarProps {
   sale: AuctionInfoSidebar_sale$data
@@ -11,8 +12,23 @@ interface AuctionInfoSidebarProps {
 const AuctionInfoSidebar: React.FC<
   React.PropsWithChildren<AuctionInfoSidebarProps>
 > = ({ sale }) => {
+  const showTotalRaisedFlag = useFeatureFlag(
+    "emerald_hackathon-sale-total-raised",
+  )
+
   return (
     <Join separator={<Spacer y={2} />}>
+      {!sale.hideTotal &&
+        showTotalRaisedFlag &&
+        sale.totalRaised?.minor > 0 && (
+          <Box>
+            <Text variant="sm">Total Raised</Text>
+            <Text variant="sm" fontWeight="bold">
+              {sale.totalRaised?.display}
+            </Text>
+          </Box>
+        )}
+
       <LiveAuctionToolTip show={!!sale.liveStartAt} />
 
       <Box>
@@ -62,6 +78,11 @@ export const AuctionInfoSidebarFragmentContainer = createFragmentContainer(
     sale: graphql`
       fragment AuctionInfoSidebar_sale on Sale {
         liveStartAt
+        hideTotal
+        totalRaised {
+          minor
+          display
+        }
       }
     `,
   },

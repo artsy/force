@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f3141aa9ba9a918c5e72a7d6753b5fcc>>
+ * @generated SignedSource<<b155480924ff6369c98ca30772199da2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,13 @@ var v0 = [
     "name": "id",
     "value": "foo"
   }
-];
+],
+v1 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -81,6 +87,38 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "hideTotal",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Money",
+            "kind": "LinkedField",
+            "name": "totalRaised",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "minor",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "display",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -90,7 +128,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8c448b5672c90b8998259c383a51cfdb",
+    "cacheID": "b1c07e024c3d3cdfaf1299eff8665bd2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -100,23 +138,37 @@ return {
           "plural": false,
           "type": "Sale"
         },
+        "sale.hideTotal": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
         "sale.id": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "ID"
         },
-        "sale.liveStartAt": {
+        "sale.liveStartAt": (v1/*: any*/),
+        "sale.totalRaised": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "String"
+          "type": "Money"
+        },
+        "sale.totalRaised.display": (v1/*: any*/),
+        "sale.totalRaised.minor": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Long"
         }
       }
     },
     "name": "AuctionInfoSidebarTestQuery",
     "operationKind": "query",
-    "text": "query AuctionInfoSidebarTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionInfoSidebar_sale\n    id\n  }\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n"
+    "text": "query AuctionInfoSidebarTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionInfoSidebar_sale\n    id\n  }\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n  hideTotal\n  totalRaised {\n    minor\n    display\n  }\n}\n"
   }
 };
 })();

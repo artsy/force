@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d13051d7f2adc100188ed4ce1efd2257>>
+ * @generated SignedSource<<11e48b961299d92b6af1b5d31a43efdb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -214,6 +214,38 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "hideTotal",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Money",
+            "kind": "LinkedField",
+            "name": "totalRaised",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "minor",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "display",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "endAt",
             "storageKey": null
           },
@@ -273,7 +305,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "09d48aa728c68d5ebd5f3e53c5219d6a",
+    "cacheID": "0adc68b388e6a0dd67b6b9999760bd6b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -295,6 +327,7 @@ return {
         "sale.description": (v6/*: any*/),
         "sale.endAt": (v6/*: any*/),
         "sale.endedAt": (v6/*: any*/),
+        "sale.hideTotal": (v5/*: any*/),
         "sale.href": (v6/*: any*/),
         "sale.id": (v4/*: any*/),
         "sale.internalID": (v4/*: any*/),
@@ -312,12 +345,25 @@ return {
         "sale.requireIdentityVerification": (v5/*: any*/),
         "sale.slug": (v4/*: any*/),
         "sale.startAt": (v6/*: any*/),
-        "sale.status": (v6/*: any*/)
+        "sale.status": (v6/*: any*/),
+        "sale.totalRaised": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Money"
+        },
+        "sale.totalRaised.display": (v6/*: any*/),
+        "sale.totalRaised.minor": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Long"
+        }
       }
     },
     "name": "AuctionDetailsTestQuery",
     "operationKind": "query",
-    "text": "query AuctionDetailsTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionDetails_sale\n    id\n  }\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  ...SaleDetailTimer_sale\n  internalID\n  name\n  slug\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n  cascadingEndTimeIntervalMinutes\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n\nfragment SaleDetailTimer_sale on Sale {\n  endAt\n  endedAt\n  startAt\n}\n"
+    "text": "query AuctionDetailsTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionDetails_sale\n    id\n  }\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  ...SaleDetailTimer_sale\n  internalID\n  name\n  slug\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n  cascadingEndTimeIntervalMinutes\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n  hideTotal\n  totalRaised {\n    minor\n    display\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n\nfragment SaleDetailTimer_sale on Sale {\n  endAt\n  endedAt\n  startAt\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fce06f2a6f6c1e84213a64042fd53efd>>
+ * @generated SignedSource<<cdd1b35a6d50a6cdd193e6a3532744f1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,12 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionInfoSidebar_sale$data = {
+  readonly hideTotal: boolean | null | undefined;
   readonly liveStartAt: string | null | undefined;
+  readonly totalRaised: {
+    readonly display: string | null | undefined;
+    readonly minor: any;
+  } | null | undefined;
   readonly " $fragmentType": "AuctionInfoSidebar_sale";
 };
 export type AuctionInfoSidebar_sale$key = {
@@ -31,12 +36,44 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "liveStartAt",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hideTotal",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Money",
+      "kind": "LinkedField",
+      "name": "totalRaised",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "minor",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "display",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Sale",
   "abstractKey": null
 };
 
-(node as any).hash = "9fc008c7640af944287dfaddc126d163";
+(node as any).hash = "cb90cad64e1b1a34c1dd75d87430b891";
 
 export default node;
