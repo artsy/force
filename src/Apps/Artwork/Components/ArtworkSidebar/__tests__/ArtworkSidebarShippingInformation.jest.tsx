@@ -45,6 +45,30 @@ describe("ArtworkSidebarShippingInformation", () => {
     })
   })
 
+  describe("Artwork with pickupAvailable", () => {
+    it("renders pickup available line", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          pickupAvailable: true,
+        }),
+      })
+
+      expect(screen.queryByText(/Pickup available/)).toBeInTheDocument()
+    })
+  })
+
+  describe("Artwork with no pickupAvailable", () => {
+    it("does not render pickup available line", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          pickupAvailable: null,
+        }),
+      })
+
+      expect(screen.queryByTestId(/Pickup available/)).not.toBeInTheDocument()
+    })
+  })
+
   describe("Artwork has both shippingOrigin and shippingInfo", () => {
     it("renders shipping origin & info", () => {
       renderWithRelay({
