@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3f182c9b161f11873c5a4f1ed90a220c>>
+ * @generated SignedSource<<ef0e6c155747654aa407db525244586c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,6 +33,7 @@ export type FilterArtworksInput = {
   extraAggregationGeneIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
   first?: number | null | undefined;
   forSale?: boolean | null | undefined;
+  framed?: boolean | null | undefined;
   geneID?: string | null | undefined;
   geneIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
   height?: string | null | undefined;

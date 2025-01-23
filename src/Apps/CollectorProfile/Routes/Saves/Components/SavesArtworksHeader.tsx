@@ -1,9 +1,19 @@
 import HideIcon from "@artsy/icons/HideIcon"
-import { Clickable, SkeletonText, Stack, Text, Tooltip } from "@artsy/palette"
+import ShareIcon from "@artsy/icons/ShareIcon"
+import {
+  Button,
+  Clickable,
+  SkeletonText,
+  Stack,
+  Text,
+  Tooltip,
+} from "@artsy/palette"
 import { ArtworkListContextualMenu } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/ArtworkListContextualMenu"
+import { SavesArtworksShareDialog } from "Apps/CollectorProfile/Routes/Saves/Components/SavesArtworksShareDialog"
 import { ClientSuspense } from "Components/ClientSuspense"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import type { SavesArtworksHeaderQuery } from "__generated__/SavesArtworksHeaderQuery.graphql"
-import type { FC } from "react"
+import { type FC, useState } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 
 interface SavesArtworksHeaderProps {
@@ -19,43 +29,75 @@ const SavesArtworksHeader: FC<
 
   const collection = me?.collection
 
+  const [mode, setMode] = useState<"Idle" | "Share">("Idle")
+
+  const enableShare = useFeatureFlag("diamond_shareable-artwork-lists")
+
+  const handleShare = () => {
+    setMode("Share")
+  }
+
   if (!collection) {
     return null
   }
 
   return (
-    <Stack
-      gap={2}
-      flexDirection="row"
-      justifyContent="space-between"
-      alignItems="center"
-    >
-      <Stack gap={0.5} flexDirection="row" alignItems="center">
-        <Text variant="lg">{collection.name}</Text>
+    <>
+      <Stack
+        gap={2}
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Stack gap={2} flexDirection="row" alignItems="center">
+          <Stack gap={0.5} flexDirection="row" alignItems="center">
+            <Text variant="lg">{collection.name}</Text>
 
-        {!collection.shareableWithPartners && (
-          <Tooltip
-            pointer
-            variant="defaultDark"
-            placement="bottom-start"
-            content={
-              <Text variant="xs">
-                Artworks in this list are only visible to you and not eligible
-                to receive offers.
-              </Text>
-            }
-          >
-            <Clickable style={{ lineHeight: 0 }}>
-              <HideIcon flexShrink={0} data-testid="hide-icon" />
-            </Clickable>
-          </Tooltip>
+            {!collection.shareableWithPartners && (
+              <Tooltip
+                pointer
+                variant="defaultDark"
+                placement="bottom-start"
+                content={
+                  <Text variant="xs">
+                    Artworks in this list are only visible to you and not
+                    eligible to receive offers.
+                  </Text>
+                }
+              >
+                <Clickable style={{ lineHeight: 0 }}>
+                  <HideIcon flexShrink={0} data-testid="hide-icon" />
+                </Clickable>
+              </Tooltip>
+            )}
+          </Stack>
+
+          {enableShare && (
+            <Button
+              size="small"
+              variant="secondaryBlack"
+              onClick={handleShare}
+              Icon={ShareIcon}
+            >
+              Share
+            </Button>
+          )}
+        </Stack>
+
+        {!collection.default && collection && (
+          <ArtworkListContextualMenu artworkList={collection} />
         )}
       </Stack>
 
-      {!collection.default && collection && (
-        <ArtworkListContextualMenu artworkList={collection} />
+      {mode === "Share" && (
+        <SavesArtworksShareDialog
+          onClose={() => setMode("Idle")}
+          collectionId={collection.internalID}
+          collectionName={collection.name}
+          isPublic={!collection.private}
+        />
       )}
-    </Stack>
+    </>
   )
 }
 
@@ -83,6 +125,7 @@ const QUERY = graphql`
         name
         default
         shareableWithPartners
+        private
       }
     }
   }
