@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<da6618d4d68ac3381efc479065872041>>
+ * @generated SignedSource<<f6f825f78aca3e1717fc24391df4399f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,34 +11,32 @@
 import { ReaderFragment } from 'relay-runtime';
 export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "COLLECTOR_PROFILE_UPDATE_PROMPT" | "MARKETING_COLLECTION_HIT" | "PARTNER_OFFER_CREATED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkPublishedNotification_notification$data = {
+export type MarketingCollectionHitNotification_notification$data = {
   readonly artworksConnection: {
     readonly totalCount: number | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"NotificationArtworkList_artworksConnection">;
   } | null | undefined;
   readonly headline: string;
   readonly item: {
-    readonly artists?: ReadonlyArray<{
-      readonly internalID: string;
-      readonly isFollowed: boolean | null | undefined;
-      readonly name: string | null | undefined;
+    readonly marketingCollection?: {
       readonly slug: string;
-    }>;
+      readonly title: string;
+    } | null | undefined;
   } | null | undefined;
   readonly notificationType: NotificationTypesEnum;
   readonly " $fragmentSpreads": FragmentRefs<"NotificationTypeLabel_notification">;
-  readonly " $fragmentType": "ArtworkPublishedNotification_notification";
+  readonly " $fragmentType": "MarketingCollectionHitNotification_notification";
 };
-export type ArtworkPublishedNotification_notification$key = {
-  readonly " $data"?: ArtworkPublishedNotification_notification$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkPublishedNotification_notification">;
+export type MarketingCollectionHitNotification_notification$key = {
+  readonly " $data"?: MarketingCollectionHitNotification_notification$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MarketingCollectionHitNotification_notification">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtworkPublishedNotification_notification",
+  "name": "MarketingCollectionHitNotification_notification",
   "selections": [
     {
       "alias": null,
@@ -90,30 +88,16 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": null,
-              "concreteType": "Artist",
+              "concreteType": "MarketingCollection",
               "kind": "LinkedField",
-              "name": "artists",
-              "plural": true,
+              "name": "marketingCollection",
+              "plural": false,
               "selections": [
                 {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "isFollowed",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "name",
+                  "name": "title",
                   "storageKey": null
                 },
                 {
@@ -127,7 +111,7 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "type": "ArtworkPublishedNotificationItem",
+          "type": "MarketingCollectionHitNotificationItem",
           "abstractKey": null
         }
       ],
@@ -150,6 +134,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "9f2f8af45c14080e6d4d2dc0339dd08f";
+(node as any).hash = "24fc8ce121dd3a98ece18a63d38535c8";
 
 export default node;
