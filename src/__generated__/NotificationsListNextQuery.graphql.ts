@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2389485587e195bba889000620d2cb34>>
+ * @generated SignedSource<<9f74575819834322d9d5261c1987a001>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "COLLECTOR_PROFILE_UPDATE_PROMPT" | "PARTNER_OFFER_CREATED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
+export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "COLLECTOR_PROFILE_UPDATE_PROMPT" | "MARKETING_COLLECTION_HIT" | "PARTNER_OFFER_CREATED" | "PARTNER_SHOW_OPENED" | "SAVED_ARTWORK_CHANGES" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 export type NotificationsListNextQuery$variables = {
   count: number;
   cursor?: string | null | undefined;
