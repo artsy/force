@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c5ce459638f6dd398af7b6bb10934af>>
+ * @generated SignedSource<<edef59eed0d0822ba3c2c909139c8b1a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,7 @@ export type SavesArtworksHeaderQuery$data = {
       readonly name: string;
       readonly private: boolean;
       readonly shareableWithPartners: boolean;
+      readonly slug: string;
     } | null | undefined;
   } | null | undefined;
 };
@@ -82,6 +83,13 @@ v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 };
@@ -112,7 +120,8 @@ return {
               (v3/*: any*/),
               (v4/*: any*/),
               (v5/*: any*/),
-              (v6/*: any*/)
+              (v6/*: any*/),
+              (v7/*: any*/)
             ],
             "storageKey": null
           }
@@ -150,27 +159,28 @@ return {
               (v4/*: any*/),
               (v5/*: any*/),
               (v6/*: any*/),
-              (v7/*: any*/)
+              (v7/*: any*/),
+              (v8/*: any*/)
             ],
             "storageKey": null
           },
-          (v7/*: any*/)
+          (v8/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "3ce533bd3888d40476d4998be51d17f0",
+    "cacheID": "4a00e84c7f58d21cb4f1d4207d5d02f5",
     "id": null,
     "metadata": {},
     "name": "SavesArtworksHeaderQuery",
     "operationKind": "query",
-    "text": "query SavesArtworksHeaderQuery(\n  $id: String!\n) {\n  me {\n    collection(id: $id) {\n      internalID\n      name\n      default\n      shareableWithPartners\n      private\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query SavesArtworksHeaderQuery(\n  $id: String!\n) {\n  me {\n    collection(id: $id) {\n      internalID\n      name\n      default\n      shareableWithPartners\n      private\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a4107cc88558c4555fa1d5a9d52713fa";
+(node as any).hash = "f3d217609d54045406a9a3d104f3f4d7";
 
 export default node;
