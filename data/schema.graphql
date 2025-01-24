@@ -22877,7 +22877,7 @@ input updateCollectionInput {
 
   # The internal ID of the collection
   id: String!
-  name: String!
+  name: String
   private: Boolean
   shareableWithPartners: Boolean
 }
