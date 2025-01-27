@@ -11,19 +11,19 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useOnce } from "Utils/Hooks/useOnce"
 import { getENV } from "Utils/getENV"
-import type { SavesArtworksShareDialogMutation } from "__generated__/SavesArtworksShareDialogMutation.graphql"
+import type { ShareCollectionDialogMutation } from "__generated__/ShareCollectionDialogMutation.graphql"
 import { useState } from "react"
 import { graphql } from "react-relay"
 
-export interface SavesArtworksShareDialogProps {
+export interface ShareCollectionDialogProps {
   onClose: () => void
   collectionId: string
   collectionName: string
   isPublic: boolean
 }
 
-export const SavesArtworksShareDialog: React.FC<
-  React.PropsWithChildren<SavesArtworksShareDialogProps>
+export const ShareCollectionDialog: React.FC<
+  React.PropsWithChildren<ShareCollectionDialogProps>
 > = ({ onClose, collectionId, collectionName, isPublic }) => {
   const { user } = useSystemContext()
 
@@ -40,13 +40,18 @@ export const SavesArtworksShareDialog: React.FC<
     }, 2000)
   }
 
-  const { submitMutation } = useMutation<SavesArtworksShareDialogMutation>({
+  const { submitMutation } = useMutation<ShareCollectionDialogMutation>({
     mutation: graphql`
-      mutation SavesArtworksShareDialogMutation(
-        $input: updateCollectionInput!
-      ) {
+      mutation ShareCollectionDialogMutation($input: updateCollectionInput!) {
         updateCollection(input: $input) {
           clientMutationId
+          responseOrError {
+            ... on UpdateCollectionFailure {
+              mutationError {
+                message
+              }
+            }
+          }
         }
       }
     `,
@@ -71,6 +76,9 @@ export const SavesArtworksShareDialog: React.FC<
             private: false,
             shareableWithPartners: true,
           },
+        },
+        rejectIf: res => {
+          return !!res.updateCollection?.responseOrError?.mutationError
         },
       })
 

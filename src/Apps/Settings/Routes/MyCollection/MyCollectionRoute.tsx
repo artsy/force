@@ -1,11 +1,11 @@
-import { Box, Button, Flex, FullBleed, useTheme } from "@artsy/palette"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import ShareIcon from "@artsy/icons/ShareIcon"
+import { Box, Button, Flex, Stack } from "@artsy/palette"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkGrid } from "Apps/Settings/Routes/MyCollection/Components/MyCollectionArtworkGrid"
 import { MetaTags } from "Components/MetaTags"
-import { Sticky } from "Components/Sticky"
+import { ShareCollectionDialog } from "Components/ShareCollectionDialog"
 import { RouterLink } from "System/Components/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { cleanLocalImages } from "Utils/localImageHelpers"
 import type { MyCollectionRoute_me$data } from "__generated__/MyCollectionRoute_me.graphql"
 import { type FC, useEffect, useState } from "react"
@@ -24,6 +24,8 @@ export interface MyCollectionRouteProps {
 const MyCollectionRoute: FC<
   React.PropsWithChildren<MyCollectionRouteProps>
 > = ({ me, relay }) => {
+  const enableShare = useFeatureFlag("diamond_shareable-artwork-lists")
+
   const { addCollectedArtwork: trackAddCollectedArtwork } =
     useMyCollectionTracking()
   const [isLoading, setLoading] = useState(false)
@@ -34,7 +36,7 @@ const MyCollectionRoute: FC<
 
   const { myCollectionConnection } = me
 
-  const { theme } = useTheme()
+  const [mode, setMode] = useState<"Idle" | "Share">("Idle")
 
   if (!myCollectionConnection) {
     return null
@@ -61,44 +63,29 @@ const MyCollectionRoute: FC<
       />
 
       {total > 0 ? (
-        <>
-          <Box mt={[-2, -4]}>
-            <Sticky>
-              {({ stuck }) => {
-                return (
-                  <FullBleed
-                    backgroundColor="white100"
-                    style={
-                      stuck
-                        ? { boxShadow: theme.effects.dropShadow }
-                        : undefined
-                    }
-                  >
-                    <AppContainer>
-                      <HorizontalPadding>
-                        <Flex
-                          backgroundColor="white100"
-                          justifyContent="flex-end"
-                          py={2}
-                        >
-                          <Button
-                            // @ts-ignore
-                            as={RouterLink}
-                            size={["small", "large"]}
-                            variant="primaryBlack"
-                            to={"/collector-profile/my-collection/artworks/new"}
-                            onClick={() => trackAddCollectedArtwork()}
-                          >
-                            Upload Artwork
-                          </Button>
-                        </Flex>
-                      </HorizontalPadding>
-                    </AppContainer>
-                  </FullBleed>
-                )
-              }}
-            </Sticky>
-          </Box>
+        <Stack gap={2}>
+          <Flex backgroundColor="white100" justifyContent="flex-end" gap={1}>
+            {enableShare && (
+              <Button
+                variant="secondaryBlack"
+                Icon={ShareIcon}
+                onClick={() => setMode("Share")}
+              >
+                Share
+              </Button>
+            )}
+
+            <Button
+              // @ts-ignore
+              as={RouterLink}
+              size={["small", "large"]}
+              variant="primaryBlack"
+              to={"/collector-profile/my-collection/artworks/new"}
+              onClick={() => trackAddCollectedArtwork()}
+            >
+              Upload Artwork
+            </Button>
+          </Flex>
 
           <MyCollectionArtworkGrid
             artworks={myCollectionConnection}
@@ -112,9 +99,18 @@ const MyCollectionRoute: FC<
               </Button>
             </Box>
           )}
-        </>
+        </Stack>
       ) : (
         <EmptyMyCollectionPage />
+      )}
+
+      {mode === "Share" && (
+        <ShareCollectionDialog
+          onClose={() => setMode("Idle")}
+          collectionId="my-collection"
+          collectionName="My Collection"
+          isPublic={false}
+        />
       )}
     </>
   )
