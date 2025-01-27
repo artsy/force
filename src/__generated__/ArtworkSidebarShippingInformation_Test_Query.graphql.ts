@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<309ea4f80660510e738e4606d8a9b6ce>>
+ * @generated SignedSource<<77015f0161d3e4e451b6a055f471cc2d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -120,6 +120,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "pickupAvailable",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "TaxInfo",
             "kind": "LinkedField",
             "name": "taxInfo",
@@ -161,7 +168,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9d08a7db72fcefd9a641cf22037d2120",
+    "cacheID": "c83a92052944bec61354fd381b4038d9",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -180,6 +187,12 @@ return {
         "artwork.isUnlisted": {
           "enumValues": null,
           "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "artwork.pickupAvailable": {
+          "enumValues": null,
+          "nullable": true,
           "plural": false,
           "type": "Boolean"
         },
@@ -205,7 +218,7 @@ return {
     },
     "name": "ArtworkSidebarShippingInformation_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarShippingInformation_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarShippingInformation_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarShippingInformation_artwork on Artwork {\n  isUnlisted\n  priceIncludesTaxDisplay\n  shippingOrigin\n  shippingInfo\n  taxInfo {\n    displayText\n    moreInfo {\n      displayText\n      url\n    }\n  }\n}\n"
+    "text": "query ArtworkSidebarShippingInformation_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarShippingInformation_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarShippingInformation_artwork on Artwork {\n  isUnlisted\n  priceIncludesTaxDisplay\n  shippingOrigin\n  shippingInfo\n  pickupAvailable\n  taxInfo {\n    displayText\n    moreInfo {\n      displayText\n      url\n    }\n  }\n}\n"
   }
 };
 })();

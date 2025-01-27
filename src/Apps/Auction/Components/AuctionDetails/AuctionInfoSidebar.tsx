@@ -3,6 +3,9 @@ import { RouterLink } from "System/Components/RouterLink"
 import type { AuctionInfoSidebar_sale$data } from "__generated__/AuctionInfoSidebar_sale.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { LiveAuctionToolTip } from "./LiveAuctionToolTip"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useSaleWebsocket } from "Utils/Hooks/useSaleWebsocket"
+import { useState } from "react"
 
 interface AuctionInfoSidebarProps {
   sale: AuctionInfoSidebar_sale$data
@@ -11,8 +14,33 @@ interface AuctionInfoSidebarProps {
 const AuctionInfoSidebar: React.FC<
   React.PropsWithChildren<AuctionInfoSidebarProps>
 > = ({ sale }) => {
+  const showTotalRaisedFlag = useFeatureFlag(
+    "emerald_hackathon-sale-total-raised",
+  )
+  const totalRaisedDisplay = sale.totalRaised?.display
+  const [updatedTotalRaisedDisplay, setUpdatedTotalRaisedDisplay] =
+    useState(totalRaisedDisplay)
+
+  useSaleWebsocket({
+    saleID: sale.internalID as string,
+    onChange: data => {
+      setUpdatedTotalRaisedDisplay(data.total_raised_display)
+    },
+  })
+
   return (
     <Join separator={<Spacer y={2} />}>
+      {!sale.hideTotal &&
+        showTotalRaisedFlag &&
+        sale.totalRaised?.minor > 0 && (
+          <Box>
+            <Text variant="sm">Bid Total</Text>
+            <Text variant="sm" fontWeight="bold">
+              {updatedTotalRaisedDisplay}
+            </Text>
+          </Box>
+        )}
+
       <LiveAuctionToolTip show={!!sale.liveStartAt} />
 
       <Box>
@@ -61,7 +89,13 @@ export const AuctionInfoSidebarFragmentContainer = createFragmentContainer(
   {
     sale: graphql`
       fragment AuctionInfoSidebar_sale on Sale {
+        internalID
         liveStartAt
+        hideTotal
+        totalRaised {
+          minor
+          display
+        }
       }
     `,
   },
