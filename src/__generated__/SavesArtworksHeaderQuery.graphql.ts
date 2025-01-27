@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<edef59eed0d0822ba3c2c909139c8b1a>>
+ * @generated SignedSource<<34f2346f9cee176bf563e55b27d9f9c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,6 @@ export type SavesArtworksHeaderQuery$data = {
       readonly default: boolean;
       readonly internalID: string;
       readonly name: string;
-      readonly private: boolean;
       readonly shareableWithPartners: boolean;
       readonly slug: string;
     } | null | undefined;
@@ -76,17 +75,10 @@ v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "private",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v8 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -120,8 +112,7 @@ return {
               (v3/*: any*/),
               (v4/*: any*/),
               (v5/*: any*/),
-              (v6/*: any*/),
-              (v7/*: any*/)
+              (v6/*: any*/)
             ],
             "storageKey": null
           }
@@ -159,28 +150,27 @@ return {
               (v4/*: any*/),
               (v5/*: any*/),
               (v6/*: any*/),
-              (v7/*: any*/),
-              (v8/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": null
           },
-          (v8/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "4a00e84c7f58d21cb4f1d4207d5d02f5",
+    "cacheID": "5d886fb930e896709b8510eb764fc5c0",
     "id": null,
     "metadata": {},
     "name": "SavesArtworksHeaderQuery",
     "operationKind": "query",
-    "text": "query SavesArtworksHeaderQuery(\n  $id: String!\n) {\n  me {\n    collection(id: $id) {\n      internalID\n      name\n      default\n      shareableWithPartners\n      private\n      slug\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query SavesArtworksHeaderQuery(\n  $id: String!\n) {\n  me {\n    collection(id: $id) {\n      internalID\n      name\n      default\n      shareableWithPartners\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f3d217609d54045406a9a3d104f3f4d7";
+(node as any).hash = "c3357788f75b58fdfcc8c7d65f638149";
 
 export default node;

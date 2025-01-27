@@ -19,12 +19,11 @@ export interface ShareCollectionDialogProps {
   onClose: () => void
   collectionId: string
   collectionName: string
-  isPublic: boolean
 }
 
 export const ShareCollectionDialog: React.FC<
   React.PropsWithChildren<ShareCollectionDialogProps>
-> = ({ onClose, collectionId, collectionName, isPublic }) => {
+> = ({ onClose, collectionId, collectionName }) => {
   const { user } = useSystemContext()
 
   const [mode, setMode] = useState<"Idle" | "Updating" | "Ready" | "Copied">(
@@ -60,11 +59,6 @@ export const ShareCollectionDialog: React.FC<
   const { sendToast } = useToasts()
 
   useOnce(async () => {
-    if (isPublic) {
-      setMode("Ready")
-      return
-    }
-
     setMode("Updating")
 
     try {

@@ -109,7 +109,6 @@ const MyCollectionRoute: FC<
           onClose={() => setMode("Idle")}
           collectionId="my-collection"
           collectionName="My Collection"
-          isPublic={false}
         />
       )}
     </>
