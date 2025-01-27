@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c5ce459638f6dd398af7b6bb10934af>>
+ * @generated SignedSource<<34f2346f9cee176bf563e55b27d9f9c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,8 +18,8 @@ export type SavesArtworksHeaderQuery$data = {
       readonly default: boolean;
       readonly internalID: string;
       readonly name: string;
-      readonly private: boolean;
       readonly shareableWithPartners: boolean;
+      readonly slug: string;
     } | null | undefined;
   } | null | undefined;
 };
@@ -75,7 +75,7 @@ v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "private",
+  "name": "slug",
   "storageKey": null
 },
 v7 = {
@@ -161,16 +161,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3ce533bd3888d40476d4998be51d17f0",
+    "cacheID": "5d886fb930e896709b8510eb764fc5c0",
     "id": null,
     "metadata": {},
     "name": "SavesArtworksHeaderQuery",
     "operationKind": "query",
-    "text": "query SavesArtworksHeaderQuery(\n  $id: String!\n) {\n  me {\n    collection(id: $id) {\n      internalID\n      name\n      default\n      shareableWithPartners\n      private\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query SavesArtworksHeaderQuery(\n  $id: String!\n) {\n  me {\n    collection(id: $id) {\n      internalID\n      name\n      default\n      shareableWithPartners\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a4107cc88558c4555fa1d5a9d52713fa";
+(node as any).hash = "c3357788f75b58fdfcc8c7d65f638149";
 
 export default node;

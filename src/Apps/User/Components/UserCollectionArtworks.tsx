@@ -35,7 +35,16 @@ export const UserCollectionArtworks: FC<
           {artworks.map(artwork => {
             return (
               <Fragment key={artwork.id}>
-                <ArtworkGridItemFragmentContainer artwork={artwork} />
+                <ArtworkGridItemFragmentContainer
+                  artwork={artwork}
+                  {...(artwork.published
+                    ? {}
+                    : {
+                        showHoverDetails: false,
+                        showSaveButton: false,
+                        disableRouterLinking: true,
+                      })}
+                />
 
                 <Spacer y={2} />
               </Fragment>
@@ -84,6 +93,7 @@ const QUERY = graphql`
           node {
             ...GridItem_artwork
             id
+            published
           }
         }
       }
