@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<42e14207222bcbb036371dec9db5687e>>
+ * @generated SignedSource<<da52d8cc4209bb6e29c99298d1d513d0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,7 +30,7 @@ export type MyCollectionRoute_me$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 25,
+      "defaultValue": 10,
       "kind": "LocalArgument",
       "name": "count"
     },
@@ -151,6 +151,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "90bf02c929b1358c41e9cef821762f5d";
+(node as any).hash = "37e454b0d02f82338567325f3738a99e";
 
 export default node;
