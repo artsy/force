@@ -32,6 +32,7 @@ export const allowedSearchCriteriaKeys = [
   "attributionClass",
   "colors",
   "forSale",
+  "framed",
   "height",
   "includeArtworksByFollowedArtists",
   "inquireableOnly",

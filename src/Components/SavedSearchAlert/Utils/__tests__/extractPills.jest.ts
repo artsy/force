@@ -176,6 +176,24 @@ describe("extractPillsFromDefaultCriteria", () => {
       },
     ])
   })
+
+  it("should support framed", () => {
+    const result = extractPillsFromDefaultCriteria({
+      framed: {
+        displayValue: "Framed",
+        value: true,
+      },
+    })
+
+    expect(result).toEqual([
+      {
+        isDefault: true,
+        displayValue: "Framed",
+        value: "true",
+        field: "framed",
+      },
+    ])
+  })
 })
 
 describe("excludeDefaultCriteria", () => {

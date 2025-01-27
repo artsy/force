@@ -1,26 +1,27 @@
 import type { PageOwnerType } from "@artsy/cohesion"
 
 export interface SearchCriteriaAttributes {
+  acquireable?: boolean | null
+  additionalGeneIDs?: string[] | null
   artistID?: string | null
   artistIDs?: string[]
-  locationCities?: string[] | null
-  colors?: string[] | null
-  partnerIDs?: string[] | null
-  additionalGeneIDs?: string[] | null
-  attributionClass?: string[] | null
   artistSeriesIDs?: string[] | null
-  majorPeriods?: string[] | null
-  acquireable?: boolean | null
   atAuction?: boolean | null
-  inquireableOnly?: boolean | null
-  offerable?: boolean | null
+  attributionClass?: string[] | null
+  colors?: string[] | null
   dimensionRange?: string | null
+  forSale?: boolean | null
+  framed?: boolean | null
   height?: string | null
-  width?: string | null
+  inquireableOnly?: boolean | null
+  locationCities?: string[] | null
+  majorPeriods?: string[] | null
   materialsTerms?: string[] | null
+  offerable?: boolean | null
+  partnerIDs?: string[] | null
   priceRange?: string | null
   sizes?: string[] | null
-  forSale?: boolean | null
+  width?: string | null
 }
 
 export type SearchCriteriaAttributeKeys = keyof SearchCriteriaAttributes
