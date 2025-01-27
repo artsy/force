@@ -99,7 +99,6 @@ export const AlertProvider: FC<React.PropsWithChildren<AlertProviderProps>> = ({
     // (Alerts, by definition, stipulate forSale=true
     // when they are created in Gravity.)
     delete criteria.forSale
-    delete criteria.framed
 
     dispatch({ type: "SET_CRITERIA", payload: criteria })
   }, [initialCriteria, isEditMode, isAlertArtworksView])
