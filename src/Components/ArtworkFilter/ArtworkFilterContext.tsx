@@ -55,6 +55,7 @@ export enum FilterParamName {
   medium = "medium",
   partnerIDs = "partnerIDs",
   priceRange = "priceRange",
+  signed = "signed",
   sizes = "sizes",
   sort = "sort",
   timePeriod = "majorPeriods",
@@ -145,6 +146,7 @@ export enum SelectedFiltersCountsLabels {
   medium = "medium",
   partnerIDs = "partnerIDs",
   priceRange = "priceRange",
+  signed = "signed",
   sizes = "sizes",
   sort = "sort",
   timePeriod = "majorPeriods",
@@ -489,6 +491,7 @@ const artworkFilterReducer = (
         "includeArtworksByFollowedArtists",
         "inquireableOnly",
         "offerable",
+        "signed",
       ]
       booleanFilterTypes.forEach(filter => {
         if (name === filter) {
@@ -541,6 +544,7 @@ const artworkFilterReducer = (
         "inquireableOnly",
         "offerable",
         "partnerID",
+        "signed",
       ]
       filters.forEach(filter => {
         if (name === filter) {
@@ -652,7 +656,8 @@ export const getSelectedFiltersCounts = (
         break
       }
 
-      case paramName === FilterParamName.framed: {
+      case paramName === FilterParamName.framed:
+      case paramName === FilterParamName.signed: {
         if (paramValue) {
           counts[paramName] = 1
         }

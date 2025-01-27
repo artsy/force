@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<91fb8c79b47fcf72abe837347b893751>>
+ * @generated SignedSource<<729304e7999a1eb0063c8c4509247cd6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -107,7 +107,7 @@ v3 = {
 v4 = {
   "alias": null,
   "args": null,
-  "concreteType": "GravityARImage",
+  "concreteType": "ARImage",
   "kind": "LinkedField",
   "name": "image",
   "plural": false,
@@ -115,7 +115,7 @@ v4 = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "GravityImageURLs",
+      "concreteType": "ImageURLs",
       "kind": "LinkedField",
       "name": "imageURLs",
       "plural": false,
@@ -213,13 +213,13 @@ v14 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "GravityARImage"
+  "type": "ARImage"
 },
 v15 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "GravityImageURLs"
+  "type": "ImageURLs"
 },
 v16 = {
   "enumValues": null,

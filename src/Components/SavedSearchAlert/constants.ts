@@ -42,6 +42,7 @@ export const allowedSearchCriteriaKeys = [
   "offerable",
   "partnerIDs",
   "priceRange",
+  "signed",
   "sizes",
   "width",
 ]

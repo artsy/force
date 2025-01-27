@@ -10,6 +10,7 @@ import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/Materia
 import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { PartnersFilter } from "Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
 import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { SignedFilter } from "Components/ArtworkFilter/ArtworkFilters/SignedFilter"
 import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
@@ -20,6 +21,9 @@ export const SearchResultsArtworksFilters = () => {
     "onyx_only_framed_artworks_filter",
   )
 
+  const enableShowOnlySignedArtworksFilter = useFeatureFlag(
+    "onyx_only_signed_artworks_filter",
+  )
   return (
     <Join separator={<Spacer y={4} />}>
       <ArtistsFilter expanded />
@@ -36,6 +40,7 @@ export const SearchResultsArtworksFilters = () => {
       <ColorFilter expanded />
       <PartnersFilter expanded />
       {enableShowOnlyFramedArtworksFilter && <FramedFilter expanded />}
+      {enableShowOnlySignedArtworksFilter && <SignedFilter expanded />}
     </Join>
   )
 }

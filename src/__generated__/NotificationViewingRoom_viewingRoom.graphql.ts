@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<65abc3f61fa50168b5891107a12eeebf>>
+ * @generated SignedSource<<c0e1a0e6f540244cc21f6edae551dbbe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -58,7 +58,7 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "GravityARImage",
+      "concreteType": "ARImage",
       "kind": "LinkedField",
       "name": "image",
       "plural": false,
@@ -66,7 +66,7 @@ const node: ReaderFragment = {
         {
           "alias": null,
           "args": null,
-          "concreteType": "GravityImageURLs",
+          "concreteType": "ImageURLs",
           "kind": "LinkedField",
           "name": "imageURLs",
           "plural": false,

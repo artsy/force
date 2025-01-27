@@ -177,6 +177,24 @@ describe("extractPillsFromDefaultCriteria", () => {
     ])
   })
 
+  it("should support signed", () => {
+    const result = extractPillsFromDefaultCriteria({
+      signed: {
+        displayValue: "Signed",
+        value: true,
+      },
+    })
+
+    expect(result).toEqual([
+      {
+        isDefault: true,
+        displayValue: "Signed",
+        value: "true",
+        field: "signed",
+      },
+    ])
+  })
+
   it("should support framed", () => {
     const result = extractPillsFromDefaultCriteria({
       framed: {
