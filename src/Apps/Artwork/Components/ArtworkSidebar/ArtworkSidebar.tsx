@@ -35,7 +35,6 @@ import { ArtworkSidebarDetailsFragmentContainer } from "./ArtworkSidebarDetails"
 import { ArtworkSidebarEstimatedValueFragmentContainer } from "./ArtworkSidebarEstimatedValue"
 import { ArtworkSidebarLinksFragmentContainer } from "./ArtworkSidebarLinks"
 import { ArtworkSidebarPartnerInfoFragmentContainer } from "./ArtworkSidebarPartnerInfo"
-import { ArtsyShippingEstimateProvider } from "Components/ArtsyShippingEstimate"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork$data
@@ -102,144 +101,142 @@ export const ArtworkSidebar: React.FC<
   const showTimedSaleTimer = sale && !sale.isAuction && !hasEnded
 
   return (
-    <ArtsyShippingEstimateProvider>
-      <Flex flexDirection="column" data-test={ContextModule.artworkSidebar}>
-        {shoudlDisplayLotLabel && (
-          <Text variant="sm" color="black100" mb={0.5}>
-            Lot {lotLabel}
-          </Text>
-        )}
-        <ArtworkSidebarArtistsFragmentContainer artwork={artwork} />
+    <Flex flexDirection="column" data-test={ContextModule.artworkSidebar}>
+      {shoudlDisplayLotLabel && (
+        <Text variant="sm" color="black100" mb={0.5}>
+          Lot {lotLabel}
+        </Text>
+      )}
+      <ArtworkSidebarArtistsFragmentContainer artwork={artwork} />
 
-        <ArtworkSidebarArtworkTitleFragmentContainer artwork={artwork} />
+      <ArtworkSidebarArtworkTitleFragmentContainer artwork={artwork} />
 
-        <Spacer y={2} />
+      <Spacer y={2} />
 
-        <ArtworkSidebarDetailsFragmentContainer artwork={artwork} />
+      <ArtworkSidebarDetailsFragmentContainer artwork={artwork} />
 
-        {!isUnlisted && (
-          <>
-            {isInAuction ? (
-              <>
-                <Separator />
+      {!isUnlisted && (
+        <>
+          {isInAuction ? (
+            <>
+              <Separator />
 
-                <Spacer y={2} />
+              <Spacer y={2} />
 
-                <ArtworkSidebarEstimatedValueFragmentContainer
-                  artwork={artwork}
-                />
+              <ArtworkSidebarEstimatedValueFragmentContainer
+                artwork={artwork}
+              />
 
-                <Join separator={<Spacer y={2} />}>
-                  {hasEnded ? (
-                    <ArtworkSidebarBiddingClosedMessageFragmentContainer
-                      artwork={artwork}
-                    />
-                  ) : (
-                    <ArtworkSidebarAuctionPollingRefetchContainer
-                      artwork={artwork}
-                      me={me}
-                    />
-                  )}
-                </Join>
-
-                {!hasEnded && (
-                  <ArtworkSidebarAuctionTimerFragmentContainer
+              <Join separator={<Spacer y={2} />}>
+                {hasEnded ? (
+                  <ArtworkSidebarBiddingClosedMessageFragmentContainer
                     artwork={artwork}
                   />
+                ) : (
+                  <ArtworkSidebarAuctionPollingRefetchContainer
+                    artwork={artwork}
+                    me={me}
+                  />
                 )}
+              </Join>
 
-                <Spacer y={2} />
-              </>
-            ) : (
-              <ArtworkSidebarCommercialButtons artwork={artwork} me={me} />
-            )}
-          </>
-        )}
+              {!hasEnded && (
+                <ArtworkSidebarAuctionTimerFragmentContainer
+                  artwork={artwork}
+                />
+              )}
 
-        {isUnlisted && (
-          <>
-            <PrivateArtworkAdditionalInfo artwork={artwork} />
+              <Spacer y={2} />
+            </>
+          ) : (
+            <ArtworkSidebarCommercialButtons artwork={artwork} me={me} />
+          )}
+        </>
+      )}
 
-            <Spacer y={4} />
+      {isUnlisted && (
+        <>
+          <PrivateArtworkAdditionalInfo artwork={artwork} />
 
-            <ArtworkSidebarCommercialButtons
-              artwork={artwork}
-              me={me}
-              showPrice={true}
-              showButtonActions={false}
-            />
+          <Spacer y={4} />
 
-            <Spacer y={2} />
+          <ArtworkSidebarCommercialButtons
+            artwork={artwork}
+            me={me}
+            showPrice={true}
+            showButtonActions={false}
+          />
 
+          <Spacer y={2} />
+
+          <ArtworkSidebarShippingInformationFragmentContainer
+            artwork={artwork}
+          />
+
+          <Separator borderWidth={1} my={4} />
+
+          <ArtworkSidebarPrivateArtwork artwork={artwork} />
+          <Spacer y={2} />
+
+          <ArtworkSidebarCommercialButtons
+            artwork={artwork}
+            me={me}
+            showPrice={false}
+            showButtonActions={true}
+          />
+
+          <ArtworkSidebarArtsyGuarantee artwork={artwork} />
+
+          <Spacer y={2} />
+        </>
+      )}
+
+      {showTimedSaleTimer && (
+        <>
+          <ArtworkSidebarAuctionTimerFragmentContainer artwork={artwork} />
+          <Spacer y={2} />
+        </>
+      )}
+
+      {!isUnlisted && !isSold && artworkEcommerceAvailable && (
+        <>
+          <SidebarExpandable label="Shipping and taxes">
             <ArtworkSidebarShippingInformationFragmentContainer
               artwork={artwork}
             />
+          </SidebarExpandable>
 
-            <Separator borderWidth={1} my={4} />
+          <Spacer y={1} />
+        </>
+      )}
 
-            <ArtworkSidebarPrivateArtwork artwork={artwork} />
-            <Spacer y={2} />
-
-            <ArtworkSidebarCommercialButtons
-              artwork={artwork}
-              me={me}
-              showPrice={false}
-              showButtonActions={true}
-            />
-
+      {!isUnlisted && !!isEligibleForArtsyGuarantee && (
+        <>
+          <SidebarExpandable label="Be covered by the Artsy Guarantee when you check out with Artsy">
             <ArtworkSidebarArtsyGuarantee artwork={artwork} />
+          </SidebarExpandable>
 
-            <Spacer y={2} />
-          </>
-        )}
+          <Spacer y={1} />
+        </>
+      )}
 
-        {showTimedSaleTimer && (
-          <>
-            <ArtworkSidebarAuctionTimerFragmentContainer artwork={artwork} />
-            <Spacer y={2} />
-          </>
-        )}
+      <Separator />
 
-        {!isUnlisted && !isSold && artworkEcommerceAvailable && (
-          <>
-            <SidebarExpandable label="Shipping and taxes">
-              <ArtworkSidebarShippingInformationFragmentContainer
-                artwork={artwork}
-              />
-            </SidebarExpandable>
+      <Spacer y={2} />
 
-            <Spacer y={1} />
-          </>
-        )}
+      <ArtworkSidebarPartnerInfoFragmentContainer artwork={artwork} />
 
-        {!isUnlisted && !!isEligibleForArtsyGuarantee && (
-          <>
-            <SidebarExpandable label="Be covered by the Artsy Guarantee when you check out with Artsy">
-              <ArtworkSidebarArtsyGuarantee artwork={artwork} />
-            </SidebarExpandable>
+      <Spacer y={2} />
 
-            <Spacer y={1} />
-          </>
-        )}
+      {(!shouldHideDetailsCreateAlertCTA ||
+        checkIfArtworkIsOnLoanOrPermanentCollection(artwork.saleMessage)) && (
+        <ArtworkSidebarCreateAlertFragmentContainer artwork={artwork} />
+      )}
 
-        <Separator />
+      <Separator />
 
-        <Spacer y={2} />
-
-        <ArtworkSidebarPartnerInfoFragmentContainer artwork={artwork} />
-
-        <Spacer y={2} />
-
-        {(!shouldHideDetailsCreateAlertCTA ||
-          checkIfArtworkIsOnLoanOrPermanentCollection(artwork.saleMessage)) && (
-          <ArtworkSidebarCreateAlertFragmentContainer artwork={artwork} />
-        )}
-
-        <Separator />
-
-        <ArtworkSidebarLinksFragmentContainer artwork={artwork} />
-      </Flex>
-    </ArtsyShippingEstimateProvider>
+      <ArtworkSidebarLinksFragmentContainer artwork={artwork} />
+    </Flex>
   )
 }
 

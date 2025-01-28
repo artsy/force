@@ -1,4 +1,3 @@
-// import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import type { EstimateBody } from "@artaio/arta-browser"
 import type {
   ArtaLocation,
@@ -10,7 +9,7 @@ import { Link, SkeletonText, Text } from "@artsy/palette"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import type { ArtsyShippingEstimate_artwork$key } from "__generated__/ArtsyShippingEstimate_artwork.graphql"
-import { createContext, useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 /* TODOs:
@@ -25,79 +24,15 @@ const ARTA_API_KEY = getENV("ARTA_API_KEY")
 
 type Arta = typeof import("@artaio/arta-browser").default
 
-type ArtsyShippingEstimateContextType =
-  | {
-      Arta: Arta
-      enabled: true
-      loaded: true
-    }
-  | { Arta: null; enabled: false; loaded: true }
-  | { Arta: undefined; enabled: undefined; loaded: false }
-
-const ArtsyShippingEstimateContext =
-  createContext<ArtsyShippingEstimateContextType>({
-    loaded: false,
-    enabled: undefined,
-    Arta: undefined,
-  })
-
-interface ArtsyShippingEstimateProviderProps {
-  children: React.ReactNode
+interface ArtaModuleState {
+  Arta: Arta | null
+  initialized: boolean
 }
 
-/**
- * Load an arta estimate provider to keep the arta module loaded and initialized
- * even when shipping details are collapsed
- */
-export const ArtsyShippingEstimateProvider = (
-  props: ArtsyShippingEstimateProviderProps,
-) => {
-  const featureEnabled = useFeatureFlag("emerald_shipping-estimate-widget")
-  const [context, setContext] = useState<ArtsyShippingEstimateContextType>(
-    featureEnabled
-      ? {
-          loaded: false,
-          enabled: undefined,
-          Arta: undefined,
-        }
-      : { enabled: false, loaded: true, Arta: null },
-  )
-
-  const widgetWillLoad = featureEnabled && !!ARTA_API_KEY
-
-  // Load Arta module and intialize
-  useEffect(() => {
-    const initArta = async () => {
-      if (!context.loaded && !widgetWillLoad) {
-        return
-      }
-      try {
-        const Arta = (await import("@artaio/arta-browser")).default
-        Arta.init(ARTA_API_KEY)
-        setContext({ Arta, enabled: true, loaded: true })
-      } catch (error) {
-        console.error("Failed to load Arta module", error)
-        setContext({ enabled: false, loaded: true, Arta: null })
-      }
-    }
-    initArta()
-  }, [context.loaded, widgetWillLoad])
-
-  return (
-    <ArtsyShippingEstimateContext.Provider value={context}>
-      {props.children}
-    </ArtsyShippingEstimateContext.Provider>
-  )
+type EstimateWidgetState = {
+  loaded: boolean
+  widget: ArtaEstimate | null
 }
-
-type State =
-  | {
-      loaded: false
-    }
-  | {
-      loaded: true
-      widget: ArtaEstimate | null
-    }
 
 interface Props {
   artwork: ArtsyShippingEstimate_artwork$key
@@ -110,32 +45,59 @@ const Loading = () => (
 
 export const ArtsyShippingEstimate = ({ artwork }: Props) => {
   const artworkData = useFragment(ARTWORK_FRAGMENT, artwork)
-
   const estimateInput = estimateRequestBodyForArtwork(
     artworkData as ShippableArtwork,
   )
-  console.log("***", "estimateInput", estimateInput)
-  const initialState: State = !!estimateInput
-    ? { loaded: false }
+
+  const featureEnabled = useFeatureFlag("emerald_shipping-estimate-widget")
+
+  const initialModuleState: ArtaModuleState =
+    featureEnabled && !!ARTA_API_KEY && !!estimateInput
+      ? {
+          initialized: false,
+          Arta: null,
+        }
+      : {
+          initialized: true,
+          Arta: null,
+        }
+
+  const [artaModule, setArtaModule] =
+    useState<ArtaModuleState>(initialModuleState)
+
+  // Load Arta module and intialize
+  useEffect(() => {
+    if (artaModule.initialized) {
+      return
+    }
+    const initArta = async () => {
+      try {
+        const Arta = (await import("@artaio/arta-browser")).default
+        Arta.init(ARTA_API_KEY)
+        setArtaModule({ Arta, initialized: true })
+      } catch (error) {
+        console.error("Failed to load Arta module", error)
+        setArtaModule({ initialized: true, Arta: null })
+      }
+    }
+    initArta()
+  }, [artaModule.initialized])
+
+  const initialState: EstimateWidgetState = !!estimateInput
+    ? { loaded: false, widget: null }
     : { loaded: true, widget: null }
 
-  const artaContext = useContext(ArtsyShippingEstimateContext)
-  const [state, setState] = useState<State>(initialState)
+  const [state, setState] = useState<EstimateWidgetState>(initialState)
 
-  const {
-    loaded: isArtaInitialized,
-    enabled: isArtaEnabled,
-    Arta,
-  } = artaContext
+  const { Arta } = artaModule
 
   useEffect(() => {
     console.log("*** loading estimate widget...", {
       ...state,
-      isArtaInitialized,
-      isArtaEnabled,
+      isArtaInitialized: artaModule.initialized,
       estimateInput,
     })
-    if (!isArtaInitialized || state.loaded) {
+    if (!artaModule.initialized || state.loaded) {
       return
     }
 
@@ -143,7 +105,7 @@ export const ArtsyShippingEstimate = ({ artwork }: Props) => {
       console.log("***", "ArtsyShippingEstimate params", estimateInput)
 
       const artsyEstimateWidget =
-        isArtaEnabled && estimateInput && Arta.estimate(estimateInput)
+        Arta && estimateInput && Arta.estimate(estimateInput)
 
       if (!artsyEstimateWidget) {
         setState({ loaded: true, widget: null })
@@ -160,14 +122,7 @@ export const ArtsyShippingEstimate = ({ artwork }: Props) => {
       }
     }
     loadEstimate()
-  }, [
-    isArtaInitialized,
-    isArtaEnabled,
-    Arta,
-    estimateInput,
-    state.loaded,
-    state,
-  ])
+  }, [Arta, estimateInput, artaModule.initialized, state.loaded, state])
 
   if (!state.loaded) {
     return <Loading />
@@ -268,42 +223,38 @@ type ArtaObjectDimensions = Pick<
   "height" | "width" | "unit_of_measurement" | "depth"
 >
 const artworkDimensions = (
-  editionSetOrArtwork: ShippableArtwork,
+  artwork: ShippableArtwork,
 ): ArtaObjectDimensions | null => {
-  if (editionSetOrArtwork.isFramed && !!editionSetOrArtwork.framedMetric) {
-    if (
-      !!(
-        !!editionSetOrArtwork.framedHeight && !!editionSetOrArtwork.framedWidth
-      )
-    ) {
+  if (artwork.isFramed && !!artwork.framedMetric) {
+    if (!!(!!artwork.framedHeight && !!artwork.framedWidth)) {
       return {
-        unit_of_measurement: editionSetOrArtwork.framedMetric,
-        height: editionSetOrArtwork.framedHeight,
-        width: editionSetOrArtwork.framedWidth,
-        depth: editionSetOrArtwork.framedDepth,
+        unit_of_measurement: artwork.framedMetric,
+        height: artwork.framedHeight,
+        width: artwork.framedWidth,
+        depth: artwork.framedDepth,
       }
     }
-    if (!!editionSetOrArtwork.framedDiameter) {
+    if (!!artwork.framedDiameter) {
       return {
-        unit_of_measurement: editionSetOrArtwork.framedMetric,
-        height: editionSetOrArtwork.framedDiameter,
-        width: editionSetOrArtwork.framedDiameter,
-        depth: editionSetOrArtwork.framedDepth,
+        unit_of_measurement: artwork.framedMetric,
+        height: artwork.framedDiameter,
+        width: artwork.framedDiameter,
+        depth: artwork.framedDepth,
       }
     }
-  } else if (!!editionSetOrArtwork.heightCm && !!editionSetOrArtwork.widthCm) {
+  } else if (!!artwork.heightCm && !!artwork.widthCm) {
     return {
       unit_of_measurement: "cm",
-      height: editionSetOrArtwork.heightCm,
-      width: editionSetOrArtwork.widthCm,
-      depth: editionSetOrArtwork.depthCm,
+      height: artwork.heightCm,
+      width: artwork.widthCm,
+      depth: artwork.depthCm,
     }
-  } else if (!!editionSetOrArtwork.diameterCm) {
+  } else if (!!artwork.diameterCm) {
     return {
       unit_of_measurement: "cm",
-      height: editionSetOrArtwork.diameterCm,
-      width: editionSetOrArtwork.diameterCm,
-      depth: editionSetOrArtwork.depthCm,
+      height: artwork.diameterCm,
+      width: artwork.diameterCm,
+      depth: artwork.depthCm,
     }
   }
   return null
