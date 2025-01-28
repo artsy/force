@@ -1,4 +1,4 @@
-import { Join, Spacer } from "@artsy/palette"
+import { Stack, Text } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import type { ArtistCVRoute_viewer$data } from "__generated__/ArtistCVRoute_viewer.graphql"
 import type * as React from "react"
@@ -18,9 +18,13 @@ const ArtistCVRoute: React.FC<React.PropsWithChildren<ArtistCVRouteProps>> = ({
 
   return (
     <>
-      <MetaTags title={`${viewer?.soloShows?.name} - CV | Artsy`} />
+      <MetaTags title={`${viewer?.soloShows?.name} CV | Artsy`} />
 
-      <Join separator={<Spacer y={4} />}>
+      <Stack gap={4}>
+        <Text as="h1" variant="xl">
+          {viewer.soloShows?.name} CV
+        </Text>
+
         <ArtistCVGroupRefetchContainer
           artist={viewer.soloShows}
           title="Solo shows"
@@ -35,7 +39,7 @@ const ArtistCVRoute: React.FC<React.PropsWithChildren<ArtistCVRouteProps>> = ({
           artist={viewer.fairBooths}
           title="Fair booths"
         />
-      </Join>
+      </Stack>
     </>
   )
 }
