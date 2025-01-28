@@ -5,6 +5,10 @@ import { mount } from "enzyme"
 
 jest.mock("Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext")
 
+jest.mock("../BankDebitForm", () => ({
+  BankDebitForm: () => <div />,
+}))
+
 const setHookState = state =>
   jest.fn().mockImplementation(() => [state, () => {}])
 
