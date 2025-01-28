@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d0568ca66721d6480bab03ed3c9e463e>>
+ * @generated SignedSource<<7e69d7e0776c3373b2c4199538af5940>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,7 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
-export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "COLLECTOR_PROFILE_UPDATE_PROMPT" | "PARTNER_OFFER_CREATED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
+export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "COLLECTOR_PROFILE_UPDATE_PROMPT" | "MARKETING_COLLECTION_HIT" | "PARTNER_OFFER_CREATED" | "PARTNER_SHOW_OPENED" | "SAVED_ARTWORK_CHANGES" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomPublishedNotification_notification$data = {
   readonly headline: string;

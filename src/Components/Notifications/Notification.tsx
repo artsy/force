@@ -27,7 +27,7 @@ import type {
 } from "__generated__/NotificationQuery.graphql"
 import { Suspense, useEffect } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
-
+import { SavedArtworkChangesNotification } from "./SavedArtworkChangesNotification"
 const logger = createLogger("NotificationItem")
 
 // FIXME: Should probably be a column span
@@ -40,6 +40,7 @@ export const SUPPORTED_NOTIFICATION_TYPES: NotificationTypesEnum[] = [
   "VIEWING_ROOM_PUBLISHED",
   "PARTNER_SHOW_OPENED",
   "COLLECTOR_PROFILE_UPDATE_PROMPT",
+  "SAVED_ARTWORK_CHANGES",
 ]
 
 interface NotificationProps {
@@ -122,6 +123,9 @@ const Notification: React.FC<React.PropsWithChildren<NotificationProps>> = ({
     case "VIEWING_ROOM_PUBLISHED":
       return <ViewingRoomPublishedNotification notification={notification} />
 
+    case "SAVED_ARTWORK_CHANGES":
+      return <SavedArtworkChangesNotification notification={notification} />
+
     default:
       return null
   }
@@ -161,6 +165,7 @@ const notificationQuery = graphql`
         ...PartnerOfferCreatedNotification_notification
         ...PartnerShowOpenedNotification_notification
         ...ViewingRoomPublishedNotification_notification
+        ...SavedArtworkChangesNotification_notification
         id
         internalID
         notificationType
