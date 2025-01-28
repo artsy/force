@@ -30,7 +30,7 @@ export const ExpressCheckout = () => {
 
   return (
     <>
-      <Text variant="lg-display">Express Checkout</Text>
+      <Text variant="lg-display">Express checkout</Text>
       <Spacer y={1} />
       <ExpressCheckoutElement onConfirm={onConfirm} />
     </>
