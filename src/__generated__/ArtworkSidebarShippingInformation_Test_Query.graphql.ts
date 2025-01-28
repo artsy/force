@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cc548afd641b66546d648936ec501e80>>
+ * @generated SignedSource<<09a47bd96b84befd6c9321665b319262>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -53,19 +53,19 @@ v4 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Float"
+  "type": "String"
 },
 v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Float"
+},
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
-},
-v6 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
 },
 v7 = {
   "enumValues": null,
@@ -117,6 +117,34 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "isFramed",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "category",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "shippingOrigin",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "shippingCountry",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Location",
             "kind": "LinkedField",
             "name": "location",
@@ -134,6 +162,13 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "postalCode",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "city",
                 "storageKey": null
               },
               (v1/*: any*/)
@@ -191,13 +226,6 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "priceIncludesTaxDisplay",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "shippingOrigin",
             "storageKey": null
           },
           {
@@ -266,7 +294,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "41d2252fc75de31a37c8bdf7d705ac13",
+    "cacheID": "83e030aa8dd5b00cad4befb8cb13e392",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -278,8 +306,10 @@ return {
         },
         "artwork.artsyShippingDomestic": (v3/*: any*/),
         "artwork.artsyShippingInternational": (v3/*: any*/),
-        "artwork.heightCm": (v4/*: any*/),
-        "artwork.id": (v5/*: any*/),
+        "artwork.category": (v4/*: any*/),
+        "artwork.heightCm": (v5/*: any*/),
+        "artwork.id": (v6/*: any*/),
+        "artwork.isFramed": (v3/*: any*/),
         "artwork.isUnlisted": {
           "enumValues": null,
           "nullable": false,
@@ -292,12 +322,13 @@ return {
           "plural": false,
           "type": "Location"
         },
-        "artwork.location.country": (v6/*: any*/),
-        "artwork.location.id": (v5/*: any*/),
-        "artwork.location.postalCode": (v6/*: any*/),
+        "artwork.location.city": (v4/*: any*/),
+        "artwork.location.country": (v4/*: any*/),
+        "artwork.location.id": (v6/*: any*/),
+        "artwork.location.postalCode": (v4/*: any*/),
         "artwork.pickupAvailable": (v3/*: any*/),
-        "artwork.priceCurrency": (v6/*: any*/),
-        "artwork.priceIncludesTaxDisplay": (v6/*: any*/),
+        "artwork.priceCurrency": (v4/*: any*/),
+        "artwork.priceIncludesTaxDisplay": (v4/*: any*/),
         "artwork.priceListed": {
           "enumValues": null,
           "nullable": true,
@@ -310,8 +341,9 @@ return {
           "plural": false,
           "type": "Float"
         },
-        "artwork.shippingInfo": (v6/*: any*/),
-        "artwork.shippingOrigin": (v6/*: any*/),
+        "artwork.shippingCountry": (v4/*: any*/),
+        "artwork.shippingInfo": (v4/*: any*/),
+        "artwork.shippingOrigin": (v4/*: any*/),
         "artwork.taxInfo": {
           "enumValues": null,
           "nullable": true,
@@ -327,12 +359,12 @@ return {
         },
         "artwork.taxInfo.moreInfo.displayText": (v7/*: any*/),
         "artwork.taxInfo.moreInfo.url": (v7/*: any*/),
-        "artwork.widthCm": (v4/*: any*/)
+        "artwork.widthCm": (v5/*: any*/)
       }
     },
     "name": "ArtworkSidebarShippingInformation_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarShippingInformation_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarShippingInformation_artwork\n    id\n  }\n}\n\nfragment ArtsyShippingEstimate_artwork on Artwork {\n  location {\n    country\n    postalCode\n    id\n  }\n  priceCurrency\n  priceListed {\n    major\n  }\n  heightCm\n  widthCm\n}\n\nfragment ArtworkSidebarShippingInformation_artwork on Artwork {\n  ...ArtsyShippingEstimate_artwork\n  isUnlisted\n  priceIncludesTaxDisplay\n  shippingOrigin\n  artsyShippingDomestic\n  artsyShippingInternational\n  shippingInfo\n  pickupAvailable\n  taxInfo {\n    displayText\n    moreInfo {\n      displayText\n      url\n    }\n  }\n}\n"
+    "text": "query ArtworkSidebarShippingInformation_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarShippingInformation_artwork\n    id\n  }\n}\n\nfragment ArtsyShippingEstimate_artwork on Artwork {\n  isFramed\n  category\n  shippingOrigin\n  shippingCountry\n  location {\n    country\n    postalCode\n    city\n    id\n  }\n  priceCurrency\n  priceListed {\n    major\n  }\n  heightCm\n  widthCm\n}\n\nfragment ArtworkSidebarShippingInformation_artwork on Artwork {\n  ...ArtsyShippingEstimate_artwork\n  isUnlisted\n  priceIncludesTaxDisplay\n  shippingOrigin\n  artsyShippingDomestic\n  artsyShippingInternational\n  shippingInfo\n  pickupAvailable\n  taxInfo {\n    displayText\n    moreInfo {\n      displayText\n      url\n    }\n  }\n}\n"
   }
 };
 })();

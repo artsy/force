@@ -1,14 +1,15 @@
+import { ActionType, type ClickedOnLearnMore } from "@artsy/cohesion"
 import { Spacer, Text } from "@artsy/palette"
+import { ArtsyShippingEstimate } from "Components/ArtsyShippingEstimate"
+import { RouterLink } from "System/Components/RouterLink"
 import type { ArtworkSidebarShippingInformation_artwork$data } from "__generated__/ArtworkSidebarShippingInformation_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ActionType, type ClickedOnLearnMore } from "@artsy/cohesion"
-import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
-import { ArtsyShippingEstimate } from "Components/ArtsyShippingEstimate"
 
 export interface ShippingInformationProps {
   artwork: ArtworkSidebarShippingInformation_artwork$data
 }
+const CALCULATED_IN_CHECKOUT_MESSAGE = "Shipping: Calculated in checkout"
 
 const ArtworkSidebarShippingInformation: React.FC<
   React.PropsWithChildren<ShippingInformationProps>
@@ -60,7 +61,12 @@ const ArtworkSidebarShippingInformation: React.FC<
             </RouterLink>
           </Text>
         )}
-        {globalArtsyShipping && <ArtsyShippingEstimate artwork={artwork} />}
+        {globalArtsyShipping && (
+          <ArtsyShippingEstimate
+            artwork={artwork}
+            fallbackText={CALCULATED_IN_CHECKOUT_MESSAGE}
+          />
+        )}
       </>
     )
   }
@@ -74,7 +80,7 @@ const ArtworkSidebarShippingInformation: React.FC<
         </Text>
       )}
 
-      {!!shippingInfo && (
+      {!!shippingInfo && !globalArtsyShipping && (
         <Text
           variant="sm"
           color="black60"
@@ -83,6 +89,12 @@ const ArtworkSidebarShippingInformation: React.FC<
         >
           {shippingInfo}
         </Text>
+      )}
+      {globalArtsyShipping && (
+        <ArtsyShippingEstimate
+          artwork={artwork}
+          fallbackText={CALCULATED_IN_CHECKOUT_MESSAGE}
+        />
       )}
       {!!pickupAvailable && (
         <Text variant="sm" color="black60">
@@ -112,7 +124,7 @@ const ArtworkSidebarShippingInformation: React.FC<
           </RouterLink>
         </Text>
       )}
-      {globalArtsyShipping && <ArtsyShippingEstimate artwork={artwork} />}
+
       <Spacer y={1} />
     </>
   )

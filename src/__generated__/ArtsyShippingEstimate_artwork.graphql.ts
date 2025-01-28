@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<308cade2c642e9ce416a222b790af56b>>
+ * @generated SignedSource<<0688b0fc9b18c41aee5e334c8f6c212e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,11 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtsyShippingEstimate_artwork$data = {
+  readonly category: string | null | undefined;
   readonly heightCm: number | null | undefined;
+  readonly isFramed: boolean | null | undefined;
   readonly location: {
+    readonly city: string | null | undefined;
     readonly country: string | null | undefined;
     readonly postalCode: string | null | undefined;
   } | null | undefined;
@@ -20,6 +23,8 @@ export type ArtsyShippingEstimate_artwork$data = {
   readonly priceListed: {
     readonly major: number;
   } | null | undefined;
+  readonly shippingCountry: string | null | undefined;
+  readonly shippingOrigin: string | null | undefined;
   readonly widthCm: number | null | undefined;
   readonly " $fragmentType": "ArtsyShippingEstimate_artwork";
 };
@@ -34,6 +39,34 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtsyShippingEstimate_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isFramed",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "category",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shippingOrigin",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shippingCountry",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -54,6 +87,13 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "postalCode",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "city",
           "storageKey": null
         }
       ],
@@ -103,6 +143,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5cbb2aac16fbabd0ecd5f3afda08232a";
+(node as any).hash = "e334bac45ddae9ac876f8e846105b439";
 
 export default node;
