@@ -1,10 +1,11 @@
+import { Spacer, Text } from "@artsy/palette"
 import {
   ExpressCheckoutElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js"
 
-export const ExpressCheckoutPrototype = () => {
+export const ExpressCheckout = () => {
   const elements = useElements()
   const stripe = useStripe()
   const clientSecret = "client_secret_id"
@@ -29,6 +30,8 @@ export const ExpressCheckoutPrototype = () => {
 
   return (
     <>
+      <Text variant="lg-display">Express Checkout</Text>
+      <Spacer y={1} />
       <ExpressCheckoutElement onConfirm={onConfirm} />
     </>
   )

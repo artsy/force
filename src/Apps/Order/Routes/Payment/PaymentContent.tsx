@@ -12,8 +12,6 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import { Elements } from "@stripe/react-stripe-js"
-import { type StripeElementsOptions, loadStripe } from "@stripe/stripe-js"
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import {
@@ -21,13 +19,12 @@ import {
   CreditCardPickerFragmentContainer,
 } from "Apps/Order/Components/CreditCardPicker"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
-import { ExpressCheckoutPrototype } from "Apps/Order/Routes/Payment/ExpressCheckoutPrototype"
+import { ExpressCheckoutProvider } from "Apps/Order/Routes/Payment/ExpressCheckoutPrototype/ExpressCheckoutProvider"
 import type { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import { RouterLink } from "System/Components/RouterLink"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { Jump } from "Utils/Hooks/useJump"
 import { extractNodes } from "Utils/extractNodes"
-import { getENV } from "Utils/getENV"
 import type { Payment_me$data } from "__generated__/Payment_me.graphql"
 import type {
   CommercePaymentMethodEnum,
@@ -80,14 +77,6 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
     }
   }, [order, selectedPaymentMethod, tracking])
 
-  const options: StripeElementsOptions = {
-    mode: "payment",
-    amount: 1099,
-    currency: "usd",
-  }
-
-  const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
-
   const expressCheckoutPrototypeEnabled = useFeatureFlag(
     "emerald_stripe-express-checkout-prototype",
   )
@@ -97,10 +86,8 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
       {/* Express Checkout */}
       {expressCheckoutPrototypeEnabled && (
         <>
-          <Text variant="lg-display">Express Checkout</Text>
-          <Elements stripe={stripePromise} options={options}>
-            <ExpressCheckoutPrototype />
-          </Elements>
+          <ExpressCheckoutProvider order={order} />
+          <Spacer y={4} />
         </>
       )}
 
