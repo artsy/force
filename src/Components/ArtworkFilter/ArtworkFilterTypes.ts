@@ -26,6 +26,7 @@ export interface ArtworkFilters extends MultiSelectArtworkFilters {
   atAuction?: boolean
   color?: string
   forSale?: boolean
+  framed?: boolean
   height?: string
   includeArtworksByFollowedArtists?: boolean
   inquireableOnly?: boolean
@@ -35,6 +36,7 @@ export interface ArtworkFilters extends MultiSelectArtworkFilters {
   page?: number
   partnerID?: string
   priceRange?: string
+  signed?: boolean
   sort?: string
   term?: string
   width?: string

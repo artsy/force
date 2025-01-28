@@ -1,4 +1,4 @@
-import { Spacer, Stack, Sup, Text } from "@artsy/palette"
+import { Spacer, Stack, Text } from "@artsy/palette"
 import { UserCollectionArtworks } from "Apps/User/Components/UserCollectionArtworks"
 import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
 import { ClientSuspense } from "Components/ClientSuspense"
@@ -25,10 +25,15 @@ const UserCollectionRoute = ({ collection }: UserCollectionRouteProps) => {
 
       <Jump id="UserCollectionRoute">
         <Stack gap={4}>
-          <Text variant="lg-display">
-            {collection.name}{" "}
-            <Sup color="brand">{collection.artworksConnection?.totalCount}</Sup>
-          </Text>
+          <div>
+            <Text variant="lg-display">{collection.name}</Text>
+            {collection.artworksConnection && (
+              <Text variant="lg-display" color="black60">
+                {collection.artworksConnection.totalCount} artwork
+                {collection.artworksConnection.totalCount === 1 ? "" : "s"}
+              </Text>
+            )}
+          </div>
 
           <ClientSuspense
             fallback={

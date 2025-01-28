@@ -44,7 +44,9 @@ const ArtistCVGroup: FC<React.PropsWithChildren<ArtistCVGroupProps>> = ({
     return (
       <GridColumns>
         <Column span={12}>
-          <Text variant="lg-display">{title}</Text>
+          <Text as="h2" variant="lg-display">
+            {title}
+          </Text>
         </Column>
 
         <Column span={8} start={4}>

@@ -9,8 +9,8 @@ import {
   Tooltip,
 } from "@artsy/palette"
 import { ArtworkListContextualMenu } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/ArtworkListContextualMenu"
-import { SavesArtworksShareDialog } from "Apps/CollectorProfile/Routes/Saves/Components/SavesArtworksShareDialog"
 import { ClientSuspense } from "Components/ClientSuspense"
+import { ShareCollectionDialog } from "Components/ShareCollectionDialog"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import type { SavesArtworksHeaderQuery } from "__generated__/SavesArtworksHeaderQuery.graphql"
 import { type FC, useState } from "react"
@@ -90,11 +90,10 @@ const SavesArtworksHeader: FC<
       </Stack>
 
       {mode === "Share" && (
-        <SavesArtworksShareDialog
+        <ShareCollectionDialog
           onClose={() => setMode("Idle")}
-          collectionId={collection.internalID}
+          collectionId={collection.slug || collection.internalID}
           collectionName={collection.name}
-          isPublic={!collection.private}
         />
       )}
     </>
@@ -125,7 +124,7 @@ const QUERY = graphql`
         name
         default
         shareableWithPartners
-        private
+        slug
       }
     }
   }

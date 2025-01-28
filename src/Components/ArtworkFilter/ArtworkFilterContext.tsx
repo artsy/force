@@ -15,24 +15,24 @@ import { rangeToTuple } from "./Utils/rangeToTuple"
  * Initial filter state
  */
 export const initialArtworkFilterState: ArtworkFilters = {
-  majorPeriods: [],
-  page: 1,
-  sizes: [],
-  sort: "-decayed_merch",
+  additionalGeneIDs: [],
   artistIDs: [],
+  artistNationalities: [],
   artistSeriesIDs: [],
   attributionClass: [],
-  keyword: undefined,
-  partnerIDs: [],
-  additionalGeneIDs: [],
   colors: [],
-  locationCities: [],
-  artistNationalities: [],
-  materialsTerms: [],
   height: "*-*",
-  width: "*-*",
-  priceRange: "*-*",
+  keyword: undefined,
+  locationCities: [],
+  majorPeriods: [],
+  materialsTerms: [],
   metric: DEFAULT_METRIC,
+  page: 1,
+  partnerIDs: [],
+  priceRange: "*-*",
+  sizes: [],
+  sort: "-decayed_merch",
+  width: "*-*",
 }
 
 /**
@@ -47,6 +47,7 @@ export enum FilterParamName {
   attributionClass = "attributionClass",
   colors = "colors",
   forSale = "forSale",
+  framed = "framed",
   height = "height",
   keyword = "keyword",
   locationCities = "locationCities",
@@ -54,6 +55,7 @@ export enum FilterParamName {
   medium = "medium",
   partnerIDs = "partnerIDs",
   priceRange = "priceRange",
+  signed = "signed",
   sizes = "sizes",
   sort = "sort",
   timePeriod = "majorPeriods",
@@ -138,11 +140,13 @@ export enum SelectedFiltersCountsLabels {
   attributionClass = "attributionClass",
   colors = "colors",
   forSale = "forSale",
+  framed = "framed",
   locationCities = "locationCities",
   materialsTerms = "materialsTerms",
   medium = "medium",
   partnerIDs = "partnerIDs",
   priceRange = "priceRange",
+  signed = "signed",
   sizes = "sizes",
   sort = "sort",
   timePeriod = "majorPeriods",
@@ -483,9 +487,11 @@ const artworkFilterReducer = (
         "acquireable",
         "atAuction",
         "forSale",
+        "framed",
         "includeArtworksByFollowedArtists",
         "inquireableOnly",
         "offerable",
+        "signed",
       ]
       booleanFilterTypes.forEach(filter => {
         if (name === filter) {
@@ -533,10 +539,12 @@ const artworkFilterReducer = (
         "atAuction",
         "color",
         "forSale",
+        "framed",
         "includeArtworksByFollowedArtists",
         "inquireableOnly",
         "offerable",
         "partnerID",
+        "signed",
       ]
       filters.forEach(filter => {
         if (name === filter) {
@@ -642,6 +650,14 @@ export const getSelectedFiltersCounts = (
         break
       }
       case paramName === FilterParamName.forSale: {
+        if (paramValue) {
+          counts[paramName] = 1
+        }
+        break
+      }
+
+      case paramName === FilterParamName.framed:
+      case paramName === FilterParamName.signed: {
         if (paramValue) {
           counts[paramName] = 1
         }

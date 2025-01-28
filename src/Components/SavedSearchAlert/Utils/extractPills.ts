@@ -195,6 +195,22 @@ export const extractPillsFromCriteria = ({
         }
         break
       }
+      case "framed": {
+        result = {
+          field: paramName,
+          value: paramValue,
+          displayValue: "Framed",
+        }
+        break
+      }
+      case "signed": {
+        result = {
+          field: paramName,
+          value: paramValue,
+          displayValue: "Signed",
+        }
+        break
+      }
       default: {
         result = null
       }

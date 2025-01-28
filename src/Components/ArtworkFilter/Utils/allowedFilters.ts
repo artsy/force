@@ -31,12 +31,14 @@ const BOOLEAN_INPUT_ARGS = [
   "acquireable",
   "atAuction",
   "forSale",
+  "framed",
   "includeArtworksByFollowedArtists",
   "includeMediumFilterInAggregation",
   "inquireableOnly",
   "keywordMatchExact",
   "marketable",
   "offerable",
+  "signed",
 ]
 
 /**
@@ -64,6 +66,7 @@ const SUPPORTED_INPUT_ARGS = [
   "extraAggregationGeneIDs",
   "first",
   "forSale",
+  "framed",
   "geneID",
   "geneIDs",
   "height",
@@ -87,6 +90,7 @@ const SUPPORTED_INPUT_ARGS = [
   "periods",
   "priceRange",
   "saleID",
+  "signed",
   "size",
   "sizes",
   "sort",
