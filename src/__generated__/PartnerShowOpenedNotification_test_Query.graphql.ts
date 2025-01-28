@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<facd7279ce5d1199a2f14a327086e820>>
+ * @generated SignedSource<<73c657fc07f93c3a0115bc54c560b2d3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -499,6 +499,7 @@ return {
             "ARTWORK_ALERT",
             "ARTWORK_PUBLISHED",
             "COLLECTOR_PROFILE_UPDATE_PROMPT",
+            "MARKETING_COLLECTION_HIT",
             "PARTNER_OFFER_CREATED",
             "PARTNER_SHOW_OPENED",
             "VIEWING_ROOM_PUBLISHED"

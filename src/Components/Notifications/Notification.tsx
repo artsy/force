@@ -27,6 +27,7 @@ import type {
 } from "__generated__/NotificationQuery.graphql"
 import { Suspense, useEffect } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
+import { MarketingCollectionHitNotification } from "./MarketingCollectionHitNotification"
 
 const logger = createLogger("NotificationItem")
 
@@ -40,6 +41,7 @@ export const SUPPORTED_NOTIFICATION_TYPES: NotificationTypesEnum[] = [
   "VIEWING_ROOM_PUBLISHED",
   "PARTNER_SHOW_OPENED",
   "COLLECTOR_PROFILE_UPDATE_PROMPT",
+  "MARKETING_COLLECTION_HIT",
 ]
 
 interface NotificationProps {
@@ -122,6 +124,9 @@ const Notification: React.FC<React.PropsWithChildren<NotificationProps>> = ({
     case "VIEWING_ROOM_PUBLISHED":
       return <ViewingRoomPublishedNotification notification={notification} />
 
+    case "MARKETING_COLLECTION_HIT":
+      return <MarketingCollectionHitNotification notification={notification} />
+
     default:
       return null
   }
@@ -161,6 +166,7 @@ const notificationQuery = graphql`
         ...PartnerOfferCreatedNotification_notification
         ...PartnerShowOpenedNotification_notification
         ...ViewingRoomPublishedNotification_notification
+        ...MarketingCollectionHitNotification_notification
         id
         internalID
         notificationType
