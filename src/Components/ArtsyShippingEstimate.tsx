@@ -7,6 +7,7 @@ import type {
 import type ArtaEstimate from "@artaio/arta-browser/dist/estimate"
 import { Link, SkeletonText, Text } from "@artsy/palette"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import { getENV } from "Utils/getENV"
 import type { ArtsyShippingEstimate_artwork$key } from "__generated__/ArtsyShippingEstimate_artwork.graphql"
 import { useEffect, useState } from "react"
@@ -24,11 +25,6 @@ const ARTA_API_KEY = getENV("ARTA_API_KEY")
 
 type Arta = typeof import("@artaio/arta-browser").default
 
-interface ArtaModuleState {
-  Arta: Arta | null
-  initialized: boolean
-}
-
 type EstimateWidgetState = {
   loaded: boolean
   widget: ArtaEstimate | null
@@ -36,12 +32,9 @@ type EstimateWidgetState = {
 
 interface Props {
   artwork: ArtsyShippingEstimate_artwork$key
-  fallbackText: string
 }
 
-const Loading = () => (
-  <SkeletonText variant="sm">Estimate shipping</SkeletonText>
-)
+const Loader = () => <SkeletonText variant="sm">Estimate shipping</SkeletonText>
 
 export const ArtsyShippingEstimate = ({ artwork }: Props) => {
   const artworkData = useFragment(ARTWORK_FRAGMENT, artwork)
@@ -51,37 +44,15 @@ export const ArtsyShippingEstimate = ({ artwork }: Props) => {
 
   const featureEnabled = useFeatureFlag("emerald_shipping-estimate-widget")
 
-  const initialModuleState: ArtaModuleState =
-    featureEnabled && !!ARTA_API_KEY && !!estimateInput
-      ? {
-          initialized: false,
-          Arta: null,
-        }
-      : {
-          initialized: true,
-          Arta: null,
-        }
+  const [Arta, setArta] = useState<Arta | null>(null)
 
-  const [artaModule, setArtaModule] =
-    useState<ArtaModuleState>(initialModuleState)
-
-  // Load Arta module and intialize
-  useEffect(() => {
-    if (artaModule.initialized) {
-      return
-    }
-    const initArta = async () => {
-      try {
-        const Arta = (await import("@artaio/arta-browser")).default
-        Arta.init(ARTA_API_KEY)
-        setArtaModule({ Arta, initialized: true })
-      } catch (error) {
-        console.error("Failed to load Arta module", error)
-        setArtaModule({ initialized: true, Arta: null })
-      }
-    }
-    initArta()
-  }, [artaModule.initialized])
+  useLoadScript({
+    id: "arta-browser-script",
+    src: "https://cdn.jsdelivr.net/npm/@artaio/arta-browser@2.16.1/dist/bundle.js",
+    onReady: () => {
+      setArta(window["Arta"])
+    },
+  })
 
   const initialState: EstimateWidgetState = !!estimateInput
     ? { loaded: false, widget: null }
@@ -89,20 +60,19 @@ export const ArtsyShippingEstimate = ({ artwork }: Props) => {
 
   const [state, setState] = useState<EstimateWidgetState>(initialState)
 
-  const { Arta } = artaModule
-
   useEffect(() => {
-    console.log("*** loading estimate widget...", {
-      ...state,
-      isArtaInitialized: artaModule.initialized,
-      estimateInput,
-    })
-    if (!artaModule.initialized || state.loaded) {
+    if (!featureEnabled || !estimateInput || !ARTA_API_KEY) {
+      setState({ loaded: true, widget: null })
+      return
+    }
+
+    if (state.loaded || !Arta) {
       return
     }
 
     const loadEstimate = async () => {
-      console.log("***", "ArtsyShippingEstimate params", estimateInput)
+      console.log("***", "oading estimate", estimateInput)
+      Arta.init(ARTA_API_KEY)
 
       const artsyEstimateWidget =
         Arta && estimateInput && Arta.estimate(estimateInput)
@@ -122,22 +92,24 @@ export const ArtsyShippingEstimate = ({ artwork }: Props) => {
       }
     }
     loadEstimate()
-  }, [Arta, estimateInput, artaModule.initialized, state.loaded, state])
+  }, [Arta, estimateInput, state.loaded, state, featureEnabled])
 
   if (!state.loaded) {
-    return <Loading />
+    return <Loader />
   }
 
   if (!state.widget) {
-    return <Text>Shipping cost calculated at checkout</Text>
+    return <Text> </Text>
   }
 
   const estimateWidget = state.widget
 
   return estimateWidget.isReady ? (
-    <Link onClick={() => estimateWidget.open()}>Estimate Shipping</Link>
+    <Link color="black60" onClick={() => estimateWidget.open()}>
+      Estimate Shipping Cost
+    </Link>
   ) : (
-    <Loading />
+    <Loader />
   )
 }
 
@@ -264,7 +236,7 @@ type ArtworkValue = Pick<ArtaObject, "value" | "value_currency">
 const artworkValue = (artwork: ShippableArtwork): ArtworkValue | null => {
   if (!!artwork.heightCm && !!artwork.widthCm) {
     return {
-      value: artwork.priceListed?.major || 500, // todo: get a real value
+      value: artwork.priceListed?.major || 500, // TODO: get a real value
       value_currency: artwork.priceCurrency,
     }
   }
@@ -284,7 +256,6 @@ const artaObject = (artwork: ShippableArtwork): ArtaObject | null => {
   if (!!subtype && !!dimensions && !!value) {
     return { subtype, ...dimensions, ...value }
   }
-  console.log("***", "artaObject failed", { subtype, dimensions, value })
   return null
 }
 
@@ -299,19 +270,23 @@ const artaLocation = (artwork: ShippableArtwork): ArtaLocation | null => {
       }
     : null
 }
+
 const estimateRequestBodyForArtwork = (
   artwork: ShippableArtwork,
 ): EstimateBody | null => {
-  console.log("***", "estimateRequestBodyForArtwork", artwork)
-  const origin = artaLocation(artwork)
-  const artworkObject = artaObject(artwork)
+  try {
+    const origin = artaLocation(artwork)
+    const artworkObject = artaObject(artwork)
 
-  console.log("***", "estimateRequestBodyForArtwork", { origin, artworkObject })
-  if (!origin || !artworkObject) {
+    if (!origin || !artworkObject) {
+      return null
+    }
+    return {
+      origin,
+      objects: [artworkObject],
+    }
+  } catch (e) {
+    console.error("***", "estimateRequestBodyForArtwork error", e)
     return null
-  }
-  return {
-    origin,
-    objects: [artworkObject],
   }
 }
