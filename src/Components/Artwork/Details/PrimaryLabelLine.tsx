@@ -18,7 +18,7 @@ export const PrimaryLabelLine: React.FC<
   const partnerOffer = artwork?.collectorSignals?.partnerOffer
 
   useEffect(() => {
-    if (updateSignals && artwork) {
+    if (updateSignals && artwork?.internalID) {
       const signals: string[] = []
 
       if (partnerOffer) {
@@ -30,7 +30,7 @@ export const PrimaryLabelLine: React.FC<
       }
       updateSignals(artwork.internalID, signals)
     }
-  }, [updateSignals, partnerOffer, label, artwork])
+  }, [updateSignals, partnerOffer, label, artwork?.internalID])
 
   if (!!partnerOffer) {
     return (
