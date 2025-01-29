@@ -87,7 +87,6 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
       {expressCheckoutPrototypeEnabled && (
         <>
           <ExpressCheckoutProvider order={order} />
-          <Spacer y={4} />
         </>
       )}
 
