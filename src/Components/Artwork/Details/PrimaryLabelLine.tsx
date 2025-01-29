@@ -17,9 +17,8 @@ export const PrimaryLabelLine: React.FC<
   const { hideSignals, updateSignals } = useArtworkGridContext()
   const partnerOffer = artwork?.collectorSignals?.partnerOffer
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (updateSignals && artwork?.internalID) {
+    if (updateSignals && artwork) {
       const signals: string[] = []
 
       if (partnerOffer) {
@@ -29,10 +28,9 @@ export const PrimaryLabelLine: React.FC<
       if (label) {
         signals.push(label)
       }
-
       updateSignals(artwork.internalID, signals)
     }
-  }, [partnerOffer, label, artwork?.internalID])
+  }, [updateSignals, partnerOffer, label, artwork])
 
   if (!!partnerOffer) {
     return (
