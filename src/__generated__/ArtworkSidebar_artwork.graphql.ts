@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ab8ff10493240b5d75b70b670503ee2c>>
+ * @generated SignedSource<<4691eec76aac1080e0714ef879efede2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,8 @@ export type ArtworkSidebar_artwork$data = {
   readonly artists: ReadonlyArray<{
     readonly internalID: string;
   } | null | undefined> | null | undefined;
+  readonly artsyShippingDomestic: boolean | null | undefined;
+  readonly artsyShippingInternational: boolean | null | undefined;
   readonly isAcquireable: boolean | null | undefined;
   readonly isBiddable: boolean | null | undefined;
   readonly isEligibleForArtsyGuarantee: boolean;
@@ -40,7 +42,7 @@ export type ArtworkSidebar_artwork$data = {
   } | null | undefined;
   readonly saleMessage: string | null | undefined;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarArtsyGuarantee_artwork" | "ArtworkSidebarArtworkTitle_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarAuctionTimer_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork" | "ArtworkSidebarCommercialButtons_artwork" | "ArtworkSidebarCreateAlert_artwork" | "ArtworkSidebarDetails_artwork" | "ArtworkSidebarEstimatedValue_artwork" | "ArtworkSidebarLinks_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarPrivateArtwork_artwork" | "ArtworkSidebarShippingInformation_artwork" | "PrivateArtworkAdditionalInfo_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtsyShippingEstimate_artwork" | "ArtworkSidebarArtists_artwork" | "ArtworkSidebarArtsyGuarantee_artwork" | "ArtworkSidebarArtworkTitle_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarAuctionTimer_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork" | "ArtworkSidebarCommercialButtons_artwork" | "ArtworkSidebarCreateAlert_artwork" | "ArtworkSidebarDetails_artwork" | "ArtworkSidebarEstimatedValue_artwork" | "ArtworkSidebarLinks_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarPrivateArtwork_artwork" | "ArtworkSidebarShippingInformation_artwork" | "PrivateArtworkAdditionalInfo_artwork">;
   readonly " $fragmentType": "ArtworkSidebar_artwork";
 };
 export type ArtworkSidebar_artwork$key = {
@@ -145,6 +147,25 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "PrivateArtworkAdditionalInfo_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtsyShippingEstimate_artwork"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "artsyShippingDomestic",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "artsyShippingInternational",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -321,6 +342,6 @@ return {
 };
 })();
 
-(node as any).hash = "e1b1cfee7e04115e073097744d45b081";
+(node as any).hash = "da42b26ac95a863b7bddd3e383078798";
 
 export default node;

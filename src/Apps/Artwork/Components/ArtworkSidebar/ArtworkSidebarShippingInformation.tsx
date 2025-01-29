@@ -1,6 +1,5 @@
 import { ActionType, type ClickedOnLearnMore } from "@artsy/cohesion"
 import { Spacer, Text } from "@artsy/palette"
-import { ArtsyShippingEstimate } from "Components/ArtsyShippingEstimate"
 import { RouterLink } from "System/Components/RouterLink"
 import type { ArtworkSidebarShippingInformation_artwork$data } from "__generated__/ArtworkSidebarShippingInformation_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -9,7 +8,6 @@ import { useTracking } from "react-tracking"
 export interface ShippingInformationProps {
   artwork: ArtworkSidebarShippingInformation_artwork$data
 }
-const CALCULATED_IN_CHECKOUT_MESSAGE = "Shipping: Calculated in checkout"
 
 const ArtworkSidebarShippingInformation: React.FC<
   React.PropsWithChildren<ShippingInformationProps>
@@ -23,8 +21,6 @@ const ArtworkSidebarShippingInformation: React.FC<
     taxInfo,
   } = artwork
   const { trackEvent } = useTracking()
-  const globalArtsyShipping =
-    !!artwork.artsyShippingDomestic || !!artwork.artsyShippingInternational
 
   const handleMoreInfoClick = () => {
     const payload: ClickedOnLearnMore = {
@@ -61,12 +57,6 @@ const ArtworkSidebarShippingInformation: React.FC<
             </RouterLink>
           </Text>
         )}
-        {globalArtsyShipping && (
-          <ArtsyShippingEstimate
-            artwork={artwork}
-            fallbackText={CALCULATED_IN_CHECKOUT_MESSAGE}
-          />
-        )}
       </>
     )
   }
@@ -80,7 +70,7 @@ const ArtworkSidebarShippingInformation: React.FC<
         </Text>
       )}
 
-      {!!shippingInfo && !globalArtsyShipping && (
+      {!!shippingInfo && (
         <Text
           variant="sm"
           color="black60"
@@ -89,12 +79,6 @@ const ArtworkSidebarShippingInformation: React.FC<
         >
           {shippingInfo}
         </Text>
-      )}
-      {globalArtsyShipping && (
-        <ArtsyShippingEstimate
-          artwork={artwork}
-          fallbackText={CALCULATED_IN_CHECKOUT_MESSAGE}
-        />
       )}
       {!!pickupAvailable && (
         <Text variant="sm" color="black60">
@@ -134,7 +118,6 @@ export const ArtworkSidebarShippingInformationFragmentContainer =
   createFragmentContainer(ArtworkSidebarShippingInformation, {
     artwork: graphql`
       fragment ArtworkSidebarShippingInformation_artwork on Artwork {
-        ...ArtsyShippingEstimate_artwork
         isUnlisted
         priceIncludesTaxDisplay
         shippingOrigin

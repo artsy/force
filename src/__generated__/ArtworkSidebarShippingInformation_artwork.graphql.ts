@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<69d24c02ed75188398ace1189252f6ac>>
+ * @generated SignedSource<<e7660d22305b0004b566e998591ea371>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,6 @@ export type ArtworkSidebarShippingInformation_artwork$data = {
       readonly url: string;
     };
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtsyShippingEstimate_artwork">;
   readonly " $fragmentType": "ArtworkSidebarShippingInformation_artwork";
 };
 export type ArtworkSidebarShippingInformation_artwork$key = {
@@ -47,11 +46,6 @@ return {
   "metadata": null,
   "name": "ArtworkSidebarShippingInformation_artwork",
   "selections": [
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtsyShippingEstimate_artwork"
-    },
     {
       "alias": null,
       "args": null,
@@ -138,6 +132,6 @@ return {
 };
 })();
 
-(node as any).hash = "b9432d12dca37956c4a6d14300a4e995";
+(node as any).hash = "50fe1ae0152b695d94fd63b2e24b7220";
 
 export default node;

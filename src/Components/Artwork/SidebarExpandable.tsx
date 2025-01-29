@@ -4,7 +4,7 @@ import { useTracking } from "react-tracking"
 
 export const SidebarExpandable: React.FC<
   React.PropsWithChildren<Pick<ExpandableProps, "label" | "children">>
-> = ({ label, children }) => {
+> = ({ label, children, ...rest }) => {
   const { trackEvent } = useTracking()
 
   const handleToggle = (isExpanded: boolean) => {

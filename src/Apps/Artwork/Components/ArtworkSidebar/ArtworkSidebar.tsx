@@ -1,4 +1,5 @@
 import {
+  Box,
   Flex,
   Join,
   Separator,
@@ -15,9 +16,19 @@ import { ArtworkSidebarArtistsFragmentContainer } from "./ArtworkSidebarArtists"
 import { ArtworkSidebarShippingInformationFragmentContainer } from "./ArtworkSidebarShippingInformation"
 
 import { ContextModule } from "@artsy/cohesion"
+import { ArtworkSidebarAuctionPollingRefetchContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionInfoPolling"
+import { ArtworkSidebarAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer"
+import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarBiddingClosedMessage"
+import { ArtworkSidebarCommercialButtons } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCommercialButtons"
+import { ArtworkSidebarCreateAlertFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCreateAlert"
+import { ArtworkSidebarDetailsFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarDetails"
+import { ArtworkSidebarEstimatedValueFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarEstimatedValue"
+import { ArtworkSidebarLinksFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarLinks"
+import { ArtworkSidebarPartnerInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPartnerInfo"
 import { ArtworkSidebarPrivateArtwork } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPrivateArtwork"
 import { PrivateArtworkAdditionalInfo } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkAdditionalInfo"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
+import { ArtsyShippingEstimate } from "Components/ArtsyShippingEstimate"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
@@ -26,15 +37,6 @@ import type { ArtworkSidebarQuery } from "__generated__/ArtworkSidebarQuery.grap
 import { useState } from "react"
 import { ArtworkSidebarArtsyGuarantee } from "./ArtworkSidebarArtsyGuarantee"
 import { ArtworkSidebarArtworkTitleFragmentContainer } from "./ArtworkSidebarArtworkTitle"
-import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAuctionInfoPolling"
-import { ArtworkSidebarAuctionTimerFragmentContainer } from "./ArtworkSidebarAuctionTimer"
-import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "./ArtworkSidebarBiddingClosedMessage"
-import { ArtworkSidebarCommercialButtons } from "./ArtworkSidebarCommercialButtons"
-import { ArtworkSidebarCreateAlertFragmentContainer } from "./ArtworkSidebarCreateAlert"
-import { ArtworkSidebarDetailsFragmentContainer } from "./ArtworkSidebarDetails"
-import { ArtworkSidebarEstimatedValueFragmentContainer } from "./ArtworkSidebarEstimatedValue"
-import { ArtworkSidebarLinksFragmentContainer } from "./ArtworkSidebarLinks"
-import { ArtworkSidebarPartnerInfoFragmentContainer } from "./ArtworkSidebarPartnerInfo"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork$data
@@ -84,6 +86,10 @@ export const ArtworkSidebar: React.FC<
   })
 
   const artworkEcommerceAvailable = !!(isAcquireable || isOfferable)
+
+  const globalArtsyShipping =
+    (artworkEcommerceAvailable && !!artwork.artsyShippingDomestic) ||
+    !!artwork.artsyShippingInternational
 
   const timerEndAt = sale?.isAuction ? updatedBiddingEndAt : sale?.endAt
 
@@ -200,12 +206,33 @@ export const ArtworkSidebar: React.FC<
 
       {!isUnlisted && !isSold && artworkEcommerceAvailable && (
         <>
-          <SidebarExpandable label="Shipping and taxes">
-            <ArtworkSidebarShippingInformationFragmentContainer
-              artwork={artwork}
-            />
-          </SidebarExpandable>
-
+          {globalArtsyShipping ? (
+            <Box position="relative" top="-1rem">
+              <SidebarExpandable
+                label={
+                  <Flex
+                    position="relative"
+                    top="1rem"
+                    flexDirection="column"
+                    justifyContent={"flex-start"}
+                  >
+                    <Text>Shipping and taxes</Text>
+                    <ArtsyShippingEstimate artwork={artwork} />
+                  </Flex>
+                }
+              >
+                <ArtworkSidebarShippingInformationFragmentContainer
+                  artwork={artwork}
+                />
+              </SidebarExpandable>
+            </Box>
+          ) : (
+            <SidebarExpandable label="Shipping and taxes">
+              <ArtworkSidebarShippingInformationFragmentContainer
+                artwork={artwork}
+              />
+            </SidebarExpandable>
+          )}
           <Spacer y={1} />
         </>
       )}
@@ -260,7 +287,9 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...ArtworkSidebarPrivateArtwork_artwork
         ...ArtworkSidebarArtsyGuarantee_artwork
         ...PrivateArtworkAdditionalInfo_artwork
-
+        ...ArtsyShippingEstimate_artwork
+        artsyShippingDomestic
+        artsyShippingInternational
         slug
         isSold
         isAcquireable
