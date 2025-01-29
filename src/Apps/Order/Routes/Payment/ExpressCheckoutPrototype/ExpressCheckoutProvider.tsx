@@ -6,6 +6,10 @@ import { getENV } from "Utils/getENV"
 export const ExpressCheckoutProvider = ({ order }) => {
   const { buyerTotalCents } = order
 
+  if (!buyerTotalCents) {
+    return null
+  }
+
   const options: StripeElementsOptions = {
     mode: "payment",
     amount: buyerTotalCents,

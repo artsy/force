@@ -33,6 +33,7 @@ export const ExpressCheckout = () => {
       <Text variant="lg-display">Express checkout</Text>
       <Spacer y={1} />
       <ExpressCheckoutElement onConfirm={onConfirm} />
+      <Spacer y={4} />
     </>
   )
 }
