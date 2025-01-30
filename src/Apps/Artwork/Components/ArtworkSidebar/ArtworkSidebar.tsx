@@ -211,6 +211,7 @@ export const ArtworkSidebar: React.FC<
       {!isUnlisted && !isSold && artworkEcommerceAvailable && (
         <>
           <SidebarExpandable
+            labelTrackingText="Shipping and taxes"
             label={
               <Flex flexDirection="column" justifyContent="flex-start">
                 <Text>Shipping and taxes</Text>

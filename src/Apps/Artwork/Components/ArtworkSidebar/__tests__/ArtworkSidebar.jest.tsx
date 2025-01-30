@@ -1,6 +1,8 @@
 import { fireEvent, screen } from "@testing-library/react"
 import { ArtworkSidebarFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebar"
+import { ArtsyShippingEstimate } from "Components/ArtsyShippingEstimate"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -8,6 +10,16 @@ import { useTracking } from "react-tracking"
 jest.unmock("react-relay")
 
 jest.mock("react-tracking")
+
+const MockArtsyShippingEstimate = ArtsyShippingEstimate as jest.Mock
+jest.mock("Components/ArtsyShippingEstimate", () => ({
+  ArtsyShippingEstimate: jest.fn(() => <div>ArtsyShippingEstimate</div>),
+}))
+
+const mockUseFeatureFlag = useFeatureFlag as jest.Mock
+jest.mock("System/Hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(),
+}))
 
 jest.mock(
   "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer",
@@ -175,36 +187,51 @@ describe("ArtworkSidebarArtists", () => {
       fireEvent.click(button)
 
       expect(trackEvent).toHaveBeenCalledTimes(1)
-      expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-        [
-          {
-            "action": "toggledAccordion",
-            "context_module": "artworkSidebar",
-            "context_owner_type": "artwork",
-            "expand": true,
-            "subject": "Be covered by the Artsy Guarantee when you check out with Artsy",
-          },
-        ]
-      `)
+      expect(trackEvent.mock.calls[0]).toEqual([
+        {
+          action: "toggledAccordion",
+          context_module: "artworkSidebar",
+          context_owner_type: "artwork",
+          expand: true,
+          subject:
+            "Be covered by the Artsy Guarantee when you check out with Artsy",
+        },
+      ])
 
       fireEvent.click(button)
 
       expect(trackEvent).toHaveBeenCalledTimes(2)
-      expect(trackEvent.mock.calls[1]).toMatchInlineSnapshot(`
-        [
-          {
-            "action": "toggledAccordion",
-            "context_module": "artworkSidebar",
-            "context_owner_type": "artwork",
-            "expand": false,
-            "subject": "Be covered by the Artsy Guarantee when you check out with Artsy",
-          },
-        ]
-      `)
+      expect(trackEvent.mock.calls[1]).toEqual([
+        {
+          action: "toggledAccordion",
+          context_module: "artworkSidebar",
+          context_owner_type: "artwork",
+          expand: false,
+          subject:
+            "Be covered by the Artsy Guarantee when you check out with Artsy",
+        },
+      ])
     })
   })
 
   describe("Shipping and taxes section", () => {
+    describe("Shipping estimate feature flag enabled", () => {
+      beforeEach(() => {
+        mockUseFeatureFlag.mockReturnValue(true)
+      })
+
+      it("Renders the ArtsyShippingEstimate component for an artwork with global shipping", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            isAcquireable: true,
+            artsyShippingDomestic: true,
+            artsyShippingInternational: true,
+          }),
+        })
+
+        expect(MockArtsyShippingEstimate).toHaveBeenCalled()
+      })
+    })
     it("should track click to expand/collapse the Shipping and taxes section", () => {
       renderWithRelay({
         Artwork: () => ({
@@ -218,32 +245,28 @@ describe("ArtworkSidebarArtists", () => {
       fireEvent.click(button)
 
       expect(trackEvent).toHaveBeenCalledTimes(1)
-      expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-        [
-          {
-            "action": "toggledAccordion",
-            "context_module": "artworkSidebar",
-            "context_owner_type": "artwork",
-            "expand": true,
-            "subject": "Shipping and taxes",
-          },
-        ]
-      `)
+      expect(trackEvent.mock.calls[0]).toEqual([
+        {
+          action: "toggledAccordion",
+          context_module: "artworkSidebar",
+          context_owner_type: "artwork",
+          expand: true,
+          subject: "Shipping and taxes",
+        },
+      ])
 
       fireEvent.click(button)
 
       expect(trackEvent).toHaveBeenCalledTimes(2)
-      expect(trackEvent.mock.calls[1]).toMatchInlineSnapshot(`
-        [
-          {
-            "action": "toggledAccordion",
-            "context_module": "artworkSidebar",
-            "context_owner_type": "artwork",
-            "expand": false,
-            "subject": "Shipping and taxes",
-          },
-        ]
-      `)
+      expect(trackEvent.mock.calls[1]).toEqual([
+        {
+          action: "toggledAccordion",
+          context_module: "artworkSidebar",
+          context_owner_type: "artwork",
+          expand: false,
+          subject: "Shipping and taxes",
+        },
+      ])
     })
   })
 
