@@ -220,7 +220,7 @@ describe("ArtworkSidebarArtists", () => {
         mockUseFeatureFlag.mockReturnValue(true)
       })
 
-      it("Renders the ArtsyShippingEstimate component for an artwork with global shipping", () => {
+      it("Renders the ArtsyShippingEstimate component for an acquireable artwork with global shipping", () => {
         renderWithRelay({
           Artwork: () => ({
             isAcquireable: true,
@@ -230,6 +230,18 @@ describe("ArtworkSidebarArtists", () => {
         })
 
         expect(MockArtsyShippingEstimate).toHaveBeenCalled()
+      })
+
+      it("Does not render the ArtsyShippingEstimate component for an acquireable artwork without global shipping", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            isAcquireable: true,
+            artsyShippingDomestic: true,
+            artsyShippingInternational: false,
+          }),
+        })
+
+        expect(MockArtsyShippingEstimate).not.toHaveBeenCalled()
       })
     })
     it("should track click to expand/collapse the Shipping and taxes section", () => {
