@@ -29,6 +29,7 @@ import { ArtworkSidebarPrivateArtwork } from "Apps/Artwork/Components/ArtworkSid
 import { PrivateArtworkAdditionalInfo } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkAdditionalInfo"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { ArtsyShippingEstimate } from "Components/ArtsyShippingEstimate"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
@@ -86,9 +87,13 @@ export const ArtworkSidebar: React.FC<
   })
 
   const artworkEcommerceAvailable = !!(isAcquireable || isOfferable)
+  const artsyShippingEstimateEnabled = useFeatureFlag(
+    "emerald_shipping-estimate-widget",
+  )
 
   const globalArtsyShipping =
-    (artworkEcommerceAvailable && !!artwork.artsyShippingDomestic) ||
+    artworkEcommerceAvailable &&
+    !!artwork.artsyShippingDomestic &&
     !!artwork.artsyShippingInternational
 
   const timerEndAt = sale?.isAuction ? updatedBiddingEndAt : sale?.endAt
@@ -206,33 +211,21 @@ export const ArtworkSidebar: React.FC<
 
       {!isUnlisted && !isSold && artworkEcommerceAvailable && (
         <>
-          {globalArtsyShipping ? (
-            <Box position="relative" top="-1rem">
-              <SidebarExpandable
-                label={
-                  <Flex
-                    position="relative"
-                    top="1rem"
-                    flexDirection="column"
-                    justifyContent={"flex-start"}
-                  >
-                    <Text>Shipping and taxes</Text>
-                    <ArtsyShippingEstimate artwork={artwork} />
-                  </Flex>
-                }
-              >
-                <ArtworkSidebarShippingInformationFragmentContainer
-                  artwork={artwork}
-                />
-              </SidebarExpandable>
-            </Box>
-          ) : (
-            <SidebarExpandable label="Shipping and taxes">
-              <ArtworkSidebarShippingInformationFragmentContainer
-                artwork={artwork}
-              />
-            </SidebarExpandable>
-          )}
+          <SidebarExpandable
+            label={
+              <Flex flexDirection="column" justifyContent="flex-start">
+                <Text>Shipping and taxes</Text>
+                {globalArtsyShipping && artsyShippingEstimateEnabled && (
+                  <ArtsyShippingEstimate artwork={artwork} />
+                )}
+              </Flex>
+            }
+          >
+            <ArtworkSidebarShippingInformationFragmentContainer
+              artwork={artwork}
+            />
+          </SidebarExpandable>
+
           <Spacer y={1} />
         </>
       )}

@@ -5,8 +5,7 @@ import type {
   SupportedCurrency,
 } from "@artaio/arta-browser/dist/MetadataTypes"
 import type ArtaEstimate from "@artaio/arta-browser/dist/estimate"
-import { Link, SkeletonText, Text } from "@artsy/palette"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { Link, SkeletonText, Spacer, Text } from "@artsy/palette"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import { getENV } from "Utils/getENV"
 import type { ArtsyShippingEstimate_artwork$key } from "__generated__/ArtsyShippingEstimate_artwork.graphql"
@@ -34,15 +33,14 @@ interface Props {
   artwork: ArtsyShippingEstimate_artwork$key
 }
 
-const Loader = () => <SkeletonText variant="sm">Estimate shipping</SkeletonText>
+const Loader = () => <Spacer y={2} />
 
 export const ArtsyShippingEstimate = ({ artwork }: Props) => {
   const artworkData = useFragment(ARTWORK_FRAGMENT, artwork)
+
   const estimateInput = estimateRequestBodyForArtwork(
     artworkData as ShippableArtwork,
   )
-
-  const featureEnabled = useFeatureFlag("emerald_shipping-estimate-widget")
 
   const [Arta, setArta] = useState<Arta | null>(null)
 
@@ -60,8 +58,17 @@ export const ArtsyShippingEstimate = ({ artwork }: Props) => {
 
   const [state, setState] = useState<EstimateWidgetState>(initialState)
 
+  // close on unmount
   useEffect(() => {
-    if (!featureEnabled || !estimateInput || !ARTA_API_KEY) {
+    return () => {
+      if (state.widget?.isOpen) {
+        state.widget.close()
+      }
+    }
+  }, [state.widget])
+
+  useEffect(() => {
+    if (!estimateInput || !ARTA_API_KEY) {
       setState({ loaded: true, widget: null })
       return
     }
@@ -92,21 +99,23 @@ export const ArtsyShippingEstimate = ({ artwork }: Props) => {
       }
     }
     loadEstimate()
-  }, [Arta, estimateInput, state.loaded, state, featureEnabled])
+  }, [Arta, estimateInput, state.loaded, state])
 
   if (!state.loaded) {
     return <Loader />
   }
 
   if (!state.widget) {
-    return <Text> </Text>
+    return null
   }
 
   const estimateWidget = state.widget
 
   return estimateWidget.isReady ? (
-    <Link color="black60" onClick={() => estimateWidget.open()}>
-      Estimate Shipping Cost
+    <Link onClick={() => estimateWidget.open()}>
+      <Text variant="xs" color="black60">
+        Estimate Shipping Cost
+      </Text>
     </Link>
   ) : (
     <Loader />
@@ -125,8 +134,18 @@ const ARTWORK_FRAGMENT = graphql`
       city
     }
     priceCurrency
-    priceListed {
-      major
+    listPrice {
+      ... on Money {
+        major
+      }
+      ... on PriceRange {
+        minPrice {
+          major
+        }
+        maxPrice {
+          major
+        }
+      }
     }
     heightCm
     widthCm
@@ -174,7 +193,15 @@ interface ShippableArtwork {
   }
 
   priceCurrency: SupportedCurrency
-  priceListed: { major: number }
+  listPrice: {
+    major?: number
+    minPrice?: {
+      major?: number
+    }
+    maxPrice?: {
+      major?: number
+    }
+  }
   isFramed: boolean
   category:
     | keyof typeof FRAMED_CATEGORY_MAP
@@ -234,10 +261,25 @@ const artworkDimensions = (
 
 type ArtworkValue = Pick<ArtaObject, "value" | "value_currency">
 const artworkValue = (artwork: ShippableArtwork): ArtworkValue | null => {
-  if (!!artwork.heightCm && !!artwork.widthCm) {
+  const priceCurrency = artwork.priceCurrency
+  if (!priceCurrency) {
+    return null
+  }
+
+  const listPrice = artwork.listPrice.major
+  if (listPrice) {
     return {
-      value: artwork.priceListed?.major || 500, // TODO: get a real value
-      value_currency: artwork.priceCurrency,
+      value: listPrice,
+      value_currency: priceCurrency,
+    }
+  }
+
+  const minPrice = artwork.listPrice.minPrice?.major
+  const maxPrice = artwork.listPrice.maxPrice?.major
+  if (minPrice && maxPrice) {
+    return {
+      value: (minPrice + maxPrice) / 2,
+      value_currency: priceCurrency,
     }
   }
   return null
@@ -247,8 +289,8 @@ const artaObject = (artwork: ShippableArtwork): ArtaObject | null => {
   const framed = artwork.isFramed
 
   const subtype = framed
-    ? FRAMED_CATEGORY_MAP[artwork.category]
-    : UNFRAMED_CATEGORY_MAP[artwork.category]
+    ? FRAMED_CATEGORY_MAP[artwork.category] || FRAMED_CATEGORY_MAP.Other
+    : UNFRAMED_CATEGORY_MAP[artwork.category] || UNFRAMED_CATEGORY_MAP.Other
 
   const dimensions = artworkDimensions(artwork)
   const value = artworkValue(artwork)

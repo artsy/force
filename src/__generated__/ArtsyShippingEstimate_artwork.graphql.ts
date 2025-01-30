@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0688b0fc9b18c41aee5e334c8f6c212e>>
+ * @generated SignedSource<<e1f771f33271fb4d1b0e9b8aeb9a46b8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,15 +14,21 @@ export type ArtsyShippingEstimate_artwork$data = {
   readonly category: string | null | undefined;
   readonly heightCm: number | null | undefined;
   readonly isFramed: boolean | null | undefined;
+  readonly listPrice: {
+    readonly major?: number;
+    readonly maxPrice?: {
+      readonly major: number;
+    } | null | undefined;
+    readonly minPrice?: {
+      readonly major: number;
+    } | null | undefined;
+  } | null | undefined;
   readonly location: {
     readonly city: string | null | undefined;
     readonly country: string | null | undefined;
     readonly postalCode: string | null | undefined;
   } | null | undefined;
   readonly priceCurrency: string | null | undefined;
-  readonly priceListed: {
-    readonly major: number;
-  } | null | undefined;
   readonly shippingCountry: string | null | undefined;
   readonly shippingOrigin: string | null | undefined;
   readonly widthCm: number | null | undefined;
@@ -33,7 +39,17 @@ export type ArtsyShippingEstimate_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtsyShippingEstimate_artwork">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "major",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -109,17 +125,43 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Money",
+      "concreteType": null,
       "kind": "LinkedField",
-      "name": "priceListed",
+      "name": "listPrice",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "major",
-          "storageKey": null
+          "kind": "InlineFragment",
+          "selections": (v0/*: any*/),
+          "type": "Money",
+          "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Money",
+              "kind": "LinkedField",
+              "name": "minPrice",
+              "plural": false,
+              "selections": (v0/*: any*/),
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Money",
+              "kind": "LinkedField",
+              "name": "maxPrice",
+              "plural": false,
+              "selections": (v0/*: any*/),
+              "storageKey": null
+            }
+          ],
+          "type": "PriceRange",
+          "abstractKey": null
         }
       ],
       "storageKey": null
@@ -142,7 +184,8 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "e334bac45ddae9ac876f8e846105b439";
+(node as any).hash = "020495e4ce1cecb17582e72ba5e933d9";
 
 export default node;
