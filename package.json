@@ -189,6 +189,7 @@
     "yup": "0.32.6"
   },
   "devDependencies": {
+    "@artaio/arta-browser": "^2.16.1",
     "@biomejs/biome": "1.9.4",
     "@graphql-inspector/core": "1.14.0",
     "@graphql-tools/jest-transform": "^2.0.0",

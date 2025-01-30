@@ -1,9 +1,8 @@
+import { ActionType, type ClickedOnLearnMore } from "@artsy/cohesion"
 import { Spacer, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type { ArtworkSidebarShippingInformation_artwork$data } from "__generated__/ArtworkSidebarShippingInformation_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-
-import { ActionType, type ClickedOnLearnMore } from "@artsy/cohesion"
-import { RouterLink } from "System/Components/RouterLink"
 import { useTracking } from "react-tracking"
 
 export interface ShippingInformationProps {
@@ -12,16 +11,15 @@ export interface ShippingInformationProps {
 
 const ArtworkSidebarShippingInformation: React.FC<
   React.PropsWithChildren<ShippingInformationProps>
-> = ({
-  artwork: {
+> = ({ artwork }) => {
+  const {
     isUnlisted,
     priceIncludesTaxDisplay,
     shippingOrigin,
     shippingInfo,
     pickupAvailable,
     taxInfo,
-  },
-}) => {
+  } = artwork
   const { trackEvent } = useTracking()
 
   const handleMoreInfoClick = () => {
@@ -110,6 +108,7 @@ const ArtworkSidebarShippingInformation: React.FC<
           </RouterLink>
         </Text>
       )}
+
       <Spacer y={1} />
     </>
   )

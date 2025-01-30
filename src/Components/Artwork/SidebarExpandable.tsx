@@ -3,8 +3,10 @@ import { Expandable, type ExpandableProps } from "@artsy/palette"
 import { useTracking } from "react-tracking"
 
 export const SidebarExpandable: React.FC<
-  React.PropsWithChildren<Pick<ExpandableProps, "label" | "children">>
-> = ({ label, children }) => {
+  { labelTrackingText?: string } & React.PropsWithChildren<
+    Pick<ExpandableProps, "label" | "children">
+  >
+> = ({ label, labelTrackingText, children, ...rest }) => {
   const { trackEvent } = useTracking()
 
   const handleToggle = (isExpanded: boolean) => {
@@ -12,7 +14,7 @@ export const SidebarExpandable: React.FC<
       action: ActionType.toggledAccordion,
       context_module: ContextModule.artworkSidebar,
       context_owner_type: OwnerType.artwork,
-      subject: label,
+      subject: labelTrackingText ?? label,
       expand: isExpanded,
     })
   }

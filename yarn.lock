@@ -15,6 +15,13 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
+"@artaio/arta-browser@^2.16.1":
+  version "2.16.1"
+  resolved "https://registry.yarnpkg.com/@artaio/arta-browser/-/arta-browser-2.16.1.tgz#a26c202280c7f00720efba13d3c541493a594075"
+  integrity sha512-HB+e92dBSYX+YAsSkP9jOIM50HmZKwef0oId9O9y4bIcBrxm43hGGI3Wnggudl/vsAC/hs8BRkDQX3WCWccH4g==
+  dependencies:
+    preact "^10.11.3"
+
 "@artsy/cohesion@4.227.0":
   version "4.227.0"
   resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.227.0.tgz#d627f51a32f4ef8ad61c4079cc0a4b01a3e3e6c3"
@@ -10888,6 +10895,11 @@ pprof-format@^2.0.6:
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/pprof-format/-/pprof-format-2.0.7.tgz#526e4361f8b37d16b2ec4bb0696b5292de5046a4"
   integrity sha512-1qWaGAzwMpaXJP9opRa23nPnt2Egi7RMNoNBptEE/XwHbcn4fC2b/4U4bKc5arkGkIh2ZabpF2bEb+c5GNHEKA==
+
+preact@^10.11.3:
+  version "10.25.4"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.25.4.tgz#c1d00bee9d7b9dcd06a2311d9951973b506ae8ac"
+  integrity sha512-jLdZDb+Q+odkHJ+MpW/9U5cODzqnB+fy2EiHSZES7ldV5LK7yjlVzTp7R8Xy6W6y75kfK8iWYtFVH7lvjwrCMA==
 
 prelude-ls@~1.1.2:
   version "1.1.2"
