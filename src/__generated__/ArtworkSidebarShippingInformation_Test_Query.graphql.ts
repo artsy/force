@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<01dfbb5106acb73df9b6485a284e7af1>>
+ * @generated SignedSource<<77015f0161d3e4e451b6a055f471cc2d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,15 +40,9 @@ v2 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Boolean"
-},
-v3 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
   "type": "String"
 },
-v4 = {
+v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -120,20 +114,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "artsyShippingDomestic",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "artsyShippingInternational",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "shippingInfo",
             "storageKey": null
           },
@@ -188,7 +168,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "46731a73de9f48412b988570b425d68a",
+    "cacheID": "c83a92052944bec61354fd381b4038d9",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -198,8 +178,6 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.artsyShippingDomestic": (v2/*: any*/),
-        "artwork.artsyShippingInternational": (v2/*: any*/),
         "artwork.id": {
           "enumValues": null,
           "nullable": false,
@@ -212,30 +190,35 @@ return {
           "plural": false,
           "type": "Boolean"
         },
-        "artwork.pickupAvailable": (v2/*: any*/),
-        "artwork.priceIncludesTaxDisplay": (v3/*: any*/),
-        "artwork.shippingInfo": (v3/*: any*/),
-        "artwork.shippingOrigin": (v3/*: any*/),
+        "artwork.pickupAvailable": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "artwork.priceIncludesTaxDisplay": (v2/*: any*/),
+        "artwork.shippingInfo": (v2/*: any*/),
+        "artwork.shippingOrigin": (v2/*: any*/),
         "artwork.taxInfo": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "TaxInfo"
         },
-        "artwork.taxInfo.displayText": (v4/*: any*/),
+        "artwork.taxInfo.displayText": (v3/*: any*/),
         "artwork.taxInfo.moreInfo": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "TaxMoreInfo"
         },
-        "artwork.taxInfo.moreInfo.displayText": (v4/*: any*/),
-        "artwork.taxInfo.moreInfo.url": (v4/*: any*/)
+        "artwork.taxInfo.moreInfo.displayText": (v3/*: any*/),
+        "artwork.taxInfo.moreInfo.url": (v3/*: any*/)
       }
     },
     "name": "ArtworkSidebarShippingInformation_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarShippingInformation_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarShippingInformation_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarShippingInformation_artwork on Artwork {\n  isUnlisted\n  priceIncludesTaxDisplay\n  shippingOrigin\n  artsyShippingDomestic\n  artsyShippingInternational\n  shippingInfo\n  pickupAvailable\n  taxInfo {\n    displayText\n    moreInfo {\n      displayText\n      url\n    }\n  }\n}\n"
+    "text": "query ArtworkSidebarShippingInformation_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarShippingInformation_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarShippingInformation_artwork on Artwork {\n  isUnlisted\n  priceIncludesTaxDisplay\n  shippingOrigin\n  shippingInfo\n  pickupAvailable\n  taxInfo {\n    displayText\n    moreInfo {\n      displayText\n      url\n    }\n  }\n}\n"
   }
 };
 })();

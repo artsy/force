@@ -121,8 +121,6 @@ export const ArtworkSidebarShippingInformationFragmentContainer =
         isUnlisted
         priceIncludesTaxDisplay
         shippingOrigin
-        artsyShippingDomestic
-        artsyShippingInternational
         shippingInfo
         pickupAvailable
         taxInfo {
