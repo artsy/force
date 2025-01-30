@@ -24,21 +24,13 @@ type EstimateWidgetState = {
   widget: ArtaEstimate | null
 }
 
-interface Props {
+interface ArtsyShippingEstimateProps {
   artwork: ArtsyShippingEstimate_artwork$key
 }
 
-const Loader = () => <Spacer y={2} />
-
-const LinkButton = styled(Link)`
-  color: ${props => props.theme.colors.black60};
-  &:hover {
-    text-decoration: underline;
-    color: ${props => props.theme.colors.black100};
-  }
-`
-
-export const ArtsyShippingEstimate = ({ artwork }: Props) => {
+export const ArtsyShippingEstimate = ({
+  artwork,
+}: ArtsyShippingEstimateProps) => {
   const artworkData = useFragment(ARTWORK_FRAGMENT, artwork)
 
   const estimateInput = estimateRequestBodyForArtwork(
@@ -81,7 +73,6 @@ export const ArtsyShippingEstimate = ({ artwork }: Props) => {
     }
 
     const loadEstimate = async () => {
-      console.log("***", "oading estimate", estimateInput)
       Arta.init(ARTA_API_KEY)
 
       const artsyEstimateWidget =
@@ -113,12 +104,16 @@ export const ArtsyShippingEstimate = ({ artwork }: Props) => {
   }
 
   if (!state.widget) {
-    return null
+    return <Spacer y={2} />
   }
 
   const estimateWidget = state.widget
 
-  return estimateWidget.isReady ? (
+  if (!estimateWidget.isReady) {
+    return <Loader />
+  }
+
+  return (
     <LinkButton
       tabIndex={0}
       onClick={() => estimateWidget.open()}
@@ -131,10 +126,18 @@ export const ArtsyShippingEstimate = ({ artwork }: Props) => {
     >
       <Text variant="xs">{WIDGET_TITLE}</Text>
     </LinkButton>
-  ) : (
-    <Loader />
   )
 }
+
+const Loader = () => <Spacer y={2} />
+
+const LinkButton = styled(Link)`
+  color: ${props => props.theme.colors.black60};
+  &:hover {
+    text-decoration: underline;
+    color: ${props => props.theme.colors.black100};
+  }
+`
 
 const ARTWORK_FRAGMENT = graphql`
   fragment ArtsyShippingEstimate_artwork on Artwork {
