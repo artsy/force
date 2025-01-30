@@ -5,22 +5,17 @@ import type {
   SupportedCurrency,
 } from "@artaio/arta-browser/dist/MetadataTypes"
 import type ArtaEstimate from "@artaio/arta-browser/dist/estimate"
-import { Link, SkeletonText, Spacer, Text } from "@artsy/palette"
+import { Link, Spacer, Text } from "@artsy/palette"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import { getENV } from "Utils/getENV"
 import type { ArtsyShippingEstimate_artwork$key } from "__generated__/ArtsyShippingEstimate_artwork.graphql"
 import { useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
-
-/* TODOs:
- * - May need to add properties to artwork in metaphysics
- *   eg: how granular of a location is needed - can we get away with just country?
- * Need price major
- * May need weight
- * Need artwork location or can we get away with shippingOrigin? I think we need at least city x country
- */
+import styled from "styled-components"
 
 const ARTA_API_KEY = getENV("ARTA_API_KEY")
+
+const WIDGET_TITLE = "Estimate Shipping Cost"
 
 type Arta = typeof import("@artaio/arta-browser").default
 
@@ -34,6 +29,14 @@ interface Props {
 }
 
 const Loader = () => <Spacer y={2} />
+
+const LinkButton = styled(Link)`
+  color: ${props => props.theme.colors.black60};
+  &:hover {
+    text-decoration: underline;
+    color: ${props => props.theme.colors.black100};
+  }
+`
 
 export const ArtsyShippingEstimate = ({ artwork }: Props) => {
   const artworkData = useFragment(ARTWORK_FRAGMENT, artwork)
@@ -82,7 +85,11 @@ export const ArtsyShippingEstimate = ({ artwork }: Props) => {
       Arta.init(ARTA_API_KEY)
 
       const artsyEstimateWidget =
-        Arta && estimateInput && Arta.estimate(estimateInput)
+        Arta &&
+        estimateInput &&
+        Arta.estimate(estimateInput, {
+          text: { header: { title: WIDGET_TITLE } },
+        })
 
       if (!artsyEstimateWidget) {
         setState({ loaded: true, widget: null })
@@ -112,11 +119,18 @@ export const ArtsyShippingEstimate = ({ artwork }: Props) => {
   const estimateWidget = state.widget
 
   return estimateWidget.isReady ? (
-    <Link onClick={() => estimateWidget.open()}>
-      <Text variant="xs" color="black60">
-        Estimate Shipping Cost
-      </Text>
-    </Link>
+    <LinkButton
+      tabIndex={0}
+      onClick={() => estimateWidget.open()}
+      onKeyDown={e => {
+        if (e.key === "Enter") {
+          e.preventDefault()
+          estimateWidget.open()
+        }
+      }}
+    >
+      <Text variant="xs">{WIDGET_TITLE}</Text>
+    </LinkButton>
   ) : (
     <Loader />
   )
