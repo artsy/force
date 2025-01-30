@@ -1,12 +1,12 @@
 import path from "path"
-import nodeExternals from "webpack-node-externals"
+import { loadEnvs } from "@artsy/multienv"
 import LoadablePlugin from "@loadable/webpack-plugin"
 import { defineConfig } from "@rsbuild/core"
-import { pluginReact } from "@rsbuild/plugin-react"
 import { pluginAssetsRetry } from "@rsbuild/plugin-assets-retry"
 import { pluginNodePolyfill } from "@rsbuild/plugin-node-polyfill"
+import { pluginReact } from "@rsbuild/plugin-react"
+import nodeExternals from "webpack-node-externals"
 import { EarlyHintsPlugin } from "./rspack/plugins/EarlyHintsPlugin"
-import { loadEnvs } from "@artsy/multienv"
 
 loadEnvs(".env.shared", ".env")
 
@@ -53,6 +53,9 @@ export default defineConfig({
       },
       tools: {
         rspack: {
+          experiments: {
+            parallelCodeSplitting: true,
+          },
           externals: [nodeExternals()],
           node: {
             __dirname: true,
@@ -96,6 +99,14 @@ export default defineConfig({
     port: Number(process.env.PORT) || 3000,
   },
   tools: {
+    rspack: {
+      cache: true,
+      experiments: {
+        cache: {
+          type: "persistent",
+        },
+      },
+    },
     swc: {
       jsc: {
         experimental: {

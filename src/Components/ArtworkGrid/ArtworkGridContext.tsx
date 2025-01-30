@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useCallback, useContext, useState } from "react"
 
 /**
  * Used to configure internal details of the Artwork Grid / Brick without
@@ -35,12 +35,12 @@ export const ArtworkGridContextProvider: React.FC<
 > = ({ children, ...rest }) => {
   const [signals, setSignals] = useState<{ [id: string]: string[] }>({})
 
-  const updateSignals = (id: string, newSignals: string[]) => {
+  const updateSignals = useCallback((id: string, newSignals: string[]) => {
     setSignals(prevSignals => ({
       ...prevSignals,
       [id]: newSignals,
     }))
-  }
+  }, [])
 
   return (
     <ArtworkGridContext.Provider

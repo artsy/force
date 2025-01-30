@@ -19,8 +19,10 @@ import {
   CreditCardPickerFragmentContainer,
 } from "Apps/Order/Components/CreditCardPicker"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
+import { ExpressCheckoutProvider } from "Apps/Order/Routes/Payment/ExpressCheckoutPrototype/ExpressCheckoutProvider"
 import type { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import { RouterLink } from "System/Components/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { Jump } from "Utils/Hooks/useJump"
 import { extractNodes } from "Utils/extractNodes"
 import type { Payment_me$data } from "__generated__/Payment_me.graphql"
@@ -75,8 +77,19 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
     }
   }, [order, selectedPaymentMethod, tracking])
 
+  const expressCheckoutPrototypeEnabled = useFeatureFlag(
+    "emerald_stripe-express-checkout-prototype",
+  )
+
   return (
     <>
+      {/* Express Checkout */}
+      {expressCheckoutPrototypeEnabled && (
+        <>
+          <ExpressCheckoutProvider order={order} />
+        </>
+      )}
+
       {order.availablePaymentMethods.length > 1 && (
         <>
           <Text variant="lg-display">Payment method</Text>
