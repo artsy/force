@@ -63,12 +63,11 @@ export const ArtsyShippingEstimate = ({
   }, [state.widget])
 
   useEffect(() => {
-    if (!estimateInput || !ARTA_API_KEY) {
-      setState({ loaded: true, widget: null })
+    if (state.loaded || !Arta) {
       return
     }
-
-    if (state.loaded || !Arta) {
+    if (!estimateInput || !ARTA_API_KEY) {
+      setState({ loaded: true, widget: null })
       return
     }
 
@@ -104,7 +103,7 @@ export const ArtsyShippingEstimate = ({
   }
 
   if (!state.widget) {
-    return <Spacer y={2} />
+    return <Spacer data-testid="loaded-no-widget" y={2} />
   }
 
   const estimateWidget = state.widget
@@ -116,7 +115,10 @@ export const ArtsyShippingEstimate = ({
   return (
     <LinkButton
       tabIndex={0}
-      onClick={() => estimateWidget.open()}
+      onClick={e => {
+        e.preventDefault()
+        estimateWidget.open()
+      }}
       onKeyDown={e => {
         if (e.key === "Enter") {
           e.preventDefault()
