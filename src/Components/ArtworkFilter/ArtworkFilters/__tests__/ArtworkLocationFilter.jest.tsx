@@ -7,10 +7,19 @@ import {
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useTracking } from "react-tracking"
 
 jest.mock("System/Hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
 }))
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerId: "id",
+    contextPageOwnerSlug: "slug",
+    contextPageOwnerType: "type",
+  })),
+}))
+jest.mock("react-tracking")
 
 const artworkFilterContext: Partial<ArtworkFilterContextProps> = {
   aggregations: [
@@ -136,6 +145,30 @@ describe(ArtworkLocationFilter, () => {
         expect(currentArtworkFilterContext().filters?.locationCities).toEqual(
           [],
         )
+      })
+
+      it("fires a select-all tracking event", () => {
+        const mockTrackEvent = jest.fn()
+        ;(useTracking as jest.Mock).mockImplementation(() => ({
+          trackEvent: mockTrackEvent,
+        }))
+
+        render(<ArtworkLocationFilter expanded />)
+        userEvent.type(
+          screen.getByPlaceholderText("Enter a city, country, or region"),
+          "usa",
+        )
+        userEvent.click(screen.getByText("Select all"))
+
+        expect(mockTrackEvent).toHaveBeenCalledWith({
+          action: "commercialFilterSelectedAll",
+          context_module: "artworkGrid",
+          context_owner_type: "type",
+          context_owner_id: "id",
+          context_owner_slug: "slug",
+          facet: "locationCities",
+          query: "usa",
+        })
       })
     })
   })

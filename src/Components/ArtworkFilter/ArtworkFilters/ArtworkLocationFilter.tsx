@@ -2,6 +2,14 @@ import { SelectedFiltersCountsLabels } from "Components/ArtworkFilter/ArtworkFil
 import { ResultsFilter } from "./ResultsFilter"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { getArtworkLocationSearchableText } from "Components/ArtworkFilter/Utils/getArtworkLocationSearchableText"
+import { useTracking } from "react-tracking"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import type { FilterSelectChangeState } from "@artsy/palette"
+import {
+  ActionType,
+  ContextModule,
+  CommercialFilterSelectedAll,
+} from "@artsy/cohesion"
 
 export interface ArtworkLocationFilterProps {
   expanded?: boolean
@@ -35,6 +43,24 @@ export const EnhancedArtworkLocationFilter: React.FC<
   React.PropsWithChildren<ArtworkLocationFilterProps>
 > = props => {
   const { expanded } = props
+  const tracking = useTracking()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
+
+  const handleSelectAll = (state: FilterSelectChangeState) => {
+    const event: CommercialFilterSelectedAll = {
+      action: ActionType.commercialFilterSelectedAll,
+      context_module: ContextModule.artworkGrid,
+      context_owner_type: contextPageOwnerType,
+      context_owner_id: contextPageOwnerId,
+      context_owner_slug: contextPageOwnerSlug,
+      facet: "locationCities",
+      query: state.query,
+    }
+
+    tracking.trackEvent(event)
+  }
+
   return (
     <ResultsFilter
       expanded={expanded}
@@ -45,6 +71,7 @@ export const EnhancedArtworkLocationFilter: React.FC<
       slice="LOCATION_CITY"
       searchableText={getArtworkLocationSearchableText}
       enableSelectAll
+      onSelectAll={handleSelectAll}
     />
   )
 }
