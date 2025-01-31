@@ -5,11 +5,11 @@ import type {
   SupportedCurrency,
 } from "@artaio/arta-browser/dist/MetadataTypes"
 import type ArtaEstimate from "@artaio/arta-browser/dist/estimate"
-import { Link, Spacer, Text } from "@artsy/palette"
+import { Link, Spacer, Text, usePrevious } from "@artsy/palette"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import { getENV } from "Utils/getENV"
 import type { ArtsyShippingEstimate_artwork$key } from "__generated__/ArtsyShippingEstimate_artwork.graphql"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
 
@@ -53,14 +53,40 @@ export const ArtsyShippingEstimate = ({
 
   const [state, setState] = useState<EstimateWidgetState>(initialState)
 
+  const trackClickedEstimatePrice = () => {
+    console.log("*** Tracking clicked estimate price")
+  }
+
+  const trackViewedEstimatedPrice = (price: PriceEstimate) => {
+    console.log("*** Tracking viewed estimate price, ", price)
+  }
+
+  const { connectWidgetObserver, disconnectWidgetObserver } = useWidgetObserver(
+    {
+      onViewEstimatedPrice: trackViewedEstimatedPrice,
+    },
+  )
+
+  const openWidget = useCallback(() => {
+    if (state.widget && !state.widget.isOpen) {
+      state.widget.open()
+      connectWidgetObserver()
+    }
+  }, [state.widget, connectWidgetObserver])
+
+  const closeWidget = useCallback(() => {
+    if (state.widget && state.widget.isOpen) {
+      state.widget.close()
+      disconnectWidgetObserver()
+    }
+  }, [state.widget, disconnectWidgetObserver])
+
   // close on unmount
   useEffect(() => {
     return () => {
-      if (state.widget?.isOpen) {
-        state.widget.close()
-      }
+      closeWidget()
     }
-  }, [state.widget])
+  }, [closeWidget])
 
   const widgetConfig = {
     style: {
@@ -156,18 +182,97 @@ export const ArtsyShippingEstimate = ({
       tabIndex={0}
       onClick={e => {
         e.preventDefault()
-        estimateWidget.open()
+        openWidget()
+        trackClickedEstimatePrice()
       }}
       onKeyDown={e => {
         if (e.key === "Enter") {
           e.preventDefault()
-          estimateWidget.open()
+          openWidget()
+          trackClickedEstimatePrice()
         }
       }}
     >
       <Text variant="xs">{WIDGET_TITLE}</Text>
     </LinkButton>
   )
+}
+
+interface PriceEstimate {
+  minPrice: number
+  maxPrice: number
+  currency?: string | null
+}
+
+interface UseWidgetObserverProps {
+  onViewEstimatedPrice: (price: PriceEstimate) => void
+}
+const useWidgetObserver = ({
+  onViewEstimatedPrice,
+}: UseWidgetObserverProps) => {
+  const widgetObserver = useRef<MutationObserver | null>(null)
+  const [visiblePrice, setVisiblePrice] = useState<PriceEstimate | null>(null)
+
+  const extractPriceFromDom = useCallback(() => {
+    const priceAmountEl = document.getElementsByClassName(
+      "artajs__modal__quotes__price__amount",
+    )[0]
+    const amountTextContent = priceAmountEl?.textContent // e.g. "$1,000"
+    const [minPrice, maxPrice] =
+      amountTextContent
+        ?.replace(/[^0-9,.-]+/g, "")
+        ?.split("-")
+        .map(n => Number.parseFloat(n)) || []
+    if (!(minPrice && maxPrice)) {
+      return null
+    }
+    const priceCurrencyEl = document.getElementsByClassName(
+      "artajs__modal__quotes__price__currency_code",
+    )[0]
+    const currency = priceCurrencyEl?.textContent
+
+    return { minPrice, maxPrice, currency }
+  }, [])
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: We only want to run this when the price changes
+  useEffect(() => {
+    if (visiblePrice?.minPrice && visiblePrice?.maxPrice) {
+      console.log("*** Price changed", visiblePrice)
+      onViewEstimatedPrice(visiblePrice)
+    }
+  }, [visiblePrice])
+
+  const connectWidgetObserver = useCallback(() => {
+    const targetNode = document.getElementsByClassName("artajs__modal")[0]
+    if (!targetNode) {
+      console.error("*** Widget target node not found")
+    }
+    // Options for the observer (which mutations to observe)
+    const config = { attributes: true, childList: true, subtree: true }
+
+    // Callback function to execute when mutations are observed
+    const callback = (_mutationList, _observer) => {
+      const price = extractPriceFromDom()
+      if (price) {
+        setVisiblePrice(price)
+      }
+    }
+    // Create an observer instance linked to the callback function
+    const observer = new MutationObserver(callback)
+    widgetObserver.current = observer
+
+    // Start observing the target node for configured mutations
+    observer.observe(targetNode, config)
+  }, [extractPriceFromDom])
+
+  const disconnectWidgetObserver = useCallback(() => {
+    widgetObserver.current?.disconnect()
+  }, [])
+
+  return {
+    connectWidgetObserver,
+    disconnectWidgetObserver,
+  }
 }
 
 const Loader = () => <Spacer y={2} />
