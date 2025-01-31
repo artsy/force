@@ -26,6 +26,7 @@ export const bootstrapSharify = () => {
       "API_URL",
       "APP_URL",
       "APPLICATION_NAME",
+      "ARTA_API_KEY",
       "ARTIST_PAGE_CTA_ARTIST_ID",
       "ARTIST_PAGE_CTA_ENABLED",
       "ARTSY_EDITORIAL_CHANNEL",
