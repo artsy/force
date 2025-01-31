@@ -211,7 +211,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
               {/* Desktop. Collapses into mobile at `xs` breakpoint. */}
               <Flex display={["none", "flex"]} ml={2} alignItems="stretch">
                 <Text variant="sm" lineHeight={1} display={["none", "flex"]}>
-                  <Flex alignItems="center" display={["none", "none", "flex"]}>
+                  <Flex alignItems="center" display={["none", "flex"]}>
                     <NavBarItemLink
                       href="/collect"
                       onMouseOver={() => prefetch("/collect")}
