@@ -43,6 +43,18 @@ jest.mock("Utils/Hooks/useLoadScript", () => {
   }
 })
 
+const validArtworkData = {
+  isFramed: true,
+  category: "Painting",
+  shippingOrigin: "New York, USA",
+  priceCurrency: "USD",
+  listPrice: {
+    major: 1000,
+  },
+  heightCm: 100,
+  widthCm: 100,
+}
+
 const TestWrapper = ({ artwork }) => {
   const [show, setShow] = useState(true)
 
@@ -76,22 +88,25 @@ const { renderWithRelay } =
 
 describe("ArtsyShippingEstimate", () => {
   describe("with an artwork that cannot be estimated", () => {
-    const mockArtworkData = {
-      isFramed: true,
-      category: "Painting",
-      shippingOrigin: "USA",
-
-      priceCurrency: "USD",
-      listPrice: {
-        major: 1000,
-      },
-      heightCm: 100,
-      widthCm: 100,
-    }
-
-    it("does not render the widget", async () => {
+    it("does not render the widget if the shippingOrigin is missing a city", async () => {
       renderWithRelay({
-        Artwork: () => mockArtworkData,
+        Artwork: () => ({
+          ...validArtworkData,
+          shippingOrigin: "USA",
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByTestId("loaded-no-widget")).toBeInTheDocument()
+      })
+    })
+
+    it("does not render the widget if the artwork is missing dimensions", async () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...validArtworkData,
+          widthCm: null,
+        }),
       })
 
       await waitFor(() => {
@@ -99,24 +114,9 @@ describe("ArtsyShippingEstimate", () => {
       })
     })
   })
+
   describe("with a valid artwork", () => {
-    const mockArtworkData = {
-      isFramed: true,
-      category: "Painting",
-      shippingOrigin: "New York, USA",
-      shippingCountry: "USA",
-      location: {
-        country: "USA",
-        postalCode: "10001",
-        city: "New York",
-      },
-      priceCurrency: "USD",
-      listPrice: {
-        major: 1000,
-      },
-      heightCm: 100,
-      widthCm: 100,
-    }
+    const mockArtworkData = { ...validArtworkData }
 
     it("renders the widget", async () => {
       renderWithRelay({
