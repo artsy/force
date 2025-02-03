@@ -220,24 +220,56 @@ describe("ArtworkSidebarArtists", () => {
         mockUseFeatureFlag.mockReturnValue(true)
       })
 
-      it("Renders the ArtsyShippingEstimate component for an acquireable artwork with global shipping", () => {
+      it("renders ArtsyShippingEstimate if work is arta shipped globablly", () => {
         renderWithRelay({
           Artwork: () => ({
             isAcquireable: true,
             artsyShippingDomestic: true,
             artsyShippingInternational: true,
+            internationalShippingFee: null,
           }),
         })
 
         expect(MockArtsyShippingEstimate).toHaveBeenCalled()
       })
 
-      it("Does not render the ArtsyShippingEstimate component for an acquireable artwork without global shipping", () => {
+      it("renders ArtsyShippingEstimate if work is arta shipped domestically and no international shipping defined", () => {
         renderWithRelay({
           Artwork: () => ({
             isAcquireable: true,
             artsyShippingDomestic: true,
             artsyShippingInternational: false,
+            internationalShippingFee: null,
+          }),
+        })
+
+        expect(MockArtsyShippingEstimate).toHaveBeenCalled()
+      })
+
+      it("does not render ArtsyShippingEstimate if work is not arta shipped", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            isAcquireable: true,
+            artsyShippingDomestic: false,
+            artsyShippingInternational: false,
+            internationalShippingFee: {
+              major: 1234,
+            },
+          }),
+        })
+
+        expect(MockArtsyShippingEstimate).not.toHaveBeenCalled()
+      })
+
+      it("does not render ArtsyShippingEstimate if work is arta shipped domestically but international shipping is different", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            isAcquireable: true,
+            artsyShippingDomestic: true,
+            artsyShippingInternational: false,
+            internationalShippingFee: {
+              major: 1234,
+            },
           }),
         })
 

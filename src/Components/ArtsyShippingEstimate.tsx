@@ -144,14 +144,11 @@ const LinkButton = styled(Link)`
 const ARTWORK_FRAGMENT = graphql`
   fragment ArtsyShippingEstimate_artwork on Artwork {
     isFramed
-    category # Raw category required for mapping to Arta subtype
+    mediumType {
+      name
+    }
     shippingOrigin
     shippingCountry
-    location {
-      country
-      postalCode
-      city
-    }
     priceCurrency
     listPrice {
       ... on Money {
@@ -205,12 +202,6 @@ const UNFRAMED_CATEGORY_MAP = {
 
 interface ShippableArtwork {
   shippingOrigin: string
-  location: {
-    country: string
-    postalCode?: string
-    city?: string
-  }
-
   priceCurrency: SupportedCurrency
   listPrice: {
     major?: number
@@ -222,9 +213,9 @@ interface ShippableArtwork {
     }
   }
   isFramed: boolean
-  category:
-    | keyof typeof FRAMED_CATEGORY_MAP
-    | keyof typeof UNFRAMED_CATEGORY_MAP
+  mediumType: {
+    name: keyof typeof FRAMED_CATEGORY_MAP | keyof typeof UNFRAMED_CATEGORY_MAP
+  }
   framedMetric?: string
   framedHeight?: number
   framedDiameter?: number
@@ -305,11 +296,11 @@ const artworkValue = (artwork: ShippableArtwork): ArtworkValue | null => {
 }
 
 const artaObject = (artwork: ShippableArtwork): ArtaObject | null => {
-  const framed = artwork.isFramed
+  const { isFramed, mediumType } = artwork
 
-  const subtype = framed
-    ? FRAMED_CATEGORY_MAP[artwork.category] || FRAMED_CATEGORY_MAP.Other
-    : UNFRAMED_CATEGORY_MAP[artwork.category] || UNFRAMED_CATEGORY_MAP.Other
+  const subtype = isFramed
+    ? FRAMED_CATEGORY_MAP[mediumType.name] || FRAMED_CATEGORY_MAP.Other
+    : UNFRAMED_CATEGORY_MAP[mediumType.name] || UNFRAMED_CATEGORY_MAP.Other
 
   const dimensions = artworkDimensions(artwork)
   const value = artworkValue(artwork)
