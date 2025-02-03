@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4691eec76aac1080e0714ef879efede2>>
+ * @generated SignedSource<<16fee92353c64ce693632d7100e2a154>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,9 @@ export type ArtworkSidebar_artwork$data = {
   } | null | undefined> | null | undefined;
   readonly artsyShippingDomestic: boolean | null | undefined;
   readonly artsyShippingInternational: boolean | null | undefined;
+  readonly internationalShippingFee: {
+    readonly major: number;
+  } | null | undefined;
   readonly isAcquireable: boolean | null | undefined;
   readonly isBiddable: boolean | null | undefined;
   readonly isEligibleForArtsyGuarantee: boolean;
@@ -165,6 +168,24 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "artsyShippingInternational",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Money",
+      "kind": "LinkedField",
+      "name": "internationalShippingFee",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "major",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -342,6 +363,6 @@ return {
 };
 })();
 
-(node as any).hash = "da42b26ac95a863b7bddd3e383078798";
+(node as any).hash = "d50b1e0cc612abb78246dddc2f146aab";
 
 export default node;

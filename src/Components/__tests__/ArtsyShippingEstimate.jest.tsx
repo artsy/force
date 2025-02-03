@@ -45,7 +45,9 @@ jest.mock("Utils/Hooks/useLoadScript", () => {
 
 const validArtworkData = {
   isFramed: true,
-  category: "Painting",
+  mediumType: {
+    name: "Painting",
+  },
   shippingOrigin: "New York, USA",
   priceCurrency: "USD",
   listPrice: {

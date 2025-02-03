@@ -68,6 +68,9 @@ export const ArtworkSidebar: React.FC<
     isOfferable,
     saleArtwork,
     sale,
+    artsyShippingDomestic,
+    artsyShippingInternational,
+    internationalShippingFee,
   } = artwork
   const startAt = sale?.startAt
   const endAt = saleArtwork?.endAt
@@ -86,14 +89,16 @@ export const ArtworkSidebar: React.FC<
   })
 
   const artworkEcommerceAvailable = !!(isAcquireable || isOfferable)
+
   const artsyShippingEstimateEnabled = useFeatureFlag(
     "emerald_shipping-estimate-widget",
   )
-
-  const globalArtsyShipping =
-    artworkEcommerceAvailable &&
-    !!artwork.artsyShippingDomestic &&
-    !!artwork.artsyShippingInternational
+  const allArtsyShipping =
+    !!artsyShippingDomestic && !!artsyShippingInternational
+  const artsyImpliedShipping =
+    !!artsyShippingDomestic && !internationalShippingFee
+  const displayArtaEstimate =
+    artsyShippingEstimateEnabled && (allArtsyShipping || artsyImpliedShipping)
 
   const timerEndAt = sale?.isAuction ? updatedBiddingEndAt : sale?.endAt
 
@@ -215,7 +220,7 @@ export const ArtworkSidebar: React.FC<
             label={
               <Flex flexDirection="column" justifyContent="flex-start">
                 <Text>Shipping and taxes</Text>
-                {globalArtsyShipping && artsyShippingEstimateEnabled && (
+                {displayArtaEstimate && (
                   <ArtsyShippingEstimate artwork={artwork} />
                 )}
               </Flex>
@@ -283,6 +288,9 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...ArtsyShippingEstimate_artwork
         artsyShippingDomestic
         artsyShippingInternational
+        internationalShippingFee {
+          major
+        }
         slug
         isSold
         isAcquireable

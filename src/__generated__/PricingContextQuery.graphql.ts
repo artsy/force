@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c89b777444e1622cd80bc61e2bec124>>
+ * @generated SignedSource<<707c2574d33297fc59ecb051f4d2fbf5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -269,16 +269,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3ce6aa5a6927bc93fb908cf326054a73",
+    "cacheID": "2108b00df02f6466ee01d9c6d383e1df",
     "id": null,
     "metadata": {},
     "name": "PricingContextQuery",
     "operationKind": "query",
-    "text": "query PricingContextQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...PricingContext_artwork\n    id\n  }\n}\n\nfragment PricingContext_artwork on Artwork {\n  listPrice {\n    __typename\n    ... on PriceRange {\n      maxPrice {\n        minor\n      }\n      minPrice {\n        minor\n      }\n    }\n    ... on Money {\n      minor\n    }\n  }\n  artists(shallow: true) {\n    slug\n    id\n  }\n  category\n  pricingContext {\n    appliedFiltersDisplay\n    appliedFilters {\n      dimension\n      category\n    }\n    bins {\n      maxPrice\n      maxPriceCents\n      minPrice\n      minPriceCents\n      numArtworks\n    }\n  }\n}\n"
+    "text": "query PricingContextQuery(\n  $slug: String!\n) @cacheable {\n  artwork(id: $slug) {\n    ...PricingContext_artwork\n    id\n  }\n}\n\nfragment PricingContext_artwork on Artwork {\n  listPrice {\n    __typename\n    ... on PriceRange {\n      maxPrice {\n        minor\n      }\n      minPrice {\n        minor\n      }\n    }\n    ... on Money {\n      minor\n    }\n  }\n  artists(shallow: true) {\n    slug\n    id\n  }\n  category\n  pricingContext {\n    appliedFiltersDisplay\n    appliedFilters {\n      dimension\n      category\n    }\n    bins {\n      maxPrice\n      maxPriceCents\n      minPrice\n      minPriceCents\n      numArtworks\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b583a7fd1a66ffb72488456478598aa9";
+(node as any).hash = "7b255f3e4c8ab9f57aca9798e3b285a3";
 
 export default node;
