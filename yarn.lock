@@ -22,10 +22,10 @@
   dependencies:
     preact "^10.11.3"
 
-"@artsy/cohesion@4.227.0":
-  version "4.227.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.227.0.tgz#d627f51a32f4ef8ad61c4079cc0a4b01a3e3e6c3"
-  integrity sha512-PlMBeSqVZlrKgPvk8yMvM0xvye0WdetR38/G7I1Ik3O+b1b/Z0eWTTUa04bJk1LKhiqMG7Y6GxOY7/b2us5NCA==
+"@artsy/cohesion@4.228.0":
+  version "4.228.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.228.0.tgz#7fc5346fcf6f516be4236be06c5758448225ec11"
+  integrity sha512-2XwygAKbVsZZyM8KQ/Eo/oZVfirS7t/bMuxo16QE9UwbeBbRs6SIxhmnk6I1xjrKWhUiri+B46qAWYcwGXSk0g==
   dependencies:
     core-js "3"
 
@@ -55,10 +55,10 @@
     chokidar "^3.0.0"
     decache "^4.4.0"
 
-"@artsy/fresnel@^8.0.1":
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-8.0.1.tgz#3f14ab0670688be30d24f4f5aff89994e85da067"
-  integrity sha512-GKCFGkpta1gDW1hurr+62Qfdl9GgPqmGf6FFv/HW7mLy4B2PCs1P7njLUcy7GCiGgfbZ7LcJJpZDCq9heoPfYA==
+"@artsy/fresnel@^8.1.0":
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-8.1.0.tgz#25dff4bdacda24f94636bbde0cc08e55b0f09f45"
+  integrity sha512-zlTUFfMDlJa2rmt631qC3/uwuZlGtLIpJtwddDEYdmy/p2P/rvZej+IXLHTP5a922CUMujWtEJHm/9wh93B2OQ==
 
 "@artsy/icons@3.22.1", "@artsy/icons@^3.2.2":
   version "3.22.1"
@@ -79,10 +79,10 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@^39.2.1":
-  version "39.2.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-39.2.1.tgz#c751ebe39d7e9f16ee3b78faa30ad6ca2c8f3f1f"
-  integrity sha512-2PajIGjZz8D2qVpERzsUGmErYXLCgBbuXu7LbNd6vXNQKIloVVIAm7xsRCtlag1SsI5G3567J3B8EWXpOAtpfA==
+"@artsy/palette-charts@^39.3.0":
+  version "39.3.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-39.3.0.tgz#9c2a117eed5a041e2565b3466cc2faa39afc982c"
+  integrity sha512-wZgeMvmm0JdxWGw7+T/qsL9N36JEWcJ6oEMSoM26gp1GnbsTbgW+bws/SMaeX4cN8DjTVFeGFF7FGV237bSftw==
   dependencies:
     "@seznam/compose-react-refs" "^1.0.6"
     d3-interpolate "^1.3.2"
