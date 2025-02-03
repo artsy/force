@@ -120,7 +120,7 @@ const ArticleZoomGalleryFigure: FC<
               key={i}
               rel="preload"
               as="image"
-              imagesrcset={source.img.srcSet}
+              imageSrcSet={source.img.srcSet}
               media={source.media.preload}
               fetchPriority="high"
             />

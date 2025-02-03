@@ -39,7 +39,7 @@ export const ArtistHeaderImage: FC<
         // always hint at mobile 2x image, to inform Link: headers
         href={mobile.quality2x}
         as="image"
-        imagesrcset={isMobile ? mobile.srcSet : desktop.srcSet}
+        imageSrcSet={isMobile ? mobile.srcSet : desktop.srcSet}
         fetchPriority="high"
       />
 
