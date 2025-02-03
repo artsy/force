@@ -35,7 +35,7 @@ const ArtistWorksForSaleRoute: React.FC<
             $artistID: String!
             $aggregations: [ArtworkAggregation]
             $input: FilterArtworksInput!
-          ) {
+          ) @cacheable {
             artist(id: $artistID) {
               ...ArtistArtworkFilter_artist @arguments(input: $input)
               sidebarAggregations: filterArtworksConnection(
