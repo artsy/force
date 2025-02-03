@@ -20,7 +20,7 @@ export const HeaderIcon: React.FC<React.PropsWithChildren<HeaderIconProps>> = ({
         rel="preload"
         as="image"
         href={img.src}
-        imagesrcset={img.srcSet}
+        imageSrcSet={img.srcSet}
         fetchPriority="high"
       />
 
