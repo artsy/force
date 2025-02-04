@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e66848189671d99426ffb5e25e72da6>>
+ * @generated SignedSource<<4f5fd37b51a7dd1a40c9656905b43ab9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type OrderStepper_order$data = {
+  readonly internalID: string;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -77,6 +78,13 @@ return {
   "metadata": null,
   "name": "OrderStepper_order",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -238,6 +246,6 @@ return {
 };
 })();
 
-(node as any).hash = "475608c6cb79e5efeae1173f7b13e08e";
+(node as any).hash = "3ab96f99e233c5ee80b17681ce6a86e5";
 
 export default node;
