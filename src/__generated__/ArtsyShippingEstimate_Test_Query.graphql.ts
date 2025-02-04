@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ad05f8f0ae0d54897bdfb6580f84257d>>
+ * @generated SignedSource<<6ecb98e0906f3f3f682afaaeffbfe262>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,14 +29,7 @@ var v0 = [
     "value": "example"
   }
 ],
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v2 = [
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -45,35 +38,29 @@ v2 = [
     "storageKey": null
   }
 ],
-v3 = {
+v2 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
+  "type": "Float"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Float"
 },
 v4 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Float"
+  "type": "Money"
 },
 v5 = {
   "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
-v6 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "Float"
-},
-v7 = {
-  "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Money"
+  "type": "String"
 };
 return {
   "fragment": {
@@ -126,8 +113,19 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "category",
+            "concreteType": "ArtworkMedium",
+            "kind": "LinkedField",
+            "name": "mediumType",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "name",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           },
           {
@@ -142,39 +140,6 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "shippingCountry",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Location",
-            "kind": "LinkedField",
-            "name": "location",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "country",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "postalCode",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "city",
-                "storageKey": null
-              },
-              (v1/*: any*/)
-            ],
             "storageKey": null
           },
           {
@@ -201,7 +166,7 @@ return {
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v2/*: any*/),
+                "selections": (v1/*: any*/),
                 "type": "Money",
                 "abstractKey": null
               },
@@ -215,7 +180,7 @@ return {
                     "kind": "LinkedField",
                     "name": "minPrice",
                     "plural": false,
-                    "selections": (v2/*: any*/),
+                    "selections": (v1/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -225,7 +190,7 @@ return {
                     "kind": "LinkedField",
                     "name": "maxPrice",
                     "plural": false,
-                    "selections": (v2/*: any*/),
+                    "selections": (v1/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -249,14 +214,20 @@ return {
             "name": "widthCm",
             "storageKey": null
           },
-          (v1/*: any*/)
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          }
         ],
         "storageKey": "artwork(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "d8d6e0dd445f676172374534ed6e8555",
+    "cacheID": "d6d53ca44923a7f2500bc0223a09b1e2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -266,9 +237,13 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.category": (v3/*: any*/),
-        "artwork.heightCm": (v4/*: any*/),
-        "artwork.id": (v5/*: any*/),
+        "artwork.heightCm": (v2/*: any*/),
+        "artwork.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
         "artwork.isFramed": {
           "enumValues": null,
           "nullable": true,
@@ -287,30 +262,27 @@ return {
           "plural": false,
           "type": "String"
         },
-        "artwork.listPrice.major": (v6/*: any*/),
-        "artwork.listPrice.maxPrice": (v7/*: any*/),
-        "artwork.listPrice.maxPrice.major": (v6/*: any*/),
-        "artwork.listPrice.minPrice": (v7/*: any*/),
-        "artwork.listPrice.minPrice.major": (v6/*: any*/),
-        "artwork.location": {
+        "artwork.listPrice.major": (v3/*: any*/),
+        "artwork.listPrice.maxPrice": (v4/*: any*/),
+        "artwork.listPrice.maxPrice.major": (v3/*: any*/),
+        "artwork.listPrice.minPrice": (v4/*: any*/),
+        "artwork.listPrice.minPrice.major": (v3/*: any*/),
+        "artwork.mediumType": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "Location"
+          "type": "ArtworkMedium"
         },
-        "artwork.location.city": (v3/*: any*/),
-        "artwork.location.country": (v3/*: any*/),
-        "artwork.location.id": (v5/*: any*/),
-        "artwork.location.postalCode": (v3/*: any*/),
-        "artwork.priceCurrency": (v3/*: any*/),
-        "artwork.shippingCountry": (v3/*: any*/),
-        "artwork.shippingOrigin": (v3/*: any*/),
-        "artwork.widthCm": (v4/*: any*/)
+        "artwork.mediumType.name": (v5/*: any*/),
+        "artwork.priceCurrency": (v5/*: any*/),
+        "artwork.shippingCountry": (v5/*: any*/),
+        "artwork.shippingOrigin": (v5/*: any*/),
+        "artwork.widthCm": (v2/*: any*/)
       }
     },
     "name": "ArtsyShippingEstimate_Test_Query",
     "operationKind": "query",
-    "text": "query ArtsyShippingEstimate_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtsyShippingEstimate_artwork\n    id\n  }\n}\n\nfragment ArtsyShippingEstimate_artwork on Artwork {\n  isFramed\n  category\n  shippingOrigin\n  shippingCountry\n  location {\n    country\n    postalCode\n    city\n    id\n  }\n  priceCurrency\n  listPrice {\n    __typename\n    ... on Money {\n      major\n    }\n    ... on PriceRange {\n      minPrice {\n        major\n      }\n      maxPrice {\n        major\n      }\n    }\n  }\n  heightCm\n  widthCm\n}\n"
+    "text": "query ArtsyShippingEstimate_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtsyShippingEstimate_artwork\n    id\n  }\n}\n\nfragment ArtsyShippingEstimate_artwork on Artwork {\n  isFramed\n  mediumType {\n    name\n  }\n  shippingOrigin\n  shippingCountry\n  priceCurrency\n  listPrice {\n    __typename\n    ... on Money {\n      major\n    }\n    ... on PriceRange {\n      minPrice {\n        major\n      }\n      maxPrice {\n        major\n      }\n    }\n  }\n  heightCm\n  widthCm\n}\n"
   }
 };
 })();
