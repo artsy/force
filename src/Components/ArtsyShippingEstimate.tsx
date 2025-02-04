@@ -88,49 +88,6 @@ export const ArtsyShippingEstimate = ({
     }
   }, [closeWidget])
 
-  const widgetConfig = {
-    style: {
-      color: {
-        border: "none",
-        buttonBackground: "#1023D7",
-        buttonBackgroundHover: "#1023D7",
-        buttonBackgroundDisabled: "#C2C2C2",
-        buttonText: "#FFFFFF",
-        buttonTextHover: "#FFFFFF",
-        buttonTextDisabled: "#FFFFFF",
-      },
-      position: "center" as any,
-      pricingDisplay: "range" as any,
-      fontFamily:
-        '"ll-unica77", "Helvetica Neue", Helvetica, Arial, sans-serif',
-      fontSize: 16,
-      width: 440,
-      height: 440,
-    },
-    text: {
-      detailOriginLabel: "(origin)",
-      detailDestinationLabel: "(destination)",
-      returnLinkLabel: "Change Destination",
-      header: {
-        title: "Estimate shipping cost",
-      },
-      destination: {
-        descriptionLabel: "",
-        buttonText: "Get Shipping Estimate",
-        countryLabel: "Destination Country",
-        zipLabel: "Destination City/Zip Code",
-        cityLabel: "Destination City",
-      },
-      quoted: {
-        shipFromLabel: "",
-        shipToLabel: "",
-        disclaimerLabel: "",
-        rangeLabel: "Shipping estimated between",
-        artaInsuranceLabel: "",
-      },
-    },
-  }
-
   useEffect(() => {
     if (state.loaded || !Arta) {
       return
@@ -312,6 +269,48 @@ const ARTWORK_FRAGMENT = graphql`
     # shippingWeight # may need to be added?
   }
 `
+
+const widgetConfig = {
+  style: {
+    color: {
+      border: "none",
+      buttonBackground: "#1023D7",
+      buttonBackgroundHover: "#1023D7",
+      buttonBackgroundDisabled: "#C2C2C2",
+      buttonText: "#FFFFFF",
+      buttonTextHover: "#FFFFFF",
+      buttonTextDisabled: "#FFFFFF",
+    },
+    position: "center" as any,
+    pricingDisplay: "range" as any,
+    fontFamily: '"ll-unica77", "Helvetica Neue", Helvetica, Arial, sans-serif',
+    fontSize: 16,
+    width: 440,
+    height: 440,
+  },
+  text: {
+    detailOriginLabel: "(origin)",
+    detailDestinationLabel: "(destination)",
+    returnLinkLabel: "Change Destination",
+    header: {
+      title: WIDGET_TITLE,
+    },
+    destination: {
+      descriptionLabel: "",
+      buttonText: "Get Shipping Estimate",
+      countryLabel: "Destination Country",
+      zipLabel: "Destination City/Zip Code",
+      cityLabel: "Destination City",
+    },
+    quoted: {
+      shipFromLabel: "",
+      shipToLabel: "",
+      disclaimerLabel: "",
+      rangeLabel: "Shipping estimated between",
+      artaInsuranceLabel: "",
+    },
+  },
+} as const
 
 const FRAMED_CATEGORY_MAP = {
   Photography: "photograph_framed",
