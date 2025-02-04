@@ -62,6 +62,48 @@ export const ArtsyShippingEstimate = ({
     }
   }, [state.widget])
 
+  const widgetConfig = {
+    style: {
+      color: {
+        // border: "none",
+        buttonBackground: "#1023D7",
+        buttonBackgroundHover: "#1023D7",
+        buttonBackgroundDisabled: "#E6E7F5",
+        buttonText: "#FFFFFF",
+        buttonTextHover: "#FFFFFF",
+        buttonTextDisabled: "#cacdec",
+      },
+      position: "center" as any,
+      pricingDisplay: "range" as any,
+      fontFamily:
+        '"ll-unica77", "Helvetica Neue", Helvetica, Arial, sans-serif',
+      width: 440,
+      height: 440,
+    },
+    text: {
+      detailOriginLabel: "(origin)",
+      detailDestinationLabel: "(destination)",
+      returnLinkLabel: "Change Destination",
+      header: {
+        title: "Estimate shipping cost",
+      },
+      destination: {
+        descriptionLabel: "",
+        buttonText: "Get Shipping Estimate",
+        countryLabel: "Destination Country",
+        zipLabel: "Destination Postal/ZIP Code",
+        cityLabel: "Destination City",
+      },
+      quoted: {
+        shipFromLabel: "",
+        shipToLabel: "",
+        disclaimerLabel:
+          "This estimate includes Arta Transit Insurance. Actual shipping costs will be provided at checkout.",
+        rangeLabel: "Shipping estimated between",
+      },
+    },
+  }
+
   useEffect(() => {
     if (state.loaded || !Arta) {
       return
@@ -75,11 +117,7 @@ export const ArtsyShippingEstimate = ({
       Arta.init(ARTA_API_KEY)
 
       const artsyEstimateWidget =
-        Arta &&
-        estimateInput &&
-        Arta.estimate(estimateInput, {
-          text: { header: { title: WIDGET_TITLE } },
-        })
+        Arta && estimateInput && Arta.estimate(estimateInput, widgetConfig)
 
       if (!artsyEstimateWidget) {
         setState({ loaded: true, widget: null })
