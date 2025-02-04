@@ -65,18 +65,19 @@ export const ArtsyShippingEstimate = ({
   const widgetConfig = {
     style: {
       color: {
-        // border: "none",
+        border: "none",
         buttonBackground: "#1023D7",
         buttonBackgroundHover: "#1023D7",
-        buttonBackgroundDisabled: "#E6E7F5",
+        buttonBackgroundDisabled: "#C2C2C2",
         buttonText: "#FFFFFF",
         buttonTextHover: "#FFFFFF",
-        buttonTextDisabled: "#cacdec",
+        buttonTextDisabled: "#FFFFFF",
       },
       position: "center" as any,
       pricingDisplay: "range" as any,
       fontFamily:
         '"ll-unica77", "Helvetica Neue", Helvetica, Arial, sans-serif',
+      fontSize: 16,
       width: 440,
       height: 440,
     },
@@ -91,15 +92,15 @@ export const ArtsyShippingEstimate = ({
         descriptionLabel: "",
         buttonText: "Get Shipping Estimate",
         countryLabel: "Destination Country",
-        zipLabel: "Destination Postal/ZIP Code",
+        zipLabel: "Destination City/Zip Code",
         cityLabel: "Destination City",
       },
       quoted: {
         shipFromLabel: "",
         shipToLabel: "",
-        disclaimerLabel:
-          "This estimate includes Arta Transit Insurance. Actual shipping costs will be provided at checkout.",
+        disclaimerLabel: "",
         rangeLabel: "Shipping estimated between",
+        artaInsuranceLabel: "",
       },
     },
   }
