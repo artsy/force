@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<81524160a144b575cfe7f1d8241315bb>>
+ * @generated SignedSource<<a07a5cf239a0620a3cc5f6922a761048>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,6 +40,7 @@ export type FilterArtworksInput = {
   height?: string | null | undefined;
   includeArtworksByFollowedArtists?: boolean | null | undefined;
   includeMediumFilterInAggregation?: boolean | null | undefined;
+  includeUnpublished?: boolean | null | undefined;
   inquireableOnly?: boolean | null | undefined;
   keyword?: string | null | undefined;
   keywordMatchExact?: boolean | null | undefined;
@@ -66,7 +67,7 @@ export type FilterArtworksInput = {
   sold?: boolean | null | undefined;
   sort?: string | null | undefined;
   tagID?: string | null | undefined;
-  visibility_level?: string | null | undefined;
+  visibilityLevel?: string | null | undefined;
   width?: string | null | undefined;
 };
 export type SuggestedArtworksModalGridQuery$variables = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6e09cdc85622c824bbe515d92829e19f>>
+ * @generated SignedSource<<75ffdaf33ff2f3193f8f02db4eee3dc1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -41,6 +41,7 @@ export type FilterArtworksInput = {
   height?: string | null | undefined;
   includeArtworksByFollowedArtists?: boolean | null | undefined;
   includeMediumFilterInAggregation?: boolean | null | undefined;
+  includeUnpublished?: boolean | null | undefined;
   inquireableOnly?: boolean | null | undefined;
   keyword?: string | null | undefined;
   keywordMatchExact?: boolean | null | undefined;
@@ -67,7 +68,7 @@ export type FilterArtworksInput = {
   sold?: boolean | null | undefined;
   sort?: string | null | undefined;
   tagID?: string | null | undefined;
-  visibility_level?: string | null | undefined;
+  visibilityLevel?: string | null | undefined;
   width?: string | null | undefined;
 };
 export type ArtworkQueryFilterQuery$variables = {

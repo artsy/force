@@ -295,6 +295,7 @@ type Alert {
     height: String
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
+    includeUnpublished: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -320,6 +321,8 @@ type Alert {
     period: String
     periods: [String]
     priceRange: String
+
+    # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
 
@@ -332,7 +335,7 @@ type Alert {
     sold: Boolean
     sort: String
     tagID: String
-    visibility_level: String
+    visibilityLevel: String
     width: String
   ): FilterArtworksConnection
   atAuction: Boolean
@@ -1688,6 +1691,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     height: String
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
+    includeUnpublished: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -1713,6 +1717,8 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     period: String
     periods: [String]
     priceRange: String
+
+    # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
 
@@ -1725,7 +1731,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     sold: Boolean
     sort: String
     tagID: String
-    visibility_level: String
+    visibilityLevel: String
     width: String
   ): FilterArtworksConnection
   first: String
@@ -2174,6 +2180,7 @@ type ArtistSeries implements Node {
     height: String
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
+    includeUnpublished: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -2199,6 +2206,8 @@ type ArtistSeries implements Node {
     period: String
     periods: [String]
     priceRange: String
+
+    # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
 
@@ -2211,7 +2220,7 @@ type ArtistSeries implements Node {
     sold: Boolean
     sort: String
     tagID: String
-    visibility_level: String
+    visibilityLevel: String
     width: String
   ): FilterArtworksConnection
   forSaleArtworksCount: Int!
@@ -9472,6 +9481,7 @@ interface EntityWithFilterArtworksConnectionInterface {
     height: String
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
+    includeUnpublished: Boolean
     inquireableOnly: Boolean
     keyword: String
 
@@ -9496,6 +9506,8 @@ interface EntityWithFilterArtworksConnectionInterface {
     period: String
     periods: [String]
     priceRange: String
+
+    # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
 
@@ -9508,7 +9520,7 @@ interface EntityWithFilterArtworksConnectionInterface {
     sold: Boolean
     sort: String
     tagID: String
-    visibility_level: String
+    visibilityLevel: String
     width: String
   ): FilterArtworksConnection
 
@@ -9722,6 +9734,7 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     height: String
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
+    includeUnpublished: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -9747,6 +9760,8 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     period: String
     periods: [String]
     priceRange: String
+
+    # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
 
@@ -9759,7 +9774,7 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     sold: Boolean
     sort: String
     tagID: String
-    visibility_level: String
+    visibilityLevel: String
     width: String
   ): FilterArtworksConnection
   followedContent: FollowedContent
@@ -10238,6 +10253,7 @@ input FilterArtworksInput {
   height: String
   includeArtworksByFollowedArtists: Boolean
   includeMediumFilterInAggregation: Boolean
+  includeUnpublished: Boolean
   inquireableOnly: Boolean
   keyword: String
 
@@ -10262,6 +10278,8 @@ input FilterArtworksInput {
   period: String
   periods: [String]
   priceRange: String
+
+  # When false, will only return unpublished artworks for authorized users.
   published: Boolean
   saleID: ID
 
@@ -10274,7 +10292,7 @@ input FilterArtworksInput {
   sold: Boolean
   sort: String
   tagID: String
-  visibility_level: String
+  visibilityLevel: String
   width: String
 }
 
@@ -10700,6 +10718,7 @@ type Gene implements Node & Searchable {
     height: String
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
+    includeUnpublished: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -10725,6 +10744,8 @@ type Gene implements Node & Searchable {
     period: String
     periods: [String]
     priceRange: String
+
+    # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
 
@@ -10737,7 +10758,7 @@ type Gene implements Node & Searchable {
     sold: Boolean
     sort: String
     tagID: String
-    visibility_level: String
+    visibilityLevel: String
     width: String
   ): FilterArtworksConnection
   href: String
@@ -12601,6 +12622,7 @@ type MarketingCollection implements Node {
     height: String
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
+    includeUnpublished: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -12626,6 +12648,8 @@ type MarketingCollection implements Node {
     period: String
     periods: [String]
     priceRange: String
+
+    # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
 
@@ -12638,7 +12662,7 @@ type MarketingCollection implements Node {
     sold: Boolean
     sort: String
     tagID: String
-    visibility_level: String
+    visibilityLevel: String
     width: String
   ): FilterArtworksConnection
   category: String!
@@ -15139,6 +15163,7 @@ type Partner implements Node {
     height: String
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
+    includeUnpublished: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -15164,6 +15189,8 @@ type Partner implements Node {
     period: String
     periods: [String]
     priceRange: String
+
+    # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
 
@@ -15176,7 +15203,7 @@ type Partner implements Node {
     sold: Boolean
     sort: String
     tagID: String
-    visibility_level: String
+    visibilityLevel: String
     width: String
   ): FilterArtworksConnection
   fullProfileEligible: Boolean
@@ -16646,6 +16673,7 @@ type Query {
     height: String
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
+    includeUnpublished: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -16671,6 +16699,8 @@ type Query {
     period: String
     periods: [String]
     priceRange: String
+
+    # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
 
@@ -16683,7 +16713,7 @@ type Query {
     sold: Boolean
     sort: String
     tagID: String
-    visibility_level: String
+    visibilityLevel: String
     width: String
   ): FilterArtworksConnection
 
@@ -19001,6 +19031,7 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     height: String
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
+    includeUnpublished: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -19026,6 +19057,8 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     period: String
     periods: [String]
     priceRange: String
+
+    # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
 
@@ -19038,7 +19071,7 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     sold: Boolean
     sort: String
     tagID: String
-    visibility_level: String
+    visibilityLevel: String
     width: String
   ): FilterArtworksConnection
 
@@ -19497,6 +19530,7 @@ type Tag implements Node {
     height: String
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
+    includeUnpublished: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -19522,6 +19556,8 @@ type Tag implements Node {
     period: String
     periods: [String]
     priceRange: String
+
+    # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
 
@@ -19534,7 +19570,7 @@ type Tag implements Node {
     sold: Boolean
     sort: String
     tagID: String
-    visibility_level: String
+    visibilityLevel: String
     width: String
   ): FilterArtworksConnection
   href: String
@@ -21447,6 +21483,7 @@ type Viewer {
     height: String
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
+    includeUnpublished: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -21472,6 +21509,8 @@ type Viewer {
     period: String
     periods: [String]
     priceRange: String
+
+    # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
 
@@ -21484,7 +21523,7 @@ type Viewer {
     sold: Boolean
     sort: String
     tagID: String
-    visibility_level: String
+    visibilityLevel: String
     width: String
   ): FilterArtworksConnection
 
