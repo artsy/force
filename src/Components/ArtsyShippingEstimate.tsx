@@ -5,7 +5,12 @@ import type {
   SupportedCurrency,
 } from "@artaio/arta-browser/dist/MetadataTypes"
 import type ArtaEstimate from "@artaio/arta-browser/dist/estimate"
-import { OwnerType } from "@artsy/cohesion"
+import {
+  ActionType,
+  type ClickedEstimateShippingCost,
+  OwnerType,
+  type ShippingEstimateViewed,
+} from "@artsy/cohesion"
 import { Link, Spacer, Text } from "@artsy/palette"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
@@ -61,17 +66,17 @@ export const ArtsyShippingEstimate = ({
 
   const trackClickedEstimatePrice = () => {
     trackEvent({
-      action: "clickedEstimateShippingCost", // TODO: Actiontype.clickedEstimateShippingCost
-      context_owner_type: OwnerType.artwork,
+      action: ActionType.clickedEstimateShippingCost,
+      context_page_owner_type: OwnerType.artwork,
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,
-    })
+    } as ClickedEstimateShippingCost)
   }
 
   const trackViewedEstimatedPrice = (estimate: PriceEstimate) => {
     trackEvent({
-      action: "shippingEstimateViewed", // TODO: ActionType.clickedEstimateShippingCost
-      context_owner_type: OwnerType.artwork,
+      action: ActionType.shippingEstimateViewed,
+      context_page_owner_type: OwnerType.artwork,
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,
       origin: artworkData.shippingOrigin,
@@ -79,7 +84,7 @@ export const ArtsyShippingEstimate = ({
       minimum_estimate: estimate.minPrice,
       maximum_estimate: estimate.maxPrice,
       estimate_currency: estimate.currency,
-    })
+    } as ShippingEstimateViewed)
   }
 
   const { connectWidgetObserver, disconnectWidgetObserver } = useWidgetObserver(
