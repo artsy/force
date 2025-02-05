@@ -18,9 +18,9 @@ const ShowMeta: React.FC<React.PropsWithChildren<ShowMetaProps>> = ({
     formattedEndAt,
   },
 }) => {
-  const fallbackDescription = `Explore ${name} from ${
+  const fallbackDescription = `Explore ${name} presented by ${
     partner ? `${partner.name} on` : ""
-  } Artsy. ${formattedStartAt} - ${formattedEndAt}.`
+  } Artsy. On view from ${formattedStartAt} to ${formattedEndAt}.`
 
   return (
     <MetaTags
