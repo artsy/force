@@ -311,9 +311,18 @@ const ARTWORK_FRAGMENT = graphql`
         }
       }
     }
+
     heightCm
     widthCm
-    # shippingWeight # may need to be added?
+    depthCm
+    diameterCm
+
+    framedHeight
+    framedWidth
+    framedDepth
+    framedDiameter
+    shippingWeight # may need to be added?
+    shippingWeightMetric # may need to be added?
   }
 `
 
@@ -413,15 +422,21 @@ interface ShippableArtwork {
   mediumType: {
     name: keyof typeof FRAMED_CATEGORY_MAP | keyof typeof UNFRAMED_CATEGORY_MAP
   }
+
   framedMetric?: string
+
   framedHeight?: number
-  framedDiameter?: number
   framedWidth?: number
   framedDepth?: number
+  framedDiameter?: number
+
   heightCm?: number
-  diameterCm?: number
   widthCm?: number
   depthCm?: number
+  diameterCm?: number
+
+  shippingWeight?: number
+  shippingWeightMetric?: string
 }
 
 type ArtaObjectDimensions = Pick<
@@ -432,7 +447,7 @@ const artworkDimensions = (
   artwork: ShippableArtwork,
 ): ArtaObjectDimensions | null => {
   if (artwork.isFramed && !!artwork.framedMetric) {
-    if (!!(!!artwork.framedHeight && !!artwork.framedWidth)) {
+    if (!!artwork.framedHeight && !!artwork.framedWidth) {
       return {
         unit_of_measurement: artwork.framedMetric,
         height: artwork.framedHeight,
@@ -502,8 +517,13 @@ const artaObject = (artwork: ShippableArtwork): ArtaObject | null => {
   const dimensions = artworkDimensions(artwork)
   const value = artworkValue(artwork)
 
+  const weight = {
+    weight: artwork.shippingWeight,
+    weight_unit: artwork.shippingWeightMetric,
+  }
+
   if (!!subtype && !!dimensions && !!value) {
-    return { subtype, ...dimensions, ...value }
+    return { subtype, ...dimensions, ...value, ...weight }
   }
   return null
 }

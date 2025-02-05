@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b99a237e20dfc523331dc2ffa151353b>>
+ * @generated SignedSource<<397f9777b51560e540594d188ccee039>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,9 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtsyShippingEstimate_artwork$data = {
+  readonly framedDepth: string | null | undefined;
+  readonly framedHeight: string | null | undefined;
+  readonly framedWidth: string | null | undefined;
   readonly heightCm: number | null | undefined;
   readonly isFramed: boolean | null | undefined;
   readonly listPrice: {
@@ -155,6 +158,27 @@ return {
       "kind": "ScalarField",
       "name": "widthCm",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "framedHeight",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "framedWidth",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "framedDepth",
+      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -162,6 +186,6 @@ return {
 };
 })();
 
-(node as any).hash = "2850e23f06f3cd1c327290c9533b6458";
+(node as any).hash = "55ad43265e1b801f6e66941e691aed54";
 
 export default node;
