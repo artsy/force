@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0660e5238dcde817835d79a0709ce485>>
+ * @generated SignedSource<<3755b69f2279e17edfd800db6d35e44e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,6 +25,7 @@ export type FilterArtworksInput = {
   artistSeriesIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
   atAuction?: boolean | null | undefined;
   attributionClass?: ReadonlyArray<string | null | undefined> | null | undefined;
+  availability?: string | null | undefined;
   before?: string | null | undefined;
   color?: string | null | undefined;
   colors?: ReadonlyArray<string | null | undefined> | null | undefined;
@@ -57,12 +58,15 @@ export type FilterArtworksInput = {
   period?: string | null | undefined;
   periods?: ReadonlyArray<string | null | undefined> | null | undefined;
   priceRange?: string | null | undefined;
+  published?: boolean | null | undefined;
   saleID?: string | null | undefined;
   signed?: boolean | null | undefined;
   size?: number | null | undefined;
   sizes?: ReadonlyArray<ArtworkSizes | null | undefined> | null | undefined;
+  sold?: boolean | null | undefined;
   sort?: string | null | undefined;
   tagID?: string | null | undefined;
+  visibility_level?: string | null | undefined;
   width?: string | null | undefined;
 };
 export type ArtistWorksForSaleRouteArtworksQuery$variables = {
