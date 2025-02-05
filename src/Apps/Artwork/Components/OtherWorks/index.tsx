@@ -201,7 +201,7 @@ export const OtherWorksQueryRenderer: React.FC<
         variables={{ slug }}
         placeholder={PLACEHOLDER}
         query={graphql`
-          query OtherWorksQuery($slug: String!) {
+          query OtherWorksQuery($slug: String!) @cacheable {
             artwork(id: $slug) {
               ...OtherWorks_artwork
             }
