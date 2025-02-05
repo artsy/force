@@ -5,12 +5,15 @@ import type {
   SupportedCurrency,
 } from "@artaio/arta-browser/dist/MetadataTypes"
 import type ArtaEstimate from "@artaio/arta-browser/dist/estimate"
-import { Link, Spacer, Text, usePrevious } from "@artsy/palette"
+import { OwnerType } from "@artsy/cohesion"
+import { Link, Spacer, Text } from "@artsy/palette"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import { getENV } from "Utils/getENV"
 import type { ArtsyShippingEstimate_artwork$key } from "__generated__/ArtsyShippingEstimate_artwork.graphql"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
 import styled from "styled-components"
 
 const ARTA_API_KEY = getENV("ARTA_API_KEY")
@@ -31,6 +34,9 @@ interface ArtsyShippingEstimateProps {
 export const ArtsyShippingEstimate = ({
   artwork,
 }: ArtsyShippingEstimateProps) => {
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerId, contextPageOwnerSlug } = useAnalyticsContext()
+
   const artworkData = useFragment(ARTWORK_FRAGMENT, artwork)
 
   const estimateInput = estimateRequestBodyForArtwork(
@@ -54,11 +60,26 @@ export const ArtsyShippingEstimate = ({
   const [state, setState] = useState<EstimateWidgetState>(initialState)
 
   const trackClickedEstimatePrice = () => {
-    console.log("*** Tracking clicked estimate price")
+    trackEvent({
+      action: "clickedEstimateShippingCost", // TODO: Actiontype.clickedEstimateShippingCost
+      context_owner_type: OwnerType.artwork,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+    })
   }
 
-  const trackViewedEstimatedPrice = (price: PriceEstimate) => {
-    console.log("*** Tracking viewed estimate price, ", price)
+  const trackViewedEstimatedPrice = (estimate: PriceEstimate) => {
+    trackEvent({
+      action: "shippingEstimateViewed", // TODO: ActionType.clickedEstimateShippingCost
+      context_owner_type: OwnerType.artwork,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      origin: artworkData.shippingOrigin,
+      destination: estimate.destination,
+      minimum_estimate: estimate.minPrice,
+      maximum_estimate: estimate.maxPrice,
+      estimate_currency: estimate.currency,
+    })
   }
 
   const { connectWidgetObserver, disconnectWidgetObserver } = useWidgetObserver(
@@ -156,45 +177,64 @@ export const ArtsyShippingEstimate = ({
 }
 
 interface PriceEstimate {
+  destination: string
   minPrice: number
-  maxPrice: number
-  currency?: string | null
+  maxPrice?: number | null
+  currency: string
 }
 
 interface UseWidgetObserverProps {
   onViewEstimatedPrice: (price: PriceEstimate) => void
 }
+
 const useWidgetObserver = ({
   onViewEstimatedPrice,
 }: UseWidgetObserverProps) => {
   const widgetObserver = useRef<MutationObserver | null>(null)
   const [visiblePrice, setVisiblePrice] = useState<PriceEstimate | null>(null)
 
-  const extractPriceFromDom = useCallback(() => {
+  const extractEstimateFromDom = useCallback((): PriceEstimate | null => {
     const priceAmountEl = document.getElementsByClassName(
       "artajs__modal__quotes__price__amount",
     )[0]
-    const amountTextContent = priceAmountEl?.textContent // e.g. "$1,000"
+    const amountTextContent = priceAmountEl?.textContent
+    // e.g. "$1,000"
     const [minPrice, maxPrice] =
       amountTextContent
         ?.replace(/[^0-9,.-]+/g, "")
         ?.split("-")
         .map(n => Number.parseFloat(n)) || []
-    if (!(minPrice && maxPrice)) {
+
+    if (!minPrice) {
       return null
     }
+
+    const destinationEl = document.getElementsByClassName(
+      "artajs__modal__quotes__destination",
+    )[0]
+    // e.g. "Chicago, IL, US (destination)"
+    const destination =
+      destinationEl?.textContent?.match(/(.+)\(destination\)/)?.[1]
+
+    if (!destination) {
+      return null
+    }
+
     const priceCurrencyEl = document.getElementsByClassName(
       "artajs__modal__quotes__price__currency_code",
     )[0]
     const currency = priceCurrencyEl?.textContent
 
-    return { minPrice, maxPrice, currency }
+    if (!currency) {
+      return null
+    }
+
+    return { minPrice, maxPrice, currency, destination }
   }, [])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: We only want to run this when the price changes
   useEffect(() => {
     if (visiblePrice?.minPrice && visiblePrice?.maxPrice) {
-      console.log("*** Price changed", visiblePrice)
       onViewEstimatedPrice(visiblePrice)
     }
   }, [visiblePrice])
@@ -209,7 +249,7 @@ const useWidgetObserver = ({
 
     // Callback function to execute when mutations are observed
     const callback = (_mutationList, _observer) => {
-      const price = extractPriceFromDom()
+      const price = extractEstimateFromDom()
       if (price) {
         setVisiblePrice(price)
       }
@@ -220,7 +260,7 @@ const useWidgetObserver = ({
 
     // Start observing the target node for configured mutations
     observer.observe(targetNode, config)
-  }, [extractPriceFromDom])
+  }, [extractEstimateFromDom])
 
   const disconnectWidgetObserver = useCallback(() => {
     widgetObserver.current?.disconnect()
