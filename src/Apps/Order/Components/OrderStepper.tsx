@@ -26,6 +26,43 @@ export interface OrderStepperProps {
   steps: string[]
 }
 
+export interface StepperComponentProps {
+  steps: string[]
+  currentStep: string
+  completedOrderSteps: string[]
+  onStepClick: (step: string) => void
+}
+
+const StepperComponent: FC<StepperComponentProps> = ({
+  steps,
+  currentStep,
+  completedOrderSteps,
+  onStepClick,
+}) => {
+  const stepIndex = steps.indexOf(currentStep)
+
+  return (
+    <Stepper
+      initialTabIndex={stepIndex}
+      currentStepIndex={stepIndex}
+      disableNavigation={false}
+    >
+      {steps.map(step => (
+        <Step
+          name={
+            completedOrderSteps.includes(step) ? (
+              <Clickable onClick={() => onStepClick(step)}>{step}</Clickable>
+            ) : (
+              step
+            )
+          }
+          key={step}
+        />
+      ))}
+    </Stepper>
+  )
+}
+
 export const OrderStepper: FC<React.PropsWithChildren<OrderStepperProps>> = ({
   order,
   steps,
@@ -69,8 +106,6 @@ export const OrderStepper: FC<React.PropsWithChildren<OrderStepperProps>> = ({
     return completedSteps
   }, [order, steps, currentStep])
 
-  const stepIndex = steps.indexOf(currentStep)
-
   const handleStepClick = (step: string) => {
     if (typeof window === "undefined") return
 
@@ -88,35 +123,26 @@ export const OrderStepper: FC<React.PropsWithChildren<OrderStepperProps>> = ({
     )
   }
 
-  const renderStepper = () => (
-    <Stepper
-      initialTabIndex={stepIndex}
-      currentStepIndex={stepIndex}
-      disableNavigation={false}
-    >
-      {steps.map(step => (
-        <Step
-          name={
-            completedOrderSteps.includes(step) ? (
-              <Clickable onClick={() => handleStepClick(step)}>
-                {step}
-              </Clickable>
-            ) : (
-              step
-            )
-          }
-          key={step}
-        />
-      ))}
-    </Stepper>
-  )
-
   return (
     <>
       <Media between={["xs", "md"]}>
-        <Box>{renderStepper()}</Box>
+        <Box>
+          <StepperComponent
+            steps={steps}
+            currentStep={currentStep}
+            completedOrderSteps={completedOrderSteps}
+            onStepClick={handleStepClick}
+          />
+        </Box>
       </Media>
-      <Media greaterThan="sm">{renderStepper()}</Media>
+      <Media greaterThan="sm">
+        <StepperComponent
+          steps={steps}
+          currentStep={currentStep}
+          completedOrderSteps={completedOrderSteps}
+          onStepClick={handleStepClick}
+        />
+      </Media>
     </>
   )
 }
