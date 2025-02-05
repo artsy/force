@@ -243,6 +243,7 @@ const useWidgetObserver = ({
     const targetNode = document.getElementsByClassName("artajs__modal")[0]
     if (!targetNode) {
       console.error("*** Widget target node not found")
+      return
     }
     // Options for the observer (which mutations to observe)
     const config = { attributes: true, childList: true, subtree: true }
@@ -254,6 +255,7 @@ const useWidgetObserver = ({
         setVisiblePrice(price)
       }
     }
+
     // Create an observer instance linked to the callback function
     const observer = new MutationObserver(callback)
     widgetObserver.current = observer
