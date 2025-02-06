@@ -457,7 +457,8 @@ const artworkDimensions = (
     isFramed &&
     !!framedMetric &&
     // TODO: this line effectively ignores framed data for artworks with one edition set
-    // We'll nned to either get it from editions sets in MP or add merge functions in gravity.
+    // We need to either get this framed data from editions sets in MP
+    // or add merge functions in gravity to roll this data to the artwork level.
     (!!(!!framedHeight && !!framedWidth) || !!framedDiameter)
   ) {
     if (!!(!!framedHeight && !!framedWidth)) {

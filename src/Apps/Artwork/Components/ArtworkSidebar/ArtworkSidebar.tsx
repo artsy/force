@@ -94,14 +94,18 @@ export const ArtworkSidebar: React.FC<
 
   const artworkEcommerceAvailable = !!(isAcquireable || isOfferable)
 
-  // TODO: Arta Estimate widget experiment! Either remove or properly instrument
+  // TODO: Arta Estimate widget experiment!
+  // This code determins if Arta widget code should be loaded
+  // Either remove or properly implement when experiment is
   const artsyShippingEstimateEnabled = useFeatureFlag(
     "emerald_shipping-estimate-widget",
   )
   const allArtsyShipping =
     !!artsyShippingDomestic && !!artsyShippingInternational
   const artsyImpliedShipping =
-    !!artsyShippingDomestic && !internationalShippingFee
+    !!artsyShippingDomestic &&
+    !artsyShippingInternational &&
+    !internationalShippingFee
   const isOneEdition = isEdition && editionSets && editionSets.length === 1
   let isWeightArtaEstimatable = true
   // TODO: for now ignoring weight for works with one edition set.
