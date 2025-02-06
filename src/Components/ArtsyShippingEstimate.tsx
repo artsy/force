@@ -5,12 +5,20 @@ import type {
   SupportedCurrency,
 } from "@artaio/arta-browser/dist/MetadataTypes"
 import type ArtaEstimate from "@artaio/arta-browser/dist/estimate"
+import {
+  ActionType,
+  type ClickedEstimateShippingCost,
+  OwnerType,
+  type ShippingEstimateViewed,
+} from "@artsy/cohesion"
 import { Link, Spacer, Text } from "@artsy/palette"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import { getENV } from "Utils/getENV"
 import type { ArtsyShippingEstimate_artwork$key } from "__generated__/ArtsyShippingEstimate_artwork.graphql"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
 import styled from "styled-components"
 
 const ARTA_API_KEY = getENV("ARTA_API_KEY")
@@ -31,6 +39,9 @@ interface ArtsyShippingEstimateProps {
 export const ArtsyShippingEstimate = ({
   artwork,
 }: ArtsyShippingEstimateProps) => {
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerId, contextPageOwnerSlug } = useAnalyticsContext()
+
   const artworkData = useFragment(ARTWORK_FRAGMENT, artwork)
 
   const estimateInput = estimateRequestBodyForArtwork(
@@ -53,14 +64,55 @@ export const ArtsyShippingEstimate = ({
 
   const [state, setState] = useState<EstimateWidgetState>(initialState)
 
+  const trackClickedEstimatePrice = () => {
+    trackEvent({
+      action: ActionType.clickedEstimateShippingCost,
+      context_page_owner_type: OwnerType.artwork,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+    } as ClickedEstimateShippingCost)
+  }
+
+  const trackViewedEstimatedPrice = (estimate: PriceEstimate) => {
+    trackEvent({
+      action: ActionType.shippingEstimateViewed,
+      context_page_owner_type: OwnerType.artwork,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      origin: artworkData.shippingOrigin,
+      destination: estimate.destination,
+      minimum_estimate: estimate.minPrice,
+      maximum_estimate: estimate.maxPrice,
+      estimate_currency: estimate.currency,
+    } as ShippingEstimateViewed)
+  }
+
+  const { connectWidgetObserver, disconnectWidgetObserver } = useWidgetObserver(
+    {
+      onViewEstimatedPrice: trackViewedEstimatedPrice,
+    },
+  )
+
+  const openWidget = useCallback(() => {
+    if (state.widget && !state.widget.isOpen) {
+      state.widget.open()
+      connectWidgetObserver()
+    }
+  }, [state.widget, connectWidgetObserver])
+
+  const closeWidget = useCallback(() => {
+    if (state.widget && state.widget.isOpen) {
+      state.widget.close()
+      disconnectWidgetObserver()
+    }
+  }, [state.widget, disconnectWidgetObserver])
+
   // close on unmount
   useEffect(() => {
     return () => {
-      if (state.widget?.isOpen) {
-        state.widget.close()
-      }
+      closeWidget()
     }
-  }, [state.widget])
+  }, [closeWidget])
 
   useEffect(() => {
     if (state.loaded || !Arta) {
@@ -75,11 +127,7 @@ export const ArtsyShippingEstimate = ({
       Arta.init(ARTA_API_KEY)
 
       const artsyEstimateWidget =
-        Arta &&
-        estimateInput &&
-        Arta.estimate(estimateInput, {
-          text: { header: { title: WIDGET_TITLE } },
-        })
+        Arta && estimateInput && Arta.estimate(estimateInput, widgetConfig)
 
       if (!artsyEstimateWidget) {
         setState({ loaded: true, widget: null })
@@ -117,18 +165,118 @@ export const ArtsyShippingEstimate = ({
       tabIndex={0}
       onClick={e => {
         e.preventDefault()
-        estimateWidget.open()
+        openWidget()
+        trackClickedEstimatePrice()
       }}
       onKeyDown={e => {
         if (e.key === "Enter") {
           e.preventDefault()
-          estimateWidget.open()
+          openWidget()
+          trackClickedEstimatePrice()
         }
       }}
     >
       <Text variant="xs">{WIDGET_TITLE}</Text>
     </LinkButton>
   )
+}
+
+interface PriceEstimate {
+  destination: string
+  minPrice: number
+  maxPrice?: number | null
+  currency: string
+}
+
+interface UseWidgetObserverProps {
+  onViewEstimatedPrice: (price: PriceEstimate) => void
+}
+
+const useWidgetObserver = ({
+  onViewEstimatedPrice,
+}: UseWidgetObserverProps) => {
+  const widgetObserver = useRef<MutationObserver | null>(null)
+  const [visiblePrice, setVisiblePrice] = useState<PriceEstimate | null>(null)
+
+  const extractEstimateFromDom = useCallback((): PriceEstimate | null => {
+    const priceAmountEl = document.getElementsByClassName(
+      "artajs__modal__quotes__price__amount",
+    )[0]
+    const amountTextContent = priceAmountEl?.textContent
+    // e.g. "$1,000"
+    const [minPrice, maxPrice] =
+      amountTextContent
+        ?.replace(/[^0-9,.-]+/g, "")
+        ?.split("-")
+        .map(n => Number.parseFloat(n)) || []
+
+    if (!minPrice) {
+      return null
+    }
+
+    const destinationEl = document.getElementsByClassName(
+      "artajs__modal__quotes__destination",
+    )[0]
+    // e.g. "Chicago, IL, US (destination)"
+    const destination =
+      destinationEl?.textContent?.match(/(.+)\(destination\)/)?.[1]
+
+    if (!destination) {
+      return null
+    }
+
+    const priceCurrencyEl = document.getElementsByClassName(
+      "artajs__modal__quotes__price__currency_code",
+    )[0]
+    const currency = priceCurrencyEl?.textContent
+
+    if (!currency) {
+      return null
+    }
+
+    return { minPrice, maxPrice, currency, destination }
+  }, [])
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: We only want to run this when the price changes
+  useEffect(() => {
+    if (visiblePrice?.minPrice && visiblePrice?.maxPrice) {
+      onViewEstimatedPrice(visiblePrice)
+    }
+  }, [visiblePrice])
+
+  const connectWidgetObserver = useCallback(() => {
+    const targetNode = document.getElementsByClassName("artajs__modal")[0]
+    if (!targetNode) {
+      console.error("*** Widget target node not found")
+      return
+    }
+    // Options for the observer (which mutations to observe)
+    const config = { attributes: true, childList: true, subtree: true }
+
+    // Callback function to execute when mutations are observed
+    const callback = (_mutationList, _observer) => {
+      const price = extractEstimateFromDom()
+      if (price) {
+        setVisiblePrice(price)
+      }
+    }
+
+    // Create an observer instance linked to the callback function
+    const observer = new MutationObserver(callback)
+    widgetObserver.current = observer
+
+    // Start observing the target node for configured mutations
+    observer.observe(targetNode, config)
+  }, [extractEstimateFromDom])
+
+  const disconnectWidgetObserver = useCallback(() => {
+    widgetObserver.current?.disconnect()
+  }, [])
+
+  return {
+    connectWidgetObserver,
+    disconnectWidgetObserver,
+  }
 }
 
 const Loader = () => <Spacer y={2} />
@@ -168,6 +316,48 @@ const ARTWORK_FRAGMENT = graphql`
     # shippingWeight # may need to be added?
   }
 `
+
+const widgetConfig = {
+  style: {
+    color: {
+      border: "none",
+      buttonBackground: "#1023D7",
+      buttonBackgroundHover: "#1023D7",
+      buttonBackgroundDisabled: "#C2C2C2",
+      buttonText: "#FFFFFF",
+      buttonTextHover: "#FFFFFF",
+      buttonTextDisabled: "#FFFFFF",
+    },
+    position: "center" as any,
+    pricingDisplay: "range" as any,
+    fontFamily: '"ll-unica77", "Helvetica Neue", Helvetica, Arial, sans-serif',
+    fontSize: 16,
+    width: 440,
+    height: 440,
+  },
+  text: {
+    detailOriginLabel: "(origin)",
+    detailDestinationLabel: "(destination)",
+    returnLinkLabel: "Change Destination",
+    header: {
+      title: WIDGET_TITLE,
+    },
+    destination: {
+      descriptionLabel: "",
+      buttonText: "Get Shipping Estimate",
+      countryLabel: "Destination Country",
+      zipLabel: "Destination City/Zip Code",
+      cityLabel: "Destination City",
+    },
+    quoted: {
+      shipFromLabel: "",
+      shipToLabel: "",
+      disclaimerLabel: "",
+      rangeLabel: "Shipping estimated between",
+      artaInsuranceLabel: "",
+    },
+  },
+} as const
 
 const FRAMED_CATEGORY_MAP = {
   Photography: "photograph_framed",
