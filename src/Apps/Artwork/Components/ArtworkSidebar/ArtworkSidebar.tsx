@@ -65,6 +65,7 @@ export const ArtworkSidebar: React.FC<
     editionSets,
     internationalShippingFee,
     isAcquireable,
+    isEdition,
     isEligibleForArtsyGuarantee,
     isEligibleToCreateAlert,
     isInAuction,
@@ -72,6 +73,8 @@ export const ArtworkSidebar: React.FC<
     isSold,
     saleArtwork,
     sale,
+    shippingWeight,
+    shippingWeightMetric,
   } = artwork
   const startAt = sale?.startAt
   const endAt = saleArtwork?.endAt
@@ -91,6 +94,7 @@ export const ArtworkSidebar: React.FC<
 
   const artworkEcommerceAvailable = !!(isAcquireable || isOfferable)
 
+  // TODO: Arta Estimate widget experiment! Either remove or properly instrument
   const artsyShippingEstimateEnabled = useFeatureFlag(
     "emerald_shipping-estimate-widget",
   )
@@ -98,11 +102,22 @@ export const ArtworkSidebar: React.FC<
     !!artsyShippingDomestic && !!artsyShippingInternational
   const artsyImpliedShipping =
     !!artsyShippingDomestic && !internationalShippingFee
-  const isUniqueOrOneEdition = !editionSets || editionSets.length <= 1
+  const isOneEdition = isEdition && editionSets && editionSets.length === 1
+  let isWeightArtaEstimatable = true
+  // TODO: for now ignoring weight for works with one edition set.
+  // Need to either support in MP or roll data to the artwork level.
+  // TODO: have standard shippingWeightKg in MP?
+  if (!isEdition && shippingWeight && shippingWeightMetric) {
+    isWeightArtaEstimatable =
+      shippingWeightMetric === "kg"
+        ? shippingWeight <= 68
+        : shippingWeight <= 150
+  }
   const displayArtaEstimate =
     artsyShippingEstimateEnabled &&
     (allArtsyShipping || artsyImpliedShipping) &&
-    isUniqueOrOneEdition
+    (!isEdition || isOneEdition) &&
+    isWeightArtaEstimatable
 
   const timerEndAt = sale?.isAuction ? updatedBiddingEndAt : sale?.endAt
 
@@ -303,6 +318,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         }
         isAcquireable
         isBiddable
+        isEdition
         isEligibleForArtsyGuarantee
         isEligibleToCreateAlert
         isInAuction
@@ -326,6 +342,8 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
           endedAt
         }
         saleMessage
+        shippingWeight
+        shippingWeightMetric
         slug
       }
     `,

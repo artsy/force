@@ -538,7 +538,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
             objectId: "artwork-1",
             secondaryObjectId: "edition-set-id",
           },
-          redirectTo: `/artwork/artwork-1?creating_order=true`,
+          redirectTo: "/artwork/artwork-1?creating_order=true",
         },
         analytics: {
           contextModule: "artworkSidebar",
@@ -576,7 +576,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
             objectId: "artwork-1",
             secondaryObjectId: "edition-set-id",
           },
-          redirectTo: `/artwork/artwork-1?creating_order=true`,
+          redirectTo: "/artwork/artwork-1?creating_order=true",
         },
         analytics: {
           contextModule: "artworkSidebar",
