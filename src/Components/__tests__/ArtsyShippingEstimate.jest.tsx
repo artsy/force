@@ -44,16 +44,25 @@ jest.mock("Utils/Hooks/useLoadScript", () => {
 })
 
 const validArtworkData = {
-  isFramed: true,
-  mediumType: {
-    name: "Painting",
-  },
-  shippingOrigin: "New York, USA",
-  priceCurrency: "USD",
+  depthCm: null,
+  diameterCm: null,
+  framedHeight: null,
+  framedWidth: null,
+  framedDepth: null,
+  framedDiameter: null,
+  framedMetric: "cm",
+  heightCm: 100,
+  isFramed: false,
   listPrice: {
     major: 1000,
   },
-  heightCm: 100,
+  mediumType: {
+    name: "Painting",
+  },
+  priceCurrency: "USD",
+  shippingOrigin: "New York, USA",
+  shippingWeight: null,
+  shippingWeightMetric: "lb",
   widthCm: 100,
 }
 
@@ -103,7 +112,7 @@ describe("ArtsyShippingEstimate", () => {
       })
     })
 
-    it("does not render the widget if the artwork is missing dimensions", async () => {
+    it("does not render the widget if the artwork is missing enough dimensions info", async () => {
       renderWithRelay({
         Artwork: () => ({
           ...validArtworkData,

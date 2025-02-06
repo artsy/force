@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6ecb98e0906f3f3f682afaaeffbfe262>>
+ * @generated SignedSource<<d4aea6d51e2e4a1d6ef35f9aac9ac194>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -46,21 +46,21 @@ v2 = {
 },
 v3 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
-  "type": "Float"
+  "type": "String"
 },
 v4 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
-  "type": "Money"
+  "type": "Float"
 },
 v5 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
+  "type": "Money"
 };
 return {
   "fragment": {
@@ -107,46 +107,63 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "depthCm",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "diameterCm",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "framedHeight",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "framedWidth",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "framedDepth",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "framedDiameter",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "framedMetric",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "heightCm",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "isFramed",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "ArtworkMedium",
-            "kind": "LinkedField",
-            "name": "mediumType",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "shippingOrigin",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "shippingCountry",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "priceCurrency",
             "storageKey": null
           },
           {
@@ -178,7 +195,7 @@ return {
                     "args": null,
                     "concreteType": "Money",
                     "kind": "LinkedField",
-                    "name": "minPrice",
+                    "name": "maxPrice",
                     "plural": false,
                     "selections": (v1/*: any*/),
                     "storageKey": null
@@ -188,7 +205,7 @@ return {
                     "args": null,
                     "concreteType": "Money",
                     "kind": "LinkedField",
-                    "name": "maxPrice",
+                    "name": "minPrice",
                     "plural": false,
                     "selections": (v1/*: any*/),
                     "storageKey": null
@@ -203,8 +220,47 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "ArtworkMedium",
+            "kind": "LinkedField",
+            "name": "mediumType",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "name",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "kind": "ScalarField",
-            "name": "heightCm",
+            "name": "priceCurrency",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "shippingOrigin",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "shippingWeight",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "shippingWeightMetric",
             "storageKey": null
           },
           {
@@ -227,7 +283,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d6d53ca44923a7f2500bc0223a09b1e2",
+    "cacheID": "55e4608d74bf395909b4868ea6d19bff",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -237,6 +293,13 @@ return {
           "plural": false,
           "type": "Artwork"
         },
+        "artwork.depthCm": (v2/*: any*/),
+        "artwork.diameterCm": (v2/*: any*/),
+        "artwork.framedDepth": (v3/*: any*/),
+        "artwork.framedDiameter": (v2/*: any*/),
+        "artwork.framedHeight": (v3/*: any*/),
+        "artwork.framedMetric": (v3/*: any*/),
+        "artwork.framedWidth": (v3/*: any*/),
         "artwork.heightCm": (v2/*: any*/),
         "artwork.id": {
           "enumValues": null,
@@ -262,27 +325,28 @@ return {
           "plural": false,
           "type": "String"
         },
-        "artwork.listPrice.major": (v3/*: any*/),
-        "artwork.listPrice.maxPrice": (v4/*: any*/),
-        "artwork.listPrice.maxPrice.major": (v3/*: any*/),
-        "artwork.listPrice.minPrice": (v4/*: any*/),
-        "artwork.listPrice.minPrice.major": (v3/*: any*/),
+        "artwork.listPrice.major": (v4/*: any*/),
+        "artwork.listPrice.maxPrice": (v5/*: any*/),
+        "artwork.listPrice.maxPrice.major": (v4/*: any*/),
+        "artwork.listPrice.minPrice": (v5/*: any*/),
+        "artwork.listPrice.minPrice.major": (v4/*: any*/),
         "artwork.mediumType": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkMedium"
         },
-        "artwork.mediumType.name": (v5/*: any*/),
-        "artwork.priceCurrency": (v5/*: any*/),
-        "artwork.shippingCountry": (v5/*: any*/),
-        "artwork.shippingOrigin": (v5/*: any*/),
+        "artwork.mediumType.name": (v3/*: any*/),
+        "artwork.priceCurrency": (v3/*: any*/),
+        "artwork.shippingOrigin": (v3/*: any*/),
+        "artwork.shippingWeight": (v2/*: any*/),
+        "artwork.shippingWeightMetric": (v3/*: any*/),
         "artwork.widthCm": (v2/*: any*/)
       }
     },
     "name": "ArtsyShippingEstimate_Test_Query",
     "operationKind": "query",
-    "text": "query ArtsyShippingEstimate_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtsyShippingEstimate_artwork\n    id\n  }\n}\n\nfragment ArtsyShippingEstimate_artwork on Artwork {\n  isFramed\n  mediumType {\n    name\n  }\n  shippingOrigin\n  shippingCountry\n  priceCurrency\n  listPrice {\n    __typename\n    ... on Money {\n      major\n    }\n    ... on PriceRange {\n      minPrice {\n        major\n      }\n      maxPrice {\n        major\n      }\n    }\n  }\n  heightCm\n  widthCm\n}\n"
+    "text": "query ArtsyShippingEstimate_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtsyShippingEstimate_artwork\n    id\n  }\n}\n\nfragment ArtsyShippingEstimate_artwork on Artwork {\n  depthCm\n  diameterCm\n  framedHeight\n  framedWidth\n  framedDepth\n  framedDiameter\n  framedMetric\n  heightCm\n  isFramed\n  listPrice {\n    __typename\n    ... on Money {\n      major\n    }\n    ... on PriceRange {\n      maxPrice {\n        major\n      }\n      minPrice {\n        major\n      }\n    }\n  }\n  mediumType {\n    name\n  }\n  priceCurrency\n  shippingOrigin\n  shippingWeight\n  shippingWeightMetric\n  widthCm\n}\n"
   }
 };
 })();
