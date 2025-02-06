@@ -219,7 +219,6 @@ describe("ArtworkSidebarArtists", () => {
       beforeEach(() => {
         mockUseFeatureFlag.mockReturnValue(true)
       })
-
       it("renders ArtsyShippingEstimate if work is arta shipped globablly", () => {
         renderWithRelay({
           Artwork: () => ({
@@ -232,7 +231,6 @@ describe("ArtworkSidebarArtists", () => {
 
         expect(MockArtsyShippingEstimate).toHaveBeenCalled()
       })
-
       it("renders ArtsyShippingEstimate if work is arta shipped domestically and no international shipping defined", () => {
         renderWithRelay({
           Artwork: () => ({
@@ -245,7 +243,6 @@ describe("ArtworkSidebarArtists", () => {
 
         expect(MockArtsyShippingEstimate).toHaveBeenCalled()
       })
-
       it("does not render ArtsyShippingEstimate if work is not arta shipped", () => {
         renderWithRelay({
           Artwork: () => ({
@@ -260,7 +257,6 @@ describe("ArtworkSidebarArtists", () => {
 
         expect(MockArtsyShippingEstimate).not.toHaveBeenCalled()
       })
-
       it("does not render ArtsyShippingEstimate if work is arta shipped domestically but international shipping is different", () => {
         renderWithRelay({
           Artwork: () => ({
@@ -275,7 +271,34 @@ describe("ArtworkSidebarArtists", () => {
 
         expect(MockArtsyShippingEstimate).not.toHaveBeenCalled()
       })
+      it("does not render ArtsyShippingEstimate if work has multiple editions", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            isAcquireable: true,
+            artsyShippingDomestic: true,
+            artsyShippingInternational: true,
+            isEdition: true,
+            editionSets: [{ internalID: "set1" }, { internalID: "set2" }],
+          }),
+        })
+
+        expect(MockArtsyShippingEstimate).not.toHaveBeenCalled()
+      })
+      it("renders ArtsyShippingEstimate if work has only one edition set", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            isAcquireable: true,
+            artsyShippingDomestic: true,
+            artsyShippingInternational: true,
+            isEdition: true,
+            editionSets: [{ internalID: "set1" }],
+          }),
+        })
+
+        expect(MockArtsyShippingEstimate).toHaveBeenCalled()
+      })
     })
+
     it("should track click to expand/collapse the Shipping and taxes section", () => {
       renderWithRelay({
         Artwork: () => ({

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<16fee92353c64ce693632d7100e2a154>>
+ * @generated SignedSource<<cbe5549cd27641c8c828bf6874f744cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,11 +16,15 @@ export type ArtworkSidebar_artwork$data = {
   } | null | undefined> | null | undefined;
   readonly artsyShippingDomestic: boolean | null | undefined;
   readonly artsyShippingInternational: boolean | null | undefined;
+  readonly editionSets: ReadonlyArray<{
+    readonly internalID: string;
+  } | null | undefined> | null | undefined;
   readonly internationalShippingFee: {
     readonly major: number;
   } | null | undefined;
   readonly isAcquireable: boolean | null | undefined;
   readonly isBiddable: boolean | null | undefined;
+  readonly isEdition: boolean | null | undefined;
   readonly isEligibleForArtsyGuarantee: boolean;
   readonly isEligibleToCreateAlert: boolean;
   readonly isInAuction: boolean | null | undefined;
@@ -44,6 +48,8 @@ export type ArtworkSidebar_artwork$data = {
     readonly lotLabel: string | null | undefined;
   } | null | undefined;
   readonly saleMessage: string | null | undefined;
+  readonly shippingWeight: number | null | undefined;
+  readonly shippingWeightMetric: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtsyShippingEstimate_artwork" | "ArtworkSidebarArtists_artwork" | "ArtworkSidebarArtsyGuarantee_artwork" | "ArtworkSidebarArtworkTitle_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarAuctionTimer_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork" | "ArtworkSidebarCommercialButtons_artwork" | "ArtworkSidebarCreateAlert_artwork" | "ArtworkSidebarDetails_artwork" | "ArtworkSidebarEstimatedValue_artwork" | "ArtworkSidebarLinks_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarPrivateArtwork_artwork" | "ArtworkSidebarShippingInformation_artwork" | "PrivateArtworkAdditionalInfo_artwork">;
   readonly " $fragmentType": "ArtworkSidebar_artwork";
@@ -158,6 +164,22 @@ return {
     },
     {
       "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "shallow",
+          "value": true
+        }
+      ],
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artists",
+      "plural": true,
+      "selections": (v0/*: any*/),
+      "storageKey": "artists(shallow:true)"
+    },
+    {
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "artsyShippingDomestic",
@@ -168,6 +190,16 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "artsyShippingInternational",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "EditionSet",
+      "kind": "LinkedField",
+      "name": "editionSets",
+      "plural": true,
+      "selections": (v0/*: any*/),
       "storageKey": null
     },
     {
@@ -192,20 +224,6 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isSold",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "isAcquireable",
       "storageKey": null
     },
@@ -213,28 +231,14 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "isOfferable",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isInAuction",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "saleMessage",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "isBiddable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isEdition",
       "storageKey": null
     },
     {
@@ -249,6 +253,34 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "isEligibleToCreateAlert",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isInAuction",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isOfferable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isSold",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isUnlisted",
       "storageKey": null
     },
     {
@@ -336,25 +368,30 @@ return {
     },
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "shallow",
-          "value": true
-        }
-      ],
-      "concreteType": "Artist",
-      "kind": "LinkedField",
-      "name": "artists",
-      "plural": true,
-      "selections": (v0/*: any*/),
-      "storageKey": "artists(shallow:true)"
+      "args": null,
+      "kind": "ScalarField",
+      "name": "saleMessage",
+      "storageKey": null
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "isUnlisted",
+      "name": "shippingWeight",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shippingWeightMetric",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
       "storageKey": null
     }
   ],
@@ -363,6 +400,6 @@ return {
 };
 })();
 
-(node as any).hash = "d50b1e0cc612abb78246dddc2f146aab";
+(node as any).hash = "4cf76de287e9061591904b521e66bf36";
 
 export default node;

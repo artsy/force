@@ -60,17 +60,21 @@ export const ArtworkSidebar: React.FC<
   React.PropsWithChildren<ArtworkSidebarProps>
 > = ({ artwork, me }) => {
   const {
-    isSold,
-    isAcquireable,
-    isInAuction,
-    isEligibleForArtsyGuarantee,
-    isEligibleToCreateAlert,
-    isOfferable,
-    saleArtwork,
-    sale,
     artsyShippingDomestic,
     artsyShippingInternational,
+    editionSets,
     internationalShippingFee,
+    isAcquireable,
+    isEdition,
+    isEligibleForArtsyGuarantee,
+    isEligibleToCreateAlert,
+    isInAuction,
+    isOfferable,
+    isSold,
+    saleArtwork,
+    sale,
+    shippingWeight,
+    shippingWeightMetric,
   } = artwork
   const startAt = sale?.startAt
   const endAt = saleArtwork?.endAt
@@ -90,15 +94,34 @@ export const ArtworkSidebar: React.FC<
 
   const artworkEcommerceAvailable = !!(isAcquireable || isOfferable)
 
+  // TODO: Arta Estimate widget experiment!
+  // This code determins if Arta widget code should be loaded
+  // Either remove or properly implement when experiment is
   const artsyShippingEstimateEnabled = useFeatureFlag(
     "emerald_shipping-estimate-widget",
   )
   const allArtsyShipping =
     !!artsyShippingDomestic && !!artsyShippingInternational
   const artsyImpliedShipping =
-    !!artsyShippingDomestic && !internationalShippingFee
+    !!artsyShippingDomestic &&
+    !artsyShippingInternational &&
+    !internationalShippingFee
+  const isOneEdition = isEdition && editionSets && editionSets.length === 1
+  let isWeightArtaEstimatable = true
+  // TODO: for now ignoring weight for works with one edition set.
+  // Need to either support in MP or roll data to the artwork level.
+  // TODO: have standard shippingWeightKg in MP?
+  if (!isEdition && shippingWeight && shippingWeightMetric) {
+    isWeightArtaEstimatable =
+      shippingWeightMetric === "kg"
+        ? shippingWeight <= 68
+        : shippingWeight <= 150
+  }
   const displayArtaEstimate =
-    artsyShippingEstimateEnabled && (allArtsyShipping || artsyImpliedShipping)
+    artsyShippingEstimateEnabled &&
+    (allArtsyShipping || artsyImpliedShipping) &&
+    (!isEdition || isOneEdition) &&
+    isWeightArtaEstimatable
 
   const timerEndAt = sale?.isAuction ? updatedBiddingEndAt : sale?.endAt
 
@@ -286,20 +309,26 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...ArtworkSidebarArtsyGuarantee_artwork
         ...PrivateArtworkAdditionalInfo_artwork
         ...ArtsyShippingEstimate_artwork
+        artists(shallow: true) {
+          internalID
+        }
         artsyShippingDomestic
         artsyShippingInternational
+        editionSets {
+          internalID
+        }
         internationalShippingFee {
           major
         }
-        slug
-        isSold
         isAcquireable
-        isOfferable
-        isInAuction
-        saleMessage
         isBiddable
+        isEdition
         isEligibleForArtsyGuarantee
         isEligibleToCreateAlert
+        isInAuction
+        isOfferable
+        isSold
+        isUnlisted
         partner {
           internalID
         }
@@ -316,10 +345,10 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
           endAt
           endedAt
         }
-        artists(shallow: true) {
-          internalID
-        }
-        isUnlisted
+        saleMessage
+        shippingWeight
+        shippingWeightMetric
+        slug
       }
     `,
     me: graphql`
