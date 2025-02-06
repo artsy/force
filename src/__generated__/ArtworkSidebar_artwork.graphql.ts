@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<16fee92353c64ce693632d7100e2a154>>
+ * @generated SignedSource<<5543da26a4646e1a99dfdb315a805f38>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,9 @@ export type ArtworkSidebar_artwork$data = {
   } | null | undefined> | null | undefined;
   readonly artsyShippingDomestic: boolean | null | undefined;
   readonly artsyShippingInternational: boolean | null | undefined;
+  readonly editionSets: ReadonlyArray<{
+    readonly internalID: string;
+  } | null | undefined> | null | undefined;
   readonly internationalShippingFee: {
     readonly major: number;
   } | null | undefined;
@@ -158,6 +161,22 @@ return {
     },
     {
       "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "shallow",
+          "value": true
+        }
+      ],
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artists",
+      "plural": true,
+      "selections": (v0/*: any*/),
+      "storageKey": "artists(shallow:true)"
+    },
+    {
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "artsyShippingDomestic",
@@ -168,6 +187,16 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "artsyShippingInternational",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "EditionSet",
+      "kind": "LinkedField",
+      "name": "editionSets",
+      "plural": true,
+      "selections": (v0/*: any*/),
       "storageKey": null
     },
     {
@@ -192,42 +221,7 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isSold",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "isAcquireable",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isOfferable",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isInAuction",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "saleMessage",
       "storageKey": null
     },
     {
@@ -249,6 +243,34 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "isEligibleToCreateAlert",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isInAuction",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isOfferable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isSold",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isUnlisted",
       "storageKey": null
     },
     {
@@ -336,25 +358,16 @@ return {
     },
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "shallow",
-          "value": true
-        }
-      ],
-      "concreteType": "Artist",
-      "kind": "LinkedField",
-      "name": "artists",
-      "plural": true,
-      "selections": (v0/*: any*/),
-      "storageKey": "artists(shallow:true)"
+      "args": null,
+      "kind": "ScalarField",
+      "name": "saleMessage",
+      "storageKey": null
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "isUnlisted",
+      "name": "slug",
       "storageKey": null
     }
   ],
@@ -363,6 +376,6 @@ return {
 };
 })();
 
-(node as any).hash = "d50b1e0cc612abb78246dddc2f146aab";
+(node as any).hash = "d5d90bf655383c504b2069496db00730";
 
 export default node;

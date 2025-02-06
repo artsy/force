@@ -60,17 +60,18 @@ export const ArtworkSidebar: React.FC<
   React.PropsWithChildren<ArtworkSidebarProps>
 > = ({ artwork, me }) => {
   const {
-    isSold,
-    isAcquireable,
-    isInAuction,
-    isEligibleForArtsyGuarantee,
-    isEligibleToCreateAlert,
-    isOfferable,
-    saleArtwork,
-    sale,
     artsyShippingDomestic,
     artsyShippingInternational,
+    editionSets,
     internationalShippingFee,
+    isAcquireable,
+    isEligibleForArtsyGuarantee,
+    isEligibleToCreateAlert,
+    isInAuction,
+    isOfferable,
+    isSold,
+    saleArtwork,
+    sale,
   } = artwork
   const startAt = sale?.startAt
   const endAt = saleArtwork?.endAt
@@ -97,8 +98,11 @@ export const ArtworkSidebar: React.FC<
     !!artsyShippingDomestic && !!artsyShippingInternational
   const artsyImpliedShipping =
     !!artsyShippingDomestic && !internationalShippingFee
+  const isUniqueOrOneEdition = !editionSets || editionSets.length <= 1
   const displayArtaEstimate =
-    artsyShippingEstimateEnabled && (allArtsyShipping || artsyImpliedShipping)
+    artsyShippingEstimateEnabled &&
+    (allArtsyShipping || artsyImpliedShipping) &&
+    isUniqueOrOneEdition
 
   const timerEndAt = sale?.isAuction ? updatedBiddingEndAt : sale?.endAt
 
@@ -286,20 +290,25 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...ArtworkSidebarArtsyGuarantee_artwork
         ...PrivateArtworkAdditionalInfo_artwork
         ...ArtsyShippingEstimate_artwork
+        artists(shallow: true) {
+          internalID
+        }
         artsyShippingDomestic
         artsyShippingInternational
+        editionSets {
+          internalID
+        }
         internationalShippingFee {
           major
         }
-        slug
-        isSold
         isAcquireable
-        isOfferable
-        isInAuction
-        saleMessage
         isBiddable
         isEligibleForArtsyGuarantee
         isEligibleToCreateAlert
+        isInAuction
+        isOfferable
+        isSold
+        isUnlisted
         partner {
           internalID
         }
@@ -316,10 +325,8 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
           endAt
           endedAt
         }
-        artists(shallow: true) {
-          internalID
-        }
-        isUnlisted
+        saleMessage
+        slug
       }
     `,
     me: graphql`
