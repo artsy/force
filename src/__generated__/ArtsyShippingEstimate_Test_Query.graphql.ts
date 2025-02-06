@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a21ddd877124412dcc34fd166a5155b>>
+ * @generated SignedSource<<d4aea6d51e2e4a1d6ef35f9aac9ac194>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -246,13 +246,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "shippingCountry",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "shippingOrigin",
             "storageKey": null
           },
@@ -290,7 +283,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "27cc0f8c1418796d0734ec78b9cdf20a",
+    "cacheID": "55e4608d74bf395909b4868ea6d19bff",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -345,7 +338,6 @@ return {
         },
         "artwork.mediumType.name": (v3/*: any*/),
         "artwork.priceCurrency": (v3/*: any*/),
-        "artwork.shippingCountry": (v3/*: any*/),
         "artwork.shippingOrigin": (v3/*: any*/),
         "artwork.shippingWeight": (v2/*: any*/),
         "artwork.shippingWeightMetric": (v3/*: any*/),
@@ -354,7 +346,7 @@ return {
     },
     "name": "ArtsyShippingEstimate_Test_Query",
     "operationKind": "query",
-    "text": "query ArtsyShippingEstimate_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtsyShippingEstimate_artwork\n    id\n  }\n}\n\nfragment ArtsyShippingEstimate_artwork on Artwork {\n  depthCm\n  diameterCm\n  framedHeight\n  framedWidth\n  framedDepth\n  framedDiameter\n  framedMetric\n  heightCm\n  isFramed\n  listPrice {\n    __typename\n    ... on Money {\n      major\n    }\n    ... on PriceRange {\n      maxPrice {\n        major\n      }\n      minPrice {\n        major\n      }\n    }\n  }\n  mediumType {\n    name\n  }\n  priceCurrency\n  shippingCountry\n  shippingOrigin\n  shippingWeight\n  shippingWeightMetric\n  widthCm\n}\n"
+    "text": "query ArtsyShippingEstimate_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtsyShippingEstimate_artwork\n    id\n  }\n}\n\nfragment ArtsyShippingEstimate_artwork on Artwork {\n  depthCm\n  diameterCm\n  framedHeight\n  framedWidth\n  framedDepth\n  framedDiameter\n  framedMetric\n  heightCm\n  isFramed\n  listPrice {\n    __typename\n    ... on Money {\n      major\n    }\n    ... on PriceRange {\n      maxPrice {\n        major\n      }\n      minPrice {\n        major\n      }\n    }\n  }\n  mediumType {\n    name\n  }\n  priceCurrency\n  shippingOrigin\n  shippingWeight\n  shippingWeightMetric\n  widthCm\n}\n"
   }
 };
 })();

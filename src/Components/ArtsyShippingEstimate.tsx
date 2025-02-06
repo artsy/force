@@ -317,7 +317,6 @@ const ARTWORK_FRAGMENT = graphql`
       name
     }
     priceCurrency
-    shippingCountry
     shippingOrigin
     shippingWeight
     shippingWeightMetric
@@ -442,23 +441,24 @@ const artworkDimensions = (
   artwork: ShippableArtwork,
 ): ArtaObjectDimensions | null => {
   const {
-    isFramed,
+    depthCm,
+    diameterCm,
     framedMetric,
     framedHeight,
     framedWidth,
     framedDepth,
     framedDiameter,
     heightCm,
+    isFramed,
     widthCm,
-    depthCm,
-    diameterCm,
   } = artwork
+
   if (
     isFramed &&
     !!framedMetric &&
     // TODO: this line effectively ignores framed data for artworks with one edition set
     // We'll nned to either get it from editions sets in MP or add merge functions in gravity.
-    ((framedHeight && framedWidth) || framedDiameter)
+    (!!(!!framedHeight && !!framedWidth) || !!framedDiameter)
   ) {
     if (!!(!!framedHeight && !!framedWidth)) {
       return {

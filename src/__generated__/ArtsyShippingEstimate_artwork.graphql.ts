@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7d832fabf880d1c7165e7689d105efa7>>
+ * @generated SignedSource<<6e8f8af7a4446d1a837d3fd242a5aa49>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,7 +33,6 @@ export type ArtsyShippingEstimate_artwork$data = {
     readonly name: string | null | undefined;
   } | null | undefined;
   readonly priceCurrency: string | null | undefined;
-  readonly shippingCountry: string | null | undefined;
   readonly shippingOrigin: string | null | undefined;
   readonly shippingWeight: number | null | undefined;
   readonly shippingWeightMetric: string | null | undefined;
@@ -197,13 +196,6 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "shippingCountry",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "shippingOrigin",
       "storageKey": null
     },
@@ -234,6 +226,6 @@ return {
 };
 })();
 
-(node as any).hash = "ea07742a97f4da0bdbbb42f9d63e760e";
+(node as any).hash = "e70ecbf31691b4a60da024039cba586a";
 
 export default node;
