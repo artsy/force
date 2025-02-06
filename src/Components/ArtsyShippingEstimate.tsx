@@ -291,29 +291,37 @@ const LinkButton = styled(Link)`
 
 const ARTWORK_FRAGMENT = graphql`
   fragment ArtsyShippingEstimate_artwork on Artwork {
+    depthCm
+    diameterCm
+    framedHeight
+    framedWidth
+    framedDepth
+    framedDiameter
+    framedMetric
+    heightCm
     isFramed
-    mediumType {
-      name
-    }
-    shippingOrigin
-    shippingCountry
-    priceCurrency
     listPrice {
       ... on Money {
         major
       }
       ... on PriceRange {
-        minPrice {
+        maxPrice {
           major
         }
-        maxPrice {
+        minPrice {
           major
         }
       }
     }
-    heightCm
+    mediumType {
+      name
+    }
+    priceCurrency
+    shippingCountry
+    shippingOrigin
+    shippingWeight
+    shippingWeightMetric
     widthCm
-    # shippingWeight # may need to be added?
   }
 `
 
@@ -398,69 +406,89 @@ const UNFRAMED_CATEGORY_MAP = {
 } as const
 
 interface ShippableArtwork {
-  shippingOrigin: string
-  priceCurrency: SupportedCurrency
+  depthCm?: number
+  diameterCm?: number
+  framedDepth?: number
+  framedDiameter?: number
+  framedHeight?: number
+  framedMetric?: string
+  framedWidth?: number
+  heightCm?: number
+  isFramed: boolean
   listPrice: {
     major?: number
-    minPrice?: {
-      major?: number
-    }
     maxPrice?: {
       major?: number
     }
+    minPrice?: {
+      major?: number
+    }
   }
-  isFramed: boolean
   mediumType: {
     name: keyof typeof FRAMED_CATEGORY_MAP | keyof typeof UNFRAMED_CATEGORY_MAP
   }
-  framedMetric?: string
-  framedHeight?: number
-  framedDiameter?: number
-  framedWidth?: number
-  framedDepth?: number
-  heightCm?: number
-  diameterCm?: number
+  priceCurrency: SupportedCurrency
+  shippingOrigin: string
+  shippingWeight?: number
+  shippingWeightMetric?: string
   widthCm?: number
-  depthCm?: number
 }
 
 type ArtaObjectDimensions = Pick<
   ArtaObject,
-  "height" | "width" | "unit_of_measurement" | "depth"
+  "height" | "width" | "depth" | "unit_of_measurement"
 >
 const artworkDimensions = (
   artwork: ShippableArtwork,
 ): ArtaObjectDimensions | null => {
-  if (artwork.isFramed && !!artwork.framedMetric) {
-    if (!!(!!artwork.framedHeight && !!artwork.framedWidth)) {
+  const {
+    isFramed,
+    framedMetric,
+    framedHeight,
+    framedWidth,
+    framedDepth,
+    framedDiameter,
+    heightCm,
+    widthCm,
+    depthCm,
+    diameterCm,
+  } = artwork
+  if (
+    isFramed &&
+    !!framedMetric &&
+    // TODO: this line effectively ignores framed data for artworks with one edition set
+    // We'll nned to either get it from editions sets in MP or add merge functions in gravity.
+    ((framedHeight && framedWidth) || framedDiameter)
+  ) {
+    if (!!(!!framedHeight && !!framedWidth)) {
       return {
-        unit_of_measurement: artwork.framedMetric,
-        height: artwork.framedHeight,
-        width: artwork.framedWidth,
-        depth: artwork.framedDepth,
+        unit_of_measurement: framedMetric,
+        height: framedHeight,
+        width: framedWidth,
+        depth: framedDepth,
       }
     }
-    if (!!artwork.framedDiameter) {
+    if (!!framedDiameter) {
       return {
-        unit_of_measurement: artwork.framedMetric,
-        height: artwork.framedDiameter,
-        width: artwork.framedDiameter,
-        depth: artwork.framedDepth,
+        unit_of_measurement: framedMetric,
+        height: framedDiameter,
+        width: framedDiameter,
+        depth: framedDepth,
       }
     }
-  } else if (!!artwork.heightCm && !!artwork.widthCm) {
+  } else if (!!heightCm && !!widthCm) {
     return {
       unit_of_measurement: "cm",
-      height: artwork.heightCm,
-      width: artwork.widthCm,
-      depth: artwork.depthCm,
+      height: heightCm,
+      width: widthCm,
+      depth: depthCm,
     }
-  } else if (!!artwork.diameterCm) {
+  } else if (!!diameterCm) {
     return {
       unit_of_measurement: "cm",
-      height: artwork.diameterCm,
-      width: artwork.diameterCm,
-      depth: artwork.depthCm,
+      height: diameterCm,
+      width: diameterCm,
+      depth: depthCm,
     }
   }
   return null
@@ -493,7 +521,7 @@ const artworkValue = (artwork: ShippableArtwork): ArtworkValue | null => {
 }
 
 const artaObject = (artwork: ShippableArtwork): ArtaObject | null => {
-  const { isFramed, mediumType } = artwork
+  const { isFramed, mediumType, shippingWeight, shippingWeightMetric } = artwork
 
   const subtype = isFramed
     ? FRAMED_CATEGORY_MAP[mediumType.name] || FRAMED_CATEGORY_MAP.Other
@@ -501,9 +529,13 @@ const artaObject = (artwork: ShippableArtwork): ArtaObject | null => {
 
   const dimensions = artworkDimensions(artwork)
   const value = artworkValue(artwork)
+  const weight = {
+    weight: shippingWeight,
+    weight_unit: shippingWeightMetric,
+  }
 
   if (!!subtype && !!dimensions && !!value) {
-    return { subtype, ...dimensions, ...value }
+    return { subtype, ...dimensions, ...value, ...weight }
   }
   return null
 }

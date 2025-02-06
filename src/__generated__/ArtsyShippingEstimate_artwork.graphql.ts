@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b99a237e20dfc523331dc2ffa151353b>>
+ * @generated SignedSource<<7d832fabf880d1c7165e7689d105efa7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,13 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtsyShippingEstimate_artwork$data = {
+  readonly depthCm: number | null | undefined;
+  readonly diameterCm: number | null | undefined;
+  readonly framedDepth: string | null | undefined;
+  readonly framedDiameter: number | null | undefined;
+  readonly framedHeight: string | null | undefined;
+  readonly framedMetric: string | null | undefined;
+  readonly framedWidth: string | null | undefined;
   readonly heightCm: number | null | undefined;
   readonly isFramed: boolean | null | undefined;
   readonly listPrice: {
@@ -28,6 +35,8 @@ export type ArtsyShippingEstimate_artwork$data = {
   readonly priceCurrency: string | null | undefined;
   readonly shippingCountry: string | null | undefined;
   readonly shippingOrigin: string | null | undefined;
+  readonly shippingWeight: number | null | undefined;
+  readonly shippingWeightMetric: string | null | undefined;
   readonly widthCm: number | null | undefined;
   readonly " $fragmentType": "ArtsyShippingEstimate_artwork";
 };
@@ -56,46 +65,63 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "depthCm",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "diameterCm",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "framedHeight",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "framedWidth",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "framedDepth",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "framedDiameter",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "framedMetric",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "heightCm",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "isFramed",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ArtworkMedium",
-      "kind": "LinkedField",
-      "name": "mediumType",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "shippingOrigin",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "shippingCountry",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "priceCurrency",
       "storageKey": null
     },
     {
@@ -120,7 +146,7 @@ return {
               "args": null,
               "concreteType": "Money",
               "kind": "LinkedField",
-              "name": "minPrice",
+              "name": "maxPrice",
               "plural": false,
               "selections": (v0/*: any*/),
               "storageKey": null
@@ -130,7 +156,7 @@ return {
               "args": null,
               "concreteType": "Money",
               "kind": "LinkedField",
-              "name": "maxPrice",
+              "name": "minPrice",
               "plural": false,
               "selections": (v0/*: any*/),
               "storageKey": null
@@ -145,8 +171,54 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "ArtworkMedium",
+      "kind": "LinkedField",
+      "name": "mediumType",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
-      "name": "heightCm",
+      "name": "priceCurrency",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shippingCountry",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shippingOrigin",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shippingWeight",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shippingWeightMetric",
       "storageKey": null
     },
     {
@@ -162,6 +234,6 @@ return {
 };
 })();
 
-(node as any).hash = "2850e23f06f3cd1c327290c9533b6458";
+(node as any).hash = "ea07742a97f4da0bdbbb42f9d63e760e";
 
 export default node;
