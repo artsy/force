@@ -356,6 +356,13 @@ const widgetConfig = {
       rangeLabel: "Shipping estimated between",
       artaInsuranceLabel: "",
     },
+    disqualified: {
+      shipFromLabel: "",
+      shipToLabel: "",
+      contactEmail: "",
+      emailHeaderLabel: "",
+      emailFooterLabel: "An estimate is not available for this artwork.",
+    },
   },
 } as const
 
