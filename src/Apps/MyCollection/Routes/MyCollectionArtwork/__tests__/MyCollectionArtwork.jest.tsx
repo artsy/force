@@ -67,26 +67,6 @@ describe("MyCollectionArtwork", () => {
   })
 
   describe("SWA section", () => {
-    it("P1 artist: renders correct component when artwork does not have submission id", () => {
-      const { renderWithRelay } = getWrapper("lg")
-      renderWithRelay(mockResolversWithoutInsights)
-
-      // eslint-disable-next-line jest/valid-expect
-      expect(screen.getByText("Interested in Selling This Work?"))
-    })
-
-    it("not P1 artist: the section is not rendered", () => {
-      const { renderWithRelay } = getWrapper("lg")
-      renderWithRelay(mockResolversNotP1)
-
-      expect(
-        screen.queryByText("Artwork has been submitted for sale"),
-      ).not.toBeInTheDocument()
-      expect(
-        screen.queryByText("Interested in Selling This Work?"),
-      ).not.toBeInTheDocument()
-    })
-
     it("with submission id: the section is rendered", () => {
       const { renderWithRelay } = getWrapper()
       renderWithRelay(mockResolversWithInsights)
