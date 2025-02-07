@@ -72,7 +72,6 @@ describe("NavBarMobileMenu", () => {
         ["/art-fairs", "Fairs & Events"],
         ["/shows", "Shows"],
         ["/institutions", "Museums"],
-        ["/sell", "Sell"],
         ["/price-database", "Price Database"],
         ["/articles", "Editorial"],
         ["/signup?intent=signup&contextModule=header", "Sign Up"],
