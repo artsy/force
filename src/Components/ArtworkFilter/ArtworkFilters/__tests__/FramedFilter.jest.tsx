@@ -16,7 +16,7 @@ const render = createArtworkFilterTestRenderer()
 describe(FramedFilter, () => {
   it("renders a toggle", () => {
     render(<FramedFilter expanded />)
-    expect(screen.getByText("Only framed works")).toBeInTheDocument()
+    expect(screen.getByText("Show only framed works")).toBeInTheDocument()
   })
 
   it("updates context on filter change", () => {
