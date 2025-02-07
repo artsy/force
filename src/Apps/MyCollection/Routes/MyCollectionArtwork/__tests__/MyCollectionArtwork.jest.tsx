@@ -74,49 +74,6 @@ describe("MyCollectionArtwork", () => {
       expect(screen.queryByText("In Progress")).toBeInTheDocument()
     })
   })
-
-  describe("Request Price Estimate section", () => {
-    describe("when the price estimate is requestable", () => {
-      it("the section is rendered", () => {
-        const { renderWithRelay } = getWrapper("lg")
-        renderWithRelay(mockResolversWithInsightsWithoutSubmission)
-
-        expect(
-          screen
-            .getAllByRole("link")
-            .find(c => c.textContent?.includes("Request a Price Estimate")),
-        ).toHaveAttribute(
-          "href",
-          `/collector-profile/my-collection/artwork/63035a6b41808b000c7e2933/price-estimate`,
-        )
-      })
-    })
-
-    describe("when the price estimate has been already requested", () => {
-      it("the request confirmation is rendered", () => {
-        const { renderWithRelay } = getWrapper("lg")
-        renderWithRelay(mockResolversWithPriceEstimateRequest)
-
-        expect(
-          screen.queryByText("Request a Price Estimate"),
-        ).not.toBeInTheDocument()
-        expect(
-          screen.getByText("Price estimate request sent"),
-        ).toBeInTheDocument()
-      })
-    })
-
-    describe("when the price estimate is not requestable", () => {
-      it("the section is not rendered", () => {
-        const { renderWithRelay } = getWrapper("lg")
-        renderWithRelay(mockResolversNotP1)
-
-        expect(
-          screen.queryByText("Request a Price Estimate"),
-        ).not.toBeInTheDocument()
-      })
-    })
-  })
 })
 
 const mockResolversWithInsights = {

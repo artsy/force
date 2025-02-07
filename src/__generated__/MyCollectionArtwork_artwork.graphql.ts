@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c5fd356f795460a65d8ab8b6d01c4bc1>>
+ * @generated SignedSource<<2c11cee0d460eff8a0f59622bb9fd3b5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,7 +35,7 @@ export type MyCollectionArtwork_artwork$data = {
   readonly internalID: string;
   readonly slug: string;
   readonly submissionId: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAboutTab_artwork" | "MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkDetails_artwork" | "MyCollectionArtworkHeader_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkRequestPriceEstimate_artwork" | "MyCollectionArtworkSWASectionSubmitted_submissionState" | "MyCollectionArtworkSWASubmissionStatus_artwork" | "MyCollectionArtworkTitle_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAboutTab_artwork" | "MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkDetails_artwork" | "MyCollectionArtworkHeader_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkSWASectionSubmitted_submissionState" | "MyCollectionArtworkSWASubmissionStatus_artwork" | "MyCollectionArtworkTitle_artwork">;
   readonly " $fragmentType": "MyCollectionArtwork_artwork";
 };
 export type MyCollectionArtwork_artwork$key = {
@@ -107,11 +107,6 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "MyCollectionArtworkComparables_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkRequestPriceEstimate_artwork"
     },
     {
       "args": null,
@@ -237,6 +232,6 @@ return {
 };
 })();
 
-(node as any).hash = "403a46dd57609b9fc594abe3af091cb3";
+(node as any).hash = "efac9f7e403f1e862752edb75bef82f5";
 
 export default node;

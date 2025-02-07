@@ -1,7 +1,5 @@
-import { Box, Join, Separator, Spacer } from "@artsy/palette"
+import { Box, Spacer } from "@artsy/palette"
 import { MyCollectionArtworkDetails } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetails"
-import { MyCollectionArtworkRequestPriceEstimate } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkRequestPriceEstimate"
-import { MyCollectionPriceEstimateStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionPriceEstimateStatus"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrentArticlesRail"
 import type { MyCollectionArtworkAboutTab_artwork$key } from "__generated__/MyCollectionArtworkAboutTab_artwork.graphql"
 import type { FC } from "react"
@@ -26,32 +24,10 @@ export const MyCollectionArtworkAboutTab: FC<
 
       {!showSubmitForSaleButton && <Spacer x={6} y={6} />}
 
-      <Join separator={<Spacer y={[4, 6]} />}>
-        {artwork.hasPriceEstimateRequest && (
-          <>
-            {showSubmitForSaleButton && <Separator my={2} />}
-
-            <MyCollectionPriceEstimateStatus />
-          </>
-        )}
-
-        {!artwork.hasPriceEstimateRequest && (
-          <>
-            <MyCollectionArtworkRequestPriceEstimate
-              artwork={artwork}
-              ctaColor={
-                showSubmitForSaleButton ? "secondaryNeutral" : "primaryBlack"
-              }
-            />
-            <Separator my={2} />
-          </>
-        )}
-
-        <ArtistCurrentArticlesRailQueryRenderer
-          slug={artwork?.artist?.slug ?? ""}
-          artworkId={artwork.internalID}
-        />
-      </Join>
+      <ArtistCurrentArticlesRailQueryRenderer
+        slug={artwork?.artist?.slug ?? ""}
+        artworkId={artwork.internalID}
+      />
     </Box>
   )
 }
@@ -59,7 +35,6 @@ export const MyCollectionArtworkAboutTab: FC<
 const FRAGMENT = graphql`
   fragment MyCollectionArtworkAboutTab_artwork on Artwork {
     ...MyCollectionArtworkDetails_artwork
-    ...MyCollectionArtworkRequestPriceEstimate_artwork
 
     artist(shallow: true) {
       slug

@@ -5,7 +5,6 @@ import { MyCollectionArtworkHeader } from "Apps/MyCollection/Routes/MyCollection
 import { MyCollectionArtworkSWAHelpSection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWAHelpSection"
 import { MyCollectionArtworkSWASubmissionStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASubmissionStatus"
 import { MyCollectionArtworkTitle } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkTitle"
-import { MyCollectionPriceEstimateStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionPriceEstimateStatus"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrentArticlesRail"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { Media } from "Utils/Responsive"
@@ -14,7 +13,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { MyCollectionArtworkImageBrowser } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkInsights } from "./Components/MyCollectionArtworkInsights"
 import { MyCollectionArtworkMeta } from "./Components/MyCollectionArtworkMeta"
-import { MyCollectionArtworkRequestPriceEstimate } from "./Components/MyCollectionArtworkRequestPriceEstimate"
 import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
 
 interface MyCollectionArtworkProps {
@@ -55,10 +53,6 @@ const MyCollectionArtwork: React.FC<
 
             <MyCollectionArtworkDetails artwork={artwork} />
 
-            {artwork.hasPriceEstimateRequest && (
-              <MyCollectionPriceEstimateStatus />
-            )}
-
             {artwork.consignmentSubmission ? (
               <>
                 {enablePostApprovalSubmissionFlow ? (
@@ -68,16 +62,6 @@ const MyCollectionArtwork: React.FC<
                 )}
               </>
             ) : null}
-
-            {!artwork.hasPriceEstimateRequest &&
-              !artwork.consignmentSubmission && (
-                <MyCollectionArtworkRequestPriceEstimate
-                  artwork={artwork}
-                  ctaColor={
-                    isTargetSupply ? "secondaryNeutral" : "primaryBlack"
-                  }
-                />
-              )}
 
             {(!!artwork.consignmentSubmission || isTargetSupply) && (
               <MyCollectionArtworkSWAHelpSection />
@@ -148,7 +132,6 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         ...MyCollectionArtworkImageBrowser_artwork
         ...MyCollectionArtworkComparables_artwork
         ...MyCollectionArtworkTitle_artwork
-        ...MyCollectionArtworkRequestPriceEstimate_artwork
         ...MyCollectionArtworkSWASectionSubmitted_submissionState
         ...MyCollectionArtworkSWASubmissionStatus_artwork
         ...MyCollectionArtworkAboutTab_artwork

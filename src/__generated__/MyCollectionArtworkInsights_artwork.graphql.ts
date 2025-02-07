@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f3556fbcedbe6cd3685f906fec90b238>>
+ * @generated SignedSource<<215ed38d2df8851bc834f2ae7defd9aa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,7 +36,7 @@ export type MyCollectionArtworkInsights_artwork$data = {
   readonly marketPriceInsights: {
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkArtistMarket_marketPriceInsights" | "MyCollectionArtworkDemandIndex_marketPriceInsights">;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkRequestPriceEstimate_artwork" | "MyCollectionArtworkSWASectionSubmitted_submissionState" | "MyCollectionArtworkSWASubmissionStatus_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkSWASectionSubmitted_submissionState" | "MyCollectionArtworkSWASubmissionStatus_artwork">;
   readonly " $fragmentType": "MyCollectionArtworkInsights_artwork";
 };
 export type MyCollectionArtworkInsights_artwork$key = {
@@ -102,11 +102,6 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "MyCollectionArtworkComparables_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkRequestPriceEstimate_artwork"
     },
     {
       "args": null,
@@ -227,6 +222,6 @@ return {
 };
 })();
 
-(node as any).hash = "652d39dfc67e21505a81576f8cdd3e47";
+(node as any).hash = "01ab5ee1ffb5b4ba7f5b9bb566b7996c";
 
 export default node;
