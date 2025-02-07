@@ -1,5 +1,4 @@
 import { ArtworkGridContainer } from "Components/ArtworkGrid/ArtworkGrid"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import type { MyCollectionArtworkGrid_artworks$data } from "__generated__/MyCollectionArtworkGrid_artworks.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -13,10 +12,6 @@ interface MyCollectionArtworkGridProps {
 const MyCollectionArtworksGrid: FC<
   React.PropsWithChildren<MyCollectionArtworkGridProps>
 > = ({ artworks, onLoadMore }) => {
-  const enablePostApprovalSubmissionFlow = useFeatureFlag(
-    "onyx_post_approval_submission_flow",
-  )
-
   return (
     <ArtworkGridContainer
       artworks={artworks}
@@ -29,7 +24,6 @@ const MyCollectionArtworksGrid: FC<
       }
       showHighDemandIcon
       showSaveButton={false}
-      showSubmissionStatus={!!enablePostApprovalSubmissionFlow}
       onLoadMore={onLoadMore}
     />
   )
