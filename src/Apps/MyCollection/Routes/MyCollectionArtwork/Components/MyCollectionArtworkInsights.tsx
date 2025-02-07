@@ -1,11 +1,7 @@
 import { Box, Join, Spacer } from "@artsy/palette"
-import { MyCollectionArtworkRequestPriceEstimate } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkRequestPriceEstimate"
 import { MyCollectionArtworkSWASectionSubmitted } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASectionSubmitted"
 import { MyCollectionArtworkSWASubmissionStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASubmissionStatus"
-import { MyCollectionArtworkSubmitForSale } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSubmitForSale"
-import { MyCollectionPriceEstimateStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionPriceEstimateStatus"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
-import { Media } from "Utils/Responsive"
 import type { MyCollectionArtworkInsights_artwork$key } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
 import { graphql, useFragment } from "react-relay"
 import { MyCollectionArtworkArtistMarketFragmentContainer } from "./MyCollectionArtworkArtistMarket"
@@ -26,9 +22,6 @@ export const MyCollectionArtworkInsights: React.FC<
 
   const artwork = useFragment(FRAGMENT, restProps.artwork)
 
-  const isTargetSupply = artwork.artist?.targetSupply?.priority === "TRUE"
-  const submissionStateLabel = artwork.consignmentSubmission?.stateLabel
-  const showSubmitForSaleCtaMobile = isTargetSupply && !submissionStateLabel
   const hasAuctionResults = artwork.auctionResults?.totalCount ?? 0 > 0
   const artistHasAuctionResults =
     artwork.artist?.auctionResultsCount?.totalCount ?? 0 > 0
@@ -54,18 +47,6 @@ export const MyCollectionArtworkInsights: React.FC<
           </Box>
         )}
 
-        {artwork.hasPriceEstimateRequest && (
-          <Media lessThan="sm">
-            <MyCollectionPriceEstimateStatus />
-          </Media>
-        )}
-
-        {showSubmitForSaleCtaMobile && (
-          <Media lessThan="sm">
-            <MyCollectionArtworkSubmitForSale artwork={artwork} />
-          </Media>
-        )}
-
         {artwork.marketPriceInsights && (
           <MyCollectionArtworkArtistMarketFragmentContainer
             marketPriceInsights={artwork.marketPriceInsights}
@@ -81,20 +62,6 @@ export const MyCollectionArtworkInsights: React.FC<
             artist={artwork.artist}
           />
         )}
-
-        <Media lessThan="sm">
-          {!artwork.hasPriceEstimateRequest &&
-            artwork.isPriceEstimateRequestable && (
-              <MyCollectionArtworkRequestPriceEstimate
-                artwork={artwork}
-                ctaColor={
-                  showSubmitForSaleCtaMobile
-                    ? "secondaryNeutral"
-                    : "primaryBlack"
-                }
-              />
-            )}
-        </Media>
       </Join>
     </Box>
   )
@@ -109,7 +76,6 @@ const FRAGMENT = graphql`
       totalCount
     }
     ...MyCollectionArtworkComparables_artwork
-    ...MyCollectionArtworkRequestPriceEstimate_artwork
     ...MyCollectionArtworkSWASectionSubmitted_submissionState
     ...MyCollectionArtworkSWASubmissionStatus_artwork
     artist(shallow: true) {
@@ -131,6 +97,5 @@ const FRAGMENT = graphql`
       ...MyCollectionArtworkArtistMarket_marketPriceInsights
       ...MyCollectionArtworkDemandIndex_marketPriceInsights
     }
-    ...MyCollectionArtworkSubmitForSale_artwork
   }
 `

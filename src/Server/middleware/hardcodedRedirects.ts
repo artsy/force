@@ -199,6 +199,7 @@ for (const from in PERMANENT_REDIRECTS) {
 // Temporarily (302) redirect a specific route or route pattern
 const TEMP_REDIRECTS = {
   "/art-appraisals": "/sell",
+  "/sell": "https://partners.artsy.net",
 }
 
 for (const from in TEMP_REDIRECTS) {

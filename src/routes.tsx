@@ -41,7 +41,6 @@ import { partnerOfferRoutes } from "Apps/PartnerOffer/partnerOfferRoutes"
 import { partnersRoutes } from "Apps/Partners/partnersRoutes"
 import { saleAgreementsRoutes } from "Apps/SaleAgreements/saleAgreementsRoutes"
 import { searchRoutes } from "Apps/Search/searchRoutes"
-import { sellRoutes } from "Apps/Sell/sellRoutes"
 import { settingsRoutes } from "Apps/Settings/settingsRoutes"
 import { showRoutes } from "Apps/Show/showRoutes"
 import { showsRoutes } from "Apps/Shows/showsRoutes"
@@ -116,7 +115,6 @@ const ROUTES = buildAppRoutes([
   saleRoutes,
   saleAgreementsRoutes,
   searchRoutes,
-  sellRoutes,
   settingsRoutes,
   showRoutes,
   showsRoutes,

@@ -18,9 +18,6 @@ export const PROGRESSIVE_ONBOARDING = {
   alertCreate: "alert-create",
   alertFind: "alert-find",
   alertHighlight: "alert-highlight",
-
-  // My Collection
-  startSelling: "start-selling",
 }
 
 export const PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST_CHAIN = [

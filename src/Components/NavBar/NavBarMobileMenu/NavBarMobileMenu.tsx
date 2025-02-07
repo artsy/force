@@ -129,14 +129,6 @@ export const NavBarMobileMenu: React.FC<
             <Separator my={1} />
 
             <NavBarMobileMenuItemLink
-              to="/sell"
-              color="black100"
-              onClick={handleClick}
-            >
-              Sell
-            </NavBarMobileMenuItemLink>
-
-            <NavBarMobileMenuItemLink
               to="/price-database"
               color="black100"
               onClick={handleClick}

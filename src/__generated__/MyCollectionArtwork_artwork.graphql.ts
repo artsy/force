@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<37bf31ae8d7f5dc9b9b698dd34cacdb5>>
+ * @generated SignedSource<<2c11cee0d460eff8a0f59622bb9fd3b5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,7 +35,7 @@ export type MyCollectionArtwork_artwork$data = {
   readonly internalID: string;
   readonly slug: string;
   readonly submissionId: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAboutTab_artwork" | "MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkDetails_artwork" | "MyCollectionArtworkHeader_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkRequestPriceEstimate_artwork" | "MyCollectionArtworkSWASectionSubmitted_submissionState" | "MyCollectionArtworkSWASubmissionStatus_artwork" | "MyCollectionArtworkSubmitForSale_artwork" | "MyCollectionArtworkTitle_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAboutTab_artwork" | "MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkDetails_artwork" | "MyCollectionArtworkHeader_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkSWASectionSubmitted_submissionState" | "MyCollectionArtworkSWASubmissionStatus_artwork" | "MyCollectionArtworkTitle_artwork">;
   readonly " $fragmentType": "MyCollectionArtwork_artwork";
 };
 export type MyCollectionArtwork_artwork$key = {
@@ -111,22 +111,12 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkRequestPriceEstimate_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
       "name": "MyCollectionArtworkSWASectionSubmitted_submissionState"
     },
     {
       "args": null,
       "kind": "FragmentSpread",
       "name": "MyCollectionArtworkSWASubmissionStatus_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkSubmitForSale_artwork"
     },
     {
       "args": null,
@@ -242,6 +232,6 @@ return {
 };
 })();
 
-(node as any).hash = "88705b6203f298cdb7b2c6c4a5f9d185";
+(node as any).hash = "efac9f7e403f1e862752edb75bef82f5";
 
 export default node;

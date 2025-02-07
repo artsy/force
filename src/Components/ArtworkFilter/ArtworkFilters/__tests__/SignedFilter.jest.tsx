@@ -16,7 +16,7 @@ const render = createArtworkFilterTestRenderer()
 describe(SignedFilter, () => {
   it("renders a signed toggle", () => {
     render(<SignedFilter expanded />)
-    expect(screen.getByText("Only signed works")).toBeInTheDocument()
+    expect(screen.getByText("Show only signed works")).toBeInTheDocument()
   })
 
   it("updates context on filter change", () => {
