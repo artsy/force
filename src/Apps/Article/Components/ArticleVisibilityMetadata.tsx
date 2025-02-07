@@ -14,7 +14,8 @@ interface ArticleVisibilityMetadataProps {
 const ArticleVisibilityMetadata: FC<
   React.PropsWithChildren<ArticleVisibilityMetadataProps>
 > = ({ article, children }) => {
-  const { silentReplace } = useRouter()
+  const { silentReplace, match } = useRouter()
+
   const { ref } = useIntersectionObserver({
     once: false,
     onIntersection: () => {
@@ -22,7 +23,7 @@ const ArticleVisibilityMetadata: FC<
 
       document.title = `${article.searchTitle || article.title} | Artsy`
 
-      silentReplace(article.href)
+      silentReplace(`${article.href}${match?.location.search}`)
     },
   })
 
