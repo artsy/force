@@ -16,7 +16,6 @@ import { MyCollectionArtworkInsights } from "./Components/MyCollectionArtworkIns
 import { MyCollectionArtworkMeta } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkRequestPriceEstimate } from "./Components/MyCollectionArtworkRequestPriceEstimate"
 import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
-import { MyCollectionArtworkSubmitForSale } from "./Components/MyCollectionArtworkSubmitForSale"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork$data
@@ -68,9 +67,7 @@ const MyCollectionArtwork: React.FC<
                   <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
                 )}
               </>
-            ) : (
-              <MyCollectionArtworkSubmitForSale artwork={artwork} />
-            )}
+            ) : null}
 
             {!artwork.hasPriceEstimateRequest &&
               !artwork.consignmentSubmission && (
@@ -154,7 +151,6 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         ...MyCollectionArtworkRequestPriceEstimate_artwork
         ...MyCollectionArtworkSWASectionSubmitted_submissionState
         ...MyCollectionArtworkSWASubmissionStatus_artwork
-        ...MyCollectionArtworkSubmitForSale_artwork
         ...MyCollectionArtworkAboutTab_artwork
         comparables: comparableAuctionResults {
           totalCount

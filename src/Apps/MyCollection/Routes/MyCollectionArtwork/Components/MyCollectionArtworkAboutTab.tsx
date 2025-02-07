@@ -1,7 +1,6 @@
 import { Box, Join, Separator, Spacer } from "@artsy/palette"
 import { MyCollectionArtworkDetails } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetails"
 import { MyCollectionArtworkRequestPriceEstimate } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkRequestPriceEstimate"
-import { MyCollectionArtworkSubmitForSale } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSubmitForSale"
 import { MyCollectionPriceEstimateStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionPriceEstimateStatus"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrentArticlesRail"
 import type { MyCollectionArtworkAboutTab_artwork$key } from "__generated__/MyCollectionArtworkAboutTab_artwork.graphql"
@@ -36,12 +35,6 @@ export const MyCollectionArtworkAboutTab: FC<
           </>
         )}
 
-        {showSubmitForSaleButton && (
-          <Box mt={2}>
-            <MyCollectionArtworkSubmitForSale artwork={artwork} />
-          </Box>
-        )}
-
         {!artwork.hasPriceEstimateRequest && (
           <>
             <MyCollectionArtworkRequestPriceEstimate
@@ -67,7 +60,6 @@ const FRAGMENT = graphql`
   fragment MyCollectionArtworkAboutTab_artwork on Artwork {
     ...MyCollectionArtworkDetails_artwork
     ...MyCollectionArtworkRequestPriceEstimate_artwork
-    ...MyCollectionArtworkSubmitForSale_artwork
 
     artist(shallow: true) {
       slug

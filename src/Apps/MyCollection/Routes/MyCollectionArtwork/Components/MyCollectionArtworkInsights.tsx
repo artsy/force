@@ -2,7 +2,6 @@ import { Box, Join, Spacer } from "@artsy/palette"
 import { MyCollectionArtworkRequestPriceEstimate } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkRequestPriceEstimate"
 import { MyCollectionArtworkSWASectionSubmitted } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASectionSubmitted"
 import { MyCollectionArtworkSWASubmissionStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASubmissionStatus"
-import { MyCollectionArtworkSubmitForSale } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSubmitForSale"
 import { MyCollectionPriceEstimateStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionPriceEstimateStatus"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { Media } from "Utils/Responsive"
@@ -57,12 +56,6 @@ export const MyCollectionArtworkInsights: React.FC<
         {artwork.hasPriceEstimateRequest && (
           <Media lessThan="sm">
             <MyCollectionPriceEstimateStatus />
-          </Media>
-        )}
-
-        {showSubmitForSaleCtaMobile && (
-          <Media lessThan="sm">
-            <MyCollectionArtworkSubmitForSale artwork={artwork} />
           </Media>
         )}
 
@@ -131,6 +124,5 @@ const FRAGMENT = graphql`
       ...MyCollectionArtworkArtistMarket_marketPriceInsights
       ...MyCollectionArtworkDemandIndex_marketPriceInsights
     }
-    ...MyCollectionArtworkSubmitForSale_artwork
   }
 `
