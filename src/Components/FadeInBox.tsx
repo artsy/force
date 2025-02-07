@@ -12,7 +12,7 @@ export const FadeInBox: React.FC<React.PropsWithChildren<FadeInBoxProps>> = ({
     <Box
       opacity={isMounted ? 1 : 0}
       style={{
-        transition: "opacity 250ms",
+        transition: "opacity 250ms 500ms",
       }}
       {...rest}
     >
