@@ -3,7 +3,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
 import type { OrderStepper_order$data } from "__generated__/OrderStepper_order.graphql"
-import { type FC, useEffect, useState } from "react"
+import { type FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 function typedArray<T extends string>(...elems: T[]): T[] {
@@ -26,28 +26,69 @@ export interface OrderStepperProps {
   steps: string[]
 }
 
+export interface StepperComponentProps {
+  steps: string[]
+  currentStep: string
+  completedOrderSteps: string[]
+  onStepClick: (step: string) => void
+}
+
+const StepperComponent: FC<StepperComponentProps> = ({
+  steps,
+  currentStep,
+  completedOrderSteps,
+  onStepClick,
+}) => {
+  const stepIndex = steps.indexOf(currentStep)
+
+  return (
+    <Stepper
+      initialTabIndex={stepIndex}
+      currentStepIndex={stepIndex}
+      disableNavigation={false}
+    >
+      {steps.map(step => (
+        <Step
+          name={
+            completedOrderSteps.includes(step) ? (
+              <Clickable onClick={() => onStepClick(step)}>{step}</Clickable>
+            ) : (
+              step
+            )
+          }
+          key={step}
+        />
+      ))}
+    </Stepper>
+  )
+}
+
 export const OrderStepper: FC<React.PropsWithChildren<OrderStepperProps>> = ({
   order,
   steps,
   currentStep,
 }) => {
   const { router } = useRouter()
-  const [stepIndex, setStepIndex] = useState(steps.indexOf(currentStep))
-  const [completedSteps, setCompletedSteps] = useState<string[]>([])
 
-  useEffect(() => {
+  const completedOrderSteps = useMemo(() => {
     const completedSteps: string[] = []
+
+    if (steps === counterofferFlowSteps && currentStep === "Review") {
+      completedSteps.push("Respond")
+      return completedSteps
+    }
 
     if (order.mode === "OFFER") {
       completedSteps.push("Offer")
     }
 
-    if (
+    const hasShipping =
       order.requestedFulfillment ||
       extractNodes(
         extractNodes(order.lineItems)?.[0].shippingQuoteOptions,
       ).find(shippingQuote => shippingQuote.isSelected)
-    ) {
+
+    if (hasShipping) {
       completedSteps.push("Shipping")
     }
 
@@ -62,65 +103,45 @@ export const OrderStepper: FC<React.PropsWithChildren<OrderStepperProps>> = ({
       completedSteps.push("Review")
     }
 
-    setCompletedSteps(completedSteps)
-  }, [order])
+    return completedSteps
+  }, [order, steps, currentStep])
 
   const handleStepClick = (step: string) => {
-    const clickedStepIndex = steps.indexOf(step)
-    setStepIndex(clickedStepIndex)
+    if (typeof window === "undefined") return
 
-    const activeStep = currentStep.toLocaleLowerCase()
-    const nextStep = step.toLocaleLowerCase()
-    router.push(window.location.pathname.replace(activeStep, nextStep))
+    // handle counteroffer flow
+    if (completedOrderSteps.includes("Respond")) {
+      router.push(`/orders/${order.internalID}/respond`)
+      return
+    }
+
+    router.push(
+      window.location.pathname.replace(
+        currentStep.toLowerCase(),
+        step.toLowerCase(),
+      ),
+    )
   }
 
   return (
     <>
       <Media between={["xs", "md"]}>
         <Box>
-          <Stepper
-            initialTabIndex={stepIndex}
-            currentStepIndex={stepIndex}
-            disableNavigation={false}
-          >
-            {steps.map(step => (
-              <Step
-                name={
-                  completedSteps.includes(step) ? (
-                    <Clickable onClick={() => handleStepClick(step)}>
-                      {step}
-                    </Clickable>
-                  ) : (
-                    step
-                  )
-                }
-                key={step}
-              />
-            ))}
-          </Stepper>
+          <StepperComponent
+            steps={steps}
+            currentStep={currentStep}
+            completedOrderSteps={completedOrderSteps}
+            onStepClick={handleStepClick}
+          />
         </Box>
       </Media>
       <Media greaterThan="sm">
-        <Stepper
-          initialTabIndex={stepIndex}
-          currentStepIndex={stepIndex}
-          disableNavigation={false}
-        >
-          {steps.map(step => (
-            <Step
-              name={
-                completedSteps.includes(step) ? (
-                  <Clickable onClick={() => handleStepClick(step)}>
-                    {step}
-                  </Clickable>
-                ) : (
-                  step
-                )
-              }
-              key={step}
-            />
-          ))}
-        </Stepper>
+        <StepperComponent
+          steps={steps}
+          currentStep={currentStep}
+          completedOrderSteps={completedOrderSteps}
+          onStepClick={handleStepClick}
+        />
       </Media>
     </>
   )
@@ -131,6 +152,7 @@ export const OrderStepperFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment OrderStepper_order on CommerceOrder {
+        internalID
         mode
         paymentSet
         requestedFulfillment {
