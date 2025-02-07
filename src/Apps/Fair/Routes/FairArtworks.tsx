@@ -12,17 +12,20 @@ import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/A
 import { AttributionClassFilter } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
 import { ColorFilter } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
+import { FramedFilter } from "Components/ArtworkFilter/ArtworkFilters/FramedFilter"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
 import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { PartnersFilter } from "Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
 import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { SignedFilter } from "Components/ArtworkFilter/ArtworkFilters/SignedFilter"
 import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -46,6 +49,14 @@ const FairArtworksFilter: React.FC<
   const { relay, fair } = props
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
+
+  const enableShowOnlyFramedArtworksFilter = useFeatureFlag(
+    "onyx_only_framed_artworks_filter",
+  )
+  const enableShowOnlySignedArtworksFilter = useFeatureFlag(
+    "onyx_only_signed_artworks_filter",
+  )
+
   const { filtered_artworks, sidebarAggregations } = fair
 
   const hasFilter = filtered_artworks && filtered_artworks.id
@@ -76,6 +87,8 @@ const FairArtworksFilter: React.FC<
       <ArtworkLocationFilter expanded />
       <TimePeriodFilter expanded />
       <ColorFilter expanded />
+      {enableShowOnlyFramedArtworksFilter && <FramedFilter expanded />}
+      {enableShowOnlySignedArtworksFilter && <SignedFilter expanded />}
     </Join>
   )
 
