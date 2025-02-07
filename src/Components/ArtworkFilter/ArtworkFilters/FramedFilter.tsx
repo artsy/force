@@ -37,7 +37,7 @@ export const FramedFilter: React.FC<FramedFilterProps> = ({ expanded }) => {
         onSelect={handleOnSelect}
         my={1}
       >
-        Only framed works
+        Show only framed works
       </Checkbox>
     </FilterExpandable>
   )

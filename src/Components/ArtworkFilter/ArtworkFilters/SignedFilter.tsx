@@ -37,7 +37,7 @@ export const SignedFilter: React.FC<SignedFilterProps> = ({ expanded }) => {
         onSelect={handleOnSelect}
         my={1}
       >
-        Only signed works
+        Show only signed works
       </Checkbox>
     </FilterExpandable>
   )
