@@ -1,14 +1,8 @@
-import { useDismissibleContext } from "@artsy/dismissible"
-import { Text } from "@artsy/palette"
 import { ArtworkGridContainer } from "Components/ArtworkGrid/ArtworkGrid"
-import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import type { MyCollectionArtworkGrid_artworks$data } from "__generated__/MyCollectionArtworkGrid_artworks.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { _FragmentRefs } from "relay-runtime"
-
-const POPOVER_KEY = PROGRESSIVE_ONBOARDING.startSelling
 
 interface MyCollectionArtworkGridProps {
   artworks: MyCollectionArtworkGrid_artworks$data
@@ -18,14 +12,6 @@ interface MyCollectionArtworkGridProps {
 const MyCollectionArtworksGrid: FC<
   React.PropsWithChildren<MyCollectionArtworkGridProps>
 > = ({ artworks, onLoadMore }) => {
-  const enablePostApprovalSubmissionFlow = useFeatureFlag(
-    "onyx_post_approval_submission_flow",
-  )
-
-  const { dismiss, isDismissed } = useDismissibleContext()
-
-  const displayPopover = !isDismissed(POPOVER_KEY).status
-
   return (
     <ArtworkGridContainer
       artworks={artworks}
@@ -38,19 +24,7 @@ const MyCollectionArtworksGrid: FC<
       }
       showHighDemandIcon
       showSaveButton={false}
-      showSubmissionStatus={!!enablePostApprovalSubmissionFlow}
       onLoadMore={onLoadMore}
-      popoverContent={
-        displayPopover && (
-          <Text variant="xs">
-            <strong>Interested in Selling This Work?</strong>
-            <br />
-            Submit for sale and let our experts find the best selling option for
-            you.
-          </Text>
-        )
-      }
-      onPopoverDismiss={() => dismiss(POPOVER_KEY)}
     />
   )
 }
