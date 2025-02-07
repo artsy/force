@@ -1,18 +1,15 @@
-import { Box, Column, GridColumns, Spacer, Tab, Tabs } from "@artsy/palette"
+import { Column, GridColumns, Spacer, Tab, Tabs } from "@artsy/palette"
 import { MyCollectionArtworkAboutTab } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkAboutTab"
 import { MyCollectionArtworkDetails } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetails"
 import { MyCollectionArtworkHeader } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkHeader"
-import { MyCollectionArtworkSWASubmissionStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASubmissionStatus"
 import { MyCollectionArtworkTitle } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkTitle"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrentArticlesRail"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import type { MyCollectionArtwork_artwork$data } from "__generated__/MyCollectionArtwork_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MyCollectionArtworkImageBrowser } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkInsights } from "./Components/MyCollectionArtworkInsights"
 import { MyCollectionArtworkMeta } from "./Components/MyCollectionArtworkMeta"
-import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork$data
@@ -21,10 +18,6 @@ interface MyCollectionArtworkProps {
 const MyCollectionArtwork: React.FC<
   React.PropsWithChildren<MyCollectionArtworkProps>
 > = ({ artwork }) => {
-  const enablePostApprovalSubmissionFlow = useFeatureFlag(
-    "onyx_post_approval_submission_flow",
-  )
-
   const showComparables = !!artwork.comparables?.totalCount
   const showAuctionResults = !!artwork.artist?.auctionResults?.totalCount
   const showDemandIndex = !!artwork.hasMarketPriceInsights
@@ -32,8 +25,6 @@ const MyCollectionArtwork: React.FC<
 
   const hasInsights =
     showComparables || showAuctionResults || showDemandIndex || showArtistMarket
-
-  const isTargetSupply = artwork.artist?.targetSupply?.priority === "TRUE"
 
   return (
     <>
@@ -51,16 +42,6 @@ const MyCollectionArtwork: React.FC<
             <MyCollectionArtworkTitle artwork={artwork} />
 
             <MyCollectionArtworkDetails artwork={artwork} />
-
-            {artwork.consignmentSubmission ? (
-              <>
-                {enablePostApprovalSubmissionFlow ? (
-                  <MyCollectionArtworkSWASubmissionStatus artwork={artwork} />
-                ) : (
-                  <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
-                )}
-              </>
-            ) : null}
           </Column>
 
           <Column span={12}>
@@ -84,17 +65,6 @@ const MyCollectionArtwork: React.FC<
         <MyCollectionArtworkImageBrowser artwork={artwork} />
 
         <MyCollectionArtworkTitle artwork={artwork} />
-
-        {isTargetSupply &&
-          artwork.consignmentSubmission?.state !== "REJECTED" && (
-            <Box mb={4}>
-              {enablePostApprovalSubmissionFlow ? (
-                <MyCollectionArtworkSWASubmissionStatus artwork={artwork} />
-              ) : (
-                <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
-              )}
-            </Box>
-          )}
 
         {hasInsights ? (
           <Tabs fill mt={2}>

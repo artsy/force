@@ -65,15 +65,6 @@ describe("MyCollectionArtwork", () => {
       })
     })
   })
-
-  describe("SWA section", () => {
-    it("with submission id: the section is rendered", () => {
-      const { renderWithRelay } = getWrapper()
-      renderWithRelay(mockResolversWithInsights)
-      expect(screen.queryByText("Submission Status")).toBeInTheDocument()
-      expect(screen.queryByText("In Progress")).toBeInTheDocument()
-    })
-  })
 })
 
 const mockResolversWithInsights = {
@@ -95,18 +86,6 @@ const mockResolversWithInsights = {
   }),
 }
 
-const mockResolversWithInsightsWithoutSubmission = {
-  Artwork: () => ({
-    internalID: "63035a6b41808b000c7e2933",
-    title: "Morons",
-    date: "2007",
-    artistNames: "Banksy",
-    hasMarketPriceInsights: true,
-    isPriceEstimateRequestable: true,
-    consignmentSubmission: null,
-  }),
-}
-
 const mockResolversWithoutInsights = {
   Artwork: () => ({
     internalID: "63035a6b41808b000c7e2933",
@@ -121,37 +100,6 @@ const mockResolversWithoutInsights = {
         priority: true,
       },
     },
-    consignmentSubmission: null,
-  }),
-}
-
-const mockResolversNotP1 = {
-  Artwork: () => ({
-    internalID: "61efced8a47135000c7b4c31",
-    title: "Anima",
-    date: "2020",
-    artistNames: "MAria",
-    hasMarketPriceInsights: false,
-    consignmentSubmission: {
-      state: "SUBMITTED",
-      stateLabel: "In Progress",
-    },
-    artist: {
-      targetSupply: {
-        isP1: false,
-      },
-    },
-  }),
-}
-
-const mockResolversWithPriceEstimateRequest = {
-  Artwork: () => ({
-    internalID: "61efced8a47135000c7b4c31",
-    title: "Anima",
-    date: "2020",
-    artistNames: "MAria",
-    hasMarketPriceInsights: false,
-    hasPriceEstimateRequest: true,
     consignmentSubmission: null,
   }),
 }
