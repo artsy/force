@@ -224,16 +224,6 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                   </Flex>
 
                   <NavBarItemLink
-                    href="/sell"
-                    onMouseOver={() => prefetch("/sell")}
-                    textDecoration="none"
-                    onClick={handleClick}
-                    data-label="Consign"
-                  >
-                    Sell
-                  </NavBarItemLink>
-
-                  <NavBarItemLink
                     href="/price-database"
                     onMouseOver={() => prefetch("/price-database")}
                     textDecoration="none"

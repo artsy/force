@@ -42,7 +42,7 @@ describe("MetaTags", () => {
 
     const tags = getTags()
 
-    expect(tags.title).toEqual("Artsy — Discover, Buy, and Sell Fine Art")
+    expect(tags.title).toEqual("Artsy — Discover and Buy Fine Art")
 
     expect(tags.links).toEqual([
       { href: "https://www.artsy.net/", rel: "canonical" },
@@ -52,7 +52,7 @@ describe("MetaTags", () => {
       {
         name: "title",
         property: null,
-        content: "Artsy — Discover, Buy, and Sell Fine Art",
+        content: "Artsy — Discover and Buy Fine Art",
       },
       {
         name: "description",
@@ -65,7 +65,7 @@ describe("MetaTags", () => {
       {
         name: null,
         property: "og:title",
-        content: "Artsy — Discover, Buy, and Sell Fine Art",
+        content: "Artsy — Discover and Buy Fine Art",
       },
       { name: null, property: "og:site_name", content: "Artsy" },
       {
@@ -88,7 +88,7 @@ describe("MetaTags", () => {
       {
         name: null,
         property: "twitter:title",
-        content: "Artsy — Discover, Buy, and Sell Fine Art",
+        content: "Artsy — Discover and Buy Fine Art",
       },
       { name: null, property: "twitter:card", content: "summary" },
       {
@@ -234,7 +234,7 @@ describe("MetaTags", () => {
 
     const tags = getTags()
 
-    expect(tags.title).toEqual("Artsy — Discover, Buy, and Sell Fine Art")
+    expect(tags.title).toEqual("Artsy — Discover and Buy Fine Art")
 
     expect(tags.links).toEqual([
       { href: "https://www.artsy.net/", rel: "canonical" },
@@ -244,7 +244,7 @@ describe("MetaTags", () => {
       {
         name: "title",
         property: null,
-        content: "Artsy — Discover, Buy, and Sell Fine Art",
+        content: "Artsy — Discover and Buy Fine Art",
       },
       {
         name: "description",
@@ -257,7 +257,7 @@ describe("MetaTags", () => {
       {
         name: null,
         property: "og:title",
-        content: "Artsy — Discover, Buy, and Sell Fine Art",
+        content: "Artsy — Discover and Buy Fine Art",
       },
       { name: null, property: "og:site_name", content: "Artsy" },
       {
@@ -280,7 +280,7 @@ describe("MetaTags", () => {
       {
         name: null,
         property: "twitter:title",
-        content: "Artsy — Discover, Buy, and Sell Fine Art",
+        content: "Artsy — Discover and Buy Fine Art",
       },
       { name: null, property: "twitter:card", content: "summary" },
       {
