@@ -1,7 +1,6 @@
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
-  type Counts,
   type SharedArtworkFilterContextProps,
   initialArtworkFilterState,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
@@ -50,7 +49,6 @@ const GeneArtworkFilter: React.FC<
       aggregations={
         sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
-      counts={sidebar?.counts as Counts}
       userPreferredMetric={userPreferences?.metric}
     >
       <BaseArtworkFilter relay={relay} viewer={gene} />
@@ -66,7 +64,6 @@ export const GeneArtworkFilterRefetchContainer = createRefetchContainer(
       @argumentDefinitions(
         input: { type: "FilterArtworksInput" }
         aggregations: { type: "[ArtworkAggregation]" }
-        shouldFetchCounts: { type: "Boolean!", defaultValue: false }
       ) {
         slug
         internalID
@@ -74,9 +71,6 @@ export const GeneArtworkFilterRefetchContainer = createRefetchContainer(
           aggregations: $aggregations
           first: 1
         ) {
-          counts @include(if: $shouldFetchCounts) {
-            followedArtists
-          }
           aggregations {
             slice
             counts {
@@ -100,7 +94,7 @@ export const GeneArtworkFilterRefetchContainer = createRefetchContainer(
     query GeneArtworkFilterRefetchQuery(
       $slug: String!
       $input: FilterArtworksInput
-    ) {
+    ) @cacheable {
       gene(id: $slug) {
         ...GeneArtworkFilter_gene @arguments(input: $input)
       }
@@ -125,15 +119,10 @@ export const GeneArtworkFilterQueryRenderer: React.FC<
             $slug: String!
             $input: FilterArtworksInput
             $aggregations: [ArtworkAggregation]
-            $shouldFetchCounts: Boolean!
-          ) {
+          ) @cacheable {
             gene(id: $slug) {
               ...GeneArtworkFilter_gene
-                @arguments(
-                  input: $input
-                  aggregations: $aggregations
-                  shouldFetchCounts: $shouldFetchCounts
-                )
+                @arguments(input: $input, aggregations: $aggregations)
             }
           }
         `}
@@ -177,7 +166,6 @@ const initializeVariablesWithFilterState = (params, props) => {
   return {
     aggregations,
     input: allowedFilters(filters),
-    shouldFetchCounts: !!props.context.user,
     slug: geneSlug,
   }
 }
