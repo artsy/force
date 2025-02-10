@@ -60,16 +60,6 @@ export const MarketingMeetArtAdvisorRoute: FC<
                 href: "/collector-profile/my-collection",
               },
             },
-            {
-              title: "When you’re ready to sell, we can help.",
-              subtitle:
-                "Earn more and worry less with our expert guidance, tailored to you.",
-              src: "https://files.artsy.net/images/marketing_meet_04_april-14.jpg",
-              cta: {
-                label: "Learn More",
-                href: "/sell",
-              },
-            },
           ]}
         />
 
