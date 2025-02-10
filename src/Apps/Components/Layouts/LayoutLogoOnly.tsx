@@ -6,12 +6,14 @@ import type { BaseLayoutProps } from "Apps/Components/Layouts"
 import { LayoutMain } from "Apps/Components/Layouts/Components/LayoutMain"
 import { NavBarPrimaryLogo } from "Components/NavBar/NavBarPrimaryLogo"
 import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { FC } from "react"
 
 export const LayoutLogoOnly: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
   children,
 }) => {
+  const { match } = useRouter()
   const { isEigen } = useSystemContext()
 
   return (
@@ -23,7 +25,15 @@ export const LayoutLogoOnly: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
           <HorizontalPadding>
             <Spacer y={[2, 4]} />
 
-            <RouterLink to={isEigen ? undefined : "/"} display="block">
+            <RouterLink
+              onClick={event => {
+                if (match.location.pathname.includes("/order") && isEigen) {
+                  event.preventDefault()
+                }
+              }}
+              to="/"
+              display="block"
+            >
               <NavBarPrimaryLogo />
             </RouterLink>
 

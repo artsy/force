@@ -26,14 +26,6 @@ const ArtworkSidebarLinks: React.FC<
     })
   }
 
-  const trackClickedSellWithArtsy = () => {
-    tracking.trackEvent({
-      action_type: DeprecatedSchema.ActionType.Click,
-      subject: "sell with artsy",
-      type: DeprecatedSchema.Type.Link,
-    })
-  }
-
   if (isUnlisted) {
     return null
   }
@@ -58,13 +50,6 @@ const ArtworkSidebarLinks: React.FC<
           <Spacer y={1} />
         </>
       )}
-
-      <Text variant="xs" color="black60">
-        Want to sell a work by this artist?{" "}
-        <RouterLink inline to="/sell" onClick={trackClickedSellWithArtsy}>
-          Sell with Artsy
-        </RouterLink>
-      </Text>
     </>
   )
 }
