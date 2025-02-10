@@ -1,11 +1,11 @@
 import { Box, Join, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import type { AuctionInfoSidebar_sale$data } from "__generated__/AuctionInfoSidebar_sale.graphql"
-import { createFragmentContainer, graphql } from "react-relay"
-import { LiveAuctionToolTip } from "./LiveAuctionToolTip"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useSaleWebsocket } from "Utils/Hooks/useSaleWebsocket"
+import type { AuctionInfoSidebar_sale$data } from "__generated__/AuctionInfoSidebar_sale.graphql"
 import { useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { LiveAuctionToolTip } from "./LiveAuctionToolTip"
 
 interface AuctionInfoSidebarProps {
   sale: AuctionInfoSidebar_sale$data

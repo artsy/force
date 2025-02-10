@@ -2,7 +2,6 @@ import type { AuthContextModule } from "@artsy/cohesion"
 import HighDemandIcon from "@artsy/icons/HighDemandIcon"
 import { Box, Flex, Join, SkeletonText, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { ConsignmentSubmissionStatusFragmentContainer } from "Components/Artwork/ConsignmentSubmissionStatus"
 import { HoverDetailsFragmentContainer } from "Components/Artwork/HoverDetails"
 import { SaveArtworkToListsButtonQueryRenderer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { SaveButtonQueryRenderer } from "Components/Artwork/SaveButton/SaveButton"
@@ -352,14 +351,8 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
   const isHighDemand =
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
-  const isConsignmentSubmission =
-    !!rest?.artwork.consignmentSubmission?.internalID
 
-  const showHighDemandInfo =
-    !!isP1Artist &&
-    isHighDemand &&
-    showHighDemandIcon &&
-    !isConsignmentSubmission
+  const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
 
   const isAuction = rest?.artwork?.sale?.is_auction ?? false
   const artworkId = rest?.artwork?.internalID
@@ -454,10 +447,6 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
         )}
       </Box>
 
-      {showSubmissionStatus && (
-        <ConsignmentSubmissionStatusFragmentContainer artwork={rest.artwork} />
-      )}
-
       {clientsideSignalsEnabled && !hideSaleInfo && <SaleInfoLine {...rest} />}
       {!clientsideSignalsEnabled && !hideSaleInfo && (
         <LegacySaleInfoLine
@@ -473,10 +462,7 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
 
 export const DetailsFragmentContainer = createFragmentContainer(Details, {
   artwork: graphql`
-    fragment Details_artwork on Artwork
-    @argumentDefinitions(
-      includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
-    ) {
+    fragment Details_artwork on Artwork {
       internalID
       href
       title
@@ -541,15 +527,10 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           display
         }
       }
-      consignmentSubmission @include(if: $includeConsignmentSubmission) {
-        internalID
-      }
       ...LegacyPrimaryLabelLine_artwork
       ...PrimaryLabelLine_artwork
       ...BidTimerLine_artwork
       ...HoverDetails_artwork
-      ...ConsignmentSubmissionStatus_artwork
-        @include(if: $includeConsignmentSubmission)
     }
   `,
 })

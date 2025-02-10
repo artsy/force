@@ -3,8 +3,8 @@ import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useAuthDialog } from "Components/AuthDialog"
 import { renderRelayTree } from "DevTools/renderRelayTree"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { Details_Test_Query$rawResponse } from "__generated__/Details_Test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -43,7 +43,6 @@ describe("Details", () => {
       showHoverDetails?: boolean
       contextModule?: AuthContextModule
       showSaveButton?: boolean
-      showSubmissionStatus?: boolean
     },
   ) => {
     return await renderRelayTree({
@@ -53,20 +52,13 @@ describe("Details", () => {
         </ArtworkGridContextProvider>
       ),
       query: graphql`
-        query Details_Test_Query($includeConsignmentSubmission: Boolean!)
-        @raw_response_type
-        @relay_test_operation {
+        query Details_Test_Query @raw_response_type @relay_test_operation {
           artwork(id: "gerhard-richter-bagdad-ii-flow-p10-1") {
             ...Details_artwork
-              @arguments(
-                includeConsignmentSubmission: $includeConsignmentSubmission
-              )
           }
         }
       `,
-      variables: {
-        includeConsignmentSubmission: true,
-      },
+      variables: {},
       mockData: {
         artwork: response,
       } as Details_Test_Query$rawResponse,
@@ -231,7 +223,6 @@ describe("Details", () => {
     it("does not render high demand icon for artworks submitted for sale", async () => {
       props = {
         showHighDemandIcon: true,
-        showSubmissionStatus: true,
       }
       const wrapper = await getWrapper(submittedMyCollectionArtwork, props)
 
@@ -466,8 +457,6 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
       registrationEndsAt: "2022-03-5T12:33:37.000Z",
     },
   },
-  consignmentSubmission: null,
-  isListed: false,
 }
 
 const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] =
@@ -540,14 +529,6 @@ const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] =
       partnerOffer: null,
       auction: null,
     },
-    consignmentSubmission: {
-      internalID: "internal-id",
-      state: "SUBMITTED",
-      stateLabel: "Submitted",
-      actionLabel: "Action",
-      stateLabelColor: "black100",
-    },
-    isListed: false,
   }
 
 const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
@@ -598,6 +579,4 @@ const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
     partnerOffer: null,
     auction: null,
   },
-  consignmentSubmission: null,
-  isListed: false,
 }

@@ -51,16 +51,8 @@ export const MyCollectionArtworkGrid = createFragmentContainer(
             consignmentSubmission {
               state
             }
-            ...GridItem_artwork
-              @arguments(
-                includeAllImages: true
-                includeConsignmentSubmission: true
-              )
-            ...FlatGridItem_artwork
-              @arguments(
-                includeAllImages: true
-                includeConsignmentSubmission: true
-              )
+            ...GridItem_artwork @arguments(includeAllImages: true)
+            ...FlatGridItem_artwork @arguments(includeAllImages: true)
           }
         }
       }

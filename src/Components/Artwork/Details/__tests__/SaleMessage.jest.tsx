@@ -1,13 +1,13 @@
-import { DateTime } from "luxon"
-import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
-import { SaleMessageQueryRenderer } from "Components/Artwork/Details/SaleMessage"
-import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
-import { createRef } from "react"
 import { act, render, screen } from "@testing-library/react"
+import { SaleMessageQueryRenderer } from "Components/Artwork/Details/SaleMessage"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { CleanRelayFragment } from "Utils/typeSupport"
+import type { CleanRelayFragment } from "Utils/typeSupport"
+import type { Details_artwork$data } from "__generated__/Details_artwork.graphql"
+import { DateTime } from "luxon"
+import { createRef } from "react"
+import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 
 jest.unmock("react-relay")
 
@@ -16,9 +16,9 @@ jest.mock("Utils/Hooks/useDidMount")
 jest.mock("Utils/Hooks/useIntersectionObserver")
 
 describe("SaleMessage", () => {
-  let mockuseDidMount = useDidMount as jest.Mock
-  let mockUseIntersectionObserver = useIntersectionObserver as jest.Mock
-  let mockUseSystemContext = useSystemContext as jest.Mock
+  const mockuseDidMount = useDidMount as jest.Mock
+  const mockUseIntersectionObserver = useIntersectionObserver as jest.Mock
+  const mockUseSystemContext = useSystemContext as jest.Mock
   let mockEnvironment
 
   beforeEach(() => {
@@ -232,5 +232,4 @@ const artworkNotInAuction: CleanRelayFragment<Details_artwork$data> = {
     auction: null,
     partnerOffer: null,
   },
-  consignmentSubmission: null,
 }

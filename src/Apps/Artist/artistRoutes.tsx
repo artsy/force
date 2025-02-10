@@ -91,17 +91,6 @@ const AuctionResultsRoute = loadable(
   },
 )
 
-const ConsignRoute = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "artistBundle" */ "./Routes/Consign/ArtistConsignRoute"
-    ),
-  {
-    resolveComponent: component =>
-      component.ArtistConsignRouteFragmentContainer,
-  },
-)
-
 const AuctionResultRoute = loadable(
   () =>
     import(
@@ -249,38 +238,6 @@ export const artistRoutes: RouteProps[] = [
             }
           }
         `,
-      },
-      {
-        path: "consign",
-        getComponent: () => ConsignRoute,
-        onPreloadJS: () => {
-          ConsignRoute.preload()
-        },
-        query: graphql`
-          query artistRoutes_ArtistConsignQuery($artistID: String!) @cacheable {
-            artist(id: $artistID) @principalField {
-              ...ArtistConsignRoute_artist
-              targetSupply {
-                isInMicrofunnel
-              }
-            }
-          }
-        `,
-        render: ({ Component, props, match }) => {
-          if (!(Component && props)) {
-            return undefined
-          }
-
-          const artistPathName = match.location.pathname.replace("/consign", "")
-          const isInMicrofunnel = (props as any).artist.targetSupply
-            .isInMicrofunnel
-
-          if (isInMicrofunnel) {
-            return <Component {...props} />
-          } else {
-            throw new RedirectException(artistPathName)
-          }
-        },
       },
       {
         path: "cv",

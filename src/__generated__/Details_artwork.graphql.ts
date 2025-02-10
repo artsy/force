@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0fefd608a31019a6ba737e1b8a763237>>
+ * @generated SignedSource<<f7b6a06cede292d8aac872c202c58e4b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,9 +39,6 @@ export type Details_artwork$data = {
     } | null | undefined;
     readonly primaryLabel: LabelSignalEnum | null | undefined;
   } | null | undefined;
-  readonly consignmentSubmission?: {
-    readonly internalID: string | null | undefined;
-  } | null | undefined;
   readonly cultural_maker: string | null | undefined;
   readonly date: string | null | undefined;
   readonly href: string | null | undefined;
@@ -79,7 +76,7 @@ export type Details_artwork$data = {
   } | null | undefined;
   readonly sale_message: string | null | undefined;
   readonly title: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"BidTimerLine_artwork" | "ConsignmentSubmissionStatus_artwork" | "HoverDetails_artwork" | "LegacyPrimaryLabelLine_artwork" | "PrimaryLabelLine_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"BidTimerLine_artwork" | "HoverDetails_artwork" | "LegacyPrimaryLabelLine_artwork" | "PrimaryLabelLine_artwork">;
   readonly " $fragmentType": "Details_artwork";
 };
 export type Details_artwork$key = {
@@ -92,24 +89,17 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "href",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "endAt",
   "storageKey": null
 },
-v3 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -118,14 +108,14 @@ v3 = [
     "storageKey": null
   }
 ],
-v4 = [
+v3 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -133,19 +123,19 @@ v5 = {
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "includeConsignmentSubmission"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "Details_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     (v0/*: any*/),
-    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -229,7 +219,7 @@ return {
           "name": "partnerOffer",
           "plural": false,
           "selections": [
-            (v2/*: any*/),
+            (v1/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -237,7 +227,7 @@ return {
               "kind": "LinkedField",
               "name": "priceWithDiscount",
               "plural": false,
-              "selections": (v3/*: any*/),
+              "selections": (v2/*: any*/),
               "storageKey": null
             }
           ],
@@ -262,7 +252,7 @@ return {
     },
     {
       "alias": null,
-      "args": (v4/*: any*/),
+      "args": (v3/*: any*/),
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artist",
@@ -309,7 +299,7 @@ return {
     },
     {
       "alias": null,
-      "args": (v4/*: any*/),
+      "args": (v3/*: any*/),
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artists",
@@ -322,8 +312,8 @@ return {
           "name": "id",
           "storageKey": null
         },
-        (v1/*: any*/),
-        (v5/*: any*/)
+        (v0/*: any*/),
+        (v4/*: any*/)
       ],
       "storageKey": "artists(shallow:true)"
     },
@@ -336,14 +326,14 @@ return {
     },
     {
       "alias": null,
-      "args": (v4/*: any*/),
+      "args": (v3/*: any*/),
       "concreteType": "Partner",
       "kind": "LinkedField",
       "name": "partner",
       "plural": false,
       "selections": [
-        (v5/*: any*/),
-        (v1/*: any*/)
+        (v4/*: any*/),
+        (v0/*: any*/)
       ],
       "storageKey": "partner(shallow:true)"
     },
@@ -355,7 +345,7 @@ return {
       "name": "sale",
       "plural": false,
       "selections": [
-        (v2/*: any*/),
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -416,7 +406,7 @@ return {
           "name": "lotLabel",
           "storageKey": null
         },
-        (v2/*: any*/),
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -456,7 +446,7 @@ return {
           "kind": "LinkedField",
           "name": "highestBid",
           "plural": false,
-          "selections": (v3/*: any*/),
+          "selections": (v2/*: any*/),
           "storageKey": null
         },
         {
@@ -466,35 +456,11 @@ return {
           "kind": "LinkedField",
           "name": "openingBid",
           "plural": false,
-          "selections": (v3/*: any*/),
+          "selections": (v2/*: any*/),
           "storageKey": null
         }
       ],
       "storageKey": null
-    },
-    {
-      "condition": "includeConsignmentSubmission",
-      "kind": "Condition",
-      "passingValue": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "ArtworkConsignmentSubmission",
-          "kind": "LinkedField",
-          "name": "consignmentSubmission",
-          "plural": false,
-          "selections": [
-            (v0/*: any*/)
-          ],
-          "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ConsignmentSubmissionStatus_artwork"
-        }
-      ]
     },
     {
       "args": null,
@@ -522,6 +488,6 @@ return {
 };
 })();
 
-(node as any).hash = "42c2c4a9b6684ec321b1ec531fffb422";
+(node as any).hash = "01348e9b9ff387d67b8888fbd35cbcd4";
 
 export default node;
