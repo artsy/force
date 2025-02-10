@@ -31,7 +31,11 @@ export const SignedFilter: React.FC<SignedFilterProps> = ({ expanded }) => {
   }
 
   return (
-    <FilterExpandable label={label} expanded={isSelected || expanded}>
+    <FilterExpandable
+      label={label}
+      expanded={isSelected || expanded}
+      ignoreBounds
+    >
       <Checkbox
         selected={!!currentSelectedFilters?.signed}
         onSelect={handleOnSelect}
