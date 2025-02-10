@@ -542,7 +542,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
       $createdBeforeYear: Int
       $createdAfterYear: Int
       $allowEmptyCreatedDates: Boolean
-    ) {
+    ) @cacheable {
       artist(id: $artistID) {
         ...ArtistAuctionResults_artist
           @arguments(
