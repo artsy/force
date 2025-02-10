@@ -15,7 +15,10 @@ import { Link, Spacer, Text } from "@artsy/palette"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import { getENV } from "Utils/getENV"
-import type { ArtsyShippingEstimate_artwork$key } from "__generated__/ArtsyShippingEstimate_artwork.graphql"
+import type {
+  ArtsyShippingEstimate_artwork$data,
+  ArtsyShippingEstimate_artwork$key,
+} from "__generated__/ArtsyShippingEstimate_artwork.graphql"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -402,41 +405,12 @@ const UNFRAMED_CATEGORY_MAP = {
   Other: "other_art",
 } as const
 
-interface ShippableArtwork {
-  depthCm?: number | null
-  diameterCm?: number | null
-  framedDepth?: string | null
-  framedDiameter?: number | null
-  framedHeight?: string | null
-  framedMetric?: string | null
-  framedWidth?: string | null
-  heightCm?: number | null
-  isFramed?: boolean | null
-  listPrice?: {
-    major?: number | null
-    maxPrice?: {
-      major?: number | null
-    } | null
-    minPrice?: {
-      major?: number | null
-    } | null
-  } | null
-  mediumType?: {
-    name?: string | null
-  } | null
-  priceCurrency?: string | null
-  shippingOrigin?: string | null
-  shippingWeight?: number | null
-  shippingWeightMetric?: string | null
-  widthCm?: number | null
-}
-
 type ArtaObjectDimensions = Pick<
   ArtaObject,
   "height" | "width" | "depth" | "unit_of_measurement"
 >
 const artworkDimensions = (
-  artwork: ShippableArtwork,
+  artwork: ArtsyShippingEstimate_artwork$data,
 ): ArtaObjectDimensions | null => {
   const {
     depthCm,
@@ -494,7 +468,9 @@ const artworkDimensions = (
 }
 
 type ArtworkValue = Pick<ArtaObject, "value" | "value_currency">
-const artworkValue = (artwork: ShippableArtwork): ArtworkValue | null => {
+const artworkValue = (
+  artwork: ArtsyShippingEstimate_artwork$data,
+): ArtworkValue | null => {
   const priceCurrency = artwork.priceCurrency as SupportedCurrency
   if (!priceCurrency || !artwork.listPrice) {
     return null
@@ -519,7 +495,9 @@ const artworkValue = (artwork: ShippableArtwork): ArtworkValue | null => {
   return null
 }
 
-const artaObject = (artwork: ShippableArtwork): ArtaObject | null => {
+const artaObject = (
+  artwork: ArtsyShippingEstimate_artwork$data,
+): ArtaObject | null => {
   const { isFramed, mediumType, shippingWeight, shippingWeightMetric } = artwork
 
   let subtype
@@ -546,7 +524,9 @@ const artaObject = (artwork: ShippableArtwork): ArtaObject | null => {
   return null
 }
 
-const artaLocation = (artwork: ShippableArtwork): ArtaLocation | null => {
+const artaLocation = (
+  artwork: ArtsyShippingEstimate_artwork$data,
+): ArtaLocation | null => {
   const shippingOrigin = artwork.shippingOrigin?.split(", ") ?? []
   const city = shippingOrigin[0]
   const country = shippingOrigin[shippingOrigin.length - 1]
@@ -559,7 +539,7 @@ const artaLocation = (artwork: ShippableArtwork): ArtaLocation | null => {
 }
 
 export const estimateRequestBodyForArtwork = (
-  artwork: ShippableArtwork,
+  artwork: ArtsyShippingEstimate_artwork$data,
 ): EstimateBody | null => {
   try {
     const origin = artaLocation(artwork)

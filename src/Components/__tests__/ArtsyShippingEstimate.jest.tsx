@@ -8,6 +8,7 @@ import {
 } from "Components/ArtsyShippingEstimate"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ArtsyShippingEstimate_Test_Query } from "__generated__/ArtsyShippingEstimate_Test_Query.graphql"
+import type { ArtsyShippingEstimate_artwork$data } from "__generated__/ArtsyShippingEstimate_artwork.graphql"
 import { useEffect, useState } from "react"
 
 import { graphql } from "react-relay"
@@ -61,13 +62,13 @@ const validArtworkData = {
     major: 1000,
   },
   mediumType: {
-    name: "Painting" as const,
+    name: "Painting",
   },
-  priceCurrency: "USD" as const,
+  priceCurrency: "USD",
   shippingOrigin: "New York, USA",
   shippingWeight: 20,
   shippingWeightMetric: "lb",
-}
+} as ArtsyShippingEstimate_artwork$data
 
 const TestWrapper = ({ artwork }) => {
   const [show, setShow] = useState(true)
@@ -200,7 +201,6 @@ describe("ArtsyShippingEstimate", () => {
         estimateRequestBodyForArtwork({
           ...validArtworkData,
           listPrice: {
-            major: null,
             minPrice: null,
           },
         }),
