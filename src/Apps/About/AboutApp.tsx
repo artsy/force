@@ -63,8 +63,8 @@ export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
           <Text variant={["sm-display", "lg-display"]} mt={2}>
             As the leading marketplace for art by the world’s emerging and
             established artists, we’ve made it easy for new and experienced
-            collectors to discover, buy, and sell art—and so much more.
-            Everything you’ll ever need to collect art, you’ll find on Artsy.
+            collectors to discover and buy art—and so much more. Everything
+            you’ll ever need to collect art, you’ll find on Artsy.
           </Text>
         </Box>
       </Box>
@@ -201,14 +201,6 @@ const SECTION_DATA: SectionProps[] = [
     caption: "John Baldessari, Marina Abramovic, 2018.",
     href: "/meet-your-new-art-advisor",
     imageUrl: "https://files.artsy.net/images/05_CVP_About_Manage.png",
-  },
-  {
-    title: "Sell from your collection",
-    description:
-      "Sell art from your collection to the right buyer with the help of our experts.",
-    caption: "Ezra Johnson, Small Interior, 2022.",
-    href: "/sell",
-    imageUrl: "https://files.artsy.net/images/06_CVP_About_Sell.png",
   },
   {
     title: "Discover new talents",
