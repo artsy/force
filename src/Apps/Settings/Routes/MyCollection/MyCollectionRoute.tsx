@@ -67,6 +67,7 @@ const MyCollectionRoute: FC<
           <Flex backgroundColor="white100" justifyContent="flex-end" gap={1}>
             {enableShare && (
               <Button
+                size={["small", "large"]}
                 variant="secondaryBlack"
                 Icon={ShareIcon}
                 onClick={() => setMode("Share")}
