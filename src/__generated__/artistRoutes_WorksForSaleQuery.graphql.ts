@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f848de5dc3a2ca2739b8a04837d5eec2>>
+ * @generated SignedSource<<fbc1f3eaea6dba1d4c4cd6abbce75523>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -144,16 +144,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1a9748f76857f144106918c1f6db9562",
+    "cacheID": "2250cc00d4af643cbb49f405f6d8e890",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_WorksForSaleQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_WorksForSaleQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) @principalField {\n    ...ArtistWorksForSaleRoute_artist\n    id\n  }\n}\n\nfragment ArtistWorksForSaleEmpty_artist on Artist {\n  internalID\n  name\n}\n\nfragment ArtistWorksForSaleRoute_artist on Artist {\n  ...ArtistWorksForSaleEmpty_artist\n  slug\n  name\n  meta(page: ARTWORKS) {\n    description\n    title\n  }\n}\n"
+    "text": "query artistRoutes_WorksForSaleQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistWorksForSaleRoute_artist\n    id\n  }\n}\n\nfragment ArtistWorksForSaleEmpty_artist on Artist {\n  internalID\n  name\n}\n\nfragment ArtistWorksForSaleRoute_artist on Artist {\n  ...ArtistWorksForSaleEmpty_artist\n  slug\n  name\n  meta(page: ARTWORKS) {\n    description\n    title\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "875716fecee7260100706e351b5dce01";
+(node as any).hash = "ea4fa27cdfcc455a635e133e902f8532";
 
 export default node;
