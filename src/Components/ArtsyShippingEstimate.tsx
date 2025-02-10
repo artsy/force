@@ -1,4 +1,4 @@
-import type { EstimateBody } from "@artaio/arta-browser"
+import type { EstimateBody, PartialEstimateConfig } from "@artaio/arta-browser"
 import type {
   ArtaLocation,
   ArtaObject,
@@ -324,7 +324,7 @@ const ARTWORK_FRAGMENT = graphql`
   }
 `
 
-const widgetConfig = {
+const widgetConfig: PartialEstimateConfig = {
   style: {
     color: {
       border: "none",
@@ -553,7 +553,7 @@ const artaLocation = (artwork: ShippableArtwork): ArtaLocation | null => {
     : null
 }
 
-const estimateRequestBodyForArtwork = (
+export const estimateRequestBodyForArtwork = (
   artwork: ShippableArtwork,
 ): EstimateBody | null => {
   try {
@@ -564,6 +564,11 @@ const estimateRequestBodyForArtwork = (
       return null
     }
     return {
+      insurance: "arta_transit_insurance",
+      additional_services: ["signature_delivery"],
+      preferred_quote_types: ["self_ship", "parcel", "select", "premium"],
+      currency: artwork.priceCurrency,
+
       origin,
       objects: [artworkObject],
     }

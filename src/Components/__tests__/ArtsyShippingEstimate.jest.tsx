@@ -2,7 +2,10 @@ import type { default as Arta } from "@artaio/arta-browser"
 import type ArtaEstimate from "@artaio/arta-browser/dist/estimate"
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { ArtsyShippingEstimate } from "Components/ArtsyShippingEstimate"
+import {
+  ArtsyShippingEstimate,
+  estimateRequestBodyForArtwork,
+} from "Components/ArtsyShippingEstimate"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ArtsyShippingEstimate_Test_Query } from "__generated__/ArtsyShippingEstimate_Test_Query.graphql"
 import { useEffect, useState } from "react"
@@ -44,12 +47,12 @@ jest.mock("Utils/Hooks/useLoadScript", () => {
 })
 
 const validArtworkData = {
-  depthCm: null,
-  diameterCm: null,
-  framedHeight: null,
-  framedWidth: null,
-  framedDepth: null,
-  framedDiameter: null,
+  depthCm: undefined,
+  diameterCm: undefined,
+  framedHeight: undefined,
+  framedWidth: undefined,
+  framedDepth: undefined,
+  framedDiameter: undefined,
   framedMetric: "cm",
   heightCm: 100,
   isFramed: false,
@@ -57,11 +60,11 @@ const validArtworkData = {
     major: 1000,
   },
   mediumType: {
-    name: "Painting",
+    name: "Painting" as const,
   },
-  priceCurrency: "USD",
+  priceCurrency: "USD" as const,
   shippingOrigin: "New York, USA",
-  shippingWeight: null,
+  shippingWeight: 20,
   shippingWeightMetric: "lb",
   widthCm: 100,
 }
@@ -117,6 +120,7 @@ describe("ArtsyShippingEstimate", () => {
         Artwork: () => ({
           ...validArtworkData,
           widthCm: null,
+          diameterCm: null,
         }),
       })
 
@@ -160,6 +164,54 @@ describe("ArtsyShippingEstimate", () => {
       await waitFor(() => {
         expect(mockArtaEstimate.close).toHaveBeenCalledTimes(1)
       })
+    })
+  })
+
+  describe("estimateRequestBodyForArtwork()", () => {
+    it("sends the correct basic request params", async () => {
+      expect(
+        estimateRequestBodyForArtwork({
+          ...validArtworkData,
+          priceCurrency: "GBP",
+        }),
+      ).toEqual(
+        expect.objectContaining({
+          additional_services: ["signature_delivery"],
+          currency: "GBP",
+          insurance: "arta_transit_insurance",
+          preferred_quote_types: ["self_ship", "parcel", "select", "premium"],
+        }),
+      )
+    })
+
+    it("returns null if artwork is missing required dimensions", () => {
+      expect(
+        estimateRequestBodyForArtwork({
+          ...validArtworkData,
+          isFramed: false,
+          widthCm: undefined,
+          diameterCm: undefined,
+        }),
+      ).toBeNull()
+    })
+
+    it("returns null if artwork is missing required price info", () => {
+      expect(
+        estimateRequestBodyForArtwork({
+          ...validArtworkData,
+          listPrice: {
+            major: undefined,
+            minPrice: undefined,
+          },
+        }),
+      ).toBeNull()
+
+      expect(
+        estimateRequestBodyForArtwork({
+          ...validArtworkData,
+          priceCurrency: undefined as any,
+        }),
+      ).toBeNull()
     })
   })
 })
