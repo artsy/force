@@ -83,7 +83,6 @@ sitemapsServerApp
       { loc: `${APP_URL}/categories` },
       { loc: `${APP_URL}/collect`, priority: 1 },
       { loc: `${APP_URL}/conditions-of-sale` },
-      { loc: `${APP_URL}/consign` },
       { loc: `${APP_URL}/contact` },
       { loc: `${APP_URL}/institution-partnerships` },
       { loc: `${APP_URL}/institutions` },
