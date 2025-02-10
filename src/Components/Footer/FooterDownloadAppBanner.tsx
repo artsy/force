@@ -21,7 +21,7 @@ import { resized } from "Utils/resized"
 const IGNORE_PATHS = ["/meet-your-new-art-advisor"]
 
 const APP_BANNER_SRC =
-  "https://files.artsy.net/images/universal-footer_april-14_cropped.jpg"
+  "https://files.artsy.net/images/artsy-universal-footer-2025.png"
 
 export const FooterDownloadAppBanner = () => {
   const { match } = useRouter()
