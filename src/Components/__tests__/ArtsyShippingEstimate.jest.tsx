@@ -47,13 +47,14 @@ jest.mock("Utils/Hooks/useLoadScript", () => {
 })
 
 const validArtworkData = {
-  depthCm: undefined,
-  diameterCm: undefined,
-  framedHeight: undefined,
-  framedWidth: undefined,
-  framedDepth: undefined,
-  framedDiameter: undefined,
+  depthCm: null,
+  diameterCm: null,
+  framedHeight: null,
+  framedWidth: null,
+  framedDepth: null,
+  framedDiameter: null,
   framedMetric: "cm",
+  widthCm: 100,
   heightCm: 100,
   isFramed: false,
   listPrice: {
@@ -66,7 +67,6 @@ const validArtworkData = {
   shippingOrigin: "New York, USA",
   shippingWeight: 20,
   shippingWeightMetric: "lb",
-  widthCm: 100,
 }
 
 const TestWrapper = ({ artwork }) => {
@@ -189,8 +189,8 @@ describe("ArtsyShippingEstimate", () => {
         estimateRequestBodyForArtwork({
           ...validArtworkData,
           isFramed: false,
-          widthCm: undefined,
-          diameterCm: undefined,
+          widthCm: null,
+          diameterCm: null,
         }),
       ).toBeNull()
     })
@@ -200,8 +200,8 @@ describe("ArtsyShippingEstimate", () => {
         estimateRequestBodyForArtwork({
           ...validArtworkData,
           listPrice: {
-            major: undefined,
-            minPrice: undefined,
+            major: null,
+            minPrice: null,
           },
         }),
       ).toBeNull()
@@ -209,7 +209,7 @@ describe("ArtsyShippingEstimate", () => {
       expect(
         estimateRequestBodyForArtwork({
           ...validArtworkData,
-          priceCurrency: undefined as any,
+          priceCurrency: null,
         }),
       ).toBeNull()
     })
