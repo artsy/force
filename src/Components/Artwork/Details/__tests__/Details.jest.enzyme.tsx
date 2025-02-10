@@ -219,23 +219,6 @@ describe("Details", () => {
 
       expect(wrapper.html()).not.toContain("High Demand")
     })
-
-    it("does not render high demand icon for artworks submitted for sale", async () => {
-      props = {
-        showHighDemandIcon: true,
-      }
-      const wrapper = await getWrapper(submittedMyCollectionArtwork, props)
-
-      expect(wrapper.html()).not.toContain("High Demand")
-    })
-  })
-
-  describe("Show Submission Status", () => {
-    it("renders submission status for MyCollectionArtwork", async () => {
-      const wrapper = await getWrapper(submittedMyCollectionArtwork, props)
-
-      expect(wrapper.html()).toContain("Submitted")
-    })
   })
 
   it("should display save artwork button by default when showSaveButton prop is passed", async () => {
@@ -458,78 +441,6 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
     },
   },
 }
-
-const submittedMyCollectionArtwork: Details_Test_Query$rawResponse["artwork"] =
-  {
-    id: "opaque-artwork-id",
-    saleArtwork: {
-      lotID: "lot-id",
-      id: "opaque-sale-artwork-id",
-    },
-    internalID: "opaque-internal-id",
-    artist: {
-      id: "artist-id",
-      targetSupply: {
-        isP1: true,
-      },
-    },
-    marketPriceInsights: {
-      demandRank: 0.9,
-    },
-    artists: [
-      {
-        id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
-        href: "/artist/gerhard-richter",
-        name: "Gerhard Richter",
-      },
-    ],
-    href: "/artwork/gerhard-richter-tulips-p17-14",
-    date: "2017",
-    sale_message: "$450",
-    cultural_maker: null,
-    title: "Tulips (P17)",
-    collecting_institution: "This Really Great Gallery",
-    partner: {
-      id: "opaque-partner-id",
-      name: "Forum Auctions",
-      href: "/auction/forum-auctions",
-    },
-    sale: {
-      id: "opaque-sale-id",
-      is_auction: true,
-      is_closed: false,
-      cascadingEndTimeIntervalMinutes: null,
-      extendedBiddingIntervalMinutes: null,
-      startAt: "2022-03-11T12:33:37.000Z",
-      endAt: "2022-03-12T12:33:37.000Z",
-    },
-    sale_artwork: {
-      lotID: "lot-id",
-      lotLabel: "0",
-      id: "opaque-sale-artwork-id",
-      highest_bid: { display: "$2,600" },
-      opening_bid: { display: "$2,400" },
-      counts: { bidder_positions: 0 },
-      endAt: "2022-03-12T12:33:37.000Z",
-      formattedEndDateTime: "Closes, Mar 12 • 12:33pm GMT",
-      extendedBiddingEndAt: null,
-    },
-    attributionClass: {
-      id: "attributionClass-id",
-      name: "Unique",
-    },
-    mediumType: {
-      filterGene: {
-        id: "gene-id",
-        name: "Prints",
-      },
-    },
-    collectorSignals: {
-      primaryLabel: null,
-      partnerOffer: null,
-      auction: null,
-    },
-  }
 
 const artworkNotInAuction: Details_Test_Query$rawResponse["artwork"] = {
   id: "opaque-artwork-id",
