@@ -75,6 +75,8 @@ const request = async (url, opts) => {
       headers: {
         "Content-Type": "application/json",
         "Cache-Control": "no-cache",
+        "X-Access-Token": window.sd.CURRENT_USER.accessToken,
+        "X-User-Id": window.sd.CURRENT_USER.id,
       },
       body: opts.body,
     }
