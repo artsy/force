@@ -1,5 +1,4 @@
 import { isValid, runAuthIntent } from "Utils/Hooks/useAuthIntent/index"
-import { associateSubmissionMutation } from "Utils/Hooks/useAuthIntent/mutations/AuthIntentAssociateSubmissionMutation"
 import { followArtistMutation } from "Utils/Hooks/useAuthIntent/mutations/AuthIntentFollowArtistMutation"
 import { followGeneMutation } from "Utils/Hooks/useAuthIntent/mutations/AuthIntentFollowGeneMutation"
 import { followProfileMutation } from "Utils/Hooks/useAuthIntent/mutations/AuthIntentFollowProfileMutation"
@@ -26,10 +25,6 @@ jest.mock("../mutations/AuthIntentFollowProfileMutation", () => ({
 
 jest.mock("../mutations/AuthIntentSaveArtworkMutation", () => ({
   saveArtworkMutation: jest.fn(),
-}))
-
-jest.mock("../mutations/AuthIntentAssociateSubmissionMutation", () => ({
-  associateSubmissionMutation: jest.fn(),
 }))
 
 describe("runAuthIntent", () => {
@@ -310,68 +305,6 @@ describe("runAuthIntent", () => {
 
     // There is no failure branch for this action
   })
-
-  describe("associate a submission", () => {
-    beforeEach(() => {
-      ;(Cookies.get as jest.Mock).mockImplementation(() =>
-        JSON.stringify({
-          action: "associateSubmission",
-          kind: "submission",
-          objectId: "on-kawara-one-million-years",
-        }),
-      )
-    })
-
-    afterEach(() => {
-      jest.resetAllMocks()
-    })
-
-    describe("success", () => {
-      it("associates the submission and expires the cookie", async () => {
-        ;(associateSubmissionMutation as jest.Mock).mockImplementation(() =>
-          Promise.resolve(),
-        )
-
-        jest.spyOn(Cookies, "expire")
-
-        await runAuthIntent({
-          user: {},
-          relayEnvironment: env as any,
-          onSuccess: () => {},
-        })
-
-        expect(associateSubmissionMutation).toBeCalledWith(
-          env,
-          "on-kawara-one-million-years",
-        )
-        expect(Cookies.expire).toBeCalledWith("afterSignUpAction")
-      })
-    })
-
-    describe("failure", () => {
-      it("tries to associate the submission; does not expire the cookie", async () => {
-        ;(associateSubmissionMutation as jest.Mock).mockImplementation(() =>
-          Promise.reject(),
-        )
-
-        jest.spyOn(Cookies, "expire")
-        jest.spyOn(global.console, "error").mockImplementation(jest.fn())
-
-        await runAuthIntent({
-          user: {},
-          relayEnvironment: env as any,
-          onSuccess: () => {},
-        })
-
-        expect(associateSubmissionMutation).toBeCalledWith(
-          env,
-          "on-kawara-one-million-years",
-        )
-        expect(Cookies.expire).not.toBeCalled()
-        expect(global.console.error).toBeCalled()
-      })
-    })
-  })
 })
 
 describe("isValid", () => {
@@ -383,20 +316,6 @@ describe("isValid", () => {
       isValid({ action: "save", kind: "artworks", objectId: "example" }),
     ).toBe(true)
     expect(isValid({ action: "createAlert" })).toBe(true)
-    expect(
-      isValid({
-        action: "saveAndExitSubmission",
-        kind: "submission",
-        objectId: "example",
-      }),
-    ).toBe(true)
-    expect(
-      isValid({
-        action: "submitSubmission",
-        kind: "submission",
-        objectId: "example",
-      }),
-    ).toBe(true)
     expect(
       isValid({ action: "follow", kind: "invalid", objectId: "example" }),
     ).toBe(false)

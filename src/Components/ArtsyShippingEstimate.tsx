@@ -1,4 +1,4 @@
-import type { EstimateBody } from "@artaio/arta-browser"
+import type { EstimateBody, PartialEstimateConfig } from "@artaio/arta-browser"
 import type {
   ArtaLocation,
   ArtaObject,
@@ -15,7 +15,10 @@ import { Link, Spacer, Text } from "@artsy/palette"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import { getENV } from "Utils/getENV"
-import type { ArtsyShippingEstimate_artwork$key } from "__generated__/ArtsyShippingEstimate_artwork.graphql"
+import type {
+  ArtsyShippingEstimate_artwork$data,
+  ArtsyShippingEstimate_artwork$key,
+} from "__generated__/ArtsyShippingEstimate_artwork.graphql"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -44,9 +47,7 @@ export const ArtsyShippingEstimate = ({
 
   const artworkData = useFragment(ARTWORK_FRAGMENT, artwork)
 
-  const estimateInput = estimateRequestBodyForArtwork(
-    artworkData as ShippableArtwork,
-  )
+  const estimateInput = estimateRequestBodyForArtwork(artworkData)
 
   const [Arta, setArta] = useState<Arta | null>(null)
 
@@ -165,12 +166,14 @@ export const ArtsyShippingEstimate = ({
       tabIndex={0}
       onClick={e => {
         e.preventDefault()
+        e.stopPropagation()
         openWidget()
         trackClickedEstimatePrice()
       }}
       onKeyDown={e => {
         if (e.key === "Enter") {
           e.preventDefault()
+          e.stopPropagation()
           openWidget()
           trackClickedEstimatePrice()
         }
@@ -324,7 +327,7 @@ const ARTWORK_FRAGMENT = graphql`
   }
 `
 
-const widgetConfig = {
+const widgetConfig: PartialEstimateConfig = {
   style: {
     color: {
       border: "none",
@@ -404,41 +407,12 @@ const UNFRAMED_CATEGORY_MAP = {
   Other: "other_art",
 } as const
 
-interface ShippableArtwork {
-  depthCm?: number
-  diameterCm?: number
-  framedDepth?: number
-  framedDiameter?: number
-  framedHeight?: number
-  framedMetric?: string
-  framedWidth?: number
-  heightCm?: number
-  isFramed: boolean
-  listPrice: {
-    major?: number
-    maxPrice?: {
-      major?: number
-    }
-    minPrice?: {
-      major?: number
-    }
-  }
-  mediumType: {
-    name: keyof typeof FRAMED_CATEGORY_MAP | keyof typeof UNFRAMED_CATEGORY_MAP
-  }
-  priceCurrency: SupportedCurrency
-  shippingOrigin: string
-  shippingWeight?: number
-  shippingWeightMetric?: string
-  widthCm?: number
-}
-
 type ArtaObjectDimensions = Pick<
   ArtaObject,
   "height" | "width" | "depth" | "unit_of_measurement"
 >
 const artworkDimensions = (
-  artwork: ShippableArtwork,
+  artwork: ArtsyShippingEstimate_artwork$data,
 ): ArtaObjectDimensions | null => {
   const {
     depthCm,
@@ -496,16 +470,18 @@ const artworkDimensions = (
 }
 
 type ArtworkValue = Pick<ArtaObject, "value" | "value_currency">
-const artworkValue = (artwork: ShippableArtwork): ArtworkValue | null => {
-  const priceCurrency = artwork.priceCurrency
-  if (!priceCurrency) {
+const artworkValue = (
+  artwork: ArtsyShippingEstimate_artwork$data,
+): ArtworkValue | null => {
+  const priceCurrency = artwork.priceCurrency as SupportedCurrency
+  if (!priceCurrency || !artwork.listPrice) {
     return null
   }
 
-  const listPrice = artwork.listPrice.major
-  if (listPrice) {
+  const listPriceMajor = artwork.listPrice.major
+  if (listPriceMajor) {
     return {
-      value: listPrice,
+      value: listPriceMajor,
       value_currency: priceCurrency,
     }
   }
@@ -521,12 +497,21 @@ const artworkValue = (artwork: ShippableArtwork): ArtworkValue | null => {
   return null
 }
 
-const artaObject = (artwork: ShippableArtwork): ArtaObject | null => {
+const artaObject = (
+  artwork: ArtsyShippingEstimate_artwork$data,
+): ArtaObject | null => {
   const { isFramed, mediumType, shippingWeight, shippingWeightMetric } = artwork
 
-  const subtype = isFramed
-    ? FRAMED_CATEGORY_MAP[mediumType.name] || FRAMED_CATEGORY_MAP.Other
-    : UNFRAMED_CATEGORY_MAP[mediumType.name] || UNFRAMED_CATEGORY_MAP.Other
+  let subtype
+  if (isFramed) {
+    subtype =
+      (!!mediumType?.name && FRAMED_CATEGORY_MAP[mediumType.name]) ||
+      FRAMED_CATEGORY_MAP.Other
+  } else {
+    subtype =
+      (!!mediumType?.name && UNFRAMED_CATEGORY_MAP[mediumType.name]) ||
+      UNFRAMED_CATEGORY_MAP.Other
+  }
 
   const dimensions = artworkDimensions(artwork)
   const value = artworkValue(artwork)
@@ -541,8 +526,10 @@ const artaObject = (artwork: ShippableArtwork): ArtaObject | null => {
   return null
 }
 
-const artaLocation = (artwork: ShippableArtwork): ArtaLocation | null => {
-  const shippingOrigin = artwork.shippingOrigin.split(", ")
+const artaLocation = (
+  artwork: ArtsyShippingEstimate_artwork$data,
+): ArtaLocation | null => {
+  const shippingOrigin = artwork.shippingOrigin?.split(", ") ?? []
   const city = shippingOrigin[0]
   const country = shippingOrigin[shippingOrigin.length - 1]
   return shippingOrigin.length > 1 && !!city && !!country
@@ -553,8 +540,8 @@ const artaLocation = (artwork: ShippableArtwork): ArtaLocation | null => {
     : null
 }
 
-const estimateRequestBodyForArtwork = (
-  artwork: ShippableArtwork,
+export const estimateRequestBodyForArtwork = (
+  artwork: ArtsyShippingEstimate_artwork$data,
 ): EstimateBody | null => {
   try {
     const origin = artaLocation(artwork)
@@ -564,6 +551,11 @@ const estimateRequestBodyForArtwork = (
       return null
     }
     return {
+      insurance: "arta_transit_insurance",
+      additional_services: ["signature_delivery"],
+      preferred_quote_types: ["self_ship", "parcel", "select", "premium"],
+      currency: artwork.priceCurrency as SupportedCurrency,
+
       origin,
       objects: [artworkObject],
     }

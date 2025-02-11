@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<51da6d53a2a24db861d41df7aed1ec79>>
+ * @generated SignedSource<<3a52d842486ab6c060159abbfc890368>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -45,11 +45,6 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "includeAllImages",
-    "value": true
-  },
-  {
-    "kind": "Literal",
-    "name": "includeConsignmentSubmission",
     "value": true
   }
 ];
@@ -202,6 +197,6 @@ return {
 };
 })();
 
-(node as any).hash = "c52e6cfed2fe497274b8f532e8245592";
+(node as any).hash = "fded4aabad6f71c55dbfcb47a2c55c9f";
 
 export default node;

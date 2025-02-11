@@ -39,7 +39,7 @@ const { getWrapper } = setupTestWrapper<GeneArtworkFilter_Query>({
   query: graphql`
     query GeneArtworkFilter_Query($slug: String!) @relay_test_operation {
       gene(id: $slug) {
-        ...GeneArtworkFilter_gene @arguments(shouldFetchCounts: true)
+        ...GeneArtworkFilter_gene
       }
     }
   `,

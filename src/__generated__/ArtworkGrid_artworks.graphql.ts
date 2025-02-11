@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c7e0c018ad3eba4dc0836cfbfe028078>>
+ * @generated SignedSource<<bd0b6328794e2f0865d8a6d140d26972>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,11 +31,13 @@ export type ArtworkGrid_artworks$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = {
-  "kind": "Variable",
-  "name": "includeBlurHash",
-  "variableName": "includeBlurHash"
-};
+var v0 = [
+  {
+    "kind": "Variable",
+    "name": "includeBlurHash",
+    "variableName": "includeBlurHash"
+  }
+];
 return {
   "argumentDefinitions": [
     {
@@ -47,11 +49,6 @@ return {
       "defaultValue": true,
       "kind": "LocalArgument",
       "name": "includeBlurHash"
-    },
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "includeConsignmentSubmission"
     }
   ],
   "kind": "Fragment",
@@ -127,21 +124,12 @@ return {
               "storageKey": null
             },
             {
-              "args": [
-                (v0/*: any*/)
-              ],
+              "args": (v0/*: any*/),
               "kind": "FragmentSpread",
               "name": "GridItem_artwork"
             },
             {
-              "args": [
-                (v0/*: any*/),
-                {
-                  "kind": "Variable",
-                  "name": "includeConsignmentSubmission",
-                  "variableName": "includeConsignmentSubmission"
-                }
-              ],
+              "args": (v0/*: any*/),
               "kind": "FragmentSpread",
               "name": "FlatGridItem_artwork"
             }
@@ -157,6 +145,6 @@ return {
 };
 })();
 
-(node as any).hash = "33daab4206d833407dbfce33acf9d5b8";
+(node as any).hash = "97bb4e1cb64ddf22804fb50fbb66cff0";
 
 export default node;

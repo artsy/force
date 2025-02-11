@@ -1,7 +1,5 @@
 import { useDismissibleContext } from "@artsy/dismissible"
-import type { SellFlowStep } from "Apps/Sell/SellFlowContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { associateSubmissionMutation } from "Utils/Hooks/useAuthIntent/mutations/AuthIntentAssociateSubmissionMutation"
 import Cookies from "cookies-js"
 import { createContext, useContext, useEffect, useState } from "react"
 import type { Environment } from "react-relay"
@@ -16,7 +14,6 @@ import { saveArtworkMutation } from "./mutations/AuthIntentSaveArtworkMutation"
 export const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"
 
 export type AfterAuthAction =
-  | { action: "associateSubmission"; kind: "submission"; objectId: string }
   | { action: "createAlert" }
   | { action: "createAlert"; kind: "artist"; objectId: string }
   | { action: "createAlert"; kind: "artworks"; objectId: string }
@@ -36,17 +33,6 @@ export type AfterAuthAction =
       kind: "artworks"
       objectId: string
       secondaryObjectId: string | null | undefined
-    }
-  | {
-      action: "saveAndExitSubmission"
-      kind: "submission"
-      objectId: string
-      step: SellFlowStep
-    }
-  | {
-      action: "submitSubmission"
-      kind: "submission"
-      objectId: string
     }
 
 export const runAuthIntent = async ({
@@ -109,15 +95,6 @@ export const runAuthIntent = async ({
             value.objectId,
             value.secondaryObjectId,
           )
-
-        case "associateSubmission":
-          return associateSubmissionMutation(relayEnvironment, value.objectId)
-
-        case "saveAndExitSubmission":
-          // Do nothing. Value update triggers UI which handles mutation.
-          break
-        case "submitSubmission":
-          break
       }
     })()
 
@@ -207,19 +184,16 @@ export const setAfterAuthAction = (afterAuthAction: AfterAuthAction) => {
 const schema = Yup.object({
   action: Yup.string()
     .oneOf([
-      "associateSubmission",
       "createAlert",
       "follow",
       "save",
       "saveArtworkToLists",
       "buyNow",
       "makeOffer",
-      "submitSubmission",
-      "saveAndExitSubmission",
     ])
     .required(),
   kind: Yup.string()
-    .oneOf(["artist", "artworks", "gene", "profile", "submission"])
+    .oneOf(["artist", "artworks", "gene", "profile"])
     .when("action", (action, schema) => {
       return action === "createAlert" ? schema.notRequired() : schema.required()
     }),

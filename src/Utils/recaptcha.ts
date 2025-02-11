@@ -31,7 +31,6 @@ export const recaptcha = async (action: RecaptchaAction): Promise<string> => {
 }
 
 export type RecaptchaAction =
-  | "consignment_inquiry"
   | "forgot_submit"
   | "home"
   | "inquiry_forgot_impression"
@@ -40,5 +39,4 @@ export type RecaptchaAction =
   | "inquiry_register_impression"
   | "login_submit"
   | "signup_submit"
-  | "submission_submit"
   | "verify_user"

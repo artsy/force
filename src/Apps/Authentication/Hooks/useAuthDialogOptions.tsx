@@ -53,14 +53,9 @@ export const useAuthDialogOptions = () => {
   //
   // If there's a `submissionId` constructs an `afterAuthAction` from it. Otherwise
   // falls back to the `afterAuthAction` param.
-  const afterAuthAction: AfterAuthAction | undefined = !!query.submissionId
-    ? {
-        action: "associateSubmission",
-        kind: "submission",
-        objectId: query.submissionId,
-      }
-    : (query.afterSignUpAction as unknown as AfterAuthAction) ||
-      (query.afterAuthAction as unknown as AfterAuthAction)
+  const afterAuthAction: AfterAuthAction | undefined =
+    (query.afterSignUpAction as unknown as AfterAuthAction) ||
+    (query.afterAuthAction as unknown as AfterAuthAction)
 
   useEffect(() => {
     dispatch({

@@ -2,9 +2,13 @@ import type { default as Arta } from "@artaio/arta-browser"
 import type ArtaEstimate from "@artaio/arta-browser/dist/estimate"
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { ArtsyShippingEstimate } from "Components/ArtsyShippingEstimate"
+import {
+  ArtsyShippingEstimate,
+  estimateRequestBodyForArtwork,
+} from "Components/ArtsyShippingEstimate"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ArtsyShippingEstimate_Test_Query } from "__generated__/ArtsyShippingEstimate_Test_Query.graphql"
+import type { ArtsyShippingEstimate_artwork$data } from "__generated__/ArtsyShippingEstimate_artwork.graphql"
 import { useEffect, useState } from "react"
 
 import { graphql } from "react-relay"
@@ -51,6 +55,7 @@ const validArtworkData = {
   framedDepth: null,
   framedDiameter: null,
   framedMetric: "cm",
+  widthCm: 100,
   heightCm: 100,
   isFramed: false,
   listPrice: {
@@ -61,10 +66,9 @@ const validArtworkData = {
   },
   priceCurrency: "USD",
   shippingOrigin: "New York, USA",
-  shippingWeight: null,
+  shippingWeight: 20,
   shippingWeightMetric: "lb",
-  widthCm: 100,
-}
+} as ArtsyShippingEstimate_artwork$data
 
 const TestWrapper = ({ artwork }) => {
   const [show, setShow] = useState(true)
@@ -117,6 +121,7 @@ describe("ArtsyShippingEstimate", () => {
         Artwork: () => ({
           ...validArtworkData,
           widthCm: null,
+          diameterCm: null,
         }),
       })
 
@@ -160,6 +165,53 @@ describe("ArtsyShippingEstimate", () => {
       await waitFor(() => {
         expect(mockArtaEstimate.close).toHaveBeenCalledTimes(1)
       })
+    })
+  })
+
+  describe("estimateRequestBodyForArtwork()", () => {
+    it("sends the correct basic request params", async () => {
+      expect(
+        estimateRequestBodyForArtwork({
+          ...validArtworkData,
+          priceCurrency: "GBP",
+        }),
+      ).toEqual(
+        expect.objectContaining({
+          additional_services: ["signature_delivery"],
+          currency: "GBP",
+          insurance: "arta_transit_insurance",
+          preferred_quote_types: ["self_ship", "parcel", "select", "premium"],
+        }),
+      )
+    })
+
+    it("returns null if artwork is missing required dimensions", () => {
+      expect(
+        estimateRequestBodyForArtwork({
+          ...validArtworkData,
+          isFramed: false,
+          widthCm: null,
+          diameterCm: null,
+        }),
+      ).toBeNull()
+    })
+
+    it("returns null if artwork is missing required price info", () => {
+      expect(
+        estimateRequestBodyForArtwork({
+          ...validArtworkData,
+          listPrice: {
+            minPrice: null,
+          },
+        }),
+      ).toBeNull()
+
+      expect(
+        estimateRequestBodyForArtwork({
+          ...validArtworkData,
+          priceCurrency: null,
+        }),
+      ).toBeNull()
     })
   })
 })

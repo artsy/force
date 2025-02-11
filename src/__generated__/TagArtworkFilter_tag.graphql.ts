@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b853bd8c6f1609b4575f19f9738f2aef>>
+ * @generated SignedSource<<fb5746b8c46ba8ffbead608dd3676d26>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,9 +29,6 @@ export type TagArtworkFilter_tag$data = {
       } | null | undefined> | null | undefined;
       readonly slice: ArtworkAggregation | null | undefined;
     } | null | undefined> | null | undefined;
-    readonly counts?: {
-      readonly followedArtists: any | null | undefined;
-    } | null | undefined;
   } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "TagArtworkFilter_tag";
@@ -52,11 +49,6 @@ const node: ReaderFragment = {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "input"
-    },
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "shouldFetchCounts"
     }
   ],
   "kind": "Fragment",
@@ -96,31 +88,6 @@ const node: ReaderFragment = {
       "name": "filterArtworksConnection",
       "plural": false,
       "selections": [
-        {
-          "condition": "shouldFetchCounts",
-          "kind": "Condition",
-          "passingValue": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "FilterArtworksCounts",
-              "kind": "LinkedField",
-              "name": "counts",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "followedArtists",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ]
-        },
         {
           "alias": null,
           "args": null,
@@ -237,6 +204,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "70e71fb21ba5f3997f706a3f931e1452";
+(node as any).hash = "81034abbae0d7ada5f39904f3e931ac0";
 
 export default node;
