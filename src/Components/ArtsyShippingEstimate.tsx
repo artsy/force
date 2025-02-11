@@ -166,12 +166,14 @@ export const ArtsyShippingEstimate = ({
       tabIndex={0}
       onClick={e => {
         e.preventDefault()
+        e.stopPropagation()
         openWidget()
         trackClickedEstimatePrice()
       }}
       onKeyDown={e => {
         if (e.key === "Enter") {
           e.preventDefault()
+          e.stopPropagation()
           openWidget()
           trackClickedEstimatePrice()
         }
