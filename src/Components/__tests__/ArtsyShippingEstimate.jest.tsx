@@ -134,7 +134,7 @@ describe("ArtsyShippingEstimate", () => {
   describe("with a valid artwork", () => {
     const mockArtworkData = { ...validArtworkData }
 
-    it("renders the widget", async () => {
+    it("renders the widget as a link to open an estimate", async () => {
       renderWithRelay({
         Artwork: () => mockArtworkData,
       })
