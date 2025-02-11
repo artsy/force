@@ -18,7 +18,7 @@ import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Co
 import type { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { categoryOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/categoryOptions"
 import { rarityOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/rarityOptions"
-import { ArtistAutoComplete } from "Apps/Sell/Components/ArtistAutocomplete"
+import { ArtistAutoComplete } from "Components/ArtistAutocomplete"
 import {
   LocationAutocompleteInput,
   buildLocationDisplay,

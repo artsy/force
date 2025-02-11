@@ -17,7 +17,7 @@ import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCol
 import {
   ArtistAutoComplete,
   type AutocompleteArtist,
-} from "Apps/Sell/Components/ArtistAutocomplete"
+} from "Components/ArtistAutocomplete"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { extractNodes } from "Utils/extractNodes"
 import type { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
