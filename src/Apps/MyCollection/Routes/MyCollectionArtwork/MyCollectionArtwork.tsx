@@ -97,8 +97,6 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         ...MyCollectionArtworkImageBrowser_artwork
         ...MyCollectionArtworkComparables_artwork
         ...MyCollectionArtworkTitle_artwork
-        ...MyCollectionArtworkSWASectionSubmitted_submissionState
-        ...MyCollectionArtworkSWASubmissionStatus_artwork
         ...MyCollectionArtworkAboutTab_artwork
         comparables: comparableAuctionResults {
           totalCount

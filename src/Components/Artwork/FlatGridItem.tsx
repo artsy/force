@@ -131,13 +131,8 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
       @argumentDefinitions(
         includeBlurHash: { type: "Boolean", defaultValue: true }
         includeAllImages: { type: "Boolean", defaultValue: false }
-        includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
       ) {
         ...Metadata_artwork
-          @arguments(
-            includeConsignmentSubmission: $includeConsignmentSubmission
-          )
-
         sale {
           extendedBiddingPeriodMinutes
           extendedBiddingIntervalMinutes

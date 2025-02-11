@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2352f590c2b47d97b98a016c0ee58310>>
+ * @generated SignedSource<<a707f27be870ed03d568241cdd147376>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -55,11 +55,6 @@ const node: ReaderFragment = {
       "defaultValue": true,
       "kind": "LocalArgument",
       "name": "includeBlurHash"
-    },
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "includeConsignmentSubmission"
     }
   ],
   "kind": "Fragment",
@@ -67,13 +62,7 @@ const node: ReaderFragment = {
   "name": "FlatGridItem_artwork",
   "selections": [
     {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "includeConsignmentSubmission",
-          "variableName": "includeConsignmentSubmission"
-        }
-      ],
+      "args": null,
       "kind": "FragmentSpread",
       "name": "Metadata_artwork"
     },
@@ -272,6 +261,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "802f5554854d0877359f5df32ba66fbc";
+(node as any).hash = "fdba985b8be11309db3e707bb508917a";
 
 export default node;

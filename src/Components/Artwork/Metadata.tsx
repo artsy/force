@@ -102,12 +102,8 @@ const DisabledLink = styled(Box)`
 
 export default createFragmentContainer(Metadata, {
   artwork: graphql`
-    fragment Metadata_artwork on Artwork
-    @argumentDefinitions(
-      includeConsignmentSubmission: { type: "Boolean", defaultValue: false }
-    ) {
+    fragment Metadata_artwork on Artwork {
       ...Details_artwork
-        @arguments(includeConsignmentSubmission: $includeConsignmentSubmission)
       internalID
       href
       sale {

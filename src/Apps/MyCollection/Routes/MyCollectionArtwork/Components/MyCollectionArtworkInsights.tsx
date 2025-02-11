@@ -1,7 +1,4 @@
 import { Box, Join, Spacer } from "@artsy/palette"
-import { MyCollectionArtworkSWASectionSubmitted } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASectionSubmitted"
-import { MyCollectionArtworkSWASubmissionStatus } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWASubmissionStatus"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import type { MyCollectionArtworkInsights_artwork$key } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
 import { graphql, useFragment } from "react-relay"
 import { MyCollectionArtworkArtistMarketFragmentContainer } from "./MyCollectionArtworkArtistMarket"
@@ -16,18 +13,11 @@ interface MyCollectionArtworkInsightsProps {
 export const MyCollectionArtworkInsights: React.FC<
   React.PropsWithChildren<MyCollectionArtworkInsightsProps>
 > = ({ ...restProps }) => {
-  const enablePostApprovalSubmissionFlow = useFeatureFlag(
-    "onyx_post_approval_submission_flow",
-  )
-
   const artwork = useFragment(FRAGMENT, restProps.artwork)
 
-  const hasAuctionResults = artwork.auctionResults?.totalCount ?? 0 > 0
+  const hasAuctionResults = artwork.auctionResults?.totalCount
   const artistHasAuctionResults =
-    artwork.artist?.auctionResultsCount?.totalCount ?? 0 > 0
-  const displaySubmissionStateSection =
-    artwork.consignmentSubmission?.state === "REJECTED"
-
+    artwork.artist?.auctionResultsCount?.totalCount
   return (
     <Box pt={[1, 0]}>
       <Join separator={<Spacer y={[4, 6]} />}>
@@ -35,16 +25,6 @@ export const MyCollectionArtworkInsights: React.FC<
           <MyCollectionArtworkDemandIndexFragmentContainer
             marketPriceInsights={artwork.marketPriceInsights}
           />
-        )}
-
-        {!!displaySubmissionStateSection && (
-          <Box mb={4}>
-            {enablePostApprovalSubmissionFlow ? (
-              <MyCollectionArtworkSWASubmissionStatus artwork={artwork} />
-            ) : (
-              <MyCollectionArtworkSWASectionSubmitted artwork={artwork} />
-            )}
-          </Box>
         )}
 
         {artwork.marketPriceInsights && (
@@ -76,8 +56,6 @@ const FRAGMENT = graphql`
       totalCount
     }
     ...MyCollectionArtworkComparables_artwork
-    ...MyCollectionArtworkSWASectionSubmitted_submissionState
-    ...MyCollectionArtworkSWASubmissionStatus_artwork
     artist(shallow: true) {
       slug
       auctionResultsCount: auctionResultsConnection(first: 1) {
@@ -88,10 +66,6 @@ const FRAGMENT = graphql`
       }
 
       ...MyCollectionArtworkAuctionResults_artist
-    }
-    consignmentSubmission {
-      state
-      stateLabel
     }
     marketPriceInsights {
       ...MyCollectionArtworkArtistMarket_marketPriceInsights

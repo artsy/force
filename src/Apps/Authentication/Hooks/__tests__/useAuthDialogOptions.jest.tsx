@@ -165,43 +165,4 @@ describe("useAuthDialogOptions", () => {
       type: "SET",
     })
   })
-
-  it("sets afterAuthAction correctly when there is a submissionId", () => {
-    const dispatch = jest.fn()
-
-    mockUseAuthDialogContext.mockImplementation(() => ({
-      state: { mode: "Welcome" },
-      dispatch,
-    }))
-
-    mockUseRouter.mockImplementation(() => ({
-      match: {
-        location: {
-          query: {
-            submissionId: "exampleSubmissionId",
-          },
-        },
-      },
-    }))
-
-    renderHook(useAuthDialogOptions)
-
-    expect(dispatch).toHaveBeenCalledWith({
-      payload: {
-        analytics: {
-          intent: "signup",
-        },
-        mode: "Welcome",
-        options: {
-          title: "Sign up or log in",
-          afterAuthAction: {
-            action: "associateSubmission",
-            kind: "submission",
-            objectId: "exampleSubmissionId",
-          },
-        },
-      },
-      type: "SET",
-    })
-  })
 })

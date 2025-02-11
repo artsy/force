@@ -7,7 +7,6 @@ import {
   Image,
   Text,
 } from "@artsy/palette"
-import type { FormValues } from "Apps/Sell/Routes/ArtistRoute"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { extractNodes } from "Utils/extractNodes"
 import type {
@@ -20,6 +19,12 @@ import { useEffect, useMemo, useState } from "react"
 import { type Environment, fetchQuery, graphql } from "react-relay"
 
 const DEBOUNCE_DELAY = 300
+
+export interface FormValues {
+  artistId: string
+  artistName: string
+  isTargetSupply: boolean
+}
 
 export type AutocompleteArtist =
   | NonNullable<

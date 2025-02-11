@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cfd5f6ecbb391195f1d9962c829f38c3>>
+ * @generated SignedSource<<bc92622c9519c21d91b3434bc08561f1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,8 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
-export type Details_Test_Query$variables = {
-  includeConsignmentSubmission: boolean;
-};
+export type Details_Test_Query$variables = Record<PropertyKey, never>;
 export type Details_Test_Query$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"Details_artwork">;
@@ -55,19 +52,11 @@ export type Details_Test_Query$rawResponse = {
       } | null | undefined;
       readonly primaryLabel: LabelSignalEnum | null | undefined;
     } | null | undefined;
-    readonly consignmentSubmission: {
-      readonly actionLabel: string | null | undefined;
-      readonly internalID: string | null | undefined;
-      readonly state: ArtworkConsignmentSubmissionState;
-      readonly stateLabel: string | null | undefined;
-      readonly stateLabelColor: string | null | undefined;
-    } | null | undefined;
     readonly cultural_maker: string | null | undefined;
     readonly date: string | null | undefined;
     readonly href: string | null | undefined;
     readonly id: string;
     readonly internalID: string;
-    readonly isListed: boolean;
     readonly marketPriceInsights: {
       readonly demandRank: number | null | undefined;
     } | null | undefined;
@@ -125,40 +114,26 @@ export type Details_Test_Query = {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "includeConsignmentSubmission"
-  }
-],
-v1 = [
-  {
     "kind": "Literal",
     "name": "id",
     "value": "gerhard-richter-bagdad-ii-flow-p10-1"
   }
 ],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v3 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v4 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "endAt",
   "storageKey": null
 },
-v5 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -167,47 +142,59 @@ v5 = [
     "storageKey": null
   }
 ],
-v6 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v7 = [
+v5 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v8 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v9 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "lotID",
   "storageKey": null
 },
-v10 = [
-  (v8/*: any*/),
-  (v6/*: any*/)
+v8 = [
+  (v6/*: any*/),
+  (v4/*: any*/)
 ],
-v11 = {
+v9 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v12 = {
+v10 = {
   "enumValues": null,
   "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+},
+v11 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v12 = {
+  "enumValues": null,
+  "nullable": false,
   "plural": false,
   "type": "Boolean"
 },
@@ -215,21 +202,9 @@ v13 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
-},
-v14 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "Boolean"
-},
-v15 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
   "type": "Int"
 },
-v16 = {
+v14 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -237,27 +212,21 @@ v16 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "Details_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
         "selections": [
           {
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "includeConsignmentSubmission",
-                "variableName": "includeConsignmentSubmission"
-              }
-            ],
+            "args": null,
             "kind": "FragmentSpread",
             "name": "Details_artwork"
           }
@@ -270,20 +239,26 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "Details_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
-          (v3/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -367,7 +342,7 @@ return {
                 "name": "partnerOffer",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -375,10 +350,10 @@ return {
                     "kind": "LinkedField",
                     "name": "priceWithDiscount",
                     "plural": false,
-                    "selections": (v5/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
-                  (v6/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -401,7 +376,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v7/*: any*/),
+            "args": (v5/*: any*/),
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artist",
@@ -425,7 +400,7 @@ return {
                 ],
                 "storageKey": null
               },
-              (v6/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": "artist(shallow:true)"
           },
@@ -449,15 +424,15 @@ return {
           },
           {
             "alias": null,
-            "args": (v7/*: any*/),
+            "args": (v5/*: any*/),
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artists",
             "plural": true,
             "selections": [
-              (v6/*: any*/),
-              (v3/*: any*/),
-              (v8/*: any*/)
+              (v4/*: any*/),
+              (v1/*: any*/),
+              (v6/*: any*/)
             ],
             "storageKey": "artists(shallow:true)"
           },
@@ -470,15 +445,15 @@ return {
           },
           {
             "alias": null,
-            "args": (v7/*: any*/),
+            "args": (v5/*: any*/),
             "concreteType": "Partner",
             "kind": "LinkedField",
             "name": "partner",
             "plural": false,
             "selections": [
-              (v8/*: any*/),
-              (v3/*: any*/),
-              (v6/*: any*/)
+              (v6/*: any*/),
+              (v1/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": "partner(shallow:true)"
           },
@@ -490,7 +465,7 @@ return {
             "name": "sale",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -526,7 +501,7 @@ return {
                 "name": "isClosed",
                 "storageKey": null
               },
-              (v6/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -538,7 +513,7 @@ return {
             "name": "saleArtwork",
             "plural": false,
             "selections": [
-              (v9/*: any*/),
+              (v7/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -546,7 +521,7 @@ return {
                 "name": "lotLabel",
                 "storageKey": null
               },
-              (v4/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -586,7 +561,7 @@ return {
                 "kind": "LinkedField",
                 "name": "highestBid",
                 "plural": false,
-                "selections": (v5/*: any*/),
+                "selections": (v3/*: any*/),
                 "storageKey": null
               },
               {
@@ -596,10 +571,10 @@ return {
                 "kind": "LinkedField",
                 "name": "openingBid",
                 "plural": false,
-                "selections": (v5/*: any*/),
+                "selections": (v3/*: any*/),
                 "storageKey": null
               },
-              (v6/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -611,8 +586,8 @@ return {
             "name": "saleArtwork",
             "plural": false,
             "selections": [
-              (v9/*: any*/),
-              (v6/*: any*/)
+              (v7/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -623,7 +598,7 @@ return {
             "kind": "LinkedField",
             "name": "attributionClass",
             "plural": false,
-            "selections": (v10/*: any*/),
+            "selections": (v8/*: any*/),
             "storageKey": null
           },
           {
@@ -641,74 +616,20 @@ return {
                 "kind": "LinkedField",
                 "name": "filterGene",
                 "plural": false,
-                "selections": (v10/*: any*/),
+                "selections": (v8/*: any*/),
                 "storageKey": null
               }
             ],
             "storageKey": null
           },
-          (v6/*: any*/),
-          {
-            "condition": "includeConsignmentSubmission",
-            "kind": "Condition",
-            "passingValue": true,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "ArtworkConsignmentSubmission",
-                "kind": "LinkedField",
-                "name": "consignmentSubmission",
-                "plural": false,
-                "selections": [
-                  (v2/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "state",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "stateLabel",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "actionLabel",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "stateLabelColor",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "isListed",
-                "storageKey": null
-              }
-            ]
-          }
+          (v4/*: any*/)
         ],
         "storageKey": "artwork(id:\"gerhard-richter-bagdad-ii-flow-p10-1\")"
       }
     ]
   },
   "params": {
-    "cacheID": "617a2a723659248e87f469ee107a069a",
+    "cacheID": "31ffc266ef89c3031c83c2d19b0314dc",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -724,32 +645,32 @@ return {
           "plural": false,
           "type": "Artist"
         },
-        "artwork.artist.id": (v11/*: any*/),
+        "artwork.artist.id": (v9/*: any*/),
         "artwork.artist.targetSupply": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "ArtistTargetSupply"
         },
-        "artwork.artist.targetSupply.isP1": (v12/*: any*/),
+        "artwork.artist.targetSupply.isP1": (v10/*: any*/),
         "artwork.artists": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "Artist"
         },
-        "artwork.artists.href": (v13/*: any*/),
-        "artwork.artists.id": (v11/*: any*/),
-        "artwork.artists.name": (v13/*: any*/),
+        "artwork.artists.href": (v11/*: any*/),
+        "artwork.artists.id": (v9/*: any*/),
+        "artwork.artists.name": (v11/*: any*/),
         "artwork.attributionClass": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AttributionClass"
         },
-        "artwork.attributionClass.id": (v11/*: any*/),
-        "artwork.attributionClass.name": (v13/*: any*/),
-        "artwork.collecting_institution": (v13/*: any*/),
+        "artwork.attributionClass.id": (v9/*: any*/),
+        "artwork.attributionClass.name": (v11/*: any*/),
+        "artwork.collecting_institution": (v11/*: any*/),
         "artwork.collectorSignals": {
           "enumValues": null,
           "nullable": true,
@@ -768,25 +689,25 @@ return {
           "plural": false,
           "type": "Int"
         },
-        "artwork.collectorSignals.auction.liveBiddingStarted": (v14/*: any*/),
-        "artwork.collectorSignals.auction.lotClosesAt": (v13/*: any*/),
-        "artwork.collectorSignals.auction.onlineBiddingExtended": (v14/*: any*/),
-        "artwork.collectorSignals.auction.registrationEndsAt": (v13/*: any*/),
+        "artwork.collectorSignals.auction.liveBiddingStarted": (v12/*: any*/),
+        "artwork.collectorSignals.auction.lotClosesAt": (v11/*: any*/),
+        "artwork.collectorSignals.auction.onlineBiddingExtended": (v12/*: any*/),
+        "artwork.collectorSignals.auction.registrationEndsAt": (v11/*: any*/),
         "artwork.collectorSignals.partnerOffer": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "PartnerOfferToCollector"
         },
-        "artwork.collectorSignals.partnerOffer.endAt": (v13/*: any*/),
-        "artwork.collectorSignals.partnerOffer.id": (v11/*: any*/),
+        "artwork.collectorSignals.partnerOffer.endAt": (v11/*: any*/),
+        "artwork.collectorSignals.partnerOffer.id": (v9/*: any*/),
         "artwork.collectorSignals.partnerOffer.priceWithDiscount": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Money"
         },
-        "artwork.collectorSignals.partnerOffer.priceWithDiscount.display": (v13/*: any*/),
+        "artwork.collectorSignals.partnerOffer.priceWithDiscount.display": (v11/*: any*/),
         "artwork.collectorSignals.primaryLabel": {
           "enumValues": [
             "CURATORS_PICK",
@@ -797,37 +718,11 @@ return {
           "plural": false,
           "type": "LabelSignalEnum"
         },
-        "artwork.consignmentSubmission": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtworkConsignmentSubmission"
-        },
-        "artwork.consignmentSubmission.actionLabel": (v13/*: any*/),
-        "artwork.consignmentSubmission.internalID": (v13/*: any*/),
-        "artwork.consignmentSubmission.state": {
-          "enumValues": [
-            "APPROVED",
-            "CLOSED",
-            "DRAFT",
-            "HOLD",
-            "PUBLISHED",
-            "REJECTED",
-            "RESUBMITTED",
-            "SUBMITTED"
-          ],
-          "nullable": false,
-          "plural": false,
-          "type": "ArtworkConsignmentSubmissionState"
-        },
-        "artwork.consignmentSubmission.stateLabel": (v13/*: any*/),
-        "artwork.consignmentSubmission.stateLabelColor": (v13/*: any*/),
-        "artwork.cultural_maker": (v13/*: any*/),
-        "artwork.date": (v13/*: any*/),
-        "artwork.href": (v13/*: any*/),
-        "artwork.id": (v11/*: any*/),
-        "artwork.internalID": (v11/*: any*/),
-        "artwork.isListed": (v14/*: any*/),
+        "artwork.cultural_maker": (v11/*: any*/),
+        "artwork.date": (v11/*: any*/),
+        "artwork.href": (v11/*: any*/),
+        "artwork.id": (v9/*: any*/),
+        "artwork.internalID": (v9/*: any*/),
         "artwork.marketPriceInsights": {
           "enumValues": null,
           "nullable": true,
@@ -852,34 +747,34 @@ return {
           "plural": false,
           "type": "Gene"
         },
-        "artwork.mediumType.filterGene.id": (v11/*: any*/),
-        "artwork.mediumType.filterGene.name": (v13/*: any*/),
+        "artwork.mediumType.filterGene.id": (v9/*: any*/),
+        "artwork.mediumType.filterGene.name": (v11/*: any*/),
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
-        "artwork.partner.href": (v13/*: any*/),
-        "artwork.partner.id": (v11/*: any*/),
-        "artwork.partner.name": (v13/*: any*/),
+        "artwork.partner.href": (v11/*: any*/),
+        "artwork.partner.id": (v9/*: any*/),
+        "artwork.partner.name": (v11/*: any*/),
         "artwork.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "artwork.sale.cascadingEndTimeIntervalMinutes": (v15/*: any*/),
-        "artwork.sale.endAt": (v13/*: any*/),
-        "artwork.sale.extendedBiddingIntervalMinutes": (v15/*: any*/),
-        "artwork.sale.id": (v11/*: any*/),
-        "artwork.sale.is_auction": (v12/*: any*/),
-        "artwork.sale.is_closed": (v12/*: any*/),
-        "artwork.sale.startAt": (v13/*: any*/),
-        "artwork.saleArtwork": (v16/*: any*/),
-        "artwork.saleArtwork.id": (v11/*: any*/),
-        "artwork.saleArtwork.lotID": (v13/*: any*/),
-        "artwork.sale_artwork": (v16/*: any*/),
+        "artwork.sale.cascadingEndTimeIntervalMinutes": (v13/*: any*/),
+        "artwork.sale.endAt": (v11/*: any*/),
+        "artwork.sale.extendedBiddingIntervalMinutes": (v13/*: any*/),
+        "artwork.sale.id": (v9/*: any*/),
+        "artwork.sale.is_auction": (v10/*: any*/),
+        "artwork.sale.is_closed": (v10/*: any*/),
+        "artwork.sale.startAt": (v11/*: any*/),
+        "artwork.saleArtwork": (v14/*: any*/),
+        "artwork.saleArtwork.id": (v9/*: any*/),
+        "artwork.saleArtwork.lotID": (v11/*: any*/),
+        "artwork.sale_artwork": (v14/*: any*/),
         "artwork.sale_artwork.counts": {
           "enumValues": null,
           "nullable": true,
@@ -892,37 +787,37 @@ return {
           "plural": false,
           "type": "FormattedNumber"
         },
-        "artwork.sale_artwork.endAt": (v13/*: any*/),
-        "artwork.sale_artwork.extendedBiddingEndAt": (v13/*: any*/),
-        "artwork.sale_artwork.formattedEndDateTime": (v13/*: any*/),
+        "artwork.sale_artwork.endAt": (v11/*: any*/),
+        "artwork.sale_artwork.extendedBiddingEndAt": (v11/*: any*/),
+        "artwork.sale_artwork.formattedEndDateTime": (v11/*: any*/),
         "artwork.sale_artwork.highest_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkHighestBid"
         },
-        "artwork.sale_artwork.highest_bid.display": (v13/*: any*/),
-        "artwork.sale_artwork.id": (v11/*: any*/),
-        "artwork.sale_artwork.lotID": (v13/*: any*/),
-        "artwork.sale_artwork.lotLabel": (v13/*: any*/),
+        "artwork.sale_artwork.highest_bid.display": (v11/*: any*/),
+        "artwork.sale_artwork.id": (v9/*: any*/),
+        "artwork.sale_artwork.lotID": (v11/*: any*/),
+        "artwork.sale_artwork.lotLabel": (v11/*: any*/),
         "artwork.sale_artwork.opening_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkOpeningBid"
         },
-        "artwork.sale_artwork.opening_bid.display": (v13/*: any*/),
-        "artwork.sale_message": (v13/*: any*/),
-        "artwork.title": (v13/*: any*/)
+        "artwork.sale_artwork.opening_bid.display": (v11/*: any*/),
+        "artwork.sale_message": (v11/*: any*/),
+        "artwork.title": (v11/*: any*/)
       }
     },
     "name": "Details_Test_Query",
     "operationKind": "query",
-    "text": "query Details_Test_Query(\n  $includeConsignmentSubmission: Boolean!\n) {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork_2UNTrk\n    id\n  }\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  saleArtwork {\n    lotID\n    id\n  }\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n\nfragment ConsignmentSubmissionStatus_artwork on Artwork {\n  internalID\n  isListed\n  consignmentSubmission {\n    internalID\n    state\n    stateLabel\n    actionLabel\n    stateLabelColor\n  }\n}\n\nfragment Details_artwork_2UNTrk on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    primaryLabel\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  consignmentSubmission @include(if: $includeConsignmentSubmission) {\n    internalID\n  }\n  ...ConsignmentSubmissionStatus_artwork @include(if: $includeConsignmentSubmission)\n  ...LegacyPrimaryLabelLine_artwork\n  ...PrimaryLabelLine_artwork\n  ...BidTimerLine_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment LegacyPrimaryLabelLine_artwork on Artwork {\n  collectorSignals {\n    primaryLabel\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query Details_Test_Query {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork\n    id\n  }\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  saleArtwork {\n    lotID\n    id\n  }\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    primaryLabel\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...LegacyPrimaryLabelLine_artwork\n  ...PrimaryLabelLine_artwork\n  ...BidTimerLine_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment LegacyPrimaryLabelLine_artwork on Artwork {\n  collectorSignals {\n    primaryLabel\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "4802181dbf91e191607e80ab8ece2b6c";
+(node as any).hash = "01119da99c9b8742b1bd28e198996a2c";
 
 export default node;

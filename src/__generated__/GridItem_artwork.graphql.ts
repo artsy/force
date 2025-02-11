@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<41b8dccf42540686e6dffb8269b7c8d4>>
+ * @generated SignedSource<<eeb92e004b90f058a8b2f0a26c7e93f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -51,11 +51,6 @@ return {
       "defaultValue": true,
       "kind": "LocalArgument",
       "name": "includeBlurHash"
-    },
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "includeConsignmentSubmission"
     }
   ],
   "kind": "Fragment",
@@ -161,13 +156,7 @@ return {
       "storageKey": null
     },
     {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "includeConsignmentSubmission",
-          "variableName": "includeConsignmentSubmission"
-        }
-      ],
+      "args": null,
       "kind": "FragmentSpread",
       "name": "Metadata_artwork"
     },
@@ -182,6 +171,6 @@ return {
 };
 })();
 
-(node as any).hash = "c4459a2e0d89f7ac40e00f390da7058d";
+(node as any).hash = "915e0ca22e361d3dbe0b8ab8947f574b";
 
 export default node;
