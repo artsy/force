@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6fb8baf5337f03b7ddb415d5e17624ae>>
+ * @generated SignedSource<<d9f0ec9b21a7f76347487c39596676f6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -153,16 +153,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "035d078a8dc1e5672ec96bd1575eea3b",
+    "cacheID": "4d6f103a998626087cf248eab709b64d",
     "id": null,
     "metadata": {},
     "name": "tagRoutes_TagQuery",
     "operationKind": "query",
-    "text": "query tagRoutes_TagQuery(\n  $slug: String!\n) {\n  tag(id: $slug) @principalField {\n    ...TagApp_tag\n    id\n  }\n}\n\nfragment TagApp_tag on Tag {\n  ...TagMeta_tag\n  name\n}\n\nfragment TagMeta_tag on Tag {\n  name\n  href\n  description\n  image {\n    cropped(width: 1200, height: 630) {\n      src\n    }\n  }\n}\n"
+    "text": "query tagRoutes_TagQuery(\n  $slug: String!\n) @cacheable {\n  tag(id: $slug) @principalField {\n    ...TagApp_tag\n    id\n  }\n}\n\nfragment TagApp_tag on Tag {\n  ...TagMeta_tag\n  name\n}\n\nfragment TagMeta_tag on Tag {\n  name\n  href\n  description\n  image {\n    cropped(width: 1200, height: 630) {\n      src\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a969974f4251bcc8522f3c4b08ee1d39";
+(node as any).hash = "c2dac8ec47bd17eddd8094a7bb72bbf3";
 
 export default node;

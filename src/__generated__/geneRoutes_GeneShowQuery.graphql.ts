@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ccc59f0e817baef964c94fec907b9074>>
+ * @generated SignedSource<<5a857cd1d2a147dbe8fb61a0bbb12ece>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -272,16 +272,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "470c206ecbc5934cf79625ff9ff87a83",
+    "cacheID": "3536f8d90496eb8640e4a0bfbca81a34",
     "id": null,
     "metadata": {},
     "name": "geneRoutes_GeneShowQuery",
     "operationKind": "query",
-    "text": "query geneRoutes_GeneShowQuery(\n  $slug: String!\n) {\n  gene(id: $slug) @principalField {\n    ...GeneShow_gene\n    id\n  }\n}\n\nfragment GeneMeta_gene on Gene {\n  name\n  displayName\n  href\n  meta {\n    description\n  }\n  image {\n    cropped(width: 1200, height: 630) {\n      src\n    }\n  }\n}\n\nfragment GeneShow_gene on Gene {\n  ...GeneMeta_gene\n  internalID\n  name\n  displayName\n  formattedDescription: description(format: HTML)\n  similar(first: 10) {\n    edges {\n      node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n  artistsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query geneRoutes_GeneShowQuery(\n  $slug: String!\n) @cacheable {\n  gene(id: $slug) @principalField {\n    ...GeneShow_gene\n    id\n  }\n}\n\nfragment GeneMeta_gene on Gene {\n  name\n  displayName\n  href\n  meta {\n    description\n  }\n  image {\n    cropped(width: 1200, height: 630) {\n      src\n    }\n  }\n}\n\nfragment GeneShow_gene on Gene {\n  ...GeneMeta_gene\n  internalID\n  name\n  displayName\n  formattedDescription: description(format: HTML)\n  similar(first: 10) {\n    edges {\n      node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n  artistsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f0054fa7b90bc66c38eef2b99ba3247a";
+(node as any).hash = "d485b87d861d375ffa40e0ce0ca4870b";
 
 export default node;

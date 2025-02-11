@@ -39,7 +39,7 @@ const { getWrapper } = setupTestWrapper<TagArtworkFilter_Query>({
   query: graphql`
     query TagArtworkFilter_Query($slug: String!) @relay_test_operation {
       tag(id: $slug) {
-        ...TagArtworkFilter_tag @arguments(shouldFetchCounts: true)
+        ...TagArtworkFilter_tag
       }
     }
   `,

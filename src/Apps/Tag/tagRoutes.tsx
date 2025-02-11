@@ -18,7 +18,7 @@ export const tagRoutes: RouteProps[] = [
     },
 
     query: graphql`
-      query tagRoutes_TagQuery($slug: String!) {
+      query tagRoutes_TagQuery($slug: String!) @cacheable {
         tag(id: $slug) @principalField {
           ...TagApp_tag
         }

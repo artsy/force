@@ -1,7 +1,6 @@
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
-  type Counts,
   type SharedArtworkFilterContextProps,
   initialArtworkFilterState,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
@@ -47,7 +46,6 @@ const TagArtworkFilter: React.FC<
         { text: "Artwork Year (Descending)", value: "-year" },
         { text: "Artwork Year (Ascending)", value: "year" },
       ]}
-      counts={sidebar?.counts as Counts}
       aggregations={
         sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
@@ -66,7 +64,6 @@ export const TagArtworkFilterRefetchContainer = createRefetchContainer(
       @argumentDefinitions(
         input: { type: "FilterArtworksInput" }
         aggregations: { type: "[ArtworkAggregation]" }
-        shouldFetchCounts: { type: "Boolean!", defaultValue: false }
       ) {
         slug
         internalID
@@ -74,9 +71,6 @@ export const TagArtworkFilterRefetchContainer = createRefetchContainer(
           aggregations: $aggregations
           first: 1
         ) {
-          counts @include(if: $shouldFetchCounts) {
-            followedArtists
-          }
           aggregations {
             slice
             counts {
@@ -100,7 +94,7 @@ export const TagArtworkFilterRefetchContainer = createRefetchContainer(
     query TagArtworkFilterRefetchQuery(
       $slug: String!
       $input: FilterArtworksInput
-    ) {
+    ) @cacheable {
       tag(id: $slug) {
         ...TagArtworkFilter_tag @arguments(input: $input)
       }
@@ -125,15 +119,10 @@ export const TagArtworkFilterQueryRenderer: React.FC<
             $slug: String!
             $input: FilterArtworksInput
             $aggregations: [ArtworkAggregation]
-            $shouldFetchCounts: Boolean!
-          ) {
+          ) @cacheable {
             tag(id: $slug) {
               ...TagArtworkFilter_tag
-                @arguments(
-                  input: $input
-                  aggregations: $aggregations
-                  shouldFetchCounts: $shouldFetchCounts
-                )
+                @arguments(input: $input, aggregations: $aggregations)
             }
           }
         `}
@@ -176,7 +165,6 @@ const initializeVariablesWithFilterState = (params, props) => {
   return {
     aggregations,
     input: allowedFilters(filters),
-    shouldFetchCounts: !!props.context.user,
     slug: tagSlug,
   }
 }
