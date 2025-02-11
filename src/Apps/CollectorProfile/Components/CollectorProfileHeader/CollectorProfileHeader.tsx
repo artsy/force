@@ -59,7 +59,7 @@ const CollectorProfileHeader: React.FC<
             {hasBadge && (
               <Stack gap={0.5} flexDirection="row" flexWrap="wrap">
                 {collectorProfile.confirmedBuyerAt && (
-                  <Tooltip content="Confirmed Buyer">
+                  <Tooltip content="Confirmed Buyer" width="fit-content">
                     <Box as="span" style={{ lineHeight: 0 }}>
                       <UserVerifiedIcon />
                     </Box>
@@ -67,7 +67,7 @@ const CollectorProfileHeader: React.FC<
                 )}
 
                 {collectorProfile.isIdentityVerified && (
-                  <Tooltip content="ID Verified">
+                  <Tooltip content="ID Verified" width="fit-content">
                     <Box as="span" style={{ lineHeight: 0 }}>
                       <ShieldIcon />
                     </Box>

@@ -129,7 +129,7 @@ export const artistRoutes: RouteProps[] = [
         },
         prepareVariables: getWorksForSaleRouteVariables,
         query: graphql`
-          query artistRoutes_WorksForSaleQuery($artistID: String!) {
+          query artistRoutes_WorksForSaleQuery($artistID: String!) @cacheable {
             artist(id: $artistID) @principalField {
               ...ArtistWorksForSaleRoute_artist
             }

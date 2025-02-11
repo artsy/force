@@ -1,4 +1,4 @@
-import { fireEvent, screen } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { ArtworkSidebarLinksFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarLinks"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ArtworkSidebarLinks_Test_Query } from "__generated__/ArtworkSidebarLinks_Test_Query.graphql"
@@ -37,32 +37,6 @@ describe("ArtworkSidebarLinks", () => {
       `,
     })
 
-  it("renders sell with Artsy Section", () => {
-    renderWithRelay({})
-
-    expect(
-      screen.queryByText(/Want to sell a work by this artist?/i),
-    ).toBeInTheDocument()
-    expect(screen.queryByText(/Sell with Artsy/i)).toBeInTheDocument()
-  })
-
-  it("tracks sell with artsy link click", () => {
-    renderWithRelay({})
-
-    fireEvent.click(screen.getByText(/Sell with Artsy/i))
-
-    expect(trackEvent).toHaveBeenCalledTimes(1)
-    expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-      [
-        {
-          "action_type": "Click",
-          "subject": "sell with artsy",
-          "type": "Link",
-        },
-      ]
-    `)
-  })
-
   describe("render auction faq section when artwork", () => {
     describe("is in auction and auction is ongoing", () => {
       beforeEach(() => {
@@ -96,30 +70,6 @@ describe("ArtworkSidebarLinks", () => {
           ).toHaveAttribute("href", "/terms")
         })
       })
-    })
-
-    it("tracks conditions of sale link click", () => {
-      renderWithRelay({
-        Artwork: () => ({
-          isInAuction: true,
-          sale: {
-            isClosed: false,
-          },
-        }),
-      })
-
-      fireEvent.click(screen.getByText(/Sell with Artsy/i))
-
-      expect(trackEvent).toHaveBeenCalledTimes(1)
-      expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-        [
-          {
-            "action_type": "Click",
-            "subject": "sell with artsy",
-            "type": "Link",
-          },
-        ]
-      `)
     })
   })
 

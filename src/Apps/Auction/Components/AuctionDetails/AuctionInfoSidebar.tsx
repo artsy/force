@@ -69,17 +69,6 @@ const AuctionInfoSidebar: React.FC<
           <Text variant="sm">Supplemental Conditions of Sale</Text>
         </RouterLink>
       </Box>
-
-      <Box>
-        <Text variant="sm">
-          Have a work you want to sell?
-          <br />
-          Submit to our team{" "}
-          <RouterLink inline to="/sell" target="_blank">
-            here
-          </RouterLink>
-        </Text>
-      </Box>
     </Join>
   )
 }

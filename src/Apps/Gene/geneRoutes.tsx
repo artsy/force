@@ -47,7 +47,7 @@ export const geneRoutes: RouteProps[] = [
           GeneShowRoute.preload()
         },
         query: graphql`
-          query geneRoutes_GeneShowQuery($slug: String!) {
+          query geneRoutes_GeneShowQuery($slug: String!) @cacheable {
             gene(id: $slug) @principalField {
               ...GeneShow_gene
             }

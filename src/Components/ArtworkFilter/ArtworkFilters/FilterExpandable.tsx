@@ -4,8 +4,8 @@ import type React from "react"
 import { useRef } from "react"
 
 export const FilterExpandable: React.FC<
-  React.PropsWithChildren<ExpandableProps>
-> = ({ expanded, ...rest }) => {
+  React.PropsWithChildren<ExpandableProps & { ignoreBounds?: boolean }>
+> = ({ expanded, ignoreBounds = false, ...rest }) => {
   const ref = useRef<HTMLDivElement | null>(null)
 
   // Note: `IS_MOBILE` requires a full page load
@@ -19,7 +19,7 @@ export const FilterExpandable: React.FC<
       const anchor = ref.current
       if (!anchor) return
       const { top } = anchor.getBoundingClientRect()
-      if (top < window.innerHeight) return
+      if (top < window.innerHeight && !ignoreBounds) return
       anchor.scrollIntoView({ block: "end" })
     })
   }

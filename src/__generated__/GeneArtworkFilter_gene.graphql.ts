@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a4939cf2f055f3e8d4822d008c32d7cd>>
+ * @generated SignedSource<<ac7d20e6686dc718f8f97dc678793dc8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,9 +29,6 @@ export type GeneArtworkFilter_gene$data = {
       } | null | undefined> | null | undefined;
       readonly slice: ArtworkAggregation | null | undefined;
     } | null | undefined> | null | undefined;
-    readonly counts?: {
-      readonly followedArtists: any | null | undefined;
-    } | null | undefined;
   } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "GeneArtworkFilter_gene";
@@ -52,11 +49,6 @@ const node: ReaderFragment = {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "input"
-    },
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "shouldFetchCounts"
     }
   ],
   "kind": "Fragment",
@@ -96,31 +88,6 @@ const node: ReaderFragment = {
       "name": "filterArtworksConnection",
       "plural": false,
       "selections": [
-        {
-          "condition": "shouldFetchCounts",
-          "kind": "Condition",
-          "passingValue": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "FilterArtworksCounts",
-              "kind": "LinkedField",
-              "name": "counts",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "followedArtists",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ]
-        },
         {
           "alias": null,
           "args": null,
@@ -237,6 +204,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "58624c2cf366c7a7f3f0d22db616cec0";
+(node as any).hash = "163364967e7c06edecb9195531d1adf9";
 
 export default node;

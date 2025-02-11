@@ -163,7 +163,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
     query FairArtworksFilterRefetchQuery(
       $slug: String!
       $input: FilterArtworksInput
-    ) {
+    ) @cacheable {
       fair(id: $slug) {
         ...FairArtworks_fair @arguments(input: $input)
       }
@@ -188,7 +188,7 @@ export const FairArtworksQueryRenderer: React.FC<
             $slug: String!
             $input: FilterArtworksInput
             $aggregations: [ArtworkAggregation]
-          ) {
+          ) @cacheable {
             fair(id: $slug) {
               ...FairArtworks_fair
                 @arguments(input: $input, aggregations: $aggregations)
