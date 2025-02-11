@@ -6,7 +6,7 @@ import { getInitialPaymentMethodValue } from "./../orderUtils"
 
 describe("order utils", () => {
   describe("get initial payment method value", () => {
-    describe("order payment is valid", () => {
+    describe("when currently selected order payment is valid (paymentSet is true)", () => {
       it.each<[CommercePaymentMethodEnum]>([
         ["CREDIT_CARD"],
         ["US_BANK_ACCOUNT"],
@@ -21,32 +21,32 @@ describe("order utils", () => {
       })
     })
 
-    describe("order payment is invalid", () => {
-      it("returns US_BANK_ACCOUNT if available payment methods includes it", () => {
+    describe("when currently selected order payment payment is invalid (paymentSet is false)", () => {
+      it("returns CREDIT_CARD if available payment methods includes it", () => {
         expect(
           getInitialPaymentMethodValue({
             paymentSet: false,
-            paymentMethod: "CREDIT_CARD",
+            paymentMethod: "WIRE_TRANSFER",
             availablePaymentMethods: [
               "US_BANK_ACCOUNT",
               "CREDIT_CARD",
               "WIRE_TRANSFER",
             ],
           } as unknown as Payment_order$data),
-        ).toEqual("US_BANK_ACCOUNT")
+        ).toEqual("CREDIT_CARD")
       })
 
-      it("returns CREDIT_CARD if available payment methods doesn't include US_BANK_ACCOUNT", () => {
+      it("returns US_BANK_ACCOUNT if available payment methods doesn't include CREDIT_CARD but include US_BANK_ACCOUNT", () => {
         expect(
           getInitialPaymentMethodValue({
             paymentSet: false,
             paymentMethod: "CREDIT_CARD",
-            availablePaymentMethods: ["CREDIT_CARD", "WIRE_TRANSFER"],
+            availablePaymentMethods: ["WIRE_TRANSFER", "US_BANK_ACCOUNT"],
           } as unknown as Payment_order$data),
-        ).toEqual("CREDIT_CARD")
+        ).toEqual("US_BANK_ACCOUNT")
       })
 
-      it("returns WIRE_TRANSFER if available payment methods doesn't include US_BANK_ACCOUNT and CREDIT_CARD", () => {
+      it("returns WIRE_TRANSFER if available payment methods doesn't include CREDIT_CARD or US_BANK_ACCOUNT", () => {
         expect(
           getInitialPaymentMethodValue({
             paymentSet: false,

@@ -3,10 +3,10 @@ import type {
   Payment_order$data,
 } from "__generated__/Payment_order.graphql"
 
-const initialPaymentMethods: CommercePaymentMethodEnum[] = [
+const orderedPaymentMethods: CommercePaymentMethodEnum[] = [
+  "CREDIT_CARD",
   "US_BANK_ACCOUNT",
   "SEPA_DEBIT",
-  "CREDIT_CARD",
   "WIRE_TRANSFER",
 ]
 
@@ -17,6 +17,6 @@ export const getInitialPaymentMethodValue = ({
 }: Payment_order$data): CommercePaymentMethodEnum =>
   paymentSet
     ? paymentMethod!
-    : initialPaymentMethods.find(method =>
+    : orderedPaymentMethods.find(method =>
         availablePaymentMethods.includes(method),
       )!

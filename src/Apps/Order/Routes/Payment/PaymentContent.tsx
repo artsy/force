@@ -217,7 +217,6 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
 const getAvailablePaymentMethods = (
   availablePaymentMethods: readonly CommercePaymentMethodEnum[],
 ): ReactElement<RadioProps<string>>[] => {
-  let paymentMethod: CommercePaymentMethodEnum = "CREDIT_CARD"
   const paymentMethods: Array<ReactElement<RadioProps<string>>> = []
 
   if (availablePaymentMethods.includes("CREDIT_CARD")) {
@@ -225,7 +224,7 @@ const getAvailablePaymentMethods = (
       <BorderedRadio
         data-test-id="credit-card"
         key="CREDIT_CARD"
-        value={paymentMethod}
+        value="CREDIT_CARD"
         label={
           <>
             <UnknownCardIcon fill="black100" />
@@ -238,32 +237,12 @@ const getAvailablePaymentMethods = (
     )
   }
 
-  // push wire transfer as the last option
-  if (availablePaymentMethods.includes("WIRE_TRANSFER")) {
-    paymentMethods.push(
-      <BorderedRadio
-        data-test-id="wire-transfer"
-        key="WIRE_TRANSFER"
-        value={(paymentMethod = "WIRE_TRANSFER")}
-        label={
-          <>
-            <InstitutionIcon fill="green100" />
-            <Text variant="sm-display" ml={0.5}>
-              Wire transfer
-            </Text>
-          </>
-        }
-      />,
-    )
-  }
-
-  // when available, unshift ACH since it's the first option we want to offer for US artworks
   if (availablePaymentMethods.includes("US_BANK_ACCOUNT")) {
-    paymentMethods.unshift(
+    paymentMethods.push(
       <BorderedRadio
         data-test-id="us-bank-account"
         key="US_BANK_ACCOUNT"
-        value={(paymentMethod = "US_BANK_ACCOUNT")}
+        value="US_BANK_ACCOUNT"
         label={
           <>
             <InstitutionIcon fill="green100" />
@@ -280,13 +259,12 @@ const getAvailablePaymentMethods = (
     )
   }
 
-  // when available, unshift SEPA since it's the first option we want to offer for EU artworks
   if (availablePaymentMethods.includes("SEPA_DEBIT")) {
-    paymentMethods.unshift(
+    paymentMethods.push(
       <BorderedRadio
         data-test-id="sepa-debit"
         key="SEPA_DEBIT"
-        value={(paymentMethod = "SEPA_DEBIT")}
+        value="SEPA_DEBIT"
         label={
           <>
             <InstitutionIcon fill="green100" />
@@ -300,6 +278,24 @@ const getAvailablePaymentMethods = (
           Your bank account must be denominated in EUR
         </Text>
       </BorderedRadio>,
+    )
+  }
+
+  if (availablePaymentMethods.includes("WIRE_TRANSFER")) {
+    paymentMethods.push(
+      <BorderedRadio
+        data-test-id="wire-transfer"
+        key="WIRE_TRANSFER"
+        value="WIRE_TRANSFER"
+        label={
+          <>
+            <InstitutionIcon fill="green100" />
+            <Text variant="sm-display" ml={0.5}>
+              Wire transfer
+            </Text>
+          </>
+        }
+      />,
     )
   }
 
