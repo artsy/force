@@ -81,6 +81,7 @@ export const ArtsyShippingEstimate = ({
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,
       origin: artworkData.shippingOrigin,
+      estimate_available: estimate.estimateAvailable,
       destination: estimate.destination,
       minimum_estimate: estimate.minPrice,
       maximum_estimate: estimate.maxPrice,
@@ -185,10 +186,11 @@ export const ArtsyShippingEstimate = ({
 }
 
 interface PriceEstimate {
-  destination: string
-  minPrice: number
+  destination: string | null
+  estimateAvailable: boolean
+  minPrice: number | null
   maxPrice?: number | null
-  currency: string
+  currency: string | null
 }
 
 interface UseWidgetObserverProps {
@@ -202,6 +204,17 @@ const useWidgetObserver = ({
   const [visiblePrice, setVisiblePrice] = useState<PriceEstimate | null>(null)
 
   const extractEstimateFromDom = useCallback((): PriceEstimate | null => {
+    const destinationEl = document.getElementsByClassName(
+      "artajs__modal__quotes__destination",
+    )[0]
+    // e.g. "Chicago, IL, US (destination)"
+    const destination =
+      destinationEl?.textContent?.match(/(.+)\(destination\)/)?.[1]
+
+    if (!destination) {
+      return null
+    }
+
     const priceAmountEl = document.getElementsByClassName(
       "artajs__modal__quotes__price__amount",
     )[0]
@@ -214,18 +227,13 @@ const useWidgetObserver = ({
         .map(n => Number.parseFloat(n)) || []
 
     if (!minPrice) {
-      return null
-    }
-
-    const destinationEl = document.getElementsByClassName(
-      "artajs__modal__quotes__destination",
-    )[0]
-    // e.g. "Chicago, IL, US (destination)"
-    const destination =
-      destinationEl?.textContent?.match(/(.+)\(destination\)/)?.[1]
-
-    if (!destination) {
-      return null
+      return {
+        estimateAvailable: false,
+        destination,
+        minPrice: null,
+        maxPrice: null,
+        currency: null,
+      }
     }
 
     const priceCurrencyEl = document.getElementsByClassName(
@@ -233,16 +241,18 @@ const useWidgetObserver = ({
     )[0]
     const currency = priceCurrencyEl?.textContent
 
-    if (!currency) {
-      return null
+    return {
+      minPrice,
+      maxPrice,
+      currency,
+      destination,
+      estimateAvailable: true,
     }
-
-    return { minPrice, maxPrice, currency, destination }
   }, [])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: We only want to run this when the price changes
   useEffect(() => {
-    if (visiblePrice?.minPrice && visiblePrice?.maxPrice) {
+    if (visiblePrice) {
       onViewEstimatedPrice(visiblePrice)
     }
   }, [visiblePrice])
@@ -259,6 +269,7 @@ const useWidgetObserver = ({
     // Callback function to execute when mutations are observed
     const callback = (_mutationList, _observer) => {
       const price = extractEstimateFromDom()
+
       if (price) {
         setVisiblePrice(price)
       }
@@ -274,6 +285,7 @@ const useWidgetObserver = ({
 
   const disconnectWidgetObserver = useCallback(() => {
     widgetObserver.current?.disconnect()
+    setVisiblePrice(null)
   }, [])
 
   return {
@@ -338,8 +350,8 @@ const widgetConfig: PartialEstimateConfig = {
       buttonTextHover: "#FFFFFF",
       buttonTextDisabled: "#FFFFFF",
     },
-    position: "center" as any,
-    pricingDisplay: "range" as any,
+    position: "center",
+    pricingDisplay: "starts_at",
     fontFamily: '"ll-unica77", "Helvetica Neue", Helvetica, Arial, sans-serif',
     fontSize: 16,
     width: 440,
