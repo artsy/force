@@ -98,7 +98,11 @@ const SettingsAuctionsLotStanding: FC<
           width="100%"
           variant={sale.isClosed ? "secondaryBlack" : "primaryBlack"}
         >
-          {sale.isClosed ? "View Lot" : "Bid"}
+          {sale.isClosed
+            ? "View Lot"
+            : sale.isLiveOpen
+              ? "Enter live auction"
+              : "Bid"}
         </Button>
       </Column>
     </Fragment>
@@ -110,10 +114,16 @@ export const SettingsAuctionsLotStandingFragmentContainer =
     lotStanding: graphql`
       fragment SettingsAuctionsLotStanding_lotStanding on LotStanding {
         isLeadingBidder
+
         saleArtwork {
+          # lotState {
+          # Does not include causality's lot standing for user (AuctionsLotStanding)
+          # Seems we can only query causality lot standing by lists, eg me.auctionsLotStandingConnection
+          # }
           lotLabel
           sale {
             isClosed
+            isLiveOpen
           }
           artwork {
             ...Details_artwork

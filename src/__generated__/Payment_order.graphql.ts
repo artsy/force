@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c6a0acd4622f1a6c3e588d71530b1500>>
+ * @generated SignedSource<<e275347d73e3e14f2aa120ec2fdcaecd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -53,7 +53,7 @@ export type Payment_order$data = {
   } | null | undefined;
   readonly paymentSet: boolean;
   readonly source: CommerceOrderSourceEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "BankAccountPicker_order" | "CreditCardPicker_order" | "OrderStepper_order" | "PartnerOfferTimerItem_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "BankAccountPicker_order" | "CreditCardPicker_order" | "ExpressCheckout_order" | "OrderStepper_order" | "PartnerOfferTimerItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Payment_order";
 };
 export type Payment_order$key = {
@@ -77,6 +77,11 @@ return {
   "metadata": null,
   "name": "Payment_order",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ExpressCheckout_order"
+    },
     {
       "alias": null,
       "args": null,
@@ -328,6 +333,6 @@ return {
 };
 })();
 
-(node as any).hash = "51e7d85c0b0748e4941859ab2c2aa5cd";
+(node as any).hash = "63b09040416a7b449a645841591df161";
 
 export default node;

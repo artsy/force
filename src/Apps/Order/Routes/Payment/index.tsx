@@ -587,6 +587,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
     `,
     order: graphql`
       fragment Payment_order on CommerceOrder {
+        ...ExpressCheckout_order
         artworkDetails
         source
         conditionsOfSale

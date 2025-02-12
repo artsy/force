@@ -1,22 +1,41 @@
 import { Elements } from "@stripe/react-stripe-js"
-import { type StripeElementsOptions, loadStripe } from "@stripe/stripe-js"
+import {
+  type StripeElementsOptions,
+  type StripeElementsUpdateOptions,
+  loadStripe,
+} from "@stripe/stripe-js"
 import { ExpressCheckout } from "Apps/Order/Routes/Payment/ExpressCheckoutPrototype/ExpressCheckout"
 import { getENV } from "Utils/getENV"
 
-export const ExpressCheckoutProvider = ({ order }) => {
-  const { buyerTotalCents } = order
+interface Props {
+  order: {
+    mode: string
+    buyerTotalCents?: StripeElementsUpdateOptions["amount"] | null
+    currencyCode?: StripeElementsUpdateOptions["currency"] | null
+  }
+}
 
-  if (!buyerTotalCents) {
+const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
+
+export const ExpressCheckoutProvider = ({ order }: Props) => {
+  const { buyerTotalCents, currencyCode } = order
+
+  if (!(buyerTotalCents && currencyCode)) {
     return null
+  }
+
+  const isBuyNow = order.mode === "BUY"
+
+  const updateableOptions: StripeElementsUpdateOptions = {
+    amount: buyerTotalCents,
+    currency: currencyCode.toLowerCase(),
   }
 
   const options: StripeElementsOptions = {
     mode: "payment",
-    amount: buyerTotalCents,
-    currency: "usd",
+    captureMethod: isBuyNow ? "automatic_async" : "manual",
+    ...updateableOptions,
   }
-
-  const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
   return (
     <>

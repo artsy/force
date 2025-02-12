@@ -18,8 +18,8 @@ import {
   type CreditCardPicker,
   CreditCardPickerFragmentContainer,
 } from "Apps/Order/Components/CreditCardPicker"
+import { ExpressCheckout } from "Apps/Order/Components/ExpressCheckout"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
-import { ExpressCheckoutProvider } from "Apps/Order/Routes/Payment/ExpressCheckoutPrototype/ExpressCheckoutProvider"
 import type { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import { RouterLink } from "System/Components/RouterLink"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
@@ -86,7 +86,7 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
       {/* Express Checkout */}
       {expressCheckoutPrototypeEnabled && (
         <>
-          <ExpressCheckoutProvider order={order} />
+          <ExpressCheckout order={order} />
         </>
       )}
 
