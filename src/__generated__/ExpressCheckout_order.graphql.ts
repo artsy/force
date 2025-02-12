@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5951cfa5127a8c3962bb9f83c5be5007>>
+ * @generated SignedSource<<71b037eaa32d79a7db916f39578cbfd6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,28 +10,27 @@
 
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ExpressCheckoutProvider_order$data = {
+export type ExpressCheckout_order$data = {
   readonly buyerTotalCents: number | null | undefined;
-  readonly internalID: string;
-  readonly " $fragmentType": "ExpressCheckoutProvider_order";
+  readonly currencyCode: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutUI_order">;
+  readonly " $fragmentType": "ExpressCheckout_order";
 };
-export type ExpressCheckoutProvider_order$key = {
-  readonly " $data"?: ExpressCheckoutProvider_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutProvider_order">;
+export type ExpressCheckout_order$key = {
+  readonly " $data"?: ExpressCheckout_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckout_order">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ExpressCheckoutProvider_order",
+  "name": "ExpressCheckout_order",
   "selections": [
     {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "ExpressCheckoutUI_order"
     },
     {
       "alias": null,
@@ -39,12 +38,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "buyerTotalCents",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "currencyCode",
+      "storageKey": null
     }
   ],
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
 
-(node as any).hash = "0173f5ca191bf4ac4286b339a6bbf224";
+(node as any).hash = "29d7576fc07a7882ca59ed5e0abba477";
 
 export default node;
