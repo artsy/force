@@ -13,6 +13,10 @@ import {
 } from "@artsy/cohesion"
 import { Link, Spacer, Text } from "@artsy/palette"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import {
+  useFeatureVariant,
+  useTrackFeatureVariant,
+} from "System/Hooks/useFeatureFlag"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import { getENV } from "Utils/getENV"
 import type {
@@ -39,7 +43,29 @@ interface ArtsyShippingEstimateProps {
   artwork: ArtsyShippingEstimate_artwork$key
 }
 
-export const ArtsyShippingEstimate = ({
+export const ArtsyShippingEstimate = (props: ArtsyShippingEstimateProps) => {
+  // TODO: Arta Estimate widget experiment!
+  // This code determins if Arta widget code should be loaded
+  // Either remove or properly implement when experiment is
+  const variant = useFeatureVariant("emerald_shipping-estimate-widget")
+
+  const { trackFeatureVariant } = useTrackFeatureVariant({
+    experimentName: "emerald_shipping-estimate-widget",
+    variantName: variant?.name ?? "control",
+  })
+
+  useEffect(() => {
+    trackFeatureVariant()
+  })
+
+  if (variant?.name === "experiment") {
+    return <ArtsyShippingEstimateLoader {...props} />
+  }
+
+  return null
+}
+
+const ArtsyShippingEstimateLoader = ({
   artwork,
 }: ArtsyShippingEstimateProps) => {
   const { trackEvent } = useTracking()
