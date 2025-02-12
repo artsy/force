@@ -15,8 +15,23 @@ export const useSaveFulfillmentDetails = () => {
               order {
                 internalID
                 __typename
-                ... on CommerceOrder {
-                  ...Shipping_order
+                ...Shipping_order
+                shippingTotalCents
+                lineItems {
+                  edges {
+                    node {
+                      shippingQuoteOptions {
+                        edges {
+                          node {
+                            id
+                            isSelected
+                            tier
+                            name
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }

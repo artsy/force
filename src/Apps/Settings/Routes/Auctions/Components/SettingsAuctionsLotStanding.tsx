@@ -3,10 +3,10 @@ import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
 import { Box, Button, Column, Flex, Image, Text } from "@artsy/palette"
 import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
 import { RouterLink } from "System/Components/RouterLink"
+import { getENV } from "Utils/getENV"
 import type { SettingsAuctionsLotStanding_lotStanding$data } from "__generated__/SettingsAuctionsLotStanding_lotStanding.graphql"
 import { type FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { getENV } from "Utils/getENV"
 
 interface SettingsAuctionsLotStandingProps {
   lotStanding: SettingsAuctionsLotStanding_lotStanding$data
@@ -125,12 +125,18 @@ export const SettingsAuctionsLotStandingFragmentContainer =
     lotStanding: graphql`
       fragment SettingsAuctionsLotStanding_lotStanding on LotStanding {
         isLeadingBidder
+
         saleArtwork {
+          # lotState {
+          # Does not include causality's lot standing for user (AuctionsLotStanding)
+          # Seems we can only query causality lot standing by lists, eg me.auctionsLotStandingConnection
+          # }
           lotLabel
           sale {
             slug
             isLiveOpen
             isClosed
+            isLiveOpen
           }
           artwork {
             ...Details_artwork

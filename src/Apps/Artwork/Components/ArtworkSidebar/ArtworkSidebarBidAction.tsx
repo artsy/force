@@ -180,6 +180,7 @@ export class ArtworkSidebarBidAction extends React.Component<
           qualifiedForBidding: sale.registrationStatus.qualified_for_bidding,
         } as any),
     )
+    console.log("***", { sale })
 
     if (sale.is_preview) {
       let PreviewAction: React.FC<React.PropsWithChildren<unknown>>
