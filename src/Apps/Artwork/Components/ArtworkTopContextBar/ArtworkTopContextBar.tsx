@@ -1,6 +1,8 @@
-import { Box } from "@artsy/palette"
+import { Box, Stack } from "@artsy/palette"
 import { RegistrationAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/RegistrationAuctionTimer"
+import { StructuredData } from "Components/Seo/StructuredData"
 import { TopContextBar } from "Components/TopContextBar"
+import { getENV } from "Utils/getENV"
 import type { ArtworkTopContextBar_artwork$data } from "__generated__/ArtworkTopContextBar_artwork.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -11,87 +13,64 @@ export interface ArtworkTopContextBarProps {
 
 export const ArtworkTopContextBar: React.FC<
   React.PropsWithChildren<ArtworkTopContextBarProps>
-> = props => {
-  const bannerProps = computeBannerProps(props)
-
-  if (!bannerProps) {
+> = ({ artwork }) => {
+  if (!artwork.artist) {
     return null
   }
 
-  const { image, meta, name, subHeadline, href, rightContent } = bannerProps
-  const isShow = props.artwork?.context?.__typename === "Show"
+  if (artwork.context?.__typename === "Sale") {
+    const sale = artwork.context
+
+    return (
+      <TopContextBar
+        href={sale.href}
+        src={sale.coverImage?.url}
+        rightContent={<RegistrationAuctionTimerFragmentContainer sale={sale} />}
+      >
+        <Stack gap={1} flexDirection="row">
+          {sale.name}{" "}
+          {sale.isBenefit || sale.isGalleryAuction || !sale.isAuction
+            ? null
+            : `- ${artwork.partner?.name}`}{" "}
+          <Box as="span" color="black60">
+            {sale.isAuction ? "In auction" : "In sale"}
+          </Box>
+        </Stack>
+      </TopContextBar>
+    )
+  }
 
   return (
-    <TopContextBar
-      href={href}
-      displayBackArrow={isShow}
-      src={!isShow ? image : undefined}
-      rightContent={rightContent}
-    >
-      {[name, subHeadline].filter(Boolean).join(" - ")}　
-      <Box as="span" display="inline-block" color="black60">
-        {meta}
-      </Box>
-    </TopContextBar>
+    <>
+      <TopContextBar href={artwork.artist.href} displayBackArrow>
+        {artwork.artist.name}
+      </TopContextBar>
+
+      <StructuredData
+        schemaData={{
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              item: {
+                "@id": `${getENV("APP_URL")}${artwork.artist.href}`,
+                name: artwork.artist.name,
+              },
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              item: {
+                "@id": `${getENV("APP_URL")}${artwork.href}`,
+                name: artwork.title,
+              },
+            },
+          ],
+        }}
+      />
+    </>
   )
-}
-
-const computeBannerProps = (props: ArtworkTopContextBarProps) => {
-  const { context, partner, sale } = props.artwork
-
-  if (!context) {
-    return null
-  }
-
-  switch (context.__typename) {
-    case "Sale": {
-      if (!sale) {
-        return null
-      }
-
-      const meta = sale.isAuction ? "In auction" : "In sale"
-
-      return {
-        image: sale.coverImage?.url,
-        meta,
-        name: context.name,
-        subHeadline:
-          sale.isBenefit || sale.isGalleryAuction || !sale.isAuction
-            ? null
-            : partner?.name,
-        href: context.href,
-        rightContent: <RegistrationAuctionTimerFragmentContainer sale={sale} />,
-      }
-    }
-    case "Fair": {
-      return {
-        image: context.profile?.icon?.url,
-        meta: "At fair",
-        name: context.name,
-        subHeadline: partner?.name,
-        href: context.href,
-      }
-    }
-    case "Show": {
-      let meta = "In current show"
-      if (context.status === "upcoming") {
-        meta = "In upcoming show"
-      } else if (context.status === "closed") {
-        meta = "In past show"
-      }
-
-      return {
-        image: context.thumbnail?.url,
-        meta,
-        name: context.name,
-        subHeadline: partner?.name,
-        href: context.href,
-      }
-    }
-    default: {
-      return null
-    }
-  }
 }
 
 export const ArtworkTopContextBarFragmentContainer = createFragmentContainer(
@@ -99,38 +78,25 @@ export const ArtworkTopContextBarFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ArtworkTopContextBar_artwork on Artwork {
+        href
+        title
+        artist {
+          name
+          href
+        }
         partner {
           name
         }
-        sale {
-          isAuction
-          isBenefit
-          isGalleryAuction
-          coverImage {
-            url
-          }
-          ...RegistrationAuctionTimer_sale
-        }
         context {
           __typename
+          ...RegistrationAuctionTimer_sale
           ... on Sale {
             name
             href
-          }
-          ... on Fair {
-            name
-            href
-            profile {
-              icon {
-                url
-              }
-            }
-          }
-          ... on Show {
-            name
-            href
-            status
-            thumbnail: coverImage {
+            isAuction
+            isBenefit
+            isGalleryAuction
+            coverImage {
               url
             }
           }
