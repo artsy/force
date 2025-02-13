@@ -9,6 +9,7 @@ import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import type { ArtworkSidebarCommercialButtons_Test_Query } from "__generated__/ArtworkSidebarCommercialButtons_Test_Query.graphql"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import { createMockEnvironment } from "relay-test-utils"
 
 jest.unmock("react-relay")
@@ -740,6 +741,88 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
       const { operationName } = await mockResolveLastOperation({})
       expect(operationName).toBe("ArtworkSidebarCommercialButtonsOrderMutation")
+    })
+  })
+
+  describe("Tracking", () => {
+    const trackEvent = jest.fn()
+
+    beforeEach(() => {
+      ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
+    })
+
+    it("tracks buy now click", async () => {
+      renderWithRelay({
+        Query: () => ({ me: meMock }),
+        Artwork: () => ({
+          internalID: "artwork-id",
+          slug: "artwork-slug",
+          isAcquireable: true,
+          isInquireable: false,
+          isOfferable: false,
+          collectorSignals: null,
+        }),
+      })
+
+      await userEvent.click(screen.getByText("Purchase"))
+
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedBuyNow",
+        context_owner_id: "artwork-id",
+        context_owner_slug: "artwork-slug",
+        context_owner_type: "artwork",
+        flow: "Buy now",
+        signal_label: "",
+      })
+    })
+
+    it("tracks make offer click", async () => {
+      renderWithRelay({
+        Query: () => ({ me: meMock }),
+        Artwork: () => ({
+          internalID: "artwork-id",
+          slug: "artwork-slug",
+          isAcquireable: true,
+          isInquireable: false,
+          isOfferable: true,
+          collectorSignals: null,
+        }),
+      })
+
+      await userEvent.click(screen.getByText("Make an Offer"))
+
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedMakeOffer",
+        context_owner_id: "artwork-id",
+        context_owner_slug: "artwork-slug",
+        context_owner_type: "artwork",
+        flow: "Make offer",
+        signal_label: "",
+      })
+    })
+
+    it("tracks inquiry click", async () => {
+      renderWithRelay({
+        Query: () => ({ me: meMock }),
+        Artwork: () => ({
+          internalID: "artwork-id",
+          slug: "artwork-slug",
+          isAcquireable: false,
+          isInquireable: true,
+          isOfferable: false,
+          collectorSignals: null,
+        }),
+      })
+
+      await userEvent.click(screen.getByText("Contact Gallery"))
+
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedContactGallery",
+        context_owner_id: "artwork-id",
+        context_owner_slug: "artwork-slug",
+        context_owner_type: "artwork",
+        signal_label: "",
+      })
     })
   })
 })
