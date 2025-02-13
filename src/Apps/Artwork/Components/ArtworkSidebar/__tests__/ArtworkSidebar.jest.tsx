@@ -2,7 +2,6 @@ import { fireEvent, screen } from "@testing-library/react"
 import { ArtworkSidebarFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebar"
 import { ArtsyShippingEstimate } from "Components/ArtsyShippingEstimate"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -14,11 +13,6 @@ jest.mock("react-tracking")
 const MockArtsyShippingEstimate = ArtsyShippingEstimate as jest.Mock
 jest.mock("Components/ArtsyShippingEstimate", () => ({
   ArtsyShippingEstimate: jest.fn(() => <div>ArtsyShippingEstimate</div>),
-}))
-
-const mockUseFeatureFlag = useFeatureFlag as jest.Mock
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(),
 }))
 
 jest.mock(
@@ -216,9 +210,6 @@ describe("ArtworkSidebarArtists", () => {
 
   describe("Shipping and taxes section", () => {
     describe("Shipping estimate feature flag enabled", () => {
-      beforeEach(() => {
-        mockUseFeatureFlag.mockReturnValue(true)
-      })
       it("renders ArtsyShippingEstimate if work is arta shipped globablly", () => {
         renderWithRelay({
           Artwork: () => ({
