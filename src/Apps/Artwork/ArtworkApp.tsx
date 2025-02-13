@@ -69,25 +69,29 @@ interface BelowTheFoldArtworkDetailsProps {
 
 const BelowTheFoldArtworkDetails: React.FC<
   React.PropsWithChildren<BelowTheFoldArtworkDetailsProps>
-> = ({ artists, slug }) => (
-  <>
-    <Spacer y={6} />
-    <Join separator={<Spacer y={2} />}>
-      <ArtworkDetailsQueryRenderer slug={slug} />
+> = ({ artists, slug }) => {
+  return (
+    <>
+      <Spacer y={6} />
+      <Join separator={<Spacer y={2} />}>
+        <ArtworkDetailsQueryRenderer slug={slug} />
 
-      <PricingContextQueryRenderer slug={slug} />
+        <PricingContextQueryRenderer slug={slug} />
 
-      {!!artists &&
-        artists.map(artist => {
-          if (!artist) return null
+        {!!artists &&
+          artists.map(artist => {
+            if (!artist) return null
 
-          return <ArtistInfoQueryRenderer key={artist.id} slug={artist.slug} />
-        })}
+            return (
+              <ArtistInfoQueryRenderer key={artist.id} slug={artist.slug} />
+            )
+          })}
 
-      <ArtworkDetailsPartnerInfoQueryRenderer slug={slug} />
-    </Join>
-  </>
-)
+        <ArtworkDetailsPartnerInfoQueryRenderer slug={slug} />
+      </Join>
+    </>
+  )
+}
 
 export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
   const { artwork, me, referrer, tracking } = props
