@@ -5,7 +5,6 @@ import { MyCollectionArtworkGrid } from "Apps/Settings/Routes/MyCollection/Compo
 import { MetaTags } from "Components/MetaTags"
 import { ShareCollectionDialog } from "Components/ShareCollectionDialog"
 import { RouterLink } from "System/Components/RouterLink"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { cleanLocalImages } from "Utils/localImageHelpers"
 import type { MyCollectionRoute_me$data } from "__generated__/MyCollectionRoute_me.graphql"
 import { type FC, useEffect, useState } from "react"
@@ -24,8 +23,6 @@ export interface MyCollectionRouteProps {
 const MyCollectionRoute: FC<
   React.PropsWithChildren<MyCollectionRouteProps>
 > = ({ me, relay }) => {
-  const enableShare = useFeatureFlag("diamond_shareable-artwork-lists")
-
   const { addCollectedArtwork: trackAddCollectedArtwork } =
     useMyCollectionTracking()
   const [isLoading, setLoading] = useState(false)
@@ -65,16 +62,14 @@ const MyCollectionRoute: FC<
       {total > 0 ? (
         <Stack gap={2}>
           <Flex backgroundColor="white100" justifyContent="flex-end" gap={1}>
-            {enableShare && (
-              <Button
-                size={["small", "large"]}
-                variant="secondaryBlack"
-                Icon={ShareIcon}
-                onClick={() => setMode("Share")}
-              >
-                Share
-              </Button>
-            )}
+            <Button
+              size={["small", "large"]}
+              variant="secondaryBlack"
+              Icon={ShareIcon}
+              onClick={() => setMode("Share")}
+            >
+              Share
+            </Button>
 
             <Button
               // @ts-ignore
