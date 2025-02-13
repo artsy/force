@@ -7,6 +7,7 @@ import {
   estimateRequestBodyForArtwork,
 } from "Components/ArtsyShippingEstimate"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { useFeatureVariant } from "System/Hooks/useFeatureFlag"
 import type { ArtsyShippingEstimate_Test_Query } from "__generated__/ArtsyShippingEstimate_Test_Query.graphql"
 import type { ArtsyShippingEstimate_artwork$data } from "__generated__/ArtsyShippingEstimate_artwork.graphql"
 import { useEffect, useState } from "react"
@@ -20,6 +21,21 @@ jest.mock("Utils/getENV", () => ({
 }))
 
 let mockArtaEstimate: ArtaEstimate
+
+const mockUseFeatureVariant = useFeatureVariant as jest.Mock
+
+jest.mock("System/Hooks/useFeatureFlag", () => {
+  const actual = jest.requireActual("System/Hooks/useFeatureFlag")
+  return {
+    ...actual,
+    useFeatureVariant: jest.fn(),
+    useTrackFeatureVariant: jest.fn(() => {
+      return {
+        trackFeatureVariant: jest.fn(),
+      }
+    }),
+  }
+})
 
 beforeEach(() => {
   mockArtaEstimate = {
@@ -102,6 +118,33 @@ const { renderWithRelay } =
   })
 
 describe("ArtsyShippingEstimate", () => {
+  describe("feature flag disabled", () => {
+    it("does not render the widget", async () => {
+      mockUseFeatureVariant.mockReturnValue({
+        name: "disabled",
+        enabled: false,
+      })
+
+      renderWithRelay({
+        Artwork: () => ({
+          ...validArtworkData,
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.queryByText("Unmounted")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("loaded-no-widget")).not.toBeInTheDocument()
+        expect(
+          screen.queryByText("Estimate Shipping Cost"),
+        ).not.toBeInTheDocument()
+      })
+    })
+  })
+
+  beforeEach(() => {
+    mockUseFeatureVariant.mockReturnValue({ name: "experiment", enabled: true })
+  })
+
   describe("with an artwork that cannot be estimated", () => {
     it("does not render the widget if the shippingOrigin is missing a city", async () => {
       renderWithRelay({

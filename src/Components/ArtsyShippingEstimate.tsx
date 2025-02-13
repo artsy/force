@@ -44,9 +44,6 @@ interface ArtsyShippingEstimateProps {
 }
 
 export const ArtsyShippingEstimate = (props: ArtsyShippingEstimateProps) => {
-  // TODO: Arta Estimate widget experiment!
-  // This code determins if Arta widget code should be loaded
-  // Either remove or properly implement when experiment is
   const variant = useFeatureVariant("emerald_shipping-estimate-widget")
 
   const { trackFeatureVariant } = useTrackFeatureVariant({
