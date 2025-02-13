@@ -150,7 +150,6 @@ export const ArtworkDetailsQueryRenderer: React.FC<
   return (
     <Box data-test="ArtworkDetailsQueryRenderer">
       <SystemQueryRenderer<ArtworkDetailsQuery>
-        lazyLoad
         environment={relayEnvironment}
         variables={{ slug }}
         placeholder={PLACEHOLDER}
