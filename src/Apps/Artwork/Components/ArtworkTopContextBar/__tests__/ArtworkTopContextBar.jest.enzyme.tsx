@@ -1,10 +1,13 @@
 import { ArtworkTopContextBarFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBar"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { getENV } from "Utils/getENV"
 import type { ArtworkTopContextBar_Test_Query } from "__generated__/ArtworkTopContextBar_Test_Query.graphql"
-import { DateTime } from "luxon"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
+jest.mock("Utils/getENV", () => ({
+  getENV: jest.fn(),
+}))
 
 describe("ArtworkTopContextBar", () => {
   const { getWrapper } = setupTestWrapper<ArtworkTopContextBar_Test_Query>({
@@ -18,268 +21,155 @@ describe("ArtworkTopContextBar", () => {
     `,
   })
 
-  it("if no in show or auction or fair, render nothing", () => {
+  beforeEach(() => {
+    ;(getENV as jest.Mock).mockImplementation(key => {
+      if (key === "APP_URL") return "https://artsy.net"
+      return process.env[key]
+    })
+  })
+
+  it("returns null if no artist data", () => {
     const { wrapper } = getWrapper({
       Artwork: () => ({
-        context: null,
+        artist: null,
       }),
     })
 
     expect(wrapper.html()).toEqual("")
   })
 
-  describe("sale", () => {
-    it("does not render if sale is invalid", () => {
-      const { wrapper } = getWrapper({
-        Artwork: () => ({
-          sale: null,
-        }),
-      })
-      expect(wrapper.html()).toEqual("")
+  it("renders artist information by default", () => {
+    const { wrapper } = getWrapper({
+      Artwork: () => ({
+        artist: {
+          name: "Andy Warhol",
+          href: "/artist/andy-warhol",
+        },
+        title: "Campbell's Soup Can",
+        href: "/artwork/andy-warhol-campbells-soup-can",
+        context: null,
+      }),
     })
 
-    it("renders a sale banner", () => {
+    expect(wrapper.text()).toContain("Andy Warhol")
+    expect(wrapper.find("TopContextBar").prop("href")).toBe(
+      "/artist/andy-warhol",
+    )
+    expect(wrapper.find("TopContextBar").prop("displayBackArrow")).toBe(true)
+  })
+
+  it("renders structured data for breadcrumbs", () => {
+    const { wrapper } = getWrapper({
+      Artwork: () => ({
+        artist: {
+          name: "Andy Warhol",
+          href: "/artist/andy-warhol",
+        },
+        title: "Campbell's Soup Can",
+        href: "/artwork/andy-warhol-campbells-soup-can",
+        context: null,
+      }),
+    })
+
+    const structuredData = wrapper.find("StructuredData")
+    expect(structuredData.length).toBe(1)
+    expect(structuredData.prop("schemaData")).toEqual({
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          item: {
+            "@id": "https://artsy.net/artist/andy-warhol",
+            name: "Andy Warhol",
+          },
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          item: {
+            "@id": "https://artsy.net/artwork/andy-warhol-campbells-soup-can",
+            name: "Campbell's Soup Can",
+          },
+        },
+      ],
+    })
+  })
+
+  describe("sale context", () => {
+    it("renders sale information when artwork is in a sale", () => {
       const { wrapper } = getWrapper({
         Artwork: () => ({
+          artist: {
+            name: "Andy Warhol",
+            href: "/artist/andy-warhol",
+          },
           context: {
             __typename: "Sale",
-            name: "saleName",
-            href: "saleHref",
-          },
-          sale: {
+            name: "Contemporary Evening Sale",
+            href: "/auction/contemporary-evening-sale",
+            isAuction: true,
             isBenefit: false,
             isGalleryAuction: false,
-            isAuction: true,
           },
-        }),
-        Partner: () => ({
-          name: "partnerName",
+          partner: {
+            name: "Christie's",
+          },
         }),
       })
 
-      const html = wrapper.html()
       const text = wrapper.text()
-      expect(html).toContain("src")
-      expect(html).toContain("saleName")
-      expect(html).toContain("saleHref")
-      expect(text).toContain("partnerName")
+      expect(text).toContain("Contemporary Evening Sale")
+      expect(text).toContain("Christie's")
       expect(text).toContain("In auction")
+      expect(wrapper.find("TopContextBar").prop("href")).toBe(
+        "/auction/contemporary-evening-sale",
+      )
     })
 
-    it("has correct meta text if auction", () => {
+    it("omits partner name for benefit auctions", () => {
       const { wrapper } = getWrapper({
         Artwork: () => ({
-          sale: {
+          artist: {
+            name: "Andy Warhol",
+            href: "/artist/andy-warhol",
+          },
+          context: {
+            __typename: "Sale",
+            name: "Benefit Auction",
+            href: "/auction/benefit-auction",
             isAuction: true,
-          },
-        }),
-      })
-      expect(wrapper.html()).toContain("In auction")
-    })
-
-    it("has correct meta text if not an auction", () => {
-      const { wrapper } = getWrapper({
-        Artwork: () => ({
-          sale: {
-            isAuction: false,
-          },
-        }),
-      })
-      expect(wrapper.html()).toContain("In sale")
-    })
-
-    it("does not render partnerName if benefit or gallery auction", () => {
-      const { wrapper } = getWrapper({
-        Artwork: () => ({
-          context: {
-            __typename: "Sale",
-          },
-          sale: {
             isBenefit: true,
-            isGalleryAuction: true,
+            isGalleryAuction: false,
           },
-        }),
-        Partner: () => ({
-          name: "partnerName",
+          partner: {
+            name: "Partner Name",
+          },
         }),
       })
 
-      const html = wrapper.html()
-      expect(html).not.toContain("partnerHref")
+      expect(wrapper.text()).not.toContain("Partner Name")
     })
 
-    it("does not render partnerName if not an auction", () => {
+    it("shows 'In sale' for non-auction sales", () => {
       const { wrapper } = getWrapper({
         Artwork: () => ({
+          artist: {
+            name: "Andy Warhol",
+            href: "/artist/andy-warhol",
+          },
           context: {
             __typename: "Sale",
-          },
-          sale: {
+            name: "Gallery Sale",
+            href: "/sale/gallery-sale",
             isAuction: false,
-          },
-        }),
-        Partner: () => ({
-          name: "partnerName",
-        }),
-      })
-
-      const html = wrapper.html()
-      expect(html).not.toContain("partnerHref")
-    })
-
-    describe("the auction registration countdown", () => {
-      it("does not render by default", () => {
-        const { wrapper } = getWrapper({
-          Artwork: () => ({
-            context: {
-              __typename: "Sale",
-              name: "saleName",
-              href: "saleHref",
-            },
-            sale: {
-              registrationEndsAt: null,
-              isRegistrationClosed: false,
-            },
-          }),
-          Partner: () => ({
-            name: "partnerName",
-          }),
-        })
-
-        const text = wrapper.text()
-
-        expect(text).not.toContain("Registration for this auction ends:")
-        expect(wrapper.find("Timer").length).toBe(0)
-      })
-
-      it("does not render if registration is closed", () => {
-        const registrationEndsAt = DateTime.local()
-          .plus({ hours: 1 })
-          .toString()
-        const { wrapper } = getWrapper({
-          Artwork: () => ({
-            context: {
-              __typename: "Sale",
-              name: "saleName",
-              href: "saleHref",
-            },
-            sale: {
-              registrationEndsAt,
-              isRegistrationClosed: true,
-            },
-          }),
-          Partner: () => ({
-            name: "partnerName",
-          }),
-        })
-
-        const text = wrapper.text()
-
-        expect(text).not.toContain("Registration for this auction ends:")
-        expect(wrapper.find("Timer").length).toBe(0)
-      })
-
-      it("render when sale registration is not closed", () => {
-        const registrationEndsAt = DateTime.local()
-          .plus({ hours: 1 })
-          .toString()
-        const { wrapper } = getWrapper({
-          Artwork: () => ({
-            context: {
-              __typename: "Sale",
-              name: "saleName",
-              href: "saleHref",
-            },
-            sale: {
-              registrationEndsAt,
-              isRegistrationClosed: false,
-            },
-          }),
-          Partner: () => ({
-            name: "partnerName",
-          }),
-        })
-
-        const text = wrapper.text()
-
-        expect(text).toContain("Registration for this auction ends:")
-        expect(wrapper.find("Timer").length).toBe(1)
-      })
-    })
-  })
-
-  describe("fair", () => {
-    it("renders a fair banner", () => {
-      const { wrapper } = getWrapper({
-        Artwork: () => ({
-          context: {
-            __typename: "Fair",
-            name: "fairName",
-            href: "fairHref",
-          },
-        }),
-        Partner: () => ({
-          name: "partnerName",
-        }),
-      })
-
-      const html = wrapper.html()
-      const text = wrapper.text()
-      expect(html).toContain("src")
-      expect(text).toContain("fairName")
-      expect(html).toContain("fairHref")
-      expect(text).toContain("At fair")
-    })
-  })
-
-  describe("show", () => {
-    it("renders a show banner with default status", () => {
-      const { wrapper } = getWrapper({
-        Artwork: () => ({
-          context: {
-            __typename: "Show",
-            name: "showName",
-            href: "showHref",
-            status: "null",
-          },
-        }),
-        Partner: () => ({
-          name: "partnerName",
-        }),
-      })
-
-      const html = wrapper.html()
-      const text = wrapper.text()
-      expect(wrapper.find("ChevronLeftIcon").length).toBe(1)
-      expect(text).toContain("showName")
-      expect(html).toContain("showHref")
-      expect(text).toContain("In current show")
-    })
-
-    it("renders upcoming status", () => {
-      const { wrapper } = getWrapper({
-        Artwork: () => ({
-          context: {
-            __typename: "Show",
-            status: "upcoming",
+            isBenefit: false,
+            isGalleryAuction: false,
           },
         }),
       })
 
-      expect(wrapper.text()).toContain("In upcoming show")
-    })
-
-    it("renders closed status", () => {
-      const { wrapper } = getWrapper({
-        Artwork: () => ({
-          context: {
-            __typename: "Show",
-            status: "closed",
-          },
-        }),
-      })
-
-      expect(wrapper.text()).toContain("In past show")
+      expect(wrapper.text()).toContain("In sale")
     })
   })
 })

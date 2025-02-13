@@ -28,7 +28,6 @@ import { ArtworkSidebarPrivateArtwork } from "Apps/Artwork/Components/ArtworkSid
 import { PrivateArtworkAdditionalInfo } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkAdditionalInfo"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { ArtsyShippingEstimate } from "Components/ArtsyShippingEstimate"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
@@ -96,10 +95,7 @@ export const ArtworkSidebar: React.FC<
 
   // TODO: Arta Estimate widget experiment!
   // This code determins if Arta widget code should be loaded
-  // Either remove or properly implement when experiment is
-  const artsyShippingEstimateEnabled = useFeatureFlag(
-    "emerald_shipping-estimate-widget",
-  )
+  // Either remove or properly implement when experiment is complete
   const allArtsyShipping =
     !!artsyShippingDomestic && !!artsyShippingInternational
   const artsyImpliedShipping =
@@ -118,7 +114,6 @@ export const ArtworkSidebar: React.FC<
         : shippingWeight <= 150
   }
   const displayArtaEstimate =
-    artsyShippingEstimateEnabled &&
     (allArtsyShipping || artsyImpliedShipping) &&
     (!isEdition || isOneEdition) &&
     isWeightArtaEstimatable

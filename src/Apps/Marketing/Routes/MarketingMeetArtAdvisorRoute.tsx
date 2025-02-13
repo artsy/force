@@ -8,7 +8,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { MarketingAlternatingStack } from "Apps/Marketing/Components/MarketingAlternatingStack"
-import { MarketingHeaderSplitTest } from "Apps/Marketing/Components/MarketingHeaderSpitTest"
+import { MarketingHeaderPrimary } from "Apps/Marketing/Components/MarketingHeaderPrimary"
 import { MetaTags } from "Components/MetaTags"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { FC } from "react"
@@ -26,7 +26,7 @@ export const MarketingMeetArtAdvisorRoute: FC<
       />
 
       <Join separator={<Spacer y={6} />}>
-        <MarketingHeaderSplitTest />
+        <MarketingHeaderPrimary />
 
         <MarketingAlternatingStack
           cards={[
