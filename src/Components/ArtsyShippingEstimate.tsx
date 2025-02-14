@@ -51,9 +51,10 @@ export const ArtsyShippingEstimate = (props: ArtsyShippingEstimateProps) => {
     variantName: variant?.name ?? "control",
   })
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Only track experiment viewed once
   useEffect(() => {
     trackFeatureVariant()
-  })
+  }, [])
 
   if (variant?.name === "experiment") {
     return <ArtsyShippingEstimateLoader {...props} />
