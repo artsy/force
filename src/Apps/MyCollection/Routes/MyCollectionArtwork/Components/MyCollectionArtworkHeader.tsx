@@ -17,8 +17,7 @@ export const MyCollectionArtworkHeader: React.FC<
     useMyCollectionTracking()
 
   const artwork = useFragment(FRAGMENT, props.artwork)
-
-  const showEditCTA = true // !artwork.consignmentSubmission?.internalID
+  const showEditCTA = !artwork.consignmentSubmission?.internalID
 
   return (
     <Flex pt={2} justifyContent="space-between" alignItems="center">

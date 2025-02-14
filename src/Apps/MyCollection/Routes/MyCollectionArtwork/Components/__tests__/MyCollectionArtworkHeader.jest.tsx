@@ -40,10 +40,10 @@ describe("MyCollectionArtworkHeader", () => {
     )
   })
 
-  it("displays Edit Artwork Details CTA even for submitted works", () => {
+  it("does not display Edit Artwork Details CTA", () => {
     renderWithRelay({ Artwork: () => mockResolversWithSubmission })
 
-    expect(screen.queryByText("Edit Artwork Details")).toBeInTheDocument()
+    expect(screen.queryByText("Edit Artwork Details")).not.toBeInTheDocument()
   })
 })
 
