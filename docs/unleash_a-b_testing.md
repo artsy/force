@@ -111,9 +111,10 @@ function MyComponent() {
   })
 
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Only track experiment viewed once
   useEffect(() => {
     trackFeatureVariant()
-  })
+  }, [])
 
   return (
     // Your Components

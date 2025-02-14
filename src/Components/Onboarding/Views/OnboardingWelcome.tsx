@@ -21,12 +21,17 @@ export const OnboardingWelcome = () => {
       left={<OnboardingWelcomeAnimatedPanel ref={register(0)} />}
       leftProps={{ display: "block", flexBasis: ["30%", "50%"] }}
       right={
-        <Flex flexDirection="column" justifyContent="space-between" p={[2, 4]}>
+        <Flex
+          flexDirection="column"
+          justifyContent="space-between"
+          p={[2, 4]}
+          overflowY="auto"
+        >
           {/* Vertically centers next Box */}
           <Box />
 
           <Box width="100%">
-            <Text ref={register(1)} variant={["xl", "xxl"]}>
+            <Text ref={register(1)} variant={["xl", "xxl"]} hyphenate>
               Welcome to Artsy{user ? `, ${user.name}` : ""}.
             </Text>
 

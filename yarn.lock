@@ -22,10 +22,10 @@
   dependencies:
     preact "^10.11.3"
 
-"@artsy/cohesion@^4.233.0":
-  version "4.233.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.233.0.tgz#d2765064684006916918e8afde988cb0b5813b7f"
-  integrity sha512-lNRi2cMecJsveuhLqeehePsibXxAtO4nPxn1wXS3z1pyhE49yN/OJ1HJycOoBLfEYZjDudLL7/MeD5MlJaJL9A==
+"@artsy/cohesion@^4.234.0":
+  version "4.234.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.234.0.tgz#5ff287188ae25e8643ea7d5ad33ad4887e06696d"
+  integrity sha512-BtgLa4LNGzNG4IJx/nLBjyn3sZSILzOtdbOm9AxbpnV3I7gfbXgDzQXinFEodxG7EI3B+OHyiE8prO1SjxmNSw==
   dependencies:
     core-js "3"
 
@@ -5939,9 +5939,9 @@ elegant-spinner@^2.0.0:
   integrity sha512-5YRYHhvhYzV/FC4AiMdeSIg3jAYGq9xFvbhZMpPlJoBsfYgrw2DSCYeXfat6tYBu45PWiyRr3+flaCPPmviPaA==
 
 elliptic@^6.0.0, elliptic@^6.5.4:
-  version "6.6.0"
-  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.6.0.tgz#5919ec723286c1edf28685aa89261d4761afa210"
-  integrity sha512-dpwoQcLc/2WLQvJvLRHKZ+f9FgOdjnq11rurqwekGQygGPsYSK29OMMD2WalatiqQ+XGFDglTNixpPfI+lpaAA==
+  version "6.6.1"
+  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.6.1.tgz#3b8ffb02670bf69e382c7f65bf524c97c5405c06"
+  integrity sha512-RaddvvMatK2LJHqFJ+YA4WysVN5Ita9E35botqIYspQ4TkRAlCicdzKOjlyv/1Za5RyTNn7di//eEV0uTAfe3g==
   dependencies:
     bn.js "^4.11.9"
     brorand "^1.1.0"
