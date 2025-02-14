@@ -2,11 +2,11 @@ import {
   ActionType,
   type ClickedBuyNow,
   type ClickedContactGallery,
+  type ClickedMakeOffer,
   ContextModule,
   Intent,
   OwnerType,
 } from "@artsy/cohesion"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Box,
   Button,
@@ -248,13 +248,16 @@ export const ArtworkSidebarCommercialButtons: React.FC<
   }
 
   const handleCreateOfferOrder = async () => {
-    trackEvent({
-      action_type: DeprecatedSchema.ActionType.ClickedMakeOffer,
-      flow: DeprecatedSchema.Flow.MakeOffer,
-      type: DeprecatedSchema.Type.Button,
-      artwork_id: artwork.internalID,
-      artwork_slug: artwork.slug,
-    })
+    const event: ClickedMakeOffer = {
+      action: ActionType.clickedMakeOffer,
+      context_owner_type: OwnerType.artwork,
+      context_owner_id: artwork.internalID,
+      context_owner_slug: artwork.slug,
+      flow: activePartnerOffer ? "Partner offer" : "Make offer",
+      signal_label: getSignalLabel({ signals }) ?? "",
+    }
+
+    trackEvent(event)
 
     if (!!user?.id) {
       try {
