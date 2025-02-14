@@ -43,8 +43,5 @@ const FRAGMENT = graphql`
   fragment MyCollectionArtworkHeader_artwork on Artwork {
     internalID
     slug
-    consignmentSubmission {
-      internalID
-    }
   }
 `

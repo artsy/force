@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1aaa020fae27afdce6de0191c500a0fc>>
+ * @generated SignedSource<<17f311b5092a9908c00aacce6049c346>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,13 +30,6 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v2 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -83,24 +76,18 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
+            "name": "internalID",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
-            "concreteType": "ArtworkConsignmentSubmission",
-            "kind": "LinkedField",
-            "name": "consignmentSubmission",
-            "plural": false,
-            "selections": [
-              (v1/*: any*/)
-            ],
+            "kind": "ScalarField",
+            "name": "slug",
             "storageKey": null
           },
           {
@@ -116,7 +103,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "59f5d759f49d7e1d3a5169bfda18cea7",
+    "cacheID": "0ccd6343a0b09e760e3a654cf2dbf13b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -126,26 +113,14 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.consignmentSubmission": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtworkConsignmentSubmission"
-        },
-        "artwork.consignmentSubmission.internalID": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        },
-        "artwork.id": (v2/*: any*/),
-        "artwork.internalID": (v2/*: any*/),
-        "artwork.slug": (v2/*: any*/)
+        "artwork.id": (v1/*: any*/),
+        "artwork.internalID": (v1/*: any*/),
+        "artwork.slug": (v1/*: any*/)
       }
     },
     "name": "MyCollectionArtworkHeaderTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkHeaderTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkHeader_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkHeader_artwork on Artwork {\n  internalID\n  slug\n  consignmentSubmission {\n    internalID\n  }\n}\n"
+    "text": "query MyCollectionArtworkHeaderTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkHeader_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkHeader_artwork on Artwork {\n  internalID\n  slug\n}\n"
   }
 };
 })();
