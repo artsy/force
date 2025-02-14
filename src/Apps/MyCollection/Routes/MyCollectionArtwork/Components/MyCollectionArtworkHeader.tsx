@@ -17,28 +17,24 @@ export const MyCollectionArtworkHeader: React.FC<
     useMyCollectionTracking()
 
   const artwork = useFragment(FRAGMENT, props.artwork)
-  const showEditCTA = !artwork.consignmentSubmission?.internalID
 
   return (
     <Flex pt={2} justifyContent="space-between" alignItems="center">
       <MyCollectionArtworkBackButton />
-
-      {showEditCTA && (
-        <Button
-          // @ts-ignore
-          as={RouterLink}
-          variant="secondaryNeutral"
-          size="small"
-          to={`/collector-profile/my-collection/artworks/${artwork.internalID}/edit`}
-          onClick={() =>
-            trackEditCollectedArtwork(artwork.internalID, artwork.slug)
-          }
-          alignSelf="flex-end"
-        >
-          <Media greaterThanOrEqual="sm">Edit Artwork Details</Media>
-          <Media lessThan="sm">Edit</Media>
-        </Button>
-      )}
+      <Button
+        // @ts-ignore
+        as={RouterLink}
+        variant="secondaryNeutral"
+        size="small"
+        to={`/collector-profile/my-collection/artworks/${artwork.internalID}/edit`}
+        onClick={() =>
+          trackEditCollectedArtwork(artwork.internalID, artwork.slug)
+        }
+        alignSelf="flex-end"
+      >
+        <Media greaterThanOrEqual="sm">Edit Artwork Details</Media>
+        <Media lessThan="sm">Edit</Media>
+      </Button>
     </Flex>
   )
 }
