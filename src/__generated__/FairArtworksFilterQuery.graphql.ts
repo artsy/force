@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a5481ed635a8efbfd0cbc6fd0096f742>>
+ * @generated SignedSource<<138d32fc4fab8d9620a4a1eaa5a3536a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,6 +38,7 @@ export type FilterArtworksInput = {
   geneID?: string | null | undefined;
   geneIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
   height?: string | null | undefined;
+  includeAllJSON?: boolean | null | undefined;
   includeArtworksByFollowedArtists?: boolean | null | undefined;
   includeMediumFilterInAggregation?: boolean | null | undefined;
   includeUnpublished?: boolean | null | undefined;
