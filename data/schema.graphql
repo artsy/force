@@ -13007,7 +13007,6 @@ input MatchArtworkImportRowImageInput {
   artworkImportID: String!
   clientMutationId: String
   fileName: String!
-  rowID: String!
   s3Bucket: String!
   s3Key: String!
 }
