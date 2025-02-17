@@ -13,6 +13,7 @@ import { useFormikContext } from "formik"
 export interface FormikContextWithAddress {
   address: Address
   phoneNumber?: string
+  name?: string
 }
 
 interface Props {
@@ -106,7 +107,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           placeholder="Add full name"
           autoComplete="name"
           autoFocus
-          value={values.address?.name}
+          value={values.address?.name || values.name}
           onChange={handleChange}
           onBlur={handleBlur}
           error={touchedAddress?.name && errorsAddress?.name}

@@ -62,6 +62,7 @@ export interface ShippingContextProps {
   orderData: ComputedOrderData
   meData: {
     addressList: SavedAddressType[]
+    name: string | null
   }
 }
 
@@ -81,8 +82,9 @@ export const ShippingContextProvider: FC<
       addressList: compact<SavedAddressType>(
         extractNodes(meFragmentData?.addressConnection) ?? [],
       ),
+      name: meFragmentData?.name ?? null,
     }),
-    [meFragmentData.addressConnection],
+    [meFragmentData.addressConnection, meFragmentData.name],
   )
 
   const orderData = computeOrderData(orderFragmentData, meData)
@@ -306,6 +308,7 @@ const ME_FRAGMENT = graphql`
     after: { type: "String" }
     before: { type: "String" }
   ) {
+    name
     addressConnection(
       first: $first
       last: $last

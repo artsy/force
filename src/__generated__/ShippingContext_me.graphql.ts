@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f445027a568a16e45950389732b160dc>>
+ * @generated SignedSource<<f56d3c91ecc380b8904b8115a8487fba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,6 +29,7 @@ export type ShippingContext_me$data = {
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "ShippingContext_me";
 };
 export type ShippingContext_me$key = {
@@ -36,7 +37,15 @@ export type ShippingContext_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ShippingContext_me">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -63,6 +72,7 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ShippingContext_me",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": [
@@ -164,13 +174,7 @@ const node: ReaderFragment = {
                   "name": "isDefault",
                   "storageKey": null
                 },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "name",
-                  "storageKey": null
-                },
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -205,7 +209,8 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "1f4558c6f188e79ce22f6d373889841e";
+(node as any).hash = "425e2ddcd2804509c154eea3def92d56";
 
 export default node;
