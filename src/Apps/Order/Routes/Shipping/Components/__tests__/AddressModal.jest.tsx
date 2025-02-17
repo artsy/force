@@ -46,6 +46,9 @@ const mockShippingcontext: DeepPartial<ShippingContextProps> = {
   actions: {
     setIsPerformingOperation: jest.fn(),
   },
+  meData: {
+    name: "Max",
+  },
 }
 
 jest.mock("Apps/Order/Routes/Shipping/Hooks/useShippingContext", () => ({
