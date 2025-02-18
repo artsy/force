@@ -214,6 +214,7 @@ const FulfillmentDetailsFormLayout = (
         getInitialShippingValues(
           savedAddresses,
           shippingContext.orderData.shipsFrom,
+          shippingContext.meData.name,
           shippingContext.orderData.availableShippingCountries,
         ),
       )

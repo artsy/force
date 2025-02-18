@@ -82,6 +82,7 @@ export const FulfillmentDetails: FC<
       const emptyFormValues = getInitialShippingValues(
         shippingContext.meData.addressList,
         shippingContext.orderData.shipsFrom,
+        shippingContext.meData.name,
         shippingContext.orderData.availableShippingCountries,
       )
 
@@ -336,6 +337,7 @@ const getInitialValues = (
   return getInitialShippingValues(
     savedAddresses,
     orderData.shipsFrom,
+    meData.name,
     orderData.availableShippingCountries,
   )
 }
