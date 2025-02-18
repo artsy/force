@@ -107,7 +107,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           placeholder="Add full name"
           autoComplete="name"
           autoFocus
-          value={values.address?.name || values.name}
+          value={values.address?.name}
           onChange={handleChange}
           onBlur={handleBlur}
           error={touchedAddress?.name && errorsAddress?.name}
