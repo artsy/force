@@ -56,7 +56,6 @@ interface FormValues extends FormikContextWithAddress {
     postalCode: string
     country: string
   }
-  name: string
   setAsDefault: boolean
 }
 
@@ -85,8 +84,8 @@ export const AddressModal: FC<React.PropsWithChildren<AddressModalProps>> = ({
               country: shippingContext.orderData.shipsFrom,
             },
       ),
+      name: shippingContext.meData.name || "",
     },
-    name: shippingContext.meData.name || "",
     setAsDefault: false,
   }
 
