@@ -116,7 +116,7 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                 mt={2}
                 to="https://partners.artsy.net/auction-partnerships"
               >
-                Artsy for Auctions
+                Artsy for Benefits
               </FooterLink>
 
               <FooterLink
