@@ -3,7 +3,6 @@ import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useAuthDialog } from "Components/AuthDialog"
 import { renderRelayTree } from "DevTools/renderRelayTree"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { Details_Test_Query$rawResponse } from "__generated__/Details_Test_Query.graphql"
 import { graphql } from "react-relay"
@@ -21,7 +20,6 @@ jest.mock("Components/Artwork/Details/SaleMessage", () => ({
 jest.mock("Components/Artwork/Details/PrimaryLabelLine", () => ({
   PrimaryLabelLineQueryRenderer: () => <div>PrimaryLabelLineQueryRenderer</div>,
 }))
-jest.mock("System/Hooks/useFeatureFlag")
 
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(
   "2022-03-18T05:22:32.000Z",
@@ -75,9 +73,6 @@ describe("Details", () => {
     mockUseAuthDialog.mockImplementation(() => ({
       showAuthDialog: jest.fn(),
     }))
-    ;(useFeatureFlag as jest.Mock).mockImplementation(
-      featureName => featureName === "emerald_clientside-collector-signals",
-    )
   })
 
   describe("in artist Notable Works rail", () => {
