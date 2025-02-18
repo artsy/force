@@ -13,7 +13,6 @@ import { useFormikContext } from "formik"
 export interface FormikContextWithAddress {
   address: Address
   phoneNumber?: string
-  name?: string
 }
 
 interface Props {
