@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c19fde77c2135cf25c037cc05473a2ce>>
+ * @generated SignedSource<<5438245dece557d2e621b2c47d369baf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,6 +36,10 @@ export type MyBidsBidItem_saleArtwork$data = {
       readonly display: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
+  readonly sale: {
+    readonly isLiveOpen: boolean | null | undefined;
+    readonly slug: string;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "MyBidsBidItem_saleArtwork";
 };
@@ -53,7 +57,14 @@ var v0 = [
     "name": "display",
     "storageKey": null
   }
-];
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -212,11 +223,24 @@ return {
       "name": "lotLabel",
       "storageKey": null
     },
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
+      "concreteType": "Sale",
+      "kind": "LinkedField",
+      "name": "sale",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isLiveOpen",
+          "storageKey": null
+        },
+        (v1/*: any*/)
+      ],
       "storageKey": null
     }
   ],
@@ -225,6 +249,6 @@ return {
 };
 })();
 
-(node as any).hash = "01d8693674c141b25ab9c428b3d632f5";
+(node as any).hash = "3683c859d26011b55f790675df252474";
 
 export default node;
