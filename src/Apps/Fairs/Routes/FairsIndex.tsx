@@ -17,7 +17,6 @@ import { FairsFairBannerFragmentContainer } from "Apps/Fairs/Components/FairsFai
 import { FairsFairRowFragmentContainer } from "Apps/Fairs/Components/FairsFairRow"
 import { FairsMeta } from "Apps/Fairs/Components/FairsMeta"
 import { FairsPastFairsPaginationContainer } from "Apps/Fairs/Components/FairsPastFairs"
-import { FairsPhonePromo } from "Apps/Fairs/Components/FairsPhonePromo"
 import { FairsPromoCarousel } from "Apps/Fairs/Components/FairsPromoCarousel"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
@@ -260,16 +259,6 @@ export const FairsIndex: React.FC<React.PropsWithChildren<FairsIndexProps>> = ({
                     </Column>
                   )
                 })}
-
-                {
-                  // Avoids orphaned CTA
-                  currentFairs[currentFairs.length - 1].bannerSize !==
-                    "x-large" && (
-                    <Column span={6}>
-                      <FairsPhonePromo pt={2} />
-                    </Column>
-                  )
-                }
               </GridColumns>
             </>
           )}
