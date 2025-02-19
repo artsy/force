@@ -46,7 +46,7 @@ describe("Footer", () => {
       expect(wrapper.text()).toContain("Artsy for Museums")
       expect(wrapper.html()).toContain("/institution-partnerships")
 
-      expect(wrapper.text()).toContain("Artsy for Auctions")
+      expect(wrapper.text()).toContain("Artsy for Benefits")
       expect(wrapper.html()).toContain("/auction-partnerships")
 
       expect(wrapper.text()).toContain("Artsy for Fairs")
