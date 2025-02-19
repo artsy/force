@@ -84,6 +84,7 @@ export const AddressModal: FC<React.PropsWithChildren<AddressModalProps>> = ({
               country: shippingContext.orderData.shipsFrom,
             },
       ),
+      name: incomingAddress?.name || shippingContext.meData.name || "",
     },
     setAsDefault: false,
   }

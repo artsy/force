@@ -148,6 +148,7 @@ export const getDefaultUserAddress = (
 export const getInitialShippingValues = (
   savedAddresses: SavedAddressType[],
   defaultCountry,
+  defaultName,
   filterCountries?: string[],
 ): ShipValues => {
   const defaultUserAddress = getDefaultUserAddress(
@@ -172,7 +173,10 @@ export const getInitialShippingValues = (
 
   // The user doesn't have a valid ship-to address, so we'll return empty values.
   const initialFulfillmentValues: ShipValues["attributes"] =
-    addressWithFallbackValues({ country: defaultCountry })
+    addressWithFallbackValues({
+      country: defaultCountry,
+      name: defaultName,
+    })
 
   return {
     fulfillmentType: FulfillmentType.SHIP,
