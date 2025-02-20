@@ -6,6 +6,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import type { SettingsAuctionsLotStanding_lotStanding$data } from "__generated__/SettingsAuctionsLotStanding_lotStanding.graphql"
 import { type FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { getENV } from "Utils/getENV"
 
 interface SettingsAuctionsLotStandingProps {
   lotStanding: SettingsAuctionsLotStanding_lotStanding$data
@@ -25,6 +26,7 @@ const SettingsAuctionsLotStanding: FC<
   if (!artwork || !sale) return null
 
   const image = artwork.image?.cropped
+  const showLotStanding = !sale.isClosed && !sale.isLiveOpen
 
   return (
     <Fragment>
@@ -64,42 +66,55 @@ const SettingsAuctionsLotStanding: FC<
 
       <Column span={2}>
         <Flex alignItems="center">
-          {isLeadingBidder ? (
-            <Text
-              variant="xs"
-              color="green100"
-              overflowEllipsis
-              display="flex"
-              alignItems="center"
-            >
-              <ChevronCircleUpIcon height={15} width={15} fill="green100" />
-              &nbsp; Highest Bid
-            </Text>
-          ) : (
-            <Text
-              variant="xs"
-              color="red100"
-              overflowEllipsis
-              display="flex"
-              alignItems="center"
-            >
-              <ChevronCircleDownIcon height={15} width={15} fill="red100" />
-              &nbsp; Outbid
-            </Text>
-          )}
+          {showLotStanding &&
+            (isLeadingBidder ? (
+              <Text
+                variant="xs"
+                color="green100"
+                overflowEllipsis
+                display="flex"
+                alignItems="center"
+              >
+                <ChevronCircleUpIcon height={15} width={15} fill="green100" />
+                &nbsp; Highest Bid
+              </Text>
+            ) : (
+              <Text
+                variant="xs"
+                color="red100"
+                overflowEllipsis
+                display="flex"
+                alignItems="center"
+              >
+                <ChevronCircleDownIcon height={15} width={15} fill="red100" />
+                &nbsp; Outbid
+              </Text>
+            ))}
         </Flex>
       </Column>
 
       <Column span={2}>
-        <Button
-          // @ts-ignore
-          as={RouterLink}
-          to={artwork.href}
-          width="100%"
-          variant={sale.isClosed ? "secondaryBlack" : "primaryBlack"}
-        >
-          {sale.isClosed ? "View Lot" : "Bid"}
-        </Button>
+        {sale.isLiveOpen ? (
+          <Button
+            // @ts-ignore
+            as={RouterLink}
+            to={`${getENV("PREDICTION_URL")}/${sale.slug}/login`}
+            width="100%"
+            variant="primaryBlack"
+          >
+            Enter live bidding
+          </Button>
+        ) : (
+          <Button
+            // @ts-ignore
+            as={RouterLink}
+            to={artwork.href}
+            width="100%"
+            variant={sale.isClosed ? "secondaryBlack" : "primaryBlack"}
+          >
+            {sale.isClosed ? "View Lot" : "Bid"}
+          </Button>
+        )}
       </Column>
     </Fragment>
   )
@@ -113,6 +128,8 @@ export const SettingsAuctionsLotStandingFragmentContainer =
         saleArtwork {
           lotLabel
           sale {
+            slug
+            isLiveOpen
             isClosed
           }
           artwork {

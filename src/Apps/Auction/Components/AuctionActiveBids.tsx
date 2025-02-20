@@ -25,6 +25,7 @@ import {
   createRefetchContainer,
   graphql,
 } from "react-relay"
+import { getENV } from "Utils/getENV"
 
 interface AuctionActiveBidsProps {
   me: AuctionActiveBids_me$data
@@ -179,6 +180,13 @@ const BidStatus: React.FC<
   }
 
   switch (true) {
+    case lotStanding.saleArtwork?.sale?.isLiveOpen: {
+      return (
+        <Text variant="xs" color="blue100" display="flex">
+          &nbsp; Bidding live now
+        </Text>
+      )
+    }
     case lotStanding.isHighestBidder: {
       return (
         <Text variant="xs" color="green100" display="flex">
@@ -218,11 +226,15 @@ const BidButton: React.FC<
   const { router } = useRouter()
   const { tracking } = useAuctionTracking()
 
-  if (!lotStanding) {
-    return null
-  }
+  if (!lotStanding) return null
 
-  if (!!lotStanding.saleArtwork?.endedAt) {
+  const { saleArtwork } = lotStanding
+  if (!saleArtwork) return null
+
+  const { sale } = saleArtwork
+  if (!sale) return null
+
+  if (!!saleArtwork.endedAt) {
     return (
       <Box
         alignItems="center"
@@ -237,10 +249,24 @@ const BidButton: React.FC<
     )
   }
 
+  if (!!sale.isLiveOpen) {
+    return (
+      <Button
+        // @ts-ignore
+        as={RouterLink}
+        to={`${getENV("PREDICTION_URL")}/${sale.slug}/login`}
+        width="50%"
+        variant="primaryBlack"
+      >
+        Enter live bidding
+      </Button>
+    )
+  }
+
   // By default, we redirect to /artwork/id on successful bid, but since we're
   // in the ActiveBids component, redirect to /auction/id (i.e., close modal)
-  const redirectTo = `/auction/${lotStanding.saleArtwork?.saleID}`
-  const href = `/auction/${lotStanding.saleArtwork?.saleID}/bid/${lotStanding?.saleArtwork?.slug}?redirectTo=${redirectTo}`
+  const redirectTo = `/auction/${saleArtwork.saleID}`
+  const href = `/auction/${saleArtwork.saleID}/bid/${saleArtwork.slug}?redirectTo=${redirectTo}`
 
   return (
     <Button
@@ -249,13 +275,13 @@ const BidButton: React.FC<
       to={href}
       size={size}
       width="50%"
-      disabled={!!lotStanding.saleArtwork?.endedAt}
+      disabled={!!saleArtwork.endedAt}
       onClick={event => {
         event.preventDefault()
 
         tracking.clickedActiveBid({
-          artworkSlug: lotStanding.saleArtwork?.slug,
-          saleSlug: lotStanding.saleArtwork?.sale?.slug,
+          artworkSlug: saleArtwork.slug,
+          saleSlug: sale.slug,
           userID: me.internalID,
         })
 
