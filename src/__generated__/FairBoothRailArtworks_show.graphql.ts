@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<163ca577fb7fab7f213a15c9c7f92c76>>
+ * @generated SignedSource<<2b5ab9b966696a3b28c6076fde16c8a4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,11 +9,19 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type FairBoothRailArtworks_show$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly collectorSignals: {
+          readonly auction: {
+            readonly bidCount: number;
+            readonly lotWatcherCount: number;
+          } | null | undefined;
+          readonly primaryLabel: LabelSignalEnum | null | undefined;
+        } | null | undefined;
         readonly internalID: string;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
@@ -81,6 +89,49 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "slug",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CollectorSignals",
+                  "kind": "LinkedField",
+                  "name": "collectorSignals",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "primaryLabel",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "AuctionCollectorSignals",
+                      "kind": "LinkedField",
+                      "name": "auction",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "bidCount",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "lotWatcherCount",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -96,6 +147,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d6817dc611224bb68cab87ea49adfa29";
+(node as any).hash = "6d38f5faad5f661d8efd3c9f887cca71";
 
 export default node;
