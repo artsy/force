@@ -56,6 +56,8 @@ const TrendingLotsRail: React.FC<
                     node.internalID,
                     node.slug,
                     index,
+                    node.collectorSignals?.auction?.bidCount,
+                    node.collectorSignals?.auction?.lotWatcherCount,
                   ),
                 )
               }}
@@ -87,6 +89,12 @@ export const TrendingLotsRailFragmentContainer = createFragmentContainer(
               slug
               sale {
                 isClosed
+              }
+              collectorSignals {
+                auction {
+                  bidCount
+                  lotWatcherCount
+                }
               }
               ...ShelfArtwork_artwork
             }

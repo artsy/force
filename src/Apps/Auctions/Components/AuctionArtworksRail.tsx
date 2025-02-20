@@ -76,6 +76,8 @@ export const AuctionArtworksRail: React.FC<
                     node.internalID,
                     node.slug,
                     index,
+                    node.collectorSignals?.auction?.bidCount,
+                    node.collectorSignals?.auction?.lotWatcherCount,
                   ),
                 )
               }}
@@ -113,6 +115,12 @@ export const AuctionArtworksRailFragmentContainer = createFragmentContainer(
               ...ShelfArtwork_artwork
               internalID
               slug
+              collectorSignals {
+                auction {
+                  bidCount
+                  lotWatcherCount
+                }
+              }
             }
           }
         }

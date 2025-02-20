@@ -37,6 +37,8 @@ export const MyBidsBidItem: React.FC<
             saleArtwork.internalID,
             saleArtwork.slug,
             horizontalSlidePosition,
+            saleArtwork.artwork?.collectorSignals?.auction?.bidCount,
+            saleArtwork.artwork?.collectorSignals?.auction?.lotWatcherCount,
           ),
         )
       }}
@@ -159,6 +161,12 @@ export const MyBidsBidItemFragmentContainer = createFragmentContainer(
               srcSet
               width
               height
+            }
+          }
+          collectorSignals {
+            auction {
+              bidCount
+              lotWatcherCount
             }
           }
         }

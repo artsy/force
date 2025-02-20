@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e64f81b4c740c45c67cbe67a71f95240>>
+ * @generated SignedSource<<ee51615d52fbd0512345c6fef03b6d3b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,12 @@ export type TrendingLotsRail_viewer$data = {
         readonly bidderPositions: any | null | undefined;
       } | null | undefined;
       readonly node: {
+        readonly collectorSignals: {
+          readonly auction: {
+            readonly bidCount: number;
+            readonly lotWatcherCount: number;
+          } | null | undefined;
+        } | null | undefined;
         readonly internalID: string;
         readonly sale: {
           readonly isClosed: boolean | null | undefined;
@@ -135,6 +141,42 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CollectorSignals",
+                  "kind": "LinkedField",
+                  "name": "collectorSignals",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "AuctionCollectorSignals",
+                      "kind": "LinkedField",
+                      "name": "auction",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "bidCount",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "lotWatcherCount",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "ShelfArtwork_artwork"
@@ -153,6 +195,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "8ecb9ab94e93aafd7c16720ee4fb1920";
+(node as any).hash = "94e97aa738fa425ddba019bee65452b0";
 
 export default node;
