@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<232c2cbcaf7eda67e745ba0f33060def>>
+ * @generated SignedSource<<6108e66a717979bc30b9e20f19284f01>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,11 +9,19 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type FairFollowedArtists_fair$data = {
   readonly followedArtistArtworks: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly collectorSignals: {
+          readonly auction: {
+            readonly bidCount: number;
+            readonly lotWatcherCount: number;
+          } | null | undefined;
+          readonly primaryLabel: LabelSignalEnum | null | undefined;
+        } | null | undefined;
         readonly internalID: string;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
@@ -93,7 +101,50 @@ return {
                   "name": "ShelfArtwork_artwork"
                 },
                 (v0/*: any*/),
-                (v1/*: any*/)
+                (v1/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CollectorSignals",
+                  "kind": "LinkedField",
+                  "name": "collectorSignals",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "primaryLabel",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "AuctionCollectorSignals",
+                      "kind": "LinkedField",
+                      "name": "auction",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "bidCount",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "lotWatcherCount",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
               ],
               "storageKey": null
             }
@@ -109,6 +160,6 @@ return {
 };
 })();
 
-(node as any).hash = "e6f2019d1199cc4b9c488adf91d25f8a";
+(node as any).hash = "7e91e2bd451ffc90f0da649197e3439c";
 
 export default node;

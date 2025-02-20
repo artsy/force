@@ -53,6 +53,9 @@ const HomeAuctionLotsRail: React.FC<
                 destination_page_owner_slug: artwork.slug,
                 destination_page_owner_type: OwnerType.artwork,
                 type: "thumbnail",
+                signal_bid_count: artwork.collectorSignals?.auction?.bidCount,
+                signal_lot_watcher_count:
+                  artwork.collectorSignals?.auction?.lotWatcherCount,
               }
               trackEvent(trackingEvent)
             }}
@@ -89,6 +92,12 @@ export const HomeAuctionLotsRailFragmentContainer = createFragmentContainer(
               internalID
               slug
               href
+              collectorSignals {
+                auction {
+                  bidCount
+                  lotWatcherCount
+                }
+              }
             }
           }
         }

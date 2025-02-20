@@ -6,11 +6,13 @@ import {
 } from "@artsy/cohesion"
 import { Box, type BoxProps, Shelf, Spacer, Text } from "@artsy/palette"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
+import { getSignalLabel } from "Utils/getSignalLabel"
 import type { FairFollowedArtistsQuery } from "__generated__/FairFollowedArtistsQuery.graphql"
 import type { FairFollowedArtists_fair$data } from "__generated__/FairFollowedArtists_fair.graphql"
 import type * as React from "react"
@@ -25,6 +27,7 @@ export const FairFollowedArtists: React.FC<
   React.PropsWithChildren<FairFollowedArtistsProps>
 > = ({ fair, ...rest }) => {
   const tracking = useTracking()
+  const { signals } = useArtworkGridContext()
 
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
     useAnalyticsContext()
@@ -45,6 +48,9 @@ export const FairFollowedArtists: React.FC<
     artworkID,
     artworkSlug,
     carouselIndex,
+    signalLabel,
+    signalBidCount,
+    signalLotWatcherCount,
   }): ClickedArtworkGroup => {
     return {
       context_module: ContextModule.worksByArtistsYouFollowRail,
@@ -57,6 +63,9 @@ export const FairFollowedArtists: React.FC<
       horizontal_slide_position: carouselIndex,
       type: "thumbnail",
       action: ActionType.clickedArtworkGroup,
+      signal_label: signalLabel,
+      signal_bid_count: signalBidCount,
+      signal_lot_watcher_count: signalLotWatcherCount,
     }
   }
 
@@ -99,6 +108,12 @@ export const FairFollowedArtists: React.FC<
                     artworkID: artwork.internalID,
                     artworkSlug: artwork.slug,
                     carouselIndex: index,
+                    signalLabel: getSignalLabel({
+                      signals: signals?.[artwork.internalID] ?? [],
+                    }),
+                    signalBidCount: artwork.collectorSignals?.auction?.bidCount,
+                    signalLotWatcherCount:
+                      artwork.collectorSignals?.auction?.lotWatcherCount,
                   }),
                 )
               }
@@ -126,6 +141,13 @@ export const FairFollowedArtistsFragmentContainer = createFragmentContainer(
               ...ShelfArtwork_artwork
               internalID
               slug
+              collectorSignals {
+                primaryLabel
+                auction {
+                  bidCount
+                  lotWatcherCount
+                }
+              }
             }
           }
         }

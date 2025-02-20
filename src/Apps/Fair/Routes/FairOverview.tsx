@@ -4,6 +4,7 @@ import { FairCollectionsFragmentContainer } from "Apps/Fair/Components/FairColle
 import { FairEditorialRailArticlesFragmentContainer } from "Apps/Fair/Components/FairEditorial/FairEditorialRailArticles"
 import { FairAboutFragmentContainer as FairAbout } from "Apps/Fair/Components/FairOverview/FairAbout"
 import { FairFollowedArtistsQueryRenderer } from "Apps/Fair/Components/FairOverview/FairFollowedArtists"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump, useJump } from "Utils/Hooks/useJump"
@@ -50,7 +51,11 @@ const FairOverview: FC<React.PropsWithChildren<FairOverviewProps>> = ({
 
         {hasCollections && <FairCollectionsFragmentContainer fair={fair} />}
 
-        {!!user && <FairFollowedArtistsQueryRenderer id={fair.slug} />}
+        {!!user && (
+          <ArtworkGridContextProvider>
+            <FairFollowedArtistsQueryRenderer id={fair.slug} />
+          </ArtworkGridContextProvider>
+        )}
 
         <Jump id="BoothsSection">
           <FairBooths slug={fair.slug} />

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c19fde77c2135cf25c037cc05473a2ce>>
+ * @generated SignedSource<<d35d83929dde71edfc5411daac6fe15a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,12 @@ import { FragmentRefs } from "relay-runtime";
 export type MyBidsBidItem_saleArtwork$data = {
   readonly artwork: {
     readonly artistNames: string | null | undefined;
+    readonly collectorSignals: {
+      readonly auction: {
+        readonly bidCount: number;
+        readonly lotWatcherCount: number;
+      } | null | undefined;
+    } | null | undefined;
     readonly image: {
       readonly cropped: {
         readonly height: number;
@@ -45,7 +51,14 @@ export type MyBidsBidItem_saleArtwork$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = [
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "bidCount",
+  "storageKey": null
+},
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -135,6 +148,36 @@ return {
             }
           ],
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CollectorSignals",
+          "kind": "LinkedField",
+          "name": "collectorSignals",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "AuctionCollectorSignals",
+              "kind": "LinkedField",
+              "name": "auction",
+              "plural": false,
+              "selections": [
+                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "lotWatcherCount",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -153,7 +196,7 @@ return {
       "kind": "LinkedField",
       "name": "currentBid",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": (v1/*: any*/),
       "storageKey": null
     },
     {
@@ -185,13 +228,7 @@ return {
       "name": "lotState",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "bidCount",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -199,7 +236,7 @@ return {
           "kind": "LinkedField",
           "name": "sellingPrice",
           "plural": false,
-          "selections": (v0/*: any*/),
+          "selections": (v1/*: any*/),
           "storageKey": null
         }
       ],
@@ -225,6 +262,6 @@ return {
 };
 })();
 
-(node as any).hash = "01d8693674c141b25ab9c428b3d632f5";
+(node as any).hash = "04204c03b8fa8d8456ee7a9e652d5863";
 
 export default node;

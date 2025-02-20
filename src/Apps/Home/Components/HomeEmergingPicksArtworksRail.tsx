@@ -59,8 +59,7 @@ export const HomeEmergingPicksArtworksRail: React.FC<
             artwork={artwork}
             key={artwork.internalID}
             lazyLoad
-            // TODO: add troveArtworksRail to the union type of auth context module
-            // @ts-ignore
+            // @ts-expect-error TODO: add troveArtworksRail to the union type of auth context module
             contextModule={ContextModule.troveArtworksRail}
             onClick={() => {
               const trackingEvent: ClickedArtworkGroup = {

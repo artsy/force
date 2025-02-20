@@ -54,6 +54,8 @@ export const StandoutLotsRail: React.FC<
                       artwork.internalID,
                       artwork.slug,
                       index,
+                      artwork.collectorSignals?.auction?.bidCount,
+                      artwork.collectorSignals?.auction?.lotWatcherCount,
                     ),
                   )
                 }}
@@ -80,6 +82,12 @@ export const StandoutLotsRailFragmentContainer = createFragmentContainer(
             node {
               internalID
               slug
+              collectorSignals {
+                auction {
+                  bidCount
+                  lotWatcherCount
+                }
+              }
               ...ShelfArtwork_artwork
             }
           }
