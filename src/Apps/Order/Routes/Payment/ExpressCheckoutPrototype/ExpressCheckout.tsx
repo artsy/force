@@ -4,11 +4,14 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js"
+import type { StripeExpressCheckoutElementOptions } from "@stripe/stripe-js"
+import { useState } from "react"
 
 export const ExpressCheckout = () => {
   const elements = useElements()
   const stripe = useStripe()
   const clientSecret = "client_secret_id"
+  const [isReady, setIsReady] = useState(false)
 
   const onConfirm = async () => {
     if (!stripe || !elements) {
@@ -28,12 +31,31 @@ export const ExpressCheckout = () => {
     }
   }
 
+  const expressCheckoutOptions: StripeExpressCheckoutElementOptions = {
+    buttonTheme: {
+      applePay: "white-outline",
+    },
+    buttonHeight: 50,
+  }
+
   return (
     <>
-      <Text variant="lg-display">Express checkout</Text>
-      <Spacer y={1} />
-      <ExpressCheckoutElement onConfirm={onConfirm} />
-      <Spacer y={4} />
+      {isReady && (
+        <>
+          <Text variant="lg-display">Express checkout</Text>
+          <Spacer y={1} />
+        </>
+      )}
+      <ExpressCheckoutElement
+        options={expressCheckoutOptions}
+        onConfirm={onConfirm}
+        onReady={e => {
+          if (!!e.availablePaymentMethods) {
+            setIsReady(true)
+          }
+        }}
+      />
+      {isReady && <Spacer y={4} />}
     </>
   )
 }
