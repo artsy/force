@@ -12,6 +12,7 @@ interface CacheHeaderMiddlewareProps {
 }
 
 export const shouldSkipCDNCache = (req, user, ttl, url) => {
+  return true
   /**
    * The order of these checks is important.
    * We always want to skip the cache no matter what if any of:
@@ -70,11 +71,6 @@ export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
       switch (true) {
         case shouldSkipCDNCache(req, props?.user, ttl, url): {
           return { "Cache-Control": "no-cache" }
-        }
-        case !!ttl: {
-          return {
-            "Cache-Control": `max-age=${ttl}`,
-          }
         }
         default: {
           return {}
