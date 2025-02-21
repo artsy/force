@@ -2343,6 +2343,41 @@ type ArtistsWithAlertCountsEdge {
   totalAlertCount: Int
 }
 
+type ArtsyShippingOptInMutationFailure {
+  mutationError: GravityMutationError
+}
+
+input ArtsyShippingOptInMutationInput {
+  # Whether Artsy domestic shipping should be enabled
+  artsyShippingDomestic: Boolean
+
+  # Whether Artsy international shipping should be enabled
+  artsyShippingInternational: Boolean
+  clientMutationId: String
+
+  # ID of the partner
+  id: String!
+}
+
+type ArtsyShippingOptInMutationPayload {
+  ArtsyShippingOptInOrError: ArtsyShippingOptInMutationType
+  clientMutationId: String
+}
+
+type ArtsyShippingOptInMutationSuccess {
+  skippedPartnerArtworks: ArtsyShippingOptInResponse
+  updatedPartnerArtworks: ArtsyShippingOptInResponse
+}
+
+union ArtsyShippingOptInMutationType =
+  | ArtsyShippingOptInMutationFailure
+  | ArtsyShippingOptInMutationSuccess
+
+type ArtsyShippingOptInResponse {
+  count: Int
+  ids: [String]
+}
+
 type Artwork implements Node & Searchable & Sellable {
   additionalInformation(format: Format): String
   artaShippingEnabled: Boolean
@@ -2912,6 +2947,9 @@ union ArtworkFilterFacet = Gene | Tag
 union ArtworkHighlight = Article | Show
 
 type ArtworkImport implements Node {
+  # Columns to display for an import, will exist in a row's `transformedData`
+  columns: [String!]!
+  currency: String
   fileName: String!
 
   # A globally unique ID.
@@ -2961,7 +2999,9 @@ type ArtworkImportRow {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+  priceListed: Money
   rawData: JSON!
+  transformedData: JSON!
 }
 
 # A connection to a list of items.
@@ -4183,41 +4223,6 @@ union BulkUpdateArtworksMetadataMutationType =
   | BulkUpdateArtworksMetadataMutationSuccess
 
 type BulkUpdateArtworksMetadataResponse {
-  count: Int
-  ids: [String]
-}
-
-type BulkUpdatePartnerArtworksMutationFailure {
-  mutationError: GravityMutationError
-}
-
-input BulkUpdatePartnerArtworksMutationInput {
-  # Whether Artsy domestic shipping should be enabled
-  artsyShippingDomestic: Boolean
-
-  # Whether Artsy international shipping should be enabled
-  artsyShippingInternational: Boolean
-  clientMutationId: String
-
-  # ID of the partner
-  id: String!
-}
-
-type BulkUpdatePartnerArtworksMutationPayload {
-  bulkUpdatePartnerArtworksOrError: BulkUpdatePartnerArtworksMutationType
-  clientMutationId: String
-}
-
-type BulkUpdatePartnerArtworksMutationSuccess {
-  skippedPartnerArtworks: BulkUpdatePartnerArtworksResponse
-  updatedPartnerArtworks: BulkUpdatePartnerArtworksResponse
-}
-
-union BulkUpdatePartnerArtworksMutationType =
-  | BulkUpdatePartnerArtworksMutationFailure
-  | BulkUpdatePartnerArtworksMutationSuccess
-
-type BulkUpdatePartnerArtworksResponse {
   count: Int
   ids: [String]
 }
@@ -13920,6 +13925,11 @@ type Mutation {
     input: AdminUpdateFeatureFlagInput!
   ): AdminUpdateFeatureFlagPayload
 
+  # Update all artworks that belong to the partner
+  artsyShippingOptIn(
+    input: ArtsyShippingOptInMutationInput!
+  ): ArtsyShippingOptInMutationPayload
+
   # Add / remove artworks to / from collections
   artworksCollectionsBatchUpdate(
     input: ArtworksCollectionsBatchUpdateInput!
@@ -13932,11 +13942,6 @@ type Mutation {
   bulkUpdateArtworksMetadata(
     input: BulkUpdateArtworksMetadataMutationInput!
   ): BulkUpdateArtworksMetadataMutationPayload
-
-  # Update all artworks that belong to the partner
-  bulkUpdatePartnerArtworks(
-    input: BulkUpdatePartnerArtworksMutationInput!
-  ): BulkUpdatePartnerArtworksMutationPayload
   captureHold(
     # Parameters for CaptureHold
     input: CaptureHoldInput!

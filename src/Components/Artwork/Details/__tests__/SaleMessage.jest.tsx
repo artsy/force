@@ -230,6 +230,5 @@ const artworkNotInAuction: CleanRelayFragment<Details_artwork$data> = {
   collectorSignals: {
     primaryLabel: null,
     auction: null,
-    partnerOffer: null,
   },
 }
