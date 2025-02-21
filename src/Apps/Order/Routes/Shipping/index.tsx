@@ -9,12 +9,14 @@ import {
 } from "Apps/Order/Components/OrderStepper"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
+import { ExpressCheckoutProvider } from "Apps/Order/Routes/Payment/ExpressCheckoutPrototype/ExpressCheckoutProvider"
 import { FulfillmentDetails } from "Apps/Order/Routes/Shipping/Components/FulfillmentDetails"
 import { SaveAndContinueButton } from "Apps/Order/Routes/Shipping/Components/SaveAndContinueButton"
 import { ShippingQuotes } from "Apps/Order/Routes/Shipping/Components/ShippingQuotes"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import { ShippingContextProvider } from "Apps/Order/Routes/Shipping/ShippingContext"
 import { Analytics } from "System/Contexts/AnalyticsContext"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { Media } from "Utils/Responsive"
 import type {
@@ -72,6 +74,10 @@ const ShippingRouteLayout: FC<
 
   const { jumpTo } = useJump()
 
+  const expressCheckoutPrototypeEnabled = useFeatureFlag(
+    "emerald_stripe-express-checkout-prototype",
+  )
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (shippingContext.state.stage === "shipping_quotes") {
@@ -96,6 +102,11 @@ const ShippingRouteLayout: FC<
                 : {}
             }
           >
+            {expressCheckoutPrototypeEnabled &&
+              !shippingContext.orderData.isOffer && (
+                <ExpressCheckoutProvider order={order} />
+              )}
+
             <FulfillmentDetails me={me} order={order} />
 
             <Jump id="shippingOptionsTop" />
@@ -143,6 +154,7 @@ const ORDER_FRAGMENT = graphql`
     ...TransactionDetailsSummaryItem_order
     ...OrderStepper_order
     ...ShippingQuotes_order
+    ...ExpressCheckoutProvider_order
     internalID
   }
 `
