@@ -2960,6 +2960,7 @@ type ArtworkImport implements Node {
   rowsConnection(
     after: String
     before: String
+    blockersOnly: Boolean
     errorTypes: [String!]
     first: Int
     hasErrors: Boolean
