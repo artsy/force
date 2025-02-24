@@ -170,7 +170,7 @@ export const settingsRoutes: RouteProps[] = [
       {
         path: "saves",
         render: () => {
-          throw new RedirectException(`/favorites/saves`, 301)
+          throw new RedirectException("/favorites/saves", 301)
         },
       },
       {
