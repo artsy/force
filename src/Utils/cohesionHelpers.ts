@@ -13,6 +13,8 @@ export const trackHelpers = {
     artworkID: string,
     artworkSlug: string,
     horizontalSlidePosition: number,
+    singalBidCount?: number,
+    signalLotWatcherCount?: number,
   ): ClickedArtworkGroup => ({
     action: ActionType.clickedArtworkGroup,
     destination_page_owner_id: artworkID,
@@ -22,5 +24,7 @@ export const trackHelpers = {
     context_page_owner_type: contextPageOwnerType,
     horizontal_slide_position: horizontalSlidePosition,
     type: "thumbnail",
+    signal_bid_count: singalBidCount,
+    signal_lot_watcher_count: signalLotWatcherCount,
   }),
 }

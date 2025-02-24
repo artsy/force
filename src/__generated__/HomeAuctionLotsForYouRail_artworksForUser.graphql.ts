@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<62e7c8236b3d0a92b9c04205dde34af9>>
+ * @generated SignedSource<<affe1f207e2c04fb8d1051ce68d204f5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,12 @@ import { FragmentRefs } from "relay-runtime";
 export type HomeAuctionLotsForYouRail_artworksForUser$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
+      readonly collectorSignals: {
+        readonly auction: {
+          readonly bidCount: number;
+          readonly lotWatcherCount: number;
+        } | null | undefined;
+      } | null | undefined;
       readonly internalID: string;
       readonly slug: string;
       readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
@@ -62,6 +68,42 @@ const node: ReaderFragment = {
               "storageKey": null
             },
             {
+              "alias": null,
+              "args": null,
+              "concreteType": "CollectorSignals",
+              "kind": "LinkedField",
+              "name": "collectorSignals",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "AuctionCollectorSignals",
+                  "kind": "LinkedField",
+                  "name": "auction",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "bidCount",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "lotWatcherCount",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
               "args": null,
               "kind": "FragmentSpread",
               "name": "ShelfArtwork_artwork"
@@ -77,6 +119,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "bdac1f2188daaaece5f32666e68ac598";
+(node as any).hash = "52444fd11bc8bef8b325a2cb2dbe0847";
 
 export default node;
