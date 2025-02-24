@@ -2960,6 +2960,7 @@ type ArtworkImport implements Node {
   rowsConnection(
     after: String
     before: String
+    blockersOnly: Boolean
     errorTypes: [String!]
     first: Int
     hasErrors: Boolean
@@ -3354,6 +3355,7 @@ union AssignArtworkImportArtistResponseOrError =
   | AssignArtworkImportArtistSuccess
 
 type AssignArtworkImportArtistSuccess {
+  artworkImport: ArtworkImport
   artworkImportID: String!
   updatedRowsCount: Int!
 }
@@ -8284,6 +8286,7 @@ union CreateArtworkImportArtworksResponseOrError =
   | CreateArtworkImportArtworksSuccess
 
 type CreateArtworkImportArtworksSuccess {
+  artworkImport: ArtworkImport
   artworkImportID: String!
   created: Int!
   errors: Int!
@@ -13058,6 +13061,7 @@ union MatchArtworkImportArtistsResponseOrError =
   | MatchArtworkImportArtistsSuccess
 
 type MatchArtworkImportArtistsSuccess {
+  artworkImport: ArtworkImport
   artworkImportID: String!
   matched: Int!
   unmatched: Int!
@@ -13085,6 +13089,7 @@ union MatchArtworkImportRowImageResponseOrError =
   | MatchArtworkImportRowImageSuccess
 
 type MatchArtworkImportRowImageSuccess {
+  artworkImport: ArtworkImport
   success: Boolean!
 }
 
@@ -20232,6 +20237,7 @@ union UpdateArtworkImportRowResponseOrError =
   | UpdateArtworkImportRowSuccess
 
 type UpdateArtworkImportRowSuccess {
+  artworkImport: ArtworkImport
   success: Boolean!
 }
 
