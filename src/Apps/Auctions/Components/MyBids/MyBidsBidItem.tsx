@@ -99,7 +99,16 @@ export const MyBidsBidItem: React.FC<
                   </Box>
                 </Text>
 
-                {saleArtwork.isHighestBidder ? (
+                {saleArtwork.sale?.isLiveOpen ? (
+                  <Text
+                    variant="xs"
+                    color="blue100"
+                    overflowEllipsis
+                    display="flex"
+                  >
+                    &nbsp; Bidding live now
+                  </Text>
+                ) : saleArtwork.isHighestBidder ? (
                   <Text
                     variant="xs"
                     color="green100"
@@ -118,7 +127,7 @@ export const MyBidsBidItem: React.FC<
                     variant="xs"
                     color="red100"
                     overflowEllipsis
-                    alignItems="center"
+                    display="flex"
                   >
                     <ChevronCircleDownIcon
                       height={15}
@@ -168,6 +177,10 @@ export const MyBidsBidItemFragmentContainer = createFragmentContainer(
         }
         lotLabel
         slug
+        sale {
+          isLiveOpen
+          slug
+        }
       }
     `,
   },

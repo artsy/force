@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<319986c790eadc1c4f1e73ed366aa057>>
+ * @generated SignedSource<<f71985bc6883dc9e7ecf1ee861ea1fa7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,6 +26,8 @@ export type SettingsAuctionsLotStanding_lotStanding$data = {
     readonly lotLabel: string | null | undefined;
     readonly sale: {
       readonly isClosed: boolean | null | undefined;
+      readonly isLiveOpen: boolean | null | undefined;
+      readonly slug: string;
     } | null | undefined;
   } | null | undefined;
   readonly " $fragmentType": "SettingsAuctionsLotStanding_lotStanding";
@@ -71,6 +73,20 @@ const node: ReaderFragment = {
           "name": "sale",
           "plural": false,
           "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "slug",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isLiveOpen",
+              "storageKey": null
+            },
             {
               "alias": null,
               "args": null,
@@ -159,6 +175,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a7f0f63cb1451e8d704b21be1a14f99f";
+(node as any).hash = "2b6194438eeee34f5dc34b04a5a95b1d";
 
 export default node;

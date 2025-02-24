@@ -19,6 +19,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { usePoll } from "Utils/Hooks/usePoll"
 import { Media } from "Utils/Responsive"
+import { getENV } from "Utils/getENV"
 import type { AuctionActiveBids_me$data } from "__generated__/AuctionActiveBids_me.graphql"
 import {
   type RelayRefetchProp,
@@ -61,7 +62,7 @@ const AuctionActiveBids: React.FC<
       <Media at="xs">
         {me?.lotStandings?.map((lotStanding, index) => {
           return (
-            <>
+            <Box key={index}>
               <Box my={4}>
                 <Join separator={<Spacer y={0.5} />}>
                   <AuctionLotInfoFragmentContainer
@@ -72,7 +73,7 @@ const AuctionActiveBids: React.FC<
                 </Join>
               </Box>
               <Separator />
-            </>
+            </Box>
           )
         })}
       </Media>
@@ -179,6 +180,13 @@ const BidStatus: React.FC<
   }
 
   switch (true) {
+    case lotStanding.saleArtwork?.sale?.isLiveOpen: {
+      return (
+        <Text variant="xs" color="blue100" display="flex">
+          &nbsp; Bidding live now
+        </Text>
+      )
+    }
     case lotStanding.isHighestBidder: {
       return (
         <Text variant="xs" color="green100" display="flex">
@@ -218,11 +226,11 @@ const BidButton: React.FC<
   const { router } = useRouter()
   const { tracking } = useAuctionTracking()
 
-  if (!lotStanding) {
-    return null
-  }
+  const saleArtwork = lotStanding?.saleArtwork
+  const sale = saleArtwork?.sale
+  if (!sale) return null
 
-  if (!!lotStanding.saleArtwork?.endedAt) {
+  if (!!saleArtwork.endedAt) {
     return (
       <Box
         alignItems="center"
@@ -237,10 +245,24 @@ const BidButton: React.FC<
     )
   }
 
+  if (!!sale.isLiveOpen) {
+    return (
+      <Button
+        // @ts-ignore
+        as={RouterLink}
+        to={`${getENV("PREDICTION_URL")}/${sale.slug}/login`}
+        width="50%"
+        variant="primaryBlack"
+      >
+        Enter live bidding
+      </Button>
+    )
+  }
+
   // By default, we redirect to /artwork/id on successful bid, but since we're
   // in the ActiveBids component, redirect to /auction/id (i.e., close modal)
-  const redirectTo = `/auction/${lotStanding.saleArtwork?.saleID}`
-  const href = `/auction/${lotStanding.saleArtwork?.saleID}/bid/${lotStanding?.saleArtwork?.slug}?redirectTo=${redirectTo}`
+  const redirectTo = `/auction/${saleArtwork.saleID}`
+  const href = `/auction/${saleArtwork.saleID}/bid/${saleArtwork.slug}?redirectTo=${redirectTo}`
 
   return (
     <Button
@@ -249,13 +271,13 @@ const BidButton: React.FC<
       to={href}
       size={size}
       width="50%"
-      disabled={!!lotStanding.saleArtwork?.endedAt}
+      disabled={!!saleArtwork.endedAt}
       onClick={event => {
         event.preventDefault()
 
         tracking.clickedActiveBid({
-          artworkSlug: lotStanding.saleArtwork?.slug,
-          saleSlug: lotStanding.saleArtwork?.sale?.slug,
+          artworkSlug: saleArtwork.slug,
+          saleSlug: sale.slug,
           userID: me.internalID,
         })
 

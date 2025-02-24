@@ -13,7 +13,7 @@ export const UserActiveBids: React.FC<
   React.PropsWithChildren<UserActiveBidsProps>
 > = ({ me: { activeLotStandings: lotStandings } }) => {
   if (!lotStandings || lotStandings.length === 0) {
-    return <SectionContainer title="Active Bids"></SectionContainer>
+    return <SectionContainer title="Active Bids" />
   }
 
   return (
