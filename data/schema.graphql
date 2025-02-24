@@ -17347,9 +17347,6 @@ type Query {
 
     # Weights for the KNN and MLT query
     osWeights: [Float] = [0.6, 0.4]
-
-    # Internal Redis tracking for the user seen artworks
-    useInternalTracking: Boolean = false
   ): ArtworkConnection
 
   # A namespace external partners (provided by Galaxy)
@@ -22106,9 +22103,6 @@ type Viewer {
 
     # Weights for the KNN and MLT query
     osWeights: [Float] = [0.6, 0.4]
-
-    # Internal Redis tracking for the user seen artworks
-    useInternalTracking: Boolean = false
   ): ArtworkConnection
 
   # A namespace external partners (provided by Galaxy)
