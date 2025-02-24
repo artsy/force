@@ -226,12 +226,8 @@ const BidButton: React.FC<
   const { router } = useRouter()
   const { tracking } = useAuctionTracking()
 
-  if (!lotStanding) return null
-
-  const { saleArtwork } = lotStanding
-  if (!saleArtwork) return null
-
-  const { sale } = saleArtwork
+  const saleArtwork = lotStanding?.saleArtwork
+  const sale = saleArtwork?.sale
   if (!sale) return null
 
   if (!!saleArtwork.endedAt) {

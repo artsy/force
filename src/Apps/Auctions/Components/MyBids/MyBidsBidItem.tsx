@@ -127,7 +127,7 @@ export const MyBidsBidItem: React.FC<
                     variant="xs"
                     color="red100"
                     overflowEllipsis
-                    alignItems="center"
+                    display="flex"
                   >
                     <ChevronCircleDownIcon
                       height={15}
