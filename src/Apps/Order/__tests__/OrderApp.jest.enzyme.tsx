@@ -19,14 +19,13 @@ import {
   UntouchedOfferOrder,
 } from "Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "DevTools/MockBoot"
-import mockStripe from "DevTools/mockStripe"
+// import mockStripe from ""
 import { getENV } from "Utils/getENV"
 import type { orderRoutes_OrderQuery$rawResponse } from "__generated__/orderRoutes_OrderQuery.graphql"
 import type { FarceRedirectResult } from "found/server"
 import { DateTime } from "luxon"
 import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 // eslint-disable-next-line no-restricted-imports
-import type { GlobalData } from "sharify"
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn(),
@@ -44,21 +43,8 @@ jest.mock(
     return jest.requireActual("../Components/__mocks__/BankDebitProvider")
   },
 )
-jest.mock("Apps/Order/Components/ExpressCheckout", () => {
-  return {
-    ExpressCheckout: () => <div>Express Checkout</div>,
-  }
-})
-
-jest.mock("@stripe/stripe-js", () => ({
-  loadStripe: jest.fn(() => Promise.resolve(mockStripe)),
-}))
 
 describe("OrderApp routing redirects", () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
   // FIXME: move to DevTools folder
   async function render(url: string, mockData): Promise<FarceRedirectResult> {
     const environment = createMockEnvironment()
@@ -617,9 +603,6 @@ describe("OrderApp", () => {
       </MockBoot>,
     )
   }
-  beforeAll(() => {
-    window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
-  })
 
   const getProps = ({ state, location, replace }: any = {}) => {
     return {
