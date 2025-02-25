@@ -19,7 +19,7 @@ import {
   UntouchedOfferOrder,
 } from "Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "DevTools/MockBoot"
-import { mockStripe } from "DevTools/mockStripe"
+import mockStripe from "DevTools/mockStripe"
 import { getENV } from "Utils/getENV"
 import type { orderRoutes_OrderQuery$rawResponse } from "__generated__/orderRoutes_OrderQuery.graphql"
 import type { FarceRedirectResult } from "found/server"
@@ -44,23 +44,21 @@ jest.mock(
     return jest.requireActual("../Components/__mocks__/BankDebitProvider")
   },
 )
-
-jest.mock("@stripe/stripe-js", () => {
-  let mock: null | ReturnType<typeof mockStripe> = null
+jest.mock("Apps/Order/Components/ExpressCheckout", () => {
   return {
-    loadStripe: () => {
-      if (mock === null) {
-        mock = mockStripe()
-      }
-      return mock
-    },
-    _mockStripe: () => mock,
-
-    _mockReset: () => (mock = mockStripe()),
+    ExpressCheckout: () => <div>Express Checkout</div>,
   }
 })
 
+jest.mock("@stripe/stripe-js", () => ({
+  loadStripe: jest.fn(() => Promise.resolve(mockStripe)),
+}))
+
 describe("OrderApp routing redirects", () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   // FIXME: move to DevTools folder
   async function render(url: string, mockData): Promise<FarceRedirectResult> {
     const environment = createMockEnvironment()
@@ -602,6 +600,10 @@ describe("OrderApp routing redirects", () => {
 })
 
 describe("OrderApp", () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   const mockGetENV = getENV as jest.Mock
 
   const getWrapper = ({ props, context, breakpoint = "lg" }: any) => {
