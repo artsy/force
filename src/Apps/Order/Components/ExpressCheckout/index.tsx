@@ -18,14 +18,17 @@ interface Props {
 export const ExpressCheckout = ({ order }: Props) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
 
-  const { buyerTotalCents, currencyCode } = orderData
+  const { buyerTotalCents, currencyCode, itemsTotalCents } = orderData
 
-  if (!(buyerTotalCents && currencyCode)) {
+  // fall back if buyer total not available yet
+  const amount = buyerTotalCents || itemsTotalCents
+
+  if (!currencyCode || !amount) {
     return null
   }
 
   const orderOptions: StripeElementsUpdateOptions = {
-    amount: buyerTotalCents,
+    amount: amount,
     currency: currencyCode.toLowerCase(),
   }
 
@@ -53,5 +56,6 @@ const ORDER_FRAGMENT = graphql`
     ...ExpressCheckoutUI_order
     buyerTotalCents
     currencyCode
+    itemsTotalCents
   }
 `

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<71b037eaa32d79a7db916f39578cbfd6>>
+ * @generated SignedSource<<079abdd2b152465bf43292d9054c2c92>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ExpressCheckout_order$data = {
   readonly buyerTotalCents: number | null | undefined;
   readonly currencyCode: string;
+  readonly itemsTotalCents: number | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutUI_order">;
   readonly " $fragmentType": "ExpressCheckout_order";
 };
@@ -45,12 +46,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "currencyCode",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "itemsTotalCents",
+      "storageKey": null
     }
   ],
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
 
-(node as any).hash = "29d7576fc07a7882ca59ed5e0abba477";
+(node as any).hash = "65450074d89512b85f38cb9e17633aae";
 
 export default node;
