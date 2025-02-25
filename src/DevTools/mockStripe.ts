@@ -6,13 +6,13 @@ const mockElement = () => ({
 })
 
 const mockElements = () => {
-  const elements = {}
+  const elements: Record<string, ReturnType<typeof mockElement>> = {}
   return {
-    create: jest.fn(type => {
+    create: jest.fn((type: string) => {
       elements[type] = mockElement()
       return elements[type]
     }),
-    getElement: jest.fn(type => {
+    getElement: jest.fn((type: string) => {
       return elements[type] || null
     }),
   }
@@ -29,3 +29,7 @@ export const mockStripe = () => ({
   handleCardAction: jest.fn(),
   _registerWrapper: jest.fn(),
 })
+
+// Export a singleton mock
+const stripeMock = mockStripe()
+export default stripeMock
