@@ -2966,6 +2966,7 @@ type ArtworkImport implements Node {
     hasErrors: Boolean
     last: Int
   ): ArtworkImportRowConnection
+  state: String!
   unmatchedArtistNames: [String!]!
 }
 
