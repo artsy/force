@@ -135,6 +135,30 @@ describe("AuctionActiveBids", () => {
       })
     })
 
+    describe("auction with live bidding that is already started", () => {
+      it("displays live bidding in process", () => {
+        const { wrapper } = getWrapper({
+          Me: () => ({
+            lotStandings: [
+              {
+                saleArtwork: {
+                  counts: {
+                    bidderPositions: 1,
+                  },
+                  sale: {
+                    slug: "auction-slug",
+                    isLiveOpen: true,
+                  },
+                },
+              },
+            ],
+          }),
+        })
+
+        expect(wrapper.text()).toContain("Bidding live now")
+      })
+    })
+
     describe("current bid", () => {
       it("shows current bid count", () => {
         const { wrapper } = getWrapper({
