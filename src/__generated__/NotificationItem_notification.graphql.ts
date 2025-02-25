@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e2d9298f492869acc2f5ac31fe9834c2>>
+ * @generated SignedSource<<442046b03fed15f204b33773911eff95>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,7 +32,9 @@ export type NotificationItem_notification$data = {
     readonly blurhashDataURL: string | null | undefined;
     readonly internalID: string | null | undefined;
     readonly resized: {
+      readonly height: number | null | undefined;
       readonly srcSet: string;
+      readonly width: number | null | undefined;
     } | null | undefined;
   }>;
   readonly targetHref: string;
@@ -200,6 +202,20 @@ return {
               "kind": "ScalarField",
               "name": "srcSet",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "width",
+              "storageKey": null
             }
           ],
           "storageKey": "resized(height:58,version:[\"main\",\"normalized\",\"larger\",\"large\"])"
@@ -225,6 +241,6 @@ return {
 };
 })();
 
-(node as any).hash = "b2e1725decadccbf37ef770c67b23c96";
+(node as any).hash = "ad704c6d86c7a5946b2c7d6c54f43aa4";
 
 export default node;
