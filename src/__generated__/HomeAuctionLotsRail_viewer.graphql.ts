@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7661aca7d980de2204ef4c12e7f53505>>
+ * @generated SignedSource<<4b20b0dd6f2b3bf0fcac56fed9853eb5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,12 @@ export type HomeAuctionLotsRail_viewer$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly collectorSignals: {
+          readonly auction: {
+            readonly bidCount: number;
+            readonly lotWatcherCount: number;
+          } | null | undefined;
+        } | null | undefined;
         readonly href: string | null | undefined;
         readonly internalID: string;
         readonly slug: string;
@@ -99,6 +105,42 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "href",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CollectorSignals",
+                  "kind": "LinkedField",
+                  "name": "collectorSignals",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "AuctionCollectorSignals",
+                      "kind": "LinkedField",
+                      "name": "auction",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "bidCount",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "lotWatcherCount",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -114,6 +156,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "23381ef077116e1e276e18689536114a";
+(node as any).hash = "d75f28e65a386338f7d4fe20f160ebf9";
 
 export default node;

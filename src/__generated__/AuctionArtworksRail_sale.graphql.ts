@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e733107787f6ca2931ab5fd32709b53e>>
+ * @generated SignedSource<<0859b9155d650f62b5da6d09e424e050>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,12 @@ export type AuctionArtworksRail_sale$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly collectorSignals: {
+          readonly auction: {
+            readonly bidCount: number;
+            readonly lotWatcherCount: number;
+          } | null | undefined;
+        } | null | undefined;
         readonly internalID: string;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
@@ -89,7 +95,43 @@ return {
                   "name": "ShelfArtwork_artwork"
                 },
                 (v0/*: any*/),
-                (v1/*: any*/)
+                (v1/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CollectorSignals",
+                  "kind": "LinkedField",
+                  "name": "collectorSignals",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "AuctionCollectorSignals",
+                      "kind": "LinkedField",
+                      "name": "auction",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "bidCount",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "lotWatcherCount",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
               ],
               "storageKey": null
             }
@@ -128,6 +170,6 @@ return {
 };
 })();
 
-(node as any).hash = "17ff6099d53e1915651b68d0f6aa4aac";
+(node as any).hash = "2de5348fdfc4fb9fee063344ad946bff";
 
 export default node;

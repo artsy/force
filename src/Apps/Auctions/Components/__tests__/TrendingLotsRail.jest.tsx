@@ -115,6 +115,8 @@ describe("TrendingLotsRail", () => {
           "destination_page_owner_slug": "<Artwork-mock-id-2>",
           "destination_page_owner_type": "artwork",
           "horizontal_slide_position": 0,
+          "signal_bid_count": 42,
+          "signal_lot_watcher_count": 42,
           "type": "thumbnail",
         },
       ]

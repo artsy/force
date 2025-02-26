@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<592668cd643121ded7750d0b0d02a82e>>
+ * @generated SignedSource<<c432abe92e9200f330a3723267b505e9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,6 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowInstallShots_show$data = {
   readonly images: ReadonlyArray<{
-    readonly blurhashDataURL: string | null | undefined;
     readonly caption: string | null | undefined;
     readonly height: number | null | undefined;
     readonly internalID: string | null | undefined;
@@ -121,13 +120,6 @@ return {
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "blurhashDataURL",
-          "storageKey": null
-        },
-        {
           "alias": "zoom",
           "args": [
             {
@@ -189,6 +181,6 @@ return {
 };
 })();
 
-(node as any).hash = "f2b6459acd74ed0edb9c617d9e1a6269";
+(node as any).hash = "d71055e7fc50e9797da1e9579ea9eeaf";
 
 export default node;

@@ -52,7 +52,6 @@ const ShelfArtwork: React.FC<React.PropsWithChildren<ShelfArtworkProps>> = ({
   })
 
   const image = resized(artwork.image.src, { width })
-  const blurHashDataURL = artwork.image.blurhashDataURL
 
   const label =
     (artwork.title ?? "Artwork") +
@@ -100,7 +99,6 @@ const ShelfArtwork: React.FC<React.PropsWithChildren<ShelfArtworkProps>> = ({
               lazyLoad={lazyLoad}
               style={{ display: "block", objectFit: "cover" }}
               alt=""
-              placeHolderURL={blurHashDataURL ?? undefined}
             />
           </Box>
 
@@ -138,7 +136,6 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
           src: url(version: ["larger", "large"])
           width
           height
-          blurhashDataURL
         }
       }
     `,

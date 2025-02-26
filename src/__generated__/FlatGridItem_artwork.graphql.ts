@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a707f27be870ed03d568241cdd147376>>
+ * @generated SignedSource<<add4ae3f22efce668ba2be9b7e04d469>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,6 @@ export type FlatGridItem_artwork$data = {
   readonly artistNames: string | null | undefined;
   readonly href: string | null | undefined;
   readonly image: {
-    readonly blurhashDataURL?: string | null | undefined;
     readonly resized: {
       readonly height: number | null | undefined;
       readonly src: string;
@@ -50,11 +49,6 @@ const node: ReaderFragment = {
       "defaultValue": false,
       "kind": "LocalArgument",
       "name": "includeAllImages"
-    },
-    {
-      "defaultValue": true,
-      "kind": "LocalArgument",
-      "name": "includeBlurHash"
     }
   ],
   "kind": "Fragment",
@@ -224,20 +218,6 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": "resized(version:[\"larger\",\"large\"],width:445)"
-        },
-        {
-          "condition": "includeBlurHash",
-          "kind": "Condition",
-          "passingValue": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "blurhashDataURL",
-              "storageKey": null
-            }
-          ]
         }
       ],
       "storageKey": null
@@ -261,6 +241,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "fdba985b8be11309db3e707bb508917a";
+(node as any).hash = "323936022dfe2a4d2fa1f0f460385ba4";
 
 export default node;

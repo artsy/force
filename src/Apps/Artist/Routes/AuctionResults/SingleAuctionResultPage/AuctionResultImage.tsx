@@ -52,9 +52,6 @@ export const AuctionResultImage: React.FC<
       aspectHeight={image.height || 1}
     >
       <Image
-        // updates the background of the image to be white
-        // @ts-expect-error
-        bg="white100"
         lazyLoad
         data-testid="artwork-lightbox-image"
         width="100%"

@@ -2,6 +2,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Flex, Spacer } from "@artsy/palette"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
+import { ExpressCheckout } from "Apps/Order/Components/ExpressCheckout"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import {
   buyNowFlowSteps,
@@ -9,7 +10,6 @@ import {
 } from "Apps/Order/Components/OrderStepper"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
-import { ExpressCheckoutProvider } from "Apps/Order/Routes/Payment/ExpressCheckoutPrototype/ExpressCheckoutProvider"
 import { FulfillmentDetails } from "Apps/Order/Routes/Shipping/Components/FulfillmentDetails"
 import { SaveAndContinueButton } from "Apps/Order/Routes/Shipping/Components/SaveAndContinueButton"
 import { ShippingQuotes } from "Apps/Order/Routes/Shipping/Components/ShippingQuotes"
@@ -104,7 +104,7 @@ const ShippingRouteLayout: FC<
           >
             {expressCheckoutPrototypeEnabled &&
               !shippingContext.orderData.isOffer && (
-                <ExpressCheckoutProvider order={order} />
+                <ExpressCheckout order={order} />
               )}
 
             <FulfillmentDetails me={me} order={order} />
@@ -154,7 +154,7 @@ const ORDER_FRAGMENT = graphql`
     ...TransactionDetailsSummaryItem_order
     ...OrderStepper_order
     ...ShippingQuotes_order
-    ...ExpressCheckoutProvider_order
+    ...ExpressCheckout_order
     internalID
   }
 `

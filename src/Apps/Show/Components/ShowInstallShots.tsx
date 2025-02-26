@@ -80,7 +80,6 @@ export const ShowInstallShots: FC<
                 height="100%"
                 alt={`${show.name}, installation view`}
                 lazyLoad={i > 2}
-                placeHolderURL={image.blurhashDataURL ?? undefined}
                 style={{
                   display: "block",
                   objectFit: "contain",
@@ -145,7 +144,6 @@ export const ShowInstallShots: FC<
                   srcSet={selected.zoom.srcSet}
                   width="100%"
                   height="100%"
-                  placeHolderURL={selected.blurhashDataURL ?? undefined}
                   alt={`${show.name}, installation view`}
                 />
               </FullscreenBox>
@@ -190,7 +188,6 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
           width
           height
           versions
-          blurhashDataURL
           zoom: resized(
             quality: 85
             width: 900

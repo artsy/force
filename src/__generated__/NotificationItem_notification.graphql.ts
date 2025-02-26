@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e2d9298f492869acc2f5ac31fe9834c2>>
+ * @generated SignedSource<<8a13ef14233cd481117018d2d60deec6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,10 +29,11 @@ export type NotificationItem_notification$data = {
   readonly notificationType: NotificationTypesEnum;
   readonly objectsCount: number;
   readonly previewImages: ReadonlyArray<{
-    readonly blurhashDataURL: string | null | undefined;
     readonly internalID: string | null | undefined;
     readonly resized: {
+      readonly height: number | null | undefined;
       readonly srcSet: string;
+      readonly width: number | null | undefined;
     } | null | undefined;
   }>;
   readonly targetHref: string;
@@ -165,13 +166,6 @@ return {
         (v0/*: any*/),
         {
           "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "blurhashDataURL",
-          "storageKey": null
-        },
-        {
-          "alias": null,
           "args": [
             {
               "kind": "Literal",
@@ -200,6 +194,20 @@ return {
               "kind": "ScalarField",
               "name": "srcSet",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "width",
+              "storageKey": null
             }
           ],
           "storageKey": "resized(height:58,version:[\"main\",\"normalized\",\"larger\",\"large\"])"
@@ -225,6 +233,6 @@ return {
 };
 })();
 
-(node as any).hash = "b2e1725decadccbf37ef770c67b23c96";
+(node as any).hash = "1eabaa94d01dcae518982787f854a346";
 
 export default node;

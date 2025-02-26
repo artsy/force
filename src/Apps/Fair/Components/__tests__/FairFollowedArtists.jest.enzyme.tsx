@@ -98,6 +98,9 @@ describe("FairFollowedArtists", () => {
       destination_page_owner_slug: "example-artwork-slug",
       destination_page_owner_type: "artwork",
       horizontal_slide_position: 0,
+      signal_bid_count: undefined,
+      signal_label: "",
+      signal_lot_watcher_count: undefined,
       type: "thumbnail",
     })
   })
