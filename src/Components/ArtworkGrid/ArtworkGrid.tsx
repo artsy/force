@@ -344,7 +344,6 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
     fragment ArtworkGrid_artworks on ArtworkConnectionInterface
     @argumentDefinitions(
       includeAllImages: { type: "Boolean", defaultValue: false }
-      includeBlurHash: { type: "Boolean!", defaultValue: true }
     ) {
       edges {
         node {
@@ -355,8 +354,8 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
           image(includeAll: $includeAllImages) {
             aspectRatio
           }
-          ...GridItem_artwork @arguments(includeBlurHash: $includeBlurHash)
-          ...FlatGridItem_artwork @arguments(includeBlurHash: $includeBlurHash)
+          ...GridItem_artwork
+          ...FlatGridItem_artwork
         }
       }
     }

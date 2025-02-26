@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8d43e2c59c1b2bde010d6f18ead7c821>>
+ * @generated SignedSource<<8b4a6d9b3a1e30b2fb96ff16858808eb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -168,13 +168,6 @@ return {
                 "storageKey": null
               },
               {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "blurhashDataURL",
-                "storageKey": null
-              },
-              {
                 "alias": "zoom",
                 "args": [
                   {
@@ -243,7 +236,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "00d0be7957863981c565fdd39a848257",
+    "cacheID": "8ba528a488d7538483e9a021bcddcdb7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -265,7 +258,6 @@ return {
           "plural": true,
           "type": "Image"
         },
-        "show.images.blurhashDataURL": (v3/*: any*/),
         "show.images.caption": (v3/*: any*/),
         "show.images.height": (v4/*: any*/),
         "show.images.internalID": {
@@ -297,7 +289,7 @@ return {
     },
     "name": "ShowInstallShots_Test_Query",
     "operationKind": "query",
-    "text": "query ShowInstallShots_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowInstallShots_show\n    id\n  }\n}\n\nfragment ShowInstallShots_show on Show {\n  name\n  images(default: false, size: 100) {\n    internalID\n    caption\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n    versions\n    blurhashDataURL\n    zoom: resized(quality: 85, width: 900, height: 900, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
+    "text": "query ShowInstallShots_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowInstallShots_show\n    id\n  }\n}\n\nfragment ShowInstallShots_show on Show {\n  name\n  images(default: false, size: 100) {\n    internalID\n    caption\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n    versions\n    zoom: resized(quality: 85, width: 900, height: 900, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
   }
 };
 })();

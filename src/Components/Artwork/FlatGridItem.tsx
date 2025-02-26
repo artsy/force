@@ -30,7 +30,6 @@ const FlatGridItem: React.FC<React.PropsWithChildren<FlatGridItemProps>> = ({
   })
 
   const image = artwork.image?.resized
-  const blurHashDataURL = artwork.image?.blurhashDataURL
 
   const handleClick = () => {
     onClick?.()
@@ -93,7 +92,6 @@ const FlatGridItem: React.FC<React.PropsWithChildren<FlatGridItemProps>> = ({
               width="100%"
               height="100%"
               style={{ display: "block" }}
-              placeHolderURL={blurHashDataURL ?? undefined}
               lazyLoad
             />
           )}
@@ -129,7 +127,6 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
     artwork: graphql`
       fragment FlatGridItem_artwork on Artwork
       @argumentDefinitions(
-        includeBlurHash: { type: "Boolean", defaultValue: true }
         includeAllImages: { type: "Boolean", defaultValue: false }
       ) {
         ...Metadata_artwork
@@ -154,7 +151,6 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
             width
             height
           }
-          blurhashDataURL @include(if: $includeBlurHash)
         }
         artistNames
         href

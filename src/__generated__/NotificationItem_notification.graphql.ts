@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<442046b03fed15f204b33773911eff95>>
+ * @generated SignedSource<<8a13ef14233cd481117018d2d60deec6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,7 +29,6 @@ export type NotificationItem_notification$data = {
   readonly notificationType: NotificationTypesEnum;
   readonly objectsCount: number;
   readonly previewImages: ReadonlyArray<{
-    readonly blurhashDataURL: string | null | undefined;
     readonly internalID: string | null | undefined;
     readonly resized: {
       readonly height: number | null | undefined;
@@ -167,13 +166,6 @@ return {
         (v0/*: any*/),
         {
           "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "blurhashDataURL",
-          "storageKey": null
-        },
-        {
-          "alias": null,
           "args": [
             {
               "kind": "Literal",
@@ -241,6 +233,6 @@ return {
 };
 })();
 
-(node as any).hash = "ad704c6d86c7a5946b2c7d6c54f43aa4";
+(node as any).hash = "1eabaa94d01dcae518982787f854a346";
 
 export default node;

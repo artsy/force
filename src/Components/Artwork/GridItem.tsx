@@ -176,7 +176,6 @@ const ArtworkGridItemImage: React.FC<
   const height = Math.floor(width / aspectRatio)
   const transform = aspectRatio === 1 ? cropped : resized
   const imageURL = artwork.image?.url
-  const blurHashDataURL = artwork.image?.blurhashDataURL
   const { src, srcSet } = imageURL
     ? transform(imageURL, {
         width,
@@ -212,7 +211,6 @@ const ArtworkGridItemImage: React.FC<
         srcSet={srcSet}
         lazyLoad={lazyLoad}
         preventRightClick={!isTeam}
-        placeHolderURL={blurHashDataURL ?? undefined}
       />
     )
   }
@@ -303,7 +301,6 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
       fragment GridItem_artwork on Artwork
       @argumentDefinitions(
         includeAllImages: { type: "Boolean", defaultValue: false }
-        includeBlurHash: { type: "Boolean", defaultValue: true }
       ) {
         internalID
         title
@@ -314,7 +311,6 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
           url(version: ["larger", "large"])
           aspectRatio
           versions
-          blurhashDataURL @include(if: $includeBlurHash)
         }
         artistNames
         href
