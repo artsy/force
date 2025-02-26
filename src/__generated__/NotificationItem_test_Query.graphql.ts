@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<566ad41139dacd7814581ee14a2958dc>>
+ * @generated SignedSource<<f254c71b26fe8c3e3ede3166c156cdb1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -53,12 +53,6 @@ v3 = {
   "type": "ID"
 },
 v4 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v5 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -249,13 +243,6 @@ return {
                       (v1/*: any*/),
                       {
                         "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "blurhashDataURL",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
                         "args": [
                           {
                             "kind": "Literal",
@@ -337,7 +324,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d7cf5f744852da4042b78f9b8c647669",
+    "cacheID": "91ec9f1f793b5a20592908983248ec8b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -381,7 +368,12 @@ return {
           "plural": false,
           "type": "Boolean"
         },
-        "notificationsConnection.edges.node.item.expiresAt": (v4/*: any*/),
+        "notificationsConnection.edges.node.item.expiresAt": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
         "notificationsConnection.edges.node.message": (v2/*: any*/),
         "notificationsConnection.edges.node.notificationType": {
           "enumValues": [
@@ -409,7 +401,6 @@ return {
           "plural": true,
           "type": "Image"
         },
-        "notificationsConnection.edges.node.previewImages.blurhashDataURL": (v4/*: any*/),
         "notificationsConnection.edges.node.previewImages.internalID": {
           "enumValues": null,
           "nullable": true,
@@ -422,9 +413,9 @@ return {
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "notificationsConnection.edges.node.previewImages.resized.height": (v5/*: any*/),
+        "notificationsConnection.edges.node.previewImages.resized.height": (v4/*: any*/),
         "notificationsConnection.edges.node.previewImages.resized.srcSet": (v2/*: any*/),
-        "notificationsConnection.edges.node.previewImages.resized.width": (v5/*: any*/),
+        "notificationsConnection.edges.node.previewImages.resized.width": (v4/*: any*/),
         "notificationsConnection.edges.node.publishedAt": (v2/*: any*/),
         "notificationsConnection.edges.node.targetHref": (v2/*: any*/),
         "notificationsConnection.edges.node.title": (v2/*: any*/)
@@ -432,7 +423,7 @@ return {
     },
     "name": "NotificationItem_test_Query",
     "operationKind": "query",
-    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_notification\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_notification on Notification {\n  id\n  internalID\n  headline\n  message\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  previewImages(size: 4) {\n    internalID\n    blurhashDataURL\n    resized(height: 58, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      srcSet\n      height\n      width\n    }\n  }\n  title\n  ...NotificationTypeLabel_notification\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n"
+    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_notification\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_notification on Notification {\n  id\n  internalID\n  headline\n  message\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      available\n      expiresAt\n    }\n  }\n  previewImages(size: 4) {\n    internalID\n    resized(height: 58, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      srcSet\n      height\n      width\n    }\n  }\n  title\n  ...NotificationTypeLabel_notification\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n"
   }
 };
 })();

@@ -25,6 +25,5 @@ export function getWorksForSaleRouteVariables({ artistID }, { location }) {
     input: filterParams,
     aggregations,
     artistID,
-    includeBlurHash: false,
   }
 }
