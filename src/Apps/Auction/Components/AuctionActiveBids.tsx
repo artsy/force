@@ -151,7 +151,6 @@ export const AuctionActiveBidsRefetchContainer = createRefetchContainer(
             endedAt
             sale {
               slug
-              liveStartAt
               endAt
               isLiveOpen
               isClosed

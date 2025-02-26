@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8b7f775c0e29031d25f350f8e7d1cccb>>
+ * @generated SignedSource<<97a1d7a3e6d1e675e9c4f9dd50bc28ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -139,27 +139,6 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "href",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "liveStartAt",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "isLiveOpen",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
                         "name": "id",
                         "storageKey": null
                       },
@@ -231,12 +210,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "52e1b248618f45749cb9dca9c6b6118b",
+    "cacheID": "0370ff3603c038c9557879ff98fc8e59",
     "id": null,
     "metadata": {},
     "name": "auctionsRoutes_Current_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Current_AuctionsQuery {\n  viewer {\n    ...CurrentAuctions_viewer\n  }\n}\n\nfragment CurrentAuctions_viewer on Viewer {\n  salesConnection(first: 10, live: true, published: true, sort: LICENSED_TIMELY_AT_NAME_DESC, auctionState: OPEN) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        isLiveOpen\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query auctionsRoutes_Current_AuctionsQuery {\n  viewer {\n    ...CurrentAuctions_viewer\n  }\n}\n\nfragment CurrentAuctions_viewer on Viewer {\n  salesConnection(first: 10, live: true, published: true, sort: LICENSED_TIMELY_AT_NAME_DESC, auctionState: OPEN) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
