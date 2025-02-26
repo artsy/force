@@ -24,6 +24,7 @@ import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePe
 import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
@@ -93,33 +94,35 @@ const FairArtworksFilter: React.FC<
   )
 
   return (
-    <ArtworkFilterContextProvider
-      filters={match && match.location.query}
-      counts={counts as Counts}
-      sortOptions={[
-        { text: "Recommended", value: "-decayed_merch" },
-        { text: "Price (High to Low)", value: "-has_price,-prices" },
-        { text: "Price (Low to High)", value: "-has_price,prices" },
-        { text: "Recently Updated", value: "-partner_updated_at" },
-        { text: "Recently Added", value: "-published_at" },
-        { text: "Artwork Year (Descending)", value: "-year" },
-        { text: "Artwork Year (Ascending)", value: "year" },
-      ]}
-      onChange={updateUrl}
-      aggregations={
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
-      }
-      userPreferredMetric={userPreferences?.metric}
-    >
-      <BaseArtworkFilter
-        mt={[0, 6]}
-        relay={relay}
-        viewer={fair}
-        featuredKeywords={fair.featuredKeywords}
-        Filters={Filters}
-      />
-    </ArtworkFilterContextProvider>
+    <ArtworkGridContextProvider>
+      <ArtworkFilterContextProvider
+        filters={match && match.location.query}
+        counts={counts as Counts}
+        sortOptions={[
+          { text: "Recommended", value: "-decayed_merch" },
+          { text: "Price (High to Low)", value: "-has_price,-prices" },
+          { text: "Price (Low to High)", value: "-has_price,prices" },
+          { text: "Recently Updated", value: "-partner_updated_at" },
+          { text: "Recently Added", value: "-published_at" },
+          { text: "Artwork Year (Descending)", value: "-year" },
+          { text: "Artwork Year (Ascending)", value: "year" },
+        ]}
+        onChange={updateUrl}
+        aggregations={
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+          sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
+        }
+        userPreferredMetric={userPreferences?.metric}
+      >
+        <BaseArtworkFilter
+          mt={[0, 6]}
+          relay={relay}
+          viewer={fair}
+          featuredKeywords={fair.featuredKeywords}
+          Filters={Filters}
+        />
+      </ArtworkFilterContextProvider>
+    </ArtworkGridContextProvider>
   )
 }
 

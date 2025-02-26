@@ -87,6 +87,8 @@ describe("HomeAuctionLotsRail", () => {
         destination_page_owner_id: "test-internal-id",
         destination_page_owner_slug: "test-href",
         destination_page_owner_type: "artwork",
+        signal_bid_count: 42,
+        signal_lot_watcher_count: 42,
         type: "thumbnail",
       })
     })

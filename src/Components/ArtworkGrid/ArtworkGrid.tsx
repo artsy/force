@@ -249,10 +249,17 @@ export class ArtworkGridContainer extends React.Component<
 
     return (
       <GridColumns width="100%">
-        {nodes.map(artwork => {
+        {nodes.map((artwork, index) => {
           return (
             <Column span={[6, 3]} key={artwork.internalID} minWidth={0}>
-              <FlatGridItemFragmentContainer artwork={artwork} />
+              <FlatGridItemFragmentContainer
+                onClick={() => {
+                  if (this.props.onBrickClick) {
+                    this.props.onBrickClick(artwork, index)
+                  }
+                }}
+                artwork={artwork}
+              />
             </Column>
           )
         })}
