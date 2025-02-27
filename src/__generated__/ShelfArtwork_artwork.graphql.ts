@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<693ac61aadd4d882c61501c6f3e300b9>>
+ * @generated SignedSource<<0b708314ad44325b4906831db1190cec>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,6 @@ export type ShelfArtwork_artwork$data = {
   readonly artistNames: string | null | undefined;
   readonly href: string | null | undefined;
   readonly image: {
-    readonly blurhashDataURL: string | null | undefined;
     readonly height: number | null | undefined;
     readonly src: string | null | undefined;
     readonly width: number | null | undefined;
@@ -110,13 +109,6 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "height",
           "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "blurhashDataURL",
-          "storageKey": null
         }
       ],
       "storageKey": null
@@ -126,6 +118,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "1c78062da40df279094a43d2e645407e";
+(node as any).hash = "ce3f28472a75c29f53c06eb59b5a4581";
 
 export default node;

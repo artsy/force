@@ -249,10 +249,17 @@ export class ArtworkGridContainer extends React.Component<
 
     return (
       <GridColumns width="100%">
-        {nodes.map(artwork => {
+        {nodes.map((artwork, index) => {
           return (
             <Column span={[6, 3]} key={artwork.internalID} minWidth={0}>
-              <FlatGridItemFragmentContainer artwork={artwork} />
+              <FlatGridItemFragmentContainer
+                onClick={() => {
+                  if (this.props.onBrickClick) {
+                    this.props.onBrickClick(artwork, index)
+                  }
+                }}
+                artwork={artwork}
+              />
             </Column>
           )
         })}
@@ -344,7 +351,6 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
     fragment ArtworkGrid_artworks on ArtworkConnectionInterface
     @argumentDefinitions(
       includeAllImages: { type: "Boolean", defaultValue: false }
-      includeBlurHash: { type: "Boolean!", defaultValue: true }
     ) {
       edges {
         node {
@@ -355,8 +361,8 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
           image(includeAll: $includeAllImages) {
             aspectRatio
           }
-          ...GridItem_artwork @arguments(includeBlurHash: $includeBlurHash)
-          ...FlatGridItem_artwork @arguments(includeBlurHash: $includeBlurHash)
+          ...GridItem_artwork
+          ...FlatGridItem_artwork
         }
       }
     }

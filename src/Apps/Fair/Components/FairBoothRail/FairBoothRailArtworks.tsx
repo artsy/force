@@ -10,10 +10,12 @@ import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
+import { getSignalLabel } from "Utils/getSignalLabel"
 import type { FairBoothRailArtworksQuery } from "__generated__/FairBoothRailArtworksQuery.graphql"
 import type { FairBoothRailArtworks_show$data } from "__generated__/FairBoothRailArtworks_show.graphql"
 import type * as React from "react"
@@ -29,6 +31,7 @@ const FairBoothRailArtworks: React.FC<
 > = ({ show }) => {
   const tracking = useTracking()
 
+  const { signals } = useArtworkGridContext()
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
     useAnalyticsContext()
 
@@ -36,6 +39,9 @@ const FairBoothRailArtworks: React.FC<
     artworkID,
     artworkSlug,
     carouselIndex,
+    signalLabel,
+    signalBidCount,
+    signalLotWatcherCount,
   }): ClickedArtworkGroup => {
     return {
       context_module: ContextModule.galleryBoothRail,
@@ -48,6 +54,9 @@ const FairBoothRailArtworks: React.FC<
       horizontal_slide_position: carouselIndex,
       type: "thumbnail",
       action: ActionType.clickedArtworkGroup,
+      signal_label: signalLabel,
+      signal_bid_count: signalBidCount,
+      signal_lot_watcher_count: signalLotWatcherCount,
     }
   }
 
@@ -68,6 +77,12 @@ const FairBoothRailArtworks: React.FC<
                   artworkID: artwork.internalID,
                   artworkSlug: artwork.slug,
                   carouselIndex: index,
+                  signalLabel: getSignalLabel({
+                    signals: signals?.[artwork.internalID] ?? [],
+                  }),
+                  signalBidCount: artwork.collectorSignals?.auction?.bidCount,
+                  signalLotWatcherCount:
+                    artwork.collectorSignals?.auction?.lotWatcherCount,
                 }),
               )
             }
@@ -97,6 +112,13 @@ export const FairBoothRailArtworksFragmentContainer = createFragmentContainer(
               ...ShelfArtwork_artwork
               internalID
               slug
+              collectorSignals {
+                primaryLabel
+                auction {
+                  bidCount
+                  lotWatcherCount
+                }
+              }
             }
           }
         }

@@ -19,14 +19,13 @@ import {
   UntouchedOfferOrder,
 } from "Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "DevTools/MockBoot"
-import { mockStripe } from "DevTools/mockStripe"
+// import mockStripe from ""
 import { getENV } from "Utils/getENV"
 import type { orderRoutes_OrderQuery$rawResponse } from "__generated__/orderRoutes_OrderQuery.graphql"
 import type { FarceRedirectResult } from "found/server"
 import { DateTime } from "luxon"
 import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 // eslint-disable-next-line no-restricted-imports
-import type { GlobalData } from "sharify"
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn(),
@@ -44,21 +43,6 @@ jest.mock(
     return jest.requireActual("../Components/__mocks__/BankDebitProvider")
   },
 )
-
-jest.mock("@stripe/stripe-js", () => {
-  let mock: null | ReturnType<typeof mockStripe> = null
-  return {
-    loadStripe: () => {
-      if (mock === null) {
-        mock = mockStripe()
-      }
-      return mock
-    },
-    _mockStripe: () => mock,
-
-    _mockReset: () => (mock = mockStripe()),
-  }
-})
 
 describe("OrderApp routing redirects", () => {
   // FIXME: move to DevTools folder
@@ -602,6 +586,10 @@ describe("OrderApp routing redirects", () => {
 })
 
 describe("OrderApp", () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   const mockGetENV = getENV as jest.Mock
 
   const getWrapper = ({ props, context, breakpoint = "lg" }: any) => {
@@ -615,9 +603,6 @@ describe("OrderApp", () => {
       </MockBoot>,
     )
   }
-  beforeAll(() => {
-    window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
-  })
 
   const getProps = ({ state, location, replace }: any = {}) => {
     return {
