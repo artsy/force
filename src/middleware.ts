@@ -32,18 +32,12 @@ import artsyPassport from "./Server/passport"
 
 import { appPreferencesMiddleware } from "Apps/AppPreferences/appPreferencesMiddleware"
 import { bootstrapSharify } from "./Server/bootstrapSharify"
-import { registerFeatureFlagService } from "./Server/featureFlags/featureFlagService"
-import {
-  UnleashFeatureFlagService,
-  UnleashService,
-} from "./Server/featureFlags/unleashService"
 import { assetMiddleware } from "./Server/middleware/assetMiddleware"
 import { asyncLocalsMiddleware } from "./Server/middleware/asyncLocalMiddleware"
 import { bootstrapSharifyAndContextLocalsMiddleware } from "./Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
 import { csrfTokenMiddleware } from "./Server/middleware/csrfToken"
 import { downcaseMiddleware } from "./Server/middleware/downcase"
 import { ensureSslMiddleware } from "./Server/middleware/ensureSsl"
-import { featureFlagMiddleware } from "./Server/middleware/featureFlagMiddleware"
 import { hardcodedRedirectsMiddleware } from "./Server/middleware/hardcodedRedirects"
 import { hstsMiddleware } from "./Server/middleware/hsts"
 import { ipFilter } from "./Server/middleware/ipFilter"
@@ -169,10 +163,6 @@ export function initializeMiddleware(app) {
   // Add CSRF to the cookie and remove it from the page. This allows the caching
   // on the html and is used by the Login Modal to make secure requests.
   app.use(csrfTokenMiddleware)
-
-  // Need sharify for unleash
-  registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)
-  app.use(featureFlagMiddleware(UnleashService))
 
   /**
    * Routes for pinging system time and up
