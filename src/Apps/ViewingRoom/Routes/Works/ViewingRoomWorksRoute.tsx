@@ -47,13 +47,11 @@ const ViewingRoomWorksRoute: React.FC<
                             <Image
                               src={img.src}
                               srcSet={img.srcSet}
+                              width={(img.width ?? 0) * 0.5}
+                              height={(img.height ?? 0) * 0.5}
                               lazyLoad
                               alt=""
-                              style={{
-                                display: "block",
-                                width: (img.width ?? 0) * 0.5,
-                                height: (img.height ?? 0) * 0.5,
-                              }}
+                              display="block"
                             />
                           </Media>
 
@@ -61,13 +59,11 @@ const ViewingRoomWorksRoute: React.FC<
                             <Image
                               src={img.src}
                               srcSet={img.srcSet}
+                              width={img.width}
+                              height={img.height}
                               lazyLoad
                               alt=""
-                              style={{
-                                display: "block",
-                                width: img.width ?? 0,
-                                height: img.height ?? 0,
-                              }}
+                              display="block"
                             />
                           </Media>
                         </React.Fragment>
