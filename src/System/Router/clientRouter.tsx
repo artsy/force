@@ -1,6 +1,5 @@
 import { Boot } from "System/Boot"
 import type { SystemContextProps } from "System/Contexts/SystemContext"
-import type { FeatureFlags } from "System/Hooks/useFeatureFlag"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { loadingIndicatorMiddleware } from "System/Router/Middleware/loadingIndicatorMiddleware"
 import { trackingMiddleware } from "System/Router/Middleware/trackingMiddleware"
@@ -25,7 +24,6 @@ import React from "react"
 
 export interface RouterConfig {
   context?: SystemContextProps
-  featureFlags?: FeatureFlags
   history?: {
     protocol?: "browser" | "hash" | "memory"
     options?: HistoryEnhancerOptions

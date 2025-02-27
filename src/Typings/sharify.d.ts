@@ -55,7 +55,6 @@ declare module "sharify" {
       FACEBOOK_ID: string
       FAIR_ORGANIZER?: any
       FAIR?: any // mobile fair app data
-      FEATURE_FLAGS: any
       GEMINI_CLOUDFRONT_URL: string
       GOOGLE_ADWORDS_ID: string
       GRAVITY_WEBSOCKET_URL: string

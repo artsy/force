@@ -1,10 +1,9 @@
-import type { FeatureFlags } from "System/Hooks/useFeatureFlag"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 
 export interface ClientContext {
   user: User
-  featureFlags: FeatureFlags
+  sessionId: string | undefined
 }
 
 export const getClientAppContext = (
@@ -12,7 +11,7 @@ export const getClientAppContext = (
 ): ClientContext => {
   return {
     user: sd.CURRENT_USER,
-    featureFlags: sd.FEATURE_FLAGS,
+    sessionId: sd.SESSION_ID,
     ...context,
   }
 }

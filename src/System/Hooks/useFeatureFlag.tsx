@@ -1,77 +1,12 @@
 import { ActionType } from "@artsy/cohesion"
 import { pathToOwnerType } from "System/Contexts/AnalyticsContext"
 import { useRouter } from "System/Hooks/useRouter"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { getENV } from "Utils/getENV"
-import { warnInDevelopment } from "Utils/warnInDevelopment"
 import { useRef } from "react"
-import type { Variant } from "unleash-client"
-
-export type FeatureFlags = Record<string, FeatureFlagDetails>
-
-interface FeatureFlagDetails {
-  flagEnabled: boolean
-  variant: Variant
-}
 
 interface VariantTrackingProperties {
   experimentName: string
   variantName: string
   payload?: string
-}
-
-interface DisabledVariant {
-  enabled: false
-  name: "disabled"
-}
-
-export function useFeatureFlag(featureName: string): boolean | null {
-  const { featureFlags } = useSystemContext()
-  const flagEnabled = featureFlags?.[featureName]?.flagEnabled
-
-  if (flagEnabled === undefined) {
-    warnInDevelopment(
-      `[Force] Warning: cannot find ${featureName} in featureFlags: `,
-      featureFlags,
-    )
-    return null
-  }
-
-  return flagEnabled
-}
-
-export function useFeatureVariant(featureName: string): Variant | null {
-  const { featureFlags } = useSystemContext()
-  const variant = featureFlags?.[featureName]?.variant
-
-  if (!variant) {
-    warnInDevelopment(
-      "[Force] Warning: cannot find variant on featureFlags: ",
-      featureFlags,
-    )
-
-    return null
-  }
-
-  return variant
-}
-
-export const getFeatureVariant = (
-  featureName: string,
-): Variant | DisabledVariant | null => {
-  const featureFlags = getENV("FEATURE_FLAGS")
-  const variant = featureFlags?.[featureName]?.variant
-
-  if (!variant) {
-    warnInDevelopment(
-      "[Force] Warning: cannot find variant on featureFlags: ",
-      featureFlags,
-    )
-
-    return null
-  }
-
-  return variant
 }
 
 export function useTrackFeatureVariant({

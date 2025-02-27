@@ -12,7 +12,7 @@ export const getServerAppContext = (
     initialMatchingMediaQueries: res.locals.sd.IS_MOBILE ? ["xs"] : undefined,
     user: req.user,
     isEigen: req.header("User-Agent")?.match("Artsy-Mobile") != null,
-    featureFlags: res.locals.sd.FEATURE_FLAGS,
+    sessionId: res.locals.sd.SESSION_ID,
     userPreferences: res.locals.sd.USER_PREFERENCES,
     ...context,
   }
