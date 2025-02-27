@@ -53,7 +53,6 @@ export const bootstrapSharify = () => {
       "ERROR",
       "FACEBOOK_APP_NAMESPACE",
       "FACEBOOK_ID",
-      "FEATURE_FLAGS",
       "GALLERY_PARTNER_UPDATES_CHANNEL",
       "GEMINI_ACCOUNT_KEY",
       "GEMINI_APP",
