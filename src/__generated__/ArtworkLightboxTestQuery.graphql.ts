@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4d30042b2aacf32d598aa1823e2b8961>>
+ * @generated SignedSource<<485923c15296da0acaf8ec5517eeec0a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -182,6 +182,19 @@ return {
                 "storageKey": "url(version:[\"small\",\"medium\"])"
               },
               {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 801
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "blurhashDataURL",
+                "storageKey": "blurhashDataURL(width:801)"
+              },
+              {
                 "alias": "fallback",
                 "args": (v4/*: any*/),
                 "concreteType": "CroppedImageUrl",
@@ -243,12 +256,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e5a4e87d9a67ffabc17ff6580af10c69",
+    "cacheID": "b46fba0315d9ec8ccca65648ebf2114b",
     "id": null,
     "metadata": {},
     "name": "ArtworkLightboxTestQuery",
     "operationKind": "query",
-    "text": "query ArtworkLightboxTestQuery {\n  artwork(id: \"foo\") {\n    ...ArtworkLightbox_artwork\n    id\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images(includeAll: false) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    mobileLightboxSource: resized(quality: 50, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n"
+    "text": "query ArtworkLightboxTestQuery {\n  artwork(id: \"foo\") {\n    ...ArtworkLightbox_artwork\n    id\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images(includeAll: false) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    blurhashDataURL(width: 801)\n    fallback: cropped(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    mobileLightboxSource: resized(quality: 50, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n"
   }
 };
 })();

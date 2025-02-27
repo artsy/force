@@ -84,27 +84,27 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@^39.3.0":
-  version "39.3.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-39.3.0.tgz#9c2a117eed5a041e2565b3466cc2faa39afc982c"
-  integrity sha512-wZgeMvmm0JdxWGw7+T/qsL9N36JEWcJ6oEMSoM26gp1GnbsTbgW+bws/SMaeX4cN8DjTVFeGFF7FGV237bSftw==
+"@artsy/palette-charts@^39.3.1":
+  version "39.5.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-39.5.1.tgz#d32b46542f43341ad374d3c69bc14c506c11bbaa"
+  integrity sha512-fVeW0wkGDJH73CeF65eWixc5zEsIvNDFQigXqW8jkO72WHuxixZWn33RWCcwy8xb/fGbg2xt6nWOhf8uUWozCg==
   dependencies:
     "@seznam/compose-react-refs" "^1.0.6"
     d3-interpolate "^1.3.2"
     d3-shape "^1.3.5"
 
-"@artsy/palette-tokens@^6.2.0":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-6.2.0.tgz#189d6dcf8280407c38bfe0fef5153b6b112c70da"
-  integrity sha512-cKsVAO+6Ze78us49yh/VxJ7NmkggPnaPajj0qom3DkxqaTrbJrrWWWtAZkkcMs+3wG3FdI9P2Ro/2XHBUhbnkw==
+"@artsy/palette-tokens@^6.3.0":
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-6.3.0.tgz#1eab1354f90644214a0d8d481c302b3c5e58699f"
+  integrity sha512-UmpwWW7aLeQ5cnQopBmq34IlXar8QedEEjwQVqgUIHTTkMz7Sk3/3QkXYjHhx6UEQprsv5X64f0gvLv6Y+6fFw==
 
-"@artsy/palette@^40.4.0":
-  version "40.4.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-40.4.0.tgz#17c18b8a0c0b0d1d944c02b07aac145b86e45fdb"
-  integrity sha512-maeI7P2S1PcWrIEWuvZ/DmuZGKADe9PUDCNV4JxXzdZWEPqynND6RTT8mIrnnCgNhHmMEQxejYxcCoByWRfhUA==
+"@artsy/palette@^40.4.1":
+  version "40.6.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-40.6.1.tgz#bf06d315f56113e5e4fa98eef6f8dc399c30261d"
+  integrity sha512-M7nqkMU2TJF969G8wQk7IDj/e0tPX44w7jQe+e/YfkT05djUzRIm2WMs4jIIxCt0gkqu8SOF03GL3CJKRa3heQ==
   dependencies:
     "@artsy/icons" "^3.2.2"
-    "@artsy/palette-tokens" "^6.2.0"
+    "@artsy/palette-tokens" "^6.3.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     es-toolkit "^1.16.0"
