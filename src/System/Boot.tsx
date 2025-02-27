@@ -25,6 +25,8 @@ import { HeadProvider } from "react-head"
 import { type Environment, RelayEnvironmentProvider } from "react-relay"
 import track from "react-tracking"
 import { StyleSheetManager } from "styled-components"
+import { FlagProvider } from "@unleash/proxy-client-react"
+import { data as sd } from "sharify"
 
 export interface BootProps extends React.PropsWithChildren {
   context: ClientContext
@@ -63,6 +65,18 @@ export const Boot: React.FC<
     ...context,
   }
 
+  const unleashConfig = {
+    url: sd.UNLEASH_API,
+    clientKey: sd.UNLEASH_CLIENT_KEY,
+    refreshInterval: 15,
+    appName: sd.UNLEASH_APP_NAME,
+    environment: sd.NODE_ENV,
+    context: {
+      userId: props.user?.id,
+      sessionId: props.context.sessionId,
+    },
+  }
+
   return (
     <AppPreferencesProvider>
       <ThemeProvider>
@@ -72,25 +86,27 @@ export const Boot: React.FC<
           <SystemContextProvider {...contextProps}>
             <EnvironmentProvider environment={props.relayEnvironment}>
               <ErrorBoundary>
-                <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                  <ToastsProvider>
-                    <StickyProvider>
-                      <AuthIntentProvider>
-                        <AuthDialogProvider>
-                          <DismissibleProvider
-                            userID={props.user?.id}
-                            keys={PROGRESSIVE_ONBOARDING_KEYS}
-                          >
-                            <CookieConsentManager>
-                              <SiftContainer />
-                              {children}
-                            </CookieConsentManager>
-                          </DismissibleProvider>
-                        </AuthDialogProvider>
-                      </AuthIntentProvider>
-                    </StickyProvider>
-                  </ToastsProvider>
-                </MediaContextProvider>
+                <FlagProvider config={unleashConfig}>
+                  <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
+                    <ToastsProvider>
+                      <StickyProvider>
+                        <AuthIntentProvider>
+                          <AuthDialogProvider>
+                            <DismissibleProvider
+                              userID={props.user?.id}
+                              keys={PROGRESSIVE_ONBOARDING_KEYS}
+                            >
+                              <CookieConsentManager>
+                                <SiftContainer />
+                                {children}
+                              </CookieConsentManager>
+                            </DismissibleProvider>
+                          </AuthDialogProvider>
+                        </AuthIntentProvider>
+                      </StickyProvider>
+                    </ToastsProvider>
+                  </MediaContextProvider>
+                </FlagProvider>
               </ErrorBoundary>
             </EnvironmentProvider>
           </SystemContextProvider>
