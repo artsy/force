@@ -66,7 +66,7 @@ export const Boot: React.FC<
   }
 
   const unleashConfig = {
-    url: sd.UNLEASH_API,
+    url: `${sd.UNLEASH_API}frontend/`,
     clientKey: sd.UNLEASH_CLIENT_KEY,
     refreshInterval: 15,
     appName: sd.UNLEASH_APP_NAME,
