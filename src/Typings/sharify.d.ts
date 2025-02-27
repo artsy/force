@@ -100,6 +100,10 @@ declare module "sharify" {
       THIRD_PARTIES_DISABLED: boolean
       TOOLS_URL: string
       TRACK_PAGELOAD_PATHS: string
+      UNLEASH_API: string
+      UNLEASH_APP_NAME: string
+      UNLEASH_CLIENT_KEY: string
+      UNLEASH_SERVER_KEY: string
       USER_AGENT: string
       USER_PREFERENCES: any
       VOLLEY_ENDPOINT: string
@@ -115,8 +119,6 @@ declare module "sharify" {
         loginPagePath?: string
         logoutPath?: string
       }
-
-      unleash: any
 
       // Injected by route when rendering a custom error page
       statusCode?: number
