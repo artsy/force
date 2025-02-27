@@ -12,6 +12,7 @@ import { endingSoonAuctionsRoutes } from "Apps/Auctions/EndingSoonAuctions/endin
 import { auctionsRoutes } from "Apps/Auctions/auctionsRoutes"
 import { authenticationRoutes } from "Apps/Authentication/authenticationRoutes"
 import { buyerGuaranteeRoutes } from "Apps/BuyerGuarantee/buyerGuaranteeRoutes"
+import { checkoutRoutes } from "Apps/Checkout/checkoutRoutes"
 import { collectRoutes } from "Apps/Collect/collectRoutes"
 import { collectorProfileRoutes } from "Apps/CollectorProfile/collectorProfileRoutes"
 import { conversationsRoutes } from "Apps/Conversations/conversationsRoutes"
@@ -79,6 +80,7 @@ const ROUTES = buildAppRoutes([
   authenticationRoutes,
   buyerGuaranteeRoutes,
   categoriesRoutes,
+  checkoutRoutes,
   collectRoutes,
   collectorProfileRoutes,
   contactRoutes,
