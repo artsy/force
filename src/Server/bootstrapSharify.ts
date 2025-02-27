@@ -83,6 +83,7 @@ export const bootstrapSharify = () => {
       "SEGMENT_AMP_WRITE_KEY",
       "SEGMENT_WRITE_KEY",
       "SENTRY_PUBLIC_DSN",
+      "SESSION_ID",
       "SHOW_ANALYTICS_CALLS",
       "SIFT_BEACON_KEY",
       "SITEMAP_BASE_URL",

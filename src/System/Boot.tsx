@@ -73,7 +73,7 @@ export const Boot: React.FC<
     environment: sd.NODE_ENV,
     context: {
       userId: props.user?.id,
-      sessionId: props.context.sessionId,
+      sessionId: sd.SESSION_ID,
     },
   }
 

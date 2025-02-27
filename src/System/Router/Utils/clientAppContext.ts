@@ -3,7 +3,6 @@ import { data as sd } from "sharify"
 
 export interface ClientContext {
   user: User
-  sessionId: string | undefined
 }
 
 export const getClientAppContext = (
@@ -11,7 +10,6 @@ export const getClientAppContext = (
 ): ClientContext => {
   return {
     user: sd.CURRENT_USER,
-    sessionId: sd.SESSION_ID,
     ...context,
   }
 }
