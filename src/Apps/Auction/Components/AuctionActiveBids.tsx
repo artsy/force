@@ -67,8 +67,13 @@ const AuctionActiveBids: React.FC<
                 <Join separator={<Spacer y={0.5} />}>
                   <AuctionLotInfoFragmentContainer
                     saleArtwork={lotStanding?.saleArtwork!}
+                    hideLotInfo={!!lotStanding?.saleArtwork?.sale?.isLiveOpen}
                   />
-                  <BidStatus lotStanding={lotStanding} />
+                  {!lotStanding?.saleArtwork?.sale?.isLiveOpen ? (
+                    <BidStatus lotStanding={lotStanding} />
+                  ) : (
+                    <Spacer y={2} />
+                  )}
                   <BidButton lotStanding={lotStanding} me={me} size="small" />
                 </Join>
               </Box>
@@ -95,17 +100,21 @@ const AuctionActiveBids: React.FC<
                   hideLotInfo
                 />
               </Column>
-              <Column justifyContent={["flex-start", "center"]}>
-                <Text variant="sm-display" fontWeight="bold">
-                  {currentBid}
-                </Text>
-
-                {bidCount > 0 && (
-                  <Text variant="sm-display" color="black60" pl={0.5}>
-                    ({bidCount} bid{bidCount > 1 && "s"})
+              {lotStanding?.saleArtwork?.sale?.isLiveOpen ? (
+                <Column />
+              ) : (
+                <Column justifyContent={["flex-start", "center"]}>
+                  <Text variant="sm-display" fontWeight="bold">
+                    {currentBid}
                   </Text>
-                )}
-              </Column>
+
+                  {bidCount > 0 && (
+                    <Text variant="sm-display" color="black60" pl={0.5}>
+                      ({bidCount} bid{bidCount > 1 && "s"})
+                    </Text>
+                  )}
+                </Column>
+              )}
               <Column justifyContent={["flex-start", "center"]}>
                 <BidStatus lotStanding={lotStanding} />
               </Column>
