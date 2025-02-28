@@ -88,7 +88,7 @@ spec:
           periodSeconds: 5
         resources:
           requests:
-            cpu: 100m
+            cpu: 500m
             memory: 500Mi
           limits:
             memory: 1Gi
@@ -207,7 +207,7 @@ spec:
           periodSeconds: 5
         resources:
           requests:
-            cpu: 100m
+            cpu: 500m
             memory: 500Mi
           limits:
             memory: 1Gi
