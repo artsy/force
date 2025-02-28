@@ -11,7 +11,7 @@ const CheckoutApp = loadable(
 const CheckoutOverviewRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "exampleBundle" */ "./Routes/Welcome/CheckoutOverviewRoute"
+      /* webpackChunkName: "checkoutBundle" */ "./Routes/CheckoutOverviewRoute"
     ),
   {
     resolveComponent: component => component.CheckoutOverviewRoute,
