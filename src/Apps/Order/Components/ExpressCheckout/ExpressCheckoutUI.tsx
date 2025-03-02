@@ -1,3 +1,9 @@
+import {
+  ActionType,
+  type ClickedCancelExpressCheckout,
+  type ClickedExpressCheckout,
+  OwnerType,
+} from "@artsy/cohesion"
 import { Box, Spacer, Text } from "@artsy/palette"
 import {
   ExpressCheckoutElement,
@@ -15,6 +21,7 @@ import { extractNodes } from "Utils/extractNodes"
 import type { ExpressCheckoutUI_order$key } from "__generated__/ExpressCheckoutUI_order.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
 import styled from "styled-components"
 
 interface ExpressCheckoutUIProps {
@@ -31,9 +38,9 @@ export const ExpressCheckoutUI = ({
   const elements = useElements()
   const stripe = useStripe()
   const clientSecret = "client_secret_id"
-
   const firstLineItem = extractNodes(orderData.lineItems)[0] ?? {}
   const { artwork } = firstLineItem
+  const { trackEvent } = useTracking()
 
   if (!artwork) {
     return null
@@ -47,8 +54,50 @@ export const ExpressCheckoutUI = ({
     allowedShippingCountries: ["US", "CA"],
   }
 
-  const handleClick = ({ resolve }: StripeExpressCheckoutElementClickEvent) => {
+  const handleClick = ({
+    expressPaymentType,
+    resolve,
+  }: StripeExpressCheckoutElementClickEvent) => {
+    const event: ClickedExpressCheckout = {
+      action: ActionType.clickedExpressCheckout,
+      context_page_owner_type: OwnerType.ordersShipping,
+      context_page_owner_id: artwork.internalID,
+      context_page_owner_slug: artwork.slug,
+      flow:
+        orderData.source === "partner_offer"
+          ? "Partner offer"
+          : orderData.mode === "BUY"
+            ? "Buy now"
+            : "Make offer",
+      payment_method: expressPaymentType,
+    }
+
+    trackEvent(event)
+
     resolve(checkoutOptions)
+  }
+
+  const handleCancel = ({
+    expressPaymentType,
+  }: StripeExpressCheckoutElementClickEvent) => {
+    const event: ClickedCancelExpressCheckout = {
+      action: ActionType.clickedCancelExpressCheckout,
+      context_page_owner_type: OwnerType.ordersShipping,
+      context_page_owner_id: artwork.internalID,
+      context_page_owner_slug: artwork.slug,
+      flow:
+        orderData.source === "partner_offer"
+          ? "Partner offer"
+          : orderData.mode === "BUY"
+            ? "Buy now"
+            : "Make offer",
+      payment_method: expressPaymentType,
+    }
+
+    trackEvent(event)
+
+    // TODO: This is where we could reset the order back to its pre-checkout state
+    console.log("Express checkout element cancelled")
   }
 
   const onConfirm = async () => {
@@ -105,10 +154,7 @@ export const ExpressCheckoutUI = ({
       <ExpressCheckoutElement
         options={expressCheckoutOptions}
         onClick={handleClick}
-        onCancel={() => {
-          // TODO: This is where we could reset the order back to its pre-checkout state
-          console.log("Express checkout element cancelled")
-        }}
+        onCancel={handleCancel}
         onReady={e => {
           if (!!e.availablePaymentMethods) {
             setVisible(true)
@@ -137,10 +183,13 @@ const ORDER_FRAGMENT = graphql`
     }
     currencyCode
     shippingTotalCents
+    source
     lineItems {
       edges {
         node {
           artwork {
+            slug
+            internalID
             processWithArtsyShippingDomestic
             artsyShippingInternational
             euShippingOrigin
