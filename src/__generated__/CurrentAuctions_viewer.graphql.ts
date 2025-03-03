@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e06694292eaa7d7758eb3780e8464fcb>>
+ * @generated SignedSource<<b4f2c15e1070a6d46f6afa1f397421e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,9 +14,6 @@ export type CurrentAuctions_viewer$data = {
   readonly salesConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly href: string | null | undefined;
-        readonly isLiveOpen: boolean | null | undefined;
-        readonly liveStartAt: string | null | undefined;
         readonly name: string | null | undefined;
         readonly slug: string;
       } | null | undefined;
@@ -128,27 +125,6 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "href",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "liveStartAt",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "isLiveOpen",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
                 }
@@ -198,6 +174,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "38c994c7874307977baafd577ec5cb05";
+(node as any).hash = "be266477dfb14b9a9526141c7269688f";
 
 export default node;

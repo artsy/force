@@ -90,16 +90,18 @@ export const MyBidsBidItem: React.FC<
               </>
             ) : (
               <>
-                <Text variant="xs" overflowEllipsis>
-                  {saleArtwork.currentBid?.display || saleArtwork.estimate}{" "}
-                  <Box as="span" color="black60">
-                    (
-                    {saleArtwork.lotState?.bidCount === 1
-                      ? `${saleArtwork.lotState.bidCount} bid`
-                      : `${saleArtwork.lotState?.bidCount} bids`}
-                    )
-                  </Box>
-                </Text>
+                {!saleArtwork.sale?.isLiveOpen && (
+                  <Text variant="xs" overflowEllipsis>
+                    {saleArtwork.currentBid?.display || saleArtwork.estimate}{" "}
+                    <Box as="span" color="black60">
+                      (
+                      {saleArtwork.lotState?.bidCount === 1
+                        ? `${saleArtwork.lotState.bidCount} bid`
+                        : `${saleArtwork.lotState?.bidCount} bids`}
+                      )
+                    </Box>
+                  </Text>
+                )}
 
                 {saleArtwork.sale?.isLiveOpen ? (
                   <Text
