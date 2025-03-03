@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d782ed5c6f64e98f82c32326280befe9>>
+ * @generated SignedSource<<9b99237b2a4004a36170efddd17a923f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -168,27 +168,6 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "href",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "liveStartAt",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "isLiveOpen",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
                         "name": "id",
                         "storageKey": null
                       },
@@ -260,12 +239,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d7369d82bfbd471bb0a15a1061e382a4",
+    "cacheID": "ca1c93f2af1abff4e1a5a52e15d97518",
     "id": null,
     "metadata": {},
     "name": "CurrentAuctionsQuery",
     "operationKind": "query",
-    "text": "query CurrentAuctionsQuery(\n  $first: Int!\n  $after: String\n) {\n  viewer {\n    ...CurrentAuctions_viewer_2HEEH6\n  }\n}\n\nfragment CurrentAuctions_viewer_2HEEH6 on Viewer {\n  salesConnection(first: $first, after: $after, live: true, published: true, sort: LICENSED_TIMELY_AT_NAME_DESC, auctionState: OPEN) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        isLiveOpen\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query CurrentAuctionsQuery(\n  $first: Int!\n  $after: String\n) {\n  viewer {\n    ...CurrentAuctions_viewer_2HEEH6\n  }\n}\n\nfragment CurrentAuctions_viewer_2HEEH6 on Viewer {\n  salesConnection(first: $first, after: $after, live: true, published: true, sort: LICENSED_TIMELY_AT_NAME_DESC, auctionState: OPEN) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

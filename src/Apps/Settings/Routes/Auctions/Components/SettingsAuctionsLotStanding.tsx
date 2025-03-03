@@ -3,10 +3,10 @@ import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
 import { Box, Button, Column, Flex, Image, Text } from "@artsy/palette"
 import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
 import { RouterLink } from "System/Components/RouterLink"
+import { getENV } from "Utils/getENV"
 import type { SettingsAuctionsLotStanding_lotStanding$data } from "__generated__/SettingsAuctionsLotStanding_lotStanding.graphql"
 import { type FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { getENV } from "Utils/getENV"
 
 interface SettingsAuctionsLotStandingProps {
   lotStanding: SettingsAuctionsLotStanding_lotStanding$data
@@ -26,7 +26,8 @@ const SettingsAuctionsLotStanding: FC<
   if (!artwork || !sale) return null
 
   const image = artwork.image?.cropped
-  const showLotStanding = !sale.isClosed && !sale.isLiveOpen
+  const showLotStanding =
+    !sale.isLiveOpen && !(sale.isClosed && sale.liveStartAt)
 
   return (
     <Fragment>
@@ -128,9 +129,10 @@ export const SettingsAuctionsLotStandingFragmentContainer =
         saleArtwork {
           lotLabel
           sale {
-            slug
-            isLiveOpen
             isClosed
+            isLiveOpen
+            liveStartAt
+            slug
           }
           artwork {
             ...Details_artwork

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f71985bc6883dc9e7ecf1ee861ea1fa7>>
+ * @generated SignedSource<<2cf0c2920cc3631f8bfc3a57bb50c2de>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,7 @@ export type SettingsAuctionsLotStanding_lotStanding$data = {
     readonly sale: {
       readonly isClosed: boolean | null | undefined;
       readonly isLiveOpen: boolean | null | undefined;
+      readonly liveStartAt: string | null | undefined;
       readonly slug: string;
     } | null | undefined;
   } | null | undefined;
@@ -77,7 +78,7 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "slug",
+              "name": "isClosed",
               "storageKey": null
             },
             {
@@ -91,7 +92,14 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "isClosed",
+              "name": "liveStartAt",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "slug",
               "storageKey": null
             }
           ],
@@ -175,6 +183,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2b6194438eeee34f5dc34b04a5a95b1d";
+(node as any).hash = "3c2527f605aa78ecd4a0741bcf3fe5d0";
 
 export default node;
