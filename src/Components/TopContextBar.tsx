@@ -21,6 +21,8 @@ export interface TopContextBarProps {
   rightContent?: React.ReactNode
   onClick?(): void
   hideSeparator?: boolean
+  /** When true, clicking the back arrow will first try to use browser history, falling back to href */
+  preferHistoryBack?: boolean
 }
 
 export const TopContextBar: React.FC<
@@ -33,9 +35,19 @@ export const TopContextBar: React.FC<
   rightContent,
   onClick,
   hideSeparator = false,
+  preferHistoryBack = false,
 }) => {
   const image = src ? cropped(src, { width: 60, height: 60 }) : null
   const href = _href ? sanitizeRedirect(_href) : null
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (preferHistoryBack && window.history.length > 1) {
+      e.preventDefault()
+      window.history.back()
+    }
+
+    onClick?.()
+  }
 
   return (
     <>
@@ -47,13 +59,13 @@ export const TopContextBar: React.FC<
               as: RouterLink,
               to: href,
               textDecoration: "none",
-              onClick,
+              onClick: handleClick,
             }
           : {
-              ...(onClick
+              ...(onClick || (preferHistoryBack && displayBackArrow)
                 ? {
                     as: Clickable,
-                    onClick,
+                    onClick: handleClick,
                   }
                 : {}),
             })}
