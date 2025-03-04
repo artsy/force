@@ -1,8 +1,8 @@
-import { Box, Stack } from "@artsy/palette"
-import { RegistrationAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/RegistrationAuctionTimer"
-import { StructuredData } from "Components/Seo/StructuredData"
-import { TopContextBar } from "Components/TopContextBar"
-import { getENV } from "Utils/getENV"
+import { ArtworkTopContextBarBreadcrumbFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBarBreadcrumb"
+import {
+  ArtworkTopContextBarDynamicBreadcrumbQueryRenderer,
+  useDynamicBreadcrumb,
+} from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBarDynamicBreadcrumb"
 import type { ArtworkTopContextBar_artwork$data } from "__generated__/ArtworkTopContextBar_artwork.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -14,63 +14,21 @@ export interface ArtworkTopContextBarProps {
 export const ArtworkTopContextBar: React.FC<
   React.PropsWithChildren<ArtworkTopContextBarProps>
 > = ({ artwork }) => {
-  if (!artwork.artist) {
-    return null
-  }
+  const { isEnabled, type, id } = useDynamicBreadcrumb()
 
-  if (artwork.context?.__typename === "Sale") {
-    const sale = artwork.context
-
+  if (isEnabled) {
     return (
-      <TopContextBar
-        href={sale.href}
-        src={sale.coverImage?.url}
-        rightContent={<RegistrationAuctionTimerFragmentContainer sale={sale} />}
+      <ArtworkTopContextBarDynamicBreadcrumbQueryRenderer
+        id={artwork.internalID}
+        contextMatchId={id}
+        contextMatchType={type}
       >
-        <Stack gap={1} flexDirection="row">
-          {sale.name}{" "}
-          {sale.isBenefit || sale.isGalleryAuction || !sale.isAuction
-            ? null
-            : `- ${artwork.partner?.name}`}{" "}
-          <Box as="span" color="black60">
-            {sale.isAuction ? "In auction" : "In sale"}
-          </Box>
-        </Stack>
-      </TopContextBar>
+        <ArtworkTopContextBarBreadcrumbFragmentContainer artwork={artwork} />
+      </ArtworkTopContextBarDynamicBreadcrumbQueryRenderer>
     )
   }
 
-  return (
-    <>
-      <TopContextBar href={artwork.artist.href} displayBackArrow>
-        {artwork.artist.name}
-      </TopContextBar>
-
-      <StructuredData
-        schemaData={{
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            {
-              "@type": "ListItem",
-              position: 1,
-              item: {
-                "@id": `${getENV("APP_URL")}${artwork.artist.href}`,
-                name: artwork.artist.name,
-              },
-            },
-            {
-              "@type": "ListItem",
-              position: 2,
-              item: {
-                "@id": `${getENV("APP_URL")}${artwork.href}`,
-                name: artwork.title,
-              },
-            },
-          ],
-        }}
-      />
-    </>
-  )
+  return <ArtworkTopContextBarBreadcrumbFragmentContainer artwork={artwork} />
 }
 
 export const ArtworkTopContextBarFragmentContainer = createFragmentContainer(
@@ -78,29 +36,8 @@ export const ArtworkTopContextBarFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ArtworkTopContextBar_artwork on Artwork {
-        href
-        title
-        artist {
-          name
-          href
-        }
-        partner {
-          name
-        }
-        context {
-          __typename
-          ...RegistrationAuctionTimer_sale
-          ... on Sale {
-            name
-            href
-            isAuction
-            isBenefit
-            isGalleryAuction
-            coverImage {
-              url
-            }
-          }
-        }
+        ...ArtworkTopContextBarBreadcrumb_artwork
+        internalID
       }
     `,
   },
