@@ -25,7 +25,7 @@ import { HeadProvider } from "react-head"
 import { type Environment, RelayEnvironmentProvider } from "react-relay"
 import track from "react-tracking"
 import { StyleSheetManager } from "styled-components"
-import { FlagProvider } from "@unleash/proxy-client-react"
+import { FeatureFlagProvider } from "System/Contexts/FeatureFlagContext"
 import { data as sd } from "sharify"
 
 export interface BootProps extends React.PropsWithChildren {
@@ -65,18 +65,6 @@ export const Boot: React.FC<
     ...context,
   }
 
-  const unleashConfig = {
-    url: `${sd.UNLEASH_API}frontend/`,
-    clientKey: sd.UNLEASH_CLIENT_KEY,
-    refreshInterval: 15,
-    appName: sd.UNLEASH_APP_NAME,
-    environment: sd.NODE_ENV,
-    context: {
-      userId: props.user?.id,
-      sessionId: sd.SESSION_ID,
-    },
-  }
-
   return (
     <AppPreferencesProvider>
       <ThemeProvider>
@@ -86,7 +74,7 @@ export const Boot: React.FC<
           <SystemContextProvider {...contextProps}>
             <EnvironmentProvider environment={props.relayEnvironment}>
               <ErrorBoundary>
-                <FlagProvider config={unleashConfig}>
+                <FeatureFlagProvider>
                   <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
                     <ToastsProvider>
                       <StickyProvider>
@@ -106,7 +94,7 @@ export const Boot: React.FC<
                       </StickyProvider>
                     </ToastsProvider>
                   </MediaContextProvider>
-                </FlagProvider>
+                </FeatureFlagProvider>
               </ErrorBoundary>
             </EnvironmentProvider>
           </SystemContextProvider>
