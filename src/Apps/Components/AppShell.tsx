@@ -1,6 +1,7 @@
 import { Layout } from "Apps/Components/Layouts"
 import { PageLoadingBar } from "System/Components/PageLoadingBar"
 import { AnalyticsContextProvider } from "System/Contexts/AnalyticsContext"
+import { NavigationHistoryProvider } from "System/Contexts/NavigationHistoryContext"
 import { findCurrentRoute } from "System/Router/Utils/routeUtils"
 import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
 import { useNetworkOfflineMonitor } from "Utils/Hooks/useNetworkOfflineMonitor"
@@ -60,11 +61,13 @@ export const AppShell: React.FC<
     <>
       <PageLoadingBar loadingState={showLoader ? "loading" : "complete"} />
 
-      <AnalyticsContextProvider path={match?.location?.pathname}>
-        <Layout variant={routeConfig?.layout}>{children}</Layout>
+      <NavigationHistoryProvider>
+        <AnalyticsContextProvider path={match?.location?.pathname}>
+          <Layout variant={routeConfig?.layout}>{children}</Layout>
 
-        {onboardingComponent}
-      </AnalyticsContextProvider>
+          {onboardingComponent}
+        </AnalyticsContextProvider>
+      </NavigationHistoryProvider>
     </>
   )
 }
