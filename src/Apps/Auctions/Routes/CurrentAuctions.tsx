@@ -101,9 +101,6 @@ export const CurrentAuctionsPaginationContainer = createPaginationContainer(
             node {
               slug
               name
-              href
-              liveStartAt
-              isLiveOpen
             }
           }
         }

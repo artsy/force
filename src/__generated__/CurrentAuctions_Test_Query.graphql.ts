@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cba0bc898c6003daeeb121fe01577d77>>
+ * @generated SignedSource<<4f5b98464de04885dae1ad166a718112>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -57,15 +57,15 @@ v1 = {
 },
 v2 = {
   "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v3 = {
-  "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -157,27 +157,6 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "href",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "liveStartAt",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "isLiveOpen",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
                         "name": "id",
                         "storageKey": null
                       },
@@ -249,7 +228,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "655e13ed32fa47b1f6878c209bcdf6bc",
+    "cacheID": "fa99d7ce5ff126db5623a0de623da9d0",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -279,24 +258,16 @@ return {
           "type": "Sale"
         },
         "viewer.salesConnection.edges.node.__typename": (v1/*: any*/),
-        "viewer.salesConnection.edges.node.href": (v2/*: any*/),
-        "viewer.salesConnection.edges.node.id": (v3/*: any*/),
-        "viewer.salesConnection.edges.node.isLiveOpen": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "viewer.salesConnection.edges.node.liveStartAt": (v2/*: any*/),
-        "viewer.salesConnection.edges.node.name": (v2/*: any*/),
-        "viewer.salesConnection.edges.node.slug": (v3/*: any*/),
+        "viewer.salesConnection.edges.node.id": (v2/*: any*/),
+        "viewer.salesConnection.edges.node.name": (v3/*: any*/),
+        "viewer.salesConnection.edges.node.slug": (v2/*: any*/),
         "viewer.salesConnection.pageInfo": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "PageInfo"
         },
-        "viewer.salesConnection.pageInfo.endCursor": (v2/*: any*/),
+        "viewer.salesConnection.pageInfo.endCursor": (v3/*: any*/),
         "viewer.salesConnection.pageInfo.hasNextPage": {
           "enumValues": null,
           "nullable": false,
@@ -313,7 +284,7 @@ return {
     },
     "name": "CurrentAuctions_Test_Query",
     "operationKind": "query",
-    "text": "query CurrentAuctions_Test_Query {\n  viewer {\n    ...CurrentAuctions_viewer\n  }\n}\n\nfragment CurrentAuctions_viewer on Viewer {\n  salesConnection(first: 10, live: true, published: true, sort: LICENSED_TIMELY_AT_NAME_DESC, auctionState: OPEN) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        isLiveOpen\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query CurrentAuctions_Test_Query {\n  viewer {\n    ...CurrentAuctions_viewer\n  }\n}\n\nfragment CurrentAuctions_viewer on Viewer {\n  salesConnection(first: 10, live: true, published: true, sort: LICENSED_TIMELY_AT_NAME_DESC, auctionState: OPEN) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
