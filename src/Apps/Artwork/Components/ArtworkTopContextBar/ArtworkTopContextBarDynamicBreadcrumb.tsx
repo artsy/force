@@ -1,13 +1,8 @@
-import { Box, Stack } from "@artsy/palette"
-import { ArtworkTopContextBarBreadcrumbFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBarBreadcrumb"
-import { RegistrationAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/RegistrationAuctionTimer"
-import { TopContextBar } from "Components/TopContextBar"
+import { ArtworkTopContextBarFairQueryRenderer } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBarFair"
+import { ArtworkTopContextBarSaleQueryRenderer } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBarSale"
+import { ArtworkTopContextBarShowQueryRenderer } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBarShow"
 import { useNavigationHistory } from "System/Contexts/NavigationHistoryContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { ArtworkTopContextBarDynamicBreadcrumbQuery } from "__generated__/ArtworkTopContextBarDynamicBreadcrumbQuery.graphql"
-import type { ArtworkTopContextBarDynamicBreadcrumb_artwork$data } from "__generated__/ArtworkTopContextBarDynamicBreadcrumb_artwork.graphql"
 import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 
 export const useDynamicBreadcrumb = ():
   | { isEnabled: true; type: "SALE" | "FAIR" | "SHOW"; id: string }
@@ -28,147 +23,6 @@ export const useDynamicBreadcrumb = ():
   }
 }
 
-export interface ArtworkTopContextBarDynamicBreadcrumbProps {
-  artwork: ArtworkTopContextBarDynamicBreadcrumb_artwork$data
-}
-
-export const ArtworkTopContextBarDynamicBreadcrumb: React.FC<
-  React.PropsWithChildren<ArtworkTopContextBarDynamicBreadcrumbProps>
-> = ({ artwork }) => {
-  switch (artwork.contextMatch?.__typename) {
-    case "Sale": {
-      const sale = artwork.contextMatch
-
-      return (
-        <TopContextBar
-          href={sale.href}
-          src={sale.coverImage?.url}
-          rightContent={
-            <RegistrationAuctionTimerFragmentContainer sale={sale} />
-          }
-          displayBackArrow
-          preferHistoryBack
-        >
-          <Stack gap={1} flexDirection="row">
-            {sale.name}{" "}
-            {sale.isBenefit || sale.isGalleryAuction || !sale.isAuction
-              ? null
-              : `- ${sale.partner?.name}`}{" "}
-            <Box as="span" color="black60">
-              {sale.isAuction ? "In auction" : "In sale"}
-            </Box>
-          </Stack>
-        </TopContextBar>
-      )
-    }
-
-    case "Show": {
-      const show = artwork.contextMatch
-
-      return (
-        <TopContextBar
-          href={show.href}
-          src={show.thumbnail?.url}
-          displayBackArrow
-          preferHistoryBack
-        >
-          <Stack gap={1} flexDirection="row">
-            {show.name} {show.partner && `- ${show.partner.name}`}
-            <Box as="span" color="black60">
-              {show.status === "upcoming"
-                ? "In upcoming show"
-                : show.status === "closed"
-                  ? "In past show"
-                  : "In current show"}
-            </Box>
-          </Stack>
-        </TopContextBar>
-      )
-    }
-
-    case "Fair": {
-      const fair = artwork.contextMatch
-
-      return (
-        <TopContextBar
-          href={fair.href}
-          src={fair.profile?.icon?.url}
-          displayBackArrow
-          preferHistoryBack
-        >
-          <Stack gap={1} flexDirection="row">
-            {fair.name}
-            <Box as="span" color="black60">
-              At fair
-            </Box>
-          </Stack>
-        </TopContextBar>
-      )
-    }
-
-    default: {
-      return (
-        <ArtworkTopContextBarBreadcrumbFragmentContainer artwork={artwork} />
-      )
-    }
-  }
-}
-
-export const ArtworkTopContextBarDynamicBreadcrumbFragmentContainer =
-  createFragmentContainer(ArtworkTopContextBarDynamicBreadcrumb, {
-    artwork: graphql`
-      fragment ArtworkTopContextBarDynamicBreadcrumb_artwork on Artwork
-      @argumentDefinitions(
-        contextMatchId: { type: "String!" }
-        contextMatchType: { type: "ArtworkContextEnum!" }
-      ) {
-        ...ArtworkTopContextBarBreadcrumb_artwork
-        contextMatch(id: $contextMatchId, type: $contextMatchType) {
-          __typename
-          ...RegistrationAuctionTimer_sale
-          ... on Sale {
-            name
-            href
-            isAuction
-            isBenefit
-            isGalleryAuction
-            coverImage {
-              url
-            }
-            partner {
-              name
-            }
-          }
-          ... on Fair {
-            name
-            href
-            profile {
-              icon {
-                url
-              }
-            }
-          }
-          ... on Show {
-            name
-            href
-            status
-            thumbnail: coverImage {
-              url
-            }
-            partner {
-              ... on Partner {
-                name
-              }
-              ... on ExternalPartner {
-                name
-              }
-            }
-          }
-        }
-      }
-    `,
-  })
-
 interface ArtworkTopContextBarDynamicBreadcrumbQueryRendererProps {
   id: string
   children: React.ReactNode
@@ -178,42 +32,30 @@ interface ArtworkTopContextBarDynamicBreadcrumbQueryRendererProps {
 
 export const ArtworkTopContextBarDynamicBreadcrumbQueryRenderer: React.FC<
   ArtworkTopContextBarDynamicBreadcrumbQueryRendererProps
-> = ({ id, contextMatchId, contextMatchType, children }) => {
-  return (
-    <SystemQueryRenderer<ArtworkTopContextBarDynamicBreadcrumbQuery>
-      query={graphql`
-        query ArtworkTopContextBarDynamicBreadcrumbQuery(
-          $id: String!
-          $contextMatchId: String!
-          $contextMatchType: ArtworkContextEnum!
-        ) {
-          artwork(id: $id) {
-            ...ArtworkTopContextBarDynamicBreadcrumb_artwork
-              @arguments(
-                contextMatchId: $contextMatchId
-                contextMatchType: $contextMatchType
-              )
-          }
-        }
-      `}
-      variables={{ id, contextMatchId, contextMatchType }}
-      placeholder={<>{children}</>}
-      render={({ props, error }) => {
-        if (error) {
-          console.error(error)
-          return <>{children}</>
-        }
+> = ({ contextMatchId, contextMatchType, children }) => {
+  switch (contextMatchType) {
+    case "SALE":
+      return (
+        <ArtworkTopContextBarSaleQueryRenderer id={contextMatchId}>
+          {children}
+        </ArtworkTopContextBarSaleQueryRenderer>
+      )
 
-        if (!props?.artwork) {
-          return <>{children}</>
-        }
+    case "FAIR":
+      return (
+        <ArtworkTopContextBarFairQueryRenderer id={contextMatchId}>
+          {children}
+        </ArtworkTopContextBarFairQueryRenderer>
+      )
 
-        return (
-          <ArtworkTopContextBarDynamicBreadcrumbFragmentContainer
-            artwork={props.artwork}
-          />
-        )
-      }}
-    />
-  )
+    case "SHOW":
+      return (
+        <ArtworkTopContextBarShowQueryRenderer id={contextMatchId}>
+          {children}
+        </ArtworkTopContextBarShowQueryRenderer>
+      )
+
+    default:
+      return <>{children}</>
+  }
 }
