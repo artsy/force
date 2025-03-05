@@ -57,6 +57,10 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
   const previousPaymentMethod = useRef<string | null>(null)
 
   useEffect(() => {
+    if (!previousPaymentMethod.current && !selectedPaymentMethod) {
+      return
+    }
+
     if (selectedPaymentMethod !== previousPaymentMethod.current) {
       const { mode, internalID, buyerTotal, currencyCode } = order
       previousPaymentMethod.current = selectedPaymentMethod
@@ -71,6 +75,7 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
         amount: buyerTotal,
         currency: currencyCode,
       }
+
       tracking.trackEvent(event)
     }
   }, [order, selectedPaymentMethod, tracking])
