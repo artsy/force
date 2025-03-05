@@ -28,13 +28,7 @@ import type {
   CommercePaymentMethodEnum,
   Payment_order$data,
 } from "__generated__/Payment_order.graphql"
-import {
-  type FC,
-  type ReactElement,
-  type RefObject,
-  useEffect,
-  useRef,
-} from "react"
+import type { FC, ReactElement, RefObject } from "react"
 import { useTracking } from "react-tracking"
 import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
 
@@ -54,31 +48,25 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
     useOrderPaymentContext()
 
   const tracking = useTracking()
-  const previousPaymentMethod = useRef<string | null>(null)
 
-  useEffect(() => {
-    if (!previousPaymentMethod.current && !selectedPaymentMethod) {
-      return
+  const onSelectPaymentMethod = (paymentMethod: string) => {
+    const { mode, internalID, buyerTotal, currencyCode } = order
+
+    const event = {
+      subject: "click_payment_method",
+      payment_method: paymentMethod,
+      action: ActionType.clickedPaymentMethod,
+      flow: mode,
+      context_page_owner_type: OwnerType.ordersPayment,
+      order_id: internalID,
+      amount: buyerTotal,
+      currency: currencyCode,
     }
 
-    if (selectedPaymentMethod !== previousPaymentMethod.current) {
-      const { mode, internalID, buyerTotal, currencyCode } = order
-      previousPaymentMethod.current = selectedPaymentMethod
+    tracking.trackEvent(event)
 
-      const event = {
-        subject: "click_payment_method",
-        payment_method: selectedPaymentMethod,
-        action: ActionType.clickedPaymentMethod,
-        flow: mode,
-        context_page_owner_type: OwnerType.ordersPayment,
-        order_id: internalID,
-        amount: buyerTotal,
-        currency: currencyCode,
-      }
-
-      tracking.trackEvent(event)
-    }
-  }, [order, selectedPaymentMethod, tracking])
+    setSelectedPaymentMethod(paymentMethod as CommercePaymentMethodEnum)
+  }
 
   return (
     <>
@@ -88,9 +76,7 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
           <Spacer y={2} />
           <RadioGroup
             data-test="payment-methods"
-            onSelect={val => {
-              setSelectedPaymentMethod(val as CommercePaymentMethodEnum)
-            }}
+            onSelect={onSelectPaymentMethod}
             defaultValue={selectedPaymentMethod}
           >
             {getAvailablePaymentMethods(order.availablePaymentMethods).map(
