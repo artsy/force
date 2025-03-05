@@ -7,7 +7,7 @@ import {
 import type { AutocompleteInputOptionType } from "@artsy/palette"
 import type { Address } from "Components/Address/utils"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import { getENV } from "Utils/getENV"
 import { throttle, uniqBy } from "lodash"
 import { useCallback, useEffect, useMemo, useState } from "react"
@@ -61,7 +61,7 @@ export const useAddressAutocomplete = (
   const { key: apiKey } = getENV("SMARTY_EMBEDDED_KEY_JSON") || { key: "" }
 
   const isUSAddress = address.country === "US"
-  const isFeatureFlagEnabled = !!useFeatureFlag("address_autocomplete_us")
+  const isFeatureFlagEnabled = !!useFlag("address_autocomplete_us")
   const { trackEvent } = useTracking()
   const { contextPageOwnerId } = useAnalyticsContext()
 

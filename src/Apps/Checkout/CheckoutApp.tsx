@@ -1,12 +1,12 @@
 import type * as React from "react"
 import { Box } from "@artsy/palette"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import { ErrorPage } from "Components/ErrorPage"
 
 export const CheckoutApp: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const isRedesignEnabled = useFeatureFlag("emerald_checkout-redesign")
+  const isRedesignEnabled = useFlag("emerald_checkout-redesign")
 
   if (!isRedesignEnabled) return <ErrorPage code={404} />
 

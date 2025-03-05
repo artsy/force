@@ -12,16 +12,18 @@ export const FeatureFlagProvider: React.FC<
   const { user } = useSystemContext()
 
   const unleashConfig: IConfig = {
-    url: `${getENV("UNLEASH_API")}frontend/`,
-    clientKey: getENV("UNLEASH_CLIENT_KEY"),
+    url: `http://localhost:5000/frontend/`,
+    clientKey: getENV("UNLEASH_CLIENT_KEY") || "kljl;ksdfg",
     refreshInterval: 15,
-    appName: getENV("UNLEASH_APP_NAME"),
-    environment: getENV("NODE_ENV"),
+    appName: getENV("UNLEASH_APP_NAME") || "test",
+    environment: getENV("NODE_ENV") || "test",
     context: {
       userId: user?.id,
       sessionId: getENV("SESSION_ID"),
     },
+    disableRefresh: true,
+    bootstrap: [],
   }
-
+  debugger
   return <FlagProvider config={unleashConfig}>{children}</FlagProvider>
 }

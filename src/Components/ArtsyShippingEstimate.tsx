@@ -13,10 +13,8 @@ import {
 } from "@artsy/cohesion"
 import { Link, Spacer, Text } from "@artsy/palette"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import {
-  useFeatureVariant,
-  useTrackFeatureVariant,
-} from "System/Hooks/useFeatureFlag"
+import { useTrackFeatureVariant } from "System/Hooks/useTrackFeatureVariant"
+import { useVariant } from "@unleash/proxy-client-react"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import { getENV } from "Utils/getENV"
 import type {
@@ -44,7 +42,7 @@ interface ArtsyShippingEstimateProps {
 }
 
 export const ArtsyShippingEstimate = (props: ArtsyShippingEstimateProps) => {
-  const variant = useFeatureVariant("emerald_shipping-estimate-widget")
+  const variant = useVariant("emerald_shipping-estimate-widget")
 
   const { trackFeatureVariant } = useTrackFeatureVariant({
     experimentName: "emerald_shipping-estimate-widget",
