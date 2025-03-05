@@ -2,7 +2,6 @@ import { NavBarMobileMenu } from "Components/NavBar/NavBarMobileMenu/NavBarMobil
 import { NavBarMobileMenuTransition } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuTransition"
 import { NavBarMobileSubMenuBack } from "Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenu"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
-import type { FeatureFlags } from "System/Hooks/useFeatureFlag"
 import { logout } from "Utils/auth"
 import { mount } from "enzyme"
 import { useTracking } from "react-tracking"
@@ -23,10 +22,7 @@ describe("NavBarMobileMenu", () => {
   const noop = () => {}
   const getWrapper = props => {
     return mount(
-      <SystemContextProvider
-        user={props.user}
-        featureFlags={props.featureFlags}
-      >
+      <SystemContextProvider user={props.user}>
         <NavBarMobileMenu isOpen onClose={noop} />
       </SystemContextProvider>,
     )
@@ -35,11 +31,9 @@ describe("NavBarMobileMenu", () => {
   const getMobileMenuLinkContainer = (
     userType: string | null = null,
     lab_features: string[] = [],
-    featureFlags?: FeatureFlags,
   ) =>
     getWrapper({
       user: userType ? { userType, lab_features } : null,
-      featureFlags,
     })
       .find(NavBarMobileMenuTransition)
       .findWhere(element => element.props().isOpen)
