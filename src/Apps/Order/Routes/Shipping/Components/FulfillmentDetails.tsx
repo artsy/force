@@ -11,7 +11,7 @@ import {
   addressWithFallbackValues,
   getInitialShippingValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
@@ -39,9 +39,7 @@ export const FulfillmentDetails: FC<
   const { handleNewUserAddressUpdates } = useUserAddressUpdates()
   const { handleSaveFulfillmentDetails } = useHandleSaveFulfillmentDetails()
 
-  const addressVerificationUSEnabled = !!useFeatureFlag(
-    "address_verification_us",
-  )
+  const addressVerificationUSEnabled = !!useFlag("address_verification_us")
 
   // Trigger address verification by setting this to true
   const [verifyAddressNow, setVerifyAddressNow] = useState<boolean>(false)

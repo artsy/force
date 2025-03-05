@@ -13,7 +13,7 @@ import {
   usePrevious,
 } from "@artsy/palette"
 import type { Address } from "Components/Address/utils"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import { getENV } from "Utils/getENV"
 import { throttle, uniqBy } from "lodash"
 import { useCallback, useEffect, useReducer } from "react"
@@ -171,7 +171,7 @@ export const AddressAutocompleteInput = ({
   const { serviceAvailability, providerSuggestions } = state
 
   const isUSAddress = address.country === "US"
-  const isFeatureFlagEnabled = !!useFeatureFlag("address_autocomplete_us")
+  const isFeatureFlagEnabled = !!useFlag("address_autocomplete_us")
 
   const { trackEvent } = useTracking()
 

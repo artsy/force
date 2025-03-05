@@ -1,6 +1,6 @@
 import { Join, Link, Spacer, Text } from "@artsy/palette"
 import { SaleAgreementsFilter } from "Apps/SaleAgreements/Components/SaleAgreementsFilter"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import { getENV } from "Utils/getENV"
 import type { SaleAgreementsApp_viewer$key } from "__generated__/SaleAgreementsApp_viewer.graphql"
 import { HttpError } from "found"
@@ -14,7 +14,7 @@ interface SaleAgreementsAppProps {
 export const SaleAgreementsApp: FC<
   React.PropsWithChildren<SaleAgreementsAppProps>
 > = ({ viewer }) => {
-  const showSupplementalCosPage = useFeatureFlag("sapphire_supplemental-cos")
+  const showSupplementalCosPage = useFlag("sapphire_supplemental-cos")
   const data = useFragment(saleAgreementsAppFragment, viewer)
 
   if (!showSupplementalCosPage) {

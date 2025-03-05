@@ -1,7 +1,7 @@
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { PageHTML } from "Apps/Page/Components/PageHTML"
 import { TopContextBar } from "Components/TopContextBar"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import type { SaleAgreementRoute_saleAgreement$key } from "__generated__/SaleAgreementRoute_saleAgreement.graphql"
 import { HttpError } from "found"
 import type { FC } from "react"
@@ -15,7 +15,7 @@ export const SaleAgreementRoute: FC<
   React.PropsWithChildren<SaleAgreementRouteProps>
 > = ({ saleAgreement }) => {
   const data = useFragment(saleAgreementFragment, saleAgreement)
-  const showSupplementalCosPage = useFeatureFlag("sapphire_supplemental-cos")
+  const showSupplementalCosPage = useFlag("sapphire_supplemental-cos")
 
   if (!showSupplementalCosPage) {
     throw new HttpError(404)

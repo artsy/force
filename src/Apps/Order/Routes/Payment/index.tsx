@@ -19,7 +19,7 @@ import {
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import { getInitialPaymentMethodValue } from "Apps/Order/Utils/orderUtils"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import { useRouter } from "System/Hooks/useRouter"
 // utils, hooks, mutations and system tools
 import { extractNodes } from "Utils/extractNodes"
@@ -98,7 +98,7 @@ export const PaymentRoute: FC<
   } = useOrderPaymentContext()
 
   const balanceCheckEnabled =
-    useFeatureFlag("bank_account_balance_check") &&
+    useFlag("bank_account_balance_check") &&
     selectedPaymentMethod === "US_BANK_ACCOUNT"
 
   const artworkVersion = extractNodes(order.lineItems)[0]?.artworkVersion

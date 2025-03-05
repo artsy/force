@@ -1,6 +1,6 @@
 import { SelectedFiltersCountsLabels } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ResultsFilter } from "./ResultsFilter"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import { getArtworkLocationSearchableText } from "Components/ArtworkFilter/Utils/getArtworkLocationSearchableText"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -19,7 +19,7 @@ export const ArtworkLocationFilter: React.FC<
   React.PropsWithChildren<ArtworkLocationFilterProps>
 > = props => {
   const { expanded } = props
-  const enableEnhancedFilter = useFeatureFlag(
+  const enableEnhancedFilter = useFlag(
     "onyx_enhanced-artwork-location-filtering",
   )
 
