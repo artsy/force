@@ -60,13 +60,14 @@ jest.mock("react-relay", () => ({
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<ExpressCheckoutUI_Test_Query>({
-  Component: ({ commerceOrder }) => (
-    <ExpressCheckoutUI order={commerceOrder!} pickup={false} />
-  ),
+  Component: ({ me }) =>
+    me?.order && <ExpressCheckoutUI order={me.order!} pickup={false} />,
   query: graphql`
     query ExpressCheckoutUI_Test_Query @raw_response_type {
-      commerceOrder(id: "123") {
-        ...ExpressCheckoutUI_order
+      me {
+        order(id: "123") {
+          ...ExpressCheckoutUI_order
+        }
       }
     }
   `,

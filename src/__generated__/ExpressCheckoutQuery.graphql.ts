@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<642484f2e33e27fd1245627a3417dbc9>>
+ * @generated SignedSource<<e9206d3f2fd3eeeb2a6ee71c81684acf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,48 +10,53 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
-export type ExpressCheckoutUI_Test_Query$variables = Record<PropertyKey, never>;
-export type ExpressCheckoutUI_Test_Query$data = {
+export type ExpressCheckoutQuery$variables = {
+  orderID: string;
+};
+export type ExpressCheckoutQuery$data = {
   readonly me: {
     readonly order: {
-      readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutUI_order">;
+      readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckout_order">;
     } | null | undefined;
   } | null | undefined;
 };
-export type ExpressCheckoutUI_Test_Query$rawResponse = {
-  readonly me: {
-    readonly id: string;
-    readonly order: {
-      readonly availableShippingCountries: ReadonlyArray<string>;
-      readonly fulfillmentOptions: ReadonlyArray<{
-        readonly amount: {
-          readonly currencyCode: string;
-          readonly minor: any;
-        } | null | undefined;
-        readonly selected: boolean | null | undefined;
-        readonly type: FulfillmentOptionTypeEnum;
-      }>;
-      readonly id: string;
-      readonly internalID: string;
-    } | null | undefined;
-  } | null | undefined;
-};
-export type ExpressCheckoutUI_Test_Query = {
-  rawResponse: ExpressCheckoutUI_Test_Query$rawResponse;
-  response: ExpressCheckoutUI_Test_Query$data;
-  variables: ExpressCheckoutUI_Test_Query$variables;
+export type ExpressCheckoutQuery = {
+  response: ExpressCheckoutQuery$data;
+  variables: ExpressCheckoutQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "kind": "Literal",
-    "name": "id",
-    "value": "123"
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "orderID"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "orderID"
+  }
+],
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "minor",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "currencyCode",
+    "storageKey": null
+  }
+],
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -60,10 +65,10 @@ v1 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ExpressCheckoutUI_Test_Query",
+    "name": "ExpressCheckoutQuery",
     "selections": [
       {
         "alias": null,
@@ -75,7 +80,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v0/*: any*/),
+            "args": (v1/*: any*/),
             "concreteType": "Order",
             "kind": "LinkedField",
             "name": "order",
@@ -84,10 +89,10 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "ExpressCheckoutUI_order"
+                "name": "ExpressCheckout_order"
               }
             ],
-            "storageKey": "order(id:\"123\")"
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -98,9 +103,9 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ExpressCheckoutUI_Test_Query",
+    "name": "ExpressCheckoutQuery",
     "selections": [
       {
         "alias": null,
@@ -112,7 +117,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v0/*: any*/),
+            "args": (v1/*: any*/),
             "concreteType": "Order",
             "kind": "LinkedField",
             "name": "order",
@@ -154,22 +159,7 @@ return {
                     "kind": "LinkedField",
                     "name": "amount",
                     "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "minor",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "currencyCode",
-                        "storageKey": null
-                      }
-                    ],
+                    "selections": (v2/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -182,27 +172,37 @@ return {
                 ],
                 "storageKey": null
               },
-              (v1/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Money",
+                "kind": "LinkedField",
+                "name": "buyerTotal",
+                "plural": false,
+                "selections": (v2/*: any*/),
+                "storageKey": null
+              },
+              (v3/*: any*/)
             ],
-            "storageKey": "order(id:\"123\")"
+            "storageKey": null
           },
-          (v1/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "d416ecbe18356952a4442dd9c5d9dfec",
+    "cacheID": "340d9273be7ad737a63c6ec850bdf912",
     "id": null,
     "metadata": {},
-    "name": "ExpressCheckoutUI_Test_Query",
+    "name": "ExpressCheckoutQuery",
     "operationKind": "query",
-    "text": "query ExpressCheckoutUI_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...ExpressCheckoutUI_order\n      id\n    }\n    id\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n}\n"
+    "text": "query ExpressCheckoutQuery(\n  $orderID: String!\n) {\n  me {\n    order(id: $orderID) {\n      ...ExpressCheckout_order\n      id\n    }\n    id\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n}\n\nfragment ExpressCheckout_order on Order {\n  ...ExpressCheckoutUI_order\n  availableShippingCountries\n  buyerTotal {\n    minor\n    currencyCode\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "336854d9cea3b4608782fa71ebd3d42e";
+(node as any).hash = "1261f9ad42a8e1b9c782bca109ad6378";
 
 export default node;
