@@ -8,6 +8,8 @@ import { ExpressCheckoutUI } from "../ExpressCheckoutUI"
 
 jest.mock("react-tracking")
 
+jest.unmock("react-relay")
+
 jest.mock("@stripe/react-stripe-js", () => {
   return {
     useStripe: jest.fn(() => ({})),
@@ -37,31 +39,8 @@ jest.mock("@stripe/react-stripe-js", () => {
   }
 })
 
-jest.mock("react-relay", () => ({
-  ...jest.requireActual("react-relay"),
-  graphql: jest.fn(),
-  useFragment: jest.fn(() => ({
-    internalID: "order123",
-    mode: "BUY",
-    source: "artwork_page",
-    lineItems: {
-      edges: [
-        {
-          node: {
-            artwork: {
-              slug: "artwork-slug",
-              internalID: "artwork123",
-            },
-          },
-        },
-      ],
-    },
-  })),
-}))
-
 const { renderWithRelay } = setupTestWrapperTL<ExpressCheckoutUI_Test_Query>({
-  Component: ({ me }) =>
-    me?.order && <ExpressCheckoutUI order={me.order!} pickup={false} />,
+  Component: ({ me }) => me?.order && <ExpressCheckoutUI order={me.order!} />,
   query: graphql`
     query ExpressCheckoutUI_Test_Query @raw_response_type {
       me {
@@ -84,7 +63,7 @@ describe("ExpressCheckoutUI", () => {
 
   it("tracks an express checkout click event", () => {
     renderWithRelay({
-      CommerceOrder: () => ({}),
+      Order: () => ({ ...orderData }),
     })
 
     fireEvent.click(screen.getByTestId("express-checkout-button"))
@@ -101,7 +80,7 @@ describe("ExpressCheckoutUI", () => {
 
   it("tracks an express checkout cancel event", () => {
     renderWithRelay({
-      CommerceOrder: () => ({}),
+      Order: () => ({ ...orderData }),
     })
 
     fireEvent.click(screen.getByTestId("express-checkout-cancel"))
@@ -116,3 +95,36 @@ describe("ExpressCheckoutUI", () => {
     })
   })
 })
+
+const orderData = {
+  internalID: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+  buyerTotal: {
+    minor: 100000,
+    currencyCode: "USD",
+  },
+  itemsTotal: {
+    minor: 100000,
+    currencyCode: "USD",
+  },
+  source: "ARTWORK_PAGE",
+  mode: "BUY",
+  availableShippingCountries: ["US"],
+  fulfillmentOptions: [
+    {
+      type: "DOMESTIC_FLAT",
+      amount: {
+        minor: 4200,
+        currencyCode: "USD",
+      },
+      selected: null,
+    },
+  ],
+  lineItems: [
+    {
+      artwork: {
+        internalID: "artwork123",
+        slug: "artwork-slug",
+      },
+    },
+  ],
+}

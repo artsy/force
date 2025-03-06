@@ -101,7 +101,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     trackEvent(event)
 
     // TODO: This is where we could reset the order back to its pre-checkout state
-    console.log("Express checkout element cancelled")
+    console.warn("Express checkout element cancelled")
   }
 
   const onConfirm = async () => {
@@ -129,7 +129,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     resolve,
     reject,
   }: StripeExpressCheckoutElementShippingAddressChangeEvent) => {
-    console.log("Express checkout element address change", address)
+    console.warn("Express checkout element address change", address)
   }
 
   const handleShippingRateChange = async ({
@@ -137,7 +137,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     resolve,
     reject,
   }: StripeExpressCheckoutElementShippingRateChangeEvent) => {
-    console.log("Shipping rate change", shippingRate)
+    console.warn("Shipping rate change", shippingRate)
     try {
       resolve()
     } catch (error) {
@@ -162,7 +162,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         onShippingAddressChange={handleShippingAddressChange}
         onShippingRateChange={handleShippingRateChange}
         onLoadError={e => {
-          console.log("Express checkout element error", e)
+          console.warn("Express checkout element error", e)
         }}
         onConfirm={onConfirm}
       />
