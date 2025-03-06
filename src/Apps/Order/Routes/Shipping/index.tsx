@@ -2,7 +2,10 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Flex, Spacer } from "@artsy/palette"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
-import { ExpressCheckout } from "Apps/Order/Components/ExpressCheckout"
+import {
+  ExpressCheckout,
+  ExpressCheckoutQueryRenderer,
+} from "Apps/Order/Components/ExpressCheckout"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import {
   buyNowFlowSteps,
@@ -104,7 +107,7 @@ const ShippingRouteLayout: FC<
           >
             {expressCheckoutPrototypeEnabled &&
               !shippingContext.orderData.isOffer && (
-                <ExpressCheckout order={order} />
+                <ExpressCheckoutQueryRenderer orderID={order.internalID} />
               )}
 
             <FulfillmentDetails me={me} order={order} />
