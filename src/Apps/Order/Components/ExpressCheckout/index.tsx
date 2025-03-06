@@ -8,7 +8,7 @@ import { ExpressCheckoutUI } from "Apps/Order/Components/ExpressCheckout/Express
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { getENV } from "Utils/getENV"
-import type {} from "__generated__/ExpressCheckoutQuery.graphql"
+import type { ExpressCheckoutQuery } from "__generated__/ExpressCheckoutQuery.graphql"
 import type { ExpressCheckout_order$key } from "__generated__/ExpressCheckout_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -21,11 +21,11 @@ interface Props {
 export const ExpressCheckout = ({ order }: Props) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
 
-  const { buyerTotal } = orderData
+  const { buyerTotal, itemsTotal } = orderData
 
-  // fall back if buyer total not available yet
-  // FIXME: should use itemsTotal for fallback
-  const total = buyerTotal || { minor: 123456789, currencyCode: "USD" }
+  // fall back to itemsTotal if buyer total not available yet
+  // TODO: refresh this/refetch fragment when we do mutations
+  const total = buyerTotal || itemsTotal
 
   if (!(total && orderData.availableShippingCountries.length)) {
     return null
@@ -63,8 +63,10 @@ const ORDER_FRAGMENT = graphql`
       minor
       currencyCode
     }
-
-    # itemsTotalCents
+    itemsTotal {
+      minor
+      currencyCode
+    }
   }
 `
 

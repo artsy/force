@@ -50,10 +50,12 @@ export const ExpressCheckoutUI = ({
   const clientSecret = "client_secret_id"
   const { trackEvent } = useTracking()
 
+  const primaryLineItem = orderData.lineItems[0]
+  const primaryArtwork = primaryLineItem?.artwork
+
   const checkoutOptions: ClickResolveDetails = {
     shippingAddressRequired: !pickup,
     phoneNumberRequired: true,
-
     shippingRates: extractShippingRates(orderData),
     allowedShippingCountries: extractAllowedShippingCountries(orderData),
   }
@@ -65,11 +67,11 @@ export const ExpressCheckoutUI = ({
     const event: ClickedExpressCheckout = {
       action: ActionType.clickedExpressCheckout,
       context_page_owner_type: OwnerType.ordersShipping,
-      // TODO: need to get artwork/line item types - should this be order id?
-      context_page_owner_id: "artwork-id", // artwork.internalID,
-      context_page_owner_slug: "artwork-slug", // artwork.slug,
+      // TODO: should this be order id?
+      context_page_owner_id: primaryArtwork?.internalID ?? "",
+      context_page_owner_slug: primaryArtwork?.slug ?? "",
       flow:
-        orderData.source === "partner_offer"
+        orderData.source === "PARTNER_OFFER"
           ? "Partner offer"
           : orderData.mode === "BUY"
             ? "Buy now"
@@ -88,11 +90,11 @@ export const ExpressCheckoutUI = ({
     const event: ClickedCancelExpressCheckout = {
       action: ActionType.clickedCancelExpressCheckout,
       context_page_owner_type: OwnerType.ordersShipping,
-      // TODO: need to get artwork/line item types - should this be order id?
-      context_page_owner_id: "artwork-id", // artwork.internalID,
-      context_page_owner_slug: "artwork-slug", // artwork.slug,
+      // TODO: should this be order id?
+      context_page_owner_id: primaryArtwork?.internalID ?? "",
+      context_page_owner_slug: primaryArtwork?.slug ?? "",
       flow:
-        orderData.source === "partner_offer"
+        orderData.source === "PARTNER_OFFER"
           ? "Partner offer"
           : orderData.mode === "BUY"
             ? "Buy now"
@@ -132,76 +134,6 @@ export const ExpressCheckoutUI = ({
     reject,
   }: StripeExpressCheckoutElementShippingAddressChangeEvent) => {
     console.log("Express checkout element address change", address)
-
-    alert("onShippingAddressChange")
-    // try {
-    //   let variables: any
-    //   if (pickup) {
-    //     // TODO: From looking at the types on the checkout element events, saving pickup
-    //     // might be required at the confirm step - ie save pickup, then submit order.
-    //     // See the type for this address and references to phoneNumber in that typedefs file
-    //     // variables = {
-    //     //   input: {
-    //     //     id: orderData.internalID,
-    //     //     fulfillmentType: "PICKUP",
-    //     //     phoneNumber: address.phone,
-    //     //   },
-    //     // }
-    //     console.warn("Pickup does not apply")
-    //     resolve()
-    //   } else {
-    //     // TODO: FIXME: NO PHONE NUMBER AVAILABLE ON ADDRESS OR BEFORE CONFIRM???
-    //     console.log("Shipping address change", address)
-    //     const fulfilmentType = requiresArtsyShippingTo(address.country, artwork)
-    //       ? "SHIP_ARTA"
-    //       : "SHIP"
-    //     variables = {
-    //       input: {
-    //         id: orderData.internalID,
-    //         fulfillmentType: fulfilmentType,
-    //         shipping: {
-    //           addressLine1: (address as ExpressCheckoutAddress).line1 ?? "",
-    //           addressLine2: (address as ExpressCheckoutAddress).line2 ?? "",
-    //           city: address.city,
-    //           country: address.country,
-    //           postalCode: address.postal_code,
-    //           region: address.state,
-    //           phoneNumber: "555-555-5555", //address.phone,
-    //         },
-    //       },
-    //     }
-    //   }
-    //   const result = await saveFulfillmentDetails.submitMutation({
-    //     variables,
-    //   })
-    //   const { orderOrError } = result.commerceSetShipping ?? {}
-    //   console.log("Order or error", orderOrError)
-    //   if (orderOrError?.__typename === "CommerceOrderWithMutationSuccess") {
-    //     const firstLineItem = extractNodes(orderOrError.order.lineItems)[0]
-    //     const lineItemResult = validateAndExtractLineItemData(firstLineItem)
-
-    //     if (lineItemResult) {
-    //       if (lineItemResult.requestedFulfillment === "PICKUP") {
-    //         // TODO: Again, should not happen
-    //         resolve()
-    //         return
-    //       }
-
-    //       const shippingRates = extractShippingRates(
-    //         lineItemResult,
-    //         orderOrError.order,
-    //       )
-
-    //       resolve({
-    //         shippingRates,
-    //       })
-    //     }
-    //     return
-    //   }
-    // } catch (error) {
-    //   console.error(error)
-    //   reject()
-    // }
   }
 
   const handleShippingRateChange = async ({
@@ -247,6 +179,8 @@ export const ExpressCheckoutUI = ({
 const ORDER_FRAGMENT = graphql`
   fragment ExpressCheckoutUI_order on Order {
     internalID
+    source
+    mode
     availableShippingCountries
     fulfillmentOptions {
       type
@@ -256,34 +190,12 @@ const ORDER_FRAGMENT = graphql`
       }
       selected
     }
-    # lineItems {
-    #   edges {
-    #     node {
-    #       artwork {
-    #         slug
-    #         internalID
-    #       }
-    #     }
-    #   }
-    # }
-    # mode
-
-    # buyerTotalCents
-    # requestedFulfillment {
-    #   __typename
-    # }
-    # currencyCode
-    # shippingTotalCents
-    # source
-    # shippingQuoteOptions {
-    #   edges {
-    #     node {
-    #       name
-    #       priceCents
-    #       tier
-    #     }
-    #   }
-    # }
+    lineItems {
+      artwork {
+        internalID
+        slug
+      }
+    }
   }
 `
 
@@ -300,39 +212,47 @@ const extractShippingRates = (
 ): Array<ShippingRate> => {
   return order.fulfillmentOptions
     .map(option => {
-      switch (option.type) {
+      const { type, amount } = option
+      const rate: ShippingRate | null = null
+      switch (type) {
         case "DOMESTIC_FLAT":
-          return {
-            id: option.type,
-            displayName: "Domestic shipping",
-            amount: option.amount!.minor,
-            currency: option.amount!.currencyCode,
-          } as ShippingRate
+          if (amount) {
+            return {
+              id: type,
+              displayName: "Domestic shipping",
+              amount: amount.minor,
+            }
+          }
+          break
         case "INTERNATIONAL_FLAT":
-          return {
-            id: option.type,
-            displayName: "International shipping",
-            amount: option.amount!.minor,
-            currency: option.amount!.currencyCode,
-          } as ShippingRate
+          if (amount) {
+            return {
+              id: type,
+              displayName: "International shipping",
+              amount: amount!.minor,
+            }
+          }
+          break
         case "PICKUP":
-          return {
-            id: option.type,
-            displayName: "Pickup",
-            amount: option.amount!.minor,
-            currency: option.amount!.currencyCode,
-          } as ShippingRate
+          if (amount) {
+            return {
+              id: type,
+              displayName: "Pickup",
+              amount: amount!.minor,
+            }
+          }
+          break
         case "SHIPPING_TBD":
           return {
-            id: option.type,
+            id: type,
             displayName: "Calculating shipping...",
-            amount: option.amount!.minor || 0,
-            currency: option.amount!.currencyCode,
-          } as ShippingRate
+            // Express checkout requires a number for amount
+            amount: 0,
+          }
         default:
-          console.warn("Unhandled fulfillment option", option.type)
-          return null
+          console.warn("Unhandled fulfillment option", type)
       }
+      return rate
     })
     .filter(Boolean) as ShippingRate[]
 }
