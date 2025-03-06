@@ -37,7 +37,7 @@ export const HomeEmergingPicksArtworksRail: React.FC<
   return (
     <Rail
       title="Curators’ Picks"
-      subTitle="The best works on Artsy, all available now."
+      subTitle="The best works by rising talents on Artsy, all available now."
       viewAllLabel="View All Works"
       viewAllHref="/collection/curators-picks-emerging"
       viewAllOnClick={() => {
@@ -157,7 +157,7 @@ const PLACEHOLDER = (
   <Skeleton>
     <Rail
       title="Curators’ Picks"
-      subTitle="The best works on Artsy, all available now."
+      subTitle="The best works by rising talents on Artsy, all available now."
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
           return <ShelfArtworkPlaceholder key={i} index={i} />
