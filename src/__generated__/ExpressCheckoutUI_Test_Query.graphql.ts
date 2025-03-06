@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<642484f2e33e27fd1245627a3417dbc9>>
+ * @generated SignedSource<<4782b28939ed07174cef7ca3b6f88de9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,8 @@
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
+export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 export type ExpressCheckoutUI_Test_Query$variables = Record<PropertyKey, never>;
 export type ExpressCheckoutUI_Test_Query$data = {
   readonly me: {
@@ -34,6 +36,16 @@ export type ExpressCheckoutUI_Test_Query$rawResponse = {
       }>;
       readonly id: string;
       readonly internalID: string;
+      readonly lineItems: ReadonlyArray<{
+        readonly artwork: {
+          readonly id: string;
+          readonly internalID: string;
+          readonly slug: string;
+        } | null | undefined;
+        readonly id: string;
+      } | null | undefined>;
+      readonly mode: OrderModeEnum;
+      readonly source: OrderSourceEnum;
     } | null | undefined;
   } | null | undefined;
 };
@@ -52,6 +64,13 @@ var v0 = [
   }
 ],
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -118,11 +137,19 @@ return {
             "name": "order",
             "plural": false,
             "selections": [
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "internalID",
+                "name": "source",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "mode",
                 "storageKey": null
               },
               {
@@ -182,23 +209,55 @@ return {
                 ],
                 "storageKey": null
               },
-              (v1/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "LineItem",
+                "kind": "LinkedField",
+                "name": "lineItems",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Artwork",
+                    "kind": "LinkedField",
+                    "name": "artwork",
+                    "plural": false,
+                    "selections": [
+                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "slug",
+                        "storageKey": null
+                      },
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
+              },
+              (v2/*: any*/)
             ],
             "storageKey": "order(id:\"123\")"
           },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "d416ecbe18356952a4442dd9c5d9dfec",
+    "cacheID": "364fbda45dfa0492daebd5118f25c289",
     "id": null,
     "metadata": {},
     "name": "ExpressCheckoutUI_Test_Query",
     "operationKind": "query",
-    "text": "query ExpressCheckoutUI_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...ExpressCheckoutUI_order\n      id\n    }\n    id\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n}\n"
+    "text": "query ExpressCheckoutUI_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...ExpressCheckoutUI_order\n      id\n    }\n    id\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

@@ -2,10 +2,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Flex, Spacer } from "@artsy/palette"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
-import {
-  ExpressCheckout,
-  ExpressCheckoutQueryRenderer,
-} from "Apps/Order/Components/ExpressCheckout"
+import { ExpressCheckoutQueryRenderer } from "Apps/Order/Components/ExpressCheckout"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import {
   buyNowFlowSteps,

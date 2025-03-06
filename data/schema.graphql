@@ -12621,6 +12621,7 @@ enum LengthUnitPreference {
 type LineItem {
   artwork: Artwork
   artworkVersion: ArtworkVersion
+  currencyCode: String!
 
   # A globally unique ID.
   id: ID!
@@ -15193,6 +15194,9 @@ type Order {
 
   # The total amount the buyer is expected to pay
   buyerTotal: Money
+
+  # Order code
+  code: String!
   fulfillmentOptions: [FulfillmentOption!]!
 
   # A globally unique ID.
@@ -15200,10 +15204,29 @@ type Order {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
-  lineItems: [LineItem]
+
+  # The total amount of the line items
+  itemsTotal: Money
+  lineItems: [LineItem]!
+  mode: OrderModeEnum!
+
+  # Source of the order
+  source: OrderSourceEnum!
+}
+
+enum OrderModeEnum {
+  BUY
+  OFFER
 }
 
 union OrderParty = Partner | User
+
+enum OrderSourceEnum {
+  ARTWORK_PAGE
+  INQUIRY
+  PARTNER_OFFER
+  PRIVATE_SALE
+}
 
 type OrderedSet {
   cached: Int
