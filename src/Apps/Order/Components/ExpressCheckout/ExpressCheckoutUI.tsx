@@ -29,7 +29,6 @@ import styled from "styled-components"
 
 interface ExpressCheckoutUIProps {
   order: ExpressCheckoutUI_order$key
-  pickup: boolean
 }
 
 const expressCheckoutOptions: StripeExpressCheckoutElementOptions = {
@@ -39,10 +38,7 @@ const expressCheckoutOptions: StripeExpressCheckoutElementOptions = {
   buttonHeight: 50,
 }
 
-export const ExpressCheckoutUI = ({
-  order,
-  pickup = true,
-}: ExpressCheckoutUIProps) => {
+export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const [visible, setVisible] = useState(false)
   const elements = useElements()
@@ -54,7 +50,7 @@ export const ExpressCheckoutUI = ({
   const primaryArtwork = primaryLineItem?.artwork
 
   const checkoutOptions: ClickResolveDetails = {
-    shippingAddressRequired: !pickup,
+    shippingAddressRequired: true,
     phoneNumberRequired: true,
     shippingRates: extractShippingRates(orderData),
     allowedShippingCountries: extractAllowedShippingCountries(orderData),
