@@ -165,7 +165,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         onShippingAddressChange={handleShippingAddressChange}
         onShippingRateChange={handleShippingRateChange}
         onLoadError={e => {
-          console.warn("Express checkout element error", e)
+          console.error("Express checkout element error", e)
         }}
         onConfirm={onConfirm}
       />
