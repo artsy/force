@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<22dba6a53132cf5b643377f5d9c6de31>>
+ * @generated SignedSource<<e466b14adeb86370736ccb7425e17cc2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ExpressCheckoutUI_order$data = {
   readonly buyerTotalCents: number | null | undefined;
@@ -21,9 +22,11 @@ export type ExpressCheckoutUI_order$data = {
         readonly artwork: {
           readonly artsyShippingInternational: boolean | null | undefined;
           readonly euShippingOrigin: boolean | null | undefined;
+          readonly internalID: string;
           readonly onlyShipsDomestically: boolean | null | undefined;
           readonly processWithArtsyShippingDomestic: boolean | null | undefined;
           readonly shippingCountry: string | null | undefined;
+          readonly slug: string;
         } | null | undefined;
         readonly shippingQuoteOptions: {
           readonly edges: ReadonlyArray<{
@@ -42,6 +45,7 @@ export type ExpressCheckoutUI_order$data = {
     readonly __typename: string;
   } | null | undefined;
   readonly shippingTotalCents: number | null | undefined;
+  readonly source: CommerceOrderSourceEnum;
   readonly " $fragmentType": "ExpressCheckoutUI_order";
 };
 export type ExpressCheckoutUI_order$key = {
@@ -49,19 +53,21 @@ export type ExpressCheckoutUI_order$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutUI_order">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ExpressCheckoutUI_order",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -111,6 +117,13 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "CommerceLineItemConnection",
       "kind": "LinkedField",
       "name": "lineItems",
@@ -140,6 +153,14 @@ const node: ReaderFragment = {
                   "name": "artwork",
                   "plural": false,
                   "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "slug",
+                      "storageKey": null
+                    },
+                    (v0/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -245,7 +266,8 @@ const node: ReaderFragment = {
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
+})();
 
-(node as any).hash = "0ae60cfee591bbd45d4b43c8f0df56e2";
+(node as any).hash = "ac2922116b8fbf5b6bda89d9170a37ab";
 
 export default node;
