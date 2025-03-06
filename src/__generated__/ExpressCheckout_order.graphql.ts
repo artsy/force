@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<079abdd2b152465bf43292d9054c2c92>>
+ * @generated SignedSource<<98afda31dab5a047959cb812b5b5270c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,11 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ExpressCheckout_order$data = {
-  readonly buyerTotalCents: number | null | undefined;
-  readonly currencyCode: string;
-  readonly itemsTotalCents: number | null | undefined;
+  readonly availableShippingCountries: ReadonlyArray<string>;
+  readonly buyerTotal: {
+    readonly currencyCode: string;
+    readonly minor: any;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutUI_order">;
   readonly " $fragmentType": "ExpressCheckout_order";
 };
@@ -37,28 +39,39 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "buyerTotalCents",
+      "name": "availableShippingCountries",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "currencyCode",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "itemsTotalCents",
+      "concreteType": "Money",
+      "kind": "LinkedField",
+      "name": "buyerTotal",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "minor",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "currencyCode",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     }
   ],
-  "type": "CommerceOrder",
-  "abstractKey": "__isCommerceOrder"
+  "type": "Order",
+  "abstractKey": null
 };
 
-(node as any).hash = "65450074d89512b85f38cb9e17633aae";
+(node as any).hash = "a556166021d8b2b395d6f1d87307f77a";
 
 export default node;

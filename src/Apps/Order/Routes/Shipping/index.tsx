@@ -154,7 +154,6 @@ const ORDER_FRAGMENT = graphql`
     ...TransactionDetailsSummaryItem_order
     ...OrderStepper_order
     ...ShippingQuotes_order
-    ...ExpressCheckout_order
     internalID
   }
 `

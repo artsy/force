@@ -5,7 +5,10 @@ import {
   loadStripe,
 } from "@stripe/stripe-js"
 import { ExpressCheckoutUI } from "Apps/Order/Components/ExpressCheckout/ExpressCheckoutUI"
+import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { getENV } from "Utils/getENV"
+import type {} from "__generated__/ExpressCheckoutQuery.graphql"
 import type { ExpressCheckout_order$key } from "__generated__/ExpressCheckout_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -18,18 +21,19 @@ interface Props {
 export const ExpressCheckout = ({ order }: Props) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
 
-  const { buyerTotalCents, currencyCode, itemsTotalCents } = orderData
+  const { buyerTotal } = orderData
 
   // fall back if buyer total not available yet
-  const amount = buyerTotalCents || itemsTotalCents
+  // FIXME: should use itemsTotal for fallback
+  const total = buyerTotal || { minor: 123456789, currencyCode: "USD" }
 
-  if (!currencyCode || !amount) {
+  if (!(total && orderData.availableShippingCountries.length)) {
     return null
   }
 
   const orderOptions: StripeElementsUpdateOptions = {
-    amount: amount,
-    currency: currencyCode.toLowerCase(),
+    amount: total.minor,
+    currency: total.currencyCode.toLowerCase(),
   }
 
   const options: StripeElementsOptions = {
@@ -52,10 +56,43 @@ export const ExpressCheckout = ({ order }: Props) => {
 }
 
 const ORDER_FRAGMENT = graphql`
-  fragment ExpressCheckout_order on CommerceOrder {
+  fragment ExpressCheckout_order on Order {
     ...ExpressCheckoutUI_order
-    buyerTotalCents
-    currencyCode
-    itemsTotalCents
+    availableShippingCountries
+    buyerTotal {
+      minor
+      currencyCode
+    }
+
+    # itemsTotalCents
   }
 `
+
+export const ExpressCheckoutQueryRenderer: React.FC<{ orderID: string }> = ({
+  orderID,
+}) => {
+  const {
+    orderData: { internalID },
+  } = useShippingContext()
+  return (
+    <SystemQueryRenderer<ExpressCheckoutQuery>
+      // lazyLoad
+      query={graphql`
+        query ExpressCheckoutQuery($orderID: String!) {
+          me {
+            order(id: $orderID) {
+              ...ExpressCheckout_order
+            }
+          }
+        }
+      `}
+      variables={{ orderID: internalID }}
+      render={({ props }) => {
+        if (props?.order) {
+          return <ExpressCheckout order={props.order} />
+        }
+        return null
+      }}
+    />
+  )
+}
