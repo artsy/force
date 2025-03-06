@@ -31,13 +31,6 @@ interface ExpressCheckoutUIProps {
   order: ExpressCheckoutUI_order$key
 }
 
-const expressCheckoutOptions: StripeExpressCheckoutElementOptions = {
-  buttonTheme: {
-    applePay: "white-outline",
-  },
-  buttonHeight: 50,
-}
-
 export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const [visible, setVisible] = useState(false)
@@ -52,6 +45,11 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const checkoutOptions: ClickResolveDetails = {
     shippingAddressRequired: true,
     phoneNumberRequired: true,
+
+    // TODO: possible conflict between initial rates from order,
+    //   rates set as a result of the legacy setShippingMutation,
+    //   and rates set as a result of the express checkout flow's automatic
+    //   shipping address selection event below.
     shippingRates: extractShippingRates(orderData),
     allowedShippingCountries: extractAllowedShippingCountries(orderData),
   }
@@ -130,6 +128,11 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     reject,
   }: StripeExpressCheckoutElementShippingAddressChangeEvent) => {
     console.warn("Express checkout element address change", address)
+    try {
+      resolve()
+    } catch (error) {
+      reject()
+    }
   }
 
   const handleShippingRateChange = async ({
@@ -170,6 +173,13 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       <Spacer y={4} />
     </UncollapsingBox>
   )
+}
+
+const expressCheckoutOptions: StripeExpressCheckoutElementOptions = {
+  buttonTheme: {
+    applePay: "white-outline",
+  },
+  buttonHeight: 50,
 }
 
 const ORDER_FRAGMENT = graphql`

@@ -5,7 +5,6 @@ import {
   loadStripe,
 } from "@stripe/stripe-js"
 import { ExpressCheckoutUI } from "Apps/Order/Components/ExpressCheckout/ExpressCheckoutUI"
-import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { getENV } from "Utils/getENV"
 import type { ExpressCheckoutQuery } from "__generated__/ExpressCheckoutQuery.graphql"
@@ -73,9 +72,6 @@ const ORDER_FRAGMENT = graphql`
 export const ExpressCheckoutQueryRenderer: React.FC<{ orderID: string }> = ({
   orderID,
 }) => {
-  const {
-    orderData: { internalID },
-  } = useShippingContext()
   return (
     <SystemQueryRenderer<ExpressCheckoutQuery>
       // lazyLoad
@@ -88,7 +84,7 @@ export const ExpressCheckoutQueryRenderer: React.FC<{ orderID: string }> = ({
           }
         }
       `}
-      variables={{ orderID: internalID }}
+      variables={{ orderID }}
       render={({ props }) => {
         console.log("****", props)
         if (props?.me?.order) {
