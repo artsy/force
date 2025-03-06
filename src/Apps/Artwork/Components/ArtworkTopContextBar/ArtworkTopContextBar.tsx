@@ -1,6 +1,6 @@
 import { ArtworkTopContextBarBreadcrumbFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBarBreadcrumb"
 import {
-  ArtworkTopContextBarDynamicBreadcrumbQueryRenderer,
+  ArtworkTopContextBarDynamicBreadcrumb,
   useDynamicBreadcrumb,
 } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBarDynamicBreadcrumb"
 import type { ArtworkTopContextBar_artwork$data } from "__generated__/ArtworkTopContextBar_artwork.graphql"
@@ -18,13 +18,13 @@ export const ArtworkTopContextBar: React.FC<
 
   if (isEnabled) {
     return (
-      <ArtworkTopContextBarDynamicBreadcrumbQueryRenderer
+      <ArtworkTopContextBarDynamicBreadcrumb
         id={artwork.internalID}
         contextMatchId={id}
         contextMatchType={type}
       >
         <ArtworkTopContextBarBreadcrumbFragmentContainer artwork={artwork} />
-      </ArtworkTopContextBarDynamicBreadcrumbQueryRenderer>
+      </ArtworkTopContextBarDynamicBreadcrumb>
     )
   }
 

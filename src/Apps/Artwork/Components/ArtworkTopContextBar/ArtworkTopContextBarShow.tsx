@@ -1,18 +1,45 @@
 import { Box, Stack } from "@artsy/palette"
 import { TopContextBar } from "Components/TopContextBar"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ArtworkTopContextBarShowQuery } from "__generated__/ArtworkTopContextBarShowQuery.graphql"
-import type { ArtworkTopContextBarShow_show$data } from "__generated__/ArtworkTopContextBarShow_show.graphql"
 import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { graphql, useLazyLoadQuery } from "react-relay"
 
 interface ArtworkTopContextBarShowProps {
-  show: ArtworkTopContextBarShow_show$data
+  id: string
 }
 
 export const ArtworkTopContextBarShow: React.FC<
   ArtworkTopContextBarShowProps
-> = ({ show }) => {
+> = ({ id }) => {
+  const data = useLazyLoadQuery<ArtworkTopContextBarShowQuery>(
+    graphql`
+      query ArtworkTopContextBarShowQuery($id: String!) {
+        show(id: $id) {
+          name
+          href
+          status
+          thumbnail: coverImage {
+            url
+          }
+          partner {
+            ... on Partner {
+              name
+            }
+            ... on ExternalPartner {
+              name
+            }
+          }
+        }
+      }
+    `,
+    { id },
+    { fetchPolicy: "store-or-network" },
+  )
+
+  if (!data.show) return null
+
+  const { show } = data
+
   return (
     <TopContextBar
       href={show.href}
@@ -21,72 +48,12 @@ export const ArtworkTopContextBarShow: React.FC<
       preferHistoryBack
     >
       <Stack gap={1} flexDirection="row">
-        {show.name} {show.partner && `- ${show.partner.name}`}
+        {show.name}
         <Box as="span" color="black60">
-          {show.status === "upcoming"
-            ? "In upcoming show"
-            : show.status === "closed"
-              ? "In past show"
-              : "In current show"}
+          {show.status === "running" ? "Current show" : "Past show"}
+          {show.partner?.name ? ` at ${show.partner.name}` : null}
         </Box>
       </Stack>
     </TopContextBar>
-  )
-}
-
-export const ArtworkTopContextBarShowFragmentContainer =
-  createFragmentContainer(ArtworkTopContextBarShow, {
-    show: graphql`
-      fragment ArtworkTopContextBarShow_show on Show {
-        name
-        href
-        status
-        thumbnail: coverImage {
-          url
-        }
-        partner {
-          ... on Partner {
-            name
-          }
-          ... on ExternalPartner {
-            name
-          }
-        }
-      }
-    `,
-  })
-
-interface ArtworkTopContextBarShowQueryRendererProps {
-  id: string
-  children: React.ReactNode
-}
-
-export const ArtworkTopContextBarShowQueryRenderer: React.FC<
-  ArtworkTopContextBarShowQueryRendererProps
-> = ({ id, children }) => {
-  return (
-    <SystemQueryRenderer<ArtworkTopContextBarShowQuery>
-      query={graphql`
-        query ArtworkTopContextBarShowQuery($id: String!) {
-          show(id: $id) {
-            ...ArtworkTopContextBarShow_show
-          }
-        }
-      `}
-      variables={{ id }}
-      placeholder={<>{children}</>}
-      render={({ props, error }) => {
-        if (error) {
-          console.error(error)
-          return <>{children}</>
-        }
-
-        if (!props?.show) {
-          return <>{children}</>
-        }
-
-        return <ArtworkTopContextBarShowFragmentContainer show={props.show} />
-      }}
-    />
   )
 }

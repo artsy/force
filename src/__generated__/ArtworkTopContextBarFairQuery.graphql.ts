@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c67700a804bd2e5f6a21c84e12a099d1>>
+ * @generated SignedSource<<e1a8119391098ff4b64e5eb6237c250c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,13 +9,18 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
 export type ArtworkTopContextBarFairQuery$variables = {
   id: string;
 };
 export type ArtworkTopContextBarFairQuery$data = {
   readonly fair: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtworkTopContextBarFair_fair">;
+    readonly href: string | null | undefined;
+    readonly name: string | null | undefined;
+    readonly profile: {
+      readonly icon: {
+        readonly url: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
   } | null | undefined;
 };
 export type ArtworkTopContextBarFairQuery = {
@@ -42,6 +47,38 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Image",
+  "kind": "LinkedField",
+  "name": "icon",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "url",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 };
@@ -60,10 +97,19 @@ return {
         "name": "fair",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
+          (v3/*: any*/),
           {
+            "alias": null,
             "args": null,
-            "kind": "FragmentSpread",
-            "name": "ArtworkTopContextBarFair_fair"
+            "concreteType": "Profile",
+            "kind": "LinkedField",
+            "name": "profile",
+            "plural": false,
+            "selections": [
+              (v4/*: any*/)
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -86,20 +132,8 @@ return {
         "name": "fair",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "href",
-            "storageKey": null
-          },
+          (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -108,45 +142,28 @@ return {
             "name": "profile",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Image",
-                "kind": "LinkedField",
-                "name": "icon",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "url",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              (v2/*: any*/)
+              (v4/*: any*/),
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "ff09adeafa46d0afd3009258d2e7ef9d",
+    "cacheID": "3d4e3163445fe7eb842fdeb9489252e3",
     "id": null,
     "metadata": {},
     "name": "ArtworkTopContextBarFairQuery",
     "operationKind": "query",
-    "text": "query ArtworkTopContextBarFairQuery(\n  $id: String!\n) {\n  fair(id: $id) {\n    ...ArtworkTopContextBarFair_fair\n    id\n  }\n}\n\nfragment ArtworkTopContextBarFair_fair on Fair {\n  name\n  href\n  profile {\n    icon {\n      url\n    }\n    id\n  }\n}\n"
+    "text": "query ArtworkTopContextBarFairQuery(\n  $id: String!\n) {\n  fair(id: $id) {\n    name\n    href\n    profile {\n      icon {\n        url\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c0422e1319ab86ba8baaf6e73c6ecc3c";
+(node as any).hash = "839d88c61e3ec24103e377c2f1e93427";
 
 export default node;

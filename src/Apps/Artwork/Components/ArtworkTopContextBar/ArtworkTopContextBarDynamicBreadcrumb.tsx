@@ -1,8 +1,9 @@
-import { ArtworkTopContextBarFairQueryRenderer } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBarFair"
-import { ArtworkTopContextBarSaleQueryRenderer } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBarSale"
-import { ArtworkTopContextBarShowQueryRenderer } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBarShow"
+import { ArtworkTopContextBarFair } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBarFair"
+import { ArtworkTopContextBarSale } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBarSale"
+import { ArtworkTopContextBarShow } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBarShow"
 import { useNavigationHistory } from "System/Contexts/NavigationHistoryContext"
 import type * as React from "react"
+import { Suspense } from "react"
 
 export const useDynamicBreadcrumb = ():
   | { isEnabled: true; type: "SALE" | "FAIR" | "SHOW"; id: string }
@@ -23,39 +24,33 @@ export const useDynamicBreadcrumb = ():
   }
 }
 
-interface ArtworkTopContextBarDynamicBreadcrumbQueryRendererProps {
+interface ArtworkTopContextBarDynamicBreadcrumbProps {
   id: string
   children: React.ReactNode
   contextMatchId: string
   contextMatchType: "SALE" | "FAIR" | "SHOW"
 }
 
-export const ArtworkTopContextBarDynamicBreadcrumbQueryRenderer: React.FC<
-  ArtworkTopContextBarDynamicBreadcrumbQueryRendererProps
+export const ArtworkTopContextBarDynamicBreadcrumb: React.FC<
+  ArtworkTopContextBarDynamicBreadcrumbProps
 > = ({ contextMatchId, contextMatchType, children }) => {
-  switch (contextMatchType) {
-    case "SALE":
-      return (
-        <ArtworkTopContextBarSaleQueryRenderer id={contextMatchId}>
-          {children}
-        </ArtworkTopContextBarSaleQueryRenderer>
-      )
+  return (
+    <Suspense fallback={<>{children}</>}>
+      {(() => {
+        switch (contextMatchType) {
+          case "SALE":
+            return <ArtworkTopContextBarSale id={contextMatchId} />
 
-    case "FAIR":
-      return (
-        <ArtworkTopContextBarFairQueryRenderer id={contextMatchId}>
-          {children}
-        </ArtworkTopContextBarFairQueryRenderer>
-      )
+          case "FAIR":
+            return <ArtworkTopContextBarFair id={contextMatchId} />
 
-    case "SHOW":
-      return (
-        <ArtworkTopContextBarShowQueryRenderer id={contextMatchId}>
-          {children}
-        </ArtworkTopContextBarShowQueryRenderer>
-      )
+          case "SHOW":
+            return <ArtworkTopContextBarShow id={contextMatchId} />
 
-    default:
-      return <>{children}</>
-  }
+          default:
+            return <>{children}</>
+        }
+      })()}
+    </Suspense>
+  )
 }

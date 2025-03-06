@@ -1,18 +1,38 @@
 import { Box, Stack } from "@artsy/palette"
 import { TopContextBar } from "Components/TopContextBar"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ArtworkTopContextBarFairQuery } from "__generated__/ArtworkTopContextBarFairQuery.graphql"
-import type { ArtworkTopContextBarFair_fair$data } from "__generated__/ArtworkTopContextBarFair_fair.graphql"
 import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { graphql, useLazyLoadQuery } from "react-relay"
 
 interface ArtworkTopContextBarFairProps {
-  fair: ArtworkTopContextBarFair_fair$data
+  id: string
 }
 
 export const ArtworkTopContextBarFair: React.FC<
   ArtworkTopContextBarFairProps
-> = ({ fair }) => {
+> = ({ id }) => {
+  const data = useLazyLoadQuery<ArtworkTopContextBarFairQuery>(
+    graphql`
+      query ArtworkTopContextBarFairQuery($id: String!) {
+        fair(id: $id) {
+          name
+          href
+          profile {
+            icon {
+              url
+            }
+          }
+        }
+      }
+    `,
+    { id },
+    { fetchPolicy: "store-or-network" },
+  )
+
+  if (!data.fair) return null
+
+  const { fair } = data
+
   return (
     <TopContextBar
       href={fair.href}
@@ -27,55 +47,5 @@ export const ArtworkTopContextBarFair: React.FC<
         </Box>
       </Stack>
     </TopContextBar>
-  )
-}
-
-export const ArtworkTopContextBarFairFragmentContainer =
-  createFragmentContainer(ArtworkTopContextBarFair, {
-    fair: graphql`
-      fragment ArtworkTopContextBarFair_fair on Fair {
-        name
-        href
-        profile {
-          icon {
-            url
-          }
-        }
-      }
-    `,
-  })
-
-interface ArtworkTopContextBarFairQueryRendererProps {
-  id: string
-  children: React.ReactNode
-}
-
-export const ArtworkTopContextBarFairQueryRenderer: React.FC<
-  ArtworkTopContextBarFairQueryRendererProps
-> = ({ id, children }) => {
-  return (
-    <SystemQueryRenderer<ArtworkTopContextBarFairQuery>
-      query={graphql`
-        query ArtworkTopContextBarFairQuery($id: String!) {
-          fair(id: $id) {
-            ...ArtworkTopContextBarFair_fair
-          }
-        }
-      `}
-      variables={{ id }}
-      placeholder={<>{children}</>}
-      render={({ props, error }) => {
-        if (error) {
-          console.error(error)
-          return <>{children}</>
-        }
-
-        if (!props?.fair) {
-          return <>{children}</>
-        }
-
-        return <ArtworkTopContextBarFairFragmentContainer fair={props.fair} />
-      }}
-    />
   )
 }

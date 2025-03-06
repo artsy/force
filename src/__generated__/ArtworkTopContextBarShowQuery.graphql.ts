@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ce12ca18f1915cbe634b383d14d6f3a7>>
+ * @generated SignedSource<<86c0b76c1d1e95f3a259037515d1f5c7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,13 +9,20 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
 export type ArtworkTopContextBarShowQuery$variables = {
   id: string;
 };
 export type ArtworkTopContextBarShowQuery$data = {
   readonly show: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtworkTopContextBarShow_show">;
+    readonly href: string | null | undefined;
+    readonly name: string | null | undefined;
+    readonly partner: {
+      readonly name?: string | null | undefined;
+    } | null | undefined;
+    readonly status: string | null | undefined;
+    readonly thumbnail: {
+      readonly url: string | null | undefined;
+    } | null | undefined;
   } | null | undefined;
 };
 export type ArtworkTopContextBarShowQuery = {
@@ -49,6 +56,47 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "status",
+  "storageKey": null
+},
+v5 = {
+  "alias": "thumbnail",
+  "args": null,
+  "concreteType": "Image",
+  "kind": "LinkedField",
+  "name": "coverImage",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "url",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v6 = [
+  (v2/*: any*/)
+],
+v7 = {
+  "kind": "InlineFragment",
+  "selections": (v6/*: any*/),
+  "type": "Partner",
+  "abstractKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 };
@@ -67,10 +115,27 @@ return {
         "name": "show",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
+          (v3/*: any*/),
+          (v4/*: any*/),
+          (v5/*: any*/),
           {
+            "alias": null,
             "args": null,
-            "kind": "FragmentSpread",
-            "name": "ArtworkTopContextBarShow_show"
+            "concreteType": null,
+            "kind": "LinkedField",
+            "name": "partner",
+            "plural": false,
+            "selections": [
+              (v7/*: any*/),
+              {
+                "kind": "InlineFragment",
+                "selections": (v6/*: any*/),
+                "type": "ExternalPartner",
+                "abstractKey": null
+              }
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -94,38 +159,9 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "href",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "status",
-            "storageKey": null
-          },
-          {
-            "alias": "thumbnail",
-            "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "coverImage",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "url",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
+          (v3/*: any*/),
+          (v4/*: any*/),
+          (v5/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -141,19 +177,12 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v2/*: any*/)
-                ],
-                "type": "Partner",
-                "abstractKey": null
-              },
+              (v7/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
                   (v2/*: any*/),
-                  (v3/*: any*/)
+                  (v8/*: any*/)
                 ],
                 "type": "ExternalPartner",
                 "abstractKey": null
@@ -161,7 +190,7 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v3/*: any*/)
+                  (v8/*: any*/)
                 ],
                 "type": "Node",
                 "abstractKey": "__isNode"
@@ -169,23 +198,23 @@ return {
             ],
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v8/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "ce98e53271d687e86703b8f654197733",
+    "cacheID": "c21502dcb59526224d149d0d6c4ddb7a",
     "id": null,
     "metadata": {},
     "name": "ArtworkTopContextBarShowQuery",
     "operationKind": "query",
-    "text": "query ArtworkTopContextBarShowQuery(\n  $id: String!\n) {\n  show(id: $id) {\n    ...ArtworkTopContextBarShow_show\n    id\n  }\n}\n\nfragment ArtworkTopContextBarShow_show on Show {\n  name\n  href\n  status\n  thumbnail: coverImage {\n    url\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkTopContextBarShowQuery(\n  $id: String!\n) {\n  show(id: $id) {\n    name\n    href\n    status\n    thumbnail: coverImage {\n      url\n    }\n    partner {\n      __typename\n      ... on Partner {\n        name\n      }\n      ... on ExternalPartner {\n        name\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "53bd7287451359323fcbcfeec7b076ed";
+(node as any).hash = "267621eff519dada63cb46956572190e";
 
 export default node;
