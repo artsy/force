@@ -49,7 +49,7 @@ export const ExpressCheckout = ({ order }: Props) => {
   return (
     <>
       <Elements stripe={stripePromise} options={options}>
-        <ExpressCheckoutUI order={orderData} pickup={false} />
+        <ExpressCheckoutUI order={orderData} />
       </Elements>
     </>
   )
