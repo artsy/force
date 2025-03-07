@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ade150d28d4b5bea1b706c98daeea25e>>
+ * @generated SignedSource<<636fe6653916fff94a316e93a8cb7220>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,39 +40,20 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = {
+v3 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v5 = {
+v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
-},
-v6 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-},
-v7 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -115,6 +96,13 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
           (v1/*: any*/),
           {
             "alias": null,
@@ -131,121 +119,26 @@ return {
             "name": "artist",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
-              (v1/*: any*/),
-              (v3/*: any*/)
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Partner",
-            "kind": "LinkedField",
-            "name": "partner",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/)
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": null,
-            "kind": "LinkedField",
-            "name": "context",
-            "plural": false,
-            "selections": [
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "__typename",
+                "name": "name",
                 "storageKey": null
               },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "registrationEndsAt",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isRegistrationClosed",
-                    "storageKey": null
-                  },
-                  (v2/*: any*/),
-                  (v1/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isAuction",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isBenefit",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isGalleryAuction",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Image",
-                    "kind": "LinkedField",
-                    "name": "coverImage",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "url",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "type": "Sale",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v3/*: any*/)
-                ],
-                "type": "Node",
-                "abstractKey": "__isNode"
-              }
+              (v1/*: any*/),
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": "artwork(id:\"richard-anuszkiewicz-lino-yellow-318\")"
       }
     ]
   },
   "params": {
-    "cacheID": "c7da4d94d982d2b2784e6547fb591a9d",
+    "cacheID": "c8725824d3cf25b49c6624926ab7a0dd",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -261,48 +154,18 @@ return {
           "plural": false,
           "type": "Artist"
         },
-        "artwork.artist.href": (v4/*: any*/),
-        "artwork.artist.id": (v5/*: any*/),
-        "artwork.artist.name": (v4/*: any*/),
-        "artwork.context": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtworkContext"
-        },
-        "artwork.context.__isNode": (v6/*: any*/),
-        "artwork.context.__typename": (v6/*: any*/),
-        "artwork.context.coverImage": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "artwork.context.coverImage.url": (v4/*: any*/),
-        "artwork.context.href": (v4/*: any*/),
-        "artwork.context.id": (v5/*: any*/),
-        "artwork.context.isAuction": (v7/*: any*/),
-        "artwork.context.isBenefit": (v7/*: any*/),
-        "artwork.context.isGalleryAuction": (v7/*: any*/),
-        "artwork.context.isRegistrationClosed": (v7/*: any*/),
-        "artwork.context.name": (v4/*: any*/),
-        "artwork.context.registrationEndsAt": (v4/*: any*/),
-        "artwork.href": (v4/*: any*/),
-        "artwork.id": (v5/*: any*/),
-        "artwork.partner": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Partner"
-        },
-        "artwork.partner.id": (v5/*: any*/),
-        "artwork.partner.name": (v4/*: any*/),
-        "artwork.title": (v4/*: any*/)
+        "artwork.artist.href": (v3/*: any*/),
+        "artwork.artist.id": (v4/*: any*/),
+        "artwork.artist.name": (v3/*: any*/),
+        "artwork.href": (v3/*: any*/),
+        "artwork.id": (v4/*: any*/),
+        "artwork.internalID": (v4/*: any*/),
+        "artwork.title": (v3/*: any*/)
       }
     },
     "name": "ArtworkTopContextBar_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkTopContextBar_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...ArtworkTopContextBar_artwork\n    id\n  }\n}\n\nfragment ArtworkTopContextBar_artwork on Artwork {\n  href\n  title\n  artist {\n    name\n    href\n    id\n  }\n  partner {\n    name\n    id\n  }\n  context {\n    __typename\n    ...RegistrationAuctionTimer_sale\n    ... on Sale {\n      name\n      href\n      isAuction\n      isBenefit\n      isGalleryAuction\n      coverImage {\n        url\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment RegistrationAuctionTimer_sale on Sale {\n  registrationEndsAt\n  isRegistrationClosed\n}\n"
+    "text": "query ArtworkTopContextBar_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...ArtworkTopContextBar_artwork\n    id\n  }\n}\n\nfragment ArtworkTopContextBarBreadcrumb_artwork on Artwork {\n  internalID\n  href\n  title\n  artist {\n    name\n    href\n    id\n  }\n}\n\nfragment ArtworkTopContextBar_artwork on Artwork {\n  ...ArtworkTopContextBarBreadcrumb_artwork\n  internalID\n}\n"
   }
 };
 })();
