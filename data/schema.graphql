@@ -2971,6 +2971,7 @@ type ArtworkImport implements Node {
     blockersOnly: Boolean
     createdOnly: Boolean
     errorTypes: [String!]
+    excludeErrorTypes: [String!]
     first: Int
     hasErrors: Boolean
     last: Int
