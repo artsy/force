@@ -147,29 +147,12 @@ export const ExpressCheckoutUI = ({
   }
 
   return (
-    <UncollapsingBox visible={visible}>
+    <>
       <Text variant="lg-display">Express checkout</Text>
       <Spacer y={1} />
-
-      <ExpressCheckoutElement
-        options={expressCheckoutOptions}
-        onClick={handleClick}
-        onCancel={handleCancel}
-        onReady={e => {
-          if (!!e.availablePaymentMethods) {
-            setVisible(true)
-          }
-        }}
-        onShippingAddressChange={handleShippingAddressChange}
-        onShippingRateChange={handleShippingRateChange}
-        onLoadError={e => {
-          console.log("Express checkout element error", e)
-        }}
-        onConfirm={onConfirm}
-      />
-
+      <ExpressCheckoutElement onConfirm={onConfirm} />
       <Spacer y={4} />
-    </UncollapsingBox>
+    </>
   )
 }
 
