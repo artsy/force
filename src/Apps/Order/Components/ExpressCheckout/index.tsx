@@ -9,13 +9,13 @@ import { getENV } from "Utils/getENV"
 import type { ExpressCheckout_order$key } from "__generated__/ExpressCheckout_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
-const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
-
 interface Props {
   order: ExpressCheckout_order$key
 }
 
 export const ExpressCheckout = ({ order }: Props) => {
+  const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
+
   const orderData = useFragment(ORDER_FRAGMENT, order)
 
   const { buyerTotalCents, currencyCode, itemsTotalCents } = orderData

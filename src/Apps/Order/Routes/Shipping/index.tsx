@@ -16,7 +16,6 @@ import { ShippingQuotes } from "Apps/Order/Routes/Shipping/Components/ShippingQu
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import { ShippingContextProvider } from "Apps/Order/Routes/Shipping/ShippingContext"
 import { Analytics } from "System/Contexts/AnalyticsContext"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { Media } from "Utils/Responsive"
 import type {
@@ -74,9 +73,9 @@ const ShippingRouteLayout: FC<
 
   const { jumpTo } = useJump()
 
-  const expressCheckoutPrototypeEnabled = useFeatureFlag(
-    "emerald_stripe-express-checkout-prototype",
-  )
+  // const expressCheckoutPrototypeEnabled = useFeatureFlag(
+  //   "emerald_stripe-express-checkout-prototype",
+  // )
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -102,10 +101,7 @@ const ShippingRouteLayout: FC<
                 : {}
             }
           >
-            {expressCheckoutPrototypeEnabled &&
-              !shippingContext.orderData.isOffer && (
-                <ExpressCheckout order={order} />
-              )}
+            <ExpressCheckout order={order} />
 
             <FulfillmentDetails me={me} order={order} />
 
