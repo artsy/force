@@ -101,7 +101,7 @@ const ShippingRouteLayout: FC<
                 : {}
             }
           >
-            <ExpressCheckout order={order} />
+            <ExpressCheckout />
 
             <FulfillmentDetails me={me} order={order} />
 
@@ -150,7 +150,6 @@ const ORDER_FRAGMENT = graphql`
     ...TransactionDetailsSummaryItem_order
     ...OrderStepper_order
     ...ShippingQuotes_order
-    ...ExpressCheckout_order
     internalID
   }
 `
