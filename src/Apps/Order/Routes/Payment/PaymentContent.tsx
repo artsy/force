@@ -18,6 +18,7 @@ import {
   type CreditCardPicker,
   CreditCardPickerFragmentContainer,
 } from "Apps/Order/Components/CreditCardPicker"
+import { ExpressCheckout } from "Apps/Order/Components/ExpressCheckout"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import type { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import { RouterLink } from "System/Components/RouterLink"
@@ -77,6 +78,8 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
 
   return (
     <>
+      <ExpressCheckout />
+      <Spacer y={4} />
       {order.availablePaymentMethods.length > 1 && (
         <>
           <Text variant="lg-display">Payment method</Text>
