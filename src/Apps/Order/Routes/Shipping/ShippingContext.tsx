@@ -15,7 +15,14 @@ import type { ShippingContext_me$key } from "__generated__/ShippingContext_me.gr
 import type { ShippingContext_order$key } from "__generated__/ShippingContext_order.graphql"
 import type { FormikProps } from "formik"
 import { compact } from "lodash"
-import { type FC, createContext, useMemo, useReducer, useRef } from "react"
+import {
+  type FC,
+  createContext,
+  useMemo,
+  useReducer,
+  useRef,
+  useEffect,
+} from "react"
 import { graphql, useFragment } from "react-relay"
 
 export interface State {
@@ -33,6 +40,8 @@ export interface State {
   stage: ShippingStage
   // Manually set & unset when performing mutations
   isPerformingOperation: boolean
+  // Loading state to prevent render before data is available
+  isLoading: boolean
 }
 
 interface Actions {
@@ -87,6 +96,13 @@ export const ShippingContextProvider: FC<
     [meFragmentData.addressConnection, meFragmentData.name],
   )
 
+  // Set loading to false once data is available
+  useEffect(() => {
+    if (orderFragmentData && meFragmentData) {
+      dispatch({ type: "SET_LOADING", payload: false })
+    }
+  }, [orderFragmentData, meFragmentData])
+
   const orderData = computeOrderData(orderFragmentData, meData)
 
   /*
@@ -118,6 +134,7 @@ export const ShippingContextProvider: FC<
     stage: "fulfillment_details",
     selectedSavedAddressID:
       orderData.savedFulfillmentDetails?.selectedSavedAddressID ?? null,
+    isLoading: true,
   }
 
   const [state, dispatch] = useReducer(shippingStateReducer, initialState)
@@ -195,6 +212,7 @@ export type Action =
       payload: "new_address" | "saved_addresses"
     }
   | { type: "SET_STAGE"; payload: ShippingStage }
+  | { type: "SET_LOADING"; payload: boolean }
 
 const shippingStateReducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -238,6 +256,12 @@ const shippingStateReducer = (state: State, action: Action): State => {
       return {
         ...state,
         stage: action.payload,
+      }
+    }
+    case "SET_LOADING": {
+      return {
+        ...state,
+        isLoading: action.payload,
       }
     }
     default: {
