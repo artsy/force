@@ -9,8 +9,9 @@ import { Box, Text, Spacer } from "@artsy/palette"
 import { useState } from "react"
 import { FadeInBox } from "Components/FadeInBox"
 import { Collapse } from "Apps/Order/Components/Collapse"
+import { getENV } from "Utils/getENV"
 
-const stripePromise = loadStripe("pk_test_h9x96nuEG26CZFlE05aSA41o009gNRFRAZ")
+const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
 export const PaymentForm = () => {
   const orderOptions: StripeElementsUpdateOptions = {
