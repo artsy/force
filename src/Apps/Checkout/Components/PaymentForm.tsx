@@ -13,7 +13,7 @@ import { getENV } from "Utils/getENV"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
-export const PaymentForm = () => {
+export const PaymentForm: React.FC = () => {
   const orderOptions: StripeElementsUpdateOptions = {
     amount: 12345,
     currency: "eur",
