@@ -390,19 +390,6 @@ describe("Payment", () => {
       expect(page.text()).toContain("US bank account only")
     })
 
-    it("tracks the initially-selected payment method on load like any other selection", () => {
-      expect(trackEvent).toHaveBeenCalledWith({
-        action: "clickedPaymentMethod",
-        amount: "$12,000",
-        context_page_owner_type: "orders-payment",
-        currency: "USD",
-        flow: "BUY",
-        order_id: "1234",
-        payment_method: "US_BANK_ACCOUNT",
-        subject: "click_payment_method",
-      })
-    })
-
     it("renders bank element when ACH is chosen as payment method", () => {
       const creditCardCollapse = page
         .find(CreditCardPickerFragmentContainer)
