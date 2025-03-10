@@ -1,3 +1,4 @@
+import { ExpressCheckoutElement } from "@stripe/react-stripe-js"
 import { fireEvent } from "@testing-library/react"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -8,18 +9,25 @@ import { ExpressCheckoutUI } from "../ExpressCheckoutUI"
 
 jest.mock("react-tracking")
 
+jest.unmock("react-relay")
+
+const mockExpressCheckoutElement = ExpressCheckoutElement as jest.Mock
+const mockResolveOnClick = jest.fn()
 jest.mock("@stripe/react-stripe-js", () => {
   return {
     useStripe: jest.fn(() => ({})),
     useElements: jest.fn(),
-    ExpressCheckoutElement: ({ onClick, onCancel }) => {
+    ExpressCheckoutElement: jest.fn(({ onClick, onCancel }) => {
       return (
         <div>
           <button
             type="button"
             data-testid="express-checkout-button"
             onClick={() =>
-              onClick({ expressPaymentType: "apple_pay", resolve: jest.fn() })
+              onClick({
+                expressPaymentType: "apple_pay",
+                resolve: mockResolveOnClick,
+              })
             }
           >
             Apple Pay
@@ -33,40 +41,18 @@ jest.mock("@stripe/react-stripe-js", () => {
           </button>
         </div>
       )
-    },
+    }),
   }
 })
 
-jest.mock("react-relay", () => ({
-  ...jest.requireActual("react-relay"),
-  graphql: jest.fn(),
-  useFragment: jest.fn(() => ({
-    internalID: "order123",
-    mode: "BUY",
-    source: "artwork_page",
-    lineItems: {
-      edges: [
-        {
-          node: {
-            artwork: {
-              slug: "artwork-slug",
-              internalID: "artwork123",
-            },
-          },
-        },
-      ],
-    },
-  })),
-}))
-
 const { renderWithRelay } = setupTestWrapperTL<ExpressCheckoutUI_Test_Query>({
-  Component: ({ commerceOrder }) => (
-    <ExpressCheckoutUI order={commerceOrder!} pickup={false} />
-  ),
+  Component: ({ me }) => me?.order && <ExpressCheckoutUI order={me.order!} />,
   query: graphql`
     query ExpressCheckoutUI_Test_Query @raw_response_type {
-      commerceOrder(id: "123") {
-        ...ExpressCheckoutUI_order
+      me {
+        order(id: "123") {
+          ...ExpressCheckoutUI_order
+        }
       }
     }
   `,
@@ -81,9 +67,34 @@ describe("ExpressCheckoutUI", () => {
     mockTracking.mockImplementation(() => ({ trackEvent }))
   })
 
+  it("passes correct props to ExpressCheckoutElement", async () => {
+    renderWithRelay({
+      Order: () => ({ ...orderData }),
+    })
+
+    const elementProps = mockExpressCheckoutElement.mock.calls[0][0]
+
+    expect(elementProps.options).toEqual({
+      buttonTheme: { applePay: "white-outline" },
+      buttonHeight: 50,
+    })
+
+    fireEvent.click(screen.getByTestId("express-checkout-button"))
+
+    // Where we load initial values into the express checkout element
+    expect(mockResolveOnClick).toHaveBeenCalledWith({
+      allowedShippingCountries: ["US"],
+      phoneNumberRequired: true,
+      shippingAddressRequired: true,
+      shippingRates: [
+        { amount: 4200, displayName: "Domestic shipping", id: "DOMESTIC_FLAT" },
+      ],
+    })
+  })
+
   it("tracks an express checkout click event", () => {
     renderWithRelay({
-      CommerceOrder: () => ({}),
+      Order: () => ({ ...orderData }),
     })
 
     fireEvent.click(screen.getByTestId("express-checkout-button"))
@@ -100,7 +111,7 @@ describe("ExpressCheckoutUI", () => {
 
   it("tracks an express checkout cancel event", () => {
     renderWithRelay({
-      CommerceOrder: () => ({}),
+      Order: () => ({ ...orderData }),
     })
 
     fireEvent.click(screen.getByTestId("express-checkout-cancel"))
@@ -115,3 +126,36 @@ describe("ExpressCheckoutUI", () => {
     })
   })
 })
+
+const orderData = {
+  internalID: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+  buyerTotal: {
+    minor: 100000,
+    currencyCode: "USD",
+  },
+  itemsTotal: {
+    minor: 100000,
+    currencyCode: "USD",
+  },
+  source: "ARTWORK_PAGE",
+  mode: "BUY",
+  availableShippingCountries: ["US"],
+  fulfillmentOptions: [
+    {
+      type: "DOMESTIC_FLAT",
+      amount: {
+        minor: 4200,
+        currencyCode: "USD",
+      },
+      selected: null,
+    },
+  ],
+  lineItems: [
+    {
+      artwork: {
+        internalID: "artwork123",
+        slug: "artwork-slug",
+      },
+    },
+  ],
+}
