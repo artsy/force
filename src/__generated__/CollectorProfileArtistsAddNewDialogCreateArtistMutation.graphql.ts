@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a8fcb55c40ed0c4537b54369321d6eba>>
+ * @generated SignedSource<<d60347865c7c3b4dbabff8b7a3a7071a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type CreateArtistMutationInput = {
   lastName?: string | null | undefined;
   middleName?: string | null | undefined;
   nationality?: string | null | undefined;
+  partnerID?: string | null | undefined;
 };
 export type CollectorProfileArtistsAddNewDialogCreateArtistMutation$variables = {
   input: CreateArtistMutationInput;
