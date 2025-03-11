@@ -65,16 +65,12 @@ const ArtworkLightbox: React.FC<
     lightboxImage = mobileLightboxSource
   }
 
-  // Always preload the 2x image for mobile lightbox if available
-  const preloadImage = mobileLightboxSource?.srcSet?.match(/ ([^ ]+) 2x/)?.[1]
-
   return (
     <>
       {isDefault && (
         <Link
           rel="preload"
           as="image"
-          href={preloadImage}
           imageSrcSet={lightboxImage.srcSet}
           fetchPriority="high"
         />
