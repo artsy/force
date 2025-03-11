@@ -38,31 +38,31 @@ export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
           links: [
             {
               text: "Art under $500",
-              href: "/collect?price_range=%2A-500",
+              href: "/collect?price_range=*-500",
             },
             {
               text: "Art under $1,000",
-              href: "/collect?price_range=%2A-1000",
+              href: "/collect?price_range=501-1000",
             },
             {
               text: "Art under $2,500",
-              href: "/collect?price_range=%2A-2500",
+              href: "/collect?price_range=1001-2500",
             },
             {
               text: "Art under $5,000",
-              href: "/collect?price_range=%2A-5000",
+              href: "/collect?price_range=2501-5000",
             },
             {
               text: "Art under $10,000",
-              href: "/collect?price_range=%2A-10000",
+              href: "/collect?price_range=5001-10000",
             },
             {
               text: "Art under $25,000",
-              href: "/collect?price_range=%2A-25000",
+              href: "/collect?price_range=10001-25000",
             },
             {
               text: "Art above $25,000",
-              href: "/collect?price_range=25000-%2A",
+              href: "/collect?price_range=25000-*",
             },
           ],
         },
