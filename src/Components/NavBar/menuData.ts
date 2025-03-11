@@ -300,16 +300,16 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
           title: "By Size",
           links: [
             {
-              text: "Art for Small Spaces",
-              href: "/collection/art-for-small-spaces",
+              text: "Small (under 16in)",
+              href: "/collect?sizes%5B0%5D=SMALL&metric=in",
             },
             {
-              text: "Art for Large Spaces",
-              href: "/collection/art-for-large-spaces",
+              text: "Medium (16in - 40in)",
+              href: "/collect?sizes%5B0%5D=MEDIUM&metric=in",
             },
             {
-              text: "Tabletop Sculpture",
-              href: "/collection/tabletop-sculpture",
+              text: "Large (over 40in)",
+              href: "/collect?sizes%5B0%5D=LARGE&metric=in",
             },
           ],
         },
@@ -320,20 +320,44 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
           title: "By Color",
           links: [
             {
-              text: "Cool-Toned Artworks",
-              href: "/collection/cool-toned-artworks",
+              text: "Black and White",
+              href: "/collect?colors%5B0%5D=black-and-white&metric=in",
             },
             {
-              text: "Warm-Toned Artworks",
-              href: "/collection/warm-toned-artworks",
+              text: "Red",
+              href: "/collect?colors%5B0%5D=red&metric=in",
             },
             {
-              text: "Neutral Artworks",
-              href: "/collection/neutral-artworks",
+              text: "Orange",
+              href: "/collect?colors%5B0%5D=orange&metric=in",
             },
             {
-              text: "Black-and-White Artworks",
-              href: "/collection/black-and-white-artworks",
+              text: "Yellow",
+              href: "/collect?colors%5B0%5D=yellow&metric=in",
+            },
+            {
+              text: "Green",
+              href: "/collect?colors%5B0%5D=green&metric=in",
+            },
+            {
+              text: "Blue",
+              href: "/collect?colors%5B0%5D=blue&metric=in",
+            },
+            {
+              text: "Purple",
+              href: "/collect?colors%5B0%5D=purple&metric=in",
+            },
+            {
+              text: "Pink",
+              href: "/collect?colors%5B0%5D=pink&metric=in",
+            },
+            {
+              text: "Brown",
+              href: "/collect?colors%5B0%5D=brown&metric=in",
+            },
+            {
+              text: "Gray",
+              href: "/collect?colors%5B0%5D=gray&metric=in",
             },
           ],
         },
