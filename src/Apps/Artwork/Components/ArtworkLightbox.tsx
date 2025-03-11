@@ -89,6 +89,7 @@ const ArtworkLightbox: React.FC<
         cursor={onClick ? "zoom-in" : "default"}
         tabIndex={onClick ? undefined : -1}
         onClick={onClick}
+        overflow="hidden"
         {...rest}
       >
         <ResponsiveBox
@@ -136,12 +137,15 @@ const ArtworkLightbox: React.FC<
                 }
               : {})}
             width="100%"
-            height={"100%"}
+            height="100%"
             src={lightboxImage.src}
             srcSet={lightboxImage.srcSet}
             alt={artwork.formattedMetadata ?? ""}
             position="relative"
             preventRightClick={!isTeam}
+            style={{
+              objectFit: "cover",
+            }}
           />
         </ResponsiveBox>
       </Clickable>
