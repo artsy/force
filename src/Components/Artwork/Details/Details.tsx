@@ -29,6 +29,7 @@ export interface DetailsProps {
   showSaveButton?: boolean
   showSubmissionStatus?: boolean
   renderSaveButton?: (artworkId: string) => React.ReactNode
+  suppressDisplayLinesCount?: number
 }
 
 const LINE_HEIGHT = 22
@@ -239,6 +240,7 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   showSaveButton,
   showSubmissionStatus,
   renderSaveButton,
+  suppressDisplayLinesCount,
   ...rest
 }) => {
   const { isAuctionArtwork, hideLotLabel, saveOnlyToDefaultList } =
@@ -285,8 +287,13 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
     )
   }
 
+  const adjustedContainerHeight =
+    suppressDisplayLinesCount && suppressDisplayLinesCount > 0
+      ? `${LINE_HEIGHT * (NUM_OF_LINES - suppressDisplayLinesCount)}px`
+      : CONTAINER_HEIGHT_PX
+
   return (
-    <Box height={CONTAINER_HEIGHT_PX}>
+    <Box height={adjustedContainerHeight}>
       {isAuctionArtwork && (
         <Flex flexDirection="row">
           <Join separator={<Spacer x={1} />}>
@@ -412,14 +419,27 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
 
 type DetailsPlaceholderProps = Pick<
   DetailsProps,
-  "hidePartnerName" | "hideArtistName" | "hideSaleInfo"
+  | "hidePartnerName"
+  | "hideArtistName"
+  | "hideSaleInfo"
+  | "suppressDisplayLinesCount"
 >
 
 export const DetailsPlaceholder: React.FC<
   React.PropsWithChildren<DetailsPlaceholderProps>
-> = ({ hideArtistName, hidePartnerName, hideSaleInfo }) => {
+> = ({
+  hideArtistName,
+  hidePartnerName,
+  hideSaleInfo,
+  suppressDisplayLinesCount,
+}) => {
+  const adjustedContainerHeight =
+    suppressDisplayLinesCount && suppressDisplayLinesCount > 0
+      ? `${LINE_HEIGHT * (NUM_OF_LINES - suppressDisplayLinesCount)}px`
+      : CONTAINER_HEIGHT_PX
+
   return (
-    <Box height={CONTAINER_HEIGHT_PX}>
+    <Box height={adjustedContainerHeight}>
       {!hideArtistName && (
         <SkeletonText variant="sm-display" lineHeight={LINE_HEIGHT_PX}>
           Artist Name
