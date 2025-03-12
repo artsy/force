@@ -14,6 +14,7 @@ import {
   graphql,
 } from "react-relay"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 export interface MyCollectionRouteProps {
   me: MyCollectionRoute_me$data
@@ -23,6 +24,8 @@ export interface MyCollectionRouteProps {
 const MyCollectionRoute: FC<
   React.PropsWithChildren<MyCollectionRouteProps>
 > = ({ me, relay }) => {
+  const enableShare = useFeatureFlag("onyx_shareable-my-collection")
+
   const { addCollectedArtwork: trackAddCollectedArtwork } =
     useMyCollectionTracking()
   const [isLoading, setLoading] = useState(false)
@@ -62,14 +65,16 @@ const MyCollectionRoute: FC<
       {total > 0 ? (
         <Stack gap={2}>
           <Flex backgroundColor="white100" justifyContent="flex-end" gap={1}>
-            <Button
-              size={["small", "large"]}
-              variant="secondaryBlack"
-              Icon={ShareIcon}
-              onClick={() => setMode("Share")}
-            >
-              Share
-            </Button>
+            {enableShare && (
+              <Button
+                size={["small", "large"]}
+                variant="secondaryBlack"
+                Icon={ShareIcon}
+                onClick={() => setMode("Share")}
+              >
+                Share
+              </Button>
+            )}
 
             <Button
               // @ts-ignore

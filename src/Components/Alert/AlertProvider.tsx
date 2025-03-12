@@ -94,7 +94,7 @@ export const AlertProvider: FC<React.PropsWithChildren<AlertProviderProps>> = ({
     if (isEditMode || isAlertArtworksView) return
     const criteria = getAllowedSearchCriteria(initialCriteria ?? {})
 
-    // `forSale` is not allowed as a filter criterion,
+    // `forSale` is allowed as a filter criterion,
     // but NOT as an alert criterion, so we remove it.
     // (Alerts, by definition, stipulate forSale=true
     // when they are created in Gravity.)
