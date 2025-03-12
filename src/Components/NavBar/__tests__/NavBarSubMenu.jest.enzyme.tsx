@@ -32,8 +32,10 @@ describe("NavBarSubMenu", () => {
     const wrapper = getWrapper()
     const links = wrapper.find("a")
 
-    expect(links.at(0).text()).toContain("Art for Small Spaces")
-    expect(links.at(0).prop("href")).toEqual("/collection/art-for-small-spaces")
+    expect(links.at(0).text()).toContain("Small (under 16in)")
+    expect(links.at(0).prop("href")).toEqual(
+      "/collect?sizes%5B0%5D=SMALL&metric=in",
+    )
   })
 
   it("doesn't render artists letter nav inside artworks dropdown", () => {
