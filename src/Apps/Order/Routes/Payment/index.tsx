@@ -93,6 +93,8 @@ export const PaymentRoute: FC<
     setBalanceCheckComplete,
     setBankAccountHasInsufficientFunds,
     setIsSavingPayment,
+    isLoading,
+    setIsLoading,
   } = useOrderPaymentContext()
 
   const balanceCheckEnabled =
@@ -100,8 +102,6 @@ export const PaymentRoute: FC<
     selectedPaymentMethod === "US_BANK_ACCOUNT"
 
   const artworkVersion = extractNodes(order.lineItems)[0]?.artworkVersion
-
-  const { jumpTo } = useJump()
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -220,6 +220,7 @@ export const PaymentRoute: FC<
   }
 
   // sets payment with Credit Card
+  const { jumpTo } = useJump()
   const handleCreditCardContinue = async () => {
     try {
       const result = await CreditCardPicker?.current?.getCreditCardId()
@@ -454,6 +455,17 @@ export const PaymentRoute: FC<
         }
       `,
     })
+  }
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (order && me) {
+      setIsLoading(false)
+    }
+  }, [order, me])
+
+  if (isLoading) {
+    return null
   }
 
   return (
