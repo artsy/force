@@ -20,6 +20,7 @@ export enum OrderPaymentActions {
   SET_STRIPE_CLIENT = "SET_STRIPE_CLIENT",
   SET_IS_SAVING_PAYMENT = "SET_IS_SAVING_PAYMENT",
   SET_IS_STRIPE_PAYMENT_ELEMENT_LOADING = "SET_IS_STRIPE_PAYMENT_ELEMENT_LOADING",
+  SET_IS_LOADING = "SET_IS_LOADING",
 }
 
 type OrderPaymentActionsPayload = {
@@ -31,6 +32,7 @@ type OrderPaymentActionsPayload = {
   [OrderPaymentActions.SET_STRIPE_CLIENT]: null | string
   [OrderPaymentActions.SET_IS_SAVING_PAYMENT]: boolean
   [OrderPaymentActions.SET_IS_STRIPE_PAYMENT_ELEMENT_LOADING]: boolean
+  [OrderPaymentActions.SET_IS_LOADING]: boolean
 }
 
 export type OrderPaymentAction =
@@ -60,6 +62,7 @@ export type OrderPaymentState = {
   stripeClient: null | string
   isSavingPayment: boolean
   isStripePaymentElementLoading: boolean
+  isLoading: boolean
 }
 
 const initialOrderPaymentState = {
@@ -71,6 +74,7 @@ const initialOrderPaymentState = {
   stripeClient: null,
   isSavingPayment: false,
   isStripePaymentElementLoading: true,
+  isLoading: true,
 }
 
 /**
@@ -164,6 +168,12 @@ export const useOrderPaymentContext = () => {
       payload,
     })
 
+  const setIsLoading = payload =>
+    dispatch({
+      type: OrderPaymentActions.SET_IS_LOADING,
+      payload,
+    })
+
   return {
     ...state,
     setSelectedBankAccountId,
@@ -174,5 +184,6 @@ export const useOrderPaymentContext = () => {
     setStripeClient,
     setIsSavingPayment,
     setIsStripePaymentElementLoading,
+    setIsLoading,
   }
 }
