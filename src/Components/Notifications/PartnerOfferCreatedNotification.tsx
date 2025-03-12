@@ -78,7 +78,7 @@ export const PartnerOfferCreatedNotification: FC<
           <Text
             variant="xs"
             fontWeight="bold"
-            aria-label={`Notification type: Offer`}
+            aria-label={"Notification type: Offer"}
           >
             Offer
           </Text>
