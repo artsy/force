@@ -32,6 +32,9 @@ const render = createArtworkFilterTestRenderer(artworkFilterContext)
 describe(ArtistNationalityFilter, () => {
   it("renders artist nationalities", () => {
     render(<ArtistNationalityFilter expanded />)
+    expect(
+      screen.getByText("Artist Nationality or Ethnicity"),
+    ).toBeInTheDocument()
     expect(screen.getByText("Cat")).toBeInTheDocument()
     expect(screen.getByText("Dog")).toBeInTheDocument()
   })
