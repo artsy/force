@@ -12,13 +12,16 @@ import {
 } from "@stripe/react-stripe-js"
 import type {
   ClickResolveDetails,
+  ShippingRate,
   StripeExpressCheckoutElementClickEvent,
   StripeExpressCheckoutElementOptions,
   StripeExpressCheckoutElementShippingAddressChangeEvent,
   StripeExpressCheckoutElementShippingRateChangeEvent,
 } from "@stripe/stripe-js"
-import { extractNodes } from "Utils/extractNodes"
-import type { ExpressCheckoutUI_order$key } from "__generated__/ExpressCheckoutUI_order.graphql"
+import type {
+  ExpressCheckoutUI_order$data,
+  ExpressCheckoutUI_order$key,
+} from "__generated__/ExpressCheckoutUI_order.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -26,32 +29,29 @@ import styled from "styled-components"
 
 interface ExpressCheckoutUIProps {
   order: ExpressCheckoutUI_order$key
-  pickup: boolean
 }
 
-export const ExpressCheckoutUI = ({
-  order,
-  pickup = true,
-}: ExpressCheckoutUIProps) => {
+export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const [visible, setVisible] = useState(false)
   const elements = useElements()
   const stripe = useStripe()
   const clientSecret = "client_secret_id"
-  const firstLineItem = extractNodes(orderData.lineItems)[0] ?? {}
-  const { artwork } = firstLineItem
   const { trackEvent } = useTracking()
 
-  if (!artwork) {
-    return null
-  }
+  const primaryLineItem = orderData.lineItems[0]
+  const primaryArtwork = primaryLineItem?.artwork
 
   const checkoutOptions: ClickResolveDetails = {
-    shippingAddressRequired: !pickup,
+    shippingAddressRequired: true,
     phoneNumberRequired: true,
-    // initial shipping rates
-    shippingRates: pickup ? [PICKUP_RATE, FALLBACK_RATE] : [FALLBACK_RATE],
-    allowedShippingCountries: ["US", "CA"],
+
+    // TODO: possible conflict between initial rates from order,
+    //   rates set as a result of the legacy setShippingMutation,
+    //   and rates set as a result of the express checkout flow's automatic
+    //   shipping address selection event below.
+    shippingRates: extractShippingRates(orderData),
+    allowedShippingCountries: extractAllowedShippingCountries(orderData),
   }
 
   const handleClick = ({
@@ -61,10 +61,11 @@ export const ExpressCheckoutUI = ({
     const event: ClickedExpressCheckout = {
       action: ActionType.clickedExpressCheckout,
       context_page_owner_type: OwnerType.ordersShipping,
-      context_page_owner_id: artwork.internalID,
-      context_page_owner_slug: artwork.slug,
+      // TODO: should this be order id?
+      context_page_owner_id: primaryArtwork?.internalID ?? "",
+      context_page_owner_slug: primaryArtwork?.slug ?? "",
       flow:
-        orderData.source === "partner_offer"
+        orderData.source === "PARTNER_OFFER"
           ? "Partner offer"
           : orderData.mode === "BUY"
             ? "Buy now"
@@ -83,10 +84,11 @@ export const ExpressCheckoutUI = ({
     const event: ClickedCancelExpressCheckout = {
       action: ActionType.clickedCancelExpressCheckout,
       context_page_owner_type: OwnerType.ordersShipping,
-      context_page_owner_id: artwork.internalID,
-      context_page_owner_slug: artwork.slug,
+      // TODO: should this be order id?
+      context_page_owner_id: primaryArtwork?.internalID ?? "",
+      context_page_owner_slug: primaryArtwork?.slug ?? "",
       flow:
-        orderData.source === "partner_offer"
+        orderData.source === "PARTNER_OFFER"
           ? "Partner offer"
           : orderData.mode === "BUY"
             ? "Buy now"
@@ -97,7 +99,7 @@ export const ExpressCheckoutUI = ({
     trackEvent(event)
 
     // TODO: This is where we could reset the order back to its pre-checkout state
-    console.log("Express checkout element cancelled")
+    console.warn("Express checkout element cancelled")
   }
 
   const onConfirm = async () => {
@@ -125,10 +127,10 @@ export const ExpressCheckoutUI = ({
     resolve,
     reject,
   }: StripeExpressCheckoutElementShippingAddressChangeEvent) => {
+    console.warn("Express checkout element address change", address)
     try {
-      console.log("Express checkout element address change", { address, name })
+      resolve()
     } catch (error) {
-      console.error(error)
       reject()
     }
   }
@@ -138,7 +140,7 @@ export const ExpressCheckoutUI = ({
     resolve,
     reject,
   }: StripeExpressCheckoutElementShippingRateChangeEvent) => {
-    console.log("Shipping rate change", shippingRate)
+    console.warn("Shipping rate change", shippingRate)
     try {
       resolve()
     } catch (error) {
@@ -163,7 +165,7 @@ export const ExpressCheckoutUI = ({
         onShippingAddressChange={handleShippingAddressChange}
         onShippingRateChange={handleShippingRateChange}
         onLoadError={e => {
-          console.log("Express checkout element error", e)
+          console.error("Express checkout element error", e)
         }}
         onConfirm={onConfirm}
       />
@@ -173,43 +175,93 @@ export const ExpressCheckoutUI = ({
   )
 }
 
+const expressCheckoutOptions: StripeExpressCheckoutElementOptions = {
+  buttonTheme: {
+    applePay: "white-outline",
+  },
+  buttonHeight: 50,
+}
+
 const ORDER_FRAGMENT = graphql`
-  fragment ExpressCheckoutUI_order on CommerceOrder {
+  fragment ExpressCheckoutUI_order on Order {
     internalID
-    mode
-    buyerTotalCents
-    requestedFulfillment {
-      __typename
-    }
-    currencyCode
-    shippingTotalCents
     source
+    mode
+    availableShippingCountries
+    fulfillmentOptions {
+      type
+      amount {
+        minor
+        currencyCode
+      }
+      selected
+    }
     lineItems {
-      edges {
-        node {
-          artwork {
-            slug
-            internalID
-            processWithArtsyShippingDomestic
-            artsyShippingInternational
-            euShippingOrigin
-            shippingCountry
-            onlyShipsDomestically
-          }
-          shippingQuoteOptions {
-            edges {
-              node {
-                name
-                priceCents
-                tier
-              }
-            }
-          }
-        }
+      artwork {
+        internalID
+        slug
       }
     }
   }
 `
+
+const extractAllowedShippingCountries = (
+  order: ExpressCheckoutUI_order$data,
+): ClickResolveDetails["allowedShippingCountries"] => {
+  return order.availableShippingCountries.map(countryCode =>
+    countryCode.toUpperCase(),
+  )
+}
+
+const extractShippingRates = (
+  order: ExpressCheckoutUI_order$data,
+): Array<ShippingRate> => {
+  return order.fulfillmentOptions
+    .map(option => {
+      const { type, amount } = option
+      const rate: ShippingRate | null = null
+      switch (type) {
+        case "DOMESTIC_FLAT":
+          if (amount) {
+            return {
+              id: type,
+              displayName: "Domestic shipping",
+              amount: amount.minor,
+            }
+          }
+          break
+        case "INTERNATIONAL_FLAT":
+          if (amount) {
+            return {
+              id: type,
+              displayName: "International shipping",
+              amount: amount!.minor,
+            }
+          }
+          break
+        case "PICKUP":
+          if (amount) {
+            return {
+              id: type,
+              displayName: "Pickup",
+              amount: amount!.minor,
+            }
+          }
+          break
+        case "SHIPPING_TBD":
+          return {
+            id: type,
+            displayName: "Calculating shipping...",
+            // Express checkout requires a number for amount
+            amount: 0,
+          }
+        default:
+          console.warn("Unhandled fulfillment option", type)
+      }
+      return rate
+    })
+    .filter(Boolean) as ShippingRate[]
+}
 
 // Only max-height can be animated
 const UncollapsingBox = styled(Box)<{ visible: boolean }>`
@@ -219,28 +271,3 @@ const UncollapsingBox = styled(Box)<{ visible: boolean }>`
   overflow: hidden;
   transition: max-height 0.3s ease-in-out;
 `
-
-const expressCheckoutOptions: StripeExpressCheckoutElementOptions = {
-  buttonTheme: {
-    applePay: "white-outline",
-  },
-  buttonHeight: 50,
-}
-
-// Fallback rate for if no fulfillment type is set yet
-// this cannot be an empty array but feels like a hack to start with
-// 'free' 'calculating' shipping
-// Technically this could also be a flat rate if we know the artwork only
-// ships to a single flat rate region
-const FALLBACK_RATE: NonNullable<ClickResolveDetails["shippingRates"]>[number] =
-  {
-    id: "calculating-shipping",
-    displayName: "Calculating...",
-    amount: 0,
-  }
-
-const PICKUP_RATE: NonNullable<ClickResolveDetails["shippingRates"]>[number] = {
-  id: "pickup",
-  displayName: "Pick up in person",
-  amount: 0,
-}
