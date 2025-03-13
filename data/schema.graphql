@@ -2970,13 +2970,13 @@ type ArtworkImport implements Node {
     before: String
     blockersOnly: Boolean
     createdOnly: Boolean
-    errorTypes: [String!]
-    excludeErrorTypes: [String!]
+    errorTypes: [ArtworkImportError]
+    excludeErrorTypes: [ArtworkImportError]
     first: Int
     hasErrors: Boolean
     last: Int
   ): ArtworkImportRowConnection
-  state: String!
+  state: ArtworkImportState
   unmatchedArtistNames: [String!]!
 }
 
@@ -3007,6 +3007,21 @@ type ArtworkImportEdge {
 
   # The item at the end of the edge
   node: ArtworkImport
+}
+
+enum ArtworkImportError {
+  ARTWORK_CREATION_FAILED
+  INVALID_DEPTH
+  INVALID_DIAMETER
+  INVALID_HEIGHT
+  INVALID_PRICE
+  INVALID_WIDTH
+  MISSING_ARTIST
+  MISSING_DATE
+  MISSING_PRICE
+  MISSING_TITLE
+  UNMATCHED_ARTIST
+  UNMATCHED_IMAGE
 }
 
 type ArtworkImportRow {
@@ -3046,7 +3061,7 @@ type ArtworkImportRowEdge {
 }
 
 type ArtworkImportRowError {
-  errorType: String!
+  errorType: ArtworkImportError
 
   # A globally unique ID.
   id: ID!
@@ -3071,6 +3086,12 @@ type ArtworkImportRowImage {
 enum ArtworkImportSource {
   CONVECTION
   MY_COLLECTION
+}
+
+enum ArtworkImportState {
+  ARTIST_MATCHING_COMPLETE
+  ARTWORKS_CREATION_COMPLETE
+  PENDING
 }
 
 type ArtworkImportTransformedData {
