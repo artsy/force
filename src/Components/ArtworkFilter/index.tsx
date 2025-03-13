@@ -29,6 +29,7 @@ import {
   ARTWORK_FILTERS_QUICK_FIELDS,
   ArtworkFiltersQuick,
 } from "Components/ArtworkFilter/ArtworkFiltersQuick"
+import type { ArtworkGridLayout } from "Components/ArtworkGrid/ArtworkGrid"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { Sticky } from "Components/Sticky"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -67,7 +68,7 @@ interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   relayVariables?: object
   viewer
   featuredKeywords?: readonly string[] | null | undefined
-  layout?: "grid" | "masonry"
+  layout?: ArtworkGridLayout
 }
 
 /**

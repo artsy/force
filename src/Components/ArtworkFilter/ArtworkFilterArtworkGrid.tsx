@@ -4,7 +4,9 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
+import ArtworkGrid, {
+  type ArtworkGridLayout,
+} from "Components/ArtworkGrid/ArtworkGrid"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
@@ -23,7 +25,7 @@ interface ArtworkFilterArtworkGridProps {
   isLoading?: boolean
   offset?: number
   relay: RelayProp
-  layout?: "grid" | "masonry"
+  layout?: ArtworkGridLayout
 }
 
 const ArtworkFilterArtworkGrid: React.FC<

@@ -34,6 +34,8 @@ type Artworks =
 type Artwork = ExtractNodeType<Artworks>
 type SectionedArtworks = Array<Array<Artwork>>
 
+export type ArtworkGridLayout = "GRID" | "MASONRY"
+
 interface ArtworkGridProps {
   artworks: Artworks
   contextModule?: AuthContextModule
@@ -41,7 +43,7 @@ interface ArtworkGridProps {
   hideSaleInfo?: boolean
   preloadImageCount?: number
   itemMargin?: number
-  layout?: "grid" | "masonry"
+  layout?: ArtworkGridLayout
   onBrickClick?: (artwork: Artwork, artworkIndex: number) => void
   onClearFilters?: () => any
   onLoadMore?: () => any
@@ -75,7 +77,7 @@ export class ArtworkGridContainer extends React.Component<
     sectionMargin: 20,
     itemMargin: 20,
     preloadImageCount: 0,
-    layout: "masonry",
+    layout: "MASONRY",
   }
 
   state = {
@@ -313,7 +315,7 @@ export class ArtworkGridContainer extends React.Component<
     const hasArtworks = !isEmpty(artworks?.edges)
     let artworkGrids
 
-    if (this.props.layout === "grid") {
+    if (this.props.layout === "GRID") {
       artworkGrids = this.renderArtworkGrid()
     } else {
       artworkGrids = this.renderMasonrySectionsForAllBreakpoints()
