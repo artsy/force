@@ -49,6 +49,7 @@ const AuctionArtworkFilter: React.FC<
         aggregations={aggregations as Aggregations}
         filters={match && match.location.query}
         counts={counts as Counts}
+        layout="grid"
         relayRefetchInputVariables={{
           ...getArtworkFilterInputArgs(user),
           saleID: match.params.slug,

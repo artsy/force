@@ -46,7 +46,7 @@ import {
 } from "react-relay"
 import { useTracking } from "react-tracking"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { ArtworkFilterArtworkGridRefetchContainer as ArtworkFilterArtworkGrid } from "./ArtworkFilterArtworkGrid"
+import { ArtworkFilterArtworkGridRefetchContainer } from "./ArtworkFilterArtworkGrid"
 import {
   ArtworkFilterContextProvider,
   type SharedArtworkFilterContextProps,
@@ -67,6 +67,7 @@ interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   relayVariables?: object
   viewer
   featuredKeywords?: readonly string[] | null | undefined
+  layout?: "grid" | "masonry"
 }
 
 /**
@@ -121,6 +122,7 @@ export const BaseArtworkFilter: React.FC<
   relayVariables = {},
   viewer,
   featuredKeywords,
+  layout,
   ...rest
 }) => {
   const tracking = useTracking()
@@ -329,11 +331,12 @@ export const BaseArtworkFilter: React.FC<
 
         <Spacer y={2} />
 
-        <ArtworkFilterArtworkGrid
+        <ArtworkFilterArtworkGridRefetchContainer
           filtered_artworks={viewer.filtered_artworks}
           isLoading={isLoading}
           offset={offset}
           columnCount={[2, 3]}
+          layout={layout}
         />
       </Media>
 
@@ -427,11 +430,12 @@ export const BaseArtworkFilter: React.FC<
         <Spacer y={2} />
 
         {children || (
-          <ArtworkFilterArtworkGrid
+          <ArtworkFilterArtworkGridRefetchContainer
             filtered_artworks={viewer.filtered_artworks}
             isLoading={isLoading}
             offset={offset}
             columnCount={[2, 3, 4]}
+            layout={layout}
           />
         )}
       </Media>

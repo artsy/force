@@ -23,6 +23,7 @@ interface ArtworkFilterArtworkGridProps {
   isLoading?: boolean
   offset?: number
   relay: RelayProp
+  layout?: "grid" | "masonry"
 }
 
 const ArtworkFilterArtworkGrid: React.FC<
@@ -69,6 +70,7 @@ const ArtworkFilterArtworkGrid: React.FC<
           contextModule={ContextModule.artworkGrid}
           itemMargin={40}
           user={user}
+          layout={props.layout}
           onClearFilters={context.resetFilters}
           emptyStateComponent={context.ZeroState && <context.ZeroState />}
           onBrickClick={(artwork, artworkIndex) => {

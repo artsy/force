@@ -40,8 +40,8 @@ interface ArtworkGridProps {
   columnCount?: number | number[]
   hideSaleInfo?: boolean
   preloadImageCount?: number
-  isAuctionArtwork?: boolean
   itemMargin?: number
+  layout?: "grid" | "masonry"
   onBrickClick?: (artwork: Artwork, artworkIndex: number) => void
   onClearFilters?: () => any
   onLoadMore?: () => any
@@ -73,9 +73,9 @@ export class ArtworkGridContainer extends React.Component<
   static defaultProps = {
     columnCount: [3],
     sectionMargin: 20,
-    isAuctionArtwork: false,
     itemMargin: 20,
     preloadImageCount: 0,
+    layout: "masonry",
   }
 
   state = {
@@ -307,18 +307,13 @@ export class ArtworkGridContainer extends React.Component<
   }
 
   render() {
-    const {
-      artworks,
-      className,
-      isAuctionArtwork,
-      onClearFilters,
-      emptyStateComponent,
-    } = this.props
+    const { artworks, className, onClearFilters, emptyStateComponent } =
+      this.props
 
     const hasArtworks = !isEmpty(artworks?.edges)
     let artworkGrids
 
-    if (isAuctionArtwork) {
+    if (this.props.layout === "grid") {
       artworkGrids = this.renderArtworkGrid()
     } else {
       artworkGrids = this.renderMasonrySectionsForAllBreakpoints()
