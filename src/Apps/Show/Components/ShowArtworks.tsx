@@ -75,6 +75,7 @@ const ShowArtworksFilter: React.FC<
         relayVariables={{
           aggregations: ["TOTAL"],
         }}
+        layout="GRID"
         {...rest}
       />
     </ArtworkFilterContextProvider>
