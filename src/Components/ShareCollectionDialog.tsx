@@ -68,7 +68,6 @@ export const ShareCollectionDialog: React.FC<
             id: collectionId,
             name: collectionName, // TODO: Shouldn't be required
             private: false,
-            shareableWithPartners: true,
           },
         },
         rejectIf: res => {
