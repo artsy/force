@@ -46,7 +46,13 @@ jest.mock("@stripe/react-stripe-js", () => {
 })
 
 const { renderWithRelay } = setupTestWrapperTL<ExpressCheckoutUI_Test_Query>({
-  Component: ({ me }) => me?.order && <ExpressCheckoutUI order={me.order!} />,
+  Component: ({ me }) =>
+    me?.order && (
+      <ExpressCheckoutUI
+        orderOptions={{ amount: 1000, currency: "usd" }}
+        order={me.order!}
+      />
+    ),
   query: graphql`
     query ExpressCheckoutUI_Test_Query @raw_response_type {
       me {

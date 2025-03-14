@@ -201,11 +201,11 @@ export const ExpressCheckoutUI = ({
 }
 
 async function createStripePaymentIntent(
-  amountMinor: number,
+  amount: number,
   currency: string,
 ): Promise<string | null> {
   try {
-    console.log("Fetching Stripe payment intent", amountMinor, currency)
+    console.log("Fetching Stripe payment intent", amount, currency)
     return null
   } catch (error) {
     console.error("Failed to create Stripe payment intent:", error)
