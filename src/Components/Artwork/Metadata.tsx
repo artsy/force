@@ -26,6 +26,7 @@ export interface MetadataProps
   showSubmissionStatus?: boolean
   to?: string | null
   renderSaveButton?: (artworkId: string) => React.ReactNode
+  suppressDisplayLinesCount?: number
 }
 
 export const Metadata: React.FC<React.PropsWithChildren<MetadataProps>> = ({
@@ -42,6 +43,7 @@ export const Metadata: React.FC<React.PropsWithChildren<MetadataProps>> = ({
   showSaveButton,
   showSubmissionStatus,
   renderSaveButton,
+  suppressDisplayLinesCount,
   ...rest
 }) => {
   return (
@@ -64,6 +66,7 @@ export const Metadata: React.FC<React.PropsWithChildren<MetadataProps>> = ({
         showSubmissionStatus={showSubmissionStatus}
         contextModule={contextModule}
         renderSaveButton={renderSaveButton}
+        suppressDisplayLinesCount={suppressDisplayLinesCount}
       />
     </LinkContainer>
   )
@@ -115,19 +118,30 @@ export default createFragmentContainer(Metadata, {
 
 type MetadataPlaceholderProps = Pick<
   MetadataProps,
-  "hidePartnerName" | "hideArtistName" | "hideSaleInfo"
+  | "hidePartnerName"
+  | "hideArtistName"
+  | "hideSaleInfo"
+  | "suppressDisplayLinesCount"
 > &
   BoxProps
 
 export const MetadataPlaceholder: React.FC<
   React.PropsWithChildren<MetadataPlaceholderProps>
-> = ({ mt = 1, hidePartnerName, hideArtistName, hideSaleInfo, ...rest }) => {
+> = ({
+  mt = 1,
+  hidePartnerName,
+  hideArtistName,
+  hideSaleInfo,
+  suppressDisplayLinesCount,
+  ...rest
+}) => {
   return (
     <Box mt={mt} {...rest}>
       <DetailsPlaceholder
         hidePartnerName={hidePartnerName}
         hideArtistName={hideArtistName}
         hideSaleInfo={hideSaleInfo}
+        suppressDisplayLinesCount={suppressDisplayLinesCount}
       />
     </Box>
   )

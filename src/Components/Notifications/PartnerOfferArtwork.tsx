@@ -105,6 +105,7 @@ export const PartnerOfferArtwork: FC<
           hideSaleInfo
           maxWidth="100%"
           to={fullyAvailable ? artworkListingHref : href}
+          suppressDisplayLinesCount={1}
         />
 
         {fullyAvailable && (
