@@ -55,7 +55,6 @@ declare module "sharify" {
       FACEBOOK_ID: string
       FAIR_ORGANIZER?: any
       FAIR?: any // mobile fair app data
-      FEATURE_FLAGS: any
       GEMINI_CLOUDFRONT_URL: string
       GOOGLE_ADWORDS_ID: string
       GRAVITY_WEBSOCKET_URL: string
@@ -101,6 +100,10 @@ declare module "sharify" {
       THIRD_PARTIES_DISABLED: boolean
       TOOLS_URL: string
       TRACK_PAGELOAD_PATHS: string
+      UNLEASH_API: string
+      UNLEASH_APP_NAME: string
+      UNLEASH_CLIENT_KEY: string
+      UNLEASH_SERVER_KEY: string
       USER_AGENT: string
       USER_PREFERENCES: any
       VOLLEY_ENDPOINT: string
@@ -116,8 +119,6 @@ declare module "sharify" {
         loginPagePath?: string
         logoutPath?: string
       }
-
-      unleash: any
 
       // Injected by route when rendering a custom error page
       statusCode?: number
