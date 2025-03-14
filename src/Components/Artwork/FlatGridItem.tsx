@@ -11,7 +11,7 @@ import { userIsTeam } from "Utils/user"
 import type { FlatGridItem_artwork$data } from "__generated__/FlatGridItem_artwork.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import Metadata from "./Metadata"
+import Metadata, { MetadataPlaceholder } from "./Metadata"
 import { useSaveButton } from "./SaveButton"
 
 interface FlatGridItemProps {
@@ -158,3 +158,30 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
     `,
   },
 )
+
+interface FlatGridItemPlaceholderProps {
+  width: number
+  height: number
+}
+
+export const FlatGridItemPlaceholder: React.FC<
+  React.PropsWithChildren<FlatGridItemPlaceholderProps>
+> = ({ width, height }) => {
+  return (
+    <Flex
+      flexDirection="column"
+      justifyContent="flex-end"
+      width="100%"
+      height="100%"
+    >
+      <ResponsiveBox
+        aspectWidth={width}
+        aspectHeight={height}
+        maxWidth="100%"
+        bg="black10"
+      />
+
+      <MetadataPlaceholder />
+    </Flex>
+  )
+}
