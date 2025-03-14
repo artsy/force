@@ -49,6 +49,7 @@ const AuctionArtworkFilter: React.FC<
         aggregations={aggregations as Aggregations}
         filters={match && match.location.query}
         counts={counts as Counts}
+        layout="GRID"
         relayRefetchInputVariables={{
           ...getArtworkFilterInputArgs(user),
           saleID: match.params.slug,
@@ -154,10 +155,10 @@ export const AuctionArtworkFilterQueryRenderer: React.FC<
         `}
         variables={initializeVariablesWithFilterState(match.params, match)}
         fetchPolicy="network-only"
-        placeholder={<ArtworkFilterPlaceholder />}
+        placeholder={<ArtworkFilterPlaceholder layout="GRID" />}
         render={({ error, props }) => {
           if (error || !props?.viewer) {
-            return <ArtworkFilterPlaceholder />
+            return <ArtworkFilterPlaceholder layout="GRID" />
           }
 
           return (

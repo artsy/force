@@ -75,6 +75,7 @@ const ShowArtworksFilter: React.FC<
         relayVariables={{
           aggregations: ["TOTAL"],
         }}
+        layout="GRID"
         {...rest}
       />
     </ArtworkFilterContextProvider>
@@ -155,10 +156,10 @@ export const ShowArtworkFilterQueryRenderer: React.FC<
         `}
         variables={initializeVariablesWithFilterState(match.params, match)}
         fetchPolicy="store-and-network"
-        placeholder={<ArtworkFilterPlaceholder />}
+        placeholder={<ArtworkFilterPlaceholder layout="GRID" />}
         render={({ error, props }) => {
           if (error || !props?.show) {
-            return <ArtworkFilterPlaceholder />
+            return <ArtworkFilterPlaceholder layout="GRID" />
           }
 
           return <ShowArtworksRefetchContainer show={props.show} {...rest} />

@@ -1,6 +1,6 @@
 import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
-import { Box, Flex, Popover, ResponsiveBox } from "@artsy/palette"
+import { Box, Flex, Popover, ResponsiveBox, SkeletonBox } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { ExclusiveAccessBadge } from "Components/Artwork/ExclusiveAccessBadge"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
@@ -13,7 +13,7 @@ import { userIsTeam } from "Utils/user"
 import type { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import Metadata from "./Metadata"
+import Metadata, { MetadataPlaceholder } from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
 
 export const DEFAULT_GRID_ITEM_ASPECT_RATIO = 4 / 3
@@ -322,3 +322,22 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
 )
 
 export default ArtworkGridItemFragmentContainer
+
+interface ArtworkGridItemPlaceholderProps {
+  width: number
+  height: number
+}
+
+export const ArtworkGridItemPlaceholder: React.FC<
+  React.PropsWithChildren<ArtworkGridItemPlaceholderProps>
+> = ({ width, height }) => {
+  return (
+    <>
+      <ResponsiveBox aspectWidth={width} aspectHeight={height} maxWidth="100%">
+        <SkeletonBox width="100%" height="100%" />
+      </ResponsiveBox>
+
+      <MetadataPlaceholder />
+    </>
+  )
+}

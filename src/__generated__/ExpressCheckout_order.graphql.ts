@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<079abdd2b152465bf43292d9054c2c92>>
+ * @generated SignedSource<<102fc5863e1b6cfbaabdd90212fb0f68>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,15 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ExpressCheckout_order$data = {
-  readonly buyerTotalCents: number | null | undefined;
-  readonly currencyCode: string;
-  readonly itemsTotalCents: number | null | undefined;
+  readonly availableShippingCountries: ReadonlyArray<string>;
+  readonly buyerTotal: {
+    readonly currencyCode: string;
+    readonly minor: any;
+  } | null | undefined;
+  readonly itemsTotal: {
+    readonly currencyCode: string;
+    readonly minor: any;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutUI_order">;
   readonly " $fragmentType": "ExpressCheckout_order";
 };
@@ -22,7 +28,24 @@ export type ExpressCheckout_order$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckout_order">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "minor",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "currencyCode",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -37,28 +60,35 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "buyerTotalCents",
+      "name": "availableShippingCountries",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "currencyCode",
+      "concreteType": "Money",
+      "kind": "LinkedField",
+      "name": "buyerTotal",
+      "plural": false,
+      "selections": (v0/*: any*/),
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "itemsTotalCents",
+      "concreteType": "Money",
+      "kind": "LinkedField",
+      "name": "itemsTotal",
+      "plural": false,
+      "selections": (v0/*: any*/),
       "storageKey": null
     }
   ],
-  "type": "CommerceOrder",
-  "abstractKey": "__isCommerceOrder"
+  "type": "Order",
+  "abstractKey": null
 };
+})();
 
-(node as any).hash = "65450074d89512b85f38cb9e17633aae";
+(node as any).hash = "cb19c16d234bae12a7d81e12fff38b81";
 
 export default node;

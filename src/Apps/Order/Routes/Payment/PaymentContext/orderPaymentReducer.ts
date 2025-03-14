@@ -57,6 +57,12 @@ export const orderPaymentReducer = (
         isStripePaymentElementLoading: action.payload,
       }
     }
+    case OrderPaymentActions.SET_IS_LOADING: {
+      return {
+        ...state,
+        isLoading: action.payload,
+      }
+    }
     default: {
       return state
     }

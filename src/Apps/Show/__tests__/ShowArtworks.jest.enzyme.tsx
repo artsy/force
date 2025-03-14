@@ -52,7 +52,7 @@ describe("ShowArtworks", () => {
     const { wrapper } = getWrapper({ Show: () => ({ __typename: "Show" }) })
 
     expect(wrapper.find("ArtworkFilterArtworkGrid").length).toBe(1)
-    expect(wrapper.find("ArtworkGridItem").length).toBe(1)
+    expect(wrapper.find("FlatGridItem").length).toBe(1)
   })
 
   it("renders filters in correct order", () => {
