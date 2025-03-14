@@ -155,10 +155,10 @@ export const AuctionArtworkFilterQueryRenderer: React.FC<
         `}
         variables={initializeVariablesWithFilterState(match.params, match)}
         fetchPolicy="network-only"
-        placeholder={<ArtworkFilterPlaceholder />}
+        placeholder={<ArtworkFilterPlaceholder layout="GRID" />}
         render={({ error, props }) => {
           if (error || !props?.viewer) {
-            return <ArtworkFilterPlaceholder />
+            return <ArtworkFilterPlaceholder layout="GRID" />
           }
 
           return (
