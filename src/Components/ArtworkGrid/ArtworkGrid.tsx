@@ -1,17 +1,13 @@
 import type { AuthContextModule } from "@artsy/cohesion"
+import { Column, Flex, GridColumns, Spacer } from "@artsy/palette"
 import {
-  Column,
-  Flex,
-  GridColumns,
-  ResponsiveBox,
-  SkeletonBox,
-  Spacer,
-} from "@artsy/palette"
-import { FlatGridItemFragmentContainer } from "Components/Artwork/FlatGridItem"
+  FlatGridItemFragmentContainer,
+  FlatGridItemPlaceholder,
+} from "Components/Artwork/FlatGridItem"
 import GridItem, {
+  ArtworkGridItemPlaceholder,
   DEFAULT_GRID_ITEM_ASPECT_RATIO,
 } from "Components/Artwork/GridItem"
-import { MetadataPlaceholder } from "Components/Artwork/Metadata"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { Masonry, type MasonryProps } from "Components/Masonry"
 import { Media, valuesWithBreakpointProps } from "Utils/Responsive"
@@ -22,7 +18,7 @@ import type { MyCollectionArtworkGrid_artworks$data } from "__generated__/MyColl
 import { isEmpty, isEqual } from "lodash"
 import memoizeOnce from "memoize-one"
 import * as React from "react"
-import type { ReactNode } from "react"
+import { type ReactNode, useMemo } from "react"
 import ReactDOM from "react-dom"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -449,28 +445,41 @@ const PLACEHOLDER_DIMENSIONS = [
 
 interface ArtworkGridPlaceholderProps extends MasonryProps {
   amount?: number
+  layout?: ArtworkGridLayout
 }
 
 export const ArtworkGridPlaceholder: React.FC<
   React.PropsWithChildren<ArtworkGridPlaceholderProps>
-> = ({ amount = 20, ...rest }) => {
+> = ({ amount = 20, layout = "MASONRY", ...rest }) => {
+  const nodes = useMemo(() => {
+    return [...new Array(amount)].map((_, i) => {
+      const [width, height] =
+        PLACEHOLDER_DIMENSIONS[i % PLACEHOLDER_DIMENSIONS.length]
+
+      return { width, height }
+    })
+  }, [amount])
+
+  if (layout === "GRID") {
+    return (
+      <GridColumns width="100%">
+        {nodes.map(({ width, height }, index) => {
+          return (
+            <Column span={[6, 3]} key={index} minWidth={0}>
+              <FlatGridItemPlaceholder width={width} height={height} />
+            </Column>
+          )
+        })}
+      </GridColumns>
+    )
+  }
+
   return (
     <Masonry {...rest}>
-      {[...new Array(amount)].map((_, i) => {
-        const [width, height] =
-          PLACEHOLDER_DIMENSIONS[i % PLACEHOLDER_DIMENSIONS.length]
-
+      {nodes.map(({ width, height }, i) => {
         return (
           <div key={i}>
-            <ResponsiveBox
-              aspectWidth={width}
-              aspectHeight={height}
-              maxWidth="100%"
-            >
-              <SkeletonBox width="100%" height="100%" />
-            </ResponsiveBox>
-
-            <MetadataPlaceholder />
+            <ArtworkGridItemPlaceholder width={width} height={height} />
 
             <Spacer y={4} />
           </div>

@@ -15,17 +15,21 @@ import {
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
-import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
+import {
+  type ArtworkGridLayout,
+  ArtworkGridPlaceholder,
+} from "Components/ArtworkGrid/ArtworkGrid"
 import { Sticky } from "Components/Sticky"
 import { Media } from "Utils/Responsive"
 
 interface ArtworkFilterPlaceholderProps extends BoxProps {
   showCreateAlert?: boolean
+  layout?: ArtworkGridLayout
 }
 
 export const ArtworkFilterPlaceholder: React.FC<
   React.PropsWithChildren<ArtworkFilterPlaceholderProps>
-> = ({ showCreateAlert = false, ...rest }) => {
+> = ({ showCreateAlert = false, layout = "MASONRY", ...rest }) => {
   return (
     <Skeleton {...rest}>
       {/* Mobile Artwork Filter Placeholder */}
@@ -65,7 +69,7 @@ export const ArtworkFilterPlaceholder: React.FC<
 
         <Spacer y={2} />
 
-        <ArtworkGridPlaceholder columnCount={2} />
+        <ArtworkGridPlaceholder columnCount={2} layout={layout} />
       </Media>
 
       {/* Desktop Artwork Filter Placeholder */}
@@ -163,7 +167,7 @@ export const ArtworkFilterPlaceholder: React.FC<
 
         {/* FIXME: The breakpoints that the artwork grid uses are completely different from Palette's */}
         {/* So this placeholder does not accurately reflect column count at certain widths */}
-        <ArtworkGridPlaceholder columnCount={[2, 3, 4]} />
+        <ArtworkGridPlaceholder columnCount={[2, 3, 4]} layout={layout} />
       </Media>
     </Skeleton>
   )
