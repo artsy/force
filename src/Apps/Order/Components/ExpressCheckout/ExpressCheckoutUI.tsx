@@ -13,11 +13,13 @@ import {
 import type {
   ClickResolveDetails,
   ShippingRate,
+  StripeElementsUpdateOptions,
   StripeExpressCheckoutElementClickEvent,
   StripeExpressCheckoutElementOptions,
   StripeExpressCheckoutElementShippingAddressChangeEvent,
   StripeExpressCheckoutElementShippingRateChangeEvent,
 } from "@stripe/stripe-js"
+import { getENV } from "Utils/getENV"
 import type {
   ExpressCheckoutUI_order$data,
   ExpressCheckoutUI_order$key,
@@ -29,16 +31,18 @@ import styled from "styled-components"
 
 interface ExpressCheckoutUIProps {
   order: ExpressCheckoutUI_order$key
+  orderOptions: StripeElementsUpdateOptions
 }
 
-export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
+export const ExpressCheckoutUI = ({
+  order,
+  orderOptions,
+}: ExpressCheckoutUIProps) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const [visible, setVisible] = useState(false)
   const elements = useElements()
   const stripe = useStripe()
-  const clientSecret = "client_secret_id"
   const { trackEvent } = useTracking()
-
   const primaryLineItem = orderData.lineItems[0]
   const primaryArtwork = primaryLineItem?.artwork
 
@@ -103,20 +107,41 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }
 
   const onConfirm = async () => {
-    if (!stripe || !elements) {
+    if (
+      !stripe ||
+      !elements ||
+      !orderOptions.amount ||
+      !orderOptions.currency
+    ) {
+      return
+    }
+
+    const { error: submitError } = await elements.submit()
+
+    if (submitError) {
+      console.error(submitError.message)
+      return
+    }
+
+    const clientSecret = await createStripePaymentIntent(
+      orderOptions.amount,
+      orderOptions.currency,
+    )
+
+    if (!clientSecret) {
       return
     }
 
     const { error } = await stripe.confirmPayment({
-      elements: elements,
+      elements,
       clientSecret,
       confirmParams: {
-        return_url: "https://artsy.net/",
+        return_url: `${getENV("APP_URL")}/orders/${orderData.internalID}/status`,
       },
     })
 
     if (error) {
-      console.error(error)
+      console.error(error.message)
     }
   }
 
@@ -173,6 +198,19 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       <Spacer y={4} />
     </UncollapsingBox>
   )
+}
+
+async function createStripePaymentIntent(
+  amountMinor: number,
+  currency: string,
+): Promise<string | null> {
+  try {
+    console.log("Fetching Stripe payment intent", amountMinor, currency)
+    return null
+  } catch (error) {
+    console.error("Failed to create Stripe payment intent:", error)
+    return null
+  }
 }
 
 const expressCheckoutOptions: StripeExpressCheckoutElementOptions = {
