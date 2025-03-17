@@ -72,7 +72,7 @@
     "@artsy/cohesion": "4.244.0",
     "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.1.0",
-    "@artsy/dismissible": "^0.3.2",
+    "@artsy/dismissible": "^0.4.0",
     "@artsy/express-reloadable": "^1.7.0",
     "@artsy/fresnel": "^8.1.0",
     "@artsy/icons": "3.26.0",

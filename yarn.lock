@@ -38,10 +38,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.1.0.tgz#f7ae5041893b859ff9f6bc305fd318d2f5132745"
   integrity sha512-cdHMDcGpYuItSBvelAWEWxWipVGw/8Yzk7YoMvO+qWjZsHJtIF2hACtL5QFQxcf9K3j/eTXNSFlPmfZAe9Byew==
 
-"@artsy/dismissible@^0.3.2":
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/@artsy/dismissible/-/dismissible-0.3.3.tgz#9d56811efebc23d7be99214b4f5b2b2e1ea3773f"
-  integrity sha512-ciByjC+Asm9553KuieQNkJ3LAmLBMQy9rG950bglBGGwZtfmmvLeqMFfozK6pUTqeTVhZiGs3xtRp+EizYIAjA==
+"@artsy/dismissible@^0.4.0":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@artsy/dismissible/-/dismissible-0.4.1.tgz#9251033d6e1dc5b577a847f88c0dfd9de85ff6ee"
+  integrity sha512-jYp3MEsxolw/8JFglaSAFGVBnjkaM3ZrRTCLmxWl6nGYlR2mxOKIHrxiOScmZNtCl7rFUmVuNhR1B1I3U8QeqA==
   dependencies:
     lodash.uniqby "^4.7.0"
     yup "^1.3.3"
