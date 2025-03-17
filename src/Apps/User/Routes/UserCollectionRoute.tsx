@@ -1,3 +1,4 @@
+import { ActionType, OwnerType } from "@artsy/cohesion"
 import { Spacer, Stack, Text } from "@artsy/palette"
 import { UserCollectionArtworks } from "Apps/User/Components/UserCollectionArtworks"
 import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
@@ -6,7 +7,9 @@ import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
 import { Jump } from "Utils/Hooks/useJump"
 import type { UserCollectionRoute_collection$data } from "__generated__/UserCollectionRoute_collection.graphql"
+import { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface UserCollectionRouteProps {
   collection: UserCollectionRoute_collection$data
@@ -16,6 +19,12 @@ const UserCollectionRoute = ({ collection }: UserCollectionRouteProps) => {
   const {
     match: { params },
   } = useRouter()
+
+  const { trackEvent } = useTracking()
+
+  useEffect(() => {
+    trackEvent(tracks.openedPage(collection))
+  }, [collection, trackEvent])
 
   return (
     <>
@@ -65,3 +74,11 @@ export const UserCollectionRouteFragmentContainer = createFragmentContainer(
     `,
   },
 )
+
+const tracks = {
+  openedPage: (collection: UserCollectionRoute_collection$data) => ({
+    action: ActionType.viewedSharedArtworkList,
+    context_owner_type: OwnerType.saves,
+    owner_id: collection.internalID,
+  }),
+}
