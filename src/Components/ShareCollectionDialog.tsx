@@ -1,3 +1,4 @@
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import ShareIcon from "@artsy/icons/ShareIcon"
 import {
   Button,
@@ -14,6 +15,7 @@ import { getENV } from "Utils/getENV"
 import type { ShareCollectionDialogMutation } from "__generated__/ShareCollectionDialogMutation.graphql"
 import { useState } from "react"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 export interface ShareCollectionDialogProps {
   onClose: () => void
@@ -25,6 +27,7 @@ export const ShareCollectionDialog: React.FC<
   React.PropsWithChildren<ShareCollectionDialogProps>
 > = ({ onClose, collectionId, collectionName }) => {
   const { user } = useSystemContext()
+  const { trackEvent } = useTracking()
 
   const [mode, setMode] = useState<"Idle" | "Updating" | "Ready" | "Copied">(
     "Idle",
@@ -34,9 +37,15 @@ export const ShareCollectionDialog: React.FC<
     navigator?.clipboard.writeText(url)
     setMode("Copied")
 
+    trackEvent(tracks.clickedCopyButton(collectionId))
+
     setTimeout(() => {
       setMode("Idle")
     }, 2000)
+  }
+
+  const handleOpenInNewTab = () => {
+    trackEvent(tracks.clickedOpenInNewTab(collectionId))
   }
 
   const { submitMutation } = useMutation<ShareCollectionDialogMutation>({
@@ -124,6 +133,7 @@ export const ShareCollectionDialog: React.FC<
             as="a"
             href={url}
             target="_blank"
+            onClick={handleOpenInNewTab}
           >
             Open in new tab
           </Button>
@@ -131,4 +141,20 @@ export const ShareCollectionDialog: React.FC<
       )}
     </ModalDialog>
   )
+}
+
+const tracks = {
+  clickedCopyButton: (collectionId: string) => ({
+    action: ActionType.share,
+    context_module: ContextModule.saves,
+    context_owner_type: OwnerType.saves,
+    context_owner_id: collectionId,
+    service: "copy_link",
+  }),
+  clickedOpenInNewTab: (collectionId: string) => ({
+    action: ActionType.clickedOpenInNewTabButton,
+    context_module: ContextModule.saves,
+    context_owner_type: OwnerType.saves,
+    context_owner_id: collectionId,
+  }),
 }

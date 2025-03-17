@@ -1,3 +1,4 @@
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import ShareIcon from "@artsy/icons/ShareIcon"
 import { Box, Button, Flex, Stack } from "@artsy/palette"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
@@ -5,6 +6,7 @@ import { MyCollectionArtworkGrid } from "Apps/Settings/Routes/MyCollection/Compo
 import { MetaTags } from "Components/MetaTags"
 import { ShareCollectionDialog } from "Components/ShareCollectionDialog"
 import { RouterLink } from "System/Components/RouterLink"
+import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { cleanLocalImages } from "Utils/localImageHelpers"
 import type { MyCollectionRoute_me$data } from "__generated__/MyCollectionRoute_me.graphql"
 import { type FC, useEffect, useState } from "react"
@@ -13,8 +15,8 @@ import {
   createPaginationContainer,
   graphql,
 } from "react-relay"
+import { useTracking } from "react-tracking"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 
 export interface MyCollectionRouteProps {
   me: MyCollectionRoute_me$data
@@ -29,6 +31,7 @@ const MyCollectionRoute: FC<
   const { addCollectedArtwork: trackAddCollectedArtwork } =
     useMyCollectionTracking()
   const [isLoading, setLoading] = useState(false)
+  const { trackEvent } = useTracking()
 
   useEffect(() => {
     cleanLocalImages()
@@ -43,6 +46,12 @@ const MyCollectionRoute: FC<
   }
 
   const total = myCollectionConnection.totalCount ?? 0
+
+  const handleShare = () => {
+    trackEvent(tracks.clickedShareButton())
+
+    setMode("Share")
+  }
 
   const handleLoadMore = () => {
     if (!relay.hasMore() || relay.isLoading()) return
@@ -70,7 +79,7 @@ const MyCollectionRoute: FC<
                 size={["small", "large"]}
                 variant="secondaryBlack"
                 Icon={ShareIcon}
-                onClick={() => setMode("Share")}
+                onClick={handleShare}
               >
                 Share
               </Button>
@@ -169,3 +178,13 @@ export const MyCollectionRoutePaginationContainer = createPaginationContainer(
     `,
   },
 )
+
+const tracks = {
+  clickedShareButton: () => ({
+    action: ActionType.clickedShareButton,
+    context_module: ContextModule.myCollection,
+    context_owner_type: OwnerType.myCollection,
+    context_owner_id: "my-collection",
+    context_owner_slug: "my-collection",
+  }),
+}

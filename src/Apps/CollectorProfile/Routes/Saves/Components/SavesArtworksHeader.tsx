@@ -1,3 +1,4 @@
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import HideIcon from "@artsy/icons/HideIcon"
 import ShareIcon from "@artsy/icons/ShareIcon"
 import {
@@ -11,9 +12,13 @@ import {
 import { ArtworkListContextualMenu } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/ArtworkListContextualMenu"
 import { ClientSuspense } from "Components/ClientSuspense"
 import { ShareCollectionDialog } from "Components/ShareCollectionDialog"
-import type { SavesArtworksHeaderQuery } from "__generated__/SavesArtworksHeaderQuery.graphql"
+import type {
+  SavesArtworksHeaderQuery,
+  SavesArtworksHeaderQuery$data,
+} from "__generated__/SavesArtworksHeaderQuery.graphql"
 import { type FC, useState } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface SavesArtworksHeaderProps {
   id: string
@@ -25,12 +30,15 @@ const SavesArtworksHeader: FC<
   const { me } = useLazyLoadQuery<SavesArtworksHeaderQuery>(QUERY, {
     id,
   })
+  const { trackEvent } = useTracking()
 
   const collection = me?.collection
 
   const [mode, setMode] = useState<"Idle" | "Share">("Idle")
 
   const handleShare = () => {
+    trackEvent(tracks.clickedShareButton(collection))
+
     setMode("Share")
   }
 
@@ -124,3 +132,15 @@ const QUERY = graphql`
     }
   }
 `
+
+const tracks = {
+  clickedShareButton: (
+    collection: NonNullable<SavesArtworksHeaderQuery$data["me"]>["collection"],
+  ) => ({
+    action: ActionType.clickedShareButton,
+    context_module: ContextModule.saves,
+    context_owner_type: OwnerType.saves,
+    context_owner_id: collection?.internalID,
+    context_owner_slug: collection?.slug,
+  }),
+}
