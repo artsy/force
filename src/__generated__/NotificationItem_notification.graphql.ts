@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8a13ef14233cd481117018d2d60deec6>>
+ * @generated SignedSource<<9bd52347ac15c7fc282f032c0edc65dc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,6 +32,7 @@ export type NotificationItem_notification$data = {
     readonly internalID: string | null | undefined;
     readonly resized: {
       readonly height: number | null | undefined;
+      readonly src: string;
       readonly srcSet: string;
       readonly width: number | null | undefined;
     } | null | undefined;
@@ -192,6 +193,13 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
+              "name": "src",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "srcSet",
               "storageKey": null
             },
@@ -233,6 +241,6 @@ return {
 };
 })();
 
-(node as any).hash = "1eabaa94d01dcae518982787f854a346";
+(node as any).hash = "476ccbaebfb4eef0b9cb1e4938593379";
 
 export default node;
