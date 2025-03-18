@@ -1,4 +1,11 @@
-import { Flex, Image, Join, Spacer, Text } from "@artsy/palette"
+import {
+  Flex,
+  HorizontalOverflow,
+  Image,
+  Spacer,
+  Stack,
+  Text,
+} from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
@@ -11,7 +18,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import createLogger from "Utils/logger"
 import type { NotificationItem_notification$data } from "__generated__/NotificationItem_notification.graphql"
-import { type FC, useCallback } from "react"
+import { type FC, useCallback, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { NotificationTypeLabel } from "./NotificationTypeLabel"
@@ -49,6 +56,14 @@ const NotificationItem: FC<React.PropsWithChildren<NotificationItemProps>> = ({
 
   const subTitle = getNotificationSubTitle(notification)
 
+  const images = useMemo(
+    () =>
+      notification.previewImages.filter(
+        image => image.resized?.width && image.resized?.height,
+      ),
+    [notification.previewImages],
+  )
+
   return (
     <NotificationItemWrapper
       item={notification}
@@ -57,45 +72,50 @@ const NotificationItem: FC<React.PropsWithChildren<NotificationItemProps>> = ({
     >
       <Flex
         flex={1}
-        flexDirection={
-          notification.notificationType === "PARTNER_OFFER_CREATED"
-            ? "row"
-            : "column"
-        }
+        minWidth={0}
+        {...(notification.notificationType === "PARTNER_OFFER_CREATED"
+          ? { flexDirection: "row", gap: 1 }
+          : { flexDirection: "column" })}
       >
-        {!!notification.previewImages.length && (
-          <Flex flexDirection="row" alignItems="center" mb={0.5}>
-            <Flex flex={1}>
-              <Join separator={<Spacer x={1} />}>
-                {notification.previewImages.map((image, index) => {
+        {images.length > 0 && (
+          <Stack flexDirection="row" alignItems="center" mb={0.5} gap={1}>
+            <HorizontalOverflow height={58} width="100%">
+              <Stack gap={1} flexDirection="row">
+                {images.map((image, index) => {
                   if (!image.resized) return null
 
                   return (
                     <Image
                       key={index}
+                      src={image.resized.src}
                       srcSet={image.resized.srcSet}
-                      alt=""
-                      height={image.resized.height}
                       width={image.resized.width}
+                      placeHolderURL={image.blurhashDataURL ?? undefined}
+                      height="100%"
                       lazyLoad
+                      alt=""
                     />
                   )
                 })}
-              </Join>
-              <Spacer x={1} />
-            </Flex>
+              </Stack>
 
-            {shouldDisplayCounts && (
-              <Text
-                variant="xs"
-                color="black60"
-                aria-label="Remaining artworks count"
-                ml={1}
-              >
-                + {remainingArtworksCount}
-              </Text>
-            )}
-          </Flex>
+              {shouldDisplayCounts && (
+                <>
+                  <Spacer x={1} />
+
+                  <Text
+                    variant="xs"
+                    color="black60"
+                    aria-label="Remaining artworks count"
+                    display="flex"
+                    alignItems="center"
+                  >
+                    + {remainingArtworksCount}
+                  </Text>
+                </>
+              )}
+            </HorizontalOverflow>
+          </Stack>
         )}
 
         <Flex flexDirection="column">
@@ -118,6 +138,7 @@ const NotificationItem: FC<React.PropsWithChildren<NotificationItemProps>> = ({
 
           <Flex flexDirection="row" gap={0.5}>
             <NotificationTypeLabel notification={notification} />
+
             {notification.item?.__typename ===
               "PartnerOfferCreatedNotificationItem" &&
               notification.item.expiresAt && (
@@ -157,10 +178,12 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
         }
         previewImages(size: 4) {
           internalID
+          blurhashDataURL
           resized(
             height: 58
             version: ["main", "normalized", "larger", "large"]
           ) {
+            src
             srcSet
             height
             width
@@ -225,6 +248,7 @@ const NotificationItemLink = styled(RouterLink)`
   display: flex;
   align-items: center;
   text-decoration: none;
+  overflow: hidden;
 
   &:hover {
     background-color: ${themeGet("colors.black5")};
