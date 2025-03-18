@@ -14,6 +14,7 @@ import type {
   ClickResolveDetails,
   ShippingRate,
   StripeExpressCheckoutElementClickEvent,
+  StripeExpressCheckoutElementConfirmEvent,
   StripeExpressCheckoutElementOptions,
   StripeExpressCheckoutElementShippingAddressChangeEvent,
   StripeExpressCheckoutElementShippingRateChangeEvent,
@@ -38,6 +39,10 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const stripe = useStripe()
   const clientSecret = "client_secret_id"
   const { trackEvent } = useTracking()
+
+  if (!(stripe && elements)) {
+    return null
+  }
 
   const primaryLineItem = orderData.lineItems[0]
   const primaryArtwork = primaryLineItem?.artwork
@@ -102,24 +107,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     console.warn("Express checkout element cancelled")
   }
 
-  const onConfirm = async () => {
-    if (!stripe || !elements) {
-      return
-    }
-
-    const { error } = await stripe.confirmPayment({
-      elements: elements,
-      clientSecret,
-      confirmParams: {
-        return_url: "https://artsy.net/",
-      },
-    })
-
-    if (error) {
-      console.error(error)
-    }
-  }
-
+  // User selects a shipping address
   const handleShippingAddressChange = async ({
     // Stripe type only guarantees a partial address
     address,
@@ -128,6 +116,27 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     reject,
   }: StripeExpressCheckoutElementShippingAddressChangeEvent) => {
     console.warn("Express checkout element address change", address)
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { line1, line2, city, state, postalCode, country } = address
+    /*
+    
+    option 1: mutate order address, get calculated result (ie with shipping rates)
+    from order JSON
+      - update order saved shipping address, get order back with new rates
+
+      resolve({ shippingRates: newOrder.fulfillmentOptions })
+
+    option 2: send a request to fetch fulfillment options for order-address combination
+    without updating order
+      - send request to (for example) `/me/order/:id/fulfillment-options` for new rates
+      - set local state here for what we have of the shipping address
+      - assume that the rates will still be 'valid' when the user confirms the order,
+        i.e. that the same state will yield the same result later
+
+      resolve({ shippingRates: newRates })
+    */
     try {
       resolve()
     } catch (error) {
@@ -135,16 +144,69 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     }
   }
 
+  // User selects a shipping rate
   const handleShippingRateChange = async ({
     shippingRate,
     resolve,
     reject,
   }: StripeExpressCheckoutElementShippingRateChangeEvent) => {
     console.warn("Shipping rate change", shippingRate)
+    /*
+    
+    option 1 : mutate order fulfillment type, get calculated result
+       (ie taxes ready to submit order) from order JSON
+     - send update to order to save selected fulfillment option (shipping rate) and whatever
+       shipping destination data we do have available
+     - result should include full data now like taxes...
+
+     option 2
+      - send a new request to get estimated taxes based on line items including shipping rate
+      - set local state here similar to above for both shipping rate and taxes
+    */
+
     try {
       resolve()
     } catch (error) {
       reject()
+    }
+  }
+
+  // User confirms the payment
+  const onConfirm = async ({
+    paymentFailed,
+    billingDetails,
+    shippingAddress,
+    expressPaymentType,
+    shippingRate,
+  }: StripeExpressCheckoutElementConfirmEvent) => {
+    const {
+      name,
+      address: { line1, line2, city, state, postalCode, country },
+    } = shippingAddress as NonNullable<
+      StripeExpressCheckoutElementConfirmEvent["shippingAddress"]
+    >
+
+    const { phone } = billingDetails as NonNullable<
+      StripeExpressCheckoutElementConfirmEvent["billingDetails"]
+    >
+
+    // const
+
+    try {
+      const { error } = await stripe.confirmPayment({
+        elements: elements,
+        clientSecret,
+        confirmParams: {
+          return_url: "https://artsy.net/",
+        },
+      })
+
+      if (error) {
+        console.error("Error confirming payment", error)
+        return
+      }
+    } catch (error) {
+      console.error("Error confirming payment", error)
     }
   }
 
