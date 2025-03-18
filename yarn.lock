@@ -38,10 +38,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.1.0.tgz#f7ae5041893b859ff9f6bc305fd318d2f5132745"
   integrity sha512-cdHMDcGpYuItSBvelAWEWxWipVGw/8Yzk7YoMvO+qWjZsHJtIF2hACtL5QFQxcf9K3j/eTXNSFlPmfZAe9Byew==
 
-"@artsy/dismissible@^0.3.2":
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/@artsy/dismissible/-/dismissible-0.3.3.tgz#9d56811efebc23d7be99214b4f5b2b2e1ea3773f"
-  integrity sha512-ciByjC+Asm9553KuieQNkJ3LAmLBMQy9rG950bglBGGwZtfmmvLeqMFfozK6pUTqeTVhZiGs3xtRp+EizYIAjA==
+"@artsy/dismissible@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@artsy/dismissible/-/dismissible-0.4.1.tgz#9251033d6e1dc5b577a847f88c0dfd9de85ff6ee"
+  integrity sha512-jYp3MEsxolw/8JFglaSAFGVBnjkaM3ZrRTCLmxWl6nGYlR2mxOKIHrxiOScmZNtCl7rFUmVuNhR1B1I3U8QeqA==
   dependencies:
     lodash.uniqby "^4.7.0"
     yup "^1.3.3"
@@ -60,10 +60,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-8.1.0.tgz#25dff4bdacda24f94636bbde0cc08e55b0f09f45"
   integrity sha512-zlTUFfMDlJa2rmt631qC3/uwuZlGtLIpJtwddDEYdmy/p2P/rvZej+IXLHTP5a922CUMujWtEJHm/9wh93B2OQ==
 
-"@artsy/icons@3.25.7":
-  version "3.25.7"
-  resolved "https://registry.yarnpkg.com/@artsy/icons/-/icons-3.25.7.tgz#7d1824bdcfab5681638b548905364f1017e3b795"
-  integrity sha512-wz61M9Cu3vMxSHLsnMpaHPQNR8YGCv68Df/SpRnnhKhcc4qfUaEhRCAuh4myeQEsXrlRMP1Rb03u2LOnHKqnAg==
+"@artsy/icons@3.26.0":
+  version "3.26.0"
+  resolved "https://registry.yarnpkg.com/@artsy/icons/-/icons-3.26.0.tgz#eae81c31ccb34b992b017358b0871f3e3419951e"
+  integrity sha512-vqKlTqiNWY2pRjzNCgibCSWaCDUUaKwRCJFhWExIk7AwA2BoXrNnS2WKpmpQnoDcJBdeVrKk2KcErT+grxIkzQ==
 
 "@artsy/icons@^3.2.2":
   version "3.22.1"
