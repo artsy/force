@@ -35,8 +35,6 @@ export interface DetailsProps {
 const LINE_HEIGHT = 22
 const LINE_HEIGHT_PX = `${LINE_HEIGHT}px`
 const NUM_OF_LINES = 5
-const CONTAINER_HEIGHT = LINE_HEIGHT * NUM_OF_LINES
-const CONTAINER_HEIGHT_PX = `${CONTAINER_HEIGHT}px`
 
 const StyledConditionalLink = styled(RouterLink)`
   color: ${themeGet("colors.black100")};
@@ -287,13 +285,9 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
     )
   }
 
-  const adjustedContainerHeight =
-    suppressDisplayLinesCount && suppressDisplayLinesCount > 0
-      ? `${LINE_HEIGHT * (NUM_OF_LINES - suppressDisplayLinesCount)}px`
-      : CONTAINER_HEIGHT_PX
-
+  const containerHeight = `${LINE_HEIGHT * (NUM_OF_LINES - (suppressDisplayLinesCount || 0))}px`
   return (
-    <Box height={adjustedContainerHeight}>
+    <Box height={containerHeight}>
       {isAuctionArtwork && (
         <Flex flexDirection="row">
           <Join separator={<Spacer x={1} />}>
@@ -433,13 +427,10 @@ export const DetailsPlaceholder: React.FC<
   hideSaleInfo,
   suppressDisplayLinesCount,
 }) => {
-  const adjustedContainerHeight =
-    suppressDisplayLinesCount && suppressDisplayLinesCount > 0
-      ? `${LINE_HEIGHT * (NUM_OF_LINES - suppressDisplayLinesCount)}px`
-      : CONTAINER_HEIGHT_PX
+  const containerHeight = `${LINE_HEIGHT * (NUM_OF_LINES - (suppressDisplayLinesCount || 0))}px`
 
   return (
-    <Box height={adjustedContainerHeight}>
+    <Box height={containerHeight}>
       {!hideArtistName && (
         <SkeletonText variant="sm-display" lineHeight={LINE_HEIGHT_PX}>
           Artist Name
