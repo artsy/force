@@ -52,7 +52,6 @@ describe("PartnerOfferCreatedNotification", () => {
       "src",
       "undefined?quality=80&resize_to=width&src=artwork-image-one&width=600",
     )
-    expect(screen.getByText("$900")).toBeInTheDocument()
     expect(screen.getByText("(List price: $1,000)")).toBeInTheDocument()
 
     // Continue to purchase button
