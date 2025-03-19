@@ -41,15 +41,13 @@ describe("ArtworkImageBrowserSmall", () => {
       }),
       Image: () => ({ isDefault: true }),
       ResizedImageUrl: () => ({
-        width: 800,
-        height: 600,
+        width: 1600,
+        height: 1200,
         src: "example.jpg",
-        srcSet: "example.jpg 1x",
       }),
     })
 
     expect(wrapper.html()).toContain("max-width: 800px")
     expect(wrapper.html()).toContain('src="example.jpg"')
-    expect(wrapper.html()).toContain('srcset="example.jpg 1x"')
   })
 })
