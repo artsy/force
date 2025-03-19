@@ -23,6 +23,7 @@ import { useSetFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCh
 import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import type { ExpressCheckoutUI_order$key } from "__generated__/ExpressCheckoutUI_order.graphql"
+import type { FulfillmentOptionInputEnum } from "__generated__/useSetFulfillmentOptionMutation.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -111,14 +112,12 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     trackEvent(event)
     try {
       const data = await resetOrder()
-      const validatedResult = validateAndExtractOrderResponse(data)
+      const { order } = validateAndExtractOrderResponse(data)
 
       resolve({
         ...checkoutOptions,
-        allowedShippingCountries: extractAllowedShippingCountries(
-          validatedResult.order,
-        ),
-        shippingRates: extractShippingRates(validatedResult.order),
+        allowedShippingCountries: extractAllowedShippingCountries(order),
+        shippingRates: extractShippingRates(order),
       })
     } catch (error) {
       console.error("Error resetting order on load", error)
@@ -148,7 +147,6 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
 
     console.warn("Express checkout element cancelled - resetting")
     await resetOrder()
-    resolve()
   }
 
   // User selects a shipping address
@@ -197,24 +195,20 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }: StripeExpressCheckoutElementShippingRateChangeEvent) => {
     console.warn("Shipping rate change", shippingRate)
 
+    if (shippingRate.id === "SHIPPING_TBD") {
+      console.warn(
+        "Shipping rate is still calculating, skipping - order cannot be transacted yet",
+      )
+      resolve()
+    }
+
     try {
-      const { id } = shippingRate
-
-      let type
-      if (["DOMESTIC_FLAT", "INTERNATIONAL_FLAT", "PICKUP"].includes(id)) {
-        type = id
-      }
-      if (!type) {
-        // SHIPPING_TBD and any unrecognized types are handled as a no-op
-        return
-      }
-
       const result = await setFulfillmentOptionMutation.submitMutation({
         variables: {
           input: {
             id: orderData.internalID,
             fulfillmentOption: {
-              type,
+              type: shippingRate.id as FulfillmentOptionInputEnum,
             },
           },
         },
@@ -250,8 +244,6 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     const { phone } = billingDetails as NonNullable<
       StripeExpressCheckoutElementConfirmEvent["billingDetails"]
     >
-
-    // const
 
     try {
       // Finally we have all fulfillment details
@@ -353,6 +345,7 @@ const ORDER_FRAGMENT = graphql`
 interface OrderWithAvailableShippingCountries {
   readonly availableShippingCountries: ReadonlyArray<string>
 }
+
 const extractAllowedShippingCountries = (
   order: OrderWithAvailableShippingCountries,
 ): ClickResolveDetails["allowedShippingCountries"] => {
@@ -367,6 +360,7 @@ interface OrderWithFulfillmentOptions {
     readonly amount?: { readonly minor?: number } | null
   }>
 }
+
 const extractShippingRates = (
   order: OrderWithFulfillmentOptions,
 ): Array<ShippingRate> => {
