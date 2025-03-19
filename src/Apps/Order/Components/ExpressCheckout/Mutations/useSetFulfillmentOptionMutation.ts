@@ -14,7 +14,14 @@ export const useSetFulfillmentOptionMutation = () => {
             ... on OrderMutationSuccess {
               order {
                 internalID
-
+                availableShippingCountries
+                fulfillmentOptions {
+                  amount {
+                    minor
+                  }
+                  selected
+                  type
+                }
                 ...ExpressCheckoutUI_order
               }
             }

@@ -19,10 +19,10 @@ import type {
   StripeExpressCheckoutElementShippingAddressChangeEvent,
   StripeExpressCheckoutElementShippingRateChangeEvent,
 } from "@stripe/stripe-js"
-import type {
-  ExpressCheckoutUI_order$data,
-  ExpressCheckoutUI_order$key,
-} from "__generated__/ExpressCheckoutUI_order.graphql"
+import { useSetFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSetFulfillmentOptionMutation"
+import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
+import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import type { ExpressCheckoutUI_order$key } from "__generated__/ExpressCheckoutUI_order.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -39,6 +39,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const stripe = useStripe()
   const clientSecret = "client_secret_id"
   const { trackEvent } = useTracking()
+  const setFulfillmentOptionMutation = useSetFulfillmentOptionMutation()
+  const updateOrderMutation = useUpdateOrderMutation()
 
   if (!(stripe && elements)) {
     return null
@@ -50,16 +52,44 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const checkoutOptions: ClickResolveDetails = {
     shippingAddressRequired: true,
     phoneNumberRequired: true,
-
-    // TODO: possible conflict between initial rates from order,
-    //   rates set as a result of the legacy setShippingMutation,
-    //   and rates set as a result of the express checkout flow's automatic
-    //   shipping address selection event below.
-    shippingRates: extractShippingRates(orderData),
-    allowedShippingCountries: extractAllowedShippingCountries(orderData),
   }
 
-  const handleClick = ({
+  const resetOrder = async () => {
+    // reset fulfillment type: Not yet supported
+    //   const result = await setFulfillmentOptionMutation.submitMutation({
+    //     variables: {
+    //       input: {
+    //         id: orderData.internalID,
+    //         fulfillmentOption: null,
+    //       },
+    //     },
+    //   })
+    //   validateAndExtractOrderResponse(result.setOrderFulfillmentOption?.orderOrError)
+
+    // reset fulfillment details
+    const fulfillmentDetailsResult = await updateOrderMutation.submitMutation({
+      variables: {
+        input: {
+          id: orderData.internalID,
+          shippingName: null,
+          shippingAddressLine1: null,
+          shippingAddressLine2: null,
+          shippingPostalCode: null,
+          shippingCity: null,
+          shippingRegion: null,
+          shippingCountry: null,
+          buyerPhoneNumber: null,
+          buyerPhoneNumberCountryCode: null,
+        },
+      },
+    })
+    const validatedResult = validateAndExtractOrderResponse(
+      fulfillmentDetailsResult.updateOrder?.orderOrError,
+    )
+    return validatedResult
+  }
+
+  const handleClick = async ({
     expressPaymentType,
     resolve,
   }: StripeExpressCheckoutElementClickEvent) => {
@@ -79,12 +109,25 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     }
 
     trackEvent(event)
+    try {
+      const data = await resetOrder()
+      const validatedResult = validateAndExtractOrderResponse(data)
 
-    resolve(checkoutOptions)
+      resolve({
+        ...checkoutOptions,
+        allowedShippingCountries: extractAllowedShippingCountries(
+          validatedResult.order,
+        ),
+        shippingRates: extractShippingRates(validatedResult.order),
+      })
+    } catch (error) {
+      console.error("Error resetting order on load", error)
+    }
   }
 
-  const handleCancel = ({
+  const handleCancel = async ({
     expressPaymentType,
+    resolve,
   }: StripeExpressCheckoutElementClickEvent) => {
     const event: ClickedCancelExpressCheckout = {
       action: ActionType.clickedCancelExpressCheckout,
@@ -103,8 +146,9 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
 
     trackEvent(event)
 
-    // TODO: This is where we could reset the order back to its pre-checkout state
-    console.warn("Express checkout element cancelled")
+    console.warn("Express checkout element cancelled - resetting")
+    await resetOrder()
+    resolve()
   }
 
   // User selects a shipping address
@@ -118,28 +162,29 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     console.warn("Express checkout element address change", address)
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { line1, line2, city, state, postalCode, country } = address
-    /*
-    
-    option 1: mutate order address, get calculated result (ie with shipping rates)
-    from order JSON
-      - update order saved shipping address, get order back with new rates
+    const { city, state, country } = address
 
-      resolve({ shippingRates: newOrder.fulfillmentOptions })
-
-    option 2: send a request to fetch fulfillment options for order-address combination
-    without updating order
-      - send request to (for example) `/me/order/:id/fulfillment-options` for new rates
-      - set local state here for what we have of the shipping address
-      - assume that the rates will still be 'valid' when the user confirms the order,
-        i.e. that the same state will yield the same result later
-
-      resolve({ shippingRates: newRates })
-    */
     try {
-      resolve()
+      const updateOrderResult = await updateOrderMutation.submitMutation({
+        variables: {
+          input: {
+            id: orderData.internalID,
+            shippingCity: city,
+            shippingRegion: state,
+            shippingCountry: country,
+          },
+        },
+      })
+
+      const validatedResult = validateAndExtractOrderResponse(
+        updateOrderResult.updateOrder?.orderOrError,
+      )
+
+      const shippingRates = extractShippingRates(validatedResult.order)
+      resolve({ shippingRates })
+      return
     } catch (error) {
+      console.error("Error updating order", error)
       reject()
     }
   }
@@ -151,22 +196,38 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     reject,
   }: StripeExpressCheckoutElementShippingRateChangeEvent) => {
     console.warn("Shipping rate change", shippingRate)
-    /*
-    
-    option 1 : mutate order fulfillment type, get calculated result
-       (ie taxes ready to submit order) from order JSON
-     - send update to order to save selected fulfillment option (shipping rate) and whatever
-       shipping destination data we do have available
-     - result should include full data now like taxes...
-
-     option 2
-      - send a new request to get estimated taxes based on line items including shipping rate
-      - set local state here similar to above for both shipping rate and taxes
-    */
 
     try {
-      resolve()
+      const { id } = shippingRate
+
+      let type
+      if (["DOMESTIC_FLAT", "INTERNATIONAL_FLAT", "PICKUP"].includes(id)) {
+        type = id
+      }
+      if (!type) {
+        // SHIPPING_TBD and any unrecognized types are handled as a no-op
+        return
+      }
+
+      const result = await setFulfillmentOptionMutation.submitMutation({
+        variables: {
+          input: {
+            id: orderData.internalID,
+            fulfillmentOption: {
+              type,
+            },
+          },
+        },
+      })
+      const data = result.setOrderFulfillmentOption?.orderOrError
+
+      const validatedResult = validateAndExtractOrderResponse(data)
+
+      const shippingRates = extractShippingRates(validatedResult.order)
+      resolve({ shippingRates })
+      return
     } catch (error) {
+      console.error("Error updating order", error)
       reject()
     }
   }
@@ -181,7 +242,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }: StripeExpressCheckoutElementConfirmEvent) => {
     const {
       name,
-      address: { line1, line2, city, state, postalCode, country },
+      address: { line1, line2, city, state, postal_code, country },
     } = shippingAddress as NonNullable<
       StripeExpressCheckoutElementConfirmEvent["shippingAddress"]
     >
@@ -193,6 +254,28 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     // const
 
     try {
+      // Finally we have all fulfillment details
+      const updateOrderResult = await updateOrderMutation.submitMutation({
+        variables: {
+          input: {
+            id: orderData.internalID,
+            buyerPhoneNumber: phone,
+            buyerPhoneNumberCountryCode: null,
+            shippingName: name,
+            shippingAddressLine1: line1,
+            shippingAddressLine2: line2,
+            shippingPostalCode: postal_code,
+            shippingCity: city,
+            shippingRegion: state,
+            shippingCountry: country,
+          },
+        },
+      })
+
+      validateAndExtractOrderResponse(
+        updateOrderResult.updateOrder?.orderOrError,
+      )
+
       const { error } = await stripe.confirmPayment({
         elements: elements,
         clientSecret,
@@ -267,16 +350,25 @@ const ORDER_FRAGMENT = graphql`
   }
 `
 
+interface OrderWithAvailableShippingCountries {
+  readonly availableShippingCountries: ReadonlyArray<string>
+}
 const extractAllowedShippingCountries = (
-  order: ExpressCheckoutUI_order$data,
+  order: OrderWithAvailableShippingCountries,
 ): ClickResolveDetails["allowedShippingCountries"] => {
   return order.availableShippingCountries.map(countryCode =>
     countryCode.toUpperCase(),
   )
 }
 
+interface OrderWithFulfillmentOptions {
+  readonly fulfillmentOptions: ReadonlyArray<{
+    readonly type: string
+    readonly amount?: { readonly minor?: number } | null
+  }>
+}
 const extractShippingRates = (
-  order: ExpressCheckoutUI_order$data,
+  order: OrderWithFulfillmentOptions,
 ): Array<ShippingRate> => {
   return order.fulfillmentOptions
     .map(option => {

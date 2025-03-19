@@ -12,8 +12,16 @@ export const useUpdateOrderMutation = () => {
             ... on OrderMutationSuccess {
               order {
                 internalID
-
                 ...ExpressCheckoutUI_order
+                availableShippingCountries
+                fulfillmentOptions {
+                  type
+                  amount {
+                    minor
+                    currencyCode
+                  }
+                  selected
+                }
               }
             }
             ... on OrderMutationError {
