@@ -30,6 +30,7 @@ export const ShareCollectionDialog: React.FC<
   const { user } = useSystemContext()
   const { trackEvent } = useTracking()
   const [isShared, setIsShared] = useState(false)
+  const [isUpdating, setIsUpdating] = useState(false)
 
   const [mode, setMode] = useState<"Idle" | "Copied">("Idle")
 
@@ -67,8 +68,29 @@ export const ShareCollectionDialog: React.FC<
 
   const { sendToast } = useToasts()
 
-  const handleToggle = x => {
-    alert(JSON.stringify(x))
+  const handleToggle = async toggleValue => {
+    try {
+      setIsUpdating(true)
+      await submitMutation({
+        variables: {
+          input: {
+            id: collectionId,
+            private: !toggleValue, // negate the toggle, because the flag is for 'private', not 'public'
+          },
+        },
+        rejectIf: res => {
+          return !!res.updateCollection?.responseOrError?.mutationError
+        },
+      })
+      setIsShared(toggleValue)
+      setIsUpdating(false)
+    } catch (error) {
+      onClose()
+      sendToast({
+        message: "Failed to enable sharing",
+        variant: "error",
+      })
+    }
   }
 
   if (!user) return null
@@ -82,7 +104,7 @@ export const ShareCollectionDialog: React.FC<
           <Text>Create a shareable link to allow others to view this list</Text>
           <Toggle
             selected={isShared}
-            disabled={false}
+            disabled={isUpdating}
             aria-label={
               isShared ? "Disable shareable link" : "Enable shareable link"
             }
@@ -90,14 +112,14 @@ export const ShareCollectionDialog: React.FC<
           />
         </Flex>
 
-        <Input value={url} readOnly />
+        <Input value={url} readOnly disabled={!isShared} />
 
         <Flex my={1} gap={1}>
           <Button
             width={1}
             variant="secondaryBlack"
             onClick={handleClick}
-            disabled={mode === "Copied"}
+            disabled={!isShared || mode === "Copied"}
           >
             {mode === "Copied" ? "Copied to clipboard" : "Copy URL"}
           </Button>
@@ -111,6 +133,7 @@ export const ShareCollectionDialog: React.FC<
             href={url}
             target="_blank"
             onClick={handleOpenInNewTab}
+            disabled={!isShared}
           >
             Open in new tab
           </Button>
