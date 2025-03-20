@@ -19618,6 +19618,14 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
 
   # A description of the show
   description: String
+
+  # Retrieve all documents for this show
+  documentsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): PartnerDocumentConnection
   endAt(
     format: String
 
