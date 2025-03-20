@@ -92,11 +92,10 @@ const SavesArtworksHeader: FC<
         )}
       </Stack>
 
-      {mode === "Share" && (
+      {mode === "Share" && collection && (
         <ShareCollectionDialog
           onClose={() => setMode("Idle")}
-          collectionId={collection.slug || collection.internalID}
-          collectionName={collection.name}
+          collection={collection}
         />
       )}
     </>
@@ -126,6 +125,7 @@ const QUERY = graphql`
         internalID
         name
         default
+        private
         shareableWithPartners
         slug
       }

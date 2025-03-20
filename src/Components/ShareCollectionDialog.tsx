@@ -13,6 +13,7 @@ import {
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { getENV } from "Utils/getENV"
+import { SavesArtworksHeaderQuery$data } from "__generated__/SavesArtworksHeaderQuery.graphql"
 import type { ShareCollectionDialogMutation } from "__generated__/ShareCollectionDialogMutation.graphql"
 import { useState } from "react"
 import { graphql } from "react-relay"
@@ -20,13 +21,14 @@ import { useTracking } from "react-tracking"
 
 export interface ShareCollectionDialogProps {
   onClose: () => void
-  collectionId: string
-  collectionName: string
+  collection: NonNullable<
+    NonNullable<SavesArtworksHeaderQuery$data["me"]>["collection"]
+  >
 }
 
 export const ShareCollectionDialog: React.FC<
   React.PropsWithChildren<ShareCollectionDialogProps>
-> = ({ onClose, collectionId, collectionName }) => {
+> = ({ onClose, collection }) => {
   const { user } = useSystemContext()
   const { trackEvent } = useTracking()
   const [isShared, setIsShared] = useState(false)
@@ -38,7 +40,7 @@ export const ShareCollectionDialog: React.FC<
     navigator?.clipboard.writeText(url)
     setMode("Copied")
 
-    trackEvent(tracks.clickedCopyButton(collectionId))
+    trackEvent(tracks.clickedCopyButton(collection.internalID))
 
     setTimeout(() => {
       setMode("Idle")
@@ -46,7 +48,7 @@ export const ShareCollectionDialog: React.FC<
   }
 
   const handleOpenInNewTab = () => {
-    trackEvent(tracks.clickedOpenInNewTab(collectionId))
+    trackEvent(tracks.clickedOpenInNewTab(collection.internalID))
   }
 
   const { submitMutation } = useMutation<ShareCollectionDialogMutation>({
@@ -74,7 +76,7 @@ export const ShareCollectionDialog: React.FC<
       await submitMutation({
         variables: {
           input: {
-            id: collectionId,
+            id: collection.internalID,
             private: !toggleValue, // negate the toggle, because the flag is for 'private', not 'public'
           },
         },
@@ -95,7 +97,7 @@ export const ShareCollectionDialog: React.FC<
 
   if (!user) return null
 
-  const url = `${getENV("APP_URL")}/user/${user.id}/collection/${collectionId}`
+  const url = `${getENV("APP_URL")}/user/${user.id}/collection/${collection.slug ?? collection.internalID}`
 
   return (
     <ModalDialog onClose={onClose} title="Share List">
