@@ -4,9 +4,11 @@ import {
   Button,
   Input,
   ModalDialog,
-  Skeleton,
+  Text,
   Stack,
   useToasts,
+  Flex,
+  Toggle,
 } from "@artsy/palette"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
@@ -27,6 +29,7 @@ export const ShareCollectionDialog: React.FC<
 > = ({ onClose, collectionId, collectionName }) => {
   const { user } = useSystemContext()
   const { trackEvent } = useTracking()
+  const [isShared, setIsShared] = useState(false)
 
   const [mode, setMode] = useState<"Idle" | "Copied">("Idle")
 
@@ -64,31 +67,34 @@ export const ShareCollectionDialog: React.FC<
 
   const { sendToast } = useToasts()
 
+  const handleToggle = x => {
+    alert(JSON.stringify(x))
+  }
+
   if (!user) return null
 
   const url = `${getENV("APP_URL")}/user/${user.id}/collection/${collectionId}`
 
   return (
     <ModalDialog onClose={onClose} title="Share List">
-      {mode === "Updating" ? (
-        <Skeleton>
-          <Stack gap={1}>
-            <Input value={url} readOnly disabled />
+      <Stack gap={1}>
+        <Flex flexDirection="row" gap={2} mb={1}>
+          <Text>Create a shareable link to allow others to view this list</Text>
+          <Toggle
+            selected={isShared}
+            disabled={false}
+            aria-label={
+              isShared ? "Disable shareable link" : "Enable shareable link"
+            }
+            onSelect={handleToggle}
+          />
+        </Flex>
 
-            <Button variant="secondaryBlack" disabled>
-              Copy URL
-            </Button>
+        <Input value={url} readOnly />
 
-            <Button variant="primaryBlack" disabled>
-              Open in new tab
-            </Button>
-          </Stack>
-        </Skeleton>
-      ) : (
-        <Stack gap={1}>
-          <Input value={url} readOnly />
-
+        <Flex my={1} gap={1}>
           <Button
+            width={1}
             variant="secondaryBlack"
             onClick={handleClick}
             disabled={mode === "Copied"}
@@ -97,7 +103,8 @@ export const ShareCollectionDialog: React.FC<
           </Button>
 
           <Button
-            variant="primaryBlack"
+            width={1}
+            variant="secondaryBlack"
             Icon={ShareIcon}
             // @ts-ignore
             as="a"
@@ -107,8 +114,9 @@ export const ShareCollectionDialog: React.FC<
           >
             Open in new tab
           </Button>
-        </Stack>
-      )}
+        </Flex>
+        <Button onClick={onClose}>Done</Button>
+      </Stack>
     </ModalDialog>
   )
 }
