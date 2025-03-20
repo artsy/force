@@ -4,6 +4,8 @@ import { ARTIST_WORKS_FOR_SALE_QUERY } from "Apps/Artist/Routes/WorksForSale/Art
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import type { RouteProps } from "System/Router/Route"
+import { extractNodes } from "Utils/extractNodes"
+import type { ArtistWorksForSaleRouteArtworksQuery } from "__generated__/ArtistWorksForSaleRouteArtworksQuery.graphql"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
@@ -128,7 +130,27 @@ export const artistRoutes: RouteProps[] = [
         onPreloadJS: () => {
           WorksForSaleRoute.preload()
         },
-        prefetchSubQueries: [ARTIST_WORKS_FOR_SALE_QUERY],
+        prefetchSubQueries: [
+          {
+            query: ARTIST_WORKS_FOR_SALE_QUERY,
+            onComplete: (
+              data: ArtistWorksForSaleRouteArtworksQuery["response"],
+            ) => {
+              const images = extractNodes(
+                data.artist?.prefetchArtworksConnection,
+              ).map(node => node.image?.url)
+
+              images.forEach(image => {
+                if (image) {
+                  const img = new Image()
+                  img.src = image
+                }
+              })
+
+              console.log("prefetch-complete", data)
+            },
+          },
+        ],
         prepareVariables: getWorksForSaleRouteVariables,
         query: graphql`
           query artistRoutes_WorksForSaleQuery($artistID: String!) @cacheable {

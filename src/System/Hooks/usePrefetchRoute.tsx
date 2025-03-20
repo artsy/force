@@ -124,9 +124,9 @@ export const usePrefetchRoute = ({
           enableSubQueryPrefetchOnHover &&
           prefetchSubQueries?.length
         ) {
-          prefetchSubQueries.forEach(prefetchQuery => {
+          prefetchSubQueries.forEach(({ query, onComplete }) => {
             fetchQueryData({
-              query: prefetchQuery,
+              query,
               variables,
               serverCacheTTL,
               onStart: () => {
@@ -136,6 +136,9 @@ export const usePrefetchRoute = ({
                     path,
                   )
                 }
+              },
+              onNext: data => {
+                onComplete?.(data)
               },
               onComplete: () => {
                 if (isDevelopment) {
@@ -165,6 +168,7 @@ export const usePrefetchRoute = ({
     variables,
     serverCacheTTL,
     onStart,
+    onNext,
     onComplete,
     onError,
   }) => {
@@ -184,6 +188,9 @@ export const usePrefetchRoute = ({
     ).subscribe({
       start: () => {
         onStart()
+      },
+      next: response => {
+        onNext?.(response)
       },
       complete: () => {
         onComplete()
