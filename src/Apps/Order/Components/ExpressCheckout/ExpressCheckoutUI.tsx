@@ -22,6 +22,7 @@ import type {
 import { useSetFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSetFulfillmentOptionMutation"
 import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import createLogger from "Utils/logger"
 import type { ExpressCheckoutUI_order$key } from "__generated__/ExpressCheckoutUI_order.graphql"
 import type { FulfillmentOptionInputEnum } from "__generated__/useSetFulfillmentOptionMutation.graphql"
 import { useState } from "react"
@@ -32,6 +33,8 @@ import styled from "styled-components"
 interface ExpressCheckoutUIProps {
   order: ExpressCheckoutUI_order$key
 }
+
+const logger = createLogger("ExpressCheckoutUI")
 
 export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
@@ -56,7 +59,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }
 
   const resetOrder = async () => {
-    // reset fulfillment type: Not yet supported
+    // TODO: reset fulfillment type: Not yet supported
     //   const result = await setFulfillmentOptionMutation.submitMutation({
     //     variables: {
     //       input: {
@@ -120,7 +123,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         shippingRates: extractShippingRates(order),
       })
     } catch (error) {
-      console.error("Error resetting order on load", error)
+      logger.error("Error resetting order on load", error)
     }
   }
 
@@ -145,7 +148,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
 
     trackEvent(event)
 
-    console.warn("Express checkout element cancelled - resetting")
+    logger.warn("Express checkout element cancelled - resetting")
     await resetOrder()
   }
 
@@ -157,7 +160,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     resolve,
     reject,
   }: StripeExpressCheckoutElementShippingAddressChangeEvent) => {
-    console.warn("Express checkout element address change", address)
+    logger.warn("Express checkout element address change", address)
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { city, state, country } = address
@@ -182,7 +185,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       resolve({ shippingRates })
       return
     } catch (error) {
-      console.error("Error updating order", error)
+      logger.error("Error updating order", error)
       reject()
     }
   }
@@ -193,10 +196,10 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     resolve,
     reject,
   }: StripeExpressCheckoutElementShippingRateChangeEvent) => {
-    console.warn("Shipping rate change", shippingRate)
+    logger.warn("Shipping rate change", shippingRate)
 
     if (shippingRate.id === "SHIPPING_TBD") {
-      console.warn(
+      logger.warn(
         "Shipping rate is still calculating, skipping - order cannot be transacted yet",
       )
       resolve()
@@ -221,7 +224,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       resolve({ shippingRates })
       return
     } catch (error) {
-      console.error("Error updating order", error)
+      logger.error("Error updating order", error)
       reject()
     }
   }
@@ -277,11 +280,11 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       })
 
       if (error) {
-        console.error("Error confirming payment", error)
+        logger.error("Error confirming payment", error)
         return
       }
     } catch (error) {
-      console.error("Error confirming payment", error)
+      logger.error("Error confirming payment", error)
     }
   }
 
@@ -302,7 +305,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         onShippingAddressChange={handleShippingAddressChange}
         onShippingRateChange={handleShippingRateChange}
         onLoadError={e => {
-          console.error("Express checkout element error", e)
+          logger.error("Express checkout element error", e)
         }}
         onConfirm={onConfirm}
       />
@@ -404,7 +407,7 @@ const extractShippingRates = (
             amount: 0,
           }
         default:
-          console.warn("Unhandled fulfillment option", type)
+          logger.warn("Unhandled fulfillment option", type)
       }
       return rate
     })
