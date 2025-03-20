@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34f2346f9cee176bf563e55b27d9f9c5>>
+ * @generated SignedSource<<e446a8a2d0805101426d27280be3c4d2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type SavesArtworksHeaderQuery$data = {
       readonly internalID: string;
       readonly name: string;
       readonly shareableWithPartners: boolean;
-      readonly slug: string;
+      readonly slug: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
 };

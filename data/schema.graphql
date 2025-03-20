@@ -4559,7 +4559,7 @@ type Collection {
   # True if this collection represents artworks explicitly saved by the user, false otherwise.
   saves: Boolean!
   shareableWithPartners: Boolean!
-  slug: String!
+  slug: String
 }
 
 enum CollectionArtworkSorts {
