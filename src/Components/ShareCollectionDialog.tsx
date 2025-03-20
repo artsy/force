@@ -31,7 +31,7 @@ export const ShareCollectionDialog: React.FC<
 > = ({ onClose, collection }) => {
   const { user } = useSystemContext()
   const { trackEvent } = useTracking()
-  const [isShared, setIsShared] = useState(false)
+  const [isShared, setIsShared] = useState(!collection.private)
   const [isUpdating, setIsUpdating] = useState(false)
 
   const [mode, setMode] = useState<"Idle" | "Copied">("Idle")
