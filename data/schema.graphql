@@ -15731,6 +15731,7 @@ type Partner implements Node {
   contactsConnection(
     after: String
     before: String
+    contactType: contactType
     first: Int
     last: Int
   ): ContactConnection
@@ -23333,6 +23334,11 @@ enum addressType {
   BUSINESS
   OTHER
   TEMPORARY
+}
+
+enum contactType {
+  ADMIN
+  PARTNER
 }
 
 input createAlertInput {
