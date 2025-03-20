@@ -83,7 +83,7 @@ export const RouterLink: React.FC<
   })
 
   const handleMouseOver = () => {
-    if (enablePrefetch) {
+    if (enablePrefetch && !isPrefetched) {
       prefetch()
     }
   }
