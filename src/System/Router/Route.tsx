@@ -18,6 +18,7 @@ interface Route extends RouteObjectBase {
 
   prepareVariables?: (params: any, props: any) => object
   query?: GraphQLTaggedNode
+  prefetchSubQueries?: GraphQLTaggedNode[]
   scrollToTop?: boolean
   shouldWarnBeforeLeaving?: boolean
 

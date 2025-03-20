@@ -30,33 +30,7 @@ const ArtistWorksForSaleRoute: React.FC<
       />
       <Meta name="description" content={description} />
       <SystemQueryRenderer<ArtistWorksForSaleRouteArtworksQuery>
-        query={graphql`
-          query ArtistWorksForSaleRouteArtworksQuery(
-            $artistID: String!
-            $aggregations: [ArtworkAggregation]
-            $input: FilterArtworksInput!
-          ) @cacheable {
-            artist(id: $artistID) {
-              ...ArtistArtworkFilter_artist @arguments(input: $input)
-              sidebarAggregations: filterArtworksConnection(
-                aggregations: $aggregations
-                first: 1
-              ) {
-                counts {
-                  total
-                }
-                aggregations {
-                  slice
-                  counts {
-                    name
-                    value
-                    count
-                  }
-                }
-              }
-            }
-          }
-        `}
+        query={ARTIST_WORKS_FOR_SALE_QUERY}
         variables={{
           ...getWorksForSaleRouteVariables(
             match.params as { artistID: string },
@@ -98,6 +72,34 @@ const ArtistWorksForSaleRoute: React.FC<
     </>
   )
 }
+
+export const ARTIST_WORKS_FOR_SALE_QUERY = graphql`
+  query ArtistWorksForSaleRouteArtworksQuery(
+    $artistID: String!
+    $aggregations: [ArtworkAggregation]
+    $input: FilterArtworksInput!
+  ) @cacheable {
+    artist(id: $artistID) {
+      ...ArtistArtworkFilter_artist @arguments(input: $input)
+      sidebarAggregations: filterArtworksConnection(
+        aggregations: $aggregations
+        first: 1
+      ) {
+        counts {
+          total
+        }
+        aggregations {
+          slice
+          counts {
+            name
+            value
+            count
+          }
+        }
+      }
+    }
+  }
+`
 
 export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
   ArtistWorksForSaleRoute,

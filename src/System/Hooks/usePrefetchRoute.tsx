@@ -52,7 +52,7 @@ export const usePrefetchRoute = ({
         } = foundRoute
 
         const {
-          route: { query, prepareVariables },
+          route: { query, prefetchSubQueries, prepareVariables },
         } = foundRoute
 
         const variables = (() => {
@@ -69,39 +69,66 @@ export const usePrefetchRoute = ({
           return null
         }
 
-        const subscription = fetchQuery(
-          relayEnvironment,
+        // Prefetch primary route query
+        const subscription = fetchQueryData({
           query,
-          { ...variables, isPrefetched: true }, // Inject a variable to indicate this is a prefetch
-          {
-            fetchPolicy: "store-or-network",
-            networkCacheConfig: {
-              force: false,
-              metadata: {
-                maxAge: serverCacheTTL,
-              },
-            },
-          },
-        ).subscribe({
-          start: () => {
+          variables,
+          serverCacheTTL,
+          onStart: () => {
             if (isDevelopment) {
-              console.log("[usePrefetchRoute] Starting prefetch:", path)
+              console.log(
+                "[usePrefetchRoute] Starting prefetch [primary-query]:",
+                path,
+              )
             }
 
             // Prefetch bundle split JS alongside data, if defined
             foundRoute.route.onPreloadJS?.()
           },
-          complete: () => {
+          onComplete: () => {
             if (isDevelopment) {
-              console.log("[usePrefetchRoute] Completed:", path)
+              console.log("[usePrefetchRoute] Completed [primary-query]:", path)
             }
 
             onComplete?.()
           },
-          error: () => {
-            console.error("[usePrefetchRoute] Error prefetching:", path)
+          onError: () => {
+            console.error(
+              "[usePrefetchRoute] Error prefetching [primary-query]:",
+              path,
+            )
           },
         })
+
+        // If there are prefetchSubQueries, fetch them as well
+        if (prefetchSubQueries?.length) {
+          prefetchSubQueries.forEach(prefetchQuery => {
+            fetchQueryData({
+              query: prefetchQuery,
+              variables,
+              serverCacheTTL,
+              onStart: () => {
+                if (isDevelopment) {
+                  console.log(
+                    "[usePrefetchRoute] Starting prefetch [sub-query]:",
+                    path,
+                  )
+                }
+              },
+              onComplete: () => {
+                if (isDevelopment) {
+                  console.log("[usePrefetchRoute] Completed [sub-query]:", path)
+                }
+              },
+              onError: () => {
+                console.error(
+                  "[usePrefetchRoute] Error prefetching [sub-query]:",
+                  path,
+                )
+              },
+            })
+          })
+        }
 
         return subscription
       })
@@ -110,6 +137,42 @@ export const usePrefetchRoute = ({
     },
     [initialPath, prefetchDisabled],
   )
+
+  const fetchQueryData = ({
+    query,
+    variables,
+    serverCacheTTL,
+    onStart,
+    onComplete,
+    onError,
+  }) => {
+    const subscription = fetchQuery(
+      relayEnvironment,
+      query,
+      { ...variables, isPrefetched: true }, // Inject a variable to indicate this is a prefetch
+      {
+        fetchPolicy: "store-or-network",
+        networkCacheConfig: {
+          force: false,
+          metadata: {
+            maxAge: serverCacheTTL,
+          },
+        },
+      },
+    ).subscribe({
+      start: () => {
+        onStart()
+      },
+      complete: () => {
+        onComplete()
+      },
+      error: () => {
+        onError()
+      },
+    })
+
+    return subscription
+  }
 
   return { prefetch }
 }

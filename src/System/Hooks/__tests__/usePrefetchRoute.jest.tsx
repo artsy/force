@@ -141,7 +141,7 @@ describe("usePrefetchRoute", () => {
     result.current.prefetch()
 
     expect(console.error).toHaveBeenCalledWith(
-      "[usePrefetchRoute] Error prefetching:",
+      "[usePrefetchRoute] Error prefetching [primary-query]:",
       "/foo/bar",
     )
   })
@@ -175,11 +175,11 @@ describe("usePrefetchRoute", () => {
     result.current.prefetch()
 
     expect(console.log).toHaveBeenCalledWith(
-      "[usePrefetchRoute] Starting prefetch:",
+      "[usePrefetchRoute] Starting prefetch [primary-query]:",
       "/foo/bar",
     )
     expect(console.log).toHaveBeenCalledWith(
-      "[usePrefetchRoute] Completed:",
+      "[usePrefetchRoute] Completed [primary-query]:",
       "/foo/bar",
     )
   })
@@ -235,6 +235,53 @@ describe("usePrefetchRoute", () => {
         fetchPolicy: "store-or-network",
         networkCacheConfig: { force: false, metadata: { maxAge: 1000 } },
       },
+    )
+  })
+
+  it("should prefetch `prefetchSubQueries` if they exist", () => {
+    const mockRoute = {
+      match: { params: { id: "bar" } },
+      route: {
+        path: "/foo/:id",
+        query: ["TestQuery"],
+        prefetchSubQueries: ["TestSubQuery"],
+        prepareVariables: jest.fn().mockReturnValue({ id: "bar" }),
+      },
+    }
+    const mockSubscription = { unsubscribe: jest.fn() }
+
+    mockFindRoutesByPath.mockReturnValue([mockRoute])
+    mockTake.mockReturnValue([mockRoute])
+    mockFetchQuery.mockReturnValue({
+      subscribe: jest.fn(({ start, complete }) => {
+        start()
+        complete()
+        return mockSubscription
+      }),
+    })
+
+    console.log = jest.fn()
+
+    const { result } = renderHook(() =>
+      usePrefetchRoute({ initialPath: "/foo/bar" }),
+    )
+    result.current.prefetch()
+
+    expect(console.log).toHaveBeenCalledWith(
+      "[usePrefetchRoute] Starting prefetch [primary-query]:",
+      "/foo/bar",
+    )
+    expect(console.log).toHaveBeenCalledWith(
+      "[usePrefetchRoute] Completed [primary-query]:",
+      "/foo/bar",
+    )
+    expect(console.log).toHaveBeenCalledWith(
+      "[usePrefetchRoute] Starting prefetch [sub-query]:",
+      "/foo/bar",
+    )
+    expect(console.log).toHaveBeenCalledWith(
+      "[usePrefetchRoute] Completed [sub-query]:",
+      "/foo/bar",
     )
   })
 })

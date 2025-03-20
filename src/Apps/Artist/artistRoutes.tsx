@@ -1,5 +1,6 @@
 import loadable from "@loadable/component"
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
+import { ARTIST_WORKS_FOR_SALE_QUERY } from "Apps/Artist/Routes/WorksForSale/ArtistWorksForSaleRoute"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import type { RouteProps } from "System/Router/Route"
@@ -127,6 +128,7 @@ export const artistRoutes: RouteProps[] = [
         onPreloadJS: () => {
           WorksForSaleRoute.preload()
         },
+        prefetchSubQueries: [ARTIST_WORKS_FOR_SALE_QUERY],
         prepareVariables: getWorksForSaleRouteVariables,
         query: graphql`
           query artistRoutes_WorksForSaleQuery($artistID: String!) @cacheable {
