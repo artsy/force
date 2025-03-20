@@ -1,11 +1,11 @@
-import { FC, ReactElement } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { Flex, Text } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useTimer } from "Utils/Hooks/useTimer"
-import { SaleMessageQuery } from "__generated__/SaleMessageQuery.graphql"
-import { SaleMessage_artwork$data } from "__generated__/SaleMessage_artwork.graphql"
-import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
+import type { Details_artwork$data } from "__generated__/Details_artwork.graphql"
+import type { SaleMessageQuery } from "__generated__/SaleMessageQuery.graphql"
+import type { SaleMessage_artwork$data } from "__generated__/SaleMessage_artwork.graphql"
+import type { FC, ReactElement } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface PublicSaleMessageProps {
   artwork: Details_artwork$data

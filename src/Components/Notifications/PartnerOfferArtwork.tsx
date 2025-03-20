@@ -1,5 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Box, Button, Flex, Image, Link, Text, useTheme } from "@artsy/palette"
+import { Box, Button, Image, Link, Text, useTheme } from "@artsy/palette"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import Metadata from "Components/Artwork/Metadata"
 import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
@@ -102,26 +102,15 @@ export const PartnerOfferArtwork: FC<
           artwork={artwork}
           contextModule={ContextModule.activity}
           showSaveButton
-          hideSaleInfo
+          hideSaleInfo={!fullyAvailable}
           maxWidth="100%"
           to={fullyAvailable ? artworkListingHref : href}
         />
 
         {fullyAvailable && (
-          <Flex flexDirection="row">
-            <Text
-              variant="xs"
-              color="black100"
-              fontWeight="bold"
-              overflowEllipsis
-            >
-              {priceWithDiscount}
-              {" "}
-            </Text>
-            <Text variant="xs" color="black60" overflowEllipsis>
-              (List price: {priceListed})
-            </Text>
-          </Flex>
+          <Text variant="xs" color="black60" overflowEllipsis>
+            (List price: {priceListed})
+          </Text>
         )}
       </Box>
       <Box
