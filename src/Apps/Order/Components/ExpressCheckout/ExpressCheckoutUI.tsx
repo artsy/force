@@ -12,6 +12,7 @@ import {
 } from "@stripe/react-stripe-js"
 import type {
   ClickResolveDetails,
+  ExpressPaymentType,
   ShippingRate,
   StripeExpressCheckoutElementClickEvent,
   StripeExpressCheckoutElementConfirmEvent,
@@ -36,6 +37,11 @@ interface ExpressCheckoutUIProps {
 
 const logger = createLogger("ExpressCheckoutUI")
 
+// This prop has no type definition in stripe
+type HandleCancelCallback = NonNullable<
+  React.ComponentProps<typeof ExpressCheckoutElement>["onCancel"]
+>
+
 export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const [visible, setVisible] = useState(false)
@@ -45,6 +51,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const { trackEvent } = useTracking()
   const setFulfillmentOptionMutation = useSetFulfillmentOptionMutation()
   const updateOrderMutation = useUpdateOrderMutation()
+  const [expressCheckoutType, setExpressCheckoutType] =
+    useState<ExpressPaymentType | null>(null)
 
   if (!(stripe && elements)) {
     return null
@@ -111,6 +119,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
             : "Make offer",
       payment_method: expressPaymentType,
     }
+    setExpressCheckoutType(expressPaymentType)
 
     trackEvent(event)
     try {
@@ -127,10 +136,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     }
   }
 
-  const handleCancel = async ({
-    expressPaymentType,
-    resolve,
-  }: StripeExpressCheckoutElementClickEvent) => {
+  const handleCancel: HandleCancelCallback = async () => {
     const event: ClickedCancelExpressCheckout = {
       action: ActionType.clickedCancelExpressCheckout,
       context_page_owner_type: OwnerType.ordersShipping,
@@ -143,13 +149,14 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           : orderData.mode === "BUY"
             ? "Buy now"
             : "Make offer",
-      payment_method: expressPaymentType,
+      payment_method: expressCheckoutType as string,
     }
 
     trackEvent(event)
 
     logger.warn("Express checkout element cancelled - resetting")
     await resetOrder()
+    setExpressCheckoutType(null)
   }
 
   // User selects a shipping address

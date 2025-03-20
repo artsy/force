@@ -36,7 +36,7 @@ jest.mock("@stripe/react-stripe-js", () => {
           <button
             type="button"
             data-testid="express-checkout-cancel"
-            onClick={() => onCancel({ expressPaymentType: "apple_pay" })}
+            onClick={() => onCancel()}
           >
             Cancel
           </button>
@@ -145,9 +145,22 @@ describe("ExpressCheckoutUI", () => {
     })
   })
 
-  it("tracks an express checkout cancel event", () => {
-    renderWithRelay({
+  it("tracks an express checkout cancel event", async () => {
+    const { mockResolveLastOperation } = renderWithRelay({
       Order: () => ({ ...orderData }),
+    })
+
+    // We have to do the fake open before we can do the fake cancel
+    // because opening sets the express checkout type (payment_method)
+    fireEvent.click(screen.getByTestId("express-checkout-button"))
+
+    await mockResolveLastOperation({
+      updateOrderPayload: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
     })
 
     fireEvent.click(screen.getByTestId("express-checkout-cancel"))
