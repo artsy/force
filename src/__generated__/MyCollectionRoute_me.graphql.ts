@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<42e14207222bcbb036371dec9db5687e>>
+ * @generated SignedSource<<d927d125845aaa858e1c18e25a30e9e3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,11 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionRoute_me$data = {
+  readonly myCollection: {
+    readonly internalID: string;
+    readonly private: boolean;
+    readonly slug: string;
+  } | null | undefined;
   readonly myCollectionConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -55,6 +60,44 @@ const node: ReaderFragment = {
   },
   "name": "MyCollectionRoute_me",
   "selections": [
+    {
+      "alias": "myCollection",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "id",
+          "value": "my-collection"
+        }
+      ],
+      "concreteType": "Collection",
+      "kind": "LinkedField",
+      "name": "collection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "slug",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "private",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "collection(id:\"my-collection\")"
+    },
     {
       "alias": "myCollectionConnection",
       "args": null,
@@ -151,6 +194,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "90bf02c929b1358c41e9cef821762f5d";
+(node as any).hash = "f157c676f90174ca1740af1d57d46825";
 
 export default node;

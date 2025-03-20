@@ -13,7 +13,6 @@ import {
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { getENV } from "Utils/getENV"
-import { SavesArtworksHeaderQuery$data } from "__generated__/SavesArtworksHeaderQuery.graphql"
 import type { ShareCollectionDialogMutation } from "__generated__/ShareCollectionDialogMutation.graphql"
 import { useState } from "react"
 import { graphql } from "react-relay"
@@ -21,9 +20,11 @@ import { useTracking } from "react-tracking"
 
 export interface ShareCollectionDialogProps {
   onClose: () => void
-  collection: NonNullable<
-    NonNullable<SavesArtworksHeaderQuery$data["me"]>["collection"]
-  >
+  collection: {
+    internalID: string
+    slug: string
+    private: boolean
+  }
 }
 
 export const ShareCollectionDialog: React.FC<
