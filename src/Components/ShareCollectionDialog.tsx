@@ -22,7 +22,7 @@ export interface ShareCollectionDialogProps {
   onClose: () => void
   collection: {
     internalID: string
-    slug: string
+    slug: string | null | undefined
     private: boolean
   }
 }
@@ -35,7 +35,7 @@ export const ShareCollectionDialog: React.FC<
   const [isShared, setIsShared] = useState(!collection.private)
   const [isUpdating, setIsUpdating] = useState(false)
   const [copyMode, setCopyMode] = useState<"Idle" | "Copied">("Idle")
-  const [slug, setSlug] = useState<string | undefined>(collection.slug)
+  const [slug, setSlug] = useState<string | null | undefined>(collection.slug)
 
   const handleClick = () => {
     navigator?.clipboard.writeText(url)

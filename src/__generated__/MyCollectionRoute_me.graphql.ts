@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d927d125845aaa858e1c18e25a30e9e3>>
+ * @generated SignedSource<<b9b84a771fc4b4940fccad069d720809>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type MyCollectionRoute_me$data = {
   readonly myCollection: {
     readonly internalID: string;
     readonly private: boolean;
-    readonly slug: string;
+    readonly slug: string | null | undefined;
   } | null | undefined;
   readonly myCollectionConnection: {
     readonly edges: ReadonlyArray<{

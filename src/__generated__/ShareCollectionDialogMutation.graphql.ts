@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b213615c3d45f1fa7c91425300f34adb>>
+ * @generated SignedSource<<2592b17e2fb078bea96304326d42a760>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,7 @@ export type ShareCollectionDialogMutation$data = {
       readonly collection?: {
         readonly internalID: string;
         readonly private: boolean;
-        readonly slug: string;
+        readonly slug: string | null | undefined;
       } | null | undefined;
       readonly mutationError?: {
         readonly message: string;
