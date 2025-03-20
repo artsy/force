@@ -80,6 +80,7 @@ export const myNewAppRoutes: AppRouteConfig[] = [
         </div>
       )
     },
+    // Typically prefetched by default unless cacheConfig is set to true above
     query: graphql`
       query myNewAppRoutesQuery {
         artist(id: "andy-warhol") {
@@ -87,6 +88,13 @@ export const myNewAppRoutes: AppRouteConfig[] = [
         }
       }
     `,
+    // If there are lazy loaded components that you want to prefetch, pass the
+    // query in here. Takes the same arguments as returned from prepareVariables.
+    // Currently only supported when a user hovers over an item matching the
+    // path.
+    prefetchSubQueries: [
+      SOME_GRID_QUERY
+    ]
   },
 ]
 ```
@@ -105,7 +113,7 @@ Extending the example above, lets add a server-side redirect if the user isn't l
 export function myNewAppRedirect({ req, res, next }) {
   if (!res.locals.sd.CURRENT_USER) {
     return res.redirect(
-      `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`
+      `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`,
     )
   }
 }
