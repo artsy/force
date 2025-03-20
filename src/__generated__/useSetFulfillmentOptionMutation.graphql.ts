@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<08f8bcf1a61a0feda529cd367ca26ed0>>
+ * @generated SignedSource<<d6674be5997113908e5989cab4ed5dfb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FulfillmentOptionInputEnum = "DOMESTIC_EXPEDITED" | "DOMESTIC_FLAT" | "DOMESTIC_PRIORITY" | "INTERNATIONAL_EXPEDITED" | "INTERNATIONAL_STANDARD" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
+export type FulfillmentOptionInputEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "%future added value";
 export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 export type setOrderFulfillmentOptionInput = {
   clientMutationId?: string | null | undefined;
