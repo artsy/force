@@ -10,7 +10,6 @@ import {
 } from "@artsy/palette"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { useOnce } from "Utils/Hooks/useOnce"
 import { getENV } from "Utils/getENV"
 import type { ShareCollectionDialogMutation } from "__generated__/ShareCollectionDialogMutation.graphql"
 import { useState } from "react"
@@ -29,9 +28,7 @@ export const ShareCollectionDialog: React.FC<
   const { user } = useSystemContext()
   const { trackEvent } = useTracking()
 
-  const [mode, setMode] = useState<"Idle" | "Updating" | "Ready" | "Copied">(
-    "Idle",
-  )
+  const [mode, setMode] = useState<"Idle" | "Copied">("Idle")
 
   const handleClick = () => {
     navigator?.clipboard.writeText(url)
@@ -66,33 +63,6 @@ export const ShareCollectionDialog: React.FC<
   })
 
   const { sendToast } = useToasts()
-
-  useOnce(async () => {
-    setMode("Updating")
-
-    try {
-      await submitMutation({
-        variables: {
-          input: {
-            id: collectionId,
-            name: collectionName, // TODO: Shouldn't be required
-            private: false,
-          },
-        },
-        rejectIf: res => {
-          return !!res.updateCollection?.responseOrError?.mutationError
-        },
-      })
-
-      setMode("Ready")
-    } catch (error) {
-      onClose()
-      sendToast({
-        message: "Failed to share collection",
-        variant: "error",
-      })
-    }
-  })
 
   if (!user) return null
 
