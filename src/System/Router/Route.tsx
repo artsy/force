@@ -18,6 +18,12 @@ interface Route extends RouteObjectBase {
 
   prepareVariables?: (params: any, props: any) => object
   query?: GraphQLTaggedNode
+  /**
+   * If there are any queries in the route we'd like to prefetch (in order to
+   * warm the cache), declare them here.
+   *
+   * Currently only supported on hover. See RouterLink.tsx for usage.
+  ) */
   prefetchSubQueries?: GraphQLTaggedNode[]
   scrollToTop?: boolean
   shouldWarnBeforeLeaving?: boolean

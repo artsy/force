@@ -13,11 +13,23 @@ interface UsePrefetchRouteProps {
   onComplete?: () => void
 }
 
+interface PrefetchProps {
+  path?: string
+  /**
+   * Enable to support query prefetching
+   * @see: RouterLink.tsx
+   *
+   * We're conservative here so that we don't overload ElasticSearch.
+   * @see: https://github.com/artsy/force/pull/15090#issue-2793798833
+   */
+  enableSubQueryPrefetchOnHover?: boolean
+}
+
 export const usePrefetchRoute = ({
   initialPath,
   onComplete,
 }: UsePrefetchRouteProps = {}): {
-  prefetch: (path?: string) => Array<Subscription | null> | null
+  prefetch: (props?: PrefetchProps) => Array<Subscription | null> | null
 } => {
   const { relayEnvironment } = useSystemContext()
 
@@ -33,7 +45,10 @@ export const usePrefetchRoute = ({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const prefetch = useCallback(
-    (path = initialPath) => {
+    (props: PrefetchProps) => {
+      const { path = initialPath, enableSubQueryPrefetchOnHover = false } =
+        props || {}
+
       if (prefetchDisabled) {
         return null
       }
@@ -106,6 +121,7 @@ export const usePrefetchRoute = ({
         // If there are prefetchSubQueries, fetch them as well
         if (
           prefetchSubqueriesFeatureFlagEnabled &&
+          enableSubQueryPrefetchOnHover &&
           prefetchSubQueries?.length
         ) {
           prefetchSubQueries.forEach(prefetchQuery => {

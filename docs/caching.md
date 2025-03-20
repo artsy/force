@@ -85,6 +85,7 @@ const myRouter = [
       }
     `,
     // Takes the same arguments as returned from prepareVariables, or route params
+    // Note: Currently only enabled on hover
     prefetchSubQueries: [SOME_ARTWORK_GRID_QUERY],
   },
 ]

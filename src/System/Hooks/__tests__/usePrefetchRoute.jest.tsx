@@ -105,7 +105,7 @@ describe("usePrefetchRoute", () => {
 
     const { result } = renderHook(() => usePrefetchRoute())
 
-    const subscriptions = result.current.prefetch("/foo/bar")
+    const subscriptions = result.current.prefetch({ path: "/foo/bar" })
     expect(subscriptions).toHaveLength(1)
     expect(subscriptions?.[0]).toEqual(mockSubscription)
     expect(mockFetchQuery).toHaveBeenCalledWith(
@@ -265,7 +265,7 @@ describe("usePrefetchRoute", () => {
     const { result } = renderHook(() =>
       usePrefetchRoute({ initialPath: "/foo/bar" }),
     )
-    result.current.prefetch()
+    result.current.prefetch({ enableSubQueryPrefetchOnHover: true })
 
     expect(console.log).toHaveBeenCalledWith(
       "[usePrefetchRoute] Starting prefetch [primary-query]:",

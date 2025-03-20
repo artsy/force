@@ -90,6 +90,8 @@ export const myNewAppRoutes: AppRouteConfig[] = [
     `,
     // If there are lazy loaded components that you want to prefetch, pass the
     // query in here. Takes the same arguments as returned from prepareVariables.
+    // Currently only supported when a user hovers over an item matching the
+    // path.
     prefetchSubQueries: [
       SOME_GRID_QUERY
     ]
