@@ -24,6 +24,9 @@ export const usePrefetchRoute = ({
   const { match } = useRouter()
 
   const prefetchFeatureFlagEnabled = useFeatureFlag("diamond_prefetch-hover")
+  const prefetchSubqueriesFeatureFlagEnabled = useFeatureFlag(
+    "diamond_prefetch-subqueries",
+  )
 
   // If we're transitioning routes, we don't want to prefetch
   const prefetchDisabled = !prefetchFeatureFlagEnabled || !match?.elements
@@ -101,7 +104,10 @@ export const usePrefetchRoute = ({
         })
 
         // If there are prefetchSubQueries, fetch them as well
-        if (prefetchSubQueries?.length) {
+        if (
+          prefetchSubqueriesFeatureFlagEnabled &&
+          prefetchSubQueries?.length
+        ) {
           prefetchSubQueries.forEach(prefetchQuery => {
             fetchQueryData({
               query: prefetchQuery,
