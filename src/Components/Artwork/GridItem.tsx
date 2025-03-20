@@ -196,7 +196,8 @@ const ArtworkGridItemImage: React.FC<
           srcSet={""}
           width={localImage.width}
           height={localImage.height}
-          lazyLoad={lazyLoad}
+          // lazyLoad={lazyLoad}
+
           preventRightClick={!isTeam}
         />
       </ResponsiveBox>
@@ -209,7 +210,7 @@ const ArtworkGridItemImage: React.FC<
         alt={artwork.imageTitle ?? ""}
         src={src}
         srcSet={srcSet}
-        lazyLoad={lazyLoad}
+        // lazyLoad={lazyLoad}
         preventRightClick={!isTeam}
       />
     )

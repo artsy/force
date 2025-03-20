@@ -81,6 +81,20 @@ export const ARTIST_WORKS_FOR_SALE_QUERY = graphql`
   ) @cacheable {
     artist(id: $artistID) {
       ...ArtistArtworkFilter_artist @arguments(input: $input)
+
+      prefetchArtworksConnection: filterArtworksConnection(
+        first: 4
+        input: $input
+      ) {
+        edges {
+          node {
+            image {
+              url(version: ["larger", "large"])
+            }
+          }
+        }
+      }
+
       sidebarAggregations: filterArtworksConnection(
         aggregations: $aggregations
         first: 1
