@@ -33,17 +33,16 @@ export const ShareCollectionDialog: React.FC<
   const { trackEvent } = useTracking()
   const [isShared, setIsShared] = useState(!collection.private)
   const [isUpdating, setIsUpdating] = useState(false)
-
-  const [mode, setMode] = useState<"Idle" | "Copied">("Idle")
+  const [copyMode, setCopyMode] = useState<"Idle" | "Copied">("Idle")
 
   const handleClick = () => {
     navigator?.clipboard.writeText(url)
-    setMode("Copied")
+    setCopyMode("Copied")
 
     trackEvent(tracks.clickedCopyButton(collection.internalID))
 
     setTimeout(() => {
-      setMode("Idle")
+      setCopyMode("Idle")
     }, 2000)
   }
 
@@ -121,9 +120,9 @@ export const ShareCollectionDialog: React.FC<
             width={1}
             variant="secondaryBlack"
             onClick={handleClick}
-            disabled={!isShared || mode === "Copied"}
+            disabled={!isShared}
           >
-            {mode === "Copied" ? "Copied to clipboard" : "Copy URL"}
+            {copyMode === "Copied" ? "Copied to clipboard" : "Copy link"}
           </Button>
 
           <Button
