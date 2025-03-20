@@ -99,7 +99,7 @@ export const ShareCollectionDialog: React.FC<
   const url = `${getENV("APP_URL")}/user/${user.id}/collection/${collectionId}`
 
   return (
-    <ModalDialog onClose={onClose} title="Share Collection">
+    <ModalDialog onClose={onClose} title="Share List">
       {mode === "Updating" ? (
         <Skeleton>
           <Stack gap={1}>
