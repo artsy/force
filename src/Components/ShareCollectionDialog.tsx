@@ -34,6 +34,7 @@ export const ShareCollectionDialog: React.FC<
   const [isShared, setIsShared] = useState(!collection.private)
   const [isUpdating, setIsUpdating] = useState(false)
   const [copyMode, setCopyMode] = useState<"Idle" | "Copied">("Idle")
+  const [slug, setSlug] = useState<string | undefined>(collection.slug)
 
   const handleClick = () => {
     navigator?.clipboard.writeText(url)
@@ -61,6 +62,13 @@ export const ShareCollectionDialog: React.FC<
                 message
               }
             }
+            ... on UpdateCollectionSuccess {
+              collection {
+                internalID
+                slug
+                private
+              }
+            }
           }
         }
       }
@@ -72,7 +80,7 @@ export const ShareCollectionDialog: React.FC<
   const handleToggle = async toggleValue => {
     try {
       setIsUpdating(true)
-      await submitMutation({
+      const result = await submitMutation({
         variables: {
           input: {
             id: collection.internalID,
@@ -83,6 +91,7 @@ export const ShareCollectionDialog: React.FC<
           return !!res.updateCollection?.responseOrError?.mutationError
         },
       })
+      setSlug(result.updateCollection?.responseOrError?.collection?.slug)
       setIsShared(toggleValue)
       setIsUpdating(false)
     } catch (error) {
@@ -96,7 +105,7 @@ export const ShareCollectionDialog: React.FC<
 
   if (!user) return null
 
-  const url = `${getENV("APP_URL")}/user/${user.id}/collection/${collection.slug ?? collection.internalID}`
+  const url = `${getENV("APP_URL")}/user/${user.id}/collection/${slug ?? collection.internalID}`
 
   return (
     <ModalDialog onClose={onClose} title="Share List">
