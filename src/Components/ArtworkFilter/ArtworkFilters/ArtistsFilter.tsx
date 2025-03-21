@@ -117,6 +117,7 @@ export const ArtistsFilter: FC<React.PropsWithChildren<ArtistsFilterProps>> = ({
     <FilterExpandable label={label} expanded={hasSelection || expanded}>
       <Flex flexDirection="column" gap={2} mt={1}>
         <Checkbox
+          data-testid="followedArtistsCheckbox"
           disabled={!user}
           selected={isFollowedArtistCheckboxSelected}
           onSelect={value => {
