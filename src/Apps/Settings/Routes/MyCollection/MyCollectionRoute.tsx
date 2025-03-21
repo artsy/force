@@ -136,6 +136,7 @@ export const MyCollectionRoutePaginationContainer = createPaginationContainer(
         myCollection: collection(id: "my-collection") {
           internalID
           slug
+          name
           private
         }
         myCollectionConnection(

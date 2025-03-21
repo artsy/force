@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b9b84a771fc4b4940fccad069d720809>>
+ * @generated SignedSource<<813cbff8a59edca5115d3afced9a5409>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type MyCollectionRoute_me$data = {
   readonly myCollection: {
     readonly internalID: string;
+    readonly name: string;
     readonly private: boolean;
     readonly slug: string | null | undefined;
   } | null | undefined;
@@ -86,6 +87,13 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "slug",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
           "storageKey": null
         },
         {
@@ -194,6 +202,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "f157c676f90174ca1740af1d57d46825";
+(node as any).hash = "9fb061ddf0a0f613172f15caffb87640";
 
 export default node;

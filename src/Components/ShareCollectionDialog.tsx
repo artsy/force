@@ -23,6 +23,7 @@ export interface ShareCollectionDialogProps {
   collection: {
     internalID: string
     slug: string | null | undefined
+    name: string
     private: boolean
   }
 }
@@ -110,7 +111,7 @@ export const ShareCollectionDialog: React.FC<
   const url = `${getENV("APP_URL")}/user/${user.id}/collection/${slug ?? collection.internalID}`
 
   return (
-    <ModalDialog onClose={onClose} title="Share List">
+    <ModalDialog onClose={onClose} title={`Share “${collection.name}”`}>
       <Stack gap={1}>
         <Flex flexDirection="row" gap={2} mb={1}>
           <Text>Create a shareable link to allow others to view this list</Text>
