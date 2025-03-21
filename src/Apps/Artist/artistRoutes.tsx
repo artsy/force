@@ -1,8 +1,11 @@
 import loadable from "@loadable/component"
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
+import { ARTIST_WORKS_FOR_SALE_QUERY } from "Apps/Artist/Routes/WorksForSale/ArtistWorksForSaleRoute"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import type { RouteProps } from "System/Router/Route"
+import { extractNodes } from "Utils/extractNodes"
+import type { ArtistWorksForSaleRouteArtworksQuery } from "__generated__/ArtistWorksForSaleRouteArtworksQuery.graphql"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
@@ -135,6 +138,29 @@ export const artistRoutes: RouteProps[] = [
             }
           }
         `,
+        prefetchSubQueries: [
+          {
+            query: ARTIST_WORKS_FOR_SALE_QUERY,
+            onComplete: (
+              data: ArtistWorksForSaleRouteArtworksQuery["response"],
+            ) => {
+              const images = extractNodes(
+                data.artist?.prefetchArtworksConnection,
+              ).map(node => node.image?.url)
+
+              requestIdleCallback(() => {
+                images.forEach(image => {
+                  if (image) {
+                    const img = new Image()
+                    img.src = image
+                  }
+                })
+
+                console.log("[artistRoutes] Prefetched images:", images)
+              })
+            },
+          },
+        ],
       },
       {
         path: "auction-results",

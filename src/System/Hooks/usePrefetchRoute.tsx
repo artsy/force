@@ -6,11 +6,15 @@ import { isDevelopment } from "Utils/device"
 import take from "lodash/take"
 import { useCallback } from "react"
 import { fetchQuery } from "react-relay"
-import type { OperationType, Subscription } from "relay-runtime"
+import type {
+  GraphQLTaggedNode,
+  OperationType,
+  Subscription,
+} from "relay-runtime"
 
 interface UsePrefetchRouteProps {
   initialPath?: string
-  onComplete?: () => void
+  onComplete?: (response?: any) => void
 }
 
 export const usePrefetchRoute = ({
@@ -52,7 +56,7 @@ export const usePrefetchRoute = ({
         } = foundRoute
 
         const {
-          route: { query, prepareVariables },
+          route: { query, prefetchSubQueries, prepareVariables },
         } = foundRoute
 
         const variables = (() => {
@@ -69,39 +73,72 @@ export const usePrefetchRoute = ({
           return null
         }
 
-        const subscription = fetchQuery(
-          relayEnvironment,
+        const subscription = fetchQueryData({
           query,
-          { ...variables, isPrefetched: true }, // Inject a variable to indicate this is a prefetch
-          {
-            fetchPolicy: "store-or-network",
-            networkCacheConfig: {
-              force: false,
-              metadata: {
-                maxAge: serverCacheTTL,
-              },
-            },
-          },
-        ).subscribe({
-          start: () => {
+          variables,
+          serverCacheTTL,
+          onStart: () => {
             if (isDevelopment) {
-              console.log("[usePrefetchRoute] Starting prefetch:", path)
+              // console.log("[usePrefetchRoute] Starting prefetch:", path)
             }
 
             // Prefetch bundle split JS alongside data, if defined
             foundRoute.route.onPreloadJS?.()
           },
-          complete: () => {
+          onComplete: () => {
             if (isDevelopment) {
-              console.log("[usePrefetchRoute] Completed:", path)
+              // console.log("[usePrefetchRoute] Completed:", path)
             }
 
             onComplete?.()
           },
-          error: () => {
-            console.error("[usePrefetchRoute] Error prefetching:", path)
+          onError: () => {
+            // console.error("[usePrefetchRoute] Error prefetching:", path)
           },
         })
+
+        // If there are prefetchSubQueries, fetch them as well
+        if (prefetchSubQueries?.length) {
+          prefetchSubQueries.forEach(
+            ({ query, transformVariables, onStart, onComplete }) => {
+              const subqueryVariables =
+                transformVariables?.(variables) ?? variables
+
+              console.log("subquery", subqueryVariables)
+
+              fetchQueryData({
+                query,
+                variables: subqueryVariables,
+                serverCacheTTL,
+                onStart: () => {
+                  if (isDevelopment) {
+                    // console.log(
+                    //   "[usePrefetchRoute] Starting prefetch [sub-query]:",
+                    //   path,
+                    // )
+                  }
+
+                  onStart?.(variables)
+                },
+                onComplete: response => {
+                  if (isDevelopment) {
+                    console.log(
+                      "[usePrefetchRoute] Completed [sub-query]:",
+                      path,
+                    )
+                  }
+                  onComplete?.(response)
+                },
+                onError: () => {
+                  console.error(
+                    "[usePrefetchRoute] Error prefetching [sub-query]:",
+                    path,
+                  )
+                },
+              })
+            },
+          )
+        }
 
         return subscription
       })
@@ -110,6 +147,51 @@ export const usePrefetchRoute = ({
     },
     [initialPath, prefetchDisabled],
   )
+
+  interface FetchQueryDataProps {
+    query: GraphQLTaggedNode
+    variables: OperationType["variables"]
+    serverCacheTTL?: number
+    onStart: () => void
+    onComplete: (response: any) => void
+    onError: () => void
+  }
+
+  const fetchQueryData = ({
+    query,
+    variables,
+    serverCacheTTL,
+    onStart,
+    onComplete,
+    onError,
+  }: FetchQueryDataProps) => {
+    const subscription = fetchQuery(
+      relayEnvironment,
+      query,
+      { ...variables, isPrefetched: true }, // Inject a variable to indicate this is a prefetch
+      {
+        fetchPolicy: "store-or-network",
+        networkCacheConfig: {
+          force: false,
+          metadata: {
+            maxAge: serverCacheTTL,
+          },
+        },
+      },
+    ).subscribe({
+      start: () => {
+        onStart()
+      },
+      next: response => {
+        onComplete(response)
+      },
+      error: () => {
+        onError()
+      },
+    })
+
+    return subscription
+  }
 
   return { prefetch }
 }
