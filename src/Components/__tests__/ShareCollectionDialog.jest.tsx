@@ -46,6 +46,7 @@ describe("ShareCollectionDialog", () => {
   const mockCollection = {
     internalID: "collection-id-1",
     slug: "test-collection-slug",
+    name: "Test Collection",
     private: true, // initially private
   } as ShareCollectionDialogProps["collection"]
 
@@ -61,7 +62,7 @@ describe("ShareCollectionDialog", () => {
       />,
     )
 
-    expect(screen.getByText("Share List")).toBeInTheDocument()
+    expect(screen.getByText("Share “Test Collection”")).toBeInTheDocument()
 
     const toggle = screen.getByRole("toggle")
     const inputField = screen.getByRole("textbox")
@@ -85,7 +86,7 @@ describe("ShareCollectionDialog", () => {
       />,
     )
 
-    expect(screen.getByText("Share List")).toBeInTheDocument()
+    expect(screen.getByText("Share “Test Collection”")).toBeInTheDocument()
 
     const toggle = screen.getByRole("toggle")
     const inputField = screen.getByRole("textbox")
