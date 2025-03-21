@@ -13,7 +13,6 @@ export const useUpdateOrderMutation = () => {
               order {
                 internalID
                 ...ExpressCheckoutUI_order
-                availableShippingCountries
                 fulfillmentOptions {
                   type
                   amount {
@@ -22,6 +21,17 @@ export const useUpdateOrderMutation = () => {
                   }
                   selected
                 }
+                buyerTotal {
+                  minor
+                  currencyCode
+                }
+                itemsTotal {
+                  minor
+                }
+                shippingTotal {
+                  minor
+                }
+                availableShippingCountries
               }
             }
             ... on OrderMutationError {

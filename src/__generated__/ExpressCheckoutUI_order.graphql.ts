@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cefad612709e515e38ea54f65a783679>>
+ * @generated SignedSource<<87da03375a4873a46705c54e3de217e2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,21 @@ export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PR
 import { FragmentRefs } from "relay-runtime";
 export type ExpressCheckoutUI_order$data = {
   readonly availableShippingCountries: ReadonlyArray<string>;
+  readonly buyerTotal: {
+    readonly currencyCode: string;
+    readonly minor: any;
+  } | null | undefined;
+  readonly fulfillmentDetails: {
+    readonly addressLine1: string | null | undefined;
+    readonly addressLine2: string | null | undefined;
+    readonly city: string | null | undefined;
+    readonly country: string | null | undefined;
+    readonly name: string | null | undefined;
+    readonly phoneNumber: string | null | undefined;
+    readonly phoneNumberCountryCode: string | null | undefined;
+    readonly postalCode: string | null | undefined;
+    readonly region: string | null | undefined;
+  } | null | undefined;
   readonly fulfillmentOptions: ReadonlyArray<{
     readonly amount: {
       readonly currencyCode: string;
@@ -24,6 +39,9 @@ export type ExpressCheckoutUI_order$data = {
     readonly type: FulfillmentOptionTypeEnum;
   }>;
   readonly internalID: string;
+  readonly itemsTotal: {
+    readonly minor: any;
+  } | null | undefined;
   readonly lineItems: ReadonlyArray<{
     readonly artwork: {
       readonly internalID: string;
@@ -31,6 +49,9 @@ export type ExpressCheckoutUI_order$data = {
     } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
+  readonly shippingTotal: {
+    readonly minor: any;
+  } | null | undefined;
   readonly source: OrderSourceEnum;
   readonly " $fragmentType": "ExpressCheckoutUI_order";
 };
@@ -46,7 +67,27 @@ var v0 = {
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
-};
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "minor",
+  "storageKey": null
+},
+v2 = [
+  (v1/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "currencyCode",
+    "storageKey": null
+  }
+],
+v3 = [
+  (v1/*: any*/)
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -66,6 +107,36 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "mode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Money",
+      "kind": "LinkedField",
+      "name": "buyerTotal",
+      "plural": false,
+      "selections": (v2/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Money",
+      "kind": "LinkedField",
+      "name": "itemsTotal",
+      "plural": false,
+      "selections": (v3/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Money",
+      "kind": "LinkedField",
+      "name": "shippingTotal",
+      "plural": false,
+      "selections": (v3/*: any*/),
       "storageKey": null
     },
     {
@@ -97,22 +168,7 @@ return {
           "kind": "LinkedField",
           "name": "amount",
           "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "minor",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "currencyCode",
-              "storageKey": null
-            }
-          ],
+          "selections": (v2/*: any*/),
           "storageKey": null
         },
         {
@@ -120,6 +176,80 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "selected",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "FulfillmentDetails",
+      "kind": "LinkedField",
+      "name": "fulfillmentDetails",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "addressLine1",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "addressLine2",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "city",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "postalCode",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "region",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "country",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "phoneNumber",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "phoneNumberCountryCode",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
           "storageKey": null
         }
       ],
@@ -161,6 +291,6 @@ return {
 };
 })();
 
-(node as any).hash = "9ae95b5e11f2dc22d1063f228f269624";
+(node as any).hash = "892cfc2f692675ac8b59b9941aa9aeac";
 
 export default node;

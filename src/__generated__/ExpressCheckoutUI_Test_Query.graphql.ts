@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4782b28939ed07174cef7ca3b6f88de9>>
+ * @generated SignedSource<<2d109871d8480b1ebd59d15e2ac7c254>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,6 +26,21 @@ export type ExpressCheckoutUI_Test_Query$rawResponse = {
     readonly id: string;
     readonly order: {
       readonly availableShippingCountries: ReadonlyArray<string>;
+      readonly buyerTotal: {
+        readonly currencyCode: string;
+        readonly minor: any;
+      } | null | undefined;
+      readonly fulfillmentDetails: {
+        readonly addressLine1: string | null | undefined;
+        readonly addressLine2: string | null | undefined;
+        readonly city: string | null | undefined;
+        readonly country: string | null | undefined;
+        readonly name: string | null | undefined;
+        readonly phoneNumber: string | null | undefined;
+        readonly phoneNumberCountryCode: string | null | undefined;
+        readonly postalCode: string | null | undefined;
+        readonly region: string | null | undefined;
+      } | null | undefined;
       readonly fulfillmentOptions: ReadonlyArray<{
         readonly amount: {
           readonly currencyCode: string;
@@ -36,6 +51,9 @@ export type ExpressCheckoutUI_Test_Query$rawResponse = {
       }>;
       readonly id: string;
       readonly internalID: string;
+      readonly itemsTotal: {
+        readonly minor: any;
+      } | null | undefined;
       readonly lineItems: ReadonlyArray<{
         readonly artwork: {
           readonly id: string;
@@ -45,6 +63,9 @@ export type ExpressCheckoutUI_Test_Query$rawResponse = {
         readonly id: string;
       } | null | undefined>;
       readonly mode: OrderModeEnum;
+      readonly shippingTotal: {
+        readonly minor: any;
+      } | null | undefined;
       readonly source: OrderSourceEnum;
     } | null | undefined;
   } | null | undefined;
@@ -71,6 +92,26 @@ v1 = {
   "storageKey": null
 },
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "minor",
+  "storageKey": null
+},
+v3 = [
+  (v2/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "currencyCode",
+    "storageKey": null
+  }
+],
+v4 = [
+  (v2/*: any*/)
+],
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -155,6 +196,36 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "concreteType": "Money",
+                "kind": "LinkedField",
+                "name": "buyerTotal",
+                "plural": false,
+                "selections": (v3/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Money",
+                "kind": "LinkedField",
+                "name": "itemsTotal",
+                "plural": false,
+                "selections": (v4/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Money",
+                "kind": "LinkedField",
+                "name": "shippingTotal",
+                "plural": false,
+                "selections": (v4/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "kind": "ScalarField",
                 "name": "availableShippingCountries",
                 "storageKey": null
@@ -181,22 +252,7 @@ return {
                     "kind": "LinkedField",
                     "name": "amount",
                     "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "minor",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "currencyCode",
-                        "storageKey": null
-                      }
-                    ],
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -204,6 +260,80 @@ return {
                     "args": null,
                     "kind": "ScalarField",
                     "name": "selected",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "FulfillmentDetails",
+                "kind": "LinkedField",
+                "name": "fulfillmentDetails",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "addressLine1",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "addressLine2",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "city",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "postalCode",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "region",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "country",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "phoneNumber",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "phoneNumberCountryCode",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
                     "storageKey": null
                   }
                 ],
@@ -233,31 +363,31 @@ return {
                         "name": "slug",
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v2/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": "order(id:\"123\")"
           },
-          (v2/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "364fbda45dfa0492daebd5118f25c289",
+    "cacheID": "ef78bd8c5f0a0223617fce5577f0a036",
     "id": null,
     "metadata": {},
     "name": "ExpressCheckoutUI_Test_Query",
     "operationKind": "query",
-    "text": "query ExpressCheckoutUI_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...ExpressCheckoutUI_order\n      id\n    }\n    id\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query ExpressCheckoutUI_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...ExpressCheckoutUI_order\n      id\n    }\n    id\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n    phoneNumberCountryCode\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

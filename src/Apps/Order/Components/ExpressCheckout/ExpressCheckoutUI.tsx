@@ -8,6 +8,7 @@ import type {
   AvailablePaymentMethods,
   ClickResolveDetails,
   ExpressPaymentType,
+  LineItem,
   ShippingRate,
   StripeExpressCheckoutElementClickEvent,
   StripeExpressCheckoutElementConfirmEvent,
@@ -16,14 +17,24 @@ import type {
   StripeExpressCheckoutElementShippingRateChangeEvent,
 } from "@stripe/stripe-js"
 import { useSetFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSetFulfillmentOptionMutation"
-import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
 import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSubmitOrderMutation"
-import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
+import {
+  type OrderMutationSuccess,
+  validateAndExtractOrderResponse,
+} from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import createLogger from "Utils/logger"
-import type { ExpressCheckoutUI_order$key } from "__generated__/ExpressCheckoutUI_order.graphql"
-import type { FulfillmentOptionInputEnum } from "__generated__/useSetFulfillmentOptionMutation.graphql"
-import { useState } from "react"
+import type {
+  ExpressCheckoutUI_order$data,
+  ExpressCheckoutUI_order$key,
+} from "__generated__/ExpressCheckoutUI_order.graphql"
+import type {
+  FulfillmentOptionInputEnum,
+  useSetFulfillmentOptionMutation$data,
+} from "__generated__/useSetFulfillmentOptionMutation.graphql"
+import type { useUpdateOrderMutation$data } from "__generated__/useUpdateOrderMutation.graphql"
+import { useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
 
@@ -50,6 +61,17 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
 
+  // update parent elements with the order amount when it changes
+  // we could also do it in the individual callbacks below.
+  const buyerTotalMinor = orderData.buyerTotal?.minor
+  useEffect(() => {
+    if (buyerTotalMinor) {
+      elements?.update({
+        amount: buyerTotalMinor,
+      })
+    }
+  }, [buyerTotalMinor, elements])
+
   if (!(stripe && elements)) {
     return null
   }
@@ -61,15 +83,15 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
 
   const resetOrder = async () => {
     // TODO: reset fulfillment type: Not yet supported
-    //   const result = await setFulfillmentOptionMutation.submitMutation({
-    //     variables: {
-    //       input: {
-    //         id: orderData.internalID,
-    //         fulfillmentOption: null,
-    //       },
+    // const result = await setFulfillmentOptionMutation.submitMutation({
+    //   variables: {
+    //     input: {
+    //       id: orderData.internalID,
+    //       fulfillmentOption: null,
     //     },
-    //   })
-    //   validateAndExtractOrderResponse(result.setOrderFulfillmentOption?.orderOrError)
+    //   },
+    // })
+    // validateAndExtractOrderResponse(result.setOrderFulfillmentOption?.orderOrError)
 
     // reset fulfillment details
     const fulfillmentDetailsResult = await updateOrderMutation.submitMutation({
@@ -113,6 +135,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         ...checkoutOptions,
         allowedShippingCountries: extractAllowedShippingCountries(order),
         shippingRates: extractShippingRates(order),
+        lineItems: extractLineItems(order),
       })
     } catch (error) {
       logger.error("Error resetting order on load", error)
@@ -161,11 +184,13 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       )
 
       const shippingRates = extractShippingRates(validatedResult.order)
-      resolve({ shippingRates })
+      const lineItems = extractLineItems(validatedResult.order)
+      resolve({ shippingRates, lineItems })
       return
     } catch (error) {
       logger.error("Error updating order", error)
       reject()
+      return
     }
   }
 
@@ -177,11 +202,21 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }: StripeExpressCheckoutElementShippingRateChangeEvent) => {
     logger.warn("Shipping rate change", shippingRate)
 
-    if (shippingRate.id === "SHIPPING_TBD") {
+    if (shippingRate.id === CALCULATING_SHIPPING_RATE.id) {
       logger.warn(
         "Shipping rate is still calculating, skipping - order cannot be transacted yet",
       )
       resolve()
+      return
+    }
+
+    if (shippingRate.id !== "PICKUP") {
+      logger.warn(
+        "Shipping rate is not pickup so not supported for now, skipping",
+      )
+      // elements.update({ amount: 42069 })
+      resolve()
+      return
     }
 
     try {
@@ -334,6 +369,16 @@ const ORDER_FRAGMENT = graphql`
     internalID
     source
     mode
+    buyerTotal {
+      minor
+      currencyCode
+    }
+    itemsTotal {
+      minor
+    }
+    shippingTotal {
+      minor
+    }
     availableShippingCountries
     fulfillmentOptions {
       type
@@ -343,6 +388,18 @@ const ORDER_FRAGMENT = graphql`
       }
       selected
     }
+    fulfillmentDetails {
+      addressLine1
+      addressLine2
+      city
+      postalCode
+      region
+      country
+      phoneNumber
+      phoneNumberCountryCode
+      name
+    }
+
     lineItems {
       artwork {
         internalID
@@ -352,73 +409,126 @@ const ORDER_FRAGMENT = graphql`
   }
 `
 
-interface OrderWithAvailableShippingCountries {
-  readonly availableShippingCountries: ReadonlyArray<string>
+type SetFulfillmentOrderResult = OrderMutationSuccess<
+  NonNullable<
+    useSetFulfillmentOptionMutation$data["setOrderFulfillmentOption"]
+  >["orderOrError"]
+>["order"]
+
+type UpdateOrderResult = OrderMutationSuccess<
+  NonNullable<useUpdateOrderMutation$data["updateOrder"]>["orderOrError"]
+>["order"]
+
+type ParseableOrder =
+  | ExpressCheckoutUI_order$data
+  | SetFulfillmentOrderResult
+  | UpdateOrderResult
+
+const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
+  const { itemsTotal, shippingTotal } = order
+
+  if (!itemsTotal) {
+    throw new Error("itemsTotal is required")
+  }
+
+  // TODO: Change to let when we have shipping and tax lines
+  let shippingLine: LineItem | null = null
+  const taxLine: LineItem | null = null
+
+  const itemsSubtotal = {
+    name: "Subtotal",
+    amount: itemsTotal.minor,
+  }
+
+  const selectedFulfillmentOption = order.fulfillmentOptions.find(
+    option => option.selected,
+  )
+
+  if (selectedFulfillmentOption && shippingTotal) {
+    const shippingRate = shippingRateForFulfillmentOption(
+      selectedFulfillmentOption,
+    )
+    shippingLine = {
+      name: shippingRate?.displayName || "Shipping",
+      amount: shippingTotal.minor,
+    }
+  }
+
+  const lineItems: Array<LineItem> = [itemsSubtotal]
+  if (shippingLine) {
+    lineItems.push(shippingLine)
+  }
+  if (taxLine) {
+    lineItems.push(taxLine)
+  }
+  logger.warn("Line items", lineItems)
+  return lineItems
 }
 
 const extractAllowedShippingCountries = (
-  order: OrderWithAvailableShippingCountries,
+  order: ParseableOrder,
 ): ClickResolveDetails["allowedShippingCountries"] => {
   return order.availableShippingCountries.map(countryCode =>
     countryCode.toUpperCase(),
   )
 }
 
-interface OrderWithFulfillmentOptions {
-  readonly fulfillmentOptions: ReadonlyArray<{
-    readonly type: string
-    readonly amount?: { readonly minor?: number } | null
-  }>
+const CALCULATING_SHIPPING_RATE = {
+  id: "CALCULATING_SHIPPING",
+  displayName: "Calculating shipping...",
+  // Express checkout requires a number for amount
+  amount: 0,
+} as const
+
+const shippingRateForFulfillmentOption = option => {
+  const { type, amount } = option
+  switch (type) {
+    case "DOMESTIC_FLAT":
+      if (amount) {
+        return {
+          id: type,
+          displayName: "Domestic shipping",
+          amount: amount.minor,
+        }
+      }
+      break
+    case "INTERNATIONAL_FLAT":
+      if (amount) {
+        return {
+          id: type,
+          displayName: "International shipping",
+          amount: amount!.minor,
+        }
+      }
+      break
+    case "PICKUP":
+      if (amount) {
+        return {
+          id: type,
+          displayName: "Pickup",
+          amount: amount!.minor,
+        }
+      }
+      break
+    case "SHIPPING_TBD":
+      // TODO: Maybe we no longer return this (rates might be empty on
+      // server, define our fallback CALCULATING_SHIPPING_RATE in this file)
+      return null
+    default:
+      logger.warn("Unhandled fulfillment option", type)
+      return null
+  }
 }
 
-const extractShippingRates = (
-  order: OrderWithFulfillmentOptions,
-): Array<ShippingRate> => {
-  return order.fulfillmentOptions
-    .map(option => {
-      const { type, amount } = option
-      const rate: ShippingRate | null = null
-      switch (type) {
-        case "DOMESTIC_FLAT":
-          if (amount) {
-            return {
-              id: type,
-              displayName: "Domestic shipping",
-              amount: amount.minor,
-            }
-          }
-          break
-        case "INTERNATIONAL_FLAT":
-          if (amount) {
-            return {
-              id: type,
-              displayName: "International shipping",
-              amount: amount!.minor,
-            }
-          }
-          break
-        case "PICKUP":
-          if (amount) {
-            return {
-              id: type,
-              displayName: "Pickup",
-              amount: amount!.minor,
-            }
-          }
-          break
-        case "SHIPPING_TBD":
-          return {
-            id: type,
-            displayName: "Calculating shipping...",
-            // Express checkout requires a number for amount
-            amount: 0,
-          }
-        default:
-          logger.warn("Unhandled fulfillment option", type)
-      }
-      return rate
-    })
+const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
+  const rates = order.fulfillmentOptions
+    .map(shippingRateForFulfillmentOption)
     .filter(Boolean) as ShippingRate[]
+  const shippingRatesOnly = rates.filter(rate => rate.id !== "PICKUP")
+  if (shippingRatesOnly.length === 0) {
+    return rates.concat(CALCULATING_SHIPPING_RATE)
+  }
+  return rates
 }
 
 // Only max-height can be animated

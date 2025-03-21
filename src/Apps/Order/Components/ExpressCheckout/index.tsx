@@ -19,11 +19,11 @@ interface Props {
 
 export const ExpressCheckout = ({ order }: Props) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
-
   const { buyerTotal, itemsTotal } = orderData
 
   // fall back to itemsTotal if buyer total not available yet
-  // TODO: refresh this/refetch fragment when we do mutations
+  // TODO: refresh this/refetch fragment when we do mutations so we can update
+  // the checkout price?
   const total = buyerTotal || itemsTotal
 
   if (!(total && orderData.availableShippingCountries.length)) {
