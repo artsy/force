@@ -83,7 +83,7 @@ const SavesArtworksHeader: FC<
             onClick={handleShare}
             Icon={ShareIcon}
           >
-            Share
+            {collection.private ? "Share" : "Shared"}
           </Button>
         </Stack>
 
