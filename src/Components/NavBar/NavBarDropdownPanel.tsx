@@ -60,7 +60,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
           >
             <NavBarItemUnfocusableAnchor
               href={href}
-              onMouseOver={() => prefetch({ path: href })}
+              onMouseOver={() => prefetch(href)}
               onClick={event => {
                 handleClick(event)
                 setTimeout(() => setVisible(false), 100)

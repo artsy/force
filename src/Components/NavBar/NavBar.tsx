@@ -92,7 +92,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   useEffect(() => {
     const PREFETCH_NAVBAR_LINKS = ["/artists", "/collect"]
 
-    PREFETCH_NAVBAR_LINKS.forEach(path => prefetch({ path }))
+    PREFETCH_NAVBAR_LINKS.forEach(prefetch)
   }, [])
 
   const handleMobileNavClick = (
@@ -214,7 +214,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                   <Flex alignItems="center" display={["none", "flex"]}>
                     <NavBarItemLink
                       href="/collect"
-                      onMouseOver={() => prefetch({ path: "/collect" })}
+                      onMouseOver={() => prefetch("/collect")}
                       textDecoration="none"
                       onClick={handleClick}
                       data-label="Buy"
@@ -225,7 +225,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
                   <NavBarItemLink
                     href="/price-database"
-                    onMouseOver={() => prefetch({ path: "/price-database" })}
+                    onMouseOver={() => prefetch("/price-database")}
                     textDecoration="none"
                     onClick={handleClick}
                     data-label="Price Database"
@@ -236,7 +236,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                   <Flex alignItems="center" display={["none", "flex"]}>
                     <NavBarItemLink
                       href="/articles"
-                      onMouseOver={() => prefetch({ path: "/articles" })}
+                      onMouseOver={() => prefetch("/articles")}
                       textDecoration="none"
                       onClick={handleClick}
                       data-label="Articles"
@@ -396,7 +396,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
                 <NavBarItemLink
                   href="/auctions"
-                  onMouseOver={() => prefetch({ path: "/auctions" })}
+                  onMouseOver={() => prefetch("/auctions")}
                   onClick={handleClick}
                   data-label="Auctions"
                 >
@@ -405,7 +405,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
                 <NavBarItemLink
                   href="/viewing-rooms"
-                  onMouseOver={() => prefetch({ path: "/viewing-rooms" })}
+                  onMouseOver={() => prefetch("/viewing-rooms")}
                   onClick={handleClick}
                   data-label="Viewing Rooms"
                 >
@@ -414,7 +414,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
                 <NavBarItemLink
                   href="/galleries"
-                  onMouseOver={() => prefetch({ path: "/galleries" })}
+                  onMouseOver={() => prefetch("/galleries")}
                   onClick={handleClick}
                   data-label="Galleries"
                 >
@@ -423,7 +423,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
                 <NavBarItemLink
                   href="/art-fairs"
-                  onMouseOver={() => prefetch({ path: "/art-fairs" })}
+                  onMouseOver={() => prefetch("/art-fairs")}
                   onClick={handleClick}
                   data-label="Fairs & Events"
                 >
@@ -432,7 +432,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
                 <NavBarItemLink
                   href="/shows"
-                  onMouseOver={() => prefetch({ path: "/shows" })}
+                  onMouseOver={() => prefetch("/shows")}
                   onClick={handleClick}
                   data-label="Shows"
                 >
@@ -441,7 +441,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
                 <NavBarItemInstitutionsLink
                   href="/institutions"
-                  onMouseOver={() => prefetch({ path: "/institutions" })}
+                  onMouseOver={() => prefetch("/institutions")}
                   onClick={handleClick}
                   data-label="Institutions"
                 >

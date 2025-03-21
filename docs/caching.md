@@ -69,28 +69,6 @@ const myRouter = [
 ]
 ```
 
-5. Prefetch specific route query sub-queries (useful for lazy-loaded grids and the like):
-
-```tsx
-import { SOME_ARTWORK_GRID_QUERY } from "path/to/SomeApp"
-
-const myRouter = [
-  {
-    path: "/some-app",
-    query: graphql`
-      query SomeAppQuery($artistID: String!) @cacheable {
-        artist(id: $artistID) @principalField {
-          slug
-        }
-      }
-    `,
-    // Takes the same arguments as returned from prepareVariables, or route params
-    // Note: Currently only enabled on hover
-    prefetchSubQueries: [SOME_ARTWORK_GRID_QUERY],
-  },
-]
-```
-
 5. Never cache in a QueryRenderer or hook or other relay-centric component:
 
 ```tsx

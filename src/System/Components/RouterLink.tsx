@@ -84,7 +84,7 @@ export const RouterLink: React.FC<
 
   const handleMouseOver = () => {
     if (enablePrefetch) {
-      prefetch({ enableSubQueryPrefetchOnHover: true })
+      prefetch()
     }
   }
 
