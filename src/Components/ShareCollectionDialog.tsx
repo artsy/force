@@ -4,13 +4,14 @@ import {
   Button,
   Input,
   ModalDialog,
-  Skeleton,
+  Text,
   Stack,
   useToasts,
+  Flex,
+  Toggle,
 } from "@artsy/palette"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { useOnce } from "Utils/Hooks/useOnce"
 import { getENV } from "Utils/getENV"
 import type { ShareCollectionDialogMutation } from "__generated__/ShareCollectionDialogMutation.graphql"
 import { useState } from "react"
@@ -19,33 +20,37 @@ import { useTracking } from "react-tracking"
 
 export interface ShareCollectionDialogProps {
   onClose: () => void
-  collectionId: string
-  collectionName: string
+  collection: {
+    internalID: string
+    slug: string | null | undefined
+    name: string
+    private: boolean
+  }
 }
 
 export const ShareCollectionDialog: React.FC<
   React.PropsWithChildren<ShareCollectionDialogProps>
-> = ({ onClose, collectionId, collectionName }) => {
+> = ({ onClose, collection }) => {
   const { user } = useSystemContext()
   const { trackEvent } = useTracking()
-
-  const [mode, setMode] = useState<"Idle" | "Updating" | "Ready" | "Copied">(
-    "Idle",
-  )
+  const [isShared, setIsShared] = useState(!collection.private)
+  const [isUpdating, setIsUpdating] = useState(false)
+  const [copyMode, setCopyMode] = useState<"Idle" | "Copied">("Idle")
+  const [slug, setSlug] = useState<string | null | undefined>(collection.slug)
 
   const handleClick = () => {
     navigator?.clipboard.writeText(url)
-    setMode("Copied")
+    setCopyMode("Copied")
 
-    trackEvent(tracks.clickedCopyButton(collectionId))
+    trackEvent(tracks.clickedCopyButton(collection.internalID))
 
     setTimeout(() => {
-      setMode("Idle")
+      setCopyMode("Idle")
     }, 2000)
   }
 
   const handleOpenInNewTab = () => {
-    trackEvent(tracks.clickedOpenInNewTab(collectionId))
+    trackEvent(tracks.clickedOpenInNewTab(collection.internalID))
   }
 
   const { submitMutation } = useMutation<ShareCollectionDialogMutation>({
@@ -59,6 +64,13 @@ export const ShareCollectionDialog: React.FC<
                 message
               }
             }
+            ... on UpdateCollectionSuccess {
+              collection {
+                internalID
+                slug
+                private
+              }
+            }
           }
         }
       }
@@ -67,78 +79,80 @@ export const ShareCollectionDialog: React.FC<
 
   const { sendToast } = useToasts()
 
-  useOnce(async () => {
-    setMode("Updating")
-
+  const handleToggle = async toggleValue => {
     try {
-      await submitMutation({
+      setIsUpdating(true)
+      const result = await submitMutation({
         variables: {
           input: {
-            id: collectionId,
-            name: collectionName, // TODO: Shouldn't be required
-            private: false,
+            id: collection.internalID,
+            private: !toggleValue, // negate the toggle, because the flag is for 'private', not 'public'
           },
         },
         rejectIf: res => {
           return !!res.updateCollection?.responseOrError?.mutationError
         },
       })
-
-      setMode("Ready")
+      setSlug(result.updateCollection?.responseOrError?.collection?.slug)
+      setIsShared(toggleValue)
     } catch (error) {
       onClose()
       sendToast({
-        message: "Failed to share collection",
+        message: "Failed to enable sharing",
         variant: "error",
       })
+    } finally {
+      setIsUpdating(false)
     }
-  })
+  }
 
   if (!user) return null
 
-  const url = `${getENV("APP_URL")}/user/${user.id}/collection/${collectionId}`
+  const url = `${getENV("APP_URL")}/user/${user.id}/collection/${slug ?? collection.internalID}`
 
   return (
-    <ModalDialog onClose={onClose} title="Share Collection">
-      {mode === "Updating" ? (
-        <Skeleton>
-          <Stack gap={1}>
-            <Input value={url} readOnly disabled />
+    <ModalDialog onClose={onClose} title={`Share “${collection.name}”`}>
+      <Stack gap={1}>
+        <Flex flexDirection="row" gap={2} mb={1}>
+          <Text>Create a shareable link to allow others to view this list</Text>
+          <Toggle
+            selected={isShared}
+            disabled={isUpdating}
+            aria-label={
+              isShared ? "Disable shareable link" : "Enable shareable link"
+            }
+            onSelect={handleToggle}
+          />
+        </Flex>
 
-            <Button variant="secondaryBlack" disabled>
-              Copy URL
-            </Button>
+        <Input value={url} readOnly disabled={!isShared} />
 
-            <Button variant="primaryBlack" disabled>
-              Open in new tab
-            </Button>
-          </Stack>
-        </Skeleton>
-      ) : (
-        <Stack gap={1}>
-          <Input value={url} readOnly />
-
+        <Flex my={1} gap={1}>
           <Button
+            width={1}
             variant="secondaryBlack"
             onClick={handleClick}
-            disabled={mode === "Copied"}
+            disabled={!isShared}
           >
-            {mode === "Copied" ? "Copied to clipboard" : "Copy URL"}
+            {copyMode === "Copied" ? "Copied to clipboard" : "Copy link"}
           </Button>
 
           <Button
-            variant="primaryBlack"
+            width={1}
+            variant="secondaryBlack"
             Icon={ShareIcon}
             // @ts-ignore
             as="a"
             href={url}
             target="_blank"
             onClick={handleOpenInNewTab}
+            disabled={!isShared}
           >
             Open in new tab
           </Button>
-        </Stack>
-      )}
+        </Flex>
+        <Button onClick={onClose}>Done</Button>
+      </Stack>
     </ModalDialog>
   )
 }

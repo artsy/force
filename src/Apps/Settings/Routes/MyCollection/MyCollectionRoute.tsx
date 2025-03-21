@@ -37,7 +37,7 @@ const MyCollectionRoute: FC<
     cleanLocalImages()
   }, [])
 
-  const { myCollectionConnection } = me
+  const { myCollection, myCollectionConnection } = me
 
   const [mode, setMode] = useState<"Idle" | "Share">("Idle")
 
@@ -114,11 +114,10 @@ const MyCollectionRoute: FC<
         <EmptyMyCollectionPage />
       )}
 
-      {mode === "Share" && (
+      {mode === "Share" && myCollection && (
         <ShareCollectionDialog
           onClose={() => setMode("Idle")}
-          collectionId="my-collection"
-          collectionName="My Collection"
+          collection={myCollection}
         />
       )}
     </>
@@ -134,6 +133,12 @@ export const MyCollectionRoutePaginationContainer = createPaginationContainer(
         count: { type: "Int", defaultValue: 25 }
         cursor: { type: "String" }
       ) {
+        myCollection: collection(id: "my-collection") {
+          internalID
+          slug
+          name
+          private
+        }
         myCollectionConnection(
           first: $count
           after: $cursor

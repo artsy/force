@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34f2346f9cee176bf563e55b27d9f9c5>>
+ * @generated SignedSource<<0be54371b615b303d9dd57086e5c3f86>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,8 +18,9 @@ export type SavesArtworksHeaderQuery$data = {
       readonly default: boolean;
       readonly internalID: string;
       readonly name: string;
+      readonly private: boolean;
       readonly shareableWithPartners: boolean;
-      readonly slug: string;
+      readonly slug: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
 };
@@ -68,17 +69,24 @@ v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "shareableWithPartners",
+  "name": "private",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "shareableWithPartners",
   "storageKey": null
 },
 v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -112,7 +120,8 @@ return {
               (v3/*: any*/),
               (v4/*: any*/),
               (v5/*: any*/),
-              (v6/*: any*/)
+              (v6/*: any*/),
+              (v7/*: any*/)
             ],
             "storageKey": null
           }
@@ -150,27 +159,28 @@ return {
               (v4/*: any*/),
               (v5/*: any*/),
               (v6/*: any*/),
-              (v7/*: any*/)
+              (v7/*: any*/),
+              (v8/*: any*/)
             ],
             "storageKey": null
           },
-          (v7/*: any*/)
+          (v8/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "5d886fb930e896709b8510eb764fc5c0",
+    "cacheID": "905c11a783a4592ba2f56d2226bf3041",
     "id": null,
     "metadata": {},
     "name": "SavesArtworksHeaderQuery",
     "operationKind": "query",
-    "text": "query SavesArtworksHeaderQuery(\n  $id: String!\n) {\n  me {\n    collection(id: $id) {\n      internalID\n      name\n      default\n      shareableWithPartners\n      slug\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query SavesArtworksHeaderQuery(\n  $id: String!\n) {\n  me {\n    collection(id: $id) {\n      internalID\n      name\n      default\n      private\n      shareableWithPartners\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c3357788f75b58fdfcc8c7d65f638149";
+(node as any).hash = "ea48e8a6764d1e2e856015f132df33dd";
 
 export default node;

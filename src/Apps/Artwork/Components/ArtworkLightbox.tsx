@@ -34,7 +34,7 @@ const ArtworkLightbox: React.FC<
   const images = compact(artwork.images)
   const hasGeometry = !!images[0]?.resized?.width
 
-  const isBlurhashEnabled = useFeatureFlag("diamond_blurhash-on-artist-pages")
+  const isBlurhashEnabled = useFeatureFlag("diamond_artwork-page-blurhash")
   const localImage = useLocalImage(images[activeIndex])
 
   const resizedLocalImage = localImage && {
