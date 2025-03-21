@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<485923c15296da0acaf8ec5517eeec0a>>
+ * @generated SignedSource<<04c3ebd6467ee97055962e4428e61d90>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,37 +29,34 @@ var v0 = [
     "value": "foo"
   }
 ],
-v1 = {
-  "kind": "Literal",
-  "name": "height",
-  "value": 800
-},
-v2 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": [
-    "main",
-    "normalized",
-    "larger",
-    "large"
-  ]
-},
-v3 = {
-  "kind": "Literal",
-  "name": "width",
-  "value": 800
-},
-v4 = [
-  (v1/*: any*/),
+v1 = [
+  {
+    "kind": "Literal",
+    "name": "height",
+    "value": 1600
+  },
   {
     "kind": "Literal",
     "name": "quality",
     "value": 80
   },
-  (v2/*: any*/),
-  (v3/*: any*/)
+  {
+    "kind": "Literal",
+    "name": "version",
+    "value": [
+      "main",
+      "normalized",
+      "larger",
+      "large"
+    ]
+  },
+  {
+    "kind": "Literal",
+    "name": "width",
+    "value": 1600
+  }
 ],
-v5 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -79,13 +76,6 @@ v5 = [
     "args": null,
     "kind": "ScalarField",
     "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
     "storageKey": null
   }
 ];
@@ -196,42 +186,23 @@ return {
               },
               {
                 "alias": "fallback",
-                "args": (v4/*: any*/),
+                "args": (v1/*: any*/),
                 "concreteType": "CroppedImageUrl",
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": (v5/*: any*/),
-                "storageKey": "cropped(height:800,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
+                "selections": (v2/*: any*/),
+                "storageKey": "cropped(height:1600,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:1600)"
               },
               {
                 "alias": null,
-                "args": (v4/*: any*/),
+                "args": (v1/*: any*/),
                 "concreteType": "ResizedImageUrl",
                 "kind": "LinkedField",
                 "name": "resized",
                 "plural": false,
-                "selections": (v5/*: any*/),
-                "storageKey": "resized(height:800,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
-              },
-              {
-                "alias": "mobileLightboxSource",
-                "args": [
-                  (v1/*: any*/),
-                  {
-                    "kind": "Literal",
-                    "name": "quality",
-                    "value": 50
-                  },
-                  (v2/*: any*/),
-                  (v3/*: any*/)
-                ],
-                "concreteType": "ResizedImageUrl",
-                "kind": "LinkedField",
-                "name": "resized",
-                "plural": false,
-                "selections": (v5/*: any*/),
-                "storageKey": "resized(height:800,quality:50,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
+                "selections": (v2/*: any*/),
+                "storageKey": "resized(height:1600,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:1600)"
               },
               {
                 "alias": null,
@@ -256,12 +227,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b46fba0315d9ec8ccca65648ebf2114b",
+    "cacheID": "036c4f4d186ae16d98b8c5e35a1a84aa",
     "id": null,
     "metadata": {},
     "name": "ArtworkLightboxTestQuery",
     "operationKind": "query",
-    "text": "query ArtworkLightboxTestQuery {\n  artwork(id: \"foo\") {\n    ...ArtworkLightbox_artwork\n    id\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images(includeAll: false) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    blurhashDataURL(width: 801)\n    fallback: cropped(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    mobileLightboxSource: resized(quality: 50, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n"
+    "text": "query ArtworkLightboxTestQuery {\n  artwork(id: \"foo\") {\n    ...ArtworkLightbox_artwork\n    id\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images(includeAll: false) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    blurhashDataURL(width: 801)\n    fallback: cropped(quality: 80, width: 1600, height: 1600, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n    }\n    resized(quality: 80, width: 1600, height: 1600, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n    }\n    versions\n  }\n}\n"
   }
 };
 })();

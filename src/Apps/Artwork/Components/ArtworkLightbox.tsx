@@ -6,7 +6,6 @@ import {
 } from "@artsy/palette"
 import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { getENV } from "Utils/getENV"
 import { useLocalImage } from "Utils/localImageHelpers"
 import { userIsTeam } from "Utils/user"
 import type { ArtworkLightbox_artwork$data } from "__generated__/ArtworkLightbox_artwork.graphql"
@@ -24,7 +23,7 @@ interface ArtworkLightboxProps extends ClickableProps {
   lazyLoad?: boolean
 }
 
-const MAX_SIZE = 800
+const MAX_SIZE = 1600
 
 const ArtworkLightbox: React.FC<
   React.PropsWithChildren<ArtworkLightboxProps>
@@ -39,7 +38,6 @@ const ArtworkLightbox: React.FC<
 
   const resizedLocalImage = localImage && {
     src: localImage.data,
-    srcSet: undefined,
     ...scale({ ...localImage, maxWidth: MAX_SIZE, maxHeight: MAX_SIZE }),
   }
 
@@ -51,7 +49,6 @@ const ArtworkLightbox: React.FC<
     isDefault,
     placeholder,
     resized,
-    mobileLightboxSource,
     blurhashDataURL,
   } = images[activeIndex]
 
@@ -59,25 +56,10 @@ const ArtworkLightbox: React.FC<
 
   if (!image) return null
 
-  let lightboxImage = image
-
-  if (getENV("IS_MOBILE") && mobileLightboxSource) {
-    lightboxImage = mobileLightboxSource
-  }
-
-  // Always preload the 2x image for mobile lightbox if available
-  const preloadImage = mobileLightboxSource?.srcSet?.match(/ ([^ ]+) 2x/)?.[1]
-
   return (
     <>
       {isDefault && (
-        <Link
-          rel="preload"
-          as="image"
-          href={preloadImage}
-          imageSrcSet={lightboxImage.srcSet}
-          fetchPriority="high"
-        />
+        <Link rel="preload" as="image" href={image.src} fetchPriority="high" />
       )}
 
       <Clickable
@@ -96,7 +78,7 @@ const ArtworkLightbox: React.FC<
           data-testid="artwork-lightbox-box"
           bg="black10"
           mx={[0, 2]}
-          maxWidth={image.width || ("100%" as any)}
+          maxWidth={image.width ? image.width / 2 : ("100%" as any)}
           aspectWidth={image.width || 1}
           aspectHeight={image.height || 1}
         >
@@ -138,8 +120,7 @@ const ArtworkLightbox: React.FC<
               : {})}
             width="100%"
             height="100%"
-            src={lightboxImage.src}
-            srcSet={lightboxImage.srcSet}
+            src={image.src}
             alt={artwork.formattedMetadata ?? ""}
             position="relative"
             preventRightClick={!isTeam}
@@ -169,36 +150,23 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
           blurhashDataURL(width: 801)
           fallback: cropped(
             quality: 80
-            width: 800
-            height: 800
+            width: 1600
+            height: 1600
             version: ["main", "normalized", "larger", "large"]
           ) {
             width
             height
             src
-            srcSet
           }
           resized(
             quality: 80
-            width: 800
-            height: 800
+            width: 1600
+            height: 1600
             version: ["main", "normalized", "larger", "large"]
           ) {
             width
             height
             src
-            srcSet
-          }
-          mobileLightboxSource: resized(
-            quality: 50
-            width: 800
-            height: 800
-            version: ["main", "normalized", "larger", "large"]
-          ) {
-            width
-            height
-            src
-            srcSet
           }
           versions
         }
