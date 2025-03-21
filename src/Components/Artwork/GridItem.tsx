@@ -11,6 +11,7 @@ import { type LocalImage, useLocalImage } from "Utils/localImageHelpers"
 import { cropped, resized } from "Utils/resized"
 import { userIsTeam } from "Utils/user"
 import type { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
+import { useRouter } from "found"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import Metadata, { MetadataPlaceholder } from "./Metadata"
@@ -168,6 +169,8 @@ const ArtworkGridItemImage: React.FC<
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
 
+  const { match } = useRouter()
+
   const aspectRatio =
     localImage?.aspectRatio ??
     artwork.image?.aspectRatio ??
@@ -209,7 +212,7 @@ const ArtworkGridItemImage: React.FC<
         alt={artwork.imageTitle ?? ""}
         src={src}
         srcSet={srcSet}
-        lazyLoad={lazyLoad}
+        lazyLoad={match.location.state.isPrefetched ? false : lazyLoad}
         preventRightClick={!isTeam}
       />
     )
