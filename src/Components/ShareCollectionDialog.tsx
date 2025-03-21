@@ -94,13 +94,14 @@ export const ShareCollectionDialog: React.FC<
       })
       setSlug(result.updateCollection?.responseOrError?.collection?.slug)
       setIsShared(toggleValue)
-      setIsUpdating(false)
     } catch (error) {
       onClose()
       sendToast({
         message: "Failed to enable sharing",
         variant: "error",
       })
+    } finally {
+      setIsUpdating(false)
     }
   }
 
