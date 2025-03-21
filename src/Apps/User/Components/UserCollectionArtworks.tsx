@@ -52,7 +52,7 @@ export const UserCollectionArtworks: FC<
           })}
         </Masonry>
       ) : (
-        <Message>There aren‘t any works in this collection yet.</Message>
+        <Message>There aren’t any works in this list yet.</Message>
       )}
 
       <PaginationFragmentContainer
