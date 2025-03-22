@@ -53,6 +53,7 @@ export const RouterLink: React.FC<
 
   // When a prefetch is completed, propagate that in the router state.
   const [isPrefetched, setIsPrefetched] = React.useState(false)
+
   const { prefetch } = usePrefetchRoute({
     initialPath: to as string,
     onComplete: () => setIsPrefetched(true),
@@ -76,14 +77,14 @@ export const RouterLink: React.FC<
       threshold: 0.2,
     },
     onIntersection: () => {
-      if (enablePrefetch && isPrefetchOnEnterEnabled) {
+      if (!isPrefetched && enablePrefetch && isPrefetchOnEnterEnabled) {
         prefetch()
       }
     },
   })
 
   const handleMouseOver = () => {
-    if (enablePrefetch) {
+    if (!isPrefetched && enablePrefetch) {
       prefetch()
     }
   }
