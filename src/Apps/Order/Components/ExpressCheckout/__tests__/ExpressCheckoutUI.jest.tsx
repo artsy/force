@@ -1,6 +1,7 @@
 import { ExpressCheckoutElement } from "@stripe/react-stripe-js"
 import { fireEvent } from "@testing-library/react"
 import { screen } from "@testing-library/react"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ExpressCheckoutUI_Test_Query } from "__generated__/ExpressCheckoutUI_Test_Query.graphql"
 import { graphql } from "react-relay"
@@ -16,7 +17,7 @@ const mockResolveOnClick = jest.fn()
 jest.mock("@stripe/react-stripe-js", () => {
   return {
     useStripe: jest.fn(() => ({})),
-    useElements: jest.fn(),
+    useElements: jest.fn(() => ({})),
     ExpressCheckoutElement: jest.fn(({ onClick, onCancel }) => {
       return (
         <div>
@@ -35,7 +36,7 @@ jest.mock("@stripe/react-stripe-js", () => {
           <button
             type="button"
             data-testid="express-checkout-cancel"
-            onClick={() => onCancel({ expressPaymentType: "apple_pay" })}
+            onClick={() => onCancel()}
           >
             Cancel
           </button>
@@ -78,10 +79,43 @@ describe("ExpressCheckoutUI", () => {
       buttonTheme: { applePay: "white-outline" },
       buttonHeight: 50,
     })
+  })
+
+  it("unsets the order fulfillment details and uses the result for initial values on load", async () => {
+    const { mockResolveLastOperation, env } = renderWithRelay({
+      Order: () => ({
+        ...orderData,
+        fulfillmentOptions: [{ type: "SHIPPING_TBD", amount: null }],
+      }),
+    })
 
     fireEvent.click(screen.getByTestId("express-checkout-button"))
 
+    const { operationName, operationVariables } =
+      await mockResolveLastOperation({
+        updateOrderPayload: () => ({
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: orderData,
+          },
+        }),
+      })
+    expect(operationName).toBe("useUpdateOrderMutation")
+    expect(operationVariables.input).toEqual({
+      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+      buyerPhoneNumber: null,
+      buyerPhoneNumberCountryCode: null,
+      shippingAddressLine1: null,
+      shippingAddressLine2: null,
+      shippingCity: null,
+      shippingCountry: null,
+      shippingName: null,
+      shippingPostalCode: null,
+      shippingRegion: null,
+    })
+
     // Where we load initial values into the express checkout element
+    await flushPromiseQueue()
     expect(mockResolveOnClick).toHaveBeenCalledWith({
       allowedShippingCountries: ["US"],
       phoneNumberRequired: true,
@@ -90,6 +124,8 @@ describe("ExpressCheckoutUI", () => {
         { amount: 4200, displayName: "Domestic shipping", id: "DOMESTIC_FLAT" },
       ],
     })
+    await flushPromiseQueue()
+    expect(env.mock.getAllOperations()).toHaveLength(0)
   })
 
   it("tracks an express checkout click event", () => {
@@ -109,9 +145,22 @@ describe("ExpressCheckoutUI", () => {
     })
   })
 
-  it("tracks an express checkout cancel event", () => {
-    renderWithRelay({
+  it("tracks an express checkout cancel event", async () => {
+    const { mockResolveLastOperation } = renderWithRelay({
       Order: () => ({ ...orderData }),
+    })
+
+    // We have to do the fake open before we can do the fake cancel
+    // because opening sets the express checkout type (payment_method)
+    fireEvent.click(screen.getByTestId("express-checkout-button"))
+
+    await mockResolveLastOperation({
+      updateOrderPayload: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
     })
 
     fireEvent.click(screen.getByTestId("express-checkout-cancel"))
@@ -124,6 +173,40 @@ describe("ExpressCheckoutUI", () => {
       flow: "Buy now",
       payment_method: "apple_pay",
     })
+  })
+
+  it("resets the order fulfillment details when the cancel button is clicked", async () => {
+    const { mockResolveLastOperation, env } = renderWithRelay({
+      Order: () => orderData,
+    })
+
+    fireEvent.click(screen.getByTestId("express-checkout-cancel"))
+
+    const { operationName, operationVariables } =
+      await mockResolveLastOperation({
+        setOrderFulfillmentOptionPayload: () => ({
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: orderData,
+          },
+        }),
+      })
+    expect(operationName).toBe("useUpdateOrderMutation")
+    expect(operationVariables.input).toEqual({
+      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+      buyerPhoneNumber: null,
+      buyerPhoneNumberCountryCode: null,
+      shippingAddressLine1: null,
+      shippingAddressLine2: null,
+      shippingCity: null,
+      shippingCountry: null,
+      shippingName: null,
+      shippingPostalCode: null,
+      shippingRegion: null,
+    })
+
+    await flushPromiseQueue()
+    expect(env.mock.getAllOperations()).toHaveLength(0)
   })
 })
 

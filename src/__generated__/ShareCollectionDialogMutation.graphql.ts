@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<523c38756e9dd7a0d29bcfa70b68fa3b>>
+ * @generated SignedSource<<2592b17e2fb078bea96304326d42a760>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,11 @@ export type ShareCollectionDialogMutation$data = {
   readonly updateCollection: {
     readonly clientMutationId: string | null | undefined;
     readonly responseOrError: {
+      readonly collection?: {
+        readonly internalID: string;
+        readonly private: boolean;
+        readonly slug: string | null | undefined;
+      } | null | undefined;
       readonly mutationError?: {
         readonly message: string;
       } | null | undefined;
@@ -80,6 +85,27 @@ v3 = {
   ],
   "type": "UpdateCollectionFailure",
   "abstractKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "private",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -105,7 +131,28 @@ return {
             "name": "responseOrError",
             "plural": false,
             "selections": [
-              (v3/*: any*/)
+              (v3/*: any*/),
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Collection",
+                    "kind": "LinkedField",
+                    "name": "collection",
+                    "plural": false,
+                    "selections": [
+                      (v4/*: any*/),
+                      (v5/*: any*/),
+                      (v6/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "type": "UpdateCollectionSuccess",
+                "abstractKey": null
+              }
             ],
             "storageKey": null
           }
@@ -146,7 +193,35 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v3/*: any*/)
+              (v3/*: any*/),
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Collection",
+                    "kind": "LinkedField",
+                    "name": "collection",
+                    "plural": false,
+                    "selections": [
+                      (v4/*: any*/),
+                      (v5/*: any*/),
+                      (v6/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "id",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "type": "UpdateCollectionSuccess",
+                "abstractKey": null
+              }
             ],
             "storageKey": null
           }
@@ -156,16 +231,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "642735d07b225659e2cdf1a376f04557",
+    "cacheID": "86f5ab6abab4a1da07d2ee28b7040557",
     "id": null,
     "metadata": {},
     "name": "ShareCollectionDialogMutation",
     "operationKind": "mutation",
-    "text": "mutation ShareCollectionDialogMutation(\n  $input: updateCollectionInput!\n) {\n  updateCollection(input: $input) {\n    clientMutationId\n    responseOrError {\n      __typename\n      ... on UpdateCollectionFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation ShareCollectionDialogMutation(\n  $input: updateCollectionInput!\n) {\n  updateCollection(input: $input) {\n    clientMutationId\n    responseOrError {\n      __typename\n      ... on UpdateCollectionFailure {\n        mutationError {\n          message\n        }\n      }\n      ... on UpdateCollectionSuccess {\n        collection {\n          internalID\n          slug\n          private\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "664c315dcb821405f46fb10b7998dcf1";
+(node as any).hash = "b8d4e0f939e02625a86bc1764bd7e948";
 
 export default node;
