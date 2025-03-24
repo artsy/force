@@ -17,6 +17,7 @@ import type {
 } from "@stripe/stripe-js"
 import { useSetFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSetFulfillmentOptionMutation"
 import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
+import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSubmitOrderMutation"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import createLogger from "Utils/logger"
@@ -45,6 +46,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const clientSecret = "client_secret_id"
   const setFulfillmentOptionMutation = useSetFulfillmentOptionMutation()
   const updateOrderMutation = useUpdateOrderMutation()
+  const submitOrderMutation = useSubmitOrderMutation()
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
@@ -232,6 +234,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         variables: {
           input: {
             id: orderData.internalID,
+            paymentMethod: "CREDIT_CARD",
+            creditCardWalletType: "APPLE_PAY",
             buyerPhoneNumber: phone,
             buyerPhoneNumberCountryCode: null,
             shippingName: name,
@@ -249,18 +253,37 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         updateOrderResult.updateOrder?.orderOrError,
       )
 
-      const { error } = await stripe.confirmPayment({
-        elements: elements,
-        clientSecret,
-        confirmParams: {
-          return_url: "https://artsy.net/",
+      // Trigger form validation and wallet collection
+      const { error: submitError } = await elements.submit()
+      if (submitError) {
+        console.error(submitError)
+        return
+      }
+
+      // Create the ConfirmationToken using the details collected by the Payment Element
+      const { error, confirmationToken } = await stripe.createConfirmationToken(
+        {
+          elements,
+        },
+      )
+
+      if (error) {
+        // This point is only reached if there's an immediate error when
+        // creating the ConfirmationToken. Show the error to customer (for example, payment details incomplete)
+        console.error(error)
+        return
+      }
+
+      const submitOrderResult = await submitOrderMutation.submitMutation({
+        variables: {
+          input: {
+            id: orderData.internalID,
+            confirmationToken: confirmationToken.id,
+          },
         },
       })
 
-      if (error) {
-        logger.error("Error confirming payment", error)
-        return
-      }
+      console.log(submitOrderResult)
     } catch (error) {
       logger.error("Error confirming payment", error)
     }
