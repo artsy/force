@@ -316,13 +316,8 @@ const ORDER_FRAGMENT = graphql`
           }
           artwork {
             artsyShippingInternational
-            domesticShippingFee {
-              major
-            }
             euShippingOrigin
-            internationalShippingFee {
-              major
-            }
+            isFixedShippingFeeOnly
             onlyShipsDomestically
             processWithArtsyShippingDomestic
             shippingCountry

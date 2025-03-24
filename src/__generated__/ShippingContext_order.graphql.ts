@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e6effc4370867464f1a50d0cd33e68c5>>
+ * @generated SignedSource<<96bb8718eb0749a4b85b5d2874c56736>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,13 +18,8 @@ export type ShippingContext_order$data = {
       readonly node: {
         readonly artwork: {
           readonly artsyShippingInternational: boolean | null | undefined;
-          readonly domesticShippingFee: {
-            readonly major: number;
-          } | null | undefined;
           readonly euShippingOrigin: boolean | null | undefined;
-          readonly internationalShippingFee: {
-            readonly major: number;
-          } | null | undefined;
+          readonly isFixedShippingFeeOnly: boolean | null | undefined;
           readonly onlyShipsDomestically: boolean | null | undefined;
           readonly processWithArtsyShippingDomestic: boolean | null | undefined;
           readonly shippingCountry: string | null | undefined;
@@ -135,15 +130,6 @@ v1 = [
     "storageKey": null
   },
   (v0/*: any*/)
-],
-v2 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "major",
-    "storageKey": null
-  }
 ];
 return {
   "argumentDefinitions": [],
@@ -292,16 +278,6 @@ return {
                     {
                       "alias": null,
                       "args": null,
-                      "concreteType": "Money",
-                      "kind": "LinkedField",
-                      "name": "domesticShippingFee",
-                      "plural": false,
-                      "selections": (v2/*: any*/),
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
                       "kind": "ScalarField",
                       "name": "euShippingOrigin",
                       "storageKey": null
@@ -309,11 +285,8 @@ return {
                     {
                       "alias": null,
                       "args": null,
-                      "concreteType": "Money",
-                      "kind": "LinkedField",
-                      "name": "internationalShippingFee",
-                      "plural": false,
-                      "selections": (v2/*: any*/),
+                      "kind": "ScalarField",
+                      "name": "isFixedShippingFeeOnly",
                       "storageKey": null
                     },
                     {
@@ -355,6 +328,6 @@ return {
 };
 })();
 
-(node as any).hash = "05ab2a7d80b34214dc020e0e1b24a383";
+(node as any).hash = "7948098e0cac4eb6be5a2e673c6bfa13";
 
 export default node;

@@ -63,8 +63,8 @@ export const computeOrderData = (
   const shipsFrom = firstArtwork.shippingCountry!
   const domesticOnly = !!firstArtwork.onlyShipsDomestically
   const euOrigin = !!firstArtwork.euShippingOrigin
-  // The first artwork in the order has predetermined shipping cost
-  const isFixedShipping = true
+  // The first artwork in the order has fixe shipping cost upfront
+  const isFixedShipping = !!firstArtwork.isFixedShippingFeeOnly
 
   const lockShippingCountryTo = domesticOnly
     ? euOrigin
