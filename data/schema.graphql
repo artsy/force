@@ -8866,6 +8866,42 @@ type CreatePartnerContactSuccess {
   partnerContact: Contact
 }
 
+type CreatePartnerShowDocumentFailure {
+  mutationError: GravityMutationError
+}
+
+input CreatePartnerShowDocumentMutationInput {
+  clientMutationId: String
+
+  # The ID of the partner.
+  partnerId: String!
+
+  # The URL of the document to upload.
+  remoteDocumentUrl: String!
+
+  # The ID of the show.
+  showId: String!
+
+  # The title of the document.
+  title: String!
+}
+
+type CreatePartnerShowDocumentMutationPayload {
+  clientMutationId: String
+
+  # On success: the created document. On error: the error that occurred.
+  documentOrError: CreatePartnerShowDocumentResponseOrError
+}
+
+union CreatePartnerShowDocumentResponseOrError =
+  | CreatePartnerShowDocumentFailure
+  | CreatePartnerShowDocumentSuccess
+
+type CreatePartnerShowDocumentSuccess {
+  document: PartnerDocument
+  show: Show
+}
+
 type CreatePartnerShowEventFailure {
   mutationError: GravityMutationError
 }
@@ -9598,6 +9634,39 @@ union DeletePageResponseOrError = DeletePageFailure | DeletePageSuccess
 
 type DeletePageSuccess {
   page: Page
+}
+
+type DeletePartnerShowDocumentFailure {
+  mutationError: GravityMutationError
+}
+
+input DeletePartnerShowDocumentMutationInput {
+  clientMutationId: String
+
+  # The ID of the document to delete.
+  documentId: String!
+
+  # The ID of the partner.
+  partnerId: String!
+
+  # The ID of the show.
+  showId: String!
+}
+
+type DeletePartnerShowDocumentMutationPayload {
+  clientMutationId: String
+
+  # On success: the deleted document. On error: the error that occurred.
+  documentOrError: DeletePartnerShowDocumentResponseOrError
+}
+
+union DeletePartnerShowDocumentResponseOrError =
+  | DeletePartnerShowDocumentFailure
+  | DeletePartnerShowDocumentSuccess
+
+type DeletePartnerShowDocumentSuccess {
+  document: PartnerDocument
+  show: Show
 }
 
 type DeletePartnerShowEventFailure {
@@ -14695,6 +14764,11 @@ type Mutation {
     input: CreatePartnerShowMutationInput!
   ): CreatePartnerShowMutationPayload
 
+  # Creates a partner show document.
+  createPartnerShowDocument(
+    input: CreatePartnerShowDocumentMutationInput!
+  ): CreatePartnerShowDocumentMutationPayload
+
   # Creates a partner show event.
   createPartnerShowEvent(
     input: CreatePartnerShowEventMutationInput!
@@ -14814,6 +14888,11 @@ type Mutation {
   deletePartnerShow(
     input: DeletePartnerShowMutationInput!
   ): DeletePartnerShowMutationPayload
+
+  # Deletes a partner show document.
+  deletePartnerShowDocument(
+    input: DeletePartnerShowDocumentMutationInput!
+  ): DeletePartnerShowDocumentMutationPayload
 
   # Deletes a partner show event.
   deletePartnerShowEvent(
@@ -15115,6 +15194,11 @@ type Mutation {
   updatePartnerShow(
     input: UpdatePartnerShowMutationInput!
   ): UpdatePartnerShowMutationPayload
+
+  # Updates a partner show document.
+  updatePartnerShowDocument(
+    input: UpdatePartnerShowDocumentMutationInput!
+  ): UpdatePartnerShowDocumentMutationPayload
 
   # Updates a partner show event.
   updatePartnerShowEvent(
@@ -16608,11 +16692,14 @@ type PartnerDocument {
   # A globally unique ID.
   id: ID!
 
-  # A type-specific Gravity Mongo Document ID.
+  # A type-specific ID likely used as a database ID.
   internalID: ID!
   publicURL: String!
   publicUrl: String! @deprecated(reason: "Prefer `publicURL`")
   size: Int! @deprecated(reason: "Prefer `filesize`")
+
+  # A slug ID.
+  slug: ID!
   title: String!
 }
 
@@ -21374,6 +21461,45 @@ union UpdatePageResponseOrError = UpdatePageFailure | UpdatePageSuccess
 
 type UpdatePageSuccess {
   page: Page
+}
+
+type UpdatePartnerShowDocumentFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdatePartnerShowDocumentMutationInput {
+  clientMutationId: String
+
+  # The ID of the document to update.
+  documentId: String!
+
+  # The ID of the partner.
+  partnerId: String!
+
+  # The URL of the document to upload.
+  remoteDocumentUrl: String
+
+  # The ID of the show.
+  showId: String!
+
+  # The updated title of the document.
+  title: String
+}
+
+type UpdatePartnerShowDocumentMutationPayload {
+  clientMutationId: String
+
+  # On success: the updated document. On error: the error that occurred.
+  documentOrError: UpdatePartnerShowDocumentResponseOrError
+}
+
+union UpdatePartnerShowDocumentResponseOrError =
+  | UpdatePartnerShowDocumentFailure
+  | UpdatePartnerShowDocumentSuccess
+
+type UpdatePartnerShowDocumentSuccess {
+  document: PartnerDocument
+  show: Show
 }
 
 type UpdatePartnerShowEventFailure {
