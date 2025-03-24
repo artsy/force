@@ -107,7 +107,7 @@ const ShippingRouteLayout: FC<
             }
           >
             {expressCheckoutPrototypeEnabled &&
-              !shippingContext.orderData.isOffer && (
+              shippingContext.state.isExpressCheckoutEligeable && (
                 <ExpressCheckoutQueryRenderer orderID={order.internalID} />
               )}
 

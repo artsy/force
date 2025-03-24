@@ -18,10 +18,10 @@ import { compact } from "lodash"
 import {
   type FC,
   createContext,
+  useEffect,
   useMemo,
   useReducer,
   useRef,
-  useEffect,
 } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -42,6 +42,8 @@ export interface State {
   isPerformingOperation: boolean
   // Loading state to prevent render before data is available
   isLoading: boolean
+  // order can be processed with express checkout
+  isExpressCheckoutEligeable: boolean
 }
 
 interface Actions {
@@ -135,6 +137,7 @@ export const ShippingContextProvider: FC<
     selectedSavedAddressID:
       orderData.savedFulfillmentDetails?.selectedSavedAddressID ?? null,
     isLoading: true,
+    isExpressCheckoutEligeable: !orderData.isOffer && orderData.isFixedShipping,
   }
 
   const [state, dispatch] = useReducer(shippingStateReducer, initialState)
@@ -312,10 +315,16 @@ const ORDER_FRAGMENT = graphql`
             }
           }
           artwork {
-            processWithArtsyShippingDomestic
             artsyShippingInternational
-            onlyShipsDomestically
+            domesticShippingFee {
+              major
+            }
             euShippingOrigin
+            internationalShippingFee {
+              major
+            }
+            onlyShipsDomestically
+            processWithArtsyShippingDomestic
             shippingCountry
           }
         }

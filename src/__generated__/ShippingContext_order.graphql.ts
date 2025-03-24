@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2508f7de85aead9d841a41e3135811f6>>
+ * @generated SignedSource<<e6effc4370867464f1a50d0cd33e68c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,13 @@ export type ShippingContext_order$data = {
       readonly node: {
         readonly artwork: {
           readonly artsyShippingInternational: boolean | null | undefined;
+          readonly domesticShippingFee: {
+            readonly major: number;
+          } | null | undefined;
           readonly euShippingOrigin: boolean | null | undefined;
+          readonly internationalShippingFee: {
+            readonly major: number;
+          } | null | undefined;
           readonly onlyShipsDomestically: boolean | null | undefined;
           readonly processWithArtsyShippingDomestic: boolean | null | undefined;
           readonly shippingCountry: string | null | undefined;
@@ -129,6 +135,15 @@ v1 = [
     "storageKey": null
   },
   (v0/*: any*/)
+],
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "major",
+    "storageKey": null
+  }
 ];
 return {
   "argumentDefinitions": [],
@@ -271,14 +286,34 @@ return {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "processWithArtsyShippingDomestic",
+                      "name": "artsyShippingInternational",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "Money",
+                      "kind": "LinkedField",
+                      "name": "domesticShippingFee",
+                      "plural": false,
+                      "selections": (v2/*: any*/),
                       "storageKey": null
                     },
                     {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "artsyShippingInternational",
+                      "name": "euShippingOrigin",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "Money",
+                      "kind": "LinkedField",
+                      "name": "internationalShippingFee",
+                      "plural": false,
+                      "selections": (v2/*: any*/),
                       "storageKey": null
                     },
                     {
@@ -292,7 +327,7 @@ return {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "euShippingOrigin",
+                      "name": "processWithArtsyShippingDomestic",
                       "storageKey": null
                     },
                     {
@@ -320,6 +355,6 @@ return {
 };
 })();
 
-(node as any).hash = "11f4570a1618cdab936ad34ddd2a5364";
+(node as any).hash = "05ab2a7d80b34214dc020e0e1b24a383";
 
 export default node;
