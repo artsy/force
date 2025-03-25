@@ -4,6 +4,7 @@ import { screen } from "@testing-library/react"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ExpressCheckoutUI_Test_Query } from "__generated__/ExpressCheckoutUI_Test_Query.graphql"
+import { useEffect } from "react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ExpressCheckoutUI } from "../ExpressCheckoutUI"
@@ -12,13 +13,28 @@ jest.mock("react-tracking")
 
 jest.unmock("react-relay")
 
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerSlug: "artwork-slug",
+  })),
+}))
+
 const mockExpressCheckoutElement = ExpressCheckoutElement as jest.Mock
 const mockResolveOnClick = jest.fn()
+
 jest.mock("@stripe/react-stripe-js", () => {
   return {
     useStripe: jest.fn(() => ({})),
     useElements: jest.fn(() => ({})),
-    ExpressCheckoutElement: jest.fn(({ onClick, onCancel }) => {
+    ExpressCheckoutElement: jest.fn(({ onClick, onCancel, onReady }) => {
+      useEffect(() => {
+        if (onReady) {
+          onReady({
+            availablePaymentMethods: { applePay: true },
+          })
+        }
+      }, [onReady])
+
       return (
         <div>
           <button
@@ -66,6 +82,7 @@ describe("ExpressCheckoutUI", () => {
   beforeEach(() => {
     jest.clearAllMocks()
     mockTracking.mockImplementation(() => ({ trackEvent }))
+    trackEvent.mockClear()
   })
 
   it("passes correct props to ExpressCheckoutElement", async () => {
@@ -128,6 +145,21 @@ describe("ExpressCheckoutUI", () => {
     expect(env.mock.getAllOperations()).toHaveLength(0)
   })
 
+  it("tracks an express checkout viewed event", () => {
+    renderWithRelay({
+      Order: () => ({ ...orderData }),
+    })
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "expressCheckoutViewed",
+      context_page_owner_id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+      context_page_owner_slug: "artwork-slug",
+      context_page_owner_type: "orders-shipping",
+      flow: "Buy now",
+      payment_methods: ["applePay"],
+    })
+  })
+
   it("tracks an express checkout click event", () => {
     renderWithRelay({
       Order: () => ({ ...orderData }),
@@ -137,7 +169,7 @@ describe("ExpressCheckoutUI", () => {
 
     expect(trackEvent).toHaveBeenCalledWith({
       action: "clickedExpressCheckout",
-      context_page_owner_id: "artwork123",
+      context_page_owner_id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
       context_page_owner_slug: "artwork-slug",
       context_page_owner_type: "orders-shipping",
       flow: "Buy now",
@@ -167,7 +199,7 @@ describe("ExpressCheckoutUI", () => {
 
     expect(trackEvent).toHaveBeenCalledWith({
       action: "clickedCancelExpressCheckout",
-      context_page_owner_id: "artwork123",
+      context_page_owner_id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
       context_page_owner_slug: "artwork-slug",
       context_page_owner_type: "orders-shipping",
       flow: "Buy now",
