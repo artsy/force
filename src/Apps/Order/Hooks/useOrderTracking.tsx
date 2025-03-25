@@ -1,6 +1,8 @@
 import {
   ActionType,
   type ClickedAddNewShippingAddress,
+  type ClickedCancelExpressCheckout,
+  type ClickedExpressCheckout,
   type ClickedSelectShippingOption,
   type ClickedShippingAddress,
   ContextModule,
@@ -11,6 +13,7 @@ import {
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import type { FulfillmentType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import type { ExpressCheckoutUI_order$data } from "__generated__/ExpressCheckoutUI_order.graphql"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
 
@@ -94,7 +97,13 @@ export const useOrderTracking = () => {
         trackEvent(payload)
       },
 
-      expressCheckoutViewed: ({ order, paymentMethods }) => {
+      expressCheckoutViewed: ({
+        order,
+        paymentMethods,
+      }: {
+        order: ExpressCheckoutUI_order$data
+        paymentMethods: string[]
+      }) => {
         const payload: ExpressCheckoutViewed = {
           action: ActionType.expressCheckoutViewed,
           context_page_owner_type: OwnerType.ordersShipping,
@@ -107,6 +116,54 @@ export const useOrderTracking = () => {
                 ? "Buy now"
                 : "Make offer",
           payment_methods: paymentMethods,
+        }
+
+        trackEvent(payload)
+      },
+
+      clickedExpressCheckout: ({
+        order,
+        paymentMethod,
+      }: {
+        order: ExpressCheckoutUI_order$data
+        paymentMethod: string
+      }) => {
+        const payload: ClickedExpressCheckout = {
+          action: ActionType.clickedExpressCheckout,
+          context_page_owner_type: OwnerType.ordersShipping,
+          context_page_owner_id: order.internalID ?? "",
+          context_page_owner_slug: contextPageOwnerSlug,
+          flow:
+            order.source === "PARTNER_OFFER"
+              ? "Partner offer"
+              : order.mode === "BUY"
+                ? "Buy now"
+                : "Make offer",
+          payment_method: paymentMethod,
+        }
+
+        trackEvent(payload)
+      },
+
+      clickedCancelExpressCheckout: ({
+        order,
+        paymentMethod,
+      }: {
+        order: ExpressCheckoutUI_order$data
+        paymentMethod: string
+      }) => {
+        const payload: ClickedCancelExpressCheckout = {
+          action: ActionType.clickedCancelExpressCheckout,
+          context_page_owner_type: OwnerType.ordersShipping,
+          context_page_owner_id: order.internalID ?? "",
+          context_page_owner_slug: contextPageOwnerSlug,
+          flow:
+            order.source === "PARTNER_OFFER"
+              ? "Partner offer"
+              : order.mode === "BUY"
+                ? "Buy now"
+                : "Make offer",
+          payment_method: paymentMethod,
         }
 
         trackEvent(payload)
