@@ -42,8 +42,6 @@ export interface State {
   isPerformingOperation: boolean
   // Loading state to prevent render before data is available
   isLoading: boolean
-  // order can be processed with express checkout
-  isExpressCheckoutEligeable: boolean
 }
 
 interface Actions {
@@ -137,7 +135,6 @@ export const ShippingContextProvider: FC<
     selectedSavedAddressID:
       orderData.savedFulfillmentDetails?.selectedSavedAddressID ?? null,
     isLoading: true,
-    isExpressCheckoutEligeable: !orderData.isOffer && orderData.isFixedShipping,
   }
 
   const [state, dispatch] = useReducer(shippingStateReducer, initialState)

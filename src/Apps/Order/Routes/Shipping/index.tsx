@@ -81,6 +81,11 @@ const ShippingRouteLayout: FC<
   const expressCheckoutPrototypeEnabled = useFeatureFlag(
     "emerald_stripe-express-checkout-prototype",
   )
+  // order can be processed with express checkout
+  const isExpressCheckoutEligible =
+    expressCheckoutPrototypeEnabled &&
+    !!shippingContext.orderData.isOffer &&
+    shippingContext.orderData.isFixedShipping
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -106,10 +111,9 @@ const ShippingRouteLayout: FC<
                 : {}
             }
           >
-            {expressCheckoutPrototypeEnabled &&
-              shippingContext.state.isExpressCheckoutEligeable && (
-                <ExpressCheckoutQueryRenderer orderID={order.internalID} />
-              )}
+            {isExpressCheckoutEligible && (
+              <ExpressCheckoutQueryRenderer orderID={order.internalID} />
+            )}
 
             <FulfillmentDetails me={me} order={order} />
 
