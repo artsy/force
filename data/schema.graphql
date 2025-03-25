@@ -10626,6 +10626,7 @@ type Feature {
   isActive: Boolean!
   layout: FeatureLayouts!
   meta: FeatureMeta!
+  metaTitle: String
   name: String!
 
   # Features are composed of sets, which are themselves composed of items of various types
@@ -10744,7 +10745,8 @@ enum FeatureLayouts {
 type FeatureMeta {
   description: String!
   image: String
-  name: String!
+  name: String! @deprecated(reason: "Use `title` instead")
+  title: String!
 }
 
 enum FeatureSorts {
@@ -21139,6 +21141,7 @@ input UpdateFeatureMutationInput {
   description: String
   id: String!
   layout: FeatureLayouts
+  metaTitle: String
   name: String
   sourceBucket: String
   sourceKey: String
