@@ -5,6 +5,7 @@ import {
   type ClickedShippingAddress,
   ContextModule,
   type ErrorMessageViewed,
+  type ExpressCheckoutViewed,
   OwnerType,
 } from "@artsy/cohesion"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
@@ -17,6 +18,7 @@ export const useOrderTracking = () => {
   const { trackEvent } = useTracking()
   const analytics = useAnalyticsContext()
   const contextPageOwnerId = analytics.contextPageOwnerId as string
+  const contextPageOwnerSlug = analytics.contextPageOwnerSlug as string
 
   const trackingCalls = useMemo(() => {
     return {
@@ -91,8 +93,26 @@ export const useOrderTracking = () => {
 
         trackEvent(payload)
       },
+
+      expressCheckoutViewed: ({ order, paymentMethods }) => {
+        const payload: ExpressCheckoutViewed = {
+          action: ActionType.expressCheckoutViewed,
+          context_page_owner_type: OwnerType.ordersShipping,
+          context_page_owner_id: order.internalID ?? "",
+          context_page_owner_slug: contextPageOwnerSlug,
+          flow:
+            order.source === "PARTNER_OFFER"
+              ? "Partner offer"
+              : order.mode === "BUY"
+                ? "Buy now"
+                : "Make offer",
+          payment_methods: paymentMethods,
+        }
+
+        trackEvent(payload)
+      },
     }
-  }, [trackEvent, contextPageOwnerId])
+  }, [trackEvent, contextPageOwnerId, contextPageOwnerSlug])
 
   return trackingCalls
 }

@@ -11,6 +11,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js"
 import type {
+  AvailablePaymentMethods,
   ClickResolveDetails,
   ExpressPaymentType,
   ShippingRate,
@@ -23,6 +24,7 @@ import type {
 import { useSetFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSetFulfillmentOptionMutation"
 import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import createLogger from "Utils/logger"
 import type { ExpressCheckoutUI_order$key } from "__generated__/ExpressCheckoutUI_order.graphql"
 import type { FulfillmentOptionInputEnum } from "__generated__/useSetFulfillmentOptionMutation.graphql"
@@ -53,6 +55,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const updateOrderMutation = useUpdateOrderMutation()
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
+  const orderTracking = useOrderTracking()
 
   if (!(stripe && elements)) {
     return null
@@ -108,8 +111,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     const event: ClickedExpressCheckout = {
       action: ActionType.clickedExpressCheckout,
       context_page_owner_type: OwnerType.ordersShipping,
-      // TODO: should this be order id?
-      context_page_owner_id: primaryArtwork?.internalID ?? "",
+      context_page_owner_id: orderData.internalID ?? "",
       context_page_owner_slug: primaryArtwork?.slug ?? "",
       flow:
         orderData.source === "PARTNER_OFFER"
@@ -306,6 +308,12 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         onCancel={handleCancel}
         onReady={e => {
           if (!!e.availablePaymentMethods) {
+            orderTracking.expressCheckoutViewed({
+              order: orderData,
+              paymentMethods: getAvailablePaymentMethods(
+                e.availablePaymentMethods,
+              ),
+            })
             setVisible(true)
           }
         }}
@@ -429,3 +437,11 @@ const UncollapsingBox = styled(Box)<{ visible: boolean }>`
   overflow: hidden;
   transition: max-height 0.3s ease-in-out;
 `
+
+function getAvailablePaymentMethods(
+  paymentMethods: AvailablePaymentMethods,
+): string[] {
+  return Object.entries(paymentMethods)
+    .filter(([_, isAvailable]) => isAvailable)
+    .map(([method]) => method)
+}
