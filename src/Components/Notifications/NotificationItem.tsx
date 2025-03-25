@@ -90,7 +90,6 @@ const NotificationItem: FC<React.PropsWithChildren<NotificationItemProps>> = ({
                       src={image.resized.src}
                       srcSet={image.resized.srcSet}
                       width={image.resized.width}
-                      placeHolderURL={image.blurhashDataURL ?? undefined}
                       height="100%"
                       lazyLoad
                       alt=""
@@ -178,7 +177,6 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
         }
         previewImages(size: 4) {
           internalID
-          blurhashDataURL
           resized(
             height: 58
             version: ["main", "normalized", "larger", "large"]
