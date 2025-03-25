@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8a47012558a69abbce70c4f7a906484c>>
+ * @generated SignedSource<<dba69c34324298792a1d178bdb6c1899>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,22 +17,14 @@ export type ArtworkLightbox_artwork$data = {
     readonly fallback: {
       readonly height: number;
       readonly src: string;
-      readonly srcSet: string;
       readonly width: number;
     } | null | undefined;
     readonly internalID: string | null | undefined;
     readonly isDefault: boolean | null | undefined;
-    readonly mobileLightboxSource: {
-      readonly height: number | null | undefined;
-      readonly src: string;
-      readonly srcSet: string;
-      readonly width: number | null | undefined;
-    } | null | undefined;
     readonly placeholder: string | null | undefined;
     readonly resized: {
       readonly height: number | null | undefined;
       readonly src: string;
-      readonly srcSet: string;
       readonly width: number | null | undefined;
     } | null | undefined;
     readonly versions: ReadonlyArray<string | null | undefined> | null | undefined;
@@ -45,37 +37,34 @@ export type ArtworkLightbox_artwork$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = {
-  "kind": "Literal",
-  "name": "height",
-  "value": 800
-},
-v1 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": [
-    "main",
-    "normalized",
-    "larger",
-    "large"
-  ]
-},
-v2 = {
-  "kind": "Literal",
-  "name": "width",
-  "value": 800
-},
-v3 = [
-  (v0/*: any*/),
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "height",
+    "value": 1600
+  },
   {
     "kind": "Literal",
     "name": "quality",
     "value": 80
   },
-  (v1/*: any*/),
-  (v2/*: any*/)
+  {
+    "kind": "Literal",
+    "name": "version",
+    "value": [
+      "main",
+      "normalized",
+      "larger",
+      "large"
+    ]
+  },
+  {
+    "kind": "Literal",
+    "name": "width",
+    "value": 1600
+  }
 ],
-v4 = [
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -95,13 +84,6 @@ v4 = [
     "args": null,
     "kind": "ScalarField",
     "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
     "storageKey": null
   }
 ];
@@ -183,42 +165,23 @@ return {
         },
         {
           "alias": "fallback",
-          "args": (v3/*: any*/),
+          "args": (v0/*: any*/),
           "concreteType": "CroppedImageUrl",
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": (v4/*: any*/),
-          "storageKey": "cropped(height:800,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
+          "selections": (v1/*: any*/),
+          "storageKey": "cropped(height:1600,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:1600)"
         },
         {
           "alias": null,
-          "args": (v3/*: any*/),
+          "args": (v0/*: any*/),
           "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
-          "selections": (v4/*: any*/),
-          "storageKey": "resized(height:800,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
-        },
-        {
-          "alias": "mobileLightboxSource",
-          "args": [
-            (v0/*: any*/),
-            {
-              "kind": "Literal",
-              "name": "quality",
-              "value": 50
-            },
-            (v1/*: any*/),
-            (v2/*: any*/)
-          ],
-          "concreteType": "ResizedImageUrl",
-          "kind": "LinkedField",
-          "name": "resized",
-          "plural": false,
-          "selections": (v4/*: any*/),
-          "storageKey": "resized(height:800,quality:50,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
+          "selections": (v1/*: any*/),
+          "storageKey": "resized(height:1600,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:1600)"
         },
         {
           "alias": null,
@@ -236,6 +199,6 @@ return {
 };
 })();
 
-(node as any).hash = "74ab1795e99fb44777d238220d7acf9d";
+(node as any).hash = "7e3192f3e15bd2d6cd9a376e78cc936f";
 
 export default node;
