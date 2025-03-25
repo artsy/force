@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2508f7de85aead9d841a41e3135811f6>>
+ * @generated SignedSource<<96bb8718eb0749a4b85b5d2874c56736>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type ShippingContext_order$data = {
         readonly artwork: {
           readonly artsyShippingInternational: boolean | null | undefined;
           readonly euShippingOrigin: boolean | null | undefined;
+          readonly isFixedShippingFeeOnly: boolean | null | undefined;
           readonly onlyShipsDomestically: boolean | null | undefined;
           readonly processWithArtsyShippingDomestic: boolean | null | undefined;
           readonly shippingCountry: string | null | undefined;
@@ -271,14 +272,21 @@ return {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "processWithArtsyShippingDomestic",
+                      "name": "artsyShippingInternational",
                       "storageKey": null
                     },
                     {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "artsyShippingInternational",
+                      "name": "euShippingOrigin",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "isFixedShippingFeeOnly",
                       "storageKey": null
                     },
                     {
@@ -292,7 +300,7 @@ return {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "euShippingOrigin",
+                      "name": "processWithArtsyShippingDomestic",
                       "storageKey": null
                     },
                     {
@@ -320,6 +328,6 @@ return {
 };
 })();
 
-(node as any).hash = "11f4570a1618cdab936ad34ddd2a5364";
+(node as any).hash = "7948098e0cac4eb6be5a2e673c6bfa13";
 
 export default node;

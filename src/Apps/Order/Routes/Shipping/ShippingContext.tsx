@@ -18,10 +18,10 @@ import { compact } from "lodash"
 import {
   type FC,
   createContext,
+  useEffect,
   useMemo,
   useReducer,
   useRef,
-  useEffect,
 } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -312,10 +312,11 @@ const ORDER_FRAGMENT = graphql`
             }
           }
           artwork {
-            processWithArtsyShippingDomestic
             artsyShippingInternational
-            onlyShipsDomestically
             euShippingOrigin
+            isFixedShippingFeeOnly
+            onlyShipsDomestically
+            processWithArtsyShippingDomestic
             shippingCountry
           }
         }
