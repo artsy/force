@@ -4,7 +4,6 @@ import {
   Image,
   ResponsiveBox,
 } from "@artsy/palette"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
 import { useLocalImage } from "Utils/localImageHelpers"
@@ -34,7 +33,6 @@ const ArtworkLightbox: React.FC<
   const images = compact(artwork.images)
   const hasGeometry = !!images[0]?.resized?.width
 
-  const isBlurhashEnabled = useFeatureFlag("diamond_artwork-page-blurhash")
   const localImage = useLocalImage(images[activeIndex])
 
   const resizedLocalImage = localImage && {
@@ -52,7 +50,6 @@ const ArtworkLightbox: React.FC<
     placeholder,
     resized,
     mobileLightboxSource,
-    blurhashDataURL,
   } = images[activeIndex]
 
   const image = resizedLocalImage ?? (hasGeometry ? resized : fallback)
@@ -100,30 +97,13 @@ const ArtworkLightbox: React.FC<
           aspectWidth={image.width || 1}
           aspectHeight={image.height || 1}
         >
-          {placeholder && !isBlurhashEnabled && (
+          {placeholder && (
             <ArtworkLightboxPlaceholder
               key={placeholder}
               src={placeholder}
               preload={!!isDefault}
               // Deliberate, to improve LCP
               lazyLoad={false}
-            />
-          )}
-
-          {blurhashDataURL && isBlurhashEnabled && (
-            <Image
-              src={blurhashDataURL}
-              alt=""
-              position="absolute"
-              top={0}
-              left={0}
-              width="100%"
-              height="100%"
-              zIndex={0}
-              style={{
-                filter: "blur(10px)",
-                transform: "scale(1.1)",
-              }}
             />
           )}
 
@@ -166,7 +146,6 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
           internalID
           isDefault
           placeholder: url(version: ["small", "medium"])
-          blurhashDataURL(width: 801)
           fallback: cropped(
             quality: 80
             width: 800

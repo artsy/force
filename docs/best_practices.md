@@ -21,6 +21,7 @@ Links should point to `main` and not specific commits. Broken docs are better th
 - [Code style](#code-style)
 - [Testing](#testing)
 - [Tracking Events](#tracking-events)
+- [Secrets](#secrets)
 
 ## Current Tech Stack
 
@@ -315,3 +316,7 @@ If you are building an entity route (/example/:slug) — be sure to wrap your ap
   {...}
 </Analytics>
 ```
+
+## Secrets
+
+See [Vault Docs](https://www.notion.so/artsy/Hashicorp-Vault-developer-instructions-77d94af51f714d51bb44049f4f2027bc) for managing secrets.
