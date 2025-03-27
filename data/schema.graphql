@@ -15113,6 +15113,11 @@ type Mutation {
   repositionArtworksInPartnerShow(
     input: RepositionArtworksInPartnerShowMutationInput!
   ): RepositionArtworksInPartnerShowMutationPayload
+
+  # Reposition installation shots in a partner show, determining their display order.
+  repositionInstallShotsInPartnerShow(
+    input: RepositionInstallShotsInPartnerShowMutationInput!
+  ): RepositionInstallShotsInPartnerShowMutationPayload
   requestConditionReport(
     # Parameters for RequestConditionReport
     input: RequestConditionReportInput!
@@ -19065,6 +19070,35 @@ union RepositionArtworksInPartnerShowResponseOrError =
   | RepositionArtworksInPartnerShowSuccess
 
 type RepositionArtworksInPartnerShowSuccess {
+  show: Show
+}
+
+type RepositionInstallShotsInPartnerShowFailure {
+  mutationError: GravityMutationError
+}
+
+input RepositionInstallShotsInPartnerShowMutationInput {
+  clientMutationId: String
+
+  # An ordered array of image IDs representing the new display order.
+  imageIds: [String!]!
+
+  # The ID of the show.
+  showId: String!
+}
+
+type RepositionInstallShotsInPartnerShowMutationPayload {
+  clientMutationId: String
+
+  # On success: the show with repositioned installation shots. On error: the error that occurred.
+  showOrError: RepositionInstallShotsInPartnerShowResponseOrError
+}
+
+union RepositionInstallShotsInPartnerShowResponseOrError =
+  | RepositionInstallShotsInPartnerShowFailure
+  | RepositionInstallShotsInPartnerShowSuccess
+
+type RepositionInstallShotsInPartnerShowSuccess {
   show: Show
 }
 
