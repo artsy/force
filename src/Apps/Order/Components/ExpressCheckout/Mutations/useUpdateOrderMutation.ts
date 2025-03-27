@@ -31,6 +31,9 @@ export const useUpdateOrderMutation = () => {
                 shippingTotal {
                   minor
                 }
+                taxTotal {
+                  minor
+                }
                 availableShippingCountries
               }
             }

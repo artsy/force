@@ -34,7 +34,7 @@ import type {
   useSetFulfillmentOptionMutation$data,
 } from "__generated__/useSetFulfillmentOptionMutation.graphql"
 import type { useUpdateOrderMutation$data } from "__generated__/useUpdateOrderMutation.graphql"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
 
@@ -61,17 +61,6 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
 
-  // update parent elements with the order amount when it changes
-  // we could also do it in the individual callbacks below.
-  const buyerTotalMinor = orderData.buyerTotal?.minor
-  useEffect(() => {
-    if (buyerTotalMinor) {
-      elements?.update({
-        amount: buyerTotalMinor,
-      })
-    }
-  }, [buyerTotalMinor, elements])
-
   if (!(stripe && elements)) {
     return null
   }
@@ -79,6 +68,15 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const checkoutOptions: ClickResolveDetails = {
     shippingAddressRequired: true,
     phoneNumberRequired: true,
+  }
+
+  const updateOrderTotal = async (buyerTotalMinor?: number | null) => {
+    logger.warn("Updating order total", buyerTotalMinor)
+    buyerTotalMinor &&
+      elements?.update({
+        amount: buyerTotalMinor,
+      })
+    await Promise.resolve()
   }
 
   const resetOrder = async () => {
@@ -110,13 +108,14 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         },
       },
     })
+
     const validatedResult = validateAndExtractOrderResponse(
       fulfillmentDetailsResult.updateOrder?.orderOrError,
     )
     return validatedResult
   }
 
-  const handleClick = async ({
+  const handleOpenExpressCheckout = async ({
     expressPaymentType,
     resolve,
   }: StripeExpressCheckoutElementClickEvent) => {
@@ -129,13 +128,20 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
 
     try {
       const data = await resetOrder()
-      const { order } = validateAndExtractOrderResponse(data)
+      const validatedResult = validateAndExtractOrderResponse(data)
+
+      await updateOrderTotal(validatedResult.order.buyerTotal?.minor)
+      const allowedShippingCountries = extractAllowedShippingCountries(
+        validatedResult.order,
+      )
+      const shippingRates = extractShippingRates(validatedResult.order)
+      const lineItems = extractLineItems(validatedResult.order)
 
       resolve({
         ...checkoutOptions,
-        allowedShippingCountries: extractAllowedShippingCountries(order),
-        shippingRates: extractShippingRates(order),
-        lineItems: extractLineItems(order),
+        allowedShippingCountries,
+        shippingRates,
+        lineItems,
       })
     } catch (error) {
       logger.error("Error resetting order on load", error)
@@ -175,6 +181,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
             shippingRegion: state,
             shippingCountry: country,
             shippingPostalCode: postal_code,
+            shippingName: name,
           },
         },
       })
@@ -185,6 +192,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
 
       const shippingRates = extractShippingRates(validatedResult.order)
       const lineItems = extractLineItems(validatedResult.order)
+      await updateOrderTotal(validatedResult.order.buyerTotal?.minor)
+
       resolve({ shippingRates, lineItems })
       return
     } catch (error) {
@@ -204,17 +213,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
 
     if (shippingRate.id === CALCULATING_SHIPPING_RATE.id) {
       logger.warn(
-        "Shipping rate is still calculating, skipping - order cannot be transacted yet",
+        "Shipping options not available yet, skipping setting fulfillment option",
       )
-      resolve()
-      return
-    }
-
-    if (shippingRate.id !== "PICKUP") {
-      logger.warn(
-        "Shipping rate is not pickup so not supported for now, skipping",
-      )
-      // elements.update({ amount: 42069 })
       resolve()
       return
     }
@@ -233,9 +233,12 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       const data = result.setOrderFulfillmentOption?.orderOrError
 
       const validatedResult = validateAndExtractOrderResponse(data)
+      await updateOrderTotal(validatedResult.order.buyerTotal?.minor)
 
+      const lineItems = extractLineItems(validatedResult.order)
       const shippingRates = extractShippingRates(validatedResult.order)
-      resolve({ shippingRates })
+
+      resolve({ shippingRates, lineItems })
       return
     } catch (error) {
       logger.error("Error updating order", error)
@@ -330,7 +333,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
 
       <ExpressCheckoutElement
         options={expressCheckoutOptions}
-        onClick={handleClick}
+        onClick={handleOpenExpressCheckout}
         onCancel={handleCancel}
         onReady={e => {
           if (!!e.availablePaymentMethods) {
@@ -377,6 +380,9 @@ const ORDER_FRAGMENT = graphql`
       minor
     }
     shippingTotal {
+      minor
+    }
+    taxTotal {
       minor
     }
     availableShippingCountries
@@ -433,7 +439,7 @@ const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
 
   // TODO: Change to let when we have shipping and tax lines
   let shippingLine: LineItem | null = null
-  const taxLine: LineItem | null = null
+  let taxLine: LineItem | null = null
 
   const itemsSubtotal = {
     name: "Subtotal",
@@ -454,13 +460,17 @@ const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
     }
   }
 
-  const lineItems: Array<LineItem> = [itemsSubtotal]
-  if (shippingLine) {
-    lineItems.push(shippingLine)
+  if (order.taxTotal) {
+    taxLine = {
+      name: "Tax",
+      amount: order.taxTotal.minor,
+    }
   }
-  if (taxLine) {
-    lineItems.push(taxLine)
-  }
+
+  const lineItems = (
+    [itemsSubtotal, shippingLine, taxLine] as Array<LineItem>
+  ).filter(Boolean)
+
   logger.warn("Line items", lineItems)
   return lineItems
 }

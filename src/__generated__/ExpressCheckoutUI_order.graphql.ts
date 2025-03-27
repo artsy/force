@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<87da03375a4873a46705c54e3de217e2>>
+ * @generated SignedSource<<e708f69202fae21dca7d0edf0b4a8c79>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -53,6 +53,9 @@ export type ExpressCheckoutUI_order$data = {
     readonly minor: any;
   } | null | undefined;
   readonly source: OrderSourceEnum;
+  readonly taxTotal: {
+    readonly minor: any;
+  } | null | undefined;
   readonly " $fragmentType": "ExpressCheckoutUI_order";
 };
 export type ExpressCheckoutUI_order$key = {
@@ -135,6 +138,16 @@ return {
       "concreteType": "Money",
       "kind": "LinkedField",
       "name": "shippingTotal",
+      "plural": false,
+      "selections": (v3/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Money",
+      "kind": "LinkedField",
+      "name": "taxTotal",
       "plural": false,
       "selections": (v3/*: any*/),
       "storageKey": null
@@ -291,6 +304,6 @@ return {
 };
 })();
 
-(node as any).hash = "892cfc2f692675ac8b59b9941aa9aeac";
+(node as any).hash = "d8cbef7172097641569fe6d74924979a";
 
 export default node;

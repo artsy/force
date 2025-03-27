@@ -31,6 +31,9 @@ export const useSetFulfillmentOptionMutation = () => {
                 shippingTotal {
                   minor
                 }
+                taxTotal {
+                  minor
+                }
                 availableShippingCountries
                 ...ExpressCheckoutUI_order
               }

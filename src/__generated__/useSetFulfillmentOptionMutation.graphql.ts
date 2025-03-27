@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<213dbe1ded75a74cb04e552031dbc6b8>>
+ * @generated SignedSource<<ab48ecda4402dbac9108eca71fcdff05>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -50,6 +50,9 @@ export type useSetFulfillmentOptionMutation$data = {
           readonly minor: any;
         } | null | undefined;
         readonly shippingTotal: {
+          readonly minor: any;
+        } | null | undefined;
+        readonly taxTotal: {
           readonly minor: any;
         } | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutUI_order">;
@@ -162,11 +165,21 @@ v11 = {
 v12 = {
   "alias": null,
   "args": null,
+  "concreteType": "Money",
+  "kind": "LinkedField",
+  "name": "taxTotal",
+  "plural": false,
+  "selections": (v5/*: any*/),
+  "storageKey": null
+},
+v13 = {
+  "alias": null,
+  "args": null,
   "kind": "ScalarField",
   "name": "availableShippingCountries",
   "storageKey": null
 },
-v13 = {
+v14 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -191,7 +204,7 @@ v13 = {
   "type": "OrderMutationError",
   "abstractKey": null
 },
-v14 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -261,6 +274,7 @@ return {
                       (v10/*: any*/),
                       (v11/*: any*/),
                       (v12/*: any*/),
+                      (v13/*: any*/),
                       {
                         "args": null,
                         "kind": "FragmentSpread",
@@ -273,7 +287,7 @@ return {
                 "type": "OrderMutationSuccess",
                 "abstractKey": null
               },
-              (v13/*: any*/)
+              (v14/*: any*/)
             ],
             "storageKey": null
           }
@@ -346,6 +360,7 @@ return {
                       (v10/*: any*/),
                       (v11/*: any*/),
                       (v12/*: any*/),
+                      (v13/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -458,15 +473,15 @@ return {
                                 "name": "slug",
                                 "storageKey": null
                               },
-                              (v14/*: any*/)
+                              (v15/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v14/*: any*/)
+                          (v15/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v14/*: any*/)
+                      (v15/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -474,7 +489,7 @@ return {
                 "type": "OrderMutationSuccess",
                 "abstractKey": null
               },
-              (v13/*: any*/)
+              (v14/*: any*/)
             ],
             "storageKey": null
           }
@@ -484,16 +499,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3e0a8504a735c9d49f639d4bd7cbe2a6",
+    "cacheID": "1077b20e223a9a6cb2c1fc54bae23673",
     "id": null,
     "metadata": {},
     "name": "useSetFulfillmentOptionMutation",
     "operationKind": "mutation",
-    "text": "mutation useSetFulfillmentOptionMutation(\n  $input: setOrderFulfillmentOptionInput!\n) {\n  setOrderFulfillmentOption(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          internalID\n          fulfillmentOptions {\n            amount {\n              minor\n            }\n            selected\n            type\n          }\n          buyerTotal {\n            minor\n            currencyCode\n          }\n          itemsTotal {\n            minor\n          }\n          shippingTotal {\n            minor\n          }\n          availableShippingCountries\n          ...ExpressCheckoutUI_order\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n    phoneNumberCountryCode\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
+    "text": "mutation useSetFulfillmentOptionMutation(\n  $input: setOrderFulfillmentOptionInput!\n) {\n  setOrderFulfillmentOption(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          internalID\n          fulfillmentOptions {\n            amount {\n              minor\n            }\n            selected\n            type\n          }\n          buyerTotal {\n            minor\n            currencyCode\n          }\n          itemsTotal {\n            minor\n          }\n          shippingTotal {\n            minor\n          }\n          taxTotal {\n            minor\n          }\n          availableShippingCountries\n          ...ExpressCheckoutUI_order\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n    phoneNumberCountryCode\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "418cbb5cc860c0aea2b5297ee0356beb";
+(node as any).hash = "38e35233ec4ceb8b4be4a7edc89952d7";
 
 export default node;

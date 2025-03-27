@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fe75feed0a33e97e0b3ca46ebe32b0d6>>
+ * @generated SignedSource<<cf1e483594cb30f75e2ae6c66b17a727>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -64,7 +64,10 @@ v4 = [
     "storageKey": null
   }
 ],
-v5 = {
+v5 = [
+  (v3/*: any*/)
+],
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -173,9 +176,17 @@ return {
                 "kind": "LinkedField",
                 "name": "shippingTotal",
                 "plural": false,
-                "selections": [
-                  (v3/*: any*/)
-                ],
+                "selections": (v5/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Money",
+                "kind": "LinkedField",
+                "name": "taxTotal",
+                "plural": false,
+                "selections": (v5/*: any*/),
                 "storageKey": null
               },
               {
@@ -318,31 +329,31 @@ return {
                         "name": "slug",
                         "storageKey": null
                       },
-                      (v5/*: any*/)
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v5/*: any*/)
+                  (v6/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/)
+              (v6/*: any*/)
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "0fe78200948b5994d1ef7799f3057f04",
+    "cacheID": "4cd393f794c30eae0841134509c46b32",
     "id": null,
     "metadata": {},
     "name": "ExpressCheckoutQuery",
     "operationKind": "query",
-    "text": "query ExpressCheckoutQuery(\n  $orderID: String!\n) {\n  me {\n    order(id: $orderID) {\n      ...ExpressCheckout_order\n      id\n    }\n    id\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n    phoneNumberCountryCode\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment ExpressCheckout_order on Order {\n  ...ExpressCheckoutUI_order\n  availableShippingCountries\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n}\n"
+    "text": "query ExpressCheckoutQuery(\n  $orderID: String!\n) {\n  me {\n    order(id: $orderID) {\n      ...ExpressCheckout_order\n      id\n    }\n    id\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n    phoneNumberCountryCode\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment ExpressCheckout_order on Order {\n  ...ExpressCheckoutUI_order\n  availableShippingCountries\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n}\n"
   }
 };
 })();
