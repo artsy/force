@@ -43,7 +43,6 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const [visible, setVisible] = useState(false)
   const elements = useElements()
   const stripe = useStripe()
-  const clientSecret = "client_secret_id"
   const setFulfillmentOptionMutation = useSetFulfillmentOptionMutation()
   const updateOrderMutation = useUpdateOrderMutation()
   const submitOrderMutation = useSubmitOrderMutation()
