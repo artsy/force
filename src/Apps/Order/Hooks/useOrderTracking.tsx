@@ -115,7 +115,7 @@ export const useOrderTracking = () => {
               : order.mode === "BUY"
                 ? "Buy now"
                 : "Make offer",
-          payment_methods: paymentMethods,
+          credit_card_wallet_types: paymentMethods,
         }
 
         trackEvent(payload)
@@ -139,7 +139,7 @@ export const useOrderTracking = () => {
               : order.mode === "BUY"
                 ? "Buy now"
                 : "Make offer",
-          payment_method: paymentMethod,
+          credit_card_wallet_type: paymentMethod,
         }
 
         trackEvent(payload)
@@ -163,7 +163,7 @@ export const useOrderTracking = () => {
               : order.mode === "BUY"
                 ? "Buy now"
                 : "Make offer",
-          payment_method: paymentMethod,
+          credit_card_wallet_type: paymentMethod,
         }
 
         trackEvent(payload)

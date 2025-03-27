@@ -156,7 +156,7 @@ describe("ExpressCheckoutUI", () => {
       context_page_owner_slug: "artwork-slug-from-context",
       context_page_owner_type: "orders-shipping",
       flow: "Buy now",
-      payment_methods: ["applePay"],
+      credit_card_wallet_types: ["applePay"],
     })
   })
 
@@ -173,7 +173,7 @@ describe("ExpressCheckoutUI", () => {
       context_page_owner_slug: "artwork-slug-from-context",
       context_page_owner_type: "orders-shipping",
       flow: "Buy now",
-      payment_method: "apple_pay",
+      credit_card_wallet_type: "apple_pay",
     })
   })
 
@@ -203,7 +203,7 @@ describe("ExpressCheckoutUI", () => {
       context_page_owner_slug: "artwork-slug-from-context",
       context_page_owner_type: "orders-shipping",
       flow: "Buy now",
-      payment_method: "apple_pay",
+      credit_card_wallet_type: "apple_pay",
     })
   })
 
