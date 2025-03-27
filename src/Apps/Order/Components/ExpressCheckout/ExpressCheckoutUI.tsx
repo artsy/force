@@ -314,7 +314,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       // Trigger form validation and wallet collection
       const { error: submitError } = await elements.submit()
       if (submitError) {
-        console.error(submitError)
+        logger.error(submitError)
         return
       }
 
@@ -328,7 +328,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       if (error) {
         // This point is only reached if there's an immediate error when
         // creating the ConfirmationToken. Show the error to customer (for example, payment details incomplete)
-        console.error(error)
+        logger.error(error)
         return
       }
 
@@ -340,8 +340,6 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           },
         },
       })
-
-      console.log(submitOrderResult)
     } catch (error) {
       logger.error("Error confirming payment", error)
     }
