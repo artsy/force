@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<729faf049f3a5c8f45b17b2a54a86a6d>>
+ * @generated SignedSource<<b8a6a0bffe07aa120a2b714cb83ef9b3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,15 @@
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
+export type OrderCreditCardWalletTypeEnum = "APPLE_PAY" | "%future added value";
+export type OrderPaymentMethodEnum = "CREDIT_CARD" | "%future added value";
 export type updateOrderInput = {
   buyerPhoneNumber?: string | null | undefined;
   buyerPhoneNumberCountryCode?: string | null | undefined;
   clientMutationId?: string | null | undefined;
+  creditCardWalletType?: OrderCreditCardWalletTypeEnum | null | undefined;
   id: string;
+  paymentMethod?: OrderPaymentMethodEnum | null | undefined;
   shippingAddressLine1?: string | null | undefined;
   shippingAddressLine2?: string | null | undefined;
   shippingCity?: string | null | undefined;
