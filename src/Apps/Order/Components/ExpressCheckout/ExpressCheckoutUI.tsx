@@ -70,13 +70,20 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     phoneNumberRequired: true,
   }
 
-  const updateOrderTotal = async (buyerTotalMinor?: number | null) => {
+  const updateOrderTotalAndResolve = (args: {
+    buyerTotalMinor?: number | null
+    resolveDetails: () => void
+    timeout?: number
+  }) => {
+    const { buyerTotalMinor, resolveDetails, timeout = 500 } = args
     logger.warn("Updating order total", buyerTotalMinor)
     buyerTotalMinor &&
       elements?.update({
         amount: buyerTotalMinor,
       })
-    await Promise.resolve()
+    setTimeout(() => {
+      resolveDetails()
+    }, timeout)
   }
 
   const resetOrder = async () => {
@@ -130,18 +137,22 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       const data = await resetOrder()
       const validatedResult = validateAndExtractOrderResponse(data)
 
-      await updateOrderTotal(validatedResult.order.buyerTotal?.minor)
       const allowedShippingCountries = extractAllowedShippingCountries(
         validatedResult.order,
       )
       const shippingRates = extractShippingRates(validatedResult.order)
       const lineItems = extractLineItems(validatedResult.order)
 
-      resolve({
-        ...checkoutOptions,
-        allowedShippingCountries,
-        shippingRates,
-        lineItems,
+      return updateOrderTotalAndResolve({
+        buyerTotalMinor: validatedResult.order.buyerTotal?.minor,
+        timeout: 0,
+        resolveDetails: () =>
+          resolve({
+            ...checkoutOptions,
+            allowedShippingCountries,
+            shippingRates,
+            lineItems,
+          }),
       })
     } catch (error) {
       logger.error("Error resetting order on load", error)
@@ -192,10 +203,15 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
 
       const shippingRates = extractShippingRates(validatedResult.order)
       const lineItems = extractLineItems(validatedResult.order)
-      await updateOrderTotal(validatedResult.order.buyerTotal?.minor)
 
-      resolve({ shippingRates, lineItems })
-      return
+      return updateOrderTotalAndResolve({
+        buyerTotalMinor: validatedResult.order.buyerTotal?.minor,
+        resolveDetails: () =>
+          resolve({
+            shippingRates,
+            lineItems,
+          }),
+      })
     } catch (error) {
       logger.error("Error updating order", error)
       reject()
@@ -233,13 +249,18 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       const data = result.setOrderFulfillmentOption?.orderOrError
 
       const validatedResult = validateAndExtractOrderResponse(data)
-      await updateOrderTotal(validatedResult.order.buyerTotal?.minor)
 
       const lineItems = extractLineItems(validatedResult.order)
       const shippingRates = extractShippingRates(validatedResult.order)
 
-      resolve({ shippingRates, lineItems })
-      return
+      return updateOrderTotalAndResolve({
+        buyerTotalMinor: validatedResult.order.buyerTotal?.minor,
+        resolveDetails: () =>
+          resolve({
+            shippingRates,
+            lineItems,
+          }),
+      })
     } catch (error) {
       logger.error("Error updating order", error)
       reject()
