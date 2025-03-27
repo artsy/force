@@ -15,7 +15,7 @@ jest.unmock("react-relay")
 
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
-    contextPageOwnerSlug: "artwork-slug",
+    contextPageOwnerSlug: "artwork-slug-from-context",
   })),
 }))
 
@@ -153,7 +153,7 @@ describe("ExpressCheckoutUI", () => {
     expect(trackEvent).toHaveBeenCalledWith({
       action: "expressCheckoutViewed",
       context_page_owner_id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-      context_page_owner_slug: "artwork-slug",
+      context_page_owner_slug: "artwork-slug-from-context",
       context_page_owner_type: "orders-shipping",
       flow: "Buy now",
       payment_methods: ["applePay"],
@@ -170,7 +170,7 @@ describe("ExpressCheckoutUI", () => {
     expect(trackEvent).toHaveBeenCalledWith({
       action: "clickedExpressCheckout",
       context_page_owner_id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-      context_page_owner_slug: "artwork-slug",
+      context_page_owner_slug: "artwork-slug-from-context",
       context_page_owner_type: "orders-shipping",
       flow: "Buy now",
       payment_method: "apple_pay",
@@ -200,7 +200,7 @@ describe("ExpressCheckoutUI", () => {
     expect(trackEvent).toHaveBeenCalledWith({
       action: "clickedCancelExpressCheckout",
       context_page_owner_id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-      context_page_owner_slug: "artwork-slug",
+      context_page_owner_slug: "artwork-slug-from-context",
       context_page_owner_type: "orders-shipping",
       flow: "Buy now",
       payment_method: "apple_pay",
