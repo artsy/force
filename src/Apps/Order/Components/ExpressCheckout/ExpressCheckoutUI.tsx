@@ -170,7 +170,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     logger.warn("Express checkout element address change", address)
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { city, state, country } = address
+    const { city, state, country, postal_code } = address
 
     try {
       const updateOrderResult = await updateOrderMutation.submitMutation({
@@ -180,6 +180,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
             shippingCity: city,
             shippingRegion: state,
             shippingCountry: country,
+            shippingPostalCode: postal_code,
           },
         },
       })
