@@ -10310,6 +10310,7 @@ enum EventStatus {
 }
 
 type ExchangeError {
+  code: String!
   message: String!
 }
 
