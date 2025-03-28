@@ -19,20 +19,15 @@ interface Props {
 
 export const ExpressCheckout = ({ order }: Props) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
+  const { buyerTotal } = orderData
 
-  const { buyerTotal, itemsTotal } = orderData
-
-  // fall back to itemsTotal if buyer total not available yet
-  // TODO: refresh this/refetch fragment when we do mutations
-  const total = buyerTotal || itemsTotal
-
-  if (!(total && orderData.availableShippingCountries.length)) {
+  if (!(buyerTotal && orderData.availableShippingCountries.length)) {
     return null
   }
 
   const orderOptions: StripeElementsUpdateOptions = {
-    amount: total.minor,
-    currency: total.currencyCode.toLowerCase(),
+    amount: buyerTotal.minor,
+    currency: buyerTotal.currencyCode.toLowerCase(),
     setupFutureUsage: "off_session",
     captureMethod: "manual",
     // TODO: Add seller details to the order type
