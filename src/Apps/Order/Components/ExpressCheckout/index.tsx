@@ -19,15 +19,18 @@ interface Props {
 
 export const ExpressCheckout = ({ order }: Props) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
-  const { buyerTotal } = orderData
 
-  if (!(buyerTotal && orderData.availableShippingCountries.length)) {
+  // Use itemsTotal on load, but subsequent updates inside ExpressCheckoutUI
+  // will use the updated buyersTotal.
+  const { itemsTotal } = orderData
+
+  if (!(itemsTotal && orderData.availableShippingCountries.length)) {
     return null
   }
 
   const orderOptions: StripeElementsUpdateOptions = {
-    amount: buyerTotal.minor,
-    currency: buyerTotal.currencyCode.toLowerCase(),
+    amount: itemsTotal.minor,
+    currency: itemsTotal.currencyCode.toLowerCase(),
     setupFutureUsage: "off_session",
     captureMethod: "manual",
     // TODO: Add seller details to the order type

@@ -195,61 +195,27 @@ describe("ExpressCheckoutUI", () => {
     expect(env.mock.getAllOperations()).toHaveLength(0)
   })
 
-  it("unsets the order fulfillment details and uses the result for initial values on load", async () => {
-    const { mockResolveLastOperation, env } = renderWithRelay({
+  it("uses the itemTotal and 'calculating shipping...' for initial values on load", async () => {
+    const { env } = renderWithRelay({
       Order: () => ({
         ...orderData,
-        fulfillmentOptions: [{ type: "SHIPPING_TBD", amount: null }],
+        itemsTotal: {
+          minor: 12345,
+        },
+        fulfillmentOptions: [
+          {
+            type: "DOMESTIC_FLAT",
+            amount: {
+              minor: 4200,
+              currencyCode: "USD",
+            },
+            selected: null,
+          },
+        ],
       }),
     })
 
     fireEvent.click(screen.getByTestId("express-checkout-button"))
-
-    // Need to see a selected option to consider shipping details
-    const [toBeSelected, ...fulfillmentOptions] = orderData.fulfillmentOptions
-    ;(toBeSelected.selected as any) = true
-    const newOrderData = {
-      ...orderData,
-      fulfillmentOptions: [toBeSelected, ...fulfillmentOptions],
-      buyerTotal: {
-        minor: 104300,
-        currencyCode: "USD",
-      },
-      itemsTotal: {
-        minor: 100000,
-        currencyCode: "USD",
-      },
-      shippingTotal: {
-        minor: 4200,
-        currencyCode: "USD",
-      },
-      taxTotal: {
-        minor: 100,
-        currencyCode: "USD",
-      },
-    }
-    const { operationName, operationVariables } =
-      await mockResolveLastOperation({
-        updateOrderPayload: () => ({
-          orderOrError: {
-            __typename: "OrderMutationSuccess",
-            order: newOrderData,
-          },
-        }),
-      })
-    expect(operationName).toBe("useUpdateOrderMutation")
-    expect(operationVariables.input).toEqual({
-      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-      buyerPhoneNumber: null,
-      buyerPhoneNumberCountryCode: null,
-      shippingAddressLine1: null,
-      shippingAddressLine2: null,
-      shippingCity: null,
-      shippingCountry: null,
-      shippingName: null,
-      shippingPostalCode: null,
-      shippingRegion: null,
-    })
 
     // Where we load initial values into the express checkout element
     await waitFor(() => {
@@ -257,30 +223,17 @@ describe("ExpressCheckoutUI", () => {
         allowedShippingCountries: ["US"],
         phoneNumberRequired: true,
         shippingAddressRequired: true,
-        lineItems: [
-          {
-            amount: 100000,
-            name: "Subtotal",
-          },
-          {
-            amount: 4200,
-            name: "Domestic shipping",
-          },
-          {
-            amount: 100,
-            name: "Tax",
-          },
-        ],
+
         shippingRates: [
           {
-            amount: 4200,
-            displayName: "Domestic shipping",
-            id: "DOMESTIC_FLAT",
+            amount: 0,
+            displayName: "Calculating shipping...",
+            id: "CALCULATING_SHIPPING",
           },
         ],
       })
     })
-    expect(mockElementsUpdate).toHaveBeenCalledWith({ amount: 104300 })
+    expect(mockElementsUpdate).toHaveBeenCalledWith({ amount: 12345 })
     await flushPromiseQueue()
     expect(env.mock.getAllOperations()).toHaveLength(0)
   })
@@ -318,22 +271,13 @@ describe("ExpressCheckoutUI", () => {
   })
 
   it("tracks an express checkout cancel event", async () => {
-    const { mockResolveLastOperation } = renderWithRelay({
+    renderWithRelay({
       Order: () => ({ ...orderData }),
     })
 
     // We have to do the fake open before we can do the fake cancel
     // because opening sets the express checkout type (payment_method)
     fireEvent.click(screen.getByTestId("express-checkout-button"))
-
-    await mockResolveLastOperation({
-      updateOrderPayload: () => ({
-        orderOrError: {
-          __typename: "OrderMutationSuccess",
-          order: orderData,
-        },
-      }),
-    })
 
     fireEvent.click(screen.getByTestId("express-checkout-cancel"))
 

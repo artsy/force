@@ -132,26 +132,20 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       order: orderData,
       paymentMethod: expressPaymentType,
     })
+    const { itemsTotal } = orderData
 
     try {
-      const data = await resetOrder()
-      const validatedResult = validateAndExtractOrderResponse(data)
-
-      const allowedShippingCountries = extractAllowedShippingCountries(
-        validatedResult.order,
-      )
-      const shippingRates = extractShippingRates(validatedResult.order)
-      const lineItems = extractLineItems(validatedResult.order)
+      const allowedShippingCountries =
+        extractAllowedShippingCountries(orderData)
+      const shippingRates = [CALCULATING_SHIPPING_RATE]
 
       return updateOrderTotalAndResolve({
-        buyerTotalMinor: validatedResult.order.buyerTotal?.minor,
-        timeout: 0,
+        buyerTotalMinor: itemsTotal?.minor,
         resolveDetails: () =>
           resolve({
             ...checkoutOptions,
             allowedShippingCountries,
             shippingRates,
-            lineItems,
           }),
       })
     } catch (error) {
@@ -460,7 +454,6 @@ const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
     throw new Error("itemsTotal is required")
   }
 
-  // TODO: Change to let when we have shipping and tax lines
   let shippingLine: LineItem | null = null
   let taxLine: LineItem | null = null
 
@@ -553,15 +546,28 @@ const shippingRateForFulfillmentOption = option => {
   }
 }
 
+const sortPickupLast = (a: ShippingRate, b: ShippingRate) => {
+  // Sort pickup last
+  if (a.id === "PICKUP" && b.id !== "PICKUP") {
+    return 1
+  }
+  if (a.id !== "PICKUP" && b.id === "PICKUP") {
+    return -1
+  }
+  return 0
+}
+
 const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
   const rates = order.fulfillmentOptions
     .map(shippingRateForFulfillmentOption)
     .filter(Boolean) as ShippingRate[]
   const shippingRatesOnly = rates.filter(rate => rate.id !== "PICKUP")
-  if (shippingRatesOnly.length === 0) {
-    return rates.concat(CALCULATING_SHIPPING_RATE)
-  }
-  return rates
+  const finalRates =
+    shippingRatesOnly.length === 0
+      ? rates.concat(CALCULATING_SHIPPING_RATE)
+      : rates
+
+  return finalRates.sort(sortPickupLast)
 }
 
 // Only max-height can be animated
