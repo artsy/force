@@ -84,7 +84,7 @@ const ShippingRouteLayout: FC<
   // order can be processed with express checkout
   const isExpressCheckoutEligible =
     expressCheckoutPrototypeEnabled &&
-    !!shippingContext.orderData.isOffer &&
+    !shippingContext.orderData.isOffer &&
     shippingContext.orderData.isFixedShipping
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>

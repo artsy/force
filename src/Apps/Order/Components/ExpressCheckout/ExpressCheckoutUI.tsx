@@ -1,9 +1,3 @@
-import {
-  ActionType,
-  type ClickedCancelExpressCheckout,
-  type ClickedExpressCheckout,
-  OwnerType,
-} from "@artsy/cohesion"
 import { Box, Spacer, Text } from "@artsy/palette"
 import {
   ExpressCheckoutElement,
@@ -11,6 +5,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js"
 import type {
+  AvailablePaymentMethods,
   ClickResolveDetails,
   ExpressPaymentType,
   ShippingRate,
@@ -22,13 +17,14 @@ import type {
 } from "@stripe/stripe-js"
 import { useSetFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSetFulfillmentOptionMutation"
 import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
+import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSubmitOrderMutation"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import createLogger from "Utils/logger"
 import type { ExpressCheckoutUI_order$key } from "__generated__/ExpressCheckoutUI_order.graphql"
 import type { FulfillmentOptionInputEnum } from "__generated__/useSetFulfillmentOptionMutation.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
-import { useTracking } from "react-tracking"
 import styled from "styled-components"
 
 interface ExpressCheckoutUIProps {
@@ -47,19 +43,16 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const [visible, setVisible] = useState(false)
   const elements = useElements()
   const stripe = useStripe()
-  const clientSecret = "client_secret_id"
-  const { trackEvent } = useTracking()
   const setFulfillmentOptionMutation = useSetFulfillmentOptionMutation()
   const updateOrderMutation = useUpdateOrderMutation()
+  const submitOrderMutation = useSubmitOrderMutation()
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
+  const orderTracking = useOrderTracking()
 
   if (!(stripe && elements)) {
     return null
   }
-
-  const primaryLineItem = orderData.lineItems[0]
-  const primaryArtwork = primaryLineItem?.artwork
 
   const checkoutOptions: ClickResolveDetails = {
     shippingAddressRequired: true,
@@ -105,23 +98,13 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     expressPaymentType,
     resolve,
   }: StripeExpressCheckoutElementClickEvent) => {
-    const event: ClickedExpressCheckout = {
-      action: ActionType.clickedExpressCheckout,
-      context_page_owner_type: OwnerType.ordersShipping,
-      // TODO: should this be order id?
-      context_page_owner_id: primaryArtwork?.internalID ?? "",
-      context_page_owner_slug: primaryArtwork?.slug ?? "",
-      flow:
-        orderData.source === "PARTNER_OFFER"
-          ? "Partner offer"
-          : orderData.mode === "BUY"
-            ? "Buy now"
-            : "Make offer",
-      payment_method: expressPaymentType,
-    }
     setExpressCheckoutType(expressPaymentType)
 
-    trackEvent(event)
+    orderTracking.clickedExpressCheckout({
+      order: orderData,
+      paymentMethod: expressPaymentType,
+    })
+
     try {
       const data = await resetOrder()
       const { order } = validateAndExtractOrderResponse(data)
@@ -137,22 +120,10 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }
 
   const handleCancel: HandleCancelCallback = async () => {
-    const event: ClickedCancelExpressCheckout = {
-      action: ActionType.clickedCancelExpressCheckout,
-      context_page_owner_type: OwnerType.ordersShipping,
-      // TODO: should this be order id?
-      context_page_owner_id: primaryArtwork?.internalID ?? "",
-      context_page_owner_slug: primaryArtwork?.slug ?? "",
-      flow:
-        orderData.source === "PARTNER_OFFER"
-          ? "Partner offer"
-          : orderData.mode === "BUY"
-            ? "Buy now"
-            : "Make offer",
-      payment_method: expressCheckoutType as string,
-    }
-
-    trackEvent(event)
+    orderTracking.clickedCancelExpressCheckout({
+      order: orderData,
+      paymentMethod: expressCheckoutType as string,
+    })
 
     logger.warn("Express checkout element cancelled - resetting")
     await resetOrder()
@@ -170,7 +141,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     logger.warn("Express checkout element address change", address)
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { city, state, country } = address
+    const { city, state, country, postal_code } = address
 
     try {
       const updateOrderResult = await updateOrderMutation.submitMutation({
@@ -180,6 +151,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
             shippingCity: city,
             shippingRegion: state,
             shippingCountry: country,
+            shippingPostalCode: postal_code,
           },
         },
       })
@@ -261,6 +233,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         variables: {
           input: {
             id: orderData.internalID,
+            paymentMethod: "CREDIT_CARD",
+            creditCardWalletType: "APPLE_PAY",
             buyerPhoneNumber: phone,
             buyerPhoneNumberCountryCode: null,
             shippingName: name,
@@ -278,18 +252,37 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         updateOrderResult.updateOrder?.orderOrError,
       )
 
-      const { error } = await stripe.confirmPayment({
-        elements: elements,
-        clientSecret,
-        confirmParams: {
-          return_url: "https://artsy.net/",
+      // Trigger form validation and wallet collection
+      const { error: submitError } = await elements.submit()
+      if (submitError) {
+        console.error(submitError)
+        return
+      }
+
+      // Create the ConfirmationToken using the details collected by the Payment Element
+      const { error, confirmationToken } = await stripe.createConfirmationToken(
+        {
+          elements,
+        },
+      )
+
+      if (error) {
+        // This point is only reached if there's an immediate error when
+        // creating the ConfirmationToken. Show the error to customer (for example, payment details incomplete)
+        console.error(error)
+        return
+      }
+
+      const submitOrderResult = await submitOrderMutation.submitMutation({
+        variables: {
+          input: {
+            id: orderData.internalID,
+            confirmationToken: confirmationToken.id,
+          },
         },
       })
 
-      if (error) {
-        logger.error("Error confirming payment", error)
-        return
-      }
+      console.log(submitOrderResult)
     } catch (error) {
       logger.error("Error confirming payment", error)
     }
@@ -307,6 +300,13 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         onReady={e => {
           if (!!e.availablePaymentMethods) {
             setVisible(true)
+
+            orderTracking.expressCheckoutViewed({
+              order: orderData,
+              paymentMethods: getAvailablePaymentMethods(
+                e.availablePaymentMethods,
+              ),
+            })
           }
         }}
         onShippingAddressChange={handleShippingAddressChange}
@@ -429,3 +429,11 @@ const UncollapsingBox = styled(Box)<{ visible: boolean }>`
   overflow: hidden;
   transition: max-height 0.3s ease-in-out;
 `
+
+function getAvailablePaymentMethods(
+  paymentMethods: AvailablePaymentMethods,
+): string[] {
+  return Object.entries(paymentMethods)
+    .filter(([_, isAvailable]) => isAvailable)
+    .map(([method]) => method)
+}

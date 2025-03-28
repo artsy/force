@@ -33,6 +33,10 @@ export const ExpressCheckout = ({ order }: Props) => {
   const orderOptions: StripeElementsUpdateOptions = {
     amount: total.minor,
     currency: total.currencyCode.toLowerCase(),
+    setupFutureUsage: "off_session",
+    captureMethod: "manual",
+    // TODO: Add seller details to the order type
+    onBehalfOf: "acct_14FIYS4fSw9JrcJy",
   }
 
   const options: StripeElementsOptions = {
