@@ -169,8 +169,8 @@ export const AddressAutocompleteInput = ({
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const { serviceAvailability, providerSuggestions } = state
-
   const isUSAddress = address.country === "US"
+
   const isFeatureFlagEnabled = !!useFlag("address_autocomplete_us")
 
   const { trackEvent } = useTracking()

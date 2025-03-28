@@ -3,6 +3,9 @@ import { renderServerApp } from "System/Router/renderServerApp"
 import { IpDeniedError } from "express-ipfilter"
 
 jest.mock("System/Router/renderServerApp")
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn(),
+}))
 jest.mock("Server/config", () => {
   return {
     NODE_ENV: "unknown",

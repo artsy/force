@@ -4,8 +4,15 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { PartnerOfferCreatedNotification_test_Query } from "__generated__/PartnerOfferCreatedNotification_test_Query.graphql"
 import { graphql } from "react-relay"
 
+jest.mock("@unleash/proxy-client-react", () => {
+  const actual = jest.requireActual("@unleash/proxy-client-react")
+  return {
+    ...actual,
+    useFlag: jest.fn().mockReturnValue(true),
+  }
+})
+
 jest.unmock("react-relay")
-jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
 
 const { renderWithRelay } =
   setupTestWrapperTL<PartnerOfferCreatedNotification_test_Query>({

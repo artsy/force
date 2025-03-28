@@ -5,17 +5,11 @@ import {
 } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/CreateNewListModal"
 import { render } from "DevTools/renderWithMockBoot"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useTracking } from "react-tracking"
 
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(() => false),
-}))
-
 jest.mock("Utils/Hooks/useMutation")
 
-const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 const mockUseMutation = useMutation as jest.Mock
 const mockUseTracking = useTracking as jest.Mock
 const onCloseMock = jest.fn()
@@ -208,10 +202,6 @@ describe("CreateNewListModal", () => {
   })
 
   describe("shared list toggle", () => {
-    beforeEach(() => {
-      mockUseFeatureFlag.mockImplementation(() => true)
-    })
-
     it("allows user to enable list shareability by default", async () => {
       render(<TestComponent />)
 

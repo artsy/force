@@ -26,7 +26,6 @@ import { type Environment, RelayEnvironmentProvider } from "react-relay"
 import track from "react-tracking"
 import { StyleSheetManager } from "styled-components"
 import { FeatureFlagProvider } from "System/Contexts/FeatureFlagContext"
-import { data as sd } from "sharify"
 
 export interface BootProps extends React.PropsWithChildren {
   context: ClientContext

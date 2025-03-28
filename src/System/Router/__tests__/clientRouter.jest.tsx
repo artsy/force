@@ -119,7 +119,6 @@ describe("clientRouter", () => {
         <SystemContextConsumer>
           {context => {
             expect(Object.keys(context).sort()).toEqual([
-              "featureFlags",
               "isEigen",
               "isLoggedIn",
               "relayEnvironment",

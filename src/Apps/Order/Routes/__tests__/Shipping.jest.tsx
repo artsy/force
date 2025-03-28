@@ -31,7 +31,6 @@ import {
 import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import type {
   ShippingTestQuery,
@@ -66,10 +65,6 @@ jest.mock("@artsy/palette", () => {
     },
   }
 })
-
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(),
-}))
 
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn().mockReturnValue({
@@ -276,7 +271,6 @@ describe.skip("Shipping", () => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent: mockTrackEvent,
     }))
-    ;(useFeatureFlag as jest.Mock).mockImplementation(() => false)
 
     mockUseRouter.mockReturnValue({
       router: {
@@ -887,13 +881,6 @@ describe.skip("Shipping", () => {
 
       describe("address verification", () => {
         describe("with US enabled and international disabled", () => {
-          beforeEach(() => {
-            ;(useFeatureFlag as jest.Mock).mockImplementation(
-              (featureName: string) =>
-                featureName === "address_verification_us",
-            )
-          })
-
           it("triggers basic form validation before address verification", async () => {
             const { env } = renderWithRelay({
               CommerceOrder: () => order,
@@ -1202,13 +1189,6 @@ describe.skip("Shipping", () => {
 
       describe("address verification", () => {
         describe("with address verification enabled", () => {
-          beforeEach(() => {
-            ;(useFeatureFlag as jest.Mock).mockImplementation(
-              (featureName: string) =>
-                featureName === "address_verification_us",
-            )
-          })
-
           it("does not trigger the flow", async () => {
             const { mockResolveLastOperation } = renderWithRelay({
               CommerceOrder: () => order,
@@ -1361,13 +1341,6 @@ describe.skip("Shipping", () => {
     describe("with no saved address", () => {
       describe("address verification", () => {
         describe("with US enabled and international disabled", () => {
-          beforeEach(() => {
-            ;(useFeatureFlag as jest.Mock).mockImplementation(
-              (featureName: string) =>
-                featureName === "address_verification_us",
-            )
-          })
-
           it("uses recommended address", async () => {
             const { mockResolveLastOperation, env } = renderWithRelay({
               CommerceOrder: () =>

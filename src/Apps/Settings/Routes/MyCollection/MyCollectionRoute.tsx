@@ -6,7 +6,7 @@ import { MyCollectionArtworkGrid } from "Apps/Settings/Routes/MyCollection/Compo
 import { MetaTags } from "Components/MetaTags"
 import { ShareCollectionDialog } from "Components/ShareCollectionDialog"
 import { RouterLink } from "System/Components/RouterLink"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import { cleanLocalImages } from "Utils/localImageHelpers"
 import type { MyCollectionRoute_me$data } from "__generated__/MyCollectionRoute_me.graphql"
 import { type FC, useEffect, useState } from "react"
@@ -26,7 +26,7 @@ export interface MyCollectionRouteProps {
 const MyCollectionRoute: FC<
   React.PropsWithChildren<MyCollectionRouteProps>
 > = ({ me, relay }) => {
-  const enableShare = useFeatureFlag("onyx_shareable-my-collection")
+  const enableShare = useFlag("onyx_shareable-my-collection")
 
   const { addCollectedArtwork: trackAddCollectedArtwork } =
     useMyCollectionTracking()

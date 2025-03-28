@@ -24,6 +24,5 @@ export const FeatureFlagProvider: React.FC<
     disableRefresh: true,
     bootstrap: [],
   }
-  debugger
   return <FlagProvider config={unleashConfig}>{children}</FlagProvider>
 }

@@ -1,7 +1,6 @@
 import { fireEvent, screen } from "@testing-library/react"
 import { InsightsMedianSalePriceFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsMedianSalePrice"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { InsightsMedianSalePriceTestQuery } from "__generated__/InsightsMedianSalePriceTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -9,7 +8,6 @@ jest.unmock("react-relay")
 
 const mockPush = jest.fn()
 
-jest.mock("System/Hooks/useSystemContext")
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     router: {
@@ -17,6 +15,14 @@ jest.mock("System/Hooks/useRouter", () => ({
     },
   }),
 }))
+
+jest.mock("@unleash/proxy-client-react", () => {
+  const actual = jest.requireActual("@unleash/proxy-client-react")
+  return {
+    ...actual,
+    useFlag: jest.fn().mockReturnValue(true),
+  }
+})
 
 describe("InsightsMedianSalePrice", () => {
   const { renderWithRelay } =
@@ -30,16 +36,6 @@ describe("InsightsMedianSalePrice", () => {
         }
       `,
     })
-
-  beforeAll(() => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "my-collection-web-phase-7-median-sale-price-graph": {
-          flagEnabled: false,
-        },
-      },
-    }))
-  })
 
   describe("when there are market price insights data", () => {
     describe("Median auction price in the last 3 years", () => {
@@ -63,14 +59,6 @@ describe("InsightsMedianSalePrice", () => {
     })
 
     it("navigates to the median auction price screen when the feature flag is enabled", () => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        featureFlags: {
-          "my-collection-web-phase-7-median-sale-price-graph": {
-            flagEnabled: true,
-          },
-        },
-      }))
-
       renderWithRelay(mockResolver)
 
       const artistRow = screen.getByText("Takashi Murakami")
@@ -83,14 +71,6 @@ describe("InsightsMedianSalePrice", () => {
     })
 
     it("navigates to the median auction price screen when the median-sale-price-graph and collecto-profile feature flags are enabled", () => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        featureFlags: {
-          "my-collection-web-phase-7-median-sale-price-graph": {
-            flagEnabled: true,
-          },
-        },
-      }))
-
       renderWithRelay(mockResolver)
 
       const artistRow = screen.getByText("Takashi Murakami")

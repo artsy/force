@@ -17,9 +17,6 @@ jest.mock("Components/AuthDialog/useAuthDialog")
 jest.mock("Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(() => true),
-}))
 
 jest.mock("System/Hooks/useSystemContext")
 

@@ -4,16 +4,20 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { SaleAgreementsApp_Test_Query } from "__generated__/SaleAgreementsApp_Test_Query.graphql"
 import { graphql } from "react-relay"
 
+jest.mock("@unleash/proxy-client-react", () => {
+  const actual = jest.requireActual("@unleash/proxy-client-react")
+  return {
+    ...actual,
+    useFlag: jest.fn().mockReturnValue(true),
+  }
+})
+
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({ match: { params: { id: "example" } } }),
 }))
 jest.mock("Components/MetaTags", () => ({
   MetaTags: () => null,
-}))
-
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: () => true,
 }))
 
 describe("SaleAgreementsApp", () => {
