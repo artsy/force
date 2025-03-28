@@ -5,7 +5,6 @@ import { ArtworkSidebarCommercialButtons } from "Apps/Artwork/Components/Artwork
 import { useAuthDialog } from "Components/AuthDialog"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import type { ArtworkSidebarCommercialButtons_Test_Query } from "__generated__/ArtworkSidebarCommercialButtons_Test_Query.graphql"
 import { graphql } from "react-relay"
@@ -16,12 +15,6 @@ jest.unmock("react-relay")
 
 jest.mock("System/Hooks/useRouter")
 
-jest.mock("System/Hooks/useFeatureFlag", () => {
-  return {
-    useFeatureFlag: jest.fn(),
-  }
-})
-
 jest.mock("Components/AuthDialog/useAuthDialog", () => ({
   useAuthDialog: jest.fn().mockReturnValue({ showAuthDialog: jest.fn() }),
 }))
@@ -31,7 +24,6 @@ describe("ArtworkSidebarCommercialButtons", () => {
   let meMock
 
   let mockEnvironment
-  const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 
   const { renderWithRelay } =
     setupTestWrapperTL<ArtworkSidebarCommercialButtons_Test_Query>({
@@ -75,7 +67,6 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
   describe("action buttons area for artwork with offer", () => {
     it("for artwork that BN only displays Purchase button only", async () => {
-      mockUseFeatureFlag.mockImplementation(() => true)
       meMock.partnerOffersConnection.edges.push({
         node: {
           internalID: "partner-offer-id",
@@ -102,7 +93,6 @@ describe("ArtworkSidebarCommercialButtons", () => {
     })
 
     it("does not add Purchase button if offer is not available", async () => {
-      mockUseFeatureFlag.mockImplementation(() => true)
       meMock.partnerOffersConnection.edges.push({
         node: {
           internalID: "partner-offer-id",
@@ -127,7 +117,6 @@ describe("ArtworkSidebarCommercialButtons", () => {
     })
 
     it("for artwork that is MO only displays Purchase and Make offer buttons", async () => {
-      mockUseFeatureFlag.mockImplementation(() => true)
       meMock.partnerOffersConnection.edges.push({
         node: {
           internalID: "partner-offer-id",
@@ -154,7 +143,6 @@ describe("ArtworkSidebarCommercialButtons", () => {
     })
 
     it("for artwork that is contact gallery only displays Purchase and Contact Gallery buttons", async () => {
-      mockUseFeatureFlag.mockImplementation(() => true)
       meMock.partnerOffersConnection.edges.push({
         node: {
           internalID: "partner-offer-id",
@@ -181,7 +169,6 @@ describe("ArtworkSidebarCommercialButtons", () => {
     })
 
     it("for MOOEA artwork displays Purchase and Contact Gallery buttons", async () => {
-      mockUseFeatureFlag.mockImplementation(() => true)
       meMock.partnerOffersConnection.edges.push({
         node: {
           internalID: "partner-offer-id",
@@ -399,7 +386,6 @@ describe("ArtworkSidebarCommercialButtons", () => {
   })
 
   it("displays offer details when viewed by user with an active partner offer on the artwork", async () => {
-    mockUseFeatureFlag.mockImplementation(() => true)
     const futureDate = new Date()
     futureDate.setDate(futureDate.getDate() + 1)
     meMock.partnerOffersConnection.edges.push({
@@ -430,7 +416,6 @@ describe("ArtworkSidebarCommercialButtons", () => {
   })
 
   it("does not displays offer details when viewed by user without an active partner offer on the artwork", async () => {
-    mockUseFeatureFlag.mockImplementation(() => true)
     meMock.partnerOffersConnection.edges.push({
       node: {
         internalID: "partner-offer-id",
@@ -461,7 +446,6 @@ describe("ArtworkSidebarCommercialButtons", () => {
   })
 
   it("displays partner offer note if present", () => {
-    mockUseFeatureFlag.mockImplementation(() => true)
     const futureDate = new Date()
     futureDate.setDate(futureDate.getDate() + 1)
     meMock.partnerOffersConnection.edges.push({
@@ -589,7 +573,6 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
   describe("Starting an order", () => {
     beforeEach(() => {
-      mockUseFeatureFlag.mockImplementation(() => true)
       user = { id: "123", name: "User" }
       meMock = meMock = {
         partnerOffersConnection: {

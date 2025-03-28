@@ -3,6 +3,11 @@ import { MockRouter } from "DevTools/MockRouter"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { RouterLink } from "System/Components/RouterLink"
 
+jest.mock("@unleash/proxy-client-react", () => ({
+  ...jest.requireActual("@unleash/proxy-client-react"),
+  useFlag: jest.fn().mockReturnValue(true),
+}))
+
 jest.mock("System/Router/Utils/shouldUpdateScroll", () => ({
   shouldUpdateScroll: () => true,
 }))
@@ -86,6 +91,7 @@ describe("RouterLink", () => {
   })
 
   it("falls back to an <a> tag if missing a router context", () => {
+    // TODO: maybe mock
     render(<RouterLink to="/foo">Foo</RouterLink>)
     expect(screen.queryByText("FooLink")).not.toBeInTheDocument()
     expect(screen.getByRole("link", { name: "Foo" })).toBeInTheDocument()

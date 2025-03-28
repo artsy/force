@@ -5,7 +5,6 @@ import type { ViewingRoomPublishedNotification_test_Query } from "__generated__/
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
-jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
 
 const { renderWithRelay } =
   setupTestWrapperTL<ViewingRoomPublishedNotification_test_Query>({

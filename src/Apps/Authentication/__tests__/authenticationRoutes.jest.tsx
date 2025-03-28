@@ -13,6 +13,11 @@ import { getENV } from "Utils/getENV"
 import type { NextFunction } from "express"
 import qs from "qs"
 
+jest.mock("@unleash/proxy-client-react", () => ({
+  ...jest.requireActual("@unleash/proxy-client-react"),
+  useFlag: jest.fn().mockReturnValue(false),
+}))
+
 jest.mock("Apps/Authentication/Middleware/checkForRedirect", () => ({
   checkForRedirect: jest.fn(),
 }))
