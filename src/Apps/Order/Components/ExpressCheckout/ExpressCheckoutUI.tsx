@@ -340,6 +340,10 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           },
         },
       })
+
+      validateAndExtractOrderResponse(
+        submitOrderResult.submitOrder?.orderOrError,
+      )
     } catch (error) {
       logger.error("Error confirming payment", error)
     }
