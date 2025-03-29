@@ -8522,6 +8522,9 @@ input CreateArtworkMutationInput {
 
   # The ID of the partner under which the artwork is created.
   partnerId: String!
+
+  # If present, the newly created artwork will be added to this show.
+  partnerShowId: String
 }
 
 type CreateArtworkMutationPayload {
