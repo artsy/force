@@ -14,7 +14,6 @@ export const useSetFulfillmentOptionMutation = () => {
             ... on OrderMutationSuccess {
               order {
                 internalID
-                availableShippingCountries
                 fulfillmentOptions {
                   amount {
                     minor
@@ -22,6 +21,20 @@ export const useSetFulfillmentOptionMutation = () => {
                   selected
                   type
                 }
+                buyerTotal {
+                  minor
+                  currencyCode
+                }
+                itemsTotal {
+                  minor
+                }
+                shippingTotal {
+                  minor
+                }
+                taxTotal {
+                  minor
+                }
+                availableShippingCountries
                 ...ExpressCheckoutUI_order
               }
             }

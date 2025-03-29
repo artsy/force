@@ -72,10 +72,6 @@ const ShippingRouteLayout: FC<
 > = ({ me, order }) => {
   const shippingContext = useShippingContext()
 
-  if (shippingContext.state.isLoading) {
-    return null
-  }
-
   const { jumpTo } = useJump()
 
   const expressCheckoutPrototypeEnabled = useFeatureFlag(
@@ -93,6 +89,10 @@ const ShippingRouteLayout: FC<
       jumpTo("shippingOptionsTop", { behavior: "smooth" })
     }
   }, [shippingContext.state.stage])
+
+  if (shippingContext.state.isLoading) {
+    return null
+  }
 
   return (
     <Box data-testid="orderShipping">

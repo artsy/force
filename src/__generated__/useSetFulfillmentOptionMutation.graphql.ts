@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d6674be5997113908e5989cab4ed5dfb>>
+ * @generated SignedSource<<ab48ecda4402dbac9108eca71fcdff05>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,6 +34,10 @@ export type useSetFulfillmentOptionMutation$data = {
       readonly __typename: "OrderMutationSuccess";
       readonly order: {
         readonly availableShippingCountries: ReadonlyArray<string>;
+        readonly buyerTotal: {
+          readonly currencyCode: string;
+          readonly minor: any;
+        } | null | undefined;
         readonly fulfillmentOptions: ReadonlyArray<{
           readonly amount: {
             readonly minor: any;
@@ -42,6 +46,15 @@ export type useSetFulfillmentOptionMutation$data = {
           readonly type: FulfillmentOptionTypeEnum;
         }>;
         readonly internalID: string;
+        readonly itemsTotal: {
+          readonly minor: any;
+        } | null | undefined;
+        readonly shippingTotal: {
+          readonly minor: any;
+        } | null | undefined;
+        readonly taxTotal: {
+          readonly minor: any;
+        } | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutUI_order">;
       };
     } | {
@@ -89,16 +102,12 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "availableShippingCountries",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "minor",
   "storageKey": null
 },
+v5 = [
+  (v4/*: any*/)
+],
 v6 = {
   "alias": null,
   "args": null,
@@ -113,7 +122,64 @@ v7 = {
   "name": "type",
   "storageKey": null
 },
-v8 = {
+v8 = [
+  (v4/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "currencyCode",
+    "storageKey": null
+  }
+],
+v9 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Money",
+  "kind": "LinkedField",
+  "name": "buyerTotal",
+  "plural": false,
+  "selections": (v8/*: any*/),
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Money",
+  "kind": "LinkedField",
+  "name": "itemsTotal",
+  "plural": false,
+  "selections": (v5/*: any*/),
+  "storageKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Money",
+  "kind": "LinkedField",
+  "name": "shippingTotal",
+  "plural": false,
+  "selections": (v5/*: any*/),
+  "storageKey": null
+},
+v12 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Money",
+  "kind": "LinkedField",
+  "name": "taxTotal",
+  "plural": false,
+  "selections": (v5/*: any*/),
+  "storageKey": null
+},
+v13 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "availableShippingCountries",
+  "storageKey": null
+},
+v14 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -138,7 +204,7 @@ v8 = {
   "type": "OrderMutationError",
   "abstractKey": null
 },
-v9 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -181,7 +247,6 @@ return {
                     "plural": false,
                     "selections": [
                       (v3/*: any*/),
-                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -197,9 +262,7 @@ return {
                             "kind": "LinkedField",
                             "name": "amount",
                             "plural": false,
-                            "selections": [
-                              (v5/*: any*/)
-                            ],
+                            "selections": (v5/*: any*/),
                             "storageKey": null
                           },
                           (v6/*: any*/),
@@ -207,6 +270,11 @@ return {
                         ],
                         "storageKey": null
                       },
+                      (v9/*: any*/),
+                      (v10/*: any*/),
+                      (v11/*: any*/),
+                      (v12/*: any*/),
+                      (v13/*: any*/),
                       {
                         "args": null,
                         "kind": "FragmentSpread",
@@ -219,7 +287,7 @@ return {
                 "type": "OrderMutationSuccess",
                 "abstractKey": null
               },
-              (v8/*: any*/)
+              (v14/*: any*/)
             ],
             "storageKey": null
           }
@@ -265,7 +333,6 @@ return {
                     "plural": false,
                     "selections": [
                       (v3/*: any*/),
-                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -281,16 +348,7 @@ return {
                             "kind": "LinkedField",
                             "name": "amount",
                             "plural": false,
-                            "selections": [
-                              (v5/*: any*/),
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "currencyCode",
-                                "storageKey": null
-                              }
-                            ],
+                            "selections": (v8/*: any*/),
                             "storageKey": null
                           },
                           (v6/*: any*/),
@@ -298,6 +356,11 @@ return {
                         ],
                         "storageKey": null
                       },
+                      (v9/*: any*/),
+                      (v10/*: any*/),
+                      (v11/*: any*/),
+                      (v12/*: any*/),
+                      (v13/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -310,6 +373,80 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "mode",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "FulfillmentDetails",
+                        "kind": "LinkedField",
+                        "name": "fulfillmentDetails",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "addressLine1",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "addressLine2",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "city",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "postalCode",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "region",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "country",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "phoneNumber",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "phoneNumberCountryCode",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "name",
+                            "storageKey": null
+                          }
+                        ],
                         "storageKey": null
                       },
                       {
@@ -336,15 +473,15 @@ return {
                                 "name": "slug",
                                 "storageKey": null
                               },
-                              (v9/*: any*/)
+                              (v15/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v9/*: any*/)
+                          (v15/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v9/*: any*/)
+                      (v15/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -352,7 +489,7 @@ return {
                 "type": "OrderMutationSuccess",
                 "abstractKey": null
               },
-              (v8/*: any*/)
+              (v14/*: any*/)
             ],
             "storageKey": null
           }
@@ -362,16 +499,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6c4d5830d1a77b64930c5a917d433e2a",
+    "cacheID": "1077b20e223a9a6cb2c1fc54bae23673",
     "id": null,
     "metadata": {},
     "name": "useSetFulfillmentOptionMutation",
     "operationKind": "mutation",
-    "text": "mutation useSetFulfillmentOptionMutation(\n  $input: setOrderFulfillmentOptionInput!\n) {\n  setOrderFulfillmentOption(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          internalID\n          availableShippingCountries\n          fulfillmentOptions {\n            amount {\n              minor\n            }\n            selected\n            type\n          }\n          ...ExpressCheckoutUI_order\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
+    "text": "mutation useSetFulfillmentOptionMutation(\n  $input: setOrderFulfillmentOptionInput!\n) {\n  setOrderFulfillmentOption(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          internalID\n          fulfillmentOptions {\n            amount {\n              minor\n            }\n            selected\n            type\n          }\n          buyerTotal {\n            minor\n            currencyCode\n          }\n          itemsTotal {\n            minor\n          }\n          shippingTotal {\n            minor\n          }\n          taxTotal {\n            minor\n          }\n          availableShippingCountries\n          ...ExpressCheckoutUI_order\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n    phoneNumberCountryCode\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "67c3fcfeb30b649f1a909d98223fcc02";
+(node as any).hash = "38e35233ec4ceb8b4be4a7edc89952d7";
 
 export default node;

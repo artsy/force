@@ -8522,6 +8522,9 @@ input CreateArtworkMutationInput {
 
   # The ID of the partner under which the artwork is created.
   partnerId: String!
+
+  # If present, the newly created artwork will be added to this show.
+  partnerShowId: String
 }
 
 type CreateArtworkMutationPayload {
@@ -8670,6 +8673,7 @@ input CreateFeatureMutationInput {
   clientMutationId: String
   description: String
   layout: FeatureLayouts
+  metaTitle: String
   name: String!
   sourceBucket: String
   sourceKey: String
@@ -8960,6 +8964,46 @@ type CreatePartnerContactPayload {
 
 type CreatePartnerContactSuccess {
   partnerContact: Contact
+}
+
+type CreatePartnerLocationFailure {
+  mutationError: GravityMutationError
+}
+
+input CreatePartnerLocationInput {
+  address: String
+  address2: String
+  addressType: locationType
+  city: String
+  clientMutationId: String
+  country: String
+
+  # Primary email of given location
+  email: String
+
+  # ID of the partner
+  partnerID: String!
+
+  # Primary phone of given location
+  phone: String
+  postalCode: String
+
+  # Boolean flag that denotes whether a location is publicly viewable on Partner's Artsy Profile
+  publiclyViewable: Boolean
+  state: String
+}
+
+union CreatePartnerLocationOrError =
+  | CreatePartnerLocationFailure
+  | CreatePartnerLocationSuccess
+
+type CreatePartnerLocationPayload {
+  clientMutationId: String
+  partnerLocationOrError: CreatePartnerLocationOrError
+}
+
+type CreatePartnerLocationSuccess {
+  location: Location
 }
 
 type CreatePartnerShowDocumentFailure {
@@ -10309,6 +10353,7 @@ enum EventStatus {
 }
 
 type ExchangeError {
+  code: String!
   message: String!
 }
 
@@ -14866,6 +14911,11 @@ type Mutation {
   createPartnerContact(
     input: CreatePartnerContactInput!
   ): CreatePartnerContactPayload
+
+  # Creates a new location for a partner
+  createPartnerLocation(
+    input: CreatePartnerLocationInput!
+  ): CreatePartnerLocationPayload
 
   # Create a partner offer for the users
   createPartnerOffer(
@@ -24432,6 +24482,12 @@ type deleteUserRoleSuccess {
 type dimensions {
   cm: String
   in: String
+}
+
+enum locationType {
+  BUSINESS
+  OTHER
+  TEMPORARY
 }
 
 type partnerBiographyBlurb {

@@ -1,4 +1,4 @@
-type OrderMutationSuccess<T> = Extract<
+export type OrderMutationSuccess<T> = Extract<
   T,
   { __typename: "OrderMutationSuccess" }
 >
