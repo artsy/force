@@ -18,6 +18,13 @@ const CheckoutOverviewRoute = loadable(
   },
 )
 
+const ApplePayRoute = loadable(
+  () => import(/* webpackChunkName: "checkoutBundle" */ "./ApplePay"),
+  {
+    resolveComponent: component => component.ApplePay,
+  },
+)
+
 export const checkoutRoutes: RouteProps[] = [
   {
     path: "/checkout",
@@ -29,6 +36,10 @@ export const checkoutRoutes: RouteProps[] = [
       {
         path: "",
         getComponent: () => CheckoutOverviewRoute,
+      },
+      {
+        path: ":orderID/apple-pay",
+        getComponent: () => ApplePayRoute,
       },
     ],
   },
