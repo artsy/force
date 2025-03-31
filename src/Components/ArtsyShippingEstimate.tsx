@@ -13,10 +13,6 @@ import {
 } from "@artsy/cohesion"
 import { Link, Spacer, Text } from "@artsy/palette"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import {
-  useFeatureVariant,
-  useTrackFeatureVariant,
-} from "System/Hooks/useFeatureFlag"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import { getENV } from "Utils/getENV"
 import type {
@@ -44,23 +40,7 @@ interface ArtsyShippingEstimateProps {
 }
 
 export const ArtsyShippingEstimate = (props: ArtsyShippingEstimateProps) => {
-  const variant = useFeatureVariant("emerald_shipping-estimate-widget")
-
-  const { trackFeatureVariant } = useTrackFeatureVariant({
-    experimentName: "emerald_shipping-estimate-widget",
-    variantName: variant?.name ?? "control",
-  })
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Only track experiment viewed once
-  useEffect(() => {
-    trackFeatureVariant()
-  }, [])
-
-  if (variant?.name === "experiment") {
-    return <ArtsyShippingEstimateLoader {...props} />
-  }
-
-  return null
+  return <ArtsyShippingEstimateLoader {...props} />
 }
 
 const ArtsyShippingEstimateLoader = ({
