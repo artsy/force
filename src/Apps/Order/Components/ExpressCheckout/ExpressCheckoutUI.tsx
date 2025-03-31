@@ -348,7 +348,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       <Text variant="lg-display">Express checkout</Text>
       <Spacer y={1} />
 
-      <ExpressCheckoutElement
+      <StyledExpressCheckoutElement
         options={expressCheckoutOptions}
         onClick={handleOpenExpressCheckout}
         onCancel={handleCancel}
@@ -577,6 +577,10 @@ const UncollapsingBox = styled(Box)<{ visible: boolean }>`
   max-height: ${({ visible }) => (visible ? "1000px" : "0")};
   overflow: hidden;
   transition: max-height 0.3s ease-in-out;
+`
+
+const StyledExpressCheckoutElement = styled(ExpressCheckoutElement)`
+  max-width: 175px;
 `
 
 function getAvailablePaymentMethods(
