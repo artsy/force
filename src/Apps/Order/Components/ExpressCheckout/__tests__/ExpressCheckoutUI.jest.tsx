@@ -1,5 +1,5 @@
 import { ExpressCheckoutElement } from "@stripe/react-stripe-js"
-import { fireEvent } from "@testing-library/react"
+import { fireEvent, waitFor } from "@testing-library/react"
 import { screen } from "@testing-library/react"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -21,6 +21,7 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
 
 const mockExpressCheckoutElement = ExpressCheckoutElement as jest.Mock
 const mockResolveOnClick = jest.fn()
+const mockElementsUpdate = jest.fn()
 const mockCreateConfirmationToken = jest.fn(() => {
   return {
     confirmationToken: {
@@ -38,6 +39,7 @@ jest.mock("@stripe/react-stripe-js", () => {
       submit: jest.fn(async () => {
         return {}
       }),
+      update: mockElementsUpdate,
     })),
     ExpressCheckoutElement: jest.fn(
       ({ onClick, onCancel, onReady, onConfirm }) => {
@@ -193,49 +195,45 @@ describe("ExpressCheckoutUI", () => {
     expect(env.mock.getAllOperations()).toHaveLength(0)
   })
 
-  it("unsets the order fulfillment details and uses the result for initial values on load", async () => {
-    const { mockResolveLastOperation, env } = renderWithRelay({
+  it("uses the itemTotal and 'calculating shipping...' for initial values on load", async () => {
+    const { env } = renderWithRelay({
       Order: () => ({
         ...orderData,
-        fulfillmentOptions: [{ type: "SHIPPING_TBD", amount: null }],
+        itemsTotal: {
+          minor: 12345,
+        },
+        fulfillmentOptions: [
+          {
+            type: "DOMESTIC_FLAT",
+            amount: {
+              minor: 4200,
+              currencyCode: "USD",
+            },
+            selected: null,
+          },
+        ],
       }),
     })
 
     fireEvent.click(screen.getByTestId("express-checkout-button"))
 
-    const { operationName, operationVariables } =
-      await mockResolveLastOperation({
-        updateOrderPayload: () => ({
-          orderOrError: {
-            __typename: "OrderMutationSuccess",
-            order: orderData,
-          },
-        }),
-      })
-    expect(operationName).toBe("useUpdateOrderMutation")
-    expect(operationVariables.input).toEqual({
-      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-      buyerPhoneNumber: null,
-      buyerPhoneNumberCountryCode: null,
-      shippingAddressLine1: null,
-      shippingAddressLine2: null,
-      shippingCity: null,
-      shippingCountry: null,
-      shippingName: null,
-      shippingPostalCode: null,
-      shippingRegion: null,
-    })
-
     // Where we load initial values into the express checkout element
-    await flushPromiseQueue()
-    expect(mockResolveOnClick).toHaveBeenCalledWith({
-      allowedShippingCountries: ["US"],
-      phoneNumberRequired: true,
-      shippingAddressRequired: true,
-      shippingRates: [
-        { amount: 4200, displayName: "Domestic shipping", id: "DOMESTIC_FLAT" },
-      ],
+    await waitFor(() => {
+      expect(mockResolveOnClick).toHaveBeenCalledWith({
+        allowedShippingCountries: ["US"],
+        phoneNumberRequired: true,
+        shippingAddressRequired: true,
+
+        shippingRates: [
+          {
+            amount: 0,
+            displayName: "Calculating shipping...",
+            id: "CALCULATING_SHIPPING",
+          },
+        ],
+      })
     })
+    expect(mockElementsUpdate).toHaveBeenCalledWith({ amount: 12345 })
     await flushPromiseQueue()
     expect(env.mock.getAllOperations()).toHaveLength(0)
   })
@@ -273,22 +271,13 @@ describe("ExpressCheckoutUI", () => {
   })
 
   it("tracks an express checkout cancel event", async () => {
-    const { mockResolveLastOperation } = renderWithRelay({
+    renderWithRelay({
       Order: () => ({ ...orderData }),
     })
 
     // We have to do the fake open before we can do the fake cancel
     // because opening sets the express checkout type (payment_method)
     fireEvent.click(screen.getByTestId("express-checkout-button"))
-
-    await mockResolveLastOperation({
-      updateOrderPayload: () => ({
-        orderOrError: {
-          __typename: "OrderMutationSuccess",
-          order: orderData,
-        },
-      }),
-    })
 
     fireEvent.click(screen.getByTestId("express-checkout-cancel"))
 
@@ -340,11 +329,19 @@ describe("ExpressCheckoutUI", () => {
 const orderData = {
   internalID: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
   buyerTotal: {
-    minor: 100000,
+    minor: 104300,
     currencyCode: "USD",
   },
   itemsTotal: {
     minor: 100000,
+    currencyCode: "USD",
+  },
+  shippingTotal: {
+    minor: 4200,
+    currencyCode: "USD",
+  },
+  taxTotal: {
+    minor: 100,
     currencyCode: "USD",
   },
   source: "ARTWORK_PAGE",
