@@ -38,7 +38,7 @@ export const checkoutRoutes: RouteProps[] = [
         getComponent: () => CheckoutOverviewRoute,
       },
       {
-        path: ":orderID/apple-pay",
+        path: ":orderID",
         getComponent: () => ApplePayRoute,
       },
     ],
