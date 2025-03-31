@@ -54,6 +54,7 @@ export const ArtworkTopContextBarSale: React.FC<
       src={sale.coverImage?.url}
       displayBackArrow
       preferHistoryBack
+      rightContent={<RegistrationAuctionTimerFragmentContainer sale={sale} />}
     >
       <Stack gap={1} flexDirection="row">
         {sale.name}
@@ -61,7 +62,6 @@ export const ArtworkTopContextBarSale: React.FC<
           {sale.partner?.name ? `${title} by ${sale.partner.name}` : title}
         </Box>
       </Stack>
-      <RegistrationAuctionTimerFragmentContainer sale={sale} />
     </TopContextBar>
   )
 }
