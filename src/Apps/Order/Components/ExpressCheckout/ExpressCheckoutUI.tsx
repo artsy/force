@@ -355,31 +355,31 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     <UncollapsingBox visible={visible}>
       <Text variant="lg-display">Express checkout</Text>
       <Spacer y={1} />
+      <Box maxWidth={175}>
+        <ExpressCheckoutElement
+          options={expressCheckoutOptions}
+          onClick={handleOpenExpressCheckout}
+          onCancel={handleCancel}
+          onReady={e => {
+            if (!!e.availablePaymentMethods) {
+              setVisible(true)
 
-      <StyledExpressCheckoutElement
-        options={expressCheckoutOptions}
-        onClick={handleOpenExpressCheckout}
-        onCancel={handleCancel}
-        onReady={e => {
-          if (!!e.availablePaymentMethods) {
-            setVisible(true)
-
-            orderTracking.expressCheckoutViewed({
-              order: orderData,
-              paymentMethods: getAvailablePaymentMethods(
-                e.availablePaymentMethods,
-              ),
-            })
-          }
-        }}
-        onShippingAddressChange={handleShippingAddressChange}
-        onShippingRateChange={handleShippingRateChange}
-        onLoadError={e => {
-          logger.error("Express checkout element error", e)
-        }}
-        onConfirm={onConfirm}
-      />
-
+              orderTracking.expressCheckoutViewed({
+                order: orderData,
+                paymentMethods: getAvailablePaymentMethods(
+                  e.availablePaymentMethods,
+                ),
+              })
+            }
+          }}
+          onShippingAddressChange={handleShippingAddressChange}
+          onShippingRateChange={handleShippingRateChange}
+          onLoadError={e => {
+            logger.error("Express checkout element error", e)
+          }}
+          onConfirm={onConfirm}
+        />
+      </Box>
       <Spacer y={4} />
     </UncollapsingBox>
   )
@@ -585,10 +585,6 @@ const UncollapsingBox = styled(Box)<{ visible: boolean }>`
   max-height: ${({ visible }) => (visible ? "1000px" : "0")};
   overflow: hidden;
   transition: max-height 0.3s ease-in-out;
-`
-
-const StyledExpressCheckoutElement = styled(ExpressCheckoutElement)`
-  max-width: 175px;
 `
 
 function getAvailablePaymentMethods(
