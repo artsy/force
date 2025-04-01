@@ -11,18 +11,32 @@ export const FeatureFlagProvider: React.FC<
 > = ({ children }) => {
   const { user } = useSystemContext()
 
-  const unleashConfig: IConfig = {
-    url: `http://localhost:5000/frontend/`,
-    clientKey: getENV("UNLEASH_CLIENT_KEY") || "kljl;ksdfg",
-    refreshInterval: 15,
-    appName: getENV("UNLEASH_APP_NAME") || "test",
-    environment: getENV("NODE_ENV") || "test",
-    context: {
-      userId: user?.id,
-      sessionId: getENV("SESSION_ID"),
-    },
-    disableRefresh: true,
-    bootstrap: [],
+  let unleashConfig: IConfig
+
+  if (process.env.NODE_ENV === "test") {
+    unleashConfig = {
+      url: "http://mock-unleash-url",
+      clientKey: "mock-client-key", // pragma: allowlist secret
+      refreshInterval: 0,
+      appName: "mock-app-name",
+      context: {
+        userId: "mock-user-id",
+        sessionId: "mock-session-id",
+      },
+    }
+  } else {
+    unleashConfig = {
+      url: `${getENV("UNLEASH_API_URL")}/frontend`,
+      clientKey: getENV("UNLEASH_CLIENT_KEY"),
+      refreshInterval: 30, // How often (in seconds) the client should poll the proxy for updates
+      appName: getENV("UNLEASH_APP_NAME"),
+      environment: getENV("NODE_ENV"),
+      context: {
+        userId: user?.id,
+        sessionId: getENV("SESSION_ID"),
+      },
+    }
   }
+
   return <FlagProvider config={unleashConfig}>{children}</FlagProvider>
 }
