@@ -25,10 +25,6 @@ jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
-jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: jest.fn().mockReturnValue(true),
-  useVariant: jest.fn().mockReturnValue({ name: "disabled" }),
-}))
 
 const { getWrapper } = setupTestWrapper<TagArtworkFilter_Query>({
   Component: ({ tag }) => (

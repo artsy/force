@@ -191,13 +191,13 @@ describe("serverRouter", () => {
         <SystemContextConsumer>
           {context => {
             expect(Object.keys(context).sort()).toEqual([
-              "featureFlags",
               "initialMatchingMediaQueries",
               "isEigen",
               "isLoggedIn",
               "relayEnvironment",
               "router",
               "routes",
+              "sessionId",
               "setRouter",
               "setUser",
               "user",

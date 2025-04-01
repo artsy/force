@@ -6,6 +6,8 @@ import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 
+jest.mock("@unleash/proxy-client-react")
+
 describe("NavBarSubMenu", () => {
   const trackEvent = jest.fn()
 

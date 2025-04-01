@@ -5,6 +5,8 @@ jest.mock("Utils/getENV", () => ({
   getENV: () => "development",
 }))
 
+jest.mock("@unleash/proxy-client-react")
+
 describe("ErrorBoundary", () => {
   const errorLog = console.error
 

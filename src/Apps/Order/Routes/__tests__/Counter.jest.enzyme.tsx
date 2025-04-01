@@ -22,7 +22,6 @@ const NOW = "2018-12-05T13:47:16.446Z"
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("System/Hooks/useFeatureFlag")
 
 const mockShowErrorDialog = jest.fn()
 jest.mock("Apps/Order/Dialogs", () => ({
