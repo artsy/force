@@ -16,7 +16,7 @@ import { ShippingQuotes } from "Apps/Order/Routes/Shipping/Components/ShippingQu
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import { ShippingContextProvider } from "Apps/Order/Routes/Shipping/ShippingContext"
 import { Analytics } from "System/Contexts/AnalyticsContext"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { Media } from "Utils/Responsive"
 import type {
@@ -74,7 +74,7 @@ const ShippingRouteLayout: FC<
 
   const { jumpTo } = useJump()
 
-  const expressCheckoutPrototypeEnabled = useFeatureFlag(
+  const expressCheckoutPrototypeEnabled = useFlag(
     "emerald_stripe-express-checkout-prototype",
   )
   // order can be processed with express checkout

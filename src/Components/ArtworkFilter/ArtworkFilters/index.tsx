@@ -3,7 +3,7 @@ import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/Avai
 import { FramedFilter } from "Components/ArtworkFilter/ArtworkFilters/FramedFilter"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
 import { SignedFilter } from "Components/ArtworkFilter/ArtworkFilters/SignedFilter"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import type * as React from "react"
 import { ArtistNationalityFilter } from "./ArtistNationalityFilter"
 import { ArtistsFilter } from "./ArtistsFilter"
@@ -26,10 +26,10 @@ interface ArtworkFiltersProps {
 export const ArtworkFilters: React.FC<
   React.PropsWithChildren<ArtworkFiltersProps>
 > = props => {
-  const enableShowOnlyFramedArtworksFilter = useFeatureFlag(
+  const enableShowOnlyFramedArtworksFilter = useFlag(
     "onyx_only_framed_artworks_filter",
   )
-  const enableShowOnlySignedArtworksFilter = useFeatureFlag(
+  const enableShowOnlySignedArtworksFilter = useFlag(
     "onyx_only_signed_artworks_filter",
   )
   const { user } = props

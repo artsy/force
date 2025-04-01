@@ -2,7 +2,7 @@ import { Join, Spacer } from "@artsy/palette"
 import { InsightsCareerHighlightRailFragmentContainer } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/InsightsCareerHighlightRail"
 import { InsightsMedianSalePriceFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsMedianSalePrice"
 import { MetaTags } from "Components/MetaTags"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import { Media } from "Utils/Responsive"
 import type { InsightsRoute_me$data } from "__generated__/InsightsRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -18,10 +18,10 @@ export interface InsightsRouteProps {
 const InsightsRoute: React.FC<React.PropsWithChildren<InsightsRouteProps>> = ({
   me,
 }) => {
-  const isCareerHighlightEnabled = useFeatureFlag(
+  const isCareerHighlightEnabled = useFlag(
     "my-collection-web-phase-7-career-highlights",
   )
-  const isMedianSalePriceEnabled = useFeatureFlag(
+  const isMedianSalePriceEnabled = useFlag(
     "my-collection-web-phase-7-median-sale-price",
   )
 

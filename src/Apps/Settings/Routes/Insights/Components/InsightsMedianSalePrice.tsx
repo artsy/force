@@ -1,7 +1,7 @@
 import { Box, Clickable, Flex, Join, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import type { InsightsMedianSalePrice_me$data } from "__generated__/InsightsMedianSalePrice_me.graphql"
@@ -112,7 +112,7 @@ const ArtistRowWrapper: React.FC<
 > = ({ artistID, children, medium }) => {
   const { router } = useRouter()
 
-  const enableMedianSalePriceGraphScreen = useFeatureFlag(
+  const enableMedianSalePriceGraphScreen = useFlag(
     "my-collection-web-phase-7-median-sale-price-graph",
   )
 

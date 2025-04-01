@@ -14,7 +14,7 @@ describe("serverAppContext", () => {
     }
     res = {
       locals: {
-        sd: { EIGEN: false, IS_MOBILE: false, FEATURE_FLAGS: {} },
+        sd: { EIGEN: false, IS_MOBILE: false },
       },
     }
   })
@@ -28,11 +28,6 @@ describe("serverAppContext", () => {
   it("includes a user", () => {
     const subject = getServerAppContext(req, res)
     expect(subject.user).toBeDefined()
-  })
-
-  it("includes featureFlags", () => {
-    const subject = getServerAppContext(req, res)
-    expect(subject.featureFlags).toBeDefined()
   })
 
   it("works without a user", () => {

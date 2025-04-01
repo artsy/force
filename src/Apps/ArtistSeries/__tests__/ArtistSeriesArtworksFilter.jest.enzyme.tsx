@@ -1,7 +1,6 @@
 import { ArtistSeriesArtworksFilterRefetchContainer } from "Apps/ArtistSeries/Components/ArtistSeriesArtworksFilter"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import type { ArtistSeriesArtworksFilter_Query } from "__generated__/ArtistSeriesArtworksFilter_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -17,9 +16,6 @@ jest.mock("System/Hooks/useRouter", () => ({
 jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
-}))
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(() => false),
 }))
 
 const { getWrapper } = setupTestWrapper<ArtistSeriesArtworksFilter_Query>({
@@ -42,7 +38,6 @@ const { getWrapper } = setupTestWrapper<ArtistSeriesArtworksFilter_Query>({
 
 describe("ArtistSeriesArtworksFilter", () => {
   const trackEvent = jest.fn()
-  const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
@@ -50,7 +45,6 @@ describe("ArtistSeriesArtworksFilter", () => {
         trackEvent,
       }
     })
-    mockUseFeatureFlag.mockImplementation(() => true)
   })
 
   it("renders correctly", () => {

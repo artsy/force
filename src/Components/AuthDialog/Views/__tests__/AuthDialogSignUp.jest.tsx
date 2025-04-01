@@ -3,6 +3,11 @@ import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { AuthDialogSignUp } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import { signUp } from "Utils/auth"
 
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn().mockReturnValue(false),
+  useVariant: jest.fn().mockReturnValue({ name: "disabled" }),
+}))
+
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn().mockImplementation(key => {
     return {
@@ -41,8 +46,6 @@ jest.mock("Utils/device", () => ({
 }))
 
 jest.mock("Components/AuthDialog/Hooks/useCountryCode")
-
-jest.mock("System/Hooks/useFeatureFlag")
 
 describe("AuthDialogSignUp", () => {
   beforeAll(() => {

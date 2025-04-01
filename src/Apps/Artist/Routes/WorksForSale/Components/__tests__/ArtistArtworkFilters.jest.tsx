@@ -7,6 +7,11 @@ import { ArtistArtworkFilters } from "Apps/Artist/Routes/WorksForSale/Components
 import { ArtworkFilterContextProvider } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { ReactElement } from "react"
 
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn().mockReturnValue(false),
+  useVariant: jest.fn().mockReturnValue({ name: "disabled" }),
+}))
+
 const render = (ui: ReactElement, options: RenderOptions = {}) =>
   originalRender(ui, { wrapper: Wrapper, ...options })
 
@@ -38,10 +43,6 @@ const Wrapper: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
     </ArtworkFilterContextProvider>
   )
 }
-
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(() => true),
-}))
 
 it("renders all expected filters", () => {
   render(<ArtistArtworkFilters />)

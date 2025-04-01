@@ -4,6 +4,11 @@ import userEvent from "@testing-library/user-event"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { useTracking } from "react-tracking"
 
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn().mockReturnValue(false),
+  useVariant: jest.fn().mockReturnValue({ name: "disabled" }),
+}))
+
 jest.mock("react-tracking")
 
 describe("BuyerGuarantee", () => {

@@ -5,6 +5,8 @@ import {
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
 
+jest.mock("@unleash/proxy-client-react", () => ({ useFlag: jest.fn() }))
+
 describe("getErrorDialogCopy", () => {
   describe("dialog is CurrencyNotSupported", () => {
     it("returns the expected title and message", () => {

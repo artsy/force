@@ -6,7 +6,6 @@ import type { NotificationItem_test_Query } from "__generated__/NotificationItem
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
-jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
 
 const { renderWithRelay } = setupTestWrapperTL<NotificationItem_test_Query>({
   Component: (props: any) => {

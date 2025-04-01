@@ -2,7 +2,6 @@ import { screen } from "@testing-library/react"
 import { ArtworksRefetchContainer } from "Apps/Partner/Routes/Works"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
 import type { Works_Query } from "__generated__/Works_Query.graphql"
@@ -17,9 +16,6 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 }))
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn(),
-}))
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(() => false),
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<Works_Query>({
@@ -42,7 +38,6 @@ describe("PartnerArtworks", () => {
   const trackEvent = jest.fn()
   const mockUseRouter = useRouter as jest.Mock
   const mockGetENV = getENV as jest.Mock
-  const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
@@ -59,7 +54,6 @@ describe("PartnerArtworks", () => {
         },
       },
     }))
-    mockUseFeatureFlag.mockImplementation(() => true)
   })
 
   it("`Recommended` sort option should be selected by default for all partners", () => {

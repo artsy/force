@@ -4,13 +4,13 @@ import {
   type AddressAutocompleteSuggestion,
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import { getENV } from "Utils/getENV"
 import { throttle } from "lodash"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
-jest.mock("System/Hooks/useFeatureFlag")
+jest.mock("@unleash/proxy-client-react")
 jest.mock("Utils/getENV")
 
 jest.mock("lodash", () => ({
@@ -68,7 +68,7 @@ describe("useAddressAutocomplete", () => {
 
   describe("when the US address autocomplete feature flag is enabled", () => {
     beforeAll(() => {
-      ;(useFeatureFlag as jest.Mock).mockImplementation(
+      ;(useFlag as jest.Mock).mockImplementation(
         featureName => featureName === "address_autocomplete_us",
       )
       ;(getENV as jest.Mock).mockImplementation(() => {
@@ -531,7 +531,7 @@ describe("useAddressAutocomplete", () => {
   describe("enabled", () => {
     describe("feature flag is enabled", () => {
       beforeAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockImplementation(
+        ;(useFlag as jest.Mock).mockImplementation(
           featureName => featureName === "address_autocomplete_us",
         )
       })
@@ -583,7 +583,7 @@ describe("useAddressAutocomplete", () => {
 
     describe("feature flag is disabled", () => {
       beforeAll(() => {
-        ;(useFeatureFlag as jest.Mock).mockImplementation(featureName => false)
+        ;(useFlag as jest.Mock).mockImplementation(featureName => false)
       })
 
       describe("API key is availaible", () => {

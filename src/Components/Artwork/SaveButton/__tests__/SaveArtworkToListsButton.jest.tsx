@@ -13,7 +13,6 @@ import { fetchQuery } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("Components/Artwork/SaveButton/SaveArtworkMutation")
-jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
 
 // Used for stubbing list inclusion query
 // made when an artwork is unsaved.

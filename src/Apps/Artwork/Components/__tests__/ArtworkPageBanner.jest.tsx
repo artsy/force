@@ -2,21 +2,15 @@ import { screen, waitFor } from "@testing-library/react"
 import { ArtworkPageBanner } from "Apps/Artwork/Components/ArtworkPageBanner"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import type { DeepPartial } from "Utils/typeSupport"
 import type { ArtworkPageBanner_Test_Query$rawResponse } from "__generated__/ArtworkPageBanner_Test_Query.graphql"
 import { graphql } from "react-relay"
 
 const mockUseRouter = useRouter as jest.Mock
-const mockUseFeatureFlag = useFeatureFlag as jest.Mock
 
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({ match: { location: { query: {} } } })),
-}))
-
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(() => true),
 }))
 
 jest.unmock("react-relay")
@@ -26,8 +20,6 @@ let artworkMock: DeepPartial<
 let meMock: DeepPartial<ArtworkPageBanner_Test_Query$rawResponse["me"]>
 
 beforeEach(() => {
-  // Enable all feature flags
-  mockUseFeatureFlag.mockClear()
   mockUseRouter.mockClear()
   artworkMock = {
     sale: null,

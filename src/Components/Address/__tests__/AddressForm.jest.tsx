@@ -1,10 +1,10 @@
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { AddressForm } from "Components/Address/AddressForm"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { type FC, useState } from "react"
 
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(),
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn().mockReturnValue(true),
+  useVariant: jest.fn().mockReturnValue({ name: "disabled" }),
 }))
 
 jest.mock("Utils/getENV", () => ({
@@ -62,10 +62,6 @@ describe("AddressForm", () => {
 
   describe("address autocomplete is enabled", () => {
     beforeAll(() => {
-      ;(useFeatureFlag as jest.Mock).mockImplementation(
-        featureName => featureName === "address_autocomplete_us",
-      )
-
       const mockFetch = jest.fn().mockResolvedValue({
         json: jest.fn().mockResolvedValue({
           suggestions: [

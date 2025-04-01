@@ -1,7 +1,7 @@
 import { type BoxProps, boxMixin } from "@artsy/palette"
 import isPropValid from "@emotion/is-prop-valid"
 import { themeGet } from "@styled-system/theme-get"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -41,11 +41,10 @@ export const RouterLink: React.FC<
   const { router } = useRouter()
 
   const isPrefetchOnEnterEnabledLoggedIn =
-    useFeatureFlag("diamond_prefetch-on-enter") && !!systemContext.user
+    useFlag("diamond_prefetch-on-enter") && !!systemContext.user
 
   const isPrefetchOnEnterEnabledLoggedOut =
-    useFeatureFlag("diamond_prefetch-on-enter-logged-out") &&
-    !systemContext.user
+    useFlag("diamond_prefetch-on-enter-logged-out") && !systemContext.user
 
   // TODO: Remove feature flags
   const isPrefetchOnEnterEnabled =

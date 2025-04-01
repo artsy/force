@@ -14,14 +14,14 @@ import { SignedFilter } from "Components/ArtworkFilter/ArtworkFilters/SignedFilt
 import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 
 export const SearchResultsArtworksFilters = () => {
-  const enableShowOnlyFramedArtworksFilter = useFeatureFlag(
+  const enableShowOnlyFramedArtworksFilter = useFlag(
     "onyx_only_framed_artworks_filter",
   )
 
-  const enableShowOnlySignedArtworksFilter = useFeatureFlag(
+  const enableShowOnlySignedArtworksFilter = useFlag(
     "onyx_only_signed_artworks_filter",
   )
   return (

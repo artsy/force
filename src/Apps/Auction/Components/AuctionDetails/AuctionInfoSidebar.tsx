@@ -1,6 +1,6 @@
 import { Box, Join, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import { useSaleWebsocket } from "Utils/Hooks/useSaleWebsocket"
 import type { AuctionInfoSidebar_sale$data } from "__generated__/AuctionInfoSidebar_sale.graphql"
 import { useState } from "react"
@@ -14,9 +14,7 @@ interface AuctionInfoSidebarProps {
 const AuctionInfoSidebar: React.FC<
   React.PropsWithChildren<AuctionInfoSidebarProps>
 > = ({ sale }) => {
-  const showTotalRaisedFlag = useFeatureFlag(
-    "emerald_hackathon-sale-total-raised",
-  )
+  const showTotalRaisedFlag = useFlag("emerald_hackathon-sale-total-raised")
   const totalRaisedDisplay = sale.totalRaised?.display
   const [updatedTotalRaisedDisplay, setUpdatedTotalRaisedDisplay] =
     useState(totalRaisedDisplay)
