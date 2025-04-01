@@ -79,6 +79,9 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
   const shouldTransition = transitionCount <= 1
 
+  const GALLERY_PARTNERSHIPS_URL =
+    "https://partners.artsy.net/gallery-partnerships/?utm_medium=internal-banner&utm_source=artsy&utm_campaign=b2b-2025-gallery-partnerships-application-banner-link&utm_sfc=701Hu000001jeLjIAI"
+
   // Close mobile menu if dragging window from small size to desktop
   useEffect(() => {
     if (!isMobile) {
@@ -224,7 +227,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                   </Flex>
 
                   <NavBarItemLink
-                    href="https://partners.artsy.net/gallery-partnerships/?utm_medium=internal-banner&utm_source=artsy&utm_campaign=b2b-2025-gallery-partnerships-application-banner-link&utm_sfc=701Hu000001jeLjIAI"
+                    href={GALLERY_PARTNERSHIPS_URL}
                     textDecoration="none"
                     onClick={handleClick}
                     data-label="Artsy for Galleries"
@@ -489,6 +492,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 })
 
 // Hide these links earlier to ensure "Collecting 101" has space on smaller widths
+
 const NavBarItemFairsLink = styled(NavBarItemLink)`
   @media (max-width: 900px) {
     display: none;
