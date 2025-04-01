@@ -12,6 +12,7 @@ jest.mock("Components/TopContextBar", () => ({
     src,
     displayBackArrow,
     preferHistoryBack,
+    rightContent,
   }) => (
     <div
       data-testid="top-context-bar"
@@ -21,6 +22,7 @@ jest.mock("Components/TopContextBar", () => ({
       data-prefer-history-back={preferHistoryBack}
     >
       {children}
+      {rightContent}
     </div>
   ),
 }))
