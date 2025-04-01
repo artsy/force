@@ -100,7 +100,7 @@ declare module "sharify" {
       THIRD_PARTIES_DISABLED: boolean
       TOOLS_URL: string
       TRACK_PAGELOAD_PATHS: string
-      UNLEASH_API: string
+      UNLEASH_API_URL: string
       UNLEASH_APP_NAME: string
       UNLEASH_CLIENT_KEY: string
       UNLEASH_SERVER_KEY: string
