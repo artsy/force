@@ -224,6 +224,15 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                   </Flex>
 
                   <NavBarItemLink
+                    href="https://partners.artsy.net/gallery-partnerships/?utm_medium=internal-banner&utm_source=artsy&utm_campaign=b2b-2025-gallery-partnerships-application-banner-link&utm_sfc=701Hu000001jeLjIAI"
+                    textDecoration="none"
+                    onClick={handleClick}
+                    data-label="Artsy for Galleries"
+                  >
+                    Artsy for Galleries
+                  </NavBarItemLink>
+
+                  <NavBarItemLink
                     href="/price-database"
                     onMouseOver={() => prefetch("/price-database")}
                     textDecoration="none"
@@ -421,14 +430,14 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                   Galleries
                 </NavBarItemLink>
 
-                <NavBarItemLink
+                <NavBarItemFairsLink
                   href="/art-fairs"
                   onMouseOver={() => prefetch("/art-fairs")}
                   onClick={handleClick}
                   data-label="Fairs & Events"
                 >
                   Fairs & Events
-                </NavBarItemLink>
+                </NavBarItemFairsLink>
 
                 <NavBarItemLink
                   href="/shows"
@@ -447,6 +456,14 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                 >
                   Museums
                 </NavBarItemInstitutionsLink>
+                <NavBarItemLink
+                  href="/feature/how-to-collect-art"
+                  onMouseOver={() => prefetch("/feature/how-to-collect-art")}
+                  onClick={handleClick}
+                  data-label="Collecting 101"
+                >
+                  Collecting 101
+                </NavBarItemLink>
               </Flex>
             </Text>
           </HorizontalPadding>
@@ -471,6 +488,12 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   )
 })
 
+// Hide these links earlier to ensure "Collecting 101" has space on smaller widths
+const NavBarItemFairsLink = styled(NavBarItemLink)`
+  @media (max-width: 900px) {
+    display: none;
+  }
+`
 const NavBarItemInstitutionsLink = styled(NavBarItemLink)`
   // Can no longer fit on screen @ 900px
   @media (max-width: 900px) {
