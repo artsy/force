@@ -1,6 +1,8 @@
 import { Rail } from "Components/Rail/Rail"
 import { mount } from "enzyme"
 
+jest.mock("@unleash/proxy-client-react")
+
 describe("Rail", () => {
   const getWrapper = props => {
     return mount(

@@ -19,6 +19,7 @@ jest.mock("System/Hooks/useRouter", () => ({
     },
   }),
 }))
+jest.mock("@unleash/proxy-client-react")
 
 describe("ArtworkFilterMobileOverlay", () => {
   let context

@@ -4,6 +4,7 @@ import { mount, shallow } from "enzyme"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
+jest.mock("@unleash/proxy-client-react")
 
 describe("OtherWorks", () => {
   let genericOtherWorksData

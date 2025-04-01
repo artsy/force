@@ -4,7 +4,7 @@ import { mount } from "enzyme"
 import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
 
 jest.mock("Apps/Auction/Hooks/useAuctionFormContext")
-jest.mock("System/Hooks/useFeatureFlag")
+jest.mock("@unleash/proxy-client-react")
 
 describe("ConditionsOfSaleCheckbox", () => {
   const mockuseAuctionFormContext = useAuctionFormContext as jest.Mock

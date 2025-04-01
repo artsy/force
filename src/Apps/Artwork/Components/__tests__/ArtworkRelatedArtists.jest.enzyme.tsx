@@ -4,6 +4,7 @@ import { mount } from "enzyme"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
+jest.mock("@unleash/proxy-client-react")
 
 describe("ArtworkRelatedArtists", () => {
   const getWrapper = props => {

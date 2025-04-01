@@ -23,6 +23,8 @@ jest.mock("found", () => ({
   useRouter: jest.fn(),
 }))
 
+jest.mock("@unleash/proxy-client-react")
+
 describe("CollectionsRail", () => {
   let props
   const trackEvent = jest.fn()

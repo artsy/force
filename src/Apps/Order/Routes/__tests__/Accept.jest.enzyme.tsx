@@ -32,7 +32,7 @@ jest.mock("Utils/getCurrentTimeAsIsoString")
 jest.mock("react-tracking")
 const NOW = "2018-12-05T13:47:16.446Z"
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
-jest.mock("System/Hooks/useFeatureFlag")
+require("@unleash/proxy-client-react")
 
 jest.mock("@stripe/stripe-js", () => {
   let mock: ReturnType<typeof mockStripe> | null = null
