@@ -115,6 +115,7 @@ export const TRACK_PAGELOAD_PATHS: any = null
 export const UNLEASH_API_URL: any = null
 export const UNLEASH_APP_NAME: any = null
 export const UNLEASH_CLIENT_KEY: any = null
+export const UNLEASH_ENVIRONMENT: any = "development"
 export const UNLEASH_SERVER_KEY: any = null
 export const VANITY_BUCKET: any = "artsy-vanity-files-production"
 export const VERBOSE_LOGGING: any = false

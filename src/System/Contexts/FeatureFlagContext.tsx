@@ -30,7 +30,7 @@ export const FeatureFlagProvider: React.FC<
       clientKey: getENV("UNLEASH_CLIENT_KEY"),
       refreshInterval: 30, // How often (in seconds) the client should poll the proxy for updates
       appName: getENV("UNLEASH_APP_NAME"),
-      environment: getENV("NODE_ENV"),
+      environment: getENV("UNLEASH_ENVIRONMENT"),
       context: {
         userId: user?.id,
         sessionId: getENV("SESSION_ID"),
