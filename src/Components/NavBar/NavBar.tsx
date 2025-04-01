@@ -494,7 +494,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 // Hide these links earlier to ensure "Collecting 101" has space on smaller widths
 
 const NavBarItemFairsLink = styled(NavBarItemLink)`
-  @media (max-width: 900px) {
+  @media (max-width: 1000px) {
     display: none;
   }
 `
