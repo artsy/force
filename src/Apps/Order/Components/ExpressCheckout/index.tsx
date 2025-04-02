@@ -31,11 +31,17 @@ export const ExpressCheckout = ({ order }: Props) => {
   // Use itemsTotal on load, but subsequent updates inside ExpressCheckoutUI
   // will use the updated buyersTotal.
   const { itemsTotal, seller } = orderData
-  const sellerStripeAccountId = (seller as Seller)?.merchantAccount?.externalId
 
   if (!(itemsTotal && orderData.availableShippingCountries.length)) {
     return null
   }
+
+  const sellerStripeAccountId = (seller as Seller)?.merchantAccount?.externalId
+  // TODO: Handle exceptional cases with no seller's Stripe account
+  //   - When passing `onBehalfOf: ""` below, a validation error is raised in the console and the Apple Pay button will
+  //     not render.
+  //   - When passing `onBehalfOf: null`, the Apple Pay button will render but Artsy's Stripe account will (incorrectly)
+  //     be used. When confirming the payment on the server, it might eventually fail due to mismatched `onBehalfOf`.
 
   const orderOptions: StripeElementsUpdateOptions = {
     amount: itemsTotal.minor,
