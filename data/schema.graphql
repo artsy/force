@@ -9097,6 +9097,12 @@ input CreatePartnerShowMutationInput {
   # The end date of the show.
   endAt: String!
 
+  # The booth of the fair to create the show for.
+  fairBooth: String
+
+  # The id of the fair to create the show for.
+  fairId: String
+
   # Is the show featured?
   featured: Boolean
 
@@ -9114,6 +9120,9 @@ input CreatePartnerShowMutationInput {
 
   # The start date of the show.
   startAt: String!
+
+  # The viewing room ids of the show.
+  viewingRoomIds: [String]
 }
 
 type CreatePartnerShowMutationPayload {
@@ -15381,7 +15390,7 @@ type Mutation {
   # Updates a page.
   updatePage(input: UpdatePageMutationInput!): UpdatePageMutationPayload
 
-  # Updates a partner artist.
+  # Updates a partner show.
   updatePartnerShow(
     input: UpdatePartnerShowMutationInput!
   ): UpdatePartnerShowMutationPayload
@@ -15886,6 +15895,9 @@ type Order {
 
   # The selected fulfillment option for the order
   selectedFulfillmentOption: FulfillmentOption
+
+  # The seller of the order
+  seller: SellerType
 
   # The total amount for shipping
   shippingTotal: Money
@@ -20094,6 +20106,8 @@ interface Sellable {
   saleMessage: String
 }
 
+union SellerType = Partner
+
 type SendConfirmationEmailMutationFailure {
   mutationError: GravityMutationError
 }
@@ -21911,6 +21925,12 @@ input UpdatePartnerShowMutationInput {
   # The end date of the show.
   endAt: String
 
+  # The booth of the fair to update the show for.
+  fairBooth: String
+
+  # The id of the fair to update the show for.
+  fairId: String
+
   # Is the show featured?
   featured: Boolean
 
@@ -21926,17 +21946,20 @@ input UpdatePartnerShowMutationInput {
   # The press release of the show.
   pressRelease: String
 
-  # The id of the artist to update.
+  # The id of the show to update.
   showId: String!
 
   # The start date of the show.
   startAt: String
+
+  # The viewing room ids of the show.
+  viewingRoomIds: [String]
 }
 
 type UpdatePartnerShowMutationPayload {
   clientMutationId: String
 
-  # On success: the updated partner. On error: the error that occurred.
+  # On success: the updated partner show. On error: the error that occurred.
   showOrError: UpdatePartnerShowResponseOrError
 }
 
