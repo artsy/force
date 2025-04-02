@@ -344,20 +344,12 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
               href: "/collect?colors%5B0%5D=blue&metric=in",
             },
             {
-              text: "Purple",
-              href: "/collect?colors%5B0%5D=purple&metric=in",
-            },
-            {
               text: "Pink",
               href: "/collect?colors%5B0%5D=pink&metric=in",
             },
             {
               text: "Brown",
               href: "/collect?colors%5B0%5D=brown&metric=in",
-            },
-            {
-              text: "Gray",
-              href: "/collect?colors%5B0%5D=gray&metric=in",
             },
           ],
         },
