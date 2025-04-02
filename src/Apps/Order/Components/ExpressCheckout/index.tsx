@@ -8,7 +8,10 @@ import { ExpressCheckoutUI } from "Apps/Order/Components/ExpressCheckout/Express
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { getENV } from "Utils/getENV"
 import type { ExpressCheckoutQuery } from "__generated__/ExpressCheckoutQuery.graphql"
-import type { ExpressCheckout_order$key } from "__generated__/ExpressCheckout_order.graphql"
+import type {
+  ExpressCheckout_order$key,
+  ExpressCheckout_order$data,
+} from "__generated__/ExpressCheckout_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
@@ -17,12 +20,18 @@ interface Props {
   order: ExpressCheckout_order$key
 }
 
+type Seller = Exclude<
+  ExpressCheckout_order$data["seller"],
+  { __typename: "%other" }
+>
+
 export const ExpressCheckout = ({ order }: Props) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
 
   // Use itemsTotal on load, but subsequent updates inside ExpressCheckoutUI
   // will use the updated buyersTotal.
-  const { itemsTotal } = orderData
+  const { itemsTotal, seller } = orderData
+  const sellerStripeAccountId = (seller as Seller)?.merchantAccount?.externalId
 
   if (!(itemsTotal && orderData.availableShippingCountries.length)) {
     return null
@@ -33,8 +42,7 @@ export const ExpressCheckout = ({ order }: Props) => {
     currency: itemsTotal.currencyCode.toLowerCase(),
     setupFutureUsage: "off_session",
     captureMethod: "manual",
-    // TODO: Add seller details to the order type
-    onBehalfOf: "acct_14FIYS4fSw9JrcJy",
+    onBehalfOf: sellerStripeAccountId,
   }
 
   const options: StripeElementsOptions = {
@@ -68,6 +76,14 @@ const ORDER_FRAGMENT = graphql`
       minor
       currencyCode
     }
+    seller {
+      __typename
+      ... on Partner {
+        merchantAccount {
+          externalId
+        }
+      }
+    }
   }
 `
 
@@ -90,7 +106,7 @@ export const ExpressCheckoutQueryRenderer: React.FC<{ orderID: string }> = ({
       render={({ props }) => {
         console.log("****", props)
         if (props?.me?.order) {
-          return <ExpressCheckout order={props?.me?.order} />
+          return <ExpressCheckout order={props.me.order} />
         }
         return null
       }}

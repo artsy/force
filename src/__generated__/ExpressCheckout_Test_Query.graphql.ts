@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<274dd508fdae517268191afd7054d44d>>
+ * @generated SignedSource<<77aa88eba5059994e79d6528d7142b74>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,52 +10,112 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ExpressCheckoutQuery$variables = {
-  orderID: string;
-};
-export type ExpressCheckoutQuery$data = {
+export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
+export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
+export type ExpressCheckout_Test_Query$variables = Record<PropertyKey, never>;
+export type ExpressCheckout_Test_Query$data = {
   readonly me: {
     readonly order: {
       readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckout_order">;
     } | null | undefined;
   } | null | undefined;
 };
-export type ExpressCheckoutQuery = {
-  response: ExpressCheckoutQuery$data;
-  variables: ExpressCheckoutQuery$variables;
+export type ExpressCheckout_Test_Query$rawResponse = {
+  readonly me: {
+    readonly id: string;
+    readonly order: {
+      readonly availableShippingCountries: ReadonlyArray<string>;
+      readonly buyerTotal: {
+        readonly currencyCode: string;
+        readonly minor: any;
+      } | null | undefined;
+      readonly fulfillmentDetails: {
+        readonly addressLine1: string | null | undefined;
+        readonly addressLine2: string | null | undefined;
+        readonly city: string | null | undefined;
+        readonly country: string | null | undefined;
+        readonly name: string | null | undefined;
+        readonly phoneNumber: string | null | undefined;
+        readonly phoneNumberCountryCode: string | null | undefined;
+        readonly postalCode: string | null | undefined;
+        readonly region: string | null | undefined;
+      } | null | undefined;
+      readonly fulfillmentOptions: ReadonlyArray<{
+        readonly amount: {
+          readonly currencyCode: string;
+          readonly minor: any;
+        } | null | undefined;
+        readonly selected: boolean | null | undefined;
+        readonly type: FulfillmentOptionTypeEnum;
+      }>;
+      readonly id: string;
+      readonly internalID: string;
+      readonly itemsTotal: {
+        readonly currencyCode: string;
+        readonly minor: any;
+      } | null | undefined;
+      readonly lineItems: ReadonlyArray<{
+        readonly artwork: {
+          readonly id: string;
+          readonly internalID: string;
+          readonly slug: string;
+        } | null | undefined;
+        readonly id: string;
+      } | null | undefined>;
+      readonly mode: OrderModeEnum;
+      readonly seller: {
+        readonly __typename: "Partner";
+        readonly __isNode: "Partner";
+        readonly id: string;
+        readonly merchantAccount: {
+          readonly externalId: string;
+        } | null | undefined;
+      } | {
+        readonly __typename: string;
+        readonly __isNode: string;
+        readonly id: string;
+      } | null | undefined;
+      readonly shippingTotal: {
+        readonly minor: any;
+      } | null | undefined;
+      readonly source: OrderSourceEnum;
+      readonly taxTotal: {
+        readonly minor: any;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
+};
+export type ExpressCheckout_Test_Query = {
+  rawResponse: ExpressCheckout_Test_Query$rawResponse;
+  response: ExpressCheckout_Test_Query$data;
+  variables: ExpressCheckout_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "orderID"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
+    "kind": "Literal",
     "name": "id",
-    "variableName": "orderID"
+    "value": "123"
   }
 ],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "minor",
   "storageKey": null
 },
-v4 = [
-  (v3/*: any*/),
+v3 = [
+  (v2/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -64,10 +124,10 @@ v4 = [
     "storageKey": null
   }
 ],
-v5 = [
-  (v3/*: any*/)
+v4 = [
+  (v2/*: any*/)
 ],
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -76,10 +136,10 @@ v6 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ExpressCheckoutQuery",
+    "name": "ExpressCheckout_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -91,7 +151,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v1/*: any*/),
+            "args": (v0/*: any*/),
             "concreteType": "Order",
             "kind": "LinkedField",
             "name": "order",
@@ -103,7 +163,7 @@ return {
                 "name": "ExpressCheckout_order"
               }
             ],
-            "storageKey": null
+            "storageKey": "order(id:\"123\")"
           }
         ],
         "storageKey": null
@@ -114,9 +174,9 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ExpressCheckoutQuery",
+    "name": "ExpressCheckout_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -128,13 +188,13 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v1/*: any*/),
+            "args": (v0/*: any*/),
             "concreteType": "Order",
             "kind": "LinkedField",
             "name": "order",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -156,7 +216,7 @@ return {
                 "kind": "LinkedField",
                 "name": "buyerTotal",
                 "plural": false,
-                "selections": (v4/*: any*/),
+                "selections": (v3/*: any*/),
                 "storageKey": null
               },
               {
@@ -166,7 +226,7 @@ return {
                 "kind": "LinkedField",
                 "name": "itemsTotal",
                 "plural": false,
-                "selections": (v4/*: any*/),
+                "selections": (v3/*: any*/),
                 "storageKey": null
               },
               {
@@ -176,7 +236,7 @@ return {
                 "kind": "LinkedField",
                 "name": "shippingTotal",
                 "plural": false,
-                "selections": (v5/*: any*/),
+                "selections": (v4/*: any*/),
                 "storageKey": null
               },
               {
@@ -186,7 +246,7 @@ return {
                 "kind": "LinkedField",
                 "name": "taxTotal",
                 "plural": false,
-                "selections": (v5/*: any*/),
+                "selections": (v4/*: any*/),
                 "storageKey": null
               },
               {
@@ -218,7 +278,7 @@ return {
                     "kind": "LinkedField",
                     "name": "amount",
                     "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -321,7 +381,7 @@ return {
                     "name": "artwork",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -329,11 +389,11 @@ return {
                         "name": "slug",
                         "storageKey": null
                       },
-                      (v6/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v6/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -380,7 +440,7 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v6/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "type": "Node",
                     "abstractKey": "__isNode"
@@ -388,27 +448,27 @@ return {
                 ],
                 "storageKey": null
               },
-              (v6/*: any*/)
+              (v5/*: any*/)
             ],
-            "storageKey": null
+            "storageKey": "order(id:\"123\")"
           },
-          (v6/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "5f93c985cfb973484c38945a5e007247",
+    "cacheID": "5dff16314882b954d433b96ea7fbd6a3",
     "id": null,
     "metadata": {},
-    "name": "ExpressCheckoutQuery",
+    "name": "ExpressCheckout_Test_Query",
     "operationKind": "query",
-    "text": "query ExpressCheckoutQuery(\n  $orderID: String!\n) {\n  me {\n    order(id: $orderID) {\n      ...ExpressCheckout_order\n      id\n    }\n    id\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n    phoneNumberCountryCode\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment ExpressCheckout_order on Order {\n  ...ExpressCheckoutUI_order\n  availableShippingCountries\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
+    "text": "query ExpressCheckout_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...ExpressCheckout_order\n      id\n    }\n    id\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n    phoneNumberCountryCode\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment ExpressCheckout_order on Order {\n  ...ExpressCheckoutUI_order\n  availableShippingCountries\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "1261f9ad42a8e1b9c782bca109ad6378";
+(node as any).hash = "2f4636e770d35aa703e9214a126673eb";
 
 export default node;
