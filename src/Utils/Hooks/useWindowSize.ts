@@ -1,19 +1,20 @@
 import { getViewportDimensions } from "Utils/viewport"
 import { useEffect, useState } from "react"
+import { useDebouncedCallback } from "use-debounce"
 
 export const useWindowSize = () => {
   const [size, setSize] = useState({ width: 0, height: 0 })
 
-  useEffect(() => {
-    function resize() {
-      const { width, height } = getViewportDimensions()
+  const debouncedResize = useDebouncedCallback(() => {
+    const { width, height } = getViewportDimensions()
+    setSize({ width, height })
+  }, 100)
 
-      setSize({ width, height })
-    }
-    window.addEventListener("resize", resize)
-    resize()
-    return () => window.removeEventListener("resize", resize)
-  }, [])
+  useEffect(() => {
+    window.addEventListener("resize", debouncedResize)
+    debouncedResize()
+    return () => window.removeEventListener("resize", debouncedResize)
+  }, [debouncedResize])
 
   if (typeof window === "undefined") {
     return { width: 0, height: 0 }
