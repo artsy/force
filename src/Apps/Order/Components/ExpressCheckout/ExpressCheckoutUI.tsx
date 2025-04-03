@@ -355,7 +355,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     <UncollapsingBox visible={visible}>
       <Text variant="lg-display">Express checkout</Text>
       <Spacer y={1} />
-      <Box maxWidth={175}>
+      <Box maxWidth={["100%", "50%"]}>
         <ExpressCheckoutElement
           options={expressCheckoutOptions}
           onClick={handleOpenExpressCheckout}
