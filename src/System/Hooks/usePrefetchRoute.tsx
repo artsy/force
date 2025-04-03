@@ -23,7 +23,7 @@ export const usePrefetchRoute = ({
 
   const { match } = useRouter()
 
-  const prefetchFeatureFlagEnabled = useFlag("diamond_prefetch-hover")
+  const prefetchFeatureFlagEnabled = ssrSafeUseFlag("diamond_prefetch-hover")
 
   // If we're transitioning routes, we don't want to prefetch
   const prefetchDisabled = !prefetchFeatureFlagEnabled || !match?.elements
@@ -112,4 +112,13 @@ export const usePrefetchRoute = ({
   )
 
   return { prefetch }
+}
+
+const ssrSafeUseFlag = (flagName: string) => {
+  if (typeof window === "undefined") {
+    // In SSR, we can't use proxy-client-react, so return false
+    return false
+  }
+
+  return useFlag(flagName)
 }

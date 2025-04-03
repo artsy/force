@@ -41,10 +41,11 @@ export const RouterLink: React.FC<
   const { router } = useRouter()
 
   const isPrefetchOnEnterEnabledLoggedIn =
-    useFlag("diamond_prefetch-on-enter") && !!systemContext.user
+    ssrSafeUseFlag("diamond_prefetch-on-enter") && !!systemContext.user
 
   const isPrefetchOnEnterEnabledLoggedOut =
-    useFlag("diamond_prefetch-on-enter-logged-out") && !systemContext.user
+    ssrSafeUseFlag("diamond_prefetch-on-enter-logged-out") &&
+    !systemContext.user
 
   // TODO: Remove feature flags
   const isPrefetchOnEnterEnabled =
@@ -131,6 +132,15 @@ const VALID_ROUTER_LINK_PROPS = ["activeClassName", "activeStyle", "exact"]
 
 const routerLinkValidator = (prop: string) => {
   return VALID_ROUTER_LINK_PROPS.includes(prop)
+}
+
+const ssrSafeUseFlag = (flagName: string) => {
+  if (typeof window === "undefined") {
+    // In SSR, we can't use proxy-client-react, so return false
+    return false
+  }
+
+  return useFlag(flagName)
 }
 
 export const RouterAwareLink: React.FC<
