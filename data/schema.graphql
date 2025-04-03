@@ -20571,7 +20571,13 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
   # Is it a fair booth or a show?
   type: String
   viewingRoomIDs: [String!]!
-  viewingRoomsConnection: ViewingRoomsConnection
+  viewingRoomsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    statuses: [ViewingRoomStatusEnum!]
+  ): ViewingRoomsConnection
 }
 
 type ShowArtworkGrid implements ArtworkContextGrid {
