@@ -70,6 +70,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const checkoutOptions: ClickResolveDetails = {
     shippingAddressRequired: true,
     phoneNumberRequired: true,
+    business: { name: "Artsy" },
   }
 
   const updateOrderTotalAndResolve = (args: {
@@ -210,6 +211,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       })
     } catch (error) {
       logger.error("Error updating order", error)
+      shippingContext.actions.dialog.showErrorDialog()
       reject()
       return
     }
@@ -227,7 +229,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       logger.warn(
         "Shipping options not available yet, skipping setting fulfillment option",
       )
-      resolve()
+      shippingContext.actions.dialog.showErrorDialog()
+      reject()
       return
     }
 
@@ -259,6 +262,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       })
     } catch (error) {
       logger.error("Error updating order", error)
+      shippingContext.actions.dialog.showErrorDialog()
       reject()
     }
   }
@@ -303,9 +307,13 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         },
       })
 
-      validateAndExtractOrderResponse(
-        updateOrderResult.updateOrder?.orderOrError,
-      )
+      try {
+        validateAndExtractOrderResponse(
+          updateOrderResult.updateOrder?.orderOrError,
+        )
+      } catch (error) {
+        shippingContext.actions.dialog.showErrorDialog()
+      }
 
       // Trigger form validation and wallet collection
       const { error: submitError } = await elements.submit()
