@@ -167,6 +167,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
 
     if (errorRef.current) {
       shippingContext.actions.dialog.showErrorDialog()
+      errorRef.current = null
     }
 
     logger.warn("Express checkout element cancelled - resetting")
@@ -217,7 +218,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           }),
       })
     } catch (error) {
-      errorRef.current = error
+      errorRef.current = error.message || "unknown_error"
       logger.error("Error updating order", error)
       reject()
       return
@@ -268,7 +269,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           }),
       })
     } catch (error) {
-      errorRef.current = error
+      errorRef.current = error.message || "unknown_error"
       logger.error("Error updating order", error)
       reject()
     }
@@ -319,7 +320,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           updateOrderResult.updateOrder?.orderOrError,
         )
       } catch (error) {
-        errorRef.current = error
+        errorRef.current = error.message || "unknown_error"
         return
       }
 
