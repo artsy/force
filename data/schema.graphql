@@ -1670,6 +1670,9 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
 
   # In applicable contexts, this is what the artist (as a suggestion) is based on.
   basedOn: Artist
+
+  # The biennials the artist has participated in
+  biennials: String
   bio: String
 
   # The Artist biography article written by Artsy
@@ -1898,6 +1901,9 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
   # The most recent show for an artist
   recentShow: String
   related: ArtistRelatedData
+
+  # publications that have reviewed the artist
+  reviewSources: String
   sales(
     isAuction: Boolean
     live: Boolean
@@ -21258,6 +21264,7 @@ type UpdateArtistFailure {
 input UpdateArtistMutationInput {
   alternateNames: [String!]
   awards: String
+  biennials: String
   birthday: String
   blurb: String
   clientMutationId: String
@@ -21276,6 +21283,7 @@ input UpdateArtistMutationInput {
   nationality: String
   public: Boolean
   recentShow: String
+  reviewSources: String
   targetSupplyPriority: ArtistTargetSupplyPriority
   targetSupplyType: ArtistTargetSupplyType
   vanguardYear: String
