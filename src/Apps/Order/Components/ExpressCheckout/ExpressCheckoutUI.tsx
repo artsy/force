@@ -24,6 +24,7 @@ import {
   validateAndExtractOrderResponse,
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
+import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import createLogger from "Utils/logger"
 import type {
   ExpressCheckoutUI_order$data,
@@ -60,6 +61,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
+  const shippingContext = useShippingContext()
 
   if (!(stripe && elements)) {
     return null
@@ -323,6 +325,12 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         // This point is only reached if there's an immediate error when
         // creating the ConfirmationToken. Show the error to customer (for example, payment details incomplete)
         logger.error(error)
+
+        shippingContext.actions.dialog.showErrorDialog({
+          title: "An error occurred",
+          message: error.message,
+        })
+
         return
       }
 
@@ -347,31 +355,31 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     <UncollapsingBox visible={visible}>
       <Text variant="lg-display">Express checkout</Text>
       <Spacer y={1} />
+      <Box maxWidth={["100%", "50%"]}>
+        <ExpressCheckoutElement
+          options={expressCheckoutOptions}
+          onClick={handleOpenExpressCheckout}
+          onCancel={handleCancel}
+          onReady={e => {
+            if (!!e.availablePaymentMethods) {
+              setVisible(true)
 
-      <ExpressCheckoutElement
-        options={expressCheckoutOptions}
-        onClick={handleOpenExpressCheckout}
-        onCancel={handleCancel}
-        onReady={e => {
-          if (!!e.availablePaymentMethods) {
-            setVisible(true)
-
-            orderTracking.expressCheckoutViewed({
-              order: orderData,
-              paymentMethods: getAvailablePaymentMethods(
-                e.availablePaymentMethods,
-              ),
-            })
-          }
-        }}
-        onShippingAddressChange={handleShippingAddressChange}
-        onShippingRateChange={handleShippingRateChange}
-        onLoadError={e => {
-          logger.error("Express checkout element error", e)
-        }}
-        onConfirm={onConfirm}
-      />
-
+              orderTracking.expressCheckoutViewed({
+                order: orderData,
+                paymentMethods: getAvailablePaymentMethods(
+                  e.availablePaymentMethods,
+                ),
+              })
+            }
+          }}
+          onShippingAddressChange={handleShippingAddressChange}
+          onShippingRateChange={handleShippingRateChange}
+          onLoadError={e => {
+            logger.error("Express checkout element error", e)
+          }}
+          onConfirm={onConfirm}
+        />
+      </Box>
       <Spacer y={4} />
     </UncollapsingBox>
   )

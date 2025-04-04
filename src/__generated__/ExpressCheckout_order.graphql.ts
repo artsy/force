@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<102fc5863e1b6cfbaabdd90212fb0f68>>
+ * @generated SignedSource<<dba6026f84dbe1fa7c16d6c309042103>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,16 @@ export type ExpressCheckout_order$data = {
   readonly itemsTotal: {
     readonly currencyCode: string;
     readonly minor: any;
+  } | null | undefined;
+  readonly seller: {
+    readonly __typename: "Partner";
+    readonly merchantAccount: {
+      readonly externalId: string;
+    } | null | undefined;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
   } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutUI_order">;
   readonly " $fragmentType": "ExpressCheckout_order";
@@ -82,6 +92,49 @@ return {
       "plural": false,
       "selections": (v0/*: any*/),
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "seller",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "PartnerMerchantAccount",
+              "kind": "LinkedField",
+              "name": "merchantAccount",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "externalId",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "type": "Partner",
+          "abstractKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Order",
@@ -89,6 +142,6 @@ return {
 };
 })();
 
-(node as any).hash = "cb19c16d234bae12a7d81e12fff38b81";
+(node as any).hash = "671a82ab464d85e9d972a98de2fa2c39";
 
 export default node;

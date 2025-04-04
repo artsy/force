@@ -2579,7 +2579,7 @@ type Artwork implements Node & Searchable & Sellable {
   framed: ArtworkInfoRow
     @deprecated(reason: "Consider using isFramed field (boolean) instead")
   framedDepth: String
-  framedDiameter: Float
+  framedDiameter: String
   framedHeight: String
 
   # The unit of measurement for the framed dimensions
@@ -4971,6 +4971,7 @@ type CommerceBuyOrder implements CommerceOrder {
   ): String!
   creditCard: CreditCard
   creditCardId: String
+  creditCardWalletType: String
   currencyCode: String!
   displayCommissionRate: String
   displayState: CommerceOrderDisplayStateEnum!
@@ -5790,6 +5791,7 @@ type CommerceOfferOrder implements CommerceOrder {
   ): String!
   creditCard: CreditCard
   creditCardId: String
+  creditCardWalletType: String
   currencyCode: String!
   displayCommissionRate: String
   displayState: CommerceOrderDisplayStateEnum!
@@ -6155,6 +6157,7 @@ interface CommerceOrder {
   ): String!
   creditCard: CreditCard
   creditCardId: String
+  creditCardWalletType: String
   currencyCode: String!
   displayCommissionRate: String
   displayState: CommerceOrderDisplayStateEnum!
@@ -8090,12 +8093,15 @@ type Contact {
   # A globally unique ID.
   id: ID!
 
-  # A type-specific ID.
+  # A type-specific ID likely used as a database ID.
   internalID: ID!
   location: Location
   name: String
   phone: String
   position: String
+
+  # A slug ID.
+  slug: ID!
 }
 
 # A connection to a list of items.
@@ -9066,6 +9072,9 @@ input CreatePartnerShowEventMutationInput {
 
   # The start time of the event.
   startAt: String!
+
+  # The time zone of the event.
+  timeZone: String
 }
 
 type CreatePartnerShowEventMutationPayload {
@@ -9785,6 +9794,33 @@ type DeletePageSuccess {
   page: Page
 }
 
+type DeletePartnerContactFailure {
+  mutationError: GravityMutationError
+}
+
+input DeletePartnerContactMutationInput {
+  clientMutationId: String
+
+  # ID of the contact to delete
+  contactId: String!
+
+  # ID of the partner
+  partnerId: String!
+}
+
+type DeletePartnerContactMutationPayload {
+  clientMutationId: String
+  partnerContactOrError: DeletePartnerContactOrError
+}
+
+union DeletePartnerContactOrError =
+  | DeletePartnerContactFailure
+  | DeletePartnerContactSuccess
+
+type DeletePartnerContactSuccess {
+  partnerContact: Contact
+}
+
 type DeletePartnerShowDocumentFailure {
   mutationError: GravityMutationError
 }
@@ -10176,6 +10212,9 @@ input EditableLocation {
 type EditionSet implements Sellable {
   availability: String
   dimensions: dimensions
+
+  # The edition set parent-artwork display label (title)
+  displayLabel: String
   displayPriceRange: Boolean
   editionOf: String
 
@@ -10192,13 +10231,23 @@ type EditionSet implements Sellable {
   internalID: ID!
   isAcquireable: Boolean
   isForSale: Boolean
+
+  # Is the edition set parent-artwork part of an auction?
+  isInAuction: Boolean
+
+  # Is the edition set parent-artwork inquireable?
+  isInquireable: Boolean
   isOfferable: Boolean
   isOfferableFromInquiry: Boolean
+  isPriceHidden: Boolean
   isSold: Boolean
   listPrice: ListPrice
   price: String
   priceDisplay: String
   priceListed: Money
+
+  # Is the edition set parent-artwork published?
+  published: Boolean
   saleMessage: String
 
   # size bucket assigned to an artwork based on its dimensions
@@ -14613,8 +14662,7 @@ type Mutation {
   ): CommerceAddInitialOfferToOrderPayload
 
   # Approves an order. Different procedures will be done depending on the payment method.
-  # In general, approving an order will: debit the comission exemption; commit a
-  # tax transaction; capture a hold or charge the payment; book the shippment.
+  # In general, approving an order will: commit a tax transaction; capture a hold or charge the payment; book the shippment.
   # If the payment method is asychronous, a pre-approval operation will be done instead.
   commerceApproveOrder(
     # Parameters for ApproveOrder
@@ -15056,6 +15104,11 @@ type Mutation {
   # Deletes a page.
   deletePage(input: DeletePageMutationInput!): DeletePageMutationPayload
 
+  # Deletes a contact for a partner
+  deletePartnerContact(
+    input: DeletePartnerContactMutationInput!
+  ): DeletePartnerContactMutationPayload
+
   # Deletes a partner show.
   deletePartnerShow(
     input: DeletePartnerShowMutationInput!
@@ -15389,6 +15442,11 @@ type Mutation {
 
   # Updates a page.
   updatePage(input: UpdatePageMutationInput!): UpdatePageMutationPayload
+
+  # Updates an existing contact for a partner
+  updatePartnerContact(
+    input: UpdatePartnerContactInput!
+  ): UpdatePartnerContactPayload
 
   # Updates a partner show.
   updatePartnerShow(
@@ -16275,6 +16333,12 @@ type Partner implements Node {
   cities(size: Int = 25): [String]
   claimed: Boolean
   collectingInstitution: String
+
+  # A Singular Contact belonging to the Partner
+  contact(
+    # The slug or ID of the Contact
+    contactId: String!
+  ): Contact
 
   # A connection of contacts from a Partner.
   contactsConnection(
@@ -20090,19 +20154,33 @@ union SecondFactorOrErrorsUnion = AppSecondFactor | Errors | SmsSecondFactor
 
 # A piece that can be sold
 interface Sellable {
+  availability: String
   dimensions: dimensions
+  displayLabel: String
+  displayPriceRange: Boolean
   editionOf: String
+
+  # A globally unique ID.
+  id: ID!
+  internalDisplayPrice: String
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
 
   # Whether a piece can be purchased through e-commerce
   isAcquireable: Boolean
   isForSale: Boolean
+  isInAuction: Boolean
+  isInquireable: Boolean
 
   # Whether a user can make an offer on the work
   isOfferable: Boolean
 
   # Whether a user can make an offer on the work through inquiry
   isOfferableFromInquiry: Boolean
+  isPriceHidden: Boolean
   isSold: Boolean
+  published: Boolean
   saleMessage: String
 }
 
@@ -20531,7 +20609,13 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
   # Is it a fair booth or a show?
   type: String
   viewingRoomIDs: [String!]!
-  viewingRoomsConnection: ViewingRoomsConnection
+  viewingRoomsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    statuses: [ViewingRoomStatusEnum!]
+  ): ViewingRoomsConnection
 }
 
 type ShowArtworkGrid implements ArtworkContextGrid {
@@ -20617,6 +20701,9 @@ type ShowEventType {
     format: ExhibitionPeriodFormat = LONG
   ): String
 
+  # A formatted description of the time zone
+  formattedTimeZone: String
+
   # A globally unique ID.
   id: ID!
 
@@ -20628,6 +20715,7 @@ type ShowEventType {
     # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+  timeZone: String
   title: String
 }
 
@@ -21206,26 +21294,42 @@ type UpdateArtistSuccess {
 }
 
 input UpdateArtworkEditionSetInput {
+  artistProofs: String
+
   # The availability of the artwork
   availability: String
+  delete: Boolean
 
   # Show/Hide the price range of an artwork
   displayPriceRange: Boolean
 
-  # True for `Buy Now` artworks
+  # True for `Buy Now` edition sets
   ecommerce: Boolean
+  editionSize: String
+  framed: Boolean
+  framedDepth: String
+  framedDiameter: String
+  framedHeight: String
+  framedMetric: String
+  framedWidth: String
 
   # The id of the artwork to update.
   id: String!
 
   # True for `Make Offer` artworks
   offer: Boolean
+  priceCurrency: String
 
   # Show/Hide the price of an artwork
   priceHidden: Boolean
+  priceIncludesTax: Boolean
 
   # The price of the artwork
   priceListed: String
+  priceMax: Int
+  priceMin: Int
+  shippingWeight: Float
+  shippingWeightMetric: String
 }
 
 type UpdateArtworkImportRowFailure {
@@ -21255,30 +21359,46 @@ type UpdateArtworkImportRowSuccess {
 }
 
 input UpdateArtworkMutationInput {
+  artistProofs: String
+
   # The availability of the artwork
   availability: String
   clientMutationId: String
+  delete: Boolean
 
   # Show/Hide the price range of an artwork
   displayPriceRange: Boolean
 
-  # True for `Buy Now` artworks
+  # True for `Buy Now` edition sets
   ecommerce: Boolean
 
   # A list of edition sets for the artwork
   editionSets: [UpdateArtworkEditionSetInput]
+  editionSize: String
+  framed: Boolean
+  framedDepth: String
+  framedDiameter: String
+  framedHeight: String
+  framedMetric: String
+  framedWidth: String
 
   # The id of the artwork to update.
   id: String!
 
   # True for `Make Offer` artworks
   offer: Boolean
+  priceCurrency: String
 
   # Show/Hide the price of an artwork
   priceHidden: Boolean
+  priceIncludesTax: Boolean
 
   # The price of the artwork
   priceListed: String
+  priceMax: Int
+  priceMin: Int
+  shippingWeight: Float
+  shippingWeightMetric: String
 }
 
 type UpdateArtworkMutationPayload {
@@ -21828,6 +21948,50 @@ type UpdatePageSuccess {
   page: Page
 }
 
+type UpdatePartnerContactFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdatePartnerContactInput {
+  # If true, send all user inquiries and order notifications to this contact.
+  canContact: Boolean
+  clientMutationId: String
+
+  # ID of the contact to update
+  contactId: String!
+
+  # Email address of the contact
+  email: String
+
+  # ID of the contact's partner location
+  locationId: String
+
+  # Contact's name
+  name: String
+
+  # ID of the partner
+  partnerId: String!
+
+  # Phone number of the contact
+  phone: String
+
+  # Contact's position at the partner
+  position: String
+}
+
+union UpdatePartnerContactOrError =
+  | UpdatePartnerContactFailure
+  | UpdatePartnerContactSuccess
+
+type UpdatePartnerContactPayload {
+  clientMutationId: String
+  partnerContactOrError: UpdatePartnerContactOrError
+}
+
+type UpdatePartnerContactSuccess {
+  partnerContact: Contact
+}
+
 type UpdatePartnerShowDocumentFailure {
   mutationError: GravityMutationError
 }
@@ -21894,6 +22058,9 @@ input UpdatePartnerShowEventMutationInput {
 
   # The start time of the event.
   startAt: String
+
+  # The time zone of the event.
+  timeZone: String
 }
 
 type UpdatePartnerShowEventMutationPayload {

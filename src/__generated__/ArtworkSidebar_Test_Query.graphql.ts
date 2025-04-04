@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2b13d721139bff1f9ca9e95900836a9b>>
+ * @generated SignedSource<<1e36672168c4c3693f84eed03129bc49>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -1493,7 +1493,7 @@ return {
         "artwork.framed.details": (v26/*: any*/),
         "artwork.framed.label": (v26/*: any*/),
         "artwork.framedDepth": (v26/*: any*/),
-        "artwork.framedDiameter": (v33/*: any*/),
+        "artwork.framedDiameter": (v26/*: any*/),
         "artwork.framedHeight": (v26/*: any*/),
         "artwork.framedMetric": (v26/*: any*/),
         "artwork.framedWidth": (v26/*: any*/),
