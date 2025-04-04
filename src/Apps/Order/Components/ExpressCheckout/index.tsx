@@ -9,8 +9,8 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { getENV } from "Utils/getENV"
 import type { ExpressCheckoutQuery } from "__generated__/ExpressCheckoutQuery.graphql"
 import type {
-  ExpressCheckout_order$key,
   ExpressCheckout_order$data,
+  ExpressCheckout_order$key,
 } from "__generated__/ExpressCheckout_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -30,9 +30,9 @@ export const ExpressCheckout = ({ order }: Props) => {
 
   // Use itemsTotal on load, but subsequent updates inside ExpressCheckoutUI
   // will use the updated buyersTotal.
-  const { itemsTotal, seller } = orderData
+  const { buyerTotal, seller } = orderData
 
-  if (!(itemsTotal && orderData.availableShippingCountries.length)) {
+  if (!(buyerTotal && orderData.availableShippingCountries.length)) {
     return null
   }
 
@@ -44,8 +44,8 @@ export const ExpressCheckout = ({ order }: Props) => {
   //     be used. When confirming the payment on the server, it might eventually fail due to mismatched `onBehalfOf`.
 
   const orderOptions: StripeElementsUpdateOptions = {
-    amount: itemsTotal.minor,
-    currency: itemsTotal.currencyCode.toLowerCase(),
+    amount: buyerTotal.minor,
+    currency: buyerTotal.currencyCode.toLowerCase(),
     setupFutureUsage: "off_session",
     captureMethod: "manual",
     onBehalfOf: sellerStripeAccountId,

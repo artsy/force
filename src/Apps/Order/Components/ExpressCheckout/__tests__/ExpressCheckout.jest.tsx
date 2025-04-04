@@ -1,8 +1,8 @@
 import { Elements } from "@stripe/react-stripe-js"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { ExpressCheckout_Test_Query } from "__generated__/ExpressCheckout_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { ExpressCheckout } from ".."
-import type { ExpressCheckout_Test_Query } from "__generated__/ExpressCheckout_Test_Query.graphql"
 
 jest.mock("react-tracking")
 
@@ -26,7 +26,7 @@ const { renderWithRelay } = setupTestWrapperTL<ExpressCheckout_Test_Query>({
 jest.mock("@stripe/react-stripe-js", () => {
   return {
     Elements: jest.fn(() => {
-      return <button />
+      return <button type="button" />
     }),
   }
 })
@@ -40,7 +40,7 @@ describe("ExpressCheckout", () => {
     const elementsProps = mockElements.mock.calls[0][0]
 
     expect(elementsProps.options).toEqual({
-      amount: 100000,
+      amount: 104300,
       appearance: {
         variables: {
           borderRadius: "50px",

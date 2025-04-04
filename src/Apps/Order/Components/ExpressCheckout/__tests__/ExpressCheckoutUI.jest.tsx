@@ -223,7 +223,7 @@ describe("ExpressCheckoutUI", () => {
         allowedShippingCountries: ["US"],
         phoneNumberRequired: true,
         shippingAddressRequired: true,
-
+        business: { name: "Artsy" },
         shippingRates: [
           {
             amount: 0,
