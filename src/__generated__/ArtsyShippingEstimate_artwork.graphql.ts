@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6e8f8af7a4446d1a837d3fd242a5aa49>>
+ * @generated SignedSource<<54fd93f4c4accb16baa4288098959f12>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type ArtsyShippingEstimate_artwork$data = {
   readonly depthCm: number | null | undefined;
   readonly diameterCm: number | null | undefined;
   readonly framedDepth: string | null | undefined;
-  readonly framedDiameter: number | null | undefined;
+  readonly framedDiameter: string | null | undefined;
   readonly framedHeight: string | null | undefined;
   readonly framedMetric: string | null | undefined;
   readonly framedWidth: string | null | undefined;

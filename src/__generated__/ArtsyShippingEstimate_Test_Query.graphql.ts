@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d4aea6d51e2e4a1d6ef35f9aac9ac194>>
+ * @generated SignedSource<<7005bf80a5fa49b5001220e655fa5aeb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -296,7 +296,7 @@ return {
         "artwork.depthCm": (v2/*: any*/),
         "artwork.diameterCm": (v2/*: any*/),
         "artwork.framedDepth": (v3/*: any*/),
-        "artwork.framedDiameter": (v2/*: any*/),
+        "artwork.framedDiameter": (v3/*: any*/),
         "artwork.framedHeight": (v3/*: any*/),
         "artwork.framedMetric": (v3/*: any*/),
         "artwork.framedWidth": (v3/*: any*/),
