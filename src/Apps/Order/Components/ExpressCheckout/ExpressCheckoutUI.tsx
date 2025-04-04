@@ -315,14 +315,9 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         },
       })
 
-      try {
-        validateAndExtractOrderResponse(
-          updateOrderResult.updateOrder?.orderOrError,
-        )
-      } catch (error) {
-        errorRef.current = error.message || "unknown_error"
-        return
-      }
+      validateAndExtractOrderResponse(
+        updateOrderResult.updateOrder?.orderOrError,
+      )
 
       // Trigger form validation and wallet collection
       const { error: submitError } = await elements.submit()
@@ -342,12 +337,6 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         // This point is only reached if there's an immediate error when
         // creating the ConfirmationToken. Show the error to customer (for example, payment details incomplete)
         logger.error(error)
-
-        shippingContext.actions.dialog.showErrorDialog({
-          title: "An error occurred",
-          message: error.message,
-        })
-
         return
       }
 
@@ -364,7 +353,11 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         submitOrderResult.submitOrder?.orderOrError,
       )
     } catch (error) {
+      errorRef.current = error.message || "unknown_error"
       logger.error("Error confirming payment", error)
+      shippingContext.actions.dialog.showErrorDialog({
+        title: "Payment failed",
+      })
     }
   }
 
