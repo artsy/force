@@ -35,7 +35,7 @@ import type {
   useSetFulfillmentOptionMutation$data,
 } from "__generated__/useSetFulfillmentOptionMutation.graphql"
 import type { useUpdateOrderMutation$data } from "__generated__/useUpdateOrderMutation.graphql"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
 
@@ -62,6 +62,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
   const shippingContext = useShippingContext()
+  const errorRef = useRef<string | null>(null)
 
   if (!(stripe && elements)) {
     return null
@@ -157,10 +158,16 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }
 
   const handleCancel: HandleCancelCallback = async () => {
-    orderTracking.clickedCancelExpressCheckout({
-      order: orderData,
-      paymentMethod: expressCheckoutType as string,
-    })
+    if (!errorRef.current) {
+      orderTracking.clickedCancelExpressCheckout({
+        order: orderData,
+        paymentMethod: expressCheckoutType as string,
+      })
+    }
+
+    if (errorRef.current) {
+      shippingContext.actions.dialog.showErrorDialog()
+    }
 
     logger.warn("Express checkout element cancelled - resetting")
     await resetOrder()
@@ -210,8 +217,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           }),
       })
     } catch (error) {
+      errorRef.current = error
       logger.error("Error updating order", error)
-      shippingContext.actions.dialog.showErrorDialog()
       reject()
       return
     }
@@ -226,10 +233,10 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     logger.warn("Shipping rate change", shippingRate)
 
     if (shippingRate.id === CALCULATING_SHIPPING_RATE.id) {
+      errorRef.current = "Shipping rate not available yet."
       logger.warn(
         "Shipping options not available yet, skipping setting fulfillment option",
       )
-      shippingContext.actions.dialog.showErrorDialog()
       reject()
       return
     }
@@ -261,8 +268,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           }),
       })
     } catch (error) {
+      errorRef.current = error
       logger.error("Error updating order", error)
-      shippingContext.actions.dialog.showErrorDialog()
       reject()
     }
   }
@@ -312,7 +319,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           updateOrderResult.updateOrder?.orderOrError,
         )
       } catch (error) {
-        shippingContext.actions.dialog.showErrorDialog()
+        errorRef.current = error
+        return
       }
 
       // Trigger form validation and wallet collection
