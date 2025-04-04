@@ -42,7 +42,8 @@ import type { ReviewSubmitOfferOrderWithConversationMutation } from "__generated
 import type { ReviewSubmitOrderMutation } from "__generated__/ReviewSubmitOrderMutation.graphql"
 import type { Review_order$data } from "__generated__/Review_order.graphql"
 import type { Router } from "found"
-import type { FC } from "react"
+
+import { type FC, useEffect, useState } from "react"
 import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -64,9 +65,20 @@ const logger = createLogger("Order/Routes/Review/index.tsx")
 const OrdersReviewOwnerType = OwnerType.ordersReview
 
 export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
+  const [isLoading, setIsLoading] = useState(true)
   const { trackEvent } = useTracking()
   const productId = extractNodes(props.order.lineItems)[0].artwork?.internalID
   const artworkVersion = extractNodes(props.order.lineItems)[0]?.artworkVersion
+
+  useEffect(() => {
+    if (props.order) {
+      setIsLoading(false)
+    }
+  }, [props.order])
+
+  if (isLoading) {
+    return null
+  }
 
   const trackErrorMessageEvent = (
     title: string,
