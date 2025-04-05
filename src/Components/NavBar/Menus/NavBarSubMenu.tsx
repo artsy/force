@@ -1,5 +1,12 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Box, Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  type BoxProps,
+  Column,
+  GridColumns,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import type { MenuData } from "Components/NavBar/menuData"
@@ -8,7 +15,7 @@ import type * as React from "react"
 import { useTracking } from "react-tracking"
 import { NavBarMenuItemLink } from "./NavBarMenuItem"
 
-interface NavBarSubMenuProps {
+interface NavBarSubMenuProps extends BoxProps {
   menu: MenuData
   contextModule: DeprecatedAnalyticsSchema.ContextModule
   /** Detect any click to possibly close the menu */
@@ -18,7 +25,7 @@ interface NavBarSubMenuProps {
 /** Component for full-width sub-menus (Artworks, Artists) */
 export const NavBarSubMenu: React.FC<
   React.PropsWithChildren<NavBarSubMenuProps>
-> = ({ menu, contextModule, onClick }) => {
+> = ({ menu, contextModule, onClick, ...rest }) => {
   const { trackEvent } = useTracking()
 
   const handleClick = (
@@ -47,7 +54,12 @@ export const NavBarSubMenu: React.FC<
     !("links" in lastMenuItem) && "href" in lastMenuItem ? lastMenuItem : null
 
   return (
-    <Text width="100vw" variant={["xs", "xs", "sm"]} onClick={onClick}>
+    <Text
+      width="100vw"
+      variant={["xs", "xs", "sm"]}
+      onClick={onClick}
+      {...rest}
+    >
       <AppContainer>
         <HorizontalPadding>
           <GridColumns py={6} gridColumnGap={0}>

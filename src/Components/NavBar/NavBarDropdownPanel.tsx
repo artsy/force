@@ -1,8 +1,12 @@
 import type * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Dropdown } from "@artsy/palette"
+import composeRefs from "@seznam/compose-react-refs"
 import { Z } from "Apps/Components/constants"
 import type { MenuData } from "Components/NavBar/menuData"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
+import { useWindowSize } from "Utils/Hooks/useWindowSize"
+import { useEffect, useRef } from "react"
+import { useState } from "react"
 import { NavBarSubMenu } from "./Menus"
 import { NavBarItemButton, NavBarItemUnfocusableAnchor } from "./NavBarItem"
 
@@ -27,6 +31,22 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
 }) => {
   const { prefetch } = usePrefetchRoute()
 
+  // Calculate max height based on the distance between anchor and bottom of viewport
+  const [maxHeight, setMaxHeight] = useState<number>(0)
+
+  const { height: viewportHeight } = useWindowSize()
+
+  const positionRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!positionRef.current) return
+
+    const { top, height } = positionRef.current.getBoundingClientRect()
+    const availableHeight = viewportHeight - top - height - 2 // 2px for border
+
+    setMaxHeight(availableHeight)
+  }, [viewportHeight])
+
   return (
     <Dropdown
       zIndex={Z.dropdown}
@@ -42,6 +62,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
             contextModule as DeprecatedAnalyticsSchema.ContextModule
           }
           onClick={() => setVisible(false)}
+          maxHeight={maxHeight}
         />
       )}
     >
@@ -50,7 +71,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
 
         return (
           <NavBarItemButton
-            ref={anchorRef as any}
+            ref={composeRefs(anchorRef, positionRef) as any}
             active={visible}
             onMouseEnter={e => {
               onMouseEnter?.(e)
