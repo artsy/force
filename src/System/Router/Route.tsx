@@ -10,6 +10,13 @@ import type { Location, Match, RouteObjectBase } from "found"
 import type { FetchPolicy, GraphQLTaggedNode } from "react-relay"
 import type { CacheConfig } from "relay-runtime"
 
+interface PrefetchSubQuery {
+  query: GraphQLTaggedNode
+  transformVariables?: (params: any) => object
+  onStart?: (variables) => void
+  onComplete?: (data: any) => void
+}
+
 interface Route extends RouteObjectBase {
   children?: RouteProps[]
   ignoreScrollBehavior?: boolean
@@ -18,6 +25,13 @@ interface Route extends RouteObjectBase {
 
   prepareVariables?: (params: any, props: any) => object
   query?: GraphQLTaggedNode
+  /**
+   * If there are any queries in the route we'd like to prefetch (in order to
+   * warm the cache), declare them here.
+   *
+   * Currently only supported on hover. See RouterLink.tsx for usage.
+  ) */
+  prefetchSubQueries?: PrefetchSubQuery[]
   scrollToTop?: boolean
   shouldWarnBeforeLeaving?: boolean
 

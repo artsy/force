@@ -30,33 +30,7 @@ const ArtistWorksForSaleRoute: React.FC<
       />
       <Meta name="description" content={description} />
       <SystemQueryRenderer<ArtistWorksForSaleRouteArtworksQuery>
-        query={graphql`
-          query ArtistWorksForSaleRouteArtworksQuery(
-            $artistID: String!
-            $aggregations: [ArtworkAggregation]
-            $input: FilterArtworksInput!
-          ) @cacheable {
-            artist(id: $artistID) {
-              ...ArtistArtworkFilter_artist @arguments(input: $input)
-              sidebarAggregations: filterArtworksConnection(
-                aggregations: $aggregations
-                first: 1
-              ) {
-                counts {
-                  total
-                }
-                aggregations {
-                  slice
-                  counts {
-                    name
-                    value
-                    count
-                  }
-                }
-              }
-            }
-          }
-        `}
+        query={ARTIST_WORKS_FOR_SALE_QUERY}
         variables={{
           ...getWorksForSaleRouteVariables(
             match.params as { artistID: string },
@@ -115,3 +89,45 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
     `,
   },
 )
+
+export const ARTIST_WORKS_FOR_SALE_QUERY = graphql`
+  query ArtistWorksForSaleRouteArtworksQuery(
+    $artistID: String!
+    $aggregations: [ArtworkAggregation]
+    $input: FilterArtworksInput!
+  ) @cacheable {
+    artist(id: $artistID) {
+      ...ArtistArtworkFilter_artist @arguments(input: $input)
+
+      prefetchArtworksConnection: filterArtworksConnection(
+        first: 4
+        input: $input
+      ) {
+        edges {
+          node {
+            image {
+              url(version: ["larger", "large"])
+            }
+          }
+        }
+      }
+
+      sidebarAggregations: filterArtworksConnection(
+        aggregations: $aggregations
+        first: 1
+      ) {
+        counts {
+          total
+        }
+        aggregations {
+          slice
+          counts {
+            name
+            value
+            count
+          }
+        }
+      }
+    }
+  }
+`
