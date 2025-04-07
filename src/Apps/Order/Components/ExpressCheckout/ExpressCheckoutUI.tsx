@@ -35,7 +35,7 @@ import type {
   useSetFulfillmentOptionMutation$data,
 } from "__generated__/useSetFulfillmentOptionMutation.graphql"
 import type { useUpdateOrderMutation$data } from "__generated__/useUpdateOrderMutation.graphql"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
 
@@ -62,6 +62,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
   const shippingContext = useShippingContext()
+  const errorRef = useRef<string | null>(null)
 
   if (!(stripe && elements)) {
     return null
@@ -70,6 +71,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const checkoutOptions: ClickResolveDetails = {
     shippingAddressRequired: true,
     phoneNumberRequired: true,
+    business: { name: "Artsy" },
   }
 
   const updateOrderTotalAndResolve = (args: {
@@ -156,10 +158,17 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }
 
   const handleCancel: HandleCancelCallback = async () => {
-    orderTracking.clickedCancelExpressCheckout({
-      order: orderData,
-      paymentMethod: expressCheckoutType as string,
-    })
+    if (!errorRef.current) {
+      orderTracking.clickedCancelExpressCheckout({
+        order: orderData,
+        paymentMethod: expressCheckoutType as string,
+      })
+    }
+
+    if (errorRef.current) {
+      shippingContext.actions.dialog.showErrorDialog()
+      errorRef.current = null
+    }
 
     logger.warn("Express checkout element cancelled - resetting")
     await resetOrder()
@@ -209,6 +218,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           }),
       })
     } catch (error) {
+      errorRef.current = error.message || "unknown_error"
       logger.error("Error updating order", error)
       reject()
       return
@@ -224,10 +234,11 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     logger.warn("Shipping rate change", shippingRate)
 
     if (shippingRate.id === CALCULATING_SHIPPING_RATE.id) {
+      errorRef.current = "Shipping rate not available yet."
       logger.warn(
         "Shipping options not available yet, skipping setting fulfillment option",
       )
-      resolve()
+      reject()
       return
     }
 
@@ -258,6 +269,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           }),
       })
     } catch (error) {
+      errorRef.current = error.message || "unknown_error"
       logger.error("Error updating order", error)
       reject()
     }
@@ -325,12 +337,6 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         // This point is only reached if there's an immediate error when
         // creating the ConfirmationToken. Show the error to customer (for example, payment details incomplete)
         logger.error(error)
-
-        shippingContext.actions.dialog.showErrorDialog({
-          title: "An error occurred",
-          message: error.message,
-        })
-
         return
       }
 
@@ -347,7 +353,11 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         submitOrderResult.submitOrder?.orderOrError,
       )
     } catch (error) {
+      errorRef.current = error.message || "unknown_error"
       logger.error("Error confirming payment", error)
+      shippingContext.actions.dialog.showErrorDialog({
+        title: "Payment failed",
+      })
     }
   }
 
