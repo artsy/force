@@ -7,7 +7,6 @@ import {
   estimateRequestBodyForArtwork,
 } from "Components/ArtsyShippingEstimate"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { useVariant } from "@unleash/proxy-client-react"
 import type { ArtsyShippingEstimate_Test_Query } from "__generated__/ArtsyShippingEstimate_Test_Query.graphql"
 import type { ArtsyShippingEstimate_artwork$data } from "__generated__/ArtsyShippingEstimate_artwork.graphql"
 import { useEffect, useState } from "react"
@@ -126,13 +125,6 @@ describe("ArtsyShippingEstimate", () => {
           screen.queryByText("Estimate Shipping Cost"),
         ).not.toBeInTheDocument()
       })
-    })
-  })
-
-  beforeEach(() => {
-    ;(useVariant as jest.Mock).mockReturnValue({
-      name: "experiment",
-      enabled: true,
     })
   })
 
