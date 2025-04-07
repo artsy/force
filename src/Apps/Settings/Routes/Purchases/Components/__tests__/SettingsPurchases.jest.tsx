@@ -253,7 +253,7 @@ describe("SettingsPurchases", () => {
       expect(screen.getByText("Wire transfer")).toBeInTheDocument()
     })
 
-    it("renders bank trasnfer payment method", () => {
+    it("renders bank transfer payment method", () => {
       renderWithRelay({
         CommerceOrder: () => ({
           paymentMethodDetails: { __typename: "BankAccount" },
