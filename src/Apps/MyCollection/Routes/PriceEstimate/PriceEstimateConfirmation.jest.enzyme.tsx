@@ -15,8 +15,6 @@ jest.mock("Components/MetaTags", () => ({
   MetaTags: () => "MetaTags",
 }))
 
-jest.mock("@unleash/proxy-client-react")
-
 describe("Price Estimate Confirmation page", () => {
   const wrapper = mount(<PriceEstimateConfirmation />)
 

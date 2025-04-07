@@ -39,7 +39,7 @@ jest.mock("System/Contexts/FeatureFlagContext.tsx", () => ({
 }))
 jest.mock("@unleash/proxy-client-react", () => ({
   useFlag: jest.fn().mockReturnValue(false),
-  useVariant: jest.fn().mockReturnValue({ name: "disabled" }),
+  useVariant: jest.fn().mockReturnValue({ name: "disabled", enabled: false }),
 }))
 
 jest.mock("routes", () => ({
@@ -57,6 +57,7 @@ jest.mock("routes", () => ({
 // afterEach(() => expect.hasAssertions())
 
 import "DevTools/renderUntil"
+import { enabled } from "cookies"
 Enzyme.configure({ adapter: new Adapter() })
 
 // Manually run the garbage collector after 30 seconds. Only works if the

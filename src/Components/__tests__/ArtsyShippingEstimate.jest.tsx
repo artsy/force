@@ -21,14 +21,6 @@ jest.mock("Utils/getENV", () => ({
 
 let mockArtaEstimate: ArtaEstimate
 
-jest.mock("System/Hooks/useTrackFeatureVariant.tsx", () => ({
-  useTrackFeatureVariant: jest.fn(() => {
-    return {
-      trackFeatureVariant: jest.fn(),
-    }
-  }),
-}))
-
 beforeEach(() => {
   mockArtaEstimate = {
     open: jest.fn(),

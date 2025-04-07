@@ -86,7 +86,6 @@ describe("RouterLink", () => {
   })
 
   it("falls back to an <a> tag if missing a router context", () => {
-    // TODO: maybe mock
     render(<RouterLink to="/foo">Foo</RouterLink>)
     expect(screen.queryByText("FooLink")).not.toBeInTheDocument()
     expect(screen.getByRole("link", { name: "Foo" })).toBeInTheDocument()
