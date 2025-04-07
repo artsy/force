@@ -1,7 +1,8 @@
-import { Box, Flex, type FlexProps } from "@artsy/palette"
+import { Box, Flex, RANGE_HANDLE_SIZE, type FlexProps } from "@artsy/palette"
 
 const BAR_WIDTH = 2
 const BAR_ROUNDNESS = 10
+const HISTOGRAM_MARGIN = RANGE_HANDLE_SIZE / 2 + "px"
 
 type Range = [number, number]
 
@@ -37,6 +38,7 @@ export const Histogram: React.FC<React.PropsWithChildren<HistogramProps>> = ({
 
   return (
     <Flex
+      px={HISTOGRAM_MARGIN}
       height={110}
       justifyContent="space-between"
       alignItems="flex-end"
