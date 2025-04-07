@@ -43,7 +43,7 @@ export const RouterLink: React.FC<
     initialPath: to as string,
     onComplete: () => setIsPrefetched(true),
   })
-
+  console.log("HIIIIII")
   const routes = router?.matcher?.routeConfig ?? []
   const matcher = router?.matcher
 
