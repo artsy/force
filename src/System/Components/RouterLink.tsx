@@ -1,10 +1,8 @@
 import { type BoxProps, boxMixin } from "@artsy/palette"
 import isPropValid from "@emotion/is-prop-valid"
 import { themeGet } from "@styled-system/theme-get"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 import { useRouter } from "System/Hooks/useRouter"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { Link, type LinkPropsSimple } from "found"
 import * as React from "react"
@@ -37,19 +35,7 @@ export type RouterLinkProps = Omit<
 export const RouterLink: React.FC<
   React.PropsWithChildren<React.PropsWithChildren<RouterLinkProps>>
 > = React.forwardRef(({ inline, to, enablePrefetch = true, ...rest }, _ref) => {
-  const systemContext = useSystemContext()
   const { router } = useRouter()
-
-  const isPrefetchOnEnterEnabledLoggedIn =
-    useFeatureFlag("diamond_prefetch-on-enter") && !!systemContext.user
-
-  const isPrefetchOnEnterEnabledLoggedOut =
-    useFeatureFlag("diamond_prefetch-on-enter-logged-out") &&
-    !systemContext.user
-
-  // TODO: Remove feature flags
-  const isPrefetchOnEnterEnabled =
-    isPrefetchOnEnterEnabledLoggedIn || isPrefetchOnEnterEnabledLoggedOut
 
   // When a prefetch is completed, propagate that in the router state.
   const [isPrefetched, setIsPrefetched] = React.useState(false)
@@ -76,7 +62,7 @@ export const RouterLink: React.FC<
       threshold: 0.2,
     },
     onIntersection: () => {
-      if (enablePrefetch && isPrefetchOnEnterEnabled) {
+      if (enablePrefetch) {
         prefetch()
       }
     },
@@ -102,7 +88,7 @@ export const RouterLink: React.FC<
           state: { isPrefetched },
         }}
         onMouseOver={handleMouseOver}
-        ref={isPrefetchOnEnterEnabled ? (intersectionRef as any) : null}
+        ref={intersectionRef as any}
         {...rest}
       />
     )
