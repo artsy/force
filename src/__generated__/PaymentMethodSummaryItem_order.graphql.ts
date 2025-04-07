@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6322ff236ae3943b6fdd086b0cb06159>>
+ * @generated SignedSource<<5303f69e799befe038ec93e224fa70f1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type PaymentMethodSummaryItem_order$data = {
+  readonly creditCardWalletType: string | null | undefined;
   readonly paymentMethodDetails: {
     readonly __typename: "BankAccount";
     readonly last4: string;
@@ -48,6 +49,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "creditCardWalletType",
       "storageKey": null
     },
     {
@@ -136,6 +144,6 @@ const node: ReaderFragment = {
   "abstractKey": "__isCommerceOrder"
 };
 
-(node as any).hash = "58aebfc6e74d23f9c23ea9587452a4cf";
+(node as any).hash = "8987f37346c6bfd1cd5119cf83e190a8";
 
 export default node;
