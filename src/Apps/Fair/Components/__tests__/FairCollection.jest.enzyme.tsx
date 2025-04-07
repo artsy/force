@@ -8,7 +8,6 @@ import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("@unleash/proxy-client-react")
 
 describe("FairCollection", () => {
   let trackEvent

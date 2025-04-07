@@ -28,6 +28,14 @@ useTracking.mockImplementation(() => ({ trackEvent: jest.fn() }))
 
 jest.mock("lodash/debounce", () => jest.fn(e => e))
 jest.mock("Utils/logger")
+jest.mock("System/Contexts/FeatureFlagContext.tsx", () => ({
+  FeatureFlagProvider: ({ children }) => children,
+}))
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn().mockReturnValue(false),
+  useVariant: jest.fn().mockReturnValue({ name: "disabled" }),
+}))
+
 jest.mock("Components/CookieConsentManager/CookieConsentManager", () => ({
   CookieConsentManager: ({ children }) => children,
 }))

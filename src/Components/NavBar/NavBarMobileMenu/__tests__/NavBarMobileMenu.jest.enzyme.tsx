@@ -15,8 +15,6 @@ jest.mock("@artsy/palette", () => ({
 
 jest.mock("Utils/auth", () => ({ logout: jest.fn() }))
 
-jest.mock("@unleash/proxy-client-react")
-
 describe("NavBarMobileMenu", () => {
   const mockLogout = logout as jest.Mock
 

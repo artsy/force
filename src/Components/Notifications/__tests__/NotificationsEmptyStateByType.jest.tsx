@@ -1,10 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { NotificationsEmptyStateByType } from "Components/Notifications/NotificationsEmptyStateByType"
 
-jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: jest.fn(),
-}))
-
 describe("NotificationsEmptyStateByType", () => {
   it("should render correct state when type is 'All'", () => {
     render(<NotificationsEmptyStateByType type="all" />)

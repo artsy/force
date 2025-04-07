@@ -7,11 +7,6 @@ import { render } from "DevTools/renderWithMockBoot"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useTracking } from "react-tracking"
 
-jest.mock("@unleash/proxy-client-react", () => ({
-  ...jest.requireActual("@unleash/proxy-client-react"),
-  useFlag: jest.fn().mockReturnValue(true),
-}))
-
 jest.mock("Utils/Hooks/useMutation")
 
 const artworkList: EditArtworkListEntity = {

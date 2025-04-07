@@ -16,14 +16,6 @@ jest.mock("Components/MetaTags", () => ({
   MetaTags: () => null,
 }))
 
-jest.mock("@unleash/proxy-client-react", () => {
-  const actual = jest.requireActual("@unleash/proxy-client-react")
-  return {
-    ...actual,
-    useFlag: jest.fn(),
-  }
-})
-
 const { renderWithRelay } = setupTestWrapperTL<PageApp_Test_Query>({
   Component: PageAppFragmentContainer,
   query: graphql`

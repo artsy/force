@@ -3,11 +3,6 @@ import { MockRouter } from "DevTools/MockRouter"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { RouterLink } from "System/Components/RouterLink"
 
-jest.mock("@unleash/proxy-client-react", () => ({
-  ...jest.requireActual("@unleash/proxy-client-react"),
-  useFlag: jest.fn().mockReturnValue(true),
-}))
-
 jest.mock("System/Router/Utils/shouldUpdateScroll", () => ({
   shouldUpdateScroll: () => true,
 }))

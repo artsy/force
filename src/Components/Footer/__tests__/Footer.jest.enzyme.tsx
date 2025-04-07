@@ -12,11 +12,6 @@ jest.mock("System/Hooks/useRouter", () => ({
   }),
 }))
 
-jest.mock("@unleash/proxy-client-react", () => ({
-  ...jest.requireActual("@unleash/proxy-client-react"),
-  useFlag: jest.fn().mockReturnValue(false),
-}))
-
 jest.mock("react-relay", () => ({
   fetchQuery: jest.fn(() => ({
     toPromise: jest.fn().mockResolvedValue(false),

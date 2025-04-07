@@ -17,9 +17,6 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
   })),
 }))
 jest.mock("react-tracking")
-jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: jest.fn(),
-}))
 
 const artworkFilterContext: Partial<ArtworkFilterContextProps> = {
   aggregations: [

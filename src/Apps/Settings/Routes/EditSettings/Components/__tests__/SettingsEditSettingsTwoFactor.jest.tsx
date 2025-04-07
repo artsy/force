@@ -23,6 +23,10 @@ const { renderWithRelay } = setupTestWrapperTL({
   `,
 })
 
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn().mockReturnValue(true),
+}))
+
 const mockConfirmPasswordMutation = ConfirmPassword as jest.Mock
 
 describe("TwoFactorAuthentication", () => {

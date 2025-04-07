@@ -1,8 +1,6 @@
 import { RailHeaderTitle } from "Components/Rail/RailHeader"
 import { mount } from "enzyme"
 
-jest.mock("@unleash/proxy-client-react")
-
 describe("RailHeaderTitle", () => {
   it("returns the text with no viewAllHref", () => {
     const wrapper = mount(<RailHeaderTitle title="Awesome Auction" />)

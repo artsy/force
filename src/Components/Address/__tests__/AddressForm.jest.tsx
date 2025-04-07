@@ -2,11 +2,6 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { AddressForm } from "Components/Address/AddressForm"
 import { type FC, useState } from "react"
 
-jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: jest.fn().mockReturnValue(true),
-  useVariant: jest.fn().mockReturnValue({ name: "disabled" }),
-}))
-
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn().mockImplementation(() => {
     return {
@@ -18,6 +13,10 @@ jest.mock("Utils/getENV", () => ({
 beforeEach(() => {
   jest.clearAllMocks()
 })
+
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn().mockReturnValue(true),
+}))
 
 describe("AddressForm", () => {
   it("preserves updated value from props after user input", () => {

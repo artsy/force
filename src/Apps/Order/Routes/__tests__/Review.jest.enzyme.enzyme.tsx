@@ -68,7 +68,6 @@ jest.mock("@stripe/stripe-js", () => {
   }
 })
 const { loadStripe, _mockStripe } = require("@stripe/stripe-js")
-jest.mock("@unleash/proxy-client-react")
 
 const mockShowErrorDialog = jest.fn()
 jest.mock("Apps/Order/Dialogs", () => ({

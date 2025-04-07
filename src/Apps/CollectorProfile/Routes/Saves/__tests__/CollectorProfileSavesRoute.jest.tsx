@@ -10,13 +10,6 @@ import { useTracking } from "react-tracking"
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter")
 jest.mock("found")
-jest.mock("@unleash/proxy-client-react", () => {
-  const actual = jest.requireActual("@unleash/proxy-client-react")
-  return {
-    ...actual,
-    useFlag: jest.fn(),
-  }
-})
 
 const { renderWithRelay } =
   setupTestWrapperTL<CollectorProfileSavesRoute_Test_Query>({

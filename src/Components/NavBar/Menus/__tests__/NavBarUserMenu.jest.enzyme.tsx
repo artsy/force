@@ -15,8 +15,6 @@ jest.mock("Components/NavBar/Menus/NavBarUserMenuAvatar", () => ({
   NavBarUserMenuAvatar: () => <div />,
 }))
 
-jest.mock("@unleash/proxy-client-react")
-
 describe("NavBarUserMenu", () => {
   const mockLogout = logout as jest.Mock
 

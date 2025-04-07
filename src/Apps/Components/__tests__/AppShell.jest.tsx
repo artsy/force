@@ -3,11 +3,6 @@ import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { buildAppRoutes } from "System/Router/Utils/buildAppRoutes"
 import { setupClientRouter } from "System/Router/clientRouter"
 
-jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: jest.fn().mockReturnValue(false),
-  useVariant: jest.fn().mockReturnValue({ name: "disabled" }),
-}))
-
 jest.mock("Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,
 }))

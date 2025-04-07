@@ -2,8 +2,6 @@ import { mount } from "enzyme"
 import "jest-styled-components"
 import { ErrorPage } from "Components/ErrorPage"
 
-jest.mock("@unleash/proxy-client-react")
-
 describe("ErrorPage", () => {
   describe("unit", () => {
     it("renders an error page with no stack trace if it's a 404", () => {

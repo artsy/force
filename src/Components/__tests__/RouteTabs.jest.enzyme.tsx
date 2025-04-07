@@ -1,8 +1,6 @@
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { mount } from "enzyme"
 
-jest.mock("@unleash/proxy-client-react")
-
 describe("RouteTabs", () => {
   const getWrapper = () => {
     return mount(

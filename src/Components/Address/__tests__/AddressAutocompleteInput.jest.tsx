@@ -11,11 +11,6 @@ import { type FC, useState } from "react"
 import { useTracking } from "react-tracking"
 import { useFlag } from "@unleash/proxy-client-react"
 
-jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: jest.fn(),
-  useVariant: jest.fn().mockReturnValue({ name: "disabled" }),
-}))
-
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn().mockImplementation(() => {
     return {

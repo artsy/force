@@ -22,10 +22,6 @@ import { useFlag } from "@unleash/proxy-client-react"
 import type { DeepPartial } from "Utils/typeSupport"
 import { useTracking } from "react-tracking"
 
-jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: jest.fn(),
-}))
-
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn().mockImplementation(() => {
     return {
@@ -522,6 +518,7 @@ describe("FulfillmentDetailsForm", () => {
     })
 
     it("tries to go back to fulfillment details when the user selects an autocomplete address", async () => {
+      ;(useFlag as jest.Mock).mockReturnValueOnce(true)
       renderTree(testProps)
       await waitFor(async () => {
         const line1Input = screen.getByPlaceholderText("Street address")

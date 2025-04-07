@@ -7,11 +7,6 @@ import { ArtistArtworkFilters } from "Apps/Artist/Routes/WorksForSale/Components
 import { ArtworkFilterContextProvider } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { ReactElement } from "react"
 
-jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: jest.fn().mockReturnValue(false),
-  useVariant: jest.fn().mockReturnValue({ name: "disabled" }),
-}))
-
 const render = (ui: ReactElement, options: RenderOptions = {}) =>
   originalRender(ui, { wrapper: Wrapper, ...options })
 

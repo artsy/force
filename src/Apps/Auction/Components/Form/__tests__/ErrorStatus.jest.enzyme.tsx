@@ -5,8 +5,6 @@ import { ErrorStatus } from "Apps/Auction/Components/Form/ErrorStatus"
 
 jest.mock("Apps/Auction/Hooks/useAuctionFormContext")
 
-jest.mock("@unleash/proxy-client-react")
-
 describe("ErrorStatus", () => {
   const mockuseAuctionFormContext = useAuctionFormContext as jest.Mock
   let status

@@ -54,8 +54,6 @@ jest.mock(
   }),
 )
 
-jest.mock("@unleash/proxy-client-react")
-
 describe("NavBar", () => {
   const trackEvent = jest.fn()
 

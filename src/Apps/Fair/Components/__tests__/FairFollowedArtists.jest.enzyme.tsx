@@ -3,7 +3,6 @@ import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsConte
 import { mount } from "enzyme"
 import { useTracking } from "react-tracking"
 
-jest.mock("@unleash/proxy-client-react")
 jest.mock("react-tracking")
 jest.mock("Components/Artwork/ShelfArtwork", () => {
   return {

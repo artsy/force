@@ -7,7 +7,6 @@ import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { mount } from "enzyme"
 
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")
-jest.mock("@unleash/proxy-client-react")
 
 describe("AddToCalendar", () => {
   const mockUseAuctionTracking = useAuctionTracking as jest.Mock

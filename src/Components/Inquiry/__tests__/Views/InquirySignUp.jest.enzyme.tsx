@@ -12,7 +12,6 @@ jest.mock("../../Hooks/useArtworkInquiryRequest")
 jest.mock("../../Hooks/useInquiryContext")
 jest.mock("Utils/wait", () => ({ wait: () => Promise.resolve() }))
 jest.mock("react-tracking")
-jest.mock("@unleash/proxy-client-react")
 
 describe("InquirySignUp", () => {
   const next = jest.fn()

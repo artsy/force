@@ -15,7 +15,6 @@ jest.mock("found", () => ({
   RouterContext: jest.requireActual("found").RouterContext,
   useRouter: jest.fn(),
 }))
-jest.mock("@unleash/proxy-client-react")
 
 describe("FeaturedCollectionsRails", () => {
   let props

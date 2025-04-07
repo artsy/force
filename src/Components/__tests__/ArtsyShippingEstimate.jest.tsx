@@ -22,16 +22,6 @@ jest.mock("Utils/getENV", () => ({
 
 let mockArtaEstimate: ArtaEstimate
 
-const mockUseVariant = useVariant as jest.Mock
-jest.mock("@unleash/proxy-client-react", () => {
-  const actual = jest.requireActual("@unleash/proxy-client-react")
-  return {
-    ...actual,
-    useVariant: jest.fn(),
-    useFlag: jest.fn(),
-  }
-})
-
 jest.mock("System/Hooks/useTrackFeatureVariant.tsx", () => ({
   useTrackFeatureVariant: jest.fn(() => {
     return {
@@ -123,11 +113,6 @@ const { renderWithRelay } =
 describe("ArtsyShippingEstimate", () => {
   describe("feature flag disabled", () => {
     it("does not render the widget", async () => {
-      mockUseVariant.mockReturnValue({
-        name: "disabled",
-        enabled: false,
-      })
-
       renderWithRelay({
         Artwork: () => ({
           ...validArtworkData,
@@ -145,7 +130,10 @@ describe("ArtsyShippingEstimate", () => {
   })
 
   beforeEach(() => {
-    mockUseVariant.mockReturnValue({ name: "experiment", enabled: true })
+    ;(useVariant as jest.Mock).mockReturnValue({
+      name: "experiment",
+      enabled: true,
+    })
   })
 
   describe("with an artwork that cannot be estimated", () => {

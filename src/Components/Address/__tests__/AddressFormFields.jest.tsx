@@ -15,10 +15,6 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { Formik } from "formik"
 import * as Yup from "yup"
 
-jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: jest.fn().mockReturnValue(true),
-}))
-
 describe("AddressFormFields", () => {
   const mockOnSubmit = jest.fn()
   beforeEach(() => {
