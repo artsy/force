@@ -495,6 +495,13 @@ describe("FulfillmentDetailsForm", () => {
 
   describe("Address autocomplete", () => {
     let mockFetch: jest.Mock
+
+    beforeAll(() => {
+      ;(useFlag as jest.Mock).mockImplementation(
+        featureName => featureName === "address_autocomplete_us",
+      )
+    })
+
     beforeEach(() => {
       mockFetch = jest.fn().mockResolvedValue({
         json: jest.fn().mockResolvedValue({
@@ -512,9 +519,10 @@ describe("FulfillmentDetailsForm", () => {
       })
 
       global.fetch = mockFetch
-      ;(useFlag as jest.Mock).mockImplementation(
-        featureName => featureName === "address_autocomplete_us",
-      )
+    })
+
+    afterEach(() => {
+      jest.clearAllMocks()
     })
 
     it("tries to go back to fulfillment details when the user selects an autocomplete address", async () => {
