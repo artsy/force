@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9a1beb81bf0756072fa65c41a4e8e723>>
+ * @generated SignedSource<<6a08674938c0979190631dcd53d0e918>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,6 +42,7 @@ export type FairsIndex_viewer$data = {
       } | null | undefined;
     } | null | undefined;
     readonly profile: {
+      readonly href: string | null | undefined;
       readonly isPublished: boolean | null | undefined;
     } | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"FairsFairRow_fair">;
@@ -105,6 +106,13 @@ v7 = {
   "args": null,
   "kind": "FragmentSpread",
   "name": "FairsFairRow_fair"
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
 };
 return {
   "argumentDefinitions": [],
@@ -230,7 +238,19 @@ return {
           "storageKey": null
         },
         (v5/*: any*/),
-        (v6/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Profile",
+          "kind": "LinkedField",
+          "name": "profile",
+          "plural": false,
+          "selections": [
+            (v5/*: any*/),
+            (v8/*: any*/)
+          ],
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -247,13 +267,7 @@ return {
               "name": "profile",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "href",
-                  "storageKey": null
-                }
+                (v8/*: any*/)
               ],
               "storageKey": null
             }
@@ -275,6 +289,6 @@ return {
 };
 })();
 
-(node as any).hash = "863757b83cf4b9a2c9aab52c1fb95c00";
+(node as any).hash = "361d19311c66c34498fe3cf828e9cf15";
 
 export default node;
