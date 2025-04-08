@@ -98,7 +98,11 @@ const ORDER_COLORS = {
 
 const getPaymentMethodText = (
   paymentMethodDetails: SettingsPurchasesRow_order$data["paymentMethodDetails"],
+  creditCardWalletType: SettingsPurchasesRow_order$data["creditCardWalletType"],
 ) => {
+  if (creditCardWalletType === "apple_pay") {
+    return "Apple Pay"
+  }
   switch (paymentMethodDetails?.__typename) {
     case "BankAccount":
       return `Bank transfer •••• ${paymentMethodDetails.last4}`
@@ -359,7 +363,10 @@ const SettingsPurchasesRow: FC<
           <Text variant="sm-display">Payment Method</Text>
 
           <Text variant="sm-display" color="black60">
-            {getPaymentMethodText(order.paymentMethodDetails)}
+            {getPaymentMethodText(
+              order.paymentMethodDetails,
+              order.creditCardWalletType,
+            )}
           </Text>
         </Column>
 
@@ -405,6 +412,7 @@ export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
         requestedFulfillment {
           __typename
         }
+        creditCardWalletType
         paymentMethodDetails {
           __typename
           ... on CreditCard {
