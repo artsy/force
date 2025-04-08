@@ -1,5 +1,4 @@
 import { Flex, Text } from "@artsy/palette"
-import ApplePayMarkIcon from "@artsy/icons/ApplePayMarkIcon"
 
 interface Props {
   textColor?: string
@@ -10,8 +9,6 @@ export const ApplePayDetails = (props: Props) => {
 
   return (
     <Flex alignItems="center">
-      <ApplePayMarkIcon mr={1} width="24px" height="24px" />
-
       <Text
         variant="sm-display"
         color={textColor}
