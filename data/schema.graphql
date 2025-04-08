@@ -2550,6 +2550,7 @@ type Artwork implements Node & Searchable & Sellable {
   depth: String
   depthCm: Float
   description(format: Format): String
+  diameter: Float
   diameterCm: Float
   dimensions: dimensions
   displayArtistBio: Boolean
