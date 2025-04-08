@@ -9,7 +9,16 @@ import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ExpressCheckoutUI } from "../ExpressCheckoutUI"
 
+const mockRouterPush = jest.fn()
+
 jest.mock("react-tracking")
+jest.mock("System/Hooks/useRouter", () => ({
+  useRouter: () => ({
+    router: {
+      push: mockRouterPush,
+    },
+  }),
+}))
 
 jest.unmock("react-relay")
 
@@ -124,6 +133,7 @@ describe("ExpressCheckoutUI", () => {
     jest.clearAllMocks()
     mockTracking.mockImplementation(() => ({ trackEvent }))
     trackEvent.mockClear()
+    mockRouterPush.mockClear()
   })
 
   it("passes correct props to ExpressCheckoutElement", async () => {
@@ -323,6 +333,46 @@ describe("ExpressCheckoutUI", () => {
 
     await flushPromiseQueue()
     expect(env.mock.getAllOperations()).toHaveLength(0)
+  })
+
+  it("navigates to the status page after successful order submission", async () => {
+    const { mockResolveLastOperation } = renderWithRelay({
+      Order: () => ({
+        ...orderData,
+        fulfillmentOptions: [{ type: "SHIPPING_TBD", amount: null }],
+      }),
+    })
+
+    fireEvent.click(screen.getByTestId("express-checkout-confirm"))
+
+    // Resolve the update order mutation
+    await mockResolveLastOperation({
+      updateOrderPayload: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    await flushPromiseQueue()
+    expect(mockCreateConfirmationToken).toHaveBeenCalled()
+
+    // Resolve the submit order mutation
+    await mockResolveLastOperation({
+      submitOrderPayload: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    await flushPromiseQueue()
+
+    expect(mockRouterPush).toHaveBeenCalledWith(
+      `/orders/${orderData.internalID}/status`,
+    )
   })
 })
 

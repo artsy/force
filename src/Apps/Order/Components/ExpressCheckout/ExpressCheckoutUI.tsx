@@ -25,6 +25,7 @@ import {
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
+import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import type {
   ExpressCheckoutUI_order$data,
@@ -63,6 +64,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const orderTracking = useOrderTracking()
   const shippingContext = useShippingContext()
   const errorRef = useRef<string | null>(null)
+  const { router } = useRouter()
 
   if (!(stripe && elements)) {
     return null
@@ -352,6 +354,9 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       validateAndExtractOrderResponse(
         submitOrderResult.submitOrder?.orderOrError,
       )
+
+      // Redirect to status page after successful order submission
+      router.push(`/orders/${orderData.internalID}/status`)
     } catch (error) {
       errorRef.current = error.message || "unknown_error"
       logger.error("Error confirming payment", error)
