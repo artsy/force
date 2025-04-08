@@ -153,7 +153,7 @@ if (variant.name === "experiment") {
 ### Conditional UI Rendering
 
 ```tsx
-const enableNewFeature = useFlag("new_feature_flag")
+const enableNewFeature = useFlag("new-feature-flag")
 
 return (
   <div>{enableNewFeature ? <NewFeatureComponent /> : <LegacyComponent />}</div>
@@ -164,8 +164,8 @@ return (
 
 ```tsx
 // Filter components with feature flags
-const enableSignedFilter = useFlag("only_signed_artworks_filter")
-const enableFramedFilter = useFlag("only_framed_artworks_filter")
+const enableSignedFilter = useFlag("only-signed-artworks-filter")
+const enableFramedFilter = useFlag("only-framed-artworks-filter")
 
 return (
   <FilterSection>
