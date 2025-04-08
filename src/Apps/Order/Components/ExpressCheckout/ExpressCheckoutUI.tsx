@@ -137,8 +137,6 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
             lineItems: [{ name: "Subtotal", amount: itemsTotal?.minor }],
           }),
       })
-
-      await resetOrder()
     } catch (error) {
       logger.error("Error resetting order on load", error)
     }
