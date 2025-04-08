@@ -931,6 +931,7 @@ export const CreditCardPaymentDetails = {
     street1: "1 Art st",
     street2: null,
   },
+  creditCardWalletType: null,
   paymentMethodDetails: {
     __typename: "CreditCard",
     brand: "Visa",

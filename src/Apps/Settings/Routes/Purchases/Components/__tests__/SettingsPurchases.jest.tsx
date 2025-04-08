@@ -230,4 +230,62 @@ describe("SettingsPurchases", () => {
       expect(button).toHaveAttribute("href", "/orders/123/status")
     })
   })
+
+  fdescribe("Payment Methods", () => {
+    it("renders credit card payment method", () => {
+      renderWithRelay({
+        CommerceOrder: () => ({
+          paymentMethodDetails: { __typename: "CreditCard" },
+        }),
+        CreditCard: () => ({ lastDigits: "1234" }),
+      })
+
+      expect(screen.getByText("Credit card •••• 1234")).toBeInTheDocument()
+    })
+
+    it("renders wire transfer payment method", () => {
+      renderWithRelay({
+        CommerceOrder: () => ({
+          paymentMethodDetails: { __typename: "WireTransfer" },
+        }),
+      })
+
+      expect(screen.getByText("Wire transfer")).toBeInTheDocument()
+    })
+
+    it("renders bank transfer payment method", () => {
+      renderWithRelay({
+        CommerceOrder: () => ({
+          paymentMethodDetails: { __typename: "BankAccount" },
+        }),
+        BankAccount: () => ({ last4: "1234" }),
+      })
+
+      expect(screen.getByText("Bank transfer •••• 1234")).toBeInTheDocument()
+    })
+
+    it("renders Apple Pay payment method", () => {
+      renderWithRelay({
+        CommerceOrder: () => ({
+          paymentMethodDetails: { __typename: "CreditCard" },
+          creditCardWalletType: "apple_pay",
+        }),
+        CreditCard: () => ({ lastDigits: "1234" }),
+      })
+
+      expect(screen.getByText("Apple Pay")).toBeInTheDocument()
+    })
+
+    it("skips credit card wallet type if not recognized", () => {
+      renderWithRelay({
+        CommerceOrder: () => ({
+          paymentMethodDetails: { __typename: "CreditCard" },
+          creditCardWalletType: "new_payment",
+        }),
+        CreditCard: () => ({ lastDigits: "1234" }),
+      })
+
+      expect(screen.getByText("Credit card •••• 1234")).toBeInTheDocument()
+    })
+  })
 })

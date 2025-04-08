@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1bf5aacb83cfad30de6685df2cdca129>>
+ * @generated SignedSource<<97a7674f0c1b9100d7abcb75f9fc72ba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type SettingsPurchasesRow_order$data = {
   readonly buyerTotal: string | null | undefined;
   readonly code: string;
   readonly createdAt: string;
+  readonly creditCardWalletType: string | null | undefined;
   readonly currencyCode: string;
   readonly displayState: CommerceOrderDisplayStateEnum;
   readonly internalID: string;
@@ -186,6 +187,13 @@ return {
       "selections": [
         (v0/*: any*/)
       ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "creditCardWalletType",
       "storageKey": null
     },
     {
@@ -487,6 +495,6 @@ return {
 };
 })();
 
-(node as any).hash = "84bb7c5313a484e4fd25abe300450ac2";
+(node as any).hash = "021ada8370092c02304816255a395b79";
 
 export default node;
