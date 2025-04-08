@@ -518,7 +518,6 @@ describe("FulfillmentDetailsForm", () => {
     })
 
     it("tries to go back to fulfillment details when the user selects an autocomplete address", async () => {
-      ;(useFlag as jest.Mock).mockReturnValueOnce(true)
       renderTree(testProps)
       await waitFor(async () => {
         const line1Input = screen.getByPlaceholderText("Street address")
