@@ -18,6 +18,7 @@ import type {
 } from "@stripe/stripe-js"
 import { useSetFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSetFulfillmentOptionMutation"
 import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSubmitOrderMutation"
+import { useUnsetOrderFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUnsetOrderFulfillmentOptionMutation"
 import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
 import {
   type OrderMutationSuccess,
@@ -58,6 +59,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const setFulfillmentOptionMutation = useSetFulfillmentOptionMutation()
   const updateOrderMutation = useUpdateOrderMutation()
   const submitOrderMutation = useSubmitOrderMutation()
+  const unsetFulfillmentOptionMutation =
+    useUnsetOrderFulfillmentOptionMutation()
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
@@ -91,38 +94,19 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }
 
   const resetOrder = async () => {
-    // TODO: reset fulfillment type: Not yet supported
-    // const result = await setFulfillmentOptionMutation.submitMutation({
-    //   variables: {
-    //     input: {
-    //       id: orderData.internalID,
-    //       fulfillmentOption: null,
-    //     },
-    //   },
-    // })
-    // validateAndExtractOrderResponse(result.setOrderFulfillmentOption?.orderOrError)
-
-    // reset fulfillment details
-    const fulfillmentDetailsResult = await updateOrderMutation.submitMutation({
-      variables: {
-        input: {
-          id: orderData.internalID,
-          shippingName: null,
-          shippingAddressLine1: null,
-          shippingAddressLine2: null,
-          shippingPostalCode: null,
-          shippingCity: null,
-          shippingRegion: null,
-          shippingCountry: null,
-          buyerPhoneNumber: null,
-          buyerPhoneNumberCountryCode: null,
+    const unsetFulfillmentOptions =
+      await unsetFulfillmentOptionMutation.submitMutation({
+        variables: {
+          input: {
+            id: orderData.internalID,
+          },
         },
-      },
-    })
+      })
 
     const validatedResult = validateAndExtractOrderResponse(
-      fulfillmentDetailsResult.updateOrder?.orderOrError,
+      unsetFulfillmentOptions.unsetOrderFulfillmentOption?.orderOrError,
     )
+
     return validatedResult
   }
 
@@ -143,15 +127,18 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         extractAllowedShippingCountries(orderData)
       const shippingRates = [CALCULATING_SHIPPING_RATE]
 
-      return updateOrderTotalAndResolve({
+      updateOrderTotalAndResolve({
         buyerTotalMinor: itemsTotal?.minor,
         resolveDetails: () =>
           resolve({
             ...checkoutOptions,
             allowedShippingCountries,
             shippingRates,
+            lineItems: [{ name: "Subtotal", amount: itemsTotal?.minor }],
           }),
       })
+
+      await resetOrder()
     } catch (error) {
       logger.error("Error resetting order on load", error)
     }
@@ -171,7 +158,9 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     }
 
     logger.warn("Express checkout element cancelled - resetting")
+
     await resetOrder()
+
     setExpressCheckoutType(null)
   }
 
