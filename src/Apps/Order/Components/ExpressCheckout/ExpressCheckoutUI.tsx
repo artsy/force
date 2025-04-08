@@ -342,8 +342,12 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         submitOrderResult.submitOrder?.orderOrError,
       )
     } catch (error) {
+      await resetOrder()
+
       errorRef.current = error.message || "unknown_error"
+
       logger.error("Error confirming payment", error)
+
       shippingContext.actions.dialog.showErrorDialog({
         title: "Payment failed",
       })
