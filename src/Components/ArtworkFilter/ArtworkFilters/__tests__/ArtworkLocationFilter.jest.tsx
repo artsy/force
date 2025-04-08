@@ -34,10 +34,6 @@ const artworkFilterContext: Partial<ArtworkFilterContextProps> = {
 const render = createArtworkFilterTestRenderer(artworkFilterContext)
 
 describe(ArtworkLocationFilter, () => {
-  beforeEach(() => {
-    ;(useFlag as jest.Mock).mockImplementation(() => true)
-  })
-
   it("renders a list of options based on current aggregation", () => {
     render(<ArtworkLocationFilter expanded />)
     expect(screen.getByText("Brooklyn, NY, USA")).toBeInTheDocument()
@@ -88,8 +84,6 @@ describe(ArtworkLocationFilter, () => {
 
   describe("keyword filtering within facet", () => {
     it("lists only the matching options", () => {
-      ;(useFlag as jest.Mock).mockImplementation(() => false) // Override to false for this test
-
       render(<ArtworkLocationFilter expanded />)
       userEvent.type(screen.getByPlaceholderText("Enter a city"), "fenny")
       expect(screen.getByText("Fenny Drayton, UK")).toBeInTheDocument()
@@ -97,6 +91,12 @@ describe(ArtworkLocationFilter, () => {
     })
 
     describe("when onyx_enhanced-artwork-location-filtering is enabled", () => {
+      beforeEach(() => {
+        ;(useFlag as jest.Mock).mockImplementation(
+          flag => flag === "onyx_enhanced-artwork-location-filtering",
+        )
+      })
+
       it("lists options whose visible text matches", () => {
         render(<ArtworkLocationFilter expanded />)
         userEvent.type(

@@ -9,7 +9,6 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import compact from "lodash/compact"
 import { type FC, useState } from "react"
 import { useTracking } from "react-tracking"
-import { useFlag } from "@unleash/proxy-client-react"
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn().mockImplementation(() => {
@@ -23,11 +22,15 @@ const mockTrackEvent = jest.fn()
 jest.mock("react-tracking")
 
 let mockFetch: jest.Mock
+
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn(flag => flag === "address_autocomplete_us"),
+}))
+
 beforeEach(() => {
   ;(useTracking as jest.Mock).mockImplementation(() => ({
     trackEvent: mockTrackEvent,
   }))
-  ;(useFlag as jest.Mock).mockImplementation(() => true) // Default to true for tests
   mockFetch = jest.fn().mockResolvedValue({
     json: jest.fn().mockResolvedValue({
       suggestions: [

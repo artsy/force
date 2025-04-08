@@ -15,7 +15,7 @@ beforeEach(() => {
 })
 
 jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: jest.fn().mockReturnValue(true),
+  useFlag: jest.fn(flag => flag === "address_autocomplete_us"),
 }))
 
 describe("AddressForm", () => {
