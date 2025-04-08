@@ -40,7 +40,7 @@ describe("ExpressCheckout", () => {
     const elementsProps = mockElements.mock.calls[0][0]
 
     expect(elementsProps.options).toEqual({
-      amount: 104300,
+      amount: 100000,
       appearance: {
         variables: {
           borderRadius: "50px",

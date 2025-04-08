@@ -224,6 +224,7 @@ describe("ExpressCheckoutUI", () => {
         phoneNumberRequired: true,
         shippingAddressRequired: true,
         business: { name: "Artsy" },
+        lineItems: [{ amount: 12345, name: "Subtotal" }],
         shippingRates: [
           {
             amount: 0,
@@ -300,25 +301,16 @@ describe("ExpressCheckoutUI", () => {
 
     const { operationName, operationVariables } =
       await mockResolveLastOperation({
-        setOrderFulfillmentOptionPayload: () => ({
+        unsetOrderFulfillmentOptionPayload: () => ({
           orderOrError: {
             __typename: "OrderMutationSuccess",
             order: orderData,
           },
         }),
       })
-    expect(operationName).toBe("useUpdateOrderMutation")
+    expect(operationName).toBe("useUnsetOrderFulfillmentOptionMutation")
     expect(operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-      buyerPhoneNumber: null,
-      buyerPhoneNumberCountryCode: null,
-      shippingAddressLine1: null,
-      shippingAddressLine2: null,
-      shippingCity: null,
-      shippingCountry: null,
-      shippingName: null,
-      shippingPostalCode: null,
-      shippingRegion: null,
     })
 
     await flushPromiseQueue()
