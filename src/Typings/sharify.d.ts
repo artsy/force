@@ -103,7 +103,7 @@ declare module "sharify" {
       UNLEASH_API_URL: string
       UNLEASH_ENVIRONMENT: string
       UNLEASH_APP_NAME: string
-      UNLEASH_CLIENT_KEY: string
+      UNLEASH_FRONTEND_KEY: string
       UNLEASH_SERVER_KEY: string
       USER_AGENT: string
       USER_PREFERENCES: any

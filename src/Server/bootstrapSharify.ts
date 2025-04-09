@@ -95,7 +95,7 @@ export const bootstrapSharify = () => {
       "TRACK_PAGELOAD_PATHS",
       "UNLEASH_API_URL",
       "UNLEASH_APP_NAME",
-      "UNLEASH_CLIENT_KEY",
+      "UNLEASH_FRONTEND_KEY",
       "UNLEASH_ENVIRONMENT",
       "USER_PREFERENCES",
       "VOLLEY_ENDPOINT",

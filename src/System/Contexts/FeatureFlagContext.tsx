@@ -13,7 +13,7 @@ export const FeatureFlagProvider: React.FC<
 
   const unleashConfig: IConfig = {
     url: `${getENV("UNLEASH_API_URL")}/frontend`,
-    clientKey: getENV("UNLEASH_CLIENT_KEY"),
+    clientKey: getENV("UNLEASH_FRONTEND_KEY"),
     refreshInterval: 30, // How often (in seconds) the client should poll for updates
     appName: getENV("UNLEASH_APP_NAME"),
     environment: getENV("UNLEASH_ENVIRONMENT"),
