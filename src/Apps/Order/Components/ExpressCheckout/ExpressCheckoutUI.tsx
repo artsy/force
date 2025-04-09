@@ -127,7 +127,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         extractAllowedShippingCountries(orderData)
       const shippingRates = [CALCULATING_SHIPPING_RATE]
 
-      updateOrderTotalAndResolve({
+      return updateOrderTotalAndResolve({
         buyerTotalMinor: itemsTotal?.minor,
         resolveDetails: () =>
           resolve({
