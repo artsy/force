@@ -9017,7 +9017,7 @@ type CreatePartnerLocationFailure {
 input CreatePartnerLocationInput {
   address: String
   address2: String
-  addressType: locationType
+  addressType: String
   city: String
   clientMutationId: String
   country: String
@@ -22112,7 +22112,7 @@ type UpdatePartnerLocationFailure {
 input UpdatePartnerLocationInput {
   address: String
   address2: String
-  addressType: partnerLocationType
+  addressType: String
   city: String
   clientMutationId: String
   country: String
@@ -24830,20 +24830,8 @@ type dimensions {
   in: String
 }
 
-enum locationType {
-  BUSINESS
-  OTHER
-  TEMPORARY
-}
-
 type partnerBiographyBlurb {
   text: String
-}
-
-enum partnerLocationType {
-  BUSINESS
-  OTHER
-  TEMPORARY
 }
 
 type purchases {
