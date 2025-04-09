@@ -18,6 +18,7 @@ import type {
 } from "@stripe/stripe-js"
 import { useSetFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSetFulfillmentOptionMutation"
 import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSubmitOrderMutation"
+import { useUnsetOrderFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUnsetOrderFulfillmentOptionMutation"
 import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
 import {
   type OrderMutationSuccess,
@@ -25,6 +26,7 @@ import {
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
+import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import type {
   ExpressCheckoutUI_order$data,
@@ -58,11 +60,14 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const setFulfillmentOptionMutation = useSetFulfillmentOptionMutation()
   const updateOrderMutation = useUpdateOrderMutation()
   const submitOrderMutation = useSubmitOrderMutation()
+  const unsetFulfillmentOptionMutation =
+    useUnsetOrderFulfillmentOptionMutation()
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
   const shippingContext = useShippingContext()
   const errorRef = useRef<string | null>(null)
+  const { router } = useRouter()
 
   if (!(stripe && elements)) {
     return null
@@ -91,38 +96,19 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }
 
   const resetOrder = async () => {
-    // TODO: reset fulfillment type: Not yet supported
-    // const result = await setFulfillmentOptionMutation.submitMutation({
-    //   variables: {
-    //     input: {
-    //       id: orderData.internalID,
-    //       fulfillmentOption: null,
-    //     },
-    //   },
-    // })
-    // validateAndExtractOrderResponse(result.setOrderFulfillmentOption?.orderOrError)
-
-    // reset fulfillment details
-    const fulfillmentDetailsResult = await updateOrderMutation.submitMutation({
-      variables: {
-        input: {
-          id: orderData.internalID,
-          shippingName: null,
-          shippingAddressLine1: null,
-          shippingAddressLine2: null,
-          shippingPostalCode: null,
-          shippingCity: null,
-          shippingRegion: null,
-          shippingCountry: null,
-          buyerPhoneNumber: null,
-          buyerPhoneNumberCountryCode: null,
+    const unsetFulfillmentOptions =
+      await unsetFulfillmentOptionMutation.submitMutation({
+        variables: {
+          input: {
+            id: orderData.internalID,
+          },
         },
-      },
-    })
+      })
 
     const validatedResult = validateAndExtractOrderResponse(
-      fulfillmentDetailsResult.updateOrder?.orderOrError,
+      unsetFulfillmentOptions.unsetOrderFulfillmentOption?.orderOrError,
     )
+
     return validatedResult
   }
 
@@ -150,6 +136,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
             ...checkoutOptions,
             allowedShippingCountries,
             shippingRates,
+            lineItems: [{ name: "Subtotal", amount: itemsTotal?.minor }],
           }),
       })
     } catch (error) {
@@ -171,7 +158,9 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     }
 
     logger.warn("Express checkout element cancelled - resetting")
+
     await resetOrder()
+
     setExpressCheckoutType(null)
   }
 
@@ -352,9 +341,16 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       validateAndExtractOrderResponse(
         submitOrderResult.submitOrder?.orderOrError,
       )
+
+      // Redirect to status page after successful order submission
+      router.push(`/orders/${orderData.internalID}/status`)
     } catch (error) {
+      await resetOrder()
+
       errorRef.current = error.message || "unknown_error"
+
       logger.error("Error confirming payment", error)
+
       shippingContext.actions.dialog.showErrorDialog({
         title: "Payment failed",
       })

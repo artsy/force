@@ -231,7 +231,7 @@ describe("SettingsPurchases", () => {
     })
   })
 
-  fdescribe("Payment Methods", () => {
+  describe("Payment Methods", () => {
     it("renders credit card payment method", () => {
       renderWithRelay({
         CommerceOrder: () => ({
