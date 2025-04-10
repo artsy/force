@@ -45,7 +45,7 @@ import {
   useFormikContext,
 } from "formik"
 import { pick } from "lodash"
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 export interface FulfillmentDetailsFormProps
   extends FulfillmentDetailsFormLayoutProps {
@@ -92,6 +92,7 @@ const FulfillmentDetailsFormLayout = (
     shippingContext.orderData.shippingQuotes.length === 0
   )
 
+  const [shouldSubmit, setShouldSubmit] = useState(false)
   const formikContext = useFormikContext<FulfillmentValues>()
   const {
     values,
@@ -137,11 +138,11 @@ const FulfillmentDetailsFormLayout = (
 
   const serializedValues = JSON.stringify(formikContext.values)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleSelectSavedAddress = useCallback(
-    async (address: SavedAddressType) => {
+    (address: SavedAddressType) => {
       shippingContext.actions.setStage("fulfillment_details")
-      await formikContext.setValues({
+
+      formikContext.setValues({
         ...formikContext.values,
         fulfillmentType: FulfillmentType.SHIP,
         attributes: addressWithFallbackValues(address),
@@ -150,10 +151,19 @@ const FulfillmentDetailsFormLayout = (
         },
       })
 
-      await formikContext.submitForm()
+      // Set the state to indicate the form should be submitted
+      setShouldSubmit(true)
     },
-    [formikContext.setValues, formikContext.submitForm, serializedValues],
+    [formikContext.setValues, serializedValues],
   )
+
+  // Use useEffect to submit the form after values are updated
+  useEffect(() => {
+    if (shouldSubmit) {
+      formikContext.submitForm()
+      setShouldSubmit(false) // Reset the state after submission
+    }
+  }, [formikContext.values, shouldSubmit])
 
   const handleChooseAddressForVerification = async (
     verifiedBy,
