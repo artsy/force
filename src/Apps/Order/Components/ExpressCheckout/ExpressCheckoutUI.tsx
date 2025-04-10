@@ -19,6 +19,7 @@ import type {
 import { useSetFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSetFulfillmentOptionMutation"
 import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSubmitOrderMutation"
 import { useUnsetOrderFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUnsetOrderFulfillmentOptionMutation"
+import { useUnsetOrderPaymentMethodMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUnsetOrderPaymentMethodMutation"
 import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
 import {
   type OrderMutationSuccess,
@@ -62,6 +63,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const submitOrderMutation = useSubmitOrderMutation()
   const unsetFulfillmentOptionMutation =
     useUnsetOrderFulfillmentOptionMutation()
+  const unsetPaymentMethodMutation = useUnsetOrderPaymentMethodMutation()
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
@@ -98,18 +100,19 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const resetOrder = async () => {
     const unsetFulfillmentOptions =
       await unsetFulfillmentOptionMutation.submitMutation({
-        variables: {
-          input: {
-            id: orderData.internalID,
-          },
-        },
+        variables: { input: { id: orderData.internalID } },
       })
 
-    const validatedResult = validateAndExtractOrderResponse(
+    const unsetPaymentMethod = await unsetPaymentMethodMutation.submitMutation({
+      variables: { input: { id: orderData.internalID } },
+    })
+
+    validateAndExtractOrderResponse(
       unsetFulfillmentOptions.unsetOrderFulfillmentOption?.orderOrError,
     )
-
-    return validatedResult
+    validateAndExtractOrderResponse(
+      unsetPaymentMethod.unsetOrderPaymentMethod?.orderOrError,
+    )
   }
 
   const handleOpenExpressCheckout = async ({
