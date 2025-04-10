@@ -5,7 +5,7 @@ import { useDidMount } from "Utils/Hooks/useDidMount"
 import type { DeepZoom_image$data } from "__generated__/DeepZoom_image.graphql"
 import { once } from "lodash"
 import type * as React from "react"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { useRef } from "react"
 import { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -24,10 +24,9 @@ const DeepZoom: React.FC<React.PropsWithChildren<DeepZoomProps>> = ({
   image,
   onClose,
 }) => {
-  const deepZoomRef = useRef<HTMLDivElement | null>(null)
   const osdViewerRef = useRef<any | null>(null)
 
-  const handleZoomChanged = () => {
+  const handleZoomChanged = useCallback(() => {
     if (!osdViewerRef.current) return
 
     const { current: viewer } = osdViewerRef
@@ -38,66 +37,63 @@ const DeepZoom: React.FC<React.PropsWithChildren<DeepZoomProps>> = ({
       max: viewer.viewport.getMaxZoom(),
       value: viewer.viewport.getZoom(),
     }))
-  }
+  }, [])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if (!deepZoomRef.current) return
+  const initializeViewer = useCallback(
+    (element: HTMLDivElement | null) => {
+      if (!element) return
 
-    import(/* webpackChunkName: "openseadragon" */ "openseadragon").then(
-      OpenSeaDragon => {
-        const viewer = OpenSeaDragon.default({
-          element: deepZoomRef.current,
-          debugMode: false,
-          showNavigationControl: false,
-          immediateRender: false,
-          useCanvas: true,
-          constrainDuringPan: false,
-          blendTime: 0.0,
-          animationTime: 1.5,
-          springStiffness: 15.0,
-          maxZoomPixelRatio: 1.0,
-          minZoomImageRatio: 0.9,
-          zoomPerClick: ZOOM_PER_CLICK,
-          zoomPerScroll: 1.4,
-          clickDistThreshold: 5,
-          clickTimeThreshold: 300,
-          visibilityRatio: 1,
-          tileSources: image.deepZoom,
-          gestureSettingsTouch: {
-            scrolltozoom: false,
-            clicktozoom: true,
-            pinchtozoom: true,
-            flickenabled: true,
-            flickminspeed: 20,
-            flickmomentum: 0.4,
-          },
-        })
+      import(/* webpackChunkName: "openseadragon" */ "openseadragon").then(
+        OpenSeaDragon => {
+          const viewer = OpenSeaDragon.default({
+            element: element,
+            debugMode: false,
+            showNavigationControl: false,
+            immediateRender: false,
+            useCanvas: true,
+            constrainDuringPan: false,
+            blendTime: 0.0,
+            animationTime: 1.5,
+            springStiffness: 15.0,
+            maxZoomPixelRatio: 1.0,
+            minZoomImageRatio: 0.9,
+            zoomPerClick: ZOOM_PER_CLICK,
+            zoomPerScroll: 1.4,
+            clickDistThreshold: 5,
+            clickTimeThreshold: 300,
+            visibilityRatio: 1,
+            tileSources: image.deepZoom,
+            gestureSettingsTouch: {
+              scrolltozoom: false,
+              clicktozoom: true,
+              pinchtozoom: true,
+              flickenabled: true,
+              flickminspeed: 20,
+              flickmomentum: 0.4,
+            },
+          })
 
-        osdViewerRef.current = viewer
+          osdViewerRef.current = viewer
 
-        viewer.addHandler?.("zoom", handleZoomChanged)
+          viewer.addHandler?.("zoom", handleZoomChanged)
 
-        viewer.addHandler?.(
-          "tile-drawn",
-          once(() => {
-            setSliderState(prevSliderState => ({
-              ...prevSliderState,
-              loading: false,
-              min: viewer.viewport.getMinZoom(),
-              max: viewer.viewport.getMaxZoom(),
-              value: viewer.viewport.getHomeZoom(),
-            }))
-          }),
-        )
-      },
-    )
-
-    return () => {
-      osdViewerRef.current.destroy()
-      osdViewerRef.current = null
-    }
-  }, [image.deepZoom, deepZoomRef?.current])
+          viewer.addHandler?.(
+            "tile-drawn",
+            once(() => {
+              setSliderState(prevSliderState => ({
+                ...prevSliderState,
+                loading: false,
+                min: viewer.viewport.getMinZoom(),
+                max: viewer.viewport.getMaxZoom(),
+                value: viewer.viewport.getHomeZoom(),
+              }))
+            }),
+          )
+        },
+      )
+    },
+    [image.deepZoom, handleZoomChanged],
+  )
 
   const zoomBy = (amount: number) => {
     if (!osdViewerRef.current) return
@@ -135,10 +131,19 @@ const DeepZoom: React.FC<React.PropsWithChildren<DeepZoomProps>> = ({
 
   const isMounted = useDidMount()
 
+  useEffect(() => {
+    return () => {
+      if (osdViewerRef.current && osdViewerRef.current.destroy) {
+        osdViewerRef.current.destroy()
+        osdViewerRef.current = null
+      }
+    }
+  }, [])
+
   return (
     <ModalBase onClose={onClose} {...detectActivityProps}>
       <Box
-        ref={deepZoomRef as any}
+        ref={initializeViewer}
         width="100vw"
         height="100vh"
         bg="black100"

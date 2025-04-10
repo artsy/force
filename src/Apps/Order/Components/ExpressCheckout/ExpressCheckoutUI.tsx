@@ -26,6 +26,7 @@ import {
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
+import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import type {
@@ -386,6 +387,17 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           onConfirm={onConfirm}
         />
       </Box>
+      <Text variant="xs" color="black60" mt={1} ml={0.5}>
+        <>By clicking Pay, I agree to Artsy’s </>
+        <RouterLink
+          inline
+          to="https://www.artsy.net/terms"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          General Terms and Conditions of Sale.
+        </RouterLink>
+      </Text>
       <Spacer y={4} />
     </UncollapsingBox>
   )
