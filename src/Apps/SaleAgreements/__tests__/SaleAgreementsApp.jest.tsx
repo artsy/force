@@ -12,10 +12,6 @@ jest.mock("Components/MetaTags", () => ({
   MetaTags: () => null,
 }))
 
-jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: jest.fn().mockReturnValue(true),
-}))
-
 describe("SaleAgreementsApp", () => {
   const { renderWithRelay } = setupTestWrapperTL<SaleAgreementsApp_Test_Query>({
     Component: (props: any) => {
