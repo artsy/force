@@ -24,8 +24,9 @@ import {
   type OrderMutationSuccess,
   validateAndExtractOrderResponse,
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { useShowStoredErrorDialog } from "Apps/Order/Components/ExpressCheckout/Util/useShowStoredErrorDialog"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
-import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
+import { preventHardReload } from "Apps/Order/OrderApp"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
@@ -38,7 +39,7 @@ import type {
   useSetFulfillmentOptionMutation$data,
 } from "__generated__/useSetFulfillmentOptionMutation.graphql"
 import type { useUpdateOrderMutation$data } from "__generated__/useUpdateOrderMutation.graphql"
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
 
@@ -66,21 +67,10 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
-  const shippingContext = useShippingContext()
   const errorRef = useRef<string | null>(null)
   const { router } = useRouter()
 
-  useEffect(() => {
-    const storedError = sessionStorage.getItem("expressCheckoutError")
-    if (storedError) {
-      const errorDetails = JSON.parse(storedError)
-
-      setTimeout(() => {
-        shippingContext.actions.dialog.showErrorDialog(errorDetails)
-        sessionStorage.removeItem("expressCheckoutError")
-      }, 1000)
-    }
-  }, [shippingContext.actions.dialog])
+  useShowStoredErrorDialog()
 
   if (!(stripe && elements)) {
     return null
@@ -109,6 +99,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }
 
   const resetOrder = async () => {
+    window.removeEventListener("beforeunload", preventHardReload)
+
     const unsetFulfillmentOptions =
       await unsetFulfillmentOptionMutation.submitMutation({
         variables: {
