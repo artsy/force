@@ -524,14 +524,6 @@ const shippingRateForFulfillmentOption = option => {
   const { type, amount } = option
   switch (type) {
     case "DOMESTIC_FLAT":
-      if (amount) {
-        return {
-          id: type,
-          displayName: "Shipping",
-          amount: amount.minor,
-        }
-      }
-      break
     case "INTERNATIONAL_FLAT":
       if (amount) {
         return {
