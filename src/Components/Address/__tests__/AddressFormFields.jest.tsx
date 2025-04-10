@@ -30,7 +30,7 @@ describe("AddressFormFields", () => {
             address: emptyAddress,
           }}
           validationSchema={Yup.object().shape({
-            ...addressFormFieldsValidator({ withPhoneNumber: false }),
+            ...addressFormFieldsValidator({ withLegacyPhoneInput: false }),
           })}
         >
           {formikBag => (
@@ -46,7 +46,9 @@ describe("AddressFormFields", () => {
     })
 
     it("renders the correct components with label & placeholder copy", () => {
-      expect(hasCorrectAddressFormFields({ withPhoneNumber: false })).toBe(true)
+      expect(hasCorrectAddressFormFields({ withLegacyPhoneInput: false })).toBe(
+        true,
+      )
     })
 
     it("can be filled out with valid values", async () => {
@@ -109,12 +111,12 @@ describe("AddressFormFields", () => {
             phoneNumber: "",
           }}
           validationSchema={Yup.object().shape({
-            ...addressFormFieldsValidator({ withPhoneNumber: true }),
+            ...addressFormFieldsValidator({ withLegacyPhoneInput: true }),
           })}
         >
           {formikBag => (
             <>
-              <AddressFormFields withPhoneNumber />
+              <AddressFormFields withLegacyPhoneInput />
               <Button type="submit" onClick={() => formikBag.handleSubmit()}>
                 Submit
               </Button>
@@ -125,7 +127,9 @@ describe("AddressFormFields", () => {
     })
 
     it("renders the correct components with label & placeholder copy", () => {
-      expect(hasCorrectAddressFormFields({ withPhoneNumber: true })).toBe(true)
+      expect(hasCorrectAddressFormFields({ withLegacyPhoneInput: true })).toBe(
+        true,
+      )
       Object.values(ADDRESS_FORM_INPUTS).forEach(({ label, placeholder }) => {
         const input = screen.getByLabelText(label)
         expect(input).toBeInTheDocument()
