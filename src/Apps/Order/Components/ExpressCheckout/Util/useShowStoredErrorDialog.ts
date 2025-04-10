@@ -2,8 +2,8 @@ import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShipping
 import { useEffect } from "react"
 
 interface ErrorDetails {
-  title: string
-  message: string
+  title?: string
+  message?: string
 }
 
 export const useShowStoredErrorDialog = () => {
@@ -18,10 +18,10 @@ export const useShowStoredErrorDialog = () => {
     if (storedError) {
       const errorDetails: ErrorDetails = JSON.parse(storedError)
 
-      setImmediate(() => {
+      setTimeout(() => {
         shippingContext.actions.dialog.showErrorDialog(errorDetails)
         sessionStorage.removeItem("expressCheckoutError")
-      })
+      }, 2000)
     }
   }, [shippingContext.actions.dialog.showErrorDialog])
 }
