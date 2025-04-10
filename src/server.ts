@@ -18,8 +18,12 @@ import { setupServerRouter } from "System/Router/serverRouter"
 import express from "express"
 import type { NextFunction } from "express"
 import { initializeMiddleware } from "middleware"
+import { getOrInitUnleashServerClient } from "Server/featureFlags/unleashHelpers"
 
 const app = express()
+
+// Initialize unleash server client
+getOrInitUnleashServerClient()
 
 // Mount middleware
 initializeMiddleware(app)

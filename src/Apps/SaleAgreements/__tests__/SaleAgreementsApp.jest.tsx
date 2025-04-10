@@ -12,8 +12,8 @@ jest.mock("Components/MetaTags", () => ({
   MetaTags: () => null,
 }))
 
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: () => true,
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn().mockReturnValue(true),
 }))
 
 describe("SaleAgreementsApp", () => {

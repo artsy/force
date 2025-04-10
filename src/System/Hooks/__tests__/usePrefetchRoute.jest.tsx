@@ -22,9 +22,6 @@ jest.mock("lodash/take", () => jest.fn())
 jest.mock("Utils/device", () => ({
   isDevelopment: true,
 }))
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn().mockReturnValue(true),
-}))
 
 describe("usePrefetchRoute", () => {
   const mockEnvironment = {}

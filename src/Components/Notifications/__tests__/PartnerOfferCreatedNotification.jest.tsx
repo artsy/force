@@ -5,7 +5,6 @@ import type { PartnerOfferCreatedNotification_test_Query } from "__generated__/P
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
-jest.mock("System/Hooks/useFeatureFlag", () => ({ useFeatureFlag: jest.fn() }))
 
 const { renderWithRelay } =
   setupTestWrapperTL<PartnerOfferCreatedNotification_test_Query>({

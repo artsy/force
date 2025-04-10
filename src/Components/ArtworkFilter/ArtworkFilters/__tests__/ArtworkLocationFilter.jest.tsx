@@ -6,12 +6,9 @@ import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useTracking } from "react-tracking"
+import { useFlag } from "@unleash/proxy-client-react"
 
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(),
-}))
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
     contextPageOwnerId: "id",
@@ -95,7 +92,7 @@ describe(ArtworkLocationFilter, () => {
 
     describe("when onyx_enhanced-artwork-location-filtering is enabled", () => {
       beforeEach(() => {
-        ;(useFeatureFlag as jest.Mock).mockImplementation(
+        ;(useFlag as jest.Mock).mockImplementation(
           flag => flag === "onyx_enhanced-artwork-location-filtering",
         )
       })

@@ -5,11 +5,6 @@ import type { ArtworkSidebarPrivateArtworkQuery } from "__generated__/ArtworkSid
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
-jest.mock("System/Hooks/useFeatureFlag", () => {
-  return {
-    useFeatureFlag: jest.fn().mockReturnValue(true),
-  }
-})
 
 describe("ArtworkSidebarPrivateArtwork", () => {
   const { renderWithRelay } =

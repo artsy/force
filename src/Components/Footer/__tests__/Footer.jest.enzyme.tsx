@@ -12,8 +12,6 @@ jest.mock("System/Hooks/useRouter", () => ({
   }),
 }))
 
-jest.mock("System/Hooks/useFeatureFlag")
-
 jest.mock("react-relay", () => ({
   fetchQuery: jest.fn(() => ({
     toPromise: jest.fn().mockResolvedValue(false),

@@ -6,14 +6,9 @@ import {
   type AddressAutocompleteInputProps,
 } from "Components/Address/AddressAutocompleteInput"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import compact from "lodash/compact"
 import { type FC, useState } from "react"
 import { useTracking } from "react-tracking"
-
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(),
-}))
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn().mockImplementation(() => {
@@ -27,6 +22,11 @@ const mockTrackEvent = jest.fn()
 jest.mock("react-tracking")
 
 let mockFetch: jest.Mock
+
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn(flag => flag === "address_autocomplete_us"),
+}))
+
 beforeEach(() => {
   ;(useTracking as jest.Mock).mockImplementation(() => ({
     trackEvent: mockTrackEvent,
@@ -83,36 +83,34 @@ const TestImplementation: FC<React.PropsWithChildren<ImplementationProps>> = ({
 
   return (
     <>
-      {
-        <AddressAutocompleteInput
-          data-testid="autocomplete-input"
-          placeholder="Autocomplete input"
-          address={address}
-          value={address.line1}
-          onChange={mockOnChange.mockImplementation(e => {
-            setAddress({ ...address, line1: e.target.value })
-          })}
-          onClear={mockOnClear.mockImplementation(() => {
-            setAddress({ ...address, line1: "" })
-          })}
-          onSelect={mockOnSelect.mockImplementation(suggestion => {
-            setAddress({
-              ...address,
-              line1: suggestion.address.addressLine1,
-              line2: suggestion.address.addressLine2,
-              city: suggestion.address.city,
-              region: suggestion.address.region,
-              postalCode: suggestion.address.postalCode,
-            })
-          })}
-          trackingValues={{
-            contextModule: ContextModule.ordersShipping,
-            contextOwnerType: OwnerType.ordersShipping,
-            contextPageOwnerId: "1234",
-          }}
-          {...rest}
-        />
-      }
+      <AddressAutocompleteInput
+        data-testid="autocomplete-input"
+        placeholder="Autocomplete input"
+        address={address}
+        value={address.line1}
+        onChange={mockOnChange.mockImplementation(e => {
+          setAddress({ ...address, line1: e.target.value })
+        })}
+        onClear={mockOnClear.mockImplementation(() => {
+          setAddress({ ...address, line1: "" })
+        })}
+        onSelect={mockOnSelect.mockImplementation(suggestion => {
+          setAddress({
+            ...address,
+            line1: suggestion.address.addressLine1,
+            line2: suggestion.address.addressLine2,
+            city: suggestion.address.city,
+            region: suggestion.address.region,
+            postalCode: suggestion.address.postalCode,
+          })
+        })}
+        trackingValues={{
+          contextModule: ContextModule.ordersShipping,
+          contextOwnerType: OwnerType.ordersShipping,
+          contextPageOwnerId: "1234",
+        }}
+        {...rest}
+      />
       <select
         data-testid="AddressForm_country"
         value={address.country}
@@ -141,12 +139,6 @@ const TestImplementation: FC<React.PropsWithChildren<ImplementationProps>> = ({
 
 describe("AddressAutocompleteInput", () => {
   describe("address autocomplete is enabled for US only", () => {
-    beforeEach(() => {
-      ;(useFeatureFlag as jest.Mock).mockImplementation(
-        featureName => featureName === "address_autocomplete_us",
-      )
-    })
-
     it("renders an autocomplete input for a US address", async () => {
       render(<TestImplementation initialAddress={{ country: "US" }} />)
 

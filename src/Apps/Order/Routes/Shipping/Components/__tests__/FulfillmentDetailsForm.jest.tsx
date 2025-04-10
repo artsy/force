@@ -18,13 +18,9 @@ import {
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import type { DeepPartial } from "Utils/typeSupport"
 import { useTracking } from "react-tracking"
-
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(),
-}))
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn().mockImplementation(() => {
@@ -499,6 +495,13 @@ describe("FulfillmentDetailsForm", () => {
 
   describe("Address autocomplete", () => {
     let mockFetch: jest.Mock
+
+    beforeAll(() => {
+      ;(useFlag as jest.Mock).mockImplementation(
+        featureName => featureName === "address_autocomplete_us",
+      )
+    })
+
     beforeEach(() => {
       mockFetch = jest.fn().mockResolvedValue({
         json: jest.fn().mockResolvedValue({
@@ -516,9 +519,10 @@ describe("FulfillmentDetailsForm", () => {
       })
 
       global.fetch = mockFetch
-      ;(useFeatureFlag as jest.Mock).mockImplementation(
-        featureName => featureName === "address_autocomplete_us",
-      )
+    })
+
+    afterEach(() => {
+      jest.clearAllMocks()
     })
 
     it("tries to go back to fulfillment details when the user selects an autocomplete address", async () => {

@@ -1,4 +1,3 @@
-import type { FeatureFlags } from "System/Hooks/useFeatureFlag"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { getENV } from "Utils/getENV"
 import { type Metric, getSupportedMetric } from "Utils/metrics"
@@ -19,7 +18,6 @@ export interface SystemContextState {
 }
 
 export interface SystemContextProps extends SystemContextState {
-  featureFlags?: FeatureFlags
   injectedData?: any
   isEigen?: boolean
   isLoggedIn?: boolean
