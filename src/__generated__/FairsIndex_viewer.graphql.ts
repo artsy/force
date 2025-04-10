@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a08674938c0979190631dcd53d0e918>>
+ * @generated SignedSource<<d8998760e646872354a974d3894ea4b8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,11 +36,6 @@ export type FairsIndex_viewer$data = {
       readonly city: string | null | undefined;
     } | null | undefined;
     readonly name: string | null | undefined;
-    readonly organizer: {
-      readonly profile: {
-        readonly href: string | null | undefined;
-      } | null | undefined;
-    } | null | undefined;
     readonly profile: {
       readonly href: string | null | undefined;
       readonly isPublished: boolean | null | undefined;
@@ -106,13 +101,6 @@ v7 = {
   "args": null,
   "kind": "FragmentSpread",
   "name": "FairsFairRow_fair"
-},
-v8 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
 };
 return {
   "argumentDefinitions": [],
@@ -247,28 +235,11 @@ return {
           "plural": false,
           "selections": [
             (v5/*: any*/),
-            (v8/*: any*/)
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "FairOrganizer",
-          "kind": "LinkedField",
-          "name": "organizer",
-          "plural": false,
-          "selections": [
             {
               "alias": null,
               "args": null,
-              "concreteType": "Profile",
-              "kind": "LinkedField",
-              "name": "profile",
-              "plural": false,
-              "selections": [
-                (v8/*: any*/)
-              ],
+              "kind": "ScalarField",
+              "name": "href",
               "storageKey": null
             }
           ],
@@ -289,6 +260,6 @@ return {
 };
 })();
 
-(node as any).hash = "361d19311c66c34498fe3cf828e9cf15";
+(node as any).hash = "834317967b851680dec33ed421c42c8b";
 
 export default node;

@@ -296,14 +296,6 @@ export const FairsIndex: React.FC<React.PropsWithChildren<FairsIndexProps>> = ({
                   <RouterLink inline to={fair.profile?.href ?? "#"}>
                     {fair.name}
                   </RouterLink>
-                  {/* {fair.organizer?.profile?.href ? (
-                    <RouterLink inline to={fair.organizer.profile.href}>
-                      {fair.name}
-                    </RouterLink>
-                  ) 
-                  : (
-                    fair.name
-                  )} */}
 
                   <Box>{fair.exhibitionPeriod}</Box>
                   {fair.location && <Box>{fair.location.city}</Box>}
@@ -384,11 +376,6 @@ export const FairsIndexFragmentContainer = createFragmentContainer(FairsIndex, {
         profile {
           isPublished
           href
-        }
-        organizer {
-          profile {
-            href
-          }
         }
         ...FairsFairRow_fair
       }
