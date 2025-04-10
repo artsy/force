@@ -1,22 +1,41 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Column, GridColumns, Input } from "@artsy/palette"
+import {
+  AutocompleteInput,
+  type AutocompleteInputOptionType,
+  Column,
+  GridColumns,
+  Input,
+  PhoneInput,
+  Select,
+} from "@artsy/palette"
 import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
 import {
   type Address,
   basicPhoneValidator,
+  richPhoneValidators,
   yupAddressValidator,
 } from "Components/Address/utils"
-import { CountrySelect } from "Components/CountrySelect"
+// import { CountrySelect } from "Components/CountrySelect"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { countries } from "Utils/countries"
 import { useFormikContext } from "formik"
+import { useMemo, useState } from "react"
 
 export interface FormikContextWithAddress {
   address: Address
   phoneNumber?: string
+  phoneNumberCountryCode?: string
 }
 
+type CountryData = (typeof countries)[number]
+
 interface Props {
+  /** Whether to include rich phone number input */
   withPhoneNumber?: boolean
+  /* @deprecated - legacy plain-text phone input */
+  withLegacyPhoneInput?: boolean
+  withCountryAutocomplete?: boolean
+  countries?: typeof countries
 }
 
 /**
@@ -25,7 +44,7 @@ interface Props {
  * @example
  * ```tsx
  * const validationSchema = yup.object().shape({
- *  ...addressFormFieldsValidator({ withPhoneNumber: true }),
+ *  ...addressFormFieldsValidator({ withLegacyPhoneInput: true }),
  *  saveAddress: boolean
  * })
  * // later...
@@ -34,12 +53,13 @@ interface Props {
  *  validationSchema={validationSchema}
  *  {...otherFormikProps}
  * >
- *   <AddressFormFields<AddressFormValues> withPhoneNumber />
+ *   <AddressFormFields<AddressFormValues> withLegacyPhoneInput />
  * ```
  */
 export const addressFormFieldsValidator = (args: Props = {}) => ({
   address: yupAddressValidator,
-  ...(args.withPhoneNumber && { phoneNumber: basicPhoneValidator }),
+  ...(args.withLegacyPhoneInput && basicPhoneValidator),
+  ...(args.withPhoneNumber && richPhoneValidators),
 })
 
 /**
@@ -47,7 +67,7 @@ export const addressFormFieldsValidator = (args: Props = {}) => ({
  * to be used within a Formik form, and the `Values` interface of that form
  * should fulfill a `FormikContextWithAddress` interface:
  * - the relevant nested `address` object
- * - plus a `phoneNumber` if the `withPhoneNumber` prop is passed
+ * - plus a `phoneNumber` if the `withLegacyPhoneInput` prop is passed
  * For a composable validation schema, see `addressFormFieldsValidator()`.
  *
  * @example
@@ -59,7 +79,7 @@ export const addressFormFieldsValidator = (args: Props = {}) => ({
  * }
  *
  * <Formik<MyFormValues> {...otherFormikProps}>
- *  <AddressFormFields<MyFormValues> withPhoneNumber />
+ *  <AddressFormFields<MyFormValues> withLegacyPhoneInput />
  *  <SaveAddressCheckbox />
  *
  */
@@ -77,6 +97,32 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
   } = useFormikContext<V>()
 
   const dataTestIdPrefix = "addressFormFields"
+  const { countries: countryPhoneOptions = countries } = props
+
+  const [countryInputOptions, countryOptionMap] = useMemo(() => {
+    return sortCountriesForCountryInput(countryPhoneOptions)
+  }, [countryPhoneOptions])
+
+  const [hasSetPhoneNumberCountryCode, setHasSetPhoneNumberCountryCode] =
+    useState(false)
+
+  const [autocompleteCountryUserEntry, setAutocompleteCountryUserEntry] =
+    useState<string>(
+      values.address.country ? countryOptionMap[values.address.country] : "",
+    )
+
+  const updateUntouchedCountryCode = (countryCode: string) => {
+    if (props.withPhoneNumber && !hasSetPhoneNumberCountryCode) {
+      console.warn(`Looking for ${countryCode}..`)
+      const selectedCountry = countryPhoneOptions.find(
+        country => country.value === countryCode.toLowerCase(),
+      )
+      console.warn("Selected country", selectedCountry)
+      if (selectedCountry) {
+        setFieldValue("phoneNumberCountryCode", selectedCountry.countryCode)
+      }
+    }
+  }
 
   // Formik types don't understand our specific nested structure
   // so we need to cast these to what we know to be the correct types
@@ -94,6 +140,12 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
     contextOwnerType: contextPageOwnerType,
     contextPageOwnerId: contextPageOwnerId || "",
   }
+
+  const phoneInputType: "legacy" | "rich" | null = props.withLegacyPhoneInput
+    ? "legacy"
+    : props.withPhoneNumber
+      ? "rich"
+      : null
 
   return (
     <GridColumns data-testid={dataTestIdPrefix}>
@@ -115,19 +167,58 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
       </Column>
 
       <Column span={12}>
-        <CountrySelect
-          name="address.country"
-          id="address.country"
-          title="Country"
-          data-testid={`${dataTestIdPrefix}.country`}
-          // TODO: Accept a value prop in Select
-          // @ts-ignore
-          value={values.address.country}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={touchedAddress?.country && errorsAddress?.country}
-          required
-        />
+        {props.withCountryAutocomplete ? (
+          <AutocompleteInput
+            options={countryInputOptions}
+            name="address.country"
+            id="address.country"
+            title="Country"
+            data-testid={`${dataTestIdPrefix}.country`}
+            value={autocompleteCountryUserEntry}
+            onChange={e => {
+              setAutocompleteCountryUserEntry(e.target.value)
+              const matchingInputOption = countryInputOptions.find(
+                country => country.text === e.target.value,
+              )
+              if (matchingInputOption) {
+                setFieldValue(
+                  "address.country",
+                  matchingInputOption.value.toUpperCase(),
+                )
+              }
+            }}
+            onBlur={handleBlur}
+            onSelect={(option: CountryData) => {
+              setAutocompleteCountryUserEntry(option.text)
+              setFieldValue("address.country", option.value.toUpperCase())
+            }}
+            onClear={() => {
+              setAutocompleteCountryUserEntry("")
+              setFieldValue("address.country", "")
+            }}
+            error={touchedAddress?.country && errorsAddress?.country}
+            required
+          />
+        ) : (
+          <Select
+            options={countryInputOptions}
+            name="address.country"
+            id="address.country"
+            title="Country"
+            data-testid={`${dataTestIdPrefix}.country`}
+            // TODO: Accept a value prop in Select
+            // @ts-ignore
+            value={values.address.country}
+            onChange={e => {
+              setFieldValue("address.country", e.target.value)
+
+              updateUntouchedCountryCode(e.target.value)
+            }}
+            onBlur={handleBlur}
+            error={touchedAddress?.country && errorsAddress?.country}
+            required
+          />
+        )}
       </Column>
 
       <Column span={12}>
@@ -231,7 +322,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
         />
       </Column>
 
-      {props.withPhoneNumber && (
+      {phoneInputType === "legacy" && (
         <Column span={12}>
           <Input
             name="phoneNumber"
@@ -252,6 +343,65 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           />
         </Column>
       )}
+      {phoneInputType === "rich" && (
+        <Column span={12}>
+          <PhoneInput
+            name="phoneNumber"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            data-testid={`${dataTestIdPrefix}.phoneNumber`}
+            options={countryPhoneOptions}
+            onSelect={(option: CountryData): void => {
+              setFieldValue("phoneNumberCountryCode", option.countryCode)
+              setHasSetPhoneNumberCountryCode(true)
+            }}
+            dropdownValue={values.phoneNumberCountryCode}
+            inputValue={values.phoneNumber}
+            placeholder="(000) 000 0000"
+            error={
+              (touched.phoneNumberCountryCode &&
+                (errors.phoneNumberCountryCode as string | undefined)) ||
+              (touched.phoneNumber &&
+                (errors.phoneNumber as string | undefined))
+            }
+            required
+          />
+        </Column>
+      )}
     </GridColumns>
   )
+}
+
+/** countries are sorted by phone number code first - sort alphabetically */
+const sortCountriesForCountryInput = (
+  unsorted: typeof countries,
+  firstCode: CountryData["value"] = "us",
+): [
+  AutocompleteInputOptionType[],
+  Record<AutocompleteInputOptionType["value"], string>,
+] => {
+  const sortedCountries = countries.sort((a, b) => {
+    if (a.value === firstCode) {
+      return -1
+    }
+    if (b.value === firstCode) {
+      return 1
+    }
+    return a.name.localeCompare(b.name)
+  })
+  const options = sortedCountries.map(countryData => {
+    return {
+      text: countryData.name,
+      value: countryData.value.toUpperCase(),
+    }
+  })
+  const countryCodeMap: Record<AutocompleteInputOptionType["value"], string> =
+    options.reduce(
+      (acc, country) => {
+        acc[country.value] = country.text
+        return acc
+      },
+      {} as Record<AutocompleteInputOptionType["value"], string>,
+    )
+  return [options, countryCodeMap]
 }
