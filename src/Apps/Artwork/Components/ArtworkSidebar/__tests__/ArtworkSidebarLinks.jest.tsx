@@ -7,7 +7,6 @@ import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")
-jest.mock("System/Hooks/useFeatureFlag")
 
 const mockUseTracking = useTracking as jest.Mock
 const trackEvent = jest.fn()

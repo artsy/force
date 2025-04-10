@@ -42,8 +42,6 @@ jest.mock("Utils/device", () => ({
 
 jest.mock("Components/AuthDialog/Hooks/useCountryCode")
 
-jest.mock("System/Hooks/useFeatureFlag")
-
 describe("AuthDialogSignUp", () => {
   beforeAll(() => {
     ;(useCountryCode as jest.Mock).mockImplementation(() => ({

@@ -25,6 +25,7 @@ import { HeadProvider } from "react-head"
 import { type Environment, RelayEnvironmentProvider } from "react-relay"
 import track from "react-tracking"
 import { StyleSheetManager } from "styled-components"
+import { FeatureFlagProvider } from "System/Contexts/FeatureFlagContext"
 
 export interface BootProps extends React.PropsWithChildren {
   context: ClientContext
@@ -72,25 +73,27 @@ export const Boot: React.FC<
           <SystemContextProvider {...contextProps}>
             <EnvironmentProvider environment={props.relayEnvironment}>
               <ErrorBoundary>
-                <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                  <ToastsProvider>
-                    <StickyProvider>
-                      <AuthIntentProvider>
-                        <AuthDialogProvider>
-                          <DismissibleProvider
-                            userID={props.user?.id}
-                            keys={PROGRESSIVE_ONBOARDING_KEYS}
-                          >
-                            <CookieConsentManager>
-                              <SiftContainer />
-                              {children}
-                            </CookieConsentManager>
-                          </DismissibleProvider>
-                        </AuthDialogProvider>
-                      </AuthIntentProvider>
-                    </StickyProvider>
-                  </ToastsProvider>
-                </MediaContextProvider>
+                <FeatureFlagProvider>
+                  <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
+                    <ToastsProvider>
+                      <StickyProvider>
+                        <AuthIntentProvider>
+                          <AuthDialogProvider>
+                            <DismissibleProvider
+                              userID={props.user?.id}
+                              keys={PROGRESSIVE_ONBOARDING_KEYS}
+                            >
+                              <CookieConsentManager>
+                                <SiftContainer />
+                                {children}
+                              </CookieConsentManager>
+                            </DismissibleProvider>
+                          </AuthDialogProvider>
+                        </AuthIntentProvider>
+                      </StickyProvider>
+                    </ToastsProvider>
+                  </MediaContextProvider>
+                </FeatureFlagProvider>
               </ErrorBoundary>
             </EnvironmentProvider>
           </SystemContextProvider>

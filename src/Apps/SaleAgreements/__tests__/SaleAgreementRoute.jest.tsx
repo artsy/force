@@ -12,10 +12,6 @@ jest.mock("Components/MetaTags", () => ({
   MetaTags: () => null,
 }))
 
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: () => true,
-}))
-
 describe("SaleAgreementsRoute", () => {
   const { renderWithRelay } = setupTestWrapperTL<SaleAgreementRoute_Test_Query>(
     {

@@ -34,6 +34,14 @@ jest.mock("Components/CookieConsentManager/CookieConsentManager", () => ({
   CookieConsentManager: ({ children }) => children,
 }))
 
+jest.mock("System/Contexts/FeatureFlagContext.tsx", () => ({
+  FeatureFlagProvider: ({ children }) => children,
+}))
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn().mockReturnValue(false),
+  useVariant: jest.fn().mockReturnValue({ name: "disabled", enabled: false }),
+}))
+
 jest.mock("routes", () => ({
   getAppRoutes: () => [],
 }))

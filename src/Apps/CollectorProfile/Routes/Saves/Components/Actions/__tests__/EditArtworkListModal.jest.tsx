@@ -4,17 +4,10 @@ import {
   EditArtworkListModal,
 } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/EditArtworkListModal"
 import { render } from "DevTools/renderWithMockBoot"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useTracking } from "react-tracking"
 
 jest.mock("Utils/Hooks/useMutation")
-
-jest.mock("System/Hooks/useFeatureFlag", () => {
-  return {
-    useFeatureFlag: jest.fn(),
-  }
-})
 
 const artworkList: EditArtworkListEntity = {
   internalID: "foobar",
@@ -31,7 +24,6 @@ const setup = () => {
 }
 
 describe("EditArtworkListModal", () => {
-  const mockUseFeatureFlag = useFeatureFlag as jest.Mock
   const mockUseTracking = useTracking as jest.Mock
   const trackEvent = jest.fn()
 
@@ -48,8 +40,6 @@ describe("EditArtworkListModal", () => {
     mockUseTracking.mockImplementation(() => ({
       trackEvent,
     }))
-
-    mockUseFeatureFlag.mockImplementation(() => true)
   })
 
   it("renders the modal content", async () => {

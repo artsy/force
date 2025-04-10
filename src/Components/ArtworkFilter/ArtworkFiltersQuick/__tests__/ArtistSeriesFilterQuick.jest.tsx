@@ -3,10 +3,6 @@ import type { ArtworkFilterContextProps } from "Components/ArtworkFilter/Artwork
 import { createArtworkFilterTestRenderer } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
 import { ArtistSeriesFilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/ArtistSeriesFilterQuick"
 
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(() => true),
-}))
-
 const artworkFilterContext: Partial<ArtworkFilterContextProps> = {
   aggregations: [
     {

@@ -1,9 +1,7 @@
 import { Join, Link, Spacer, Text } from "@artsy/palette"
 import { SaleAgreementsFilter } from "Apps/SaleAgreements/Components/SaleAgreementsFilter"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import type { SaleAgreementsApp_viewer$key } from "__generated__/SaleAgreementsApp_viewer.graphql"
-import { HttpError } from "found"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -14,11 +12,10 @@ interface SaleAgreementsAppProps {
 export const SaleAgreementsApp: FC<
   React.PropsWithChildren<SaleAgreementsAppProps>
 > = ({ viewer }) => {
-  const showSupplementalCosPage = useFeatureFlag("sapphire_supplemental-cos")
   const data = useFragment(saleAgreementsAppFragment, viewer)
 
-  if (!showSupplementalCosPage) {
-    throw new HttpError(404)
+  if (!data) {
+    return null
   }
 
   return (

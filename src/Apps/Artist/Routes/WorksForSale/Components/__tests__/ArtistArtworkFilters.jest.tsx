@@ -39,10 +39,6 @@ const Wrapper: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   )
 }
 
-jest.mock("System/Hooks/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(() => true),
-}))
-
 it("renders all expected filters", () => {
   render(<ArtistArtworkFilters />)
 

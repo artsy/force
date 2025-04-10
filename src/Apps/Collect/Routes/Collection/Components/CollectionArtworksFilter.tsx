@@ -21,7 +21,7 @@ import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { useFeatureFlag } from "System/Hooks/useFeatureFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
@@ -44,10 +44,10 @@ interface CollectionArtworksFilterProps {
 export const CollectionArtworksFilter: React.FC<
   React.PropsWithChildren<CollectionArtworksFilterProps>
 > = props => {
-  const enableShowOnlyFramedArtworksFilter = useFeatureFlag(
+  const enableShowOnlyFramedArtworksFilter = useFlag(
     "onyx_only_framed_artworks_filter",
   )
-  const enableShowOnlySignedArtworksFilter = useFeatureFlag(
+  const enableShowOnlySignedArtworksFilter = useFlag(
     "onyx_only_signed_artworks_filter",
   )
 
