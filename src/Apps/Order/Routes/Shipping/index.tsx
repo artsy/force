@@ -3,6 +3,7 @@ import { Box, Flex, Spacer } from "@artsy/palette"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ExpressCheckoutQueryRenderer } from "Apps/Order/Components/ExpressCheckout"
+import { useShowStoredErrorDialog } from "Apps/Order/Components/ExpressCheckout/Util/useShowStoredErrorDialog"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import {
   buyNowFlowSteps,
@@ -70,6 +71,8 @@ export const ShippingRoute: FC<
 const ShippingRouteLayout: FC<
   React.PropsWithChildren<Omit<ShippingProps, "dialog">>
 > = ({ me, order }) => {
+  useShowStoredErrorDialog()
+
   const shippingContext = useShippingContext()
 
   const { jumpTo } = useJump()

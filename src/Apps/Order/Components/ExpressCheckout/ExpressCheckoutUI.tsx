@@ -24,7 +24,6 @@ import {
   type OrderMutationSuccess,
   validateAndExtractOrderResponse,
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import { useShowStoredErrorDialog } from "Apps/Order/Components/ExpressCheckout/Util/useShowStoredErrorDialog"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { preventHardReload } from "Apps/Order/OrderApp"
 import { RouterLink } from "System/Components/RouterLink"
@@ -69,8 +68,6 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const orderTracking = useOrderTracking()
   const errorRef = useRef<string | null>(null)
   const { router } = useRouter()
-
-  useShowStoredErrorDialog()
 
   if (!(stripe && elements)) {
     return null
