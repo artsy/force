@@ -527,7 +527,7 @@ const shippingRateForFulfillmentOption = option => {
       if (amount) {
         return {
           id: type,
-          displayName: "Domestic shipping",
+          displayName: "Shipping",
           amount: amount.minor,
         }
       }
@@ -536,7 +536,7 @@ const shippingRateForFulfillmentOption = option => {
       if (amount) {
         return {
           id: type,
-          displayName: "International shipping",
+          displayName: "Shipping",
           amount: amount!.minor,
         }
       }
