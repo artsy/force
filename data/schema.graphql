@@ -348,6 +348,9 @@ type Alert {
     color: String
     colors: [String]
     dimensionRange: String
+
+    # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
+    disableNotForSaleSorting: Boolean
     excludeArtworkIDs: [String]
     extraAggregationGeneIDs: [String]
     first: Int
@@ -1748,6 +1751,9 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     color: String
     colors: [String]
     dimensionRange: String
+
+    # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
+    disableNotForSaleSorting: Boolean
     excludeArtworkIDs: [String]
     extraAggregationGeneIDs: [String]
     first: Int
@@ -2186,6 +2192,9 @@ type ArtistPartnerEdge {
     color: String
     colors: [String]
     dimensionRange: String
+
+    # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
+    disableNotForSaleSorting: Boolean
     excludeArtworkIDs: [String]
     extraAggregationGeneIDs: [String]
     first: Int
@@ -2333,6 +2342,9 @@ type ArtistSeries implements Node {
     color: String
     colors: [String]
     dimensionRange: String
+
+    # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
+    disableNotForSaleSorting: Boolean
     excludeArtworkIDs: [String]
     extraAggregationGeneIDs: [String]
     first: Int
@@ -10553,6 +10565,9 @@ interface EntityWithFilterArtworksConnectionInterface {
     color: String
     colors: [String]
     dimensionRange: String
+
+    # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
+    disableNotForSaleSorting: Boolean
     excludeArtworkIDs: [String]
     extraAggregationGeneIDs: [String]
     first: Int
@@ -10812,6 +10827,9 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     color: String
     colors: [String]
     dimensionRange: String
+
+    # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
+    disableNotForSaleSorting: Boolean
     excludeArtworkIDs: [String]
     extraAggregationGeneIDs: [String]
     first: Int
@@ -11334,6 +11352,9 @@ input FilterArtworksInput {
   color: String
   colors: [String]
   dimensionRange: String
+
+  # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
+  disableNotForSaleSorting: Boolean
   excludeArtworkIDs: [String]
   extraAggregationGeneIDs: [String]
   first: Int
@@ -11853,6 +11874,9 @@ type Gene implements Node & Searchable {
     color: String
     colors: [String]
     dimensionRange: String
+
+    # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
+    disableNotForSaleSorting: Boolean
     excludeArtworkIDs: [String]
     extraAggregationGeneIDs: [String]
     first: Int
@@ -13800,6 +13824,9 @@ type MarketingCollection implements Node {
     color: String
     colors: [String]
     dimensionRange: String
+
+    # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
+    disableNotForSaleSorting: Boolean
     excludeArtworkIDs: [String]
     extraAggregationGeneIDs: [String]
     first: Int
@@ -16673,6 +16700,9 @@ type Partner implements Node {
     color: String
     colors: [String]
     dimensionRange: String
+
+    # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
+    disableNotForSaleSorting: Boolean
     excludeArtworkIDs: [String]
     extraAggregationGeneIDs: [String]
     first: Int
@@ -16988,6 +17018,9 @@ type PartnerArtist {
     color: String
     colors: [String]
     dimensionRange: String
+
+    # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
+    disableNotForSaleSorting: Boolean
     excludeArtworkIDs: [String]
     extraAggregationGeneIDs: [String]
     first: Int
@@ -17174,6 +17207,9 @@ type PartnerArtistEdge {
     color: String
     colors: [String]
     dimensionRange: String
+
+    # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
+    disableNotForSaleSorting: Boolean
     excludeArtworkIDs: [String]
     extraAggregationGeneIDs: [String]
     first: Int
@@ -18378,6 +18414,9 @@ type Query {
     color: String
     colors: [String]
     dimensionRange: String
+
+    # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
+    disableNotForSaleSorting: Boolean
     excludeArtworkIDs: [String]
     extraAggregationGeneIDs: [String]
     first: Int
@@ -20933,6 +20972,9 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     color: String
     colors: [String]
     dimensionRange: String
+
+    # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
+    disableNotForSaleSorting: Boolean
     excludeArtworkIDs: [String]
     extraAggregationGeneIDs: [String]
     first: Int
@@ -21475,6 +21517,9 @@ type Tag implements Node {
     color: String
     colors: [String]
     dimensionRange: String
+
+    # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
+    disableNotForSaleSorting: Boolean
     excludeArtworkIDs: [String]
     extraAggregationGeneIDs: [String]
     first: Int
@@ -23804,6 +23849,9 @@ type Viewer {
     color: String
     colors: [String]
     dimensionRange: String
+
+    # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
+    disableNotForSaleSorting: Boolean
     excludeArtworkIDs: [String]
     extraAggregationGeneIDs: [String]
     first: Int
