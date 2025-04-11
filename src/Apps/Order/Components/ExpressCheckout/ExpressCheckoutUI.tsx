@@ -25,7 +25,7 @@ import {
   validateAndExtractOrderResponse,
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
-import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
+import { preventHardReload } from "Apps/Order/OrderApp"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
@@ -66,7 +66,6 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
-  const shippingContext = useShippingContext()
   const errorRef = useRef<string | null>(null)
   const { router } = useRouter()
 
@@ -97,6 +96,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }
 
   const resetOrder = async () => {
+    window.removeEventListener("beforeunload", preventHardReload)
+
     const unsetFulfillmentOptions =
       await unsetFulfillmentOptionMutation.submitMutation({
         variables: {
@@ -109,6 +110,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     const validatedResult = validateAndExtractOrderResponse(
       unsetFulfillmentOptions.unsetOrderFulfillmentOption?.orderOrError,
     )
+
+    window.location.reload()
 
     return validatedResult
   }
@@ -146,6 +149,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }
 
   const handleCancel: HandleCancelCallback = async () => {
+    logger.warn("Express checkout element cancelled - resetting")
+
     if (!errorRef.current) {
       orderTracking.clickedCancelExpressCheckout({
         order: orderData,
@@ -154,15 +159,19 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     }
 
     if (errorRef.current) {
-      shippingContext.actions.dialog.showErrorDialog()
+      sessionStorage.setItem(
+        "expressCheckoutError",
+        JSON.stringify({
+          title: "An error occurred",
+          message: errorRef.current,
+        }),
+      )
+
       errorRef.current = null
     }
 
-    logger.warn("Express checkout element cancelled - resetting")
-
-    await resetOrder()
-
     setExpressCheckoutType(null)
+    resetOrder()
   }
 
   // User selects a shipping address
@@ -346,15 +355,17 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       // Redirect to status page after successful order submission
       router.push(`/orders/${orderData.internalID}/status`)
     } catch (error) {
-      await resetOrder()
-
+      logger.error("Error confirming payment", error)
       errorRef.current = error.message || "unknown_error"
 
-      logger.error("Error confirming payment", error)
+      sessionStorage.setItem(
+        "expressCheckoutError",
+        JSON.stringify({
+          title: "Payment failed",
+        }),
+      )
 
-      shippingContext.actions.dialog.showErrorDialog({
-        title: "Payment failed",
-      })
+      resetOrder()
     }
   }
 
