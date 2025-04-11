@@ -3,6 +3,7 @@ import { useSaveSelectedShippingQuote } from "Apps/Order/Routes/Shipping/Hooks/u
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import { useRouter } from "System/Hooks/useRouter"
 import type { SaveAndContinueButton_order$key } from "__generated__/SaveAndContinueButton_order.graphql"
+import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface SaveAndContinueButtonProps {
@@ -22,6 +23,8 @@ export const SaveAndContinueButton: React.FC<
     order,
   )
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const { router } = useRouter()
 
   const shippingContext = useShippingContext()
@@ -40,17 +43,22 @@ export const SaveAndContinueButton: React.FC<
   }
 
   const onContinueButtonPressed = async () => {
-    //  save and continue - stage", shippingContext.state.stage)
-    if (shippingContext.state.stage === "fulfillment_details") {
-      return shippingContext.state.fulfillmentDetailsFormikContext?.submitForm()
-    }
+    setIsLoading(true)
 
-    if (shippingContext.state.stage === "shipping_quotes") {
-      await saveSelectedShippingQuote()
-    }
-
-    if (shippingContext.state.stage === "fulfillment_details_saved") {
-      router.push(`/orders/${data.internalID}/payment`)
+    try {
+      if (shippingContext.state.stage === "fulfillment_details") {
+        await shippingContext.state.fulfillmentDetailsFormikContext?.submitForm()
+        router.push(`/orders/${data.internalID}/payment`)
+        return
+      } else if (shippingContext.state.stage === "shipping_quotes") {
+        await saveSelectedShippingQuote()
+      } else if (shippingContext.state.stage === "fulfillment_details_saved") {
+        router.push(`/orders/${data.internalID}/payment`)
+      }
+    } catch (error) {
+      console.error("Error during save and continue:", error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -59,7 +67,7 @@ export const SaveAndContinueButton: React.FC<
       type="submit"
       onClick={onContinueButtonPressed}
       disabled={disableSubmit}
-      loading={shippingContext.state.isPerformingOperation || undefined}
+      loading={isLoading}
       variant="primaryBlack"
       width={width}
     >
