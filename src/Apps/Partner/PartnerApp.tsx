@@ -1,4 +1,4 @@
-import { FullBleed, Marquee, Separator } from "@artsy/palette"
+import { FullBleed, Marquee, Separator, Spacer } from "@artsy/palette"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "Apps/Partner/Components/NavigationTabs"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import type { PartnerApp_partner$data } from "__generated__/PartnerApp_partner.graphql"
@@ -66,6 +66,8 @@ export const PartnerApp: React.FC<React.PropsWithChildren<PartnerAppProps>> = ({
         {(displayFullPartnerPage || partnerType === "Brand") && (
           <NavigationTabs partner={partner} />
         )}
+
+        <Spacer y={1} />
 
         {children}
       </PartnerArtistsLoadingContextProvider>
