@@ -100,22 +100,18 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const resetOrder = async () => {
     window.removeEventListener("beforeunload", preventHardReload)
 
-    const unsetFulfillmentOptions =
+    const { unsetOrderPaymentMethod } =
+      await unsetPaymentMethodMutation.submitMutation({
+        variables: { input: { id: orderData.internalID } },
+      })
+
+    const { unsetOrderFulfillmentOption } =
       await unsetFulfillmentOptionMutation.submitMutation({
         variables: { input: { id: orderData.internalID } },
       })
 
-    const unsetPaymentMethod = await unsetPaymentMethodMutation.submitMutation({
-      variables: { input: { id: orderData.internalID } },
-    })
-
-    validateAndExtractOrderResponse(
-      unsetFulfillmentOptions.unsetOrderFulfillmentOption?.orderOrError,
-    )
-
-    validateAndExtractOrderResponse(
-      unsetPaymentMethod.unsetOrderPaymentMethod?.orderOrError,
-    )
+    validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
+    validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
 
     window.location.reload()
   }
