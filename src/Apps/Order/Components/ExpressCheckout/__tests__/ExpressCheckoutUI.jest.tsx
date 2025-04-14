@@ -309,29 +309,29 @@ describe("ExpressCheckoutUI", () => {
 
     fireEvent.click(screen.getByTestId("express-checkout-cancel"))
 
-    const unsetFulfillmentMutation = await mockResolveLastOperation({
-      unsetOrderFulfillmentOptionPayload: () => ({
-        orderOrError: { __typename: "OrderMutationSuccess", order: orderData },
-      }),
-    })
-
     const unsetPaymentMutation = await mockResolveLastOperation({
       unsetOrderPaymentMethodPayload: () => ({
         orderOrError: { __typename: "OrderMutationSuccess", order: orderData },
       }),
     })
 
-    expect(unsetFulfillmentMutation.operationName).toBe(
-      "useUnsetOrderFulfillmentOptionMutation",
-    )
+    const unsetFulfillmentMutation = await mockResolveLastOperation({
+      unsetOrderFulfillmentOptionPayload: () => ({
+        orderOrError: { __typename: "OrderMutationSuccess", order: orderData },
+      }),
+    })
+
     expect(unsetPaymentMutation.operationName).toBe(
       "useUnsetOrderPaymentMethodMutation",
     )
+    expect(unsetFulfillmentMutation.operationName).toBe(
+      "useUnsetOrderFulfillmentOptionMutation",
+    )
 
-    expect(unsetFulfillmentMutation.operationVariables.input).toEqual({
+    expect(unsetPaymentMutation.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
     })
-    expect(unsetPaymentMutation.operationVariables.input).toEqual({
+    expect(unsetFulfillmentMutation.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
     })
 
