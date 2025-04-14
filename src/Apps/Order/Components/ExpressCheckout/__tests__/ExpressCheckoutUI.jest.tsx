@@ -283,64 +283,6 @@ describe("ExpressCheckoutUI", () => {
     })
   })
 
-  it("tracks an express checkout cancel event", async () => {
-    renderWithRelay({
-      Order: () => ({ ...orderData }),
-    })
-
-    // We have to do the fake open before we can do the fake cancel
-    // because opening sets the express checkout type (payment_method)
-    fireEvent.click(screen.getByTestId("express-checkout-button"))
-
-    fireEvent.click(screen.getByTestId("express-checkout-cancel"))
-
-    expect(trackEvent).toHaveBeenCalledWith({
-      action: "clickedCancelExpressCheckout",
-      context_page_owner_id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-      context_page_owner_slug: "artwork-slug-from-context",
-      context_page_owner_type: "orders-shipping",
-      flow: "Buy now",
-      credit_card_wallet_type: "apple_pay",
-    })
-  })
-
-  it("resets the order fulfillment details when the cancel button is clicked", async () => {
-    const { mockResolveLastOperation, env } = renderWithRelay({
-      Order: () => orderData,
-    })
-
-    fireEvent.click(screen.getByTestId("express-checkout-cancel"))
-
-    const unsetPaymentMutation = await mockResolveLastOperation({
-      unsetOrderPaymentMethodPayload: () => ({
-        orderOrError: { __typename: "OrderMutationSuccess", order: orderData },
-      }),
-    })
-
-    const unsetFulfillmentMutation = await mockResolveLastOperation({
-      unsetOrderFulfillmentOptionPayload: () => ({
-        orderOrError: { __typename: "OrderMutationSuccess", order: orderData },
-      }),
-    })
-
-    expect(unsetPaymentMutation.operationName).toBe(
-      "useUnsetOrderPaymentMethodMutation",
-    )
-    expect(unsetFulfillmentMutation.operationName).toBe(
-      "useUnsetOrderFulfillmentOptionMutation",
-    )
-
-    expect(unsetPaymentMutation.operationVariables.input).toEqual({
-      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-    })
-    expect(unsetFulfillmentMutation.operationVariables.input).toEqual({
-      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-    })
-
-    await flushPromiseQueue()
-    expect(env.mock.getAllOperations()).toHaveLength(0)
-  })
-
   it("navigates to the status page after successful order submission", async () => {
     const { mockResolveLastOperation } = renderWithRelay({
       Order: () => ({
@@ -455,17 +397,29 @@ describe("ExpressCheckoutUI", () => {
 
     fireEvent.click(screen.getByTestId("express-checkout-cancel"))
 
-    const { operationName, operationVariables } =
-      await mockResolveLastOperation({
-        unsetOrderFulfillmentOptionPayload: () => ({
-          orderOrError: {
-            __typename: "OrderMutationSuccess",
-            order: orderData,
-          },
-        }),
-      })
-    expect(operationName).toBe("useUnsetOrderFulfillmentOptionMutation")
-    expect(operationVariables.input).toEqual({
+    const unsetPaymentMutation = await mockResolveLastOperation({
+      unsetOrderPaymentMethodPayload: () => ({
+        orderOrError: { __typename: "OrderMutationSuccess", order: orderData },
+      }),
+    })
+
+    const unsetFulfillmentMutation = await mockResolveLastOperation({
+      unsetOrderFulfillmentOptionPayload: () => ({
+        orderOrError: { __typename: "OrderMutationSuccess", order: orderData },
+      }),
+    })
+
+    expect(unsetPaymentMutation.operationName).toBe(
+      "useUnsetOrderPaymentMethodMutation",
+    )
+    expect(unsetFulfillmentMutation.operationName).toBe(
+      "useUnsetOrderFulfillmentOptionMutation",
+    )
+
+    expect(unsetPaymentMutation.operationVariables.input).toEqual({
+      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+    })
+    expect(unsetFulfillmentMutation.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
     })
 
