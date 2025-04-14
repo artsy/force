@@ -10,6 +10,7 @@ import { CookieConsentManager } from "Components/CookieConsentManager/CookieCons
 import { PROGRESSIVE_ONBOARDING_KEYS } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { StickyProvider } from "Components/Sticky"
 import { ErrorBoundary } from "System/Components/ErrorBoundary"
+import { FeatureFlagProvider } from "System/Contexts/FeatureFlagContext"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
 import type { ClientContext } from "System/Router/Utils/clientAppContext"
@@ -20,12 +21,12 @@ import {
   MediaContextProvider,
 } from "Utils/Responsive"
 import { SiftContainer } from "Utils/SiftContainer"
+import { getENV } from "Utils/getENV"
 import { type FC, useEffect } from "react"
 import { HeadProvider } from "react-head"
 import { type Environment, RelayEnvironmentProvider } from "react-relay"
 import track from "react-tracking"
 import { StyleSheetManager } from "styled-components"
-import { FeatureFlagProvider } from "System/Contexts/FeatureFlagContext"
 
 export interface BootProps extends React.PropsWithChildren {
   context: ClientContext
@@ -117,11 +118,22 @@ const EnvironmentProvider: FC<
   )
 }
 
+const validateTheme = (theme: string): "light" | "dark" => {
+  if (theme !== "dark" && theme !== "light") {
+    return "light"
+  }
+
+  return theme
+}
+
 const ThemeProvider: FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const { preferences } = useAppPreferences()
 
+  const themeOverride = getENV("X_THEME_HEADER")
+  const theme = validateTheme(themeOverride ?? preferences.theme)
+
   return (
-    <Theme theme={preferences.theme}>
+    <Theme theme={theme}>
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
         {children}
       </StyleSheetManager>
