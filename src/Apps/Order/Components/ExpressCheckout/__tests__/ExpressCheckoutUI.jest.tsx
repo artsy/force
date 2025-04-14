@@ -5,6 +5,7 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ExpressCheckoutUI_Test_Query } from "__generated__/ExpressCheckoutUI_Test_Query.graphql"
 import { useEffect } from "react"
+import React from "react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ExpressCheckoutUI } from "../ExpressCheckoutUI"
@@ -25,6 +26,7 @@ jest.unmock("react-relay")
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
     contextPageOwnerSlug: "artwork-slug-from-context",
+    contextPageOwnerId: "artwork-id-from-context",
   })),
 }))
 
@@ -377,6 +379,99 @@ describe("ExpressCheckoutUI", () => {
     expect(mockRouterPush).toHaveBeenCalledWith(
       `/orders/${orderData.internalID}/status`,
     )
+  })
+
+  describe("Express checkout is canceled", () => {
+    beforeEach(() => {
+      jest
+        .spyOn(window.sessionStorage.__proto__, "setItem")
+        .mockImplementation(() => {})
+      Object.defineProperty(window, "location", {
+        configurable: true,
+        value: {
+          ...window.location,
+          reload: jest.fn(),
+        },
+      })
+    })
+
+    afterEach(() => {
+      jest.clearAllMocks()
+    })
+
+    it("tracks express checkout cancel event", async () => {
+      renderWithRelay({
+        Order: () => ({ ...orderData }),
+      })
+
+      fireEvent.click(screen.getByTestId("express-checkout-button"))
+
+      fireEvent.click(screen.getByTestId("express-checkout-cancel"))
+
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedCancelExpressCheckout",
+        context_page_owner_id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+        context_page_owner_slug: "artwork-slug-from-context",
+        context_page_owner_type: "orders-shipping",
+        flow: "Buy now",
+        credit_card_wallet_type: "apple_pay",
+      })
+    })
+
+    it("stores error and tracks error message viewed event when there is an error", async () => {
+      const mockErrorRef = { current: "test_error_code" }
+      jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
+
+      renderWithRelay({
+        Order: () => ({ ...orderData }),
+      })
+
+      fireEvent.click(screen.getByTestId("express-checkout-cancel"))
+
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "errorMessageViewed",
+        context_owner_id: "artwork-id-from-context",
+        context_owner_type: "orders-shipping",
+        error_code: "test_error_code",
+        title: "An error occurred",
+        message:
+          "Something went wrong. Please try again or contact orders@artsy.net",
+        flow: "Express checkout",
+      })
+
+      expect(sessionStorage.setItem).toHaveBeenCalledWith(
+        "expressCheckoutError",
+        JSON.stringify({
+          title: "An error occurred",
+        }),
+      )
+    })
+  })
+
+  it("resets the order and reloads the page", async () => {
+    const { mockResolveLastOperation, env } = renderWithRelay({
+      Order: () => orderData,
+    })
+
+    fireEvent.click(screen.getByTestId("express-checkout-cancel"))
+
+    const { operationName, operationVariables } =
+      await mockResolveLastOperation({
+        unsetOrderFulfillmentOptionPayload: () => ({
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: orderData,
+          },
+        }),
+      })
+    expect(operationName).toBe("useUnsetOrderFulfillmentOptionMutation")
+    expect(operationVariables.input).toEqual({
+      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+    })
+
+    await flushPromiseQueue()
+    expect(env.mock.getAllOperations()).toHaveLength(0)
+    expect(window.location.reload).toHaveBeenCalled()
   })
 })
 
