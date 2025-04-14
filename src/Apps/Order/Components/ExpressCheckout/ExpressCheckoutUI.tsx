@@ -159,11 +159,18 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     }
 
     if (errorRef.current) {
+      orderTracking.errorMessageViewed({
+        error_code: errorRef.current,
+        title: "An error occurred",
+        message:
+          "Something went wrong. Please try again or contact orders@artsy.net",
+        flow: "Express checkout",
+      })
+
       sessionStorage.setItem(
         "expressCheckoutError",
         JSON.stringify({
           title: "An error occurred",
-          message: errorRef.current,
         }),
       )
 
@@ -217,7 +224,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           }),
       })
     } catch (error) {
-      errorRef.current = error.message || "unknown_error"
+      errorRef.current = error.code || "unknown_error"
       logger.error("Error updating order", error)
       reject()
       return
@@ -233,8 +240,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     logger.warn("Shipping rate change", shippingRate)
 
     if (shippingRate.id === CALCULATING_SHIPPING_RATE.id) {
-      errorRef.current = "Shipping rate not available yet."
-      logger.warn(
+      errorRef.current = "shipping_options_not_available"
+      logger.error(
         "Shipping options not available yet, skipping setting fulfillment option",
       )
       reject()
@@ -268,7 +275,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           }),
       })
     } catch (error) {
-      errorRef.current = error.message || "unknown_error"
+      errorRef.current = error.code || "unknown_error"
       logger.error("Error updating order", error)
       reject()
     }
@@ -356,7 +363,15 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       router.push(`/orders/${orderData.internalID}/status`)
     } catch (error) {
       logger.error("Error confirming payment", error)
-      errorRef.current = error.message || "unknown_error"
+      errorRef.current = error.code || "unknown_error"
+
+      orderTracking.errorMessageViewed({
+        error_code: errorRef.current,
+        title: "Payment failed",
+        message:
+          "Something went wrong. Please try again or contact orders@artsy.net",
+        flow: "Express checkout",
+      })
 
       sessionStorage.setItem(
         "expressCheckoutError",
