@@ -56,7 +56,9 @@ jest.mock("@artsy/palette", () => {
     ModalDialog: ({ title, children, onClose, footer }) => {
       return (
         <div data-testid="ModalDialog">
-          <button onClick={onClose}>close</button>
+          <button type="button" onClick={onClose}>
+            close
+          </button>
           {title}
           {children}
           {footer}
@@ -79,6 +81,13 @@ jest.mock("Apps/Order/Dialogs", () => ({
     <Component {...props} dialog={{ showErrorDialog: mockShowErrorDialog }} />
   ),
 }))
+
+jest.mock(
+  "Apps/Order/Components/ExpressCheckout/Util/useShowStoredErrorDialog",
+  () => ({
+    useShowStoredErrorDialog: jest.fn(),
+  }),
+)
 
 const order = {
   ...UntouchedBuyOrder,
