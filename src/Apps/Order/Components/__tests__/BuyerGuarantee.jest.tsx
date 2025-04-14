@@ -27,7 +27,7 @@ describe("BuyerGuarantee", () => {
           />,
         )
 
-        userEvent.click(screen.getByText("Artsy’s buyer protection."))
+        userEvent.click(screen.getByText("Artsy’s buyer protection"))
 
         expect(trackEvent).toHaveBeenCalledTimes(1)
         expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
@@ -51,7 +51,7 @@ describe("BuyerGuarantee", () => {
           />,
         )
 
-        userEvent.click(screen.getByText("Artsy’s buyer protection."))
+        userEvent.click(screen.getByText("Artsy’s buyer protection"))
 
         expect(trackEvent).not.toHaveBeenCalled()
       })
