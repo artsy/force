@@ -23,8 +23,8 @@ export const CreditCardDetails = (props: Props) => {
       <BrandCreditCardIcon
         mr={1}
         type={brand as Brand}
-        width="24px"
-        height="24px"
+        width="26px"
+        height="26px"
       />
       <Text
         variant="sm-display"
