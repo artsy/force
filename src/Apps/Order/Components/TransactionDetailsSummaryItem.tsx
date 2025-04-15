@@ -294,8 +294,9 @@ export const TransactionDetailsSummaryItem: FC<
           target="_blank"
           rel="noopener noreferrer"
         >
-          may apply at import.
+          may apply at import
         </RouterLink>
+        .
       </Text>
       {showOfferNote && order.mode === "OFFER" && renderNoteEntry()}
       {showCongratulationMessage && (

@@ -406,8 +406,9 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          General Terms and Conditions of Sale.
+          General Terms and Conditions of Sale
         </RouterLink>
+        .
       </Text>
       <Spacer y={4} />
     </UncollapsingBox>
