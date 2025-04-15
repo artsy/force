@@ -460,8 +460,8 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                   Museums
                 </NavBarItemInstitutionsLink>
                 <NavBarItemLink
-                  href="/feature/how-to-collect-art"
-                  onMouseOver={() => prefetch("/feature/how-to-collect-art")}
+                  href="/feature/how-to-buy-art"
+                  onMouseOver={() => prefetch("/feature/how-to-buy-art")}
                   onClick={handleClick}
                   data-label="Collecting 101"
                 >
