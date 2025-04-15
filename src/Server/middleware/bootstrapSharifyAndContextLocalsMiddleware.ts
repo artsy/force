@@ -17,6 +17,7 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
 
   updateSharifyAndContext(res, "CURRENT_PATH", parse(req.url).pathname)
   updateSharifyAndContext(res, "EIGEN", ua.match("Artsy-Mobile") != null)
+  updateSharifyAndContext(res, "X_THEME_HEADER", req.headers["x-theme"])
 
   // Inject some project-wide sharify data such as the session id, the current
   // path and the xapp token.

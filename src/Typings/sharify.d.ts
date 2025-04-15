@@ -57,6 +57,8 @@ declare module "sharify" {
       FAIR?: any // mobile fair app data
       GEMINI_CLOUDFRONT_URL: string
       GOOGLE_ADWORDS_ID: string
+      GRAPHQL_CACHE_SIZE: string
+      GRAPHQL_CACHE_TTL: string
       GRAVITY_WEBSOCKET_URL: string
       IP_ADDRESS: string
       IS_GOOGLEBOT: boolean
@@ -74,24 +76,22 @@ declare module "sharify" {
       PROFILE?: any // mobile partner app data
       PUBLIC_GOOGLE_MAPS_API_KEY: string
       RECAPTCHA_KEY: string
-      GRAPHQL_CACHE_SIZE: string
-      GRAPHQL_CACHE_TTL: string
       REQUEST_ID?: string
       RESET_PASSWORD_REDIRECT_TO: string
       RESET_PASSWORD_TOKEN: string
       SALESFORCE_MESSAGE_ENABLED: boolean
+      SALESFORCE_MESSAGE_INSTANCE_URL: string
       SALESFORCE_MESSAGE_ORG_ID: string
       SALESFORCE_MESSAGE_SCRT2_URL: string
       SALESFORCE_MESSAGE_SERVICE_NAME: string
-      SALESFORCE_MESSAGE_INSTANCE_URL: string
       SECTION?: { slug?: string } // FIXME: used only for /venice-biennale-2015
       SEGMENT_WRITE_KEY: string
       SENTRY_PUBLIC_DSN: string
       SESSION_ID?: string
       SET_PASSWORD: string
       SHOW_ANALYTICS_CALLS: boolean
-      SMARTY_EMBEDDED_KEY_JSON: { key: string }
       SIFT_BEACON_KEY: string
+      SMARTY_EMBEDDED_KEY_JSON: { key: string }
       STRIPE_PUBLISHABLE_KEY: string
       SUBMISSION_ARTIST_NAME: string
       SUBMISSION_ID: string
@@ -101,14 +101,15 @@ declare module "sharify" {
       TOOLS_URL: string
       TRACK_PAGELOAD_PATHS: string
       UNLEASH_API_URL: string
-      UNLEASH_ENVIRONMENT: string
       UNLEASH_APP_NAME: string
+      UNLEASH_ENVIRONMENT: string
       UNLEASH_FRONTEND_KEY: string
       UNLEASH_SERVER_KEY: string
       USER_AGENT: string
       USER_PREFERENCES: any
       VOLLEY_ENDPOINT: string
       WEBFONT_URL: string
+      X_THEME_HEADER?: string
       XAPP_TOKEN: string
 
       // FORCE Tokens
