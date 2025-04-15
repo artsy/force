@@ -19,6 +19,7 @@ import type {
 import { useSetFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSetFulfillmentOptionMutation"
 import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSubmitOrderMutation"
 import { useUnsetOrderFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUnsetOrderFulfillmentOptionMutation"
+import { useUnsetOrderPaymentMethodMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUnsetOrderPaymentMethodMutation"
 import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
 import {
   type OrderMutationSuccess,
@@ -63,6 +64,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const submitOrderMutation = useSubmitOrderMutation()
   const unsetFulfillmentOptionMutation =
     useUnsetOrderFulfillmentOptionMutation()
+  const unsetPaymentMethodMutation = useUnsetOrderPaymentMethodMutation()
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
@@ -98,22 +100,20 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const resetOrder = async () => {
     window.removeEventListener("beforeunload", preventHardReload)
 
-    const unsetFulfillmentOptions =
-      await unsetFulfillmentOptionMutation.submitMutation({
-        variables: {
-          input: {
-            id: orderData.internalID,
-          },
-        },
+    const { unsetOrderPaymentMethod } =
+      await unsetPaymentMethodMutation.submitMutation({
+        variables: { input: { id: orderData.internalID } },
       })
 
-    const validatedResult = validateAndExtractOrderResponse(
-      unsetFulfillmentOptions.unsetOrderFulfillmentOption?.orderOrError,
-    )
+    const { unsetOrderFulfillmentOption } =
+      await unsetFulfillmentOptionMutation.submitMutation({
+        variables: { input: { id: orderData.internalID } },
+      })
+
+    validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
+    validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
 
     window.location.reload()
-
-    return validatedResult
   }
 
   const handleOpenExpressCheckout = async ({
@@ -406,8 +406,9 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          General Terms and Conditions of Sale.
+          General Terms and Conditions of Sale
         </RouterLink>
+        .
       </Text>
       <Spacer y={4} />
     </UncollapsingBox>

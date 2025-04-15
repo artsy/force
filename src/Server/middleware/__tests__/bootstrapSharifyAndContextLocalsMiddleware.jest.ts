@@ -12,6 +12,9 @@ describe("locals middleware", () => {
       session: {},
       url: "localhost:3000",
       query: {},
+      headers: {
+        "x-theme": "dark",
+      },
     }
     res = { locals: { sd: {}, asset: () => {} } }
   })
