@@ -4460,15 +4460,26 @@ type BidderPositionSuggestedNextBid {
 # exceed the size of a 32-bit integer, it's encoded as a string.
 scalar BigInt
 
+input BulkUpdateArtworksFilterInput {
+  # Filter artworks with matching ids
+  artworkIds: [String]
+
+  # Filter artworks by location
+  locationId: String
+
+  # Filter artworks by partner artist id
+  partnerArtistId: String
+}
+
 input BulkUpdateArtworksMetadataInput {
   # The category (medium type) to be assigned
   category: String
 
   # The partner location ID to assign
-  location_id: String
+  locationId: String
 
   # The price for the artworks
-  price_listed: Float
+  priceListed: Float
 }
 
 type BulkUpdateArtworksMetadataMutationFailure {
@@ -4477,6 +4488,9 @@ type BulkUpdateArtworksMetadataMutationFailure {
 
 input BulkUpdateArtworksMetadataMutationInput {
   clientMutationId: String
+
+  # Filter options to apply
+  filters: BulkUpdateArtworksFilterInput
 
   # ID of the partner
   id: String!
@@ -15787,6 +15801,11 @@ type Mutation {
     input: UpdatePartnerContactInput!
   ): UpdatePartnerContactPayload
 
+  # Updates multiple flags on a partner simultaneously.
+  updatePartnerFlags(
+    input: UpdatePartnerFlagsMutationInput!
+  ): UpdatePartnerFlagsMutationPayload
+
   # Updates a new location for a partner
   updatePartnerLocation(
     input: UpdatePartnerLocationInput!
@@ -22656,6 +22675,43 @@ type UpdatePartnerContactPayload {
 
 type UpdatePartnerContactSuccess {
   partnerContact: Contact
+}
+
+type UpdatePartnerFlagsFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdatePartnerFlagsMutationInput {
+  # The default currency to use for artworks. If null, the flag will be unset.
+  artworksDefaultCurrency: String
+
+  # The default metric system to use for artworks. If null, the flag will be unset.
+  artworksDefaultMetric: String
+
+  # The default partner location ID to use for artworks. If null, the flag will be unset.
+  artworksDefaultPartnerLocationId: String
+  clientMutationId: String
+
+  # The id of the partner to update.
+  id: String!
+
+  # Controls whether the partner has enabled the inquire availability price display. If null, the flag will be unset.
+  inquireAvailabilityPriceDisplayEnabledByPartner: Boolean
+}
+
+type UpdatePartnerFlagsMutationPayload {
+  clientMutationId: String
+
+  # On success: the updated partner. On error: the error that occurred.
+  partnerOrError: UpdatePartnerFlagsResponseOrError
+}
+
+union UpdatePartnerFlagsResponseOrError =
+  | UpdatePartnerFlagsFailure
+  | UpdatePartnerFlagsSuccess
+
+type UpdatePartnerFlagsSuccess {
+  partner: Partner
 }
 
 type UpdatePartnerLocationFailure {
