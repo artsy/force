@@ -1,8 +1,8 @@
-import { useFlag } from "@unleash/proxy-client-react"
+import { ApplePay_order$key } from "__generated__/ApplePay_order.graphql"
 import { ExpressCheckoutQueryRenderer } from "Apps/Order/Components/ExpressCheckout"
-import { extractNodes } from "Utils/extractNodes"
-import type { ApplePay_order$key } from "__generated__/ApplePay_order.graphql"
 import { graphql, useFragment } from "react-relay"
+import { useFlag } from "@unleash/proxy-client-react"
+import { extractNodes } from "Utils/extractNodes"
 
 interface ApplePayProps {
   order: ApplePay_order$key
