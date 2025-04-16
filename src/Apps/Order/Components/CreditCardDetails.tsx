@@ -23,14 +23,10 @@ export const CreditCardDetails = (props: Props) => {
       <BrandCreditCardIcon
         mr={1}
         type={brand as Brand}
-        width="24px"
-        height="24px"
+        width="26px"
+        height="26px"
       />
-      <Text
-        variant="sm-display"
-        color={textColor}
-        style={{ position: "relative", top: "1px" }}
-      >
+      <Text variant="sm-display" color={textColor}>
         •••• {lastDigits}
         &nbsp;&nbsp; Exp {expirationMonth.toString().padStart(2, "0")}/
         {expirationYear.toString().slice(-2)}
