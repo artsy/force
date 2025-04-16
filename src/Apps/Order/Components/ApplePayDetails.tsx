@@ -12,11 +12,7 @@ export const ApplePayDetails = (props: Props) => {
     <Flex alignItems="center">
       <ApplePayMarkIcon mr={1} width="26px" height="26px" />
 
-      <Text
-        variant="sm-display"
-        color={textColor}
-        style={{ position: "relative", top: "1px" }}
-      >
+      <Text variant="sm-display" color={textColor}>
         Apple Pay
       </Text>
     </Flex>
