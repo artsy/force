@@ -74,6 +74,13 @@ const StatusRoute = loadable(
   },
 )
 
+const DetailsRoute = loadable(
+  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Details"),
+  {
+    resolveComponent: component => component.DetailsFragmentContainer,
+  },
+)
+
 const OrderApp = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./OrderApp"),
   {
@@ -311,6 +318,18 @@ export const orderRoutes: RouteProps[] = [
         cacheConfig: {
           force: true,
         },
+      },
+      {
+        path: "details",
+        Component: DetailsRoute,
+        layout: "LogoOnly",
+        query: graphql`
+          query orderRoutes_DetailsQuery($orderID: ID!) {
+            order: commerceOrder(id: $orderID) {
+              ...Details_order
+            }
+          }
+        `,
       },
       new Redirect({
         // For now, redirect the empty route to the shipping page
