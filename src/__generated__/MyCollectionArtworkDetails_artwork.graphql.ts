@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<023bbfaef359e2660d25f408f7406cc4>>
+ * @generated SignedSource<<27be4ff3133c3df71431ab24df2ea746>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkDetails_artwork$data = {
+  readonly additionalInformation: string | null | undefined;
   readonly attributionClass: {
     readonly shortDescription: string | null | undefined;
   } | null | undefined;
@@ -26,6 +27,7 @@ export type MyCollectionArtworkDetails_artwork$data = {
     readonly in: string | null | undefined;
   } | null | undefined;
   readonly editionOf: string | null | undefined;
+  readonly exhibitionHistory: string | null | undefined;
   readonly medium: string | null | undefined;
   readonly mediumType: {
     readonly name: string | null | undefined;
@@ -64,6 +66,20 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "additionalInformation",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "exhibitionHistory",
       "storageKey": null
     },
     {
@@ -206,6 +222,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d655b4416fe006e93f793b962751ae47";
+(node as any).hash = "278358ef577e9672f427d512bb3dd3a0";
 
 export default node;

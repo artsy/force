@@ -11,12 +11,14 @@ export const MyCollectionArtworkDetails: React.FC<
   React.PropsWithChildren<MyCollectionArtworkDetailsProps>
 > = props => {
   const {
+    additionalInformation,
     attributionClass,
     mediumType,
     collectorLocation,
     confidentialNotes,
     dimensions,
     editionOf,
+    exhibitionHistory,
     medium,
     metric,
     pricePaid,
@@ -46,6 +48,18 @@ export const MyCollectionArtworkDetails: React.FC<
         label="Price Paid"
         value={pricePaid?.display}
       />
+      {exhibitionHistory && (
+        <MyCollectionArtworkDetailField
+          label="Exhibition History"
+          value={exhibitionHistory}
+        />
+      )}
+      {additionalInformation && (
+        <MyCollectionArtworkDetailField
+          label="Additional Information"
+          value={additionalInformation}
+        />
+      )}
       {confidentialNotes ? (
         <MyCollectionArtworkDetailField
           label="Notes"
@@ -62,6 +76,8 @@ const FRAGMENT = graphql`
     mediumType {
       name
     }
+    additionalInformation
+    exhibitionHistory
     confidentialNotes
     medium
     metric

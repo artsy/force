@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<89cbe5df53f6771bc6ac2be104818992>>
+ * @generated SignedSource<<15d7e03cccf9885f4be5f23fb3d8440e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,15 +38,15 @@ v1 = {
 },
 v2 = {
   "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
-v3 = {
-  "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -105,6 +105,20 @@ return {
                 "storageKey": null
               }
             ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "additionalInformation",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "exhibitionHistory",
             "storageKey": null
           },
           {
@@ -251,7 +265,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3fad4e3d6d387285592a3b3d0eb6443c",
+    "cacheID": "e414234864bf741aaddb986c936347fd",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -261,58 +275,60 @@ return {
           "plural": false,
           "type": "Artwork"
         },
+        "artwork.additionalInformation": (v2/*: any*/),
         "artwork.attributionClass": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AttributionClass"
         },
-        "artwork.attributionClass.id": (v2/*: any*/),
-        "artwork.attributionClass.shortDescription": (v3/*: any*/),
+        "artwork.attributionClass.id": (v3/*: any*/),
+        "artwork.attributionClass.shortDescription": (v2/*: any*/),
         "artwork.collectorLocation": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "MyLocation"
         },
-        "artwork.collectorLocation.city": (v3/*: any*/),
-        "artwork.collectorLocation.country": (v3/*: any*/),
-        "artwork.collectorLocation.countryCode": (v3/*: any*/),
-        "artwork.collectorLocation.id": (v2/*: any*/),
-        "artwork.collectorLocation.state": (v3/*: any*/),
-        "artwork.confidentialNotes": (v3/*: any*/),
+        "artwork.collectorLocation.city": (v2/*: any*/),
+        "artwork.collectorLocation.country": (v2/*: any*/),
+        "artwork.collectorLocation.countryCode": (v2/*: any*/),
+        "artwork.collectorLocation.id": (v3/*: any*/),
+        "artwork.collectorLocation.state": (v2/*: any*/),
+        "artwork.confidentialNotes": (v2/*: any*/),
         "artwork.dimensions": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "dimensions"
         },
-        "artwork.dimensions.cm": (v3/*: any*/),
-        "artwork.dimensions.in": (v3/*: any*/),
-        "artwork.editionOf": (v3/*: any*/),
-        "artwork.id": (v2/*: any*/),
-        "artwork.medium": (v3/*: any*/),
+        "artwork.dimensions.cm": (v2/*: any*/),
+        "artwork.dimensions.in": (v2/*: any*/),
+        "artwork.editionOf": (v2/*: any*/),
+        "artwork.exhibitionHistory": (v2/*: any*/),
+        "artwork.id": (v3/*: any*/),
+        "artwork.medium": (v2/*: any*/),
         "artwork.mediumType": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkMedium"
         },
-        "artwork.mediumType.name": (v3/*: any*/),
-        "artwork.metric": (v3/*: any*/),
+        "artwork.mediumType.name": (v2/*: any*/),
+        "artwork.metric": (v2/*: any*/),
         "artwork.pricePaid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Money"
         },
-        "artwork.pricePaid.display": (v3/*: any*/),
-        "artwork.provenance": (v3/*: any*/)
+        "artwork.pricePaid.display": (v2/*: any*/),
+        "artwork.provenance": (v2/*: any*/)
       }
     },
     "name": "MyCollectionArtworkDetailsTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkDetailsTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkDetails_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkDetails_artwork on Artwork {\n  mediumType {\n    name\n  }\n  confidentialNotes\n  medium\n  metric\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  editionOf\n  pricePaid {\n    display\n  }\n  collectorLocation {\n    city\n    state\n    country\n    countryCode\n    id\n  }\n}\n"
+    "text": "query MyCollectionArtworkDetailsTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkDetails_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkDetails_artwork on Artwork {\n  mediumType {\n    name\n  }\n  additionalInformation\n  exhibitionHistory\n  confidentialNotes\n  medium\n  metric\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  editionOf\n  pricePaid {\n    display\n  }\n  collectorLocation {\n    city\n    state\n    country\n    countryCode\n    id\n  }\n}\n"
   }
 };
 })();
