@@ -11,6 +11,10 @@ interface DetailsProps {
 
 const Details: React.FC<DetailsProps> = ({ order }) => {
   const isOrderDetailsFlagEnabled = useFlag("emerald_order-details-page")
+  // TODO: this is not great as it loads with flag false for couple of times
+  // before loading with true 2 times
+  // console.log("!!!!!!!!!!!!!!!!!!", isOrderDetailsFlagEnabled)
+
   if (!isOrderDetailsFlagEnabled) return <ErrorPage code={404} />
 
   return <OrderDetails orderId={order.internalID} />
