@@ -33,13 +33,13 @@ export const ErrorPage: React.FC<React.PropsWithChildren<ErrorPageProps>> = ({
         <Column span={6} wrap>
           <Text variant="xl">{headline}</Text>
 
-          <Text variant="xl" color="black60">
+          <Text variant="xl" color="mono60">
             {code}
           </Text>
 
           <Spacer y={2} />
 
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             Please contact{" "}
             <RouterLink inline to="mailto:support@artsy.net">
               support@artsy.net
@@ -48,7 +48,7 @@ export const ErrorPage: React.FC<React.PropsWithChildren<ErrorPageProps>> = ({
           </Text>
 
           {children ?? (
-            <Text variant="sm-display" color="black60">
+            <Text variant="sm-display" color="mono60">
               <RouterLink to="/">Go to Artsy Homepage</RouterLink>
             </Text>
           )}
@@ -62,9 +62,7 @@ export const ErrorPage: React.FC<React.PropsWithChildren<ErrorPageProps>> = ({
             <Spacer y={4} />
 
             {message && (
-              <Message color={detail ? "black100" : "black60"}>
-                {message}
-              </Message>
+              <Message color={detail ? "mono100" : "mono60"}>{message}</Message>
             )}
 
             {detail && (
@@ -90,7 +88,7 @@ const Code = styled(Box)`
 
 const Message = styled(Code).attrs({
   border: "1px solid",
-  borderColor: "black10",
+  borderColor: "mono10",
   px: 1,
   py: 0.5,
   mx: -1,
@@ -98,7 +96,7 @@ const Message = styled(Code).attrs({
 
 const Detail = styled(Code).attrs({
   border: "1px solid",
-  borderColor: "black10",
+  borderColor: "mono10",
   px: 1,
   py: 0.5,
   mx: -1,

@@ -10,7 +10,7 @@ const navBarMenuItemMixin = css`
   text-decoration: none;
 
   &:hover {
-    background-color: ${themeGet("colors.black5")};
+    background-color: ${themeGet("colors.mono5")};
   }
 `
 

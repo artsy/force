@@ -187,7 +187,7 @@ export const MyCollectionArtworkFormImages: React.FC<
         pb={[4]}
         mb={[4]}
         border="1px solid"
-        borderColor="black10"
+        borderColor="mono10"
         onReject={handleReject}
       />
 

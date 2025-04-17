@@ -34,7 +34,7 @@ export const NotificationTypeLabel: React.FC<
       {!!notificationTypeLabel && (
         <Text
           variant="xs"
-          color="black100"
+          color="mono100"
           fontWeight="bold"
           aria-label={`Notification type: ${notificationTypeLabel}`}
         >

@@ -163,7 +163,7 @@ const utilButtonMixin = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${themeGet("colors.black100")};
+  color: ${themeGet("colors.mono100")};
 
   &:hover,
   &:hover ${VisibleText} {

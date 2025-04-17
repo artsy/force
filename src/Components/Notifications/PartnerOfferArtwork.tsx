@@ -90,7 +90,7 @@ export const PartnerOfferArtwork: FC<
               height="100%"
               style={{
                 objectFit: "contain",
-                backgroundColor: theme.colors.white100,
+                backgroundColor: theme.colors.mono0,
               }}
               lazyLoad
               alt=""
@@ -108,7 +108,7 @@ export const PartnerOfferArtwork: FC<
         />
 
         {fullyAvailable && (
-          <Text variant="xs" color="black60" overflowEllipsis>
+          <Text variant="xs" color="mono60" overflowEllipsis>
             (List price: {priceListed})
           </Text>
         )}
@@ -157,7 +157,7 @@ export const PartnerOfferArtwork: FC<
       </Box>
       {note && (
         <Box
-          backgroundColor={"black5"}
+          backgroundColor={"mono5"}
           padding={2}
           width="100%"
           maxWidth={CARD_MAX_WIDTH}
@@ -172,16 +172,16 @@ export const PartnerOfferArtwork: FC<
                 width={30}
                 height={30}
                 style={{
-                  border: `1px solid ${theme.colors.black30}`,
+                  border: `1px solid ${theme.colors.mono30}`,
                 }}
               />
             </Box>
           )}
           <Box flex={1}>
-            <Text variant="sm" color="black100" fontWeight={"bold"}>
+            <Text variant="sm" color="mono100" fontWeight={"bold"}>
               Note from the gallery
             </Text>
-            <Text variant="sm" color="black100">
+            <Text variant="sm" color="mono100">
               "{note}"
             </Text>
           </Box>

@@ -26,7 +26,7 @@ const PanelOne = () => {
   return (
     <Box
       border="1px dotted"
-      borderColor="black60"
+      borderColor="mono60"
       p={1}
       width={300}
       height={200}
@@ -62,7 +62,7 @@ const PanelTwo = () => {
   return (
     <Box
       border="1px dotted"
-      borderColor="black60"
+      borderColor="mono60"
       p={1}
       width={400}
       height={300}
@@ -97,7 +97,7 @@ const PanelThree = () => {
   return (
     <Box
       border="1px dotted"
-      borderColor="black60"
+      borderColor="mono60"
       p={1}
       width={500}
       height={400}

@@ -10,11 +10,11 @@ export const ArtworkListNoImage: FC<
 > = props => {
   return (
     <ArtworkListImageBorder
-      bg="black5"
+      bg="mono5"
       aria-label="Image placeholder"
       {...props}
     >
-      <NoArtIcon width={NO_ICON_SIZE} height={NO_ICON_SIZE} fill="black60" />
+      <NoArtIcon width={NO_ICON_SIZE} height={NO_ICON_SIZE} fill="mono60" />
     </ArtworkListImageBorder>
   )
 }

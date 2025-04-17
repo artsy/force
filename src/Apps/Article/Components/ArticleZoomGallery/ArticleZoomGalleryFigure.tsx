@@ -82,7 +82,7 @@ const ArticleZoomGalleryFigure: FC<
     return (
       <FullscreenBox
         position="relative"
-        bg="black10"
+        bg="mono10"
         aspectWidth={figure.image?.width || 1}
         aspectHeight={figure.image?.height || 1}
       >

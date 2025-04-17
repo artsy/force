@@ -153,7 +153,7 @@ export const CookieConsentManagerDialog: FC<
                     </Flex>
                   }
                 >
-                  <Text variant="sm" color="black60">
+                  <Text variant="sm" color="mono60">
                     {description}
                   </Text>
 
@@ -161,7 +161,7 @@ export const CookieConsentManagerDialog: FC<
                     <>
                       <Spacer y={1} />
 
-                      <Text variant="xs" color="black60">
+                      <Text variant="xs" color="mono60">
                         Example:{" "}
                         {categoryDestinations
                           .map(destination => destination.name)

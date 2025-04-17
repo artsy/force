@@ -121,7 +121,7 @@ const EventList: React.FC<
               <Text as="h3" variant="lg">
                 {eventHeading}
               </Text>
-              <Text color="black60" mb="1">
+              <Text color="mono60" mb="1">
                 {event.dateTimeRange}
               </Text>
               <Text>{event.description}</Text>

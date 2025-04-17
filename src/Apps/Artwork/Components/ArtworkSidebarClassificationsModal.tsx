@@ -70,7 +70,7 @@ const ArtworkSidebarClassificationsModal: React.FC<
           : ARTWORK_CLASSIFICATIONS_PLACEHOLDER}
 
         {showDisclaimer && (
-          <Text variant="xs" color="black60">
+          <Text variant="xs" color="mono60">
             Our partners are responsible for providing accurate classification
             information for all works.
           </Text>

@@ -46,7 +46,7 @@ export const DebugAuthRoute: FC<React.PropsWithChildren<unknown>> = () => {
           Open AuthDialog with options
         </Button>
 
-        <Text as="pre" variant="xs" bg="black5" py={0.5} px={1}>
+        <Text as="pre" variant="xs" bg="mono5" py={0.5} px={1}>
           {JSON.stringify(state, null, 2)}
         </Text>
 

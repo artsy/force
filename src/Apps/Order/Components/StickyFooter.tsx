@@ -51,7 +51,7 @@ export const StickyFooter: FC<React.PropsWithChildren<StickyFooterProps>> = ({
     <>
       {inquiryComponent}
       <FooterContainer>
-        <Text variant="xs" color="black60">
+        <Text variant="xs" color="mono60">
           Need help?{" "}
           {orderSource === "private_sale" ? (
             <>
@@ -96,12 +96,12 @@ export const StickyFooterWithInquiry = withInquiry(StickyFooter)
 
 const FooterContainer = styled(Flex)`
   height: calc(46px + env(safe-area-inset-bottom));
-  background-color: ${themeGet("colors.white100")};
+  background-color: ${themeGet("colors.mono0")};
   bottom: 0;
   left: 0;
   position: fixed;
   width: 100%;
-  border-top: 1px solid ${themeGet("colors.black10")};
+  border-top: 1px solid ${themeGet("colors.mono10")};
   align-items: center;
   justify-content: center;
   padding-bottom: env(safe-area-inset-bottom);

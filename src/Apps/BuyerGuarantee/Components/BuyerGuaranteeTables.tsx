@@ -65,7 +65,7 @@ export const BuyerGuaranteeTableDesktop: FC<
         <Td span={2}></Td>
       </Row>
 
-      <Row bg="white100">
+      <Row bg="mono0">
         <Td span={2}>
           <Text variant="sm-display" fontWeight="bold">
             Purchasing with Artsy’s Secure Checkout
@@ -110,7 +110,7 @@ export const BuyerGuaranteeTableMobile: FC<
           </Text>
         </Td>
 
-        <Td span={[4]} bg="white100">
+        <Td span={[4]} bg="mono0">
           <Text variant="sm-display" fontWeight="bold">
             Purchasing with Artsy’s Secure Checkout
           </Text>
@@ -128,7 +128,7 @@ export const BuyerGuaranteeTableMobile: FC<
           <CheckmarkIcon width={40} height={40} />
         </Td>
 
-        <Td span={[4]} bg="white100">
+        <Td span={[4]} bg="mono0">
           <CheckmarkIcon width={40} height={40} />
         </Td>
       </Row>
@@ -144,7 +144,7 @@ export const BuyerGuaranteeTableMobile: FC<
           <CheckmarkIcon width={40} height={40} />
         </Td>
 
-        <Td span={[4]} bg="white100">
+        <Td span={[4]} bg="mono0">
           <CheckmarkIcon width={40} height={40} />
         </Td>
       </Row>
@@ -158,7 +158,7 @@ export const BuyerGuaranteeTableMobile: FC<
 
         <Td span={[4]}></Td>
 
-        <Td span={[4]} bg="white100">
+        <Td span={[4]} bg="mono0">
           <CheckmarkIcon width={40} height={40} />
         </Td>
       </Row>
@@ -172,7 +172,7 @@ export const BuyerGuaranteeTableMobile: FC<
 
         <Td span={[4]}></Td>
 
-        <Td span={[4]} bg="white100">
+        <Td span={[4]} bg="mono0">
           <CheckmarkIcon width={40} height={40} />
         </Td>
       </Row>
@@ -186,7 +186,7 @@ export const BuyerGuaranteeTableMobile: FC<
 
         <Td span={[4]}></Td>
 
-        <Td span={[4]} bg="white100">
+        <Td span={[4]} bg="mono0">
           <CheckmarkIcon width={40} height={40} />
         </Td>
       </Row>
@@ -200,7 +200,7 @@ const Td = styled(Column)`
   justify-content: center;
   text-align: center;
   padding: ${themeGet("space.2")} ${themeGet("space.1")};
-  border-right: 1px solid ${themeGet("colors.black100")};
+  border-right: 1px solid ${themeGet("colors.mono100")};
 
   &:last-of-type {
     border-right: 0;
@@ -208,7 +208,7 @@ const Td = styled(Column)`
 `
 
 const Row = styled(GridColumns)`
-  border-bottom: 1px solid ${themeGet("colors.black100")};
+  border-bottom: 1px solid ${themeGet("colors.mono100")};
 
   &:last-of-type {
     border-bottom: 0;

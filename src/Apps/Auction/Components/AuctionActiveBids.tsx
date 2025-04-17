@@ -109,7 +109,7 @@ const AuctionActiveBids: React.FC<
                   </Text>
 
                   {bidCount > 0 && (
-                    <Text variant="sm-display" color="black60" pl={0.5}>
+                    <Text variant="sm-display" color="mono60" pl={0.5}>
                       ({bidCount} bid{bidCount > 1 && "s"})
                     </Text>
                   )}
@@ -246,7 +246,7 @@ const BidButton: React.FC<
         display="flex"
         width="50%"
       >
-        <Text variant="sm-display" color="black100">
+        <Text variant="sm-display" color="mono100">
           Bidding Closed
         </Text>
       </Box>

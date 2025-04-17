@@ -60,10 +60,10 @@ export const CollectorProfileArtistsListArtistDialog: FC<
 
           <Checkbox selected={!userInterest.private} onClick={onToggle}>
             <Box>
-              <Text variant="xs" color="black100">
+              <Text variant="xs" color="mono100">
                 Share this artist with galleries during inquiries.
               </Text>
-              <Text variant="xs" color="black60">
+              <Text variant="xs" color="mono60">
                 Galleries are more likely to respond if they can see the artists
                 you collect.
               </Text>

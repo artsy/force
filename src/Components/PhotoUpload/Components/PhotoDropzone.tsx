@@ -64,7 +64,7 @@ export const PhotoDropzone: React.FC<
           <input data-testid="image-dropzone-input" {...getInputProps()} />
 
           <Text variant="lg-display">Drag and drop photos here</Text>
-          <Text variant={["xs", "sm-display"]} color="black60" mt={1}>
+          <Text variant={["xs", "sm-display"]} color="mono60" mt={1}>
             Files Supported: JPG, PNG, HEIC <br />
             Total maximum size: {maxTotalSize} MB
           </Text>
@@ -93,7 +93,7 @@ export const PhotoDropzone: React.FC<
         >
           Add Photos
         </Button>
-        <Text variant={["xs", "sm-display"]} color="black60" mt={1}>
+        <Text variant={["xs", "sm-display"]} color="mono60" mt={1}>
           Files Supported: JPG, PNG, HEIC <br />
           Total maximum size: {maxTotalSize} MB
         </Text>

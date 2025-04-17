@@ -9,7 +9,7 @@ export const SuggestedArtworksModalHeader: FC<
 
   return (
     <Flex flexDirection="column">
-      <Text variant="sm-display" textColor="black60" mb={2}>
+      <Text variant="sm-display" textColor="mono60" mb={2}>
         Available works you may have missed based on similar filters listed
         below.
       </Text>

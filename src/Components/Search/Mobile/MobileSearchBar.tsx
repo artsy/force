@@ -39,7 +39,7 @@ export const MobileSearchBar: FC<
 
       <LabeledInput
         placeholder="Search Artsy"
-        label={<SearchIcon fill="black60" aria-hidden size={22} />}
+        label={<SearchIcon fill="mono60" aria-hidden size={22} />}
         onClick={displayOverlay}
         height={40}
       />

@@ -21,7 +21,7 @@ const SettingsEditSettingsTwoFactorBackupCodesDialog: FC<
 > = ({ me }) => {
   return (
     <>
-      <Text variant="sm" color="black60">
+      <Text variant="sm" color="mono60">
         Store these two-factor recovery codes in a safe place. You can use these
         one-time codes to access your account.
       </Text>

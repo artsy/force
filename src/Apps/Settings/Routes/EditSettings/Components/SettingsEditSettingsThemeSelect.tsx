@@ -11,7 +11,7 @@ export const SettingsEditSettingsThemeSelect: FC<
 
   return (
     <>
-      <Text color="black100" variant={["md", "lg"]} mb={4}>
+      <Text color="mono100" variant={["md", "lg"]} mb={4}>
         Theme
       </Text>
 

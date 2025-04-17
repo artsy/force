@@ -30,7 +30,7 @@ export const FeatureHeaderFull: React.FC<
           <FullBleedHeaderOverlay
             alignItems="flex-start"
             flexDirection="column"
-            color="white100"
+            color="mono0"
             p={4}
           >
             <Text as="h1" variant={["xl", "xxl"]}>

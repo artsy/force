@@ -49,7 +49,7 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
           <FullBleedHeaderOverlay
             alignItems="flex-start"
             flexDirection="column"
-            color="white100"
+            color="mono0"
             p={4}
           >
             <Text variant="sm" fontWeight="bold">
@@ -88,13 +88,13 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
                 {article.title}
               </Text>
 
-              <Text variant={["md", "lg-display"]} color="black60">
+              <Text variant={["md", "lg-display"]} color="mono60">
                 {article.byline}
               </Text>
             </Box>
           </Flex>
 
-          <Box flex={1} bg="black10">
+          <Box flex={1} bg="mono10">
             {article.hero.media && (
               <Box
                 display="block"
@@ -116,7 +116,7 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
                 width="100%"
                 minHeight={height}
                 height="100%"
-                bg="black10"
+                bg="mono10"
               >
                 <Image
                   src={image.src}
@@ -148,7 +148,7 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
               aspectWidth={16}
               aspectHeight={9}
               maxWidth="100%"
-              bg="black10"
+              bg="mono10"
               mb={4}
               mx="auto"
             >
@@ -168,7 +168,7 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
                 {article.title}
               </Text>
 
-              <Text variant={["md", "lg-display"]} color="black60" mb={2}>
+              <Text variant={["md", "lg-display"]} color="mono60" mb={2}>
                 {article.byline}
               </Text>
             </Column>
@@ -194,7 +194,7 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
                 {article.title}
               </Text>
 
-              <Text variant={["md", "lg-display"]} color="black60">
+              <Text variant={["md", "lg-display"]} color="mono60">
                 {article.byline}
               </Text>
             </Column>

@@ -36,7 +36,7 @@ export const ArtQuizRecommendedArtist: FC<
           <RouterLink to={artist.href} display="block" textDecoration="none">
             <Text variant={["lg-display", "xl"]}>{artist.name}</Text>
 
-            <Text variant={["lg-display", "xl"]} color="black60">
+            <Text variant={["lg-display", "xl"]} color="mono60">
               {artist.formattedNationalityAndBirthday}
             </Text>
           </RouterLink>

@@ -93,7 +93,7 @@ const SettingsPaymentsMethods: FC<
 }
 
 const BorderedCell = styled(Column)`
-  border: 1px solid ${themeGet("colors.black15")};
+  border: 1px solid ${themeGet("colors.mono15")};
 
   &:not(:first-of-type) {
     border-top: 0;

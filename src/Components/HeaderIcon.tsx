@@ -30,9 +30,9 @@ export const HeaderIcon: React.FC<React.PropsWithChildren<HeaderIconProps>> = ({
         maxWidth={100}
         borderRadius="50%"
         overflow="hidden"
-        bg="black10"
+        bg="mono10"
         border="1px solid"
-        borderColor="black10"
+        borderColor="mono10"
         {...rest}
       >
         <Image

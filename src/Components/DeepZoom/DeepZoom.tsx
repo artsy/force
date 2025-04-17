@@ -146,10 +146,10 @@ const DeepZoom: React.FC<React.PropsWithChildren<DeepZoomProps>> = ({
         ref={initializeViewer}
         width="100vw"
         height="100vh"
-        bg="black100"
+        bg="mono100"
         style={{ transition: "opacity 250ms", opacity: isMounted ? 1 : 0 }}
       >
-        {sliderState.loading && <Spinner color="white100" />}
+        {sliderState.loading && <Spinner color="mono0" />}
       </Box>
 
       <DeepZoomCloseButton

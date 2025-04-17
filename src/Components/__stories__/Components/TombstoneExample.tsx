@@ -4,7 +4,7 @@ export const TombstoneExample = () => {
   return (
     <>
       <Text variant="sm-display">Artist Name</Text>
-      <Text variant="sm-display" color="black60">
+      <Text variant="sm-display" color="mono60">
         Artwork Title, 1900
       </Text>
       <Text variant="xs" fontWeight="bold">

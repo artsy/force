@@ -224,7 +224,7 @@ export const OfferRoute: FC<React.PropsWithChildren<OfferRouteProps>> = ({
   const showPriceOptions = (artwork?.editionSets?.length ?? 0) < 2 && !!hasPrice
 
   const priceNote = Boolean(offerItem?.price) && (
-    <Text my={1} variant="sm" color="black60">
+    <Text my={1} variant="sm" color="mono60">
       List price: {appendCurrencySymbol(offerItem?.price, order.currencyCode)}
     </Text>
   )

@@ -81,7 +81,7 @@ const HomeFeaturedEventsRail: React.FC<
                           lazyLoad
                         />
                       ) : (
-                        <Box bg="black10" width={80} height={80} />
+                        <Box bg="mono10" width={80} height={80} />
                       )}
                     </Box>
 
@@ -111,7 +111,7 @@ const HomeFeaturedEventsRail: React.FC<
                         lazyLoad
                       />
                     ) : (
-                      <Box bg="black10" width="100%" height="100%" />
+                      <Box bg="mono10" width="100%" height="100%" />
                     )}
                   </ResponsiveBox>
 

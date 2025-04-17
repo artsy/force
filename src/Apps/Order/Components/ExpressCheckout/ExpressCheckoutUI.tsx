@@ -413,7 +413,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           onConfirm={onConfirm}
         />
       </Box>
-      <Text variant="xs" color="black60" mt={1} ml={0.5}>
+      <Text variant="xs" color="mono60" mt={1} ml={0.5}>
         <>By clicking Pay, I agree to Artsy’s </>
         <RouterLink
           inline

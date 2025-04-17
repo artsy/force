@@ -30,7 +30,7 @@ const ArtQuizArtworksCard: FC<
       <FullscreenBox
         aspectWidth={image.width ?? 1}
         aspectHeight={image.height ?? 1}
-        bg="black10"
+        bg="mono10"
         position="relative"
       >
         <Image

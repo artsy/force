@@ -75,7 +75,7 @@ const FlatGridItem: React.FC<React.PropsWithChildren<FlatGridItemProps>> = ({
         aspectWidth={image?.width ?? 1}
         aspectHeight={image?.height ?? 1}
         maxWidth="100%"
-        bg="black10"
+        bg="mono10"
       >
         <RouterLink
           to={artwork.href}
@@ -178,7 +178,7 @@ export const FlatGridItemPlaceholder: React.FC<
         aspectWidth={width}
         aspectHeight={height}
         maxWidth="100%"
-        bg="black10"
+        bg="mono10"
       />
 
       <MetadataPlaceholder />

@@ -50,7 +50,7 @@ const FairsFairBanner: React.FC<FairsFairBannerProps> = ({
             />
 
             <Overlay>
-              <Text variant="lg-display" m={4} color="white100">
+              <Text variant="lg-display" m={4} color="mono0">
                 Explore the event
               </Text>
             </Overlay>

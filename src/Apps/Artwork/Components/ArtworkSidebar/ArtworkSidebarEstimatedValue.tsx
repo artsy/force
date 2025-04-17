@@ -16,7 +16,7 @@ const ArtworkSidebarEstimatedValue: React.FC<
   }
 
   return (
-    <Text variant="sm" color="black100">
+    <Text variant="sm" color="mono100">
       Estimated value: {saleArtwork?.estimate}
     </Text>
   )

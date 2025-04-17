@@ -37,7 +37,7 @@ export const ArtQuizResultsLoader: FC<
           hideLogo
           left={
             <Flex height="100%" alignItems="center" justifyContent="center">
-              <ArtsyMarkIcon height={65} width={65} fill="white100" />
+              <ArtsyMarkIcon height={65} width={65} fill="mono0" />
             </Flex>
           }
           right={
@@ -60,7 +60,7 @@ export const ArtQuizResultsLoader: FC<
 
               <Spacer y={2} />
 
-              <Text variant={["sm", "md"]} color="black60">
+              <Text variant={["sm", "md"]} color="mono60">
                 {loading ? "Calculating Results…" : "Results Complete"}
               </Text>
             </Flex>

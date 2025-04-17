@@ -44,7 +44,7 @@ export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
           <Text
             variant={["xl", "xxl"]}
             as="h1"
-            color="white100"
+            color="mono0"
             textAlign={["center", "left"]}
           >
             The Future of Art Collecting
@@ -129,7 +129,7 @@ const Section: React.FC<React.PropsWithChildren<SectionProps & BoxProps>> = ({
             bottom={0}
             right={0}
             p={1}
-            color="white100"
+            color="mono0"
             fontStyle="italic"
           >
             {caption}

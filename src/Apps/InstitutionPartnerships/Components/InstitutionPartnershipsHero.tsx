@@ -19,13 +19,13 @@ export const InstitutionPartnershipsHero: FC<
           >
             <GridColumns>
               <Column span={[12, 8, 6, 5]}>
-                <Text variant={["xl", "xxl"]} as="h1" color="white100">
+                <Text variant={["xl", "xxl"]} as="h1" color="mono0">
                   Artsy for Museums
                 </Text>
 
                 <Spacer y={2} />
 
-                <Text variant="sm" color="white100">
+                <Text variant="sm" color="mono0">
                   Promoting the collections and exhibitions of the Musée du
                   Louvre, J. Paul Getty Museum, Robert Rauschenberg Foundation,
                   and over 700 major museums and institutions worldwide.

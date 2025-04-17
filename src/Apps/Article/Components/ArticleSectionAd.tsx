@@ -34,7 +34,7 @@ const ArticleSectionAd: FC<React.PropsWithChildren<ArticleSectionAdProps>> = ({
     case "FEATURE": {
       if (i === first) {
         return (
-          <FullBleed bg="black5" p={1}>
+          <FullBleed bg="mono5" p={1}>
             <ArticleAd unit="Desktop_Leaderboard1" size="970x250" />
           </FullBleed>
         )
@@ -42,7 +42,7 @@ const ArticleSectionAd: FC<React.PropsWithChildren<ArticleSectionAdProps>> = ({
 
       if (i === third) {
         return (
-          <FullBleed bg="black5" p={1}>
+          <FullBleed bg="mono5" p={1}>
             <ArticleAd unit="Desktop_Leaderboard2" size="970x250" />
           </FullBleed>
         )

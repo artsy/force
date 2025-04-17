@@ -32,7 +32,7 @@ export const ArtistInsightBadges: FC<
               <Text variant="sm" color="blue100">
                 {insight.label}
               </Text>
-              <Text variant="sm" color="black60">
+              <Text variant="sm" color="mono60">
                 {insight.description}
               </Text>
             </Column>

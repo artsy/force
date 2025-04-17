@@ -63,7 +63,7 @@ const AddToCollectionRoute: React.FC<
             <Text variant="md">No Works.</Text>
           )}
 
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             Select some artworks from the right to get started.
           </Text>
         </>

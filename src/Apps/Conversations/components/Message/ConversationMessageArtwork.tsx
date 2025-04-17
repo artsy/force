@@ -36,7 +36,7 @@ export const ConversationMessageArtwork: React.FC<
     >
       <Flex
         flexDirection="column"
-        backgroundColor="black10"
+        backgroundColor="mono10"
         borderRadius="15px 15px 0 0"
         maxWidth={MAX_IMAGE_WIDTH}
         {...flexProps}
@@ -56,19 +56,19 @@ export const ConversationMessageArtwork: React.FC<
           p={1}
           flexDirection="column"
           justifyContent="center"
-          backgroundColor="black100"
+          backgroundColor="mono100"
           borderRadius="0 0 10px 10px"
         >
-          <Text key={1} variant="sm-display" color="white100">
+          <Text key={1} variant="sm-display" color="mono0">
             {data.artistNames}
           </Text>
 
-          <Text key={2} variant="xs" color="white100">
+          <Text key={2} variant="xs" color="mono0">
             {data.title} / {data.date}
           </Text>
 
           {displayPrice && (
-            <Text key={3} variant="xs" color="white100">
+            <Text key={3} variant="xs" color="mono0">
               {data.listPrice?.display}
             </Text>
           )}

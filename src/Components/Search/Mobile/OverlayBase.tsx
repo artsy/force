@@ -34,13 +34,10 @@ export const OverlayBase: FC<React.PropsWithChildren<OverlayBaseProps>> = ({
         width: "100%",
         height: "100%",
         justifyContent: "center",
-        backgroundColor: "white100",
+        backgroundColor: "mono0",
       }}
     >
-      <Flex
-        bg="white100"
-        style={{ boxShadow: theme.effects.dropShadow }}
-      ></Flex>
+      <Flex bg="mono0" style={{ boxShadow: theme.effects.dropShadow }}></Flex>
 
       <Flex flexDirection="column" overflow="hidden" width="100%">
         <Flex
@@ -75,11 +72,11 @@ export const OverlayBase: FC<React.PropsWithChildren<OverlayBaseProps>> = ({
 }
 
 const Close = styled(Clickable)`
-  color: ${themeGet("colors.black100")};
+  color: ${themeGet("colors.mono100")};
 
   &:focus,
   &:focus-visible {
     outline: none;
-    color: ${themeGet("colors.black60")};
+    color: ${themeGet("colors.mono60")};
   }
 `

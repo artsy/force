@@ -12,7 +12,7 @@ import {
 export const ConversationsSidebarSkeleton = () => {
   return (
     <Flex flexDirection="column" flex={1}>
-      <Box p={2} borderBottom="1px solid" borderBottomColor="black15">
+      <Box p={2} borderBottom="1px solid" borderBottomColor="mono15">
         <Text variant="lg" mb={2}>
           Conversations
         </Text>

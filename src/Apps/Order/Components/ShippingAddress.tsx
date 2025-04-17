@@ -20,7 +20,7 @@ export const ShippingAddress = ({
     country,
     phoneNumber,
   },
-  textColor = "black100",
+  textColor = "mono100",
 }: ShippingAddressProps) => (
   <>
     <Text color={textColor} variant="sm">

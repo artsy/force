@@ -58,9 +58,7 @@ export const NavBarMobileMenu: React.FC<
 
   return (
     <NavBarMobileMenuNavigationProvider>
-      <ModalBase
-        dialogProps={{ width: "100%", height: "100%", bg: "white100" }}
-      >
+      <ModalBase dialogProps={{ width: "100%", height: "100%", bg: "mono0" }}>
         <Text variant="sm-display" onClick={onNavButtonClick}>
           <NavBarMobileMenuItemButton
             position="absolute"
@@ -84,7 +82,7 @@ export const NavBarMobileMenu: React.FC<
           <NavBarMobileMenuTransition isOpen={isOpen} py={2}>
             <NavBarMobileMenuItemLink
               to="/collect"
-              color="black100"
+              color="mono100"
               onClick={handleClick}
             >
               Buy
@@ -130,7 +128,7 @@ export const NavBarMobileMenu: React.FC<
 
             <NavBarMobileMenuItemLink
               to="/price-database"
-              color="black100"
+              color="mono100"
               onClick={handleClick}
             >
               Price Database
@@ -138,7 +136,7 @@ export const NavBarMobileMenu: React.FC<
 
             <NavBarMobileMenuItemLink
               to="/articles"
-              color="black100"
+              color="mono100"
               onClick={handleClick}
             >
               Editorial

@@ -25,12 +25,12 @@ export const ArtworkSidebarCollectorSignal: React.FC<
   if (primaryLabel === "CURATORS_PICK") {
     return (
       <Flex alignItems="top" my={4} data-testid="curators_pick">
-        <VerifiedIcon color="black100" width={18} mr={1} mt={0.5} />
+        <VerifiedIcon color="mono100" width={18} mr={1} mt={0.5} />
         <Stack gap={0}>
-          <Text variant="sm" color="black100">
+          <Text variant="sm" color="mono100">
             Curators’ Pick
           </Text>
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             Hand selected by Artsy curators this week
           </Text>
         </Stack>
@@ -41,12 +41,12 @@ export const ArtworkSidebarCollectorSignal: React.FC<
   if (primaryLabel === "INCREASED_INTEREST") {
     return (
       <Flex alignItems="top" my={4} data-testid="increased_interest">
-        <TrendingIcon color="black100" width={18} mr={1} mt={0.5} />
+        <TrendingIcon color="mono100" width={18} mr={1} mt={0.5} />
         <Stack gap={0}>
-          <Text variant="sm" color="black100">
+          <Text variant="sm" color="mono100">
             Increased Interest
           </Text>
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             Based on collector activity in the past 14 days
           </Text>
         </Stack>
@@ -71,7 +71,7 @@ export const ArtworkSidebarCollectorSignal: React.FC<
       <Flex alignItems="top" my={4} data-testid="showing-now">
         <FairIcon mr={1} mt={0.5} />
         <Stack gap={0}>
-          <Text variant="sm" color="black100">
+          <Text variant="sm" color="mono100">
             Showing now • {startAt}–{endAt}
           </Text>
           <RouterLink to={data.collectorSignals?.runningShow?.href}>

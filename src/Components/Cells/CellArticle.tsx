@@ -41,7 +41,7 @@ const CellArticle: FC<React.PropsWithChildren<CellArticleProps>> = ({
         aspectWidth={4}
         aspectHeight={3}
         maxWidth="100%"
-        bg="black10"
+        bg="mono10"
       >
         {image && (
           <Image
@@ -69,7 +69,7 @@ const CellArticle: FC<React.PropsWithChildren<CellArticleProps>> = ({
         </Text>
       )}
 
-      <Text variant="sm-display" color="black60" mt={0.5}>
+      <Text variant="sm-display" color="mono60" mt={0.5}>
         {article.publishedAt}
       </Text>
     </RouterLink>

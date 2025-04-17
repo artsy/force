@@ -9,7 +9,7 @@ export const ContentMetadataExample = () => {
 
       <Text variant="xl">Section Title or Headline</Text>
 
-      <Text variant="xl" color="black60" mb={1}>
+      <Text variant="xl" color="mono60" mb={1}>
         Secondary Text
       </Text>
 

@@ -3,7 +3,7 @@ import { Flex, Text } from "@artsy/palette"
 
 export const WireTransferDetails = ({
   responsive = true,
-  textColor = "black100",
+  textColor = "mono100",
   withDescription = true,
   orderSource = null,
 }: {
@@ -26,18 +26,18 @@ export const WireTransferDetails = ({
     {withDescription && (
       <Flex flexDirection="column" mt={0.5} ml={4}>
         {orderSource === "private_sale" ? (
-          <Text color="black60" fontSize={13}>
+          <Text color="mono60" fontSize={13}>
             • To pay by wire transfer, complete checkout to view banking details
             and wire transfer instructions.
           </Text>
         ) : (
-          <Text color="black60" fontSize={13}>
+          <Text color="mono60" fontSize={13}>
             • To pay by wire transfer, complete checkout and a member of the
             Artsy team will contact you with next steps by email.
           </Text>
         )}
 
-        <Text color="black60" fontSize={13}>
+        <Text color="mono60" fontSize={13}>
           • Please inform your bank that you will be responsible for all wire
           transfer fees.
         </Text>

@@ -58,7 +58,7 @@ export const ArtworkTopContextBarSale: React.FC<
     >
       <Stack gap={1} flexDirection="row">
         {sale.name}
-        <Box as="span" color="black60">
+        <Box as="span" color="mono60">
           {sale.partner?.name ? `${title} by ${sale.partner.name}` : title}
         </Box>
       </Stack>

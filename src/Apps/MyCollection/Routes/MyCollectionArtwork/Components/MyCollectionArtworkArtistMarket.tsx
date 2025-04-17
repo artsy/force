@@ -38,7 +38,7 @@ export const MyCollectionArtworkArtistMarket = ({
       <Media greaterThanOrEqual="sm">
         <Text variant="md">Artist Market</Text>
 
-        <Text variant="sm-display" color="black60">
+        <Text variant="sm-display" color="mono60">
           Based on the last 36 months of auction sale data from top commercial
           auction houses.
         </Text>
@@ -59,7 +59,7 @@ export const MyCollectionArtworkArtistMarket = ({
             </Clickable>
           </Tooltip>
         </Flex>
-        <Text variant="xs" color="black60">
+        <Text variant="xs" color="mono60">
           Based on the last 36 months of auction data
         </Text>
       </Media>

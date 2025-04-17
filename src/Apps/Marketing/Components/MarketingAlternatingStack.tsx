@@ -81,7 +81,7 @@ export const MarketingAlternatingStack: FC<
                   aspectWidth={1}
                   aspectHeight={1}
                   maxWidth="100%"
-                  bg="black60"
+                  bg="mono60"
                 >
                   <Image
                     {...image}

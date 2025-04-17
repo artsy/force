@@ -13,7 +13,7 @@ export const SavingPaymentSpinner: FC<
       <Text variant="md" color="blue100">
         Saving payment preferences
       </Text>
-      <Text variant="sm" textColor="black60">
+      <Text variant="sm" textColor="mono60">
         Please do not close or refresh this window
       </Text>
     </Flex>

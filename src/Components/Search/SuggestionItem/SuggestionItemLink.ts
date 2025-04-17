@@ -3,7 +3,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import styled from "styled-components"
 
 export const SuggestionItemLink = styled(RouterLink).attrs({
-  color: "black100",
+  color: "mono100",
   px: 2,
   py: 1,
 })`
@@ -14,6 +14,6 @@ export const SuggestionItemLink = styled(RouterLink).attrs({
   min-height: 60px;
 
   &:hover {
-    background-color: ${themeGet("colors.black5")};
+    background-color: ${themeGet("colors.mono5")};
   }
 `

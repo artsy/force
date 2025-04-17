@@ -18,7 +18,7 @@ export const OnboardingApp: FC<React.PropsWithChildren<unknown>> = () => {
 
       <Spacer y={2} />
 
-      <Box height={700} border="1px dotted" borderColor="black10">
+      <Box height={700} border="1px dotted" borderColor="mono10">
         <OnboardingSteps />
       </Box>
     </OnboardingProvider>

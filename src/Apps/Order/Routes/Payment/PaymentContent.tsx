@@ -205,7 +205,7 @@ const getAvailablePaymentMethods = (
         value="CREDIT_CARD"
         label={
           <>
-            <UnknownCardIcon fill="black100" />
+            <UnknownCardIcon fill="mono100" />
             <Text variant="sm-display" ml={0.5}>
               Credit card
             </Text>
@@ -230,7 +230,7 @@ const getAvailablePaymentMethods = (
           </>
         }
       >
-        <Text ml="24px" variant="xs" color="black60">
+        <Text ml="24px" variant="xs" color="mono60">
           US bank account only
         </Text>
       </BorderedRadio>,
@@ -252,7 +252,7 @@ const getAvailablePaymentMethods = (
           </>
         }
       >
-        <Text ml="24px" variant="xs" color="black60">
+        <Text ml="24px" variant="xs" color="mono60">
           Your bank account must be denominated in EUR
         </Text>
       </BorderedRadio>,
@@ -292,7 +292,7 @@ const getPaymentMethodInfo = (
           {availablePaymentMethods?.length === 1 && (
             <Text variant="lg-display">Credit card payment details</Text>
           )}
-          <Text color="black60" variant="sm">
+          <Text color="mono60" variant="sm">
             • To change the co-badged card network for this purchase, select
             “Add another card”.
           </Text>
@@ -305,11 +305,11 @@ const getPaymentMethodInfo = (
             {availablePaymentMethods?.length === 1 && (
               <Text variant="lg-display">Wire transfer payment details</Text>
             )}
-            <Text color="black60" variant="sm">
+            <Text color="mono60" variant="sm">
               • To pay by wire transfer, complete checkout to view banking
               details and wire transfer instructions.
             </Text>
-            <Text color="black60" variant="sm">
+            <Text color="mono60" variant="sm">
               • Please inform your bank that you will be responsible for all
               wire transfer fees.
             </Text>
@@ -322,15 +322,15 @@ const getPaymentMethodInfo = (
           {availablePaymentMethods?.length === 1 && (
             <Text variant="lg-display">Wire transfer payment details</Text>
           )}
-          <Text color="black60" variant="sm">
+          <Text color="mono60" variant="sm">
             • To pay by wire transfer, complete checkout and a member of the
             Artsy team will contact you with next steps by email.
           </Text>
-          <Text color="black60" variant="sm">
+          <Text color="mono60" variant="sm">
             • Please inform your bank that you will be responsible for all wire
             transfer fees.
           </Text>
-          <Text color="black60" variant="sm">
+          <Text color="mono60" variant="sm">
             • Questions? Email{" "}
             <RouterLink inline to="mailto:orders@artsy.net">
               orders@artsy.net
@@ -344,17 +344,17 @@ const getPaymentMethodInfo = (
           {availablePaymentMethods?.length === 1 && (
             <Text variant="lg-display">Bank transfer payment details</Text>
           )}
-          <Text color="black60" variant="sm">
+          <Text color="mono60" variant="sm">
             • Search for your bank institution or select from the options below.
           </Text>
-          <Text color="black60" variant="sm">
+          <Text color="mono60" variant="sm">
             • If you can not find your bank, please check your spelling or
             choose another payment method.
           </Text>
-          <Text color="black60" variant="sm">
+          <Text color="mono60" variant="sm">
             • Bank transfer is powered by Stripe.
           </Text>
-          <Text color="black60" variant="sm">
+          <Text color="mono60" variant="sm">
             • Payment processing will take 4-7 business days once the gallery
             accepts the order.
           </Text>
@@ -367,7 +367,7 @@ const getPaymentMethodInfo = (
             <Text variant="lg-display">SEPA bank transfer payment details</Text>
           )}
           <Flex>
-            <Text color="black60" variant="sm">
+            <Text color="mono60" variant="sm">
               • Your bank account must be denominated in EUR and located in one
               of the SEPA countries.
             </Text>
@@ -381,16 +381,16 @@ const getPaymentMethodInfo = (
               </Clickable>
             </Tooltip>
           </Flex>
-          <Text color="black60" variant="sm">
+          <Text color="mono60" variant="sm">
             • Enter your billing address in the form below.
           </Text>
-          <Text color="black60" variant="sm">
+          <Text color="mono60" variant="sm">
             • Once your order is accepted, please allow 7-10 business days for
             processing your payment. After processing, your order will be
             prepared for pickup or packed and shipped, depending on your chosen
             delivery type.
           </Text>
-          <Text color="black60" variant="sm">
+          <Text color="mono60" variant="sm">
             • Bank transfer is powered by Stripe.
           </Text>
         </>

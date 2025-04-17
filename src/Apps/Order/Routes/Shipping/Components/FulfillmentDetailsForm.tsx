@@ -282,7 +282,7 @@ const FulfillmentDetailsFormLayout = (
               <Collapse
                 open={values.fulfillmentType === FulfillmentType.PICKUP}
               >
-                <Text variant="xs" color="black60">
+                <Text variant="xs" color="mono60">
                   After your order is confirmed, a specialist will contact you
                   to coordinate pickup.
                 </Text>
@@ -338,12 +338,7 @@ const FulfillmentDetailsFormLayout = (
               </Column>
 
               <Column span={12}>
-                <Text
-                  id="country-select"
-                  mb={0.5}
-                  variant="xs"
-                  color="black100"
-                >
+                <Text id="country-select" mb={0.5} variant="xs" color="mono100">
                   Country
                 </Text>
                 <CountrySelect
@@ -365,7 +360,7 @@ const FulfillmentDetailsFormLayout = (
                 {shippingContext.orderData.lockShippingCountryTo && (
                   <>
                     <Spacer x={0.5} y={0.5} />
-                    <Text variant="xs" color="black60">
+                    <Text variant="xs" color="mono60">
                       {shippingContext.orderData.lockShippingCountryTo === "EU"
                         ? "Continental Europe shipping only."
                         : "Domestic shipping only."}

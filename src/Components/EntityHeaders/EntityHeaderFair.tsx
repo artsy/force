@@ -50,7 +50,7 @@ const EntityHeaderFair: FC<React.PropsWithChildren<EntityHeaderFairProps>> = ({
           </Text>
 
           {meta && (
-            <Text variant="xs" color="black60" overflowEllipsis>
+            <Text variant="xs" color="mono60" overflowEllipsis>
               {meta}
             </Text>
           )}

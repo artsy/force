@@ -37,7 +37,7 @@ const ShowsCurrentShow: React.FC<
           <Text variant="lg-display">{show.partner?.name}</Text>
         )}
 
-        <Text variant="lg-display" color="black60">
+        <Text variant="lg-display" color="mono60">
           {show.name}
         </Text>
 

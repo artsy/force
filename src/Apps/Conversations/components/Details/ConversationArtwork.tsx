@@ -68,7 +68,7 @@ export const ConversationArtwork: React.FC<
           <RouterLink to={`/artist/${item?.artist?.slug}`}>
             <Text variant="xs">{item?.artist?.name}</Text>
           </RouterLink>
-          <Text variant="xs" color="black60">
+          <Text variant="xs" color="mono60">
             <Text fontStyle="italic" display="inline" variant="xs">
               {item?.title}
             </Text>

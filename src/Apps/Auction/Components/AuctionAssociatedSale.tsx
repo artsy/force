@@ -28,7 +28,7 @@ const AuctionAssociatedSale: React.FC<
             aspectWidth={16}
             aspectHeight={9}
             maxWidth="100%"
-            bg="black10"
+            bg="mono10"
           >
             {image && (
               <Image
@@ -46,7 +46,7 @@ const AuctionAssociatedSale: React.FC<
           <Text variant="sm" mt={1}>
             {sale.associatedSale.name}{" "}
           </Text>
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             {sale.associatedSale.displayTimelyAt!}
           </Text>
         </RouterLink>

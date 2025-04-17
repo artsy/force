@@ -52,7 +52,7 @@ export const AlertNotification: FC<
             mb={1}
             key={`filter-label-${label?.displayValue}`}
             disabled
-            borderColor="black30"
+            borderColor="mono30"
           >
             {label?.displayValue}
           </Pill>

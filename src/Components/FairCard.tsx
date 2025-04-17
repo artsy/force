@@ -16,7 +16,7 @@ export const FairCard: React.FC<
       aspectWidth={3}
       aspectHeight={2}
       maxWidth="100%"
-      bg="black10"
+      bg="mono10"
       borderRadius={4}
     >
       {image && (

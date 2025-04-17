@@ -244,7 +244,7 @@ export const InquiryContextContextQueryRenderer: React.FC<
   return (
     <SystemQueryRenderer<useInquiryContextQuery>
       environment={relayEnvironment}
-      placeholder={<Spinner color="white100" />}
+      placeholder={<Spinner color="mono0" />}
       query={graphql`
         query useInquiryContextQuery {
           me {
@@ -259,7 +259,7 @@ export const InquiryContextContextQueryRenderer: React.FC<
         }
 
         if (!props) {
-          return <Spinner color="white100" />
+          return <Spinner color="mono0" />
         }
 
         return (

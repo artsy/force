@@ -21,7 +21,7 @@ export const NotificationsContextualMenu: React.FC<
           onClick={onHide}
           to={"/favorites/alerts"}
           textDecoration="none"
-          color="black100"
+          color="mono100"
           display="block"
           p={2}
         >
@@ -33,7 +33,7 @@ export const NotificationsContextualMenu: React.FC<
           onClick={onHide}
           to="/favorites/follows"
           textDecoration="none"
-          color="black100"
+          color="mono100"
           display="block"
           p={2}
         >

@@ -47,11 +47,11 @@ const SettingsCreditCard: React.FC<
         {name}
       </Text>
 
-      <Text variant="sm-display" color="black60" mr={1}>
+      <Text variant="sm-display" color="mono60" mr={1}>
         •••• {lastDigits}
       </Text>
 
-      <Text variant="sm-display" color="black60">
+      <Text variant="sm-display" color="mono60">
         Exp {expirationMonth.toString().padStart(2, "0")}/
         {expirationYear.toString().slice(-2)}
       </Text>

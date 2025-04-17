@@ -27,17 +27,17 @@ const AdditionalArtworkDetails: React.FC<
       </Text>
       <Spacer y={1} />
       {artworkDetails && (
-        <Text variant="xs" color="black60">
+        <Text variant="xs" color="mono60">
           {artworkDetails}
         </Text>
       )}
       {artworkVersion?.provenance && (
-        <Text variant="xs" color="black60">
+        <Text variant="xs" color="mono60">
           Provenance: {artworkVersion.provenance}
         </Text>
       )}
       {artworkVersion?.condition_description && (
-        <Text variant="xs" color="black60">
+        <Text variant="xs" color="mono60">
           Condition: {artworkVersion.condition_description}
         </Text>
       )}

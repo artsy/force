@@ -20,7 +20,7 @@ export const PrivateArtworkDefinitionList: React.FC<
               width={150}
               flexShrink={0}
               mr={2}
-              color="black60"
+              color="mono60"
             >
               {term}
             </Text>
@@ -33,13 +33,13 @@ export const PrivateArtworkDefinitionList: React.FC<
           width={150}
           flexShrink={0}
           mr={2}
-          color="black60"
+          color="mono60"
         >
           {term}
         </Text>
       )}
 
-      <Text as="dd" variant="xs" color="black60" flex={1}>
+      <Text as="dd" variant="xs" color="mono60" flex={1}>
         {children}
       </Text>
     </Flex>

@@ -30,7 +30,7 @@ const ShowsShowDates: React.FC<
 
   return (
     <Text
-      color={closesSoon || closesToday || hasEnded ? "red100" : "black60"}
+      color={closesSoon || closesToday || hasEnded ? "red100" : "mono60"}
       {...rest}
     >
       {formattedString}

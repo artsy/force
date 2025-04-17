@@ -73,7 +73,7 @@ const ArticleZoomGallery: FC<
 
   return (
     <ModalBase onClose={onClose}>
-      <Box bg="white100" width="100vw" height="100vh" ref={containerRef as any}>
+      <Box bg="mono0" width="100vw" height="100vh" ref={containerRef as any}>
         {figures.length > 1 && (
           <NextPrevious onClick={handleNext} right={0}>
             <ChevronRightIcon fill="currentColor" width={30} height={30} />
@@ -116,7 +116,7 @@ const ArticleZoomGallery: FC<
 
           <Flex
             p={4}
-            bg="black5"
+            bg="mono5"
             justifyContent="space-between"
             alignItems="center"
           >
@@ -137,13 +137,13 @@ const buttonMixin = css`
   z-index: 1;
   transition: color 250ms;
   mix-blend-mode: difference;
-  color: ${themeGet("colors.black60")};
+  color: ${themeGet("colors.mono60")};
 
   &:hover,
   &:focus,
   &:focus-visible {
     outline: none;
-    color: ${themeGet("colors.white100")};
+    color: ${themeGet("colors.mono0")};
   }
 `
 

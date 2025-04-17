@@ -37,7 +37,7 @@ const ArticleSectionVideo: FC<
       aspectWidth={16}
       aspectHeight={9}
       maxWidth="100%"
-      bg="black10"
+      bg="mono10"
       data-testid="ArticleSectionVideo"
     >
       {ready && (
@@ -50,7 +50,7 @@ const ArticleSectionVideo: FC<
                   width="100%"
                   height="100%"
                   position="relative"
-                  bg="black10"
+                  bg="mono10"
                 >
                   <Image
                     src={image.src}
@@ -78,7 +78,7 @@ const ArticleSectionVideo: FC<
               alignItems="center"
               justifyContent="center"
               p={2}
-              color="black60"
+              color="mono60"
               onClick={openConsentManager}
             >
               <Text variant="xs">Manage Cookies</Text>
@@ -137,10 +137,10 @@ const Play = styled.div`
   &:after {
     content: "";
     display: block;
-    color: ${themeGet("colors.black100")};
+    color: ${themeGet("colors.mono100")};
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-left: 20px solid ${themeGet("colors.black100")};
+    border-left: 20px solid ${themeGet("colors.mono100")};
   }
 `
 

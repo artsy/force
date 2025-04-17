@@ -14,7 +14,7 @@ export const ArtQuizResultsEmpty: FC<React.PropsWithChildren<unknown>> = () => {
 
       <Spacer y={[0, 1]} />
 
-      <Text color="black60" variant={["lg-display", "md"]}>
+      <Text color="mono60" variant={["lg-display", "md"]}>
         There are almost 2 million artworks on Artsy—keep exploring to find
         something you love.
       </Text>

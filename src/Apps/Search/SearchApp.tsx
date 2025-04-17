@@ -89,7 +89,7 @@ export const SearchApp: React.FC<React.PropsWithChildren<SearchAppProps>> = ({
               <Spacer y={-1} />
 
               <Sticky bottomBoundary="#Sticky__SearchApp">
-                <FullBleed backgroundColor="white100" pt={1}>
+                <FullBleed backgroundColor="mono0" pt={1}>
                   <AppContainer>
                     <HorizontalOverflow pl={[2, 4]}>
                       <NavigationTabs

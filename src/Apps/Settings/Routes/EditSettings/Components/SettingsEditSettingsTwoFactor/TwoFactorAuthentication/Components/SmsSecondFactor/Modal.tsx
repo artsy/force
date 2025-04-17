@@ -156,11 +156,11 @@ export const SmsSecondFactorModal: React.FC<
     >
       {({ form }) => (
         <>
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             Enter your mobile phone number.
           </Text>
 
-          <Text variant="sm" mt={1} color="black60">
+          <Text variant="sm" mt={1} color="mono60">
             We’ll send you a security code to this number whenever you log into
             Artsy.
           </Text>
@@ -215,7 +215,7 @@ export const SmsSecondFactorModal: React.FC<
     >
       {({ form, wizard }) => (
         <>
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             We’ve sent the authentication code to{" "}
             {form.values.formattedPhoneNumber}. Please enter the code to verify
             your phone number.
@@ -334,11 +334,11 @@ export const OnCompleteRedirectModal: React.FC<
         </Button>
       }
     >
-      <Text color="black60">
+      <Text color="mono60">
         You’ve successfully set up two-factor authentication!
       </Text>
 
-      <Text mt={2} color="black60">
+      <Text mt={2} color="mono60">
         {redirectMessage(redirectTo)}
       </Text>
     </ModalDialog>

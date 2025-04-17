@@ -59,7 +59,7 @@ export const BuyerGuaranteeIndex: FC<React.PropsWithChildren<unknown>> = () => {
           <Text
             variant={["xl", "xxl"]}
             as="h1"
-            color="white100"
+            color="mono0"
             textAlign={["center", "left"]}
           >
             The Artsy Guarantee
@@ -321,7 +321,7 @@ export const BuyerGuaranteeIndex: FC<React.PropsWithChildren<unknown>> = () => {
 
       <Spacer y={12} />
 
-      <FullBleed bg="black5">
+      <FullBleed bg="mono5">
         <AppContainer>
           <HorizontalPadding py={4}>
             <Text variant="xl" textAlign="center">

@@ -14,7 +14,7 @@ const SettingsEditProfileRoute: React.FC<
 > = ({ me }) => {
   return (
     <GridColumns>
-      <Column span={8} bg="black5" p={2} display="flex" gap={1}>
+      <Column span={8} bg="mono5" p={2} display="flex" gap={1}>
         <InfoIcon flexShrink={0} />
         <Text variant="sm-display">
           The information you provide here will be shared when you contact a

@@ -36,7 +36,7 @@ const EntityHeaderSubmission: FC<
       justifyContent="space-between"
       p={2}
       border="1px solid"
-      borderColor="black10"
+      borderColor="mono10"
       borderRadius={5}
       {...rest}
     >
@@ -51,7 +51,7 @@ const EntityHeaderSubmission: FC<
           </Text>
 
           {title && (
-            <Text variant="xs" color="black60" overflowEllipsis>
+            <Text variant="xs" color="mono60" overflowEllipsis>
               {title}
             </Text>
           )}

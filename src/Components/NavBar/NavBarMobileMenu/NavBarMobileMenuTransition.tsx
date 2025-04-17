@@ -10,7 +10,7 @@ export const NavBarMobileMenuTransition = styled(Box)<{
   left: 0;
   width: 100vw;
   height: 100%;
-  background-color: ${themeGet("colors.white100")};
+  background-color: ${themeGet("colors.mono0")};
   transition:
     transform 150ms,
     opacity 150ms;

@@ -74,9 +74,9 @@ export const PrivateArtworkAboutArtist: React.FC<
       width="100%"
       px={[2, 6]}
       py={[4, 6]}
-      backgroundColor="black100"
+      backgroundColor="mono100"
     >
-      <Text variant="md" color="white100">
+      <Text variant="md" color="mono0">
         About the Artist
         {data.artists && data.artists?.length > 1 ? "s" : ""}
       </Text>
@@ -97,17 +97,13 @@ export const PrivateArtworkAboutArtist: React.FC<
 
                 <Box>
                   <RouterLink to={artist.href} display="block">
-                    <Text
-                      variant="lg-display"
-                      color="white100"
-                      fontWeight="bold"
-                    >
+                    <Text variant="lg-display" color="mono0" fontWeight="bold">
                       {artist.name}
                     </Text>
                   </RouterLink>
 
                   {artist.formattedNationalityAndBirthday && (
-                    <Text variant="xs" color="white100">
+                    <Text variant="xs" color="mono0">
                       {artist.formattedNationalityAndBirthday}
                     </Text>
                   )}
@@ -136,7 +132,7 @@ export const PrivateArtworkAboutArtist: React.FC<
                             flexDirection="row"
                             alignItems="center"
                           >
-                            <Box color="white100">{label}</Box>
+                            <Box color="mono0">{label}</Box>
                           </Stack>
                         )
                       }}
@@ -145,7 +141,7 @@ export const PrivateArtworkAboutArtist: React.FC<
                     {followCount(artist) > 0 && (
                       <Text
                         variant="xs"
-                        color="white100"
+                        color="mono0"
                         ml={0.5}
                         style={{ whiteSpace: "nowrap" }}
                       >
@@ -163,7 +159,7 @@ export const PrivateArtworkAboutArtist: React.FC<
                     <Spacer y={4} />
 
                     <TextWrapper>
-                      <HTML variant="md" color="white100">
+                      <HTML variant="md" color="mono0">
                         <ReadMore
                           maxChars={190}
                           content={`${biographyBlurb(artist)}`}
@@ -193,6 +189,6 @@ export const PrivateArtworkAboutArtist: React.FC<
 
 const TextWrapper = styled(Text)`
   a:hover {
-    color: ${themeGet("colors.white100")};
+    color: ${themeGet("colors.mono0")};
   }
 `

@@ -42,7 +42,7 @@ export const PartnerArtistDetails: React.FC<
               <Text variant="xl">{name}</Text>
             </RouterLink>
 
-            <Text color="black60" variant="lg-display">
+            <Text color="mono60" variant="lg-display">
               {formattedNationalityAndBirthday}
             </Text>
           </Column>
@@ -67,7 +67,7 @@ export const PartnerArtistDetails: React.FC<
             )}
 
             {biographyBlurb.credit && (
-              <HTML color="black60" variant="sm">
+              <HTML color="mono60" variant="sm">
                 <ReadMore
                   maxChars={320}
                   content={`— ${biographyBlurb.credit}`}
