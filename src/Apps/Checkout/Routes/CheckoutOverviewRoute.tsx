@@ -87,7 +87,7 @@ export const CheckoutOverviewRoute: React.FC<
             </Formik>
           </Flex>
 
-          <Flex flexDirection="column" backgroundColor="white100" py={2} px={2}>
+          <Flex flexDirection="column" backgroundColor="white100" p={2}>
             <Text variant="sm" fontWeight={"medium"} color="black100">
               Shipping Method
             </Text>
@@ -95,13 +95,7 @@ export const CheckoutOverviewRoute: React.FC<
               Options vary based on address and artwork size.
             </Text>
           </Flex>
-          <Flex
-            flexDirection="column"
-            backgroundColor="white100"
-            mb={1}
-            py={2}
-            px={2}
-          >
+          <Flex flexDirection="column" backgroundColor="white100" mb={1} p={2}>
             <Text variant="sm" fontWeight={"medium"} color="black100">
               Payment
             </Text>
