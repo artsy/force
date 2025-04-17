@@ -322,7 +322,7 @@ export const orderRoutes: RouteProps[] = [
       {
         path: "details",
         Component: DetailsRoute,
-        layout: "LogoOnly",
+        layout: "NavOnly",
         query: graphql`
           query orderRoutes_DetailsQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {

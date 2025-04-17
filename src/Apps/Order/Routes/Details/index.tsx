@@ -1,18 +1,19 @@
-import React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { useFlag } from "@unleash/proxy-client-react"
+import { OrderDetails } from "Apps/Order/Routes/Details/Components/OrderDetails"
+import { ErrorPage } from "Components/ErrorPage"
 import type { Details_order$data } from "__generated__/Details_order.graphql"
+import type React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface DetailsProps {
   order: Details_order$data
 }
 
 const Details: React.FC<DetailsProps> = ({ order }) => {
-  return (
-    <div>
-      <h1>Order Details</h1>
-      <p>Order ID: {order.internalID}</p>
-    </div>
-  )
+  const isOrderDetailsFlagEnabled = useFlag("emerald_order-details-page")
+  if (!isOrderDetailsFlagEnabled) return <ErrorPage code={404} />
+
+  return <OrderDetails orderId={order.internalID} />
 }
 
 export const DetailsFragmentContainer = createFragmentContainer(Details, {
