@@ -20,9 +20,6 @@ const validator = debounce(
       return resolve(false)
     }
 
-    const combinedNumber = regionCode?.length
-      ? `+${regionCode}${national}`
-      : national
     try {
       const response = await fetchQuery<validatePhoneNumberQuery>(
         relayEnvironment,
@@ -36,7 +33,7 @@ const validator = debounce(
             }
           }
         `,
-        { phoneNumber: combinedNumber, regionCode },
+        { phoneNumber: national, regionCode },
       ).toPromise()
 
       if (!response?.phoneNumber) {

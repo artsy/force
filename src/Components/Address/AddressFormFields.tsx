@@ -117,11 +117,16 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
     contextPageOwnerId: contextPageOwnerId || "",
   }
 
-  const phoneInputType: "legacy" | "rich" | null = props.withLegacyPhoneInput
-    ? "legacy"
-    : props.withPhoneNumber
-      ? "rich"
-      : null
+  const phoneInputType = useMemo(() => {
+    if (props.withLegacyPhoneInput) {
+      return "legacy"
+    }
+    if (props.withPhoneNumber) {
+      return "rich"
+    }
+
+    return null
+  }, [props.withLegacyPhoneInput, props.withPhoneNumber])
 
   return (
     <GridColumns data-testid={dataTestIdPrefix}>
@@ -292,7 +297,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
             data-testid={`${dataTestIdPrefix}.phoneNumber`}
             options={countryPhoneOptions}
             onSelect={(option: CountryData): void => {
-              setFieldValue("phoneNumberCountryCode", option.countryCode)
+              setFieldValue("phoneNumberCountryCode", option.value)
             }}
             dropdownValue={values.phoneNumberCountryCode}
             inputValue={values.phoneNumber}
