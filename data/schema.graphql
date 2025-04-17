@@ -4480,6 +4480,9 @@ input BulkUpdateArtworksMetadataInput {
 
   # The price for the artworks
   priceListed: Float
+
+  # Publish or unpublish artworks
+  published: Boolean
 }
 
 type BulkUpdateArtworksMetadataMutationFailure {
@@ -10034,6 +10037,34 @@ type DeletePartnerArtistDocumentSuccess {
   partner: Partner
 }
 
+type DeletePartnerArtistFailure {
+  mutationError: GravityMutationError
+}
+
+input DeletePartnerArtistMutationInput {
+  # The ID of the artist to delete.
+  artistId: String!
+  clientMutationId: String
+
+  # The ID of the partner.
+  partnerId: String!
+}
+
+type DeletePartnerArtistMutationPayload {
+  clientMutationId: String
+
+  # On success: confirmation of deletion. On error: the error that occurred.
+  partnerArtistOrError: DeletePartnerArtistResponseOrError
+}
+
+union DeletePartnerArtistResponseOrError =
+  | DeletePartnerArtistFailure
+  | DeletePartnerArtistSuccess
+
+type DeletePartnerArtistSuccess {
+  partner: Partner
+}
+
 type DeletePartnerContactFailure {
   mutationError: GravityMutationError
 }
@@ -15422,6 +15453,11 @@ type Mutation {
   # Deletes a page.
   deletePage(input: DeletePageMutationInput!): DeletePageMutationPayload
 
+  # Deletes a partner artist.
+  deletePartnerArtist(
+    input: DeletePartnerArtistMutationInput!
+  ): DeletePartnerArtistMutationPayload
+
   # Deletes a partner artist document.
   deletePartnerArtistDocument(
     input: DeletePartnerArtistDocumentMutationInput!
@@ -15790,6 +15826,16 @@ type Mutation {
 
   # Updates a page.
   updatePage(input: UpdatePageMutationInput!): UpdatePageMutationPayload
+
+  # Updates general information on a partner.
+  updatePartner(
+    input: UpdatePartnerMutationInput!
+  ): UpdatePartnerMutationPayload
+
+  # Updates a partner artist.
+  updatePartnerArtist(
+    input: UpdatePartnerArtistMutationInput!
+  ): UpdatePartnerArtistMutationPayload
 
   # Updates a partner artist document.
   updatePartnerArtistDocument(
@@ -17180,6 +17226,7 @@ type PartnerArtistCounts {
     format: String
     label: String
   ): FormattedNumber
+  documents: Int
   forSaleArtworks(
     # Returns a `String` when format is specified. e.g.`'0,0.0000''`
     format: String
@@ -17190,6 +17237,7 @@ type PartnerArtistCounts {
     format: String
     label: String
   ): FormattedNumber
+  shows: Int
   unlistedArtworks(
     # Returns a `String` when format is specified. e.g.`'0,0.0000''`
     format: String
@@ -22633,6 +22681,50 @@ type UpdatePartnerArtistDocumentSuccess {
   partner: Partner
 }
 
+type UpdatePartnerArtistFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdatePartnerArtistMutationInput {
+  # The partner-provided biography of the artist.
+  biography: String
+  clientMutationId: String
+
+  # Whether to display the artist on the partner profile page.
+  displayOnPartnerProfile: Boolean
+
+  # Whether to hide the artist in presentation mode (Folio) for the partner.
+  hideInPresentationMode: Boolean
+
+  # The ID of the partner artist to update.
+  id: String!
+
+  # The URL of the image to use for the partner artist.
+  remoteImageUrl: String
+
+  # Whether the artist is represented by the partner.
+  representedBy: Boolean
+
+  # Whether to use the default biography for the artist instead of the partner-provided one.
+  useDefaultBiography: Boolean
+}
+
+type UpdatePartnerArtistMutationPayload {
+  clientMutationId: String
+
+  # On success: the updated partner artist. On error: the error that occurred.
+  partnerArtistOrError: UpdatePartnerArtistResponseOrError
+}
+
+union UpdatePartnerArtistResponseOrError =
+  | UpdatePartnerArtistFailure
+  | UpdatePartnerArtistSuccess
+
+type UpdatePartnerArtistSuccess {
+  partner: Partner
+  partnerArtist: PartnerArtist
+}
+
 type UpdatePartnerContactFailure {
   mutationError: GravityMutationError
 }
@@ -22675,6 +22767,10 @@ type UpdatePartnerContactPayload {
 
 type UpdatePartnerContactSuccess {
   partnerContact: Contact
+}
+
+type UpdatePartnerFailure {
+  mutationError: GravityMutationError
 }
 
 type UpdatePartnerFlagsFailure {
@@ -22756,6 +22852,81 @@ type UpdatePartnerLocationPayload {
 type UpdatePartnerLocationSuccess {
   location: Location
 }
+
+input UpdatePartnerMutationInput {
+  # Alternate names or synonyms for this partner.
+  alternateNames: [String]
+
+  # Whether to charge sales tax on ecommerce orders.
+  artsyCollectsSalesTax: Boolean
+  clientMutationId: String
+
+  # Commission paid by non-subscriber/fair partner.
+  commissionRate: Float
+
+  # Contract type.
+  contractType: String
+
+  # Whether the partner is directly contactable.
+  directlyContactable: Boolean
+
+  # Controls artists tab presence on gpp. Artists tab is hidden for Institutional partners and present for the rest of partners.
+  displayArtistsSection: Boolean
+
+  # The display name of the partner.
+  displayName: String
+
+  # Controls whether the works section is displayed.
+  displayWorksSection: Boolean
+
+  # Distinguish artists the partner represents on their profile page.
+  distinguishRepresentedArtists: Boolean
+
+  # The email of the partner.
+  email: String
+
+  # The given name of the partner.
+  givenName: String
+
+  # Profile completeness.
+  hasFullProfile: Boolean
+
+  # The id of the partner to update.
+  id: String!
+
+  # Whether the partner requires pre-qualification.
+  preQualify: Boolean
+
+  # Artists layout on the profile overview page.
+  profileArtistsLayout: String
+
+  # Banner display on the profile overview page.
+  profileBannerDisplay: String
+
+  # The region of the partner.
+  region: String
+
+  # The short name of the partner.
+  shortName: String
+
+  # The sortable name of the partner.
+  sortableName: String
+
+  # Type of the partner.
+  type: String
+
+  # The website of the partner.
+  website: String
+}
+
+type UpdatePartnerMutationPayload {
+  clientMutationId: String
+
+  # On success: the updated partner. On error: the error that occurred.
+  partnerOrError: UpdatePartnerResponseOrError
+}
+
+union UpdatePartnerResponseOrError = UpdatePartnerFailure | UpdatePartnerSuccess
 
 type UpdatePartnerShowDocumentFailure {
   mutationError: GravityMutationError
@@ -22901,6 +23072,10 @@ union UpdatePartnerShowResponseOrError =
 
 type UpdatePartnerShowSuccess {
   show: Show
+}
+
+type UpdatePartnerSuccess {
+  partner: Partner
 }
 
 type UpdateSaleAgreementFailure {

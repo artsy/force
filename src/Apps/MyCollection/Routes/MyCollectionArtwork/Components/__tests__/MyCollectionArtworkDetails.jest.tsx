@@ -52,9 +52,17 @@ describe("MyCollectionArtworkDetails", () => {
         Artwork: () => ({
           ...mockResolversWithData,
           confidentialNotes: "A short text",
+          additionalInformation: "This is my favorite artwork!",
+          exhibitionHistory: "Previous exhibitions include, the Louvre.",
         }),
       })
       expect(screen.getByText("A short text")).toBeInTheDocument()
+      expect(
+        screen.getByText("This is my favorite artwork!"),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText("Previous exhibitions include, the Louvre."),
+      ).toBeInTheDocument()
     })
 
     describe("when the artwork is part of limited edition", () => {
