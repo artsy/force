@@ -168,8 +168,8 @@ export const ConversationReply: FC<
   return (
     <Flex
       borderTop="1px solid"
-      borderTopColor="black15"
-      backgroundColor="black5"
+      borderTopColor="mono15"
+      backgroundColor="mono5"
       flexDirection="column"
     >
       <ConversationCTA conversation={data} px={1} pt={1} />
@@ -185,7 +185,7 @@ export const ConversationReply: FC<
               minHeight: "50px",
               maxHeight: "40vh",
               height: textAreaHeight,
-              borderColor: "white100",
+              borderColor: "mono0",
               paddingRight: "100px",
               resize: "none",
             }}

@@ -125,10 +125,10 @@ const ArtistAchievement: FC<
 
   return (
     <>
-      <Text variant="sm" color="black100">
+      <Text variant="sm" color="mono100">
         {label}
       </Text>
-      <Text variant="sm" color="black60" data-testid="expandable-dropdownlist">
+      <Text variant="sm" color="mono60" data-testid="expandable-dropdownlist">
         {expanded ? (
           entities.join(", ").replace(/,\s([^,]+)$/, ", and $1")
         ) : (
@@ -147,7 +147,7 @@ const ArtistAchievement: FC<
                       type: "Link",
                     })
                   }}
-                  color="black100"
+                  color="mono100"
                   textDecoration="underline"
                 >
                   {remaining.length} more

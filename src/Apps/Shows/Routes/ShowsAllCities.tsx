@@ -32,20 +32,20 @@ export const ShowsAllCities: React.FC<
             display="flex"
             justifyContent="space-between"
             borderBottom="1px solid"
-            borderColor="black10"
+            borderColor="mono10"
             py={2}
           >
             <Box>
               <Text variant="sm-display">{name}</Text>
 
               {region.length > 0 && (
-                <Text variant="xs" color="black60">
+                <Text variant="xs" color="mono60">
                   {region.join(", ")}
                 </Text>
               )}
             </Box>
 
-            <ChevronRightIcon color="black60" />
+            <ChevronRightIcon color="mono60" />
           </RouterLink>
         )
       })}

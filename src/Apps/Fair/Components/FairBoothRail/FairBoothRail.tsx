@@ -82,7 +82,7 @@ export const FairBoothRail: React.FC<
             </Text>
 
             {show.counts?.artworks && (
-              <Text as="h3" variant="lg-display" color="black60" mb={1}>
+              <Text as="h3" variant="lg-display" color="mono60" mb={1}>
                 {show.counts.artworks} work
                 {show.counts.artworks === 1 ? "" : "s"}
               </Text>

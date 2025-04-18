@@ -251,7 +251,7 @@ export const SavedSearchAlertsApp: React.FC<
   const list = useMemo(
     () => (
       <>
-        <Join separator={<Separator borderColor="black5" />}>
+        <Join separator={<Separator borderColor="mono5" />}>
           {alerts.map(node => {
             if (node === null) {
               return
@@ -315,7 +315,7 @@ export const SavedSearchAlertsApp: React.FC<
             <FullBleed>
               <Jump id="Alerts" />
 
-              <Separator color="black15" />
+              <Separator color="mono15" />
 
               <Media greaterThanOrEqual="md">
                 <GridColumns gridColumnGap={0}>
@@ -326,8 +326,8 @@ export const SavedSearchAlertsApp: React.FC<
                   <Column
                     span={6}
                     borderLeft="1px solid"
-                    borderLeftColor="black15"
-                    borderRightColor="black15"
+                    borderLeftColor="mono15"
+                    borderRightColor="mono15"
                   >
                     <Flex
                       flexDirection="column"

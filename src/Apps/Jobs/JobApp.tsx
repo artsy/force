@@ -37,7 +37,7 @@ const JobApp: FC<React.PropsWithChildren<JobAppProps>> = ({ job }) => {
         {job.title}
       </Text>
 
-      <Text variant="xl" color="black60">
+      <Text variant="xl" color="mono60">
         {job.location}
       </Text>
 

@@ -9,7 +9,7 @@ export default {
 }
 
 const EXAMPLE_CONTENT = (
-  <Box bg="black10" px={2} py={1} flexGrow={1}>
+  <Box bg="mono10" px={2} py={1} flexGrow={1}>
     <Text variant="xs">Example content</Text>
   </Box>
 )

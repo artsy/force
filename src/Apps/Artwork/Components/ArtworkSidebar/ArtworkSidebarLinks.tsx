@@ -36,7 +36,7 @@ const ArtworkSidebarLinks: React.FC<
 
       {isInOpenAuction && (
         <>
-          <Text variant="xs" color="black60">
+          <Text variant="xs" color="mono60">
             By placing your bid you agree to Artsy's{" "}
             <RouterLink
               inline

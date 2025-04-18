@@ -29,7 +29,7 @@ export const SavedSearchAlertListItem: React.FC<
       px={[2, 4]}
       pr={[2, 2]}
       py={4}
-      bg={variant === "active" ? "black5" : "white100"}
+      bg={variant === "active" ? "mono5" : "mono0"}
     >
       <Flex
         flexDirection={["column", "row"]}
@@ -47,8 +47,8 @@ export const SavedSearchAlertListItem: React.FC<
             <Text
               variant="lg-display"
               textColor={[
-                "black100",
-                variant === "active" ? "black100" : "black60",
+                "mono100",
+                variant === "active" ? "mono100" : "mono60",
               ]}
               style={{ overflowWrap: "break-word" }}
             >
@@ -57,8 +57,8 @@ export const SavedSearchAlertListItem: React.FC<
             <Text
               variant="md"
               textColor={[
-                "black100",
-                variant === "active" ? "black100" : "black60",
+                "mono100",
+                variant === "active" ? "mono100" : "mono60",
               ]}
               style={{ overflowWrap: "break-word" }}
             >
@@ -74,10 +74,7 @@ export const SavedSearchAlertListItem: React.FC<
         >
           <Text
             variant="sm"
-            textColor={[
-              "black100",
-              variant === "active" ? "black100" : "black60",
-            ]}
+            textColor={["mono100", variant === "active" ? "mono100" : "mono60"]}
           >
             <Clickable
               textDecoration="underline"
@@ -102,10 +99,7 @@ export const SavedSearchAlertListItem: React.FC<
           <Spacer x={2} />
           <Text
             variant="sm"
-            textColor={[
-              "black100",
-              variant === "active" ? "black100" : "black60",
-            ]}
+            textColor={["mono100", variant === "active" ? "mono100" : "mono60"]}
           >
             <Clickable
               onClick={() => {
@@ -128,7 +122,7 @@ export const SavedSearchAlertListItem: React.FC<
             </Clickable>
             &nbsp;
             <Sup
-              textColor={["brand", variant === "active" ? "brand" : "black60"]}
+              textColor={["brand", variant === "active" ? "brand" : "mono60"]}
             >
               {matchingArtworksCount}
             </Sup>

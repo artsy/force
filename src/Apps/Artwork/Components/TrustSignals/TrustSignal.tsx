@@ -22,17 +22,17 @@ export const TrustSignal: FC<React.PropsWithChildren<TrustSignalProps>> = ({
       <Flex flexDirection="column" ml={1}>
         {onClick ? (
           <Clickable onClick={onClick} textDecoration="underline">
-            <Text variant="xs" color="black100">
+            <Text variant="xs" color="mono100">
               {label}
             </Text>
           </Clickable>
         ) : (
-          <Text variant="xs" color="black100">
+          <Text variant="xs" color="mono100">
             {label}
           </Text>
         )}
 
-        <Text variant="xs" color="black60">
+        <Text variant="xs" color="mono60">
           {description}
         </Text>
       </Flex>

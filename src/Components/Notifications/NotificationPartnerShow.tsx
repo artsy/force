@@ -39,7 +39,7 @@ export const NotificationPartnerShow: React.FC<
           aspectWidth={4}
           aspectHeight={3}
           maxWidth="100%"
-          bg="black10"
+          bg="mono10"
         >
           {!!image?.src && (
             <Image
@@ -58,7 +58,7 @@ export const NotificationPartnerShow: React.FC<
 
         <Text variant="md">{show?.name}</Text>
 
-        <Text variant="sm" color="black60">
+        <Text variant="sm" color="mono60">
           {compact([show.location?.city, show.exhibitionPeriod]).join(", ")}
 
           {show.startAt && show.endAt && (

@@ -10,9 +10,9 @@ export const ConversationsSidebarHeader: React.FC<
       position="sticky"
       top={0}
       flexDirection="column"
-      backgroundColor="white100"
+      backgroundColor="mono0"
       borderBottom="1px solid"
-      borderBottomColor="black15"
+      borderBottomColor="mono15"
       zIndex={1}
     >
       <Text variant="lg">Conversations</Text>

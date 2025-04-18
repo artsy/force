@@ -16,7 +16,7 @@ export const InquiryConfirmation: React.FC<
 
       <Spacer y={4} />
 
-      <Box p={1} backgroundColor="black10">
+      <Box p={1} backgroundColor="mono10">
         <Text variant="sm-display">
           We'll send you an email if the gallery replies to your inquiry.
         </Text>

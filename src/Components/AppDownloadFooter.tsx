@@ -81,7 +81,7 @@ export const AppDownloadFooter: FC<
         gap={1}
       >
         <Stack gap={1} flexDirection="row" alignItems="center">
-          <Box bg="black100" color="white100" p={0.5} borderRadius={3}>
+          <Box bg="mono100" color="mono0" p={0.5} borderRadius={3}>
             <ArtsyMarkIcon width={30} height={30} />
           </Box>
 
@@ -114,7 +114,7 @@ const AppDownloadFooterPanel = styled(Box)`
   flex-direction: column;
   gap: ${themeGet("space.2")};
   padding: ${themeGet("space.2")};
-  background-color: ${themeGet("colors.white100")};
+  background-color: ${themeGet("colors.mono0")};
   position: fixed;
   right: 0;
   bottom: 0;

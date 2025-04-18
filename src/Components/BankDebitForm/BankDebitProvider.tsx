@@ -93,10 +93,10 @@ export const BankDebitProvider: FC<React.PropsWithChildren<Props>> = ({
   const appearance: Appearance = {
     theme: "stripe",
     variables: {
-      colorPrimary: theme.colors.black100,
-      colorBackground: theme.colors.white100,
-      colorText: theme.colors.black100,
-      colorIcon: theme.colors.black60,
+      colorPrimary: theme.colors.mono100,
+      colorBackground: theme.colors.mono0,
+      colorText: theme.colors.mono100,
+      colorIcon: theme.colors.mono60,
       colorDanger: theme.colors.red100,
       fontFamily: theme.fonts.sans,
       borderRadius: "3px",
@@ -105,42 +105,42 @@ export const BankDebitProvider: FC<React.PropsWithChildren<Props>> = ({
       ".Label": {
         fontSize: theme.textVariants.xs.fontSize, // "13px",
         lineHeight: theme.textVariants.xs.lineHeight, // "20px",
-        color: theme.colors.black100,
+        color: theme.colors.mono100,
       },
       ".Label--resting": {
-        color: theme.colors.black60,
+        color: theme.colors.mono60,
       },
       ".Label--floating": {
-        color: theme.colors.black100,
+        color: theme.colors.mono100,
       },
       ".Input": {
-        border: `1px solid ${theme.colors.black30}`,
+        border: `1px solid ${theme.colors.mono30}`,
         transition: "border-color 0.25s",
         boxShadow: "none",
         paddingTop: "12px",
         lineHeight: theme.textVariants["sm-display"].lineHeight, // "20px",
         marginBottom: theme.space["1"], // "10px"
-        color: theme.colors.black100,
+        color: theme.colors.mono100,
       },
       ".Input--empty": {
-        color: theme.colors.black60,
+        color: theme.colors.mono60,
       },
       ".Input:focus": {
         boxShadow: "none",
-        color: theme.colors.black100,
+        color: theme.colors.mono100,
         borderColor: theme.colors.blue100,
       },
       ".Input:hover": {
-        color: theme.colors.black100,
-        borderColor: theme.colors.black60,
+        color: theme.colors.mono100,
+        borderColor: theme.colors.mono60,
       },
       ".Input--invalid": {
         border: `1px solid ${theme.colors.red100}`,
-        color: theme.colors.black100,
+        color: theme.colors.mono100,
         boxShadow: "none",
       },
       ".Input:autofill": {
-        backgroundColor: theme.colors.white100,
+        backgroundColor: theme.colors.mono0,
       },
       ".TermsText": {
         fontSize: theme.textVariants.xs.fontSize, // "13px",

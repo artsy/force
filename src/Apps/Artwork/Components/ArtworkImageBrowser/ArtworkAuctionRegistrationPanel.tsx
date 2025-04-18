@@ -30,13 +30,13 @@ const ArtworkAuctionRegistrationPanel: React.FC<
           justifyContent="space-between"
         >
           <Box>
-            <Text variant="xs" color="black60">
+            <Text variant="xs" color="mono60">
               Registration for this auction ends:
             </Text>
 
             <Timer
               variant="xs"
-              color="black100"
+              color="mono100"
               endDate={artwork.sale?.registrationEndsAt}
             />
           </Box>

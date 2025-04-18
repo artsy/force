@@ -34,14 +34,14 @@ const ArtworkSidebarSizeInfo: React.FC<
   return (
     <React.Fragment data-testid="size-info">
       <Media greaterThanOrEqual="md">
-        <Box color="black60">
+        <Box color="mono60">
           {!!label && <Text variant="sm-display">{label}</Text>}
           {editionOf && <Text variant="sm-display">{editionOf}</Text>}
         </Box>
       </Media>
 
       <Media lessThan="md">
-        <Box color="black60">
+        <Box color="mono60">
           {hasInDimensions && (
             <Text variant="sm-display">{dimensions?.in}</Text>
           )}

@@ -14,7 +14,7 @@ export const BackupSecondFactorReminder: React.FC<
 
   return (
     <>
-      <Text variant="sm" color="black60">
+      <Text variant="sm" color="mono60">
         You can use these one-time codes to access your account if you lose
         access to your{" "}
         {factorTypeName === "AppSecondFactor"
@@ -23,7 +23,7 @@ export const BackupSecondFactorReminder: React.FC<
         .
       </Text>
 
-      <Text mt={2} variant="sm" color="black60">
+      <Text mt={2} variant="sm" color="mono60">
         Treat these codes like a password and store them in a safe place.
       </Text>
 

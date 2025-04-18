@@ -1,12 +1,12 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import ShareIcon from "@artsy/icons/ShareIcon"
 import { Box, Button, Flex, Stack } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkGrid } from "Apps/Settings/Routes/MyCollection/Components/MyCollectionArtworkGrid"
 import { MetaTags } from "Components/MetaTags"
 import { ShareCollectionDialog } from "Components/ShareCollectionDialog"
 import { RouterLink } from "System/Components/RouterLink"
-import { useFlag } from "@unleash/proxy-client-react"
 import { cleanLocalImages } from "Utils/localImageHelpers"
 import type { MyCollectionRoute_me$data } from "__generated__/MyCollectionRoute_me.graphql"
 import { type FC, useEffect, useState } from "react"
@@ -73,7 +73,7 @@ const MyCollectionRoute: FC<
 
       {total > 0 ? (
         <Stack gap={2}>
-          <Flex backgroundColor="white100" justifyContent="flex-end" gap={1}>
+          <Flex backgroundColor="mono0" justifyContent="flex-end" gap={1}>
             {enableShare && (
               <Button
                 size={["small", "large"]}

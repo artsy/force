@@ -90,7 +90,7 @@ export const AuthDialogWelcome: FC<
               </Button>
 
               <Stack gap={2}>
-                <Text variant="xs" textAlign="center" color="black60" my={-1}>
+                <Text variant="xs" textAlign="center" color="mono60" my={-1}>
                   Or continue with
                 </Text>
 

@@ -20,12 +20,12 @@ export const HeaderWithCoverImage = () => {
   return (
     <Page title="<HeaderWithCoverImage />">
       <FullBleed>
-        <Box bg="black30" height={600} mb={4} />
+        <Box bg="mono30" height={600} mb={4} />
       </FullBleed>
 
       <GridColumns>
         <Column span={6}>
-          <Box size={80} border="1px solid" borderColor="black30" mb={1} />
+          <Box size={80} border="1px solid" borderColor="mono30" mb={1} />
 
           <HeadersMetadataExample />
         </Column>
@@ -47,7 +47,7 @@ export const HeaderWithCarousel = () => {
         </Column>
 
         <Column span={6}>
-          <Box bg="black30" height={480} />
+          <Box bg="mono30" height={480} />
         </Column>
       </GridColumns>
 
@@ -63,7 +63,7 @@ export const HeaderArtist = () => {
         <Column span={6}>
           <Text variant="xl">Wolfgang Tillmans</Text>
 
-          <Text variant="xl" color="black60" mb={2}>
+          <Text variant="xl" color="mono60" mb={2}>
             German, b. 1968
           </Text>
 
@@ -75,7 +75,7 @@ export const HeaderArtist = () => {
             </Column>
 
             <Column span={[6, 6, 9]} display="flex" alignItems="center">
-              <Text variant="xs" color="black60">
+              <Text variant="xs" color="mono60">
                 10k Following
               </Text>
             </Column>
@@ -111,7 +111,7 @@ export const HeaderImageLeft = () => {
     <Page title="<HeaderImageLeft />">
       <GridColumns>
         <Column span={6}>
-          <Box bg="black30" height={800} />
+          <Box bg="mono30" height={800} />
         </Column>
 
         <Column span={6}>
@@ -131,7 +131,7 @@ export const HeaderImageRight = () => {
         </Column>
 
         <Column span={6}>
-          <Box bg="black30" height={800} />
+          <Box bg="mono30" height={800} />
         </Column>
       </GridColumns>
     </Page>
@@ -147,7 +147,7 @@ const HeadersMetadataExample = () => {
 
       <Text variant="xl">Section Title or Headline</Text>
 
-      <Text variant="xl" color="black60" mb={1}>
+      <Text variant="xl" color="mono60" mb={1}>
         Secondary Text
       </Text>
 

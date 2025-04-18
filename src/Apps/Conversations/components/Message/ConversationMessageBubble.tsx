@@ -59,7 +59,7 @@ export const ConversationMessageBubble: FC<
       {/* Avatar section */}
       {!simplified && !fromViewer && (
         <Flex
-          backgroundColor={simplified ? "white100" : "black10"}
+          backgroundColor={simplified ? "mono0" : "mono10"}
           borderRadius="50%"
           size={30}
           mr={1}
@@ -86,17 +86,17 @@ export const ConversationMessageBubble: FC<
                 &nbsp;
               </Text>
             )}
-            <Text color="black60" display="inline-block">
+            <Text color="mono60" display="inline-block">
               {(name ? "• " : " ") + time}
             </Text>
           </Box>
         )}
 
         <Box
-          backgroundColor={fromViewer ? "white100" : "black10"}
+          backgroundColor={fromViewer ? "mono0" : "mono10"}
           borderRadius={10}
           border="1px solid"
-          borderColor="black10"
+          borderColor="mono10"
           width="100%"
           p={isMessageImage ? 0 : 1}
           style={{
@@ -111,10 +111,10 @@ export const ConversationMessageBubble: FC<
 
         {seenBy && (
           <Flex alignSelf="flex-end" alignItems="center" mt={1}>
-            <Text variant="xs" color="black60">
+            <Text variant="xs" color="mono60">
               Seen by {` ${seenBy} `}
             </Text>
-            <CheckmarkIcon fill="black60" />
+            <CheckmarkIcon fill="mono60" />
           </Flex>
         )}
       </Flex>

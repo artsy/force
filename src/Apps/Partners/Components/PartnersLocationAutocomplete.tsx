@@ -87,7 +87,7 @@ const PartnersLocationAutocomplete: FC<
             <Text variant="sm-display">{option.text}</Text>
 
             {"fullName" in option && (
-              <Text variant="xs" color="black60">
+              <Text variant="xs" color="mono60">
                 {option.fullName.split(", ").slice(1).join(", ")}
               </Text>
             )}

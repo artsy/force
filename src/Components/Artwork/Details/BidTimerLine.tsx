@@ -53,7 +53,7 @@ export const BidTimerLine: React.FC<
       <Text
         variant="sm-display"
         lineHeight="22px"
-        color="black100"
+        color="mono100"
         alignSelf="flex-start"
         overflowEllipsis
       >

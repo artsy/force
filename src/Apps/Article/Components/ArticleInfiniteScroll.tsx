@@ -181,7 +181,7 @@ const ArticleInfiniteScrollPlaceholder: FC<
 > = () => {
   return (
     <>
-      <FullBleed bg="black5" p={1}>
+      <FullBleed bg="mono5" p={1}>
         <ResponsiveBox
           aspectWidth={970}
           aspectHeight={250}
@@ -257,6 +257,6 @@ const FadeOut = styled(Box)`
   mask-image: linear-gradient(
     to top,
     transparent 0%,
-    ${themeGet("colors.white100")} 33%
+    ${themeGet("colors.mono0")} 33%
   );
 `

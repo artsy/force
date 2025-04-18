@@ -80,7 +80,7 @@ export const NavBarUserMenu: React.FC<
 
             <Text
               variant="xs"
-              color="black60"
+              color="mono60"
               style={{ textDecoration: "underline" }}
             >
               View profile
@@ -89,7 +89,7 @@ export const NavBarUserMenu: React.FC<
         </NavBarMenuItemLink>
       )}
 
-      <Text variant="xxs" color="black60" px={2} pt={1} pb={0.5}>
+      <Text variant="xxs" color="mono60" px={2} pt={1} pb={0.5}>
         My Collection
       </Text>
 
@@ -122,7 +122,7 @@ export const NavBarUserMenu: React.FC<
 
       <Separator my={1} />
 
-      <Text variant="xxs" color="black60" px={2} pt={1} pb={0.5}>
+      <Text variant="xxs" color="mono60" px={2} pt={1} pb={0.5}>
         Favorites
       </Text>
 

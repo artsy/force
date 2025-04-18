@@ -56,7 +56,7 @@ export const AuctionResultPrice: React.FC<
           content="The sale price includes the hammer price and buyer's premium, as well as any other additional fees (e.g., Artist's Resale Rights)."
         >
           <Clickable ml={0.5} style={{ lineHeight: 0 }}>
-            <InfoIcon fill="black60" />
+            <InfoIcon fill="mono60" />
           </Clickable>
         </Tooltip>
       </Flex>
@@ -69,7 +69,7 @@ export const AuctionResultPrice: React.FC<
             <AuctionResultPerformance value={performance?.mid!} />
           </Flex>
           {showPriceUSD && (
-            <Text variant={["xs", "sm"]} color="black60">
+            <Text variant={["xs", "sm"]} color="mono60">
               {priceRealized?.displayUSD}
             </Text>
           )}
@@ -84,7 +84,7 @@ export const AuctionResultPrice: React.FC<
 
       {!salePrice && awaitingResult && !boughtIn && (
         <Flex alignItems="center">
-          <StopwatchIcon fill="black100" width={23} height={23} mr={0.5} />
+          <StopwatchIcon fill="mono100" width={23} height={23} mr={0.5} />
           <Text variant={["md", "lg-display"]}>
             <i>Awaiting results</i>
           </Text>

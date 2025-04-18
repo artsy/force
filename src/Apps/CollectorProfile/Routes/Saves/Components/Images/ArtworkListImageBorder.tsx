@@ -4,7 +4,7 @@ import styled from "styled-components"
 
 export const ArtworkListImageBorder = styled(Flex)<FlexProps>`
   box-sizing: border-box;
-  border: 1px solid ${themeGet("colors.black15")};
+  border: 1px solid ${themeGet("colors.mono15")};
   align-items: center;
   justify-content: center;
   flex-shrink: 0;

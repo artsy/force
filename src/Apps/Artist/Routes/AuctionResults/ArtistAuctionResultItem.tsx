@@ -83,7 +83,7 @@ export const ArtistAuctionResultItem: React.FC<
             aspectWidth={1}
             aspectHeight={1}
             maxWidth={130}
-            bg="black10"
+            bg="mono10"
           >
             {image ? (
               <Image
@@ -101,7 +101,7 @@ export const ArtistAuctionResultItem: React.FC<
                 alignItems="center"
                 height="100%"
               >
-                <NoArtIcon height={24} width={24} fill="black60" />
+                <NoArtIcon height={24} width={24} fill="mono60" />
               </Box>
             )}
           </ResponsiveBox>
@@ -116,20 +116,20 @@ export const ArtistAuctionResultItem: React.FC<
             </Text>
 
             {mediumText !== "Unknown" && (
-              <Text variant="xs" color="black60" lineClamp={1}>
+              <Text variant="xs" color="mono60" lineClamp={1}>
                 {mediumText}
               </Text>
             )}
 
             {dimension_text && (
-              <Text variant="xs" color="black60" lineClamp={1}>
+              <Text variant="xs" color="mono60" lineClamp={1}>
                 {dimension_text}
               </Text>
             )}
 
             <Spacer y={1} />
 
-            <Text variant="xs" color="black60" lineClamp={1}>
+            <Text variant="xs" color="mono60" lineClamp={1}>
               {dateOfSale} • {organization}
             </Text>
 
@@ -148,13 +148,13 @@ export const ArtistAuctionResultItem: React.FC<
           </Text>
 
           {mediumText !== "Unknown" && (
-            <Text variant="xs" color="black60">
+            <Text variant="xs" color="mono60">
               {mediumText}
             </Text>
           )}
 
           {dimension_text && (
-            <Text variant="xs" color="black60">
+            <Text variant="xs" color="mono60">
               {dimension_text}
             </Text>
           )}
@@ -163,16 +163,16 @@ export const ArtistAuctionResultItem: React.FC<
         <Column span={3} display={["none", "block"]}>
           <Text variant="sm-display">{dateOfSale}</Text>
 
-          <Text variant="xs" color="black60">
+          <Text variant="xs" color="mono60">
             {organization}
             {!!location && ` • ${location}`}
           </Text>
 
-          <Text variant="xs" color="black60">
+          <Text variant="xs" color="mono60">
             {saleTitle}
           </Text>
 
-          <Text variant="xs" color="black60">
+          <Text variant="xs" color="mono60">
             Lot {lotNumber}
           </Text>
         </Column>
@@ -320,7 +320,7 @@ const ArtistAuctionResultItemPrice: React.FC<
 
       {!salePrice && !boughtIn && awaitingResults && (
         <Flex flexDirection="row" justifyContent="flex-end" alignItems="center">
-          <StopwatchIcon fill="black100" width={16} height={16} />
+          <StopwatchIcon fill="mono100" width={16} height={16} />
 
           <Spacer x="4px" />
 
@@ -337,7 +337,7 @@ const ArtistAuctionResultItemPrice: React.FC<
       )}
 
       {!!estimatedPrice && (
-        <Text variant="xs" color="black60" display={["none", "block"]}>
+        <Text variant="xs" color="mono60" display={["none", "block"]}>
           {estimatedPrice} (est)
         </Text>
       )}

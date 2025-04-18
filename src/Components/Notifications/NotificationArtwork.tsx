@@ -55,7 +55,7 @@ export const NotificationArtwork: React.FC<
               artwork.image?.height ?? 1
             }`,
           }}
-          bg="black10"
+          bg="mono10"
         >
           <Image
             src={image.src}

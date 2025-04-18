@@ -29,7 +29,7 @@ export const SaleAgreementRoute: FC<
         {data.sale.name}
       </Text>
 
-      <Text variant="lg" color="black60">
+      <Text variant="lg" color="mono60">
         {data.displayStartAt} - {data.displayEndAt}
       </Text>
 

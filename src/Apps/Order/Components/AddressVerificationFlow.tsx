@@ -314,9 +314,9 @@ const AddressVerificationFlow: React.FC<
           <Spacer y={1} />
           <Box
             border="1px solid"
-            borderColor="black5"
+            borderColor="mono5"
             p={2}
-            backgroundColor="black5"
+            backgroundColor="mono5"
           >
             {addressOptions[0]!.lines!.map((line: string) => (
               <Text key={line}>{line}</Text>

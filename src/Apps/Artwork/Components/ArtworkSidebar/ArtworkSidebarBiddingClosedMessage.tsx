@@ -14,13 +14,13 @@ const BiddingClosedMessage: React.FC<
 > = ({ artwork }) => {
   return (
     <>
-      <Text variant="lg-display" color="black100">
+      <Text variant="lg-display" color="mono100">
         Bidding closed
       </Text>
 
       {artwork.isEligibleToCreateAlert && (
         <>
-          <Text variant="sm" color="black60" pt={0.5}>
+          <Text variant="sm" color="mono60" pt={0.5}>
             Get notifications for similar works
           </Text>
           <Spacer y={2} />

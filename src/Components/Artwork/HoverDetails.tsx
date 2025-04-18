@@ -56,7 +56,7 @@ const HoverContainer = styled(Box)`
   height: 100%;
   display: flex;
   align-items: center;
-  background-color: ${themeGet("colors.white100")};
+  background-color: ${themeGet("colors.mono0")};
 `
 
 export const HoverDetailsFragmentContainer = createFragmentContainer(

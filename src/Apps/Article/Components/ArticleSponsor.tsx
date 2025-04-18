@@ -30,7 +30,7 @@ const ArticleSponsor: FC<React.PropsWithChildren<ArticleSponsorProps>> = ({
         display="block"
         width={40}
         height={40}
-        bg={scheme ? "black100" : "white100"}
+        bg={scheme ? "mono100" : "mono0"}
         borderRadius="50%"
         as="a"
         // @ts-ignore

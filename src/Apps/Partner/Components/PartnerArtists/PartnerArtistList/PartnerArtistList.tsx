@@ -62,7 +62,7 @@ export const PartnerArtistList: React.FC<
                 // No partner artworks for this artist
                 if ((edge.counts?.artworks ?? 0) === 0) {
                   return (
-                    <Box key={artist.internalID} color="black60" py={0.5}>
+                    <Box key={artist.internalID} color="mono60" py={0.5}>
                       {artist.name}
                     </Box>
                   )

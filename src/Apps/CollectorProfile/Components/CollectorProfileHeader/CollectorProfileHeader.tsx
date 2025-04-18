@@ -31,7 +31,7 @@ const CollectorProfileHeader: React.FC<
             src={me.icon?.cropped?.src}
             srcSet={me.icon?.cropped?.srcSet}
             border="1px solid"
-            borderColor="black10"
+            borderColor="mono10"
           />
         </Media>
 
@@ -42,7 +42,7 @@ const CollectorProfileHeader: React.FC<
             src={me.icon?.cropped?.src}
             srcSet={me.icon?.cropped?.srcSet}
             border="1px solid"
-            borderColor="black10"
+            borderColor="mono10"
           />
         </Media>
 

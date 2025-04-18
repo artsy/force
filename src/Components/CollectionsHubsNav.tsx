@@ -45,7 +45,7 @@ export const CollectionsHubsNav: FC<
                 aspectWidth={387}
                 aspectHeight={218}
                 maxWidth="100%"
-                bg="black10"
+                bg="mono10"
               >
                 {image && (
                   <Image

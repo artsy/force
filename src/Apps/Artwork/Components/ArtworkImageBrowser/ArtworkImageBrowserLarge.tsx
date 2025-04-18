@@ -59,7 +59,7 @@ const ArtworkImageBrowserLarge: React.FC<
       <Box
         ref={containerRef as any}
         position="relative"
-        bg="white100"
+        bg="mono0"
         {...detectActivityProps}
       >
         {figures.length > 1 && (
@@ -172,7 +172,7 @@ const NextPrevious = styled(Clickable)`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${themeGet("colors.black60")};
+  color: ${themeGet("colors.mono60")};
   mix-blend-mode: difference;
   transition:
     color 250ms,
@@ -183,6 +183,6 @@ const NextPrevious = styled(Clickable)`
   &:focus,
   &:focus-visible {
     outline: none;
-    color: ${themeGet("colors.black10")};
+    color: ${themeGet("colors.mono10")};
   }
 `

@@ -58,7 +58,7 @@ const EntityHeaderArtist: FC<
           </Text>
 
           {artist.formattedNationalityAndBirthday && (
-            <Text variant="xs" color="black60" overflowEllipsis>
+            <Text variant="xs" color="mono60" overflowEllipsis>
               {artist.formattedNationalityAndBirthday}
             </Text>
           )}

@@ -38,7 +38,7 @@ export const StepSummaryItem: React.FC<
             <Text
               variant={["xs", "sm-display"]}
               fontWeight="bold"
-              color="black100"
+              color="mono100"
             >
               {title}
             </Text>

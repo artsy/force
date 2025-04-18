@@ -45,7 +45,7 @@ export const FullBleedHeader: FC<
   return (
     <Container
       ref={ref as any}
-      bg="black10"
+      bg="mono10"
       height={height}
       position="relative"
       {...rest}
@@ -88,7 +88,7 @@ export const FullBleedHeader: FC<
 
       {caption && (
         <FullBleedHeaderOverlay display={["none", "flex"]} zIndex={1}>
-          <HTML html={caption} color="white100" variant="xs" px={2} py={1} />
+          <HTML html={caption} color="mono0" variant="xs" px={2} py={1} />
         </FullBleedHeaderOverlay>
       )}
 

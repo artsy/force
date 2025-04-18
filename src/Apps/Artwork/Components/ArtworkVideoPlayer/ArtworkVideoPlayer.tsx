@@ -89,7 +89,7 @@ const ArtworkVideoPlayer: FC<
         aspectWidth={activeVideo.videoWidth}
         aspectHeight={activeVideo.videoHeight}
         // TODO: Uncomment this when dimensions issue is investigated a bit more
-        // bg="black10"
+        // bg="mono10"
       >
         <iframe
           src={activeVideo.playerUrl}

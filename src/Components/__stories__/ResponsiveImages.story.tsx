@@ -19,7 +19,7 @@ export const ResponsiveImageWithMaxWidth = () => {
       aspectWidth={IMAGE.width}
       aspectHeight={IMAGE.height}
       maxWidth={600}
-      bg="black10"
+      bg="mono10"
     >
       <Image
         src={image.src}
@@ -47,7 +47,7 @@ export const ResponsiveImageWidthOfParent = () => {
       aspectWidth={IMAGE.width}
       aspectHeight={IMAGE.height}
       maxWidth="100%"
-      bg="black10"
+      bg="mono10"
     >
       <Image
         src={image.src}
@@ -75,7 +75,7 @@ export const ResponsiveCrop = () => {
       aspectWidth={900}
       aspectHeight={900}
       maxWidth="100%"
-      bg="black10"
+      bg="mono10"
     >
       <Image
         src={image.src}
@@ -126,7 +126,7 @@ export const PictureExample = () => {
       aspectWidth={IMAGE.width}
       aspectHeight={IMAGE.height}
       maxWidth="100%"
-      bg="black10"
+      bg="mono10"
     >
       <picture style={{ width: "100%", height: "100%" }}>
         {sources.map((source, i) => {

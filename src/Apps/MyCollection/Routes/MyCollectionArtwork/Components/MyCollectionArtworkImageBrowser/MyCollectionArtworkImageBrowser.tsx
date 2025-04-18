@@ -18,7 +18,7 @@ export const MyCollectionArtworkImageBrowser: React.FC<
       <Flex maxWidth={["100%", 600]} mx="auto" my={[2, 2]}>
         <ResponsiveBox
           data-testid="artwork-browser-no-image-box"
-          bg="black10"
+          bg="mono10"
           mx={[0, 2, 4]}
           maxWidth="100%"
           aspectWidth={1}

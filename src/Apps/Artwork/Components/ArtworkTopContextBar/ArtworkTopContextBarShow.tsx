@@ -49,7 +49,7 @@ export const ArtworkTopContextBarShow: React.FC<
     >
       <Stack gap={1} flexDirection="row">
         {show.name}
-        <Box as="span" color="black60">
+        <Box as="span" color="mono60">
           {show.status === "running" ? "Current show" : "Past show"}
           {show.partner?.name ? ` at ${show.partner.name}` : null}
         </Box>

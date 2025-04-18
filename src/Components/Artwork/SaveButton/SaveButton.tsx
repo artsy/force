@@ -66,7 +66,7 @@ export const SaveButtonBase: React.FC<
   return (
     <Flex alignItems="center">
       {shouldDisplayLotCount && (
-        <Text variant="sm-display" lineHeight="22px" color="black100">
+        <Text variant="sm-display" lineHeight="22px" color="mono100">
           {lotWatcherCount}
         </Text>
       )}
@@ -90,7 +90,7 @@ export const SaveButtonBase: React.FC<
         ) : (
           <HeartStrokeIcon
             title={title}
-            fill="black100"
+            fill="mono100"
             width={BTN_WIDTH}
             height={BTN_HEIGHT}
           />

@@ -77,7 +77,7 @@ export const CountdownTimer: React.FC<
         {action} by {actionDeadline}
       </Text>
 
-      <Text variant="xs" color="black60">
+      <Text variant="xs" color="mono60">
         {note}
       </Text>
     </StackableBorderBox>

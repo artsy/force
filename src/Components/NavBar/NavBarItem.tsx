@@ -7,7 +7,7 @@ const navBarItemMixin = css<{ active?: boolean }>`
   position: relative;
   height: 100%;
   align-items: center;
-  color: ${themeGet("colors.black100")};
+  color: ${themeGet("colors.mono100")};
   text-decoration: none;
   overflow: hidden;
   white-space: nowrap;

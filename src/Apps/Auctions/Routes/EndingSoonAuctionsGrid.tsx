@@ -22,7 +22,7 @@ export const EndingSoonAuctionsGrid: FC<
 
   if (!viewer.saleArtworksConnection || nodes.length === 0) {
     return (
-      <Text variant="lg" mt={4} color="black60">
+      <Text variant="lg" mt={4} color="mono60">
         Nothing yet.
       </Text>
     )

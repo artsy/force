@@ -28,7 +28,7 @@ export const Default = () => {
             >
               <Text
                 variant="xxl"
-                color="white100"
+                color="mono0"
                 style={{ textShadow: "0 0 15px rgba(0, 0, 0, 0.25)" }}
               >
                 Hello World

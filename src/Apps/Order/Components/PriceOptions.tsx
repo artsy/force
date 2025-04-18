@@ -126,7 +126,7 @@ export const PriceOptions: React.FC<
             }}
             key={key}
           >
-            <Text variant="sm" color="black60">
+            <Text variant="sm" color="mono60">
               {description}
             </Text>
           </BorderedRadio>

@@ -49,7 +49,7 @@ const CellArtistSeries: FC<React.PropsWithChildren<CellArtistSeriesProps>> = ({
           />
         ) : (
           <Box
-            bg="black10"
+            bg="mono10"
             width="100%"
             height="100%"
             display="flex"
@@ -63,7 +63,7 @@ const CellArtistSeries: FC<React.PropsWithChildren<CellArtistSeriesProps>> = ({
 
       <Text variant="sm-display">{artistSeries.title}</Text>
 
-      <Text variant="sm-display" color="black60">
+      <Text variant="sm-display" color="mono60">
         {artistSeries.artworksCountMessage}
       </Text>
     </RouterLink>

@@ -72,7 +72,7 @@ const knobStyles = css`
   cursor: pointer;
   width: ${themeGet("space.2")};
   height: ${themeGet("space.2")};
-  background-color: ${themeGet("colors.white100")};
+  background-color: ${themeGet("colors.mono0")};
   border-radius: 50%;
 `
 
@@ -89,7 +89,7 @@ const Track = styled(Flex)`
     right: 0;
     top: 50%;
     margin-top: -1px;
-    background-color: ${themeGet("colors.black30")};
+    background-color: ${themeGet("colors.mono30")};
   }
 `
 
@@ -127,7 +127,7 @@ const Svg = styled.svg`
   padding: ${themeGet("space.1")};
   flex-shrink: 0;
   cursor: pointer;
-  stroke: ${themeGet("colors.white100")};
+  stroke: ${themeGet("colors.mono0")};
 `
 
 const ZoomOutButton: React.FC<

@@ -39,7 +39,7 @@ export const ShowsHeader: React.FC<
   const options = uniqBy([...DEFAULT_CITIES, ...allCities], city => city.value)
 
   return (
-    <Box p={0} border="1px solid" borderColor="black10">
+    <Box p={0} border="1px solid" borderColor="mono10">
       <GridColumns width="100%">
         <Column span={10} display={["none", "block"]}>
           <HorizontalOverflow height="100%" p={2} data-test="cities-rail">

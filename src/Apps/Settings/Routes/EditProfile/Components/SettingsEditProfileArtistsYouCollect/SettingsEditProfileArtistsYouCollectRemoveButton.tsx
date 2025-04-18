@@ -18,7 +18,7 @@ export const SettingsEditProfileArtistsYouCollectRemoveButton: FC<
       {hovered ? (
         <CloseIcon display="block" fill="red100" />
       ) : (
-        <CheckmarkIcon display="block" fill="black60" />
+        <CheckmarkIcon display="block" fill="mono60" />
       )}
     </Clickable>
   )

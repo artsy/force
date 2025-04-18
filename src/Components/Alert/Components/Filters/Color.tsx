@@ -96,7 +96,7 @@ const ColorSwatch = styled.div`
 const BlackAndWhiteSwatch = styled(ColorSwatch)`
   position: relative;
   overflow: hidden;
-  border: 1px solid ${themeGet("colors.black10")};
+  border: 1px solid ${themeGet("colors.mono10")};
   transform: rotate(-135deg);
 
   &::after {
@@ -107,6 +107,6 @@ const BlackAndWhiteSwatch = styled(ColorSwatch)`
     position: absolute;
     top: 0;
     left: 0;
-    background-color: ${themeGet("colors.black100")};
+    background-color: ${themeGet("colors.mono100")};
   }
 `

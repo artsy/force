@@ -110,7 +110,7 @@ export const AuthDialogLogin: FC<React.PropsWithChildren<unknown>> = () => {
 
                 <Spacer y={0.5} />
 
-                <Text variant="xs" textAlign="right" color="black60">
+                <Text variant="xs" textAlign="right" color="mono60">
                   <Clickable
                     textDecoration="underline"
                     data-test="forgot"
@@ -165,11 +165,11 @@ export const AuthDialogLogin: FC<React.PropsWithChildren<unknown>> = () => {
                 </Button>
 
                 {state.isFallback && (
-                  <Text variant="xs" textAlign="center" color="black60">
+                  <Text variant="xs" textAlign="center" color="mono60">
                     Don’t have an account?{" "}
                     <Clickable
                       textDecoration="underline"
-                      color="black100"
+                      color="mono100"
                       onClick={() => {
                         dispatch({ type: "MODE", payload: { mode: "SignUp" } })
                       }}

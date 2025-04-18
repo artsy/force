@@ -71,28 +71,28 @@ const ORDER_LABELS = {
 } as const
 
 const ORDER_ICONS = {
-  APPROVED: <PendingIcon fill="black100" />,
+  APPROVED: <PendingIcon fill="mono100" />,
   CANCELED: <CloseStrokeIcon fill="red100" />,
   FULFILLED: <CheckmarkFillIcon fill="green100" />,
-  IN_TRANSIT: <PendingIcon fill="black60" />,
+  IN_TRANSIT: <PendingIcon fill="mono60" />,
   OFFER_RECEIVED: <PendingIcon fill="blue100" />,
-  PROCESSING: <PendingIcon fill="black60" />,
+  PROCESSING: <PendingIcon fill="mono60" />,
   REFUNDED: <CloseStrokeIcon fill="red100" />,
-  SUBMITTED: <PendingIcon fill="black60" />,
-  PROCESSING_APPROVAL: <PendingIcon fill="black60" />,
+  SUBMITTED: <PendingIcon fill="mono60" />,
+  PROCESSING_APPROVAL: <PendingIcon fill="mono60" />,
   PAYMENT_FAILED: <AlertStrokeIcon fill="red100" />,
 } as const
 
 const ORDER_COLORS = {
-  APPROVED: "black100",
+  APPROVED: "mono100",
   CANCELED: "red100",
   FULFILLED: "green100",
-  IN_TRANSIT: "black60",
+  IN_TRANSIT: "mono60",
   OFFER_RECEIVED: "blue100",
-  PROCESSING: "black60",
+  PROCESSING: "mono60",
   REFUNDED: "red100",
-  SUBMITTED: "black60",
-  PROCESSING_APPROVAL: "black60",
+  SUBMITTED: "mono60",
+  PROCESSING_APPROVAL: "mono60",
   PAYMENT_FAILED: "red100",
 } as const
 
@@ -228,13 +228,8 @@ const SettingsPurchasesRow: FC<
   }
 
   return (
-    <Box border="1px solid" borderColor="black10">
-      <Flex
-        bg="black5"
-        justifyContent="space-between"
-        alignItems="center"
-        p={2}
-      >
+    <Box border="1px solid" borderColor="mono10">
+      <Flex bg="mono5" justifyContent="space-between" alignItems="center" p={2}>
         <Text variant="sm-display">
           {orderCreatedAt.toLocaleString(DateTime.DATE_MED as LocaleOptions)}
         </Text>
@@ -279,7 +274,7 @@ const SettingsPurchasesRow: FC<
               lazyLoad
             />
           ) : (
-            <Box width={45} height={45} bg="black10" />
+            <Box width={45} height={45} bg="mono10" />
           )}
 
           <Box ml={1}>
@@ -293,14 +288,14 @@ const SettingsPurchasesRow: FC<
               </RouterLink>
             </Text>
 
-            <Text variant="xs" color="black60">
+            <Text variant="xs" color="mono60">
               {isPrivateSale ? (
                 artwork?.title
               ) : (
                 <RouterLink
                   to={artwork?.href}
                   display="block"
-                  color="black60"
+                  color="mono60"
                   textDecoration="none"
                 >
                   {artwork?.title}
@@ -343,7 +338,7 @@ const SettingsPurchasesRow: FC<
         <Column span={3}>
           <Text variant="sm-display">Order No.</Text>
 
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             <OrderLink
               order={order}
               trackChangePaymentMethodClick={trackChangePaymentMethodClick}
@@ -354,7 +349,7 @@ const SettingsPurchasesRow: FC<
         <Column span={3}>
           <Text variant="sm-display">Total</Text>
 
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             {appendCurrencySymbol(order.buyerTotal, order.currencyCode)}
           </Text>
         </Column>
@@ -362,7 +357,7 @@ const SettingsPurchasesRow: FC<
         <Column span={3}>
           <Text variant="sm-display">Payment Method</Text>
 
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             {getPaymentMethodText(
               order.paymentMethodDetails,
               order.creditCardWalletType,
@@ -373,17 +368,17 @@ const SettingsPurchasesRow: FC<
         <Column span={3}>
           <Text variant="sm-display">Delivery method</Text>
 
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             {requestedFulfillment?.__typename === "CommercePickup"
               ? "Pickup"
               : "Delivery"}
           </Text>
         </Column>
       </GridColumns>
-      <Flex p={2} borderTop="1px solid" borderColor="black10">
-        <HelpIcon fill="black60" mr={0.5} />
+      <Flex p={2} borderTop="1px solid" borderColor="mono10">
+        <HelpIcon fill="mono60" mr={0.5} />
 
-        <Text variant="xs" color="black60">
+        <Text variant="xs" color="mono60">
           Need Help?{" "}
           {isPrivateSale ? (
             <RouterLink inline to="mailto:privatesales@artsy.net">
@@ -484,10 +479,10 @@ export const SettingsPurchasesRowPlaceholder: FC<
 > = () => {
   return (
     <Skeleton>
-      <Box border="1px solid" borderColor="black10">
+      <Box border="1px solid" borderColor="mono10">
         <Box
           display="flex"
-          bg="black5"
+          bg="mono5"
           justifyContent="space-between"
           alignItems="center"
           p={2}
@@ -536,7 +531,7 @@ export const SettingsPurchasesRowPlaceholder: FC<
           </Column>
         </GridColumns>
 
-        <Flex p={2} borderTop="1px solid" borderColor="black10">
+        <Flex p={2} borderTop="1px solid" borderColor="mono10">
           <SkeletonText variant="xs">Need Help? Contact Us.</SkeletonText>
         </Flex>
       </Box>

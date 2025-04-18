@@ -33,7 +33,7 @@ const FairHeader: React.FC<React.PropsWithChildren<FairHeaderProps>> = ({
           {name}
         </Text>
 
-        <Text variant={["lg-display", "xl"]} color="black60">
+        <Text variant={["lg-display", "xl"]} color="mono60">
           {exhibitionPeriod}
         </Text>
       </Column>

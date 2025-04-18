@@ -1,15 +1,15 @@
-import { Elements, useElements, PaymentElement } from "@stripe/react-stripe-js"
+import { Box, Spacer, Text } from "@artsy/palette"
+import { Elements, PaymentElement, useElements } from "@stripe/react-stripe-js"
 import {
   type StripeElementsOptions,
   type StripeElementsUpdateOptions,
   type StripePaymentElementOptions,
   loadStripe,
 } from "@stripe/stripe-js"
-import { Box, Text, Spacer } from "@artsy/palette"
-import { useState } from "react"
-import { FadeInBox } from "Components/FadeInBox"
 import { Collapse } from "Apps/Order/Components/Collapse"
+import { FadeInBox } from "Components/FadeInBox"
 import { getENV } from "Utils/getENV"
+import { useState } from "react"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
@@ -125,7 +125,7 @@ const PaymentFormContent = () => {
         >
           <Text>Wire Transfer</Text>
           <Collapse open={selectedPaymentMethod === "wire"}>
-            <Text color="black60" variant="sm">
+            <Text color="mono60" variant="sm">
               <ul
                 style={{
                   paddingLeft: "2rem",

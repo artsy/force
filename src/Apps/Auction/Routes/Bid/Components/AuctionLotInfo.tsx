@@ -28,7 +28,7 @@ const AuctionLotInfo: React.FC<
         width={150} // keep the box area consistent
         display="flex"
         justifyContent="center"
-        bg="white100"
+        bg="mono0"
       >
         <Image
           src={artwork?.image?.resized?.src}
@@ -58,7 +58,7 @@ const AuctionLotInfo: React.FC<
             </Text>
 
             {bidCount > 0 && (
-              <Text variant="sm-display" color="black60">
+              <Text variant="sm-display" color="mono60">
                 ({bidCount} bid{bidCount > 1 && "s"})
               </Text>
             )}

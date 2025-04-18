@@ -41,7 +41,7 @@ export const CarouselArtworkLarge = () => {
         {[...new Array(10)].map((_, i) => {
           return (
             <Box key={i} width={460}>
-              <Box bg="black30" height={random(200, 500)} mb={1} />
+              <Box bg="mono30" height={random(200, 500)} mb={1} />
               <TombstoneExample />
             </Box>
           )
@@ -60,7 +60,7 @@ export const CarouselArtworkMedium = () => {
         {[...new Array(10)].map((_, i) => {
           return (
             <Box key={i} width={340}>
-              <Box bg="black30" height={random(200, 500)} mb={1} />
+              <Box bg="mono30" height={random(200, 500)} mb={1} />
               <TombstoneExample />
             </Box>
           )
@@ -79,7 +79,7 @@ export const CarouselArtworkSmall = () => {
         {[...new Array(10)].map((_, i) => {
           return (
             <Box key={i} width={220}>
-              <Box bg="black30" height={random(175, 400)} mb={1} />
+              <Box bg="mono30" height={random(175, 400)} mb={1} />
               <TombstoneExample />
             </Box>
           )
@@ -96,7 +96,7 @@ export const CarouselEditorial = () => {
 
       <SwiperWithProgress verticalAlign="top">
         <Box width={220}>
-          <Box bg="black30" height={122} mb={1} />
+          <Box bg="mono30" height={122} mb={1} />
 
           <Text variant="xs" mb={0.5}>
             Category
@@ -111,7 +111,7 @@ export const CarouselEditorial = () => {
             By Author Name
           </Text>
 
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             Time Date Year
           </Text>
         </Box>
@@ -130,13 +130,13 @@ export const CarouselEditorial = () => {
             By Author Name
           </Text>
 
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             Time Date Year
           </Text>
         </Box>
 
         <Box width={220}>
-          <Box bg="black30" height={223} mb={1} />
+          <Box bg="mono30" height={223} mb={1} />
 
           <Text variant="xs" mb={0.5}>
             Category
@@ -151,13 +151,13 @@ export const CarouselEditorial = () => {
             By Author Name
           </Text>
 
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             Time Date Year
           </Text>
         </Box>
 
         <Box width={220}>
-          <Box bg="black30" height={268} mb={1} />
+          <Box bg="mono30" height={268} mb={1} />
 
           <Text variant="xs" mb={0.5}>
             Category
@@ -171,7 +171,7 @@ export const CarouselEditorial = () => {
             By Author Name
           </Text>
 
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             Time Date Year
           </Text>
         </Box>
@@ -189,13 +189,13 @@ export const CarouselEditorial = () => {
             By Author Name
           </Text>
 
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             Time Date Year
           </Text>
         </Box>
 
         <Box width={220}>
-          <Box bg="black30" height={169} mb={1} />
+          <Box bg="mono30" height={169} mb={1} />
 
           <Text variant="xs" mb={0.5}>
             Category
@@ -209,7 +209,7 @@ export const CarouselEditorial = () => {
             By Author Name
           </Text>
 
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             Time Date Year
           </Text>
         </Box>
@@ -230,13 +230,13 @@ export const CarouselAuctions = () => {
               <Flex alignItems="flex-end" mb={1}>
                 <Box
                   position="relative"
-                  bg="black30"
+                  bg="mono30"
                   width={random(150, 225)}
                   height={random(150, 225)}
                   zIndex={2}
                 />
                 <Box
-                  bg="black15"
+                  bg="mono15"
                   width={random(150, 225)}
                   height={random(150, 225)}
                   position="relative"
@@ -244,7 +244,7 @@ export const CarouselAuctions = () => {
                   zIndex={1}
                 />
                 <Box
-                  bg="black10"
+                  bg="mono10"
                   width={random(150, 225)}
                   height={random(150, 225)}
                   position="relative"
@@ -253,7 +253,7 @@ export const CarouselAuctions = () => {
               </Flex>
 
               <Text variant="sm-display">Primary Text</Text>
-              <Text variant="sm-display" color="black60">
+              <Text variant="sm-display" color="mono60">
                 Secondary Text
               </Text>
               <Text variant="xs">Status</Text>
@@ -277,7 +277,7 @@ export const CarouselViewingRoomsGrid = () => {
               <Flex mb={1} justifyContent="space-between" alignItems="center">
                 <Box>
                   <Text variant="sm-display">Gallery</Text>
-                  <Text variant="sm-display" color="black60">
+                  <Text variant="sm-display" color="mono60">
                     City
                   </Text>
                 </Box>
@@ -287,7 +287,7 @@ export const CarouselViewingRoomsGrid = () => {
                 </Button>
               </Flex>
 
-              <Box height={222} bg="black30" />
+              <Box height={222} bg="mono30" />
             </Box>
           )
         })}
@@ -305,15 +305,15 @@ export const CarouselGalleries = () => {
         {[...new Array(10)].map((_, i) => {
           return (
             <Box key={i} width={340}>
-              <Box height={222} bg="black30" mb={1} />
+              <Box height={222} bg="mono30" mb={1} />
 
               <Flex justifyContent="space-between" alignItems="center">
                 <Flex flex={1} alignItems="center">
-                  <Box bg="black15" borderRadius="50%" size={50} mr={2} />
+                  <Box bg="mono15" borderRadius="50%" size={50} mr={2} />
 
                   <Box flex={1}>
                     <Text variant="sm-display">Artist Name</Text>
-                    <Text variant="sm-display" color="black60">
+                    <Text variant="sm-display" color="mono60">
                       Nationality, b. 1970
                     </Text>
                   </Box>
@@ -340,9 +340,9 @@ export const CarouselArtists = () => {
         {[...new Array(10)].map((_, i) => {
           return (
             <Box key={i} width={340}>
-              <Box height={220} bg="black30" mb={1} />
+              <Box height={220} bg="mono30" mb={1} />
               <Text variant="sm-display">Primary Text</Text>
-              <Text variant="sm-display" color="black60">
+              <Text variant="sm-display" color="mono60">
                 Secondary Text
               </Text>
             </Box>
@@ -366,7 +366,7 @@ export const CarouselShows = () => {
               width={340}
               height={475}
               position="relative"
-              bg="black30"
+              bg="mono30"
             >
               <Box
                 p={1}
@@ -374,13 +374,13 @@ export const CarouselShows = () => {
                 height="100%"
                 background="linear-gradient(rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);"
               >
-                <Text variant="sm-display" color="white100">
+                <Text variant="sm-display" color="mono0">
                   Primary Text
                 </Text>
-                <Text variant="sm-display" color="black15">
+                <Text variant="sm-display" color="mono15">
                   Secondary Text
                 </Text>
-                <Text variant="xs" color="white100">
+                <Text variant="xs" color="mono0">
                   Status
                 </Text>
               </Box>

@@ -63,7 +63,7 @@ export const AuctionFilterMobileActionSheet: FC<
       dialogProps={{
         width: "100%",
         height: "100%",
-        bg: "white100",
+        bg: "mono0",
         flexDirection: "column",
       }}
     >
@@ -72,7 +72,7 @@ export const AuctionFilterMobileActionSheet: FC<
         width="100%"
         alignItems="center"
         borderBottom="1px solid"
-        borderColor="black10"
+        borderColor="mono10"
       >
         <Button
           variant="tertiary"

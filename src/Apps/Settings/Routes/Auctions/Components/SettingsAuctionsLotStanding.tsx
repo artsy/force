@@ -44,7 +44,7 @@ const SettingsAuctionsLotStanding: FC<
                 alt=""
               />
             ) : (
-              <Box width={100} height={100} bg="black10" />
+              <Box width={100} height={100} bg="mono10" />
             )}
           </Box>
 
@@ -55,7 +55,7 @@ const SettingsAuctionsLotStanding: FC<
             minWidth={0}
           >
             {saleArtwork.lotLabel && (
-              <Text color="black60" variant="xs">
+              <Text color="mono60" variant="xs">
                 Lot {saleArtwork.lotLabel}
               </Text>
             )}

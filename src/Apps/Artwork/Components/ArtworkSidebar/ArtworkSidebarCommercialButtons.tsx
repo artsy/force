@@ -456,7 +456,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
             <>
               <Spacer y={2} />
               <Box
-                backgroundColor={"black5"}
+                backgroundColor={"mono5"}
                 padding={2}
                 width="100%"
                 display={"flex"}
@@ -470,16 +470,16 @@ export const ArtworkSidebarCommercialButtons: React.FC<
                       width={30}
                       height={30}
                       style={{
-                        border: `1px solid ${theme.colors.black30}`,
+                        border: `1px solid ${theme.colors.mono30}`,
                       }}
                     />
                   </Box>
                 )}
                 <Box flex={1}>
-                  <Text variant="sm" color="black100" fontWeight={"bold"}>
+                  <Text variant="sm" color="mono100" fontWeight={"bold"}>
                     Note from the gallery
                   </Text>
-                  <Text variant="sm" color="black100">
+                  <Text variant="sm" color="mono100">
                     "{partnerOffer.note}"
                   </Text>
                 </Box>
@@ -507,7 +507,7 @@ const SaleMessage: React.FC<React.PropsWithChildren<SaleMessageProps>> = ({
   }
 
   return (
-    <Text variant="lg-display" color="black100" data-test="SaleMessage">
+    <Text variant="lg-display" color="mono100" data-test="SaleMessage">
       {saleMessage}
     </Text>
   )
@@ -554,7 +554,7 @@ const OfferDisplay: React.FC<React.PropsWithChildren<OfferDisplayProps>> = ({
       >
         <SaleMessage saleMessage={offerPrice} />
         <Spacer x={1} />
-        <Text variant="md" color="black60" style={{ whiteSpace: "nowrap" }}>
+        <Text variant="md" color="mono60" style={{ whiteSpace: "nowrap" }}>
           (List price: {originalPrice})
         </Text>
       </Flex>

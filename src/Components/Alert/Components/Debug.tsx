@@ -19,7 +19,7 @@ export const Debug: FC<React.PropsWithChildren<unknown>> = () => {
 
   return (
     <>
-      <Box as="pre" bg="black5" p={1}>
+      <Box as="pre" bg="mono5" p={1}>
         {JSON.stringify(
           {
             current,

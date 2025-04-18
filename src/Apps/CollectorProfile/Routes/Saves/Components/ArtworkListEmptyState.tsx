@@ -21,12 +21,12 @@ export const ArtworkListEmptyState: FC<
       flexDirection={["column", "row"]}
       justifyContent="space-between"
       alignItems="center"
-      bg="black5"
+      bg="mono5"
       p={2}
     >
       <Box>
         <Text variant={["sm", "sm-display"]}>{text.title}</Text>
-        <Text variant={["sm", "sm-display"]} color="black60">
+        <Text variant={["sm", "sm-display"]} color="mono60">
           {text.description}
         </Text>
       </Box>

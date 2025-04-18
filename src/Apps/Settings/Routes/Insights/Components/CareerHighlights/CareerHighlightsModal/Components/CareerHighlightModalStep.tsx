@@ -41,10 +41,10 @@ export const CareerHighlightModalStep: React.FC<
           alignItems="center"
           justifyContent="center"
           border="1px solid"
-          borderColor="black100"
+          borderColor="mono100"
           borderRadius="50%"
         >
-          <Icon fill="black100" height={20} width={20} />
+          <Icon fill="mono100" height={20} width={20} />
         </Flex>
       </Flex>
 
@@ -82,7 +82,7 @@ export const STEPS_PLACEHOLDER = (
         alignItems="center"
         justifyContent="center"
         border="1px solid"
-        borderColor="black10"
+        borderColor="mono10"
         borderRadius="50%"
       >
         <SkeletonBox height={20} width={20} />

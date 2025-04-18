@@ -15,7 +15,7 @@ const SearchButton = styled(Clickable)`
     outline: none;
 
     svg > path {
-      fill: ${themeGet("colors.white100")};
+      fill: ${themeGet("colors.mono0")};
     }
   }
 `
@@ -44,7 +44,7 @@ export const NavBarSearchInputContainer = React.forwardRef(
               }
             }}
           >
-            <SearchIcon fill="black60" width={[22, 18]} height={[22, 18]} />
+            <SearchIcon fill="mono60" width={[22, 18]} height={[22, 18]} />
           </SearchButton>
         }
         {...props}

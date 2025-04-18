@@ -52,7 +52,7 @@ export const NotificationViewingRoom: React.FC<
               viewingRoom.image?.height ?? 1
             }`,
           }}
-          bg="black10"
+          bg="mono10"
         >
           <Image
             data-testid="viewing-room-image"
@@ -68,7 +68,7 @@ export const NotificationViewingRoom: React.FC<
         <Spacer y={1} />
 
         <Text variant="md">{viewingRoom?.title}</Text>
-        <Text variant="sm-display" color="black60">
+        <Text variant="sm-display" color="mono60">
           {viewingRoom?.introStatement}
         </Text>
       </RouterLink>

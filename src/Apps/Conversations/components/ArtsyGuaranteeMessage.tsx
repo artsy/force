@@ -27,7 +27,7 @@ export const ArtsyGuaranteeMessage: React.FC<
 
   return (
     <Banner variant="brand">
-      <VerifiedIcon mr={1} fill="white100" />
+      <VerifiedIcon mr={1} fill="mono0" />
       To be covered by the Artsy Guarantee, always communicate and pay through
       the Artsy platform.
     </Banner>

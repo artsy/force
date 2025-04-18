@@ -7,7 +7,7 @@ export const AuctionsZeroState: React.FC<React.PropsWithChildren<unknown>> = ({
   return (
     <Text
       as="h3"
-      color="black60"
+      color="mono60"
       mb={12}
       mt={6}
       textAlign="center"

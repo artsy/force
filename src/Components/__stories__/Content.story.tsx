@@ -19,7 +19,7 @@ export const Content2Up = () => {
 
       <GridColumns>
         <Column span={6}>
-          <Box bg="black30" height={480} mb={2} />
+          <Box bg="mono30" height={480} mb={2} />
 
           <ContentMetadataExample />
 
@@ -31,7 +31,7 @@ export const Content2Up = () => {
         </Column>
 
         <Column span={6}>
-          <Box bg="black30" height={480} mb={2} />
+          <Box bg="mono30" height={480} mb={2} />
 
           <ContentMetadataExample />
 
@@ -53,25 +53,25 @@ export const Content4Up = () => {
 
       <GridColumns>
         <Column span={[12, 6, 3]}>
-          <Box bg="black30" height={420} mb={2} />
+          <Box bg="mono30" height={420} mb={2} />
           <ContentMetadataExample />
           <Button width="100%">Button Title</Button>
         </Column>
 
         <Column span={[12, 6, 3]}>
-          <Box bg="black30" height={420} mb={2} />
+          <Box bg="mono30" height={420} mb={2} />
           <ContentMetadataExample />
           <Button width="100%">Button Title</Button>
         </Column>
 
         <Column span={[12, 6, 3]}>
-          <Box bg="black30" height={420} mb={2} />
+          <Box bg="mono30" height={420} mb={2} />
           <ContentMetadataExample />
           <Button width="100%">Button Title</Button>
         </Column>
 
         <Column span={[12, 6, 3]}>
-          <Box bg="black30" height={420} mb={2} />
+          <Box bg="mono30" height={420} mb={2} />
           <ContentMetadataExample />
           <Button width="100%">Button Title</Button>
         </Column>
@@ -85,7 +85,7 @@ export const ContentFixedLeftScrollRight = () => {
     <Page title="<ContentFixedLeftScrollRight />">
       <GridColumns>
         <Column span={6}>
-          <Box bg="black30" height={720} mb={2} />
+          <Box bg="mono30" height={720} mb={2} />
 
           <ContentMetadataExample />
 
@@ -99,32 +99,32 @@ export const ContentFixedLeftScrollRight = () => {
         <Column span={6}>
           <Masonry columnCount={2}>
             <Box mb={4}>
-              <Box bg="black30" height={214} mb={1} />
+              <Box bg="mono30" height={214} mb={1} />
               <TombstoneExample />
             </Box>
 
             <Box mb={4}>
-              <Box bg="black30" height={234} mb={1} />
+              <Box bg="mono30" height={234} mb={1} />
               <TombstoneExample />
             </Box>
 
             <Box mb={4}>
-              <Box bg="black30" height={484} mb={1} />
+              <Box bg="mono30" height={484} mb={1} />
               <TombstoneExample />
             </Box>
 
             <Box mb={4}>
-              <Box bg="black30" height={272} mb={1} />
+              <Box bg="mono30" height={272} mb={1} />
               <TombstoneExample />
             </Box>
 
             <Box mb={4}>
-              <Box bg="black30" height={414} mb={1} />
+              <Box bg="mono30" height={414} mb={1} />
               <TombstoneExample />
             </Box>
 
             <Box mb={4}>
-              <Box bg="black30" height={478} mb={1} />
+              <Box bg="mono30" height={478} mb={1} />
               <TombstoneExample />
             </Box>
           </Masonry>
@@ -141,7 +141,7 @@ export const ContentScrollLeftFixedRight = () => {
         <Column span={6}>
           <Masonry columnCount={2}>
             <Box mb={6}>
-              <Box bg="black30" height={420} mb={1} />
+              <Box bg="mono30" height={420} mb={1} />
 
               <Text variant="xs" mb={1}>
                 Category
@@ -168,7 +168,7 @@ export const ContentScrollLeftFixedRight = () => {
             </Box>
 
             <Box mb={6}>
-              <Box bg="black30" height={320} mb={1} />
+              <Box bg="mono30" height={320} mb={1} />
 
               <Text variant="xs" mb={1}>
                 Category
@@ -182,7 +182,7 @@ export const ContentScrollLeftFixedRight = () => {
             </Box>
 
             <Box mb={6}>
-              <Box bg="black30" height={260} mb={1} />
+              <Box bg="mono30" height={260} mb={1} />
 
               <Text variant="xs" mb={1}>
                 Category
@@ -210,7 +210,7 @@ export const ContentScrollLeftFixedRight = () => {
             </Box>
 
             <Box mb={6}>
-              <Box bg="black30" height={200} mb={1} />
+              <Box bg="mono30" height={200} mb={1} />
 
               <Text variant="xs" mb={1}>
                 Category
@@ -227,7 +227,7 @@ export const ContentScrollLeftFixedRight = () => {
         </Column>
 
         <Column span={6}>
-          <Box bg="black30" height={720} mb={2} />
+          <Box bg="mono30" height={720} mb={2} />
 
           <ContentMetadataExample />
 

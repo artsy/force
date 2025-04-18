@@ -24,10 +24,10 @@ export const Default = () => {
             width="100%"
             height={400}
             border="1px dotted"
-            borderColor="black60"
+            borderColor="mono60"
           >
             <FullscreenBox
-              bg="black10"
+              bg="mono10"
               aspectWidth={aspectWidth}
               aspectHeight={aspectHeight}
             />

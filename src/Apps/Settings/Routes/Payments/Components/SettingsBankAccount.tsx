@@ -31,7 +31,7 @@ const SettingsBankAccount: React.FC<
     >
       <InstitutionIcon width={24} height={24} mr={0.5} fill="green100" />
 
-      <Text variant="sm-display" color="black60" mr={1}>
+      <Text variant="sm-display" color="mono60" mr={1}>
         •••• {last4}
       </Text>
     </SettingsPaymentsMethod>

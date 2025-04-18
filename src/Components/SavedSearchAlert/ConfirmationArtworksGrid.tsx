@@ -42,7 +42,7 @@ export const ConfirmationArtworks: FC<
   if (artworksCount === 0) {
     return (
       <>
-        <Text mb={2} p={2} bg="black10" color="black60">
+        <Text mb={2} p={2} bg="mono10" color="mono60">
           There aren’t any works available that meet the criteria at this time.
         </Text>
 
@@ -59,16 +59,16 @@ export const ConfirmationArtworks: FC<
     <Flex flexDirection="column">
       {artworksCount > NUMBER_OF_ARTWORKS_TO_SHOW ? (
         <>
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             {artworksCount} works currently on Artsy match your criteria.
           </Text>
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             See our top picks for you:
           </Text>
         </>
       ) : (
         <>
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             {artworksCount === 1
               ? "You might like this 1 work currently on Artsy that matches your criteria:"
               : `You might like these ${artworksCount} works currently on Artsy that match your criteria:`}

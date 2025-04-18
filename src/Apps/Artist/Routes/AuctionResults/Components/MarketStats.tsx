@@ -84,7 +84,7 @@ export const MarketStats: FC<React.PropsWithChildren<MarketStatsProps>> = ({
         />
       </Text>
 
-      <Text variant={["sm-display", "lg-display"]} color="black60">
+      <Text variant={["sm-display", "lg-display"]} color="mono60">
         Averages over the last 36 months
       </Text>
 

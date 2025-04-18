@@ -19,11 +19,11 @@ const OfferSummaryItem = ({
 
   return (
     <StepSummaryItem title="Your offer" {...others}>
-      <Text variant={["xs", "sm-display"]} color="black100">
+      <Text variant={["xs", "sm-display"]} color="mono100">
         {appendCurrencySymbol(order.myLastOffer?.amount, order.currencyCode)}
       </Text>
       {offerItem && (
-        <Text variant="xs" color="black60">
+        <Text variant="xs" color="mono60">
           List price:{" "}
           {appendCurrencySymbol(offerItem.price, order.currencyCode)}
         </Text>
@@ -31,10 +31,10 @@ const OfferSummaryItem = ({
       {offerNote && (
         <>
           <Spacer y={[2, 4]} />
-          <Text variant={["xs", "sm-display"]} color="black100">
+          <Text variant={["xs", "sm-display"]} color="mono100">
             Your note
           </Text>
-          <Text variant={["xs", "sm-display"]} color="black60">
+          <Text variant={["xs", "sm-display"]} color="mono60">
             {offerNote}
           </Text>
         </>

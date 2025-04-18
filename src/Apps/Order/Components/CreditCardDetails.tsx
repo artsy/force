@@ -15,7 +15,7 @@ export const CreditCardDetails = (props: Props) => {
     expirationMonth,
     expirationYear,
     brand,
-    textColor = "black100",
+    textColor = "mono100",
   } = props
 
   return (

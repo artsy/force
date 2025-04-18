@@ -35,7 +35,7 @@ const ImageContainer = styled(Box).attrs({
   width: [48, 120],
   minWidth: [48, 120],
   mr: [15, 2],
-  bg: "black10",
+  bg: "mono10",
 })`
   cursor: default;
 `
@@ -102,7 +102,7 @@ export const PhotoThumbnail: React.FC<
           p={photo.errorMessage ? [15] : [15, 2]}
           border="1px solid"
           borderRadius={4}
-          borderColor={photo.errorMessage ? "red100" : "black15"}
+          borderColor={photo.errorMessage ? "red100" : "mono15"}
           {...rest}
         >
           <CSSGrid
@@ -143,7 +143,7 @@ const RemoveButton: React.FC<React.PropsWithChildren<RemoveButtonProps>> = ({
         display="flex"
         aria-label="Cancel"
         title="Cancel"
-        fill="black60"
+        fill="mono60"
       />
     ) : (
       <Text variant="xs">
@@ -236,7 +236,7 @@ const PhotoThumbnailProcessingState: React.FC<
         </Media>
 
         <Media greaterThan="xs">
-          <Text color="black60">Processing</Text>
+          <Text color="mono60">Processing</Text>
         </Media>
       </ImageContainer>
       <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
