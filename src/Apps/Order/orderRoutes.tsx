@@ -75,7 +75,8 @@ const StatusRoute = loadable(
 )
 
 const DetailsRoute = loadable(
-  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Details"),
+  () =>
+    import(/* webpackChunkName: "orderBundle" */ "./Routes/Details/Details"),
   {
     resolveComponent: component => component.DetailsFragmentContainer,
   },

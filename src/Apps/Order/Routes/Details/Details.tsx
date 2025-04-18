@@ -1,5 +1,5 @@
 import { useFlag } from "@unleash/proxy-client-react"
-import { OrderDetails } from "Apps/Order/Routes/Details/Components/OrderDetails"
+import { DetailsPage } from "Apps/Order/Routes/Details/Components/DetailsPage"
 import { ErrorPage } from "Components/ErrorPage"
 import type { Details_order$data } from "__generated__/Details_order.graphql"
 import type React from "react"
@@ -17,7 +17,7 @@ const Details: React.FC<DetailsProps> = ({ order }) => {
 
   if (!isOrderDetailsFlagEnabled) return <ErrorPage code={404} />
 
-  return <OrderDetails orderId={order.internalID} />
+  return <DetailsPage orderId={order.internalID} />
 }
 
 export const DetailsFragmentContainer = createFragmentContainer(Details, {
