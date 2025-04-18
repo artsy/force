@@ -15,7 +15,6 @@ import {
 } from "Components/Search/constants"
 import { reportPerformanceMeasurement } from "Components/Search/utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "Components/Search/utils/shouldStartSearching"
-import { useDebounce } from "Utils/Hooks/useDebounce"
 import createLogger from "Utils/logger"
 import type { Overlay_viewer$data } from "__generated__/Overlay_viewer.graphql"
 import {
@@ -24,6 +23,7 @@ import {
   graphql,
 } from "react-relay"
 import { useTracking } from "react-tracking"
+import { useDebounce } from "use-debounce"
 import { SearchResultsListPaginationContainer } from "./SearchResultsList"
 
 const logger = createLogger("Components/Search/Mobile")
@@ -48,6 +48,7 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
   // TODO: Parse value from url
   const [inputValue, setInputValue] = useState("")
+  const [debouncedValue] = useDebounce(inputValue, SEARCH_DEBOUNCE_DELAY)
   const disablePills = !shouldStartSearching(inputValue)
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -60,6 +61,12 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
     })
     // When selecting another pill - this effect shouldn't be executed again, so we disable the linting rule
   }, [])
+
+  useEffect(() => {
+    if (shouldStartSearching(debouncedValue)) {
+      refetch(debouncedValue, selectedPill.searchEntityName)
+    }
+  }, [debouncedValue, selectedPill.searchEntityName])
 
   const refetch = useCallback(
     (value: string, entity?: string) => {
@@ -90,23 +97,13 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
     [relay],
   )
 
-  const debouncedSearchRequest = useDebounce({
-    callback: refetch,
-    delay: SEARCH_DEBOUNCE_DELAY,
-  })
-
   const handlePillClick = (pill: PillType) => {
     setSelectedPill(pill)
-    refetch(inputValue, pill.searchEntityName)
   }
 
   const handleValueChange = event => {
     const value = event.target.value
     setInputValue(value)
-
-    if (shouldStartSearching(value)) {
-      debouncedSearchRequest(value, selectedPill.searchEntityName)
-    }
   }
 
   return (
