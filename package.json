@@ -78,7 +78,7 @@
     "@artsy/icons": "3.28.0",
     "@artsy/img": "1.0.3",
     "@artsy/multienv": "^1.2.0",
-    "@artsy/palette": "^40.7.0",
+    "@artsy/palette": "^41.0.0",
     "@artsy/palette-charts": "^39.6.0",
     "@artsy/react-html-parser": "^3.0.2",
     "@artsy/xapp": "2.0.0",

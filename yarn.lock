@@ -93,24 +93,23 @@
     d3-interpolate "^1.3.2"
     d3-shape "^1.3.5"
 
-"@artsy/palette-tokens@^6.3.0":
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-6.3.0.tgz#1eab1354f90644214a0d8d481c302b3c5e58699f"
-  integrity sha512-UmpwWW7aLeQ5cnQopBmq34IlXar8QedEEjwQVqgUIHTTkMz7Sk3/3QkXYjHhx6UEQprsv5X64f0gvLv6Y+6fFw==
+"@artsy/palette-tokens@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-7.0.0.tgz#4c104f8504bb591e2b468f52d393c3da2573fbd7"
+  integrity sha512-psM2CZt/4d9YHTMM/jMu+ueZjjGlHcrq9E+FA5XZvl/UtlK0AwL1me3nxbIA8pXPsfOWfQ+PPLJumB8UKSYV1g==
 
-"@artsy/palette@^40.7.0":
-  version "40.7.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-40.7.0.tgz#8340aa9c7d4932a291761ce84016e64989214218"
-  integrity sha512-WgIh7piLu1+2wabL4w0xObSy1ibgIqICWZoCPZ4b9IFDiV9sHsNvqBRwMOP2nlIUmjbiqElwX05Ta8t4BLgePw==
+"@artsy/palette@^41.0.0":
+  version "41.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-41.0.0.tgz#cf2e25fcc70e007871bfeb0297eae8ded6ebd03a"
+  integrity sha512-9/f1LNKRGCREB63y3SY1mNQTtXxpgY9vCY0iMjXqyYy4lWruwZxGMaKJhSGHMbAUEWPbih/62z/BGDjTQplM8w==
   dependencies:
     "@artsy/icons" "^3.2.2"
-    "@artsy/palette-tokens" "^6.3.0"
+    "@artsy/palette-tokens" "^7.0.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     es-toolkit "^1.16.0"
     proportional-scale "^4.0.0"
     react-focus-on "^3.7.0"
-    react-lazy-load-image-component "1.6.2"
     styled-system "^5.1.5"
     trunc-html "^1.1.2"
     use-cursor "^1.2.3"
@@ -9149,11 +9148,6 @@ lodash.bind@^4.1.4:
   resolved "https://registry.yarnpkg.com/lodash.bind/-/lodash.bind-4.2.1.tgz#7ae3017e939622ac31b7d7d7dcb1b34db1690d35"
   integrity sha1-euMBfpOWIqwxt9fX3LGzTbFpDTU=
 
-lodash.debounce@^4.0.8:
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
-  integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
-
 lodash.defaults@^4.0.1:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
@@ -9303,11 +9297,6 @@ lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
   integrity sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=
-
-lodash.throttle@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
-  integrity sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==
 
 lodash.uniq@^4.5.0:
   version "4.5.0"
@@ -11260,14 +11249,6 @@ react-is@^18.0.0, react-is@^18.2.0:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.3.1.tgz#e83557dc12eae63a99e003a46388b1dcbb44db7e"
   integrity sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==
-
-react-lazy-load-image-component@1.6.2:
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.6.2.tgz#af1773e4d66519ad6b3c2015290c23b5de97c81b"
-  integrity sha512-dAdH5PsRgvDMlHC7QpZRA9oRzEZl1kPFwowmR9Mt0IUUhxk2wwq43PB6Ffwv84HFYuPmsxDUCka0E9KVXi8roQ==
-  dependencies:
-    lodash.debounce "^4.0.8"
-    lodash.throttle "^4.1.1"
 
 react-lines-ellipsis@^0.14.0:
   version "0.14.1"
