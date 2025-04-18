@@ -40,7 +40,7 @@ export const FeatureHeaderFull: React.FC<
             {subheadline && (
               <HTML
                 variant={["md", "lg-display"]}
-                color="rgba(255, 255, 255, 0.8)"
+                color="black10"
                 html={subheadline}
               />
             )}
