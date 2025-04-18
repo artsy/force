@@ -28,7 +28,6 @@ import {
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { preventHardReload } from "Apps/Order/OrderApp"
 import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import type {
   ExpressCheckoutUI_order$data,
@@ -69,7 +68,6 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
   const errorRef = useRef<string | null>(null)
-  const { router } = useRouter()
 
   if (!(stripe && elements)) {
     return null
@@ -289,6 +287,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     expressPaymentType,
     shippingRate,
   }: StripeExpressCheckoutElementConfirmEvent) => {
+    window.removeEventListener("beforeunload", preventHardReload)
+
     const {
       name,
       address: { line1, line2, city, state, postal_code, country },
@@ -360,7 +360,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       )
 
       // Redirect to status page after successful order submission
-      router.push(`/orders/${orderData.internalID}/status`)
+      window.location.reload()
     } catch (error) {
       logger.error("Error confirming payment", error)
       errorRef.current = error.code || "unknown_error"

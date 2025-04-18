@@ -10,16 +10,7 @@ import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ExpressCheckoutUI } from "../ExpressCheckoutUI"
 
-const mockRouterPush = jest.fn()
-
 jest.mock("react-tracking")
-jest.mock("System/Hooks/useRouter", () => ({
-  useRouter: () => ({
-    router: {
-      push: mockRouterPush,
-    },
-  }),
-}))
 
 jest.unmock("react-relay")
 
@@ -135,7 +126,13 @@ describe("ExpressCheckoutUI", () => {
     jest.clearAllMocks()
     mockTracking.mockImplementation(() => ({ trackEvent }))
     trackEvent.mockClear()
-    mockRouterPush.mockClear()
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: {
+        ...window.location,
+        reload: jest.fn(),
+      },
+    })
   })
 
   it("passes correct props to ExpressCheckoutElement", async () => {
@@ -318,9 +315,7 @@ describe("ExpressCheckoutUI", () => {
 
     await flushPromiseQueue()
 
-    expect(mockRouterPush).toHaveBeenCalledWith(
-      `/orders/${orderData.internalID}/status`,
-    )
+    expect(window.location.reload).toHaveBeenCalled()
   })
 
   describe("Express checkout is canceled", () => {
