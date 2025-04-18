@@ -15,8 +15,9 @@ import {
   yupAddressValidator,
 } from "Components/Address/utils"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { countries } from "Utils/countries"
+import { countries as countryPhoneOptions } from "Utils/countries"
 import { useFormikContext } from "formik"
+import { sortBy } from "lodash"
 import { useMemo } from "react"
 
 export interface FormikContextWithAddress {
@@ -25,14 +26,13 @@ export interface FormikContextWithAddress {
   phoneNumberCountryCode?: string
 }
 
-type CountryData = (typeof countries)[number]
+type CountryData = (typeof countryPhoneOptions)[number]
 
 interface Props {
   /** Whether to include rich phone number input */
   withPhoneNumber?: boolean
   /* @deprecated - legacy plain-text phone input */
   withLegacyPhoneInput?: boolean
-  countries?: typeof countries
 }
 
 /**
@@ -94,11 +94,10 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
   } = useFormikContext<V>()
 
   const dataTestIdPrefix = "addressFormFields"
-  const { countries: countryPhoneOptions = countries } = props
 
   const countryInputOptions = useMemo(() => {
     return sortCountriesForCountryInput(countryPhoneOptions)
-  }, [countryPhoneOptions])
+  }, [])
 
   // Formik types don't understand our specific nested structure
   // so we need to cast these to what we know to be the correct types
@@ -318,18 +317,15 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
 
 /** countries are sorted by phone number code first - sort alphabetically */
 const sortCountriesForCountryInput = (
-  unsorted: typeof countries,
+  unsorted: typeof countryPhoneOptions,
   firstCode: CountryData["value"] = "us",
 ): AutocompleteInputOptionType[] => {
-  const sortedCountries = unsorted.sort((a, b) => {
-    if (a.value === firstCode) {
-      return -1
-    }
-    if (b.value === firstCode) {
-      return 1
-    }
-    return a.name.localeCompare(b.name)
-  })
+  // Sort firstCode first, then by name
+  const sortedCountries = sortBy(unsorted, [
+    country => country.value !== firstCode,
+    "name",
+  ])
+
   const options = [
     { text: "", value: "" },
     ...sortedCountries.map(countryData => {
