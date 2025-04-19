@@ -33,7 +33,7 @@ export const InvoicePaymentForm: React.FC<
       onSubmit={handleSubmit}
       initialValues={{ address: emptyAddress, creditCard: false }}
       validationSchema={Yup.object().shape({
-        ...addressFormFieldsValidator({ withPhoneNumber: false }),
+        ...addressFormFieldsValidator(),
       })}
     >
       {({ isSubmitting, isValid }) => {

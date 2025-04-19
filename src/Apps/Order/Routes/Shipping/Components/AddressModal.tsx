@@ -234,7 +234,7 @@ const AddressModalForm: FC<
             </Banner>
           )}
 
-          <AddressFormFields<FormValues> withPhoneNumber />
+          <AddressFormFields<FormValues> withLegacyPhoneInput />
 
           <Spacer y={2} />
 
@@ -329,7 +329,7 @@ const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
 }
 
 const validationSchema = Yup.object().shape(
-  addressFormFieldsValidator({ withPhoneNumber: true }),
+  addressFormFieldsValidator({ withLegacyPhoneInput: true }),
 )
 
 export const GENERIC_FAIL_MESSAGE =

@@ -42,7 +42,7 @@ export const AddressFormWithCreditCard: React.FC<
         required
       />
 
-      <AddressFormFields<AuctionFormValues> withPhoneNumber />
+      <AddressFormFields<AuctionFormValues> withLegacyPhoneInput />
     </Join>
   )
 }

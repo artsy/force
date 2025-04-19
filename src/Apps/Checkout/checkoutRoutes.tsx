@@ -1,5 +1,5 @@
-import type { RouteProps } from "System/Router/Route"
 import loadable from "@loadable/component"
+import type { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
 
 const CheckoutApp = loadable(
@@ -37,6 +37,7 @@ export const checkoutRoutes: RouteProps[] = [
       {
         path: "",
         getComponent: () => CheckoutOverviewRoute,
+        layout: "FullBleed",
       },
       {
         path: ":orderID",
