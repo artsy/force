@@ -11,7 +11,7 @@ export const ArtistOverviewEmpty: React.FC<
           We‘ll update this page when more information is available.
         </Text>
 
-        <Text variant="md" color="black60" textAlign="center">
+        <Text variant="md" color="mono60" textAlign="center">
           Do you represent this artist?{" "}
           <RouterLink inline to="/gallery-partnerships">
             Become a partner.

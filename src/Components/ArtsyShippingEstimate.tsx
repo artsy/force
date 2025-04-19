@@ -301,10 +301,10 @@ const useWidgetObserver = ({
 const Loader = () => <Spacer y={2} />
 
 const LinkButton = styled(Link)`
-  color: ${props => props.theme.colors.black60};
+  color: ${props => props.theme.colors.mono60};
   &:hover {
     text-decoration: underline;
-    color: ${props => props.theme.colors.black100};
+    color: ${props => props.theme.colors.mono100};
   }
 `
 

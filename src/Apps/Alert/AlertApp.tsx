@@ -11,7 +11,7 @@ export const AlertApp: FC<React.PropsWithChildren<unknown>> = () => {
 
       <Spacer y={2} />
 
-      <Box border="1px dotted" borderColor="black10">
+      <Box border="1px dotted" borderColor="mono10">
         <Steps />
       </Box>
     </AlertProvider>

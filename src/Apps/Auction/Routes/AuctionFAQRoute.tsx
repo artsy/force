@@ -33,7 +33,7 @@ const AuctionFAQRoute: React.FC<
 
       <Spacer y={2} />
 
-      <Text variant="sm-display" color="black100">
+      <Text variant="sm-display" color="mono100">
         How can we help you? Below are answers to some of the most common
         questions from collectors.
         <br />
@@ -212,7 +212,7 @@ const Container = styled(Box)`
   hr {
     height: 1px;
     border: 0;
-    background-color: ${themeGet("colors.black10")};
+    background-color: ${themeGet("colors.mono10")};
   }
 
   button: first-child {

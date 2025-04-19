@@ -59,7 +59,7 @@ export const ArtworkListForm: React.FC<
         <Text variant="sm">Shared list</Text>
         <Spacer y={1} />
         <Flex>
-          <Text variant="xs" color="black60">
+          <Text variant="xs" color="mono60">
             Shared lists are eligible to receive offers from galleries.
             Switching sharing off will make them visible only to you, and you
             won't receive offers. List names are always private.

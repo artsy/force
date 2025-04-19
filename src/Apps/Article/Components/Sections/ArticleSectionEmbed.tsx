@@ -54,7 +54,7 @@ const ArticleSectionEmbed: FC<
         aspectWidth={16}
         aspectHeight={9}
         maxWidth="100%"
-        bg="black10"
+        bg="mono10"
       >
         <Box
           as="iframe"

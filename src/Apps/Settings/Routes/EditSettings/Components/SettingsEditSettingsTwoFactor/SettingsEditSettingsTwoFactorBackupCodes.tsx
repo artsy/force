@@ -67,7 +67,7 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<
       <Flex
         p={2}
         border="1px solid"
-        borderColor="black10"
+        borderColor="mono10"
         flexDirection={["column", "row"]}
       >
         <Box flexBasis="50%">
@@ -81,7 +81,7 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<
             )}
           </Text>
 
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             Generate one-time backup codes to access your account. Keep these
             safe.
           </Text>

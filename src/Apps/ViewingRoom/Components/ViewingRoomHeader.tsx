@@ -63,10 +63,10 @@ const ViewingRoomHeaderLarge: React.FC<
     <FullBleed
       display="flex"
       borderBottom="1px solid"
-      borderColor="black30"
+      borderColor="mono30"
       height={`calc(90vh - ${desktop}px)`}
     >
-      <Box bg="black5" width="50%" height="100%">
+      <Box bg="mono5" width="50%" height="100%">
         {img && (
           <Image
             src={img.src}
@@ -168,14 +168,14 @@ const ViewingRoomHeaderSmall: React.FC<
         bottom="20%"
         style={{ textShadow: theme.effects.textShadow }}
       >
-        <Text variant="xl" textAlign="center" as="h1" color="white100" p={2}>
+        <Text variant="xl" textAlign="center" as="h1" color="mono0" p={2}>
           {viewingRoom.title}
         </Text>
       </Box>
 
       <Text
         variant="sm-display"
-        color="white100"
+        color="mono0"
         display="flex"
         position="absolute"
         width="100%"

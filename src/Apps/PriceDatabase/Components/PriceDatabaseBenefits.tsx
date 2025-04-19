@@ -166,7 +166,7 @@ const SectionImage: React.FC<
         style={{ objectFit: "cover", alignSelf: "center" }}
       />
       {!!artistName && (
-        <Text variant="xs" color="black60">
+        <Text variant="xs" color="mono60">
           {artistName}, <i>{artworkName}</i>. {artworkCopyright}
         </Text>
       )}
@@ -209,7 +209,7 @@ const PopularArtistTile = ({
     </Flex>
     <Box>
       <Text variant="xs">{artistName}</Text>
-      <Text variant="xs" color="black60">
+      <Text variant="xs" color="mono60">
         {artistNationality}, {artistBirthday}
       </Text>
     </Box>

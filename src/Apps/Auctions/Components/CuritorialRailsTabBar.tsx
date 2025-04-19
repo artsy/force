@@ -16,7 +16,7 @@ export const CuritorialRailsTabBar: React.FC<
       {!user ? null : (
         <Tab name="Lots for You">
           <Text variant="lg-display">Lots for You</Text>
-          <Text variant="lg-display" color="black60">
+          <Text variant="lg-display" color="mono60">
             Works recommended for you
           </Text>
           <Spacer y={4} />

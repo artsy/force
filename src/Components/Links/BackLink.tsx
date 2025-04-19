@@ -27,7 +27,7 @@ export const BackLink: React.FC<React.PropsWithChildren<BackLinkProps>> = ({
     // These props are infact valid.
     // @ts-ignore
     <Container to={to} {...rest}>
-      <ChevronLeftIcon color="black100" height={14} width={18} mr={0.5} />
+      <ChevronLeftIcon color="mono100" height={14} width={18} mr={0.5} />
       <Text
         variant="sm"
         fontWeight={rest.fontWeight ?? "bold"}

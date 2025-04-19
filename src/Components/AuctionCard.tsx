@@ -77,7 +77,7 @@ export const AuctionCard: React.FC<
         aspectWidth={4}
         aspectHeight={3}
         maxWidth="100%"
-        bg="black10"
+        bg="mono10"
       >
         {image && (
           <Image
@@ -111,7 +111,7 @@ export const AuctionCard: React.FC<
         </>
       )}
 
-      <Text variant="lg-display" color="black60" overflowEllipsis>
+      <Text variant="lg-display" color="mono60" overflowEllipsis>
         {statusLabel}
       </Text>
     </RouterLink>

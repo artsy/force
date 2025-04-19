@@ -91,7 +91,7 @@ export const NotificationsList: React.FC<
 
   return (
     <>
-      <Join separator={<Separator borderColor="black5" />}>
+      <Join separator={<Separator borderColor="mono5" />}>
         {nodes.map(node => (
           <NotificationItemFragmentContainer
             key={node.internalID}

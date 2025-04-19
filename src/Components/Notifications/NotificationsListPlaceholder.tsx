@@ -40,7 +40,7 @@ const NotificationItemPlaceholder: FC<
 
 export const NotificationsListPlaceholder = () => {
   return (
-    <Join separator={<Separator borderColor="black5" />}>
+    <Join separator={<Separator borderColor="mono5" />}>
       {times(4).map(index => {
         return (
           <NotificationItemPlaceholder

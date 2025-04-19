@@ -85,14 +85,14 @@ const ShowBanner: React.FC<React.PropsWithChildren<ShowBannerProps>> = ({
             {name && <Text variant="xl">{name}</Text>}
 
             {exhibitionPeriod && (
-              <Text color="black60" variant="lg-display">
+              <Text color="mono60" variant="lg-display">
                 {exhibitionPeriod}
               </Text>
             )}
 
             {location && location.city && (
               <Text
-                color="black60"
+                color="mono60"
                 variant="lg-display"
                 textTransform="capitalize"
               >

@@ -26,7 +26,7 @@ export const SavedSearchAlertEditFormPlaceholder: React.FC<
       <Media lessThan="md">
         <AlertProvider isEditMode>
           <Skeleton flex={1} p={4}>
-            <Modal onClose={onCloseClick} backgroundColor="white100">
+            <Modal onClose={onCloseClick} backgroundColor="mono0">
               <Skeleton px={2}>
                 <SavedSearchAlertEditFormPlaceholderContext />
               </Skeleton>

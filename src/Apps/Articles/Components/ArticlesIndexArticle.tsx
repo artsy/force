@@ -39,7 +39,7 @@ const ArticlesIndexArticle: React.FC<
             {article.thumbnailTitle}
           </Text>
 
-          <Text as="h3" variant="xl" color="black60">
+          <Text as="h3" variant="xl" color="mono60">
             {article.byline}
           </Text>
         </RouterLink>
@@ -60,7 +60,7 @@ const ArticlesIndexArticle: React.FC<
           tabIndex={-1}
         >
           <ResponsiveBox
-            bg="black10"
+            bg="mono10"
             aspectWidth={910}
             aspectHeight={607}
             maxWidth="100%"

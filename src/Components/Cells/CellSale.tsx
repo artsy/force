@@ -48,7 +48,7 @@ const CellSale: FC<React.PropsWithChildren<CellSaleProps>> = ({
           />
         ) : (
           <Box
-            bg="black10"
+            bg="mono10"
             width="100%"
             height="100%"
             display="flex"
@@ -61,7 +61,7 @@ const CellSale: FC<React.PropsWithChildren<CellSaleProps>> = ({
       <Spacer y={0.5} />
 
       <Text variant="sm-display">{sale.name}</Text>
-      <Text variant="sm-display" color="black60">
+      <Text variant="sm-display" color="mono60">
         {sale.formattedStartDateTime}
       </Text>
     </RouterLink>

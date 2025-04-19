@@ -28,7 +28,7 @@ export const ZeroState: FC<React.PropsWithChildren<ZeroStateProps>> = ({
         )}
       </Text>
 
-      <Text variant={["lg-display", "xl"]} color="black60">
+      <Text variant={["lg-display", "xl"]} color="mono60">
         {hasFilters
           ? "Try removing some filters or try another search term."
           : "Try checking for spelling errors or try another search term."}

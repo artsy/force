@@ -143,7 +143,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<
                 textDecoration="underline"
                 data-testid="artist-select-skip-button"
               >
-                <Text variant={["xs", "sm-display"]} color="black100">
+                <Text variant={["xs", "sm-display"]} color="mono100">
                   Add their name
                 </Text>
               </Clickable>

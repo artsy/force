@@ -76,14 +76,14 @@ const WorksForYouApp: React.FC<React.PropsWithChildren<WorksForYouProps>> = ({
 
       {savedArtworks.length === 0 ? (
         <>
-          <Text variant="lg-display" color="black60">
+          <Text variant="lg-display" color="mono60">
             Nothing yet.
           </Text>
 
           {isLoggedIn && (
-            <Text variant="lg-display" color="black60" mt={1}>
+            <Text variant="lg-display" color="mono60" mt={1}>
               Follow{" "}
-              <RouterLink color="black60" to="/artists">
+              <RouterLink color="mono60" to="/artists">
                 some artists
               </RouterLink>
               .
@@ -117,7 +117,7 @@ const WorksForYouApp: React.FC<React.PropsWithChildren<WorksForYouProps>> = ({
                 <Text variant="sm-display" fontWeight="medium">
                   In-demand artworks, available to buy now
                 </Text>
-                <Text variant="sm-display" color="black60">
+                <Text variant="sm-display" color="mono60">
                   Collect works by today’s top artists, with transparent
                   pricing, easy shipping, and a simple checkout process.
                 </Text>

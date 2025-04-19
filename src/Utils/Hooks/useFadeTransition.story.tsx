@@ -43,7 +43,7 @@ const Demo = (props: UseFadeTransition) => {
         Increment Counter
       </Button>
 
-      <Text variant="xs" bg="black5" px={1} py={0.5} mt={2} color="black60">
+      <Text variant="xs" bg="mono5" px={1} py={0.5} mt={2} color="mono60">
         {JSON.stringify({ counter, mode, status }, null, 2)}
       </Text>
 

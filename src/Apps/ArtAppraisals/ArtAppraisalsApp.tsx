@@ -53,11 +53,11 @@ const Header: React.FC<React.PropsWithChildren<unknown>> = () => {
       >
         <GridColumns>
           <Column span={[12, 12, 8, 6]}>
-            <Text variant={["lg", "xxl"]} as="h1" color="white100">
+            <Text variant={["lg", "xxl"]} as="h1" color="mono0">
               Art Appraisals for Your Collection
             </Text>
 
-            <Text variant={["xs", "sm"]} as="h2" color="white100">
+            <Text variant={["xs", "sm"]} as="h2" color="mono0">
               Artsy offers a full range of services to appraise trusts, estates,
               and art collections. We act as a trusted partner for collectors,
               their advisors, as well as executors, fiduciaries, and
@@ -183,7 +183,7 @@ const MeetOurSpecialists: React.FC<React.PropsWithChildren<unknown>> = () => {
             src={image.src}
             srcSet={image.srcSet}
             mr={2}
-            backgroundColor="black100"
+            backgroundColor="mono100"
             border="none"
             borderColor="transparent"
             background="none"
@@ -191,7 +191,7 @@ const MeetOurSpecialists: React.FC<React.PropsWithChildren<unknown>> = () => {
           <Flex flexDirection="column">
             <Text variant="lg-display">Simon Wills</Text>
             <Text variant="sm-display">Senior Manager, Trusts & Estates</Text>
-            <Text variant="sm-display" color="black60" mb={2}>
+            <Text variant="sm-display" color="mono60" mb={2}>
               <RouterLink inline to="mailto:appraisals@artsymail.com">
                 appraisals@artsymail.com
               </RouterLink>

@@ -145,7 +145,7 @@ export const DeleteAccountRoute: FC<
 
         <Separator my={4} />
 
-        <Text variant="sm-display" color="black60">
+        <Text variant="sm-display" color="mono60">
           <RouterLink to="edit-settings" textDecoration="none">
             Cancel
           </RouterLink>

@@ -45,7 +45,7 @@ export const SuggestedFilters: React.FC<
           <Box>
             <Text variant="sm-display">Add Filters:</Text>
 
-            <Text variant="sm" color="black60">
+            <Text variant="sm" color="mono60">
               Including Price Range, Rarity, Medium, Color
             </Text>
           </Box>
@@ -112,7 +112,7 @@ export const SuggestedFilters: React.FC<
           data-testid="moreFilters"
         >
           <Flex justifyContent={"space-between"} alignItems={"center"}>
-            <Text variant="xs" color="black100" mr={0.5}>
+            <Text variant="xs" color="mono100" mr={0.5}>
               More Filters
             </Text>
             <ChevronRightIcon height={14} width={14} />

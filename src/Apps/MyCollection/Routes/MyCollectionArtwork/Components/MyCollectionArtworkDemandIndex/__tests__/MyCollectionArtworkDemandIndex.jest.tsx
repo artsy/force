@@ -53,7 +53,7 @@ describe("MyCollectionArtworkDemandIndex", () => {
 
         expect(screen.getByText("Demand Index")).toBeInTheDocument()
         expect(screen.getByText("3.3")).toBeInTheDocument()
-        expect(screen.getByText("3.3")).toHaveAttribute("color", "black60")
+        expect(screen.getByText("3.3")).toHaveAttribute("color", "mono60")
         expect(screen.getByText("Less Active Demand")).toBeInTheDocument()
         expect(screen.getByTestId("demandIndexBar")).toBeInTheDocument()
         expect(screen.queryByTestId("highDemandIcon")).not.toBeInTheDocument()
@@ -71,7 +71,7 @@ describe("MyCollectionArtworkDemandIndex", () => {
 
         expect(screen.getByText("Demand Index")).toBeInTheDocument()
         expect(screen.getByText("6.9")).toBeInTheDocument()
-        expect(screen.getByText("6.9")).toHaveAttribute("color", "black60")
+        expect(screen.getByText("6.9")).toHaveAttribute("color", "mono60")
         expect(screen.getByText("Moderate Demand")).toBeInTheDocument()
         expect(screen.getByTestId("demandIndexBar")).toBeInTheDocument()
         expect(screen.queryByTestId("highDemandIcon")).not.toBeInTheDocument()

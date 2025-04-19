@@ -19,12 +19,7 @@ export const ConversationMessageFile: FC<
       onClick={() => window?.open(src, "_blank")}
     >
       <Flex width="100%">
-        <Box
-          size={50}
-          borderRadius={10}
-          flex="none"
-          backgroundColor="black60"
-        />
+        <Box size={50} borderRadius={10} flex="none" backgroundColor="mono60" />
 
         <Flex
           ml={1}

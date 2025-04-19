@@ -28,7 +28,7 @@ export const ConditionsOfSaleCheckbox: React.FC<
           <RouterLink
             inline
             display="inline"
-            color="black100"
+            color="mono100"
             to="/terms"
             target="_blank"
           >

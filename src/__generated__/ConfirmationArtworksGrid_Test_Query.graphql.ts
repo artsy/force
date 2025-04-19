@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d907e32ceb3d9de42d513ffa2eb712d5>>
+ * @generated SignedSource<<88ea46334054a3a1c6c6c57e58ce1ade>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type FilterArtworksInput = {
   artistNationalities?: ReadonlyArray<string | null | undefined> | null | undefined;
   artistSeriesID?: string | null | undefined;
   artistSeriesIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  artworkIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
   atAuction?: boolean | null | undefined;
   attributionClass?: ReadonlyArray<string | null | undefined> | null | undefined;
   availability?: string | null | undefined;

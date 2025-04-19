@@ -83,7 +83,7 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<
     bidsPresent &&
     artwork.sale_artwork.reserve_status === "reserve_not_met"
       ? "red100"
-      : "black100"
+      : "mono100"
 
   const bidTextParts: string[] = []
   let reserveMessage = artwork.sale_artwork.reserve_message
@@ -158,7 +158,7 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<
           )}
 
           {myMaxBid && (
-            <Text variant="xs" color="black60" pl={1}>
+            <Text variant="xs" color="mono60" pl={1}>
               Your max: {myMaxBid}
             </Text>
           )}
@@ -166,7 +166,7 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<
       )}
 
       {!!lotWatcherCount && (
-        <Text variant="xs" color="black100">
+        <Text variant="xs" color="mono100">
           {lotWatcherCount} {lotWatcherCount === 1 ? "watcher" : "watchers"}
         </Text>
       )}
@@ -177,7 +177,7 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<
         <>
           <Spacer y={1} />
 
-          <Text variant="xs" color="black60">
+          <Text variant="xs" color="mono60">
             This auction has a{" "}
             <Clickable onClick={showDialog} textDecoration="underline">
               buyer’s premium

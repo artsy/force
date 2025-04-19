@@ -33,7 +33,7 @@ export const UserRegistrationAuctions: React.FC<
                 {sale.name && <Text variant="sm">{sale.name}</Text>}
 
                 {sale.startAt && (
-                  <Text color="black60" variant="sm">
+                  <Text color="mono60" variant="sm">
                     {sale.startAt}
                   </Text>
                 )}

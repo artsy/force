@@ -194,7 +194,7 @@ export const AddressForm: React.FC<
         {(lockCountryToOrigin || lockCountriesToEU) && (
           <>
             <Spacer x={0.5} y={0.5} />
-            <Text variant="xs" color="black60">
+            <Text variant="xs" color="mono60">
               {lockCountriesToEU
                 ? "Continental Europe shipping only."
                 : "Domestic shipping only."}

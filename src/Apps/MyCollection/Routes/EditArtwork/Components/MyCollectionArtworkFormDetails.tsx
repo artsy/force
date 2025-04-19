@@ -151,7 +151,7 @@ export const MyCollectionArtworkFormDetails: React.FC<
               onClick={() => setIsRarityModalOpen(true)}
               data-test-id="open-rarity-modal"
             >
-              <Text variant="xs" color="black60">
+              <Text variant="xs" color="mono60">
                 <u>What is this?</u>
               </Text>
             </Clickable>
@@ -304,7 +304,7 @@ export const MyCollectionArtworkFormDetails: React.FC<
               onClick={() => setIsProvenanceModalOpen(true)}
               data-test-id="open-provenance-modal"
             >
-              <Text variant="xs" color="black60">
+              <Text variant="xs" color="mono60">
                 <u>What is this?</u>
               </Text>
             </Clickable>

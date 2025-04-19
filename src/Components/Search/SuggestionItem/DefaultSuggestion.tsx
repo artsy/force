@@ -32,7 +32,7 @@ export const DefaultSuggestion: FC<
           {partTags}
         </Text>
 
-        <Text color="black60" variant="xs" overflowEllipsis>
+        <Text color="mono60" variant="xs" overflowEllipsis>
           {option.subtitle}
         </Text>
       </Flex>

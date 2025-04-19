@@ -45,7 +45,7 @@ const CategoryRail: FC<React.PropsWithChildren<CategoryRailProps>> = ({
           })}
         </Shelf>
       ) : (
-        <Text variant="lg-display" color="black60" textAlign="center">
+        <Text variant="lg-display" color="mono60" textAlign="center">
           No works available in the category at this time.
         </Text>
       )}

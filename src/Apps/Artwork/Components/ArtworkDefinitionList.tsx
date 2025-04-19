@@ -25,7 +25,7 @@ export const ArtworkDefinitionList: React.FC<
         </Text>
       )}
 
-      <Text as="dd" variant="xs" color="black60" flex={1}>
+      <Text as="dd" variant="xs" color="mono60" flex={1}>
         {children}
       </Text>
     </Flex>

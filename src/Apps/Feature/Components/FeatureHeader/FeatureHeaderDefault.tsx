@@ -29,7 +29,7 @@ export const FeatureHeaderDefault: React.FC<
           {subheadline && (
             <HTML
               variant={["md", "lg-display"]}
-              color="black60"
+              color="mono60"
               html={subheadline}
             />
           )}
@@ -37,7 +37,7 @@ export const FeatureHeaderDefault: React.FC<
       </Flex>
 
       {image?.resized && (
-        <Box flex={1} bg="black10">
+        <Box flex={1} bg="mono10">
           <Image
             src={image.resized.src}
             srcSet={image.resized.srcSet}

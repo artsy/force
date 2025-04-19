@@ -91,7 +91,7 @@ const ArtworkLightbox: React.FC<
       >
         <ResponsiveBox
           data-testid="artwork-lightbox-box"
-          bg="black10"
+          bg="mono10"
           mx={[0, 2]}
           maxWidth={image.width || ("100%" as any)}
           aspectWidth={image.width || 1}

@@ -63,7 +63,7 @@ export const ConversationCTA: React.FC<
           <GuaranteeIconBlue mr={1} />
 
           <Flex>
-            <Text color="black60" variant="xs">
+            <Text color="mono60" variant="xs">
               Always complete purchases with our secure checkout in order to be
               covered by{" "}
               <RouterLink to="/buyer-guarantee" target="_blank">

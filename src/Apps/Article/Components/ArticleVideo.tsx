@@ -51,7 +51,7 @@ const ArticleVideo: FC<React.PropsWithChildren<ArticleVideoProps>> = ({
 
   return (
     <>
-      <FullBleed position="relative" height={height} bg="black10">
+      <FullBleed position="relative" height={height} bg="mono10">
         {article.media.coverImage?.url && (
           <Image
             src={article.media.coverImage.url}
@@ -70,7 +70,7 @@ const ArticleVideo: FC<React.PropsWithChildren<ArticleVideoProps>> = ({
             left={0}
             width="100%"
             height="100%"
-            bg="black100"
+            bg="mono100"
             autoPlay
             controls
             onPlay={clickedPlayVideo}
@@ -102,21 +102,19 @@ const ArticleVideo: FC<React.PropsWithChildren<ArticleVideoProps>> = ({
                             variant="sm-display"
                             fontWeight="bold"
                             display="flex"
-                            color="white100"
+                            color="mono0"
                           >
                             {article.seriesArticle && (
                               <Box mr={2}>{article.seriesArticle.title}</Box>
                             )}
 
                             {article.media.duration && (
-                              <Box color="black10">
-                                {article.media.duration}
-                              </Box>
+                              <Box color="mono10">{article.media.duration}</Box>
                             )}
                           </Text>
                         )}
 
-                        <Text as="h1" variant={["xl", "xxl"]} color="white100">
+                        <Text as="h1" variant={["xl", "xxl"]} color="mono0">
                           {article.title}
                         </Text>
                       </Box>
@@ -127,7 +125,7 @@ const ArticleVideo: FC<React.PropsWithChildren<ArticleVideoProps>> = ({
                     <Column span={12}>
                       <HTML
                         variant={["sm-display", "lg-display"]}
-                        color="black10"
+                        color="mono10"
                         html={article.description}
                       />
                     </Column>
@@ -223,7 +221,7 @@ const ArticleVideo: FC<React.PropsWithChildren<ArticleVideoProps>> = ({
 
       <Spacer y={6} />
 
-      <FullBleed bg="black5" p={1}>
+      <FullBleed bg="mono5" p={1}>
         <ArticleAd unit="Desktop_InContentLB2" size="970x250" />
       </FullBleed>
     </>
@@ -288,7 +286,7 @@ const Play = styled(Box)<{ variant: ResponsiveValue<"sm" | "lg"> }>`
   &:after {
     content: "";
     display: block;
-    color: ${themeGet("colors.white100")};
+    color: ${themeGet("colors.mono0")};
     ${variant({
       variants: {
         sm: {

@@ -237,7 +237,7 @@ const IdentityVerificationApp: React.FC<React.PropsWithChildren<Props>> = ({
 
               <Spacer y={1} />
 
-              <Text variant="xs" color="black60" textAlign="center">
+              <Text variant="xs" color="mono60" textAlign="center">
                 Questions about identity verification? Read the{" "}
                 <RouterLink
                   inline

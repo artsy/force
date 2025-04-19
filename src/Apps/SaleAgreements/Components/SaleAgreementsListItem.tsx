@@ -20,7 +20,7 @@ export const SaleAgreementListItem: FC<
         textDecoration="none"
       >
         <Text variant="sm">{saleAgreement.sale?.name}</Text>
-        <Text variant="sm" color="black60">
+        <Text variant="sm" color="mono60">
           {saleAgreement.displayStartAt} - {saleAgreement.displayEndAt}
         </Text>
         <Separator my={4} />

@@ -15,7 +15,7 @@ const ArticleByline: FC<React.PropsWithChildren<ArticleBylineProps>> = ({
     return (
       <Text
         variant={["xs", "md"]}
-        color="black60"
+        color="mono60"
         maxWidth={OPTIMAL_READING_WIDTH}
       >
         {article.byline}
@@ -43,12 +43,12 @@ const ArticleByline: FC<React.PropsWithChildren<ArticleBylineProps>> = ({
 
           return (
             <Box key={author.internalID}>
-              <Text variant={["xs", "md"]} color="black60">
+              <Text variant={["xs", "md"]} color="mono60">
                 {author.name || "Artsy Editorial"}
               </Text>
 
               {author.bio && (
-                <Text variant="xs" color="black60">
+                <Text variant="xs" color="mono60">
                   {author.bio}
                 </Text>
               )}

@@ -21,7 +21,7 @@ export const SplitLayout: FC<React.PropsWithChildren<SplitLayoutProps>> = ({
     <Flex height="100%" flexDirection={["column", "row"]}>
       <Box
         display={["none", "block"]}
-        bg="black100"
+        bg="mono100"
         flexBasis="50%"
         position="relative"
         flexShrink={0}
@@ -30,7 +30,7 @@ export const SplitLayout: FC<React.PropsWithChildren<SplitLayoutProps>> = ({
         {left}
 
         {!hideLogo && (
-          <ArtsyLogoIcon fill="white100" position="absolute" top={2} left={2} />
+          <ArtsyLogoIcon fill="mono0" position="absolute" top={2} left={2} />
         )}
       </Box>
 

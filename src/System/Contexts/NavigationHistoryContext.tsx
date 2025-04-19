@@ -112,10 +112,10 @@ export const NavigationHistoryDebug: React.FC = () => {
       bottom={2}
       right={2}
       zIndex={Z.toasts}
-      bg="white100"
+      bg="mono0"
       p={1}
       border="1px solid"
-      borderColor="black10"
+      borderColor="mono10"
       borderRadius={1}
       maxWidth={300}
       maxHeight={200}
@@ -127,7 +127,7 @@ export const NavigationHistoryDebug: React.FC = () => {
           flexDirection="row"
           justifyContent="space-between"
           borderBottom="1px solid"
-          borderColor="black10"
+          borderColor="mono10"
           pb={1}
         >
           <Text variant="sm-display">History</Text>
@@ -141,7 +141,7 @@ export const NavigationHistoryDebug: React.FC = () => {
           <Box>
             <Join separator={<Separator my={0.5} />}>
               {paths.map((path, index) => (
-                <Text key={`${path}-${index}`} variant="xs" color="black60">
+                <Text key={`${path}-${index}`} variant="xs" color="mono60">
                   <a href={path} target="_blank" rel="noreferrer">
                     {paths.length - index}. {path}
                   </a>
@@ -150,7 +150,7 @@ export const NavigationHistoryDebug: React.FC = () => {
             </Join>
           </Box>
         ) : (
-          <Text variant="xs" color="black60">
+          <Text variant="xs" color="mono60">
             Nothing yet
           </Text>
         )}

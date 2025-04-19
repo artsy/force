@@ -95,7 +95,7 @@ const HomeFeaturedMarketNews: React.FC<
               By {firstArticle.byline}
             </Text>
 
-            <Text variant="lg-display" color="black60" mt={0.5}>
+            <Text variant="lg-display" color="mono60" mt={0.5}>
               {firstArticle.publishedAt}
             </Text>
           </RouterLink>

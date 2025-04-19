@@ -73,7 +73,7 @@ const HomeHeroUnitBaseSmall: React.FC<HomeHeroUnitBaseProps> = ({
   return (
     <RouterLink
       aria-label={`${title} - ${body}`}
-      bg="black5"
+      bg="mono5"
       display="block"
       height="100%"
       onClick={handleClick}
@@ -84,7 +84,7 @@ const HomeHeroUnitBaseSmall: React.FC<HomeHeroUnitBaseProps> = ({
       <ResponsiveBox
         aspectHeight={2}
         aspectWidth={3}
-        bg="black30"
+        bg="mono30"
         maxWidth="100%"
       >
         {image && (
@@ -106,7 +106,7 @@ const HomeHeroUnitBaseSmall: React.FC<HomeHeroUnitBaseProps> = ({
 
         <Spacer y={1} />
 
-        <Text variant="xs" color="black60" lineClamp={4}>
+        <Text variant="xs" color="mono60" lineClamp={4}>
           {body}
         </Text>
 
@@ -164,9 +164,9 @@ const HomeHeroUnitBaseLarge: React.FC<HomeHeroUnitBaseProps> = ({
       textDecoration="none"
       to={href}
     >
-      <GridColumns bg="black5">
+      <GridColumns bg="mono5">
         <Column span={6}>
-          <Box height={[300, 400, 500]} position="relative" bg="black30">
+          <Box height={[300, 400, 500]} position="relative" bg="mono30">
             {image && (
               <Image
                 alt=""
@@ -225,7 +225,7 @@ const HomeHeroUnitBaseLarge: React.FC<HomeHeroUnitBaseProps> = ({
               <Spacer y={2} />
 
               <Text
-                color="black60"
+                color="mono60"
                 lineClamp={4}
                 variant={["xs", "sm-display", "lg-display"]}
               >

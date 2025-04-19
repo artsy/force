@@ -32,7 +32,7 @@ const AuctionBuyersPremiumDialog: React.FC<
 
   return (
     <Box
-      bg="white100"
+      bg="mono0"
       p={2}
       position="relative"
       width={550}
@@ -49,7 +49,7 @@ const AuctionBuyersPremiumDialog: React.FC<
         onClick={onClose}
         aria-label="Close"
       >
-        <CloseIcon fill="black100" display="block" />
+        <CloseIcon fill="mono100" display="block" />
       </Clickable>
 
       <Text variant="lg-display" mb={1}>
@@ -145,7 +145,7 @@ export const AuctionBuyersPremiumDialogQueryRenderer: React.FC<
     <ModalBase bg="rgba(0,0,0,0.8)" onClose={onClose}>
       <SystemQueryRenderer<AuctionBuyersPremiumDialogQuery>
         environment={relayEnvironment}
-        placeholder={<Spinner color="white100" />}
+        placeholder={<Spinner color="mono0" />}
         variables={{ saleID }}
         query={graphql`
           query AuctionBuyersPremiumDialogQuery($saleID: String!) {
@@ -156,7 +156,7 @@ export const AuctionBuyersPremiumDialogQueryRenderer: React.FC<
         `}
         render={({ props, error }) => {
           if (!props) {
-            return <Spinner color="white100" />
+            return <Spinner color="mono0" />
           }
 
           if (error ?? !props.sale) {

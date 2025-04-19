@@ -43,7 +43,7 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
     <Analytics contextPageOwnerId={article.internalID}>
       <ArticleContextProvider articleId={article.internalID}>
         {article.layout === "STANDARD" && (
-          <FullBleed bg="black5" p={1}>
+          <FullBleed bg="mono5" p={1}>
             <ArticleAd unit="Desktop_TopLeaderboard" size="970x250" />
           </FullBleed>
         )}
@@ -76,7 +76,7 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
                     {article.title}
                   </Text>
 
-                  <Text variant={["md", "lg-display"]} color="black60">
+                  <Text variant={["md", "lg-display"]} color="mono60">
                     {article.byline}
                   </Text>
                 </RouterLink>
@@ -150,7 +150,7 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
                 maxWidth={OPTIMAL_READING_WIDTH}
                 mt={4}
                 fontStyle="italic"
-                color="black60"
+                color="mono60"
                 html={article.postscript}
               />
             )}
@@ -200,7 +200,7 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
                                     lazyLoad
                                   />
                                 ) : (
-                                  <Box bg="black10" width={100} height={100} />
+                                  <Box bg="mono10" width={100} height={100} />
                                 )}
                               </Box>
 
@@ -209,11 +209,7 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
                                   {relatedArticle.title}
                                 </Text>
 
-                                <Text
-                                  variant="xs"
-                                  color="black60"
-                                  lineClamp={1}
-                                >
+                                <Text variant="xs" color="mono60" lineClamp={1}>
                                   {relatedArticle.byline}
                                 </Text>
                               </Box>
@@ -227,7 +223,7 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
                   <Spacer y={2} />
 
                   <ArticleAd
-                    bg="black5"
+                    bg="mono5"
                     p={1}
                     unit="Desktop_RightRail1"
                     size="300x250"

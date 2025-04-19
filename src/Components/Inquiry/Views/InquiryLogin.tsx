@@ -217,7 +217,7 @@ export const InquiryLogin: React.FC<React.PropsWithChildren<unknown>> = () => {
 
         <Spacer y={2} />
 
-        <Text variant="xs" color="black60" textAlign="center">
+        <Text variant="xs" color="mono60" textAlign="center">
           Don't have an account?{" "}
           <Clickable
             data-test="login"

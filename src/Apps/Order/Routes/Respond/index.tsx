@@ -283,7 +283,7 @@ export const RespondRoute: FC<React.PropsWithChildren<RespondProps>> = ({
               <Flex position="relative">
                 <Collapse open={responseOption === "DECLINE"}>
                   <Spacer y={1} />
-                  <Text variant="xs" color="black60">
+                  <Text variant="xs" color="mono60">
                     Declining an offer will end the negotiation process on this
                     offer.
                   </Text>

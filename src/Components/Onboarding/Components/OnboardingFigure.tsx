@@ -28,7 +28,7 @@ export const OnboardingFigure = forwardRef(
         ref={forwardedRef as any}
         width="100%"
         height="100%"
-        bg="black100"
+        bg="mono100"
         flexDirection="column"
         justifyContent="flex-end"
         alignItems="flex-start"
@@ -50,7 +50,7 @@ export const OnboardingFigure = forwardRef(
 
           <Text
             variant="sm-display"
-            color="white100"
+            color="mono0"
             position="absolute"
             right={2}
             bottom={2}

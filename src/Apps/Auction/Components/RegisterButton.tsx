@@ -232,7 +232,7 @@ const ButtonAction: React.FC<
         {title}
       </Button>
 
-      <Text textAlign="center" variant="xs" color="black60" mt={0.5}>
+      <Text textAlign="center" variant="xs" color="mono60" mt={0.5}>
         {description}
       </Text>
     </Flex>

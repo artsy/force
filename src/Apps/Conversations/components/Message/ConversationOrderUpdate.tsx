@@ -78,7 +78,7 @@ const getIconProps = (
 
     if (data.offer.fromParticipant === "BUYER") {
       return {
-        color: "black100",
+        color: "mono100",
         message: `You sent ${isCounter ? "a counteroffer" : "an offer"} for ${
           data.offer.amount
         }`,
@@ -110,7 +110,7 @@ const getIconProps = (
       return {
         Icon: AlertFillIcon,
         color: THEME.colors.yellow100 as Color,
-        textColor: "black100",
+        textColor: "mono100",
         message: "Offer accepted. Payment processing",
       }
     } else if (state === "APPROVED") {
@@ -137,7 +137,7 @@ const getIconProps = (
       }
     } else if (orderUpdateState === "buy_submitted") {
       return {
-        color: "black100",
+        color: "mono100",
         message: `You purchased this artwork`,
         Icon: MoneyFillIcon,
       }
@@ -146,7 +146,7 @@ const getIconProps = (
 
   // Default case
   return {
-    color: "black100",
+    color: "mono100",
     message: "",
     Icon: () => null,
   }

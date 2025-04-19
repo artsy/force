@@ -27,19 +27,19 @@ const OfferHistoryItem: React.FC<
   return (
     <StepSummaryItem {...others}>
       <Row>
-        <Text variant={["xs", "sm"]} color="black100" fontWeight="semibold">
+        <Text variant={["xs", "sm"]} color="mono100" fontWeight="semibold">
           {lastOffer?.fromParticipant === "SELLER"
             ? "Seller's offer"
             : "Your offer"}
         </Text>
-        <Text variant={["xs", "sm"]} color="black100">
+        <Text variant={["xs", "sm"]} color="mono100">
           {appendCurrencySymbol(lastOffer?.amount, currency)}
         </Text>
       </Row>
       {offerItem && (
         <Row>
           <div />
-          <Text variant={"xs"} color="black60">
+          <Text variant={"xs"} color="mono60">
             List price: {appendCurrencySymbol(offerItem.price, currency)}
           </Text>
         </Row>
@@ -47,12 +47,12 @@ const OfferHistoryItem: React.FC<
       {lastOffer?.note && (
         <>
           <Spacer y={2} />
-          <Text variant={["xs", "sm"]} color="black100" fontWeight="semibold">
+          <Text variant={["xs", "sm"]} color="mono100" fontWeight="semibold">
             {lastOffer.fromParticipant === "SELLER"
               ? "Seller's note"
               : "Your note"}
           </Text>
-          <Text variant="xs" color="black60">
+          <Text variant="xs" color="mono60">
             {lastOffer.note}
           </Text>
           <Spacer y={1} />
@@ -65,7 +65,7 @@ const OfferHistoryItem: React.FC<
             <Flex m={0} flexDirection="column">
               <Text
                 variant={["xs", "sm"]}
-                color="black100"
+                color="mono100"
                 fontWeight="semibold"
               >
                 Offer history
@@ -73,11 +73,11 @@ const OfferHistoryItem: React.FC<
               {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
               {previousOffers.map(({ node: offer }) => (
                 <Row key={offer.internalID}>
-                  <Text variant={["xs", "sm"]} color="black60">
+                  <Text variant={["xs", "sm"]} color="mono60">
                     {offer.fromParticipant === "BUYER" ? "You" : "Seller"}
                     {` (${offer.createdAt})`}
                   </Text>
-                  <Text variant={["xs", "sm"]} color="black60">
+                  <Text variant={["xs", "sm"]} color="mono60">
                     {appendCurrencySymbol(offer.amount, currency)}
                   </Text>
                 </Row>

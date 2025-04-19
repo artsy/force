@@ -56,7 +56,7 @@ export const Details: FC<React.PropsWithChildren<unknown>> = () => {
               </Join>
             </Flex>
 
-            <Box position="sticky" bottom={0} bg="white100" p={2}>
+            <Box position="sticky" bottom={0} bg="mono0" p={2}>
               {!!createAlertError && (
                 <Text mb={1} color="red100" variant="xs">
                   {createAlertError}

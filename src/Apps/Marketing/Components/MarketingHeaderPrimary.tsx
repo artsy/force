@@ -11,7 +11,7 @@ export const MarketingHeaderPrimary: FC = () => {
       title="Your guide to the art world"
       subtitle="Artsy makes it easy to discover artists and artworks you'll love"
       src="https://files.artsy.net/images/02_Artsy_App-Download-Landing-Page.jpg"
-      accentColor="black10"
+      accentColor="mono10"
     >
       <Spacer y={2} />
 

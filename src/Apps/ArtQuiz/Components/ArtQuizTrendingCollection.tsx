@@ -25,7 +25,7 @@ const ArtQuizTrendingCollection: FC<
 
       {collection.description && (
         <HTML
-          color="black60"
+          color="mono60"
           html={collection.description}
           variant="lg-display"
         />

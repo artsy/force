@@ -85,7 +85,7 @@ const ArtworkListItem: FC<
             )}
           </Flex>
 
-          <Text variant={["xs", "sm-display"]} color="black60" overflowEllipsis>
+          <Text variant={["xs", "sm-display"]} color="mono60" overflowEllipsis>
             {item.artworksCount === 1
               ? `${item.artworksCount} Artwork`
               : `${item.artworksCount} Artworks`}
@@ -132,7 +132,7 @@ const ArtworkListItemLink = styled(RouterLink)<ArtworkListItemLinkProps>`
     if (isSelected) {
       return css`
         box-shadow: ${themeGet("effects.dropShadow")};
-        border-color: ${themeGet("colors.black100")};
+        border-color: ${themeGet("colors.mono100")};
       `
     }
   }}

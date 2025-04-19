@@ -22,7 +22,7 @@ export const ArtworkItem: React.FC<
       )}
 
       <Text variant="xs">{artwork.artistNames}</Text>
-      <Text variant="xs" color="black60" lineClamp={1}>
+      <Text variant="xs" color="mono60" lineClamp={1}>
         {[artwork.title, artwork.date].filter(Boolean).join(", ")}
       </Text>
 

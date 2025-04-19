@@ -180,7 +180,7 @@ const InnerForm: React.FC<React.PropsWithChildren<InnerFormProps>> = ({
 
   return (
     <Join separator={<Spacer y={2} />}>
-      <Text variant="sm" color="black60">
+      <Text variant="sm" color="mono60">
         An authenticator app lets you generate security codes.
       </Text>
 
@@ -195,7 +195,7 @@ const InnerForm: React.FC<React.PropsWithChildren<InnerFormProps>> = ({
         autoFocus
       />
 
-      <Text variant="sm" color="black60">
+      <Text variant="sm" color="mono60">
         1. Use your app to scan the code below. If you can’t use a barcode,
         enter the secret code manually.
       </Text>
@@ -206,7 +206,7 @@ const InnerForm: React.FC<React.PropsWithChildren<InnerFormProps>> = ({
 
       <Box textAlign="center">
         {showSecret ? (
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             {secondFactor.otpSecret}
           </Text>
         ) : (
@@ -220,7 +220,7 @@ const InnerForm: React.FC<React.PropsWithChildren<InnerFormProps>> = ({
         )}
       </Box>
 
-      <Text variant="sm" color="black60">
+      <Text variant="sm" color="mono60">
         2. Enter the six-digit code from the application to complete the
         configuration.
       </Text>
@@ -271,11 +271,11 @@ export const OnCompleteRedirectModal: React.FC<
         </Button>
       }
     >
-      <Text variant="sm" color="black60">
+      <Text variant="sm" color="mono60">
         You’ve successfully set up two-factor authentication!
       </Text>
 
-      <Text variant="sm" mt={2} color="black60">
+      <Text variant="sm" mt={2} color="mono60">
         {redirectMessage(redirectTo)}
       </Text>
     </ModalDialog>

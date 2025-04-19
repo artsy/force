@@ -16,7 +16,7 @@ export const DemandIndexBar: React.FC<
         </Box>
       </Box>
 
-      <Box height={20} width="100%" bg="black15">
+      <Box height={20} width="100%" bg="mono15">
         <GradientBar height={20} width={progressPercent} />
       </Box>
     </Flex>
@@ -26,7 +26,7 @@ export const DemandIndexBar: React.FC<
 const GradientBar = styled(Box)`
   background: linear-gradient(
     90deg,
-    ${themeGet("colors.black5")} 2.6%,
+    ${themeGet("colors.mono5")} 2.6%,
     ${themeGet("colors.brand")} 100%
   );
 `

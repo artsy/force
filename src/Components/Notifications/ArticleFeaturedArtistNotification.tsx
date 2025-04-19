@@ -88,7 +88,7 @@ export const ArticleFeaturedArtistNotification: FC<
           tabIndex={-1}
         >
           <ResponsiveBox
-            bg="black30"
+            bg="mono30"
             aspectWidth={910}
             aspectHeight={607}
             maxWidth={CARD_MAX_WIDTH}
@@ -111,7 +111,7 @@ export const ArticleFeaturedArtistNotification: FC<
           <RouterLink to={article.href} display="block" textDecoration="none">
             <Text variant="xl">{article.thumbnailTitle}</Text>
             <Text variant="lg">By {article.byline}</Text>
-            <Text variant="md" color="black60">
+            <Text variant="md" color="mono60">
               {article.publishedAt}
             </Text>
           </RouterLink>

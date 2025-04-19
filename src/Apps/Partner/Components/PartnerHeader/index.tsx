@@ -27,7 +27,7 @@ export interface PartnerHeaderProps {
 
 // TODO: Replace with `Avatar`
 export const HeaderImage = styled(Image)`
-  border: 1px solid ${themeGet("colors.black10")};
+  border: 1px solid ${themeGet("colors.mono10")};
   object-fit: contain;
 `
 
@@ -75,7 +75,7 @@ export const PartnerHeader: React.FC<
               </Text>
 
               {hasLocations && (
-                <Text color="black60" variant="sm">
+                <Text color="mono60" variant="sm">
                   {/* FIXME: Should be a fragment container */}
                   {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                   <PartnerHeaderAddress {...partner.locations} />
@@ -112,7 +112,7 @@ export const PartnerHeader: React.FC<
             {hasFollows && (
               <Text
                 variant="xs"
-                color="black60"
+                color="mono60"
                 textAlign="center"
                 flexShrink={0}
                 paddingTop={0.5}

@@ -77,10 +77,10 @@ export const StatusRoute: FC<React.PropsWithChildren<StatusProps>> = ({
         <BackToConversationBanner conversationId={conversationId} />
       ) : (
         <>
-          <Text variant="lg-display" fontWeight="regular" color="black100">
+          <Text variant="lg-display" fontWeight="regular" color="mono100">
             {title}
           </Text>
-          <Text variant="xs" fontWeight="regular" color="black60" mb={[2, 4]}>
+          <Text variant="xs" fontWeight="regular" color="mono60" mb={[2, 4]}>
             {flowName} <span data-test="OrderCode">#{order.code}</span>
           </Text>
         </>

@@ -112,7 +112,7 @@ const InquiryInquiry: React.FC<
       {user && (
         <>
           <Text variant="sm-display" my={2}>
-            <Box display="inline-block" width={60} color="black60">
+            <Box display="inline-block" width={60} color="mono60">
               From
             </Box>
             {user.name}
@@ -123,7 +123,7 @@ const InquiryInquiry: React.FC<
       )}
 
       <Text variant="sm-display" my={2}>
-        <Box display="inline-block" width={60} color="black60">
+        <Box display="inline-block" width={60} color="mono60">
           To
         </Box>
 
@@ -163,7 +163,7 @@ const InquiryInquiry: React.FC<
 
       <Spacer y={1} />
 
-      <Text variant="xs" display="flex" gap={0.5} color="black60">
+      <Text variant="xs" display="flex" gap={0.5} color="mono60">
         <InfoIcon flexShrink={0} />
         <div>
           By clicking send, we will share your profile with{" "}
@@ -172,7 +172,7 @@ const InquiryInquiry: React.FC<
             inline
             to="/settings/edit-profile"
             target="_blank"
-            color="black100"
+            color="mono100"
           >
             Settings.
           </RouterLink>

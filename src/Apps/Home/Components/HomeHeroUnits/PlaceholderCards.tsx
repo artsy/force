@@ -35,12 +35,12 @@ export const PlaceholderCards: FC<React.PropsWithChildren<unknown>> = () => {
 
 const PlaceholderCardSmall: FC<React.PropsWithChildren<unknown>> = () => {
   return (
-    <Box width="100%" height="100%" bg="black5">
+    <Box width="100%" height="100%" bg="mono5">
       <ResponsiveBox
         aspectWidth={3}
         aspectHeight={2}
         maxWidth="100%"
-        bg="black30"
+        bg="mono30"
       />
 
       <Box p={4}>
@@ -64,9 +64,9 @@ const PlaceholderCardSmall: FC<React.PropsWithChildren<unknown>> = () => {
 
 const PlaceholderCardLarge: FC<React.PropsWithChildren<unknown>> = () => {
   return (
-    <GridColumns bg="black5">
+    <GridColumns bg="mono5">
       <Column span={6}>
-        <Box height={[300, 400, 500]} position="relative" bg="black30" />
+        <Box height={[300, 400, 500]} position="relative" bg="mono30" />
       </Column>
 
       <Column span={6}>

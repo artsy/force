@@ -45,7 +45,7 @@ export const MyBidsBidHeader: React.FC<
           lazyLoad
         />
       ) : (
-        <Box bg="black10" height={100} />
+        <Box bg="mono10" height={100} />
       )}
 
       <Spacer y={1} />
@@ -57,7 +57,7 @@ export const MyBidsBidHeader: React.FC<
 
         <Text variant="lg-display">{sale.name}</Text>
 
-        <Text variant="lg-display" color="black60">
+        <Text variant="lg-display" color="mono60">
           {sale.formattedStartDateTime}
         </Text>
       </Box>

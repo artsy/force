@@ -60,7 +60,7 @@ const ViewingRoomSubsections: React.FC<
                 </ResponsiveBox>
 
                 {caption && (
-                  <Text variant="xs" color="black60" mt={1}>
+                  <Text variant="xs" color="mono60" mt={1}>
                     {caption}
                   </Text>
                 )}

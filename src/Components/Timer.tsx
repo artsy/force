@@ -33,7 +33,7 @@ export const Timer: React.FC<
     <Flex flexDirection="column" {...rest}>
       <Text variant={variant} color={color}>
         {label && (
-          <Text variant={variant} color="black100">
+          <Text variant={variant} color="mono100">
             {label}
           </Text>
         )}
@@ -44,7 +44,7 @@ export const Timer: React.FC<
       </Text>
 
       {(labelWithTimeRemaining || labelWithoutTimeRemaining) && (
-        <Text variant={variant} color="black60">
+        <Text variant={variant} color="mono60">
           {hasEnded ? labelWithoutTimeRemaining : labelWithTimeRemaining}
         </Text>
       )}

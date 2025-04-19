@@ -105,7 +105,7 @@ const Letter: React.FC<React.PropsWithChildren<LetterProps>> = ({
   }
 
   return (
-    <Text variant="sm-display" color="black10" {...rest}>
+    <Text variant="sm-display" color="mono10" {...rest}>
       {letter}
     </Text>
   )

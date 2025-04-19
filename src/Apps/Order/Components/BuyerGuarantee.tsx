@@ -44,12 +44,12 @@ export const BuyerGuarantee: React.FC<
     return (
       <StackableBorderBox flexDirection="column">
         {renderArtsyPrivateSaleConditions && (
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             This purchase is subject to{" "}
             <RouterLink
               inline
               textDecoration="underline"
-              color="black100"
+              color="mono100"
               to="/private-sales-conditions-of-sale"
               target="_blank"
               rel="noopener noreferrer"
@@ -67,7 +67,7 @@ export const BuyerGuarantee: React.FC<
               Additional Conditions of Sale
             </Text>
             <Spacer y={2} />
-            <Text variant="xs" color="black60">
+            <Text variant="xs" color="mono60">
               {privateSaleConditions}
             </Text>
           </>
@@ -78,13 +78,13 @@ export const BuyerGuarantee: React.FC<
 
   if (orderSource !== "private_sale") {
     return (
-      <Flex p={2} my={1} backgroundColor="black5">
+      <Flex p={2} my={1} backgroundColor="mono5">
         <CheckmarkFillIcon mr={1} />
         <Flex flexDirection="column">
           <Text fontWeight="bold" variant="sm-display">
             Your purchase is protected.
           </Text>
-          <Text variant="xs" color="black60">
+          <Text variant="xs" color="mono60">
             Learn more about{" "}
             <RouterLink
               inline

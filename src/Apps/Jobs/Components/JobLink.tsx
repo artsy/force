@@ -20,7 +20,7 @@ const JobLink: FC<React.PropsWithChildren<JobLinkProps>> = ({ job }) => {
       <Text variant="sm-display">{job.title}</Text>
 
       {job.location !== LEADGEN_LOCATION && (
-        <Text variant="sm-display" color="black60">
+        <Text variant="sm-display" color="mono60">
           {job.location}
         </Text>
       )}

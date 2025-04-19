@@ -75,9 +75,9 @@ export const DeprecatedSaveButton: React.FC<
     >
       <Inner isSaved={artwork.isSavedToAnyList}>
         {artwork.isSavedToAnyList && isHovered ? (
-          <CloseIcon fill="white100" width={24} height={24} />
+          <CloseIcon fill="mono0" width={24} height={24} />
         ) : (
-          <HeartStrokeIcon fill="white100" width={24} height={24} />
+          <HeartStrokeIcon fill="mono0" width={24} height={24} />
         )}
       </Inner>
     </Clickable>
@@ -103,7 +103,7 @@ const Inner = styled(Flex)<{ isSaved: boolean }>`
       : css`
           background-color: rgba(${rgb}, 0.4);
           &:hover {
-            background-color: ${themeGet("colors.black100")};
+            background-color: ${themeGet("colors.mono100")};
           }
         `
   }}
@@ -149,7 +149,7 @@ export const DeprecatedSaveButtonQueryRenderer: React.FC<
       `}
       placeholder={
         <Clickable onClick={() => {}}>
-          <HeartStrokeIcon fill="white100" width={24} height={24} />
+          <HeartStrokeIcon fill="mono0" width={24} height={24} />
         </Clickable>
       }
       variables={{ id }}
@@ -157,7 +157,7 @@ export const DeprecatedSaveButtonQueryRenderer: React.FC<
         if (error || !props?.artwork) {
           return (
             <Clickable onClick={() => {}}>
-              <HeartStrokeIcon fill="white100" width={24} height={24} />
+              <HeartStrokeIcon fill="mono0" width={24} height={24} />
             </Clickable>
           )
         }

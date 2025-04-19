@@ -139,10 +139,10 @@ export const RichContent = () => {
           backgroundSize="cover"
           padding={2}
         >
-          <Text color="white100" fontWeight="bold">
+          <Text color="mono0" fontWeight="bold">
             Illustrated
           </Text>
-          <Text color="white100">Consectetur adipisicing</Text>
+          <Text color="mono0">Consectetur adipisicing</Text>
         </Box>
       </ContextualMenuItem>
 

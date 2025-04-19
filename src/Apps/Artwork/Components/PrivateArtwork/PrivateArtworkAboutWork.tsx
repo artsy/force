@@ -27,7 +27,7 @@ export const PrivateArtworkAboutWork: React.FC<
 
   return (
     <Box>
-      <Text variant="md" color="black100">
+      <Text variant="md" color="mono100">
         About This Work
       </Text>
 

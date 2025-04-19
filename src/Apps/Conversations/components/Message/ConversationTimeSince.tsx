@@ -26,7 +26,7 @@ export const ConversationTimeSince: React.FC<
 
   return (
     <Box {...props}>
-      <Text variant="xs" color="black60">
+      <Text variant="xs" color="mono60">
         {exact ? exactDate(time) : relativeDate(time)}
       </Text>
     </Box>

@@ -104,7 +104,7 @@ const NotificationItem: FC<React.PropsWithChildren<NotificationItemProps>> = ({
 
                   <Text
                     variant="xs"
-                    color="black60"
+                    color="mono60"
                     aria-label="Remaining artworks count"
                     display="flex"
                     alignItems="center"
@@ -213,7 +213,7 @@ export const NotificationItemWrapper: FC<
   }, [])
 
   const backgroundColor =
-    currentNotificationId === item.internalID ? "black5" : "white100"
+    currentNotificationId === item.internalID ? "mono5" : "mono0"
 
   return (
     <>
@@ -249,7 +249,7 @@ const NotificationItemLink = styled(RouterLink)`
   overflow: hidden;
 
   &:hover {
-    background-color: ${themeGet("colors.black5")};
+    background-color: ${themeGet("colors.mono5")};
   }
 `
 

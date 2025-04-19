@@ -64,7 +64,7 @@ export const MarketingMeetArtAdvisorRoute: FC<
         />
 
         {!isEigen && (
-          <FullBleed bg={["black5", "transparent"]} py={[4, 0]} px={[2, 4]}>
+          <FullBleed bg={["mono5", "transparent"]} py={[4, 0]} px={[2, 4]}>
             <GridColumns gridRowGap={4}>
               <Column span={12} textAlign="center">
                 <Text variant="xl">Meet your new art advisor. It’s Artsy.</Text>

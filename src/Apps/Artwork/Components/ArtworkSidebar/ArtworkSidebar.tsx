@@ -136,7 +136,7 @@ export const ArtworkSidebar: React.FC<
   return (
     <Flex flexDirection="column" data-test={ContextModule.artworkSidebar}>
       {shoudlDisplayLotLabel && (
-        <Text variant="sm" color="black100" mb={0.5}>
+        <Text variant="sm" color="mono100" mb={0.5}>
           Lot {lotLabel}
         </Text>
       )}

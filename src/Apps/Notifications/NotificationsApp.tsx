@@ -65,7 +65,7 @@ const NotificationsApp: React.FC<
             <Column
               span={3}
               borderRight="1px solid"
-              borderColor="black10"
+              borderColor="mono10"
               minWidth={MIN_LIST_WIDTH}
               height="100%"
             >

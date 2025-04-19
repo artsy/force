@@ -15,7 +15,7 @@ export const NoResults: FC<React.PropsWithChildren<NoResultsProps>> = ({
       <Text alignContent="center" textAlign="center">
         Sorry, we couldn’t find anything for “<Highlight>{query}</Highlight>”
       </Text>
-      <Text color="black60" textAlign="center" mt={1}>
+      <Text color="mono60" textAlign="center" mt={1}>
         Please try searching again with a different spelling.
       </Text>
     </Flex>

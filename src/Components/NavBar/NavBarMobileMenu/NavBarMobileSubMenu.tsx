@@ -46,7 +46,7 @@ export const NavBarMobileSubMenu: React.FC<
         {children}
 
         <ChevronRightIcon
-          fill="black60"
+          fill="mono60"
           height={14}
           width={14}
           ml={1}
@@ -82,7 +82,7 @@ const NavBarMobileSubMenuPanel: React.FC<
       <Flex position="relative" alignItems="stretch" height={60}>
         {showBacknav && <NavBarMobileSubMenuBack />}
 
-        <Text variant="sm" color="black100" display="flex" m="auto">
+        <Text variant="sm" color="mono100" display="flex" m="auto">
           {title}
         </Text>
 
@@ -147,7 +147,7 @@ export const NavBarMobileSubMenuBack: React.FC<
       }}
     >
       <ChevronLeftIcon
-        fill="black100"
+        fill="mono100"
         height={14}
         width={14}
         m="auto"

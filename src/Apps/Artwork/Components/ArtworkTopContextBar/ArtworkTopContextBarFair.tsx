@@ -42,7 +42,7 @@ export const ArtworkTopContextBarFair: React.FC<
     >
       <Stack gap={1} flexDirection="row">
         {fair.name}
-        <Box as="span" color="black60">
+        <Box as="span" color="mono60">
           At fair
         </Box>
       </Stack>

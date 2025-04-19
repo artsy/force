@@ -122,7 +122,7 @@ export const InquiryResetPassword: React.FC<
 
       <Spacer y={2} />
 
-      <Text variant="xs" textAlign="center" color="black60">
+      <Text variant="xs" textAlign="center" color="mono60">
         Don’t need to reset?{" "}
         <Clickable
           textDecoration="underline"

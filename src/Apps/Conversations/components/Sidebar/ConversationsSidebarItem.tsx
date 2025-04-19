@@ -54,7 +54,7 @@ export const ConversationsSidebarItem: React.FC<
   return (
     <StackableBorderBox
       flexDirection="column"
-      backgroundColor={isHighlighted ? "black5" : "white100"}
+      backgroundColor={isHighlighted ? "mono5" : "mono0"}
       p={0}
       style={{ borderLeft: 0, borderRight: 0, ...borderTop }}
       ref={scrollRef as any}
@@ -97,7 +97,7 @@ export const ConversationsSidebarItem: React.FC<
               {item.artist.name}
             </Text>
 
-            <Text variant="xs" color="black60" overflowEllipsis>
+            <Text variant="xs" color="mono60" overflowEllipsis>
               <Text fontStyle="italic" display="inline" variant="xs">
                 {item.title}
               </Text>
@@ -116,7 +116,7 @@ export const ConversationsSidebarItem: React.FC<
             <Text variant="xs">{conversationType}</Text>
 
             <Flex flexDirection="row" alignItems="center">
-              <Text variant="xs" color="black60">
+              <Text variant="xs" color="mono60">
                 {data?.lastMessageAt}
               </Text>
             </Flex>

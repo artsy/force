@@ -40,7 +40,7 @@ export const OnboardingModal: React.FC<
       <Box
         width="100%"
         position="relative"
-        bg="white100"
+        bg="mono0"
         overflowY="auto"
         style={{
           WebkitOverflowScrolling: "touch",

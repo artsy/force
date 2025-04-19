@@ -20,7 +20,7 @@ export const SidebarExpandable: React.FC<
   }
 
   return (
-    <Expandable label={label} borderColor="black10" onToggle={handleToggle}>
+    <Expandable label={label} borderColor="mono10" onToggle={handleToggle}>
       {children}
     </Expandable>
   )

@@ -38,7 +38,7 @@ const CONTAINER_HEIGHT = LINE_HEIGHT * NUM_OF_LINES
 const CONTAINER_HEIGHT_PX = `${CONTAINER_HEIGHT}px`
 
 const StyledConditionalLink = styled(RouterLink)`
-  color: ${themeGet("colors.black100")};
+  color: ${themeGet("colors.mono100")};
   text-decoration: none;
   &:hover {
     text-decoration: underline;
@@ -104,7 +104,7 @@ const TitleLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
       <Text
         variant="sm-display"
         lineHeight={LINE_HEIGHT_PX}
-        color="black60"
+        color="mono60"
         overflowEllipsis
       >
         <i>{title}</i>
@@ -123,7 +123,7 @@ const PartnerLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
       <Text
         variant="sm-display"
         lineHeight={LINE_HEIGHT_PX}
-        color="black60"
+        color="mono60"
         overflowEllipsis
       >
         {collecting_institution}
@@ -137,7 +137,7 @@ const PartnerLine: React.FC<React.PropsWithChildren<DetailsProps>> = ({
         <Text
           variant="sm-display"
           lineHeight={LINE_HEIGHT_PX}
-          color="black60"
+          color="mono60"
           overflowEllipsis
         >
           {partner.name}
@@ -158,7 +158,7 @@ const SaleInfoLine: React.FC<React.PropsWithChildren<DetailsProps>> = props => {
       <Text
         variant="sm-display"
         lineHeight={LINE_HEIGHT_PX}
-        color="black100"
+        color="mono100"
         fontWeight="bold"
       >
         Bidding closed
@@ -179,7 +179,7 @@ const SaleInfoLine: React.FC<React.PropsWithChildren<DetailsProps>> = props => {
       <Text
         variant="sm-display"
         lineHeight={LINE_HEIGHT_PX}
-        color="black100"
+        color="mono100"
         fontWeight="bold"
         overflowEllipsis
       >

@@ -163,9 +163,9 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
       <Box
         as="header"
-        bg="white100"
+        bg="mono0"
         borderBottom="1px solid"
-        borderColor="black30"
+        borderColor="mono30"
         height={height}
       >
         <Media at="xs">

@@ -20,7 +20,7 @@ export class ArtworkSidebarAuctionPartnerInfo extends Component<ArtworkSidebarAu
         {partner && <Text variant="xs">{partner.name}</Text>}
 
         {sale_artwork && sale_artwork.estimate && (
-          <Text variant="xs" color="black60">
+          <Text variant="xs" color="mono60">
             Estimated value: {sale_artwork.estimate}
           </Text>
         )}

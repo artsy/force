@@ -41,7 +41,7 @@ const ShowsFeaturedShow: React.FC<
           aspectHeight={image.height}
           maxWidth="100%"
         >
-          <Overlay bg="black100" />
+          <Overlay bg="mono100" />
 
           <Image
             width="100%"
@@ -60,7 +60,7 @@ const ShowsFeaturedShow: React.FC<
         <Text variant={variants.primary}>{show.partner.name}</Text>
       )}
 
-      <Text variant={variants.primary} color="black60">
+      <Text variant={variants.primary} color="mono60">
         {show.name}
       </Text>
 

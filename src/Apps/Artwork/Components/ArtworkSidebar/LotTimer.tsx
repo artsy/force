@@ -69,14 +69,14 @@ export const LotTimer: React.FC<React.PropsWithChildren<LotTimerProps>> = ({
         />
       )}
 
-      <Text variant="sm-display" color={"black60"}>
+      <Text variant="sm-display" color={"mono60"}>
         {saleArtwork.formattedStartDateTime}
       </Text>
 
       {extendedBiddingPeriodMinutes && (
         <>
           <Spacer y={1} />
-          <Text variant="xs" color={"black60"}>
+          <Text variant="xs" color={"mono60"}>
             *Closure times may be extended to accommodate last-minute bids
           </Text>
         </>

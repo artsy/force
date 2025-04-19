@@ -19,7 +19,7 @@ export const OnboardingWelcomeAnimatedPanel = forwardRef(
         }}
       >
         <Flex
-          bg="black100"
+          bg="mono100"
           position="absolute"
           top={0}
           left={0}
@@ -40,7 +40,7 @@ export const OnboardingWelcomeAnimatedPanel = forwardRef(
                       aspectWidth={300}
                       aspectHeight={400}
                       maxWidth="100%"
-                      bg="black60"
+                      bg="mono60"
                       mt={2}
                     >
                       <Image

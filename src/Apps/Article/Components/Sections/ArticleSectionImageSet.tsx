@@ -68,7 +68,7 @@ const ArticleSectionImageSet: FC<
                 justifyContent="space-between"
                 width="100%"
                 border="1px solid"
-                borderColor="black10"
+                borderColor="mono10"
                 p={2}
                 onClick={handleClick}
               >
@@ -97,7 +97,7 @@ const ArticleSectionImageSet: FC<
                       )}
                     </Text>
 
-                    <Text variant="sm-display" color="black60">
+                    <Text variant="sm-display" color="mono60">
                       View Slideshow
                     </Text>
                   </Box>
@@ -129,7 +129,7 @@ const ArticleSectionImageSet: FC<
                     <Box
                       display="flex"
                       alignItems="center"
-                      bg="white100"
+                      bg="mono0"
                       p={2}
                       width="fit-content"
                       style={{ boxShadow: theme.effects.dropShadow }}
@@ -149,7 +149,7 @@ const ArticleSectionImageSet: FC<
                           )}
                         </Text>
 
-                        <Text variant="sm-display" color="black60">
+                        <Text variant="sm-display" color="mono60">
                           View Slideshow
                         </Text>
                       </Box>

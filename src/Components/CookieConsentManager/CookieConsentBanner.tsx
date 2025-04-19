@@ -30,9 +30,9 @@ export const CookieConsentBanner: FC<
       right={0}
       bottom={0}
       left={0}
-      bg="white100"
+      bg="mono0"
       borderTop="1px solid"
-      borderColor="black10"
+      borderColor="mono10"
       py={[2, 4]}
       zIndex={Z.globalNav}
       style={{ boxShadow: theme.effects.dropShadow }}

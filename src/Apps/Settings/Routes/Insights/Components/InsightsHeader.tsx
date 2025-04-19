@@ -20,7 +20,7 @@ export const InsightsHeader: React.FC<
         {({ stuck }) => {
           return (
             <FullBleed
-              backgroundColor="white100"
+              backgroundColor="mono0"
               style={
                 stuck ? { boxShadow: theme.effects.dropShadow } : undefined
               }
@@ -28,7 +28,7 @@ export const InsightsHeader: React.FC<
               <AppContainer>
                 <HorizontalPadding>
                   <Flex
-                    backgroundColor="white100"
+                    backgroundColor="mono0"
                     justifyContent="flex-end"
                     py={[1, 2]}
                   >

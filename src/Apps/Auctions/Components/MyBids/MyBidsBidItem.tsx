@@ -44,7 +44,7 @@ export const MyBidsBidItem: React.FC<
       }}
     >
       <Flex alignItems="center" width="100%">
-        <Box backgroundColor="black60" flexShrink={0}>
+        <Box backgroundColor="mono60" flexShrink={0}>
           {image && (
             <Image
               src={image.src}
@@ -64,7 +64,7 @@ export const MyBidsBidItem: React.FC<
               {saleArtwork.artwork?.artistNames}
             </Text>
 
-            <Text variant="xs" color="black60">
+            <Text variant="xs" color="mono60">
               Lot {saleArtwork.lotLabel}
             </Text>
           </Box>
@@ -78,7 +78,7 @@ export const MyBidsBidItem: React.FC<
 
                 <Text
                   variant="xs"
-                  color="black60"
+                  color="mono60"
                   overflowEllipsis
                   display="flex"
                   alignItems="center"
@@ -93,7 +93,7 @@ export const MyBidsBidItem: React.FC<
                 {!saleArtwork.sale?.isLiveOpen && (
                   <Text variant="xs" overflowEllipsis>
                     {saleArtwork.currentBid?.display || saleArtwork.estimate}{" "}
-                    <Box as="span" color="black60">
+                    <Box as="span" color="mono60">
                       (
                       {saleArtwork.lotState?.bidCount === 1
                         ? `${saleArtwork.lotState.bidCount} bid`

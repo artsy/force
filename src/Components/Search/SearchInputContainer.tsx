@@ -18,7 +18,7 @@ const SearchButton = styled(Clickable)`
     outline: none;
 
     svg > path {
-      fill: ${themeGet("colors.white100")};
+      fill: ${themeGet("colors.mono0")};
     }
   }
 `

@@ -63,14 +63,14 @@ export const GenericSearchResultItem: React.FC<
           </Box>
 
           <Box>
-            <Text variant="xs" color="black60" mb={0.5}>
+            <Text variant="xs" color="mono60" mb={0.5}>
               {translateEntityType(entityType)}
             </Text>
 
             <Text size="md">{name}</Text>
 
             {description && (
-              <Text mt={0.5} variant="sm" color="black60" lineClamp={3}>
+              <Text mt={0.5} variant="sm" color="mono60" lineClamp={3}>
                 {description}
               </Text>
             )}
@@ -83,6 +83,6 @@ export const GenericSearchResultItem: React.FC<
 
 const ItemRow = styled(Box)`
   &:hover {
-    background-color: ${themeGet("colors.black5")};
+    background-color: ${themeGet("colors.mono5")};
   }
 `

@@ -30,7 +30,7 @@ export const ArtworkSidebarArtsyGuarantee: React.FC<
   if (data.isUnlisted) {
     return (
       <>
-        <Text variant="xs" color="black60">
+        <Text variant="xs" color="mono60">
           Be covered by the Artsy Guarantee when you check out with Artsy{" "}
           <RouterLink
             inline
@@ -58,7 +58,7 @@ export const ArtworkSidebarArtsyGuarantee: React.FC<
 
   return (
     <>
-      <Text variant="sm" color="black60">
+      <Text variant="sm" color="mono60">
         <Flex flexDirection="row" alignItems="center">
           <LockIcon mr={1} height={24} width={24} />
 

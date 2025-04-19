@@ -99,11 +99,11 @@ export const PriceRange: FC<React.PropsWithChildren<PriceRangeProps>> = ({
       />
 
       <Flex justifyContent="space-between" mt={1}>
-        <Text variant="xs" color="black60">
+        <Text variant="xs" color="mono60">
           ${defaultMinValue}
         </Text>
 
-        <Text variant="xs" color="black60">
+        <Text variant="xs" color="mono60">
           ${defaultMaxValue}+
         </Text>
       </Flex>

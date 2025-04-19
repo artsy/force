@@ -29,12 +29,12 @@ const ContextualMenuItemContent = styled(Clickable)`
 
   transition: background-color 250ms;
   &:hover {
-    background-color: ${themeGet("colors.black5")};
+    background-color: ${themeGet("colors.mono5")};
   }
 `
 
 export const ContextualMenuDivider: React.FC<
   React.PropsWithChildren<unknown>
 > = () => {
-  return <Separator color="black10" as="hr" width="100%" />
+  return <Separator color="mono10" as="hr" width="100%" />
 }

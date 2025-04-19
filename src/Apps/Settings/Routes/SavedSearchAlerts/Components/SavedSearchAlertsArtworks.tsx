@@ -65,11 +65,11 @@ export const AlertArtworks: React.FC<
 
             {count > 0 ? (
               <>
-                <Text variant="sm-display" color="black60" mb={4}>
+                <Text variant="sm-display" color="mono60" mb={4}>
                   {count}
                   {count > 1 ? " works" : " work"} currently on Artsy match your
                   criteria.
-                  <Text variant="sm-display" color="black60">
+                  <Text variant="sm-display" color="mono60">
                     See our top picks for you:
                   </Text>
                 </Text>
@@ -136,11 +136,11 @@ export const AlertArtworks: React.FC<
 
               {count > 0 ? (
                 <>
-                  <Text variant="sm-display" color="black60">
+                  <Text variant="sm-display" color="mono60">
                     {count}
                     {count > 1 ? " works" : " work"} currently on Artsy match
                     your criteria.
-                    <Text variant="sm-display" color="black60">
+                    <Text variant="sm-display" color="mono60">
                       See our top picks for you:
                     </Text>
                   </Text>

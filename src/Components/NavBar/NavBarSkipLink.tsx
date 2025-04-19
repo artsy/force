@@ -21,8 +21,8 @@ const Container = styled.a`
   top: -100%;
   left: 0;
   padding: ${themeGet("space.1")};
-  color: ${themeGet("colors.black100")};
-  background-color: ${themeGet("colors.black10")};
+  color: ${themeGet("colors.mono100")};
+  background-color: ${themeGet("colors.mono10")};
 
   &:focus {
     position: relative;

@@ -103,7 +103,7 @@ export const NavigationTabs: React.FC<
         return (
           <FullBleed
             py={2}
-            backgroundColor="white100"
+            backgroundColor="mono0"
             style={stuck ? { boxShadow: theme.effects.dropShadow } : undefined}
           >
             <HorizontalPadding>

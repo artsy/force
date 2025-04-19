@@ -80,7 +80,7 @@ export const FollowButtonInlineCount = styled(Text).attrs({ variant: "xs" })``
 
 const StyledButton = styled(Button)`
   ${FollowButtonInlineCount} {
-    color: ${themeGet("colors.black60")};
+    color: ${themeGet("colors.mono60")};
   }
 
   &:focus,

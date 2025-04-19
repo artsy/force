@@ -1,3 +1,4 @@
+import { ApplePayDetails } from "Apps/Order/Components/ApplePayDetails"
 import {
   StepSummaryItem,
   type StepSummaryItemProps,
@@ -7,11 +8,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { BankDebitDetails } from "./BankDebitDetails"
 import { CreditCardDetails } from "./CreditCardDetails"
 import { WireTransferDetails } from "./WireTransferDetails"
-import { ApplePayDetails } from "Apps/Order/Components/ApplePayDetails"
 
 export const PaymentMethodSummaryItem = ({
   order: { creditCardWalletType, source, paymentMethodDetails },
-  textColor = "black100",
+  textColor = "mono100",
   withDescription = true,
   ...others
 }: {

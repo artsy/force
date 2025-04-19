@@ -31,10 +31,10 @@ export const InsightsCareerHighlightCard: React.FC<
           alignItems="center"
           justifyContent="center"
           border="1px solid"
-          borderColor="black100"
+          borderColor="mono100"
           borderRadius="50%"
         >
-          <Icon fill="black100" height={20} width={20} />
+          <Icon fill="mono100" height={20} width={20} />
         </Flex>
       </Flex>
 
@@ -66,8 +66,8 @@ const CardWrapper: React.FC<React.PropsWithChildren<CardWrapperProps>> = ({
 }
 
 const ClickableCard = styled(Clickable)`
-  background: ${themeGet("colors.white100")};
-  border: 1px solid ${themeGet("colors.black10")};
+  background: ${themeGet("colors.mono0")};
+  border: 1px solid ${themeGet("colors.mono10")};
   display: flex;
   flex-direction: column;
 

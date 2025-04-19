@@ -85,7 +85,7 @@ const HomeCurrentFairs: React.FC<
                   {fair.name}
                 </Text>
 
-                <Text variant="sm-display" color="black60">
+                <Text variant="sm-display" color="mono60">
                   {fair.exhibitionPeriod}
                 </Text>
               </RouterLink>

@@ -25,17 +25,17 @@ export const AuctionResultImage: React.FC<
         maxWidth={["100%", MAX_DIMENSION]}
         maxHeight={MAX_DIMENSION}
         mx="auto"
-        bg="black10"
+        bg="mono10"
       >
         <ResponsiveBox
           data-testid="artwork-browser-no-image-box"
-          bg="black10"
+          bg="mono10"
           maxWidth="100%"
           aspectWidth={1}
           aspectHeight={1}
         >
           <Flex height="100%" justifyContent="center" alignItems="center">
-            <NoArtIcon width={28} height={28} fill="black60" />
+            <NoArtIcon width={28} height={28} fill="mono60" />
           </Flex>
         </ResponsiveBox>
       </Flex>
@@ -45,7 +45,7 @@ export const AuctionResultImage: React.FC<
   return (
     <ResponsiveBox
       data-testid="artwork-lightbox-box"
-      bg="black10"
+      bg="mono10"
       mx="auto"
       maxWidth={MAX_DIMENSION}
       aspectWidth={image.width || 1}

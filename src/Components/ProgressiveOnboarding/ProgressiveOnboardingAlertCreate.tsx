@@ -61,7 +61,7 @@ export const __ProgressiveOnboardingAlertCreate__: FC<
             <Spacer y={1} />
 
             <ResponsiveBox
-              bg="black10"
+              bg="mono10"
               aspectWidth={IMAGE.width}
               aspectHeight={IMAGE.height}
               maxWidth="100%"

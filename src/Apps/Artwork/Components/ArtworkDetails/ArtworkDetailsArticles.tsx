@@ -39,7 +39,7 @@ export const ArtworkDetailsArticles: React.FC<
                     alt=""
                   />
                 ) : (
-                  <Box width={200} height={150} bg="black5" />
+                  <Box width={200} height={150} bg="mono5" />
                 )}
 
                 <Box ml={2}>

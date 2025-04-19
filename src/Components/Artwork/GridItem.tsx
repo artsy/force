@@ -97,7 +97,7 @@ export const ArtworkGridItem: React.FC<
         <Box
           position="relative"
           width="100%"
-          bg="black10"
+          bg="mono10"
           style={{
             paddingBottom: imagePlaceholder,
           }}
@@ -232,7 +232,7 @@ const ArtworkGridItemImage: React.FC<
         justifyContent="center"
         alignItems="center"
       >
-        <NoArtIcon width="28px" height="28px" fill="black60" />
+        <NoArtIcon width="28px" height="28px" fill="mono60" />
       </Flex>
     </>
   )

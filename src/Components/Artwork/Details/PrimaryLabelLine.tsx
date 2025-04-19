@@ -55,7 +55,7 @@ export const PrimaryLabelLine: React.FC<
         variant="xs"
         border="1px solid"
         borderRadius={3}
-        borderColor="black100"
+        borderColor="mono100"
         px={0.5}
         alignSelf="flex-start"
         my="1px"
@@ -73,7 +73,7 @@ export const PrimaryLabelLine: React.FC<
         variant="xs"
         border="1px solid"
         borderRadius={3}
-        borderColor="black100"
+        borderColor="mono100"
         px={0.5}
         alignSelf="flex-start"
         my="1px"

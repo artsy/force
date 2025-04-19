@@ -78,7 +78,7 @@ export const TextFixedLeftScrollRight = () => {
     <Page title="<TextFixedLeftScrollRight />">
       <GridColumns>
         <Column span={6}>
-          <Box bg="black30" height={720} />
+          <Box bg="mono30" height={720} />
         </Column>
 
         <Column span={6}>
@@ -218,7 +218,7 @@ export const TextScrollLeftFixedRight = () => {
         </Column>
 
         <Column span={6}>
-          <Box bg="black30" height={720} />
+          <Box bg="mono30" height={720} />
         </Column>
       </GridColumns>
     </Page>

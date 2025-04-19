@@ -19,12 +19,12 @@ export const ConfirmationScreenComponent: React.FC<
       </Text>
 
       {!!subtitle && (
-        <Text variant="sm-display" color="black60" mt={1} mb={6}>
+        <Text variant="sm-display" color="mono60" mt={1} mb={6}>
           {subtitle}
         </Text>
       )}
       {!!customSubtitle && (
-        <Text variant="sm-display" color="black60" mt={1} mb={6} maxWidth={720}>
+        <Text variant="sm-display" color="mono60" mt={1} mb={6} maxWidth={720}>
           {customSubtitle}
         </Text>
       )}

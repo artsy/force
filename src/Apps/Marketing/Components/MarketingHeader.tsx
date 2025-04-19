@@ -38,7 +38,7 @@ export const MarketingHeader: FC<
             // Matches homepage hero units
             height={[300, 400, 500]}
             overflow="hidden"
-            bg="black5"
+            bg="mono5"
           >
             <Column
               span={5}
@@ -86,7 +86,7 @@ export const MarketingHeader: FC<
           />
         </FullBleed>
 
-        <FullBleed bg="black10">
+        <FullBleed bg="mono10">
           <HorizontalPadding py={6}>
             <Text variant="xl">{title}</Text>
 

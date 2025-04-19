@@ -37,7 +37,7 @@ export const Example = () => {
         right={0}
         height={[MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT]}
         p={1}
-        bg="black5"
+        bg="mono5"
         zIndex={1}
       >
         <Text variant="sm">Header placeholder</Text>
@@ -56,7 +56,7 @@ export const Example = () => {
       <JumpButton />
 
       <Sticky>
-        <Box bg="black10" p={1}>
+        <Box bg="mono10" p={1}>
           <Text variant="sm">Sticky content</Text>
         </Box>
       </Sticky>
@@ -138,9 +138,9 @@ export const GridExample = () => {
 
         <Sticky>
           <FullBleed>
-            <AppContainer bg="black100">
+            <AppContainer bg="mono100">
               <HorizontalPadding>
-                <Text variant="sm" color="white100">
+                <Text variant="sm" color="mono0">
                   Is aligned with underlying content
                 </Text>
               </HorizontalPadding>

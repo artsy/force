@@ -122,8 +122,8 @@ const CardWrapper: React.FC<React.PropsWithChildren<CardWrapperProps>> = ({
 }
 
 const ClickableCard = styled(Clickable)`
-  background: ${themeGet("colors.white100")};
-  border: 1px solid ${themeGet("colors.black10")};
+  background: ${themeGet("colors.mono0")};
+  border: 1px solid ${themeGet("colors.mono10")};
   display: flex;
   align-items: stretch;
 

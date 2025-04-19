@@ -12,11 +12,11 @@ export const ConditionsOfSaleDisclaimer: React.FC<
 > = ({ textProps, orderSource }) => {
   if (orderSource === "private_sale") {
     return (
-      <Text variant="sm" color="black60" {...textProps}>
+      <Text variant="sm" color="mono60" {...textProps}>
         By clicking Complete Purchase, I agree to the{" "}
         <RouterLink
           inline
-          color="black100"
+          color="mono100"
           textDecoration="underline"
           to="/private-sales-conditions-of-sale"
           target="_blank"
@@ -31,7 +31,7 @@ export const ConditionsOfSaleDisclaimer: React.FC<
   }
 
   return (
-    <Text variant="xs" color="black60" {...textProps}>
+    <Text variant="xs" color="mono60" {...textProps}>
       By clicking Submit, I agree to Artsy’s{" "}
       <RouterLink inline to="/terms" target="_blank">
         General Terms and Conditions of Sale.

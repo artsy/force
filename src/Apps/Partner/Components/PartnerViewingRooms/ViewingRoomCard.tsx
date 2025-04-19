@@ -35,7 +35,7 @@ const ViewingRoomCard: React.FC<
         <Text
           as="h5"
           textTransform="capitalize"
-          color="black100"
+          color="mono100"
           variant="sm-display"
           mt={1}
         >
@@ -43,12 +43,12 @@ const ViewingRoomCard: React.FC<
         </Text>
       )}
       {title && (
-        <Text as="h4" variant="lg-display" color="black100">
+        <Text as="h4" variant="lg-display" color="mono100">
           {title}
         </Text>
       )}
       {exhibitionPeriod && (
-        <Text as="h6" textTransform="capitalize" color="black60" variant="sm">
+        <Text as="h6" textTransform="capitalize" color="mono60" variant="sm">
           {exhibitionPeriod}
         </Text>
       )}

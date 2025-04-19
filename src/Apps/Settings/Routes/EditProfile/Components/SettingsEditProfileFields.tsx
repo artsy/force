@@ -208,7 +208,7 @@ const SettingsEditProfileFields: React.FC<
                 </Box>
               ) : (
                 <Flex alignItems="center">
-                  <CheckmarkStrokeIcon fill="black60" mr={0.5} />
+                  <CheckmarkStrokeIcon fill="mono60" mr={0.5} />
                   <Clickable
                     onClick={async () => {
                       trackEvent(clickedIdVerificationEvent)
@@ -244,7 +244,7 @@ const SettingsEditProfileFields: React.FC<
                   </Clickable>
                 </Flex>
               )}
-              <Text variant="sm" mt={1} color="black60">
+              <Text variant="sm" mt={1} color="mono60">
                 For details, see{" "}
                 <RouterLink
                   inline
@@ -271,7 +271,7 @@ const SettingsEditProfileFields: React.FC<
                   <Text variant="sm-display">Email Address Verified</Text>
                 </Flex>
 
-                <Text variant="sm" mt={1} color="black60">
+                <Text variant="sm" mt={1} color="mono60">
                   Secure your account and receive updates about your
                   transactions on Artsy.
                 </Text>
@@ -279,7 +279,7 @@ const SettingsEditProfileFields: React.FC<
             ) : (
               <Box>
                 <Flex alignItems="center">
-                  <CheckmarkStrokeIcon fill="black60" mr={0.5} />
+                  <CheckmarkStrokeIcon fill="mono60" mr={0.5} />
                   {canRequestEmailConfirmation ? (
                     <Clickable
                       onClick={async () => {
@@ -314,15 +314,12 @@ const SettingsEditProfileFields: React.FC<
                       <Text variant="sm-display">Verify Your Email</Text>
                     </Clickable>
                   ) : (
-                    <Text
-                      style={{ textDecorationLine: "none" }}
-                      color="black60"
-                    >
+                    <Text style={{ textDecorationLine: "none" }} color="mono60">
                       Verify Your Email
                     </Text>
                   )}
                 </Flex>
-                <Text variant="sm" mt={1} color="black60">
+                <Text variant="sm" mt={1} color="mono60">
                   Secure your account and receive updates about your
                   transactions on Artsy.
                 </Text>

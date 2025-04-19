@@ -6,7 +6,7 @@ export const ConversationNewMessageMarker: React.FC<
   React.PropsWithChildren<unknown>
 > = () => (
   <Separator alignItems="center" my={1}>
-    <Text color="black60">New</Text>
+    <Text color="mono60">New</Text>
   </Separator>
 )
 
@@ -15,7 +15,7 @@ const Separator = styled(Flex)`
   &::after {
     content: "";
     flex: 1;
-    border-bottom: 1px solid ${themeGet("colors.black10")};
+    border-bottom: 1px solid ${themeGet("colors.mono10")};
   }
 
   &:not(:empty)::before {

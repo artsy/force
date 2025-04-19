@@ -75,7 +75,7 @@ export const FileDropzone: React.FC<
 
           <Text variant="lg-display">{title}</Text>
           {subtitle && (
-            <Text variant={["xs", "sm-display"]} color="black60" mt={1}>
+            <Text variant={["xs", "sm-display"]} color="mono60" mt={1}>
               {subtitle}
             </Text>
           )}
@@ -105,7 +105,7 @@ export const FileDropzone: React.FC<
           {buttonText}
         </Button>
         {subtitle && (
-          <Text variant={["xs", "sm-display"]} color="black60" mt={1}>
+          <Text variant={["xs", "sm-display"]} color="mono60" mt={1}>
             {subtitle}
           </Text>
         )}

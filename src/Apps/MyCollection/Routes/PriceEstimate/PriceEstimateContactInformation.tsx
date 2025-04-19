@@ -149,11 +149,11 @@ export const PriceEstimateContactInformation: React.FC<
 
               <Spacer y={6} />
 
-              <Text variant="xs" color="black60">
+              <Text variant="xs" color="mono60">
                 By continuing, you agree to{" "}
                 <RouterLink
                   inline
-                  color="black60"
+                  color="mono60"
                   to="/privacy"
                   target="_blank"
                   rel="noopener noreferrer"

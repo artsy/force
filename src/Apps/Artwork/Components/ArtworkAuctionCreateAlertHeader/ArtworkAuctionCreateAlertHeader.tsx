@@ -127,7 +127,7 @@ const ArtworkAuctionCreateAlertHeader: FC<
             <Text
               variant={["sm-display", "md", "lg"]}
               textAlign={["left", "center"]}
-              textColor={["black60", "black100"]}
+              textColor={["mono60", "mono100"]}
             >
               {hasLostBid
                 ? "We’ve created an alert for you for similar works."
@@ -156,8 +156,8 @@ const ArtworkAuctionCreateAlertHeader: FC<
                   <CreateAlertButton
                     width="100%"
                     size="large"
-                    backgroundColor="black100"
-                    color="white100"
+                    backgroundColor="mono100"
+                    color="mono0"
                   />
                 </ProgressiveOnboardingAlertCreateSimple>
               )}

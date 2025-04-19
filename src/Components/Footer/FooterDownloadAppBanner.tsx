@@ -40,7 +40,7 @@ export const FooterDownloadAppBanner = () => {
 
   return (
     <>
-      <GridColumns gridColumnGap={0} gridRowGap={0} bg="black5">
+      <GridColumns gridColumnGap={0} gridRowGap={0} bg="mono5">
         <Column
           span={4}
           display="flex"

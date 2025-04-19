@@ -96,7 +96,7 @@ export const SettingsEditProfileArtistsYouCollect: FC<
               alignItems="center"
               justifyContent="space-between"
               borderTop="1px solid"
-              borderColor="black10"
+              borderColor="mono10"
             >
               {artist.name}
 

@@ -64,7 +64,7 @@ export const FeaturedCollectionRailEntity: FC<
             lazyLoad
           />
         ) : (
-          <Box width={325} height={244} bg="black10" />
+          <Box width={325} height={244} bg="mono10" />
         )}
 
         <Spacer y={1} />

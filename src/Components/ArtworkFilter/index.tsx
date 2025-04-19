@@ -267,14 +267,14 @@ export const BaseArtworkFilter: React.FC<
       {/* Mobile Artwork Filter */}
       <Media at="xs">
         <Sticky>
-          <FullBleed backgroundColor="white100">
+          <FullBleed backgroundColor="mono0">
             <Flex
               justifyContent="space-between"
               alignItems="center"
               p={2}
               gap={2}
               borderBottom="1px solid"
-              borderColor="black10"
+              borderColor="mono10"
             >
               <Clickable
                 onClick={handleOpen}
@@ -349,7 +349,7 @@ export const BaseArtworkFilter: React.FC<
         <Sticky bottomBoundary="#Sticky__ArtworkFilter">
           {({ stuck }) => {
             return (
-              <FullBleed backgroundColor="white100">
+              <FullBleed backgroundColor="mono0">
                 <AppContainer>
                   <HorizontalPadding>
                     <Flex
@@ -357,7 +357,7 @@ export const BaseArtworkFilter: React.FC<
                       justifyContent="space-between"
                       gap={2}
                       py={1}
-                      bg="white100"
+                      bg="mono0"
                     >
                       <HorizontalOverflow minWidth={0}>
                         <Flex gap={1}>
@@ -380,7 +380,7 @@ export const BaseArtworkFilter: React.FC<
                                 )
                               }}
                             >
-                              <Box width="1px" bg="black30" />
+                              <Box width="1px" bg="mono30" />
                             </ArtworkFilterCreateAlert>
 
                             <Pill

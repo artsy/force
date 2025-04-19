@@ -70,7 +70,7 @@ export const ArtworkListsHeader: FC<
           justifyContent="space-between"
           alignItems={["stretch", "center"]}
         >
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             <ProgressiveOnboardingSaveTitle>
               Curate your own lists of the works you love and{" "}
               <RouterLink to="https://support.artsy.net/s/article/Offers-on-saved-works">

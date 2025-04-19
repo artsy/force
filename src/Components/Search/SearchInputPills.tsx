@@ -175,7 +175,7 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
   }
 
   return (
-    <Flex alignItems="center" bg="white100">
+    <Flex alignItems="center" bg="mono0">
       {enableChevronNavigation && (
         <Flex
           position="absolute"

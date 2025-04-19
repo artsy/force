@@ -166,7 +166,7 @@ export const SmsSecondFactor: React.FC<
 
   return (
     <>
-      <Flex flexDirection="column" border="1px solid" borderColor="black10">
+      <Flex flexDirection="column" border="1px solid" borderColor="mono10">
         {show2FAWarning && (
           <Message
             variant="warning"
@@ -189,14 +189,14 @@ export const SmsSecondFactor: React.FC<
             <Text variant={["md", "lg"]}>Use Text Messages</Text>
 
             {enabledSecondFactorLabel && (
-              <Text variant={["md", "lg"]} color="black60">
+              <Text variant={["md", "lg"]} color="mono60">
                 {enabledSecondFactorLabel}
               </Text>
             )}
 
             <Spacer y={2} />
 
-            <Text variant="sm" color="black60">
+            <Text variant="sm" color="mono60">
               Security codes will be sent to your mobile phone.
             </Text>
           </Box>
@@ -282,12 +282,12 @@ export const SmsSecondFactor: React.FC<
             </Button>
           }
         >
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             You’ve successfully set up two-factor authentication!
           </Text>
 
           {!me.hasSecondFactorEnabled && (
-            <Text variant="sm" mt={2} color="black60">
+            <Text variant="sm" mt={2} color="mono60">
               You will be logged out of this session and prompted to enter a
               two-factor authentication code.
             </Text>

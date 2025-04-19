@@ -171,7 +171,7 @@ export const AdminCacheManagementRoute: FC<
           my={2}
           p={2}
           border="1px solid"
-          borderColor="black30"
+          borderColor="mono30"
         >
           <Input
             name="search"
@@ -192,7 +192,7 @@ export const AdminCacheManagementRoute: FC<
                 key={`${keyAsString}-${index}`}
                 py={2}
                 borderBottom="1px solid"
-                borderColor="black30"
+                borderColor="mono30"
                 alignItems="center"
               >
                 <Box width="80%">

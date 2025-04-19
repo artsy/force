@@ -51,7 +51,7 @@ const ArtworkSidebarEditionSets: React.FC<
         <Text
           ml={1}
           variant="sm-display"
-          color="black100"
+          color="mono100"
           data-test="SaleMessage"
         >
           {editionSet?.saleMessage}

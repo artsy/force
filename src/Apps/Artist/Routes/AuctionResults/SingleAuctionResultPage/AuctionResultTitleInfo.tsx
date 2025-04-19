@@ -28,7 +28,7 @@ export const AuctionResultTitleInfo: React.FC<
         {title?.trim()}
         {dateText && dateText.replace(/\s+/g, "").length > 0 && ", " + dateText}
       </Text>
-      <Text variant="xs" color="black60" mb={4}>
+      <Text variant="xs" color="mono60" mb={4}>
         {formattedSaleDate} • {organization}
       </Text>
     </Box>

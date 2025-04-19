@@ -13,14 +13,14 @@ export const ImageWithFallback = ({ Fallback, ...props }) => {
 
 export const renderFallbackImage = () => {
   return (
-    <Box bg="black5" width="100%" height="100%">
+    <Box bg="mono5" width="100%" height="100%">
       <Flex
         alignItems="center"
         justifyContent="center"
         width="100%"
         height="100%"
       >
-        <NoArtIcon width="28px" height="28px" fill="black30" />
+        <NoArtIcon width="28px" height="28px" fill="mono30" />
       </Flex>
     </Box>
   )

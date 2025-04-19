@@ -16,7 +16,7 @@ export const ArtQuizResultsTabs: FC<
 
       <Spacer y={[0, 1]} />
 
-      <Text color="black60" variant={["sm", "md"]}>
+      <Text color="mono60" variant={["sm", "md"]}>
         Based on your responses, we think you’ll enjoy these artworks and
         artists. Keep saving and following to continue tailoring Artsy to you.
       </Text>

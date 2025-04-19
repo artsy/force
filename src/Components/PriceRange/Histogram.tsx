@@ -1,4 +1,4 @@
-import { Box, Flex, RANGE_HANDLE_SIZE, type FlexProps } from "@artsy/palette"
+import { Box, Flex, type FlexProps, RANGE_HANDLE_SIZE } from "@artsy/palette"
 
 const BAR_WIDTH = 2
 const BAR_ROUNDNESS = 10
@@ -52,7 +52,7 @@ export const Histogram: React.FC<React.PropsWithChildren<HistogramProps>> = ({
           <Box
             key={`bar-${index}`}
             height={`${percent}%`}
-            bg={selected ? "blue100" : "black15"}
+            bg={selected ? "blue100" : "mono15"}
             width={BAR_WIDTH}
             borderTopLeftRadius={BAR_ROUNDNESS}
             borderTopRightRadius={BAR_ROUNDNESS}

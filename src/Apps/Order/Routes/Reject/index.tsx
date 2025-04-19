@@ -116,7 +116,7 @@ export const Reject: FC<React.PropsWithChildren<RejectProps>> = ({
               title="Decline seller's offer"
               onChange={onChangeResponse}
             >
-              <Text variant="xs" color="black60">
+              <Text variant="xs" color="mono60">
                 Declining an offer permanently ends the negotiation process. The
                 seller will not be able to make a counteroffer.
               </Text>

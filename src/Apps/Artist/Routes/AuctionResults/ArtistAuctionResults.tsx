@@ -315,7 +315,7 @@ const AuctionResultsContainer: React.FC<
                 <Box>
                   <Text variant="md">Upcoming Auctions</Text>
 
-                  <Text variant="xs" mb={2} color="black60">
+                  <Text variant="xs" mb={2} color="mono60">
                     {upcomingAuctionResultsCount}{" "}
                     {upcomingAuctionResultsCount === 1 ? "result" : "results"}
                   </Text>
@@ -338,7 +338,7 @@ const AuctionResultsContainer: React.FC<
                 <Box>
                   <Text variant="md">Past Auctions</Text>
 
-                  <Text variant="xs" mb={2} color="black60">
+                  <Text variant="xs" mb={2} color="mono60">
                     {pastAuctionResultsCount}{" "}
                     {pastAuctionResultsCount === 1 ? "result" : "results"}
                   </Text>

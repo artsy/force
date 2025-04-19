@@ -26,7 +26,7 @@ const MyCollectionArtworkDemandIndex: React.FC<
     demandRank.toFixed(1) === "10.0" ? "9.9" : demandRank
 
   const isHighDemand = Number(demandRank) >= 9
-  const demandRankColor = demandRank >= 7 ? "blue100" : "black60"
+  const demandRankColor = demandRank >= 7 ? "blue100" : "mono60"
 
   const barWidth = Math.min(demandRank * 10, 100)
 
@@ -37,7 +37,7 @@ const MyCollectionArtworkDemandIndex: React.FC<
           Demand Index
         </Text>
 
-        <Text variant="sm-display" color="black60">
+        <Text variant="sm-display" color="mono60">
           {DemandIndexExplanation}
         </Text>
       </Media>
@@ -74,10 +74,10 @@ const MyCollectionArtworkDemandIndex: React.FC<
       <DemandIndexBar progress={barWidth} />
 
       <Flex justifyContent="space-between">
-        <Text variant="xs" color="black60">
+        <Text variant="xs" color="mono60">
           0.0
         </Text>
-        <Text variant="xs" color="black60">
+        <Text variant="xs" color="mono60">
           10.0
         </Text>
       </Flex>

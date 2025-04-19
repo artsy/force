@@ -16,7 +16,7 @@ export const ArtistCareerHighlight: FC<
     <Expandable label={insight.label} pb={1}>
       <Description
         variant="sm"
-        color="black60"
+        color="mono60"
         pb={1}
         {...(insight.description
           ? {

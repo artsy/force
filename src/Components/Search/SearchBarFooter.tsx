@@ -30,7 +30,7 @@ export const SearchBarFooter: FC<
   return (
     <SuggestionItemLink
       borderTop="1px solid"
-      borderTopColor="black10"
+      borderTopColor="mono10"
       onClick={handleClick}
       to={href}
     >

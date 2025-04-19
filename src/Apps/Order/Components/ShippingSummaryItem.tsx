@@ -16,7 +16,7 @@ const showPickupCopy = state => state !== "FULFILLED" && state !== "CANCELED"
 
 const ShippingSummaryItem = ({
   order: { state, requestedFulfillment, lineItems, paymentMethod },
-  textColor = "black100",
+  textColor = "mono100",
   ...others
 }: {
   order: ShippingSummaryItem_order$data

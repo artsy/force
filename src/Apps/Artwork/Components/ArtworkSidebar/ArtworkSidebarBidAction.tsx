@@ -66,7 +66,7 @@ const IdentityVerificationDisclaimer: React.FC<
   React.PropsWithChildren<unknown>
 > = () => {
   return (
-    <Text variant="sm-display" color="black60" textAlign="center">
+    <Text variant="sm-display" color="mono60" textAlign="center">
       Identity verification required to bid.{" "}
       <Link href="/identity-verification-faq">FAQ</Link>
     </Text>
@@ -232,7 +232,7 @@ export class ArtworkSidebarBidAction extends React.Component<
       if (notApprovedBidderBeforeRegistrationClosed) {
         return (
           <>
-            <Text variant="xs" color="black60" pb={1} textAlign="center">
+            <Text variant="xs" color="mono60" pb={1} textAlign="center">
               Registration closed
             </Text>
 
@@ -329,7 +329,7 @@ export class ArtworkSidebarBidAction extends React.Component<
             <Separator my={2} />
 
             <Flex width="100%" flexDirection="row" alignItems="center">
-              <Text variant="sm-display" color="black100" mr={1}>
+              <Text variant="sm-display" color="mono100" mr={1}>
                 Place max bid
               </Text>
 

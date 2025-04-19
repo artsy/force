@@ -21,7 +21,7 @@ export const AuthDialogDisclaimer: FC<
     <Stack gap={1}>
       <Text
         variant="xs"
-        color="black60"
+        color="mono60"
         textAlign="center"
         data-testid="disclaimer"
       >
@@ -37,7 +37,7 @@ export const AuthDialogDisclaimer: FC<
         {isAutomaticallySubscribed && <> and to receiving emails from Artsy</>}.
       </Text>
 
-      <Text variant="xs" color="black60" textAlign="center">
+      <Text variant="xs" color="mono60" textAlign="center">
         This site is protected by reCAPTCHA and the{" "}
         <AuthDialogDisclaimerLink
           inline
@@ -85,5 +85,5 @@ export const AuthDialogDisclaimerSkeleton: FC<
 }
 
 const AuthDialogDisclaimerLink = styled(RouterLink)`
-  color: ${themeGet("colors.black100")};
+  color: ${themeGet("colors.mono100")};
 `

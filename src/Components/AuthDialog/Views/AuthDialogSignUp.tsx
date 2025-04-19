@@ -122,7 +122,7 @@ export const AuthDialogSignUp: FC<React.PropsWithChildren<unknown>> = () => {
 
                   <Spacer y={0.5} />
 
-                  <Text variant="xs" color="black60">
+                  <Text variant="xs" color="mono60">
                     Password must be at least 8 characters and include a
                     lowercase letter, uppercase letter, and digit.
                   </Text>
@@ -161,11 +161,11 @@ export const AuthDialogSignUp: FC<React.PropsWithChildren<unknown>> = () => {
                 </Button>
 
                 {isFallback && (
-                  <Text variant="xs" color="black60" textAlign="center">
+                  <Text variant="xs" color="mono60" textAlign="center">
                     Already have an account?{" "}
                     <Clickable
                       textDecoration="underline"
-                      color="black100"
+                      color="mono100"
                       onClick={() => {
                         dispatch({ type: "MODE", payload: { mode: "Login" } })
                       }}

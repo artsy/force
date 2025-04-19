@@ -98,7 +98,7 @@ export const TopContextBar: React.FC<
 
       {!hideSeparator && (
         <FullBleed>
-          <Separator as="hr" color="black15" />
+          <Separator as="hr" color="mono15" />
         </FullBleed>
       )}
     </>

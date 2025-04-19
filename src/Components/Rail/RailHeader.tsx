@@ -75,7 +75,7 @@ export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
             // @ts-ignore
             as="h4"
             variant="lg-display"
-            color="black60"
+            color="mono60"
             lineClamp={2}
           >
             {subTitle}

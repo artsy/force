@@ -28,7 +28,7 @@ const ArticleSeriesItem: FC<
 
   return (
     <RouterLink to={article.href} display="block" textDecoration="none">
-      <GridColumns border="1px solid" borderColor="black10" p={2}>
+      <GridColumns border="1px solid" borderColor="mono10" p={2}>
         <Column span={6} order={[1, 0]}>
           {context && (
             <Text variant="sm-display" fontWeight="bold" mb={1}>
@@ -44,7 +44,7 @@ const ArticleSeriesItem: FC<
 
           <Spacer y={4} />
 
-          <Text variant="md" color="black60">
+          <Text variant="md" color="mono60">
             {article.byline}
           </Text>
 
@@ -61,7 +61,7 @@ const ArticleSeriesItem: FC<
             aspectWidth={869}
             aspectHeight={580}
             maxWidth="100%"
-            bg="black30"
+            bg="mono30"
           >
             {image && (
               <>
@@ -85,16 +85,11 @@ const ArticleSeriesItem: FC<
 
             {article.media && (
               <>
-                <Play
-                  position="absolute"
-                  bottom={2}
-                  left={2}
-                  color="white100"
-                />
+                <Play position="absolute" bottom={2} left={2} color="mono0" />
 
                 <Text
                   variant="xs"
-                  color="white100"
+                  color="mono0"
                   position="absolute"
                   bottom={1}
                   right={2}

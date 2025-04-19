@@ -74,7 +74,7 @@ const NewWorksFromGalleriesYouFollowApp: FC<
           )}
         </>
       ) : me ? (
-        <Text variant="lg" mt={4} color="black60">
+        <Text variant="lg" mt={4} color="mono60">
           Nothing yet.
         </Text>
       ) : null}

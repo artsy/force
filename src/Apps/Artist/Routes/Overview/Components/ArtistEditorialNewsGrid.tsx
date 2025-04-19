@@ -110,7 +110,7 @@ const ArtistEditorialNewsGrid: FC<
               aspectWidth={firstImage.width}
               aspectHeight={firstImage.height}
               maxWidth="100%"
-              bg="black10"
+              bg="mono10"
             >
               <Image
                 src={firstImage.src}
@@ -133,7 +133,7 @@ const ArtistEditorialNewsGrid: FC<
             By {firstArticle.byline}
           </Text>
 
-          <Text variant="lg-display" color="black60" mt={0.5}>
+          <Text variant="lg-display" color="mono60" mt={0.5}>
             {firstArticle.publishedAt}
           </Text>
         </RouterLink>

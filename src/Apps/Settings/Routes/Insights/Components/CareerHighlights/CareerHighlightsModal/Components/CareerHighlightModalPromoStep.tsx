@@ -29,7 +29,7 @@ const CareerHighlightModalPromoStepDesktop = () => {
           aspectWidth={380}
           aspectHeight={550}
           maxWidth="100%"
-          bg="black10"
+          bg="mono10"
         >
           <Image
             lazyLoad
@@ -105,7 +105,7 @@ const CareerHighlightModalPromoStepMobile = () => {
           aspectWidth={750}
           aspectHeight={900}
           maxWidth="100%"
-          bg="black10"
+          bg="mono10"
         >
           <Image
             lazyLoad

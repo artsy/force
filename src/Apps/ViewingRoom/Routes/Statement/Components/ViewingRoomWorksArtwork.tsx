@@ -62,12 +62,12 @@ const ViewingRoomWorksArtwork: React.FC<
         {artwork.artistNames}
       </Text>
 
-      <Text variant="sm-display" color="black60" overflowEllipsis>
+      <Text variant="sm-display" color="mono60" overflowEllipsis>
         {[artwork.title, artwork.date].filter(s => s).join(", ")}
       </Text>
 
       {artwork.saleMessage && (
-        <Text variant="sm-display" color="black60">
+        <Text variant="sm-display" color="mono60">
           {artwork.saleMessage}
         </Text>
       )}

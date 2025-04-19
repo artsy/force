@@ -51,7 +51,7 @@ export const NotificationsHeader: FC<
 }
 
 const NotificationsHeaderContainer = styled(Box).attrs({
-  bg: "white100",
+  bg: "mono0",
   width: "100%",
   pt: 2,
   pr: 1,

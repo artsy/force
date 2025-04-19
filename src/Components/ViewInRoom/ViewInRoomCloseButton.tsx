@@ -8,6 +8,6 @@ export const ViewInRoomCloseButton: React.FC<
   React.PropsWithChildren<ViewInRoomCloseButtonProps>
 > = props => (
   <Clickable {...props}>
-    <CloseIcon width={40} height={40} fill="black60" />
+    <CloseIcon width={40} height={40} fill="mono60" />
   </Clickable>
 )

@@ -17,7 +17,7 @@ export const Resizer: FC<React.PropsWithChildren<SplitPaneProps>> = ({
 
 const PaneWrapper = styled(Box)`
   .Resizer {
-    background: ${themeGet("color.black15")};
+    background: ${themeGet("color.mono15")};
     z-index: 1;
     box-sizing: border-box;
     background-clip: padding-box;

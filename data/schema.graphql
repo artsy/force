@@ -341,6 +341,9 @@ type Alert {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+
+    # When provided, will only return artworks with these IDs.
+    artworkIDs: [String]
     atAuction: Boolean
     attributionClass: [String]
     availability: String
@@ -1744,6 +1747,9 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+
+    # When provided, will only return artworks with these IDs.
+    artworkIDs: [String]
     atAuction: Boolean
     attributionClass: [String]
     availability: String
@@ -2185,6 +2191,9 @@ type ArtistPartnerEdge {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+
+    # When provided, will only return artworks with these IDs.
+    artworkIDs: [String]
     atAuction: Boolean
     attributionClass: [String]
     availability: String
@@ -2335,6 +2344,9 @@ type ArtistSeries implements Node {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+
+    # When provided, will only return artworks with these IDs.
+    artworkIDs: [String]
     atAuction: Boolean
     attributionClass: [String]
     availability: String
@@ -9183,6 +9195,36 @@ type CreatePartnerContactSuccess {
   partnerContact: Contact
 }
 
+type CreatePartnerLocationDaySchedulesFailure {
+  mutationError: GravityMutationError
+}
+
+input CreatePartnerLocationDaySchedulesInput {
+  clientMutationId: String
+
+  # List of day schedules for the full week
+  daySchedules: [DayScheduleInput!]!
+
+  # ID of the location
+  locationId: String!
+
+  # ID of the partner
+  partnerId: String!
+}
+
+union CreatePartnerLocationDaySchedulesOrError =
+  | CreatePartnerLocationDaySchedulesFailure
+  | CreatePartnerLocationDaySchedulesSuccess
+
+type CreatePartnerLocationDaySchedulesPayload {
+  clientMutationId: String
+  daySchedulesOrError: CreatePartnerLocationDaySchedulesOrError
+}
+
+type CreatePartnerLocationDaySchedulesSuccess {
+  daySchedules: [DaySchedule]
+}
+
 type CreatePartnerLocationFailure {
   mutationError: GravityMutationError
 }
@@ -9782,6 +9824,12 @@ type DaySchedule {
   startTime: Int
 }
 
+input DayScheduleInput {
+  day: Int
+  endTime: Int
+  startTime: Int
+}
+
 type DeepZoom {
   Image: DeepZoomImage
 }
@@ -9849,6 +9897,10 @@ type DeleteArtistSuccess {
 
 union DeleteArtistSuccessOrErrorType = DeleteArtistFailure | DeleteArtistSuccess
 
+type DeleteArtworkFailure {
+  mutationError: GravityMutationError
+}
+
 input DeleteArtworkImageInput {
   artworkID: String!
   clientMutationId: String
@@ -9858,6 +9910,25 @@ input DeleteArtworkImageInput {
 type DeleteArtworkImagePayload {
   artworkOrError: ArtworkMutationType
   clientMutationId: String
+}
+
+input DeleteArtworkMutationInput {
+  clientMutationId: String
+
+  # The ID of the artwork to delete.
+  id: String!
+}
+
+type DeleteArtworkMutationPayload {
+  # On success: the deleted artwork. On error: the error that occurred.
+  artworkOrError: DeleteArtworkResponseOrError
+  clientMutationId: String
+}
+
+union DeleteArtworkResponseOrError = DeleteArtworkFailure | DeleteArtworkSuccess
+
+type DeleteArtworkSuccess {
+  artwork: Artwork
 }
 
 input DeleteBankAccountInput {
@@ -10508,7 +10579,7 @@ input EditableLocation {
 }
 
 type EditionSet implements Sellable {
-  artistProofs: Boolean
+  artistProofs: String
   availability: String
   availableEditions: [String]
   depth: String
@@ -10622,6 +10693,9 @@ interface EntityWithFilterArtworksConnectionInterface {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+
+    # When provided, will only return artworks with these IDs.
+    artworkIDs: [String]
     atAuction: Boolean
     attributionClass: [String]
     availability: String
@@ -10884,6 +10958,9 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+
+    # When provided, will only return artworks with these IDs.
+    artworkIDs: [String]
     atAuction: Boolean
     attributionClass: [String]
     availability: String
@@ -11409,6 +11486,9 @@ input FilterArtworksInput {
   artistNationalities: [String]
   artistSeriesID: String
   artistSeriesIDs: [String]
+
+  # When provided, will only return artworks with these IDs.
+  artworkIDs: [String]
   atAuction: Boolean
   attributionClass: [String]
   availability: String
@@ -11931,6 +12011,9 @@ type Gene implements Node & Searchable {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+
+    # When provided, will only return artworks with these IDs.
+    artworkIDs: [String]
     atAuction: Boolean
     attributionClass: [String]
     availability: String
@@ -13881,6 +13964,9 @@ type MarketingCollection implements Node {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+
+    # When provided, will only return artworks with these IDs.
+    artworkIDs: [String]
     atAuction: Boolean
     attributionClass: [String]
     availability: String
@@ -15323,6 +15409,11 @@ type Mutation {
     input: CreatePartnerLocationInput!
   ): CreatePartnerLocationPayload
 
+  # Creates a new weekly schedule for a partner location
+  createPartnerLocationDaySchedules(
+    input: CreatePartnerLocationDaySchedulesInput!
+  ): CreatePartnerLocationDaySchedulesPayload
+
   # Create a partner offer for the users
   createPartnerOffer(
     input: createPartnerOfferMutationInput!
@@ -15396,6 +15487,11 @@ type Mutation {
 
   # Delete an artist
   deleteArtist(input: DeleteArtistInput!): DeleteArtistPayload
+
+  # Deletes an artwork.
+  deleteArtwork(
+    input: DeleteArtworkMutationInput!
+  ): DeleteArtworkMutationPayload
 
   # Deletes an image from an artwork in my collection
   deleteArtworkImage(input: DeleteArtworkImageInput!): DeleteArtworkImagePayload
@@ -16793,6 +16889,9 @@ type Partner implements Node {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+
+    # When provided, will only return artworks with these IDs.
+    artworkIDs: [String]
     atAuction: Boolean
     attributionClass: [String]
     availability: String
@@ -17111,6 +17210,9 @@ type PartnerArtist {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+
+    # When provided, will only return artworks with these IDs.
+    artworkIDs: [String]
     atAuction: Boolean
     attributionClass: [String]
     availability: String
@@ -17302,6 +17404,9 @@ type PartnerArtistEdge {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+
+    # When provided, will only return artworks with these IDs.
+    artworkIDs: [String]
     atAuction: Boolean
     attributionClass: [String]
     availability: String
@@ -18514,6 +18619,9 @@ type Query {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+
+    # When provided, will only return artworks with these IDs.
+    artworkIDs: [String]
     atAuction: Boolean
     attributionClass: [String]
     availability: String
@@ -21110,6 +21218,9 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+
+    # When provided, will only return artworks with these IDs.
+    artworkIDs: [String]
     atAuction: Boolean
     attributionClass: [String]
     availability: String
@@ -21655,6 +21766,9 @@ type Tag implements Node {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+
+    # When provided, will only return artworks with these IDs.
+    artworkIDs: [String]
     atAuction: Boolean
     attributionClass: [String]
     availability: String
@@ -24151,6 +24265,9 @@ type Viewer {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+
+    # When provided, will only return artworks with these IDs.
+    artworkIDs: [String]
     atAuction: Boolean
     attributionClass: [String]
     availability: String

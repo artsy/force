@@ -171,11 +171,11 @@ export const ArtistAutoComplete: React.FC<
               height={image?.cropped?.height}
             />
           ) : (
-            <Box width={44} height={44} backgroundColor="black10" />
+            <Box width={44} height={44} backgroundColor="mono10" />
           )}
           <Flex ml={1} flexDirection="column">
             <Text variant="sm-display">{option.text}</Text>
-            <Text lineHeight={1.5} variant="sm-display" color="black60">
+            <Text lineHeight={1.5} variant="sm-display" color="mono60">
               {option.option?.formattedNationalityAndBirthday}
             </Text>
           </Flex>

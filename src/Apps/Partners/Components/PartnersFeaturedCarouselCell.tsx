@@ -84,7 +84,7 @@ const PartnersFeaturedCarouselCell: FC<
           to={show?.href ?? ""}
           display="flex"
           flex={[null, 1]}
-          bg="black10"
+          bg="mono10"
           height={[300, 500]}
           width="100%"
         >

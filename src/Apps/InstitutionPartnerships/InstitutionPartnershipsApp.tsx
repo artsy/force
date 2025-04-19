@@ -111,7 +111,7 @@ export const InstitutionPartnershipsApp: FC<
                 impact.“
               </Box>
 
-              <Box as="p" mt={2} color="black60">
+              <Box as="p" mt={2} color="mono60">
                 —Christy MacLear, Executive Director, Robert Rauschenberg
                 Foundation
               </Box>
@@ -123,7 +123,7 @@ export const InstitutionPartnershipsApp: FC<
               aspectWidth={2680}
               aspectHeight={1393}
               maxWidth="100%"
-              bg="black10"
+              bg="mono10"
             >
               <Image
                 {...resized(
@@ -147,9 +147,9 @@ export const InstitutionPartnershipsApp: FC<
               aspectWidth={2680}
               aspectHeight={1601}
               maxWidth="100%"
-              bg="black10"
+              bg="mono10"
               border="1px solid"
-              borderColor="black10"
+              borderColor="mono10"
             >
               <Image
                 {...resized(
@@ -205,9 +205,9 @@ export const InstitutionPartnershipsApp: FC<
               aspectWidth={2680}
               aspectHeight={1601}
               maxWidth="100%"
-              bg="black10"
+              bg="mono10"
               border="1px solid"
-              borderColor="black10"
+              borderColor="mono10"
             >
               <Image
                 {...resized(

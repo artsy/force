@@ -34,7 +34,7 @@ const ChannelApp: FC<React.PropsWithChildren<ChannelAppProps>> = ({
           <FullBleedHeaderOverlay
             alignItems="flex-start"
             flexDirection="column"
-            color="white100"
+            color="mono0"
             p={4}
           >
             <Flex

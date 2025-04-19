@@ -112,7 +112,7 @@ export const ArtistsIndex: React.FC<
                       textDecoration="none"
                       display="block"
                     >
-                      <Text variant="sm-display" color="black60">
+                      <Text variant="sm-display" color="mono60">
                         View
                       </Text>
                     </RouterLink>

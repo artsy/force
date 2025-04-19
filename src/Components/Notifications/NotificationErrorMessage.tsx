@@ -23,7 +23,7 @@ export const NotificationErrorMessage: FC<
 
       <Spacer y={2} />
 
-      <Text variant="sm-display" color="black60">
+      <Text variant="sm-display" color="mono60">
         Please contact{" "}
         <RouterLink inline to="mailto:support@artsy.net">
           support@artsy.net

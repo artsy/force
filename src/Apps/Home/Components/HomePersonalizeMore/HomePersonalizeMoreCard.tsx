@@ -26,18 +26,18 @@ export const HomePersonalizeMoreCard: FC<
   const image = cropped(src, { width: 880, height: 400 })
 
   return (
-    <Flex bg="black100" flexDirection="column" {...rest}>
+    <Flex bg="mono100" flexDirection="column" {...rest}>
       <ResponsiveBox
         aspectWidth={11}
         aspectHeight={5}
         maxWidth="100%"
-        bg="black10"
+        bg="mono10"
       >
         <Image {...image} width="100%" height="100%" lazyLoad alt="" />
       </ResponsiveBox>
 
       <Flex
-        color="white100"
+        color="mono0"
         p={2}
         flexDirection="column"
         justifyContent="space-between"

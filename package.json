@@ -66,7 +66,8 @@
     "@types/react-relay": "^16.0.6",
     "@types/relay-runtime": "18.1.1",
     "graceful-fs": "4.x.x",
-    "styled-components": "^6.1.13"
+    "styled-components": "^6.1.13",
+    "strip-ansi": "6.0.1"
   },
   "dependencies": {
     "@artsy/cohesion": "4.255.0",
@@ -78,8 +79,9 @@
     "@artsy/icons": "3.28.0",
     "@artsy/img": "1.0.3",
     "@artsy/multienv": "^1.2.0",
-    "@artsy/palette": "^40.7.0",
-    "@artsy/palette-charts": "^39.6.0",
+    "@artsy/palette": "41.0.0",
+    "@artsy/palette-charts": "40.0.0",
+    "@artsy/palette-tokens": "7.0.0",
     "@artsy/react-html-parser": "^3.0.2",
     "@artsy/xapp": "2.0.0",
     "@loadable/component": "5.15.2",

@@ -112,7 +112,7 @@ const SettingsEditProfileImage: FC<
                 position="relative"
                 display="flex"
                 border="1px solid"
-                borderColor="black10"
+                borderColor="mono10"
                 borderRadius="50%"
                 size={[70, 100]}
               >
@@ -128,7 +128,7 @@ const SettingsEditProfileImage: FC<
                   src={me.icon?.cropped?.src}
                   srcSet={me.icon?.cropped?.srcSet}
                   border="1px solid"
-                  borderColor="black10"
+                  borderColor="mono10"
                 />
               </Media>
 
@@ -139,13 +139,13 @@ const SettingsEditProfileImage: FC<
                   src={me.icon?.cropped?.src}
                   srcSet={me.icon?.cropped?.srcSet}
                   border="1px solid"
-                  borderColor="black10"
+                  borderColor="mono10"
                 />
               </Media>
             </>
           )}
 
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             {mode === "Idle" ? (
               <u>Choose an Image</u>
             ) : isProcessing ? (

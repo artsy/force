@@ -21,7 +21,7 @@ export const ArtQuizWelcome: FC<
           hideLogo
           left={
             <Flex height="100%" alignItems="center" justifyContent="center">
-              <ArtsyMarkIcon height={65} width={65} fill="white100" />
+              <ArtsyMarkIcon height={65} width={65} fill="mono0" />
             </Flex>
           }
           right={

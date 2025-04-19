@@ -97,7 +97,7 @@ export const AuthDialogForgotPassword: FC<
                 Send me reset instructions
               </Button>
 
-              <Text variant="xs" textAlign="center" color="black60">
+              <Text variant="xs" textAlign="center" color="mono60">
                 Don’t need to reset?{" "}
                 <Clickable
                   textDecoration="underline"

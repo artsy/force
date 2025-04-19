@@ -11,7 +11,7 @@ interface ItemReviewProps {
 }
 
 const dimensionsDisplay = dimensions => (
-  <Text variant="sm" color="black60">
+  <Text variant="sm" color="mono60">
     {dimensions.in} ({dimensions.cm})
   </Text>
 )
@@ -35,14 +35,14 @@ export const ItemReview: React.FC<React.PropsWithChildren<ItemReviewProps>> = ({
   return (
     <BorderBox p={[2, 4]}>
       <Flex flexGrow={1} flexDirection="column">
-        <Text variant="sm" color="black60">
+        <Text variant="sm" color="mono60">
           {artistNames}
         </Text>
-        <Text fontStyle="italic" variant="sm" color="black60">
+        <Text fontStyle="italic" variant="sm" color="mono60">
           {title}
           {date && `, (${date})`}
         </Text>
-        <Text variant="sm" color="black60">
+        <Text variant="sm" color="mono60">
           {medium}
         </Text>
         <Text>
@@ -57,7 +57,7 @@ export const ItemReview: React.FC<React.PropsWithChildren<ItemReviewProps>> = ({
             dimensionsDisplay(artworkDimensions)}
         </Text>
         {attributionClass?.shortDescription && (
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             {attributionClass.shortDescription}
           </Text>
         )}

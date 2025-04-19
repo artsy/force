@@ -39,7 +39,7 @@ export const FeatureFeaturedLink: React.FC<
             aspectWidth={img.width ?? 0}
             aspectHeight={img.height ?? 0}
             maxWidth="100%"
-            bg="black10"
+            bg="mono10"
           >
             <Image
               src={img.src}
@@ -54,7 +54,7 @@ export const FeatureFeaturedLink: React.FC<
       )}
 
       {!img && title && (
-        <Text variant="lg-display" color="black100" my={2}>
+        <Text variant="lg-display" color="mono100" my={2}>
           <RouterLink to={href}>{title || "—"}</RouterLink>
         </Text>
       )}
@@ -76,12 +76,12 @@ export const FeatureFeaturedLink: React.FC<
           (size === "full" ? (
             <HTML
               variant="lg-display"
-              color="black60"
+              color="mono60"
               mt={1}
               html={description}
             />
           ) : (
-            <HTML variant="sm" color="black60" mt={0.5} html={description} />
+            <HTML variant="sm" color="mono60" mt={0.5} html={description} />
           ))}
       </Flex>
     </Flex>

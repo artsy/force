@@ -38,13 +38,13 @@ const ArtworkSidebarShippingInformation: React.FC<
     return (
       <>
         {!!shippingOrigin && (
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             Ships from {shippingOrigin}
           </Text>
         )}
 
         {!!taxInfo && (
-          <Text variant="xs" color="black60">
+          <Text variant="xs" color="mono60">
             {taxInfo.displayText}{" "}
             <RouterLink
               inline
@@ -65,7 +65,7 @@ const ArtworkSidebarShippingInformation: React.FC<
     <>
       <Spacer y={1} />
       {!!shippingOrigin && (
-        <Text variant="sm" color="black60">
+        <Text variant="sm" color="mono60">
           Ships from {shippingOrigin}
         </Text>
       )}
@@ -73,7 +73,7 @@ const ArtworkSidebarShippingInformation: React.FC<
       {!!shippingInfo && (
         <Text
           variant="sm"
-          color="black60"
+          color="mono60"
           data-testid="shipping-info"
           style={{ whiteSpace: "pre-line" }}
         >
@@ -81,7 +81,7 @@ const ArtworkSidebarShippingInformation: React.FC<
         </Text>
       )}
       {!!pickupAvailable && (
-        <Text variant="sm" color="black60">
+        <Text variant="sm" color="mono60">
           Pickup available
         </Text>
       )}
@@ -89,13 +89,13 @@ const ArtworkSidebarShippingInformation: React.FC<
       {(!!priceIncludesTaxDisplay || !!taxInfo) && <Spacer y={2} />}
 
       {!!priceIncludesTaxDisplay && (
-        <Text variant="sm" color="black60">
+        <Text variant="sm" color="mono60">
           {priceIncludesTaxDisplay}
         </Text>
       )}
 
       {!!taxInfo && (
-        <Text variant="sm" color="black60">
+        <Text variant="sm" color="mono60">
           {taxInfo.displayText}{" "}
           <RouterLink
             inline

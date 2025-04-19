@@ -11,9 +11,9 @@ export const CollectorProfileArtistsListHeader: FC<
   return (
     <Media greaterThan="xs">
       <GridColumns
-        color="black60"
+        color="mono60"
         borderBottom="1px solid"
-        borderColor="black10"
+        borderColor="mono10"
         pb={2}
         gridColumnGap={1}
       >

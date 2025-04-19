@@ -40,7 +40,7 @@ export const ArtworkSidebarPrivateArtwork: React.FC<
   return (
     <Box
       border="1px solid"
-      borderColor="black100"
+      borderColor="mono100"
       borderRadius={2}
       p={2}
       textAlign="center"

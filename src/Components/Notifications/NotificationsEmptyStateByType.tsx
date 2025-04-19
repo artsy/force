@@ -42,17 +42,17 @@ export const NotificationsEmptyStateByType: React.FC<
         {state.title}
       </Text>
       <Spacer y={1} />
-      <Text variant="xs" color="black60" textAlign="left">
+      <Text variant="xs" color="mono60" textAlign="left">
         {state.message}
       </Text>
       <Spacer y={1} />
-      <Text color="black60" variant="xs">
+      <Text color="mono60" variant="xs">
         Get started with:
-        <RouterLink to={"/artists"} color="black100" mx={1}>
+        <RouterLink to={"/artists"} color="mono100" mx={1}>
           Artists
         </RouterLink>
         {type !== "alerts" && (
-          <RouterLink to={"/galleries"} color="black100">
+          <RouterLink to={"/galleries"} color="mono100">
             Galleries
           </RouterLink>
         )}

@@ -34,7 +34,7 @@ const ArtworkSidebarDetails: React.FC<
   }
 
   return (
-    <Box color="black60">
+    <Box color="mono60">
       <Text variant="sm">{medium}</Text>
       {!!dimensionsPresent(dimensions) && (editionSets?.length ?? 0) < 2 && (
         <Text variant="sm">{`${dimensions?.in} | ${dimensions?.cm}`}</Text>

@@ -140,7 +140,7 @@ const Container = styled(Box)`
   hr {
     height: 1px;
     border: 0;
-    background-color: ${themeGet("colors.black10")};
+    background-color: ${themeGet("colors.mono10")};
   }
 
   blockquote {

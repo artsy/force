@@ -107,7 +107,7 @@ export const CollectorProfileArtistsAdd: FC<
     <>
       <Stack gap={2} height="100%">
         {description && (
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             {description}
           </Text>
         )}
@@ -128,10 +128,10 @@ export const CollectorProfileArtistsAdd: FC<
                 alignItems="center"
                 aria-label="Clear input"
               >
-                <CloseIcon fill="black60" aria-hidden />
+                <CloseIcon fill="mono60" aria-hidden />
               </Clickable>
             ) : (
-              <SearchIcon fill="black60" aria-hidden />
+              <SearchIcon fill="mono60" aria-hidden />
             )
           }
           value={query}
@@ -142,7 +142,7 @@ export const CollectorProfileArtistsAdd: FC<
 
         <Stack gap={0.5}>
           {query.length > 0 && (
-            <Text variant="xs" color="black60">
+            <Text variant="xs" color="mono60">
               Can’t find the artist?{" "}
               <Clickable
                 textDecoration="underline"

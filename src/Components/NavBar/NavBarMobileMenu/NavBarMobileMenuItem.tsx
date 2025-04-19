@@ -10,7 +10,7 @@ const navBarMobileMenuItemMixin = css`
   user-select: none;
 
   &:active {
-    background-color: ${themeGet("colors.black15")};
+    background-color: ${themeGet("colors.mono15")};
   }
 `
 
@@ -22,8 +22,8 @@ NavBarMobileMenuItemButton.defaultProps = {
   display: "flex",
   py: 1,
   px: 2,
-  bg: "white100",
-  color: "black60",
+  bg: "mono0",
+  color: "mono60",
   width: "100%",
 }
 
@@ -35,7 +35,7 @@ NavBarMobileMenuItemLink.defaultProps = {
   display: "flex",
   py: 1,
   px: 2,
-  bg: "white100",
-  color: "black60",
+  bg: "mono0",
+  color: "mono60",
   width: "100%",
 }

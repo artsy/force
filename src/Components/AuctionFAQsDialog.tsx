@@ -16,7 +16,7 @@ const AuctionFAQsDialog: React.FC<
   const { theme } = useTheme()
   return (
     <Box
-      bg="white100"
+      bg="mono0"
       p={2}
       position="relative"
       width={800}
@@ -37,7 +37,7 @@ const AuctionFAQsDialog: React.FC<
         onClick={onClose}
         aria-label="Close"
       >
-        <CloseIcon fill="black100" display="block" />
+        <CloseIcon fill="mono100" display="block" />
       </Clickable>
 
       <Text variant="xl" mb={2}>

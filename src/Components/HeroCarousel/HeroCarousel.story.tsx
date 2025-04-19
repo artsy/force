@@ -29,7 +29,7 @@ export const Default = () => {
 const ExampleCell: FC<React.PropsWithChildren<unknown>> = ({ children }) => (
   <Text
     variant="xl"
-    bg="black10"
+    bg="mono10"
     width="100%"
     height={500}
     display="flex"

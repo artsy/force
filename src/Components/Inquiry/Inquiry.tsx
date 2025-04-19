@@ -48,7 +48,7 @@ const InquiryDialog: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Box
       position="relative"
-      bg="white100"
+      bg="mono0"
       // FIXME: Not a good pattern
       width={["100vw", current === "Confirmation" ? 450 : 550]}
       height={["100vh", current === "ArtistsInCollection" ? 700 : "100%"]}
@@ -65,7 +65,7 @@ const InquiryDialog: React.FC<React.PropsWithChildren<unknown>> = () => {
         onClick={isSkippable ? next : onClose}
         aria-label={isSkippable ? "Skip" : "Close"}
       >
-        <CloseIcon fill="black100" display="block" />
+        <CloseIcon fill="mono100" display="block" />
       </Clickable>
 
       <View />

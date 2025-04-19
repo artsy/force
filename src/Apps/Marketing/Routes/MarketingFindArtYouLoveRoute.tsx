@@ -44,7 +44,7 @@ export const MarketingFindArtYouLoveRoute: FC<
 
         <MarketingTrendingArtistsRailQueryRenderer />
 
-        <FullBleed bg="black5" py={[6, 12]}>
+        <FullBleed bg="mono5" py={[6, 12]}>
           <AppContainer>
             <HorizontalPadding>
               <Text variant={["xl", "xxl", "xxl"]}>

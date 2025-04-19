@@ -79,7 +79,7 @@ const ArticleSeries: FC<React.PropsWithChildren<ArticleSeriesProps>> = ({
 
       <Spacer y={6} />
 
-      <FullBleed p={1} bg="black5">
+      <FullBleed p={1} bg="mono5">
         <ArticleAd unit="Desktop_InContentLB2" size="970x250" />
       </FullBleed>
     </>

@@ -37,7 +37,7 @@ const UserCollectionRoute = ({ collection }: UserCollectionRouteProps) => {
           <div>
             <Text variant="lg-display">{collection.name}</Text>
             {collection.artworksConnection && (
-              <Text variant="lg-display" color="black60">
+              <Text variant="lg-display" color="mono60">
                 {collection.artworksConnection.totalCount} artwork
                 {collection.artworksConnection.totalCount === 1 ? "" : "s"}
               </Text>

@@ -52,14 +52,14 @@ const ArticleZoomGalleryCaption: FC<
           )}
 
           {figure.title && (
-            <Text variant="sm-display" color="black60" overflowEllipsis>
+            <Text variant="sm-display" color="mono60" overflowEllipsis>
               <i>{figure.title}</i>
               {figure.date && `, ${figure.date}`}
             </Text>
           )}
 
           {figure.partner && (
-            <Text variant="xs" color="black60" overflowEllipsis>
+            <Text variant="xs" color="mono60" overflowEllipsis>
               {figure.partner.name}
             </Text>
           )}

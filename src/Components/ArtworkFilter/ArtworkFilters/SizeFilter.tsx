@@ -187,7 +187,7 @@ export const SizeFilter: React.FC<React.PropsWithChildren<SizeFilterProps>> = ({
         </Media>
       )}
       <Flex flexDirection="column" alignItems="left">
-        <Text variant="xs" color="black60" mb={1}>
+        <Text variant="xs" color="mono60" mb={1}>
           This is based on the artwork’s average dimension.
         </Text>
 

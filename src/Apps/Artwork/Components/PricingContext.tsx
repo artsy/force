@@ -110,7 +110,7 @@ export const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
           artistId: artistId as string,
         })}
         onClick={handleCollectPageLinkClick}
-        color="black60"
+        color="mono60"
       >
         <Text variant="xs">Browse works in this category</Text>
       </Link>

@@ -20,7 +20,7 @@ export const MyCollectionInsightsMedianSalePriceAtAuction: React.FC<
       <Text mt={2} variant={["lg-display", "lg"]}>
         Median Auction Price
       </Text>
-      <Text variant={["xs", "sm-display"]} color="black60">
+      <Text variant={["xs", "sm-display"]} color="mono60">
         Track price stability or growth of your artists
       </Text>
 
@@ -39,7 +39,7 @@ export const MyCollectionInsightsMedianSalePriceAtAuction: React.FC<
         <Spacer x={4} />
 
         <Clickable
-          color="black60"
+          color="mono60"
           textDecoration="underline"
           onClick={() => setShowSelectArtistModal(!showSelectArtistModal)}
         >

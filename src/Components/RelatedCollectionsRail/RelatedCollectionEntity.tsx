@@ -87,7 +87,7 @@ export const RelatedCollectionEntity: React.FC<
           {title}
         </Text>
 
-        <Text variant="xs" color="black100">
+        <Text variant="xs" color="mono100">
           {priceGuidance ? (
             <>
               From $

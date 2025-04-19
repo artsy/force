@@ -91,7 +91,7 @@ const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({
             <Fragment key={location}>
               <Column span={4}>
                 <Text variant="lg-display">{location}</Text>
-                <Text variant="lg-display" color="black60">
+                <Text variant="lg-display" color="mono60">
                   {filteredJobs.length} open position
                   {filteredJobs.length === 1 ? "" : "s"}
                 </Text>
@@ -120,7 +120,7 @@ const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({
               <Column span={4}>
                 <Text variant="lg-display">{teamName}</Text>
 
-                <Text variant="lg-display" color="black60">
+                <Text variant="lg-display" color="mono60">
                   {jobs.length} open position
                   {jobs.length === 1 ? "" : "s"}
                 </Text>

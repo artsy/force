@@ -22,7 +22,7 @@ const PressApp: FC<React.PropsWithChildren<PressAppProps>> = ({ page }) => {
 
       <Text variant="xl">Artsy Press</Text>
 
-      <Text variant="xl" color="black60">
+      <Text variant="xl" color="mono60">
         Contact{" "}
         <RouterLink inline to="mailto:press@artsy.net" textDecoration={"none"}>
           press@artsy.net

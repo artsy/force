@@ -48,7 +48,7 @@ export const MarkAllAsReadPanel: React.FC<
       >
         <Text
           variant="sm-display"
-          color={!hasUnreadNotifications ? "black60" : "black100"}
+          color={!hasUnreadNotifications ? "mono60" : "mono100"}
         >
           Mark all as read
         </Text>

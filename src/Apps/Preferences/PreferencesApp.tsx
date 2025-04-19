@@ -125,7 +125,7 @@ export const PreferencesApp: FC<
             <GridColumns gridRowGap={4}>
               <Column span={10}>
                 <Text variant="sm-display">Subscribe to all</Text>
-                <Text variant="sm" color="black60">
+                <Text variant="sm" color="mono60">
                   Get all of Artsy’s emails, including recommendations for you,
                   Artsy Editorial, guidance on collecting, and updates on your
                   favorite artists
@@ -149,7 +149,7 @@ export const PreferencesApp: FC<
               </Column>
               <Column span={10}>
                 <Text variant="sm-display">Recommended for You</Text>
-                <Text variant="sm" color="black60">
+                <Text variant="sm" color="mono60">
                   Artworks, shows, fairs, auctions, and collections we think
                   you’ll love
                 </Text>
@@ -167,7 +167,7 @@ export const PreferencesApp: FC<
               </Column>
               <Column span={10}>
                 <Text variant="sm-display">Editorial</Text>
-                <Text variant="sm" color="black60">
+                <Text variant="sm" color="mono60">
                   Market stories, artist profiles, exhibition reviews, and more
                   art world insights
                 </Text>
@@ -185,7 +185,7 @@ export const PreferencesApp: FC<
               </Column>
               <Column span={10}>
                 <Text variant="sm-display">Guidance on Collecting</Text>
-                <Text variant="sm" color="black60">
+                <Text variant="sm" color="mono60">
                   Expert advice on buying and selling art, directly from an
                   Artsy specialist
                 </Text>
@@ -203,7 +203,7 @@ export const PreferencesApp: FC<
               </Column>
               <Column span={10}>
                 <Text variant="sm-display">Custom Alerts</Text>
-                <Text variant="sm" color="black60">
+                <Text variant="sm" color="mono60">
                   A roundup of updates on your favorite artists, chosen by you
                 </Text>
               </Column>
@@ -220,7 +220,7 @@ export const PreferencesApp: FC<
               </Column>
               <Column span={10}>
                 <Text variant="sm-display">Offers on Saved Artworks</Text>
-                <Text variant="sm" color="black60">
+                <Text variant="sm" color="mono60">
                   Offers from galleries on artworks you saved
                 </Text>
               </Column>
@@ -237,7 +237,7 @@ export const PreferencesApp: FC<
               </Column>
               <Column span={10}>
                 <Text variant="sm-display">Product Updates</Text>
-                <Text variant="sm" color="black60">
+                <Text variant="sm" color="mono60">
                   Announcements of new features on Artsy.net and the mobile app
                 </Text>
               </Column>

@@ -42,7 +42,7 @@ const PartnerViewingRoomsGrid: React.FC<
 
   return (
     <>
-      <Text color="black100" variant="lg-display" mb={6}>
+      <Text color="mono100" variant="lg-display" mb={6}>
         {sectionTitle}
       </Text>
 

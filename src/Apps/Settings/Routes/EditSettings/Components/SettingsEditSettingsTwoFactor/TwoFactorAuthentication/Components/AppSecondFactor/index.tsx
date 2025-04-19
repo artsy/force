@@ -165,7 +165,7 @@ export const AppSecondFactor: React.FC<
       <Flex
         p={2}
         border="1px solid"
-        borderColor="black10"
+        borderColor="mono10"
         flexDirection={["column", "row"]}
       >
         <Box flexBasis="50%">
@@ -174,14 +174,14 @@ export const AppSecondFactor: React.FC<
           </Text>
 
           {enabledSecondFactorLabel && (
-            <Text variant={["md", "lg"]} color="black60">
+            <Text variant={["md", "lg"]} color="mono60">
               {enabledSecondFactorLabel}
             </Text>
           )}
 
           <Spacer y={2} />
 
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             Generate secure authentication codes using an application such as{" "}
             <RouterLink
               inline
@@ -284,12 +284,12 @@ export const AppSecondFactor: React.FC<
             </Button>
           }
         >
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             You’ve successfully set up two-factor authentication!
           </Text>
 
           {!me.hasSecondFactorEnabled && (
-            <Text variant="sm" mt={2} color="black60">
+            <Text variant="sm" mt={2} color="mono60">
               You will be logged out of this session and prompted to enter a
               two-factor authentication code.
             </Text>

@@ -34,7 +34,7 @@ const ArticleSectionImageCollectionImage: FC<
         aspectWidth={figure.image.width || 1}
         aspectHeight={figure.image.height || 1}
         maxWidth="100%"
-        bg="black10"
+        bg="mono10"
         position="relative"
       >
         <ArticleZoomButton width="100%" height="100%" onClick={handleClick}>

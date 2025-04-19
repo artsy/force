@@ -8,6 +8,6 @@ export const DeepZoomCloseButton: React.FC<
   React.PropsWithChildren<DeepZoomCloseButtonProps>
 > = props => (
   <Clickable {...props}>
-    <CloseIcon width={40} height={40} fill="white100" />
+    <CloseIcon width={40} height={40} fill="mono0" />
   </Clickable>
 )

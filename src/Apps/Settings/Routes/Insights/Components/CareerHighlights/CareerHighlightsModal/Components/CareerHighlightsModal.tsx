@@ -52,7 +52,7 @@ export const CareerHighlightModal: React.FC<
         minHeight={["100vh", "90%"]}
         overflowY="auto"
         position="relative"
-        bg="white100"
+        bg="mono0"
         px={2}
         style={{
           boxShadow: theme.effects.dropShadow,
@@ -76,7 +76,7 @@ export const CareerHighlightModal: React.FC<
             activeIndex={dotPosition}
           />
           <Clickable ml={2} onClick={onClose} aria-label="Close">
-            <CloseIcon fill="black100" display="block" />
+            <CloseIcon fill="mono100" display="block" />
           </Clickable>
         </Flex>
 

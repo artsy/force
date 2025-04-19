@@ -46,6 +46,6 @@ export const BrandCreditCardIcon: FC<
     case "UnionPay":
       return <UnionPayIcon {...rest} />
     default:
-      return <UnknownCardIcon color="black30" {...rest} />
+      return <UnknownCardIcon color="mono30" {...rest} />
   }
 }

@@ -97,7 +97,7 @@ export const FairsIndex: React.FC<React.PropsWithChildren<FairsIndexProps>> = ({
             <Text
               variant="lg-display"
               as="h1"
-              color="white100"
+              color="mono0"
               position="absolute"
               top={0}
               left={0}
@@ -223,7 +223,7 @@ export const FairsIndex: React.FC<React.PropsWithChildren<FairsIndexProps>> = ({
                         aspectHeight={3}
                         maxWidth="100%"
                         width="100%"
-                        bg="black10"
+                        bg="mono10"
                       >
                         <Image
                           src={slide.image.cropped.src}
@@ -271,7 +271,7 @@ export const FairsIndex: React.FC<React.PropsWithChildren<FairsIndexProps>> = ({
               variant="lg-display"
               pb={2}
               borderBottom="1px solid"
-              borderColor="black10"
+              borderColor="mono10"
             >
               Past Events
             </Text>
@@ -285,7 +285,7 @@ export const FairsIndex: React.FC<React.PropsWithChildren<FairsIndexProps>> = ({
               variant="lg-display"
               pb={2}
               borderBottom="1px solid"
-              borderColor="black10"
+              borderColor="mono10"
             >
               Upcoming Events
             </Text>

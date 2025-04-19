@@ -12,7 +12,7 @@ export const OnboardingDebug: FC<React.PropsWithChildren<unknown>> = () => {
   const [mode, setMode] = useMode<"Resting" | "Modal">("Resting")
   return (
     <>
-      <Box as="pre" bg="black5" p={1}>
+      <Box as="pre" bg="mono5" p={1}>
         {JSON.stringify(
           {
             current,

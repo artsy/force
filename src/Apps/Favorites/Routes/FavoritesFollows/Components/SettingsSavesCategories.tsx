@@ -80,7 +80,7 @@ const SettingsSavesCategories: FC<
           )}
         </>
       ) : (
-        <Text variant={["md", "lg"]} color="black60">
+        <Text variant={["md", "lg"]} color="mono60">
           Nothing yet.
         </Text>
       )}

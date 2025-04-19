@@ -70,7 +70,7 @@ export const ShippingQuotes: React.FC<
     <CollapseDetails>
       <Text variant="sm">Artsy shipping options</Text>
 
-      <Text variant="xs" mb="1" color="black60">
+      <Text variant="xs" mb="1" color="mono60">
         {orderData.isOffer ? (
           <>
             Please note that these are estimates and may change once offer is
@@ -108,7 +108,7 @@ export const ShippingQuotes: React.FC<
                     <Text variant="sm-display" textTransform="capitalize">
                       {displayName}
                     </Text>
-                    <Text textColor="black60">{description}</Text>
+                    <Text textColor="mono60">{description}</Text>
                   </Column>
                   <Column span={2} textAlign={"right"}>
                     <Text textTransform="capitalize" data-testid="quotePrice">

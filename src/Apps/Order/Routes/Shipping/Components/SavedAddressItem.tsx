@@ -44,17 +44,17 @@ export const SavedAddressItem: React.FC<
                   <Text
                     variant="sm-display"
                     textTransform="capitalize"
-                    textColor={index === 0 ? "black100" : "black60"}
+                    textColor={index === 0 ? "mono100" : "mono60"}
                   >
                     {line}
                   </Text>
                 </Flex>
               ),
           )}
-        <Text textColor="black60" textTransform="capitalize" variant="sm">
+        <Text textColor="mono60" textTransform="capitalize" variant="sm">
           {formattedAddressLine}
         </Text>
-        <Text textColor="black60" variant="sm">
+        <Text textColor="mono60" variant="sm">
           {phoneNumber}
         </Text>
       </Flex>

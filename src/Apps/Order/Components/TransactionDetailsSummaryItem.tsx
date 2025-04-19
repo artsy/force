@@ -239,10 +239,10 @@ export const TransactionDetailsSummaryItem: FC<
       return (
         <>
           <Spacer y={2} />
-          <Text variant="sm" fontWeight="bold" color="black100">
+          <Text variant="sm" fontWeight="bold" color="mono100">
             Your note
           </Text>
-          <Text size="sm" color="black60">
+          <Text size="sm" color="mono60">
             {offer.note}
           </Text>
         </>
@@ -273,20 +273,20 @@ export const TransactionDetailsSummaryItem: FC<
       />
       <Spacer y={2} />
       {offerShippingCostSubjectToChange() && (
-        <Text variant="sm" color="black60">
+        <Text variant="sm" color="mono60">
           *Estimate only. Price may vary once offer is finalized.
         </Text>
       )}
       {shippingNotCalculated() && (
         <>
           <Spacer y={2} />
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             *Shipping costs to be confirmed by gallery. You will be able to
             review the total price before payment.
           </Text>
         </>
       )}
-      <Text variant="sm" color="black60">
+      <Text variant="sm" color="mono60">
         {taxPrefix()}
         <RouterLink
           inline
@@ -369,10 +369,10 @@ const SecondaryEntry: React.FC<
   React.PropsWithChildren<SecondaryEntryProps>
 > = ({ label, value }) => (
   <Flex justifyContent="space-between" alignItems="baseline">
-    <Text variant="xs" color="black60">
+    <Text variant="xs" color="mono60">
       {label}
     </Text>
-    <Text variant="xs" color="black60">
+    <Text variant="xs" color="mono60">
       {value}
     </Text>
   </Flex>
@@ -383,9 +383,9 @@ const getLabelColor = (final?: boolean, source?: string) => {
   if (source === "partner_offer") {
     color = "blue100"
   } else if (final) {
-    color = "black100"
+    color = "mono100"
   } else {
-    color = "black60"
+    color = "mono60"
   }
   return color
 }
