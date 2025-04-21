@@ -20,7 +20,7 @@ const ArtworkSidebarArtworkTitle: React.FC<
   }
 
   return (
-    <Text as="h1" color="black60" variant="lg-display">
+    <Text as="h1" color="mono60" variant="lg-display">
       <i>{artwork.title?.trim()}</i>
       {getArtworkDate()}
     </Text>

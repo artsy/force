@@ -15,7 +15,7 @@ const Container = styled(Flex)<{ href?: string }>`
       transition: background-color 250ms;
 
       &:hover {
-        background-color: ${themeGet("colors.black5")};
+        background-color: ${themeGet("colors.mono5")};
       }
     `}
 `
@@ -44,7 +44,7 @@ const FairsFairRow: React.FC<React.PropsWithChildren<FairsFairRowProps>> = ({
         href={href!}
         alignItems="center"
         borderBottom="1px solid"
-        borderColor="black10"
+        borderColor="mono10"
         py={2}
         px={[0, 2]}
         {...rest}
@@ -71,7 +71,7 @@ const FairsFairRow: React.FC<React.PropsWithChildren<FairsFairRowProps>> = ({
                 alt=""
               />
             ) : (
-              <Box width={60} height={60} bg="black10" borderRadius="50%" />
+              <Box width={60} height={60} bg="mono10" borderRadius="50%" />
             )}
           </Flex>
 
@@ -84,7 +84,7 @@ const FairsFairRow: React.FC<React.PropsWithChildren<FairsFairRowProps>> = ({
           </Text>
         </Flex>
 
-        {href && <ChevronRightIcon fill="black60" />}
+        {href && <ChevronRightIcon fill="mono60" />}
       </Container>
     </LinkOrBox>
   )

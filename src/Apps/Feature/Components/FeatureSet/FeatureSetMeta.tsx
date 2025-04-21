@@ -16,7 +16,7 @@ export const FeatureSetMeta: React.FC<
         {set.name && <Text variant={["lg-display", "xl"]}>{set.name}</Text>}
 
         {set.description && (
-          <HTML variant="sm" color="black60" html={set.description} />
+          <HTML variant="sm" color="mono60" html={set.description} />
         )}
       </Join>
     </Box>

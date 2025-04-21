@@ -34,11 +34,11 @@ export const Default = () => (
 
 export const InsideAnAppContainer = () => {
   return (
-    <AppContainer border="1px dotted" borderColor="black10">
+    <AppContainer border="1px dotted" borderColor="mono10">
       <TopContextBar displayBackArrow>
         <Box>
           Foo Bar　
-          <Box display="inline-block" color="black60">
+          <Box display="inline-block" color="mono60">
             Bar Baz
           </Box>
         </Box>

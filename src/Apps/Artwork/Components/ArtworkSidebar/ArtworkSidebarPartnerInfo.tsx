@@ -30,7 +30,7 @@ const PartnerContainer = styled(Box)`
 `
 
 const StyledPartnerLink = styled(RouterLink)`
-  color: ${themeGet("colors.black100")};
+  color: ${themeGet("colors.mono100")};
 
   &:hover {
     text-decoration: underline;
@@ -103,7 +103,7 @@ const ArtworkSidebarPartnerInfo: React.FC<
             handlePartnerNameClick={handlePartnerNameClick}
           />
           {hasCities && (
-            <Text variant="xs" color="black60">
+            <Text variant="xs" color="mono60">
               {limitWithCount(partner.cities as string[], 2).join(", ")}
             </Text>
           )}

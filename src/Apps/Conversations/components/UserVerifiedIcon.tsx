@@ -26,7 +26,7 @@ export const UserVerifiedIcon: React.FC<React.PropsWithChildren<Props>> = ({
         >
           <PersonIcon size={18} />
           <Box
-            backgroundColor="white100"
+            backgroundColor="mono0"
             position="absolute"
             size={6}
             borderRadius="50%"
@@ -52,7 +52,7 @@ export const UserVerifiedIcon: React.FC<React.PropsWithChildren<Props>> = ({
         >
           <PersonIcon height={12} width={14} />
           <Box
-            backgroundColor="white100"
+            backgroundColor="mono0"
             position="absolute"
             size={6}
             borderRadius="50%"

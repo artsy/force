@@ -332,7 +332,7 @@ const ThemeSelect: React.FC<React.PropsWithChildren<unknown>> = () => {
         {({ anchorRef, anchorProps }) => {
           return (
             <Clickable ref={anchorRef as any} {...anchorProps}>
-              <Text variant="xs" color="black60">
+              <Text variant="xs" color="mono60">
                 Theme
               </Text>
             </Clickable>
@@ -356,7 +356,7 @@ const ThemeSelectOption = styled(Text).attrs({
   width: 100%;
 
   &:hover {
-    background-color: ${themeGet("colors.black5")};
+    background-color: ${themeGet("colors.mono5")};
   }
 `
 
@@ -369,30 +369,30 @@ const PolicyLinks = () => {
 
       <Text
         variant="xs"
-        color="black60"
+        color="mono60"
         display="flex"
         alignItems="center"
         flexWrap="wrap"
       >
         <Flex mr={1}>© {new Date().getFullYear()} Artsy</Flex>
 
-        <FooterLink color="black60" mr={1} to="/terms">
+        <FooterLink color="mono60" mr={1} to="/terms">
           Terms and Conditions
         </FooterLink>
 
-        <FooterLink color="black60" mr={1} to="/supplemental-cos">
+        <FooterLink color="mono60" mr={1} to="/supplemental-cos">
           Auction Supplement
         </FooterLink>
 
-        <FooterLink color="black60" mr={1} to="/buyer-guarantee">
+        <FooterLink color="mono60" mr={1} to="/buyer-guarantee">
           Buyer Guarantee
         </FooterLink>
 
-        <FooterLink color="black60" mr={1} to="/privacy">
+        <FooterLink color="mono60" mr={1} to="/privacy">
           Privacy Policy
         </FooterLink>
 
-        <FooterLink color="black60" mr={1} to="/security">
+        <FooterLink color="mono60" mr={1} to="/security">
           Security
         </FooterLink>
 

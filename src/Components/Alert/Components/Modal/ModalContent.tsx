@@ -24,7 +24,7 @@ export const ModalContent: React.FC<
 
   return (
     <Flex
-      bg="white100"
+      bg="mono0"
       style={{ boxShadow: theme.effects.dropShadow }}
       width="100%"
       flexDirection="column"

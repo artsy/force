@@ -144,7 +144,7 @@ export const LocationAutocompleteInput: FC<
       loading={isLoading}
       data-testid="autocomplete-location"
       footer={
-        <Flex px={2} py={0.5} bg="white100" justifyContent="flex-end">
+        <Flex px={2} py={0.5} bg="mono0" justifyContent="flex-end">
           <PoweredByGoogleIcon />
         </Flex>
       }

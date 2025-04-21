@@ -120,7 +120,7 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
               ref={inputRef}
               value={inputValue}
               placeholder="Search Artsy"
-              label={<SearchIcon fill="black60" aria-hidden size={18} />}
+              label={<SearchIcon fill="mono60" aria-hidden size={18} />}
               onChange={handleValueChange}
             />
           </Box>

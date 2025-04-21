@@ -30,7 +30,7 @@ export const MyCollectionArtworkTitle: React.FC<
           </>
         )}
       </Text>
-      <Text as="h1" variant="lg-display" color="black60" mb={[0.5, 0]}>
+      <Text as="h1" variant="lg-display" color="mono60" mb={[0.5, 0]}>
         <i>{title?.trim()}</i>
         {date && date.replace(/\s+/g, "").length > 0 && ", " + date}
       </Text>

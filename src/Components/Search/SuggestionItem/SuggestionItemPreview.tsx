@@ -31,7 +31,7 @@ export const SuggestionItemPreview = ({
     <Box
       width={PREVIEW_IMAGE_SIZE}
       height={PREVIEW_IMAGE_SIZE}
-      bg="black5"
+      bg="mono5"
       borderRadius={borderRadius}
     />
   )

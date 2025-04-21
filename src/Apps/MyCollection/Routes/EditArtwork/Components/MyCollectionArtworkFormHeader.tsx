@@ -30,7 +30,7 @@ export const MyCollectionArtworkFormHeader: React.FC<
           {({ stuck }) => {
             return (
               <FullBleed
-                backgroundColor="white100"
+                backgroundColor="mono0"
                 style={
                   stuck ? { boxShadow: theme.effects.dropShadow } : undefined
                 }

@@ -32,7 +32,7 @@ const CategoriesApp: React.FC<React.PropsWithChildren<CategoriesAppProps>> = ({
         {({ stuck }) => {
           return (
             <FullBleed
-              backgroundColor="white100"
+              backgroundColor="mono0"
               style={
                 stuck ? { boxShadow: theme.effects.dropShadow } : undefined
               }

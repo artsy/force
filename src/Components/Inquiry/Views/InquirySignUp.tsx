@@ -184,7 +184,7 @@ export const InquirySignUp: React.FC<React.PropsWithChildren<unknown>> = () => {
 
         <Spacer y={2} />
 
-        <Text variant="xs" color="black60" textAlign="center">
+        <Text variant="xs" color="mono60" textAlign="center">
           Already have an account?{" "}
           <Clickable
             data-test="login"
@@ -199,7 +199,7 @@ export const InquirySignUp: React.FC<React.PropsWithChildren<unknown>> = () => {
 
         <Spacer y={2} />
 
-        <Text variant="xs" color="black60" data-testid="disclaimer">
+        <Text variant="xs" color="mono60" data-testid="disclaimer">
           By signing up, you agree to Artsy’s{" "}
           <RouterLink inline to="/terms" target="_blank">
             Terms and Conditions
@@ -211,7 +211,7 @@ export const InquirySignUp: React.FC<React.PropsWithChildren<unknown>> = () => {
           and to receiving emails from Artsy.
         </Text>
 
-        <Text variant="xs" color="black60" mt={1}>
+        <Text variant="xs" color="mono60" mt={1}>
           This site is protected by reCAPTCHA and the{" "}
           <RouterLink
             inline

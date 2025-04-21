@@ -30,12 +30,12 @@ export const MyCollectionArtworkDetailField = ({
 
   return (
     <Box mb={[1, 0.5]} display="flex">
-      <Text color="black60" variant="sm" minWidth={[105, 105, 190]} mr={2}>
+      <Text color="mono60" variant="sm" minWidth={[105, 105, 190]} mr={2}>
         {label}
       </Text>
 
       <Box display="flex" flex={1} flexDirection="column">
-        <WrappedText variant="sm" color={value ? "black100" : "black60"}>
+        <WrappedText variant="sm" color={value ? "mono100" : "mono60"}>
           {expanded ? value || emptyValue : truncatedValue || emptyValue}
         </WrappedText>
         {canExpand && (

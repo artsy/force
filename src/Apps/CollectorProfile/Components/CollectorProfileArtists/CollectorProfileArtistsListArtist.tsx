@@ -168,7 +168,7 @@ export const CollectorProfileArtistsListArtist: FC<
       <Media at="xs">
         <Clickable
           borderBottom="1px solid"
-          borderColor="black10"
+          borderColor="mono10"
           py={2}
           onClick={handleOpen}
           width="100%"
@@ -240,7 +240,7 @@ export const CollectorProfileArtistsListArtistSkeleton: FC<
       </Media>
 
       <Media at="xs">
-        <Box borderBottom="1px solid" borderColor="black10" py={2} width="100%">
+        <Box borderBottom="1px solid" borderColor="mono10" py={2} width="100%">
           <EntityHeaderPlaceholder />
         </Box>
       </Media>
@@ -251,7 +251,7 @@ export const CollectorProfileArtistsListArtistSkeleton: FC<
 const CollectorProfileArtistsListArtistRow = styled(GridColumns).attrs({
   gridColumnGap: 1,
   borderBottom: "1px solid",
-  borderColor: "black10",
+  borderColor: "mono10",
   py: 4,
 })``
 

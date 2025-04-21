@@ -67,8 +67,8 @@ export const AppDownloadBanner: FC<
     <Text
       as="a"
       variant="xs"
-      bg="black100"
-      color="white100"
+      bg="mono100"
+      color="mono0"
       py={1}
       px={2}
       display="flex"

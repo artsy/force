@@ -26,7 +26,7 @@ const OnboardingMarketingCollection: FC<
         <Box>
           <Text variant="xl">{marketingCollection.title}</Text>
 
-          <Text variant={["sm", "md"]} color="black60" mt={2}>
+          <Text variant={["sm", "md"]} color="mono60" mt={2}>
             {description}
           </Text>
         </Box>

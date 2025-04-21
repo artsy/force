@@ -7,10 +7,10 @@ export const SettingsEditSettingsEmailPreferences: FC<
 > = () => {
   return (
     <>
-      <Text color="black100" variant={["md", "lg"]} mb={4}>
+      <Text color="mono100" variant={["md", "lg"]} mb={4}>
         Email Preferences
       </Text>
-      <Text color="black60" variant="sm" mb={2}>
+      <Text color="mono60" variant="sm" mb={2}>
         Receive emails from Artsy with auctions, articles, curated collections,
         and new works by artists you follow
       </Text>

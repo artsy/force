@@ -25,7 +25,7 @@ export const FairOrganizerPastEventRailCell: React.FC<
           alt={fair.name!}
         />
       ) : (
-        <Box width={325} height={244} bg="black10" />
+        <Box width={325} height={244} bg="mono10" />
       )}
       <Text variant="xl" width={325} mt={1}>
         {fair.name}

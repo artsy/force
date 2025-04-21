@@ -15,7 +15,7 @@ const CollectorProfileHeaderAvatar: React.FC<
   const avatar = {
     initials: me.initials ?? "U",
     border: "1px solid",
-    borderColor: "black10",
+    borderColor: "mono10",
     ...(image ? { src: image.src, srcSet: image.srcSet } : {}),
   }
 

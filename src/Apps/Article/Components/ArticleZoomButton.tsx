@@ -12,8 +12,8 @@ export const ArticleZoomButton: FC<React.PropsWithChildren<ClickableProps>> = ({
       {children}
 
       <Indicator
-        bg="black100"
-        color="white100"
+        bg="mono100"
+        color="mono0"
         borderRadius="50%"
         width={30}
         height={30}

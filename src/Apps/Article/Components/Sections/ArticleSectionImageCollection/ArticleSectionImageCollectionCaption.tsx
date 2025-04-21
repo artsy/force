@@ -16,7 +16,7 @@ const ArticleSectionImageCollectionCaption: FC<
   }
 
   if (figure.__typename === "ArticleImageSection" && figure.caption) {
-    return <HTML variant="xs" color="black60" html={figure.caption} />
+    return <HTML variant="xs" color="mono60" html={figure.caption} />
   }
 
   if (figure.__typename === "ArticleUnpublishedArtwork") {
@@ -29,14 +29,14 @@ const ArticleSectionImageCollectionCaption: FC<
         )}
 
         {figure.title && (
-          <Text variant="sm-display" color="black60" overflowEllipsis>
+          <Text variant="sm-display" color="mono60" overflowEllipsis>
             <i>{figure.title}</i>
             {figure.date && `, ${figure.date}`}
           </Text>
         )}
 
         {figure.partner && (
-          <Text variant="xs" color="black60" overflowEllipsis>
+          <Text variant="xs" color="mono60" overflowEllipsis>
             {figure.partner.name}
           </Text>
         )}

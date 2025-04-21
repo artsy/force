@@ -67,7 +67,7 @@ const ArtworkSummaryItem: React.FC<
             <Text
               fontStyle="italic"
               variant="sm"
-              color="black60"
+              color="mono60"
               display="inline"
             >
               {title}
@@ -82,7 +82,7 @@ const ArtworkSummaryItem: React.FC<
               <Text
                 fontStyle="italic"
                 variant="sm"
-                color="black60"
+                color="mono60"
                 display="inline"
               >
                 {title}
@@ -94,11 +94,11 @@ const ArtworkSummaryItem: React.FC<
         {!isPrivateSale && (
           <>
             {name && (
-              <Text variant="sm" overflowEllipsis color="black60">
+              <Text variant="sm" overflowEllipsis color="mono60">
                 {name}
               </Text>
             )}
-            <Text variant="sm" color="black60">
+            <Text variant="sm" color="mono60">
               {shippingOrigin}
             </Text>
           </>
@@ -115,7 +115,7 @@ const ArtworkSummaryItem: React.FC<
           <Text variant="sm">{`${priceLabel}`}: Not publicly listed</Text>
         )}
         {isUnlisted && (
-          <Text variant="sm" color="black60">
+          <Text variant="sm" color="mono60">
             Exclusive Access
           </Text>
         )}

@@ -70,7 +70,7 @@ export const Notifications: React.FC<
               />
             </Flex>
 
-            <Separator borderColor="black5" />
+            <Separator borderColor="mono5" />
 
             <Box
               maxHeight={`calc(100vh - ${DROPDOWN_CONTENT_HEIGHT}px)`}
@@ -87,7 +87,7 @@ export const Notifications: React.FC<
                 onHide={onHide}
                 unreadCounts={unreadCounts}
               />
-              <Separator borderColor="black5" />
+              <Separator borderColor="mono5" />
             </Sticky>
 
             <Box
@@ -116,7 +116,7 @@ export const NotificationsDropdownPlaceholder: FC<
     <Skeleton>
       <NotificationsHeaderPlaceholder onHide={onHide} />
 
-      <Separator borderColor="black5" />
+      <Separator borderColor="mono5" />
 
       <Box
         maxHeight={`calc(100vh - ${DROPDOWN_CONTENT_HEIGHT}px)`}

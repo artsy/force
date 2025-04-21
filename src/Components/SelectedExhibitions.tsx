@@ -69,7 +69,7 @@ export const ExhibitionsHeadline: React.FC<
 
     {isCollapsed(props) && (
       <Clickable onClick={props.onShowClicked}>
-        <Text variant="xs" color="black60" ml={2}>
+        <Text variant="xs" color="mono60" ml={2}>
           Show
         </Text>
       </Clickable>
@@ -94,7 +94,7 @@ export const ExhibitionYearList: React.FC<
             {exhibition.partner && (
               <>
                 ,&nbsp;
-                <Box as="span" color="black60">
+                <Box as="span" color="mono60">
                   {exhibition.partner.name}
                 </Box>
               </>

@@ -24,7 +24,7 @@ export const NavBarUserMenuAvatar: FC<
       initials={me.initials ?? "U"}
       {...img}
       border="1px solid"
-      borderColor="black10"
+      borderColor="mono10"
     />
   )
 }
@@ -34,7 +34,7 @@ export const NavBarUserMenuAvatarSkeleton: FC<
 > = () => {
   return (
     <Skeleton>
-      <Avatar size="xs" bg="black10" border="1px solid" borderColor="black10" />
+      <Avatar size="xs" bg="mono10" border="1px solid" borderColor="mono10" />
     </Skeleton>
   )
 }

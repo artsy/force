@@ -51,7 +51,7 @@ export const OfferSettingsListItem: FC<
             )}
           </Flex>
 
-          <Text variant="xs" color="black60" paddingLeft={1}>
+          <Text variant="xs" color="mono60" paddingLeft={1}>
             {totalArtworks === 1
               ? `${totalArtworks} artwork`
               : `${totalArtworks} artworks`}
@@ -108,10 +108,10 @@ const ArtworkImagePlaceholder = () => {
       justifyContent="center"
       width={[40, 60]}
       height={[40, 60]}
-      backgroundColor="black10"
+      backgroundColor="mono10"
       aria-label="Image placeholder"
     >
-      <NoArtIcon width={18} height={18} fill="black60" />
+      <NoArtIcon width={18} height={18} fill="mono60" />
     </Flex>
   )
 }

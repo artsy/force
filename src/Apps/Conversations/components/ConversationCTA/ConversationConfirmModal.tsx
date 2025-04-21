@@ -107,7 +107,7 @@ export const ConversationConfirmModal: React.FC<
             )}
             <Flex flexDirection="column" ml={1}>
               <Text mb={0.5}>{data.artistNames}</Text>
-              <Text variant="xs" color="black60">
+              <Text variant="xs" color="mono60">
                 {data.title}, {data.date}
               </Text>
             </Flex>
@@ -125,7 +125,7 @@ export const ConversationConfirmModal: React.FC<
             return (
               <Flex flexDirection="column" mt={2} key={index}>
                 <Text>{title}</Text>
-                <Text color="black60" style={{ whiteSpace: "pre-line" }}>
+                <Text color="mono60" style={{ whiteSpace: "pre-line" }}>
                   {value}
                 </Text>
               </Flex>
@@ -162,13 +162,13 @@ export const ConversationConfirmModal: React.FC<
                 selected={selected}
               >
                 <Flex flexGrow={1} flexDirection="column">
-                  <Text color={isActionable ? "black100" : "black30"}>
+                  <Text color={isActionable ? "mono100" : "mono30"}>
                     {edition.dimensions?.in}
                   </Text>
-                  <Text color={isActionable ? "black60" : "black30"}>
+                  <Text color={isActionable ? "mono60" : "mono30"}>
                     {edition.dimensions?.cm}
                   </Text>
-                  <Text color={isActionable ? "black60" : "black30"}>
+                  <Text color={isActionable ? "mono60" : "mono30"}>
                     {edition.editionOf}
                   </Text>
                 </Flex>

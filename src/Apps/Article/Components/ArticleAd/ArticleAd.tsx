@@ -31,7 +31,7 @@ export const ArticleAd: FC<React.PropsWithChildren<ArticleAdProps>> = memo(
           maxWidth={width}
           maxHeight={height}
           mx="auto"
-          bg="black10"
+          bg="mono10"
         >
           {ready && (
             <>
@@ -45,7 +45,7 @@ export const ArticleAd: FC<React.PropsWithChildren<ArticleAdProps>> = memo(
                   alignItems="center"
                   justifyContent="center"
                   p={2}
-                  color="black60"
+                  color="mono60"
                   onClick={openConsentManager}
                 >
                   <Text variant="xs">Manage Cookies</Text>
@@ -55,7 +55,7 @@ export const ArticleAd: FC<React.PropsWithChildren<ArticleAdProps>> = memo(
           )}
         </ResponsiveBox>
 
-        <Text variant="xs" textAlign="center" mx="auto" mt={1} color="black30">
+        <Text variant="xs" textAlign="center" mx="auto" mt={1} color="mono30">
           Advertisement
         </Text>
       </Box>

@@ -41,6 +41,6 @@ const Scale = styled.div`
     transform: translateY(-50%);
     width: 100%;
     height: 1px;
-    background-color: ${themeGet("colors.black100")};
+    background-color: ${themeGet("colors.mono100")};
   }
 `

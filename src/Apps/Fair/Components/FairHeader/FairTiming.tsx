@@ -22,7 +22,7 @@ const FairTiming: React.FC<React.PropsWithChildren<Props>> = ({
 
   return (
     <>
-      <Text variant={["lg-display", "xl"]} color="black60" mb={1}>
+      <Text variant={["lg-display", "xl"]} color="mono60" mb={1}>
         {exhibitionPeriod}
       </Text>
       <Text variant={["sm-display", "lg-display"]}>{renderEventTiming()}</Text>

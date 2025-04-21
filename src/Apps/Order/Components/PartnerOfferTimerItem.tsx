@@ -55,10 +55,10 @@ export const PartnerOfferTimerItem: React.FC<
       <Text variant="sm" fontWeight="bold">
         Purchase by {actionDeadline}
       </Text>
-      <Text variant="xs" color="black60">
+      <Text variant="xs" color="mono60">
         Offers expire after 72 hours.
       </Text>
-      <Text variant="xs" color="black60">
+      <Text variant="xs" color="mono60">
         Keep in mind the work can be sold to another buyer in the meantime.
       </Text>
     </Box>

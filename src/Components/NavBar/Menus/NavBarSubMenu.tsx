@@ -55,7 +55,7 @@ export const NavBarSubMenu: React.FC<
               if ("menu" in subMenu) {
                 return (
                   <Column key={subMenu.text} span={3}>
-                    <Text variant="xs" px={2} color="black60">
+                    <Text variant="xs" px={2} color="mono60">
                       {subMenu.text}
                     </Text>
 
@@ -116,7 +116,7 @@ export const NavBarSubMenu: React.FC<
 
               {isArtistsDropdown && (
                 <Column span={9}>
-                  <Text variant="xs" py={1} px={2} color="black60">
+                  <Text variant="xs" py={1} px={2} color="mono60">
                     Browse by name
                   </Text>
 

@@ -1,8 +1,4 @@
-import {
-  ActionType,
-  OwnerType,
-  type TappedViewOffer,
-} from "@artsy/cohesion"
+import { ActionType, OwnerType, type TappedViewOffer } from "@artsy/cohesion"
 import AlertFillIcon from "@artsy/icons/AlertFillIcon"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
@@ -82,7 +78,7 @@ const AlertMessage = (props: GetCTAReturnProps & { onClick: () => void }) => {
             <Text variant="sm">{props.subMessage}</Text>
           </Message>
           <ChevronRightIcon
-            fill="black100"
+            fill="mono100"
             position="absolute"
             right={0}
             pr={4}

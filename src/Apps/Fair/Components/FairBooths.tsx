@@ -112,11 +112,11 @@ const FairBooths: React.FC<React.PropsWithChildren<FairBoothsProps>> = ({
           {({ stuck }) => {
             return (
               <FullBleed
-                backgroundColor="white100"
+                backgroundColor="mono0"
                 py={1}
                 px={2}
                 {...(stuck
-                  ? { borderBottom: "1px solid", borderColor: "black10" }
+                  ? { borderBottom: "1px solid", borderColor: "mono10" }
                   : {})}
               >
                 <Flex justifyContent="flex-end">

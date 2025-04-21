@@ -44,16 +44,16 @@ export const CreditCardInput: React.FC<
   const { theme } = useTheme()
 
   const stripeBaseStyle: StripeElementStyleVariant = {
-    "::placeholder": { color: theme.colors.black60 },
-    backgroundColor: theme.colors.white100,
-    color: theme.colors.black100,
+    "::placeholder": { color: theme.colors.mono60 },
+    backgroundColor: theme.colors.mono0,
+    color: theme.colors.mono100,
     fontFamily: theme.fonts.sans,
     fontSize: theme.textVariants["sm-display"].fontSize,
     fontSmoothing: "antialiased",
     letterSpacing: theme.textVariants["sm-display"].letterSpacing,
     lineHeight: theme.textVariants["sm-display"].lineHeight,
     ":-webkit-autofill": {
-      backgroundColor: theme.colors.white100,
+      backgroundColor: theme.colors.mono0,
     },
   }
 
@@ -119,10 +119,10 @@ const CardElementContainer = styled(Flex)<{ error: boolean }>`
     padding: 0 ${themeGet("space.1")};
     border: 1px solid;
     border-radius: 3px;
-    border-color: ${themeGet("colors.black30")};
+    border-color: ${themeGet("colors.mono30")};
     transition: border-color 0.25s;
     ::placeholder {
-      color: ${themeGet("colors.black60")};
+      color: ${themeGet("colors.mono60")};
     }
 
     ${({ error }) =>
@@ -132,18 +132,18 @@ const CardElementContainer = styled(Flex)<{ error: boolean }>`
       `}
 
     &:hover {
-      color: ${themeGet("colors.black100")};
-      !&--invalid && border-color: ${themeGet("colors.black60")};
+      color: ${themeGet("colors.mono100")};
+      !&--invalid && border-color: ${themeGet("colors.mono60")};
       ::placeholder {
-        color: ${themeGet("colors.black100")};
+        color: ${themeGet("colors.mono100")};
       }
     }
 
     &--focus {
-      color: ${themeGet("colors.black100")};
+      color: ${themeGet("colors.mono100")};
       border-color: ${themeGet("colors.blue100")};
       ::placeholder {
-        color: ${themeGet("colors.black60")};
+        color: ${themeGet("colors.mono60")};
       }
     }
 

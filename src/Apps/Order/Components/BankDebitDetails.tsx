@@ -13,7 +13,7 @@ export const BankDebitDetails = (props: Props) => {
       <Spacer x={0.5} />
       <Text
         variant="sm-display"
-        color="black100"
+        color="mono100"
         style={{ position: "relative", top: "1px" }}
       >
         Bank transfer •••• {last4}

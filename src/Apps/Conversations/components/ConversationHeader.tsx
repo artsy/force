@@ -95,7 +95,7 @@ export const ConversationHeader: React.FC<
         <Box
           p={2}
           borderBottom="1px solid"
-          borderBottomColor="black15"
+          borderBottomColor="mono15"
           style={{ boxShadow: theme.effects.dropShadow }}
         >
           <Text variant="lg">From {data.from.name}</Text>
@@ -117,7 +117,7 @@ export const ConversationHeader: React.FC<
             <Flex flexDirection="column" flexGrow={1}>
               <Text>{item.artist?.name}</Text>
 
-              <Text color="black60">
+              <Text color="mono60">
                 <Text fontStyle="italic" display="inline">
                   {item.title}
                 </Text>
@@ -150,9 +150,9 @@ export const ConversationHeader: React.FC<
         <Box
           px={2}
           py={1}
-          backgroundColor="white100"
+          backgroundColor="mono0"
           borderBottom="1px solid"
-          borderBottomColor="black15"
+          borderBottomColor="mono15"
           style={{ boxShadow: theme.effects.dropShadow }}
         >
           <Flex
@@ -209,7 +209,7 @@ export const ConversationHeader: React.FC<
 
                 <Spacer x={1} />
 
-                <Text color="black60" variant="xs" overflowEllipsis>
+                <Text color="mono60" variant="xs" overflowEllipsis>
                   <Text fontStyle="italic" display="inline" variant="xs">
                     {item.title}
                   </Text>

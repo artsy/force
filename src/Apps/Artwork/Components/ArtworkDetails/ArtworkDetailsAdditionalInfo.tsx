@@ -58,7 +58,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<
                 term={title}
                 onTitleClick={onTitleClick}
               >
-                <HTML variant="xs" color="black60">
+                <HTML variant="xs" color="mono60">
                   {/* TODO: not sure why this check is here */}
                   {React.isValidElement(value) ? (
                     value
@@ -147,7 +147,7 @@ export const useArtworkDetailsAdditionalInfoFields = ({
               })
             }}
             textDecoration="underline"
-            color="black60"
+            color="mono60"
           >
             <Text variant="xs">{attributionClass?.name}</Text>
           </Clickable>
@@ -181,7 +181,7 @@ export const useArtworkDetailsAdditionalInfoFields = ({
                   })
                 }}
                 textDecoration="underline"
-                color="black60"
+                color="mono60"
               >
                 <Text variant="xs">{category}</Text>
               </Clickable>
@@ -193,7 +193,7 @@ export const useArtworkDetailsAdditionalInfoFields = ({
               />
             </>
           ) : (
-            <Text variant="xs" color="black60">
+            <Text variant="xs" color="mono60">
               {category}
             </Text>
           )}

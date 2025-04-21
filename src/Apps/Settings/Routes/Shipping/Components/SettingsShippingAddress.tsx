@@ -92,14 +92,14 @@ const SettingsShippingAddress: FC<
           }}
         />
       )}
-      <Box border="1px solid" borderColor="black10" p={2}>
+      <Box border="1px solid" borderColor="mono10" p={2}>
         <Text variant="sm" mb={1}>
           {address.name}
         </Text>
 
         {lines.map((line, i) => {
           return (
-            <Text key={i} variant="sm" color="black60">
+            <Text key={i} variant="sm" color="mono60">
               {line}
             </Text>
           )

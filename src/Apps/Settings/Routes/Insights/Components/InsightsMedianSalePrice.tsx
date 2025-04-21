@@ -1,7 +1,7 @@
 import { Box, Clickable, Flex, Join, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { useFlag } from "@unleash/proxy-client-react"
+import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import type { InsightsMedianSalePrice_me$data } from "__generated__/InsightsMedianSalePrice_me.graphql"
@@ -78,7 +78,7 @@ const InsightsMedianSalePrice: React.FC<
                       >
                         <Text
                           variant={["xs", "sm"]}
-                          color="black60"
+                          color="mono60"
                           minWidth={[0, 200]}
                           mr={2}
                         >
@@ -166,7 +166,7 @@ export const InsightsMedianSalePriceFragmentContainer = createFragmentContainer(
 
 const ClickableArtistRow = styled(Clickable)`
   &:hover {
-    background-color: ${themeGet("colors.black5")};
+    background-color: ${themeGet("colors.mono5")};
   }
   width: 100%;
 `

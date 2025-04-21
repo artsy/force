@@ -53,7 +53,7 @@ const SelectArtworkListItem: FC<
           )}
         </Flex>
 
-        <Text variant="sm-display" color="black60">
+        <Text variant="sm-display" color="mono60">
           {item.artworksCount === 1
             ? `${item.artworksCount} Artwork`
             : `${item.artworksCount} Artworks`}

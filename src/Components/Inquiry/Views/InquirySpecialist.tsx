@@ -100,7 +100,7 @@ export const InquirySpecialist: React.FC<
       {user && (
         <>
           <Text variant="sm-display" my={2}>
-            <Box display="inline-block" width={60} color="black60">
+            <Box display="inline-block" width={60} color="mono60">
               From
             </Box>
             {user.name} ({user.email})

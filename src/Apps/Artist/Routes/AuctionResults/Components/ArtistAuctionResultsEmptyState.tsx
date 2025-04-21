@@ -11,7 +11,7 @@ export const ArtistAuctionResultsEmptyState: React.FC<
           There are currently no auction results for this artist.
         </Text>
 
-        <Text variant="md" color="black60" textAlign="center">
+        <Text variant="md" color="mono60" textAlign="center">
           We'll update this page when results become available. Meanwhile, you
           can check out free auction results and art market data for over
           300,000 artists.

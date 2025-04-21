@@ -63,7 +63,7 @@ export const ConfirmPasswordModal: FC<
         }) => (
           <Form onSubmit={handleSubmit}>
             {subTitle && (
-              <Text variant="sm" color="black60" mb={2}>
+              <Text variant="sm" color="mono60" mb={2}>
                 {subTitle}
               </Text>
             )}

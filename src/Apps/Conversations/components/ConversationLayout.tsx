@@ -44,7 +44,7 @@ export const DesktopLayout: React.FC<
             height={DESKTOP_HEIGHT}
             display={["none", "block"]}
             borderRight="1px solid"
-            borderRightColor="black15"
+            borderRightColor="mono15"
           >
             {renderSidebar()}
           </Flex>
@@ -75,7 +75,7 @@ export const DesktopLayout: React.FC<
             height={DESKTOP_HEIGHT}
             display={["none", "block"]}
             borderLeft="1px solid"
-            borderLeftColor="black15"
+            borderLeftColor="mono15"
             p={2}
             pb={6}
           >

@@ -45,7 +45,7 @@ const PricingTransparency: React.FC<
         <Text variant="sm-display">{calculatedCost?.subtotal?.display}</Text>
       </Row>
 
-      <Text variant="sm" color="black60">
+      <Text variant="sm" color="mono60">
         Plus any applicable shipping, taxes, and fees.
       </Text>
     </Join>
@@ -76,7 +76,7 @@ const PLACEHOLDER = (
         <SkeletonText variant="sm-display">20000</SkeletonText>
       </Row>
 
-      <Text variant="sm" color="black60">
+      <Text variant="sm" color="mono60">
         Plus any applicable shipping, taxes, and fees.
       </Text>
     </Join>

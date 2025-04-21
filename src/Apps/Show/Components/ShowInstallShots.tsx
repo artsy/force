@@ -67,7 +67,7 @@ export const ShowInstallShots: FC<
               display="block"
               width={width}
               height={height}
-              bg="black10"
+              bg="mono10"
               onClick={() => {
                 setCursor(i)
                 setMode("Zoom")
@@ -90,7 +90,7 @@ export const ShowInstallShots: FC<
                 <Text
                   variant="xs"
                   mt={1}
-                  color="black60"
+                  color="mono60"
                   width={width}
                   title={image.caption}
                   overflowEllipsis
@@ -136,7 +136,7 @@ export const ShowInstallShots: FC<
                 maxHeight={selected.zoom.height ?? 1}
                 aspectWidth={selected.zoom.width ?? 1}
                 aspectHeight={selected.zoom.height ?? 1}
-                bg="black10"
+                bg="mono10"
               >
                 <Image
                   key={selected.zoom.src}
@@ -213,12 +213,12 @@ const NextPrevious = styled(Clickable).attrs({
   transform: translateY(-50%);
   z-index: 1;
   transition: color 250ms;
-  color: ${themeGet("colors.black60")};
+  color: ${themeGet("colors.mono60")};
 
   &:hover,
   &:focus,
   &:focus-visible {
     outline: none;
-    color: ${themeGet("colors.black100")};
+    color: ${themeGet("colors.mono100")};
   }
 `

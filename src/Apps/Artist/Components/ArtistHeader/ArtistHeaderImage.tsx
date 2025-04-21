@@ -76,7 +76,7 @@ export const ArtistHeaderImage: FC<
             aspectHeight={image.height}
             maxWidth={max.width}
             maxHeight={max.height}
-            bg="black5"
+            bg="mono5"
             {...rest}
           >
             <Image

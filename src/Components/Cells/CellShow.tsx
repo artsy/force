@@ -71,7 +71,7 @@ const CellShow: FC<React.PropsWithChildren<CellShowProps>> = ({
           </Text>
         )}
 
-        <Text variant="sm" color="black60">
+        <Text variant="sm" color="mono60">
           {show.exhibitionPeriod}
 
           {displayStatus && show.startAt && show.endAt && (

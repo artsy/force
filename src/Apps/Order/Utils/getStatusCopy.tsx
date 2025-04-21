@@ -335,7 +335,7 @@ export const approvedDescription = (
 ) => {
   if (isPrivateSaleOrder) {
     return (
-      <Text color="black100">
+      <Text color="mono100">
         You will receive an email from our team with next steps. If you have any
         questions about your purchase, email us at{" "}
         <RouterLink inline to="privatesales@artsy.net">
@@ -387,7 +387,7 @@ export const processingApprovalDescription = (
   // isPrivateSaleOrder and ACH (assumed)
   if (isPrivateSaleOrder) {
     return (
-      <Text color="black100">
+      <Text color="mono100">
         You will receive an email from our team with next steps. If you have any
         questions about your purchase, email us at{" "}
         <RouterLink inline to="privatesales@artsy.net">
@@ -411,7 +411,7 @@ export const wireTransferArtsyBankDetails = order => {
           <Text
             variant={["xs", "sm-display"]}
             fontWeight="bold"
-            color="black100"
+            color="mono100"
           >
             Send wire transfer to
           </Text>
@@ -425,7 +425,7 @@ export const wireTransferArtsyBankDetails = order => {
           <Text
             variant={["xs", "sm-display"]}
             fontWeight="bold"
-            color="black100"
+            color="mono100"
           >
             Bank address
           </Text>
@@ -450,7 +450,7 @@ export const wireTransferArtsyBankDetails = order => {
           <Text
             variant={["xs", "sm-display"]}
             fontWeight="bold"
-            color="black100"
+            color="mono100"
           >
             Send wire transfer to
           </Text>
@@ -463,7 +463,7 @@ export const wireTransferArtsyBankDetails = order => {
           <Text
             variant={["xs", "sm-display"]}
             fontWeight="bold"
-            color="black100"
+            color="mono100"
           >
             Bank address
           </Text>
@@ -488,7 +488,7 @@ export const wireTransferArtsyBankDetails = order => {
           <Text
             variant={["xs", "sm-display"]}
             fontWeight="bold"
-            color="black100"
+            color="mono100"
           >
             Send wire transfer to
           </Text>
@@ -501,7 +501,7 @@ export const wireTransferArtsyBankDetails = order => {
           <Text
             variant={["xs", "sm-display"]}
             fontWeight="bold"
-            color="black100"
+            color="mono100"
           >
             Bank address
           </Text>

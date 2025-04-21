@@ -30,7 +30,7 @@ export const FeatureHeaderFull: React.FC<
           <FullBleedHeaderOverlay
             alignItems="flex-start"
             flexDirection="column"
-            color="white100"
+            color="mono0"
             p={4}
           >
             <Text as="h1" variant={["xl", "xxl"]}>
@@ -40,7 +40,7 @@ export const FeatureHeaderFull: React.FC<
             {subheadline && (
               <HTML
                 variant={["md", "lg-display"]}
-                color="rgba(255, 255, 255, 0.8)"
+                color="mono10"
                 html={subheadline}
               />
             )}

@@ -17,7 +17,7 @@ const ArticlesIndexNews: FC<
   })
 
   return (
-    <Stack gap={4} border="1px solid" borderColor="black30" p={2}>
+    <Stack gap={4} border="1px solid" borderColor="mono30" p={2}>
       <Flex alignItems="center" justifyContent="space-between">
         <Text variant="lg-display">News</Text>
 
@@ -35,7 +35,7 @@ const ArticlesIndexNews: FC<
               borderBottom={
                 i === viewer.articles.length - 1 ? "none" : "1px solid"
               }
-              borderColor="black10"
+              borderColor="mono10"
               pb={2}
             >
               <Text variant="sm-display">{article.title}</Text>

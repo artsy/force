@@ -45,7 +45,7 @@ const ArtistRail: FC<React.PropsWithChildren<ArtistRailProps>> = ({
           })}
         </Shelf>
       ) : (
-        <Text variant="lg-display" color="black60" textAlign="center">
+        <Text variant="lg-display" color="mono60" textAlign="center">
           No works available by the artist at this time.
         </Text>
       )}

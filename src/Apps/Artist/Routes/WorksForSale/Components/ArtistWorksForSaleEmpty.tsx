@@ -20,7 +20,7 @@ const ArtistWorksForSaleEmpty: FC<
         <Column span={6} start={4} textAlign="center">
           <Text variant="md">Get notified when new works are available</Text>
 
-          <Text variant="md" color="black60">
+          <Text variant="md" color="mono60">
             There are currently no works for sale for this artist. Create an
             alert, and we’ll let you know when new works are added.
           </Text>

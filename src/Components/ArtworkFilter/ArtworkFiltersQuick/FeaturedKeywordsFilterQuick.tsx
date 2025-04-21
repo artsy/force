@@ -19,7 +19,7 @@ export const FeaturedKeywordsFilterQuick: FC<
   return (
     <>
       <Spacer y={2} />
-      <Box width="1px" bg="black30" />
+      <Box width="1px" bg="mono30" />
       <Spacer y={2} />
 
       {props.featuredKeywords.map((keyword, idx) => (

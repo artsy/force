@@ -36,7 +36,7 @@ export const SuggestedArtworksModalGrid: FC<
 
   if (artworksCount === 0) {
     return (
-      <Text mb={2} p={2} bg="black10" color="black60">
+      <Text mb={2} p={2} bg="mono10" color="mono60">
         There aren’t any works available that meet the criteria at this time.
       </Text>
     )
@@ -45,7 +45,7 @@ export const SuggestedArtworksModalGrid: FC<
   return (
     <>
       <Media greaterThan="xs">
-        <Text variant="sm-display" color="black60">
+        <Text variant="sm-display" color="mono60">
           {artworksCount === 1 ? "1 Artwork:" : `${artworksCount} Artworks:`}
         </Text>
         <Spacer y={2} />

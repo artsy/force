@@ -125,7 +125,7 @@ const CompleteProfileInformationDialogForm: FC<
         return (
           <Stack as={Form} gap={4}>
             <Stack gap={2}>
-              <Text variant="xs" color="black60">
+              <Text variant="xs" color="mono60">
                 Complete your profile and make a great impression. Galleries are
                 more likely to respond to collectors with complete profiles.
               </Text>

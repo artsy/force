@@ -15,7 +15,7 @@ export const ContentHeaderExample: React.FC<
         </Text>
       </Flex>
 
-      <Text variant="lg-display" color="black60">
+      <Text variant="lg-display" color="mono60">
         Supporting Copy Line
       </Text>
     </Box>

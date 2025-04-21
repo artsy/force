@@ -54,7 +54,7 @@ const CellPartnerArtist: FC<
         ) : (
           <Text
             variant="lg-display"
-            bg="black10"
+            bg="mono10"
             width="100%"
             height="100%"
             display="flex"

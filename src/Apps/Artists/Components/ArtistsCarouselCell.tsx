@@ -33,7 +33,7 @@ const ArtistsCarouselCell: React.FC<
             alt=""
           />
         ) : (
-          <Box width={600} height={450} bg="black10" />
+          <Box width={600} height={450} bg="mono10" />
         )}
       </RouterLink>
 
@@ -51,7 +51,7 @@ const ArtistsCarouselCell: React.FC<
         >
           <Text variant="lg-display">{featuredLink.title ?? entity.name}</Text>
 
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="mono60">
             {featuredLink.subtitle || entity.formattedNationalityAndBirthday}
           </Text>
         </RouterLink>

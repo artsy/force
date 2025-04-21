@@ -29,7 +29,7 @@ export const ShowHeader: React.FC<React.PropsWithChildren<ShowHeaderProps>> = ({
             {name}
           </Text>
 
-          <Text variant="xl" color="black60">
+          <Text variant="xl" color="mono60">
             {formattedStartAt} – {formattedEndAt}
           </Text>
         </Box>

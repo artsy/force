@@ -85,7 +85,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
                 {artist.name}
               </Text>
 
-              <Text as="h2" variant={["md", "xl"]} color="black60">
+              <Text as="h2" variant={["md", "xl"]} color="mono60">
                 {artist.formattedNationalityAndBirthday}
               </Text>
 
@@ -128,7 +128,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
                       <Text
                         display={["none", "block"]}
                         variant="xs"
-                        color="black60"
+                        color="mono60"
                         textAlign="center"
                         flexShrink={0}
                       >
@@ -161,7 +161,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
         )}
 
         <Text variant="xs" display={["none", "block"]}>
-          <CV to={`/artist/${artist.slug}/cv`} color="black60">
+          <CV to={`/artist/${artist.slug}/cv`} color="mono60">
             See all past shows and fair booths
           </CV>
         </Text>
@@ -171,7 +171,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
         <Column span={4} {...(!hasImage && { start: 9 })}>
           {hasVerifiedRepresentatives && (
             <>
-              <Text variant={["xs", "sm"]} textColor={["black60", "black100"]}>
+              <Text variant={["xs", "sm"]} textColor={["mono60", "mono100"]}>
                 Featured representation
               </Text>
 

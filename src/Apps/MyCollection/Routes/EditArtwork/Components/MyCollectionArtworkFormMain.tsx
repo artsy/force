@@ -175,7 +175,7 @@ export const MyCollectionArtworkFormMain: React.FC<
                 left={0}
                 px={2}
                 py={1}
-                backgroundColor="white100"
+                backgroundColor="mono0"
                 style={{ boxShadow: theme.effects.dropShadow }}
               >
                 <Button
