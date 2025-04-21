@@ -10,16 +10,31 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-// import { PaymentForm } from "Apps/Checkout/Components/PaymentForm"
+import { useFlag } from "@unleash/proxy-client-react"
 import { addressFormFieldsValidator } from "Components/Address/AddressFormFields"
 import { AddressFormFields } from "Components/Address/AddressFormFields"
+import { ErrorPage } from "Components/ErrorPage"
+import type { Checkout_order$key } from "__generated__/Checkout_order.graphql"
 import { Formik, type FormikHelpers, type FormikValues } from "formik"
 import type * as React from "react"
+import { useEffect } from "react"
+import { graphql, useFragment } from "react-relay"
 import * as yup from "yup"
 
-export const CheckoutOverviewRoute: React.FC<
-  React.PropsWithChildren<unknown>
-> = () => {
+interface CheckoutProps {
+  order: Checkout_order$key
+}
+export const Checkout: React.FC<CheckoutProps> = ({ order }) => {
+  const data = useFragment(ORDER_FRAGMENT, order)
+  const isRedesignEnabled = useFlag("emerald_checkout-redesign")
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: placeholder because we aren't using this yet
+  useEffect(() => {
+    console.warn("Checkout order data:", data)
+  }, [])
+
+  if (!isRedesignEnabled) return <ErrorPage code={404} />
+
   const validationSchema = yup.object().shape({
     ...addressFormFieldsValidator({ withPhoneNumber: true }),
     saveAddress: yup.boolean(),
@@ -109,3 +124,9 @@ export const CheckoutOverviewRoute: React.FC<
     </GridColumns>
   )
 }
+
+const ORDER_FRAGMENT = graphql`
+  fragment Checkout_order on Order {
+    internalID
+  }
+`

@@ -1,5 +1,5 @@
 import { useFlag } from "@unleash/proxy-client-react"
-import { DetailsPage } from "Apps/Order/Routes/Details/Components/DetailsPage"
+import { DetailsPage } from "Apps/Order2/Routes/Details/Components/DetailsPage"
 import { ErrorPage } from "Components/ErrorPage"
 import type { Details_order$data } from "__generated__/Details_order.graphql"
 import type React from "react"
@@ -22,7 +22,7 @@ const Details: React.FC<DetailsProps> = ({ order }) => {
 
 export const DetailsFragmentContainer = createFragmentContainer(Details, {
   order: graphql`
-    fragment Details_order on CommerceOrder {
+    fragment Details_order on Order {
       internalID
     }
   `,
