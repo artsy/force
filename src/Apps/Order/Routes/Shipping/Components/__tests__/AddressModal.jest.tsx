@@ -94,7 +94,9 @@ describe("AddressModal", () => {
     renderWithRelay({}, testAddressModalProps)
 
     await screen.findByText("Edit address")
-    expect(hasCorrectAddressFormFields({ withPhoneNumber: true })).toBe(true)
+    expect(hasCorrectAddressFormFields({ withLegacyPhoneInput: true })).toBe(
+      true,
+    )
     expect(screen.getByText("Delete address")).toBeInTheDocument()
 
     const saveAsDefault = screen.getByTestId("setAsDefault")
@@ -134,7 +136,9 @@ describe("AddressModal", () => {
 
     await screen.findByText("Add address")
 
-    expect(hasCorrectAddressFormFields({ withPhoneNumber: true })).toBe(true)
+    expect(hasCorrectAddressFormFields({ withLegacyPhoneInput: true })).toBe(
+      true,
+    )
     const saveAsDefault = screen.getByTestId("setAsDefault")
     expect(saveAsDefault).toBeInTheDocument()
     expect(saveAsDefault).not.toBeChecked()
