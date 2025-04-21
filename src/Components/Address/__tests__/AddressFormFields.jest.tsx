@@ -30,7 +30,7 @@ describe("AddressFormFields", () => {
             address: emptyAddress,
           }}
           validationSchema={Yup.object().shape({
-            ...addressFormFieldsValidator({ withPhoneNumber: false }),
+            ...addressFormFieldsValidator({ withLegacyPhoneInput: false }),
           })}
         >
           {formikBag => (
@@ -46,7 +46,9 @@ describe("AddressFormFields", () => {
     })
 
     it("renders the correct components with label & placeholder copy", () => {
-      expect(hasCorrectAddressFormFields({ withPhoneNumber: false })).toBe(true)
+      expect(hasCorrectAddressFormFields({ withLegacyPhoneInput: false })).toBe(
+        true,
+      )
     })
 
     it("can be filled out with valid values", async () => {
@@ -99,7 +101,7 @@ describe("AddressFormFields", () => {
     })
   })
 
-  describe("with phone number input", () => {
+  describe("with rich phone number input", () => {
     beforeEach(() => {
       render(
         <Formik
@@ -125,7 +127,64 @@ describe("AddressFormFields", () => {
     })
 
     it("renders the correct components with label & placeholder copy", () => {
-      expect(hasCorrectAddressFormFields({ withPhoneNumber: true })).toBe(true)
+      expect(hasCorrectAddressFormFields({ withLegacyPhoneInput: false })).toBe(
+        true,
+      )
+
+      const countryCodeInput = screen.getByTestId("country-picker")
+      expect(countryCodeInput).toBeInTheDocument()
+
+      const phoneNumberInput = screen.getByTestId(
+        "addressFormFields.phoneNumber",
+      )
+      expect(phoneNumberInput).toBeInTheDocument()
+
+      Object.values(ADDRESS_FORM_INPUTS).forEach(({ label, placeholder }) => {
+        // This is for the legacy phone number input only
+        if (label === "Phone number") {
+          return
+        }
+        const input = screen.getByLabelText(label)
+        expect(input).toBeInTheDocument()
+        if (placeholder) {
+          // eslint-disable-next-line jest/no-conditional-expect
+          expect(input).toHaveAttribute("placeholder", placeholder)
+        } else {
+          // eslint-disable-next-line jest/no-conditional-expect
+          expect(input).not.toHaveAttribute("placeholder")
+        }
+      })
+    })
+  })
+  describe("with legacy phone number input", () => {
+    beforeEach(() => {
+      render(
+        <Formik
+          onSubmit={mockOnSubmit}
+          initialValues={{
+            address: emptyAddress,
+            phoneNumber: "",
+          }}
+          validationSchema={Yup.object().shape({
+            ...addressFormFieldsValidator({ withLegacyPhoneInput: true }),
+          })}
+        >
+          {formikBag => (
+            <>
+              <AddressFormFields withLegacyPhoneInput />
+              <Button type="submit" onClick={() => formikBag.handleSubmit()}>
+                Submit
+              </Button>
+            </>
+          )}
+        </Formik>,
+      )
+    })
+
+    it("renders the correct components with label & placeholder copy", () => {
+      expect(hasCorrectAddressFormFields({ withLegacyPhoneInput: true })).toBe(
+        true,
+      )
       Object.values(ADDRESS_FORM_INPUTS).forEach(({ label, placeholder }) => {
         const input = screen.getByLabelText(label)
         expect(input).toBeInTheDocument()

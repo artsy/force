@@ -1,22 +1,38 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Column, GridColumns, Input } from "@artsy/palette"
+import {
+  type AutocompleteInputOptionType,
+  Column,
+  GridColumns,
+  Input,
+  PhoneInput,
+  Select,
+} from "@artsy/palette"
 import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
 import {
   type Address,
   basicPhoneValidator,
+  richPhoneValidators,
   yupAddressValidator,
 } from "Components/Address/utils"
-import { CountrySelect } from "Components/CountrySelect"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { countries as countryPhoneOptions } from "Utils/countries"
 import { useFormikContext } from "formik"
+import { sortBy } from "lodash"
+import { useMemo } from "react"
 
 export interface FormikContextWithAddress {
   address: Address
   phoneNumber?: string
+  phoneNumberCountryCode?: string
 }
 
+type CountryData = (typeof countryPhoneOptions)[number]
+
 interface Props {
+  /** Whether to include rich phone number input */
   withPhoneNumber?: boolean
+  /* @deprecated - legacy plain-text phone input */
+  withLegacyPhoneInput?: boolean
 }
 
 /**
@@ -25,7 +41,7 @@ interface Props {
  * @example
  * ```tsx
  * const validationSchema = yup.object().shape({
- *  ...addressFormFieldsValidator({ withPhoneNumber: true }),
+ *  ...addressFormFieldsValidator({ withLegacyPhoneInput: true }),
  *  saveAddress: boolean
  * })
  * // later...
@@ -34,12 +50,13 @@ interface Props {
  *  validationSchema={validationSchema}
  *  {...otherFormikProps}
  * >
- *   <AddressFormFields<AddressFormValues> withPhoneNumber />
+ *   <AddressFormFields<AddressFormValues> withLegacyPhoneInput />
  * ```
  */
 export const addressFormFieldsValidator = (args: Props = {}) => ({
   address: yupAddressValidator,
-  ...(args.withPhoneNumber && { phoneNumber: basicPhoneValidator }),
+  ...(args.withLegacyPhoneInput && basicPhoneValidator),
+  ...(args.withPhoneNumber && richPhoneValidators),
 })
 
 /**
@@ -47,7 +64,7 @@ export const addressFormFieldsValidator = (args: Props = {}) => ({
  * to be used within a Formik form, and the `Values` interface of that form
  * should fulfill a `FormikContextWithAddress` interface:
  * - the relevant nested `address` object
- * - plus a `phoneNumber` if the `withPhoneNumber` prop is passed
+ * - plus a `phoneNumber` if the `withLegacyPhoneInput` prop is passed
  * For a composable validation schema, see `addressFormFieldsValidator()`.
  *
  * @example
@@ -59,7 +76,7 @@ export const addressFormFieldsValidator = (args: Props = {}) => ({
  * }
  *
  * <Formik<MyFormValues> {...otherFormikProps}>
- *  <AddressFormFields<MyFormValues> withPhoneNumber />
+ *  <AddressFormFields<MyFormValues> withLegacyPhoneInput />
  *  <SaveAddressCheckbox />
  *
  */
@@ -78,6 +95,10 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
 
   const dataTestIdPrefix = "addressFormFields"
 
+  const countryInputOptions = useMemo(() => {
+    return sortCountriesForCountryInput(countryPhoneOptions)
+  }, [])
+
   // Formik types don't understand our specific nested structure
   // so we need to cast these to what we know to be the correct types
   const touchedAddress = touched.address as
@@ -94,6 +115,17 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
     contextOwnerType: contextPageOwnerType,
     contextPageOwnerId: contextPageOwnerId || "",
   }
+
+  const phoneInputType = useMemo(() => {
+    if (props.withLegacyPhoneInput) {
+      return "legacy"
+    }
+    if (props.withPhoneNumber) {
+      return "rich"
+    }
+
+    return null
+  }, [props.withLegacyPhoneInput, props.withPhoneNumber])
 
   return (
     <GridColumns data-testid={dataTestIdPrefix}>
@@ -115,7 +147,8 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
       </Column>
 
       <Column span={12}>
-        <CountrySelect
+        <Select
+          options={countryInputOptions}
           name="address.country"
           id="address.country"
           title="Country"
@@ -123,7 +156,9 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           // TODO: Accept a value prop in Select
           // @ts-ignore
           value={values.address.country}
-          onChange={handleChange}
+          onChange={e => {
+            setFieldValue("address.country", e.target.value)
+          }}
           onBlur={handleBlur}
           error={touchedAddress?.country && errorsAddress?.country}
           required
@@ -231,7 +266,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
         />
       </Column>
 
-      {props.withPhoneNumber && (
+      {phoneInputType === "legacy" && (
         <Column span={12}>
           <Input
             name="phoneNumber"
@@ -252,6 +287,54 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           />
         </Column>
       )}
+      {phoneInputType === "rich" && (
+        <Column span={12}>
+          <PhoneInput
+            name="phoneNumber"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            data-testid={`${dataTestIdPrefix}.phoneNumber`}
+            options={countryPhoneOptions}
+            onSelect={(option: CountryData): void => {
+              setFieldValue("phoneNumberCountryCode", option.value)
+            }}
+            dropdownValue={values.phoneNumberCountryCode}
+            inputValue={values.phoneNumber}
+            placeholder="(000) 000 0000"
+            error={
+              (touched.phoneNumberCountryCode &&
+                (errors.phoneNumberCountryCode as string | undefined)) ||
+              (touched.phoneNumber &&
+                (errors.phoneNumber as string | undefined))
+            }
+            required
+          />
+        </Column>
+      )}
     </GridColumns>
   )
+}
+
+/** countries are sorted by phone number code first - sort alphabetically */
+const sortCountriesForCountryInput = (
+  unsorted: typeof countryPhoneOptions,
+  firstCode: CountryData["value"] = "us",
+): AutocompleteInputOptionType[] => {
+  // Sort firstCode first, then by name
+  const sortedCountries = sortBy(unsorted, [
+    country => country.value !== firstCode,
+    "name",
+  ])
+
+  const options = [
+    { text: "", value: "" },
+    ...sortedCountries.map(countryData => {
+      return {
+        text: countryData.name,
+        value: countryData.value.toUpperCase(),
+      }
+    }),
+  ]
+
+  return options
 }

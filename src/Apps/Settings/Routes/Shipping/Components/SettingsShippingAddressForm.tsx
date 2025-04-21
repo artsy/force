@@ -127,7 +127,7 @@ export const SettingsShippingAddressForm: FC<
 
             sendToast({
               variant: "success",
-              message: `Address updated successfully.`,
+              message: "Address updated successfully.",
             })
           } else {
             // Adding new address

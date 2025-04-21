@@ -471,8 +471,6 @@ const ORDER_FRAGMENT = graphql`
       postalCode
       region
       country
-      phoneNumber
-      phoneNumberCountryCode
       name
     }
 

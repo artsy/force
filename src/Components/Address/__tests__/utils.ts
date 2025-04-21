@@ -34,9 +34,9 @@ export const ADDRESS_FORM_INPUTS: Record<
 }
 
 export const hasCorrectAddressFormFields = ({
-  withPhoneNumber,
-}: { withPhoneNumber?: boolean } = {}): boolean => {
-  const expectedInputs = withPhoneNumber
+  withLegacyPhoneInput,
+}: { withLegacyPhoneInput?: boolean } = {}): boolean => {
+  const expectedInputs = withLegacyPhoneInput
     ? Object.values(ADDRESS_FORM_INPUTS)
     : Object.entries(ADDRESS_FORM_INPUTS)
         .filter(([input, _spec]) => input !== "phoneNumber")
