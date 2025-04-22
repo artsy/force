@@ -13,7 +13,7 @@ import { useState } from "react"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
-export const PaymentForm: React.FC = () => {
+export const Order2PaymentForm: React.FC = () => {
   const orderOptions: StripeElementsUpdateOptions = {
     amount: 12345,
     currency: "eur",

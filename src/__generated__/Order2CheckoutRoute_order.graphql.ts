@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<31ef4d225f2266032c4fbd11600750ee>>
+ * @generated SignedSource<<47514ed63312ed2b7b350fe1635bd6cb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,20 +10,20 @@
 
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Details_order$data = {
+export type Order2CheckoutRoute_order$data = {
   readonly internalID: string;
-  readonly " $fragmentType": "Details_order";
+  readonly " $fragmentType": "Order2CheckoutRoute_order";
 };
-export type Details_order$key = {
-  readonly " $data"?: Details_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Details_order">;
+export type Order2CheckoutRoute_order$key = {
+  readonly " $data"?: Order2CheckoutRoute_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutRoute_order">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Details_order",
+  "name": "Order2CheckoutRoute_order",
   "selections": [
     {
       "alias": null,
@@ -37,6 +37,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e7f63b86912ba3de976eead883285643";
+(node as any).hash = "78b06c7873444c97504075cdd1378a6a";
 
 export default node;

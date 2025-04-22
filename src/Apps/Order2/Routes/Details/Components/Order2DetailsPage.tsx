@@ -15,7 +15,7 @@ interface DetailsPageProps {
   orderId: string
 }
 
-export const DetailsPage = ({ orderId }: DetailsPageProps) => {
+export const Order2DetailsPage = ({ orderId }: DetailsPageProps) => {
   // const orderData = useFragment(ORDER_FRAGMENT, order)
 
   return (

@@ -13,18 +13,20 @@ const Order2App = loadable(
 const CheckoutRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "checkoutBundle" */ "./Routes/Checkout/Checkout"
+      /* webpackChunkName: "checkoutBundle" */ "./Routes/Checkout/Order2CheckoutRoute"
     ),
   {
-    resolveComponent: component => component.Checkout,
+    resolveComponent: component => component.Order2CheckoutRoute,
   },
 )
 
 const DetailsRoute = loadable(
   () =>
-    import(/* webpackChunkName: "orderBundle" */ "./Routes/Details/Details"),
+    import(
+      /* webpackChunkName: "orderBundle" */ "./Routes/Details/Order2DetailsRoute"
+    ),
   {
-    resolveComponent: component => component.DetailsFragmentContainer,
+    resolveComponent: component => component.Order2DetailsRoute,
   },
 )
 
@@ -47,13 +49,13 @@ export const order2Routes: RouteProps[] = [
           query order2Routes_CheckoutQuery($orderID: String!) {
             me {
               order(id: $orderID) {
-                ...Checkout_order
+                ...Order2CheckoutRoute_order
               }
             }
           }
         `,
         render: args => {
-          const { props, Component, match, resolving, data } = args
+          const { props, Component } = args
           if (!(Component && props)) {
             // Returning `null` will show the spinner; but undefined uses purple
             // loader. Its a weird quirk :/
@@ -77,13 +79,13 @@ export const order2Routes: RouteProps[] = [
           query order2Routes_DetailsQuery($orderID: String!) {
             me {
               order(id: $orderID) {
-                ...Details_order
+                ...Order2DetailsRoute_order
               }
             }
           }
         `,
         render: args => {
-          const { props, Component, match, resolving, data } = args
+          const { props, Component } = args
           if (!(Component && props)) {
             // Returning `null` will show the spinner; but undefined uses purple
             // loader. Its a weird quirk :/

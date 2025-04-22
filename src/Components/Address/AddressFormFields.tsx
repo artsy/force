@@ -315,6 +315,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
   )
 }
 
+const BLANK_COUNTRY = { text: "", value: "" }
 /** countries are sorted by phone number code first - sort alphabetically */
 const sortCountriesForCountryInput = (
   unsorted: typeof countryPhoneOptions,
@@ -327,7 +328,7 @@ const sortCountriesForCountryInput = (
   ])
 
   const options = [
-    { text: "", value: "" },
+    BLANK_COUNTRY,
     ...sortedCountries.map(countryData => {
       return {
         text: countryData.name,

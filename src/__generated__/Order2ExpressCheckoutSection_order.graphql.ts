@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e2d87c5310c5a5ea8864fe5e14526916>>
+ * @generated SignedSource<<6aea5aecade586986b6cc696d349bffd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type ExpressCheckoutSection_order$data = {
+export type Order2ExpressCheckoutSection_order$data = {
   readonly internalID: string;
   readonly lineItems: ReadonlyArray<{
     readonly artwork: {
@@ -19,18 +19,18 @@ export type ExpressCheckoutSection_order$data = {
     } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
-  readonly " $fragmentType": "ExpressCheckoutSection_order";
+  readonly " $fragmentType": "Order2ExpressCheckoutSection_order";
 };
-export type ExpressCheckoutSection_order$key = {
-  readonly " $data"?: ExpressCheckoutSection_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutSection_order">;
+export type Order2ExpressCheckoutSection_order$key = {
+  readonly " $data"?: Order2ExpressCheckoutSection_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2ExpressCheckoutSection_order">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ExpressCheckoutSection_order",
+  "name": "Order2ExpressCheckoutSection_order",
   "selections": [
     {
       "alias": null,
@@ -80,6 +80,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "1619c2e4d112a7322eb535c9fb7e4948";
+(node as any).hash = "a5645ee56ac9aaa261df1478e1f3c906";
 
 export default node;

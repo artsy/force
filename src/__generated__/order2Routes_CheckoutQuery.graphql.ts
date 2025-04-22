@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8e2d64d2ece5c31c07abdeadb85fc7de>>
+ * @generated SignedSource<<24c59831a1b8ea4f90249ec35b4e07de>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type order2Routes_CheckoutQuery$variables = {
 export type order2Routes_CheckoutQuery$data = {
   readonly me: {
     readonly order: {
-      readonly " $fragmentSpreads": FragmentRefs<"Checkout_order">;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutRoute_order">;
     } | null | undefined;
   } | null | undefined;
 };
@@ -73,7 +73,7 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "Checkout_order"
+                "name": "Order2CheckoutRoute_order"
               }
             ],
             "storageKey": null
@@ -125,16 +125,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f03efc0e8537fae8cb82e4a8601f28fb",
+    "cacheID": "cd4d5a0ae81f56406374aec4eb044059",
     "id": null,
     "metadata": {},
     "name": "order2Routes_CheckoutQuery",
     "operationKind": "query",
-    "text": "query order2Routes_CheckoutQuery(\n  $orderID: String!\n) {\n  me {\n    order(id: $orderID) {\n      ...Checkout_order\n      id\n    }\n    id\n  }\n}\n\nfragment Checkout_order on Order {\n  internalID\n}\n"
+    "text": "query order2Routes_CheckoutQuery(\n  $orderID: String!\n) {\n  me {\n    order(id: $orderID) {\n      ...Order2CheckoutRoute_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutRoute_order on Order {\n  internalID\n}\n"
   }
 };
 })();
 
-(node as any).hash = "bc640bba4ed7ba6cb51553f5a5273e18";
+(node as any).hash = "8a00cdb9f40239d5d86eb73aff697a83";
 
 export default node;
