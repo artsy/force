@@ -5,7 +5,6 @@ import { ActionType } from "@artsy/cohesion"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useRouter } from "System/Hooks/useRouter"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
-import { useDebounce } from "Utils/Hooks/useDebounce"
 import { extractNodes } from "Utils/extractNodes"
 import type {
   SearchBarInputSuggestQuery,
@@ -13,6 +12,7 @@ import type {
 } from "__generated__/SearchBarInputSuggestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import { useDebounce } from "use-debounce"
 import { SearchBarFooter } from "./SearchBarFooter"
 import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
 import { StaticSearchContainer } from "./StaticSearchContainer"
@@ -46,6 +46,7 @@ export const SearchBarInput: FC<
   })
 
   const [value, setValue] = useState(searchTerm)
+  const [debouncedValue] = useDebounce(value, SEARCH_DEBOUNCE_DELAY)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
 
   // FIXME: Refactor to just use callback
@@ -96,20 +97,26 @@ export const SearchBarInput: FC<
     })
   }, [fetchCounter])
 
-  const debouncedSearchRequest = useDebounce({
-    callback: (value: string, entity?: SearchEntity) => {
-      const entities = entity ? [entity] : []
+  useEffect(() => {
+    if (shouldStartSearching(debouncedValue)) {
+      searchRequest(
+        debouncedValue,
+        selectedPill.searchEntityName as SearchEntity | undefined,
+      )
+    }
+  }, [debouncedValue, selectedPill.searchEntityName])
 
-      refetch({
-        hasTerm: true,
-        term: String(value),
-        entities,
-      })
+  const searchRequest = (value: string, entity?: SearchEntity) => {
+    const entities = entity ? [entity] : []
 
-      setFetchCounter(prevCounter => prevCounter + 1)
-    },
-    delay: SEARCH_DEBOUNCE_DELAY,
-  })
+    refetch({
+      hasTerm: true,
+      term: String(value),
+      entities,
+    })
+
+    setFetchCounter(prevCounter => prevCounter + 1)
+  }
 
   const resetValue = () => {
     setValue("")
@@ -121,15 +128,11 @@ export const SearchBarInput: FC<
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
-
-    if (shouldStartSearching(event.target.value)) {
-      debouncedSearchRequest(event.target.value, selectedPill.searchEntityName)
-    }
   }
 
   const handlePillClick = (pill: PillType) => {
     setSelectedPill(pill)
-    debouncedSearchRequest(value, pill.searchEntityName)
+    searchRequest(value, pill.searchEntityName as SearchEntity | undefined)
 
     tracking.trackEvent({
       action_type: ActionType.tappedNavigationTab,
