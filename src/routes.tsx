@@ -17,6 +17,7 @@ import { collectRoutes } from "Apps/Collect/collectRoutes"
 import { collectorProfileRoutes } from "Apps/CollectorProfile/collectorProfileRoutes"
 import { conversationsRoutes } from "Apps/Conversations/conversationsRoutes"
 import { debugRoutes } from "Apps/Debug/debugRoutes"
+import { discoverDailyRoutes } from "Apps/DiscoverDaily/discoverDailyRoutes"
 import { exampleRoutes } from "Apps/Example/exampleRoutes"
 import { fairRoutes } from "Apps/Fair/fairRoutes"
 import { fairsRoutes } from "Apps/Fairs/fairsRoutes"
@@ -95,6 +96,7 @@ const ROUTES = buildAppRoutes([
   geneRoutes,
   homeRoutes,
   identityVerificationRoutes,
+  discoverDailyRoutes,
   institutionPartnershipsRoutes,
   invoiceRoutes,
   jobsRoutes,
