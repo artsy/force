@@ -281,8 +281,8 @@ export const DiscoverDailyApp = () => {
   const [mltFields, setMltFields] = React.useState<string[]>([
     "genes",
     "materials",
-    "tags",
     "medium",
+    "tags",
   ])
   const [artworksLimit, _setArtworksLimit] = React.useState(5)
 
