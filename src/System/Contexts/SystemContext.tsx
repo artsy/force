@@ -6,6 +6,7 @@ import type { Router } from "found"
 import { createContext, useState } from "react"
 import type { Environment } from "react-relay"
 import type { Unleash } from "unleash-client"
+import type { UnleashClient } from "unleash-proxy-client"
 
 export type UserPreferences = {
   metric: Metric
@@ -19,7 +20,7 @@ export interface SystemContextState {
 }
 
 export interface SystemContextProps extends SystemContextState {
-  unleashServerClient?: Unleash
+  unleashClient?: Unleash | UnleashClient
   injectedData?: any
   isEigen?: boolean
   isLoggedIn?: boolean

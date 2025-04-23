@@ -2,6 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react"
 import { SystemContextConsumer } from "System/Contexts/SystemContext"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { setupClientRouter } from "System/Router/clientRouter"
+import type { UnleashClient } from "unleash-proxy-client"
 
 jest.mock("Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,
@@ -154,5 +155,30 @@ describe("clientRouter", () => {
     await waitFor(() => {
       expect(screen.getByText("SystemContextConsumer")).toBeInTheDocument()
     })
+  })
+
+  it("passes unleash to match context", async () => {
+    const { ClientRouter } = await setupClientRouter({
+      history: {
+        protocol: "memory",
+      },
+      routes: [
+        {
+          path: "/",
+          render: ({ match }) => {
+            expect(match.context.unleashClient.isEnabled()).toBe(true)
+            console.log("here")
+            return null
+          },
+        },
+      ],
+      context: {
+        unleashClient: {
+          isEnabled: jest.fn().mockReturnValue(true),
+        } as unknown as UnleashClient,
+      },
+    })
+
+    render(<ClientRouter />)
   })
 })

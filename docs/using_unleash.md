@@ -104,10 +104,10 @@ const MyExperiment = () => {
 ### Checking Feature Flags in Server Code
 
 ```typescript
-import { getOrInitUnleashServerClient } from "Server/featureFlags/unleashHelpers"
+import { getOrInitUnleashServer } from "Server/featureFlags/unleashServer"
 
 async function someServerFunction() {
-  const unleashClient = await getOrInitUnleashServerClient()
+  const unleashClient = await getOrInitUnleashServer()
 
   if (unleashClient.isEnabled("demo-feature")) {
     return newFeatureBehavior()
@@ -120,9 +120,9 @@ async function someServerFunction() {
 ### Using Context for Targeted Rollouts
 
 ```typescript
-import { getOrInitUnleashServerClient } from "Server/featureFlags/unleashHelpers"
+import { getOrInitUnleashServer } from "Server/featureFlags/unleashServer"
 
-const unleashClient = await getOrInitUnleashServerClient()
+const unleashClient = await getOrInitUnleashServer()
 
 // Setup context
 // NOTE: developers will need to handle passing in the context
@@ -148,9 +148,11 @@ if (variant.name === "experiment") {
 }
 ```
 
-## Accessing Unleash from the Router on the Server
+## Accessing Unleash from the Router
 
 When the router first mounts we inject it into the router context, which can be used in the render function in our router to perform redirects and other operations. Example:
+
+### Performing server-side redirects
 
 ```tsx
 const routes = [
@@ -159,9 +161,7 @@ const routes = [
     render: ({ match }) => {
       if (isServer) {
         if (
-          match.context.unleashServerClient.isEnabled(
-            "emerald_order-details-page",
-          )
+          match.context.unleashClient.isEnabled("emerald_order-details-page")
         ) {
           console.log("Successfully found feature flag flag")
 
@@ -171,6 +171,30 @@ const routes = [
 
       return <>This shouldn't render on the server, but rather redirect</>
     },
+  },
+]
+```
+
+### Accessing from `prepareVariables` to pass to GraphQL query
+
+```tsx
+const routes = [
+  {
+    path: "/some-route",
+    prepareVariables: (params, { context }) => {
+      const id = context.unleashClient.isEnabled("some-flag") ? "foo" : "bar"
+
+      return {
+        id,
+      }
+    },
+    query: graphql`
+      query someRouteQuery($id: String!) {
+        artist(id: $id) {
+          internalID
+        }
+      }
+    `,
   },
 ]
 ```

@@ -169,14 +169,13 @@ export const exampleRoutes: RouteProps[] = [
         render: ({ match }) => {
           if (isServer) {
             if (
-              match.context.unleashServerClient.isEnabled(
+              match.context.unleashClient.isEnabled(
                 "emerald_order-details-page",
               )
-            ) {
+            )
               console.log("Successfully found feature flag flag")
 
-              throw new RedirectException("/")
-            }
+            throw new RedirectException("/")
           }
 
           return <>This shouldn't render on the server, but rather redirect</>

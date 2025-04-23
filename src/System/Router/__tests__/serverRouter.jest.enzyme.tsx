@@ -351,8 +351,7 @@ describe("serverRouter", () => {
       path: "/",
       Component: () => null,
       render: ({ match }) => {
-        // Check that unleashClient is passed to the match context
-        expect(match.context.unleashServerClient.isEnabled()).toBe(true)
+        expect(match.context.unleashClient.isEnabled()).toBe(true)
         return null
       },
     }
@@ -363,14 +362,12 @@ describe("serverRouter", () => {
 
     await getWrapper(() => <>Hello</>, {
       ...options,
+      routes: [route],
       context: {
-        unleashServerClient: {
+        unleashClient: {
           isEnabled: jest.fn().mockReturnValue(true),
-          getFeatureToggle: jest.fn(),
-          getFeatureToggles: jest.fn(),
         },
       },
-      routes: [route],
     })
   })
 })
