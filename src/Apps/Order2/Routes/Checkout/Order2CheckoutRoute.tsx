@@ -13,7 +13,6 @@ import {
 import { useFlag } from "@unleash/proxy-client-react"
 import { addressFormFieldsValidator } from "Components/Address/AddressFormFields"
 import { AddressFormFields } from "Components/Address/AddressFormFields"
-import { ErrorPage } from "Components/ErrorPage"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
 import type { Order2CheckoutRoute_viewer$key } from "__generated__/Order2CheckoutRoute_viewer.graphql"
@@ -44,8 +43,6 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
       isCheckoutRedesignEnabled,
     })
   }, [isCheckoutRedesignEnabled])
-
-  if (!isCheckoutRedesignEnabled) return <ErrorPage code={404} />
 
   const validationSchema = yup.object().shape({
     ...addressFormFieldsValidator({ withPhoneNumber: true }),
