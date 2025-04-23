@@ -5,6 +5,7 @@ import { getUser } from "Utils/user"
 import type { Router } from "found"
 import { createContext, useState } from "react"
 import type { Environment } from "react-relay"
+import type { Unleash } from "unleash-client"
 
 export type UserPreferences = {
   metric: Metric
@@ -18,6 +19,7 @@ export interface SystemContextState {
 }
 
 export interface SystemContextProps extends SystemContextState {
+  unleashServerClient?: Unleash
   injectedData?: any
   isEigen?: boolean
   isLoggedIn?: boolean

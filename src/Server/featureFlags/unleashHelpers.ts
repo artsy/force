@@ -1,12 +1,14 @@
 import {
   UNLEASH_API_URL,
   UNLEASH_APP_NAME,
-  UNLEASH_SERVER_KEY,
   UNLEASH_ENVIRONMENT,
+  UNLEASH_SERVER_KEY,
 } from "Server/config"
-import { Unleash, startUnleash } from "unleash-client"
+import type { Unleash } from "unleash-client"
 
 export function getOrInitUnleashServerClient(): Promise<Unleash> {
+  const { startUnleash } = require("unleash-client")
+
   const config = {
     url: UNLEASH_API_URL,
     appName: UNLEASH_APP_NAME,

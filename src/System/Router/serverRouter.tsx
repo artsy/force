@@ -4,6 +4,7 @@ import type {
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
 import { Boot } from "System/Boot"
+import type { SystemContextProps } from "System/Contexts/SystemContext"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { renderStates } from "System/Router/RenderStates"
 import type { RouteProps } from "System/Router/Route"
@@ -43,6 +44,7 @@ export interface ServerRouterConfig extends RouterConfig {
   res: ArtsyResponse
   next: NextFunction
   routes: RouteProps[]
+  context?: Partial<SystemContextProps>
 }
 
 export const setupServerRouter = async ({

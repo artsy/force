@@ -7,6 +7,7 @@ import { rssServerApp } from "Apps/RSS/rssServerApp"
 import { redirectsServerRoutes } from "Apps/Redirects/redirectsServerRoutes"
 import { sitemapsServerApp } from "Apps/Sitemaps/sitemapsServerApp"
 import { cookieConsentManagerServerRoutes } from "Components/CookieConsentManager/cookieConsentManagerServerRoutes"
+import { getOrInitUnleashServerClient } from "Server/featureFlags/unleashHelpers"
 import type {
   ArtsyRequest,
   ArtsyResponse,
@@ -18,7 +19,6 @@ import { setupServerRouter } from "System/Router/serverRouter"
 import express from "express"
 import type { NextFunction } from "express"
 import { initializeMiddleware } from "middleware"
-import { getOrInitUnleashServerClient } from "Server/featureFlags/unleashHelpers"
 
 const app = express()
 
@@ -40,12 +40,17 @@ app.get("/collection/:slug", redirectCollectionToArtistSeries)
 app.get(
   routePaths,
   async (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
+    const unleashServerClient = await getOrInitUnleashServerClient()
+
     try {
       const { status, redirect, ...rest } = await setupServerRouter({
         next,
         req,
         res,
         routes,
+        context: {
+          unleashServerClient,
+        },
       })
 
       if (redirect) {

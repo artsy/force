@@ -1,7 +1,7 @@
 import {
   FlagProvider,
-  IConfig,
-  IFlagProvider,
+  type IConfig,
+  type IFlagProvider,
 } from "@unleash/proxy-client-react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
