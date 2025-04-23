@@ -3,11 +3,13 @@ import { DateTime } from "luxon"
 import { graphql } from "react-relay"
 import type { RedirectPredicate, RedirectRecord } from "./getRedirect"
 
+import type { SystemContextProps } from "System/Contexts/SystemContext"
 import { extractNodes } from "Utils/extractNodes"
 import type { redirects_order$data } from "__generated__/redirects_order.graphql"
 
 interface OrderQuery {
   order: redirects_order$data
+  unleashClient: SystemContextProps["unleashClient"]
 }
 
 type OrderPredicate = RedirectPredicate<OrderQuery>
@@ -174,6 +176,55 @@ const goToRespondIfAwaitingBuyerResponse: OrderPredicate = ({ order }) => {
   }
 }
 
+const goToOrder2DetailsIfEnabled: OrderPredicate = ({
+  order,
+  unleashClient,
+}) => {
+  if (newDetailsEnabled({ order, unleashClient })) {
+    return {
+      path: `/orders2/${order.internalID}/details`,
+      reason: "Order2 is enabled for this order",
+    }
+  }
+}
+
+const goToOrder2CheckoutIfEnabled: OrderPredicate = ({
+  order,
+  unleashClient,
+}) => {
+  if (newCheckoutEnabled({ order, unleashClient })) {
+    return {
+      path: `/orders2/${order.internalID}/checkout`,
+      reason: "Order2 is enabled for this order",
+    }
+  }
+}
+
+// Temporary type to allow orders queried for the new checkout page to work here
+interface Order2RedirectArgs {
+  order: { mode?: string | null }
+  unleashClient: SystemContextProps["unleashClient"]
+}
+export const newCheckoutEnabled = ({
+  order,
+  unleashClient,
+}: Order2RedirectArgs): boolean => {
+  return !!(
+    order.mode === "BUY" &&
+    unleashClient?.isEnabled("emerald_checkout-redesign")
+  )
+}
+
+export const newDetailsEnabled = ({
+  order,
+  unleashClient,
+}: Order2RedirectArgs): boolean => {
+  return !!(
+    order.mode === "BUY" &&
+    unleashClient?.isEnabled("emerald_order-details-page")
+  )
+}
+
 export const redirects: RedirectRecord<OrderQuery> = {
   path: "",
   rules: [goToArtworkIfOrderWasAbandoned],
@@ -200,6 +251,7 @@ export const redirects: RedirectRecord<OrderQuery> = {
         goToPaymentIfPrivateSaleOrder,
         goToStatusIfOrderIsNotPending,
         goToOfferIfNoOfferMade,
+        goToOrder2CheckoutIfEnabled,
       ],
     },
     {
@@ -207,6 +259,7 @@ export const redirects: RedirectRecord<OrderQuery> = {
       rules: [
         goToStatusIfOrderIsNotPending,
         goToShippingIfShippingIsNotCompleted,
+        goToOrder2CheckoutIfEnabled,
       ],
     },
     {
@@ -222,6 +275,7 @@ export const redirects: RedirectRecord<OrderQuery> = {
         goToStatusIfOrderIsNotPending,
         goToShippingIfShippingIsNotCompleted,
         goToPaymentIfPaymentIsNotCompleted,
+        goToOrder2CheckoutIfEnabled,
       ],
     },
     {
@@ -256,6 +310,7 @@ export const redirects: RedirectRecord<OrderQuery> = {
         goToShippingIfShippingIsNotCompleted,
         goToPaymentIfPaymentIsNotCompleted,
         goToRespondIfAwaitingBuyerResponse,
+        goToOrder2DetailsIfEnabled,
       ],
     },
   ],

@@ -1,6 +1,5 @@
 import { useFlag } from "@unleash/proxy-client-react"
 import { Order2DetailsPage } from "Apps/Order2/Routes/Details/Components/Order2DetailsPage"
-import { ErrorPage } from "Components/ErrorPage"
 import createLogger from "Utils/logger"
 import type { Order2DetailsRoute_viewer$key } from "__generated__/Order2DetailsRoute_viewer.graphql"
 import type React from "react"
@@ -22,8 +21,6 @@ export const Order2DetailsRoute: React.FC<DetailsProps> = ({ viewer }) => {
   useEffect(() => {
     logger.warn("Order details page data:", data, isOrderDetailsFlagEnabled)
   }, [isOrderDetailsFlagEnabled])
-
-  if (!isOrderDetailsFlagEnabled) return <ErrorPage code={404} />
 
   return (
     <>
