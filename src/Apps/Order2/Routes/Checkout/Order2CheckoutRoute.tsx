@@ -14,12 +14,13 @@ import { useFlag } from "@unleash/proxy-client-react"
 import { addressFormFieldsValidator } from "Components/Address/AddressFormFields"
 import { AddressFormFields } from "Components/Address/AddressFormFields"
 import { ErrorPage } from "Components/ErrorPage"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
 import type { Order2CheckoutRoute_viewer$key } from "__generated__/Order2CheckoutRoute_viewer.graphql"
 import { Formik, type FormikHelpers, type FormikValues } from "formik"
 import type * as React from "react"
 import { useEffect } from "react"
-import { Title } from "react-head"
+import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 import * as yup from "yup"
 
@@ -31,6 +32,8 @@ interface Order2CheckoutRouteProps {
 export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
   viewer,
 }) => {
+  const { isEigen } = useSystemContext()
+
   const data = useFragment(FRAGMENT, viewer)
   const isCheckoutRedesignEnabled = useFlag("emerald_checkout-redesign")
 
@@ -52,6 +55,14 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
   return (
     <>
       <Title>Checkout | Artsy</Title>
+      <Meta
+        name="viewport"
+        content={
+          isEigen
+            ? "width=device-width, user-scalable=no"
+            : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
+        }
+      />
       <GridColumns>
         <Column span={[12, 8]} start={[1, 2]}>
           <Box backgroundColor="mono0" py={2} px={2}>
