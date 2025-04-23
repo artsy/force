@@ -42,6 +42,7 @@ const buildInitialOpenSearchQuery = (
   excludeArtworkIds,
   limit,
   randomSeed = Date.now(),
+  dismissedArtists = [],
 ) => {
   return {
     size: limit,
@@ -60,11 +61,22 @@ const buildInitialOpenSearchQuery = (
       function_score: {
         query: {
           bool: {
-            must_not: {
-              terms: {
-                _id: excludeArtworkIds,
+            must_not: [
+              {
+                terms: {
+                  _id: excludeArtworkIds,
+                },
               },
-            },
+              ...(dismissedArtists.length > 0
+                ? [
+                    {
+                      terms: {
+                        artist_id: dismissedArtists,
+                      },
+                    },
+                  ]
+                : []),
+            ],
             filter: [
               {
                 terms: {
@@ -99,6 +111,7 @@ const buildHybridOpenSearchQuery = (
   artworksCountForTaste = 3,
   mltFields: string[] = [],
   limit,
+  dismissedArtists = [],
 ) => {
   const likedArtworkIds = likedArtworks.map(artwork => artwork.id)
   const dismissedArtworkIds = dismissedArtworks.map(artwork => artwork.id)
@@ -168,12 +181,21 @@ const buildHybridOpenSearchQuery = (
             artist_id: recentArtistIds,
           },
         },
+        ...(dismissedArtists.length > 0
+          ? [
+              {
+                terms: {
+                  artist_id: dismissedArtists,
+                },
+              },
+            ]
+          : []),
       ],
       must: [mltQuery, filterQuery, availabilityQuery],
     },
   }
 
-  // Build KNN query
+  // Build KNN query for positive vector
   const knnQuery = {
     knn: {
       vector_embedding: {
@@ -193,6 +215,15 @@ const buildHybridOpenSearchQuery = (
                   artist_id: recentArtistIds,
                 },
               },
+              ...(dismissedArtists.length > 0
+                ? [
+                    {
+                      terms: {
+                        artist_id: dismissedArtists,
+                      },
+                    },
+                  ]
+                : []),
             ],
           },
         },
@@ -274,6 +305,9 @@ export const DiscoverDailyApp = () => {
   const [artworks, setArtworks] = React.useState([]) as any
   const [likedArtworks, setLikedArtworks] = React.useState([]) as any
   const [dismissedArtworks, setDismissedArtworks] = React.useState([]) as any
+  const [dismissedArtists, setDismissedArtists] = React.useState([]) as any
+  const [excludeDismissedArtists, setExcludeDismissedArtists] =
+    React.useState(true)
   const [loading, setLoading] = React.useState(false)
   const [mltWeight, setMltWeight] = React.useState(0.6)
   const [knnWeight, setKnnWeight] = React.useState(0.4)
@@ -292,6 +326,11 @@ export const DiscoverDailyApp = () => {
 
   const onDismiss = artwork => {
     setDismissedArtworks([...dismissedArtworks, artwork])
+
+    // Track dismissed artists
+    if (artwork.artistId && !dismissedArtists.includes(artwork.artistId)) {
+      setDismissedArtists([...dismissedArtists, artwork.artistId])
+    }
   }
 
   const handleCheckboxChange = field => {
@@ -310,7 +349,12 @@ export const DiscoverDailyApp = () => {
       artwork => artwork.id,
     )
 
-    const query = buildInitialOpenSearchQuery(excludeArtworkIds, artworksLimit)
+    const query = buildInitialOpenSearchQuery(
+      excludeArtworkIds,
+      artworksLimit,
+      Date.now(),
+      excludeDismissedArtists ? dismissedArtists : [],
+    )
 
     const response = await request(OPENSEARCH_URL, {
       body: JSON.stringify(query),
@@ -352,6 +396,7 @@ export const DiscoverDailyApp = () => {
       tasteArtworks,
       mltFields,
       3, // Get only 3 recommendations from hybrid query
+      excludeDismissedArtists ? dismissedArtists : [],
     )
 
     const hybridResponse = await request(OPENSEARCH_URL, {
@@ -390,6 +435,8 @@ export const DiscoverDailyApp = () => {
       const curatedQuery = buildInitialOpenSearchQuery(
         excludeArtworkIds,
         neededCount, // Get exactly the number we need
+        Date.now(),
+        excludeDismissedArtists ? dismissedArtists : [],
       )
 
       const curatedResponse = await request(OPENSEARCH_URL, {
@@ -428,6 +475,8 @@ export const DiscoverDailyApp = () => {
       const additionalQuery = buildInitialOpenSearchQuery(
         additionalExcludeIds,
         additionalNeeded,
+        Date.now(),
+        excludeDismissedArtists ? dismissedArtists : [],
       )
 
       const additionalResponse = await request(OPENSEARCH_URL, {
@@ -518,6 +567,14 @@ export const DiscoverDailyApp = () => {
                       }
                       max={1}
                       min={0}
+                    />
+                    <Separator marginY={5} />
+                    <Label>Exclude dismissed artists</Label>
+                    <Checkbox
+                      selected={excludeDismissedArtists}
+                      onClick={() =>
+                        setExcludeDismissedArtists(!excludeDismissedArtists)
+                      }
                     />
                   </Flex>
                   <Flex flexDirection={"column"} marginLeft={20}>
