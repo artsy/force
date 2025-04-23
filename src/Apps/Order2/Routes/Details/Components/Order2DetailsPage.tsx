@@ -11,13 +11,7 @@ import {
 } from "@artsy/palette"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 
-interface DetailsPageProps {
-  orderId: string
-}
-
-export const Order2DetailsPage = ({ orderId }: DetailsPageProps) => {
-  // const orderData = useFragment(ORDER_FRAGMENT, order)
-
+export const Order2DetailsPage = () => {
   return (
     <Box width="600px">
       {/* <Box bg="red">Order ID: {orderId}</Box> */}

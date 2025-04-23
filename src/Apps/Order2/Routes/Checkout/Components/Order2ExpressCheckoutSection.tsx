@@ -3,16 +3,16 @@ import { ExpressCheckoutQueryRenderer } from "Apps/Order/Components/ExpressCheck
 import type { Order2ExpressCheckoutSection_order$key } from "__generated__/Order2ExpressCheckoutSection_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
-interface ExpressCheckoutSectionProps {
+interface Order2ExpressCheckoutSectionProps {
   order: Order2ExpressCheckoutSection_order$key
 }
 
 // TODO: Placeholder for the express checkout component loosely based on legacy
 // express checkout
 export const Order2ExpressCheckoutSection: React.FC<
-  ExpressCheckoutSectionProps
+  Order2ExpressCheckoutSectionProps
 > = ({ order }) => {
-  const data = useFragment(orderFragment, order)
+  const data = useFragment(FRAGMENT, order)
   const expressCheckoutPrototypeEnabled = useFlag(
     "emerald_stripe-express-checkout-prototype",
   )
@@ -34,7 +34,7 @@ export const Order2ExpressCheckoutSection: React.FC<
   return <ExpressCheckoutQueryRenderer orderID={data.internalID} />
 }
 
-const orderFragment = graphql`
+const FRAGMENT = graphql`
   fragment Order2ExpressCheckoutSection_order on Order {
     mode
     internalID

@@ -1,7 +1,12 @@
 import loadable from "@loadable/component"
 import { ErrorPage } from "Components/ErrorPage"
 import type { RouteProps } from "System/Router/Route"
+import createLogger from "Utils/logger"
+import type { order2Routes_CheckoutQuery$data } from "__generated__/order2Routes_CheckoutQuery.graphql"
+import type { order2Routes_DetailsQuery$data } from "__generated__/order2Routes_DetailsQuery.graphql"
 import { graphql } from "react-relay"
+
+const logger = createLogger("order2Routes.tsx")
 
 const Order2App = loadable(
   () => import(/* webpackChunkName: "checkoutBundle" */ "./Order2App"),
@@ -35,7 +40,7 @@ export const order2Routes: RouteProps[] = [
     path: "/orders2/:orderID",
     getComponent: () => Order2App,
     onPreloadJS: () => {
-      Order2App.preload() // TODO: What should this do
+      Order2App.preload()
     },
     children: [
       {
@@ -44,31 +49,32 @@ export const order2Routes: RouteProps[] = [
         Component: CheckoutRoute,
         shouldWarnBeforeLeaving: true,
         prepareVariables: params => ({ orderID: params.orderID }),
-        // TODO: Should be `orderID: ID!`
         query: graphql`
           query order2Routes_CheckoutQuery($orderID: String!) {
-            me {
-              order(id: $orderID) {
-                ...Order2CheckoutRoute_order
+            viewer {
+              me {
+                order(id: $orderID) {
+                  internalID
+                }
               }
+              ...Order2CheckoutRoute_viewer @arguments(orderID: $orderID)
             }
           }
         `,
         render: args => {
           const { props, Component } = args
           if (!(Component && props)) {
-            // Returning `null` will show the spinner; but undefined uses purple
-            // loader. Its a weird quirk :/
-            return undefined // null
+            return
           }
-          const order = (props as any).me?.order
-          // TODO: implement redirect logic based on order state and feature flags
+          const viewer = (props as unknown as order2Routes_CheckoutQuery$data)
+            .viewer
+          const order = viewer?.me?.order
           if (!order) {
-            console.warn("No order found - checkout page")
+            logger.warn("No order found - checkout page")
             return <ErrorPage code={404} />
           }
 
-          return <Component order={order} />
+          return <Component viewer={viewer} />
         },
       },
       {
@@ -77,9 +83,12 @@ export const order2Routes: RouteProps[] = [
         layout: "NavOnly",
         query: graphql`
           query order2Routes_DetailsQuery($orderID: String!) {
-            me {
-              order(id: $orderID) {
-                ...Order2DetailsRoute_order
+            viewer {
+              ...Order2DetailsRoute_viewer @arguments(orderID: $orderID)
+              me {
+                order(id: $orderID) {
+                  internalID
+                }
               }
             }
           }
@@ -87,20 +96,18 @@ export const order2Routes: RouteProps[] = [
         render: args => {
           const { props, Component } = args
           if (!(Component && props)) {
-            // Returning `null` will show the spinner; but undefined uses purple
-            // loader. Its a weird quirk :/
-            return undefined // null
+            return
           }
+          const viewer = (props as unknown as order2Routes_DetailsQuery$data)
+            .viewer
 
-          const order = (props as any).me?.order
+          const order = viewer?.me?.order
           if (!order) {
-            console.warn("No order found - details page")
+            logger.warn("No order found - details page")
             return <ErrorPage code={404} />
           }
 
-          // TODO: implement redirect logic based on order state and feature flags
-
-          return <Component order={order} />
+          return <Component viewer={viewer} />
         },
       },
     ],

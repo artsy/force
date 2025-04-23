@@ -1,34 +1,45 @@
 import { useFlag } from "@unleash/proxy-client-react"
 import { Order2DetailsPage } from "Apps/Order2/Routes/Details/Components/Order2DetailsPage"
 import { ErrorPage } from "Components/ErrorPage"
-import type { Order2DetailsRoute_order$key } from "__generated__/Order2DetailsRoute_order.graphql"
+import createLogger from "Utils/logger"
+import type { Order2DetailsRoute_viewer$key } from "__generated__/Order2DetailsRoute_viewer.graphql"
 import type React from "react"
+import { useEffect } from "react"
 import { Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 
 interface DetailsProps {
-  order: Order2DetailsRoute_order$key
+  viewer: Order2DetailsRoute_viewer$key
 }
 
-export const Order2DetailsRoute: React.FC<DetailsProps> = ({ order }) => {
+const logger = createLogger("Order2DetailsRoute.tsx")
+
+export const Order2DetailsRoute: React.FC<DetailsProps> = ({ viewer }) => {
   const isOrderDetailsFlagEnabled = useFlag("emerald_order-details-page")
-  const data = useFragment(ORDER_FRAGMENT, order)
-  // TODO: this is not great as it loads with flag false for couple of times
-  // before loading with true 2 times
-  // console.log("!!!!!!!!!!!!!!!!!!", isOrderDetailsFlagEnabled)
+  const data = useFragment(FRAGMENT, viewer)
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: placeholder because we aren't using this yet
+  useEffect(() => {
+    logger.warn("Order details page data:", data, isOrderDetailsFlagEnabled)
+  }, [isOrderDetailsFlagEnabled])
 
   if (!isOrderDetailsFlagEnabled) return <ErrorPage code={404} />
 
   return (
     <>
       <Title>Order details | Artsy</Title>
-      <Order2DetailsPage orderId={data.internalID} />
+      <Order2DetailsPage />
     </>
   )
 }
 
-const ORDER_FRAGMENT = graphql`
-  fragment Order2DetailsRoute_order on Order {
-    internalID
+const FRAGMENT = graphql`
+  fragment Order2DetailsRoute_viewer on Viewer
+  @argumentDefinitions(orderID: { type: "String!" }) {
+    me {
+      order(id: $orderID) {
+        internalID
+      }
+    }
   }
 `

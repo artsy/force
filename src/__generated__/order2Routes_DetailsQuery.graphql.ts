@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<075a904e61011ab87e8e3bce0e504a26>>
+ * @generated SignedSource<<524feda0ab5e048704244893d63232da>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,10 +14,13 @@ export type order2Routes_DetailsQuery$variables = {
   orderID: string;
 };
 export type order2Routes_DetailsQuery$data = {
-  readonly me: {
-    readonly order: {
-      readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsRoute_order">;
+  readonly viewer: {
+    readonly me: {
+      readonly order: {
+        readonly internalID: string;
+      } | null | undefined;
     } | null | undefined;
+    readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsRoute_viewer">;
   } | null | undefined;
 };
 export type order2Routes_DetailsQuery = {
@@ -44,6 +47,13 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 };
@@ -57,23 +67,41 @@ return {
       {
         "alias": null,
         "args": null,
-        "concreteType": "Me",
+        "concreteType": "Viewer",
         "kind": "LinkedField",
-        "name": "me",
+        "name": "viewer",
         "plural": false,
         "selections": [
           {
+            "args": [
+              {
+                "kind": "Variable",
+                "name": "orderID",
+                "variableName": "orderID"
+              }
+            ],
+            "kind": "FragmentSpread",
+            "name": "Order2DetailsRoute_viewer"
+          },
+          {
             "alias": null,
-            "args": (v1/*: any*/),
-            "concreteType": "Order",
+            "args": null,
+            "concreteType": "Me",
             "kind": "LinkedField",
-            "name": "order",
+            "name": "me",
             "plural": false,
             "selections": [
               {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "Order2DetailsRoute_order"
+                "alias": null,
+                "args": (v1/*: any*/),
+                "concreteType": "Order",
+                "kind": "LinkedField",
+                "name": "order",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -94,47 +122,52 @@ return {
       {
         "alias": null,
         "args": null,
-        "concreteType": "Me",
+        "concreteType": "Viewer",
         "kind": "LinkedField",
-        "name": "me",
+        "name": "viewer",
         "plural": false,
         "selections": [
           {
             "alias": null,
-            "args": (v1/*: any*/),
-            "concreteType": "Order",
+            "args": null,
+            "concreteType": "Me",
             "kind": "LinkedField",
-            "name": "order",
+            "name": "me",
             "plural": false,
             "selections": [
               {
                 "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "internalID",
+                "args": (v1/*: any*/),
+                "concreteType": "Order",
+                "kind": "LinkedField",
+                "name": "order",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/),
+                  (v3/*: any*/)
+                ],
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
-          },
-          (v2/*: any*/)
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "6c56a49ed444ef22ce09aaabf9c0c55d",
+    "cacheID": "c6c27620635e0a9def3c19c815e0eae0",
     "id": null,
     "metadata": {},
     "name": "order2Routes_DetailsQuery",
     "operationKind": "query",
-    "text": "query order2Routes_DetailsQuery(\n  $orderID: String!\n) {\n  me {\n    order(id: $orderID) {\n      ...Order2DetailsRoute_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsRoute_order on Order {\n  internalID\n}\n"
+    "text": "query order2Routes_DetailsQuery(\n  $orderID: String!\n) {\n  viewer {\n    ...Order2DetailsRoute_viewer_3HPek8\n    me {\n      order(id: $orderID) {\n        internalID\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2DetailsRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      internalID\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e9b12379689094536afe87a433b446ad";
+(node as any).hash = "61af607a27764f716534fecfb7d7daef";
 
 export default node;

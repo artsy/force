@@ -6,15 +6,16 @@ import {
   Column,
   Flex,
   GridColumns,
-  Join,
   Spacer,
+  Stack,
   Text,
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { addressFormFieldsValidator } from "Components/Address/AddressFormFields"
 import { AddressFormFields } from "Components/Address/AddressFormFields"
 import { ErrorPage } from "Components/ErrorPage"
-import type { Order2CheckoutRoute_order$key } from "__generated__/Order2CheckoutRoute_order.graphql"
+import createLogger from "Utils/logger"
+import type { Order2CheckoutRoute_viewer$key } from "__generated__/Order2CheckoutRoute_viewer.graphql"
 import { Formik, type FormikHelpers, type FormikValues } from "formik"
 import type * as React from "react"
 import { useEffect } from "react"
@@ -22,19 +23,26 @@ import { Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 import * as yup from "yup"
 
-interface CheckoutProps {
-  order: Order2CheckoutRoute_order$key
+const logger = createLogger("Order2DetailsRoute.tsx")
+
+interface Order2CheckoutRouteProps {
+  viewer: Order2CheckoutRoute_viewer$key
 }
-export const Order2CheckoutRoute: React.FC<CheckoutProps> = ({ order }) => {
-  const data = useFragment(ORDER_FRAGMENT, order)
-  const isRedesignEnabled = useFlag("emerald_checkout-redesign")
+export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
+  viewer,
+}) => {
+  const data = useFragment(FRAGMENT, viewer)
+  const isCheckoutRedesignEnabled = useFlag("emerald_checkout-redesign")
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: placeholder because we aren't using this yet
   useEffect(() => {
-    console.warn("Checkout order data:", data)
-  }, [])
+    logger.warn("Order checkout page data:", {
+      data,
+      isCheckoutRedesignEnabled,
+    })
+  }, [isCheckoutRedesignEnabled])
 
-  if (!isRedesignEnabled) return <ErrorPage code={404} />
+  if (!isCheckoutRedesignEnabled) return <ErrorPage code={404} />
 
   const validationSchema = yup.object().shape({
     ...addressFormFieldsValidator({ withPhoneNumber: true }),
@@ -44,17 +52,17 @@ export const Order2CheckoutRoute: React.FC<CheckoutProps> = ({ order }) => {
   return (
     <>
       <Title>Checkout | Artsy</Title>
-      <GridColumns p={0}>
+      <GridColumns>
         <Column span={[12, 8]} start={[1, 2]}>
-          <Flex flexDirection="column" backgroundColor="mono0" py={2} px={2}>
-            <Flex flexDirection="row" justifyContent="space-between">
+          <Box backgroundColor="mono0" py={2} px={2}>
+            <Flex justifyContent="space-between">
               <Text flex={1} variant="xs">
                 Order Summary
               </Text>
               <ChevronDownIcon />
             </Flex>
-          </Flex>
-          <Join separator={<Box height={10} bg="mono5" />}>
+          </Box>
+          <Stack gap={1} bg="mono5">
             <Flex flexDirection="column" backgroundColor="mono0" py={2} px={2}>
               <Text variant="sm">Delivery address</Text>
               <Formik
@@ -121,15 +129,27 @@ export const Order2CheckoutRoute: React.FC<CheckoutProps> = ({ order }) => {
               </Text>
               {/* <PaymentForm /> */}
             </Flex>
-          </Join>
+          </Stack>
         </Column>
       </GridColumns>
     </>
   )
 }
 
-const ORDER_FRAGMENT = graphql`
-  fragment Order2CheckoutRoute_order on Order {
-    internalID
+const FRAGMENT = graphql`
+  fragment Order2CheckoutRoute_viewer on Viewer
+  @argumentDefinitions(orderID: { type: "String!" }) {
+    me {
+      order(id: $orderID) {
+        internalID
+      }
+      addressConnection(first: 10) {
+        edges {
+          node {
+            internalID
+          }
+        }
+      }
+    }
   }
 `
