@@ -148,6 +148,33 @@ if (variant.name === "experiment") {
 }
 ```
 
+## Accessing Unleash from the Router on the Server
+
+When the router first mounts we inject it into the router context, which can be used in the render function in our router to perform redirects and other operations. Example:
+
+```tsx
+const routes = [
+  {
+    path: "/some-route",
+    render: ({ match }) => {
+      if (isServer) {
+        if (
+          match.context.unleashServerClient.isEnabled(
+            "emerald_order-details-page",
+          )
+        ) {
+          console.log("Successfully found feature flag flag")
+
+          throw new RedirectException("/")
+        }
+      }
+
+      return <>This shouldn't render on the server, but rather redirect</>
+    },
+  },
+]
+```
+
 ## Common Pattern Examples
 
 ### Conditional UI Rendering
