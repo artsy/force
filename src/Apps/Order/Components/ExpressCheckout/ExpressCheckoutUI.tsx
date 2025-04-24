@@ -122,7 +122,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
 
     orderTracking.clickedExpressCheckout({
       order: orderData,
-      paymentMethod: expressPaymentType,
+      walletType: expressPaymentType,
     })
     const { itemsTotal } = orderData
 
@@ -152,7 +152,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     if (!errorRef.current) {
       orderTracking.clickedCancelExpressCheckout({
         order: orderData,
-        paymentMethod: expressCheckoutType as string,
+        walletType: expressCheckoutType as string,
       })
     }
 
@@ -300,6 +300,11 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       StripeExpressCheckoutElementConfirmEvent["billingDetails"]
     >
 
+    orderTracking.submittedOrder({
+      order: orderData,
+      walletType: expressPaymentType,
+    })
+
     try {
       // Finally we have all fulfillment details
       const updateOrderResult = await updateOrderMutation.submitMutation({
@@ -415,7 +420,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
 
               orderTracking.expressCheckoutViewed({
                 order: orderData,
-                paymentMethods: getAvailablePaymentMethods(
+                walletType: getAvailablePaymentMethods(
                   e.availablePaymentMethods,
                 ),
               })

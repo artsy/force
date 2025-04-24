@@ -1,5 +1,4 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Button, Flex, Join, Spacer } from "@artsy/palette"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { AdditionalArtworkDetailsFragmentContainer as AdditionalArtworkDetails } from "Apps/Order/Components/AdditionalArtworkDetails"
@@ -20,6 +19,7 @@ import { ShippingArtaSummaryItemFragmentContainer } from "Apps/Order/Components/
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
+import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import {
   type CommitMutation,
   injectCommitMutation,
@@ -64,10 +64,11 @@ const logger = createLogger("Order/Routes/Review/index.tsx")
 
 const OrdersReviewOwnerType = OwnerType.ordersReview
 
+const orderTracking = useOrderTracking()
+
 export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
   const [isLoading, setIsLoading] = useState(true)
   const { trackEvent } = useTracking()
-  const productId = extractNodes(props.order.lineItems)[0].artwork?.internalID
   const artworkVersion = extractNodes(props.order.lineItems)[0]?.artworkVersion
 
   useEffect(() => {
@@ -97,21 +98,17 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
   }
 
   const onSubmit = async (setupIntentId?: any) => {
-    const submitEvent = {
-      action_type:
-        props.order.mode === "BUY"
-          ? DeprecatedSchema.ActionType.SubmittedOrder
-          : DeprecatedSchema.ActionType.SubmittedOffer,
-      order_id: props.order.internalID,
-      products: [
-        {
-          product_id: productId,
-          quantity: 1,
-          price: props.order.itemsTotal,
-        },
-      ],
+    if (props.order.mode === "BUY") {
+      orderTracking.submittedOrder({
+        order: props.order,
+      })
     }
-    trackEvent(submitEvent)
+
+    if (props.order.mode === "OFFER") {
+      orderTracking.submittedOffer({
+        order: props.order,
+      })
+    }
 
     try {
       const orderOrError =
