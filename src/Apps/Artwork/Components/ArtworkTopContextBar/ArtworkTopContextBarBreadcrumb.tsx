@@ -24,6 +24,7 @@ export const ArtworkTopContextBarBreadcrumb: React.FC<
 
       <StructuredData
         schemaData={{
+          "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
             {

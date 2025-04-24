@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<58103f5e117501c98fe28d753da434fc>>
+ * @generated SignedSource<<4071e1136d4198f6836ee760a71182d9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,25 +10,26 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SeoDataForArtwork_Test_Query$variables = Record<PropertyKey, never>;
-export type SeoDataForArtwork_Test_Query$data = {
+export type SeoDataForArtworkTestQuery$variables = Record<PropertyKey, never>;
+export type SeoDataForArtworkTestQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"SeoDataForArtwork_artwork">;
   } | null | undefined;
 };
-export type SeoDataForArtwork_Test_Query$rawResponse = {
+export type SeoDataForArtworkTestQuery$rawResponse = {
   readonly artwork: {
     readonly artistNames: string | null | undefined;
     readonly availability: string | null | undefined;
     readonly category: string | null | undefined;
     readonly date: string | null | undefined;
     readonly dimensions: {
+      readonly cm: string | null | undefined;
       readonly in: string | null | undefined;
     } | null | undefined;
+    readonly editionOf: string | null | undefined;
     readonly href: string | null | undefined;
     readonly id: string;
-    readonly is_price_hidden: boolean | null | undefined;
-    readonly is_price_range: boolean | null | undefined;
+    readonly isPriceHidden: boolean | null | undefined;
     readonly listPrice: {
       readonly __typename: "Money";
       readonly currencyCode: string;
@@ -45,11 +46,12 @@ export type SeoDataForArtwork_Test_Query$rawResponse = {
     } | {
       readonly __typename: string;
     } | null | undefined;
+    readonly medium: string | null | undefined;
     readonly meta: {
       readonly description: string | null | undefined;
       readonly title: string | null | undefined;
     } | null | undefined;
-    readonly meta_image: {
+    readonly metaImage: {
       readonly resized: {
         readonly height: number | null | undefined;
         readonly url: string;
@@ -71,10 +73,10 @@ export type SeoDataForArtwork_Test_Query$rawResponse = {
     } | null | undefined;
   } | null | undefined;
 };
-export type SeoDataForArtwork_Test_Query = {
-  rawResponse: SeoDataForArtwork_Test_Query$rawResponse;
-  response: SeoDataForArtwork_Test_Query$data;
-  variables: SeoDataForArtwork_Test_Query$variables;
+export type SeoDataForArtworkTestQuery = {
+  rawResponse: SeoDataForArtworkTestQuery$rawResponse;
+  response: SeoDataForArtworkTestQuery$data;
+  variables: SeoDataForArtworkTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -82,7 +84,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "id",
-    "value": "richard-anuszkiewicz-lino-yellow-318"
+    "value": "artwork-id"
   }
 ],
 v1 = {
@@ -130,41 +132,35 @@ v6 = {
 },
 v7 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
-  "type": "Boolean"
+  "type": "String"
 },
 v8 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "String"
-},
-v9 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
   "type": "Float"
 },
-v10 = {
+v9 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Money"
 },
-v11 = {
+v10 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Image"
 },
-v12 = {
+v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "ResizedImageUrl"
 },
-v13 = {
+v12 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -175,7 +171,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "SeoDataForArtwork_Test_Query",
+    "name": "SeoDataForArtworkTestQuery",
     "selections": [
       {
         "alias": null,
@@ -191,7 +187,7 @@ return {
             "name": "SeoDataForArtwork_artwork"
           }
         ],
-        "storageKey": "artwork(id:\"richard-anuszkiewicz-lino-yellow-318\")"
+        "storageKey": "artwork(id:\"artwork-id\")"
       }
     ],
     "type": "Query",
@@ -201,7 +197,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "SeoDataForArtwork_Test_Query",
+    "name": "SeoDataForArtworkTestQuery",
     "selections": [
       {
         "alias": null,
@@ -226,17 +222,31 @@ return {
             "storageKey": null
           },
           {
-            "alias": "is_price_hidden",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isPriceHidden",
+            "name": "medium",
             "storageKey": null
           },
           {
-            "alias": "is_price_range",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isPriceRange",
+            "name": "category",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "editionOf",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isPriceHidden",
             "storageKey": null
           },
           {
@@ -293,7 +303,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": "meta_image",
+            "alias": "metaImage",
             "args": null,
             "concreteType": "Image",
             "kind": "LinkedField",
@@ -476,13 +486,6 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "category",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "dimensions",
             "kind": "LinkedField",
             "name": "dimensions",
@@ -494,18 +497,25 @@ return {
                 "kind": "ScalarField",
                 "name": "in",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "cm",
+                "storageKey": null
               }
             ],
             "storageKey": null
           },
           (v4/*: any*/)
         ],
-        "storageKey": "artwork(id:\"richard-anuszkiewicz-lino-yellow-318\")"
+        "storageKey": "artwork(id:\"artwork-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "f8392b0d6f9c82a9432ddf2ec1e103f5",
+    "cacheID": "d6cc590d01b0c2ee11d09f13c3a9bb70",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -525,25 +535,32 @@ return {
           "plural": false,
           "type": "dimensions"
         },
+        "artwork.dimensions.cm": (v5/*: any*/),
         "artwork.dimensions.in": (v5/*: any*/),
+        "artwork.editionOf": (v5/*: any*/),
         "artwork.href": (v5/*: any*/),
         "artwork.id": (v6/*: any*/),
-        "artwork.is_price_hidden": (v7/*: any*/),
-        "artwork.is_price_range": (v7/*: any*/),
+        "artwork.isPriceHidden": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
         "artwork.listPrice": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ListPrice"
         },
-        "artwork.listPrice.__typename": (v8/*: any*/),
-        "artwork.listPrice.currencyCode": (v8/*: any*/),
-        "artwork.listPrice.major": (v9/*: any*/),
-        "artwork.listPrice.maxPrice": (v10/*: any*/),
-        "artwork.listPrice.maxPrice.major": (v9/*: any*/),
-        "artwork.listPrice.minPrice": (v10/*: any*/),
-        "artwork.listPrice.minPrice.currencyCode": (v8/*: any*/),
-        "artwork.listPrice.minPrice.major": (v9/*: any*/),
+        "artwork.listPrice.__typename": (v7/*: any*/),
+        "artwork.listPrice.currencyCode": (v7/*: any*/),
+        "artwork.listPrice.major": (v8/*: any*/),
+        "artwork.listPrice.maxPrice": (v9/*: any*/),
+        "artwork.listPrice.maxPrice.major": (v8/*: any*/),
+        "artwork.listPrice.minPrice": (v9/*: any*/),
+        "artwork.listPrice.minPrice.currencyCode": (v7/*: any*/),
+        "artwork.listPrice.minPrice.major": (v8/*: any*/),
+        "artwork.medium": (v5/*: any*/),
         "artwork.meta": {
           "enumValues": null,
           "nullable": true,
@@ -552,11 +569,11 @@ return {
         },
         "artwork.meta.description": (v5/*: any*/),
         "artwork.meta.title": (v5/*: any*/),
-        "artwork.meta_image": (v11/*: any*/),
-        "artwork.meta_image.resized": (v12/*: any*/),
-        "artwork.meta_image.resized.height": (v13/*: any*/),
-        "artwork.meta_image.resized.url": (v8/*: any*/),
-        "artwork.meta_image.resized.width": (v13/*: any*/),
+        "artwork.metaImage": (v10/*: any*/),
+        "artwork.metaImage.resized": (v11/*: any*/),
+        "artwork.metaImage.resized.height": (v12/*: any*/),
+        "artwork.metaImage.resized.url": (v7/*: any*/),
+        "artwork.metaImage.resized.width": (v12/*: any*/),
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
@@ -572,19 +589,19 @@ return {
           "type": "Profile"
         },
         "artwork.partner.profile.id": (v6/*: any*/),
-        "artwork.partner.profile.image": (v11/*: any*/),
-        "artwork.partner.profile.image.resized": (v12/*: any*/),
-        "artwork.partner.profile.image.resized.url": (v8/*: any*/),
+        "artwork.partner.profile.image": (v10/*: any*/),
+        "artwork.partner.profile.image.resized": (v11/*: any*/),
+        "artwork.partner.profile.image.resized.url": (v7/*: any*/),
         "artwork.partner.type": (v5/*: any*/)
       }
     },
-    "name": "SeoDataForArtwork_Test_Query",
+    "name": "SeoDataForArtworkTestQuery",
     "operationKind": "query",
-    "text": "query SeoDataForArtwork_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...SeoDataForArtwork_artwork\n    id\n  }\n}\n\nfragment SeoDataForArtwork_artwork on Artwork {\n  href\n  date\n  is_price_hidden: isPriceHidden\n  is_price_range: isPriceRange\n  listPrice {\n    __typename\n    ... on PriceRange {\n      minPrice {\n        major\n        currencyCode\n      }\n      maxPrice {\n        major\n      }\n    }\n    ... on Money {\n      major\n      currencyCode\n    }\n  }\n  meta_image: image {\n    resized(width: 640, height: 640, version: [\"large\", \"medium\", \"tall\"]) {\n      width\n      height\n      url\n    }\n  }\n  meta {\n    title\n    description(limit: 155)\n  }\n  partner {\n    name\n    type\n    profile {\n      image {\n        resized(width: 320, height: 320, version: [\"medium\"]) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n  artistNames\n  availability\n  category\n  dimensions {\n    in\n  }\n}\n"
+    "text": "query SeoDataForArtworkTestQuery {\n  artwork(id: \"artwork-id\") {\n    ...SeoDataForArtwork_artwork\n    id\n  }\n}\n\nfragment SeoDataForArtwork_artwork on Artwork {\n  href\n  date\n  medium\n  category\n  editionOf\n  isPriceHidden\n  listPrice {\n    __typename\n    ... on PriceRange {\n      minPrice {\n        major\n        currencyCode\n      }\n      maxPrice {\n        major\n      }\n    }\n    ... on Money {\n      major\n      currencyCode\n    }\n  }\n  metaImage: image {\n    resized(width: 640, height: 640, version: [\"large\", \"medium\", \"tall\"]) {\n      width\n      height\n      url\n    }\n  }\n  meta {\n    title\n    description(limit: 155)\n  }\n  partner {\n    name\n    type\n    profile {\n      image {\n        resized(width: 320, height: 320, version: [\"medium\"]) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n  artistNames\n  availability\n  dimensions {\n    in\n    cm\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "42324582d26a2b149c439fb77a1ebb9b";
+(node as any).hash = "417c5da73cc8618295065799c432fdf5";
 
 export default node;

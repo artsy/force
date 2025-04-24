@@ -1,9 +1,25 @@
 import { StructuredData } from "Components/Seo/StructuredData"
 import { mount } from "enzyme"
 import { HeadProvider } from "react-head"
+import type { BreadcrumbList, WithContext } from "schema-dts"
 
 describe("StructuredData", () => {
-  const defaultProps = {}
+  const defaultProps: { schemaData: WithContext<BreadcrumbList> } = {
+    schemaData: {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          item: {
+            "@id": "https://example.com",
+            name: "Test Item",
+          },
+        },
+      ],
+    },
+  }
 
   const getWrapper = (props = {}) => {
     const wrapper = mount(
@@ -34,6 +50,6 @@ describe("StructuredData", () => {
   it("sets the context", () => {
     const wrapper = getWrapper()
     const script = wrapper.find("script")
-    expect(script.text()).toMatch('"@context": "http://schema.org"')
+    expect(script.text()).toMatch('"@context": "https://schema.org"')
   })
 })

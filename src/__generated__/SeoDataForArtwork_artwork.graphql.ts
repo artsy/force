@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c032896b41ece63d2afbd93444eddb47>>
+ * @generated SignedSource<<d84fab03339fba26982301a7006ac4e4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,11 +16,12 @@ export type SeoDataForArtwork_artwork$data = {
   readonly category: string | null | undefined;
   readonly date: string | null | undefined;
   readonly dimensions: {
+    readonly cm: string | null | undefined;
     readonly in: string | null | undefined;
   } | null | undefined;
+  readonly editionOf: string | null | undefined;
   readonly href: string | null | undefined;
-  readonly is_price_hidden: boolean | null | undefined;
-  readonly is_price_range: boolean | null | undefined;
+  readonly isPriceHidden: boolean | null | undefined;
   readonly listPrice: {
     readonly __typename: "Money";
     readonly currencyCode: string;
@@ -39,11 +40,12 @@ export type SeoDataForArtwork_artwork$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null | undefined;
+  readonly medium: string | null | undefined;
   readonly meta: {
     readonly description: string | null | undefined;
     readonly title: string | null | undefined;
   } | null | undefined;
-  readonly meta_image: {
+  readonly metaImage: {
     readonly resized: {
       readonly height: number | null | undefined;
       readonly url: string;
@@ -114,17 +116,31 @@ return {
       "storageKey": null
     },
     {
-      "alias": "is_price_hidden",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "isPriceHidden",
+      "name": "medium",
       "storageKey": null
     },
     {
-      "alias": "is_price_range",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "isPriceRange",
+      "name": "category",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "editionOf",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isPriceHidden",
       "storageKey": null
     },
     {
@@ -181,7 +197,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": "meta_image",
+      "alias": "metaImage",
       "args": null,
       "concreteType": "Image",
       "kind": "LinkedField",
@@ -362,13 +378,6 @@ return {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "category",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": "dimensions",
       "kind": "LinkedField",
       "name": "dimensions",
@@ -380,6 +389,13 @@ return {
           "kind": "ScalarField",
           "name": "in",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "cm",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -390,6 +406,6 @@ return {
 };
 })();
 
-(node as any).hash = "1d1e3916a7301124ca124a3c1957a99b";
+(node as any).hash = "cb6620d7bf4d8b0b10d307b6d47a2d3d";
 
 export default node;

@@ -173,6 +173,7 @@
     "relay-mock-network-layer": "2.0.0",
     "relay-runtime": "^18.2.0",
     "s3": "4.4.0",
+    "schema-dts": "^1.1.5",
     "serialize-javascript": "5.0.1",
     "serve-favicon": "2.5.0",
     "sharify": "0.1.6",
