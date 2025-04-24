@@ -15,7 +15,7 @@ export function getOrInitUnleashClient(): UnleashClient {
     appName: getENV("UNLEASH_APP_NAME"),
     environment: getENV("UNLEASH_ENVIRONMENT"),
     context: {
-      userId: getENV("CURRENT_USER").id,
+      userId: getENV("CURRENT_USER")?.id,
       sessionId: getENV("SESSION_ID"),
     },
   }

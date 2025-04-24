@@ -7,12 +7,12 @@ import { rssServerApp } from "Apps/RSS/rssServerApp"
 import { redirectsServerRoutes } from "Apps/Redirects/redirectsServerRoutes"
 import { sitemapsServerApp } from "Apps/Sitemaps/sitemapsServerApp"
 import { cookieConsentManagerServerRoutes } from "Components/CookieConsentManager/cookieConsentManagerServerRoutes"
-import { getOrInitUnleashServer } from "Server/featureFlags/unleashServer"
 import type {
   ArtsyRequest,
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
 import { errorHandlerMiddleware } from "Server/middleware/errorHandler"
+import { getOrInitUnleashServer } from "System/FeatureFlags/unleashServer"
 import { getRoutes } from "System/Router/Utils/routeUtils"
 import { renderServerApp } from "System/Router/renderServerApp"
 import { setupServerRouter } from "System/Router/serverRouter"

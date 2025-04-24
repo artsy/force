@@ -104,12 +104,10 @@ const MyExperiment = () => {
 ### Checking Feature Flags in Server Code
 
 ```typescript
-import { getOrInitUnleashServer } from "Server/featureFlags/unleashServer"
+import { isFeatureFlagEnabled } from "System/FeatureFlags/unleashServer"
 
 async function someServerFunction() {
-  const unleashClient = await getOrInitUnleashServer()
-
-  if (unleashClient.isEnabled("demo-feature")) {
+  if (isFeatureFlagEnabled("demo-feature")) {
     return newFeatureBehavior()
   }
 
@@ -120,28 +118,20 @@ async function someServerFunction() {
 ### Using Context for Targeted Rollouts
 
 ```typescript
-import { getOrInitUnleashServer } from "Server/featureFlags/unleashServer"
-
-const unleashClient = await getOrInitUnleashServer()
-
-// Setup context
-// NOTE: developers will need to handle passing in the context
-// when retrieving flags/variant while working server side. This
-// was done for them in the previous implementation.
-const context = {
-  userId: res.locals.sd.CURRENT_USER,
-  sessionId: res.locals.sd.SESSION_ID,
-}
+import {
+  isFeatureFlagEnabled,
+  getVariant,
+} from "System/FeatureFlags/unleashServer"
 
 // Check toggle
-if (unleash.isEnabled("demo", context)) {
+if (isFeatureFlagEnabled("demo")) {
   console.log("Toggle enabled")
 } else {
   console.log("Toggle disabled")
 }
 
 // Check variant
-const variant = unleash.getVariant("demo-variant", context)
+const variant = getVariant("demo-variant")
 
 if (variant.name === "experiment") {
   // do something with the experiment variant...
