@@ -107,8 +107,8 @@ const Section: React.FC<React.PropsWithChildren<SectionProps & BoxProps>> = ({
   const image = resized(imageUrl, { width: 640 })
 
   return (
-    <RouterLink to={href} textDecoration="none" display="block">
-      <Box {...rest}>
+    <Box {...rest}>
+      <RouterLink to={href} textDecoration="none" display="block">
         <ResponsiveBox
           aspectWidth={640}
           aspectHeight={480}
@@ -135,32 +135,32 @@ const Section: React.FC<React.PropsWithChildren<SectionProps & BoxProps>> = ({
             {caption}
           </Text>
         </ResponsiveBox>
+      </RouterLink>
 
-        <Spacer y={1} />
+      <Spacer y={1} />
 
-        <Flex
-          justifyContent="space-between"
-          flexDirection="row"
-          alignItems="center"
+      <Flex
+        justifyContent="space-between"
+        flexDirection="row"
+        alignItems="center"
+      >
+        <Box>
+          <Text variant={["lg", "xl"]}>{title}</Text>
+          <Text variant="sm">{description}</Text>
+        </Box>
+
+        <Button
+          // @ts-ignore
+          as={RouterLink}
+          to={href}
+          variant="secondaryNeutral"
+          size={["small", "large"]}
+          ml={1}
         >
-          <Box>
-            <Text variant={["lg", "xl"]}>{title}</Text>
-            <Text variant="sm">{description}</Text>
-          </Box>
-
-          <Button
-            // @ts-ignore
-            as={RouterLink}
-            to={href}
-            variant="secondaryNeutral"
-            size={["small", "large"]}
-            ml={1}
-          >
-            View
-          </Button>
-        </Flex>
-      </Box>
-    </RouterLink>
+          View
+        </Button>
+      </Flex>
+    </Box>
   )
 }
 

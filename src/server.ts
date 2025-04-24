@@ -12,18 +12,18 @@ import type {
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
 import { errorHandlerMiddleware } from "Server/middleware/errorHandler"
+import { getOrInitUnleashServer } from "System/FeatureFlags/unleashServer"
 import { getRoutes } from "System/Router/Utils/routeUtils"
 import { renderServerApp } from "System/Router/renderServerApp"
 import { setupServerRouter } from "System/Router/serverRouter"
 import express from "express"
 import type { NextFunction } from "express"
 import { initializeMiddleware } from "middleware"
-import { getOrInitUnleashServerClient } from "Server/featureFlags/unleashHelpers"
 
 const app = express()
 
 // Initialize unleash server client
-getOrInitUnleashServerClient()
+const unleashClient = getOrInitUnleashServer()
 
 // Mount middleware
 initializeMiddleware(app)
@@ -46,6 +46,9 @@ app.get(
         req,
         res,
         routes,
+        context: {
+          unleashClient,
+        },
       })
 
       if (redirect) {

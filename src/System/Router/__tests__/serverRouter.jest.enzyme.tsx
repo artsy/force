@@ -345,4 +345,29 @@ describe("serverRouter", () => {
       }),
     )
   })
+
+  it("passes unleash to match context", async () => {
+    const route = {
+      path: "/",
+      Component: () => null,
+      render: ({ match }) => {
+        expect(match.context.unleashClient.isEnabled()).toBe(true)
+        return null
+      },
+    }
+
+    mockFindRoutesByPath.mockImplementation(() => {
+      return [{ route }]
+    })
+
+    await getWrapper(() => <>Hello</>, {
+      ...options,
+      routes: [route],
+      context: {
+        unleashClient: {
+          isEnabled: jest.fn().mockReturnValue(true),
+        },
+      },
+    })
+  })
 })

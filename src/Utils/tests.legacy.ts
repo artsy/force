@@ -34,7 +34,7 @@ jest.mock("Components/CookieConsentManager/CookieConsentManager", () => ({
   CookieConsentManager: ({ children }) => children,
 }))
 
-jest.mock("System/Contexts/FeatureFlagContext.tsx", () => ({
+jest.mock("System/FeatureFlags/FeatureFlagContext.tsx", () => ({
   FeatureFlagProvider: ({ children }) => children,
 }))
 jest.mock("@unleash/proxy-client-react", () => ({

@@ -1,5 +1,7 @@
 import loadable from "@loadable/component"
+import { isServer } from "Server/isServer"
 import type { RouteProps } from "System/Router/Route"
+import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
 const ExampleApp = loadable(
@@ -160,6 +162,23 @@ export const exampleRoutes: RouteProps[] = [
         getComponent: () => SearchRoute,
         onPreloadJS: () => {
           SearchRoute.preload()
+        },
+      },
+      {
+        path: "feature-flag-redirect",
+        render: ({ match }) => {
+          if (isServer) {
+            if (
+              match.context.unleashClient.isEnabled(
+                "emerald_order-details-page",
+              )
+            )
+              console.log("Successfully found feature flag flag")
+
+            throw new RedirectException("/")
+          }
+
+          return <>This shouldn't render on the server, but rather redirect</>
         },
       },
     ],
