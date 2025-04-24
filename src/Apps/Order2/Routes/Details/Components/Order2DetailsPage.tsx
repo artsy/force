@@ -28,7 +28,6 @@ export const Order2DetailsPage = () => {
           <Text variant="xs">Order #123456789 </Text>
         </Box>
 
-        <Spacer y={2} />
         {/* Message */}
         <Stack gap={1} m={2}>
           <Text variant="sm">
@@ -43,7 +42,6 @@ export const Order2DetailsPage = () => {
           </Text>
         </Stack>
 
-        <Spacer y={2} />
         {/* Full Order Summary */}
         <Box m={2}>
           <Flex width="100%" bg="mono5" justifyContent={"center"}>
@@ -111,7 +109,7 @@ export const Order2DetailsPage = () => {
               </Text>
             </Flex>
           </Stack>
-          <Spacer y={4} />
+          <Spacer y={2} />
           <Text variant="xs" color="mono60">
             *Additional duties and taxes may apply at import.
           </Text>
@@ -163,6 +161,8 @@ export const Order2DetailsPage = () => {
             </Text>
           </Flex>
         </Box>
+
+        {/* Help section */}
         <Box backgroundColor={"mono5"} p={2}>
           <Flex>
             <MessageIcon fill="mono100" />
