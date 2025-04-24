@@ -80,7 +80,7 @@ export const order2Routes: RouteProps[] = [
       {
         path: "details",
         Component: DetailsRoute,
-        layout: "NavOnly",
+        layout: "FullBleed",
         query: graphql`
           query order2Routes_DetailsQuery($orderID: String!) {
             viewer {
