@@ -43,6 +43,7 @@ const buildInitialOpenSearchQuery = (
   limit,
   randomSeed = Date.now(),
   dismissedArtists = [],
+  dismissedCollectionIds = [],
 ) => {
   return {
     size: limit,
@@ -72,6 +73,15 @@ const buildInitialOpenSearchQuery = (
                     {
                       terms: {
                         artist_id: dismissedArtists,
+                      },
+                    },
+                  ]
+                : []),
+              ...(dismissedCollectionIds.length > 0
+                ? [
+                    {
+                      terms: {
+                        marketing_collection_id: dismissedCollectionIds,
                       },
                     },
                   ]
@@ -112,6 +122,7 @@ const buildHybridOpenSearchQuery = (
   mltFields: string[] = [],
   limit,
   dismissedArtists = [],
+  dismissedCollectionIds = [],
 ) => {
   const likedArtworkIds = likedArtworks.map(artwork => artwork.id)
   const dismissedArtworkIds = dismissedArtworks.map(artwork => artwork.id)
@@ -190,6 +201,15 @@ const buildHybridOpenSearchQuery = (
               },
             ]
           : []),
+        ...(dismissedCollectionIds.length > 0
+          ? [
+              {
+                terms: {
+                  marketing_collection_id: dismissedCollectionIds,
+                },
+              },
+            ]
+          : []),
       ],
       must: [mltQuery, filterQuery, availabilityQuery],
     },
@@ -220,6 +240,15 @@ const buildHybridOpenSearchQuery = (
                     {
                       terms: {
                         artist_id: dismissedArtists,
+                      },
+                    },
+                  ]
+                : []),
+              ...(dismissedCollectionIds.length > 0
+                ? [
+                    {
+                      terms: {
+                        marketing_collection_id: dismissedCollectionIds,
                       },
                     },
                   ]
@@ -306,8 +335,13 @@ export const DiscoverDailyApp = () => {
   const [likedArtworks, setLikedArtworks] = React.useState([]) as any
   const [dismissedArtworks, setDismissedArtworks] = React.useState([]) as any
   const [dismissedArtists, setDismissedArtists] = React.useState([]) as any
+  const [dismissedCollectionIds, setDismissedCollectionIds] = React.useState(
+    [],
+  ) as any
   const [excludeDismissedArtists, setExcludeDismissedArtists] =
-    React.useState(true)
+    React.useState(false)
+  const [excludeDismissedCollections, setExcludeDismissedCollections] =
+    React.useState(false)
   const [loading, setLoading] = React.useState(false)
   const [mltWeight, setMltWeight] = React.useState(0.6)
   const [knnWeight, setKnnWeight] = React.useState(0.4)
@@ -330,6 +364,24 @@ export const DiscoverDailyApp = () => {
     // Track dismissed artists
     if (artwork.artistId && !dismissedArtists.includes(artwork.artistId)) {
       setDismissedArtists([...dismissedArtists, artwork.artistId])
+    }
+
+    // Track dismissed collection IDs
+    if (artwork.marketingCollectionId) {
+      const collectionIds = Array.isArray(artwork.marketingCollectionId)
+        ? artwork.marketingCollectionId
+        : [artwork.marketingCollectionId]
+
+      const newCollectionIds = collectionIds.filter(
+        id => !dismissedCollectionIds.includes(id),
+      )
+
+      if (newCollectionIds.length > 0) {
+        setDismissedCollectionIds([
+          ...dismissedCollectionIds,
+          ...newCollectionIds,
+        ])
+      }
     }
   }
 
@@ -354,6 +406,7 @@ export const DiscoverDailyApp = () => {
       artworksLimit,
       Date.now(),
       excludeDismissedArtists ? dismissedArtists : [],
+      excludeDismissedCollections ? dismissedCollectionIds : [],
     )
 
     const response = await request(OPENSEARCH_URL, {
@@ -397,6 +450,7 @@ export const DiscoverDailyApp = () => {
       mltFields,
       3, // Get only 3 recommendations from hybrid query
       excludeDismissedArtists ? dismissedArtists : [],
+      excludeDismissedCollections ? dismissedCollectionIds : [],
     )
 
     const hybridResponse = await request(OPENSEARCH_URL, {
@@ -437,6 +491,7 @@ export const DiscoverDailyApp = () => {
         neededCount, // Get exactly the number we need
         Date.now(),
         excludeDismissedArtists ? dismissedArtists : [],
+        excludeDismissedCollections ? dismissedCollectionIds : [],
       )
 
       const curatedResponse = await request(OPENSEARCH_URL, {
@@ -477,6 +532,7 @@ export const DiscoverDailyApp = () => {
         additionalNeeded,
         Date.now(),
         excludeDismissedArtists ? dismissedArtists : [],
+        excludeDismissedCollections ? dismissedCollectionIds : [],
       )
 
       const additionalResponse = await request(OPENSEARCH_URL, {
@@ -574,6 +630,16 @@ export const DiscoverDailyApp = () => {
                       selected={excludeDismissedArtists}
                       onClick={() =>
                         setExcludeDismissedArtists(!excludeDismissedArtists)
+                      }
+                    />
+                    <Separator marginY={5} />
+                    <Label>Exclude dismissed collections</Label>
+                    <Checkbox
+                      selected={excludeDismissedCollections}
+                      onClick={() =>
+                        setExcludeDismissedCollections(
+                          !excludeDismissedCollections,
+                        )
                       }
                     />
                   </Flex>
