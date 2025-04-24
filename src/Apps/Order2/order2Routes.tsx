@@ -1,11 +1,9 @@
 import loadable from "@loadable/component"
-import { newCheckoutEnabled, newDetailsEnabled } from "Apps/Order/redirects"
 import { ErrorPage } from "Components/ErrorPage"
-import type { SystemContextProps } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
 import createLogger from "Utils/logger"
 import type { order2Routes_CheckoutQuery$data } from "__generated__/order2Routes_CheckoutQuery.graphql"
-import { type Match, RedirectException } from "found"
+import type { order2Routes_DetailsQuery$data } from "__generated__/order2Routes_DetailsQuery.graphql"
 import { graphql } from "react-relay"
 
 const logger = createLogger("order2Routes.tsx")
@@ -57,7 +55,6 @@ export const order2Routes: RouteProps[] = [
               me {
                 order(id: $orderID) {
                   internalID
-                  mode
                 }
               }
               ...Order2CheckoutRoute_viewer @arguments(orderID: $orderID)
@@ -69,27 +66,12 @@ export const order2Routes: RouteProps[] = [
           if (!(Component && props)) {
             return
           }
-          const typedProps = props as unknown as {
-            viewer: order2Routes_CheckoutQuery$data["viewer"]
-            match: Match<SystemContextProps>
-          }
-          const { viewer, match } = typedProps
+          const viewer = (props as unknown as order2Routes_CheckoutQuery$data)
+            .viewer
           const order = viewer?.me?.order
-          const unleashClient = match.context.unleashClient
-
           if (!order) {
             logger.warn("No order found - checkout page")
             return <ErrorPage code={404} />
-          }
-
-          if (!newCheckoutEnabled({ order, unleashClient })) {
-            const redirectUrl = `/orders/${order.internalID}/shipping`
-            if (process.env.NODE_ENV === "development") {
-              console.error(
-                `Redirecting from to ${redirectUrl} because Order2 checkout is not enabled for this order`,
-              )
-            }
-            throw new RedirectException(redirectUrl)
           }
 
           return <Component viewer={viewer} />
@@ -106,7 +88,6 @@ export const order2Routes: RouteProps[] = [
               me {
                 order(id: $orderID) {
                   internalID
-                  mode
                 }
               }
             }
@@ -117,27 +98,13 @@ export const order2Routes: RouteProps[] = [
           if (!(Component && props)) {
             return
           }
-          const typedProps = props as unknown as {
-            viewer: order2Routes_CheckoutQuery$data["viewer"]
-            match: Match<SystemContextProps>
-          }
-          const { viewer, match } = typedProps
+          const viewer = (props as unknown as order2Routes_DetailsQuery$data)
+            .viewer
+
           const order = viewer?.me?.order
-          const unleashClient = match.context.unleashClient
-
           if (!order) {
-            logger.warn("No order found - checkout page")
+            logger.warn("No order found - details page")
             return <ErrorPage code={404} />
-          }
-
-          if (!newDetailsEnabled({ order, unleashClient })) {
-            const redirectUrl = `/orders/${order.internalID}/status`
-            if (process.env.NODE_ENV === "development") {
-              console.error(
-                `Redirecting from to ${redirectUrl} because Order2 details page is not enabled for this order`,
-              )
-            }
-            throw new RedirectException(redirectUrl)
           }
 
           return <Component viewer={viewer} />
