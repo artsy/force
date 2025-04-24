@@ -546,11 +546,16 @@ const artaLocation = (
   artwork: ArtsyShippingEstimate_artwork$data,
 ): ArtaLocation | null => {
   const shippingOrigin = artwork.shippingOrigin?.split(", ") ?? []
+  let state = ""
+  if (shippingOrigin.length === 3) {
+    state = shippingOrigin[1]
+  }
   const city = shippingOrigin[0]
   const country = shippingOrigin[shippingOrigin.length - 1]
   return shippingOrigin.length > 1 && !!city && !!country
     ? {
         city,
+        region: state,
         country,
       }
     : null
