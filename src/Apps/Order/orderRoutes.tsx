@@ -74,14 +74,6 @@ const StatusRoute = loadable(
   },
 )
 
-const DetailsRoute = loadable(
-  () =>
-    import(/* webpackChunkName: "orderBundle" */ "./Routes/Details/Details"),
-  {
-    resolveComponent: component => component.DetailsFragmentContainer,
-  },
-)
-
 const OrderApp = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./OrderApp"),
   {
@@ -93,8 +85,7 @@ const OrderApp = loadable(
 // * `render` functions requires casting
 export const orderRoutes: RouteProps[] = [
   {
-    // TODO: Still need order2?
-    path: "/order(2|s)/:orderID",
+    path: "/order(s)/:orderID",
     layout: "LogoOnly",
     Component: OrderApp,
     onPreloadJS: () => {
@@ -320,18 +311,7 @@ export const orderRoutes: RouteProps[] = [
           force: true,
         },
       },
-      {
-        path: "details",
-        Component: DetailsRoute,
-        layout: "NavOnly",
-        query: graphql`
-          query orderRoutes_DetailsQuery($orderID: ID!) {
-            order: commerceOrder(id: $orderID) {
-              ...Details_order
-            }
-          }
-        `,
-      },
+
       new Redirect({
         // For now, redirect the empty route to the shipping page
         from: "/",

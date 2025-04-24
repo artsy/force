@@ -12,7 +12,6 @@ import { endingSoonAuctionsRoutes } from "Apps/Auctions/EndingSoonAuctions/endin
 import { auctionsRoutes } from "Apps/Auctions/auctionsRoutes"
 import { authenticationRoutes } from "Apps/Authentication/authenticationRoutes"
 import { buyerGuaranteeRoutes } from "Apps/BuyerGuarantee/buyerGuaranteeRoutes"
-import { checkoutRoutes } from "Apps/Checkout/checkoutRoutes"
 import { collectRoutes } from "Apps/Collect/collectRoutes"
 import { collectorProfileRoutes } from "Apps/CollectorProfile/collectorProfileRoutes"
 import { conversationsRoutes } from "Apps/Conversations/conversationsRoutes"
@@ -36,6 +35,7 @@ import { newForYouRoutes } from "Apps/NewForYou/newForYouRoutes"
 import { newWorksFromGalleriesYouFollowRoutes } from "Apps/NewWorksFromGalleriesYouFollow/newWorksFromGalleriesYouFollowRoutes"
 import { onboardingRoutes } from "Apps/Onboarding/onboardingRoutes"
 import { orderRoutes } from "Apps/Order/orderRoutes"
+import { order2Routes } from "Apps/Order2/order2Routes"
 import { pageRoutes } from "Apps/Page/pageRoutes"
 import { partnerRoutes } from "Apps/Partner/partnerRoutes"
 import { partnerOfferRoutes } from "Apps/PartnerOffer/partnerOfferRoutes"
@@ -80,7 +80,6 @@ const ROUTES = buildAppRoutes([
   authenticationRoutes,
   buyerGuaranteeRoutes,
   categoriesRoutes,
-  checkoutRoutes,
   collectRoutes,
   collectorProfileRoutes,
   contactRoutes,
@@ -107,6 +106,7 @@ const ROUTES = buildAppRoutes([
   notificationsRoutes,
   onboardingRoutes,
   orderRoutes,
+  order2Routes,
   pageRoutes,
   partnerRoutes,
   partnerOfferRoutes,

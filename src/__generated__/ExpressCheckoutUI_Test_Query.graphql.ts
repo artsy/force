@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<816c7c353323ad86b05d6031cd1736f9>>
+ * @generated SignedSource<<4f850e67ea8a3668c332b1b3fb64f5f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,8 +36,6 @@ export type ExpressCheckoutUI_Test_Query$rawResponse = {
         readonly city: string | null | undefined;
         readonly country: string | null | undefined;
         readonly name: string | null | undefined;
-        readonly phoneNumber: string | null | undefined;
-        readonly phoneNumberCountryCode: string | null | undefined;
         readonly postalCode: string | null | undefined;
         readonly region: string | null | undefined;
       } | null | undefined;
@@ -332,20 +330,6 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "phoneNumber",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "phoneNumberCountryCode",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
                     "name": "name",
                     "storageKey": null
                   }
@@ -395,12 +379,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0e439f8b6f3a1c14a27d94b03731fa2f",
+    "cacheID": "b344a43e38d1fbe0337df0386ef3428e",
     "id": null,
     "metadata": {},
     "name": "ExpressCheckoutUI_Test_Query",
     "operationKind": "query",
-    "text": "query ExpressCheckoutUI_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...ExpressCheckoutUI_order\n      id\n    }\n    id\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n    phoneNumberCountryCode\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query ExpressCheckoutUI_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...ExpressCheckoutUI_order\n      id\n    }\n    id\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
