@@ -1,15 +1,7 @@
-import { MockBoot } from "DevTools/MockBoot"
-import { renderRelayTree } from "DevTools/renderRelayTree"
+import { screen } from "@testing-library/react"
+import { SeoDataForArtworkFragmentContainer } from "Apps/Artwork/Components/Seo/SeoDataForArtwork"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-
-import {
-  AVAILABILITY,
-  SeoDataForArtworkFragmentContainer,
-} from "Apps/Artwork/Components/Seo/SeoDataForArtwork"
-import { CreativeWork } from "Components/Seo/CreativeWork"
-import { Product } from "Components/Seo/Product"
-import type { SeoDataForArtwork_Test_Query$rawResponse } from "__generated__/SeoDataForArtwork_Test_Query.graphql"
-import { SeoDataForArtworkFixture } from "./SeoDataForArtwork.fixture"
 
 jest.unmock("react-relay")
 jest.mock("sharify", () => ({
@@ -18,83 +10,152 @@ jest.mock("sharify", () => ({
   },
 }))
 
+interface DangerousHTML {
+  __html: string
+}
+
+jest.mock("react-head", () => ({
+  Meta: ({ dangerouslySetInnerHTML, type }: any) => (
+    <script
+      type={type}
+      dangerouslySetInnerHTML={dangerouslySetInnerHTML}
+      data-testid="meta-tag"
+    />
+  ),
+}))
+
 describe("SeoDataForArtwork", () => {
-  const getWrapper = async (
-    artwork: SeoDataForArtwork_Test_Query$rawResponse["artwork"],
-  ) => {
-    return await renderRelayTree({
-      Component: SeoDataForArtworkFragmentContainer,
-      wrapper: renderer => <MockBoot>{renderer}</MockBoot>,
-      query: graphql`
-        query SeoDataForArtwork_Test_Query
-        @raw_response_type
-        @relay_test_operation {
-          artwork(id: "richard-anuszkiewicz-lino-yellow-318") {
-            ...SeoDataForArtwork_artwork
-          }
+  const { renderWithRelay } = setupTestWrapperTL({
+    Component: SeoDataForArtworkFragmentContainer,
+    query: graphql`
+      query SeoDataForArtworkTestQuery
+      @raw_response_type
+      @relay_test_operation {
+        artwork(id: "artwork-id") {
+          ...SeoDataForArtwork_artwork
         }
-      `,
-      mockData: { artwork } as SeoDataForArtwork_Test_Query$rawResponse,
-    })
+      }
+    `,
+  })
+
+  const defaultArtwork = {
+    artistNames: "Example Artist",
+    availability: "for sale",
+    category: "Painting",
+    date: "2020",
+    dimensions: { in: "1 × 2 in", cm: null },
+    editionOf: null,
+    href: "/artwork/an-artwork",
+    id: "artwork-id",
+    isPriceHidden: false,
+    listPrice: null,
+    medium: "Oil on canvas",
+    meta: { description: "artwork description", title: "artwork title" },
+    metaImage: {
+      resized: { url: "artwork-image", height: null, width: null },
+    },
+    partner: {
+      id: "partner-id",
+      name: "Wright",
+      type: "Gallery",
+      profile: {
+        id: "profile-id",
+        image: {
+          resized: {
+            url: "partner-image",
+          },
+        },
+      },
+    },
   }
 
-  const getProductData = wrapper => wrapper.find(Product).first().props().data
+  const getSchemaData = () => {
+    const metaTag = screen.getByTestId("meta-tag")
+    const html = metaTag.getAttribute(
+      "dangerouslySetInnerHTML",
+    ) as unknown as DangerousHTML
+    if (!html || typeof html !== "object" || !("__html" in html)) {
+      throw new Error("Invalid meta tag content")
+    }
+    return JSON.parse(html.__html)
+  }
 
   describe("SeoDataForArtworkFragmentContainer", () => {
-    it("Renders without a partner", async () => {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      const wrapper = await getWrapper({
-        ...SeoDataForArtworkFixture,
-        partner: null,
+    it("Renders without a partner", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...defaultArtwork,
+          partner: {
+            id: "partner-id",
+            name: null,
+            type: null,
+            profile: null,
+          },
+        }),
       })
 
-      expect(wrapper).toBeTruthy()
+      const data = getSchemaData()
+      expect(data["@type"]).toBe("VisualArtwork")
     })
-    it("Renders a CreativeWork for an institution", async () => {
-      const wrapper = await getWrapper({
-        ...SeoDataForArtworkFixture,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        partner: {
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          ...SeoDataForArtworkFixture.partner,
-          type: "Institution",
-        },
+
+    it("Renders a CreativeWork for an institution", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...defaultArtwork,
+          partner: {
+            ...defaultArtwork.partner,
+            type: "Institution",
+          },
+        }),
       })
 
-      expect(wrapper.find(CreativeWork).length).toEqual(1)
-
-      const data = wrapper.find(CreativeWork).first().props().data
+      const data = getSchemaData()
       expect(data).toEqual({
-        brand: {
+        "@context": "https://schema.org",
+        "@type": "VisualArtwork",
+        creator: {
           "@type": "Person",
-          name: "Artist McArtist",
+          name: "Example Artist",
         },
         description: "artwork description",
         image: "artwork-image",
         name: "artwork title",
         url: "test-url/artwork/an-artwork",
-        width: "1 in",
-        height: "2 in",
+        width: {
+          "@type": "Distance",
+          name: "1 in",
+        },
+        height: {
+          "@type": "Distance",
+          name: "2 in",
+        },
+        artMedium: "Oil on canvas",
+        artform: "Painting",
+        dateCreated: "2020",
       })
     })
 
-    it("Renders a Product for a non-institution", async () => {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      const wrapper = await getWrapper({
-        ...SeoDataForArtworkFixture,
-        listPrice: {
-          __typename: "Money",
-          major: 1000,
-          currencyCode: "USD",
-        },
+    it("Renders a Product for a non-institution", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...defaultArtwork,
+          listPrice: {
+            __typename: "Money",
+            major: 1000,
+            currencyCode: "USD",
+          },
+        }),
       })
 
-      expect(wrapper.find(Product).length).toEqual(1)
-
-      const data = wrapper.find(Product).first().props().data
+      const data = getSchemaData()
       expect(data).toEqual({
-        brand: { "@type": "Person", name: "Artist McArtist" },
-        category: "Design/Decorative Art",
+        "@context": "https://schema.org",
+        "@type": "VisualArtwork",
+        creator: {
+          "@type": "Person",
+          name: "Example Artist",
+        },
+        category: "Painting",
         description: "artwork description",
         image: "artwork-image",
         name: "artwork title",
@@ -105,85 +166,94 @@ describe("SeoDataForArtwork", () => {
           priceCurrency: "USD",
           seller: {
             "@type": "ArtGallery",
-            name: "Wright",
             image: "partner-image",
+            name: "Wright",
           },
         },
-        productionDate: "1950",
+        productionDate: "2020",
         url: "test-url/artwork/an-artwork",
-        width: "1 in",
-        height: "2 in",
+        width: {
+          "@type": "Distance",
+          name: "1 in",
+        },
+        height: {
+          "@type": "Distance",
+          name: "2 in",
+        },
+        artMedium: "Oil on canvas",
+        artform: "Painting",
+        dateCreated: "2020",
       })
     })
 
     describe("Artwork availability", () => {
-      it("Renders InStock when 'for sale'", async () => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const wrapper = await getWrapper({
-          ...SeoDataForArtworkFixture,
-          listPrice: {
-            __typename: "Money",
-            major: 1000,
-            currencyCode: "USD",
-          },
-          availability: "for sale",
+      it("Renders InStock when 'for sale'", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            ...defaultArtwork,
+            listPrice: {
+              __typename: "Money",
+              major: 1000,
+              currencyCode: "USD",
+            },
+          }),
         })
 
-        expect(getProductData(wrapper).offers.availability).toEqual(
-          AVAILABILITY["for sale"],
-        )
+        const data = getSchemaData()
+        expect(data.offers.availability).toBe("https://schema.org/InStock")
       })
 
-      it("Renders OutOfStock when not 'for sale'", async () => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const wrapper = await getWrapper({
-          ...SeoDataForArtworkFixture,
-          listPrice: {
-            __typename: "Money",
-            major: 1000,
-            currencyCode: "USD",
-          },
-          availability: "sold",
+      it("Renders OutOfStock when not 'for sale'", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            ...defaultArtwork,
+            availability: "sold",
+            listPrice: {
+              __typename: "Money",
+              major: 1000,
+              currencyCode: "USD",
+            },
+          }),
         })
 
-        expect(getProductData(wrapper).offers.availability).toEqual(
-          AVAILABILITY.sold,
-        )
+        const data = getSchemaData()
+        expect(data.offers.availability).toBe("https://schema.org/OutOfStock")
       })
     })
 
     describe("Artwork price", () => {
-      it("renders CreativeWork when price is hidden", async () => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const wrapper = await getWrapper({
-          ...SeoDataForArtworkFixture,
-          is_price_range: true,
-          is_price_hidden: true,
+      it("renders CreativeWork when price is hidden", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            ...defaultArtwork,
+            isPriceHidden: true,
+          }),
         })
 
-        expect(wrapper.find(CreativeWork).length).toEqual(1)
-        expect(wrapper.find(Product).length).toEqual(0)
+        const data = getSchemaData()
+        expect(data["@type"]).toBe("VisualArtwork")
+        expect(data.offers).toBeUndefined()
       })
 
-      it("Renders AggregateOffer when price range", async () => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const wrapper = await getWrapper({
-          ...SeoDataForArtworkFixture,
-          is_price_range: false,
-          is_price_hidden: false,
-          listPrice: {
-            __typename: "PriceRange",
-            maxPrice: {
-              major: 1000,
+      it("Renders AggregateOffer when price range", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            ...defaultArtwork,
+            listPrice: {
+              __typename: "PriceRange",
+              maxPrice: {
+                major: 1000,
+              },
+              minPrice: {
+                major: 100,
+                currencyCode: "USD",
+              },
             },
-            minPrice: {
-              major: 100,
-              currencyCode: "USD",
-            },
-          },
+          }),
         })
 
-        expect(getProductData(wrapper).offers).toEqual({
+        const data = getSchemaData()
+        expect(data.offers).toEqual({
           "@type": "AggregateOffer",
           lowPrice: 100,
           highPrice: 1000,
@@ -197,206 +267,130 @@ describe("SeoDataForArtwork", () => {
         })
       })
 
-      it("Renders AggregateOffer when price range with low and high bounds", async () => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const wrapper = await getWrapper({
-          ...SeoDataForArtworkFixture,
-          is_price_range: false,
-          is_price_hidden: false,
-          listPrice: {
-            __typename: "PriceRange",
-            maxPrice: {
-              major: 1000,
+      it("renders CreativeWork when price range and no low bound", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            ...defaultArtwork,
+            listPrice: {
+              __typename: "PriceRange",
+              minPrice: null,
+              maxPrice: {
+                major: 1000,
+              },
             },
-            minPrice: {
-              major: 100,
-              currencyCode: "USD",
-            },
-          },
+          }),
         })
 
-        expect(getProductData(wrapper).offers).toEqual({
-          "@type": "AggregateOffer",
-          lowPrice: 100,
-          highPrice: 1000,
-          priceCurrency: "USD",
-          availability: "https://schema.org/InStock",
-          seller: {
-            "@type": "ArtGallery",
-            image: "partner-image",
-            name: "Wright",
-          },
-        })
+        const data = getSchemaData()
+        expect(data["@type"]).toBe("VisualArtwork")
+        expect(data.offers).toBeUndefined()
       })
 
-      it("Renders AggregateOffer when price range only with low bound", async () => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const wrapper = await getWrapper({
-          ...SeoDataForArtworkFixture,
-          is_price_range: false,
-          is_price_hidden: false,
-          listPrice: {
-            __typename: "PriceRange",
-            minPrice: {
-              major: 100,
+      it("Does not render seller within offer when profile image (required) is not present", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            ...defaultArtwork,
+            partner: {
+              id: "partner-id",
+              name: "Wright",
+              type: "Gallery",
+              profile: {
+                id: "profile-id",
+                image: null,
+              },
+            },
+            listPrice: {
+              __typename: "Money",
+              major: 1000,
               currencyCode: "USD",
             },
-            maxPrice: null,
-          },
+          }),
         })
 
-        expect(getProductData(wrapper).offers).toEqual({
-          "@type": "AggregateOffer",
-          lowPrice: 100,
-          priceCurrency: "USD",
-          availability: "https://schema.org/InStock",
-          seller: {
-            "@type": "ArtGallery",
-            image: "partner-image",
-            name: "Wright",
-          },
-        })
-      })
-
-      it("renders CreativeWork when price range and no low bound", async () => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const wrapper = await getWrapper({
-          ...SeoDataForArtworkFixture,
-          is_price_range: false,
-          is_price_hidden: false,
-          listPrice: {
-            __typename: "PriceRange",
-            minPrice: null,
-            maxPrice: {
-              major: 1000,
-            },
-          },
-        })
-
-        expect(wrapper.find(CreativeWork).length).toEqual(1)
-        expect(wrapper.find(Product).length).toEqual(0)
-      })
-
-      it("Does not render seller within offer when profile image (required) is not present", async () => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const wrapper = await getWrapper({
-          ...SeoDataForArtworkFixture,
-          partner: {
-            id: "opaque-partner-id",
-            name: "Wright",
-            type: "Auction House",
-            profile: {
-              id: "opaque-profile-id",
-              image: null,
-            },
-          },
-          listPrice: {
-            __typename: "PriceRange",
-            maxPrice: {
-              major: 1000,
-            },
-            minPrice: {
-              major: 100,
-              currencyCode: "USD",
-            },
-          },
-        })
-
-        expect(getProductData(wrapper).offers.seller).toBeFalsy()
+        const data = getSchemaData()
+        expect(data.offers.seller).toBeUndefined()
       })
     })
+
     describe("Artwork dimensions", () => {
-      const listPrice = {
-        __typename: "PriceRange",
-        maxPrice: {
-          major: 1000,
-        },
-        minPrice: {
-          major: 100,
-          currencyCode: "USD",
-        },
-      }
-
-      it("renders no dimensions when dimensions aren't parseable", async () => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const wrapper = await getWrapper({
-          ...SeoDataForArtworkFixture,
-          listPrice,
-          dimensions: {
-            in: "one point twenty one gigawatts",
-          },
+      it("renders no dimensions when dimensions aren't parseable", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            ...defaultArtwork,
+            dimensions: {
+              in: "one point twenty one gigawatts",
+              cm: null,
+            },
+          }),
         })
 
-        expect(getProductData(wrapper).width).toBeUndefined()
-        expect(getProductData(wrapper).height).toBeUndefined()
-        expect(getProductData(wrapper).depth).toBeUndefined()
+        const data = getSchemaData()
+        expect(data.width).toBeUndefined()
+        expect(data.height).toBeUndefined()
+        expect(data.depth).toBeUndefined()
       })
 
-      it("renders width and height when given two dimensions", async () => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const wrapper = await getWrapper({
-          ...SeoDataForArtworkFixture,
-          listPrice,
-          dimensions: {
-            in: "2 × 4 in",
-          },
+      it("renders width and height when given two dimensions", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            ...defaultArtwork,
+            dimensions: {
+              in: "2 × 4 in",
+              cm: null,
+            },
+          }),
         })
 
-        expect(getProductData(wrapper).width).toEqual("2 in")
-        expect(getProductData(wrapper).height).toEqual("4 in")
-        expect(getProductData(wrapper).depth).toBeUndefined()
+        const data = getSchemaData()
+        expect(data.width).toEqual({
+          "@type": "Distance",
+          name: "2 in",
+        })
+        expect(data.height).toEqual({
+          "@type": "Distance",
+          name: "4 in",
+        })
+        expect(data.depth).toBeUndefined()
       })
 
-      it("renders width, height, and depth when given three dimensions", async () => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const wrapper = await getWrapper({
-          ...SeoDataForArtworkFixture,
-          listPrice,
-          dimensions: {
-            in: "2 × 4 × 6 in",
-          },
+      it("renders width, height, and depth when given three dimensions", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            ...defaultArtwork,
+            dimensions: {
+              in: "2 × 4 × 6 in",
+              cm: null,
+            },
+          }),
         })
 
-        expect(getProductData(wrapper).width).toEqual("2 in")
-        expect(getProductData(wrapper).height).toEqual("4 in")
-        expect(getProductData(wrapper).depth).toEqual("6 in")
+        const data = getSchemaData()
+        expect(data.width).toEqual({
+          "@type": "Distance",
+          name: "2 in",
+        })
+        expect(data.height).toEqual({
+          "@type": "Distance",
+          name: "4 in",
+        })
+        expect(data.depth).toEqual({
+          "@type": "Distance",
+          name: "6 in",
+        })
       })
 
-      it("parses dimensions missing spaces", async () => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const wrapper = await getWrapper({
-          ...SeoDataForArtworkFixture,
-          listPrice,
-          dimensions: {
-            in: "2×4×6 in",
-          },
+      it("successfully handles case when no dimensions are present", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            ...defaultArtwork,
+            dimensions: null,
+          }),
         })
 
-        expect(getProductData(wrapper).width).toEqual("2 in")
-        expect(getProductData(wrapper).height).toEqual("4 in")
-        expect(getProductData(wrapper).depth).toEqual("6 in")
-      })
-
-      it("assumes inches when no unit is included", async () => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const wrapper = await getWrapper({
-          ...SeoDataForArtworkFixture,
-          listPrice,
-          dimensions: {
-            in: "2 × 4",
-          },
-        })
-
-        expect(getProductData(wrapper).width).toEqual("2 in")
-        expect(getProductData(wrapper).height).toEqual("4 in")
-        expect(getProductData(wrapper).depth).toBeUndefined()
-      })
-
-      it("successfully handles case when no dimensions are present", async () => {
-        expect(() =>
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          getWrapper({ ...SeoDataForArtworkFixture, dimensions: undefined }),
-        ).not.toThrow()
+        const data = getSchemaData()
+        expect(data.width).toBeUndefined()
+        expect(data.height).toBeUndefined()
+        expect(data.depth).toBeUndefined()
       })
     })
   })

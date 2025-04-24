@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e708f69202fae21dca7d0edf0b4a8c79>>
+ * @generated SignedSource<<cd5bb5345b611ea7185841f34d423842>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,8 +25,6 @@ export type ExpressCheckoutUI_order$data = {
     readonly city: string | null | undefined;
     readonly country: string | null | undefined;
     readonly name: string | null | undefined;
-    readonly phoneNumber: string | null | undefined;
-    readonly phoneNumberCountryCode: string | null | undefined;
     readonly postalCode: string | null | undefined;
     readonly region: string | null | undefined;
   } | null | undefined;
@@ -248,20 +246,6 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "phoneNumber",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "phoneNumberCountryCode",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "name",
           "storageKey": null
         }
@@ -304,6 +288,6 @@ return {
 };
 })();
 
-(node as any).hash = "d8cbef7172097641569fe6d74924979a";
+(node as any).hash = "e542650bb5be3112cd80c5d8c094c00c";
 
 export default node;
