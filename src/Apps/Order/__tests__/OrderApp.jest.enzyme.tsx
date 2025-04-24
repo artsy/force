@@ -32,9 +32,7 @@ jest.mock("Utils/getENV", () => ({
 }))
 
 jest.mock("System/Hooks/useSystemContext", () => ({
-  useSystemContext: jest.fn().mockReturnValue({
-    isEigen: false,
-  }),
+  useSystemContext: jest.fn().mockReturnValue({ isEigen: false }),
 }))
 
 jest.mock(
@@ -45,10 +43,6 @@ jest.mock(
     return jest.requireActual("../Components/__mocks__/BankDebitProvider")
   },
 )
-
-const unleashClient = {
-  isEnabled: jest.fn(() => false),
-}
 
 describe("OrderApp routing redirects", () => {
   // FIXME: move to DevTools folder
@@ -66,9 +60,6 @@ describe("OrderApp routing redirects", () => {
       resolver: new Resolver(environment),
       routeConfig: orderRoutes,
       url,
-      matchContext: {
-        unleashClient,
-      },
     })
 
     return result as FarceRedirectResult
@@ -87,97 +78,6 @@ describe("OrderApp routing redirects", () => {
         ...data,
       },
     }),
-  })
-  describe("new checkout flow redirects", () => {
-    it("redirects from the legacy shipping step to the new checkout flow if feature flag is enabled and order is BUY mode", async () => {
-      unleashClient.isEnabled.mockReturnValue(true)
-      const res = await render(
-        "/orders/2939023/shipping",
-        mockResolver({
-          ...BuyOrderPickup,
-          state: "PENDING",
-          mode: "BUY",
-        }),
-      )
-      expect(res.redirect.url).toBe("/orders2/2939023/checkout")
-    })
-    it("redirects from the legacy payment step to the new checkout flow if feature flag is enabled and order is BUY mode", async () => {
-      unleashClient.isEnabled.mockReturnValue(true)
-      const res = await render(
-        "/orders/2939023/payment",
-        mockResolver({
-          ...BuyOrderPickup,
-          state: "PENDING",
-          mode: "BUY",
-        }),
-      )
-      expect(res.redirect.url).toBe("/orders2/2939023/checkout")
-    })
-    it("redirects from the legacy review step to the new checkout flow if feature flag is enabled and order is BUY mode", async () => {
-      unleashClient.isEnabled.mockReturnValue(true)
-      const res = await render(
-        "/orders/2939023/review",
-        mockResolver({
-          ...BuyOrderPickup,
-          state: "PENDING",
-          mode: "BUY",
-        }),
-      )
-      expect(res.redirect.url).toBe("/orders2/2939023/checkout")
-    })
-
-    it("does not redirect to the new checkout flow if feature flag is enabled and order is OFFER mode", async () => {
-      unleashClient.isEnabled.mockReturnValue(true)
-      let threw = false
-      try {
-        await render(
-          "/orders/2939023/offer",
-          mockResolver({
-            ...BuyOrderPickup,
-            state: "PENDING",
-            mode: "OFFER",
-          }),
-        )
-      } catch (error) {
-        threw = true
-        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
-        expect(error.message).toBe("No redirect found for order")
-      }
-      expect(threw).toBe(true)
-    })
-
-    it("redirects from the legacy status page to the new details page for a submitted order if the order is BUY mode", async () => {
-      unleashClient.isEnabled.mockReturnValue(true)
-      const res = await render(
-        "/orders/2939023/status",
-        mockResolver({
-          ...BuyOrderPickup,
-          state: "SUBMITTED",
-        }),
-      )
-      expect(res.redirect.url).toBe("/orders2/2939023/details")
-    })
-
-    it("does not redirect from the legacy status page to the new details page for a submitted order if the order is OFFER mode", async () => {
-      unleashClient.isEnabled.mockReturnValue(true)
-      let threw = false
-      try {
-        await render(
-          "/orders/2939023/status",
-          mockResolver({
-            ...BuyOrderPickup,
-            mode: "OFFER",
-            state: "SUBMITTED",
-            displayState: "SUBMITTED",
-          }),
-        )
-      } catch (error) {
-        threw = true
-        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
-        expect(error.message).toBe("No redirect found for order")
-      }
-      expect(threw).toBe(true)
-    })
   })
 
   it("does not redirect to the status route if the order is pending", async () => {

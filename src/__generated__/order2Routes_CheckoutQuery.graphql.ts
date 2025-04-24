@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd538682023afc54934a2d55de77b4aa>>
+ * @generated SignedSource<<9a706480b88048bf26ca0ce2042d4ac1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,6 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type order2Routes_CheckoutQuery$variables = {
   orderID: string;
 };
@@ -19,7 +18,6 @@ export type order2Routes_CheckoutQuery$data = {
     readonly me: {
       readonly order: {
         readonly internalID: string;
-        readonly mode: OrderModeEnum;
       } | null | undefined;
     } | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutRoute_viewer">;
@@ -56,16 +54,13 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "mode",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v4 = [
+  (v2/*: any*/),
+  (v3/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -97,8 +92,7 @@ return {
                 "name": "order",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
-                  (v3/*: any*/)
+                  (v2/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -152,14 +146,10 @@ return {
                 "kind": "LinkedField",
                 "name": "order",
                 "plural": false,
-                "selections": [
-                  (v2/*: any*/),
-                  (v3/*: any*/),
-                  (v4/*: any*/)
-                ],
+                "selections": (v4/*: any*/),
                 "storageKey": null
               },
-              (v4/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": [
@@ -189,10 +179,7 @@ return {
                         "kind": "LinkedField",
                         "name": "node",
                         "plural": false,
-                        "selections": [
-                          (v2/*: any*/),
-                          (v4/*: any*/)
-                        ],
+                        "selections": (v4/*: any*/),
                         "storageKey": null
                       }
                     ],
@@ -210,16 +197,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "10115b62aa6825bfc8badbb1ae5b440e",
+    "cacheID": "225e17b3e464902e10e8834508f16063",
     "id": null,
     "metadata": {},
     "name": "order2Routes_CheckoutQuery",
     "operationKind": "query",
-    "text": "query order2Routes_CheckoutQuery(\n  $orderID: String!\n) {\n  viewer {\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        id\n      }\n      id\n    }\n    ...Order2CheckoutRoute_viewer_3HPek8\n  }\n}\n\nfragment Order2CheckoutRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      internalID\n      id\n    }\n    addressConnection(first: 10) {\n      edges {\n        node {\n          internalID\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query order2Routes_CheckoutQuery(\n  $orderID: String!\n) {\n  viewer {\n    me {\n      order(id: $orderID) {\n        internalID\n        id\n      }\n      id\n    }\n    ...Order2CheckoutRoute_viewer_3HPek8\n  }\n}\n\nfragment Order2CheckoutRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      internalID\n      id\n    }\n    addressConnection(first: 10) {\n      edges {\n        node {\n          internalID\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2c087ef48ce01679b2b82e689e6bf48f";
+(node as any).hash = "32a0a878f853edd6cb78159b3639cc6f";
 
 export default node;
