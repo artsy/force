@@ -336,6 +336,22 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       const { error, confirmationToken } = await stripe.createConfirmationToken(
         {
           elements,
+          params:
+            shippingRate?.id === "PICKUP"
+              ? {
+                  shipping: {
+                    address: {
+                      line1: null,
+                      line2: null,
+                      city: null,
+                      postal_code: null,
+                      state: null,
+                      country: null,
+                    },
+                    name: null,
+                  },
+                }
+              : undefined,
         },
       )
 

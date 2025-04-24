@@ -86,6 +86,11 @@ jest.mock("@stripe/react-stripe-js", () => {
                   billingDetails: {
                     phone: "1234567890",
                   },
+                  shippingRate: {
+                    id: "PICKUP",
+                    amount: 123,
+                    displayName: "Pickup",
+                  },
                 })
               }
             >
@@ -193,6 +198,87 @@ describe("ExpressCheckoutUI", () => {
 
     await flushPromiseQueue()
     expect(mockCreateConfirmationToken).toHaveBeenCalled()
+
+    const mutation = await mockResolveLastOperation({
+      submitOrderPayload: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+    expect(mutation.operationName).toBe("useSubmitOrderMutation")
+    expect(mutation.operationVariables.input).toEqual({
+      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+      confirmationToken: "ctoken_123",
+    })
+
+    await flushPromiseQueue()
+    expect(env.mock.getAllOperations()).toHaveLength(0)
+  })
+
+  it("omits shipping data when order is pickup", async () => {
+    const { mockResolveLastOperation, env } = renderWithRelay({
+      Order: () => ({
+        ...orderData,
+        fulfillmentOptions: [
+          {
+            type: "PICKUP",
+            amount: {
+              minor: 4200,
+              currencyCode: "USD",
+            },
+            selected: true,
+          },
+        ],
+      }),
+    })
+
+    fireEvent.click(screen.getByTestId("express-checkout-confirm"))
+
+    const { operationName, operationVariables } =
+      await mockResolveLastOperation({
+        updateOrderPayload: () => ({
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: orderData,
+          },
+        }),
+      })
+    expect(operationName).toBe("useUpdateOrderMutation")
+    expect(operationVariables.input).toEqual({
+      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+      buyerPhoneNumber: "1234567890",
+      buyerPhoneNumberCountryCode: null,
+      creditCardWalletType: "APPLE_PAY",
+      paymentMethod: "CREDIT_CARD",
+      shippingAddressLine1: "401 Broadway",
+      shippingAddressLine2: null,
+      shippingCity: "New York",
+      shippingCountry: "US",
+      shippingName: "Buyer Name",
+      shippingPostalCode: "10013",
+      shippingRegion: "NY",
+    })
+
+    await flushPromiseQueue()
+    expect(mockCreateConfirmationToken).toHaveBeenCalledWith(
+      expect.objectContaining({
+        params: {
+          shipping: {
+            address: {
+              line1: null,
+              line2: null,
+              city: null,
+              postal_code: null,
+              state: null,
+              country: null,
+            },
+            name: null,
+          },
+        },
+      }),
+    )
 
     const mutation = await mockResolveLastOperation({
       submitOrderPayload: () => ({
