@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c7d08130a6ab85a98df49dd53e7fe1bc>>
+ * @generated SignedSource<<8db13cd7d2ac6c6c060e744f2ddd999e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
-export type OrderCreditCardWalletTypeEnum = "APPLE_PAY" | "%future added value";
+export type OrderCreditCardWalletTypeEnum = "APPLE_PAY" | "GOOGLE_PAY" | "%future added value";
 export type OrderPaymentMethodEnum = "CREDIT_CARD" | "%future added value";
 export type updateOrderInput = {
   buyerPhoneNumber?: string | null | undefined;
