@@ -286,8 +286,14 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     shippingAddress,
     expressPaymentType,
     shippingRate,
-  }: StripeExpressCheckoutElementConfirmEvent) => {
+  }: StripeExpressCheckoutElementConfirmEvent & {
+    expressPaymentType: "apple_pay" | "google_pay"
+  }) => {
     window.removeEventListener("beforeunload", preventHardReload)
+
+    const creditCardWalletType = expressPaymentType.toUpperCase() as
+      | "APPLE_PAY"
+      | "GOOGLE_PAY"
 
     const {
       name,
@@ -307,7 +313,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           input: {
             id: orderData.internalID,
             paymentMethod: "CREDIT_CARD",
-            creditCardWalletType: "APPLE_PAY",
+            creditCardWalletType: creditCardWalletType,
             buyerPhoneNumber: phone,
             buyerPhoneNumberCountryCode: null,
             shippingName: name,
