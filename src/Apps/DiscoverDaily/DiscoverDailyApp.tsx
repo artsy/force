@@ -44,6 +44,7 @@ const buildInitialOpenSearchQuery = (
   randomSeed = Date.now(),
   dismissedArtists = [],
   dismissedCollectionIds = [],
+  dismissedTags = [],
 ) => {
   return {
     size: limit,
@@ -57,6 +58,7 @@ const buildInitialOpenSearchQuery = (
       "image_url",
       "vector_embedding",
       "marketing_collection_id",
+      "tags",
     ],
     query: {
       function_score: {
@@ -82,6 +84,15 @@ const buildInitialOpenSearchQuery = (
                     {
                       terms: {
                         marketing_collection_id: dismissedCollectionIds,
+                      },
+                    },
+                  ]
+                : []),
+              ...(dismissedTags.length > 0
+                ? [
+                    {
+                      terms: {
+                        tags: dismissedTags,
                       },
                     },
                   ]
@@ -123,6 +134,7 @@ const buildHybridOpenSearchQuery = (
   limit,
   dismissedArtists = [],
   dismissedCollectionIds = [],
+  dismissedTags = [],
 ) => {
   const likedArtworkIds = likedArtworks.map(artwork => artwork.id)
   const dismissedArtworkIds = dismissedArtworks.map(artwork => artwork.id)
@@ -210,6 +222,15 @@ const buildHybridOpenSearchQuery = (
               },
             ]
           : []),
+        ...(dismissedTags.length > 0
+          ? [
+              {
+                terms: {
+                  tags: dismissedTags,
+                },
+              },
+            ]
+          : []),
       ],
       must: [mltQuery, filterQuery, availabilityQuery],
     },
@@ -253,6 +274,15 @@ const buildHybridOpenSearchQuery = (
                     },
                   ]
                 : []),
+              ...(dismissedTags.length > 0
+                ? [
+                    {
+                      terms: {
+                        tags: dismissedTags,
+                      },
+                    },
+                  ]
+                : []),
             ],
           },
         },
@@ -272,6 +302,7 @@ const buildHybridOpenSearchQuery = (
       "image_url",
       "vector_embedding",
       "marketing_collection_id",
+      "tags",
     ],
     query: {
       hybrid: {
@@ -338,10 +369,12 @@ export const DiscoverDailyApp = () => {
   const [dismissedCollectionIds, setDismissedCollectionIds] = React.useState(
     [],
   ) as any
+  const [dismissedTags, setDismissedTags] = React.useState([]) as any
   const [excludeDismissedArtists, setExcludeDismissedArtists] =
     React.useState(false)
   const [excludeDismissedCollections, setExcludeDismissedCollections] =
     React.useState(false)
+  const [excludeDismissedTags, setExcludeDismissedTags] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
   const [mltWeight, setMltWeight] = React.useState(0.6)
   const [knnWeight, setKnnWeight] = React.useState(0.4)
@@ -383,6 +416,15 @@ export const DiscoverDailyApp = () => {
         ])
       }
     }
+
+    // Track dismissed tags
+    if (artwork.tags && Array.isArray(artwork.tags)) {
+      const newTags = artwork.tags.filter(tag => !dismissedTags.includes(tag))
+
+      if (newTags.length > 0) {
+        setDismissedTags([...dismissedTags, ...newTags])
+      }
+    }
   }
 
   const handleCheckboxChange = field => {
@@ -407,6 +449,7 @@ export const DiscoverDailyApp = () => {
       Date.now(),
       excludeDismissedArtists ? dismissedArtists : [],
       excludeDismissedCollections ? dismissedCollectionIds : [],
+      excludeDismissedTags ? dismissedTags : [],
     )
 
     const response = await request(OPENSEARCH_URL, {
@@ -427,6 +470,7 @@ export const DiscoverDailyApp = () => {
         vector_embedding: hit._source.vector_embedding,
         artistId: hit._source.artist_id,
         marketingCollectionId: hit._source.marketing_collection_id,
+        tags: hit._source.tags,
       })) || []
 
     setArtworks(sampleSize(artworks, artworksLimit))
@@ -451,6 +495,7 @@ export const DiscoverDailyApp = () => {
       3, // Get only 3 recommendations from hybrid query
       excludeDismissedArtists ? dismissedArtists : [],
       excludeDismissedCollections ? dismissedCollectionIds : [],
+      excludeDismissedTags ? dismissedTags : [],
     )
 
     const hybridResponse = await request(OPENSEARCH_URL, {
@@ -471,6 +516,7 @@ export const DiscoverDailyApp = () => {
         vector_embedding: hit._source.vector_embedding,
         artistId: hit._source.artist_id,
         marketingCollectionId: hit._source.marketing_collection_id,
+        tags: hit._source.tags,
       })) || []
 
     // Calculate how many additional artworks we need
@@ -492,6 +538,7 @@ export const DiscoverDailyApp = () => {
         Date.now(),
         excludeDismissedArtists ? dismissedArtists : [],
         excludeDismissedCollections ? dismissedCollectionIds : [],
+        excludeDismissedTags ? dismissedTags : [],
       )
 
       const curatedResponse = await request(OPENSEARCH_URL, {
@@ -512,6 +559,7 @@ export const DiscoverDailyApp = () => {
           vector_embedding: hit._source.vector_embedding,
           artistId: hit._source.artist_id,
           marketingCollectionId: hit._source.marketing_collection_id,
+          tags: hit._source.tags,
         })) || []
     }
 
@@ -533,6 +581,7 @@ export const DiscoverDailyApp = () => {
         Date.now(),
         excludeDismissedArtists ? dismissedArtists : [],
         excludeDismissedCollections ? dismissedCollectionIds : [],
+        excludeDismissedTags ? dismissedTags : [],
       )
 
       const additionalResponse = await request(OPENSEARCH_URL, {
@@ -552,6 +601,7 @@ export const DiscoverDailyApp = () => {
           vector_embedding: hit._source.vector_embedding,
           artistId: hit._source.artist_id,
           marketingCollectionId: hit._source.marketing_collection_id,
+          tags: hit._source.tags,
         })) || []
 
       combinedArtworks.push(...additionalArtworks)
@@ -640,6 +690,14 @@ export const DiscoverDailyApp = () => {
                         setExcludeDismissedCollections(
                           !excludeDismissedCollections,
                         )
+                      }
+                    />
+                    <Separator marginY={5} />
+                    <Label>Exclude dismissed tags</Label>
+                    <Checkbox
+                      selected={excludeDismissedTags}
+                      onClick={() =>
+                        setExcludeDismissedTags(!excludeDismissedTags)
                       }
                     />
                   </Flex>
@@ -750,6 +808,40 @@ const Artwork = ({ onLike, onDismiss, viewed = false, artworkResource }) => {
     return `Collection: ${collectionNames.join(", ")}`
   }
 
+  // Format tags for display
+  const formatTags = () => {
+    if (
+      !artwork.tags ||
+      !Array.isArray(artwork.tags) ||
+      artwork.tags.length === 0
+    ) {
+      return null
+    }
+
+    return (
+      <Flex flexWrap="wrap" mt={1}>
+        {artwork.tags.map((tag, index) => (
+          <Text
+            key={index}
+            variant="xs"
+            bg="black5"
+            color="black60"
+            px={1}
+            py={0.5}
+            mr={1}
+            mb={1}
+            style={{
+              borderRadius: "4px",
+              fontSize: "11px",
+            }}
+          >
+            {tag}
+          </Text>
+        ))}
+      </Flex>
+    )
+  }
+
   return (
     <div style={{ width: "20%", flexShrink: 1, marginBottom: "20px" }}>
       <a
@@ -772,6 +864,7 @@ const Artwork = ({ onLike, onDismiss, viewed = false, artworkResource }) => {
       <h3 style={{ fontSize: "13px" }}>{artwork.medium}</h3>
       <h3 style={{ fontSize: "13px" }}>{formatMarketingCollectionIds()}</h3>
       <h3 style={{ fontSize: "13px" }}>{artwork.id}</h3>
+      {formatTags()}
       {viewed ||
         (artwork.title !== "Artwork not available" && (
           <>
