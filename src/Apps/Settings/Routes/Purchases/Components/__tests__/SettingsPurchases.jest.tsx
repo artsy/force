@@ -276,6 +276,18 @@ describe("SettingsPurchases", () => {
       expect(screen.getByText("Apple Pay")).toBeInTheDocument()
     })
 
+    it("renders Google Pay payment method", () => {
+      renderWithRelay({
+        CommerceOrder: () => ({
+          paymentMethodDetails: { __typename: "CreditCard" },
+          creditCardWalletType: "google_pay",
+        }),
+        CreditCard: () => ({ lastDigits: "1234" }),
+      })
+
+      expect(screen.getByText("Google Pay")).toBeInTheDocument()
+    })
+
     it("skips credit card wallet type if not recognized", () => {
       renderWithRelay({
         CommerceOrder: () => ({

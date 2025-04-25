@@ -100,8 +100,15 @@ const getPaymentMethodText = (
   paymentMethodDetails: SettingsPurchasesRow_order$data["paymentMethodDetails"],
   creditCardWalletType: SettingsPurchasesRow_order$data["creditCardWalletType"],
 ) => {
-  if (creditCardWalletType === "apple_pay") {
-    return "Apple Pay"
+  if (!!creditCardWalletType) {
+    switch (creditCardWalletType) {
+      case "google_pay":
+        return "Google Pay"
+      case "apple_pay":
+        return "Apple Pay"
+      default:
+        break
+    }
   }
   switch (paymentMethodDetails?.__typename) {
     case "BankAccount":
