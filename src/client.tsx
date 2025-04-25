@@ -20,6 +20,7 @@ setupWebVitals()
     routes: getAppRoutes(),
     context: {
       unleashClient,
+      isFeatureFlagEnabled: (flag: string) => unleashClient.isEnabled(flag),
     },
   })
 

@@ -9,7 +9,7 @@ import type { redirects_order$data } from "__generated__/redirects_order.graphql
 
 interface OrderQuery {
   order: redirects_order$data
-  unleashClient: SystemContextProps["unleashClient"]
+  isFeatureFlagEnabled: SystemContextProps["isFeatureFlagEnabled"]
 }
 
 type OrderPredicate = RedirectPredicate<OrderQuery>
@@ -178,9 +178,9 @@ const goToRespondIfAwaitingBuyerResponse: OrderPredicate = ({ order }) => {
 
 const goToOrder2DetailsIfEnabled: OrderPredicate = ({
   order,
-  unleashClient,
+  isFeatureFlagEnabled,
 }) => {
-  if (newDetailsEnabled({ order, unleashClient })) {
+  if (newDetailsEnabled({ order, isFeatureFlagEnabled })) {
     return {
       path: `/orders2/${order.internalID}/details`,
       reason: "Order2 is enabled for this order",
@@ -190,9 +190,9 @@ const goToOrder2DetailsIfEnabled: OrderPredicate = ({
 
 const goToOrder2CheckoutIfEnabled: OrderPredicate = ({
   order,
-  unleashClient,
+  isFeatureFlagEnabled,
 }) => {
-  if (newCheckoutEnabled({ order, unleashClient })) {
+  if (newCheckoutEnabled({ order, isFeatureFlagEnabled })) {
     return {
       path: `/orders2/${order.internalID}/checkout`,
       reason: "Order2 is enabled for this order",
@@ -203,25 +203,23 @@ const goToOrder2CheckoutIfEnabled: OrderPredicate = ({
 // Temporary type to allow orders queried for the new checkout page to work here
 interface Order2RedirectArgs {
   order: { mode?: string | null }
-  unleashClient: SystemContextProps["unleashClient"]
+  isFeatureFlagEnabled: SystemContextProps["isFeatureFlagEnabled"]
 }
 export const newCheckoutEnabled = ({
   order,
-  unleashClient,
+  isFeatureFlagEnabled,
 }: Order2RedirectArgs): boolean => {
   return !!(
-    order.mode === "BUY" &&
-    unleashClient?.isEnabled("emerald_checkout-redesign")
+    order.mode === "BUY" && isFeatureFlagEnabled?.("emerald_checkout-redesign")
   )
 }
 
 export const newDetailsEnabled = ({
   order,
-  unleashClient,
+  isFeatureFlagEnabled,
 }: Order2RedirectArgs): boolean => {
   return !!(
-    order.mode === "BUY" &&
-    unleashClient?.isEnabled("emerald_order-details-page")
+    order.mode === "BUY" && isFeatureFlagEnabled?.("emerald_order-details-page")
   )
 }
 
