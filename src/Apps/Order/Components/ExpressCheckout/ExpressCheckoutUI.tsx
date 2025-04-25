@@ -457,6 +457,10 @@ const expressCheckoutOptions: StripeExpressCheckoutElementOptions = {
     applePay: "white-outline",
   },
   buttonHeight: 50,
+  paymentMethods: {
+    applePay: "always",
+    googlePay: "always",
+  },
 }
 
 const ORDER_FRAGMENT = graphql`
