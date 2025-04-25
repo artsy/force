@@ -91,6 +91,7 @@ jest.mock("@stripe/react-stripe-js", () => {
                     amount: 123,
                     displayName: "Pickup",
                   },
+                  expressPaymentType: "apple_pay",
                 })
               }
             >

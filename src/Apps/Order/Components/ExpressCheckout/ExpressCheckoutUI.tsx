@@ -37,7 +37,10 @@ import type {
   FulfillmentOptionInputEnum,
   useSetFulfillmentOptionMutation$data,
 } from "__generated__/useSetFulfillmentOptionMutation.graphql"
-import type { useUpdateOrderMutation$data } from "__generated__/useUpdateOrderMutation.graphql"
+import type {
+  OrderCreditCardWalletTypeEnum,
+  useUpdateOrderMutation$data,
+} from "__generated__/useUpdateOrderMutation.graphql"
 import { useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
@@ -289,6 +292,9 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }: StripeExpressCheckoutElementConfirmEvent) => {
     window.removeEventListener("beforeunload", preventHardReload)
 
+    const creditCardWalletType =
+      expressPaymentType.toUpperCase() as OrderCreditCardWalletTypeEnum
+
     const {
       name,
       address: { line1, line2, city, state, postal_code, country },
@@ -307,7 +313,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
           input: {
             id: orderData.internalID,
             paymentMethod: "CREDIT_CARD",
-            creditCardWalletType: "APPLE_PAY",
+            creditCardWalletType,
             buyerPhoneNumber: phone,
             buyerPhoneNumberCountryCode: null,
             shippingName: name,

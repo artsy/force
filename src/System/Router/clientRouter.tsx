@@ -23,7 +23,7 @@ import qs from "qs"
 import React from "react"
 
 export interface RouterConfig {
-  context?: SystemContextProps
+  context?: Partial<SystemContextProps>
   history?: {
     protocol?: "browser" | "hash" | "memory"
     options?: HistoryEnhancerOptions

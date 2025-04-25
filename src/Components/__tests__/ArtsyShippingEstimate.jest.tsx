@@ -199,8 +199,32 @@ describe("ArtsyShippingEstimate", () => {
           currency: "GBP",
           insurance: "arta_transit_insurance",
           preferred_quote_types: ["self_ship", "parcel", "select", "premium"],
+          origin: {
+            city: "New York",
+            country: "USA",
+            region: "",
+          },
         }),
       )
+    })
+
+    describe("with an artwork with a state", () => {
+      it("sends the correct request params", () => {
+        expect(
+          estimateRequestBodyForArtwork({
+            ...validArtworkData,
+            shippingOrigin: "New York, NY, USA",
+          }),
+        ).toEqual(
+          expect.objectContaining({
+            origin: {
+              city: "New York",
+              country: "USA",
+              region: "NY",
+            },
+          }),
+        )
+      })
     })
 
     it("returns null if artwork is missing required dimensions", () => {
