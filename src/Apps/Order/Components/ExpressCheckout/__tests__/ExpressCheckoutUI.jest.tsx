@@ -159,6 +159,10 @@ describe("ExpressCheckoutUI", () => {
     expect(elementProps.options).toEqual({
       buttonTheme: { applePay: "white-outline" },
       buttonHeight: 50,
+      paymentMethods: {
+        applePay: "always",
+        googlePay: "always",
+      },
     })
   })
 
