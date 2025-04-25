@@ -8,6 +8,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { BankDebitDetails } from "./BankDebitDetails"
 import { CreditCardDetails } from "./CreditCardDetails"
 import { WireTransferDetails } from "./WireTransferDetails"
+import { GooglePayDetails } from "Apps/Order/Components/GooglePayDetails"
 
 export const PaymentMethodSummaryItem = ({
   order: { creditCardWalletType, source, paymentMethodDetails },
@@ -20,8 +21,15 @@ export const PaymentMethodSummaryItem = ({
   withDescription?: boolean
 } & StepSummaryItemProps) => {
   const renderPaymentMethodSummary = () => {
-    if (creditCardWalletType === "apple_pay") {
-      return <ApplePayDetails textColor={textColor} />
+    if (!!creditCardWalletType) {
+      switch (creditCardWalletType) {
+        case "apple_pay":
+          return <ApplePayDetails textColor={textColor} />
+        case "google_pay":
+          return <GooglePayDetails textColor={textColor} />
+        default:
+          break
+      }
     }
     switch (paymentMethodDetails?.__typename) {
       case "CreditCard":
