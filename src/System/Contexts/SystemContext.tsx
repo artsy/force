@@ -20,8 +20,8 @@ export interface SystemContextState {
 }
 
 export interface SystemContextProps extends SystemContextState {
-  unleashClient?: Unleash | UnleashClient
-  isFeatureFlagEnabled?: (flag: string) => boolean
+  isEnabled?: (flag: string) => boolean
+  getVariant?: (flag: string) => any
   injectedData?: any
   isEigen?: boolean
   isLoggedIn?: boolean
