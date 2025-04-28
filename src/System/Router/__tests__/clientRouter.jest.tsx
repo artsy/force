@@ -2,7 +2,6 @@ import { render, screen, waitFor } from "@testing-library/react"
 import { SystemContextConsumer } from "System/Contexts/SystemContext"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { setupClientRouter } from "System/Router/clientRouter"
-import type { UnleashClient } from "unleash-proxy-client"
 
 jest.mock("Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,
@@ -173,9 +172,7 @@ describe("clientRouter", () => {
         },
       ],
       context: {
-        unleashClient: {
-          isEnabled: jest.fn().mockReturnValue(true),
-        } as unknown as UnleashClient,
+        isEnabled: jest.fn().mockReturnValue(true),
       },
     })
 

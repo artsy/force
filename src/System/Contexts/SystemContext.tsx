@@ -5,8 +5,6 @@ import { getUser } from "Utils/user"
 import type { Router } from "found"
 import { createContext, useState } from "react"
 import type { Environment } from "react-relay"
-import type { Unleash } from "unleash-client"
-import type { UnleashClient } from "unleash-proxy-client"
 
 export type UserPreferences = {
   metric: Metric

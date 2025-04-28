@@ -75,14 +75,14 @@ export const order2Routes: RouteProps[] = [
           }
           const { viewer, match } = typedProps
           const order = viewer?.me?.order
-          const isFeatureFlagEnabled = match.context.isFeatureFlagEnabled
+          const isEnabled = match.context.isEnabled
 
           if (!order) {
             logger.warn("No order found - checkout page")
             return <ErrorPage code={404} />
           }
 
-          if (!newCheckoutEnabled({ order, isFeatureFlagEnabled })) {
+          if (!newCheckoutEnabled({ order, isEnabled })) {
             const redirectUrl = `/orders/${order.internalID}/shipping`
             if (process.env.NODE_ENV === "development") {
               console.error(
@@ -123,14 +123,14 @@ export const order2Routes: RouteProps[] = [
           }
           const { viewer, match } = typedProps
           const order = viewer?.me?.order
-          const isFeatureFlagEnabled = match.context.isFeatureFlagEnabled
+          const isEnabled = match.context.isEnabled
 
           if (!order) {
             logger.warn("No order found - checkout page")
             return <ErrorPage code={404} />
           }
 
-          if (!newDetailsEnabled({ order, isFeatureFlagEnabled })) {
+          if (!newDetailsEnabled({ order, isEnabled })) {
             const redirectUrl = `/orders/${order.internalID}/status`
             if (process.env.NODE_ENV === "development") {
               console.error(
