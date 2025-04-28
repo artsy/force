@@ -165,8 +165,7 @@ describe("clientRouter", () => {
         {
           path: "/",
           render: ({ match }) => {
-            expect(match.context.unleashClient.isEnabled()).toBe(true)
-            console.log("here")
+            expect(match.context.isEnabled()).toBe(true)
             return null
           },
         },
