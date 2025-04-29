@@ -45,7 +45,31 @@ const PartnerMeta: React.FC<React.PropsWithChildren<PartnerMetaProps>> = ({
 
       {meta?.image && <Meta property="og:image" content={meta?.image} />}
       {meta?.image && <Meta name="thumbnail" content={meta?.image} />}
-      <LocalBusiness partnerLocation={partnerLocation} partnerName={name} />
+      <LocalBusiness
+        partnerData={{
+          name: name ?? "",
+          profile: {
+            locations: partnerLocation
+              ? [
+                  {
+                    city: partnerLocation.city ?? null,
+                    address: partnerLocation.address ?? null,
+                    address2: partnerLocation.address2 ?? null,
+                    postalCode: partnerLocation.postalCode ?? null,
+                    state: partnerLocation.state ?? null,
+                    country: partnerLocation.country ?? null,
+                    coordinates: partnerLocation.coordinates
+                      ? {
+                          lat: partnerLocation.coordinates.lat ?? null,
+                          lng: partnerLocation.coordinates.lng ?? null,
+                        }
+                      : null,
+                  },
+                ]
+              : [],
+          },
+        }}
+      />
     </>
   )
 }

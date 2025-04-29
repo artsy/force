@@ -74,6 +74,7 @@ describe("ArtworkTopContextBar", () => {
     const structuredData = wrapper.find("StructuredData")
     expect(structuredData.length).toBe(1)
     expect(structuredData.prop("schemaData")).toEqual({
+      "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
         {
