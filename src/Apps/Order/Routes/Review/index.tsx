@@ -64,12 +64,11 @@ const logger = createLogger("Order/Routes/Review/index.tsx")
 
 const OrdersReviewOwnerType = OwnerType.ordersReview
 
-const orderTracking = useOrderTracking()
-
 export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
   const [isLoading, setIsLoading] = useState(true)
   const { trackEvent } = useTracking()
   const artworkVersion = extractNodes(props.order.lineItems)[0]?.artworkVersion
+  const orderTracking = useOrderTracking()
 
   useEffect(() => {
     if (props.order) {

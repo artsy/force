@@ -19,13 +19,11 @@ import {
   UntouchedOfferOrder,
 } from "Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "DevTools/MockBoot"
-// import mockStripe from ""
 import { getENV } from "Utils/getENV"
 import type { orderRoutes_OrderQuery$rawResponse } from "__generated__/orderRoutes_OrderQuery.graphql"
 import type { FarceRedirectResult } from "found/server"
 import { DateTime } from "luxon"
 import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
-// eslint-disable-next-line no-restricted-imports
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn(),
@@ -34,15 +32,6 @@ jest.mock("Utils/getENV", () => ({
 jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: jest.fn().mockReturnValue({ isEigen: false }),
 }))
-
-jest.mock(
-  "Components/BankDebitForm/BankDebitProvider",
-  // not sure why this is neccessary :(
-  // should just work without this extra argument
-  () => {
-    return jest.requireActual("../Components/__mocks__/BankDebitProvider")
-  },
-)
 
 describe("OrderApp routing redirects", () => {
   // FIXME: move to DevTools folder
