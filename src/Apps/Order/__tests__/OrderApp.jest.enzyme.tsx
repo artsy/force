@@ -44,7 +44,7 @@ jest.mock(
   },
 )
 
-const unleashClient = {
+const featureFlags = {
   isEnabled: jest.fn(() => false),
 }
 
@@ -65,7 +65,7 @@ describe("OrderApp routing redirects", () => {
       routeConfig: orderRoutes,
       url,
       matchContext: {
-        unleashClient,
+        featureFlags,
       },
     })
 
@@ -86,9 +86,10 @@ describe("OrderApp routing redirects", () => {
       },
     }),
   })
+
   describe("new checkout flow redirects", () => {
     it("redirects from the legacy shipping step to the new checkout flow if feature flag is enabled and order is BUY mode", async () => {
-      unleashClient.isEnabled.mockReturnValue(true)
+      featureFlags.isEnabled.mockReturnValue(true)
       const res = await render(
         "/orders/2939023/shipping",
         mockResolver({
@@ -99,8 +100,9 @@ describe("OrderApp routing redirects", () => {
       )
       expect(res.redirect.url).toBe("/orders2/2939023/checkout")
     })
+
     it("redirects from the legacy payment step to the new checkout flow if feature flag is enabled and order is BUY mode", async () => {
-      unleashClient.isEnabled.mockReturnValue(true)
+      featureFlags.isEnabled.mockReturnValue(true)
       const res = await render(
         "/orders/2939023/payment",
         mockResolver({
@@ -111,8 +113,9 @@ describe("OrderApp routing redirects", () => {
       )
       expect(res.redirect.url).toBe("/orders2/2939023/checkout")
     })
+
     it("redirects from the legacy review step to the new checkout flow if feature flag is enabled and order is BUY mode", async () => {
-      unleashClient.isEnabled.mockReturnValue(true)
+      featureFlags.isEnabled.mockReturnValue(true)
       const res = await render(
         "/orders/2939023/review",
         mockResolver({
@@ -125,7 +128,7 @@ describe("OrderApp routing redirects", () => {
     })
 
     it("does not redirect to the new checkout flow if feature flag is enabled and order is OFFER mode", async () => {
-      unleashClient.isEnabled.mockReturnValue(true)
+      featureFlags.isEnabled.mockReturnValue(true)
       let threw = false
       try {
         await render(
@@ -145,7 +148,7 @@ describe("OrderApp routing redirects", () => {
     })
 
     it("redirects from the legacy status page to the new details page for a submitted order if the order is BUY mode", async () => {
-      unleashClient.isEnabled.mockReturnValue(true)
+      featureFlags.isEnabled.mockReturnValue(true)
       const res = await render(
         "/orders/2939023/status",
         mockResolver({
@@ -157,7 +160,7 @@ describe("OrderApp routing redirects", () => {
     })
 
     it("does not redirect from the legacy status page to the new details page for a submitted order if the order is OFFER mode", async () => {
-      unleashClient.isEnabled.mockReturnValue(true)
+      featureFlags.isEnabled.mockReturnValue(true)
       let threw = false
       try {
         await render(
