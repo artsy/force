@@ -38,14 +38,123 @@ const COLLECTION_NAMES = {
 const OPENSEARCH_URL =
   "https://vpc-artsy-staging-opensearch2-gfdbifpyvreziqr7r6ewx5zpe4.us-east-1.es.amazonaws.com/artworks_staging/_search"
 
+// Add these constants after the existing constants
+const NATIONALITY_OPTIONS = [
+  "American",
+  "British",
+  "French",
+  "German",
+  "Italian",
+  "Japanese",
+  "Chinese",
+  "Russian",
+  "Spanish",
+  "Dutch",
+  "Swiss",
+  "Austrian",
+  "Belgian",
+  "Canadian",
+]
+
+const MEDIUM_OPTIONS = [
+  "Painting",
+  "Photography",
+  "Sculpture",
+  "Prints",
+  "Work on Paper",
+  "NFT",
+  "Design",
+  "Drawing",
+  "Installation",
+  "Film/Video",
+  "Jewelry",
+  "Performance Art",
+  "Reproduction",
+  "Ephemera or Merchandise",
+  "Digital Art",
+]
+
+// Add this interface at the top of the file, after the imports
+interface UserFilters {
+  nationalities: string[]
+  mediums: string[]
+  priceRange: {
+    min: number
+    max: number
+  }
+}
+
+// Add these type definitions at the top of the file, after the imports
+interface Artwork {
+  id: string
+  title: string
+  artistNames: string[]
+  artistName: string
+  medium: string
+  image: {
+    url: string
+  }
+  vector_embedding: number[]
+  artistId: string
+  marketingCollectionId: string | string[]
+  tags: string[]
+  price?: number
+  artist_nationality?: string
+  genes?: string[]
+}
+
 const buildInitialOpenSearchQuery = (
-  excludeArtworkIds,
-  limit,
+  excludeArtworkIds: string[],
+  limit: number,
   randomSeed = Date.now(),
-  dismissedArtists = [],
-  dismissedCollectionIds = [],
-  dismissedTags = [],
+  dismissedArtists: string[] = [],
+  dismissedCollectionIds: string[] = [],
+  dismissedTags: string[] = [],
+  userFilters: UserFilters = {
+    nationalities: [],
+    mediums: [],
+    priceRange: { min: 0, max: 1000000 },
+  },
 ) => {
+  const mustNotClauses = [
+    ...(excludeArtworkIds.length > 0
+      ? [
+          {
+            terms: {
+              _id: excludeArtworkIds,
+            },
+          },
+        ]
+      : []),
+    ...(dismissedArtists.length > 0
+      ? [
+          {
+            terms: {
+              artist_id: dismissedArtists,
+            },
+          },
+        ]
+      : []),
+    ...(dismissedCollectionIds.length > 0
+      ? [
+          {
+            terms: {
+              marketing_collection_id: dismissedCollectionIds,
+            },
+          },
+        ]
+      : []),
+    ...(dismissedTags.length > 0
+      ? [
+          {
+            terms: {
+              tags: dismissedTags,
+            },
+          },
+        ]
+      : []),
+  ]
+
   return {
     size: limit,
     _source: [
@@ -59,45 +168,15 @@ const buildInitialOpenSearchQuery = (
       "vector_embedding",
       "marketing_collection_id",
       "tags",
+      "list_price_amount",
+      "artist_nationality",
+      "genes",
     ],
     query: {
       function_score: {
         query: {
           bool: {
-            must_not: [
-              {
-                terms: {
-                  _id: excludeArtworkIds,
-                },
-              },
-              ...(dismissedArtists.length > 0
-                ? [
-                    {
-                      terms: {
-                        artist_id: dismissedArtists,
-                      },
-                    },
-                  ]
-                : []),
-              ...(dismissedCollectionIds.length > 0
-                ? [
-                    {
-                      terms: {
-                        marketing_collection_id: dismissedCollectionIds,
-                      },
-                    },
-                  ]
-                : []),
-              ...(dismissedTags.length > 0
-                ? [
-                    {
-                      terms: {
-                        tags: dismissedTags,
-                      },
-                    },
-                  ]
-                : []),
-            ],
+            ...(mustNotClauses.length > 0 ? { must_not: mustNotClauses } : {}),
             filter: [
               {
                 terms: {
@@ -107,6 +186,34 @@ const buildInitialOpenSearchQuery = (
               {
                 term: {
                   availability: "for sale",
+                },
+              },
+              ...(userFilters.nationalities.length > 0
+                ? [
+                    {
+                      terms: {
+                        artist_nationality: userFilters.nationalities.map(n =>
+                          n.toLowerCase(),
+                        ),
+                      },
+                    },
+                  ]
+                : []),
+              ...(userFilters.mediums.length > 0
+                ? [
+                    {
+                      terms: {
+                        medium: userFilters.mediums,
+                      },
+                    },
+                  ]
+                : []),
+              {
+                range: {
+                  list_price_amount: {
+                    gte: userFilters.priceRange.min,
+                    lte: userFilters.priceRange.max,
+                  },
                 },
               },
             ],
@@ -126,15 +233,20 @@ const buildInitialOpenSearchQuery = (
 }
 
 const buildHybridOpenSearchQuery = (
-  likedArtworks,
-  dismissedArtworks,
-  weights,
+  likedArtworks: Artwork[],
+  dismissedArtworks: Artwork[],
+  weights: number[],
   artworksCountForTaste = 3,
   mltFields: string[] = [],
-  limit,
-  dismissedArtists = [],
-  dismissedCollectionIds = [],
-  dismissedTags = [],
+  limit: number,
+  dismissedArtists: string[] = [],
+  dismissedCollectionIds: string[] = [],
+  dismissedTags: string[] = [],
+  userFilters: UserFilters = {
+    nationalities: [],
+    mediums: [],
+    priceRange: { min: 0, max: 1000000 },
+  },
 ) => {
   const likedArtworkIds = likedArtworks.map(artwork => artwork.id)
   const dismissedArtworkIds = dismissedArtworks.map(artwork => artwork.id)
@@ -362,14 +474,16 @@ const request = async (url, opts) => {
 }
 
 export const DiscoverDailyApp = () => {
-  const [artworks, setArtworks] = React.useState([]) as any
-  const [likedArtworks, setLikedArtworks] = React.useState([]) as any
-  const [dismissedArtworks, setDismissedArtworks] = React.useState([]) as any
-  const [dismissedArtists, setDismissedArtists] = React.useState([]) as any
-  const [dismissedCollectionIds, setDismissedCollectionIds] = React.useState(
+  const [artworks, setArtworks] = React.useState<Artwork[]>([])
+  const [likedArtworks, setLikedArtworks] = React.useState<Artwork[]>([])
+  const [dismissedArtworks, setDismissedArtworks] = React.useState<Artwork[]>(
     [],
-  ) as any
-  const [dismissedTags, setDismissedTags] = React.useState([]) as any
+  )
+  const [dismissedArtists, setDismissedArtists] = React.useState<string[]>([])
+  const [dismissedCollectionIds, setDismissedCollectionIds] = React.useState<
+    string[]
+  >([])
+  const [dismissedTags, setDismissedTags] = React.useState<string[]>([])
   const [excludeDismissedArtists, setExcludeDismissedArtists] =
     React.useState(false)
   const [excludeDismissedCollections, setExcludeDismissedCollections] =
@@ -386,6 +500,11 @@ export const DiscoverDailyApp = () => {
     "tags",
   ])
   const [artworksLimit, _setArtworksLimit] = React.useState(5)
+  const [selectedNationalities, setSelectedNationalities] = React.useState<
+    string[]
+  >([])
+  const [selectedMediums, setSelectedMediums] = React.useState<string[]>([])
+  const [priceRange, setPriceRange] = React.useState({ min: 0, max: 1000000 })
 
   const onLike = artwork => {
     setLikedArtworks([...likedArtworks, artwork])
@@ -450,6 +569,11 @@ export const DiscoverDailyApp = () => {
       excludeDismissedArtists ? dismissedArtists : [],
       excludeDismissedCollections ? dismissedCollectionIds : [],
       excludeDismissedTags ? dismissedTags : [],
+      {
+        nationalities: selectedNationalities,
+        mediums: selectedMediums,
+        priceRange,
+      },
     )
 
     const response = await request(OPENSEARCH_URL, {
@@ -471,6 +595,9 @@ export const DiscoverDailyApp = () => {
         artistId: hit._source.artist_id,
         marketingCollectionId: hit._source.marketing_collection_id,
         tags: hit._source.tags,
+        list_price_amount: hit._source.list_price_amount,
+        artist_nationality: hit._source.artist_nationality,
+        genes: hit._source.genes,
       })) || []
 
     setArtworks(sampleSize(artworks, artworksLimit))
@@ -496,6 +623,11 @@ export const DiscoverDailyApp = () => {
       excludeDismissedArtists ? dismissedArtists : [],
       excludeDismissedCollections ? dismissedCollectionIds : [],
       excludeDismissedTags ? dismissedTags : [],
+      {
+        nationalities: selectedNationalities,
+        mediums: selectedMediums,
+        priceRange,
+      },
     )
 
     const hybridResponse = await request(OPENSEARCH_URL, {
@@ -517,6 +649,9 @@ export const DiscoverDailyApp = () => {
         artistId: hit._source.artist_id,
         marketingCollectionId: hit._source.marketing_collection_id,
         tags: hit._source.tags,
+        list_price_amount: hit._source.list_price_amount,
+        artist_nationality: hit._source.artist_nationality,
+        genes: hit._source.genes,
       })) || []
 
     // Calculate how many additional artworks we need
@@ -539,6 +674,11 @@ export const DiscoverDailyApp = () => {
         excludeDismissedArtists ? dismissedArtists : [],
         excludeDismissedCollections ? dismissedCollectionIds : [],
         excludeDismissedTags ? dismissedTags : [],
+        {
+          nationalities: selectedNationalities,
+          mediums: selectedMediums,
+          priceRange,
+        },
       )
 
       const curatedResponse = await request(OPENSEARCH_URL, {
@@ -560,6 +700,9 @@ export const DiscoverDailyApp = () => {
           artistId: hit._source.artist_id,
           marketingCollectionId: hit._source.marketing_collection_id,
           tags: hit._source.tags,
+          list_price_amount: hit._source.list_price_amount,
+          artist_nationality: hit._source.artist_nationality,
+          genes: hit._source.genes,
         })) || []
     }
 
@@ -582,6 +725,11 @@ export const DiscoverDailyApp = () => {
         excludeDismissedArtists ? dismissedArtists : [],
         excludeDismissedCollections ? dismissedCollectionIds : [],
         excludeDismissedTags ? dismissedTags : [],
+        {
+          nationalities: selectedNationalities,
+          mediums: selectedMediums,
+          priceRange,
+        },
       )
 
       const additionalResponse = await request(OPENSEARCH_URL, {
@@ -602,6 +750,9 @@ export const DiscoverDailyApp = () => {
           artistId: hit._source.artist_id,
           marketingCollectionId: hit._source.marketing_collection_id,
           tags: hit._source.tags,
+          list_price_amount: hit._source.list_price_amount,
+          artist_nationality: hit._source.artist_nationality,
+          genes: hit._source.genes,
         })) || []
 
       combinedArtworks.push(...additionalArtworks)
@@ -615,10 +766,6 @@ export const DiscoverDailyApp = () => {
     initialArtworks()
   }, []) // eslint-disable-line
 
-  if (artworks.length === 0) {
-    return <h1>Loading...</h1>
-  }
-
   return (
     <Flex flexDirection="column">
       <Flex flexDirection="column">
@@ -630,15 +777,7 @@ export const DiscoverDailyApp = () => {
           </Text>
           <br />
           <Flex flexDirection={"row"}>
-            <Button
-              onClick={submitSearch}
-              loading={loading}
-              disabled={
-                (likedArtworks.length === 0 &&
-                  dismissedArtworks.length === 0) ||
-                loading
-              }
-            >
+            <Button onClick={submitSearch} loading={loading} disabled={loading}>
               Get Recommendations
             </Button>
             <Flex flexDirection={"row"}>
@@ -701,7 +840,7 @@ export const DiscoverDailyApp = () => {
                       }
                     />
                   </Flex>
-                  <Flex flexDirection={"column"} marginLeft={20}>
+                  <Flex flexDirection={"column"} marginLeft={20} marginTop={3}>
                     <Text>Fields to consider for MLT</Text>
                     <Flex flexDirection={"row"}>
                       {["genes", "materials", "tags", "medium"].map(field => (
@@ -716,6 +855,93 @@ export const DiscoverDailyApp = () => {
                     </Flex>
                   </Flex>
                 </Flex>
+                <Flex flexDirection={"column"} marginLeft={20} marginTop={3}>
+                  <Text>Filter Options</Text>
+
+                  <Label marginTop={3}>Artist Nationalities</Label>
+                  <Flex flexDirection={"row"} flexWrap="wrap" marginBottom={3}>
+                    {NATIONALITY_OPTIONS.map(nationality => (
+                      <Fragment key={nationality}>
+                        <Label>{nationality}</Label>
+                        <Checkbox
+                          selected={selectedNationalities.includes(nationality)}
+                          onClick={() => {
+                            setSelectedNationalities(prev =>
+                              prev.includes(nationality)
+                                ? prev.filter(n => n !== nationality)
+                                : [...prev, nationality],
+                            )
+                          }}
+                        />
+                      </Fragment>
+                    ))}
+                  </Flex>
+
+                  <Label marginTop={3}>Mediums</Label>
+                  <Flex flexDirection={"row"} flexWrap="wrap" marginBottom={3}>
+                    {MEDIUM_OPTIONS.map(medium => (
+                      <Fragment key={medium}>
+                        <Label>{medium}</Label>
+                        <Checkbox
+                          selected={selectedMediums.includes(medium)}
+                          onClick={() => {
+                            setSelectedMediums(prev =>
+                              prev.includes(medium)
+                                ? prev.filter(m => m !== medium)
+                                : [...prev, medium],
+                            )
+                          }}
+                        />
+                      </Fragment>
+                    ))}
+                  </Flex>
+
+                  <Label marginTop={3}>Price Range</Label>
+                  <Flex
+                    flexDirection={"row"}
+                    alignItems="center"
+                    marginBottom={3}
+                  >
+                    <Input
+                      width={100}
+                      type="number"
+                      value={priceRange.min}
+                      placeholder="Min"
+                      onChange={e =>
+                        setPriceRange(prev => ({
+                          ...prev,
+                          min: Number(e.target.value),
+                        }))
+                      }
+                    />
+                    <Text mx={2}>to</Text>
+                    <Input
+                      width={100}
+                      type="number"
+                      value={priceRange.max}
+                      placeholder="Max"
+                      onChange={e =>
+                        setPriceRange(prev => ({
+                          ...prev,
+                          max: Number(e.target.value),
+                        }))
+                      }
+                    />
+                  </Flex>
+
+                  <Button
+                    size="small"
+                    variant="secondaryWhite"
+                    marginTop={3}
+                    onClick={() => {
+                      setSelectedNationalities([])
+                      setSelectedMediums([])
+                      setPriceRange({ min: 0, max: 1000000 })
+                    }}
+                  >
+                    Reset Filters
+                  </Button>
+                </Flex>
               </Expandable>
             </Flex>
             <br />
@@ -723,18 +949,27 @@ export const DiscoverDailyApp = () => {
           </Flex>
         </div>
       </Flex>
-      <Flex justifyContent="space-between" flexWrap={"wrap"}>
-        {artworks.map((artwork: any) => {
-          return (
-            <Artwork
-              artworkResource={artwork}
-              key={artwork.id}
-              onLike={onLike}
-              onDismiss={onDismiss}
-            />
-          )
-        })}
-      </Flex>
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : artworks.length === 0 ? (
+        <Text>
+          No artworks found matching your filters. Try adjusting your filters or
+          resetting them.
+        </Text>
+      ) : (
+        <Flex justifyContent="space-between" flexWrap={"wrap"}>
+          {artworks.map((artwork: any) => {
+            return (
+              <Artwork
+                artworkResource={artwork}
+                key={artwork.id}
+                onLike={onLike}
+                onDismiss={onDismiss}
+              />
+            )
+          })}
+        </Flex>
+      )}
       <Separator />
       <Flex flexDirection={"column"}>
         <Text fontSize={15}>
@@ -808,38 +1043,16 @@ const Artwork = ({ onLike, onDismiss, viewed = false, artworkResource }) => {
     return `Collection: ${collectionNames.join(", ")}`
   }
 
-  // Format tags for display
-  const formatTags = () => {
-    if (
-      !artwork.tags ||
-      !Array.isArray(artwork.tags) ||
-      artwork.tags.length === 0
-    ) {
-      return null
+  // Format price for display
+  const formatPrice = () => {
+    if (!artwork.list_price_amount) {
+      return "Price not available"
     }
-
-    return (
-      <Flex flexWrap="wrap" mt={1}>
-        {artwork.tags.map((tag, index) => (
-          <Text
-            key={index}
-            variant="xs"
-            bg="black5"
-            color="black60"
-            px={1}
-            py={0.5}
-            mr={1}
-            mb={1}
-            style={{
-              borderRadius: "4px",
-              fontSize: "11px",
-            }}
-          >
-            {tag}
-          </Text>
-        ))}
-      </Flex>
-    )
+    // Format float to 2 decimal places and add thousands separator
+    return `$${artwork.list_price_amount.toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`
   }
 
   return (
@@ -861,10 +1074,9 @@ const Artwork = ({ onLike, onDismiss, viewed = false, artworkResource }) => {
       <h3 style={{ fontSize: "13px" }}>
         <i>{artwork?.artistName}</i>
       </h3>
-      <h3 style={{ fontSize: "13px" }}>{artwork.medium}</h3>
+      {artwork.medium && <h3 style={{ fontSize: "13px" }}>{artwork.medium}</h3>}
       <h3 style={{ fontSize: "13px" }}>{formatMarketingCollectionIds()}</h3>
-      <h3 style={{ fontSize: "13px" }}>{artwork.id}</h3>
-      {formatTags()}
+      <h3 style={{ fontSize: "13px" }}>{formatPrice()}</h3>
       {viewed ||
         (artwork.title !== "Artwork not available" && (
           <>
