@@ -20,8 +20,8 @@ setupWebVitals()
     routes: getAppRoutes(),
     context: {
       featureFlags: {
-        isEnabled: unleashClient.isEnabled,
-        getVariant: unleashClient.getVariant,
+        isEnabled: unleashClient.isEnabled.bind(unleashClient),
+        getVariant: unleashClient.getVariant.bind(unleashClient),
       },
     },
   })

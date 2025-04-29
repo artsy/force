@@ -210,8 +210,7 @@ export const newCheckoutEnabled = ({
   featureFlags,
 }: Order2RedirectArgs): boolean => {
   return !!(
-    order.mode === "BUY" &&
-    featureFlags?.isEnabled?.("emerald_checkout-redesign")
+    order.mode === "BUY" && featureFlags?.isEnabled("emerald_checkout-redesign")
   )
 }
 
