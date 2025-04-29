@@ -65,7 +65,7 @@ export const useOrderTracking = () => {
       }) => {
         const payload: ErrorMessageViewed = {
           action: ActionType.errorMessageViewed,
-          context_owner_type: OwnerType.ordersShipping,
+          context_owner_type: contextPageOwnerType,
           context_owner_id: contextPageOwnerId,
           title,
           message,
@@ -110,8 +110,8 @@ export const useOrderTracking = () => {
       }) => {
         const payload: ExpressCheckoutViewed = {
           action: ActionType.expressCheckoutViewed,
-          context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: order.internalID ?? "",
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
           context_page_owner_slug: contextPageOwnerSlug,
           flow:
             order.source === "PARTNER_OFFER"
@@ -134,8 +134,8 @@ export const useOrderTracking = () => {
       }) => {
         const payload: ClickedExpressCheckout = {
           action: ActionType.clickedExpressCheckout,
-          context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: order.internalID ?? "",
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
           flow:
             order.source === "PARTNER_OFFER"
               ? "Partner offer"
@@ -157,8 +157,8 @@ export const useOrderTracking = () => {
       }) => {
         const payload: ClickedCancelExpressCheckout = {
           action: ActionType.clickedCancelExpressCheckout,
-          context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: order.internalID ?? "",
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
           flow:
             order.source === "PARTNER_OFFER"
               ? "Partner offer"
@@ -181,7 +181,7 @@ export const useOrderTracking = () => {
         const payload: SubmittedOffer = {
           action: ActionType.submittedOffer,
           context_page_owner_type: contextPageOwnerType,
-          order_id: order.internalID ?? "",
+          order_id: contextPageOwnerId,
           flow:
             order.source === "PARTNER_OFFER" ? "Partner offer" : "Make offer",
           ...(walletType ? { credit_card_wallet_type: walletType } : {}),
@@ -200,7 +200,7 @@ export const useOrderTracking = () => {
         const payload: SubmittedOrder = {
           action: ActionType.submittedOrder,
           context_page_owner_type: contextPageOwnerType,
-          order_id: order.internalID ?? "",
+          order_id: contextPageOwnerId,
           flow: order.source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
           ...(walletType ? { credit_card_wallet_type: walletType } : {}),
         }

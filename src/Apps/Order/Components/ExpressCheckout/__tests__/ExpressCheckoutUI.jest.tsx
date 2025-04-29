@@ -17,7 +17,8 @@ jest.unmock("react-relay")
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
     contextPageOwnerSlug: "artwork-slug-from-context",
-    contextPageOwnerId: "artwork-id-from-context",
+    contextPageOwnerId: "order-id-from-context",
+    contextPageOwnerType: "owner-type-from-context",
   })),
 }))
 
@@ -350,9 +351,9 @@ describe("ExpressCheckoutUI", () => {
 
     expect(trackEvent).toHaveBeenCalledWith({
       action: "expressCheckoutViewed",
-      context_page_owner_id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+      context_page_owner_id: "order-id-from-context",
       context_page_owner_slug: "artwork-slug-from-context",
-      context_page_owner_type: "orders-shipping",
+      context_page_owner_type: "owner-type-from-context",
       flow: "Buy now",
       credit_card_wallet_types: ["applePay"],
     })
@@ -367,8 +368,8 @@ describe("ExpressCheckoutUI", () => {
 
     expect(trackEvent).toHaveBeenCalledWith({
       action: "clickedExpressCheckout",
-      context_page_owner_id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-      context_page_owner_type: "orders-shipping",
+      context_page_owner_id: "order-id-from-context",
+      context_page_owner_type: "owner-type-from-context",
       flow: "Buy now",
       credit_card_wallet_type: "apple_pay",
     })
@@ -411,8 +412,8 @@ describe("ExpressCheckoutUI", () => {
 
     expect(trackEvent).toHaveBeenCalledWith({
       action: "submittedOrder",
-      order_id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-      context_page_owner_type: "orders-shipping",
+      order_id: "order-id-from-context",
+      context_page_owner_type: "owner-type-from-context",
       flow: "Buy now",
       credit_card_wallet_type: "apple_pay",
     })
@@ -478,8 +479,8 @@ describe("ExpressCheckoutUI", () => {
 
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedCancelExpressCheckout",
-        context_page_owner_id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-        context_page_owner_type: "orders-shipping",
+        context_page_owner_id: "order-id-from-context",
+        context_page_owner_type: "owner-type-from-context",
         flow: "Buy now",
         credit_card_wallet_type: "apple_pay",
       })
@@ -497,8 +498,8 @@ describe("ExpressCheckoutUI", () => {
 
       expect(trackEvent).toHaveBeenCalledWith({
         action: "errorMessageViewed",
-        context_owner_id: "artwork-id-from-context",
-        context_owner_type: "orders-shipping",
+        context_owner_id: "order-id-from-context",
+        context_owner_type: "owner-type-from-context",
         error_code: "test_error_code",
         title: "An error occurred",
         message:
