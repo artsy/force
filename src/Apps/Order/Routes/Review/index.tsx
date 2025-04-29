@@ -100,14 +100,12 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
     if (props.order.mode === "BUY") {
       orderTracking.submittedOrder({
         order: props.order,
-        ownerType: OwnerType.ordersReview,
       })
     }
 
     if (props.order.mode === "OFFER") {
       orderTracking.submittedOffer({
         order: props.order,
-        ownerType: OwnerType.ordersReview,
       })
     }
 

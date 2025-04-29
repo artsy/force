@@ -25,6 +25,7 @@ export const useOrderTracking = () => {
   const analytics = useAnalyticsContext()
   const contextPageOwnerId = analytics.contextPageOwnerId as string
   const contextPageOwnerSlug = analytics.contextPageOwnerSlug as string
+  const contextPageOwnerType = analytics.contextPageOwnerType as OwnerType
 
   const trackingCalls = useMemo(() => {
     return {
@@ -173,15 +174,13 @@ export const useOrderTracking = () => {
       submittedOffer: ({
         order,
         walletType,
-        ownerType,
       }: {
         order: ExpressCheckoutUI_order$data | Review_order$data
         walletType?: string
-        ownerType: OwnerType
       }) => {
         const payload: SubmittedOffer = {
           action: ActionType.submittedOffer,
-          context_page_owner_type: ownerType,
+          context_page_owner_type: contextPageOwnerType,
           order_id: order.internalID ?? "",
           flow:
             order.source === "PARTNER_OFFER" ? "Partner offer" : "Make offer",
@@ -194,15 +193,13 @@ export const useOrderTracking = () => {
       submittedOrder: ({
         order,
         walletType,
-        ownerType,
       }: {
         order: ExpressCheckoutUI_order$data | Review_order$data
         walletType?: string
-        ownerType: OwnerType
       }) => {
         const payload: SubmittedOrder = {
           action: ActionType.submittedOrder,
-          context_page_owner_type: ownerType,
+          context_page_owner_type: contextPageOwnerType,
           order_id: order.internalID ?? "",
           flow: order.source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
           ...(walletType ? { credit_card_wallet_type: walletType } : {}),
@@ -211,7 +208,12 @@ export const useOrderTracking = () => {
         trackEvent(payload)
       },
     }
-  }, [trackEvent, contextPageOwnerId, contextPageOwnerSlug])
+  }, [
+    trackEvent,
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  ])
 
   return trackingCalls
 }
