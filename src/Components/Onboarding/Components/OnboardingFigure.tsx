@@ -45,7 +45,6 @@ export const OnboardingFigure = forwardRef(
             width="100%"
             height="auto"
             alt=""
-            lazyLoad
           />
 
           <Text
