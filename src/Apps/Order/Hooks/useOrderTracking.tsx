@@ -173,13 +173,15 @@ export const useOrderTracking = () => {
       submittedOffer: ({
         order,
         walletType,
+        ownerType,
       }: {
         order: ExpressCheckoutUI_order$data | Review_order$data
         walletType?: string
+        ownerType: OwnerType
       }) => {
         const payload: SubmittedOffer = {
           action: ActionType.submittedOffer,
-          context_page_owner_type: OwnerType.ordersShipping,
+          context_page_owner_type: ownerType,
           order_id: order.internalID ?? "",
           flow:
             order.source === "PARTNER_OFFER" ? "Partner offer" : "Make offer",
@@ -192,13 +194,15 @@ export const useOrderTracking = () => {
       submittedOrder: ({
         order,
         walletType,
+        ownerType,
       }: {
         order: ExpressCheckoutUI_order$data | Review_order$data
         walletType?: string
+        ownerType: OwnerType
       }) => {
         const payload: SubmittedOrder = {
           action: ActionType.submittedOrder,
-          context_page_owner_type: OwnerType.ordersShipping,
+          context_page_owner_type: ownerType,
           order_id: order.internalID ?? "",
           flow: order.source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
           ...(walletType ? { credit_card_wallet_type: walletType } : {}),

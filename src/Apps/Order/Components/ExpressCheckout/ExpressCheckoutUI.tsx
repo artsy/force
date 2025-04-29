@@ -1,3 +1,4 @@
+import { OwnerType } from "@artsy/cohesion"
 import { Box, Spacer, Text } from "@artsy/palette"
 import {
   ExpressCheckoutElement,
@@ -303,6 +304,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     orderTracking.submittedOrder({
       order: orderData,
       walletType: expressPaymentType,
+      ownerType: OwnerType.ordersShipping,
     })
 
     try {
