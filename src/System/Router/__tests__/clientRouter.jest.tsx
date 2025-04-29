@@ -165,13 +165,16 @@ describe("clientRouter", () => {
         {
           path: "/",
           render: ({ match }) => {
-            expect(match.context.isEnabled()).toBe(true)
+            expect(match.context.featureFlags.isEnabled()).toBe(true)
             return null
           },
         },
       ],
       context: {
-        isEnabled: jest.fn().mockReturnValue(true),
+        featureFlags: {
+          isEnabled: jest.fn().mockReturnValue(true),
+          getVariant: jest.fn(),
+        },
       },
     })
 

@@ -9,7 +9,7 @@ import type { redirects_order$data } from "__generated__/redirects_order.graphql
 
 interface OrderQuery {
   order: redirects_order$data
-  isEnabled: SystemContextProps["isEnabled"]
+  featureFlags: SystemContextProps["featureFlags"]
 }
 
 type OrderPredicate = RedirectPredicate<OrderQuery>
@@ -176,8 +176,11 @@ const goToRespondIfAwaitingBuyerResponse: OrderPredicate = ({ order }) => {
   }
 }
 
-const goToOrder2DetailsIfEnabled: OrderPredicate = ({ order, isEnabled }) => {
-  if (newDetailsEnabled({ order, isEnabled })) {
+const goToOrder2DetailsIfEnabled: OrderPredicate = ({
+  order,
+  featureFlags,
+}) => {
+  if (newDetailsEnabled({ order, featureFlags })) {
     return {
       path: `/orders2/${order.internalID}/details`,
       reason: "Order2 is enabled for this order",
@@ -185,8 +188,11 @@ const goToOrder2DetailsIfEnabled: OrderPredicate = ({ order, isEnabled }) => {
   }
 }
 
-const goToOrder2CheckoutIfEnabled: OrderPredicate = ({ order, isEnabled }) => {
-  if (newCheckoutEnabled({ order, isEnabled })) {
+const goToOrder2CheckoutIfEnabled: OrderPredicate = ({
+  order,
+  featureFlags,
+}) => {
+  if (newCheckoutEnabled({ order, featureFlags })) {
     return {
       path: `/orders2/${order.internalID}/checkout`,
       reason: "Order2 is enabled for this order",
@@ -197,20 +203,26 @@ const goToOrder2CheckoutIfEnabled: OrderPredicate = ({ order, isEnabled }) => {
 // Temporary type to allow orders queried for the new checkout page to work here
 interface Order2RedirectArgs {
   order: { mode?: string | null }
-  isEnabled: SystemContextProps["isEnabled"]
+  featureFlags?: SystemContextProps["featureFlags"]
 }
 export const newCheckoutEnabled = ({
   order,
-  isEnabled,
+  featureFlags,
 }: Order2RedirectArgs): boolean => {
-  return !!(order.mode === "BUY" && isEnabled?.("emerald_checkout-redesign"))
+  return !!(
+    order.mode === "BUY" &&
+    featureFlags?.isEnabled?.("emerald_checkout-redesign")
+  )
 }
 
 export const newDetailsEnabled = ({
   order,
-  isEnabled,
+  featureFlags,
 }: Order2RedirectArgs): boolean => {
-  return !!(order.mode === "BUY" && isEnabled?.("emerald_order-details-page"))
+  return !!(
+    order.mode === "BUY" &&
+    featureFlags?.isEnabled?.("emerald_order-details-page")
+  )
 }
 
 export const redirects: RedirectRecord<OrderQuery> = {

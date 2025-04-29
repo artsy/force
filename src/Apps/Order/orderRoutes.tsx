@@ -118,13 +118,13 @@ export const orderRoutes: RouteProps[] = [
       // found-relay
       if (resolving) {
         const { match, order } = props as any
-        const { isEnabled } = match.context as SystemContextProps
+        const { featureFlags } = match.context as SystemContextProps
 
         if (order) {
           const redirect = getRedirect(
             redirects,
             match.location.pathname.replace(/order(s)\/[^\/]+/, ""),
-            { order, isEnabled },
+            { order, featureFlags },
           )
 
           if (redirect === null) {

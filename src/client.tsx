@@ -19,8 +19,10 @@ setupWebVitals()
   const { ClientRouter } = await setupClientRouter({
     routes: getAppRoutes(),
     context: {
-      isEnabled: (flag: string) => unleashClient.isEnabled(flag),
-      getVariant: (flag: string) => unleashClient.getVariant(flag),
+      featureFlags: {
+        isEnabled: unleashClient.isEnabled,
+        getVariant: unleashClient.getVariant,
+      },
     },
   })
 

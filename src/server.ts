@@ -52,10 +52,12 @@ app.get(
         res,
         routes,
         context: {
-          isEnabled: (flag: string) =>
-            unleashClient.isEnabled(flag, unleashContext),
-          getVariant: (flag: string) =>
-            unleashClient.getVariant(flag, unleashContext),
+          featureFlags: {
+            isEnabled: (flag: string) =>
+              unleashClient.isEnabled(flag, unleashContext),
+            getVariant: (flag: string) =>
+              unleashClient.getVariant(flag, unleashContext),
+          },
         },
       })
 
