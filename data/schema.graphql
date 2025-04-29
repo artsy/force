@@ -9181,7 +9181,7 @@ input CreatePartnerContactInput {
   email: String
 
   # ID of the contact's partner location
-  locationID: String
+  locationId: String
 
   # Contact's name
   name: String
@@ -13227,6 +13227,7 @@ type Image {
     width: Int!
   ): CroppedImageUrl
   deepZoom: DeepZoom
+  geminiToken: String
   height: Int
   href: String
   imageURL: String
