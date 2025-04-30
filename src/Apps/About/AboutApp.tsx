@@ -10,12 +10,17 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
+import { themeGet } from "@styled-system/theme-get"
+import {
+  FullBleedHeader,
+  FullBleedHeaderOverlay,
+} from "Components/FullBleedHeader/FullBleedHeader"
 import { MetaTags } from "Components/MetaTags"
 import { StructuredData } from "Components/Seo/StructuredData"
 import { RouterLink } from "System/Components/RouterLink"
 import { DOWNLOAD_APP_URLS, Device } from "Utils/Hooks/useDeviceDetection"
 import { resized } from "Utils/resized"
+import styled from "styled-components"
 import { AboutArtworksRailQueryRenderer } from "./AboutArtworksRail"
 
 const DESCRIPTION =
@@ -36,6 +41,8 @@ export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
         caption="Detail of Cassi Namoda, A Strange Song, 2022. Detail of Alex Katz,
             Day Lily 1, 1969."
       >
+        <FullBleedHeaderOverlay display={["flex", "none"]} zIndex={1} />
+
         <Flex
           position="absolute"
           top={0}
@@ -285,17 +292,20 @@ const Section: React.FC<React.PropsWithChildren<SectionProps & BoxProps>> = ({
             lazyLoad
             alt=""
           />
-          <Text
-            variant={["xs", "sm"]}
-            position="absolute"
-            bottom={0}
-            right={0}
-            p={1}
-            color="mono0"
-            fontStyle="italic"
-          >
-            {caption}
-          </Text>
+
+          <SectionOverlay>
+            <Text
+              variant={["xs", "sm"]}
+              position="absolute"
+              bottom={0}
+              right={0}
+              p={1}
+              color="mono0"
+              fontStyle="italic"
+            >
+              {caption}
+            </Text>
+          </SectionOverlay>
         </ResponsiveBox>
       </RouterLink>
 
@@ -381,3 +391,14 @@ const SECTION_DATA: SectionProps[] = [
     imageUrl: "https://files.artsy.net/images/08_CVP_About_Follow (2).png",
   },
 ]
+
+const SectionOverlay = styled(Flex)`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  text-shadow: ${themeGet("effects.textShadow")};
+  background: ${themeGet("effects.overlayGradient")};
+  z-index: 1;
+`
