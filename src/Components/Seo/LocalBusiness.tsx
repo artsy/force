@@ -1,98 +1,104 @@
-import { identity, pickBy } from "lodash"
 import type * as React from "react"
+import type {
+  LocalBusiness as SchemaLocalBusiness,
+  WithContext,
+} from "schema-dts"
 import { StructuredData } from "./StructuredData"
 
-interface PostalAddressSchemaData {
-  "@type": string
-  addressCountry: string
-  addressLocality: string
-  addressRegion: string
-  postalCode: string
-  streetAddress: string
-  telephone: string
-}
-
-interface PlaceSchemaData {
-  "@type": string
-  latitude: number
-  longitude: number
-}
-
-interface LocalBusinessSchemaData {
-  "@type": string
-  address?: PostalAddressSchemaData
-  legalName: string
-  location?: PlaceSchemaData
-  name: string
-}
-
-export const computeOptionalSchemaData = partnerLocation => {
-  let address: PostalAddressSchemaData | undefined
-  let location: PlaceSchemaData | undefined
-
-  if (partnerLocation) {
-    const {
-      address: address1,
-      address2,
-      city,
-      coordinates,
-      country,
-      phone,
-      postalCode,
-      state,
-    } = partnerLocation
-
-    const streetAddress = [address1, address2].filter(Boolean).join(", ")
-
-    const addressParts = {
-      "@type": "PostalAddress",
-      addressCountry: country,
-      addressLocality: city,
-      addressRegion: state,
-      postalCode: postalCode,
-      streetAddress,
-      telephone: phone,
-    }
-
-    address = pickBy(addressParts, identity) as PostalAddressSchemaData
-
-    if (coordinates?.lat && coordinates?.lng) {
-      location = {
-        "@type": "Place",
-        latitude: coordinates.lat,
-        longitude: coordinates.lng,
-      }
-    }
-  }
-
-  return { address, location }
-}
-
 interface LocalBusinessProps {
-  partnerLocation
-  partnerName
+  partnerData: {
+    name: string
+    profile: {
+      locations: Array<{
+        city: string | null
+        address: string | null
+        address2: string | null
+        postalCode: string | null
+        state: string | null
+        country: string | null
+        coordinates: {
+          lat: number | null
+          lng: number | null
+        } | null
+      }>
+    }
+  }
 }
 
-export const LocalBusiness: React.FC<
-  React.PropsWithChildren<LocalBusinessProps>
-> = props => {
-  const { partnerLocation, partnerName } = props
+type LocalBusinessAddress = {
+  "@type": "PostalAddress"
+  streetAddress: string
+  addressLocality: string
+  addressRegion?: string
+  postalCode?: string
+  addressCountry?: string
+}
 
-  const schemaData: LocalBusinessSchemaData = {
+type LocalBusinessPlace = {
+  "@type": "Place"
+  geo: {
+    "@type": "GeoCoordinates"
+    latitude: number
+    longitude: number
+  }
+}
+
+const computeOptionalSchemaData = (
+  location: LocalBusinessProps["partnerData"]["profile"]["locations"][0],
+) => {
+  const address: LocalBusinessAddress = {
+    "@type": "PostalAddress",
+    streetAddress: [location.address, location.address2]
+      .filter(Boolean)
+      .join(" "),
+    addressLocality: location.city ?? "",
+  }
+
+  if (location.state) {
+    address.addressRegion = location.state
+  }
+
+  if (location.postalCode) {
+    address.postalCode = location.postalCode
+  }
+
+  if (location.country) {
+    address.addressCountry = location.country
+  }
+
+  let place: LocalBusinessPlace | undefined
+
+  if (location.coordinates?.lat && location.coordinates?.lng) {
+    place = {
+      "@type": "Place",
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: location.coordinates.lat,
+        longitude: location.coordinates.lng,
+      },
+    }
+  }
+
+  return { address, place }
+}
+
+export const LocalBusinessComponent: React.FC<LocalBusinessProps> = ({
+  partnerData,
+}) => {
+  const location = partnerData.profile.locations[0]
+  if (!location) return null
+
+  const { address, place } = computeOptionalSchemaData(location)
+
+  const schemaData: WithContext<SchemaLocalBusiness> = {
+    "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    legalName: partnerName,
-    name: partnerName,
-  }
-
-  const { address, location } = computeOptionalSchemaData(partnerLocation)
-
-  if (address) {
-    schemaData.address = address
-  }
-
-  if (location) {
-    schemaData.location = location
+    name: partnerData.name,
+    address,
+    ...(place && { location: place }),
   }
 
   return <StructuredData schemaData={schemaData} />
 }
+
+export const LocalBusiness = LocalBusinessComponent

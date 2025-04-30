@@ -3311,6 +3311,7 @@ type ArtworkImportTransformedData {
   height: String
   imageFileNames: String
   inventoryId: String
+  materials: String
   medium: String
   price: String
   width: String
@@ -9180,7 +9181,7 @@ input CreatePartnerContactInput {
   email: String
 
   # ID of the contact's partner location
-  locationID: String
+  locationId: String
 
   # Contact's name
   name: String
@@ -13226,6 +13227,7 @@ type Image {
     width: Int!
   ): CroppedImageUrl
   deepZoom: DeepZoom
+  geminiToken: String
   height: Int
   href: String
   imageURL: String
@@ -15932,6 +15934,11 @@ type Mutation {
 
   # Update an order
   updateOrder(input: updateOrderInput!): updateOrderPayload
+
+  # Update an order's shipping address
+  updateOrderShippingAddress(
+    input: updateOrderShippingAddressInput!
+  ): updateOrderShippingAddressPayload
 
   # updates an ordered set.
   updateOrderedSet(
@@ -26240,6 +26247,44 @@ input updateOrderInput {
 }
 
 type updateOrderPayload {
+  clientMutationId: String
+  orderOrError: SetOrderFulfillmentOptionResponse
+}
+
+input updateOrderShippingAddressInput {
+  # Buyer's phone number
+  buyerPhoneNumber: String
+
+  # Buyer's phone number country code
+  buyerPhoneNumberCountryCode: String
+  clientMutationId: String
+
+  # Order id.
+  id: ID!
+
+  # Shipping address line 1
+  shippingAddressLine1: String
+
+  # Shipping address line 2
+  shippingAddressLine2: String
+
+  # Shipping address city
+  shippingCity: String
+
+  # Shipping address country
+  shippingCountry: String
+
+  # Shipping address name
+  shippingName: String
+
+  # Shipping address postal code
+  shippingPostalCode: String
+
+  # Shipping address state/province/region
+  shippingRegion: String
+}
+
+type updateOrderShippingAddressPayload {
   clientMutationId: String
   orderOrError: SetOrderFulfillmentOptionResponse
 }

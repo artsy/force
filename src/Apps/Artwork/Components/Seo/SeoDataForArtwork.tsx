@@ -1,12 +1,11 @@
-import { trim } from "lodash"
-import type * as React from "react"
-
 import { CreativeWork } from "Components/Seo/CreativeWork"
 import { Product } from "Components/Seo/Product"
-import { get } from "Utils/get"
 import { getENV } from "Utils/getENV"
 import type { SeoDataForArtwork_artwork$data } from "__generated__/SeoDataForArtwork_artwork.graphql"
+import { trim } from "lodash"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import type { AggregateOffer, Offer, VisualArtwork } from "schema-dts"
 
 interface SeoDataForArtworkProps {
   artwork: SeoDataForArtwork_artwork$data
@@ -15,33 +14,37 @@ interface SeoDataForArtworkProps {
 export const AVAILABILITY = {
   "for sale": "https://schema.org/InStock",
   sold: "https://schema.org/OutOfStock",
-}
+} as const
 
 export const SeoDataForArtwork: React.FC<
   React.PropsWithChildren<SeoDataForArtworkProps>
 > = ({ artwork }) => {
   const artistsName = artwork.artistNames
+  const dimensions = parseDimensions(artwork.dimensions?.in ?? "")
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const dimensions = parseDimensions(get(artwork, a => a.dimensions.in, ""))
-
-  const artworkMetaData = {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    name: artwork.meta.title,
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    image: get(artwork, a => a.meta_image.resized.url),
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    description: get(artwork, a => a.meta.description),
+  const artworkMetaData: VisualArtwork = {
+    "@type": "VisualArtwork",
+    name: artwork.meta?.title ?? "",
+    image: artwork.metaImage?.resized?.url ?? "",
+    description: artwork.meta?.description ?? "",
     url: `${getENV("APP_URL")}${artwork.href}`,
-    ...dimensions,
-    brand: {
-      "@type": "Person",
-      name: artistsName,
-    },
+    creator: { "@type": "Person", name: artistsName ?? "Unknown Artist" },
+    artMedium: artwork.medium ?? undefined,
+    artform: artwork.category ?? undefined,
+    dateCreated: artwork.date ?? undefined,
+    artEdition: artwork.editionOf ?? undefined,
+    height: dimensions.height
+      ? { "@type": "Distance", name: dimensions.height }
+      : undefined,
+    width: dimensions.width
+      ? { "@type": "Distance", name: dimensions.width }
+      : undefined,
+    depth: dimensions.depth
+      ? { "@type": "Distance", name: dimensions.depth }
+      : undefined,
   }
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const partnerType = get(artwork, a => a.partner.type)
+  const partnerType = artwork.partner?.type
   const offers = offerAttributes(artwork)
 
   if (partnerType === "Institution" || offers === null) {
@@ -49,19 +52,12 @@ export const SeoDataForArtwork: React.FC<
   }
 
   const ecommerceData = {
-    category: artwork.category,
-    productionDate: artwork.date,
+    category: artwork.category ?? undefined,
+    productionDate: artwork.date ?? undefined,
     offers,
   }
 
-  return (
-    <Product
-      data={{
-        ...artworkMetaData,
-        ...ecommerceData,
-      }}
-    />
-  )
+  return <Product data={{ ...artworkMetaData, ...ecommerceData }} />
 }
 
 export const SeoDataForArtworkFragmentContainer = createFragmentContainer(
@@ -71,8 +67,10 @@ export const SeoDataForArtworkFragmentContainer = createFragmentContainer(
       fragment SeoDataForArtwork_artwork on Artwork {
         href
         date
-        is_price_hidden: isPriceHidden
-        is_price_range: isPriceRange
+        medium
+        category
+        editionOf
+        isPriceHidden
         listPrice {
           __typename
           ... on PriceRange {
@@ -89,7 +87,7 @@ export const SeoDataForArtworkFragmentContainer = createFragmentContainer(
             currencyCode
           }
         }
-        meta_image: image {
+        metaImage: image {
           resized(
             width: 640
             height: 640
@@ -117,38 +115,40 @@ export const SeoDataForArtworkFragmentContainer = createFragmentContainer(
         }
         artistNames
         availability
-        category
         dimensions {
           in
+          cm
         }
       }
     `,
   },
 )
 
-export const offerAttributes = (artwork: SeoDataForArtwork_artwork$data) => {
-  if (!artwork.listPrice || artwork.is_price_hidden) return null
-  const galleryProfileImage = get(
-    artwork,
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    a => a.partner.profile.image.resized.url,
-  )
+export const offerAttributes = (
+  artwork: SeoDataForArtwork_artwork$data,
+): Offer | AggregateOffer | null => {
+  if (!artwork.listPrice || artwork.isPriceHidden) return null
+
+  const galleryProfileImage = artwork.partner?.profile?.image?.resized?.url
+
   const seller = galleryProfileImage && {
-    "@type": "ArtGallery",
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    name: get(artwork, a => a.partner.name),
+    "@type": "ArtGallery" as const,
+    name: artwork.partner?.name || "",
     image: galleryProfileImage,
   }
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const availability = AVAILABILITY[artwork.availability]
+  const availability = artwork.availability
+    ? AVAILABILITY[artwork.availability as keyof typeof AVAILABILITY]
+    : undefined
+
   switch (artwork.listPrice.__typename) {
     case "PriceRange":
       // lowPrice is required for AggregateOffer type
       if (!artwork.listPrice.minPrice) {
         return null
       }
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      const highPrice = get(artwork.listPrice, price => price.maxPrice.major)
+
+      const highPrice = artwork.listPrice.maxPrice?.major
+
       return {
         "@type": "AggregateOffer",
         lowPrice: artwork.listPrice.minPrice.major,
@@ -157,6 +157,7 @@ export const offerAttributes = (artwork: SeoDataForArtwork_artwork$data) => {
         availability,
         seller,
       }
+
     case "Money":
       return {
         "@type": "Offer",
@@ -165,6 +166,7 @@ export const offerAttributes = (artwork: SeoDataForArtwork_artwork$data) => {
         availability,
         seller,
       }
+
     default:
       return null
   }
