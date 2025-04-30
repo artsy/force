@@ -3217,6 +3217,7 @@ type ArtworkImportEdge {
 
 enum ArtworkImportError {
   ARTWORK_CREATION_FAILED
+  INVALID_COA
   INVALID_DEPTH
   INVALID_DIAMETER
   INVALID_HEIGHT
@@ -3305,6 +3306,7 @@ enum ArtworkImportState {
 type ArtworkImportTransformedData {
   artistNames: String
   artworkTitle: String
+  certificateOfAuthenticity: String
   date: String
   depth: String
   diameter: String
