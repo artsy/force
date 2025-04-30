@@ -5,8 +5,6 @@ import { getUser } from "Utils/user"
 import type { Router } from "found"
 import { createContext, useState } from "react"
 import type { Environment } from "react-relay"
-import type { Unleash } from "unleash-client"
-import type { UnleashClient } from "unleash-proxy-client"
 
 export type UserPreferences = {
   metric: Metric
@@ -19,8 +17,13 @@ export interface SystemContextState {
   user: User
 }
 
+interface FeatureFlags {
+  isEnabled: (flag: string) => boolean
+  getVariant: (flag: string) => any
+}
+
 export interface SystemContextProps extends SystemContextState {
-  unleashClient?: Unleash | UnleashClient
+  featureFlags?: FeatureFlags
   injectedData?: any
   isEigen?: boolean
   isLoggedIn?: boolean
@@ -49,6 +52,7 @@ export const SystemContextProvider: React.FC<
     <SystemContext.Provider
       value={{
         ...props,
+
         isEigen: getENV("EIGEN") || props.isEigen,
         isLoggedIn: !!user,
         relayEnvironment,

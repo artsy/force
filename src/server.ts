@@ -40,6 +40,11 @@ app.get("/collection/:slug", redirectCollectionToArtistSeries)
 app.get(
   routePaths,
   async (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
+    const unleashContext = {
+      userId: req.user?.id, // res.locals.sd.CURRENT_USER.id
+      sessionId: req.session.id, // res.locals.sd.SESSION_ID
+    }
+
     try {
       const { status, redirect, ...rest } = await setupServerRouter({
         next,
@@ -47,7 +52,12 @@ app.get(
         res,
         routes,
         context: {
-          unleashClient,
+          featureFlags: {
+            isEnabled: (flag: string) =>
+              unleashClient.isEnabled(flag, unleashContext),
+            getVariant: (flag: string) =>
+              unleashClient.getVariant(flag, unleashContext),
+          },
         },
       })
 

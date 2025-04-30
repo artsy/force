@@ -169,9 +169,7 @@ export const exampleRoutes: RouteProps[] = [
         render: ({ match }) => {
           if (isServer) {
             if (
-              match.context.unleashClient.isEnabled(
-                "emerald_order-details-page",
-              )
+              match.context.featureFlags.isEnabled("emerald_order-details-page")
             )
               console.log("Successfully found feature flag flag")
 
