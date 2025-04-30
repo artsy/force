@@ -12,21 +12,27 @@ import {
 } from "@artsy/palette"
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { MetaTags } from "Components/MetaTags"
+import { StructuredData } from "Components/Seo/StructuredData"
 import { RouterLink } from "System/Components/RouterLink"
+import { DOWNLOAD_APP_URLS, Device } from "Utils/Hooks/useDeviceDetection"
 import { resized } from "Utils/resized"
 import { AboutArtworksRailQueryRenderer } from "./AboutArtworksRail"
+
+const DESCRIPTION =
+  "Artsy’s mission is to expand the art market to support more artists and art in the world."
 
 export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <MetaTags
         title="About | Artsy"
-        description="Artsy’s mission is to expand the art market to support more artists and art in the world."
+        description={DESCRIPTION}
         imageURL="https://files.artsy.net/images/00_CVP_About_Hero_og.png"
         pathname="/about"
       />
+
       <FullBleedHeader
-        src="https://files.artsy.net/images/00_CVP_About_Hero (1).png"
+        src="https://files.artsy.net/images/00_CVP_About_Hero%20(1).png"
         caption="Detail of Cassi Namoda, A Strange Song, 2022. Detail of Alex Katz,
             Day Lily 1, 1969."
       >
@@ -84,6 +90,162 @@ export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
       <Spacer y={6} />
 
       <AboutArtworksRailQueryRenderer />
+
+      <StructuredData
+        schemaData={{
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "Artsy",
+          url: "https://www.artsy.net",
+          applicationCategory: "LifestyleApplication",
+          operatingSystem: "Web",
+          browserRequirements: "Requires JavaScript",
+          description: DESCRIPTION,
+          downloadUrl: [
+            DOWNLOAD_APP_URLS[Device.iPhone],
+            DOWNLOAD_APP_URLS[Device.Android],
+          ],
+          offers: {
+            "@type": "Offer",
+            price: "0",
+            priceCurrency: "USD",
+            category: "free",
+          },
+          inLanguage: "en",
+          author: {
+            "@type": "Organization",
+            name: "Artsy",
+            url: "https://www.artsy.net",
+          },
+          hasPart: [
+            {
+              "@type": "MobileApplication",
+              name: "Artsy",
+              operatingSystem: "iOS 16.6 or later",
+              applicationCategory: "LifestyleApplication",
+              downloadUrl: DOWNLOAD_APP_URLS[Device.iPhone],
+              installUrl: DOWNLOAD_APP_URLS[Device.iPhone],
+              contentRating: "17+",
+              offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "USD",
+                category: "free",
+              },
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: "4.8",
+                reviewCount: "5500",
+              },
+            },
+            {
+              "@type": "MobileApplication",
+              name: "Artsy",
+              applicationCategory: "LifestyleApplication",
+              downloadUrl: DOWNLOAD_APP_URLS[Device.Android],
+              installUrl: DOWNLOAD_APP_URLS[Device.Android],
+              contentRating: "Teen",
+              offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "USD",
+                category: "free",
+              },
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: "4.5",
+                reviewCount: "1230",
+              },
+            },
+          ],
+        }}
+      />
+
+      <StructuredData
+        schemaData={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Artsy",
+          alternateName: "Artsy.net",
+          url: "https://www.artsy.net",
+          description: DESCRIPTION,
+          logo: "https://files.artsy.net/images/og_image.jpeg",
+          foundingDate: "2009",
+          foundingLocation: {
+            "@type": "Place",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "New York",
+              addressRegion: "NY",
+              addressCountry: "US",
+            },
+          },
+          founders: [
+            {
+              "@type": "Person",
+              name: "Carter Cleveland",
+              jobTitle: "Founder",
+              sameAs: "https://www.linkedin.com/in/cartercleveland",
+            },
+          ],
+          employees: [
+            {
+              "@type": "Person",
+              name: "Jeffrey Yin",
+              jobTitle: "Chief Executive Officer",
+              sameAs: "https://www.linkedin.com/in/jeffreyjyin/",
+            },
+          ],
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "401 Broadway",
+            addressLocality: "New York",
+            addressRegion: "NY",
+            postalCode: "10013",
+            addressCountry: "US",
+          },
+          contactPoint: [
+            {
+              "@type": "ContactPoint",
+              email: "support@artsy.net",
+              contactType: "customer support",
+            },
+          ],
+          brand: {
+            "@type": "Brand",
+            name: "Artsy",
+            logo: "https://files.artsy.net/images/og_image.jpeg",
+            slogan: "Discover and Buy Fine Art",
+          },
+          sameAs: [
+            "https://www.instagram.com/artsy",
+            "https://x.com/artsy",
+            "https://www.linkedin.com/company/artsyinc/",
+            "https://www.facebook.com/artsy",
+            "https://www.youtube.com/artsy",
+            "https://www.threads.com/@artsy",
+            "https://www.tiktok.com/@artsy",
+            "https://www.pinterest.com/artsy/",
+            "https://soundcloud.com/artsypodcast",
+            "https://podcasts.apple.com/us/podcast/the-artsy-podcast/id1096194516",
+            "https://open.spotify.com/show/3Wc2AVcebdEf0yC7NoFQgt",
+            DOWNLOAD_APP_URLS[Device.iPhone],
+            DOWNLOAD_APP_URLS[Device.Android],
+            "https://en.wikipedia.org/wiki/Artsy_(website)",
+            "https://github.com/artsy",
+            "https://artsy.github.io/",
+          ],
+          keywords:
+            "online art, art marketplace, buy art, art auctions, contemporary art, art galleries, emerging artists",
+          knowsAbout: [
+            "Contemporary Art",
+            "Fine Art Auctions",
+            "Art Galleries",
+            "Emerging Artists",
+            "Art Market Trends",
+          ],
+        }}
+      />
     </>
   )
 }
