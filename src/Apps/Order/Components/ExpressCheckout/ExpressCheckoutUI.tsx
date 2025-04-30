@@ -21,6 +21,7 @@ import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mu
 import { useUnsetOrderFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUnsetOrderFulfillmentOptionMutation"
 import { useUnsetOrderPaymentMethodMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUnsetOrderPaymentMethodMutation"
 import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
+import { useUpdateOrderShippingAddressMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderShippingAddressMutation"
 import {
   type OrderMutationSuccess,
   validateAndExtractOrderResponse,
@@ -63,6 +64,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const stripe = useStripe()
   const setFulfillmentOptionMutation = useSetFulfillmentOptionMutation()
   const updateOrderMutation = useUpdateOrderMutation()
+  const updateOrderShippingAddressMutation =
+    useUpdateOrderShippingAddressMutation()
   const submitOrderMutation = useSubmitOrderMutation()
   const unsetFulfillmentOptionMutation =
     useUnsetOrderFulfillmentOptionMutation()
@@ -196,21 +199,23 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     const { city, state, country, postal_code } = address
 
     try {
-      const updateOrderResult = await updateOrderMutation.submitMutation({
-        variables: {
-          input: {
-            id: orderData.internalID,
-            shippingCity: city,
-            shippingRegion: state,
-            shippingCountry: country,
-            shippingPostalCode: postal_code,
-            shippingName: name,
+      const updateOrderShippingAddressResult =
+        await updateOrderShippingAddressMutation.submitMutation({
+          variables: {
+            input: {
+              id: orderData.internalID,
+              shippingCity: city,
+              shippingRegion: state,
+              shippingCountry: country,
+              shippingPostalCode: postal_code,
+              shippingName: name,
+            },
           },
-        },
-      })
+        })
 
       const validatedResult = validateAndExtractOrderResponse(
-        updateOrderResult.updateOrder?.orderOrError,
+        updateOrderShippingAddressResult.updateOrderShippingAddress
+          ?.orderOrError,
       )
 
       const shippingRates = extractShippingRates(validatedResult.order)
@@ -307,28 +312,44 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     >
 
     try {
-      // Finally we have all fulfillment details
-      const updateOrderResult = await updateOrderMutation.submitMutation({
-        variables: {
-          input: {
-            id: orderData.internalID,
-            paymentMethod: "CREDIT_CARD",
-            creditCardWalletType,
-            buyerPhoneNumber: phone,
-            buyerPhoneNumberCountryCode: null,
-            shippingName: name,
-            shippingAddressLine1: line1,
-            shippingAddressLine2: line2,
-            shippingPostalCode: postal_code,
-            shippingCity: city,
-            shippingRegion: state,
-            shippingCountry: country,
+      // update order payment method
+      const updateOrderPaymentMethodResult =
+        await updateOrderMutation.submitMutation({
+          variables: {
+            input: {
+              id: orderData.internalID,
+              paymentMethod: "CREDIT_CARD",
+              creditCardWalletType,
+            },
           },
-        },
-      })
+        })
 
       validateAndExtractOrderResponse(
-        updateOrderResult.updateOrder?.orderOrError,
+        updateOrderPaymentMethodResult.updateOrder?.orderOrError,
+      )
+
+      // Finally we have all fulfillment details
+      const updateOrderShippingAddressResult =
+        await updateOrderShippingAddressMutation.submitMutation({
+          variables: {
+            input: {
+              id: orderData.internalID,
+              buyerPhoneNumber: phone,
+              buyerPhoneNumberCountryCode: null,
+              shippingName: name,
+              shippingAddressLine1: line1,
+              shippingAddressLine2: line2,
+              shippingPostalCode: postal_code,
+              shippingCity: city,
+              shippingRegion: state,
+              shippingCountry: country,
+            },
+          },
+        })
+
+      validateAndExtractOrderResponse(
+        updateOrderShippingAddressResult.updateOrderShippingAddress
+          ?.orderOrError,
       )
 
       // Trigger form validation and wallet collection
