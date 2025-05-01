@@ -151,7 +151,7 @@ const routes = [
     render: ({ match }) => {
       if (isServer) {
         if (
-          match.context.unleashClient.isEnabled("emerald_order-details-page")
+          match.context.featureFlags.isEnabled("emerald_order-details-page")
         ) {
           console.log("Successfully found feature flag flag")
 
@@ -172,7 +172,7 @@ const routes = [
   {
     path: "/some-route",
     prepareVariables: (params, { context }) => {
-      const id = context.unleashClient.isEnabled("some-flag") ? "foo" : "bar"
+      const id = context.featureFlags.isEnabled("some-flag") ? "foo" : "bar"
 
       return {
         id,
