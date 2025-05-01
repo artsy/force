@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4d02bac9b644bff6bdf176d9aa87f05f>>
+ * @generated SignedSource<<5526a9e065494c43be09fa78c24b0b23>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,15 +38,15 @@ v1 = {
 },
 v2 = {
   "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
-v3 = {
-  "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -110,6 +110,7 @@ return {
             "name": "artists",
             "plural": true,
             "selections": [
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -124,7 +125,13 @@ return {
                 "name": "name",
                 "storageKey": null
               },
-              (v1/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "href",
+                "storageKey": null
+              }
             ],
             "storageKey": "artists(shallow:true)"
           },
@@ -135,7 +142,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4f548eddf761c91ffb59e62c4904858e",
+    "cacheID": "bda6737dc452711f51617cdad58f391a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -151,16 +158,17 @@ return {
           "plural": true,
           "type": "Artist"
         },
-        "artwork.artists.id": (v2/*: any*/),
-        "artwork.artists.name": (v3/*: any*/),
-        "artwork.artists.slug": (v2/*: any*/),
-        "artwork.culturalMaker": (v3/*: any*/),
-        "artwork.id": (v2/*: any*/)
+        "artwork.artists.href": (v2/*: any*/),
+        "artwork.artists.id": (v3/*: any*/),
+        "artwork.artists.name": (v2/*: any*/),
+        "artwork.artists.slug": (v3/*: any*/),
+        "artwork.culturalMaker": (v2/*: any*/),
+        "artwork.id": (v3/*: any*/)
       }
     },
     "name": "ArtworkSidebarArtists_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarArtists_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarArtists_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarArtists_artwork on Artwork {\n  culturalMaker\n  artists(shallow: true) {\n    slug\n    name\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarArtists_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarArtists_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarArtists_artwork on Artwork {\n  culturalMaker\n  artists(shallow: true) {\n    id\n    slug\n    name\n    href\n  }\n}\n"
   }
 };
 })();
