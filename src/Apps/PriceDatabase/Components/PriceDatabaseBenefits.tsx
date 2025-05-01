@@ -9,6 +9,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { STATS } from "Apps/Components/constants"
 import { Media } from "Utils/Responsive"
 import type { ReactElement } from "react"
 import type * as React from "react"
@@ -21,7 +22,7 @@ export const PriceDatabaseBenefits: React.FC<
       <GridColumns gridRowGap={[2, 0]}>
         <Column span={12}>
           <Text as="h1" variant={["xl", "xxl"]}>
-            Auction records from 300,000
+            Auction records from {STATS.auctionRecordsCount}
             <br />
             artists—and counting
           </Text>
@@ -73,7 +74,9 @@ export const PriceDatabaseBenefits: React.FC<
 
       <Section
         title="Track artists and their markets"
-        text={`Get insight into artists you follow with a personalized feed in the Artsy app, powered by the Artsy Price Database. \n Available now on iOS and Android.`}
+        text={
+          "Get insight into artists you follow with a personalized feed in the Artsy app, powered by the Artsy Price Database. Available now on iOS and Android."
+        }
         jsx={
           <SectionImage
             src="https://d7hftxdivxxvm.cloudfront.net?height=660&quality=80&resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fmatthew_wong_morning.jpg&width=800"

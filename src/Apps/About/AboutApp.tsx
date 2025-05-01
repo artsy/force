@@ -11,6 +11,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { STATS } from "Apps/Components/constants"
 import {
   FullBleedHeader,
   FullBleedHeaderOverlay,
@@ -141,8 +142,7 @@ export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
               },
               aggregateRating: {
                 "@type": "AggregateRating",
-                ratingValue: "4.8",
-                reviewCount: "5500",
+                ...STATS.iosApp,
               },
             },
             {
@@ -160,8 +160,7 @@ export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
               },
               aggregateRating: {
                 "@type": "AggregateRating",
-                ratingValue: "4.5",
-                reviewCount: "1230",
+                ...STATS.androidApp,
               },
             },
           ],
