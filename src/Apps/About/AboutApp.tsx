@@ -105,7 +105,7 @@ export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
           "@type": "WebApplication",
           name: "Artsy",
           url: "https://www.artsy.net",
-          applicationCategory: "LifestyleApplication",
+          applicationCategory: ["LifestyleApplication", "ShoppingApplication"],
           operatingSystem: "Web",
           browserRequirements: "Requires JavaScript",
           description: DESCRIPTION,
@@ -130,7 +130,10 @@ export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
               "@type": "MobileApplication",
               name: "Artsy",
               operatingSystem: "iOS 16.6 or later",
-              applicationCategory: "LifestyleApplication",
+              applicationCategory: [
+                "LifestyleApplication",
+                "ShoppingApplication",
+              ],
               downloadUrl: DOWNLOAD_APP_URLS[Device.iPhone],
               installUrl: DOWNLOAD_APP_URLS[Device.iPhone],
               contentRating: "17+",
@@ -148,7 +151,10 @@ export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
             {
               "@type": "MobileApplication",
               name: "Artsy",
-              applicationCategory: "LifestyleApplication",
+              applicationCategory: [
+                "LifestyleApplication",
+                "ShoppingApplication",
+              ],
               downloadUrl: DOWNLOAD_APP_URLS[Device.Android],
               installUrl: DOWNLOAD_APP_URLS[Device.Android],
               contentRating: "Teen",
