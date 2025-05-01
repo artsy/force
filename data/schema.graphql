@@ -4274,6 +4274,15 @@ type Author {
   twitterHandle: String
 }
 
+enum Availability {
+  FOR_SALE
+  NOT_FOR_SALE
+  ON_HOLD
+  ON_LOAN
+  PERMANENT_COLLECTION
+  SOLD
+}
+
 type BackupSecondFactor implements SecondFactor {
   code: String!
   disabledAt(
@@ -4498,6 +4507,9 @@ input BulkUpdateArtworksFilterInput {
 }
 
 input BulkUpdateArtworksMetadataInput {
+  # The availaiblity to be assigned
+  availability: Availability
+
   # The category (medium type) to be assigned
   category: String
 
