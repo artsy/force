@@ -22,10 +22,10 @@
   dependencies:
     preact "^10.11.3"
 
-"@artsy/cohesion@4.258.0":
-  version "4.258.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.258.0.tgz#ce64c99ad22b8ff17521d5b781c17d8136bd43b7"
-  integrity sha512-O9N7WiCi1Q2TnKxEK23AtkvkfAleSxU/5xjPAqTgxjHpPwggYIXxYHV44q0yk/tKAUX8jq72ML+UoXHv8e+fSw==
+"@artsy/cohesion@4.259.0":
+  version "4.259.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.259.0.tgz#60cc44147216a77fdbb2296ffc900985fe1fc3b9"
+  integrity sha512-jQQMBQtbthrGGt70HOOnIVb/aZA2SzXqpabkMDmpzggBNFQOdp3HBcx8rZskl7zesEg8UqCUWXC1t7wMZpGdGQ==
   dependencies:
     core-js "3"
 
@@ -98,10 +98,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-7.0.0.tgz#4c104f8504bb591e2b468f52d393c3da2573fbd7"
   integrity sha512-psM2CZt/4d9YHTMM/jMu+ueZjjGlHcrq9E+FA5XZvl/UtlK0AwL1me3nxbIA8pXPsfOWfQ+PPLJumB8UKSYV1g==
 
-"@artsy/palette@41.0.0":
-  version "41.0.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-41.0.0.tgz#cf2e25fcc70e007871bfeb0297eae8ded6ebd03a"
-  integrity sha512-9/f1LNKRGCREB63y3SY1mNQTtXxpgY9vCY0iMjXqyYy4lWruwZxGMaKJhSGHMbAUEWPbih/62z/BGDjTQplM8w==
+"@artsy/palette@41.1.0":
+  version "41.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-41.1.0.tgz#ae7b813b8df6bf651715ff3a925606121ea601ed"
+  integrity sha512-GatNqDwbst+1ao4sg9hhblBUYDtq9A4clCRNF3xO0fDm+VEmiZlCRyr6yApDoYmoxDbeC+XHenZ+kh6TFFv1ng==
   dependencies:
     "@artsy/icons" "^3.2.2"
     "@artsy/palette-tokens" "^7.0.0"

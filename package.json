@@ -70,7 +70,7 @@
     "strip-ansi": "6.0.1"
   },
   "dependencies": {
-    "@artsy/cohesion": "4.258.0",
+    "@artsy/cohesion": "4.259.0",
     "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.1.0",
     "@artsy/dismissible": "^0.4.1",
@@ -79,7 +79,7 @@
     "@artsy/icons": "^3.29.1",
     "@artsy/img": "1.0.3",
     "@artsy/multienv": "^1.2.0",
-    "@artsy/palette": "41.0.0",
+    "@artsy/palette": "41.1.0",
     "@artsy/palette-charts": "40.0.0",
     "@artsy/palette-tokens": "7.0.0",
     "@artsy/react-html-parser": "^3.0.2",
