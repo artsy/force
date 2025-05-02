@@ -435,6 +435,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       <Text variant="lg-display">Express checkout</Text>
       <Spacer y={1} />
       <Box
+        minWidth="240px"
         maxWidth={hasMultiplePaymentOptions ? "100%" : ["100%", "50%"]}
         paddingX="1px"
       >
