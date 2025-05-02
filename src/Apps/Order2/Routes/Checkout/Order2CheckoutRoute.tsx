@@ -1,4 +1,5 @@
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
+import ShieldIcon from "@artsy/icons/ShieldIcon"
 import {
   Box,
   Button,
@@ -8,6 +9,7 @@ import {
   GridColumns,
   Image,
   Link,
+  Message,
   PhoneInput,
   Spacer,
   Stack,
@@ -91,7 +93,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                     mr={1}
                     src={TEMP_DATA.artworkVersionImageResizedUrl}
                     alt={TEMP_DATA.artworkVersionTitle || ""}
-                    width="55px"
+                    width="65px"
                   />
                 </Link>
                 <Box
@@ -322,7 +324,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
               {/* <PaymentForm /> */}
             </Flex>
             <Flex
-              data-testid="OrderSummaryReviewSection"
+              data-testid="OrderReviewSection"
               flexDirection="column"
               backgroundColor="mono0"
               p={2}
@@ -331,6 +333,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                 Order summary
               </Text>
               <Flex
+                data-testid="OrderReviewArtworkDetails"
                 py={1}
                 justifyContent="space-between"
                 alignItems="flex-start"
@@ -344,7 +347,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                     mr={1}
                     src={TEMP_DATA.artworkVersionImageResizedUrl}
                     alt={TEMP_DATA.artworkVersionTitle || ""}
-                    width="55px"
+                    width="65px"
                   />
                 </Link>
                 <Box
@@ -411,7 +414,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                   </Text>
                 </Box>
               </Flex>
-              <Box>
+              <Box data-testId="OrderReviewPriceDetails" mb={2}>
                 <Flex data-testid="OrderSummaryPriceLineItem">
                   <Text flexGrow={1} variant="sm-display" color="mono60">
                     Price
@@ -454,14 +457,23 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                     Waiting for final cost
                   </Text>
                 </Flex>
+                <Text variant="xs" color="mono60" textAlign="left" mt={2}>
+                  *Additional duties and taxes{" "}
+                  <Link target="_blank" href="#">
+                    may apply at import
+                  </Link>
+                  .
+                </Text>
               </Box>
-              <Text variant="xs" color="mono60" textAlign="left" mt={2}>
-                *Additional duties and taxes{" "}
-                <Link target="_blank" href="#">
-                  may apply at import
-                </Link>
-                .
-              </Text>
+              <Message variant="default">
+                <Flex>
+                  <ShieldIcon fill="mono100" />
+                  <Spacer x={1} />
+                  <Text variant="xs" color="mono100">
+                    Your purchase is protected with Artsy’s buyer protection.
+                  </Text>
+                </Flex>
+              </Message>
             </Flex>
           </Stack>
         </Column>
