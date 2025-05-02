@@ -158,11 +158,17 @@ describe("ExpressCheckoutUI", () => {
     const elementProps = mockExpressCheckoutElement.mock.calls[0][0]
 
     expect(elementProps.options).toEqual({
-      buttonTheme: { applePay: "white-outline" },
+      buttonTheme: { applePay: "white-outline", googlePay: "white" },
       buttonHeight: 50,
       paymentMethods: {
         applePay: "always",
         googlePay: "always",
+      },
+      buttonType: {
+        googlePay: "plain",
+      },
+      layout: {
+        overflow: "never",
       },
     })
   })
