@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2ae3dcaf49e1c5617f1bc11743ddb9ea>>
+ * @generated SignedSource<<e5b839b3696463ca09beaaa7ed287b0f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type Order2ReviewSection_order$data = {
+export type Order2ReviewStep_order$data = {
   readonly buyerTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
@@ -42,11 +42,11 @@ export type Order2ReviewSection_order$data = {
   readonly taxTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
-  readonly " $fragmentType": "Order2ReviewSection_order";
+  readonly " $fragmentType": "Order2ReviewStep_order";
 };
-export type Order2ReviewSection_order$key = {
-  readonly " $data"?: Order2ReviewSection_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2ReviewSection_order">;
+export type Order2ReviewStep_order$key = {
+  readonly " $data"?: Order2ReviewStep_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2ReviewStep_order">;
 };
 
 const node: ReaderFragment = (function(){
@@ -63,7 +63,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Order2ReviewSection_order",
+  "name": "Order2ReviewStep_order",
   "selections": [
     {
       "alias": null,
@@ -226,6 +226,6 @@ return {
 };
 })();
 
-(node as any).hash = "80943dd2e16639bb70b5f08d3a1d610b";
+(node as any).hash = "a9f92a55d87fcb6b5eb9061e17649762";
 
 export default node;

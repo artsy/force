@@ -1,14 +1,14 @@
 import ShieldIcon from "@artsy/icons/ShieldIcon"
 import { Box, Flex, Image, Link, Message, Spacer, Text } from "@artsy/palette"
-import type { Order2ReviewSection_order$key } from "__generated__/Order2ReviewSection_order.graphql"
+import type { Order2ReviewStep_order$key } from "__generated__/Order2ReviewStep_order.graphql"
 import { useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
 
-interface Order2ReviewSectionProps {
-  order: Order2ReviewSection_order$key
+interface Order2ReviewStepProps {
+  order: Order2ReviewStep_order$key
 }
 
-export const Order2ReviewSection: React.FC<Order2ReviewSectionProps> = ({
+export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   order,
 }) => {
   const data = useFragment(FRAGMENT, order)
@@ -46,7 +46,7 @@ export const Order2ReviewSection: React.FC<Order2ReviewSectionProps> = ({
   }
   return (
     <Flex
-      data-testid="OrderReviewSection"
+      data-testid="OrderReviewStep"
       flexDirection="column"
       backgroundColor="mono0"
       p={2}
@@ -198,7 +198,7 @@ export const Order2ReviewSection: React.FC<Order2ReviewSectionProps> = ({
 }
 
 const FRAGMENT = graphql`
-  fragment Order2ReviewSection_order on Order {
+  fragment Order2ReviewStep_order on Order {
     mode
     source
     buyerTotal {

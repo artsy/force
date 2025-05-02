@@ -14,7 +14,7 @@ import {
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { Order2CollapsableOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsableOrderSummary"
-import { Order2ReviewSection } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewSection"
+import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { addressFormFieldsValidator } from "Components/Address/AddressFormFields"
 import { AddressFormFields } from "Components/Address/AddressFormFields"
 import { ErrorPage } from "Components/ErrorPage"
@@ -77,9 +77,9 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
           <Stack gap={1} bg="mono5">
             {/* Collapsable order summary */}
             <Order2CollapsableOrderSummary order={order} />
-            {/* Fulfillment details section */}
+            {/* Fulfillment details Step */}
             <Flex
-              data-testid="FulfillmentDetailsSection"
+              data-testid="FulfillmentDetailsStep"
               flexDirection="column"
               backgroundColor="mono0"
               py={2}
@@ -257,9 +257,9 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
               </Tabs>
             </Flex>
 
-            {/* Shipping method section */}
+            {/* Shipping method Step */}
             <Flex
-              data-testID="ShippingMethodSection"
+              data-testID="ShippingMethodStep"
               flexDirection="column"
               backgroundColor="mono0"
               p={2}
@@ -272,7 +272,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
               </Text>
             </Flex>
 
-            {/* Payment method section */}
+            {/* Payment method Step */}
             <Flex
               data-testID="PaymentMethodSction"
               flexDirection="column"
@@ -288,7 +288,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
               {/* <PaymentForm /> */}
             </Flex>
 
-            <Order2ReviewSection order={order} />
+            <Order2ReviewStep order={order} />
           </Stack>
         </Column>
       </GridColumns>
@@ -303,7 +303,7 @@ const FRAGMENT = graphql`
       order(id: $orderID) {
         internalID
         ...Order2CollapsableOrderSummary_order
-        ...Order2ReviewSection_order
+        ...Order2ReviewStep_order
       }
       addressConnection(first: 10) {
         edges {
