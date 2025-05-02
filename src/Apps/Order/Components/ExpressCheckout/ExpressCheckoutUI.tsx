@@ -71,6 +71,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
   const errorRef = useRef<string | null>(null)
+  const [hasMultiplePaymentOptions, setHasMultiplePaymentOptions] =
+    useState<boolean>(false)
 
   if (!(stripe && elements)) {
     return null
@@ -411,27 +413,36 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     }
   }
 
+  const handleReady = e => {
+    const paymentMethods = e.availablePaymentMethods
+
+    if (paymentMethods) {
+      setHasMultiplePaymentOptions(
+        Object.values(paymentMethods).filter(Boolean).length > 1,
+      )
+
+      setVisible(true)
+
+      orderTracking.expressCheckoutViewed({
+        order: orderData,
+        walletType: getAvailablePaymentMethods(paymentMethods),
+      })
+    }
+  }
+
   return (
     <UncollapsingBox visible={visible}>
       <Text variant="lg-display">Express checkout</Text>
       <Spacer y={1} />
-      <Box maxWidth={["100%", "50%"]} paddingLeft="1px">
+      <Box
+        maxWidth={hasMultiplePaymentOptions ? "100%" : ["100%", "50%"]}
+        paddingX="1px"
+      >
         <ExpressCheckoutElement
           options={expressCheckoutOptions}
           onClick={handleOpenExpressCheckout}
           onCancel={handleCancel}
-          onReady={e => {
-            if (!!e.availablePaymentMethods) {
-              setVisible(true)
-
-              orderTracking.expressCheckoutViewed({
-                order: orderData,
-                walletType: getAvailablePaymentMethods(
-                  e.availablePaymentMethods,
-                ),
-              })
-            }
-          }}
+          onReady={handleReady}
           onShippingAddressChange={handleShippingAddressChange}
           onShippingRateChange={handleShippingRateChange}
           onLoadError={e => {
@@ -460,11 +471,18 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
 const expressCheckoutOptions: StripeExpressCheckoutElementOptions = {
   buttonTheme: {
     applePay: "white-outline",
+    googlePay: "white",
   },
   buttonHeight: 50,
   paymentMethods: {
     applePay: "always",
     googlePay: "always",
+  },
+  layout: {
+    overflow: "never",
+  },
+  buttonType: {
+    googlePay: "plain",
   },
 }
 
