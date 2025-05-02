@@ -82,7 +82,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
       <GridColumns>
         <Column span={[12, 8]} start={[1, 2]}>
           <Stack gap={1} bg="mono5">
-            <Box data-testid="OrderSummaryTop" backgroundColor="mono0">
+            <Box data-testid="OrderSummary" backgroundColor="mono0">
               <Flex py={1} px={2} justifyContent="space-between">
                 <Link
                   flex={0}
@@ -93,23 +93,24 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                     mr={1}
                     src={TEMP_DATA.artworkVersionImageResizedUrl}
                     alt={TEMP_DATA.artworkVersionTitle || ""}
-                    width="65px"
+                    width="40px"
                   />
                 </Link>
                 <Box
+                  data-testid="OrderSummaryArtworkDetails"
                   style={{
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                   }}
                   flex={1}
-                  mr={1}
+                  mr={2}
                 >
                   <Text
                     style={{
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                     }}
-                    variant="sm-display"
+                    variant="xs"
                     color="mono100"
                   >
                     {TEMP_DATA.artworkVersionArtistNames}
@@ -119,7 +120,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                     }}
-                    variant="sm-display"
+                    variant="xs"
                     color="mono60"
                     textAlign="left"
                   >
@@ -127,7 +128,12 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                     {TEMP_DATA.artworkVersionDate}
                   </Text>
                 </Box>
-                <ChevronDownIcon />
+                <Flex flexShrink={0}>
+                  <Text variant="xs" color="mono100" mr={0.5}>
+                    $150,000
+                  </Text>
+                  <ChevronDownIcon height="18px" mt="2px" />
+                </Flex>
               </Flex>
             </Box>
             <Flex
@@ -135,11 +141,10 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
               flexDirection="column"
               backgroundColor="mono0"
               py={2}
-              px={2}
             >
               <Tabs
                 data-testid="DeliveryOrPickupTabs"
-                justifyContent="center"
+                justifyContent="space-between"
                 initialTabIndex={0}
                 onChange={tabInfo => {
                   // Required because the tabInfo.name is a customized text element
@@ -148,7 +153,14 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                   console.log("Tab change", selected)
                 }}
               >
-                <Tab name={<Text variant="xs">Delivery</Text>}>
+                <Tab
+                  name={
+                    // margins here come pretty close to making the tabs fill the full width
+                    <Text mx={50} variant="xs">
+                      Delivery
+                    </Text>
+                  }
+                >
                   <Box px={2}>
                     <Text
                       fontWeight="medium"
@@ -197,7 +209,9 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                             selected={formikContext.values.saveAddress}
                             data-testid="saveAddress"
                           >
-                            Save address
+                            <Text variant="xs">
+                              Save shipping address for later use
+                            </Text>
                           </Checkbox>
                           <Spacer y={4} />
                           <Button
@@ -211,7 +225,13 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                     </Formik>
                   </Box>
                 </Tab>
-                <Tab name={<Text variant="xs">Pickup</Text>}>
+                <Tab
+                  name={
+                    <Text mx={50} variant="xs">
+                      Pickup
+                    </Text>
+                  }
+                >
                   <Box px={2}>
                     <Text
                       fontWeight="medium"
@@ -232,7 +252,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                       validationSchema={{}}
                       onSubmit={(
                         values: FormikValues,
-                        formikHelpers: FormikHelpers<FormikValues>,
+                        // formikHelpers: FormikHelpers<FormikValues>,
                       ) => {
                         console.warn("Pickup values submitted:", values)
                       }}
@@ -312,7 +332,6 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
               data-testID="PaymentMethodSction"
               flexDirection="column"
               backgroundColor="mono0"
-              mb={1}
               p={2}
             >
               <Text variant="sm-display" fontWeight="medium" color="mono100">
@@ -390,6 +409,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                   >
                     List price: $1,000,000
                   </Text>
+                  <Spacer y={0.5} />
                   <Text
                     style={{
                       overflow: "hidden",
@@ -416,29 +436,30 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
               </Flex>
               <Box data-testId="OrderReviewPriceDetails" mb={2}>
                 <Flex data-testid="OrderSummaryPriceLineItem">
-                  <Text flexGrow={1} variant="sm-display" color="mono60">
+                  <Text flexGrow={1} variant="sm" color="mono60">
                     Price
                   </Text>
-                  <Text flexGrow={0} variant="sm-display" color="mono60">
+                  <Text flexGrow={0} variant="sm" color="mono60">
                     $15,000
                   </Text>
                 </Flex>
                 <Flex data-testid="OrderSummaryShippingLineItem">
-                  <Text flexGrow={1} variant="sm-display" color="mono60">
+                  <Text flexGrow={1} variant="sm" color="mono60">
                     Shipping
                   </Text>
-                  <Text flexGrow={0} variant="sm-display" color="mono60">
+                  <Text flexGrow={0} variant="sm" color="mono60">
                     Calculated in next steps
                   </Text>
                 </Flex>
                 <Flex data-testid="OrderSummaryTaxLineItem">
-                  <Text flexGrow={1} variant="sm-display" color="mono60">
+                  <Text flexGrow={1} variant="sm" color="mono60">
                     Tax*
                   </Text>
-                  <Text flexGrow={0} variant="sm-display" color="mono60">
+                  <Text flexGrow={0} variant="sm" color="mono60">
                     Calculated in next steps
                   </Text>
                 </Flex>
+                <Spacer y={0.5} />
                 <Flex data-testid="OrderSummaryTotalPrice">
                   <Text
                     flexGrow={1}
