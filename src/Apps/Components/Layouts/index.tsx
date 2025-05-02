@@ -16,12 +16,17 @@ export interface LayoutProps extends BaseLayoutProps {
   variant?: LayoutVariant
 }
 
+const LayoutLogoOnlyFullBleed = ({ children }: BaseLayoutProps) => (
+  <LayoutLogoOnly fullBleed>{children}</LayoutLogoOnly>
+)
+
 export const LAYOUTS = {
   Blank: LayoutBlank,
   ContainerOnly: LayoutContainerOnly,
   Default: LayoutDefault,
   FullBleed: LayoutFullBleed,
   LogoOnly: LayoutLogoOnly,
+  LogoOnlyFullBleed: LayoutLogoOnlyFullBleed,
   NavOnly: LayoutNavOnly,
 } as const
 
