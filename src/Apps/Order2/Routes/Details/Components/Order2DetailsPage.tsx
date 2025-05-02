@@ -14,8 +14,16 @@ import {
   Text,
 } from "@artsy/palette"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
+import type { Order2DetailsPage_order$key } from "__generated__/Order2DetailsPage_order.graphql"
+import { graphql, useFragment } from "react-relay"
 
-export const Order2DetailsPage = () => {
+interface Order2DetailsPageProps {
+  order: Order2DetailsPage_order$key
+}
+
+export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
+  const orderData = useFragment(FRAGMENT, order)
+
   return (
     <GridColumns>
       <Column span={[12]}>
@@ -23,9 +31,9 @@ export const Order2DetailsPage = () => {
 
         <Box m={2}>
           {/* Title */}
-          <Text variant="lg">Great choice, Viviana! </Text>
+          <Text variant="lg">{orderData.displayTexts.titleText}</Text>
           {/* Order # */}
-          <Text variant="xs">Order #123456789 </Text>
+          <Text variant="xs">Order #{orderData.code} </Text>
         </Box>
 
         {/* Message */}
@@ -196,6 +204,16 @@ export const Order2DetailsPage = () => {
     </GridColumns>
   )
 }
+
+const FRAGMENT = graphql`
+  fragment Order2DetailsPage_order on Order {
+    internalID
+    code
+    displayTexts {
+      titleText
+    }
+  }
+`
 
 const onClickReadFAQ = () => {
   // TODO: track event?

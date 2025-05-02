@@ -5,6 +5,7 @@ import type { SystemContextProps } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
 import createLogger from "Utils/logger"
 import type { order2Routes_CheckoutQuery$data } from "__generated__/order2Routes_CheckoutQuery.graphql"
+import type { order2Routes_DetailsQuery$data } from "__generated__/order2Routes_DetailsQuery.graphql"
 import { type Match, RedirectException } from "found"
 import { graphql } from "react-relay"
 
@@ -118,7 +119,7 @@ export const order2Routes: RouteProps[] = [
             return
           }
           const typedProps = props as unknown as {
-            viewer: order2Routes_CheckoutQuery$data["viewer"]
+            viewer: order2Routes_DetailsQuery$data["viewer"]
             match: Match<SystemContextProps>
           }
           const { viewer, match } = typedProps
@@ -126,7 +127,7 @@ export const order2Routes: RouteProps[] = [
           const featureFlags = match.context.featureFlags
 
           if (!order) {
-            logger.warn("No order found - checkout page")
+            logger.warn("No order found - details page")
             return <ErrorPage code={404} />
           }
 
