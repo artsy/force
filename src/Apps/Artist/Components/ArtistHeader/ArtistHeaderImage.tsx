@@ -12,11 +12,12 @@ const MOBILE_SIZE = {
 interface ArtistHeaderImageProps
   extends Omit<BoxProps, "maxHeight" | "maxWidth"> {
   image: ValidImage
+  alt: string
 }
 
 export const ArtistHeaderImage: FC<
   React.PropsWithChildren<ArtistHeaderImageProps>
-> = ({ image, ...rest }) => {
+> = ({ image, alt, ...rest }) => {
   const max = maxDimensionsByArea({
     width: image.width,
     height: image.height,
@@ -58,6 +59,7 @@ export const ArtistHeaderImage: FC<
                 height="100%"
                 src={mobile.src}
                 srcSet={mobile.srcSet}
+                alt={alt}
                 fetchPriority="high"
                 // LCP optimization
                 lazyLoad={false}
@@ -83,6 +85,7 @@ export const ArtistHeaderImage: FC<
               key={desktop.src}
               src={desktop.src}
               srcSet={desktop.srcSet}
+              alt={alt}
               width="100%"
               height="100%"
               style={{ objectFit: "cover" }}
