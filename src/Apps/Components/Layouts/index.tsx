@@ -4,6 +4,7 @@ import { LayoutContainerOnly } from "Apps/Components/Layouts/LayoutContainerOnly
 import { LayoutDefault } from "Apps/Components/Layouts/LayoutDefault"
 import { LayoutFullBleed } from "Apps/Components/Layouts/LayoutFullBleed"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
+import { LayoutLogoOnlyFullBleed } from "Apps/Components/Layouts/LayoutLogoOnlyFullBleed"
 import { LayoutNavOnly } from "Apps/Components/Layouts/LayoutNavOnly"
 import { useRouter } from "System/Hooks/useRouter"
 import type { FC, ReactNode } from "react"
@@ -15,10 +16,6 @@ export interface BaseLayoutProps {
 export interface LayoutProps extends BaseLayoutProps {
   variant?: LayoutVariant
 }
-
-const LayoutLogoOnlyFullBleed = ({ children }: BaseLayoutProps) => (
-  <LayoutLogoOnly fullBleed>{children}</LayoutLogoOnly>
-)
 
 export const LAYOUTS = {
   Blank: LayoutBlank,

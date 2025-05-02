@@ -82,6 +82,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
       <GridColumns>
         <Column span={[12, 8]} start={[1, 2]}>
           <Stack gap={1} bg="mono5">
+            {/* Collapsable order summary */}
             <Box data-testid="OrderSummary" backgroundColor="mono0">
               <Flex py={1} px={2} justifyContent="space-between">
                 <Link
@@ -136,6 +137,8 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                 </Flex>
               </Flex>
             </Box>
+
+            {/* Fulfillment details section */}
             <Flex
               data-testid="FulfillmentDetailsSection"
               flexDirection="column"
@@ -315,6 +318,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
               </Tabs>
             </Flex>
 
+            {/* Shipping method section */}
             <Flex
               data-testID="ShippingMethodSection"
               flexDirection="column"
@@ -328,6 +332,8 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                 Options vary based on address and artwork size
               </Text>
             </Flex>
+
+            {/* Payment method section */}
             <Flex
               data-testID="PaymentMethodSction"
               flexDirection="column"
@@ -342,6 +348,8 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
               </Text>
               {/* <PaymentForm /> */}
             </Flex>
+
+            {/* Review & submit section */}
             <Flex
               data-testid="OrderReviewSection"
               flexDirection="column"
