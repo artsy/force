@@ -13,7 +13,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
-import { Order2CollapsableOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsableOrderSummary"
+import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { addressFormFieldsValidator } from "Components/Address/AddressFormFields"
 import { AddressFormFields } from "Components/Address/AddressFormFields"
@@ -75,8 +75,8 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
       <GridColumns>
         <Column span={[12, 8]} start={[1, 2]}>
           <Stack gap={1} bg="mono5">
-            {/* Collapsable order summary */}
-            <Order2CollapsableOrderSummary order={order} />
+            {/* Collapsible order summary */}
+            <Order2CollapsibleOrderSummary order={order} />
             {/* Fulfillment details Step */}
             <Flex
               data-testid="FulfillmentDetailsStep"
@@ -302,7 +302,7 @@ const FRAGMENT = graphql`
     me {
       order(id: $orderID) {
         internalID
-        ...Order2CollapsableOrderSummary_order
+        ...Order2CollapsibleOrderSummary_order
         ...Order2ReviewStep_order
       }
       addressConnection(first: 10) {

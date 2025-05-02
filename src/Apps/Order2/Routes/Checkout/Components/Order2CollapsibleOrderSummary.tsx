@@ -1,16 +1,16 @@
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import { Box, Flex, Image, Link, Spacer, Text } from "@artsy/palette"
-import type { Order2CollapsableOrderSummary_order$key } from "__generated__/Order2CollapsableOrderSummary_order.graphql"
+import type { Order2CollapsibleOrderSummary_order$key } from "__generated__/Order2CollapsibleOrderSummary_order.graphql"
 import type * as React from "react"
 import { useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
-interface Order2CollapsableOrderSummaryProps {
-  order: Order2CollapsableOrderSummary_order$key
+interface Order2CollapsibleOrderSummaryProps {
+  order: Order2CollapsibleOrderSummary_order$key
 }
 
-export const Order2CollapsableOrderSummary: React.FC<
-  Order2CollapsableOrderSummaryProps
+export const Order2CollapsibleOrderSummary: React.FC<
+  Order2CollapsibleOrderSummaryProps
 > = ({ order }) => {
   const data = useFragment(FRAGMENT, order)
   const firstArtwork = data.lineItems[0]?.artwork
@@ -31,12 +31,12 @@ export const Order2CollapsableOrderSummary: React.FC<
   useEffect(() => {
     console.log("*** Order data", data)
     if (missingArtworkData) {
-      console.error("Missing artwork data in Order2CollapsableOrderSummary", {
+      console.error("Missing artwork data in Order2CollapsibleOrderSummary", {
         artworkData,
       })
     }
     if (missingOrderData) {
-      console.error("Missing order data in Order2CollapsableOrderSummary", {
+      console.error("Missing order data in Order2CollapsibleOrderSummary", {
         order,
       })
     }
@@ -184,7 +184,7 @@ export const Order2CollapsableOrderSummary: React.FC<
 }
 
 const FRAGMENT = graphql`
-  fragment Order2CollapsableOrderSummary_order on Order {
+  fragment Order2CollapsibleOrderSummary_order on Order {
     mode
     source
     buyerTotal {

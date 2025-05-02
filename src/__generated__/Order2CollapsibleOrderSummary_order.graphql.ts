@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<05fc565150cb657fc764125fbdc0ca75>>
+ * @generated SignedSource<<148e449511d187c93e362342b372b0e0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type Order2CollapsableOrderSummary_order$data = {
+export type Order2CollapsibleOrderSummary_order$data = {
   readonly buyerTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
@@ -42,11 +42,11 @@ export type Order2CollapsableOrderSummary_order$data = {
   readonly taxTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
-  readonly " $fragmentType": "Order2CollapsableOrderSummary_order";
+  readonly " $fragmentType": "Order2CollapsibleOrderSummary_order";
 };
-export type Order2CollapsableOrderSummary_order$key = {
-  readonly " $data"?: Order2CollapsableOrderSummary_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2CollapsableOrderSummary_order">;
+export type Order2CollapsibleOrderSummary_order$key = {
+  readonly " $data"?: Order2CollapsibleOrderSummary_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2CollapsibleOrderSummary_order">;
 };
 
 const node: ReaderFragment = (function(){
@@ -63,7 +63,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Order2CollapsableOrderSummary_order",
+  "name": "Order2CollapsibleOrderSummary_order",
   "selections": [
     {
       "alias": null,
@@ -226,6 +226,6 @@ return {
 };
 })();
 
-(node as any).hash = "e4c7d404717f0801b83258c0b1500181";
+(node as any).hash = "cea49933eed9fd4c478433353204a19b";
 
 export default node;

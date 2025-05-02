@@ -30,12 +30,12 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   useEffect(() => {
     console.log("*** Order data", data)
     if (missingArtworkData) {
-      console.error("Missing artwork data in Order2CollapsableOrderSummary", {
+      console.error("Missing artwork data in Order2CollapsibleOrderSummary", {
         artworkData,
       })
     }
     if (missingOrderData) {
-      console.error("Missing order data in Order2CollapsableOrderSummary", {
+      console.error("Missing order data in Order2CollapsibleOrderSummary", {
         data,
       })
     }
