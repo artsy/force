@@ -453,10 +453,10 @@ const request = async (url, opts) => {
   try {
     const options: RequestInit = {
       method: opts.method || "POST",
+      body: opts.body,
       headers: {
         "Content-Type": "application/json",
       },
-      body: opts.body,
     }
 
     const response = await fetch(url, options)
