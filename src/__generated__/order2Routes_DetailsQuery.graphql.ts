@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<523de5ce75881bad3d205ba99d7aff79>>
+ * @generated SignedSource<<4a8903628f480f7369a09868405e3b8d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -194,12 +194,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3f8a141b94688092ff84b0370a03db69",
+    "cacheID": "752951689219d899229f8b4eac41d612",
     "id": null,
     "metadata": {},
     "name": "order2Routes_DetailsQuery",
     "operationKind": "query",
-    "text": "query order2Routes_DetailsQuery(\n  $orderID: String!\n) {\n  viewer {\n    ...Order2DetailsRoute_viewer_3HPek8\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment DetailsHeader_order on Order {\n  code\n  displayTexts {\n    titleText\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...DetailsHeader_order\n}\n\nfragment Order2DetailsRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      ...Order2DetailsPage_order\n      internalID\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query order2Routes_DetailsQuery(\n  $orderID: String!\n) {\n  viewer {\n    ...Order2DetailsRoute_viewer_3HPek8\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    titleText\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n}\n\nfragment Order2DetailsRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      ...Order2DetailsPage_order\n      internalID\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

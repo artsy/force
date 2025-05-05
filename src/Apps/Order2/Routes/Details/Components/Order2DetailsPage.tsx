@@ -16,7 +16,7 @@ import {
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import type { Order2DetailsPage_order$key } from "__generated__/Order2DetailsPage_order.graphql"
 import { graphql, useFragment } from "react-relay"
-import { DetailsHeader } from "./DetailsHeader"
+import { Order2DetailsHeader } from "./Order2DetailsHeader"
 
 interface Order2DetailsPageProps {
   order: Order2DetailsPage_order$key
@@ -29,7 +29,7 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
     <GridColumns>
       <Column span={[12]}>
         <Box m={2}>
-          <DetailsHeader order={orderData} />
+          <Order2DetailsHeader order={orderData} />
         </Box>
 
         {/* Message */}
@@ -203,7 +203,7 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
 
 const FRAGMENT = graphql`
   fragment Order2DetailsPage_order on Order {
-    ...DetailsHeader_order
+    ...Order2DetailsHeader_order
   }
 `
 

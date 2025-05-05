@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1a0f9adeecb3e62518db00d4baf21d25>>
+ * @generated SignedSource<<833854ddb0f7358595a4a923c5dc465a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -147,12 +147,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3192ad4f0ba4a75465524aff88e2dd90",
+    "cacheID": "e600145f28d495bb25e408340926acb7",
     "id": null,
     "metadata": {},
     "name": "Order2DetailsPage_Test_Query",
     "operationKind": "query",
-    "text": "query Order2DetailsPage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment DetailsHeader_order on Order {\n  code\n  displayTexts {\n    titleText\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...DetailsHeader_order\n}\n"
+    "text": "query Order2DetailsPage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    titleText\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n}\n"
   }
 };
 })();

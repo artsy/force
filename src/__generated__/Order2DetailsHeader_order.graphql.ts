@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<815871fb76657e384df1db1f327fbbdc>>
+ * @generated SignedSource<<68ea1902f9d517af2184de87eff8f4c8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,23 +10,23 @@
 
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type DetailsHeader_order$data = {
+export type Order2DetailsHeader_order$data = {
   readonly code: string;
   readonly displayTexts: {
     readonly titleText: string;
   };
-  readonly " $fragmentType": "DetailsHeader_order";
+  readonly " $fragmentType": "Order2DetailsHeader_order";
 };
-export type DetailsHeader_order$key = {
-  readonly " $data"?: DetailsHeader_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"DetailsHeader_order">;
+export type Order2DetailsHeader_order$key = {
+  readonly " $data"?: Order2DetailsHeader_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsHeader_order">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "DetailsHeader_order",
+  "name": "Order2DetailsHeader_order",
   "selections": [
     {
       "alias": null,
@@ -58,6 +58,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2aee730e55cb373e6e4bd0af20180c04";
+(node as any).hash = "cd083827d41bc82288815e03e8096e50";
 
 export default node;
