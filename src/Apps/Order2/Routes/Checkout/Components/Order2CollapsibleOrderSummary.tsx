@@ -1,9 +1,12 @@
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
-import { Box, Flex, Image, Link, Spacer, Text } from "@artsy/palette"
+import { Box, Clickable, Flex, Image, Link, Spacer, Text } from "@artsy/palette"
+import createLogger from "Utils/logger"
 import type { Order2CollapsibleOrderSummary_order$key } from "__generated__/Order2CollapsibleOrderSummary_order.graphql"
 import type * as React from "react"
 import { useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
+
+const logger = createLogger("Order2CollapsibleOrderSummary")
 
 interface Order2CollapsibleOrderSummaryProps {
   order: Order2CollapsibleOrderSummary_order$key
@@ -12,9 +15,9 @@ interface Order2CollapsibleOrderSummaryProps {
 export const Order2CollapsibleOrderSummary: React.FC<
   Order2CollapsibleOrderSummaryProps
 > = ({ order }) => {
-  const data = useFragment(FRAGMENT, order)
-  const firstArtwork = data.lineItems[0]?.artwork
-  const firstArtworkVersion = data.lineItems[0]?.artworkVersion
+  const orderData = useFragment(FRAGMENT, order)
+  const firstArtwork = orderData.lineItems[0]?.artwork
+  const firstArtworkVersion = orderData.lineItems[0]?.artworkVersion
 
   const artworkData = {
     slug: firstArtwork?.slug,
@@ -25,18 +28,20 @@ export const Order2CollapsibleOrderSummary: React.FC<
   }
 
   const missingArtworkData = Object.values(artworkData).some(value => !value)
-  const missingOrderData = !data.buyerTotal?.display
+  const missingOrderData = !(
+    orderData.buyerTotal?.display || orderData.itemsTotal?.display
+  )
 
+  // TODO: Handle missing/required data more intentionally.
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    console.log("*** Order data", data)
     if (missingArtworkData) {
-      console.error("Missing artwork data in Order2CollapsibleOrderSummary", {
+      logger.error("Missing artwork data in Order2CollapsibleOrderSummary", {
         artworkData,
       })
     }
     if (missingOrderData) {
-      console.error("Missing order data in Order2CollapsibleOrderSummary", {
+      logger.error("Missing order data in Order2CollapsibleOrderSummary", {
         order,
       })
     }
@@ -94,15 +99,9 @@ export const Order2CollapsibleOrderSummary: React.FC<
             {artworkData.title}, {artworkData.date}
           </Text>
         </Box>
-        <Flex
-          as="a"
-          aria-role="button"
-          style={{ textDecoration: "none" }}
-          onClick={handleToggle}
-          flexShrink={0}
-        >
+        <Clickable display="flex" onClick={handleToggle} flexShrink={0}>
           <Text variant="xs" color="mono100" mr={0.5}>
-            {data.buyerTotal?.display || data.itemsTotal?.display}
+            {orderData.buyerTotal?.display || orderData.itemsTotal?.display}
           </Text>
 
           <ChevronDownIcon
@@ -110,29 +109,29 @@ export const Order2CollapsibleOrderSummary: React.FC<
             mt="2px"
             style={{
               transition: "transform 0.3s ease-in", // Smooth flipping animation
-              transitionDelay: "0.15s", // Add a delay to the flip animation
+              transitionDelay: "0.15s", // Add a delay to the flip animation to help it line up with the height transition below
               transform: isExpanded ? "scaleY(-1)" : "scaleY(1)", // Flip vertically when expanded
             }}
           />
-        </Flex>
+        </Clickable>
       </Flex>
       <Box
         data-testid="OrderSummaryExpandedContent"
         px={2}
-        py={isExpanded ? 1 : 0} // Dynamically adjust padding when collapsed        aria-expanded={isExpanded}
         style={{
           maxHeight: isExpanded ? "200px" : "0px", // Dynamically adjust maxHeight
-          transition: "max-height 0.3s ease-in, padding 0.3s ease-in", // Smooth transition for maxHeight
+          transition: "max-height 0.3s ease-in", // Smooth transition for maxHeight
           overflow: "hidden", // Hide content when collapsed
         }}
       >
-        <Box data-testId="OrderSummaryPriceDetails" mb={2}>
+        <Spacer y={1} />
+        <Box data-testid="OrderSummaryPriceDetails" mb={2}>
           <Flex data-testid="OrderSummaryPriceLineItem">
             <Text flexGrow={1} variant="sm" color="mono60">
               Price
             </Text>
             <Text flexGrow={0} variant="sm" color="mono60">
-              {data.itemsTotal?.display}
+              {orderData.itemsTotal?.display}
             </Text>
           </Flex>
           <Flex data-testid="OrderSummaryShippingLineItem">
@@ -140,7 +139,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
               Shipping
             </Text>
             <Text flexGrow={0} variant="sm" color="mono60">
-              {data.shippingTotal?.display || "Calculated in next steps"}
+              {orderData.shippingTotal?.display || "Calculated in next steps"}
             </Text>
           </Flex>
           <Flex data-testid="OrderSummaryTaxLineItem">
@@ -148,7 +147,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
               Tax*
             </Text>
             <Text flexGrow={0} variant="sm" color="mono60">
-              {data.shippingTotal?.display || "Calculated in next steps"}
+              {orderData.shippingTotal?.display || "Calculated in next steps"}
             </Text>
           </Flex>
           <Spacer y={0.5} />
@@ -178,6 +177,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
             .
           </Text>
         </Box>
+        <Spacer y={1} />
       </Box>
     </Box>
   )

@@ -1,8 +1,11 @@
 import ShieldIcon from "@artsy/icons/ShieldIcon"
 import { Box, Flex, Image, Link, Message, Spacer, Text } from "@artsy/palette"
+import createLogger from "Utils/logger"
 import type { Order2ReviewStep_order$key } from "__generated__/Order2ReviewStep_order.graphql"
 import { useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
+
+const logger = createLogger("Order2ReviewStep")
 
 interface Order2ReviewStepProps {
   order: Order2ReviewStep_order$key
@@ -11,9 +14,9 @@ interface Order2ReviewStepProps {
 export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   order,
 }) => {
-  const data = useFragment(FRAGMENT, order)
-  const firstArtwork = data.lineItems[0]?.artwork
-  const firstArtworkVersion = data.lineItems[0]?.artworkVersion
+  const orderData = useFragment(FRAGMENT, order)
+  const firstArtwork = orderData.lineItems[0]?.artwork
+  const firstArtworkVersion = orderData.lineItems[0]?.artworkVersion
 
   const artworkData = {
     slug: firstArtwork?.slug,
@@ -24,19 +27,20 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   }
 
   const missingArtworkData = Object.values(artworkData).some(value => !value)
-  const missingOrderData = !data.buyerTotal?.display
+  const missingOrderData = !(
+    orderData.buyerTotal?.display || orderData.itemsTotal?.display
+  )
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    console.log("*** Order data", data)
     if (missingArtworkData) {
-      console.error("Missing artwork data in Order2CollapsibleOrderSummary", {
+      logger.error("Missing artwork data in Order2CollapsibleOrderSummary", {
         artworkData,
       })
     }
     if (missingOrderData) {
-      console.error("Missing order data in Order2CollapsibleOrderSummary", {
-        data,
+      logger.error("Missing order data in Order2CollapsibleOrderSummary", {
+        data: orderData,
       })
     }
   }, [])
@@ -44,6 +48,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   if (missingArtworkData) {
     return null
   }
+
   return (
     <Flex
       data-testid="OrderReviewStep"
@@ -132,7 +137,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           </Text>
         </Box>
       </Flex>
-      <Box data-testId="OrderReviewPriceDetails" mb={2}>
+      <Box data-testid="OrderReviewPriceDetails" mb={2}>
         <Flex data-testid="OrderSummaryPriceLineItem">
           <Text flexGrow={1} variant="sm" color="mono60">
             Price

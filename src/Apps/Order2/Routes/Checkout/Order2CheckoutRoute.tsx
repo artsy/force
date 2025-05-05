@@ -12,7 +12,6 @@ import {
   Tabs,
   Text,
 } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { addressFormFieldsValidator } from "Components/Address/AddressFormFields"
@@ -20,16 +19,12 @@ import { AddressFormFields } from "Components/Address/AddressFormFields"
 import { ErrorPage } from "Components/ErrorPage"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { countries as phoneCountryOptions } from "Utils/countries"
-import createLogger from "Utils/logger"
 import type { Order2CheckoutRoute_viewer$key } from "__generated__/Order2CheckoutRoute_viewer.graphql"
 import { Formik, type FormikHelpers, type FormikValues } from "formik"
 import type * as React from "react"
-import { useEffect } from "react"
 import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 import * as yup from "yup"
-
-const logger = createLogger("Order2DetailsRoute.tsx")
 
 interface Order2CheckoutRouteProps {
   viewer: Order2CheckoutRoute_viewer$key
@@ -42,15 +37,6 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
 
   const data = useFragment(FRAGMENT, viewer)
   const order = data.me?.order
-  const isCheckoutRedesignEnabled = useFlag("emerald_checkout-redesign")
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: placeholder because we aren't using this yet
-  useEffect(() => {
-    logger.warn("Order checkout page data:", {
-      data,
-      isCheckoutRedesignEnabled,
-    })
-  }, [isCheckoutRedesignEnabled])
 
   const validationSchema = yup.object().shape({
     ...addressFormFieldsValidator({ withPhoneNumber: true }),
@@ -259,7 +245,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
 
             {/* Shipping method Step */}
             <Flex
-              data-testID="ShippingMethodStep"
+              data-testid="ShippingMethodStep"
               flexDirection="column"
               backgroundColor="mono0"
               p={2}
@@ -274,7 +260,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
 
             {/* Payment method Step */}
             <Flex
-              data-testID="PaymentMethodSction"
+              data-testid="PaymentMethodSction"
               flexDirection="column"
               backgroundColor="mono0"
               p={2}
