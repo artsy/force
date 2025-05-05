@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<460155b22f1bb9b95bd09fc7e33e10d4>>
+ * @generated SignedSource<<f988faffb52c6045ff20168dce578556>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,6 +26,7 @@ export type ArtistHeader_artist$data = {
       readonly src: string | null | undefined;
       readonly width: number | null | undefined;
     } | null | undefined;
+    readonly imageTitle: string | null | undefined;
     readonly title: string | null | undefined;
   } | null | undefined;
   readonly formattedNationalityAndBirthday: string | null | undefined;
@@ -294,6 +295,13 @@ return {
           "name": "title",
           "storageKey": null
         },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "imageTitle",
+          "storageKey": null
+        },
         (v2/*: any*/),
         {
           "alias": null,
@@ -345,6 +353,6 @@ return {
 };
 })();
 
-(node as any).hash = "966307beb64f1a2a1d34d53688a526e4";
+(node as any).hash = "e52c47ac3fe6c7aad115ef19f7f3218d";
 
 export default node;
