@@ -3222,7 +3222,6 @@ type ArtworkImportEdge {
 enum ArtworkImportError {
   ARTWORK_CREATION_FAILED
   INVALID_CERTIFICATE_OF_AUTHENTICITY
-  INVALID_COA
   INVALID_DEPTH
   INVALID_DIAMETER
   INVALID_HEIGHT
@@ -11972,10 +11971,13 @@ type FulfillmentDetails {
   name: String
 
   # Phone number of the buyer
-  phoneNumber: String
+  phoneNumber: PhoneNumberType
 
   # Country code of the buyer's phone number
   phoneNumberCountryCode: String
+    @deprecated(
+      reason: "Use `phoneNumber.regionCode` for the alpha-2 country code or phoneNumber.countryCode for the numeric country code"
+    )
 
   # Shipping address postal code
   postalCode: String
@@ -12541,6 +12543,9 @@ type HomeView {
   section(
     # The ID of the section
     id: String!
+
+    # Overrides shouldBeDisplayed to show sections that would otherwise be hidden
+    overrideShouldBeDisplayed: Boolean = false
   ): HomeViewSectionGeneric
 
   # A paginated list of home view sections
@@ -17948,11 +17953,16 @@ enum PhoneNumberFormats {
 }
 
 type PhoneNumberType {
+  # Numeric phone number country code
   countryCode: String
+
+  # A formatted phone number if the number could be parsed
   display(format: PhoneNumberFormats): String
   error: PhoneNumberErrors
   isValid: Boolean
   originalNumber: String
+
+  # Two-letter region code (ISO 3166-1 alpha-2)
   regionCode: String
 }
 
@@ -19468,7 +19478,13 @@ type Query {
   ): PartnerConnection
 
   # Phone number information
-  phoneNumber(phoneNumber: String!, regionCode: String): PhoneNumberType
+  phoneNumber(
+    # Phone number to parse
+    phoneNumber: String!
+
+    # Two-letter region code (ISO 3166-1 alpha-2)
+    regionCode: String
+  ): PhoneNumberType
 
   # A previewed saved search
   previewSavedSearch(
@@ -25121,7 +25137,13 @@ type Viewer {
   ): PartnerConnection
 
   # Phone number information
-  phoneNumber(phoneNumber: String!, regionCode: String): PhoneNumberType
+  phoneNumber(
+    # Phone number to parse
+    phoneNumber: String!
+
+    # Two-letter region code (ISO 3166-1 alpha-2)
+    regionCode: String
+  ): PhoneNumberType
 
   # A previewed saved search
   previewSavedSearch(
