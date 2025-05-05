@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d91ccbc923730314e5f271cf172db722>>
+ * @generated SignedSource<<a28059ee4b770b5311366622de4a18a8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Order2DetailsPage_order$data = {
-  readonly code: string;
-  readonly displayTexts: {
-    readonly titleText: string;
-  };
-  readonly internalID: string;
+  readonly " $fragmentSpreads": FragmentRefs<"DetailsHeader_order">;
   readonly " $fragmentType": "Order2DetailsPage_order";
 };
 export type Order2DetailsPage_order$key = {
@@ -30,42 +26,15 @@ const node: ReaderFragment = {
   "name": "Order2DetailsPage_order",
   "selections": [
     {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "code",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "DisplayTexts",
-      "kind": "LinkedField",
-      "name": "displayTexts",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "titleText",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "DetailsHeader_order"
     }
   ],
   "type": "Order",
   "abstractKey": null
 };
 
-(node as any).hash = "5a78234b63f8bc406de90d2e4a0bd07d";
+(node as any).hash = "f44fbf49bcca9931b756d30a3ab79d61";
 
 export default node;

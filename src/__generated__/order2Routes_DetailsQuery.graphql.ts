@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<607fb0f1f3aef3e724e4ea766b38e725>>
+ * @generated SignedSource<<523de5ce75881bad3d205ba99d7aff79>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -153,7 +153,6 @@ return {
                 "name": "order",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -179,6 +178,7 @@ return {
                     ],
                     "storageKey": null
                   },
+                  (v2/*: any*/),
                   (v4/*: any*/),
                   (v3/*: any*/)
                 ],
@@ -194,12 +194,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "feda2c95191a972c9165dc450e3d2275",
+    "cacheID": "3f8a141b94688092ff84b0370a03db69",
     "id": null,
     "metadata": {},
     "name": "order2Routes_DetailsQuery",
     "operationKind": "query",
-    "text": "query order2Routes_DetailsQuery(\n  $orderID: String!\n) {\n  viewer {\n    ...Order2DetailsRoute_viewer_3HPek8\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  internalID\n  code\n  displayTexts {\n    titleText\n  }\n}\n\nfragment Order2DetailsRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      ...Order2DetailsPage_order\n      internalID\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query order2Routes_DetailsQuery(\n  $orderID: String!\n) {\n  viewer {\n    ...Order2DetailsRoute_viewer_3HPek8\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment DetailsHeader_order on Order {\n  code\n  displayTexts {\n    titleText\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...DetailsHeader_order\n}\n\nfragment Order2DetailsRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      ...Order2DetailsPage_order\n      internalID\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
