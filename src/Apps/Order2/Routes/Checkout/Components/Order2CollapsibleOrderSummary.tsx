@@ -22,33 +22,33 @@ export const Order2CollapsibleOrderSummary: React.FC<
   const artwork = orderData.lineItems[0]?.artwork
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
 
-  const requiredArtworkDataPresent =
+  const isRequiredArtworkDataPresent =
     artwork?.slug &&
     artworkVersion?.image?.resized?.url &&
     artworkVersion?.title &&
     artworkVersion?.artistNames &&
     artworkVersion?.date
 
-  const requiredOrderDataPresent =
+  const isRequiredOrderDataPresent =
     orderData.buyerTotal?.display || orderData.itemsTotal?.display
 
   // TODO: Handle missing/required data more intentionally.
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (!requiredArtworkDataPresent) {
+    if (!isRequiredArtworkDataPresent) {
       logger.error("Missing artwork data in Order2CollapsibleOrderSummary", {
         artwork,
         artworkVersion,
       })
     }
-    if (!requiredOrderDataPresent) {
+    if (!isRequiredOrderDataPresent) {
       logger.error("Missing order data in Order2CollapsibleOrderSummary", {
         orderData,
       })
     }
   }, [])
 
-  if (!requiredArtworkDataPresent) {
+  if (!isRequiredArtworkDataPresent) {
     return null
   }
 
@@ -118,8 +118,8 @@ export const Order2CollapsibleOrderSummary: React.FC<
         data-testid="OrderSummaryExpandedContent"
         px={2}
         overflow="hidden"
+        maxHeight={isExpanded ? "200px" : "0px"} // Set maxHeight to 0 when collapsed
         style={{
-          maxHeight: isExpanded ? "200px" : "0px", // Dynamically adjust maxHeight
           transition: "max-height 0.3s ease-in", // Smooth transition for maxHeight
         }}
       >

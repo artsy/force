@@ -19,19 +19,19 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   const artwork = orderData.lineItems[0]?.artwork
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
 
-  const requiredArtworkDataPresent =
+  const isRequiredArtworkDataPresent =
     artwork?.slug &&
     artworkVersion?.image?.resized?.url &&
     artworkVersion?.title &&
     artworkVersion?.artistNames &&
     artworkVersion?.date
 
-  const requiredOrderDataPresent =
+  const isRequiredOrderDataPresent =
     orderData.buyerTotal?.display || orderData.itemsTotal?.display
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Check only at mount
   useEffect(() => {
-    if (!requiredArtworkDataPresent) {
+    if (!isRequiredArtworkDataPresent) {
       logger.error(
         "Missing required artwork data in Order2CollapsibleOrderSummary",
         {
@@ -40,7 +40,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         },
       )
     }
-    if (!requiredOrderDataPresent) {
+    if (!isRequiredOrderDataPresent) {
       logger.error(
         "Missing required order data in Order2CollapsibleOrderSummary",
         {
@@ -50,7 +50,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
     }
   }, [])
 
-  if (!requiredArtworkDataPresent) {
+  if (!isRequiredArtworkDataPresent) {
     return null
   }
 
