@@ -1,5 +1,6 @@
 import ShieldIcon from "@artsy/icons/ShieldIcon"
-import { Box, Flex, Image, Link, Message, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type { Order2ReviewStep_order$key } from "__generated__/Order2ReviewStep_order.graphql"
 import { useEffect } from "react"
@@ -15,37 +16,41 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   order,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const firstArtwork = orderData.lineItems[0]?.artwork
-  const firstArtworkVersion = orderData.lineItems[0]?.artworkVersion
+  const artwork = orderData.lineItems[0]?.artwork
+  const artworkVersion = orderData.lineItems[0]?.artworkVersion
 
-  const artworkData = {
-    slug: firstArtwork?.slug,
-    title: firstArtworkVersion?.title,
-    artistNames: firstArtworkVersion?.artistNames,
-    date: firstArtworkVersion?.date,
-    imageURL: firstArtworkVersion?.image?.resized?.url,
-  }
+  const requiredArtworkDataPresent =
+    artwork?.slug &&
+    artworkVersion?.image?.resized?.url &&
+    artworkVersion?.title &&
+    artworkVersion?.artistNames &&
+    artworkVersion?.date
 
-  const missingArtworkData = Object.values(artworkData).some(value => !value)
-  const missingOrderData = !(
+  const requiredOrderDataPresent =
     orderData.buyerTotal?.display || orderData.itemsTotal?.display
-  )
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Check only at mount
   useEffect(() => {
-    if (missingArtworkData) {
-      logger.error("Missing artwork data in Order2CollapsibleOrderSummary", {
-        artworkData,
-      })
+    if (!requiredArtworkDataPresent) {
+      logger.error(
+        "Missing required artwork data in Order2CollapsibleOrderSummary",
+        {
+          artwork,
+          artworkVersion,
+        },
+      )
     }
-    if (missingOrderData) {
-      logger.error("Missing order data in Order2CollapsibleOrderSummary", {
-        data: orderData,
-      })
+    if (!requiredOrderDataPresent) {
+      logger.error(
+        "Missing required order data in Order2CollapsibleOrderSummary",
+        {
+          orderData,
+        },
+      )
     }
   }, [])
 
-  if (missingArtworkData) {
+  if (!requiredArtworkDataPresent) {
     return null
   }
 
@@ -65,45 +70,45 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         justifyContent="space-between"
         alignItems="flex-start"
       >
-        <Link flex={0} href={`/artwork/${artworkData.slug}`} target="_blank">
+        <RouterLink flex={0} to={`/artwork/${artwork.slug}`} target="_blank">
           <Image
             mr={1}
-            src={artworkData.imageURL}
-            alt={artworkData.title || ""}
+            src={artworkVersion.image.resized.url}
+            alt={artworkVersion.title}
             width="65px"
           />
-        </Link>
+        </RouterLink>
         <Box
+          overflow="hidden"
           style={{
             whiteSpace: "nowrap",
-            overflow: "hidden",
           }}
           flex={1}
         >
           <Text
+            overflow="hidden"
             style={{
-              overflow: "hidden",
               textOverflow: "ellipsis",
             }}
             variant="sm"
             color="mono100"
           >
-            {artworkData.artistNames}
+            {artworkVersion.artistNames}
           </Text>
           <Text
+            overflow="hidden"
             style={{
-              overflow: "hidden",
               textOverflow: "ellipsis",
             }}
             variant="sm"
             color="mono60"
             textAlign="left"
           >
-            {artworkData.title}, {artworkData.date}
+            {artworkVersion.title}, {artworkVersion.date}
           </Text>
           <Text
+            overflow="hidden"
             style={{
-              overflow: "hidden",
               textOverflow: "ellipsis",
             }}
             variant="sm"
@@ -114,8 +119,8 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           </Text>
           <Spacer y={0.5} />
           <Text
+            overflow="hidden"
             style={{
-              overflow: "hidden",
               textOverflow: "ellipsis",
             }}
             variant="xs"
@@ -125,8 +130,8 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
             From an unknown edition
           </Text>
           <Text
+            overflow="hidden"
             style={{
-              overflow: "hidden",
               textOverflow: "ellipsis",
             }}
             variant="xs"
@@ -183,9 +188,14 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         </Flex>
         <Text variant="xs" color="mono60" textAlign="left" mt={2}>
           *Additional duties and taxes{" "}
-          <Link color="inherit" target="_blank" href="#">
+          <RouterLink
+            inline
+            to="https://support.artsy.net/s/article/How-are-taxes-and-customs-fees-calculated"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             may apply at import
-          </Link>
+          </RouterLink>
           .
         </Text>
       </Box>

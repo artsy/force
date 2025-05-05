@@ -1,5 +1,6 @@
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
-import { Box, Clickable, Flex, Image, Link, Spacer, Text } from "@artsy/palette"
+import { Box, Clickable, Flex, Image, Spacer, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type { Order2CollapsibleOrderSummary_order$key } from "__generated__/Order2CollapsibleOrderSummary_order.graphql"
 import type * as React from "react"
@@ -16,42 +17,40 @@ export const Order2CollapsibleOrderSummary: React.FC<
   Order2CollapsibleOrderSummaryProps
 > = ({ order }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const firstArtwork = orderData.lineItems[0]?.artwork
-  const firstArtworkVersion = orderData.lineItems[0]?.artworkVersion
+  const [isExpanded, setIsExpanded] = useState(false)
 
-  const artworkData = {
-    slug: firstArtwork?.slug,
-    title: firstArtworkVersion?.title,
-    artistNames: firstArtworkVersion?.artistNames,
-    date: firstArtworkVersion?.date,
-    imageURL: firstArtworkVersion?.image?.resized?.url,
-  }
+  const artwork = orderData.lineItems[0]?.artwork
+  const artworkVersion = orderData.lineItems[0]?.artworkVersion
 
-  const missingArtworkData = Object.values(artworkData).some(value => !value)
-  const missingOrderData = !(
+  const requiredArtworkDataPresent =
+    artwork?.slug &&
+    artworkVersion?.image?.resized?.url &&
+    artworkVersion?.title &&
+    artworkVersion?.artistNames &&
+    artworkVersion?.date
+
+  const requiredOrderDataPresent =
     orderData.buyerTotal?.display || orderData.itemsTotal?.display
-  )
 
   // TODO: Handle missing/required data more intentionally.
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (missingArtworkData) {
+    if (!requiredArtworkDataPresent) {
       logger.error("Missing artwork data in Order2CollapsibleOrderSummary", {
-        artworkData,
+        artwork,
+        artworkVersion,
       })
     }
-    if (missingOrderData) {
+    if (!requiredOrderDataPresent) {
       logger.error("Missing order data in Order2CollapsibleOrderSummary", {
-        order,
+        orderData,
       })
     }
   }, [])
 
-  if (missingArtworkData) {
+  if (!requiredArtworkDataPresent) {
     return null
   }
-
-  const [isExpanded, setIsExpanded] = useState(false)
 
   const handleToggle = () => {
     setIsExpanded(!isExpanded)
@@ -60,43 +59,43 @@ export const Order2CollapsibleOrderSummary: React.FC<
   return (
     <Box data-testid="OrderSummary" backgroundColor="mono0">
       <Flex py={1} px={2} justifyContent="space-between">
-        <Link flex={0} href={`/artwork/${artworkData.slug}`} target="_blank">
+        <RouterLink flex={0} to={`/artwork/${artwork.slug}`} target="_blank">
           <Image
             mr={1}
-            src={artworkData.imageURL}
-            alt={artworkData.title || ""}
+            src={artworkVersion.image.resized.url}
+            alt={artworkVersion.title}
             width="40px"
           />
-        </Link>
+        </RouterLink>
         <Box
+          overflow="hidden"
           data-testid="OrderSummaryArtworkDetails"
           style={{
             whiteSpace: "nowrap",
-            overflow: "hidden",
           }}
           flex={1}
           mr={2}
         >
           <Text
+            overflow="hidden"
             style={{
-              overflow: "hidden",
               textOverflow: "ellipsis",
             }}
             variant="xs"
             color="mono100"
           >
-            {artworkData.artistNames}
+            {artworkVersion.artistNames}
           </Text>
           <Text
+            overflow="hidden"
             style={{
-              overflow: "hidden",
               textOverflow: "ellipsis",
             }}
             variant="xs"
             color="mono60"
             textAlign="left"
           >
-            {artworkData.title}, {artworkData.date}
+            {artworkVersion.title}, {artworkVersion.date}
           </Text>
         </Box>
         <Clickable display="flex" onClick={handleToggle} flexShrink={0}>
@@ -118,10 +117,10 @@ export const Order2CollapsibleOrderSummary: React.FC<
       <Box
         data-testid="OrderSummaryExpandedContent"
         px={2}
+        overflow="hidden"
         style={{
           maxHeight: isExpanded ? "200px" : "0px", // Dynamically adjust maxHeight
           transition: "max-height 0.3s ease-in", // Smooth transition for maxHeight
-          overflow: "hidden", // Hide content when collapsed
         }}
       >
         <Spacer y={1} />
@@ -171,9 +170,14 @@ export const Order2CollapsibleOrderSummary: React.FC<
           </Flex>
           <Text variant="xs" color="mono60" textAlign="left" mt={2}>
             *Additional duties and taxes{" "}
-            <Link target="_blank" href="#">
+            <RouterLink
+              inline
+              to="https://support.artsy.net/s/article/How-are-taxes-and-customs-fees-calculated"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               may apply at import
-            </Link>
+            </RouterLink>
             .
           </Text>
         </Box>
