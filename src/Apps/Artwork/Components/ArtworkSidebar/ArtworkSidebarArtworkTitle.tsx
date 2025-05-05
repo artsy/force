@@ -1,5 +1,6 @@
 import { Text } from "@artsy/palette"
 import type { ArtworkSidebarArtworkTitle_artwork$data } from "__generated__/ArtworkSidebarArtworkTitle_artwork.graphql"
+import { useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtworkSidebarArtworkTitleProps {
@@ -9,20 +10,27 @@ interface ArtworkSidebarArtworkTitleProps {
 const ArtworkSidebarArtworkTitle: React.FC<
   React.PropsWithChildren<ArtworkSidebarArtworkTitleProps>
 > = ({ artwork }) => {
-  const getArtworkDate = () => {
-    const formattedDate = artwork.date?.replace(/\s+/g, "") ?? ""
+  const date = useMemo(() => {
+    const formattedDate = artwork.date?.replace(/\s+/g, "")
 
+    if (!formattedDate) return null
     if (formattedDate.length > 0) {
       return `, ${artwork.date}`
     }
 
-    return
-  }
+    return null
+  }, [artwork.date])
+
+  const title = useMemo(() => {
+    return artwork.title?.trim()
+  }, [artwork.title])
+
+  if (!title) return null
 
   return (
-    <Text as="h1" color="mono60" variant="lg-display">
-      <i>{artwork.title?.trim()}</i>
-      {getArtworkDate()}
+    <Text color="mono60" variant="lg-display">
+      <i>{title}</i>
+      {date}
     </Text>
   )
 }

@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import {
   Flex,
   Join,
@@ -6,15 +7,8 @@ import {
   SkeletonText,
   Spacer,
   Text,
+  VisuallyHidden,
 } from "@artsy/palette"
-import { SidebarExpandable } from "Components/Artwork/SidebarExpandable"
-import type { ArtworkSidebar_artwork$data } from "__generated__/ArtworkSidebar_artwork.graphql"
-import type { ArtworkSidebar_me$data } from "__generated__/ArtworkSidebar_me.graphql"
-import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarArtistsFragmentContainer } from "./ArtworkSidebarArtists"
-import { ArtworkSidebarShippingInformationFragmentContainer } from "./ArtworkSidebarShippingInformation"
-
-import { ContextModule } from "@artsy/cohesion"
 import { ArtworkSidebarAuctionPollingRefetchContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionInfoPolling"
 import { ArtworkSidebarAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer"
 import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarBiddingClosedMessage"
@@ -28,14 +22,20 @@ import { ArtworkSidebarPrivateArtwork } from "Apps/Artwork/Components/ArtworkSid
 import { PrivateArtworkAdditionalInfo } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkAdditionalInfo"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { ArtsyShippingEstimate } from "Components/ArtsyShippingEstimate"
+import { SidebarExpandable } from "Components/Artwork/SidebarExpandable"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { useTimer } from "Utils/Hooks/useTimer"
 import type { ArtworkSidebarQuery } from "__generated__/ArtworkSidebarQuery.graphql"
+import type { ArtworkSidebar_artwork$data } from "__generated__/ArtworkSidebar_artwork.graphql"
+import type { ArtworkSidebar_me$data } from "__generated__/ArtworkSidebar_me.graphql"
 import { useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ArtworkSidebarArtistsFragmentContainer } from "./ArtworkSidebarArtists"
 import { ArtworkSidebarArtsyGuarantee } from "./ArtworkSidebarArtsyGuarantee"
 import { ArtworkSidebarArtworkTitleFragmentContainer } from "./ArtworkSidebarArtworkTitle"
+import { ArtworkSidebarShippingInformationFragmentContainer } from "./ArtworkSidebarShippingInformation"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork$data
@@ -140,9 +140,14 @@ export const ArtworkSidebar: React.FC<
           Lot {lotLabel}
         </Text>
       )}
-      <ArtworkSidebarArtistsFragmentContainer artwork={artwork} />
 
-      <ArtworkSidebarArtworkTitleFragmentContainer artwork={artwork} />
+      <h1>
+        <ArtworkSidebarArtistsFragmentContainer artwork={artwork} />
+
+        <VisuallyHidden>, </VisuallyHidden>
+
+        <ArtworkSidebarArtworkTitleFragmentContainer artwork={artwork} />
+      </h1>
 
       <Spacer y={2} />
 
