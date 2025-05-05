@@ -11,14 +11,6 @@ export interface ArtistsProps {
   artwork: ArtworkSidebarArtists_artwork$data
 }
 
-const StyledArtistLink = styled(RouterLink)`
-  color: ${themeGet("colors.mono100")};
-
-  &:hover {
-    text-decoration: underline;
-  }
-`
-
 export const ArtworkSidebarArtists: React.FC<
   React.PropsWithChildren<ArtistsProps>
 > = ({ artwork: { artists, culturalMaker } }) => {
@@ -39,6 +31,7 @@ export const ArtworkSidebarArtists: React.FC<
           if (!artist || !artist.name) return null
 
           let separator = ", "
+
           if (
             index === artists.length - 1 &&
             artists.length > ARTISTS_TO_DISPLAY
@@ -49,15 +42,16 @@ export const ArtworkSidebarArtists: React.FC<
           }
 
           return (
-            <Text variant="lg-display" as="span" key={artist.slug + index}>
-              <StyledArtistLink
-                to={`/artist/${artist.slug}`}
-                textDecoration="none"
-              >
-                {artist.name}
-                {separator}
-              </StyledArtistLink>
-            </Text>
+            <ArtistLink
+              key={artist.id}
+              variant="lg-display"
+              as={RouterLink}
+              to={artist.href}
+              target="_blank"
+            >
+              {artist.name}
+              {separator}
+            </ArtistLink>
           )
         })}
       </ShowMore>
@@ -69,6 +63,15 @@ export const ArtworkSidebarArtists: React.FC<
   )
 }
 
+const ArtistLink = styled(Text)`
+  color: ${themeGet("colors.mono100")};
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
 export const ArtworkSidebarArtistsFragmentContainer = createFragmentContainer(
   ArtworkSidebarArtists,
   {
@@ -76,8 +79,10 @@ export const ArtworkSidebarArtistsFragmentContainer = createFragmentContainer(
       fragment ArtworkSidebarArtists_artwork on Artwork {
         culturalMaker
         artists(shallow: true) {
+          id
           slug
           name
+          href
         }
       }
     `,

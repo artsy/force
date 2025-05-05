@@ -47,7 +47,7 @@ export const order2Routes: RouteProps[] = [
     children: [
       {
         path: "checkout",
-        layout: "LogoOnly",
+        layout: "LogoOnlyFullBleed",
         Component: CheckoutRoute,
         shouldWarnBeforeLeaving: true,
         prepareVariables: params => ({ orderID: params.orderID }),

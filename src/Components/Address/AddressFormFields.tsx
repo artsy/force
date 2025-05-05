@@ -290,6 +290,8 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
       {phoneInputType === "rich" && (
         <Column span={12}>
           <PhoneInput
+            // mt required to match spacing for other text inputs
+            mt={1}
             name="phoneNumber"
             onChange={handleChange}
             onBlur={handleBlur}
