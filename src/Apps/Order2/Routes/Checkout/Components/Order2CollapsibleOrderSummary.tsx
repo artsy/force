@@ -57,7 +57,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
   }
 
   return (
-    <Box data-testid="OrderSummary" backgroundColor="mono0">
+    <Box backgroundColor="mono0">
       <Flex py={1} px={2} justifyContent="space-between">
         <RouterLink flex={0} to={`/artwork/${artwork.slug}`} target="_blank">
           <Image
@@ -69,7 +69,6 @@ export const Order2CollapsibleOrderSummary: React.FC<
         </RouterLink>
         <Box
           overflow="hidden"
-          data-testid="OrderSummaryArtworkDetails"
           style={{
             whiteSpace: "nowrap",
           }}
@@ -93,7 +92,6 @@ export const Order2CollapsibleOrderSummary: React.FC<
             }}
             variant="xs"
             color="mono60"
-            textAlign="left"
           >
             {artworkVersion.title}, {artworkVersion.date}
           </Text>
@@ -107,25 +105,23 @@ export const Order2CollapsibleOrderSummary: React.FC<
             height="18px"
             mt="2px"
             style={{
-              transition: "transform 0.3s ease-in", // Smooth flipping animation
-              transitionDelay: "0.15s", // Add a delay to the flip animation to help it line up with the height transition below
-              transform: isExpanded ? "scaleY(-1)" : "scaleY(1)", // Flip vertically when expanded
+              transition: "transform 0.25s ease-in-out",
+              transform: isExpanded ? "scaleY(-1)" : "scaleY(1)",
             }}
           />
         </Clickable>
       </Flex>
       <Box
-        data-testid="OrderSummaryExpandedContent"
         px={2}
         overflow="hidden"
-        maxHeight={isExpanded ? "200px" : "0px"} // Set maxHeight to 0 when collapsed
+        maxHeight={isExpanded ? "200px" : "0px"}
         style={{
-          transition: "max-height 0.3s ease-in", // Smooth transition for maxHeight
+          transition: "max-height 0.3s ease-out",
         }}
       >
         <Spacer y={1} />
-        <Box data-testid="OrderSummaryPriceDetails" mb={2}>
-          <Flex data-testid="OrderSummaryPriceLineItem">
+        <Box mb={2}>
+          <Flex>
             <Text flexGrow={1} variant="sm" color="mono60">
               Price
             </Text>
@@ -133,7 +129,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
               {orderData.itemsTotal?.display}
             </Text>
           </Flex>
-          <Flex data-testid="OrderSummaryShippingLineItem">
+          <Flex>
             <Text flexGrow={1} variant="sm" color="mono60">
               Shipping
             </Text>
@@ -141,7 +137,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
               {orderData.shippingTotal?.display || "Calculated in next steps"}
             </Text>
           </Flex>
-          <Flex data-testid="OrderSummaryTaxLineItem">
+          <Flex>
             <Text flexGrow={1} variant="sm" color="mono60">
               Tax*
             </Text>
@@ -150,7 +146,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
             </Text>
           </Flex>
           <Spacer y={0.5} />
-          <Flex data-testid="OrderSummaryTotalPrice">
+          <Flex>
             <Text
               flexGrow={1}
               variant="sm-display"

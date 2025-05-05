@@ -55,21 +55,11 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   }
 
   return (
-    <Flex
-      data-testid="OrderReviewStep"
-      flexDirection="column"
-      backgroundColor="mono0"
-      p={2}
-    >
+    <Flex flexDirection="column" backgroundColor="mono0" p={2}>
       <Text variant="sm-display" fontWeight="medium" color="mono100">
         Order summary
       </Text>
-      <Flex
-        data-testid="OrderReviewArtworkDetails"
-        py={1}
-        justifyContent="space-between"
-        alignItems="flex-start"
-      >
+      <Flex py={1} justifyContent="space-between" alignItems="flex-start">
         <RouterLink flex={0} to={`/artwork/${artwork.slug}`} target="_blank">
           <Image
             mr={1}
@@ -142,8 +132,8 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           </Text>
         </Box>
       </Flex>
-      <Box data-testid="OrderReviewPriceDetails" mb={2}>
-        <Flex data-testid="OrderSummaryPriceLineItem">
+      <Box mb={2}>
+        <Flex>
           <Text flexGrow={1} variant="sm" color="mono60">
             Price
           </Text>
@@ -151,7 +141,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
             $15,000
           </Text>
         </Flex>
-        <Flex data-testid="OrderSummaryShippingLineItem">
+        <Flex>
           <Text flexGrow={1} variant="sm" color="mono60">
             Shipping
           </Text>
@@ -159,7 +149,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
             Calculated in next steps
           </Text>
         </Flex>
-        <Flex data-testid="OrderSummaryTaxLineItem">
+        <Flex>
           <Text flexGrow={1} variant="sm" color="mono60">
             Tax*
           </Text>
@@ -168,7 +158,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           </Text>
         </Flex>
         <Spacer y={0.5} />
-        <Flex data-testid="OrderSummaryTotalPrice">
+        <Flex>
           <Text
             flexGrow={1}
             variant="sm-display"

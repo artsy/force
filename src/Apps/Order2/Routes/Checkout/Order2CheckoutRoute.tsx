@@ -64,14 +64,8 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
             {/* Collapsible order summary */}
             <Order2CollapsibleOrderSummary order={order} />
             {/* Fulfillment details Step */}
-            <Flex
-              data-testid="FulfillmentDetailsStep"
-              flexDirection="column"
-              backgroundColor="mono0"
-              py={2}
-            >
+            <Flex flexDirection="column" backgroundColor="mono0" py={2}>
               <Tabs
-                data-testid="DeliveryOrPickupTabs"
                 justifyContent="space-between"
                 initialTabIndex={0}
                 onChange={tabInfo => {
@@ -135,7 +129,6 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                               )
                             }}
                             selected={formikContext.values.saveAddress}
-                            data-testid="saveAddress"
                           >
                             <Text variant="xs">
                               Save shipping address for later use
@@ -244,12 +237,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
             </Flex>
 
             {/* Shipping method Step */}
-            <Flex
-              data-testid="ShippingMethodStep"
-              flexDirection="column"
-              backgroundColor="mono0"
-              p={2}
-            >
+            <Flex flexDirection="column" backgroundColor="mono0" p={2}>
               <Text variant="sm-display" fontWeight="medium" color="mono100">
                 Shipping Method
               </Text>
@@ -259,12 +247,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
             </Flex>
 
             {/* Payment method Step */}
-            <Flex
-              data-testid="PaymentMethodSction"
-              flexDirection="column"
-              backgroundColor="mono0"
-              p={2}
-            >
+            <Flex flexDirection="column" backgroundColor="mono0" p={2}>
               <Text variant="sm-display" fontWeight="medium" color="mono100">
                 Payment
               </Text>
