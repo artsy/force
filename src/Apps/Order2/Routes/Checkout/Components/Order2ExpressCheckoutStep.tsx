@@ -1,15 +1,15 @@
 import { useFlag } from "@unleash/proxy-client-react"
 import { ExpressCheckoutQueryRenderer } from "Apps/Order/Components/ExpressCheckout"
-import type { Order2ExpressCheckoutSection_order$key } from "__generated__/Order2ExpressCheckoutSection_order.graphql"
+import type { Order2ExpressCheckoutStep_order$key } from "__generated__/Order2ExpressCheckoutStep_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2ExpressCheckoutSectionProps {
-  order: Order2ExpressCheckoutSection_order$key
+  order: Order2ExpressCheckoutStep_order$key
 }
 
 // TODO: Placeholder for the express checkout component loosely based on legacy
 // express checkout
-export const Order2ExpressCheckoutSection: React.FC<
+export const Order2ExpressCheckoutStep: React.FC<
   Order2ExpressCheckoutSectionProps
 > = ({ order }) => {
   const data = useFragment(FRAGMENT, order)
@@ -35,7 +35,7 @@ export const Order2ExpressCheckoutSection: React.FC<
 }
 
 const FRAGMENT = graphql`
-  fragment Order2ExpressCheckoutSection_order on Order {
+  fragment Order2ExpressCheckoutStep_order on Order {
     mode
     internalID
     lineItems {
