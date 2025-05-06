@@ -7,7 +7,6 @@ import {
   SkeletonText,
   Spacer,
   Text,
-  VisuallyHidden,
 } from "@artsy/palette"
 import { ArtworkSidebarAuctionPollingRefetchContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionInfoPolling"
 import { ArtworkSidebarAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer"
@@ -143,8 +142,6 @@ export const ArtworkSidebar: React.FC<
 
       <h1>
         <ArtworkSidebarArtistsFragmentContainer artwork={artwork} />
-
-        <VisuallyHidden>, </VisuallyHidden>
 
         <ArtworkSidebarArtworkTitleFragmentContainer artwork={artwork} />
       </h1>
