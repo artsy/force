@@ -1,17 +1,17 @@
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import { Box, Clickable, Flex, Image, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import createLogger from "Utils/logger"
 import type { Order2CollapsibleOrderSummary_order$key } from "__generated__/Order2CollapsibleOrderSummary_order.graphql"
 import type * as React from "react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
-
-const logger = createLogger("Order2CollapsibleOrderSummary")
 
 interface Order2CollapsibleOrderSummaryProps {
   order: Order2CollapsibleOrderSummary_order$key
 }
+
+const TAX_CALCULATION_ARTICLE =
+  "https://support.artsy.net/s/article/How-are-taxes-and-customs-fees-calculated"
 
 export const Order2CollapsibleOrderSummary: React.FC<
   Order2CollapsibleOrderSummaryProps
@@ -22,36 +22,6 @@ export const Order2CollapsibleOrderSummary: React.FC<
   const artwork = orderData.lineItems[0]?.artwork
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
 
-  const isRequiredArtworkDataPresent =
-    artwork?.slug &&
-    artworkVersion?.image?.resized?.url &&
-    artworkVersion?.title &&
-    artworkVersion?.artistNames &&
-    artworkVersion?.date
-
-  const isRequiredOrderDataPresent =
-    orderData.buyerTotal?.display || orderData.itemsTotal?.display
-
-  // TODO: Handle missing/required data more intentionally.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if (!isRequiredArtworkDataPresent) {
-      logger.error("Missing artwork data in Order2CollapsibleOrderSummary", {
-        artwork,
-        artworkVersion,
-      })
-    }
-    if (!isRequiredOrderDataPresent) {
-      logger.error("Missing order data in Order2CollapsibleOrderSummary", {
-        orderData,
-      })
-    }
-  }, [])
-
-  if (!isRequiredArtworkDataPresent) {
-    return null
-  }
-
   const handleToggle = () => {
     setIsExpanded(!isExpanded)
   }
@@ -59,41 +29,20 @@ export const Order2CollapsibleOrderSummary: React.FC<
   return (
     <Box backgroundColor="mono0">
       <Flex py={1} px={2} justifyContent="space-between">
-        <RouterLink flex={0} to={`/artwork/${artwork.slug}`} target="_blank">
+        <RouterLink flex={0} to={`/artwork/${artwork?.slug}`} target="_blank">
           <Image
             mr={1}
-            src={artworkVersion.image.resized.url}
-            alt={artworkVersion.title}
+            src={artworkVersion?.image?.resized?.url}
+            alt={artworkVersion?.title || ""}
             width="40px"
           />
         </RouterLink>
-        <Box
-          overflow="hidden"
-          style={{
-            whiteSpace: "nowrap",
-          }}
-          flex={1}
-          mr={2}
-        >
-          <Text
-            overflow="hidden"
-            style={{
-              textOverflow: "ellipsis",
-            }}
-            variant="xs"
-            color="mono100"
-          >
-            {artworkVersion.artistNames}
+        <Box overflow="hi" flex={1} mr={2}>
+          <Text overflowEllipsis variant="xs" color="mono100">
+            {artworkVersion?.artistNames}
           </Text>
-          <Text
-            overflow="hidden"
-            style={{
-              textOverflow: "ellipsis",
-            }}
-            variant="xs"
-            color="mono60"
-          >
-            {artworkVersion.title}, {artworkVersion.date}
+          <Text overflowEllipsis variant="xs" color="mono60">
+            {artworkVersion?.title}, {artworkVersion?.date}
           </Text>
         </Box>
         <Clickable display="flex" onClick={handleToggle} flexShrink={0}>
@@ -105,7 +54,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
             height="18px"
             mt="2px"
             style={{
-              transition: "transform 0.25s ease-in-out",
+              transition: "transform 0.3s ease-in-out",
               transform: isExpanded ? "scaleY(-1)" : "scaleY(1)",
             }}
           />
@@ -168,7 +117,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
             *Additional duties and taxes{" "}
             <RouterLink
               inline
-              to="https://support.artsy.net/s/article/How-are-taxes-and-customs-fees-calculated"
+              to={TAX_CALCULATION_ARTICLE}
               target="_blank"
               rel="noopener noreferrer"
             >
