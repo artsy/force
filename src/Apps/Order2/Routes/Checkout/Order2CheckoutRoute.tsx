@@ -1,5 +1,3 @@
-import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
-import ShieldIcon from "@artsy/icons/ShieldIcon"
 import {
   Box,
   Button,
@@ -7,9 +5,6 @@ import {
   Column,
   Flex,
   GridColumns,
-  Image,
-  Link,
-  Message,
   PhoneInput,
   Spacer,
   Stack,
@@ -17,34 +12,22 @@ import {
   Tabs,
   Text,
 } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
+import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
+import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { addressFormFieldsValidator } from "Components/Address/AddressFormFields"
 import { AddressFormFields } from "Components/Address/AddressFormFields"
+import { ErrorPage } from "Components/ErrorPage"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { countries as phoneCountryOptions } from "Utils/countries"
-import createLogger from "Utils/logger"
 import type { Order2CheckoutRoute_viewer$key } from "__generated__/Order2CheckoutRoute_viewer.graphql"
 import { Formik, type FormikHelpers, type FormikValues } from "formik"
 import type * as React from "react"
-import { useEffect } from "react"
 import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 import * as yup from "yup"
 
-const logger = createLogger("Order2DetailsRoute.tsx")
-
 interface Order2CheckoutRouteProps {
   viewer: Order2CheckoutRoute_viewer$key
-}
-
-const TEMP_DATA = {
-  artworkVersionImageResizedUrl:
-    "https://d196wkiy8qx2u5.cloudfront.net?height=138&quality=80&resize_to=fit&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FidB9tWSQTPziYVn7rPLb0A%2Flarge.jpg&width=185",
-  artworkVersionTitle: "Paper Dreams #5",
-  artworkVersionArtistNames: "Viccel, Cheatham and Howe, plus a lot more",
-  artworkVersionDate: "2023",
-  // Working of ArtworkSummaryItem this comes from artwork, others from artworkVersion
-  artworkSlug: "viccel-paper-dreams-number-5",
 }
 
 export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
@@ -53,20 +36,16 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
   const { isEigen } = useSystemContext()
 
   const data = useFragment(FRAGMENT, viewer)
-  const isCheckoutRedesignEnabled = useFlag("emerald_checkout-redesign")
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: placeholder because we aren't using this yet
-  useEffect(() => {
-    logger.warn("Order checkout page data:", {
-      data,
-      isCheckoutRedesignEnabled,
-    })
-  }, [isCheckoutRedesignEnabled])
+  const order = data.me?.order
 
   const validationSchema = yup.object().shape({
     ...addressFormFieldsValidator({ withPhoneNumber: true }),
     saveAddress: yup.boolean(),
   })
+
+  if (!order) {
+    return <ErrorPage code={404} message="Order not found" />
+  }
 
   return (
     <>
@@ -82,71 +61,11 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
       <GridColumns>
         <Column span={[12, 8]} start={[1, 2]}>
           <Stack gap={1} bg="mono5">
-            {/* Collapsable order summary */}
-            <Box data-testid="OrderSummary" backgroundColor="mono0">
-              <Flex py={1} px={2} justifyContent="space-between">
-                <Link
-                  flex={0}
-                  href={`/artwork/${TEMP_DATA.artworkSlug}`}
-                  target="_blank"
-                >
-                  <Image
-                    mr={1}
-                    src={TEMP_DATA.artworkVersionImageResizedUrl}
-                    alt={TEMP_DATA.artworkVersionTitle || ""}
-                    width="40px"
-                  />
-                </Link>
-                <Box
-                  data-testid="OrderSummaryArtworkDetails"
-                  style={{
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                  }}
-                  flex={1}
-                  mr={2}
-                >
-                  <Text
-                    style={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                    variant="xs"
-                    color="mono100"
-                  >
-                    {TEMP_DATA.artworkVersionArtistNames}
-                  </Text>
-                  <Text
-                    style={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                    variant="xs"
-                    color="mono60"
-                    textAlign="left"
-                  >
-                    {TEMP_DATA.artworkVersionTitle},{" "}
-                    {TEMP_DATA.artworkVersionDate}
-                  </Text>
-                </Box>
-                <Flex flexShrink={0}>
-                  <Text variant="xs" color="mono100" mr={0.5}>
-                    $150,000
-                  </Text>
-                  <ChevronDownIcon height="18px" mt="2px" />
-                </Flex>
-              </Flex>
-            </Box>
-
-            {/* Fulfillment details section */}
-            <Flex
-              data-testid="FulfillmentDetailsSection"
-              flexDirection="column"
-              backgroundColor="mono0"
-              py={2}
-            >
+            {/* Collapsible order summary */}
+            <Order2CollapsibleOrderSummary order={order} />
+            {/* Fulfillment details Step */}
+            <Flex flexDirection="column" backgroundColor="mono0" py={2}>
               <Tabs
-                data-testid="DeliveryOrPickupTabs"
                 justifyContent="space-between"
                 initialTabIndex={0}
                 onChange={tabInfo => {
@@ -210,7 +129,6 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                               )
                             }}
                             selected={formikContext.values.saveAddress}
-                            data-testid="saveAddress"
                           >
                             <Text variant="xs">
                               Save shipping address for later use
@@ -318,13 +236,8 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
               </Tabs>
             </Flex>
 
-            {/* Shipping method section */}
-            <Flex
-              data-testID="ShippingMethodSection"
-              flexDirection="column"
-              backgroundColor="mono0"
-              p={2}
-            >
+            {/* Shipping method Step */}
+            <Flex flexDirection="column" backgroundColor="mono0" p={2}>
               <Text variant="sm-display" fontWeight="medium" color="mono100">
                 Shipping Method
               </Text>
@@ -333,13 +246,8 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
               </Text>
             </Flex>
 
-            {/* Payment method section */}
-            <Flex
-              data-testID="PaymentMethodSction"
-              flexDirection="column"
-              backgroundColor="mono0"
-              p={2}
-            >
+            {/* Payment method Step */}
+            <Flex flexDirection="column" backgroundColor="mono0" p={2}>
               <Text variant="sm-display" fontWeight="medium" color="mono100">
                 Payment
               </Text>
@@ -349,161 +257,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
               {/* <PaymentForm /> */}
             </Flex>
 
-            {/* Review & submit section */}
-            <Flex
-              data-testid="OrderReviewSection"
-              flexDirection="column"
-              backgroundColor="mono0"
-              p={2}
-            >
-              <Text variant="sm-display" fontWeight="medium" color="mono100">
-                Order summary
-              </Text>
-              <Flex
-                data-testid="OrderReviewArtworkDetails"
-                py={1}
-                justifyContent="space-between"
-                alignItems="flex-start"
-              >
-                <Link
-                  flex={0}
-                  href={`/artwork/${TEMP_DATA.artworkSlug}`}
-                  target="_blank"
-                >
-                  <Image
-                    mr={1}
-                    src={TEMP_DATA.artworkVersionImageResizedUrl}
-                    alt={TEMP_DATA.artworkVersionTitle || ""}
-                    width="65px"
-                  />
-                </Link>
-                <Box
-                  style={{
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                  }}
-                  flex={1}
-                >
-                  <Text
-                    style={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                    variant="sm"
-                    color="mono100"
-                  >
-                    {TEMP_DATA.artworkVersionArtistNames}
-                  </Text>
-                  <Text
-                    style={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                    variant="sm"
-                    color="mono60"
-                    textAlign="left"
-                  >
-                    {TEMP_DATA.artworkVersionTitle},{" "}
-                    {TEMP_DATA.artworkVersionDate}
-                  </Text>
-                  <Text
-                    style={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                    variant="sm"
-                    color="mono60"
-                    textAlign="left"
-                  >
-                    List price: $1,000,000
-                  </Text>
-                  <Spacer y={0.5} />
-                  <Text
-                    style={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                    variant="xs"
-                    color="mono60"
-                    textAlign="left"
-                  >
-                    From an unknown edition
-                  </Text>
-                  <Text
-                    style={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                    variant="xs"
-                    color="mono60"
-                    textAlign="left"
-                  >
-                    78 x 78 x 6in (27.9 x 27.9 x 8.9 cm)
-                  </Text>
-                </Box>
-              </Flex>
-              <Box data-testId="OrderReviewPriceDetails" mb={2}>
-                <Flex data-testid="OrderSummaryPriceLineItem">
-                  <Text flexGrow={1} variant="sm" color="mono60">
-                    Price
-                  </Text>
-                  <Text flexGrow={0} variant="sm" color="mono60">
-                    $15,000
-                  </Text>
-                </Flex>
-                <Flex data-testid="OrderSummaryShippingLineItem">
-                  <Text flexGrow={1} variant="sm" color="mono60">
-                    Shipping
-                  </Text>
-                  <Text flexGrow={0} variant="sm" color="mono60">
-                    Calculated in next steps
-                  </Text>
-                </Flex>
-                <Flex data-testid="OrderSummaryTaxLineItem">
-                  <Text flexGrow={1} variant="sm" color="mono60">
-                    Tax*
-                  </Text>
-                  <Text flexGrow={0} variant="sm" color="mono60">
-                    Calculated in next steps
-                  </Text>
-                </Flex>
-                <Spacer y={0.5} />
-                <Flex data-testid="OrderSummaryTotalPrice">
-                  <Text
-                    flexGrow={1}
-                    variant="sm-display"
-                    color="mono100"
-                    fontWeight="medium"
-                  >
-                    Total
-                  </Text>
-                  <Text
-                    flexGrow={0}
-                    variant="sm-display"
-                    color="mono100"
-                    fontWeight="medium"
-                  >
-                    Waiting for final cost
-                  </Text>
-                </Flex>
-                <Text variant="xs" color="mono60" textAlign="left" mt={2}>
-                  *Additional duties and taxes{" "}
-                  <Link target="_blank" href="#">
-                    may apply at import
-                  </Link>
-                  .
-                </Text>
-              </Box>
-              <Message variant="default">
-                <Flex>
-                  <ShieldIcon fill="mono100" />
-                  <Spacer x={1} />
-                  <Text variant="xs" color="mono100">
-                    Your purchase is protected with Artsy’s buyer protection.
-                  </Text>
-                </Flex>
-              </Message>
-            </Flex>
+            <Order2ReviewStep order={order} />
           </Stack>
         </Column>
       </GridColumns>
@@ -517,6 +271,8 @@ const FRAGMENT = graphql`
     me {
       order(id: $orderID) {
         internalID
+        ...Order2CollapsibleOrderSummary_order
+        ...Order2ReviewStep_order
       }
       addressConnection(first: 10) {
         edges {

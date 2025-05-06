@@ -88,17 +88,18 @@ export const NavBarLoggedInActions: React.FC<
           </NavBarItemButton>
         )}
       </Dropdown>
+
       <NavBarItemLink
         href={(() => {
           if (getENV("IS_MOBILE")) {
-            return `/user/conversations`
+            return "/user/conversations"
           }
 
           if (firstConversation?.internalID) {
             return `/user/conversations/${firstConversation.internalID}`
-          } else {
-            return "/user/conversations"
           }
+
+          return "/user/conversations"
         })()}
         aria-label={
           hasConversations
@@ -116,6 +117,7 @@ export const NavBarLoggedInActions: React.FC<
           />
         )}
       </NavBarItemLink>
+
       <Dropdown
         zIndex={Z.dropdown}
         dropdown={<NavBarUserMenu width={230} />}

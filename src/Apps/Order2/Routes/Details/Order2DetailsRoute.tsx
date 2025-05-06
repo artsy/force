@@ -1,8 +1,5 @@
-import { useFlag } from "@unleash/proxy-client-react"
 import { Order2DetailsPage } from "Apps/Order2/Routes/Details/Components/Order2DetailsPage"
-import createLogger from "Utils/logger"
 import type { Order2DetailsRoute_viewer$key } from "__generated__/Order2DetailsRoute_viewer.graphql"
-import { useEffect } from "react"
 import type React from "react"
 import { Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
@@ -11,21 +8,13 @@ interface DetailsProps {
   viewer: Order2DetailsRoute_viewer$key
 }
 
-const logger = createLogger("Order2DetailsRoute.tsx")
-
 export const Order2DetailsRoute: React.FC<DetailsProps> = ({ viewer }) => {
-  const isOrderDetailsFlagEnabled = useFlag("emerald_order-details-page")
   const data = useFragment(FRAGMENT, viewer)
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    logger.warn("Order details page data:", data, isOrderDetailsFlagEnabled)
-  }, [isOrderDetailsFlagEnabled])
 
   return (
     <>
       <Title>Order details | Artsy</Title>
-      <Order2DetailsPage />
+      {data.me?.order ? <Order2DetailsPage order={data.me.order} /> : null}
     </>
   )
 }
@@ -35,6 +24,7 @@ const FRAGMENT = graphql`
   @argumentDefinitions(orderID: { type: "String!" }) {
     me {
       order(id: $orderID) {
+        ...Order2DetailsPage_order
         internalID
       }
     }

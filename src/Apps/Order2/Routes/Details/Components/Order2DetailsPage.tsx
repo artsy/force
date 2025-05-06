@@ -14,18 +14,22 @@ import {
   Text,
 } from "@artsy/palette"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
+import type { Order2DetailsPage_order$key } from "__generated__/Order2DetailsPage_order.graphql"
+import { graphql, useFragment } from "react-relay"
+import { Order2DetailsHeader } from "./Order2DetailsHeader"
 
-export const Order2DetailsPage = () => {
+interface Order2DetailsPageProps {
+  order: Order2DetailsPage_order$key
+}
+
+export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
+  const orderData = useFragment(FRAGMENT, order)
+
   return (
     <GridColumns>
       <Column span={[12]}>
-        {/* <Box bg="red">Order ID: {orderId}</Box> */}
-
         <Box m={2}>
-          {/* Title */}
-          <Text variant="lg">Great choice, Viviana! </Text>
-          {/* Order # */}
-          <Text variant="xs">Order #123456789 </Text>
+          <Order2DetailsHeader order={orderData} />
         </Box>
 
         {/* Message */}
@@ -119,7 +123,7 @@ export const Order2DetailsPage = () => {
               <ShieldIcon fill="mono100" />
               <Spacer x={1} />
               <Text variant="xs" color="mono100">
-                Your purchase is protected with Artsy’s buyer protection.
+                Your purchase is protected with Artsy's buyer protection.
               </Text>
             </Flex>
           </Message>
@@ -196,6 +200,12 @@ export const Order2DetailsPage = () => {
     </GridColumns>
   )
 }
+
+const FRAGMENT = graphql`
+  fragment Order2DetailsPage_order on Order {
+    ...Order2DetailsHeader_order
+  }
+`
 
 const onClickReadFAQ = () => {
   // TODO: track event?

@@ -1,4 +1,4 @@
-import { ShowMore, Text } from "@artsy/palette"
+import { ShowMore, Text, VisuallyHidden } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { RouterLink } from "System/Components/RouterLink"
 import type { ArtworkSidebarArtists_artwork$data } from "__generated__/ArtworkSidebarArtists_artwork.graphql"
@@ -59,6 +59,8 @@ export const ArtworkSidebarArtists: React.FC<
       {artists.length === 0 && culturalMaker && (
         <Text variant="lg-display">{culturalMaker}</Text>
       )}
+
+      <VisuallyHidden>, </VisuallyHidden>
     </div>
   )
 }

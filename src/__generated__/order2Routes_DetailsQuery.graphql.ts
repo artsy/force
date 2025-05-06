@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ea307fc3b179f36b3ba2586f24a59e9d>>
+ * @generated SignedSource<<4a8903628f480f7369a09868405e3b8d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -153,6 +153,31 @@ return {
                 "name": "order",
                 "plural": false,
                 "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "code",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "DisplayTexts",
+                    "kind": "LinkedField",
+                    "name": "displayTexts",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "titleText",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
                   (v2/*: any*/),
                   (v4/*: any*/),
                   (v3/*: any*/)
@@ -169,12 +194,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "161800c5620413118385777f578500b0",
+    "cacheID": "752951689219d899229f8b4eac41d612",
     "id": null,
     "metadata": {},
     "name": "order2Routes_DetailsQuery",
     "operationKind": "query",
-    "text": "query order2Routes_DetailsQuery(\n  $orderID: String!\n) {\n  viewer {\n    ...Order2DetailsRoute_viewer_3HPek8\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2DetailsRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      internalID\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query order2Routes_DetailsQuery(\n  $orderID: String!\n) {\n  viewer {\n    ...Order2DetailsRoute_viewer_3HPek8\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    titleText\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n}\n\nfragment Order2DetailsRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      ...Order2DetailsPage_order\n      internalID\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

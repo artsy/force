@@ -45,6 +45,8 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
 
   const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)
+  const altText =
+    artist.coverArtwork?.imageTitle ?? `Artwork by ${artist.name!}`
   const hasPartnerSuppliedBio = !!artist.biographyBlurb?.credit
   const hasBio = artist.biographyBlurb?.text && !hasPartnerSuppliedBio
   const hasVerifiedRepresentatives = artist?.verifiedRepresentatives?.length > 0
@@ -62,7 +64,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
           alignItems="center"
         >
           <RouterLink to={artist.coverArtwork.href} display="block">
-            <ArtistHeaderImage image={image} />
+            <ArtistHeaderImage image={image} alt={altText} />
           </RouterLink>
         </Column>
       )}
@@ -277,6 +279,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         }
         coverArtwork {
           title
+          imageTitle
           href
           image {
             src: url(version: ["larger", "larger"])

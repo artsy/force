@@ -7,7 +7,7 @@ import { NavBarPrimaryLogo } from "Components/NavBar/NavBarPrimaryLogo"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { type FC } from "react"
+import type { FC } from "react"
 
 export const LayoutLogoOnlyFullBleed: FC<
   React.PropsWithChildren<BaseLayoutProps>

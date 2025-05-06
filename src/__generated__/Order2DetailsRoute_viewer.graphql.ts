@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0d89aceb58545cdf33bdf3568bf2d4ca>>
+ * @generated SignedSource<<52eab5caccb1e2e4d26141a05689e529>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type Order2DetailsRoute_viewer$data = {
   readonly me: {
     readonly order: {
       readonly internalID: string;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsPage_order">;
     } | null | undefined;
   } | null | undefined;
   readonly " $fragmentType": "Order2DetailsRoute_viewer";
@@ -58,6 +59,11 @@ const node: ReaderFragment = {
           "plural": false,
           "selections": [
             {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "Order2DetailsPage_order"
+            },
+            {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
@@ -75,6 +81,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "c104d62967a84107696d2c663f88a325";
+(node as any).hash = "bf419309f435f0f8c96a9ba9be088cf3";
 
 export default node;
