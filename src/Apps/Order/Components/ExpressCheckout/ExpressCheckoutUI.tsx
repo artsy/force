@@ -656,8 +656,17 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
     shippingRatesOnly.length === 0
       ? rates.concat(CALCULATING_SHIPPING_RATE)
       : rates
-
-  return finalRates.sort(sortPickupLast)
+  const selectedFulfillmentOption = order.fulfillmentOptions.find(
+    option => option.selected,
+  )
+  if (selectedFulfillmentOption!.type === "PICKUP") {
+    // if pickup is selected, it should be the first option since Stripe auto
+    // selects the first option
+    return finalRates
+  } else {
+    // on modal open, the first option should always be ship
+    return finalRates.sort(sortPickupLast)
+  }
 }
 
 // Only max-height can be animated
