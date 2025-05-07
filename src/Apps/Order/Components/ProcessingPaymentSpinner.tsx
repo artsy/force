@@ -12,7 +12,7 @@ export const ProcessingPaymentSpinner: React.FC = () => {
       </Text>
 
       <Text variant="sm" color="mono60">
-        Please do not close or refresg this window
+        Please do not close or refresh this window
       </Text>
     </Flex>
   )
