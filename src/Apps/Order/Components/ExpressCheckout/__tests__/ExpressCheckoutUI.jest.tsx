@@ -183,22 +183,40 @@ describe("ExpressCheckoutUI", () => {
 
     fireEvent.click(screen.getByTestId("express-checkout-confirm"))
 
-    const { operationName, operationVariables } =
-      await mockResolveLastOperation({
-        updateOrderPayload: () => ({
-          orderOrError: {
-            __typename: "OrderMutationSuccess",
-            order: orderData,
-          },
-        }),
-      })
-    expect(operationName).toBe("useUpdateOrderMutation")
-    expect(operationVariables.input).toEqual({
+    // First, test the payment method update
+    const paymentMethodUpdate = await mockResolveLastOperation({
+      updateOrder: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    expect(paymentMethodUpdate.operationName).toBe("useUpdateOrderMutation")
+    expect(paymentMethodUpdate.operationVariables.input).toEqual({
+      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+      paymentMethod: "CREDIT_CARD",
+      creditCardWalletType: "APPLE_PAY",
+    })
+
+    // Second, test the shipping address update
+    const shippingAddressUpdate = await mockResolveLastOperation({
+      updateOrderShippingAddress: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    expect(shippingAddressUpdate.operationName).toBe(
+      "useUpdateOrderShippingAddressMutation",
+    )
+    expect(shippingAddressUpdate.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
       buyerPhoneNumber: "1234567890",
       buyerPhoneNumberCountryCode: null,
-      creditCardWalletType: "APPLE_PAY",
-      paymentMethod: "CREDIT_CARD",
       shippingAddressLine1: "401 Broadway",
       shippingAddressLine2: null,
       shippingCity: "New York",
@@ -211,16 +229,18 @@ describe("ExpressCheckoutUI", () => {
     await flushPromiseQueue()
     expect(mockCreateConfirmationToken).toHaveBeenCalled()
 
-    const mutation = await mockResolveLastOperation({
-      submitOrderPayload: () => ({
+    // Third, test the order submission
+    const orderSubmission = await mockResolveLastOperation({
+      submitOrder: () => ({
         orderOrError: {
           __typename: "OrderMutationSuccess",
           order: orderData,
         },
       }),
     })
-    expect(mutation.operationName).toBe("useSubmitOrderMutation")
-    expect(mutation.operationVariables.input).toEqual({
+
+    expect(orderSubmission.operationName).toBe("useSubmitOrderMutation")
+    expect(orderSubmission.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
       confirmationToken: "ctoken_123",
     })
@@ -248,22 +268,37 @@ describe("ExpressCheckoutUI", () => {
 
     fireEvent.click(screen.getByTestId("express-checkout-confirm"))
 
+    // First, test the payment method update
+    const paymentMethodUpdate = await mockResolveLastOperation({
+      updateOrder: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    expect(paymentMethodUpdate.operationName).toBe("useUpdateOrderMutation")
+    expect(paymentMethodUpdate.operationVariables.input).toEqual({
+      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+      paymentMethod: "CREDIT_CARD",
+      creditCardWalletType: "APPLE_PAY",
+    })
+
     const { operationName, operationVariables } =
       await mockResolveLastOperation({
-        updateOrderPayload: () => ({
+        updateOrderShippingAddress: () => ({
           orderOrError: {
             __typename: "OrderMutationSuccess",
             order: orderData,
           },
         }),
       })
-    expect(operationName).toBe("useUpdateOrderMutation")
+    expect(operationName).toBe("useUpdateOrderShippingAddressMutation")
     expect(operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
       buyerPhoneNumber: "1234567890",
       buyerPhoneNumberCountryCode: null,
-      creditCardWalletType: "APPLE_PAY",
-      paymentMethod: "CREDIT_CARD",
       shippingAddressLine1: "401 Broadway",
       shippingAddressLine2: null,
       shippingCity: "New York",
@@ -439,9 +474,19 @@ describe("ExpressCheckoutUI", () => {
 
     fireEvent.click(screen.getByTestId("express-checkout-confirm"))
 
+    // Resolve the payment method update mutation
+    await mockResolveLastOperation({
+      updateOrder: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
     // Resolve the update order mutation
     await mockResolveLastOperation({
-      updateOrderPayload: () => ({
+      updateOrderShippingAddress: () => ({
         orderOrError: {
           __typename: "OrderMutationSuccess",
           order: orderData,
