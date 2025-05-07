@@ -29,8 +29,9 @@ import type {
   Shipping_order$data,
   Shipping_order$key,
 } from "__generated__/Shipping_order.graphql"
-import { type FC, useEffect } from "react"
+import { type FC, useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
+import { ProcessingPaymentSpinner } from "Apps/Order/Components/ProcessingPaymentSpinner"
 
 export type ShippingStage =
   // User choosing fulfillment type
@@ -73,6 +74,7 @@ const ShippingRouteLayout: FC<
   React.PropsWithChildren<Omit<ShippingProps, "dialog">>
 > = ({ me, order }) => {
   useShowStoredErrorDialog()
+  const [showSpinner, setShowSpinner] = useState(false)
 
   const shippingContext = useShippingContext()
 
@@ -110,30 +112,37 @@ const ShippingRouteLayout: FC<
           shippingContext.orderData.isOffer ? offerFlowSteps : buyNowFlowSteps
         }
         content={
-          <Flex
-            flexDirection="column"
-            style={
-              shippingContext.state.isPerformingOperation
-                ? { pointerEvents: "none" }
-                : {}
-            }
-          >
-            {isExpressCheckoutEligible && (
-              <>
-                {isExpressCheckoutLoading && EXPRESS_CHECKOUT_PLACEHOLDER}
-                <ExpressCheckoutQueryRenderer orderID={order.internalID} />
-              </>
-            )}
+          <>
+            {!!showSpinner && <ProcessingPaymentSpinner />}
+            <Flex
+              display={showSpinner ? "none" : "flex"}
+              flexDirection="column"
+              style={
+                shippingContext.state.isPerformingOperation
+                  ? { pointerEvents: "none" }
+                  : {}
+              }
+            >
+              {isExpressCheckoutEligible && (
+                <>
+                  {isExpressCheckoutLoading && EXPRESS_CHECKOUT_PLACEHOLDER}
+                  <ExpressCheckoutQueryRenderer
+                    orderID={order.internalID}
+                    setShowSpinner={setShowSpinner}
+                  />
+                </>
+              )}
 
-            <FulfillmentDetails me={me} order={order} />
+              <FulfillmentDetails me={me} order={order} />
 
-            <Jump id="shippingOptionsTop" />
-            <ShippingQuotes order={order} />
+              <Jump id="shippingOptionsTop" />
+              <ShippingQuotes order={order} />
 
-            <Media greaterThan="xs">
-              <SaveAndContinueButton width="50%" order={order} />
-            </Media>
-          </Flex>
+              <Media greaterThan="xs">
+                <SaveAndContinueButton width="50%" order={order} />
+              </Media>
+            </Flex>
+          </>
         }
         sidebar={
           <Flex flexDirection="column">
