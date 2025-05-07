@@ -430,6 +430,18 @@ describe("ExpressCheckoutUI", () => {
 
     fireEvent.click(screen.getByTestId("express-checkout-confirm"))
 
+    // First, test the payment method update
+    await mockResolveLastOperation({
+      updateOrder: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    await flushPromiseQueue()
+
     // Resolve the update order mutation
     await mockResolveLastOperation({
       updateOrderPayload: () => ({
