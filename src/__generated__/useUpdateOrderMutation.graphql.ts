@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8db13cd7d2ac6c6c060e744f2ddd999e>>
+ * @generated SignedSource<<132e07f99046808f33bbef06718aa1e7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,19 +14,10 @@ export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" |
 export type OrderCreditCardWalletTypeEnum = "APPLE_PAY" | "GOOGLE_PAY" | "%future added value";
 export type OrderPaymentMethodEnum = "CREDIT_CARD" | "%future added value";
 export type updateOrderInput = {
-  buyerPhoneNumber?: string | null | undefined;
-  buyerPhoneNumberCountryCode?: string | null | undefined;
   clientMutationId?: string | null | undefined;
   creditCardWalletType?: OrderCreditCardWalletTypeEnum | null | undefined;
   id: string;
   paymentMethod?: OrderPaymentMethodEnum | null | undefined;
-  shippingAddressLine1?: string | null | undefined;
-  shippingAddressLine2?: string | null | undefined;
-  shippingCity?: string | null | undefined;
-  shippingCountry?: string | null | undefined;
-  shippingName?: string | null | undefined;
-  shippingPostalCode?: string | null | undefined;
-  shippingRegion?: string | null | undefined;
 };
 export type useUpdateOrderMutation$variables = {
   input: updateOrderInput;
