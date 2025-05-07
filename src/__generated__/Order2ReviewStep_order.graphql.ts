@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e5b839b3696463ca09beaaa7ed287b0f>>
+ * @generated SignedSource<<18dcb0596048b31c48bcac809a780b4d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,6 +42,7 @@ export type Order2ReviewStep_order$data = {
   readonly taxTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2PricingBreakdown_order">;
   readonly " $fragmentType": "Order2ReviewStep_order";
 };
 export type Order2ReviewStep_order$key = {
@@ -65,6 +66,11 @@ return {
   "metadata": null,
   "name": "Order2ReviewStep_order",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Order2PricingBreakdown_order"
+    },
     {
       "alias": null,
       "args": null,
@@ -226,6 +232,6 @@ return {
 };
 })();
 
-(node as any).hash = "a9f92a55d87fcb6b5eb9061e17649762";
+(node as any).hash = "397ea176292b127da0b449199cd7ba97";
 
 export default node;
