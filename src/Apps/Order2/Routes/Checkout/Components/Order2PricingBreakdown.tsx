@@ -71,9 +71,6 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
             color = "mono100"
             amountText = (line.amount?.display || line.amountFallbackText) ?? ""
         }
-        if (typename === "TotalLine") {
-          amountText = (line.amount?.display || line.amountFallbackText) ?? ""
-        }
 
         return (
           <Fragment key={typename}>
