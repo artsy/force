@@ -1,14 +1,17 @@
 import { Flex, Spacer, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type {
   Order2PricingBreakdown_order$data,
   Order2PricingBreakdown_order$key,
 } from "__generated__/Order2PricingBreakdown_order.graphql"
+import { Fragment } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2PricingBreakdownProps {
   order: Order2PricingBreakdown_order$key
 }
-
+const TAX_CALCULATION_ARTICLE_URL =
+  "https://support.artsy.net/s/article/How-are-taxes-and-customs-fees-calculated"
 const knownLineTypes = [
   "ShippingLine",
   "TaxLine",
@@ -40,7 +43,7 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
 
         const typename = line.__typename
         let variant: "sm" | "sm-display" = "sm"
-        let fontWeight = "regular"
+        let fontWeight: 400 | 500 = 400
         let color = "mono60"
         let withAsterisk = false
 
@@ -48,23 +51,23 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
         switch (typename) {
           case "SubtotalLine":
             amountText = line.amount
-              ? `${line.amount.currencySymbol} ${line.amount.amount}`
+              ? `${line.amount.currencySymbol}${line.amount.amount}`
               : ""
             break
           case "ShippingLine":
             amountText = line.amount
-              ? `${line.amount.currencySymbol} ${line.amount.amount}`
+              ? `${line.amount.currencySymbol}${line.amount.amount}`
               : (line.amountFallbackText ?? "")
             break
           case "TaxLine":
             amountText = line.amount
-              ? `${line.amount.currencySymbol} ${line.amount.amount}`
+              ? `${line.amount.currencySymbol}${line.amount.amount}`
               : (line.amountFallbackText ?? "")
             withAsterisk = true
             break
           case "TotalLine":
             variant = "sm-display"
-            fontWeight = "medium"
+            fontWeight = 500
             color = "mono100"
             amountText = (line.amount?.display || line.amountFallbackText) ?? ""
         }
@@ -73,9 +76,9 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
         }
 
         return (
-          <>
-            {typename !== "TotalLine" && <Spacer y={0.5} />}
-            <Flex key={typename} color={color}>
+          <Fragment key={typename}>
+            {typename === "TotalLine" && <Spacer y={0.5} />}
+            <Flex color={color}>
               <Text flexGrow={1} variant={variant} fontWeight={fontWeight}>
                 {line.displayName}
                 {withAsterisk && "*"}
@@ -84,9 +87,21 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
                 {amountText}
               </Text>
             </Flex>
-          </>
+          </Fragment>
         )
       })}
+      <Text variant="xs" color="mono60" textAlign="left" mt={2}>
+        *Additional duties and taxes{" "}
+        <RouterLink
+          inline
+          to={TAX_CALCULATION_ARTICLE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          may apply at import
+        </RouterLink>
+        .
+      </Text>
     </>
   )
 }

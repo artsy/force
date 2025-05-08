@@ -9,9 +9,6 @@ interface Order2ReviewStepProps {
   order: Order2ReviewStep_order$key
 }
 
-const TAX_CALCULATION_ARTICLE =
-  "https://support.artsy.net/s/article/How-are-taxes-and-customs-fees-calculated"
-
 export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   order,
 }) => {
@@ -21,7 +18,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0" p={2}>
-      <Text variant="sm-display" fontWeight="medium" color="mono100">
+      <Text variant="sm-display" fontWeight={500} color="mono100">
         Order summary
       </Text>
       <Flex py={1} justifyContent="space-between" alignItems="flex-start">
@@ -54,18 +51,6 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
       </Flex>
       <Box mb={2}>
         <Order2PricingBreakdown order={orderData} />
-        <Text variant="xs" color="mono60" textAlign="left" mt={2}>
-          *Additional duties and taxes{" "}
-          <RouterLink
-            inline
-            to={TAX_CALCULATION_ARTICLE}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            may apply at import
-          </RouterLink>
-          .
-        </Text>
       </Box>
       <Message variant="default">
         <Flex>

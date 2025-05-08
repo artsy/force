@@ -11,9 +11,6 @@ interface Order2CollapsibleOrderSummaryProps {
   order: Order2CollapsibleOrderSummary_order$key
 }
 
-const TAX_CALCULATION_ARTICLE =
-  "https://support.artsy.net/s/article/How-are-taxes-and-customs-fees-calculated"
-
 export const Order2CollapsibleOrderSummary: React.FC<
   Order2CollapsibleOrderSummaryProps
 > = ({ order }) => {
@@ -72,18 +69,6 @@ export const Order2CollapsibleOrderSummary: React.FC<
         <Spacer y={1} />
         <Box mb={2}>
           <Order2PricingBreakdown order={orderData} />
-          <Text variant="xs" color="mono60" textAlign="left" mt={2}>
-            *Additional duties and taxes{" "}
-            <RouterLink
-              inline
-              to={TAX_CALCULATION_ARTICLE}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              may apply at import
-            </RouterLink>
-            .
-          </Text>
         </Box>
         <Spacer y={1} />
       </Box>
