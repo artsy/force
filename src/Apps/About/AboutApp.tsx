@@ -151,6 +151,7 @@ export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
             {
               "@type": "MobileApplication",
               name: "Artsy",
+              operatingSystem: "Android 7 or later",
               applicationCategory: [
                 "LifestyleApplication",
                 "ShoppingApplication",
