@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<007f7e0bddc49204773b7dc205cc8694>>
+ * @generated SignedSource<<bb1f5526d6a2e1d55e25d9546b906da9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,7 @@ export type Order2CheckoutRoute_viewer$data = {
     } | null | undefined;
     readonly order: {
       readonly internalID: string;
-      readonly " $fragmentSpreads": FragmentRefs<"Order2CollapsibleOrderSummary_order" | "Order2ReviewStep_order">;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2CollapsibleOrderSummary_order" | "Order2ReviewStep_order" | "useLoadCheckout_order">;
     } | null | undefined;
   } | null | undefined;
   readonly " $fragmentType": "Order2CheckoutRoute_viewer";
@@ -83,6 +83,11 @@ return {
               "args": null,
               "kind": "FragmentSpread",
               "name": "Order2ReviewStep_order"
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "useLoadCheckout_order"
             }
           ],
           "storageKey": null
@@ -136,6 +141,6 @@ return {
 };
 })();
 
-(node as any).hash = "2814aadf5ca462f20584667bed830b98";
+(node as any).hash = "bb73945f496735839a8004f8a820d374";
 
 export default node;

@@ -12,8 +12,10 @@ import {
   Tabs,
   Text,
 } from "@artsy/palette"
+import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutLoadingSkeleton"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
+import { useLoadCheckout } from "Apps/Order2/Routes/Checkout/Hooks/useLoadCheckout"
 import { addressFormFieldsValidator } from "Components/Address/AddressFormFields"
 import { AddressFormFields } from "Components/Address/AddressFormFields"
 import { ErrorPage } from "Components/ErrorPage"
@@ -21,7 +23,6 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { countries as phoneCountryOptions } from "Utils/countries"
 import type { Order2CheckoutRoute_viewer$key } from "__generated__/Order2CheckoutRoute_viewer.graphql"
 import { Formik, type FormikHelpers, type FormikValues } from "formik"
-import type * as React from "react"
 import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 import * as yup from "yup"
@@ -37,6 +38,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
 
   const data = useFragment(FRAGMENT, viewer)
   const order = data.me?.order
+  const { isLoading } = useLoadCheckout(order)
 
   const validationSchema = yup.object().shape({
     ...addressFormFieldsValidator({ withPhoneNumber: true }),
@@ -58,7 +60,8 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
             : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
         }
       />
-      <GridColumns>
+      {isLoading && <Order2CheckoutLoadingSkeleton />}
+      <GridColumns display={isLoading ? "none" : "block"}>
         <Column span={[12, 8]} start={[1, 2]}>
           <Stack gap={1} bg="mono5">
             {/* Collapsible order summary */}
@@ -273,6 +276,7 @@ const FRAGMENT = graphql`
         internalID
         ...Order2CollapsibleOrderSummary_order
         ...Order2ReviewStep_order
+        ...useLoadCheckout_order
       }
       addressConnection(first: 10) {
         edges {
