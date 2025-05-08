@@ -112,7 +112,6 @@ export const ExpressCheckoutQueryRenderer: React.FC<{ orderID: string }> = ({
       `}
       variables={{ orderID }}
       render={({ props }) => {
-        console.log("****", props)
         if (props?.me?.order) {
           return <ExpressCheckout order={props.me.order} />
         }
