@@ -1,5 +1,6 @@
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import { Box, Clickable, Flex, Image, Spacer, Text } from "@artsy/palette"
+import { Order2PricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2PricingBreakdown"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2CollapsibleOrderSummary_order$key } from "__generated__/Order2CollapsibleOrderSummary_order.graphql"
 import type * as React from "react"
@@ -9,9 +10,6 @@ import { graphql, useFragment } from "react-relay"
 interface Order2CollapsibleOrderSummaryProps {
   order: Order2CollapsibleOrderSummary_order$key
 }
-
-const TAX_CALCULATION_ARTICLE =
-  "https://support.artsy.net/s/article/How-are-taxes-and-customs-fees-calculated"
 
 export const Order2CollapsibleOrderSummary: React.FC<
   Order2CollapsibleOrderSummaryProps
@@ -70,61 +68,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
       >
         <Spacer y={1} />
         <Box mb={2}>
-          <Flex>
-            <Text flexGrow={1} variant="sm" color="mono60">
-              Price
-            </Text>
-            <Text flexGrow={0} variant="sm" color="mono60">
-              {orderData.itemsTotal?.display}
-            </Text>
-          </Flex>
-          <Flex>
-            <Text flexGrow={1} variant="sm" color="mono60">
-              Shipping
-            </Text>
-            <Text flexGrow={0} variant="sm" color="mono60">
-              {orderData.shippingTotal?.display || "Calculated in next steps"}
-            </Text>
-          </Flex>
-          <Flex>
-            <Text flexGrow={1} variant="sm" color="mono60">
-              Tax*
-            </Text>
-            <Text flexGrow={0} variant="sm" color="mono60">
-              {orderData.shippingTotal?.display || "Calculated in next steps"}
-            </Text>
-          </Flex>
-          <Spacer y={0.5} />
-          <Flex>
-            <Text
-              flexGrow={1}
-              variant="sm-display"
-              color="mono100"
-              fontWeight="medium"
-            >
-              Total
-            </Text>
-            <Text
-              flexGrow={0}
-              variant="sm-display"
-              color="mono100"
-              fontWeight="medium"
-            >
-              Waiting for final cost
-            </Text>
-          </Flex>
-          <Text variant="xs" color="mono60" textAlign="left" mt={2}>
-            *Additional duties and taxes{" "}
-            <RouterLink
-              inline
-              to={TAX_CALCULATION_ARTICLE}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              may apply at import
-            </RouterLink>
-            .
-          </Text>
+          <Order2PricingBreakdown order={orderData} />
         </Box>
         <Spacer y={1} />
       </Box>
@@ -134,6 +78,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
 
 const FRAGMENT = graphql`
   fragment Order2CollapsibleOrderSummary_order on Order {
+    ...Order2PricingBreakdown_order
     mode
     source
     buyerTotal {
