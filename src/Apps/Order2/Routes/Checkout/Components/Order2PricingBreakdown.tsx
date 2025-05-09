@@ -12,6 +12,7 @@ interface Order2PricingBreakdownProps {
 }
 const TAX_CALCULATION_ARTICLE_URL =
   "https://support.artsy.net/s/article/How-are-taxes-and-customs-fees-calculated"
+
 const knownLineTypes = [
   "ShippingLine",
   "TaxLine",
@@ -21,7 +22,7 @@ const knownLineTypes = [
 
 type KnownLineType = Extract<
   Order2PricingBreakdown_order$data["pricingBreakdownLines"][number],
-  { __typename: "ShippingLine" | "TaxLine" | "SubtotalLine" | "TotalLine" }
+  { __typename: (typeof knownLineTypes)[number] }
 >
 
 const isKnownLineType = (
@@ -57,19 +58,20 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
           case "ShippingLine":
             amountText = line.amount
               ? `${line.amount.currencySymbol}${line.amount.amount}`
-              : (line.amountFallbackText ?? "")
+              : (line.amountFallbackText as string)
             break
           case "TaxLine":
             amountText = line.amount
               ? `${line.amount.currencySymbol}${line.amount.amount}`
-              : (line.amountFallbackText ?? "")
+              : (line.amountFallbackText as string)
             withAsterisk = true
             break
           case "TotalLine":
             variant = "sm-display"
             fontWeight = 500
             color = "mono100"
-            amountText = (line.amount?.display || line.amountFallbackText) ?? ""
+            amountText = (line.amount?.display ||
+              line.amountFallbackText) as string
         }
 
         return (
