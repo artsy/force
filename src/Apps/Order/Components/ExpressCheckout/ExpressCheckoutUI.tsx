@@ -42,12 +42,13 @@ import type {
   OrderCreditCardWalletTypeEnum,
   useUpdateOrderMutation$data,
 } from "__generated__/useUpdateOrderMutation.graphql"
-import { useRef, useState } from "react"
+import { Dispatch, SetStateAction, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
 
 interface ExpressCheckoutUIProps {
   order: ExpressCheckoutUI_order$key
+  setShowSpinner?: Dispatch<SetStateAction<boolean>>
 }
 
 const logger = createLogger("ExpressCheckoutUI")
@@ -57,7 +58,10 @@ type HandleCancelCallback = NonNullable<
   React.ComponentProps<typeof ExpressCheckoutElement>["onCancel"]
 >
 
-export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
+export const ExpressCheckoutUI = ({
+  order,
+  setShowSpinner,
+}: ExpressCheckoutUIProps) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const [visible, setVisible] = useState(false)
   const elements = useElements()
@@ -395,6 +399,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         logger.error(error)
         return
       }
+
+      setShowSpinner?.(true)
 
       const submitOrderResult = await submitOrderMutation.submitMutation({
         variables: {
