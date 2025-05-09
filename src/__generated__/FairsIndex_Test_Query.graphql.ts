@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<445b18ac3348647824013fc4d43e7e6c>>
+ * @generated SignedSource<<defbfd2d3440d407ebaf621926d49383>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -190,26 +190,13 @@ v19 = {
   "storageKey": null
 },
 v20 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": [
-    "wide"
-  ]
-},
-v21 = [
-  (v5/*: any*/),
-  (v6/*: any*/),
-  (v3/*: any*/),
-  (v4/*: any*/)
-],
-v22 = {
   "alias": "isoStartAt",
   "args": null,
   "kind": "ScalarField",
   "name": "startAt",
   "storageKey": null
 },
-v23 = {
+v21 = {
   "alias": null,
   "args": null,
   "concreteType": "FairOrganizer",
@@ -234,12 +221,12 @@ v23 = {
   ],
   "storageKey": null
 },
-v24 = {
+v22 = {
   "kind": "Literal",
   "name": "status",
   "value": "CLOSED"
 },
-v25 = [
+v23 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -248,75 +235,75 @@ v25 = [
   (v10/*: any*/),
   (v11/*: any*/),
   (v13/*: any*/),
-  (v24/*: any*/)
+  (v22/*: any*/)
 ],
-v26 = {
+v24 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v27 = {
+v25 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v28 = {
+v26 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Image"
 },
-v29 = {
+v27 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "CroppedImageUrl"
 },
-v30 = {
+v28 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Int"
 },
-v31 = {
+v29 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v32 = {
+v30 = {
   "enumValues": null,
   "nullable": true,
   "plural": true,
   "type": "Fair"
 },
-v33 = {
+v31 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Boolean"
 },
-v34 = {
+v32 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "FairOrganizer"
 },
-v35 = {
+v33 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Profile"
 },
-v36 = {
+v34 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "ResizedImageUrl"
 },
-v37 = {
+v35 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -503,36 +490,20 @@ return {
                 "plural": false,
                 "selections": [
                   {
-                    "alias": "large",
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 790
-                      },
-                      (v20/*: any*/),
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 1840
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v21/*: any*/),
-                    "storageKey": "cropped(height:790,version:[\"wide\"],width:1840)"
-                  },
-                  {
-                    "alias": "small",
+                    "alias": null,
                     "args": [
                       {
                         "kind": "Literal",
                         "name": "height",
                         "value": 512
                       },
-                      (v20/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "version",
+                        "value": [
+                          "wide"
+                        ]
+                      },
                       {
                         "kind": "Literal",
                         "name": "width",
@@ -543,14 +514,19 @@ return {
                     "kind": "LinkedField",
                     "name": "cropped",
                     "plural": false,
-                    "selections": (v21/*: any*/),
+                    "selections": [
+                      (v5/*: any*/),
+                      (v6/*: any*/),
+                      (v3/*: any*/),
+                      (v4/*: any*/)
+                    ],
                     "storageKey": "cropped(height:512,version:[\"wide\"],width:910)"
                   }
                 ],
                 "storageKey": null
               },
-              (v22/*: any*/),
-              (v23/*: any*/),
+              (v20/*: any*/),
+              (v21/*: any*/),
               (v8/*: any*/)
             ],
             "storageKey": "fairs(hasFullFeature:true,hasListing:true,size:25,sort:\"START_AT_DESC\",status:\"RUNNING\")"
@@ -562,7 +538,7 @@ return {
               (v11/*: any*/),
               (v12/*: any*/),
               (v13/*: any*/),
-              (v24/*: any*/)
+              (v22/*: any*/)
             ],
             "concreteType": "Fair",
             "kind": "LinkedField",
@@ -574,9 +550,9 @@ return {
               (v16/*: any*/),
               (v17/*: any*/),
               (v18/*: any*/),
-              (v22/*: any*/),
+              (v20/*: any*/),
               (v19/*: any*/),
-              (v23/*: any*/),
+              (v21/*: any*/),
               (v8/*: any*/)
             ],
             "storageKey": "fairs(hasFullFeature:true,hasListing:true,size:25,sort:\"START_AT_DESC\",status:\"CLOSED\")"
@@ -642,15 +618,15 @@ return {
                 "storageKey": null
               },
               (v17/*: any*/),
-              (v22/*: any*/),
-              (v23/*: any*/),
+              (v20/*: any*/),
+              (v21/*: any*/),
               (v8/*: any*/)
             ],
             "storageKey": "fairs(hasFullFeature:true,hasListing:true,size:25,sort:\"START_AT_ASC\",status:\"UPCOMING\")"
           },
           {
             "alias": "pastFairs",
-            "args": (v25/*: any*/),
+            "args": (v23/*: any*/),
             "concreteType": "FairConnection",
             "kind": "LinkedField",
             "name": "fairsConnection",
@@ -677,9 +653,9 @@ return {
                       (v16/*: any*/),
                       (v17/*: any*/),
                       (v18/*: any*/),
-                      (v22/*: any*/),
+                      (v20/*: any*/),
                       (v19/*: any*/),
-                      (v23/*: any*/),
+                      (v21/*: any*/),
                       (v8/*: any*/),
                       (v1/*: any*/)
                     ],
@@ -725,7 +701,7 @@ return {
           },
           {
             "alias": "pastFairs",
-            "args": (v25/*: any*/),
+            "args": (v23/*: any*/),
             "filters": [
               "hasListing",
               "hasFullFeature",
@@ -743,7 +719,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "079b8849e98b89d3526209473989c453",
+    "cacheID": "b099d2b127c37720747354889db8e87a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -753,52 +729,52 @@ return {
           "plural": true,
           "type": "OrderedSet"
         },
-        "featuredFairs.id": (v26/*: any*/),
+        "featuredFairs.id": (v24/*: any*/),
         "featuredFairs.items": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "OrderedSetItem"
         },
-        "featuredFairs.items.__isNode": (v27/*: any*/),
-        "featuredFairs.items.__typename": (v27/*: any*/),
-        "featuredFairs.items.id": (v26/*: any*/),
-        "featuredFairs.items.image": (v28/*: any*/),
-        "featuredFairs.items.image.cropped": (v29/*: any*/),
-        "featuredFairs.items.image.cropped.height": (v30/*: any*/),
-        "featuredFairs.items.image.cropped.src": (v27/*: any*/),
-        "featuredFairs.items.image.cropped.srcSet": (v27/*: any*/),
-        "featuredFairs.items.image.cropped.width": (v30/*: any*/),
-        "featuredFairs.items.internalID": (v26/*: any*/),
-        "featuredFairs.items.title": (v31/*: any*/),
+        "featuredFairs.items.__isNode": (v25/*: any*/),
+        "featuredFairs.items.__typename": (v25/*: any*/),
+        "featuredFairs.items.id": (v24/*: any*/),
+        "featuredFairs.items.image": (v26/*: any*/),
+        "featuredFairs.items.image.cropped": (v27/*: any*/),
+        "featuredFairs.items.image.cropped.height": (v28/*: any*/),
+        "featuredFairs.items.image.cropped.src": (v25/*: any*/),
+        "featuredFairs.items.image.cropped.srcSet": (v25/*: any*/),
+        "featuredFairs.items.image.cropped.width": (v28/*: any*/),
+        "featuredFairs.items.internalID": (v24/*: any*/),
+        "featuredFairs.items.title": (v29/*: any*/),
         "viewer": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Viewer"
         },
-        "viewer.closedFairs": (v32/*: any*/),
-        "viewer.closedFairs.exhibitionPeriod": (v31/*: any*/),
-        "viewer.closedFairs.href": (v31/*: any*/),
-        "viewer.closedFairs.id": (v26/*: any*/),
-        "viewer.closedFairs.internalID": (v26/*: any*/),
-        "viewer.closedFairs.isPublished": (v33/*: any*/),
-        "viewer.closedFairs.isoStartAt": (v31/*: any*/),
-        "viewer.closedFairs.name": (v31/*: any*/),
-        "viewer.closedFairs.organizer": (v34/*: any*/),
-        "viewer.closedFairs.organizer.id": (v26/*: any*/),
-        "viewer.closedFairs.organizer.profile": (v35/*: any*/),
-        "viewer.closedFairs.organizer.profile.href": (v31/*: any*/),
-        "viewer.closedFairs.organizer.profile.id": (v26/*: any*/),
-        "viewer.closedFairs.profile": (v35/*: any*/),
-        "viewer.closedFairs.profile.icon": (v28/*: any*/),
-        "viewer.closedFairs.profile.icon.resized": (v36/*: any*/),
-        "viewer.closedFairs.profile.icon.resized.height": (v37/*: any*/),
-        "viewer.closedFairs.profile.icon.resized.src": (v27/*: any*/),
-        "viewer.closedFairs.profile.icon.resized.srcSet": (v27/*: any*/),
-        "viewer.closedFairs.profile.icon.resized.width": (v37/*: any*/),
-        "viewer.closedFairs.profile.id": (v26/*: any*/),
-        "viewer.closedFairs.profile.isPublished": (v33/*: any*/),
+        "viewer.closedFairs": (v30/*: any*/),
+        "viewer.closedFairs.exhibitionPeriod": (v29/*: any*/),
+        "viewer.closedFairs.href": (v29/*: any*/),
+        "viewer.closedFairs.id": (v24/*: any*/),
+        "viewer.closedFairs.internalID": (v24/*: any*/),
+        "viewer.closedFairs.isPublished": (v31/*: any*/),
+        "viewer.closedFairs.isoStartAt": (v29/*: any*/),
+        "viewer.closedFairs.name": (v29/*: any*/),
+        "viewer.closedFairs.organizer": (v32/*: any*/),
+        "viewer.closedFairs.organizer.id": (v24/*: any*/),
+        "viewer.closedFairs.organizer.profile": (v33/*: any*/),
+        "viewer.closedFairs.organizer.profile.href": (v29/*: any*/),
+        "viewer.closedFairs.organizer.profile.id": (v24/*: any*/),
+        "viewer.closedFairs.profile": (v33/*: any*/),
+        "viewer.closedFairs.profile.icon": (v26/*: any*/),
+        "viewer.closedFairs.profile.icon.resized": (v34/*: any*/),
+        "viewer.closedFairs.profile.icon.resized.height": (v35/*: any*/),
+        "viewer.closedFairs.profile.icon.resized.src": (v25/*: any*/),
+        "viewer.closedFairs.profile.icon.resized.srcSet": (v25/*: any*/),
+        "viewer.closedFairs.profile.icon.resized.width": (v35/*: any*/),
+        "viewer.closedFairs.profile.id": (v24/*: any*/),
+        "viewer.closedFairs.profile.isPublished": (v31/*: any*/),
         "viewer.pastFairs": {
           "enumValues": null,
           "nullable": true,
@@ -811,118 +787,113 @@ return {
           "plural": true,
           "type": "FairEdge"
         },
-        "viewer.pastFairs.edges.cursor": (v27/*: any*/),
+        "viewer.pastFairs.edges.cursor": (v25/*: any*/),
         "viewer.pastFairs.edges.node": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Fair"
         },
-        "viewer.pastFairs.edges.node.__typename": (v27/*: any*/),
-        "viewer.pastFairs.edges.node.exhibitionPeriod": (v31/*: any*/),
-        "viewer.pastFairs.edges.node.href": (v31/*: any*/),
-        "viewer.pastFairs.edges.node.id": (v26/*: any*/),
-        "viewer.pastFairs.edges.node.internalID": (v26/*: any*/),
-        "viewer.pastFairs.edges.node.isPublished": (v33/*: any*/),
-        "viewer.pastFairs.edges.node.isoStartAt": (v31/*: any*/),
-        "viewer.pastFairs.edges.node.name": (v31/*: any*/),
-        "viewer.pastFairs.edges.node.organizer": (v34/*: any*/),
-        "viewer.pastFairs.edges.node.organizer.id": (v26/*: any*/),
-        "viewer.pastFairs.edges.node.organizer.profile": (v35/*: any*/),
-        "viewer.pastFairs.edges.node.organizer.profile.href": (v31/*: any*/),
-        "viewer.pastFairs.edges.node.organizer.profile.id": (v26/*: any*/),
-        "viewer.pastFairs.edges.node.profile": (v35/*: any*/),
-        "viewer.pastFairs.edges.node.profile.icon": (v28/*: any*/),
-        "viewer.pastFairs.edges.node.profile.icon.resized": (v36/*: any*/),
-        "viewer.pastFairs.edges.node.profile.icon.resized.height": (v37/*: any*/),
-        "viewer.pastFairs.edges.node.profile.icon.resized.src": (v27/*: any*/),
-        "viewer.pastFairs.edges.node.profile.icon.resized.srcSet": (v27/*: any*/),
-        "viewer.pastFairs.edges.node.profile.icon.resized.width": (v37/*: any*/),
-        "viewer.pastFairs.edges.node.profile.id": (v26/*: any*/),
-        "viewer.pastFairs.edges.node.profile.isPublished": (v33/*: any*/),
+        "viewer.pastFairs.edges.node.__typename": (v25/*: any*/),
+        "viewer.pastFairs.edges.node.exhibitionPeriod": (v29/*: any*/),
+        "viewer.pastFairs.edges.node.href": (v29/*: any*/),
+        "viewer.pastFairs.edges.node.id": (v24/*: any*/),
+        "viewer.pastFairs.edges.node.internalID": (v24/*: any*/),
+        "viewer.pastFairs.edges.node.isPublished": (v31/*: any*/),
+        "viewer.pastFairs.edges.node.isoStartAt": (v29/*: any*/),
+        "viewer.pastFairs.edges.node.name": (v29/*: any*/),
+        "viewer.pastFairs.edges.node.organizer": (v32/*: any*/),
+        "viewer.pastFairs.edges.node.organizer.id": (v24/*: any*/),
+        "viewer.pastFairs.edges.node.organizer.profile": (v33/*: any*/),
+        "viewer.pastFairs.edges.node.organizer.profile.href": (v29/*: any*/),
+        "viewer.pastFairs.edges.node.organizer.profile.id": (v24/*: any*/),
+        "viewer.pastFairs.edges.node.profile": (v33/*: any*/),
+        "viewer.pastFairs.edges.node.profile.icon": (v26/*: any*/),
+        "viewer.pastFairs.edges.node.profile.icon.resized": (v34/*: any*/),
+        "viewer.pastFairs.edges.node.profile.icon.resized.height": (v35/*: any*/),
+        "viewer.pastFairs.edges.node.profile.icon.resized.src": (v25/*: any*/),
+        "viewer.pastFairs.edges.node.profile.icon.resized.srcSet": (v25/*: any*/),
+        "viewer.pastFairs.edges.node.profile.icon.resized.width": (v35/*: any*/),
+        "viewer.pastFairs.edges.node.profile.id": (v24/*: any*/),
+        "viewer.pastFairs.edges.node.profile.isPublished": (v31/*: any*/),
         "viewer.pastFairs.pageInfo": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "PageInfo"
         },
-        "viewer.pastFairs.pageInfo.endCursor": (v31/*: any*/),
+        "viewer.pastFairs.pageInfo.endCursor": (v29/*: any*/),
         "viewer.pastFairs.pageInfo.hasNextPage": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "Boolean"
         },
-        "viewer.runningFairs": (v32/*: any*/),
-        "viewer.runningFairs.bannerSize": (v31/*: any*/),
-        "viewer.runningFairs.exhibitionPeriod": (v31/*: any*/),
-        "viewer.runningFairs.href": (v31/*: any*/),
-        "viewer.runningFairs.id": (v26/*: any*/),
-        "viewer.runningFairs.image": (v28/*: any*/),
-        "viewer.runningFairs.image.large": (v29/*: any*/),
-        "viewer.runningFairs.image.large.height": (v30/*: any*/),
-        "viewer.runningFairs.image.large.src": (v27/*: any*/),
-        "viewer.runningFairs.image.large.srcSet": (v27/*: any*/),
-        "viewer.runningFairs.image.large.width": (v30/*: any*/),
-        "viewer.runningFairs.image.small": (v29/*: any*/),
-        "viewer.runningFairs.image.small.height": (v30/*: any*/),
-        "viewer.runningFairs.image.small.src": (v27/*: any*/),
-        "viewer.runningFairs.image.small.srcSet": (v27/*: any*/),
-        "viewer.runningFairs.image.small.width": (v30/*: any*/),
-        "viewer.runningFairs.internalID": (v26/*: any*/),
-        "viewer.runningFairs.isPublished": (v33/*: any*/),
-        "viewer.runningFairs.isoStartAt": (v31/*: any*/),
-        "viewer.runningFairs.name": (v31/*: any*/),
-        "viewer.runningFairs.organizer": (v34/*: any*/),
-        "viewer.runningFairs.organizer.id": (v26/*: any*/),
-        "viewer.runningFairs.organizer.profile": (v35/*: any*/),
-        "viewer.runningFairs.organizer.profile.href": (v31/*: any*/),
-        "viewer.runningFairs.organizer.profile.id": (v26/*: any*/),
-        "viewer.runningFairs.profile": (v35/*: any*/),
-        "viewer.runningFairs.profile.icon": (v28/*: any*/),
-        "viewer.runningFairs.profile.icon.resized": (v36/*: any*/),
-        "viewer.runningFairs.profile.icon.resized.height": (v37/*: any*/),
-        "viewer.runningFairs.profile.icon.resized.src": (v27/*: any*/),
-        "viewer.runningFairs.profile.icon.resized.srcSet": (v27/*: any*/),
-        "viewer.runningFairs.profile.icon.resized.width": (v37/*: any*/),
-        "viewer.runningFairs.profile.id": (v26/*: any*/),
-        "viewer.runningFairs.profile.isPublished": (v33/*: any*/),
-        "viewer.upcomingFairs": (v32/*: any*/),
-        "viewer.upcomingFairs.exhibitionPeriod": (v31/*: any*/),
-        "viewer.upcomingFairs.href": (v31/*: any*/),
-        "viewer.upcomingFairs.id": (v26/*: any*/),
-        "viewer.upcomingFairs.internalID": (v26/*: any*/),
-        "viewer.upcomingFairs.isPublished": (v33/*: any*/),
-        "viewer.upcomingFairs.isoStartAt": (v31/*: any*/),
+        "viewer.runningFairs": (v30/*: any*/),
+        "viewer.runningFairs.bannerSize": (v29/*: any*/),
+        "viewer.runningFairs.exhibitionPeriod": (v29/*: any*/),
+        "viewer.runningFairs.href": (v29/*: any*/),
+        "viewer.runningFairs.id": (v24/*: any*/),
+        "viewer.runningFairs.image": (v26/*: any*/),
+        "viewer.runningFairs.image.cropped": (v27/*: any*/),
+        "viewer.runningFairs.image.cropped.height": (v28/*: any*/),
+        "viewer.runningFairs.image.cropped.src": (v25/*: any*/),
+        "viewer.runningFairs.image.cropped.srcSet": (v25/*: any*/),
+        "viewer.runningFairs.image.cropped.width": (v28/*: any*/),
+        "viewer.runningFairs.internalID": (v24/*: any*/),
+        "viewer.runningFairs.isPublished": (v31/*: any*/),
+        "viewer.runningFairs.isoStartAt": (v29/*: any*/),
+        "viewer.runningFairs.name": (v29/*: any*/),
+        "viewer.runningFairs.organizer": (v32/*: any*/),
+        "viewer.runningFairs.organizer.id": (v24/*: any*/),
+        "viewer.runningFairs.organizer.profile": (v33/*: any*/),
+        "viewer.runningFairs.organizer.profile.href": (v29/*: any*/),
+        "viewer.runningFairs.organizer.profile.id": (v24/*: any*/),
+        "viewer.runningFairs.profile": (v33/*: any*/),
+        "viewer.runningFairs.profile.icon": (v26/*: any*/),
+        "viewer.runningFairs.profile.icon.resized": (v34/*: any*/),
+        "viewer.runningFairs.profile.icon.resized.height": (v35/*: any*/),
+        "viewer.runningFairs.profile.icon.resized.src": (v25/*: any*/),
+        "viewer.runningFairs.profile.icon.resized.srcSet": (v25/*: any*/),
+        "viewer.runningFairs.profile.icon.resized.width": (v35/*: any*/),
+        "viewer.runningFairs.profile.id": (v24/*: any*/),
+        "viewer.runningFairs.profile.isPublished": (v31/*: any*/),
+        "viewer.upcomingFairs": (v30/*: any*/),
+        "viewer.upcomingFairs.exhibitionPeriod": (v29/*: any*/),
+        "viewer.upcomingFairs.href": (v29/*: any*/),
+        "viewer.upcomingFairs.id": (v24/*: any*/),
+        "viewer.upcomingFairs.internalID": (v24/*: any*/),
+        "viewer.upcomingFairs.isPublished": (v31/*: any*/),
+        "viewer.upcomingFairs.isoStartAt": (v29/*: any*/),
         "viewer.upcomingFairs.location": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Location"
         },
-        "viewer.upcomingFairs.location.city": (v31/*: any*/),
-        "viewer.upcomingFairs.location.id": (v26/*: any*/),
-        "viewer.upcomingFairs.name": (v31/*: any*/),
-        "viewer.upcomingFairs.organizer": (v34/*: any*/),
-        "viewer.upcomingFairs.organizer.id": (v26/*: any*/),
-        "viewer.upcomingFairs.organizer.profile": (v35/*: any*/),
-        "viewer.upcomingFairs.organizer.profile.href": (v31/*: any*/),
-        "viewer.upcomingFairs.organizer.profile.id": (v26/*: any*/),
-        "viewer.upcomingFairs.profile": (v35/*: any*/),
-        "viewer.upcomingFairs.profile.href": (v31/*: any*/),
-        "viewer.upcomingFairs.profile.icon": (v28/*: any*/),
-        "viewer.upcomingFairs.profile.icon.resized": (v36/*: any*/),
-        "viewer.upcomingFairs.profile.icon.resized.height": (v37/*: any*/),
-        "viewer.upcomingFairs.profile.icon.resized.src": (v27/*: any*/),
-        "viewer.upcomingFairs.profile.icon.resized.srcSet": (v27/*: any*/),
-        "viewer.upcomingFairs.profile.icon.resized.width": (v37/*: any*/),
-        "viewer.upcomingFairs.profile.id": (v26/*: any*/),
-        "viewer.upcomingFairs.profile.isPublished": (v33/*: any*/)
+        "viewer.upcomingFairs.location.city": (v29/*: any*/),
+        "viewer.upcomingFairs.location.id": (v24/*: any*/),
+        "viewer.upcomingFairs.name": (v29/*: any*/),
+        "viewer.upcomingFairs.organizer": (v32/*: any*/),
+        "viewer.upcomingFairs.organizer.id": (v24/*: any*/),
+        "viewer.upcomingFairs.organizer.profile": (v33/*: any*/),
+        "viewer.upcomingFairs.organizer.profile.href": (v29/*: any*/),
+        "viewer.upcomingFairs.organizer.profile.id": (v24/*: any*/),
+        "viewer.upcomingFairs.profile": (v33/*: any*/),
+        "viewer.upcomingFairs.profile.href": (v29/*: any*/),
+        "viewer.upcomingFairs.profile.icon": (v26/*: any*/),
+        "viewer.upcomingFairs.profile.icon.resized": (v34/*: any*/),
+        "viewer.upcomingFairs.profile.icon.resized.height": (v35/*: any*/),
+        "viewer.upcomingFairs.profile.icon.resized.src": (v25/*: any*/),
+        "viewer.upcomingFairs.profile.icon.resized.srcSet": (v25/*: any*/),
+        "viewer.upcomingFairs.profile.icon.resized.width": (v35/*: any*/),
+        "viewer.upcomingFairs.profile.id": (v24/*: any*/),
+        "viewer.upcomingFairs.profile.isPublished": (v31/*: any*/)
       }
     },
     "name": "FairsIndex_Test_Query",
     "operationKind": "query",
-    "text": "query FairsIndex_Test_Query {\n  featuredFairs: orderedSets(key: \"art-fairs:featured\") {\n    ...FairsIndex_featuredFairs\n    id\n  }\n  viewer {\n    ...FairsIndex_viewer\n  }\n}\n\nfragment FairsFairBanner_fair on Fair {\n  href\n  name\n  exhibitionPeriod\n  bannerSize\n  image {\n    large: cropped(width: 1840, height: 790, version: [\"wide\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n    small: cropped(width: 910, height: 512, version: [\"wide\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairsFairRow_fair on Fair {\n  href\n  name\n  isoStartAt: startAt\n  exhibitionPeriod\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  organizer {\n    profile {\n      href\n      id\n    }\n    id\n  }\n}\n\nfragment FairsIndex_featuredFairs on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      image {\n        cropped(width: 547, height: 410) {\n          width\n          height\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment FairsIndex_viewer on Viewer {\n  runningFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {\n    internalID\n    bannerSize\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    ...FairsFairBanner_fair\n    ...FairsFairRow_fair\n    id\n  }\n  closedFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: CLOSED) {\n    internalID\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    ...FairsFairRow_fair\n    id\n  }\n  upcomingFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_ASC, size: 25, status: UPCOMING) {\n    internalID\n    name\n    exhibitionPeriod\n    location {\n      city\n      id\n    }\n    isPublished\n    profile {\n      isPublished\n      href\n      id\n    }\n    ...FairsFairRow_fair\n    id\n  }\n  ...FairsPastFairs_viewer\n}\n\nfragment FairsPastFairs_viewer on Viewer {\n  pastFairs: fairsConnection(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, status: CLOSED, first: 15) {\n    edges {\n      node {\n        internalID\n        isPublished\n        profile {\n          isPublished\n          id\n        }\n        ...FairsFairRow_fair\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query FairsIndex_Test_Query {\n  featuredFairs: orderedSets(key: \"art-fairs:featured\") {\n    ...FairsIndex_featuredFairs\n    id\n  }\n  viewer {\n    ...FairsIndex_viewer\n  }\n}\n\nfragment FairsFairBanner_fair on Fair {\n  href\n  name\n  exhibitionPeriod\n  image {\n    cropped(width: 910, height: 512, version: [\"wide\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairsFairRow_fair on Fair {\n  href\n  name\n  isoStartAt: startAt\n  exhibitionPeriod\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  organizer {\n    profile {\n      href\n      id\n    }\n    id\n  }\n}\n\nfragment FairsIndex_featuredFairs on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      image {\n        cropped(width: 547, height: 410) {\n          width\n          height\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment FairsIndex_viewer on Viewer {\n  runningFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {\n    internalID\n    bannerSize\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    ...FairsFairBanner_fair\n    ...FairsFairRow_fair\n    id\n  }\n  closedFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: CLOSED) {\n    internalID\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    ...FairsFairRow_fair\n    id\n  }\n  upcomingFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_ASC, size: 25, status: UPCOMING) {\n    internalID\n    name\n    exhibitionPeriod\n    location {\n      city\n      id\n    }\n    isPublished\n    profile {\n      isPublished\n      href\n      id\n    }\n    ...FairsFairRow_fair\n    id\n  }\n  ...FairsPastFairs_viewer\n}\n\nfragment FairsPastFairs_viewer on Viewer {\n  pastFairs: fairsConnection(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, status: CLOSED, first: 15) {\n    edges {\n      node {\n        internalID\n        isPublished\n        profile {\n          isPublished\n          id\n        }\n        ...FairsFairRow_fair\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

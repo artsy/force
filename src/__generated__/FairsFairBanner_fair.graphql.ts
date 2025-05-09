@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8b13f87d7901800fe6c09bd6d824f434>>
+ * @generated SignedSource<<221f1c3ab5431254dbb1164caae6c062>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,10 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairsFairBanner_fair$data = {
-  readonly bannerSize: string | null | undefined;
   readonly exhibitionPeriod: string | null | undefined;
   readonly href: string | null | undefined;
   readonly image: {
-    readonly large: {
-      readonly height: number;
-      readonly src: string;
-      readonly srcSet: string;
-      readonly width: number;
-    } | null | undefined;
-    readonly small: {
+    readonly cropped: {
       readonly height: number;
       readonly src: string;
       readonly srcSet: string;
@@ -48,46 +41,33 @@ export type FairsFairBanner_fair$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": [
-    "wide"
-  ]
-},
-v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "srcSet",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "width",
   "storageKey": null
 },
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "height",
   "storageKey": null
-},
-v5 = [
-  (v1/*: any*/),
-  (v2/*: any*/),
-  (v3/*: any*/),
-  (v4/*: any*/)
-];
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -118,49 +98,26 @@ return {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "bannerSize",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": "Image",
       "kind": "LinkedField",
       "name": "image",
       "plural": false,
       "selections": [
         {
-          "alias": "large",
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "height",
-              "value": 790
-            },
-            (v0/*: any*/),
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 1840
-            }
-          ],
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": (v5/*: any*/),
-          "storageKey": "cropped(height:790,version:[\"wide\"],width:1840)"
-        },
-        {
-          "alias": "small",
+          "alias": null,
           "args": [
             {
               "kind": "Literal",
               "name": "height",
               "value": 512
             },
-            (v0/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": [
+                "wide"
+              ]
+            },
             {
               "kind": "Literal",
               "name": "width",
@@ -171,7 +128,12 @@ return {
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": (v5/*: any*/),
+          "selections": [
+            (v0/*: any*/),
+            (v1/*: any*/),
+            (v2/*: any*/),
+            (v3/*: any*/)
+          ],
           "storageKey": "cropped(height:512,version:[\"wide\"],width:910)"
         }
       ],
@@ -217,10 +179,10 @@ return {
               "name": "resized",
               "plural": false,
               "selections": [
+                (v2/*: any*/),
                 (v3/*: any*/),
-                (v4/*: any*/),
-                (v1/*: any*/),
-                (v2/*: any*/)
+                (v0/*: any*/),
+                (v1/*: any*/)
               ],
               "storageKey": "resized(height:80,version:\"square140\",width:80)"
             }
@@ -236,6 +198,6 @@ return {
 };
 })();
 
-(node as any).hash = "8b6356d6ed39457f9f42fa416367490e";
+(node as any).hash = "d9f0089118a908211ef0f114046da9d7";
 
 export default node;

@@ -149,6 +149,7 @@ export const FairsIndex: React.FC<React.PropsWithChildren<FairsIndexProps>> = ({
                 ))}
               </Tab>
             )}
+
             {upcomingFairs.length !== 0 && (
               <Tab name="Upcoming">
                 {upcomingFairs.map(fair => (
