@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3aadb21373562c708d0bde2afe6c243b>>
+ * @generated SignedSource<<fe34429373e05dfecde1709b86cc9649>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type ArticleApp_article$data = {
   readonly channelID: string | null | undefined;
   readonly internalID: string;
   readonly layout: ArticleLayout;
-  readonly " $fragmentSpreads": FragmentRefs<"ArticleBody_article" | "ArticleMetaTags_article" | "ArticleSeries_article" | "ArticleVideo_article" | "ArticleVisibilityMetadata_article">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleBody_article" | "ArticleMetaTags_article" | "ArticleSeries_article" | "ArticleStructuredData_article" | "ArticleVideo_article" | "ArticleVisibilityMetadata_article">;
   readonly " $fragmentType": "ArticleApp_article";
 };
 export type ArticleApp_article$key = {
@@ -55,6 +55,11 @@ const node: ReaderFragment = {
       "name": "ArticleMetaTags_article"
     },
     {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArticleStructuredData_article"
+    },
+    {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
@@ -80,6 +85,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "46968573a01bb07c0cff7cab5f7cd78a";
+(node as any).hash = "9296c6a5af3df84199be767960d394e6";
 
 export default node;
