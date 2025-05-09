@@ -1,4 +1,11 @@
-import { Box, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import {
   ExpressCheckoutElement,
   useElements,
@@ -44,7 +51,6 @@ import type {
 } from "__generated__/useUpdateOrderMutation.graphql"
 import { useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
-import styled from "styled-components"
 
 interface ExpressCheckoutUIProps {
   order: ExpressCheckoutUI_order$key
@@ -76,6 +82,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const errorRef = useRef<string | null>(null)
   const [hasMultiplePaymentOptions, setHasMultiplePaymentOptions] =
     useState<boolean>(false)
+  const [loading, setLoading] = useState(true)
 
   if (!(stripe && elements)) {
     return null
@@ -440,6 +447,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const handleReady = e => {
     const paymentMethods = e.availablePaymentMethods
 
+    setLoading(false)
+
     if (paymentMethods) {
       setHasMultiplePaymentOptions(
         Object.values(paymentMethods).filter(Boolean).length > 1,
@@ -455,41 +464,44 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }
 
   return (
-    <UncollapsingBox visible={visible}>
-      <Text variant="lg-display">Express checkout</Text>
-      <Spacer y={1} />
-      <Box
-        minWidth="240px"
-        maxWidth={hasMultiplePaymentOptions ? "100%" : ["100%", "50%"]}
-        paddingX="1px"
-      >
-        <ExpressCheckoutElement
-          options={expressCheckoutOptions}
-          onClick={handleOpenExpressCheckout}
-          onCancel={handleCancel}
-          onReady={handleReady}
-          onShippingAddressChange={handleShippingAddressChange}
-          onShippingRateChange={handleShippingRateChange}
-          onLoadError={e => {
-            logger.error("Express checkout element error", e)
-          }}
-          onConfirm={onConfirm}
-        />
-      </Box>
-      <Text variant="xs" color="mono60" mt={1} ml={0.5}>
-        <>By clicking Pay, I agree to Artsy’s </>
-        <RouterLink
-          inline
-          to="https://www.artsy.net/terms"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      {loading && PLACEHOLDER}
+      <Box display={visible ? "block" : "none"}>
+        <Text variant="lg-display">Express checkout</Text>
+        <Spacer y={1} />
+        <Box
+          minWidth="240px"
+          maxWidth={hasMultiplePaymentOptions ? "100%" : ["100%", "50%"]}
+          paddingX="1px"
         >
-          General Terms and Conditions of Sale
-        </RouterLink>
-        .
-      </Text>
-      <Spacer y={4} />
-    </UncollapsingBox>
+          <ExpressCheckoutElement
+            options={expressCheckoutOptions}
+            onClick={handleOpenExpressCheckout}
+            onCancel={handleCancel}
+            onReady={handleReady}
+            onShippingAddressChange={handleShippingAddressChange}
+            onShippingRateChange={handleShippingRateChange}
+            onLoadError={e => {
+              logger.error("Express checkout element error", e)
+            }}
+            onConfirm={onConfirm}
+          />
+        </Box>
+        <Text variant="xs" color="mono60" mt={1} ml={0.5}>
+          <>By clicking Pay, I agree to Artsy’s </>
+          <RouterLink
+            inline
+            to="https://www.artsy.net/terms"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            General Terms and Conditions of Sale
+          </RouterLink>
+          .
+        </Text>
+        <Spacer y={4} />
+      </Box>
+    </>
   )
 }
 
@@ -696,15 +708,6 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
   }
 }
 
-// Only max-height can be animated
-const UncollapsingBox = styled(Box)<{ visible: boolean }>`
-  display: flex;
-  flex-direction: column;
-  max-height: ${({ visible }) => (visible ? "1000px" : "0")};
-  overflow: hidden;
-  transition: max-height 0.3s ease-in-out;
-`
-
 function getAvailablePaymentMethods(
   paymentMethods: AvailablePaymentMethods,
 ): string[] {
@@ -712,3 +715,16 @@ function getAvailablePaymentMethods(
     .filter(([_, isAvailable]) => isAvailable)
     .map(([method]) => method)
 }
+
+const PLACEHOLDER = (
+  <Skeleton>
+    <SkeletonText variant="lg-display">Express checkout</SkeletonText>
+    <Spacer y={1} />
+    <SkeletonBox width={["100%", "50%"]} height={50} borderRadius={50} />
+    <Spacer y={1} />
+    <SkeletonText variant="xs" ml={0.5}>
+      By clicking Pay, I agree to Artsy’s General Terms and Conditions of Sale
+    </SkeletonText>
+    <Spacer y={4} />
+  </Skeleton>
+)
