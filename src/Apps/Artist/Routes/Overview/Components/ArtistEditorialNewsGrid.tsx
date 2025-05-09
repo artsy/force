@@ -115,7 +115,8 @@ const ArtistEditorialNewsGrid: FC<
               <Image
                 src={firstImage.src}
                 srcSet={firstImage.srcSet}
-                style={{ display: "block" }}
+                width="100%"
+                height="100%"
                 lazyLoad
               />
             </ResponsiveBox>
