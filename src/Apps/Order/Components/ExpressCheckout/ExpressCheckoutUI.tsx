@@ -467,43 +467,41 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }
 
   return (
-    <>
-      <Box display={visible ? "block" : "none"}>
-        <Text variant="lg-display">Express checkout</Text>
-        <Spacer y={1} />
-        <Box
-          minWidth="240px"
-          maxWidth={hasMultiplePaymentOptions ? "100%" : ["100%", "50%"]}
-          paddingX="1px"
-        >
-          <ExpressCheckoutElement
-            options={expressCheckoutOptions}
-            onClick={handleOpenExpressCheckout}
-            onCancel={handleCancel}
-            onReady={handleReady}
-            onShippingAddressChange={handleShippingAddressChange}
-            onShippingRateChange={handleShippingRateChange}
-            onLoadError={e => {
-              logger.error("Express checkout element error", e)
-            }}
-            onConfirm={onConfirm}
-          />
-        </Box>
-        <Text variant="xs" color="mono60" mt={1} ml={0.5}>
-          <>By clicking Pay, I agree to Artsy’s </>
-          <RouterLink
-            inline
-            to="https://www.artsy.net/terms"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            General Terms and Conditions of Sale
-          </RouterLink>
-          .
-        </Text>
-        <Spacer y={4} />
+    <Box display={visible ? "block" : "none"}>
+      <Text variant="lg-display">Express checkout</Text>
+      <Spacer y={1} />
+      <Box
+        minWidth="240px"
+        maxWidth={hasMultiplePaymentOptions ? "100%" : ["100%", "50%"]}
+        paddingX="1px"
+      >
+        <ExpressCheckoutElement
+          options={expressCheckoutOptions}
+          onClick={handleOpenExpressCheckout}
+          onCancel={handleCancel}
+          onReady={handleReady}
+          onShippingAddressChange={handleShippingAddressChange}
+          onShippingRateChange={handleShippingRateChange}
+          onLoadError={e => {
+            logger.error("Express checkout element error", e)
+          }}
+          onConfirm={onConfirm}
+        />
       </Box>
-    </>
+      <Text variant="xs" color="mono60" mt={1} ml={0.5}>
+        <>By clicking Pay, I agree to Artsy’s </>
+        <RouterLink
+          inline
+          to="https://www.artsy.net/terms"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          General Terms and Conditions of Sale
+        </RouterLink>
+        .
+      </Text>
+      <Spacer y={4} />
+    </Box>
   )
 }
 
