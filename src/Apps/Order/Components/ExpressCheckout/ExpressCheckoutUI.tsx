@@ -343,13 +343,16 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
               id: orderData.internalID,
               buyerPhoneNumber: phone,
               buyerPhoneNumberCountryCode: null,
-              shippingName: name,
-              shippingAddressLine1: line1,
-              shippingAddressLine2: line2,
-              shippingPostalCode: postal_code,
-              shippingCity: city,
-              shippingRegion: state,
-              shippingCountry: country,
+              shippingName: shippingRate?.id === "PICKUP" ? null : name,
+              shippingAddressLine1:
+                shippingRate?.id === "PICKUP" ? null : line1,
+              shippingAddressLine2:
+                shippingRate?.id === "PICKUP" ? null : line2,
+              shippingPostalCode:
+                shippingRate?.id === "PICKUP" ? null : postal_code,
+              shippingCity: shippingRate?.id === "PICKUP" ? null : city,
+              shippingRegion: shippingRate?.id === "PICKUP" ? null : state,
+              shippingCountry: shippingRate?.id === "PICKUP" ? null : country,
             },
           },
         })
