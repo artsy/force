@@ -22,6 +22,7 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
   })),
 }))
 
+let shippingRateId = "DOMESTIC_FLAT"
 const mockExpressCheckoutElement = ExpressCheckoutElement as jest.Mock
 const mockResolveOnClick = jest.fn()
 const mockElementsUpdate = jest.fn()
@@ -89,9 +90,8 @@ jest.mock("@stripe/react-stripe-js", () => {
                     phone: "1234567890",
                   },
                   shippingRate: {
-                    id: "PICKUP",
-                    amount: 123,
-                    displayName: "Pickup",
+                    id: shippingRateId,
+                    amount: 4200,
                   },
                 })
               }
@@ -250,6 +250,7 @@ describe("ExpressCheckoutUI", () => {
   })
 
   it("omits shipping data when order is pickup", async () => {
+    shippingRateId = "PICKUP"
     const { mockResolveLastOperation, env } = renderWithRelay({
       Order: () => ({
         ...orderData,
@@ -299,13 +300,13 @@ describe("ExpressCheckoutUI", () => {
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
       buyerPhoneNumber: "1234567890",
       buyerPhoneNumberCountryCode: null,
-      shippingAddressLine1: "401 Broadway",
+      shippingAddressLine1: null,
       shippingAddressLine2: null,
-      shippingCity: "New York",
-      shippingCountry: "US",
-      shippingName: "Buyer Name",
-      shippingPostalCode: "10013",
-      shippingRegion: "NY",
+      shippingCity: null,
+      shippingCountry: null,
+      shippingName: null,
+      shippingPostalCode: null,
+      shippingRegion: null,
     })
 
     await flushPromiseQueue()
