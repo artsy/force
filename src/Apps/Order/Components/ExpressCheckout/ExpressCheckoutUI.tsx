@@ -35,6 +35,7 @@ import {
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { preventHardReload } from "Apps/Order/OrderApp"
+import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type {
@@ -82,7 +83,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const errorRef = useRef<string | null>(null)
   const [hasMultiplePaymentOptions, setHasMultiplePaymentOptions] =
     useState<boolean>(false)
-  const [loading, setLoading] = useState(true)
+  const shippingContext = useShippingContext()
 
   if (!(stripe && elements)) {
     return null
@@ -447,7 +448,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const handleReady = e => {
     const paymentMethods = e.availablePaymentMethods
 
-    setLoading(false)
+    shippingContext.actions.setIsExpressCheckoutLoading(false)
 
     if (paymentMethods) {
       setHasMultiplePaymentOptions(
@@ -465,7 +466,6 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
 
   return (
     <>
-      {loading && PLACEHOLDER}
       <Box display={visible ? "block" : "none"}>
         <Text variant="lg-display">Express checkout</Text>
         <Spacer y={1} />
@@ -716,7 +716,7 @@ function getAvailablePaymentMethods(
     .map(([method]) => method)
 }
 
-const PLACEHOLDER = (
+export const EXPRESS_CHECKOUT_PLACEHOLDER = (
   <Skeleton>
     <SkeletonText variant="lg-display">Express checkout</SkeletonText>
     <Spacer y={1} />
