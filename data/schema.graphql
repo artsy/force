@@ -22295,6 +22295,7 @@ input UpdateArtworkEditionSetInput {
 
   # True for `Make Offer` artworks
   offer: Boolean
+  partnerLocationId: String
   priceCurrency: String
 
   # Show/Hide the price of an artwork
@@ -22365,6 +22366,7 @@ input UpdateArtworkMutationInput {
 
   # True for `Make Offer` artworks
   offer: Boolean
+  partnerLocationId: String
   priceCurrency: String
 
   # Show/Hide the price of an artwork
