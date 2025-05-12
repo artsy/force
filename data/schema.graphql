@@ -12572,9 +12572,6 @@ type HomeView {
   section(
     # The ID of the section
     id: String!
-
-    # Overrides shouldBeDisplayed to show sections that would otherwise be hidden
-    overrideShouldBeDisplayed: Boolean = false
   ): HomeViewSectionGeneric
 
   # A paginated list of home view sections
