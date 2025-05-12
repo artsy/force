@@ -54,7 +54,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
         }
       />
       {isLoading && <Order2CheckoutLoadingSkeleton />}
-      <GridColumns display={isLoading ? "none" : "block"}>
+      <GridColumns style={{ display: isLoading ? "none" : "block" }}>
         <Column span={[12, 8]} start={[1, 2]}>
           <Stack gap={1} bg="mono5">
             {/* Collapsible order summary */}

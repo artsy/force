@@ -13,12 +13,7 @@ export const Order2CheckoutLoadingSkeleton = () => {
     <Skeleton aria-label="Checkout loading skeleton">
       <Stack gap={1} bg="mono5">
         <Order2CollapsibleOrderSummarySkeleton />
-        <GenericStepSkeleton />
-        <GenericStepSkeleton />
-        <GenericStepSkeleton />
-        <GenericStepSkeleton />
-        <GenericStepSkeleton />
-        <GenericStepSkeleton />
+        <StepsSkeleton />
       </Stack>
     </Skeleton>
   )
@@ -26,59 +21,65 @@ export const Order2CheckoutLoadingSkeleton = () => {
 
 const Order2CollapsibleOrderSummarySkeleton: React.FC = () => {
   return (
-    <Box backgroundColor="mono0">
-      <Flex py={1} px={2} justifyContent="space-between" alignItems="center">
-        {/* Artwork image skeleton */}
-        <SkeletonBox width={40} height={40} />
+    <Flex height={60} py={1} px={2} backgroundColor="mono0">
+      {/* Artwork image skeleton */}
+      <SkeletonBox width={40} height={40} />
 
-        {/* Artwork details skeleton */}
-        <Box flex={1} ml={1} mr={2}>
-          <SkeletonText variant="xs" mb={0.5}>
+      {/* Artwork details skeleton */}
+      <Box ml={1} flexGrow={1}>
+        <Flex>
+          <SkeletonText variant="xs" flexGrow={1}>
             Artist names
           </SkeletonText>
-          <SkeletonText variant="xs">Artwork title, date</SkeletonText>
-        </Box>
-
-        {/* Price and chevron skeleton */}
-        <Flex flexShrink={0} alignItems="center">
-          <SkeletonText variant="xs" width={50} mr={0.5}>
-            Order total
-          </SkeletonText>
-          <SkeletonBox width={18} height={18} />
+          {/* Price and chevron skeleton */}
+          <Flex flexGrow={0} justifyContent={"flex-end"}>
+            <SkeletonText variant="xs" mr={0.5}>
+              Price
+            </SkeletonText>
+            <SkeletonBox width={18} height={16} mt="2px" />
+          </Flex>
         </Flex>
-      </Flex>
-
-      {/* Collapsible content skeleton */}
-      <Box px={2} overflow="hidden">
-        <Spacer y={1} />
-        <SkeletonText variant="xs" width="80%" mb={1} />
-        <SkeletonText variant="xs" width="60%" />
-        <Spacer y={1} />
+        <SkeletonText variant="xs">Artwork title, date</SkeletonText>
       </Box>
-    </Box>
+    </Flex>
   )
 }
 
-const GenericStepSkeleton: React.FC = () => {
+const StepsSkeleton = () => {
   return (
     <Flex flexDirection="column" backgroundColor="mono0" p={2}>
       {/* Title Skeleton */}
-      <SkeletonText variant="sm-display" width="50%" mb={1}>
-        Step Title
-      </SkeletonText>
-
       <Flex py={1}>
-        {/* Description Skeleton */}
-        <SkeletonText flex={1} variant="xs">
-          Step details
+        {/* Step */}
+        <SkeletonText flex={1} variant="sm-display">
+          First step title
         </SkeletonText>
-        <Spacer y={2} />
 
-        {/* Placeholder for additional content */}
-        <SkeletonText flex={0} variant="xs">
-          Step content
+        {/* Rioght-aligned content */}
+        <SkeletonText flex={0} variant="sm-display">
+          Loading...
         </SkeletonText>
       </Flex>
+
+      <Spacer y={2} />
+
+      <SkeletonText variant="xs" mb={1}>
+        Step content
+      </SkeletonText>
+      <SkeletonText variant="xs" mb={1}>
+        And more ...
+      </SkeletonText>
+
+      <Spacer y={1} />
+      <SkeletonText variant="sm-display" mb={1}>
+        Second step title
+      </SkeletonText>
+      <SkeletonText variant="xs" mb={1}>
+        Still more content
+      </SkeletonText>
+      <SkeletonText variant="xs" mb={1}>
+        Yet more...
+      </SkeletonText>
     </Flex>
   )
 }

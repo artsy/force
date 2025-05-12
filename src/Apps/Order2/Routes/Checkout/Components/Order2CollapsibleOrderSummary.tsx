@@ -32,10 +32,11 @@ export const Order2CollapsibleOrderSummary: React.FC<
             mr={1}
             src={artworkVersion?.image?.resized?.url}
             alt={artworkVersion?.title || ""}
-            width="40px"
+            width={40}
+            height={40}
           />
         </RouterLink>
-        <Box overflow="hi" flex={1} mr={2}>
+        <Box overflow="hidden" flex={1} mr={2}>
           <Text overflowEllipsis variant="xs" color="mono100">
             {artworkVersion?.artistNames}
           </Text>

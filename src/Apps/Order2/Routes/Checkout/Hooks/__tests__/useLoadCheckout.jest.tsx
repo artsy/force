@@ -103,7 +103,7 @@ describe("useLoadCheckout", () => {
     jest.advanceTimersByTime(1000)
   }
 
-  const markExpressCheckoutLoaded = result => {
+  const signalExpressCheckoutLoaded = result => {
     act(() => {
       result.current.handleExpressCheckoutLoaded()
     })
@@ -116,7 +116,7 @@ describe("useLoadCheckout", () => {
     expect(result.current.isLoading).toBe(true)
 
     passMinimumLoadingTime()
-    markExpressCheckoutLoaded(result)
+    signalExpressCheckoutLoaded(result)
 
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false)
@@ -137,7 +137,7 @@ describe("useLoadCheckout", () => {
     const { result, waitFor } = hookResult
 
     passMinimumLoadingTime()
-    markExpressCheckoutLoaded(result)
+    signalExpressCheckoutLoaded(result)
 
     await waitFor(() => {
       expect(result.current.loadingError).toBe("missing_line_item_data")
