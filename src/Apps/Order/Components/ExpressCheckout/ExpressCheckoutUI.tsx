@@ -446,21 +446,23 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }
 
   const handleReady = e => {
-    const paymentMethods = e.availablePaymentMethods
+    try {
+      const paymentMethods = e.availablePaymentMethods
 
-    shippingContext.actions.setIsExpressCheckoutLoading(false)
+      if (paymentMethods) {
+        setHasMultiplePaymentOptions(
+          Object.values(paymentMethods).filter(Boolean).length > 1,
+        )
 
-    if (paymentMethods) {
-      setHasMultiplePaymentOptions(
-        Object.values(paymentMethods).filter(Boolean).length > 1,
-      )
+        setVisible(true)
 
-      setVisible(true)
-
-      orderTracking.expressCheckoutViewed({
-        order: orderData,
-        walletType: getAvailablePaymentMethods(paymentMethods),
-      })
+        orderTracking.expressCheckoutViewed({
+          order: orderData,
+          walletType: getAvailablePaymentMethods(paymentMethods),
+        })
+      }
+    } finally {
+      shippingContext.actions.setIsExpressCheckoutLoading(false)
     }
   }
 
