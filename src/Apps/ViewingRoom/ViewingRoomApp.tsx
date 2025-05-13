@@ -1,5 +1,6 @@
 import HideIcon from "@artsy/icons/HideIcon"
 import { Join, Spacer } from "@artsy/palette"
+import { ViewingRoomStructuredData } from "Apps/ViewingRoom/Components/ViewingRoomStructuredData"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { SystemContext } from "System/Contexts/SystemContext"
@@ -27,30 +28,34 @@ const ViewingRoomApp: React.FC<
     (viewingRoom.status === "draft" || viewingRoom.status === "scheduled")
 
   return (
-    <Analytics contextPageOwnerId={viewingRoom.internalID}>
-      <ViewingRoomMeta viewingRoom={viewingRoom} />
+    <>
+      <Analytics contextPageOwnerId={viewingRoom.internalID}>
+        <ViewingRoomMeta viewingRoom={viewingRoom} />
 
-      {isPreviewable && (
-        <FullBleedBanner variant="defaultLight">
-          <HideIcon mr={1} />
-          This is a preview of your viewing room.
-        </FullBleedBanner>
-      )}
-
-      <Join separator={<Spacer y={4} />}>
-        <ViewingRoomHeader viewingRoom={viewingRoom} />
-
-        {viewingRoom.status === "live" || isPreviewable ? (
-          <>
-            <ViewingRoomTabBar />
-
-            <div>{children}</div>
-          </>
-        ) : (
-          <ViewingRoomContentNotAccessible viewingRoom={viewingRoom} />
+        {isPreviewable && (
+          <FullBleedBanner variant="defaultLight">
+            <HideIcon mr={1} />
+            This is a preview of your viewing room.
+          </FullBleedBanner>
         )}
-      </Join>
-    </Analytics>
+
+        <Join separator={<Spacer y={4} />}>
+          <ViewingRoomHeader viewingRoom={viewingRoom} />
+
+          {viewingRoom.status === "live" || isPreviewable ? (
+            <>
+              <ViewingRoomTabBar />
+
+              <div>{children}</div>
+            </>
+          ) : (
+            <ViewingRoomContentNotAccessible viewingRoom={viewingRoom} />
+          )}
+        </Join>
+      </Analytics>
+
+      <ViewingRoomStructuredData viewingRoom={viewingRoom} />
+    </>
   )
 }
 
@@ -63,6 +68,7 @@ export const ViewingRoomAppFragmentContainer = createFragmentContainer(
         ...ViewingRoomMeta_viewingRoom
         ...ViewingRoomHeader_viewingRoom
         ...ViewingRoomContentNotAccessible_viewingRoom
+        ...ViewingRoomStructuredData_viewingRoom
         internalID
         status
         partner {

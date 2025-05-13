@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3f8fb2fc8bfed8948527d046fe361eaf>>
+ * @generated SignedSource<<997dddc4e602c8fe2cb4e9e069c231de>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type ArticleStructuredData_article$data = {
   readonly authors: ReadonlyArray<{
     readonly name: string | null | undefined;
   }>;
+  readonly href: string | null | undefined;
   readonly publishedAt: string | null | undefined;
   readonly thumbnailImage: {
     readonly _16x9: {
@@ -61,6 +62,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "title",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "href",
       "storageKey": null
     },
     {
@@ -163,6 +171,6 @@ return {
 };
 })();
 
-(node as any).hash = "c81b59b7941170148f8e672b251efda8";
+(node as any).hash = "e1c13ea7cca9a2f4f99975f9694195a3";
 
 export default node;

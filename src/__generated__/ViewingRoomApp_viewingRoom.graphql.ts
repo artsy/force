@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f2e0f7b6bb13f8abd385f60f5dbac268>>
+ * @generated SignedSource<<25b59086cc55bbc3cb1509747264e895>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ViewingRoomApp_viewingRoom$data = {
     readonly internalID: string;
   } | null | undefined;
   readonly status: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomContentNotAccessible_viewingRoom" | "ViewingRoomHeader_viewingRoom" | "ViewingRoomMeta_viewingRoom">;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomContentNotAccessible_viewingRoom" | "ViewingRoomHeader_viewingRoom" | "ViewingRoomMeta_viewingRoom" | "ViewingRoomStructuredData_viewingRoom">;
   readonly " $fragmentType": "ViewingRoomApp_viewingRoom";
 };
 export type ViewingRoomApp_viewingRoom$key = {
@@ -53,6 +53,11 @@ return {
       "kind": "FragmentSpread",
       "name": "ViewingRoomContentNotAccessible_viewingRoom"
     },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ViewingRoomStructuredData_viewingRoom"
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -79,6 +84,6 @@ return {
 };
 })();
 
-(node as any).hash = "2d21bb76bccd60f41b8510ed547e84cd";
+(node as any).hash = "878cf655cc8bca7b2a444e2601072036";
 
 export default node;
