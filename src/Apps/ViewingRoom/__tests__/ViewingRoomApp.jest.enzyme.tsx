@@ -347,6 +347,9 @@ const DraftViewingRoomAppFixture: ViewingRoomApp_DraftTest_Query$rawResponse = {
     internalID: "example",
     href: "/viewing-room/example",
     pullQuote: "Example pull quote",
+    introStatement: "Example intro statement",
+    startAt: "2024-01-01T00:00:00Z",
+    endAt: "2024-02-01T00:00:00Z",
     distanceToClose: null,
     distanceToOpen: null,
     image: {
@@ -372,6 +375,9 @@ const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_Query$rawResp
       internalID: "example",
       href: "/viewing-room/example",
       pullQuote: "Example pull quote",
+      introStatement: "Example intro statement",
+      startAt: "2024-01-01T00:00:00Z",
+      endAt: "2024-02-01T00:00:00Z",
       distanceToClose: null,
       distanceToOpen: "8 days",
       image: {
@@ -396,6 +402,9 @@ const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_Query$rawResponse = {
     internalID: "example",
     href: "/viewing-room/example",
     pullQuote: "Example pull quote",
+    introStatement: "Example intro statement",
+    startAt: "2024-01-01T00:00:00Z",
+    endAt: "2024-02-01T00:00:00Z",
     distanceToClose: "1 month",
     distanceToOpen: null,
     image: {
@@ -421,6 +430,9 @@ const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_Query$rawResponse =
       internalID: "example",
       href: "/viewing-room/example",
       pullQuote: "Example pull quote",
+      introStatement: "Example intro statement",
+      startAt: "2024-01-01T00:00:00Z",
+      endAt: "2024-02-01T00:00:00Z",
       distanceToClose: null,
       distanceToOpen: null,
       image: {
@@ -446,6 +458,9 @@ const LoggedOutViewingRoomAppFixture: ViewingRoomApp_LoggedOutTest_Query$rawResp
       internalID: "example",
       href: "/viewing-room/example",
       pullQuote: "Example pull quote",
+      introStatement: "Example intro statement",
+      startAt: "2024-01-01T00:00:00Z",
+      endAt: "2024-02-01T00:00:00Z",
       distanceToClose: "1 month",
       distanceToOpen: null,
       image: {

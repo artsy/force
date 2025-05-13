@@ -1,4 +1,5 @@
 import { StructuredData } from "Components/Seo/StructuredData"
+import { getENV } from "Utils/getENV"
 import type { ArticleStructuredData_article$key } from "__generated__/ArticleStructuredData_article.graphql"
 import { compact } from "lodash"
 import { graphql } from "react-relay"
@@ -41,6 +42,7 @@ export const ArticleStructuredData: React.FC<
           name: "Artsy",
           url: "https://www.artsy.net",
         },
+        url: `${getENV("APP_URL")}${article.href}`,
       }}
     />
   )
@@ -49,6 +51,7 @@ export const ArticleStructuredData: React.FC<
 const ARTICLE_STRUCTURD_DATA_FRAGMENT = graphql`
   fragment ArticleStructuredData_article on Article {
     title
+    href
     publishedAt
     updatedAt
     authors {
