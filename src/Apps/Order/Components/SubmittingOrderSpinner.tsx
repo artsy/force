@@ -1,6 +1,6 @@
 import { Box, Flex, Spinner, Text } from "@artsy/palette"
 
-export const ProcessingPaymentSpinner: React.FC = () => {
+export const SubmittingOrderSpinner: React.FC = () => {
   return (
     <Flex alignItems="center" flexDirection="column">
       <Box position="relative" height={100}>
@@ -8,7 +8,7 @@ export const ProcessingPaymentSpinner: React.FC = () => {
       </Box>
 
       <Text variant="md" color="blue100">
-        Processing payment
+        Submitting your order
       </Text>
 
       <Text variant="sm" color="mono60">

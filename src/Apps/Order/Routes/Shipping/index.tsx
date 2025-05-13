@@ -11,6 +11,7 @@ import {
   buyNowFlowSteps,
   offerFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
+import { SubmittingOrderSpinner } from "Apps/Order/Components/SubmittingOrderSpinner"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import { FulfillmentDetails } from "Apps/Order/Routes/Shipping/Components/FulfillmentDetails"
@@ -31,7 +32,6 @@ import type {
 } from "__generated__/Shipping_order.graphql"
 import { type FC, useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
-import { ProcessingPaymentSpinner } from "Apps/Order/Components/ProcessingPaymentSpinner"
 
 export type ShippingStage =
   // User choosing fulfillment type
@@ -113,7 +113,8 @@ const ShippingRouteLayout: FC<
         }
         content={
           <>
-            {!!showSpinner && <ProcessingPaymentSpinner />}
+            {!!showSpinner && <SubmittingOrderSpinner />}
+
             <Flex
               display={showSpinner ? "none" : "flex"}
               flexDirection="column"
