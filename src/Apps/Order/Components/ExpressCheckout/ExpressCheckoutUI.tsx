@@ -427,6 +427,7 @@ export const ExpressCheckoutUI = ({
       )
 
       // Redirect to status page after successful order submission
+      setShowSpinner?.(false)
       window.location.reload()
     } catch (error) {
       logger.error("Error confirming payment", error)
@@ -447,6 +448,7 @@ export const ExpressCheckoutUI = ({
         }),
       )
 
+      setShowSpinner?.(false)
       resetOrder()
     }
   }
