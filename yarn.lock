@@ -22,10 +22,10 @@
   dependencies:
     preact "^10.11.3"
 
-"@artsy/cohesion@4.263.1":
-  version "4.263.1"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.263.1.tgz#7036e3c4aff45e434735f16e014cda7f14eec90d"
-  integrity sha512-baRbtK4Jjbc1P5+zcTOeRV0GH1gy5DLLrkkFnQSrsCCNBSSSBhxM/CMWGU764q05SCocX80qxz7d/oLKGYCAzQ==
+"@artsy/cohesion@4.264.0":
+  version "4.264.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.264.0.tgz#efae3bb9a1fe3b4840bc7e5012633bd07275f413"
+  integrity sha512-HJWcYKis6hC5ECQincLlKD3aJ4COcPlH2dXyBKyr2Bt5S2qIe/yQ1ncnrmmi7ydPMeGjga+IyCvymyalemhp1A==
   dependencies:
     core-js "3"
 
