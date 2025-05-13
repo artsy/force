@@ -462,7 +462,7 @@ const request = async (url, opts) => {
     const response = await fetch(url, options)
 
     if (!response?.ok) {
-      throw new Error(`Response status: ${response.status}`)
+      throw new Error(`Response status ${response.status}`)
     }
 
     const json = await response.json()
