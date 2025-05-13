@@ -1,8 +1,10 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Flex, Spacer } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ExpressCheckoutQueryRenderer } from "Apps/Order/Components/ExpressCheckout"
+import { EXPRESS_CHECKOUT_PLACEHOLDER } from "Apps/Order/Components/ExpressCheckout/ExpressCheckoutUI"
 import { useShowStoredErrorDialog } from "Apps/Order/Components/ExpressCheckout/Util/useShowStoredErrorDialog"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import {
@@ -17,7 +19,6 @@ import { ShippingQuotes } from "Apps/Order/Routes/Shipping/Components/ShippingQu
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import { ShippingContextProvider } from "Apps/Order/Routes/Shipping/ShippingContext"
 import { Analytics } from "System/Contexts/AnalyticsContext"
-import { useFlag } from "@unleash/proxy-client-react"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { Media } from "Utils/Responsive"
 import type {
@@ -86,6 +87,9 @@ const ShippingRouteLayout: FC<
     !shippingContext.orderData.isOffer &&
     shippingContext.orderData.isFixedShipping
 
+  const isExpressCheckoutLoading =
+    shippingContext.state.isExpressCheckoutLoading
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (shippingContext.state.stage === "shipping_quotes") {
@@ -115,7 +119,10 @@ const ShippingRouteLayout: FC<
             }
           >
             {isExpressCheckoutEligible && (
-              <ExpressCheckoutQueryRenderer orderID={order.internalID} />
+              <>
+                {isExpressCheckoutLoading && EXPRESS_CHECKOUT_PLACEHOLDER}
+                <ExpressCheckoutQueryRenderer orderID={order.internalID} />
+              </>
             )}
 
             <FulfillmentDetails me={me} order={order} />
