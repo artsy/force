@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Checkbox,
   Column,
   Flex,
   GridColumns,
@@ -13,9 +12,8 @@ import {
   Text,
 } from "@artsy/palette"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
+import { Order2DeliveryForm } from "Apps/Order2/Routes/Checkout/Components/Order2DeliveryForm"
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
-import { addressFormFieldsValidator } from "Components/Address/AddressFormFields"
-import { AddressFormFields } from "Components/Address/AddressFormFields"
 import { ErrorPage } from "Components/ErrorPage"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { countries as phoneCountryOptions } from "Utils/countries"
@@ -24,7 +22,6 @@ import { Formik, type FormikHelpers, type FormikValues } from "formik"
 import type * as React from "react"
 import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
-import * as yup from "yup"
 
 interface Order2CheckoutRouteProps {
   viewer: Order2CheckoutRoute_viewer$key
@@ -38,11 +35,6 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
   const data = useFragment(FRAGMENT, viewer)
   const order = data.me?.order
   const fulfillmentOptions = order?.fulfillmentOptions
-
-  const validationSchema = yup.object().shape({
-    ...addressFormFieldsValidator({ withPhoneNumber: true }),
-    saveAddress: yup.boolean(),
-  })
 
   if (!order) {
     return <ErrorPage code={404} message="Order not found" />
@@ -66,90 +58,52 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
             <Order2CollapsibleOrderSummary order={order} />
             {/* Fulfillment details Step */}
             <Flex flexDirection="column" backgroundColor="mono0" py={2}>
-              <Tabs
-                justifyContent="space-between"
-                initialTabIndex={0}
-                onChange={tabInfo => {
-                  // Required because the tabInfo.name is a customized text element
-                  const selected =
-                    tabInfo?.tabIndex === 0 ? "delivery" : "pickup"
-                  console.log("Tab change", selected)
-                }}
-              >
-                <Tab
-                  name={
-                    // margins here come pretty close to making the tabs fill the full width
-                    <Text mx={50} variant="xs">
-                      Delivery
-                    </Text>
-                  }
+              {fulfillmentOptions?.some(option => option.type === "PICKUP") ? (
+                <Tabs
+                  justifyContent="space-between"
+                  initialTabIndex={0}
+                  onChange={tabInfo => {
+                    // Required because the tabInfo.name is a customized text element
+                    const selected =
+                      tabInfo?.tabIndex === 0 ? "delivery" : "pickup"
+                    console.log("Tab change", selected)
+                  }}
                 >
-                  <Box px={2}>
-                    <Text
-                      fontWeight="medium"
-                      color="mono100"
-                      variant="sm-display"
-                    >
-                      Delivery address
-                    </Text>
-                    <Spacer y={2} />
-                    <Formik
-                      initialValues={{
-                        address: {
-                          name: "",
-                          country: "",
-                          postalCode: "",
-                          addressLine1: "",
-                          addressLine2: "",
-                          city: "",
-                          region: "",
-                        },
-                        phoneNumber: "",
-                        phoneNumberCountryCode: "",
-                      }}
-                      validationSchema={validationSchema}
-                      onSubmit={(
-                        values: FormikValues,
-                        formikHelpers: FormikHelpers<FormikValues>,
-                      ) => {
-                        console.warn(
-                          "Delivery address values submitted:",
-                          values,
-                        )
-                      }}
-                    >
-                      {formikContext => (
-                        <Flex flexDirection={"column"} mb={2}>
-                          <AddressFormFields withPhoneNumber />
-                          <Spacer y={2} />
-                          <Checkbox
-                            onSelect={selected => {
-                              formikContext.setFieldValue(
-                                "saveAddress",
-                                selected,
-                              )
-                            }}
-                            selected={formikContext.values.saveAddress}
-                          >
-                            <Text variant="xs">
-                              Save shipping address for later use
-                            </Text>
-                          </Checkbox>
-                          <Spacer y={4} />
-                          <Button
-                            type="submit"
-                            onClick={() => formikContext.handleSubmit()}
-                          >
-                            See Shipping Methods
-                          </Button>
-                        </Flex>
-                      )}
-                    </Formik>
-                  </Box>
-                </Tab>
-                {fulfillmentOptions?.some(
-                  option => option.type === "PICKUP",
-                ) && (
+                  <Tab
+                    name={
+                      // margins here come pretty close to making the tabs fill the full width
+                      <Text mx={50} variant="xs">
+                        Delivery
+                      </Text>
+                    }
+                  >
+                    <Box px={2}>
+                      <Order2DeliveryForm
+                        initialValues={{
+                          address: {
+                            name: "",
+                            country: "",
+                            postalCode: "",
+                            addressLine1: "",
+                            addressLine2: "",
+                            city: "",
+                            region: "",
+                          },
+                          phoneNumber: "",
+                          phoneNumberCountryCode: "",
+                        }}
+                        onSubmit={(
+                          values: FormikValues,
+                          formikHelpers: FormikHelpers<FormikValues>,
+                        ) => {
+                          console.warn(
+                            "Delivery address values submitted:",
+                            values,
+                          )
+                        }}
+                      />
+                    </Box>
+                  </Tab>
                   <Tab
                     name={
                       <Text mx={50} variant="xs">
@@ -237,8 +191,29 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                       </Formik>
                     </Box>
                   </Tab>
-                )}
-              </Tabs>
+                </Tabs>
+              ) : (
+                <Box px={2}>
+                  <Order2DeliveryForm
+                    initialValues={{
+                      address: {
+                        name: "",
+                        country: "",
+                        postalCode: "",
+                        addressLine1: "",
+                        addressLine2: "",
+                        city: "",
+                        region: "",
+                      },
+                      phoneNumber: "",
+                      phoneNumberCountryCode: "",
+                    }}
+                    onSubmit={(values: FormikValues) => {
+                      console.warn("Delivery address values submitted:", values)
+                    }}
+                  />
+                </Box>
+              )}
             </Flex>
 
             {/* Shipping method Step */}
