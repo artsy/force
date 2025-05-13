@@ -59,19 +59,9 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
             {/* Fulfillment details Step */}
             <Flex flexDirection="column" backgroundColor="mono0" py={2}>
               {fulfillmentOptions?.some(option => option.type === "PICKUP") ? (
-                <Tabs
-                  justifyContent="space-between"
-                  initialTabIndex={0}
-                  onChange={tabInfo => {
-                    // Required because the tabInfo.name is a customized text element
-                    const selected =
-                      tabInfo?.tabIndex === 0 ? "delivery" : "pickup"
-                    console.log("Tab change", selected)
-                  }}
-                >
+                <Tabs justifyContent="space-between" initialTabIndex={0}>
                   <Tab
                     name={
-                      // margins here come pretty close to making the tabs fill the full width
                       <Text mx={50} variant="xs">
                         Delivery
                       </Text>
@@ -95,12 +85,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                         onSubmit={(
                           values: FormikValues,
                           formikHelpers: FormikHelpers<FormikValues>,
-                        ) => {
-                          console.warn(
-                            "Delivery address values submitted:",
-                            values,
-                          )
-                        }}
+                        ) => {}}
                       />
                     </Box>
                   </Tab>
@@ -129,12 +114,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                           pickupPhoneNumberCountryCode: "",
                         }}
                         validationSchema={{}}
-                        onSubmit={(
-                          values: FormikValues,
-                          // formikHelpers: FormikHelpers<FormikValues>,
-                        ) => {
-                          console.warn("Pickup values submitted:", values)
-                        }}
+                        onSubmit={(values: FormikValues) => {}}
                       >
                         {formikContext => (
                           <GridColumns data-testid={"PickupDetailsForm"}>
@@ -208,9 +188,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                       phoneNumber: "",
                       phoneNumberCountryCode: "",
                     }}
-                    onSubmit={(values: FormikValues) => {
-                      console.warn("Delivery address values submitted:", values)
-                    }}
+                    onSubmit={(values: FormikValues) => {}}
                   />
                 </Box>
               )}
