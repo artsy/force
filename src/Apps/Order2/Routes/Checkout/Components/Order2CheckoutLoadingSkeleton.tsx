@@ -7,39 +7,69 @@ import {
   Spacer,
   Stack,
 } from "@artsy/palette"
+import type { Order2CheckoutLoadingSkeleton_order$key } from "__generated__/Order2CheckoutLoadingSkeleton_order.graphql"
+import { graphql, useFragment } from "react-relay"
 
-export const Order2CheckoutLoadingSkeleton = () => {
+interface Order2CheckoutLoadingSkeletonProps {
+  order: Order2CheckoutLoadingSkeleton_order$key
+}
+
+export const Order2CheckoutLoadingSkeleton: React.FC<
+  Order2CheckoutLoadingSkeletonProps
+> = ({ order }) => {
+  const orderData = useFragment(FRAGMENT, order)
+
+  const artworkVersion = orderData.lineItems[0]?.artworkVersion
+
   return (
     <Skeleton aria-label="Checkout loading skeleton">
       <Stack gap={1} bg="mono5">
-        <Order2CollapsibleOrderSummarySkeleton />
+        <Order2CollapsibleOrderSummarySkeleton
+          artworkTitle={artworkVersion?.title as string}
+          artworkArtistNames={artworkVersion?.artistNames as string}
+          artworkDate={artworkVersion?.date as string}
+          artworkPrice={
+            (orderData.buyerTotal?.display ||
+              orderData.itemsTotal?.display) as string
+          }
+        />
         <StepsSkeleton />
       </Stack>
     </Skeleton>
   )
 }
 
-const Order2CollapsibleOrderSummarySkeleton: React.FC = () => {
+interface Order2CollapsibleOrderSummarySkeletonProps {
+  artworkTitle: string
+  artworkArtistNames: string
+  artworkDate: string
+  artworkPrice: string
+}
+const Order2CollapsibleOrderSummarySkeleton: React.FC<
+  Order2CollapsibleOrderSummarySkeletonProps
+> = props => {
   return (
     <Flex height={60} py={1} px={2} backgroundColor="mono0">
-      {/* Artwork image skeleton */}
+      {/* Artwork image */}
       <SkeletonBox width={40} height={40} />
 
-      {/* Artwork details skeleton */}
+      {/* Artwork details */}
       <Box ml={1} flexGrow={1}>
         <Flex>
           <SkeletonText variant="xs" flexGrow={1}>
-            Artist names
+            {props.artworkArtistNames}
           </SkeletonText>
-          {/* Price and chevron skeleton */}
+          {/* Price and chevron */}
           <Flex flexGrow={0} justifyContent={"flex-end"}>
             <SkeletonText variant="xs" mr={0.5}>
-              Price
+              {props.artworkPrice}
             </SkeletonText>
             <SkeletonBox width={18} height={16} mt="2px" />
           </Flex>
         </Flex>
-        <SkeletonText variant="xs">Artwork title, date</SkeletonText>
+        <SkeletonText variant="xs">
+          {props.artworkTitle}, {props.artworkDate}
+        </SkeletonText>
       </Box>
     </Flex>
   )
@@ -48,14 +78,11 @@ const Order2CollapsibleOrderSummarySkeleton: React.FC = () => {
 const StepsSkeleton = () => {
   return (
     <Flex flexDirection="column" backgroundColor="mono0" p={2}>
-      {/* Title Skeleton */}
       <Flex py={1}>
-        {/* Step */}
         <SkeletonText flex={1} variant="sm-display">
           First step title
         </SkeletonText>
 
-        {/* Rioght-aligned content */}
         <SkeletonText flex={0} variant="sm-display">
           Loading...
         </SkeletonText>
@@ -71,6 +98,7 @@ const StepsSkeleton = () => {
       </SkeletonText>
 
       <Spacer y={1} />
+
       <SkeletonText variant="sm-display" mb={1}>
         Second step title
       </SkeletonText>
@@ -83,3 +111,21 @@ const StepsSkeleton = () => {
     </Flex>
   )
 }
+
+const FRAGMENT = graphql`
+  fragment Order2CheckoutLoadingSkeleton_order on Order {
+    buyerTotal {
+      display
+    }
+    itemsTotal {
+      display
+    }
+    lineItems {
+      artworkVersion {
+        title
+        artistNames
+        date
+      }
+    }
+  }
+`

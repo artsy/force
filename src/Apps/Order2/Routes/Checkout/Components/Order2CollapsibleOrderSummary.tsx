@@ -31,7 +31,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
           <Image
             mr={1}
             src={artworkVersion?.image?.resized?.url}
-            alt={artworkVersion?.title || ""}
+            alt={artworkVersion?.title as string}
             width={40}
             height={40}
           />
@@ -80,7 +80,6 @@ export const Order2CollapsibleOrderSummary: React.FC<
 const FRAGMENT = graphql`
   fragment Order2CollapsibleOrderSummary_order on Order {
     ...Order2PricingBreakdown_order
-    mode
     source
     buyerTotal {
       display

@@ -53,7 +53,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
             : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
         }
       />
-      {isLoading && <Order2CheckoutLoadingSkeleton />}
+      {isLoading && <Order2CheckoutLoadingSkeleton order={order} />}
       <GridColumns style={{ display: isLoading ? "none" : "block" }}>
         <Column span={[12, 8]} start={[1, 2]}>
           <Stack gap={1} bg="mono5">
@@ -238,6 +238,7 @@ const FRAGMENT = graphql`
         ...Order2CollapsibleOrderSummary_order
         ...Order2ReviewStep_order
         ...useLoadCheckout_order
+        ...Order2CheckoutLoadingSkeleton_order
       }
       addressConnection(first: 10) {
         edges {
