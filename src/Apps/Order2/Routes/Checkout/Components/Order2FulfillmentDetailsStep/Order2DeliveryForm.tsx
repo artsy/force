@@ -8,11 +8,7 @@ import type * as React from "react"
 import * as yup from "yup"
 
 interface Order2DeliveryFormProps {
-  initialValues: FormikValues
-  onSubmit: (
-    values: FormikValues,
-    formikHelpers: FormikHelpers<FormikValues>,
-  ) => void
+  order: any
 }
 
 const validationSchema = yup.object().shape({
@@ -20,10 +16,25 @@ const validationSchema = yup.object().shape({
   saveAddress: yup.boolean(),
 })
 
-export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
-  initialValues,
-  onSubmit,
-}) => {
+export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = () => {
+  // Placeholders
+  const initialValues = {
+    address: {
+      name: "",
+      country: "",
+      postalCode: "",
+      addressLine1: "",
+      addressLine2: "",
+      city: "",
+      region: "",
+    },
+    phoneNumber: "",
+    phoneNumberCountryCode: "",
+  }
+  const onSubmit = (
+    values: FormikValues,
+    formikHelpers: FormikHelpers<FormikValues>,
+  ) => {}
   return (
     <>
       <Text fontWeight="medium" color="mono100" variant="sm-display">
