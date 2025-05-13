@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<007f7e0bddc49204773b7dc205cc8694>>
+ * @generated SignedSource<<469069589a78cb3d9f5a51b50f7ad6f0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutRoute_viewer$data = {
   readonly me: {
@@ -20,6 +21,9 @@ export type Order2CheckoutRoute_viewer$data = {
       } | null | undefined> | null | undefined;
     } | null | undefined;
     readonly order: {
+      readonly fulfillmentOptions: ReadonlyArray<{
+        readonly type: FulfillmentOptionTypeEnum;
+      }>;
       readonly internalID: string;
       readonly " $fragmentSpreads": FragmentRefs<"Order2CollapsibleOrderSummary_order" | "Order2ReviewStep_order">;
     } | null | undefined;
@@ -74,6 +78,24 @@ return {
           "plural": false,
           "selections": [
             (v0/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "FulfillmentOption",
+              "kind": "LinkedField",
+              "name": "fulfillmentOptions",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "type",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
             {
               "args": null,
               "kind": "FragmentSpread",
@@ -136,6 +158,6 @@ return {
 };
 })();
 
-(node as any).hash = "2814aadf5ca462f20584667bed830b98";
+(node as any).hash = "865300edf458ce1be5fc386503ab70e4";
 
 export default node;

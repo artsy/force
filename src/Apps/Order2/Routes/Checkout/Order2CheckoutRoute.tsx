@@ -37,6 +37,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
 
   const data = useFragment(FRAGMENT, viewer)
   const order = data.me?.order
+  const fulfillmentOptions = order?.fulfillmentOptions
 
   const validationSchema = yup.object().shape({
     ...addressFormFieldsValidator({ withPhoneNumber: true }),
@@ -146,93 +147,97 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
                     </Formik>
                   </Box>
                 </Tab>
-                <Tab
-                  name={
-                    <Text mx={50} variant="xs">
-                      Pickup
-                    </Text>
-                  }
-                >
-                  <Box px={2}>
-                    <Text
-                      fontWeight="medium"
-                      color="mono100"
-                      variant="sm-display"
-                    >
-                      Free pickup
-                    </Text>
-                    <Text variant="xs" color="mono60" my={1}>
-                      After your order is confirmed, a specialist will contact
-                      you with details on how to pick up the work.
-                    </Text>
-                    <Formik
-                      initialValues={{
-                        pickupPhoneNumber: "",
-                        pickupPhoneNumberCountryCode: "",
-                      }}
-                      validationSchema={{}}
-                      onSubmit={(
-                        values: FormikValues,
-                        // formikHelpers: FormikHelpers<FormikValues>,
-                      ) => {
-                        console.warn("Pickup values submitted:", values)
-                      }}
-                    >
-                      {formikContext => (
-                        <GridColumns data-testid={"PickupDetailsForm"}>
-                          <Column span={12}>
-                            <PhoneInput
-                              mt={1}
-                              name="pickupPhoneNumber"
-                              onChange={formikContext.handleChange}
-                              onBlur={formikContext.handleBlur}
-                              data-testid={"PickupPhoneNumberInput"}
-                              options={phoneCountryOptions}
-                              onSelect={(
-                                option: (typeof phoneCountryOptions)[number],
-                              ): void => {
-                                formikContext.setFieldValue(
-                                  "pickupPhoneNumberCountryCode",
-                                  option.value,
-                                )
-                              }}
-                              dropdownValue={
-                                formikContext.values
-                                  .pickupPhoneNumberCountryCode
-                              }
-                              inputValue={
-                                formikContext.values.pickupPhoneNumber
-                              }
-                              placeholder="(000) 000 0000"
-                              error={
-                                (formikContext.touched
-                                  .pickupPhoneNumberCountryCode &&
-                                  (formikContext.errors
-                                    .pickupPhoneNumberCountryCode as
-                                    | string
-                                    | undefined)) ||
-                                (formikContext.touched.pickupPhoneNumber &&
-                                  (formikContext.errors.pickupPhoneNumber as
-                                    | string
-                                    | undefined))
-                              }
-                              required
-                            />
-                            <Spacer y={4} />
-                            <Button
-                              variant={"primaryBlack"}
-                              width="100%"
-                              type="submit"
-                              onClick={() => formikContext.handleSubmit()}
-                            >
-                              Continue to Payment
-                            </Button>
-                          </Column>
-                        </GridColumns>
-                      )}
-                    </Formik>
-                  </Box>
-                </Tab>
+                {fulfillmentOptions?.some(
+                  option => option.type === "PICKUP",
+                ) && (
+                  <Tab
+                    name={
+                      <Text mx={50} variant="xs">
+                        Pickup
+                      </Text>
+                    }
+                  >
+                    <Box px={2}>
+                      <Text
+                        fontWeight="medium"
+                        color="mono100"
+                        variant="sm-display"
+                      >
+                        Free pickup
+                      </Text>
+                      <Text variant="xs" color="mono60" my={1}>
+                        After your order is confirmed, a specialist will contact
+                        you with details on how to pick up the work.
+                      </Text>
+                      <Formik
+                        initialValues={{
+                          pickupPhoneNumber: "",
+                          pickupPhoneNumberCountryCode: "",
+                        }}
+                        validationSchema={{}}
+                        onSubmit={(
+                          values: FormikValues,
+                          // formikHelpers: FormikHelpers<FormikValues>,
+                        ) => {
+                          console.warn("Pickup values submitted:", values)
+                        }}
+                      >
+                        {formikContext => (
+                          <GridColumns data-testid={"PickupDetailsForm"}>
+                            <Column span={12}>
+                              <PhoneInput
+                                mt={1}
+                                name="pickupPhoneNumber"
+                                onChange={formikContext.handleChange}
+                                onBlur={formikContext.handleBlur}
+                                data-testid={"PickupPhoneNumberInput"}
+                                options={phoneCountryOptions}
+                                onSelect={(
+                                  option: (typeof phoneCountryOptions)[number],
+                                ): void => {
+                                  formikContext.setFieldValue(
+                                    "pickupPhoneNumberCountryCode",
+                                    option.value,
+                                  )
+                                }}
+                                dropdownValue={
+                                  formikContext.values
+                                    .pickupPhoneNumberCountryCode
+                                }
+                                inputValue={
+                                  formikContext.values.pickupPhoneNumber
+                                }
+                                placeholder="(000) 000 0000"
+                                error={
+                                  (formikContext.touched
+                                    .pickupPhoneNumberCountryCode &&
+                                    (formikContext.errors
+                                      .pickupPhoneNumberCountryCode as
+                                      | string
+                                      | undefined)) ||
+                                  (formikContext.touched.pickupPhoneNumber &&
+                                    (formikContext.errors.pickupPhoneNumber as
+                                      | string
+                                      | undefined))
+                                }
+                                required
+                              />
+                              <Spacer y={4} />
+                              <Button
+                                variant={"primaryBlack"}
+                                width="100%"
+                                type="submit"
+                                onClick={() => formikContext.handleSubmit()}
+                              >
+                                Continue to Payment
+                              </Button>
+                            </Column>
+                          </GridColumns>
+                        )}
+                      </Formik>
+                    </Box>
+                  </Tab>
+                )}
               </Tabs>
             </Flex>
 
@@ -271,6 +276,9 @@ const FRAGMENT = graphql`
     me {
       order(id: $orderID) {
         internalID
+        fulfillmentOptions {
+          type
+        }
         ...Order2CollapsibleOrderSummary_order
         ...Order2ReviewStep_order
       }
