@@ -47,7 +47,6 @@ export const ArtworkSidebarArtists: React.FC<
               variant="lg-display"
               as={RouterLink}
               to={artist.href}
-              target="_blank"
             >
               {artist.name}
               {separator}
