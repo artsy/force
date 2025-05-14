@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<68ea1902f9d517af2184de87eff8f4c8>>
+ * @generated SignedSource<<8f5540c8e6e0049f9e08b805375dd1b0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,31 +10,23 @@
 
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Order2DetailsHeader_order$data = {
-  readonly code: string;
+export type Order2DetailsMessage_order$data = {
   readonly displayTexts: {
-    readonly title: string;
+    readonly message: string | null | undefined;
   };
-  readonly " $fragmentType": "Order2DetailsHeader_order";
+  readonly " $fragmentType": "Order2DetailsMessage_order";
 };
-export type Order2DetailsHeader_order$key = {
-  readonly " $data"?: Order2DetailsHeader_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsHeader_order">;
+export type Order2DetailsMessage_order$key = {
+  readonly " $data"?: Order2DetailsMessage_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsMessage_order">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Order2DetailsHeader_order",
+  "name": "Order2DetailsMessage_order",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "code",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -47,7 +39,7 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "title",
+          "name": "message",
           "storageKey": null
         }
       ],
@@ -58,6 +50,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "cd083827d41bc82288815e03e8096e50";
+(node as any).hash = "51a67c6c6a3523b5139720fd28bc1e24";
 
 export default node;

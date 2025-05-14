@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<833854ddb0f7358595a4a923c5dc465a>>
+ * @generated SignedSource<<b50ba5a94821f4f84208a5e6492d7486>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,7 +24,8 @@ export type Order2DetailsPage_Test_Query$rawResponse = {
     readonly order: {
       readonly code: string;
       readonly displayTexts: {
-        readonly titleText: string;
+        readonly message: string | null | undefined;
+        readonly title: string;
       };
       readonly id: string;
     } | null | undefined;
@@ -130,7 +131,14 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "titleText",
+                    "name": "title",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "message",
                     "storageKey": null
                   }
                 ],
@@ -147,12 +155,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e600145f28d495bb25e408340926acb7",
+    "cacheID": "741b5426c47869afe81a3a3ce0f0091f",
     "id": null,
     "metadata": {},
     "name": "Order2DetailsPage_Test_Query",
     "operationKind": "query",
-    "text": "query Order2DetailsPage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    titleText\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n}\n"
+    "text": "query Order2DetailsPage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  displayTexts {\n    message\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n  ...Order2DetailsMessage_order\n}\n"
   }
 };
 })();
