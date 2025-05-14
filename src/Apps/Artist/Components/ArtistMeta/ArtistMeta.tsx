@@ -1,11 +1,13 @@
 import { MetaTags } from "Components/MetaTags"
-import { Person as SeoDataForArtist } from "Components/Seo/Person"
 import { getENV } from "Utils/getENV"
 import type { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { structuredDataAttributes } from "./helpers"
 import { useCanonicalHref } from "./useCanonicalHref"
+import { ArtistStructuredData } from "Components/Seo/ArtistStructuredData"
+import type { ArtistStructuredData_artist$key } from "__generated__/ArtistStructuredData_artist.graphql"
+
+// import { ArtistStructuredDataFragmentContainer } from "../ArtistStructuredData"
 
 interface Props {
   artist: ArtistMeta_artist$data
@@ -55,7 +57,11 @@ export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
         <Meta name="skos:prefLabel" content={alternateNames.join("; ")} />
       )}
 
-      <SeoDataForArtist data={structuredDataAttributes(artist)} />
+      {/* <ArtistStructuredDataFragmentContainer artist={artist} />    */}
+      {/* <SeoDataForArtist data={structuredDataAttributes(artist)} /> */}
+      <ArtistStructuredData
+        artist={artist as ArtistStructuredData_artist$key}
+      />
     </>
   )
 }
