@@ -10590,10 +10590,17 @@ type DismissTaskSuccess {
 # Display texts for the order based on its state and order shipping/payment states
 type DisplayTexts {
   # First paragraph of the message text for the order
+  message(format: Format = MARKDOWN): String
+
+  # deprecated
   messageText(format: Format = MARKDOWN): String
+    @deprecated(reason: "Use `message` instead")
 
   # Title text to display for the order
-  titleText: String!
+  title: String!
+
+  # deprecated
+  titleText: String! @deprecated(reason: "Use `title` instead")
 }
 
 type DoNotUseThisPartner {
