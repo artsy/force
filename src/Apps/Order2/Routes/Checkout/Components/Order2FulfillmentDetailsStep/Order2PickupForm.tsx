@@ -84,8 +84,6 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
         validateAndExtractOrderResponse(
           setOrderPickupDetailsResult.updateOrderShippingAddress?.orderOrError,
         )
-
-        // TODO: Handle success
       } catch (error) {
         // TODO: Handle errors
         logger.error("Error while setting pickup details", error)
