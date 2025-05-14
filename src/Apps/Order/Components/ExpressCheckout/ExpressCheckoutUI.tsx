@@ -1,4 +1,11 @@
-import { Box, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import {
   ExpressCheckoutElement,
   useElements,
@@ -28,6 +35,7 @@ import {
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { preventHardReload } from "Apps/Order/OrderApp"
+import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type {
@@ -42,12 +50,12 @@ import type {
   OrderCreditCardWalletTypeEnum,
   useUpdateOrderMutation$data,
 } from "__generated__/useUpdateOrderMutation.graphql"
-import { useRef, useState } from "react"
+import { Dispatch, SetStateAction, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
-import styled from "styled-components"
 
 interface ExpressCheckoutUIProps {
   order: ExpressCheckoutUI_order$key
+  setShowSpinner?: Dispatch<SetStateAction<boolean>>
 }
 
 const logger = createLogger("ExpressCheckoutUI")
@@ -57,7 +65,10 @@ type HandleCancelCallback = NonNullable<
   React.ComponentProps<typeof ExpressCheckoutElement>["onCancel"]
 >
 
-export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
+export const ExpressCheckoutUI = ({
+  order,
+  setShowSpinner,
+}: ExpressCheckoutUIProps) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const [visible, setVisible] = useState(false)
   const elements = useElements()
@@ -76,6 +87,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   const errorRef = useRef<string | null>(null)
   const [hasMultiplePaymentOptions, setHasMultiplePaymentOptions] =
     useState<boolean>(false)
+  const shippingContext = useShippingContext()
 
   if (!(stripe && elements)) {
     return null
@@ -399,6 +411,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         return
       }
 
+      setShowSpinner?.(true)
+
       const submitOrderResult = await submitOrderMutation.submitMutation({
         variables: {
           input: {
@@ -438,24 +452,28 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
   }
 
   const handleReady = e => {
-    const paymentMethods = e.availablePaymentMethods
+    try {
+      const paymentMethods = e.availablePaymentMethods
 
-    if (paymentMethods) {
-      setHasMultiplePaymentOptions(
-        Object.values(paymentMethods).filter(Boolean).length > 1,
-      )
+      if (paymentMethods) {
+        setHasMultiplePaymentOptions(
+          Object.values(paymentMethods).filter(Boolean).length > 1,
+        )
 
-      setVisible(true)
+        setVisible(true)
 
-      orderTracking.expressCheckoutViewed({
-        order: orderData,
-        walletType: getAvailablePaymentMethods(paymentMethods),
-      })
+        orderTracking.expressCheckoutViewed({
+          order: orderData,
+          walletType: getAvailablePaymentMethods(paymentMethods),
+        })
+      }
+    } finally {
+      shippingContext.actions.setIsExpressCheckoutLoading(false)
     }
   }
 
   return (
-    <UncollapsingBox visible={visible}>
+    <Box display={visible ? "block" : "none"}>
       <Text variant="lg-display">Express checkout</Text>
       <Spacer y={1} />
       <Box
@@ -489,7 +507,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         .
       </Text>
       <Spacer y={4} />
-    </UncollapsingBox>
+    </Box>
   )
 }
 
@@ -696,15 +714,6 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
   }
 }
 
-// Only max-height can be animated
-const UncollapsingBox = styled(Box)<{ visible: boolean }>`
-  display: flex;
-  flex-direction: column;
-  max-height: ${({ visible }) => (visible ? "1000px" : "0")};
-  overflow: hidden;
-  transition: max-height 0.3s ease-in-out;
-`
-
 function getAvailablePaymentMethods(
   paymentMethods: AvailablePaymentMethods,
 ): string[] {
@@ -712,3 +721,16 @@ function getAvailablePaymentMethods(
     .filter(([_, isAvailable]) => isAvailable)
     .map(([method]) => method)
 }
+
+export const EXPRESS_CHECKOUT_PLACEHOLDER = (
+  <Skeleton>
+    <SkeletonText variant="lg-display">Express checkout</SkeletonText>
+    <Spacer y={1} />
+    <SkeletonBox width={["100%", "50%"]} height={50} borderRadius={50} />
+    <Spacer y={1} />
+    <SkeletonText variant="xs" ml={0.5}>
+      By clicking Pay, I agree to Artsy’s General Terms and Conditions of Sale
+    </SkeletonText>
+    <Spacer y={4} />
+  </Skeleton>
+)

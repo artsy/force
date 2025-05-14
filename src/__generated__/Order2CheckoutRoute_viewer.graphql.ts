@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<007f7e0bddc49204773b7dc205cc8694>>
+ * @generated SignedSource<<7a25b75339260f9590d815ed471abd82>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutRoute_viewer$data = {
   readonly me: {
@@ -20,8 +21,11 @@ export type Order2CheckoutRoute_viewer$data = {
       } | null | undefined> | null | undefined;
     } | null | undefined;
     readonly order: {
+      readonly fulfillmentOptions: ReadonlyArray<{
+        readonly type: FulfillmentOptionTypeEnum;
+      }>;
       readonly internalID: string;
-      readonly " $fragmentSpreads": FragmentRefs<"Order2CollapsibleOrderSummary_order" | "Order2ReviewStep_order">;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutLoadingSkeleton_order" | "Order2CollapsibleOrderSummary_order" | "Order2ReviewStep_order" | "useLoadCheckout_order">;
     } | null | undefined;
   } | null | undefined;
   readonly " $fragmentType": "Order2CheckoutRoute_viewer";
@@ -75,6 +79,24 @@ return {
           "selections": [
             (v0/*: any*/),
             {
+              "alias": null,
+              "args": null,
+              "concreteType": "FulfillmentOption",
+              "kind": "LinkedField",
+              "name": "fulfillmentOptions",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "type",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
               "args": null,
               "kind": "FragmentSpread",
               "name": "Order2CollapsibleOrderSummary_order"
@@ -83,6 +105,16 @@ return {
               "args": null,
               "kind": "FragmentSpread",
               "name": "Order2ReviewStep_order"
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "useLoadCheckout_order"
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "Order2CheckoutLoadingSkeleton_order"
             }
           ],
           "storageKey": null
@@ -136,6 +168,6 @@ return {
 };
 })();
 
-(node as any).hash = "2814aadf5ca462f20584667bed830b98";
+(node as any).hash = "ae67f7d77dd9d080324f35e051fa6c4a";
 
 export default node;

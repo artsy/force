@@ -1,8 +1,10 @@
 import { ExpressCheckoutElement } from "@stripe/react-stripe-js"
 import { fireEvent, waitFor } from "@testing-library/react"
 import { screen } from "@testing-library/react"
+import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { DeepPartial } from "Utils/typeSupport"
 import type { ExpressCheckoutUI_Test_Query } from "__generated__/ExpressCheckoutUI_Test_Query.graphql"
 import { useEffect } from "react"
 import React from "react"
@@ -23,9 +25,21 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
 }))
 
 let shippingRateId = "DOMESTIC_FLAT"
+
+const mockShippingContext: DeepPartial<ShippingContextProps> = {
+  actions: {
+    setIsExpressCheckoutLoading: jest.fn(),
+  },
+}
+
+jest.mock("Apps/Order/Routes/Shipping/Hooks/useShippingContext", () => ({
+  useShippingContext: () => mockShippingContext,
+}))
+
 const mockExpressCheckoutElement = ExpressCheckoutElement as jest.Mock
 const mockResolveOnClick = jest.fn()
 const mockElementsUpdate = jest.fn()
+const mockShowSpinner = jest.fn()
 const mockCreateConfirmationToken = jest.fn(() => {
   return {
     confirmationToken: {
@@ -113,7 +127,10 @@ jest.mock("@stripe/react-stripe-js", () => {
 })
 
 const { renderWithRelay } = setupTestWrapperTL<ExpressCheckoutUI_Test_Query>({
-  Component: ({ me }) => me?.order && <ExpressCheckoutUI order={me.order!} />,
+  Component: ({ me }) =>
+    me?.order && (
+      <ExpressCheckoutUI order={me.order!} setShowSpinner={mockShowSpinner} />
+    ),
   query: graphql`
     query ExpressCheckoutUI_Test_Query @raw_response_type {
       me {
@@ -229,6 +246,9 @@ describe("ExpressCheckoutUI", () => {
     await flushPromiseQueue()
     expect(mockCreateConfirmationToken).toHaveBeenCalled()
 
+    // show the spinner after token creation
+    expect(mockShowSpinner).toHaveBeenCalledWith(true)
+
     // Third, test the order submission
     const orderSubmission = await mockResolveLastOperation({
       submitOrder: () => ({
@@ -327,6 +347,7 @@ describe("ExpressCheckoutUI", () => {
         },
       }),
     )
+    expect(mockShowSpinner).toHaveBeenCalledWith(true)
 
     const mutation = await mockResolveLastOperation({
       submitOrderPayload: () => ({
@@ -509,6 +530,7 @@ describe("ExpressCheckoutUI", () => {
 
     await flushPromiseQueue()
     expect(mockCreateConfirmationToken).toHaveBeenCalled()
+    expect(mockShowSpinner).toHaveBeenCalledWith(true)
 
     // Resolve the submit order mutation
     await mockResolveLastOperation({

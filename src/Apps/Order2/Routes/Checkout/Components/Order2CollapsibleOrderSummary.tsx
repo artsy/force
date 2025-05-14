@@ -31,11 +31,12 @@ export const Order2CollapsibleOrderSummary: React.FC<
           <Image
             mr={1}
             src={artworkVersion?.image?.resized?.url}
-            alt={artworkVersion?.title || ""}
-            width="40px"
+            alt={artworkVersion?.title as string}
+            width={40}
+            height={40}
           />
         </RouterLink>
-        <Box overflow="hi" flex={1} mr={2}>
+        <Box overflow="hidden" flex={1} mr={2}>
           <Text overflowEllipsis variant="xs" color="mono100">
             {artworkVersion?.artistNames}
           </Text>
@@ -79,7 +80,6 @@ export const Order2CollapsibleOrderSummary: React.FC<
 const FRAGMENT = graphql`
   fragment Order2CollapsibleOrderSummary_order on Order {
     ...Order2PricingBreakdown_order
-    mode
     source
     buyerTotal {
       display

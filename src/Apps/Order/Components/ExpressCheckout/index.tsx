@@ -12,12 +12,14 @@ import type {
   ExpressCheckout_order$data,
   ExpressCheckout_order$key,
 } from "__generated__/ExpressCheckout_order.graphql"
+import { Dispatch, SetStateAction } from "react"
 import { graphql, useFragment } from "react-relay"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
 interface Props {
   order: ExpressCheckout_order$key
+  setShowSpinner?: Dispatch<SetStateAction<boolean>>
 }
 
 type Seller = Exclude<
@@ -25,7 +27,7 @@ type Seller = Exclude<
   { __typename: "%other" }
 >
 
-export const ExpressCheckout = ({ order }: Props) => {
+export const ExpressCheckout = ({ order, setShowSpinner }: Props) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
 
   // Use itemsTotal on load, but subsequent updates inside ExpressCheckoutUI
@@ -66,7 +68,7 @@ export const ExpressCheckout = ({ order }: Props) => {
   return (
     <>
       <Elements stripe={stripePromise} options={options}>
-        <ExpressCheckoutUI order={orderData} />
+        <ExpressCheckoutUI order={orderData} setShowSpinner={setShowSpinner} />
       </Elements>
     </>
   )
@@ -95,9 +97,14 @@ const ORDER_FRAGMENT = graphql`
   }
 `
 
-export const ExpressCheckoutQueryRenderer: React.FC<{ orderID: string }> = ({
-  orderID,
-}) => {
+interface ExpressCheckoutQueryRendererProps {
+  orderID: string
+  setShowSpinner?: Dispatch<SetStateAction<boolean>>
+}
+
+export const ExpressCheckoutQueryRenderer: React.FC<
+  ExpressCheckoutQueryRendererProps
+> = ({ orderID, setShowSpinner }) => {
   return (
     <SystemQueryRenderer<ExpressCheckoutQuery>
       // lazyLoad
@@ -113,7 +120,12 @@ export const ExpressCheckoutQueryRenderer: React.FC<{ orderID: string }> = ({
       variables={{ orderID }}
       render={({ props }) => {
         if (props?.me?.order) {
-          return <ExpressCheckout order={props.me.order} />
+          return (
+            <ExpressCheckout
+              order={props.me.order}
+              setShowSpinner={setShowSpinner}
+            />
+          )
         }
         return null
       }}

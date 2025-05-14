@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a0cc9da26f23b113e7f5ec8b2f9986a>>
+ * @generated SignedSource<<9f5bb0dfc6032f25abbd3a14ad01e3ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,6 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
-export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2CollapsibleOrderSummary_order$data = {
@@ -34,7 +33,6 @@ export type Order2CollapsibleOrderSummary_order$data = {
       readonly title: string | null | undefined;
     } | null | undefined;
   } | null | undefined>;
-  readonly mode: OrderModeEnum;
   readonly shippingTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
@@ -70,13 +68,6 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Order2PricingBreakdown_order"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "mode",
-      "storageKey": null
     },
     {
       "alias": null,
@@ -232,6 +223,6 @@ return {
 };
 })();
 
-(node as any).hash = "dd59dbc994537c54f548e84aa617b801";
+(node as any).hash = "310bb95f5d963b10e8700f00cffe85ef";
 
 export default node;

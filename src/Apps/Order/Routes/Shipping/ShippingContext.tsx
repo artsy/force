@@ -42,6 +42,8 @@ export interface State {
   isPerformingOperation: boolean
   // Loading state to prevent render before data is available
   isLoading: boolean
+  // Loading state for express checkout
+  isExpressCheckoutLoading: boolean
 }
 
 interface Actions {
@@ -63,6 +65,7 @@ interface Actions {
   setShippingFormMode: (payload: "new_address" | "saved_addresses") => void
   setIsPerformingOperation: (payload: boolean) => void
   setStage: (payload: ShippingStage) => void
+  setIsExpressCheckoutLoading: (payload: boolean) => void
 }
 
 export interface ShippingContextProps {
@@ -135,6 +138,7 @@ export const ShippingContextProvider: FC<
     selectedSavedAddressID:
       orderData.savedFulfillmentDetails?.selectedSavedAddressID ?? null,
     isLoading: true,
+    isExpressCheckoutLoading: true,
   }
 
   const [state, dispatch] = useReducer(shippingStateReducer, initialState)
@@ -169,6 +173,9 @@ export const ShippingContextProvider: FC<
     },
     setStage: (payload: ShippingStage) => {
       dispatch({ type: "SET_STAGE", payload })
+    },
+    setIsExpressCheckoutLoading: (payload: boolean) => {
+      dispatch({ type: "SET_IS_EXPRESS_CHECKOUT_LOADING", payload })
     },
   }
 
@@ -213,6 +220,7 @@ export type Action =
     }
   | { type: "SET_STAGE"; payload: ShippingStage }
   | { type: "SET_LOADING"; payload: boolean }
+  | { type: "SET_IS_EXPRESS_CHECKOUT_LOADING"; payload: boolean }
 
 const shippingStateReducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -262,6 +270,12 @@ const shippingStateReducer = (state: State, action: Action): State => {
       return {
         ...state,
         isLoading: action.payload,
+      }
+    }
+    case "SET_IS_EXPRESS_CHECKOUT_LOADING": {
+      return {
+        ...state,
+        isExpressCheckoutLoading: action.payload,
       }
     }
     default: {
