@@ -219,7 +219,7 @@ export const newDetailsEnabled = ({
   featureFlags,
 }: Order2RedirectArgs): boolean => {
   return !!(
-    order.mode === "BUY" &&
+    (order.mode === "BUY" || order.mode === "OFFER") &&
     featureFlags?.isEnabled?.("emerald_order-details-page")
   )
 }

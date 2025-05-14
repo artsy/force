@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d6690110b2a88a141fd48a415097e1ae>>
+ * @generated SignedSource<<bd42a90da64d2b1af275d0497a8a0772>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -172,7 +172,7 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "titleT",
+                        "name": "title",
                         "storageKey": null
                       },
                       {
@@ -201,7 +201,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a4a72747bea290ae64ead81c29d11b2d",
+    "cacheID": "12ea1257a0d04fdaa567bb12affe47ac",
     "id": null,
     "metadata": {},
     "name": "order2Routes_DetailsQuery",

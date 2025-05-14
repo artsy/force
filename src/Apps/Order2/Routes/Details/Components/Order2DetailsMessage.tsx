@@ -19,14 +19,6 @@ export const Order2DetailsMessage = ({ order }: Order2DetailsMessageProps) => {
           }}
         />
       )}
-
-      <Text variant="sm">
-        You will be notified when the work has shipped, typically within 5-7
-        business days.
-      </Text>
-      <Text variant="sm">
-        You can contact the gallery with any questions about your order.
-      </Text>
     </Stack>
   )
 }

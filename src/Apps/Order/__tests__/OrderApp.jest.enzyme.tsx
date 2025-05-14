@@ -159,25 +159,18 @@ describe("OrderApp routing redirects", () => {
       expect(res.redirect.url).toBe("/orders2/2939023/details")
     })
 
-    it("does not redirect from the legacy status page to the new details page for a submitted order if the order is OFFER mode", async () => {
+    it("redirects from the legacy status page to the new details page for a submitted order if the order is OFFER mode", async () => {
       featureFlags.isEnabled.mockReturnValue(true)
-      let threw = false
-      try {
-        await render(
-          "/orders/2939023/status",
-          mockResolver({
-            ...BuyOrderPickup,
-            mode: "OFFER",
-            state: "SUBMITTED",
-            displayState: "SUBMITTED",
-          }),
-        )
-      } catch (error) {
-        threw = true
-        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
-        expect(error.message).toBe("No redirect found for order")
-      }
-      expect(threw).toBe(true)
+      const res = await render(
+        "/orders/2939023/status",
+        mockResolver({
+          ...BuyOrderPickup,
+          mode: "OFFER",
+          state: "SUBMITTED",
+          displayState: "SUBMITTED",
+        }),
+      )
+      expect(res.redirect.url).toBe("/orders2/2939023/details")
     })
   })
 
