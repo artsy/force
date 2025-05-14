@@ -134,21 +134,60 @@ export const structuredDataAttributes = (artist: ArtistMeta_artist$data) => {
   if (makesOffer && makesOffer.length === 0) {
     makesOffer = undefined
   }
-  const attributes = {
+
+  const artistUrl = `${getENV("APP_URL")}${artist.href}`
+
+  const creatorOf = artist.artworks_connection?.edges
+    ?.map(edge => {
+      const artwork = edge?.node
+      if (!artwork || !artwork.title || !artwork.href) return null
+
+      return pickBy(
+        {
+          // should this be slimmed down since I will flesh this out more in depth in VisualArtwork?
+          "@type": "VisualArtwork",
+          // TODO: add referential id with artwork slug,
+          name: artwork.title,
+          dateCreated: artwork.date,
+          artform: artwork.category,
+          image: artwork.image?.large,
+        },
+        identity,
+      )
+    })
+    .filter(Boolean)
+
+  const person = {
+    "@type": "Person",
+    "@id": artistUrl,
     additionalType: "Artist",
     birthDate: artist.birthday,
     deathDate: artist.deathday,
     description: artist.meta ? artist.meta.description : "",
     gender: artist.gender,
     image: artist.coverArtwork?.image ? artist.coverArtwork.image.large : "",
-    mainEntityOfPage: `${getENV("APP_URL")}${artist.href}`,
+    mainEntityOfPage: artistUrl,
     makesOffer,
     name: artist.name,
-    nationality: {
-      "@type": "Country",
-      name: artist.nationality,
-    },
-    url: `${getENV("APP_URL")}${artist.href}`,
+    nationality: artist.nationality
+      ? { "@type": "Country", name: artist.nationality }
+      : undefined,
+    url: artistUrl,
+    creatorOf: creatorOf?.length ? creatorOf : undefined,
   }
-  return pickBy(attributes, identity)
+
+  const webPage = {
+    "@type": "WebPage",
+    "@id": artistUrl,
+    name: artist.meta?.title,
+    description: artist.meta?.description,
+    mainEntity: {
+      "@id": artistUrl,
+    },
+  }
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [pickBy(person, identity), pickBy(webPage, identity)],
+  }
 }
