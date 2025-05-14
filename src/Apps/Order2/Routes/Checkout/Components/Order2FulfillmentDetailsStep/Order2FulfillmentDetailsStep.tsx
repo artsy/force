@@ -28,6 +28,9 @@ export const Order2FulfillmentDetailsStep: React.FC<
   const [stepStatus, setStepStatus] = useState<TempStepStatus>(
     TempStepStatus.ACTIVE,
   )
+  // FIXME: If you edit your saved number but don't change it,
+  // it doesn't trigger the step back to complete.
+  // Solve this when we implement the real state system
   useEffect(() => {
     if (savedFulfillmentDetails && selectedFulfillmentOption) {
       setStepStatus(TempStepStatus.COMPLETE)

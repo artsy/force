@@ -12,10 +12,15 @@ export const Order2FulfillmentDetailsCompletedView = ({
 }: Order2FulfillmentDetailsCompletedViewProps) => {
   if (fulfillmentOption.type === "PICKUP") {
     return (
-      <Flex>
-        <CheckmarkIcon height={20} width={20} fill="mono100" />
+      <Flex alignItems="flex-start">
+        <CheckmarkIcon
+          flexShrink={0}
+          height="20px"
+          width="20px"
+          fill="mono100"
+        />
         <Box flexGrow={1} mx={0.5}>
-          <Text variant="md" fontWeight="500" color="mono100">
+          <Text variant="sm-display" fontWeight="500" color="mono100">
             Pickup
           </Text>
           <Text variant="xs" fontWeight="400" color="mono100">
@@ -23,7 +28,15 @@ export const Order2FulfillmentDetailsCompletedView = ({
             2 business days to coordinate pickup.
           </Text>
         </Box>
-        <Clickable onClick={onClickEdit}>Edit</Clickable>
+        <Clickable
+          textDecoration="underline"
+          flexShrink={0}
+          onClick={onClickEdit}
+        >
+          <Text variant="xs" fontWeight="400" color="mono100">
+            Edit
+          </Text>
+        </Clickable>
       </Flex>
     )
   }
