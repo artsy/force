@@ -40,6 +40,7 @@ export const Order2FulfillmentDetailsCompletedView = ({
       </Flex>
     )
   }
+
   return (
     <Flex>
       <CheckmarkIcon height={20} width={20} fill="mono100" />
