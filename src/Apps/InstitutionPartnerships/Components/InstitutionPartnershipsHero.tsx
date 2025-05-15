@@ -40,7 +40,7 @@ export const InstitutionPartnershipsHero: FC<
                   // @ts-ignore
                   as="a"
                   target="_blank"
-                  href="https://apply.artsy.net/institutions"
+                  href="https://partners.artsy.net/gallery-partnerships"
                 >
                   Apply to Join
                 </Button>
