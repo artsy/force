@@ -5,6 +5,7 @@ import MessageIcon from "@artsy/icons/MessageIcon"
 import MoneyBackIcon from "@artsy/icons/MoneyBackIcon"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import {
+  Box,
   Button,
   Column,
   Flex,
@@ -21,10 +22,7 @@ import {
 } from "Apps/BuyerGuarantee/Components/BuyerGuaranteeTables"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import {
-  FullBleedHeader,
-  FullBleedHeaderOverlay,
-} from "Components/FullBleedHeader/FullBleedHeader"
+import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { MetaTags } from "Components/MetaTags"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
@@ -51,10 +49,17 @@ export const BuyerGuaranteeIndex: FC<React.PropsWithChildren<unknown>> = () => {
         src="https://files.artsy.net/images/normalizedheaderimage.jpeg"
         caption="Sophie Treppendahl, Swimming Hole, 2019. Courtesy of the artist and Kenise Barnes Fine Art."
       >
-        <FullBleedHeaderOverlay
+        <Box
+          position="absolute"
+          top={0}
+          left={0}
+          width="100%"
+          height="100%"
+          display="flex"
           alignItems="center"
           justifyContent={["center", "flex-start"]}
           p={4}
+          zIndex={1}
         >
           <Text
             variant={["xl", "xxl"]}
@@ -64,7 +69,7 @@ export const BuyerGuaranteeIndex: FC<React.PropsWithChildren<unknown>> = () => {
           >
             The Artsy Guarantee
           </Text>
-        </FullBleedHeaderOverlay>
+        </Box>
       </FullBleedHeader>
 
       <Spacer y={6} />

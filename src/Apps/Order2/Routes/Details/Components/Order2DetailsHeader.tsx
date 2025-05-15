@@ -12,7 +12,7 @@ export const Order2DetailsHeader = ({ order }: Order2DetailsHeaderProps) => {
   return (
     <>
       {/* Title */}
-      <Text variant="lg">{orderData.displayTexts.titleText}</Text>
+      <Text variant="lg">{orderData.displayTexts.title}</Text>
       {/* Order # */}
       <Text variant="xs">Order #{orderData.code} </Text>
     </>
@@ -23,7 +23,7 @@ const FRAGMENT = graphql`
   fragment Order2DetailsHeader_order on Order {
     code
     displayTexts {
-      titleText
+      title
     }
   }
 `
