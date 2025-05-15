@@ -1,3 +1,4 @@
+import { LLMS_TXT } from "Apps/Sitemaps/templates/llms"
 import { SITEMAP_BASE_URL } from "Server/config"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { getENV } from "Utils/getENV"
@@ -39,6 +40,10 @@ sitemapsServerApp
     res.send(
       getENV("ENABLE_WEB_CRAWLING") ? ENABLED_ROBOTS_TXT : DISABLED_ROBOTS_TXT,
     )
+  })
+  .get("/llms.txt", (_req, res) => {
+    res.type("text/plain")
+    res.send(LLMS_TXT)
   })
   .get("/sitemap-experiment.xml", async (req, res) => {
     res.set("Content-Type", "text/xml")
