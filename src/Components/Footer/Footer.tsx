@@ -28,6 +28,7 @@ import { useCCPARequest } from "Components/CCPARequest"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
+import { DOWNLOAD_APP_URLS, Device } from "Utils/Hooks/useDeviceDetection"
 import { Media } from "Utils/Responsive"
 import type * as React from "react"
 import styled from "styled-components"
@@ -152,17 +153,11 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
               </Text>
 
               <Text variant="sm">
-                <FooterLink
-                  mt={2}
-                  to="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
-                >
+                <FooterLink mt={2} to={DOWNLOAD_APP_URLS[Device.iPhone]}>
                   iOS App
                 </FooterLink>
 
-                <FooterLink
-                  mt={2}
-                  to="https://play.google.com/store/apps/details?id=net.artsy.app"
-                >
+                <FooterLink mt={2} to={DOWNLOAD_APP_URLS[Device.Android]}>
                   Android App
                 </FooterLink>
               </Text>
