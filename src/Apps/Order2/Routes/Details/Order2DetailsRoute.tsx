@@ -21,7 +21,7 @@ export const Order2DetailsRoute: React.FC<DetailsProps> = ({ viewer }) => {
 
 const FRAGMENT = graphql`
   fragment Order2DetailsRoute_viewer on Viewer
-  @argumentDefinitions(orderID: { type: "String!" }) {
+  @argumentDefinitions(orderID: { type: "ID!" }) {
     me {
       order(id: $orderID) {
         ...Order2DetailsPage_order

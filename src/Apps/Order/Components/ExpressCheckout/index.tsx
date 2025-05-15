@@ -109,7 +109,7 @@ export const ExpressCheckoutQueryRenderer: React.FC<
     <SystemQueryRenderer<ExpressCheckoutQuery>
       // lazyLoad
       query={graphql`
-        query ExpressCheckoutQuery($orderID: String!) {
+        query ExpressCheckoutQuery($orderID: ID!) {
           me {
             order(id: $orderID) {
               ...ExpressCheckout_order
