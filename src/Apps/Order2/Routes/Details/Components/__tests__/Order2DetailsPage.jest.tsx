@@ -36,6 +36,6 @@ const orderData = {
   internalID: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
   code: "123",
   displayTexts: {
-    titleText: "Test Order Title",
+    title: "Test Order Title",
   },
 }
