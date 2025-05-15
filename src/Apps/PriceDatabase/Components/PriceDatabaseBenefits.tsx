@@ -9,8 +9,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { STATS } from "Apps/Components/constants"
 import { Media } from "Utils/Responsive"
+import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
 import type { ReactElement } from "react"
 import type * as React from "react"
 
@@ -22,7 +22,7 @@ export const PriceDatabaseBenefits: React.FC<
       <GridColumns gridRowGap={[2, 0]}>
         <Column span={12}>
           <Text as="h1" variant={["xl", "xxl"]}>
-            Auction records from {STATS.auctionRecordsCount}
+            Auction records from {FACTS_AND_FIGURES.auctionRecordsCount}
             <br />
             artists—and counting
           </Text>
