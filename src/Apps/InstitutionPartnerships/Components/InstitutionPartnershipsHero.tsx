@@ -1,6 +1,7 @@
-import { Box, Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import { Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { FullBleedHeaderOverlay } from "Components/FullBleedHeader/FullBleedHeader"
 import { FullBleedHeaderFader } from "Components/FullBleedHeader/FullBleedHeaderFader"
 import type { FC } from "react"
 
@@ -9,7 +10,7 @@ export const InstitutionPartnershipsHero: FC<
 > = () => {
   return (
     <FullBleedHeaderFader figures={FIGURES}>
-      <Box position="absolute" top={0} left={0} width="100%" height="100%">
+      <FullBleedHeaderOverlay zIndex={1}>
         <AppContainer height="100%">
           <HorizontalPadding
             display="flex"
@@ -31,7 +32,7 @@ export const InstitutionPartnershipsHero: FC<
                   and over 700 major museums and institutions worldwide.
                 </Text>
 
-                <Spacer y={[4, 6]} />
+                <Spacer y={4} />
 
                 <Button
                   size={["small", "large"]}
@@ -47,7 +48,7 @@ export const InstitutionPartnershipsHero: FC<
             </GridColumns>
           </HorizontalPadding>
         </AppContainer>
-      </Box>
+      </FullBleedHeaderOverlay>
     </FullBleedHeaderFader>
   )
 }
