@@ -64,11 +64,11 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                 About
               </FooterLink>
 
-              <FooterLink my={2} to="/about/jobs">
+              <FooterLink my={2} to="/jobs">
                 Jobs
               </FooterLink>
 
-              <FooterLink my={2} to="/about/press">
+              <FooterLink my={2} to="/press/press-releases">
                 Press
               </FooterLink>
 
