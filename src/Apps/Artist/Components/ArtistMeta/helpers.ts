@@ -144,9 +144,7 @@ export const structuredDataAttributes = (artist: ArtistMeta_artist$data) => {
 
       return pickBy(
         {
-          // should this be slimmed down since I will flesh this out more in depth in VisualArtwork?
           "@type": "VisualArtwork",
-          // TODO: add referential id with artwork slug,
           name: artwork.title,
           dateCreated: artwork.date,
           artform: artwork.category,
