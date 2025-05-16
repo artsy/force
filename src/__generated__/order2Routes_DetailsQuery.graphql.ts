@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b1d1dfad86ec2dc6abb78468ad3657d1>>
+ * @generated SignedSource<<a56aabb437415b775ce83ff6db6f0ee9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -179,10 +179,17 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "message",
+                        "name": "messageType",
                         "storageKey": null
                       }
                     ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "buyerStateExpiresAt",
                     "storageKey": null
                   },
                   (v2/*: any*/),
@@ -201,12 +208,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e51f0e9a5703af4c10c7d2975fe9bd5e",
+    "cacheID": "3ec23cf2361a5becfafb80a2ba876ad7",
     "id": null,
     "metadata": {},
     "name": "order2Routes_DetailsQuery",
     "operationKind": "query",
-    "text": "query order2Routes_DetailsQuery(\n  $orderID: ID!\n) {\n  viewer {\n    ...Order2DetailsRoute_viewer_3HPek8\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  displayTexts {\n    message\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n  ...Order2DetailsMessage_order\n}\n\nfragment Order2DetailsRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      ...Order2DetailsPage_order\n      internalID\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query order2Routes_DetailsQuery(\n  $orderID: ID!\n) {\n  viewer {\n    ...Order2DetailsRoute_viewer_3HPek8\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment Order2DetailsMessage2_order on Order {\n  buyerStateExpiresAt\n  code\n  internalID\n  displayTexts {\n    messageType\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n  ...Order2DetailsMessage2_order\n}\n\nfragment Order2DetailsRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      ...Order2DetailsPage_order\n      internalID\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
