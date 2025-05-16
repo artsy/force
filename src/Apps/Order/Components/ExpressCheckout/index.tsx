@@ -12,7 +12,7 @@ import type {
   ExpressCheckout_order$data,
   ExpressCheckout_order$key,
 } from "__generated__/ExpressCheckout_order.graphql"
-import { Dispatch, SetStateAction } from "react"
+import type { Dispatch, SetStateAction } from "react"
 import { graphql, useFragment } from "react-relay"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))

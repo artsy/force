@@ -90,7 +90,12 @@ export const useLoadCheckout = (order?: useLoadCheckout_order$key | null) => {
     }
   }, [isLoading, minimumLoadingPassed, orderValidated, expressCheckoutLoaded])
 
-  return { isLoading, handleExpressCheckoutLoaded, loadingError }
+  return {
+    isLoading,
+    handleExpressCheckoutLoaded,
+    loadingError,
+    setExpressCheckoutLoaded,
+  }
 }
 
 const FRAGMENT = graphql`

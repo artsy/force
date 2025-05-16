@@ -14,6 +14,7 @@ import {
 import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutLoadingSkeleton"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
 import { Order2DeliveryForm } from "Apps/Order2/Routes/Checkout/Components/Order2DeliveryForm"
+import { Order2ExpressCheckoutStep } from "Apps/Order2/Routes/Checkout/Components/Order2ExpressCheckoutStep"
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { useLoadCheckout } from "Apps/Order2/Routes/Checkout/Hooks/useLoadCheckout"
 import { ErrorPage } from "Components/ErrorPage"
@@ -32,7 +33,6 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
   viewer,
 }) => {
   const { isEigen } = useSystemContext()
-
   const data = useFragment(FRAGMENT, viewer)
   const order = data.me?.order
   const fulfillmentOptions = order?.fulfillmentOptions
@@ -59,6 +59,12 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
           <Stack gap={1} bg="mono5">
             {/* Collapsible order summary */}
             <Order2CollapsibleOrderSummary order={order} />
+
+            {/* Express checkout */}
+            <Flex flexDirection="column" backgroundColor="mono0" p={2}>
+              <Order2ExpressCheckoutStep order={order} />
+            </Flex>
+
             {/* Fulfillment details Step */}
             <Flex flexDirection="column" backgroundColor="mono0" py={2}>
               {fulfillmentOptions?.some(option => option.type === "PICKUP") ? (
@@ -239,6 +245,7 @@ const FRAGMENT = graphql`
         ...Order2ReviewStep_order
         ...useLoadCheckout_order
         ...Order2CheckoutLoadingSkeleton_order
+        ...Order2ExpressCheckoutStep_order
       }
       addressConnection(first: 10) {
         edges {

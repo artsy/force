@@ -36,6 +36,7 @@ import {
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { preventHardReload } from "Apps/Order/OrderApp"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
+import { useLoadCheckout } from "Apps/Order2/Routes/Checkout/Hooks/useLoadCheckout"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type {
@@ -50,7 +51,7 @@ import type {
   OrderCreditCardWalletTypeEnum,
   useUpdateOrderMutation$data,
 } from "__generated__/useUpdateOrderMutation.graphql"
-import { Dispatch, SetStateAction, useRef, useState } from "react"
+import { type Dispatch, type SetStateAction, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface ExpressCheckoutUIProps {
@@ -88,6 +89,7 @@ export const ExpressCheckoutUI = ({
   const [hasMultiplePaymentOptions, setHasMultiplePaymentOptions] =
     useState<boolean>(false)
   const shippingContext = useShippingContext()
+  const { setExpressCheckoutLoaded } = useLoadCheckout()
 
   if (!(stripe && elements)) {
     return null
@@ -469,6 +471,9 @@ export const ExpressCheckoutUI = ({
       }
     } finally {
       shippingContext.actions.setIsExpressCheckoutLoading(false)
+
+      // Set loading for Order2 checkout
+      setExpressCheckoutLoaded(true)
     }
   }
 
