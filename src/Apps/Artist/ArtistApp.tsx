@@ -7,7 +7,6 @@ import type { ArtistApp_artist$data } from "__generated__/ArtistApp_artist.graph
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistHeader"
 import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta/ArtistMeta"
-import { ArtistStructuredData } from "Components/Seo/ArtistStructuredData"
 
 interface ArtistAppProps {
   artist: ArtistApp_artist$data
@@ -22,9 +21,6 @@ const ArtistApp: React.FC<React.PropsWithChildren<ArtistAppProps>> = ({
   return (
     <>
       <ArtistMetaFragmentContainer artist={artist} />
-      <ArtistStructuredData artist={artist} />
-
-      {/* <ArtistStructuredDataFragmentContainer artist={artist} /> */}
 
       <Analytics contextPageOwnerId={artist.internalID}>
         <Spacer y={[0, 4]} />
@@ -60,7 +56,6 @@ export const ArtistAppFragmentContainer = createFragmentContainer(ArtistApp, {
     fragment ArtistApp_artist on Artist {
       ...ArtistMeta_artist
       ...ArtistHeader_artist
-      ...ArtistStructuredData_artist
       internalID
       slug
       name
