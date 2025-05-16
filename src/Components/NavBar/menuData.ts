@@ -301,15 +301,15 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
           links: [
             {
               text: "Small (under 16in)",
-              href: "/collect?sizes%5B0%5D=SMALL&metric=in",
+              href: "/collect?sizes%5B0%5D=SMALL",
             },
             {
               text: "Medium (16in - 40in)",
-              href: "/collect?sizes%5B0%5D=MEDIUM&metric=in",
+              href: "/collect?sizes%5B0%5D=MEDIUM",
             },
             {
               text: "Large (over 40in)",
-              href: "/collect?sizes%5B0%5D=LARGE&metric=in",
+              href: "/collect?sizes%5B0%5D=LARGE",
             },
           ],
         },
@@ -321,35 +321,35 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
           links: [
             {
               text: "Black and White",
-              href: "/collect?colors%5B0%5D=black-and-white&metric=in",
+              href: "/collect?colors%5B0%5D=black-and-white",
             },
             {
               text: "Red",
-              href: "/collect?colors%5B0%5D=red&metric=in",
+              href: "/collect?colors%5B0%5D=red",
             },
             {
               text: "Orange",
-              href: "/collect?colors%5B0%5D=orange&metric=in",
+              href: "/collect?colors%5B0%5D=orange",
             },
             {
               text: "Yellow",
-              href: "/collect?colors%5B0%5D=yellow&metric=in",
+              href: "/collect?colors%5B0%5D=yellow",
             },
             {
               text: "Green",
-              href: "/collect?colors%5B0%5D=green&metric=in",
+              href: "/collect?colors%5B0%5D=green",
             },
             {
               text: "Blue",
-              href: "/collect?colors%5B0%5D=blue&metric=in",
+              href: "/collect?colors%5B0%5D=blue",
             },
             {
               text: "Pink",
-              href: "/collect?colors%5B0%5D=pink&metric=in",
+              href: "/collect?colors%5B0%5D=pink",
             },
             {
               text: "Brown",
-              href: "/collect?colors%5B0%5D=brown&metric=in",
+              href: "/collect?colors%5B0%5D=brown",
             },
           ],
         },
