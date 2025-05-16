@@ -131,6 +131,7 @@ const ShippingRouteLayout: FC<
                     orderID={order.internalID}
                     setShowSpinner={setShowSpinner}
                   />
+                  <Spacer y={4} />
                 </>
               )}
 

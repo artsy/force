@@ -33,6 +33,7 @@ export const Order2CheckoutLoadingSkeleton: React.FC<
               orderData.itemsTotal?.display) as string
           }
         />
+        <Order2ExpressCheckoutSkeleton />
         <StepsSkeleton />
       </Stack>
     </Skeleton>
@@ -71,6 +72,23 @@ const Order2CollapsibleOrderSummarySkeleton: React.FC<
           {props.artworkTitle}, {props.artworkDate}
         </SkeletonText>
       </Box>
+    </Flex>
+  )
+}
+
+const Order2ExpressCheckoutSkeleton = () => {
+  return (
+    <Flex flexDirection="column" backgroundColor="mono0" p={2}>
+      <Skeleton>
+        <SkeletonText variant="lg-display">Express checkout</SkeletonText>
+        <Spacer y={1} />
+        <SkeletonBox width={["100%", "50%"]} height={50} borderRadius={50} />
+        <Spacer y={1} />
+        <SkeletonText variant="xs" ml={0.5}>
+          By clicking Pay, I agree to Artsy’s General Terms and Conditions of
+          Sale
+        </SkeletonText>
+      </Skeleton>
     </Flex>
   )
 }

@@ -511,7 +511,6 @@ export const ExpressCheckoutUI = ({
         </RouterLink>
         .
       </Text>
-      <Spacer y={4} />
     </Box>
   )
 }
