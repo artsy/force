@@ -11,7 +11,6 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { STATS } from "Apps/Components/constants"
 import {
   FullBleedHeader,
   FullBleedHeaderOverlay,
@@ -20,6 +19,7 @@ import { MetaTags } from "Components/MetaTags"
 import { StructuredData } from "Components/Seo/StructuredData"
 import { RouterLink } from "System/Components/RouterLink"
 import { DOWNLOAD_APP_URLS, Device } from "Utils/Hooks/useDeviceDetection"
+import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
 import { resized } from "Utils/resized"
 import styled from "styled-components"
 import { AboutArtworksRailQueryRenderer } from "./AboutArtworksRail"
@@ -145,7 +145,7 @@ export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
               },
               aggregateRating: {
                 "@type": "AggregateRating",
-                ...STATS.iosApp,
+                ...FACTS_AND_FIGURES.iosApp,
               },
             },
             {
@@ -167,7 +167,7 @@ export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
               },
               aggregateRating: {
                 "@type": "AggregateRating",
-                ...STATS.androidApp,
+                ...FACTS_AND_FIGURES.androidApp,
               },
             },
           ],
