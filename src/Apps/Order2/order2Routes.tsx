@@ -53,7 +53,7 @@ export const order2Routes: RouteProps[] = [
         shouldWarnBeforeLeaving: true,
         prepareVariables: params => ({ orderID: params.orderID }),
         query: graphql`
-          query order2Routes_CheckoutQuery($orderID: String!) {
+          query order2Routes_CheckoutQuery($orderID: ID!) {
             viewer {
               me {
                 order(id: $orderID) {
@@ -101,7 +101,7 @@ export const order2Routes: RouteProps[] = [
         Component: DetailsRoute,
         layout: "FullBleed",
         query: graphql`
-          query order2Routes_DetailsQuery($orderID: String!) {
+          query order2Routes_DetailsQuery($orderID: ID!) {
             viewer {
               ...Order2DetailsRoute_viewer @arguments(orderID: $orderID)
               me {

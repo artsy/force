@@ -228,7 +228,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
 
 const FRAGMENT = graphql`
   fragment Order2CheckoutRoute_viewer on Viewer
-  @argumentDefinitions(orderID: { type: "String!" }) {
+  @argumentDefinitions(orderID: { type: "ID!" }) {
     me {
       order(id: $orderID) {
         internalID
