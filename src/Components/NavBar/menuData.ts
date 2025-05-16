@@ -38,7 +38,7 @@ export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
           links: [
             {
               text: "Art under $500",
-              href: "/collect?price_range=*-500",
+              href: "/collect?price_range=%2A-500",
             },
             {
               text: "Art under $1,000",
@@ -62,7 +62,7 @@ export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
             },
             {
               text: "Art above $25,000",
-              href: "/collect?price_range=25000-*",
+              href: "/collect?price_range=25000-%2A",
             },
           ],
         },
