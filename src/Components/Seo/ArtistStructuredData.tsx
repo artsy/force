@@ -21,7 +21,7 @@ export const ArtistStructuredData: React.FC<Props> = ({ artist }) => {
         name: artwork.title,
         dateCreated: artwork.date,
         artform: artwork.category,
-        // TODO: replace with unique @id using slug later
+        // TODO: replace with unique @id using slug
         image: artwork.image?.large,
       }
     })
@@ -126,6 +126,3 @@ const fragment = graphql`
     }
   }
 `
-// export const ArtistStructuredDataFragmentContainer = createFragmentContainer(ArtistStructuredData, {
-//   artist: fragment,
-// })
