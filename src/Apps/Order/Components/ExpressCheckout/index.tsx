@@ -20,6 +20,7 @@ const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 interface Props {
   order: ExpressCheckout_order$key
   setShowSpinner?: Dispatch<SetStateAction<boolean>>
+  isOrder2Checkout?: boolean
 }
 
 type Seller = Exclude<
@@ -27,7 +28,11 @@ type Seller = Exclude<
   { __typename: "%other" }
 >
 
-export const ExpressCheckout = ({ order, setShowSpinner }: Props) => {
+export const ExpressCheckout = ({
+  order,
+  setShowSpinner,
+  isOrder2Checkout,
+}: Props) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
 
   // Use itemsTotal on load, but subsequent updates inside ExpressCheckoutUI
@@ -68,7 +73,11 @@ export const ExpressCheckout = ({ order, setShowSpinner }: Props) => {
   return (
     <>
       <Elements stripe={stripePromise} options={options}>
-        <ExpressCheckoutUI order={orderData} setShowSpinner={setShowSpinner} />
+        <ExpressCheckoutUI
+          order={orderData}
+          setShowSpinner={setShowSpinner}
+          isOrder2Checkout={isOrder2Checkout}
+        />
       </Elements>
     </>
   )
@@ -100,11 +109,12 @@ const ORDER_FRAGMENT = graphql`
 interface ExpressCheckoutQueryRendererProps {
   orderID: string
   setShowSpinner?: Dispatch<SetStateAction<boolean>>
+  isOrder2Checkout?: boolean
 }
 
 export const ExpressCheckoutQueryRenderer: React.FC<
   ExpressCheckoutQueryRendererProps
-> = ({ orderID, setShowSpinner }) => {
+> = ({ orderID, setShowSpinner, isOrder2Checkout }) => {
   return (
     <SystemQueryRenderer<ExpressCheckoutQuery>
       // lazyLoad
@@ -124,6 +134,7 @@ export const ExpressCheckoutQueryRenderer: React.FC<
             <ExpressCheckout
               order={props.me.order}
               setShowSpinner={setShowSpinner}
+              isOrder2Checkout={isOrder2Checkout}
             />
           )
         }

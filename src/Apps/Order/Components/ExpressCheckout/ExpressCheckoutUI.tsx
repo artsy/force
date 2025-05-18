@@ -57,6 +57,7 @@ import { graphql, useFragment } from "react-relay"
 interface ExpressCheckoutUIProps {
   order: ExpressCheckoutUI_order$key
   setShowSpinner?: Dispatch<SetStateAction<boolean>>
+  isOrder2Checkout?: boolean
 }
 
 const logger = createLogger("ExpressCheckoutUI")
@@ -69,6 +70,7 @@ type HandleCancelCallback = NonNullable<
 export const ExpressCheckoutUI = ({
   order,
   setShowSpinner,
+  isOrder2Checkout,
 }: ExpressCheckoutUIProps) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const [visible, setVisible] = useState(false)
@@ -479,11 +481,19 @@ export const ExpressCheckoutUI = ({
 
   return (
     <Box display={visible ? "block" : "none"}>
-      <Text variant="lg-display">Express checkout</Text>
+      {isOrder2Checkout ? (
+        <Text variant="sm-display">Express Checkout</Text>
+      ) : (
+        <Text variant="lg-display">Express checkout</Text>
+      )}
       <Spacer y={1} />
       <Box
         minWidth="240px"
-        maxWidth={hasMultiplePaymentOptions ? "100%" : ["100%", "50%"]}
+        maxWidth={
+          hasMultiplePaymentOptions || isOrder2Checkout
+            ? "100%"
+            : ["100%", "50%"]
+        }
         paddingX="1px"
       >
         <ExpressCheckoutElement

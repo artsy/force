@@ -80,9 +80,9 @@ const Order2ExpressCheckoutSkeleton = () => {
   return (
     <Flex flexDirection="column" backgroundColor="mono0" p={2}>
       <Skeleton>
-        <SkeletonText variant="lg-display">Express checkout</SkeletonText>
+        <SkeletonText variant="sm-display">Express Checkout</SkeletonText>
         <Spacer y={1} />
-        <SkeletonBox width={["100%", "50%"]} height={50} borderRadius={50} />
+        <SkeletonBox width="100%" height={50} borderRadius={50} />
         <Spacer y={1} />
         <SkeletonText variant="xs" ml={0.5}>
           By clicking Pay, I agree to Artsy’s General Terms and Conditions of

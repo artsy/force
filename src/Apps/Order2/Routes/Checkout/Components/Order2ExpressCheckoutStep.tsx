@@ -23,7 +23,12 @@ export const Order2ExpressCheckoutStep: React.FC<
     return null
   }
 
-  return <ExpressCheckoutQueryRenderer orderID={data.internalID} />
+  return (
+    <ExpressCheckoutQueryRenderer
+      orderID={data.internalID}
+      isOrder2Checkout={true}
+    />
+  )
 }
 
 const FRAGMENT = graphql`

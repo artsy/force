@@ -130,6 +130,7 @@ const ShippingRouteLayout: FC<
                   <ExpressCheckoutQueryRenderer
                     orderID={order.internalID}
                     setShowSpinner={setShowSpinner}
+                    isOrder2Checkout={false}
                   />
                   <Spacer y={4} />
                 </>
