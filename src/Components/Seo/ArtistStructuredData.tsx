@@ -3,7 +3,6 @@ import { getENV } from "Utils/getENV"
 import type { ArtistStructuredData_artist$key } from "__generated__/ArtistStructuredData_artist.graphql"
 import compact from "lodash/compact"
 import { graphql, useFragment } from "react-relay"
-import type { Thing, WithContext } from "schema-dts"
 
 interface Props {
   artist: ArtistStructuredData_artist$key
