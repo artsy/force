@@ -1,4 +1,3 @@
-import { useFlag } from "@unleash/proxy-client-react"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
@@ -23,10 +22,8 @@ export const usePrefetchRoute = ({
 
   const { match } = useRouter()
 
-  const prefetchFeatureFlagEnabled = useFlag("diamond_prefetch")
-
   // If we're transitioning routes, we don't want to prefetch
-  const prefetchDisabled = !prefetchFeatureFlagEnabled || !match?.elements
+  const prefetchDisabled = !match?.elements
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const prefetch = useCallback(
