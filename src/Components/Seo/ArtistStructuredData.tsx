@@ -1,7 +1,9 @@
 import { StructuredData } from "Components/Seo/StructuredData"
 import { getENV } from "Utils/getENV"
 import type { ArtistStructuredData_artist$key } from "__generated__/ArtistStructuredData_artist.graphql"
+import compact from "lodash/compact"
 import { graphql, useFragment } from "react-relay"
+import type { Thing, WithContext } from "schema-dts"
 
 interface Props {
   artist: ArtistStructuredData_artist$key
@@ -15,29 +17,31 @@ export const ArtistStructuredData: React.FC<Props> = ({ artist }) => {
     ?.map(edge => {
       const artwork = edge?.node
       if (!artwork || !artwork.title || !artwork.href) return null
+      const artworkUrl = `${getENV("APP_URL")}${artwork.href}`
 
       return {
         "@type": "VisualArtwork",
         name: artwork.title,
         dateCreated: artwork.date,
         artform: artwork.category,
-        // TODO: replace with unique @id using slug
+        url: artworkUrl,
         image: artwork.image?.large,
       }
     })
     .filter(Boolean)
 
-  const memberGalleriesMap = new Map()
-  data.artworks_connection?.edges?.forEach(edge => {
-    const partner = edge?.node?.partner
-    if (partner?.name && partner?.href) {
-      memberGalleriesMap.set(partner.name, {
-        name: partner.name,
-        url: `${getENV("APP_URL")}${partner.href}`,
-      })
-    }
-  })
-  const memberOf = Array.from(memberGalleriesMap.values())
+  const memberOf = compact(
+    data.artworks_connection?.edges?.map(edge => {
+      const partner = edge?.node?.partner
+      return partner?.name && partner?.href
+        ? {
+            "@type": "ArtGallery",
+            name: partner.name,
+            url: `${getENV("APP_URL")}${partner.href}`,
+          }
+        : null
+    }),
+  )
 
   return (
     <StructuredData
@@ -61,13 +65,7 @@ export const ArtistStructuredData: React.FC<Props> = ({ artist }) => {
                 ? { "@type": "Country", name: data.nationality }
                 : undefined,
               creatorOf: creatorOf?.length ? creatorOf : undefined,
-              memberOf: memberOf.length
-                ? memberOf.map(gallery => ({
-                    "@type": "ArtGallery",
-                    name: gallery.name,
-                    url: gallery.url,
-                  }))
-                : undefined,
+              memberOf: memberOf.length ? memberOf : undefined,
             },
             {
               "@type": "WebPage",
@@ -79,7 +77,7 @@ export const ArtistStructuredData: React.FC<Props> = ({ artist }) => {
               },
             },
           ],
-        } as any
+        } satisfies WithContext<Thing>
       }
     />
   )

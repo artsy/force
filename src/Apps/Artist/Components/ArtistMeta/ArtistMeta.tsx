@@ -2,7 +2,6 @@ import { MetaTags } from "Components/MetaTags"
 import { ArtistStructuredData } from "Components/Seo/ArtistStructuredData"
 import { getENV } from "Utils/getENV"
 import type { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
-import type { ArtistStructuredData_artist$key } from "__generated__/ArtistStructuredData_artist.graphql"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useCanonicalHref } from "./useCanonicalHref"
@@ -55,9 +54,7 @@ export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
         <Meta name="skos:prefLabel" content={alternateNames.join("; ")} />
       )}
 
-      <ArtistStructuredData
-        artist={artist as ArtistStructuredData_artist$key}
-      />
+      <ArtistStructuredData artist={artist} />
     </>
   )
 }
@@ -71,7 +68,6 @@ export const ArtistMetaFragmentContainer = createFragmentContainer(ArtistMeta, {
       nationality
       birthday
       deathday
-      gender
       href
       isInSeoExperiment
       meta(page: ABOUT) {
@@ -82,57 +78,6 @@ export const ArtistMetaFragmentContainer = createFragmentContainer(ArtistMeta, {
       coverArtwork {
         image {
           large: url(version: "large")
-        }
-      }
-      counts {
-        artworks
-      }
-      blurb
-      artworks_connection: artworksConnection(
-        first: 10
-        filter: IS_FOR_SALE
-        published: true
-      ) {
-        edges {
-          node {
-            title
-            date
-            description
-            category
-            price_currency: priceCurrency
-            listPrice {
-              __typename
-              ... on PriceRange {
-                minPrice {
-                  major
-                  currencyCode
-                }
-                maxPrice {
-                  major
-                }
-              }
-              ... on Money {
-                major
-                currencyCode
-              }
-            }
-            availability
-            href
-            image {
-              small: url(version: "small")
-              large: url(version: "large")
-            }
-            partner {
-              name
-              href
-              profile {
-                image {
-                  small: url(version: "small")
-                  large: url(version: "large")
-                }
-              }
-            }
-          }
         }
       }
     }
