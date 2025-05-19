@@ -22,6 +22,9 @@ jest.mock("lodash/take", () => jest.fn())
 jest.mock("Utils/device", () => ({
   isDevelopment: true,
 }))
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn().mockReturnValue(true),
+}))
 
 describe("usePrefetchRoute", () => {
   const mockEnvironment = {}
