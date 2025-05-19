@@ -1,4 +1,4 @@
-import { Text } from "@artsy/palette"
+import { Box, Text } from "@artsy/palette"
 import type { Order2DetailsHeader_order$key } from "__generated__/Order2DetailsHeader_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -10,12 +10,12 @@ export const Order2DetailsHeader = ({ order }: Order2DetailsHeaderProps) => {
   const orderData = useFragment(FRAGMENT, order)
 
   return (
-    <>
+    <Box backgroundColor="mono0" p={2}>
       {/* Title */}
       <Text variant="lg">{orderData.displayTexts.title}</Text>
       {/* Order # */}
       <Text variant="xs">Order #{orderData.code} </Text>
-    </>
+    </Box>
   )
 }
 

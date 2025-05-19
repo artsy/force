@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5442d94645a2fd17c42d7680e24cd276>>
+ * @generated SignedSource<<c768ca0e9db6153d03d6da3397a000af>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -172,12 +172,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a84eb443953df2930ee38d218e11c337",
+    "cacheID": "61a32786e85f3e38827d7810119284b9",
     "id": null,
     "metadata": {},
     "name": "Order2DetailsPage_Test_Query",
     "operationKind": "query",
-    "text": "query Order2DetailsPage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment Order2DetailsMessage2_order on Order {\n  buyerStateExpiresAt\n  code\n  internalID\n  displayTexts {\n    messageType\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n  ...Order2DetailsMessage2_order\n}\n"
+    "text": "query Order2DetailsPage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  internalID\n  displayTexts {\n    messageType\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n  ...Order2DetailsMessage_order\n}\n"
   }
 };
 })();
