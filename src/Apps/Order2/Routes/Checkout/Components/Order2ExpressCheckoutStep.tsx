@@ -1,4 +1,3 @@
-import { useFlag } from "@unleash/proxy-client-react"
 import { ExpressCheckoutQueryRenderer } from "Apps/Order/Components/ExpressCheckout"
 import type { Order2ExpressCheckoutStep_order$key } from "__generated__/Order2ExpressCheckoutStep_order.graphql"
 import { graphql, useFragment } from "react-relay"
@@ -13,9 +12,6 @@ export const Order2ExpressCheckoutStep: React.FC<
   Order2ExpressCheckoutSectionProps
 > = ({ order }) => {
   const data = useFragment(FRAGMENT, order)
-  const expressCheckoutPrototypeEnabled = useFlag(
-    "emerald_stripe-express-checkout-prototype",
-  )
 
   if (!data) {
     return null
@@ -24,8 +20,7 @@ export const Order2ExpressCheckoutStep: React.FC<
   const isOffer = data.mode === "OFFER"
   const isFixedShipping = data.lineItems[0]?.artwork?.isFixedShippingFeeOnly
 
-  const isExpressCheckoutEligible =
-    expressCheckoutPrototypeEnabled && !isOffer && isFixedShipping
+  const isExpressCheckoutEligible = !isOffer && isFixedShipping
 
   if (!isExpressCheckoutEligible) {
     return null

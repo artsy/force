@@ -1,6 +1,5 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Flex, Spacer } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ExpressCheckoutQueryRenderer } from "Apps/Order/Components/ExpressCheckout"
@@ -80,12 +79,7 @@ const ShippingRouteLayout: FC<
 
   const { jumpTo } = useJump()
 
-  const expressCheckoutPrototypeEnabled = useFlag(
-    "emerald_stripe-express-checkout-prototype",
-  )
-  // order can be processed with express checkout
   const isExpressCheckoutEligible =
-    expressCheckoutPrototypeEnabled &&
     !shippingContext.orderData.isOffer &&
     shippingContext.orderData.isFixedShipping
 
