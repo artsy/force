@@ -2,6 +2,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 import { isDevelopment } from "Utils/device"
+import { getENV } from "Utils/getENV"
 import take from "lodash/take"
 import { useCallback } from "react"
 import { fetchQuery } from "react-relay"
@@ -22,8 +23,10 @@ export const usePrefetchRoute = ({
 
   const { match } = useRouter()
 
+  const prefetchFeatureFlagEnabled = getENV("ENABLE_PREFETCH")
+
   // If we're transitioning routes, we don't want to prefetch
-  const prefetchDisabled = !match?.elements
+  const prefetchDisabled = !prefetchFeatureFlagEnabled || !match?.elements
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const prefetch = useCallback(
