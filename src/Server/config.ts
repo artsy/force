@@ -53,6 +53,7 @@ export const EDITORIAL_PATHS: any =
   "^/article|^/2016-year-in-art|^/venice-biennale|^/gender-equality|^/series|^/video|^/news"
 export const ENABLE_CONVERSATIONS_MESSAGES_AUTO_REFRESH: any = true
 export const ENABLE_NEW_AUCTIONS_FILTER: any = false
+export const ENABLE_PREFETCH: any = true
 export const ENABLE_QUERY_BATCHING: any = false
 export const ENABLE_SSR_STREAMING: any = false
 export const ENABLE_WEB_CRAWLING: any = false
