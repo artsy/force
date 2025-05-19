@@ -45,40 +45,38 @@ export const ArtistStructuredData: React.FC<Props> = ({ artist }) => {
 
   return (
     <StructuredData
-      schemaData={
-        {
-          "@context": "https://schema.org",
-          "@graph": [
-            {
-              "@type": "Person",
+      schemaData={{
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": artistUrl,
+            additionalType: "Artist",
+            birthDate: data.birthday,
+            deathDate: data.deathday,
+            description: data.meta?.description,
+            gender: data.gender,
+            image: data.coverArtwork?.image?.large,
+            mainEntityOfPage: artistUrl,
+            name: data.name,
+            url: artistUrl,
+            nationality: data.nationality
+              ? { "@type": "Country", name: data.nationality }
+              : undefined,
+            creatorOf: creatorOf?.length ? creatorOf : undefined,
+            memberOf: memberOf.length ? memberOf : undefined,
+          },
+          {
+            "@type": "WebPage",
+            "@id": artistUrl,
+            name: data.meta?.title,
+            description: data.meta?.description,
+            mainEntity: {
               "@id": artistUrl,
-              additionalType: "Artist",
-              birthDate: data.birthday,
-              deathDate: data.deathday,
-              description: data.meta?.description,
-              gender: data.gender,
-              image: data.coverArtwork?.image?.large,
-              mainEntityOfPage: artistUrl,
-              name: data.name,
-              url: artistUrl,
-              nationality: data.nationality
-                ? { "@type": "Country", name: data.nationality }
-                : undefined,
-              creatorOf: creatorOf?.length ? creatorOf : undefined,
-              memberOf: memberOf.length ? memberOf : undefined,
             },
-            {
-              "@type": "WebPage",
-              "@id": artistUrl,
-              name: data.meta?.title,
-              description: data.meta?.description,
-              mainEntity: {
-                "@id": artistUrl,
-              },
-            },
-          ],
-        } satisfies WithContext<Thing>
-      }
+          },
+        ],
+      }}
     />
   )
 }
