@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fe92ca0098b8a9555d2346e28ad8e3bc>>
+ * @generated SignedSource<<b4fcd9ca3d32cf92124a6b97c7c16c94>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerHeader_partner$data = {
+  readonly hasVisibleFollowsCount: boolean;
   readonly locations: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -66,6 +67,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hasVisibleFollowsCount",
       "storageKey": null
     },
     {
@@ -214,6 +222,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "52e0a19ddfaa94155e29ee5d2212443e";
+(node as any).hash = "024f792857b9d86e4b2660cf11dfbe34";
 
 export default node;
