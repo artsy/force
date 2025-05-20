@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8606fad2523fc10f04d30d696c14d6bf>>
+ * @generated SignedSource<<893861d5559ab549165d997070e56ee0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -278,29 +278,19 @@ return {
             "args": [
               {
                 "kind": "Literal",
-                "name": "filter",
-                "value": "IS_FOR_SALE"
-              },
-              {
-                "kind": "Literal",
                 "name": "first",
                 "value": 10
-              },
-              {
-                "kind": "Literal",
-                "name": "published",
-                "value": true
               }
             ],
-            "concreteType": "ArtworkConnection",
+            "concreteType": "PartnerArtistConnection",
             "kind": "LinkedField",
-            "name": "artworksConnection",
+            "name": "partnersConnection",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "ArtworkEdge",
+                "concreteType": "PartnerArtistEdge",
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
@@ -308,35 +298,22 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Artwork",
+                    "concreteType": "Partner",
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
                     "selections": [
                       (v3/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Partner",
-                        "kind": "LinkedField",
-                        "name": "partner",
-                        "plural": false,
-                        "selections": [
-                          (v2/*: any*/),
-                          (v3/*: any*/),
-                          (v6/*: any*/)
-                        ],
-                        "storageKey": null
-                      },
                       (v6/*: any*/)
                     ],
                     "storageKey": null
-                  }
+                  },
+                  (v6/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
-            "storageKey": "artworksConnection(filter:\"IS_FOR_SALE\",first:10,published:true)"
+            "storageKey": "partnersConnection(first:10)"
           },
           {
             "alias": null,
@@ -550,12 +527,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "655dad3338082d83140cf9d5cf57b269",
+    "cacheID": "5c456c5ab7bae2242c9525875ef81409",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ArtistAppQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArtistAppQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistApp_artist\n    id\n  }\n}\n\nfragment ArtistApp_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistHeader_artist\n  internalID\n  slug\n  name\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML, partnerBio: false) {\n    text\n    credit\n  }\n  insights {\n    kind\n    ...ArtistCareerHighlight_insight\n  }\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    title\n    imageTitle\n    href\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  slug\n  name\n  nationality\n  birthday\n  deathday\n  href\n  isInSeoExperiment\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  alternateNames\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  meta(page: ABOUT) {\n    title\n    description\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  artworksConnection(first: 10, filter: IS_FOR_SALE, published: true) {\n    edges {\n      node {\n        href\n        partner {\n          name\n          href\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query artistRoutes_ArtistAppQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistApp_artist\n    id\n  }\n}\n\nfragment ArtistApp_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistHeader_artist\n  internalID\n  slug\n  name\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML, partnerBio: false) {\n    text\n    credit\n  }\n  insights {\n    kind\n    ...ArtistCareerHighlight_insight\n  }\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    title\n    imageTitle\n    href\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  slug\n  name\n  nationality\n  birthday\n  deathday\n  href\n  isInSeoExperiment\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  alternateNames\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  meta(page: ABOUT) {\n    title\n    description\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

@@ -14,10 +14,9 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
   const data = useFragment(fragment, artist)
   const artistUrl = `${getENV("APP_URL")}${data.href}`
 
-  // FIXME: This isn't strictly correct and does not encapsulate representation; also wouldn't be unique
   const memberOf = compact(
-    data.artworksConnection?.edges?.map(edge => {
-      const partner = edge?.node?.partner
+    data.partnersConnection?.edges?.map(edge => {
+      const partner = edge?.node
       return partner?.href
         ? { "@id": `${getENV("APP_URL")}${partner.href}` }
         : null
@@ -79,14 +78,10 @@ const fragment = graphql`
         url(version: "large")
       }
     }
-    artworksConnection(first: 10, filter: IS_FOR_SALE, published: true) {
+    partnersConnection(first: 10) {
       edges {
         node {
           href
-          partner {
-            name
-            href
-          }
         }
       }
     }

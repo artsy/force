@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<69e47920ff0fe7e7f5309653a1c8a8c0>>
+ * @generated SignedSource<<5f9ce799048d904c1f0a857d5c996836>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,6 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistStructuredData_artist$data = {
-  readonly artworksConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly href: string | null | undefined;
-        readonly partner: {
-          readonly href: string | null | undefined;
-          readonly name: string | null | undefined;
-        } | null | undefined;
-      } | null | undefined;
-    } | null | undefined> | null | undefined;
-  } | null | undefined;
   readonly birthday: string | null | undefined;
   readonly coverArtwork: {
     readonly image: {
@@ -37,6 +26,13 @@ export type ArtistStructuredData_artist$data = {
   };
   readonly name: string | null | undefined;
   readonly nationality: string | null | undefined;
+  readonly partnersConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly href: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtistStructuredData_artist";
 };
@@ -47,13 +43,6 @@ export type ArtistStructuredData_artist$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -73,7 +62,13 @@ return {
       "name": "slug",
       "storageKey": null
     },
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -102,7 +97,7 @@ return {
       "name": "nationality",
       "storageKey": null
     },
-    (v1/*: any*/),
+    (v0/*: any*/),
     {
       "alias": null,
       "args": [
@@ -174,29 +169,19 @@ return {
       "args": [
         {
           "kind": "Literal",
-          "name": "filter",
-          "value": "IS_FOR_SALE"
-        },
-        {
-          "kind": "Literal",
           "name": "first",
           "value": 10
-        },
-        {
-          "kind": "Literal",
-          "name": "published",
-          "value": true
         }
       ],
-      "concreteType": "ArtworkConnection",
+      "concreteType": "PartnerArtistConnection",
       "kind": "LinkedField",
-      "name": "artworksConnection",
+      "name": "partnersConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "ArtworkEdge",
+          "concreteType": "PartnerArtistEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -204,25 +189,12 @@ return {
             {
               "alias": null,
               "args": null,
-              "concreteType": "Artwork",
+              "concreteType": "Partner",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
               "selections": [
-                (v1/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Partner",
-                  "kind": "LinkedField",
-                  "name": "partner",
-                  "plural": false,
-                  "selections": [
-                    (v0/*: any*/),
-                    (v1/*: any*/)
-                  ],
-                  "storageKey": null
-                }
+                (v0/*: any*/)
               ],
               "storageKey": null
             }
@@ -230,7 +202,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "artworksConnection(filter:\"IS_FOR_SALE\",first:10,published:true)"
+      "storageKey": "partnersConnection(first:10)"
     }
   ],
   "type": "Artist",
@@ -238,6 +210,6 @@ return {
 };
 })();
 
-(node as any).hash = "f83677930c43a1a644e0409133510bde";
+(node as any).hash = "788fa96040837b0a798c41f95509fe2a";
 
 export default node;
