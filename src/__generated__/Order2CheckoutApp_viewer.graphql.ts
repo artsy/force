@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f05150165f9222e4cbc577bbfcdfd4a4>>
+ * @generated SignedSource<<1966f6ffd2e9f0570b2126b7ac8103e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,8 +9,9 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type Order2CheckoutRoute_viewer$data = {
+export type Order2CheckoutApp_viewer$data = {
   readonly me: {
     readonly addressConnection: {
       readonly edges: ReadonlyArray<{
@@ -20,18 +21,29 @@ export type Order2CheckoutRoute_viewer$data = {
       } | null | undefined> | null | undefined;
     } | null | undefined;
     readonly order: {
-      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutContext_order">;
+      readonly fulfillmentOptions: ReadonlyArray<{
+        readonly type: FulfillmentOptionTypeEnum;
+      }>;
+      readonly internalID: string;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutLoadingSkeleton_order" | "Order2CollapsibleOrderSummary_order" | "Order2FulfillmentDetailsStep_order" | "Order2ReviewStep_order" | "useLoadCheckout_order">;
     } | null | undefined;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutApp_viewer">;
-  readonly " $fragmentType": "Order2CheckoutRoute_viewer";
+  readonly " $fragmentType": "Order2CheckoutApp_viewer";
 };
-export type Order2CheckoutRoute_viewer$key = {
-  readonly " $data"?: Order2CheckoutRoute_viewer$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutRoute_viewer">;
+export type Order2CheckoutApp_viewer$key = {
+  readonly " $data"?: Order2CheckoutApp_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutApp_viewer">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -41,19 +53,8 @@ const node: ReaderFragment = {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Order2CheckoutRoute_viewer",
+  "name": "Order2CheckoutApp_viewer",
   "selections": [
-    {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "orderID",
-          "variableName": "orderID"
-        }
-      ],
-      "kind": "FragmentSpread",
-      "name": "Order2CheckoutApp_viewer"
-    },
     {
       "alias": null,
       "args": null,
@@ -76,10 +77,49 @@ const node: ReaderFragment = {
           "name": "order",
           "plural": false,
           "selections": [
+            (v0/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "FulfillmentOption",
+              "kind": "LinkedField",
+              "name": "fulfillmentOptions",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "type",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
             {
               "args": null,
               "kind": "FragmentSpread",
-              "name": "Order2CheckoutContext_order"
+              "name": "Order2CollapsibleOrderSummary_order"
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "Order2FulfillmentDetailsStep_order"
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "Order2ReviewStep_order"
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "useLoadCheckout_order"
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "Order2CheckoutLoadingSkeleton_order"
             }
           ],
           "storageKey": null
@@ -114,13 +154,7 @@ const node: ReaderFragment = {
                   "name": "node",
                   "plural": false,
                   "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "internalID",
-                      "storageKey": null
-                    }
+                    (v0/*: any*/)
                   ],
                   "storageKey": null
                 }
@@ -137,7 +171,8 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "b0195e8c31bd09de4ae6049ba9ef8a54";
+(node as any).hash = "c4a1b2fe59fe4da3b2bacd462450146e";
 
 export default node;
