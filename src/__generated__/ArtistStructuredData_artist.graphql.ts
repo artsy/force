@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4986cf869f64dded6f95c0b984a12358>>
+ * @generated SignedSource<<69e47920ff0fe7e7f5309653a1c8a8c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,27 +11,21 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistStructuredData_artist$data = {
-  readonly artworks_connection: {
+  readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly category: string | null | undefined;
-        readonly date: string | null | undefined;
         readonly href: string | null | undefined;
-        readonly image: {
-          readonly large: string | null | undefined;
-        } | null | undefined;
         readonly partner: {
           readonly href: string | null | undefined;
           readonly name: string | null | undefined;
         } | null | undefined;
-        readonly title: string | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
   readonly birthday: string | null | undefined;
   readonly coverArtwork: {
     readonly image: {
-      readonly large: string | null | undefined;
+      readonly url: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
   readonly deathday: string | null | undefined;
@@ -64,37 +58,6 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "href",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "title",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Image",
-  "kind": "LinkedField",
-  "name": "image",
-  "plural": false,
-  "selections": [
-    {
-      "alias": "large",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "version",
-          "value": "large"
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "url",
-      "storageKey": "url(version:\"large\")"
-    }
-  ],
   "storageKey": null
 };
 return {
@@ -154,7 +117,13 @@ return {
       "name": "meta",
       "plural": false,
       "selections": [
-        (v2/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "title",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -173,12 +142,35 @@ return {
       "name": "coverArtwork",
       "plural": false,
       "selections": [
-        (v3/*: any*/)
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "image",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": "large"
+                }
+              ],
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": "url(version:\"large\")"
+            }
+          ],
+          "storageKey": null
+        }
       ],
       "storageKey": null
     },
     {
-      "alias": "artworks_connection",
+      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -217,23 +209,7 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v2/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "date",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "category",
-                  "storageKey": null
-                },
                 (v1/*: any*/),
-                (v3/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -262,6 +238,6 @@ return {
 };
 })();
 
-(node as any).hash = "fd0a7c111b8a9091992e06a2e5e51ea7";
+(node as any).hash = "f83677930c43a1a644e0409133510bde";
 
 export default node;

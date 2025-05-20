@@ -4,40 +4,22 @@ import type { ArtistStructuredData_artist$key } from "__generated__/ArtistStruct
 import compact from "lodash/compact"
 import { graphql, useFragment } from "react-relay"
 
-interface Props {
+interface ArtistStructuredDataProps {
   artist: ArtistStructuredData_artist$key
 }
 
-export const ArtistStructuredData: React.FC<Props> = ({ artist }) => {
+export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
+  artist,
+}) => {
   const data = useFragment(fragment, artist)
   const artistUrl = `${getENV("APP_URL")}${data.href}`
 
-  const creatorOf = data.artworks_connection?.edges
-    ?.map(edge => {
-      const artwork = edge?.node
-      if (!artwork || !artwork.title || !artwork.href) return null
-      const artworkUrl = `${getENV("APP_URL")}${artwork.href}`
-
-      return {
-        "@type": "VisualArtwork",
-        name: artwork.title,
-        dateCreated: artwork.date,
-        artform: artwork.category,
-        url: artworkUrl,
-        image: artwork.image?.large,
-      }
-    })
-    .filter(Boolean)
-
+  // FIXME: This isn't strictly correct and does not encapsulate representation; also wouldn't be unique
   const memberOf = compact(
-    data.artworks_connection?.edges?.map(edge => {
+    data.artworksConnection?.edges?.map(edge => {
       const partner = edge?.node?.partner
-      return partner?.name && partner?.href
-        ? {
-            "@type": "ArtGallery",
-            name: partner.name,
-            url: `${getENV("APP_URL")}${partner.href}`,
-          }
+      return partner?.href
+        ? { "@id": `${getENV("APP_URL")}${partner.href}` }
         : null
     }),
   )
@@ -51,25 +33,24 @@ export const ArtistStructuredData: React.FC<Props> = ({ artist }) => {
             "@type": "Person",
             "@id": artistUrl,
             additionalType: "Artist",
-            birthDate: data.birthday,
-            deathDate: data.deathday,
+            birthDate: data.birthday ?? undefined,
+            deathDate: data.deathday ?? undefined,
             description: data.meta?.description,
-            gender: data.gender,
-            image: data.coverArtwork?.image?.large,
+            gender: data.gender ?? undefined,
+            image: data.coverArtwork?.image?.url ?? undefined,
             mainEntityOfPage: artistUrl,
-            name: data.name,
-            url: artistUrl,
+            memberOf: memberOf.length ? memberOf : undefined,
+            name: data.name ?? undefined,
             nationality: data.nationality
               ? { "@type": "Country", name: data.nationality }
               : undefined,
-            creatorOf: creatorOf?.length ? creatorOf : undefined,
-            memberOf: memberOf.length ? memberOf : undefined,
+            url: artistUrl,
           },
           {
             "@type": "WebPage",
             "@id": artistUrl,
-            name: data.meta?.title,
-            description: data.meta?.description,
+            name: data.meta?.title ?? undefined,
+            description: data.meta?.description ?? undefined,
             mainEntity: {
               "@id": artistUrl,
             },
@@ -95,23 +76,13 @@ const fragment = graphql`
     }
     coverArtwork {
       image {
-        large: url(version: "large")
+        url(version: "large")
       }
     }
-    artworks_connection: artworksConnection(
-      first: 10
-      filter: IS_FOR_SALE
-      published: true
-    ) {
+    artworksConnection(first: 10, filter: IS_FOR_SALE, published: true) {
       edges {
         node {
-          title
-          date
-          category
           href
-          image {
-            large: url(version: "large")
-          }
           partner {
             name
             href
