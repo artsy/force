@@ -17,7 +17,7 @@ import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import type { Order2DetailsPage_order$key } from "__generated__/Order2DetailsPage_order.graphql"
 import { graphql, useFragment } from "react-relay"
 import { Order2DetailsHeader } from "./Order2DetailsHeader"
-import { Order2DetailsMessage2 } from "./Order2DetailsMessage2"
+import { Order2DetailsMessage } from "./Order2DetailsMessage"
 
 interface Order2DetailsPageProps {
   order: Order2DetailsPage_order$key
@@ -28,19 +28,14 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
 
   return (
     <GridColumns>
-      <Column span={[12]}>
-        <Box m={2}>
-          <Order2DetailsHeader order={orderData} />
-        </Box>
+      <Column span={[12]} backgroundColor="mono5">
+        <Order2DetailsHeader order={orderData} />
 
-        {/* Message */}
-        <Box m={2}>
-          <Order2DetailsMessage2 order={orderData} />
-        </Box>
+        <Order2DetailsMessage order={orderData} />
 
         {/* Full Order Summary */}
-        <Box m={2}>
-          <Flex width="100%" bg="mono5" justifyContent={"center"}>
+        <Box p={2} backgroundColor="mono0">
+          <Flex width="100%" justifyContent={"center"}>
             <ResponsiveBox
               bg="mono5"
               maxHeight={400}
@@ -121,10 +116,10 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
           </Message>
         </Box>
 
-        <Box p={1} my={2} bg="mono5" />
+        <Spacer y={1} />
 
         {/* Shipping/pickup info */}
-        <Box m={2}>
+        <Box p={2} backgroundColor="mono0">
           <Text variant="sm" fontWeight={500} color="mono100">
             Ship to
           </Text>
@@ -137,10 +132,10 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
           </Text>
         </Box>
 
-        <Box p={1} my={2} bg="mono5" />
+        <Spacer y={1} />
 
         {/* Payment method */}
-        <Box m={2}>
+        <Box p={2} backgroundColor="mono0">
           <Text variant="sm" fontWeight={500} color="mono100">
             Payment method
           </Text>
@@ -159,7 +154,7 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
         </Box>
 
         {/* Help section */}
-        <Box backgroundColor={"mono5"} p={2}>
+        <Box p={2}>
           <Flex>
             <MessageIcon fill="mono100" />
             <Spacer x={1} />
@@ -196,7 +191,7 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
 const FRAGMENT = graphql`
   fragment Order2DetailsPage_order on Order {
     ...Order2DetailsHeader_order
-    ...Order2DetailsMessage2_order
+    ...Order2DetailsMessage_order
   }
 `
 
