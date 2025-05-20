@@ -1,13 +1,13 @@
 import { Meta } from "react-head"
-import type { Thing, WithContext } from "schema-dts"
+import type { Graph, Thing, WithContext } from "schema-dts"
 
-interface StructuredDataProps<T extends Thing> {
-  schemaData: WithContext<T>
+type SchemaData = WithContext<Thing> | Graph
+
+interface StructuredDataProps {
+  schemaData: SchemaData
 }
 
-export const StructuredData = <T extends Thing>({
-  schemaData,
-}: StructuredDataProps<T>) => {
+export const StructuredData = ({ schemaData }: StructuredDataProps) => {
   const schemaContent = JSON.stringify(schemaData, null, 2)
   const dangerousHtml = { __html: schemaContent }
 

@@ -82,6 +82,7 @@ describe("ArtworkTopContextBar", () => {
           position: 1,
           item: {
             "@id": "https://artsy.net/artist/andy-warhol",
+            "@type": "Person",
             name: "Andy Warhol",
           },
         },
@@ -90,6 +91,7 @@ describe("ArtworkTopContextBar", () => {
           position: 2,
           item: {
             "@id": "https://artsy.net/artwork/andy-warhol-campbells-soup-can",
+            "@type": "VisualArtwork",
             name: "Campbell's Soup Can",
           },
         },

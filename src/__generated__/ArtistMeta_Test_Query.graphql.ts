@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1b2162f88aef6a4c2866d18b57ef9aa2>>
+ * @generated SignedSource<<3f39dbe3797f2237e83660676a0c5d38>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,133 +33,40 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
+v2 = [
+  {
+    "kind": "Literal",
+    "name": "version",
+    "value": "large"
+  }
+],
 v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "description",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "title",
-  "storageKey": null
-},
-v5 = {
-  "alias": "large",
-  "args": [
-    {
-      "kind": "Literal",
-      "name": "version",
-      "value": "large"
-    }
-  ],
-  "kind": "ScalarField",
-  "name": "url",
-  "storageKey": "url(version:\"large\")"
-},
-v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "major",
-  "storageKey": null
-},
-v8 = [
-  (v7/*: any*/),
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "currencyCode",
-    "storageKey": null
-  }
-],
-v9 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Image",
-  "kind": "LinkedField",
-  "name": "image",
-  "plural": false,
-  "selections": [
-    {
-      "alias": "small",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "version",
-          "value": "small"
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "url",
-      "storageKey": "url(version:\"small\")"
-    },
-    (v5/*: any*/)
-  ],
-  "storageKey": null
-},
-v10 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Artwork"
-},
-v11 = {
+v4 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v12 = {
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v13 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Image"
-},
-v14 = {
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
-},
-v15 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "Float"
-},
-v16 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Money"
 };
 return {
   "fragment": {
@@ -209,12 +116,11 @@ return {
             "name": "slug",
             "storageKey": null
           },
-          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "nationality",
+            "name": "name",
             "storageKey": null
           },
           {
@@ -238,14 +144,14 @@ return {
             "name": "gender",
             "storageKey": null
           },
-          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isInSeoExperiment",
+            "name": "nationality",
             "storageKey": null
           },
+          (v1/*: any*/),
           {
             "alias": null,
             "args": [
@@ -260,17 +166,22 @@ return {
             "name": "meta",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
-              (v4/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "description",
+                "storageKey": null
+              }
             ],
             "storageKey": "meta(page:\"ABOUT\")"
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "alternateNames",
-            "storageKey": null
           },
           {
             "alias": null,
@@ -288,67 +199,45 @@ return {
                 "name": "image",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/)
+                  {
+                    "alias": null,
+                    "args": (v2/*: any*/),
+                    "kind": "ScalarField",
+                    "name": "url",
+                    "storageKey": "url(version:\"large\")"
+                  },
+                  {
+                    "alias": "large",
+                    "args": (v2/*: any*/),
+                    "kind": "ScalarField",
+                    "name": "url",
+                    "storageKey": "url(version:\"large\")"
+                  }
                 ],
                 "storageKey": null
               },
-              (v6/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
           {
             "alias": null,
-            "args": null,
-            "concreteType": "ArtistCounts",
-            "kind": "LinkedField",
-            "name": "counts",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "artworks",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "blurb",
-            "storageKey": null
-          },
-          {
-            "alias": "artworks_connection",
             "args": [
-              {
-                "kind": "Literal",
-                "name": "filter",
-                "value": "IS_FOR_SALE"
-              },
               {
                 "kind": "Literal",
                 "name": "first",
                 "value": 10
-              },
-              {
-                "kind": "Literal",
-                "name": "published",
-                "value": true
               }
             ],
-            "concreteType": "ArtworkConnection",
+            "concreteType": "PartnerArtistConnection",
             "kind": "LinkedField",
-            "name": "artworksConnection",
+            "name": "partnersConnection",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "ArtworkEdge",
+                "concreteType": "PartnerArtistEdge",
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
@@ -356,141 +245,45 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Artwork",
+                    "concreteType": "Partner",
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "date",
-                        "storageKey": null
-                      },
-                      (v3/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "category",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": "price_currency",
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "priceCurrency",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": null,
-                        "kind": "LinkedField",
-                        "name": "listPrice",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "__typename",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "Money",
-                                "kind": "LinkedField",
-                                "name": "minPrice",
-                                "plural": false,
-                                "selections": (v8/*: any*/),
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "Money",
-                                "kind": "LinkedField",
-                                "name": "maxPrice",
-                                "plural": false,
-                                "selections": [
-                                  (v7/*: any*/)
-                                ],
-                                "storageKey": null
-                              }
-                            ],
-                            "type": "PriceRange",
-                            "abstractKey": null
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": (v8/*: any*/),
-                            "type": "Money",
-                            "abstractKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "availability",
-                        "storageKey": null
-                      },
-                      (v2/*: any*/),
-                      (v9/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Partner",
-                        "kind": "LinkedField",
-                        "name": "partner",
-                        "plural": false,
-                        "selections": [
-                          (v1/*: any*/),
-                          (v2/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Profile",
-                            "kind": "LinkedField",
-                            "name": "profile",
-                            "plural": false,
-                            "selections": [
-                              (v9/*: any*/),
-                              (v6/*: any*/)
-                            ],
-                            "storageKey": null
-                          },
-                          (v6/*: any*/)
-                        ],
-                        "storageKey": null
-                      },
-                      (v6/*: any*/)
+                      (v1/*: any*/),
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
-                  }
+                  },
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
-            "storageKey": "artworksConnection(filter:\"IS_FOR_SALE\",first:10,published:true)"
+            "storageKey": "partnersConnection(first:10)"
           },
-          (v6/*: any*/)
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isInSeoExperiment",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "alternateNames",
+            "storageKey": null
+          },
+          (v3/*: any*/)
         ],
         "storageKey": "artist(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "9af8d97844a827d45fab85436ccf3f41",
+    "cacheID": "d3a1aac397f21cd460ad4409e5b79b07",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -506,85 +299,26 @@ return {
           "plural": true,
           "type": "String"
         },
-        "artist.artworks_connection": {
+        "artist.birthday": (v4/*: any*/),
+        "artist.coverArtwork": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "ArtworkConnection"
+          "type": "Artwork"
         },
-        "artist.artworks_connection.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "ArtworkEdge"
-        },
-        "artist.artworks_connection.edges.node": (v10/*: any*/),
-        "artist.artworks_connection.edges.node.availability": (v11/*: any*/),
-        "artist.artworks_connection.edges.node.category": (v11/*: any*/),
-        "artist.artworks_connection.edges.node.date": (v11/*: any*/),
-        "artist.artworks_connection.edges.node.description": (v11/*: any*/),
-        "artist.artworks_connection.edges.node.href": (v11/*: any*/),
-        "artist.artworks_connection.edges.node.id": (v12/*: any*/),
-        "artist.artworks_connection.edges.node.image": (v13/*: any*/),
-        "artist.artworks_connection.edges.node.image.large": (v11/*: any*/),
-        "artist.artworks_connection.edges.node.image.small": (v11/*: any*/),
-        "artist.artworks_connection.edges.node.listPrice": {
+        "artist.coverArtwork.id": (v5/*: any*/),
+        "artist.coverArtwork.image": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "ListPrice"
+          "type": "Image"
         },
-        "artist.artworks_connection.edges.node.listPrice.__typename": (v14/*: any*/),
-        "artist.artworks_connection.edges.node.listPrice.currencyCode": (v14/*: any*/),
-        "artist.artworks_connection.edges.node.listPrice.major": (v15/*: any*/),
-        "artist.artworks_connection.edges.node.listPrice.maxPrice": (v16/*: any*/),
-        "artist.artworks_connection.edges.node.listPrice.maxPrice.major": (v15/*: any*/),
-        "artist.artworks_connection.edges.node.listPrice.minPrice": (v16/*: any*/),
-        "artist.artworks_connection.edges.node.listPrice.minPrice.currencyCode": (v14/*: any*/),
-        "artist.artworks_connection.edges.node.listPrice.minPrice.major": (v15/*: any*/),
-        "artist.artworks_connection.edges.node.partner": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Partner"
-        },
-        "artist.artworks_connection.edges.node.partner.href": (v11/*: any*/),
-        "artist.artworks_connection.edges.node.partner.id": (v12/*: any*/),
-        "artist.artworks_connection.edges.node.partner.name": (v11/*: any*/),
-        "artist.artworks_connection.edges.node.partner.profile": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Profile"
-        },
-        "artist.artworks_connection.edges.node.partner.profile.id": (v12/*: any*/),
-        "artist.artworks_connection.edges.node.partner.profile.image": (v13/*: any*/),
-        "artist.artworks_connection.edges.node.partner.profile.image.large": (v11/*: any*/),
-        "artist.artworks_connection.edges.node.partner.profile.image.small": (v11/*: any*/),
-        "artist.artworks_connection.edges.node.price_currency": (v11/*: any*/),
-        "artist.artworks_connection.edges.node.title": (v11/*: any*/),
-        "artist.birthday": (v11/*: any*/),
-        "artist.blurb": (v11/*: any*/),
-        "artist.counts": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtistCounts"
-        },
-        "artist.counts.artworks": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "FormattedNumber"
-        },
-        "artist.coverArtwork": (v10/*: any*/),
-        "artist.coverArtwork.id": (v12/*: any*/),
-        "artist.coverArtwork.image": (v13/*: any*/),
-        "artist.coverArtwork.image.large": (v11/*: any*/),
-        "artist.deathday": (v11/*: any*/),
-        "artist.gender": (v11/*: any*/),
-        "artist.href": (v11/*: any*/),
-        "artist.id": (v12/*: any*/),
+        "artist.coverArtwork.image.large": (v4/*: any*/),
+        "artist.coverArtwork.image.url": (v4/*: any*/),
+        "artist.deathday": (v4/*: any*/),
+        "artist.gender": (v4/*: any*/),
+        "artist.href": (v4/*: any*/),
+        "artist.id": (v5/*: any*/),
         "artist.isInSeoExperiment": {
           "enumValues": null,
           "nullable": true,
@@ -597,16 +331,37 @@ return {
           "plural": false,
           "type": "ArtistMeta"
         },
-        "artist.meta.description": (v14/*: any*/),
-        "artist.meta.title": (v14/*: any*/),
-        "artist.name": (v11/*: any*/),
-        "artist.nationality": (v11/*: any*/),
-        "artist.slug": (v12/*: any*/)
+        "artist.meta.description": (v6/*: any*/),
+        "artist.meta.title": (v6/*: any*/),
+        "artist.name": (v4/*: any*/),
+        "artist.nationality": (v4/*: any*/),
+        "artist.partnersConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PartnerArtistConnection"
+        },
+        "artist.partnersConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "PartnerArtistEdge"
+        },
+        "artist.partnersConnection.edges.id": (v5/*: any*/),
+        "artist.partnersConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "artist.partnersConnection.edges.node.href": (v4/*: any*/),
+        "artist.partnersConnection.edges.node.id": (v5/*: any*/),
+        "artist.slug": (v5/*: any*/)
       }
     },
     "name": "ArtistMeta_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistMeta_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistMeta_artist\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  slug\n  name\n  nationality\n  birthday\n  deathday\n  gender\n  href\n  isInSeoExperiment\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  alternateNames\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n  counts {\n    artworks\n  }\n  blurb\n  artworks_connection: artworksConnection(first: 10, filter: IS_FOR_SALE, published: true) {\n    edges {\n      node {\n        title\n        date\n        description\n        category\n        price_currency: priceCurrency\n        listPrice {\n          __typename\n          ... on PriceRange {\n            minPrice {\n              major\n              currencyCode\n            }\n            maxPrice {\n              major\n            }\n          }\n          ... on Money {\n            major\n            currencyCode\n          }\n        }\n        availability\n        href\n        image {\n          small: url(version: \"small\")\n          large: url(version: \"large\")\n        }\n        partner {\n          name\n          href\n          profile {\n            image {\n              small: url(version: \"small\")\n              large: url(version: \"large\")\n            }\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistMeta_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistMeta_artist\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  slug\n  name\n  nationality\n  birthday\n  deathday\n  href\n  isInSeoExperiment\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  alternateNames\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  meta(page: ABOUT) {\n    title\n    description\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

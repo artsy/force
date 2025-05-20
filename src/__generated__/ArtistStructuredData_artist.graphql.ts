@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<decef44ab76bbca9fd5253e1f708c9a1>>
+ * @generated SignedSource<<5f9ce799048d904c1f0a857d5c996836>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,43 +10,51 @@
 
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistMeta_artist$data = {
-  readonly alternateNames: ReadonlyArray<string | null | undefined> | null | undefined;
+export type ArtistStructuredData_artist$data = {
   readonly birthday: string | null | undefined;
   readonly coverArtwork: {
     readonly image: {
-      readonly large: string | null | undefined;
+      readonly url: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
   readonly deathday: string | null | undefined;
+  readonly gender: string | null | undefined;
   readonly href: string | null | undefined;
-  readonly isInSeoExperiment: boolean | null | undefined;
   readonly meta: {
     readonly description: string;
     readonly title: string;
   };
   readonly name: string | null | undefined;
   readonly nationality: string | null | undefined;
+  readonly partnersConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly href: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistStructuredData_artist">;
-  readonly " $fragmentType": "ArtistMeta_artist";
+  readonly " $fragmentType": "ArtistStructuredData_artist";
 };
-export type ArtistMeta_artist$key = {
-  readonly " $data"?: ArtistMeta_artist$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistMeta_artist">;
+export type ArtistStructuredData_artist$key = {
+  readonly " $data"?: ArtistStructuredData_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistStructuredData_artist">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtistMeta_artist",
+  "name": "ArtistStructuredData_artist",
   "selections": [
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistStructuredData_artist"
-    },
     {
       "alias": null,
       "args": null,
@@ -59,13 +67,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "nationality",
       "storageKey": null
     },
     {
@@ -86,16 +87,17 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "href",
+      "name": "gender",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "isInSeoExperiment",
+      "name": "nationality",
       "storageKey": null
     },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": [
@@ -114,25 +116,18 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "description",
+          "name": "title",
           "storageKey": null
         },
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "title",
+          "name": "description",
           "storageKey": null
         }
       ],
       "storageKey": "meta(page:\"ABOUT\")"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "alternateNames",
-      "storageKey": null
     },
     {
       "alias": null,
@@ -151,7 +146,7 @@ const node: ReaderFragment = {
           "plural": false,
           "selections": [
             {
-              "alias": "large",
+              "alias": null,
               "args": [
                 {
                   "kind": "Literal",
@@ -168,12 +163,53 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 10
+        }
+      ],
+      "concreteType": "PartnerArtistConnection",
+      "kind": "LinkedField",
+      "name": "partnersConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PartnerArtistEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Partner",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                (v0/*: any*/)
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "partnersConnection(first:10)"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "6362fb84ac7dd4732057b0688b549fdb";
+(node as any).hash = "788fa96040837b0a798c41f95509fe2a";
 
 export default node;
