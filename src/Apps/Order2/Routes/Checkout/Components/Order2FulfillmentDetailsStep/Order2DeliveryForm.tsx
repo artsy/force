@@ -1,4 +1,4 @@
-import { Button, Checkbox, Flex, Spacer, Text } from "@artsy/palette"
+import { Button, Flex, Spacer, Text } from "@artsy/palette"
 import {
   AddressFormFields,
   addressFormFieldsValidator,
@@ -11,10 +11,9 @@ interface Order2DeliveryFormProps {
   order: any
 }
 
-const validationSchema = yup.object().shape({
-  ...addressFormFieldsValidator({ withPhoneNumber: true }),
-  saveAddress: yup.boolean(),
-})
+const validationSchema = yup
+  .object()
+  .shape(addressFormFieldsValidator({ withPhoneNumber: true }))
 
 export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = () => {
   // Placeholders
@@ -49,15 +48,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = () => {
         {formikContext => (
           <Flex flexDirection={"column"} mb={2}>
             <AddressFormFields withPhoneNumber />
-            <Spacer y={2} />
-            <Checkbox
-              onSelect={selected => {
-                formikContext.setFieldValue("saveAddress", selected)
-              }}
-              selected={formikContext.values.saveAddress}
-            >
-              <Text variant="xs">Save shipping address for later use</Text>
-            </Checkbox>
             <Spacer y={4} />
             <Button type="submit" onClick={() => formikContext.handleSubmit()}>
               See Shipping Methods
