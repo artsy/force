@@ -64,14 +64,15 @@ export const Order2CheckoutContextProvider: React.FC<
 > = ({ order, children }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
 
-  const initialState: CheckoutState = useMemo(
-    () => initialStateForOrder(orderData),
-    [orderData],
-  )
+  const context = useBuildCheckoutContext(orderData)
 
-  const { state, actions } = useCheckoutActions(initialState)
-  const { expressCheckoutPaymentMethods, isLoading } = state
-  const { setLoadingError, setLoadingComplete } = actions
+  const {
+    expressCheckoutPaymentMethods,
+    isLoading,
+    setLoadingError,
+    setLoadingComplete,
+    setExpressCheckoutLoaded,
+  } = context
 
   const isExpressCheckoutLoaded = expressCheckoutPaymentMethods !== null
 
@@ -121,7 +122,7 @@ export const Order2CheckoutContextProvider: React.FC<
     // for now we simulate it taking a little longer than the minimum
     // (this useEffect is temporary)
     const expressCheckoutTimeout = setTimeout(() => {
-      actions.setExpressCheckoutLoaded([])
+      setExpressCheckoutLoaded([])
     }, 2000)
 
     return () => {
@@ -129,15 +130,8 @@ export const Order2CheckoutContextProvider: React.FC<
     }
   }, [])
 
-  const value: Order2CheckoutContextValue = useMemo(() => {
-    return {
-      ...state,
-      ...actions,
-    }
-  }, [state, actions])
-
   return (
-    <Order2CheckoutContext.Provider value={value}>
+    <Order2CheckoutContext.Provider value={context}>
       {children}
     </Order2CheckoutContext.Provider>
   )
@@ -170,57 +164,14 @@ const validateOrder = (order: Order2CheckoutContext_order$data) => {
   return
 }
 
-const initialStateForOrder = (order: Order2CheckoutContext_order$data) => {
-  const stepNamesInOrder = [
-    CheckoutStepName.FULFILLMENT_DETAILS,
-    CheckoutStepName.DELIVERY_OPTION,
-    CheckoutStepName.PAYMENT,
-    CheckoutStepName.CONFIRMATION,
-  ]
+const useBuildCheckoutContext = (
+  orderData: Order2CheckoutContext_order$data,
+): Order2CheckoutContextValue => {
+  const initialState: CheckoutState = useMemo(
+    () => initialStateForOrder(orderData),
+    [orderData],
+  )
 
-  if (order.mode === "OFFER") {
-    stepNamesInOrder.unshift(CheckoutStepName.OFFER_AMOUNT)
-  }
-
-  // For now, always start from step one, and hide the delivery option
-  // step immediately if the order is pickup
-  // TODO: We should probably either reset the order to step one on load
-  // or set the current step based on the order data at load time
-  const steps = stepNamesInOrder.map((stepName, index) => {
-    if (stepName === CheckoutStepName.DELIVERY_OPTION) {
-      return {
-        name: stepName,
-        state:
-          order.selectedFulfillmentOption?.type === "PICKUP"
-            ? CheckoutStepState.HIDDEN
-            : CheckoutStepState.UPCOMING,
-      }
-    }
-    return {
-      name: stepName,
-      state:
-        index === 0 ? CheckoutStepState.ACTIVE : CheckoutStepState.UPCOMING,
-    }
-  })
-
-  return {
-    isLoading: true,
-    loadingError: null,
-    expressCheckoutPaymentMethods: null,
-    activeFulfillmentDetailsTab: null,
-    steps,
-  }
-}
-
-interface UseCheckoutActionsValue {
-  state: CheckoutState
-  actions: CheckoutActions
-  // Actions only used by the useLoadCheckout hook
-}
-
-const useCheckoutActions = (
-  initialState: CheckoutState,
-): UseCheckoutActionsValue => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const setExpressCheckoutLoaded = useCallback(
@@ -323,8 +274,50 @@ const useCheckoutActions = (
   ])
 
   return {
-    state,
-    actions,
+    ...state,
+    ...actions,
+  }
+}
+
+const initialStateForOrder = (order: Order2CheckoutContext_order$data) => {
+  const stepNamesInOrder = [
+    CheckoutStepName.FULFILLMENT_DETAILS,
+    CheckoutStepName.DELIVERY_OPTION,
+    CheckoutStepName.PAYMENT,
+    CheckoutStepName.CONFIRMATION,
+  ]
+
+  if (order.mode === "OFFER") {
+    stepNamesInOrder.unshift(CheckoutStepName.OFFER_AMOUNT)
+  }
+
+  // For now, always start from step one, and hide the delivery option
+  // step immediately if the order is pickup
+  // TODO: We should probably either reset the order to step one on load
+  // or set the current step based on the order data at load time
+  const steps = stepNamesInOrder.map((stepName, index) => {
+    if (stepName === CheckoutStepName.DELIVERY_OPTION) {
+      return {
+        name: stepName,
+        state:
+          order.selectedFulfillmentOption?.type === "PICKUP"
+            ? CheckoutStepState.HIDDEN
+            : CheckoutStepState.UPCOMING,
+      }
+    }
+    return {
+      name: stepName,
+      state:
+        index === 0 ? CheckoutStepState.ACTIVE : CheckoutStepState.UPCOMING,
+    }
+  })
+
+  return {
+    isLoading: true,
+    loadingError: null,
+    expressCheckoutPaymentMethods: null,
+    activeFulfillmentDetailsTab: null,
+    steps,
   }
 }
 
