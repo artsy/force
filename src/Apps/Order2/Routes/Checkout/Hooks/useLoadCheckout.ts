@@ -1,4 +1,4 @@
-import type { CheckoutLoadingError } from "Apps/Order2/Routes/Checkout/CheckoutContext/utils"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import createLogger from "Utils/logger"
 import type { useLoadCheckout_order$key } from "__generated__/useLoadCheckout_order.graphql"
 import { every } from "lodash"
@@ -12,22 +12,18 @@ const MINIMUM_LOADING_MS = 1000
 
 interface useLoadCheckoutArguments {
   order: useLoadCheckout_order$key | null
-
-  setLoadingError: (error: CheckoutLoadingError | null) => void
-  setLoadingComplete: () => void
-  isExpressCheckoutLoaded: boolean
-  loadingError: CheckoutLoadingError | null
-  isLoading: boolean
 }
 
-export const useLoadCheckout = ({
-  order,
-  isExpressCheckoutLoaded,
-  isLoading,
-  setLoadingComplete,
-  setLoadingError,
-}: useLoadCheckoutArguments) => {
+export const useLoadCheckout = ({ order }: useLoadCheckoutArguments) => {
   const orderData = useFragment(FRAGMENT, order)
+  const {
+    isLoading,
+    expressCheckoutPaymentMethods,
+    setLoadingComplete,
+    setLoadingError,
+  } = useCheckoutContext()
+
+  const isExpressCheckoutLoaded = expressCheckoutPaymentMethods !== null
 
   const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
   const [orderValidated, setOrderValidated] = useState(false)

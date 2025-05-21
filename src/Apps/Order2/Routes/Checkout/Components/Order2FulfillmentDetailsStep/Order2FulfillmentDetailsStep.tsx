@@ -2,7 +2,7 @@ import { Box, Flex, Tab, Tabs, Text } from "@artsy/palette"
 import {
   CheckoutStepName,
   CheckoutStepState,
-} from "Apps/Order2/Routes/Checkout/CheckoutContext/utils"
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2DeliveryForm } from "Apps/Order2/Routes/Checkout/Components/Order2FulfillmentDetailsStep/Order2DeliveryForm"
 import { Order2FulfillmentDetailsCompletedView } from "Apps/Order2/Routes/Checkout/Components/Order2FulfillmentDetailsStep/Order2FulfillmentDetailsCompletedView"
 import { Order2PickupForm } from "Apps/Order2/Routes/Checkout/Components/Order2FulfillmentDetailsStep/Order2PickupForm"
@@ -26,12 +26,17 @@ export const Order2FulfillmentDetailsStep: React.FC<
     step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
   )?.state
 
-  // TODO: This is to see saved data coming through and will probably be
+  // TODO: This is to see saved data coming through and may be
   // promoted to some higher-level context/dispatch in the future
+  // Question: should this come from the context where step is?
   const savedFulfillmentDetails = orderData?.fulfillmentDetails
   const selectedFulfillmentOption = orderData?.selectedFulfillmentOption
 
   const fulfillmentOptions = orderData?.fulfillmentOptions
+
+  const isPickupAvailable = fulfillmentOptions?.some(
+    option => option.type === "PICKUP",
+  )
 
   return (
     <Flex
@@ -44,11 +49,11 @@ export const Order2FulfillmentDetailsStep: React.FC<
         <Order2FulfillmentDetailsCompletedView
           fulfillmentDetails={savedFulfillmentDetails}
           onClickEdit={() => editFulfillmentDetails()}
-          fulfillmentOption={selectedFulfillmentOption} // TODO: should this come from the context where step is?
+          fulfillmentOption={selectedFulfillmentOption}
         />
       </Box>
       <Box hidden={stepState !== CheckoutStepState.ACTIVE}>
-        {fulfillmentOptions?.some(option => option.type === "PICKUP") ? (
+        {isPickupAvailable ? (
           <Tabs
             data-testid="FulfillmentDetailsStepTabs"
             justifyContent="space-between"

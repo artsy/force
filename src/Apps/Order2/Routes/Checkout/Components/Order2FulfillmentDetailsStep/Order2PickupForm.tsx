@@ -34,10 +34,8 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
   order,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-  // TODO: This should always be present, fix the hook after we
-  // remove the dependency on the old route in the shared express
-  // checkout component
-  const { setFulfillmentDetailsComplete } = useCheckoutContext()!
+
+  const { setFulfillmentDetailsComplete } = useCheckoutContext()
 
   const fulfillmentOptions = orderData?.fulfillmentOptions
   // By the time we get here, this option should be available
@@ -93,7 +91,6 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
 
         setFulfillmentDetailsComplete({ isPickup: true })
       } catch (error) {
-        // TODO: Handle errors
         logger.error("Error while setting pickup details", error)
       }
     },

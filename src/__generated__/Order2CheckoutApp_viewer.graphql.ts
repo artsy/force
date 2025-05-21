@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1966f6ffd2e9f0570b2126b7ac8103e6>>
+ * @generated SignedSource<<6490b717df241a25f9fa410475c34eea>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,7 @@ export type Order2CheckoutApp_viewer$data = {
       }>;
       readonly internalID: string;
       readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutLoadingSkeleton_order" | "Order2CollapsibleOrderSummary_order" | "Order2FulfillmentDetailsStep_order" | "Order2ReviewStep_order" | "useLoadCheckout_order">;
-    } | null | undefined;
+    };
   } | null | undefined;
   readonly " $fragmentType": "Order2CheckoutApp_viewer";
 };
@@ -64,65 +64,69 @@ return {
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Variable",
-              "name": "id",
-              "variableName": "orderID"
-            }
-          ],
-          "concreteType": "Order",
-          "kind": "LinkedField",
-          "name": "order",
-          "plural": false,
-          "selections": [
-            (v0/*: any*/),
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "FulfillmentOption",
-              "kind": "LinkedField",
-              "name": "fulfillmentOptions",
-              "plural": true,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "type",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "Order2CollapsibleOrderSummary_order"
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "Order2FulfillmentDetailsStep_order"
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "Order2ReviewStep_order"
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "useLoadCheckout_order"
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "Order2CheckoutLoadingSkeleton_order"
-            }
-          ],
-          "storageKey": null
+          "kind": "RequiredField",
+          "field": {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Variable",
+                "name": "id",
+                "variableName": "orderID"
+              }
+            ],
+            "concreteType": "Order",
+            "kind": "LinkedField",
+            "name": "order",
+            "plural": false,
+            "selections": [
+              (v0/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "FulfillmentOption",
+                "kind": "LinkedField",
+                "name": "fulfillmentOptions",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "type",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "useLoadCheckout_order"
+              },
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "Order2CollapsibleOrderSummary_order"
+              },
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "Order2FulfillmentDetailsStep_order"
+              },
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "Order2ReviewStep_order"
+              },
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "Order2CheckoutLoadingSkeleton_order"
+              }
+            ],
+            "storageKey": null
+          },
+          "action": "NONE"
         },
         {
           "alias": null,
@@ -173,6 +177,6 @@ return {
 };
 })();
 
-(node as any).hash = "c4a1b2fe59fe4da3b2bacd462450146e";
+(node as any).hash = "d65f0f6da8be258934152862ecec3ed9";
 
 export default node;

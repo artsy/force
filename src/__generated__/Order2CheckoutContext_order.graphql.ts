@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b6a1d6ffb0bfebd9de86a71a04317ad4>>
+ * @generated SignedSource<<4ab2054aff608907f56544b0731d2be9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,6 @@ export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutContext_order$data = {
   readonly mode: OrderModeEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"useLoadCheckout_order">;
   readonly " $fragmentType": "Order2CheckoutContext_order";
 };
 export type Order2CheckoutContext_order$key = {
@@ -28,11 +27,6 @@ const node: ReaderFragment = {
   "name": "Order2CheckoutContext_order",
   "selections": [
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "useLoadCheckout_order"
-    },
-    {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
@@ -44,6 +38,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "42ac117f7edb61580b12bf99ab6a95f2";
+(node as any).hash = "aaca62e4dcab336c9b488877f7b19f6e";
 
 export default node;

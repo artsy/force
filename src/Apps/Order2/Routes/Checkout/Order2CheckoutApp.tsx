@@ -1,5 +1,6 @@
 import { Column, Flex, GridColumns, Stack, Text } from "@artsy/palette"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/utils"
+import { useLoadCheckout } from "Apps/Order2/Routes/Checkout/Hooks/useLoadCheckout"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutLoadingSkeleton"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
 import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/Order2FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
@@ -20,11 +21,13 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   const { isEigen } = useSystemContext()
 
   const data = useFragment(FRAGMENT, viewer)
-  const order = data.me?.order
+  const order = data.me?.order ?? null
 
-  // TODO: CTX is always present, but the hook needs to be updated after we can guarantee
-  // this from its usage in the shared express checkout
-  const { isLoading, steps } = useCheckoutContext()!
+  useLoadCheckout({
+    order,
+  })
+
+  const { isLoading, steps } = useCheckoutContext()
 
   const stepNames = steps?.map(step => step.name)
 
@@ -88,16 +91,17 @@ const FRAGMENT = graphql`
   fragment Order2CheckoutApp_viewer on Viewer
   @argumentDefinitions(orderID: { type: "ID!" }) {
     me {
-      order(id: $orderID) {
+      order(id: $orderID) @required(action: NONE) {
         internalID
         fulfillmentOptions {
           type
         }
+        ...useLoadCheckout_order
         ...Order2CollapsibleOrderSummary_order
         ...Order2FulfillmentDetailsStep_order
         ...Order2ReviewStep_order
-        ...useLoadCheckout_order
         ...Order2CheckoutLoadingSkeleton_order
+        ...useLoadCheckout_order
       }
       addressConnection(first: 10) {
         edges {

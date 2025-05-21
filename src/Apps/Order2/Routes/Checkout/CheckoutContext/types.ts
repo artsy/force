@@ -35,4 +35,6 @@ export interface CheckoutActions {
   ) => void
   setFulfillmentDetailsComplete: (args: { isPickup: boolean }) => void
   editFulfillmentDetails: () => void
+  setLoadingError: (error: CheckoutLoadingError | null) => void
+  setLoadingComplete: () => void
 }
