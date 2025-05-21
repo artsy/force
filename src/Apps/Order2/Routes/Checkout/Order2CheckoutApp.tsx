@@ -7,15 +7,12 @@ import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2R
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { ErrorPage } from "Components/ErrorPage"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import createLogger from "Utils/logger"
 import type { Order2CheckoutApp_viewer$key } from "__generated__/Order2CheckoutApp_viewer.graphql"
 import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 interface Order2CheckoutAppProps {
   viewer: Order2CheckoutApp_viewer$key
 }
-
-const logger = createLogger("Order2CheckoutApp.tsx")
 
 export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   viewer,
@@ -30,11 +27,6 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   const { isLoading, steps } = useCheckoutContext()!
 
   const stepNames = steps?.map(step => step.name)
-
-  logger.log(
-    { stepNames },
-    stepNames.includes(CheckoutStepName.DELIVERY_OPTION),
-  )
 
   if (!order) {
     return <ErrorPage code={404} message="Order not found" />

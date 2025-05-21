@@ -97,6 +97,9 @@ const initialStateForOrder = (order: Order2CheckoutContext_order$data) => {
     stepNamesInOrder.unshift(CheckoutStepName.OFFER_AMOUNT)
   }
 
+  // For now, always start from step one
+  // TODO: We should probably either reset the order to step one on load
+  // or set the current step based on the order data at load time
   const steps = stepNamesInOrder.map((stepName, index) => {
     return {
       name: stepName,
