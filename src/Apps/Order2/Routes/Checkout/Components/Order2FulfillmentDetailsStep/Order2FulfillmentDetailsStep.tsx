@@ -40,22 +40,20 @@ export const Order2FulfillmentDetailsStep: React.FC<
       backgroundColor="mono0"
       py={2}
     >
-      <Box
-        px={2}
-        display={stepState === CheckoutStepState.COMPLETED ? "block" : "none"}
-      >
+      <Box px={2} hidden={stepState !== CheckoutStepState.COMPLETED}>
         <Order2FulfillmentDetailsCompletedView
           fulfillmentDetails={savedFulfillmentDetails}
           onClickEdit={() => editFulfillmentDetails()}
           fulfillmentOption={selectedFulfillmentOption} // TODO: should this come from the context where step is?
         />
       </Box>
-      {fulfillmentOptions?.some(option => option.type === "PICKUP") ? (
-        <Box
-          data-testid="FulfillmentDetailsStepTabs"
-          display={stepState === CheckoutStepState.ACTIVE ? "block" : "none"}
-        >
-          <Tabs justifyContent="space-between" initialTabIndex={0}>
+      <Box hidden={stepState !== CheckoutStepState.ACTIVE}>
+        {fulfillmentOptions?.some(option => option.type === "PICKUP") ? (
+          <Tabs
+            data-testid="FulfillmentDetailsStepTabs"
+            justifyContent="space-between"
+            initialTabIndex={0}
+          >
             <Tab
               name={
                 <Text mx={50} variant="xs">
@@ -79,15 +77,12 @@ export const Order2FulfillmentDetailsStep: React.FC<
               </Box>
             </Tab>
           </Tabs>
-        </Box>
-      ) : (
-        <Box
-          px={2}
-          display={stepState === CheckoutStepState.ACTIVE ? "block" : "none"}
-        >
-          <Order2DeliveryForm order={orderData} />
-        </Box>
-      )}
+        ) : (
+          <Box px={2} hidden={stepState !== CheckoutStepState.ACTIVE}>
+            <Order2DeliveryForm order={orderData} />
+          </Box>
+        )}
+      </Box>
     </Flex>
   )
 }
