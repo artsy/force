@@ -1,5 +1,5 @@
 import { Column, Flex, GridColumns, Stack, Text } from "@artsy/palette"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutContext"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/utils"
 import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutLoadingSkeleton"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
 import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/Order2FulfillmentDetailsStep/Order2FulfillmentDetailsStep"

@@ -1,4 +1,4 @@
-import { Order2CheckoutContext } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutContext"
+import { Order2CheckoutContext } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import { useContext } from "react"
 
 export function useCheckoutContext() {

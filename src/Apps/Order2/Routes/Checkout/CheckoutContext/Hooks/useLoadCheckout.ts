@@ -1,4 +1,4 @@
-import type { CheckoutLoadingError } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutContext"
+import type { CheckoutLoadingError } from "Apps/Order2/Routes/Checkout/CheckoutContext/utils"
 import createLogger from "Utils/logger"
 import type { useLoadCheckout_order$key } from "__generated__/useLoadCheckout_order.graphql"
 import { every } from "lodash"

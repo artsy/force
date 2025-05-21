@@ -1,4 +1,4 @@
-import { Order2CheckoutContextProvider } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutContext"
+import { Order2CheckoutContextProvider } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import { Order2CheckoutApp } from "Apps/Order2/Routes/Checkout/Order2CheckoutApp"
 import { ErrorPage } from "Components/ErrorPage"
 import type { Order2CheckoutRoute_viewer$key } from "__generated__/Order2CheckoutRoute_viewer.graphql"

@@ -2,7 +2,7 @@ import { Box, Flex, Tab, Tabs, Text } from "@artsy/palette"
 import {
   CheckoutStepName,
   CheckoutStepState,
-} from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutContext"
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/utils"
 import { Order2DeliveryForm } from "Apps/Order2/Routes/Checkout/Components/Order2FulfillmentDetailsStep/Order2DeliveryForm"
 import { Order2FulfillmentDetailsCompletedView } from "Apps/Order2/Routes/Checkout/Components/Order2FulfillmentDetailsStep/Order2FulfillmentDetailsCompletedView"
 import { Order2PickupForm } from "Apps/Order2/Routes/Checkout/Components/Order2FulfillmentDetailsStep/Order2PickupForm"
@@ -65,6 +65,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
       </Box>
       {fulfillmentOptions?.some(option => option.type === "PICKUP") ? (
         <Box
+          data-testid="FulfillmentDetailsStepTabs"
           display={stepState === CheckoutStepState.ACTIVE ? "block" : "none"}
         >
           <Tabs justifyContent="space-between" initialTabIndex={0}>

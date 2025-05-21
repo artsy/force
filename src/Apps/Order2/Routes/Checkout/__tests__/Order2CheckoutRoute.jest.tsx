@@ -1,4 +1,4 @@
-import { act, screen, waitFor } from "@testing-library/react"
+import { act, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -77,6 +77,7 @@ describe("Order2CheckoutRoute", () => {
       const testIDs = {
         phoneCountryPicker: "country-picker",
         fulfillmentDetailsStep: "FulfillmentDetailsStep",
+        fulfillmentDetailsStepTabs: "FulfillmentDetailsStepTabs",
         pickupDetailsForm: "PickupDetailsForm",
         // Use with screen.getByRole
         phoneCountryPickerListRole: "listbox",
@@ -256,8 +257,12 @@ describe("Order2CheckoutRoute", () => {
         act(() => {
           userEvent.click(screen.getByText("Edit"))
         })
+
+        const pickupTab = within(
+          screen.getByTestId(testIDs.fulfillmentDetailsStepTabs),
+        ).getByText("Pickup")
         act(() => {
-          userEvent.click(screen.getByText("Pickup"))
+          userEvent.click(pickupTab)
         })
 
         expect(screen.getByText("Free pickup")).toBeInTheDocument()
