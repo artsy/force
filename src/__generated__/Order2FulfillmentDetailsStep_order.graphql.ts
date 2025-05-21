@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<17f99b8584ad2033779130c8a2331353>>
+ * @generated SignedSource<<90289524244860e129aeb7420336cf4c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,7 @@ export type Order2FulfillmentDetailsStep_order$data = {
     readonly region: string | null | undefined;
   } | null | undefined;
   readonly fulfillmentOptions: ReadonlyArray<{
+    readonly selected: boolean | null | undefined;
     readonly type: FulfillmentOptionTypeEnum;
   }>;
   readonly id: string;
@@ -42,15 +43,13 @@ export type Order2FulfillmentDetailsStep_order$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "type",
-    "storageKey": null
-  }
-];
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "type",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -168,7 +167,9 @@ return {
       "kind": "LinkedField",
       "name": "selectedFulfillmentOption",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": [
+        (v0/*: any*/)
+      ],
       "storageKey": null
     },
     {
@@ -178,7 +179,16 @@ return {
       "kind": "LinkedField",
       "name": "fulfillmentOptions",
       "plural": true,
-      "selections": (v0/*: any*/),
+      "selections": [
+        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "selected",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     }
   ],
@@ -187,6 +197,6 @@ return {
 };
 })();
 
-(node as any).hash = "69b148de994636f51d8854642c58bb60";
+(node as any).hash = "b2c42081bf3205e8ee12fe37dd2e7491";
 
 export default node;

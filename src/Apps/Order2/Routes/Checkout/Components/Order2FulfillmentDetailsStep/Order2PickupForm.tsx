@@ -7,6 +7,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useSetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useSetOrderFulfillmentOptionMutation"
 import { useSetOrderPickupDetailsMutation } from "Apps/Order2/Routes/Checkout/Mutations/useSetOrderPickupDetailsMutation"
 import { richPhoneValidators } from "Components/Address/utils"
@@ -33,6 +34,9 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
   order,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
+
+  const { setFulfillmentDetailsComplete } = useCheckoutContext()
+
   const fulfillmentOptions = orderData?.fulfillmentOptions
   // By the time we get here, this option should be available
   const pickupFulfillmentOption = fulfillmentOptions?.find(
@@ -84,8 +88,9 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
         validateAndExtractOrderResponse(
           setOrderPickupDetailsResult.updateOrderShippingAddress?.orderOrError,
         )
+
+        setFulfillmentDetailsComplete({ isPickup: true })
       } catch (error) {
-        // TODO: Handle errors
         logger.error("Error while setting pickup details", error)
       }
     },
@@ -94,6 +99,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
       setOrderPickupDetails,
       orderData.internalID,
       pickupFulfillmentOption,
+      setFulfillmentDetailsComplete,
     ],
   )
 
@@ -102,12 +108,13 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
       ? orderData.fulfillmentDetails
       : null
 
-  const existingCountryCode = existingPickupValues?.phoneNumber?.countryCode
+  const existingRegionCode = existingPickupValues?.phoneNumber?.regionCode
+
   const initialCountryOptionFromExisting =
-    existingCountryCode &&
+    existingRegionCode &&
     phoneCountryOptions.find(
       option =>
-        option.value.toLowerCase() === existingCountryCode?.toLowerCase(),
+        option.value.toLowerCase() === existingRegionCode?.toLowerCase(),
     )?.value
 
   const initialValues = !!(
