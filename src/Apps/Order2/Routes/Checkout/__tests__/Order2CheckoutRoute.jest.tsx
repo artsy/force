@@ -257,6 +257,8 @@ describe("Order2CheckoutRoute", () => {
           },
         })
 
+        expect(screen.queryByText("Shipping Method")).not.toBeInTheDocument()
+
         act(() => {
           userEvent.click(screen.getByText("Edit"))
         })
