@@ -1,9 +1,8 @@
 import type {
-  CheckoutActions,
   CheckoutLoadingError,
-  CheckoutState,
   CheckoutStep,
   ExpressCheckoutPaymentMethod,
+  FulfillmentDetailsTab,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutStepName,
@@ -14,6 +13,7 @@ import type {
   Order2CheckoutContext_order$data,
   Order2CheckoutContext_order$key,
 } from "__generated__/Order2CheckoutContext_order.graphql"
+import { every } from "lodash"
 import type React from "react"
 import {
   createContext,
@@ -21,10 +21,33 @@ import {
   useEffect,
   useMemo,
   useReducer,
+  useState,
 } from "react"
 import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2CheckoutContext.tsx")
+const MINIMUM_LOADING_MS = 1000
+
+interface CheckoutState {
+  isLoading: boolean
+  loadingError: CheckoutLoadingError | null
+  expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
+  steps: CheckoutStep[]
+  activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
+}
+
+interface CheckoutActions {
+  setActiveFulfillmentDetailsTab: (
+    activeFulfillmentDetailsTab: FulfillmentDetailsTab | null,
+  ) => void
+  setExpressCheckoutLoaded: (
+    availablePaymentMethods: ExpressCheckoutPaymentMethod[],
+  ) => void
+  setFulfillmentDetailsComplete: (args: { isPickup: boolean }) => void
+  editFulfillmentDetails: () => void
+  setLoadingError: (error: CheckoutLoadingError | null) => void
+  setLoadingComplete: () => void
+}
 
 export type Order2CheckoutContextValue = CheckoutState & CheckoutActions
 
@@ -47,6 +70,50 @@ export const Order2CheckoutContextProvider: React.FC<
   )
 
   const { state, actions } = useCheckoutActions(initialState)
+  const { expressCheckoutPaymentMethods, isLoading } = state
+  const { setLoadingError, setLoadingComplete } = actions
+
+  const isExpressCheckoutLoaded = expressCheckoutPaymentMethods !== null
+
+  const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
+  const [orderValidated, setOrderValidated] = useState(false)
+
+  const checks = [minimumLoadingPassed, orderValidated, isExpressCheckoutLoaded]
+
+  // Validate order and get into good initial checkout state on load
+  // - artwork version match
+  // - any resetting
+  useEffect(() => {
+    if (orderValidated || !orderData) {
+      return
+    }
+
+    try {
+      validateOrder(orderData)
+      setOrderValidated(true)
+    } catch (error) {
+      logger.error("Error validating order: ", error.message)
+      setLoadingError(error.message)
+    }
+  }, [orderData, orderValidated, setLoadingError])
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setMinimumLoadingPassed(true)
+    }, MINIMUM_LOADING_MS)
+    return () => clearTimeout(timeout)
+  }, [])
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: one-time effect
+  useEffect(() => {
+    if (!isLoading) {
+      return
+    }
+
+    if (checks.every(Boolean)) {
+      setLoadingComplete()
+    }
+  }, [...checks])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: one-time effect
   useEffect(() => {
@@ -79,8 +146,26 @@ export const Order2CheckoutContextProvider: React.FC<
 const ORDER_FRAGMENT = graphql`
   fragment Order2CheckoutContext_order on Order {
     mode
+    lineItems {
+      artworkVersion {
+        internalID
+      }
+    }
   }
 `
+
+const validateOrder = (order: Order2CheckoutContext_order$data) => {
+  const hasLineItemsWithData =
+    order.lineItems.length &&
+    every(order.lineItems, lineItem => {
+      return !!lineItem?.artworkVersion?.internalID
+    })
+
+  if (!hasLineItemsWithData) {
+    throw new Error("missing_line_item_data")
+  }
+  return
+}
 
 const initialStateForOrder = (order: Order2CheckoutContext_order$data) => {
   const stepNamesInOrder = [
@@ -108,6 +193,7 @@ const initialStateForOrder = (order: Order2CheckoutContext_order$data) => {
     isLoading: true,
     loadingError: null,
     expressCheckoutPaymentMethods: null,
+    activeFulfillmentDetailsTab: null,
     steps,
   }
 }
@@ -133,6 +219,18 @@ const useCheckoutActions = (
       }
     },
     [state.isLoading, state.expressCheckoutPaymentMethods],
+  )
+
+  const setActiveFulfillmentDetailsTab = useCallback(
+    (activeFulfillmentDetailsTab: "DELIVERY" | "PICKUP" | null) => {
+      if (state.activeFulfillmentDetailsTab !== activeFulfillmentDetailsTab) {
+        dispatch({
+          type: "SET_ACTIVE_FULFILLMENT_DETAILS_TAB",
+          payload: { activeFulfillmentDetailsTab },
+        })
+      }
+    },
+    [state.activeFulfillmentDetailsTab],
   )
 
   // This used only by the useLoadCheckout hook
@@ -194,16 +292,18 @@ const useCheckoutActions = (
 
   const actions = useMemo(() => {
     return {
+      editFulfillmentDetails,
+      setActiveFulfillmentDetailsTab,
       setExpressCheckoutLoaded,
       setFulfillmentDetailsComplete,
-      editFulfillmentDetails,
       setLoadingError,
       setLoadingComplete,
     }
   }, [
+    editFulfillmentDetails,
+    setActiveFulfillmentDetailsTab,
     setExpressCheckoutLoaded,
     setFulfillmentDetailsComplete,
-    editFulfillmentDetails,
     setLoadingError,
     setLoadingComplete,
   ])
@@ -234,6 +334,10 @@ type Action =
     }
   | {
       type: "EDIT_FULFILLMENT_DETAILS"
+    }
+  | {
+      type: "SET_ACTIVE_FULFILLMENT_DETAILS_TAB"
+      payload: { activeFulfillmentDetailsTab: "DELIVERY" | "PICKUP" | null }
     }
 
 const reducer = (state: CheckoutState, action: Action): CheckoutState => {

@@ -22,19 +22,4 @@ export type CheckoutLoadingError = "missing_line_item_data"
 
 export type ExpressCheckoutPaymentMethod = "applePay" | "googlePay"
 
-export interface CheckoutState {
-  isLoading: boolean
-  loadingError: CheckoutLoadingError | null
-  expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
-  steps: CheckoutStep[]
-}
-
-export interface CheckoutActions {
-  setExpressCheckoutLoaded: (
-    availablePaymentMethods: ExpressCheckoutPaymentMethod[],
-  ) => void
-  setFulfillmentDetailsComplete: (args: { isPickup: boolean }) => void
-  editFulfillmentDetails: () => void
-  setLoadingError: (error: CheckoutLoadingError | null) => void
-  setLoadingComplete: () => void
-}
+export type FulfillmentDetailsTab = "DELIVERY" | "PICKUP"

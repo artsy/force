@@ -1,5 +1,4 @@
 import { Column, Flex, GridColumns, Stack, Text } from "@artsy/palette"
-import { useLoadCheckout } from "Apps/Order2/Routes/Checkout/Hooks/useLoadCheckout"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutLoadingSkeleton"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
@@ -23,13 +22,13 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   const data = useFragment(FRAGMENT, viewer)
   const order = data.me?.order ?? null
 
-  useLoadCheckout({
-    order,
-  })
-
-  const { isLoading, steps } = useCheckoutContext()
+  const { isLoading, steps, activeFulfillmentDetailsTab } = useCheckoutContext()
 
   const stepNames = steps?.map(step => step.name)
+
+  const showDeliveryOptionStep =
+    stepNames?.includes(CheckoutStepName.DELIVERY_OPTION) ||
+    activeFulfillmentDetailsTab === "DELIVERY"
 
   if (!order) {
     return <ErrorPage code={404} message="Order not found" />
@@ -57,7 +56,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
             <Order2FulfillmentDetailsStep order={order} />
 
             {/* Shipping method Step */}
-            {stepNames.includes(CheckoutStepName.DELIVERY_OPTION) && (
+            {showDeliveryOptionStep && (
               <Flex flexDirection="column" backgroundColor="mono0" p={2}>
                 <Text variant="sm-display" fontWeight="medium" color="mono100">
                   Shipping Method
@@ -96,12 +95,10 @@ const FRAGMENT = graphql`
         fulfillmentOptions {
           type
         }
-        ...useLoadCheckout_order
         ...Order2CollapsibleOrderSummary_order
         ...Order2FulfillmentDetailsStep_order
         ...Order2ReviewStep_order
         ...Order2CheckoutLoadingSkeleton_order
-        ...useLoadCheckout_order
       }
       addressConnection(first: 10) {
         edges {
