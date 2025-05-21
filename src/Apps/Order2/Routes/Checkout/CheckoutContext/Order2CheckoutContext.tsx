@@ -374,11 +374,14 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
       return {
         ...state,
         steps: state.steps.reduce((acc, current) => {
-          const alreadyPassedThisStep = acc
+          const isAfterFulfillmentDetailsStep = acc
             .map(step => step.name)
             .includes(CheckoutStepName.FULFILLMENT_DETAILS)
 
-          if (alreadyPassedThisStep) {
+          if (
+            isAfterFulfillmentDetailsStep &&
+            current.state !== CheckoutStepState.HIDDEN
+          ) {
             return [
               ...acc,
               {
