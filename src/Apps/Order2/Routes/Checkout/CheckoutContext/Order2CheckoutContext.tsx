@@ -342,6 +342,11 @@ type Action =
 
 const reducer = (state: CheckoutState, action: Action): CheckoutState => {
   switch (action.type) {
+    case "SET_ACTIVE_FULFILLMENT_DETAILS_TAB":
+      return {
+        ...state,
+        activeFulfillmentDetailsTab: action.payload.activeFulfillmentDetailsTab,
+      }
     case "SET_EXPRESS_CHECKOUT_LOADED":
       return {
         ...state,
