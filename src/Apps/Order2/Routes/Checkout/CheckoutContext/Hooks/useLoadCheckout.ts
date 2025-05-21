@@ -78,7 +78,6 @@ export const useLoadCheckout = ({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: one-time effect
   useEffect(() => {
-    logger.log({ isLoading, checks })
     if (!isLoading) {
       return
     }

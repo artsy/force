@@ -31,19 +31,6 @@ export const Order2FulfillmentDetailsStep: React.FC<
   const savedFulfillmentDetails = orderData?.fulfillmentDetails
   const selectedFulfillmentOption = orderData?.selectedFulfillmentOption
 
-  // // FIXME: If you edit your saved number but don't change it,
-  // // it doesn't trigger the step back to complete.
-  // // Solve this when we implement the real state system
-  // useEffect(() => {
-  //   if (savedFulfillmentDetails && selectedFulfillmentOption) {
-  //     setFulfillmentDetailsComplete(selectedFulfillmentOption.type === "PICKUP")
-  //   }
-  // }, [
-  //   savedFulfillmentDetails,
-  //   setFulfillmentDetailsComplete,
-  //   selectedFulfillmentOption,
-  // ])
-
   const fulfillmentOptions = orderData?.fulfillmentOptions
 
   return (
