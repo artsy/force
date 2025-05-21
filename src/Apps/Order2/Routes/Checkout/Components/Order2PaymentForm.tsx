@@ -93,7 +93,6 @@ const PaymentFormContent = ({ setConfirmationTokenID }) => {
   const [errorMessage, setErrorMessage] = useState()
   const [loading, setLoading] = useState(false)
 
-  // const [confirmationTokenID, setConfirmationTokenID] = useState()
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("new")
 
   const paymentElementOptions: StripePaymentElementOptions = {
