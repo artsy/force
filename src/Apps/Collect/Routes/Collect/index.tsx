@@ -1,4 +1,4 @@
-import { Box, Flex, Separator, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Separator, Spacer, Text, color } from "@artsy/palette"
 import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
 import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
 import { ArtworkFilter } from "Components/ArtworkFilter"
@@ -20,6 +20,7 @@ import type { CollectArtworkFilterQuery } from "__generated__/CollectArtworkFilt
 import type { Collect_marketingCollections$data } from "__generated__/Collect_marketingCollections.graphql"
 import type { Match, Router } from "found"
 import type * as React from "react"
+import { useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { type Color, type Medium, getMetadata } from "./Utils/getMetadata"
 
@@ -38,20 +39,14 @@ export const CollectApp: React.FC<React.PropsWithChildren<CollectAppProps>> = ({
 
   const medium = params?.medium as Medium
   const color = params?.color as Color
-  const { description, title } = getMetadata({
-    medium,
-    color,
-  })
 
-  let canonicalHref
+  const { description, title, breadcrumbTitle } = getMetadata({ medium, color })
 
-  if (medium) {
-    canonicalHref = `collect/${medium}`
-  } else if (color) {
-    canonicalHref = `collect/color/${color}`
-  } else {
-    canonicalHref = "collect"
-  }
+  const canonicalHref = useMemo(() => {
+    if (medium) return `collect/${medium}`
+    if (color) return `collect/color/${color}`
+    return "collect"
+  }, [medium, color])
 
   return (
     <>
@@ -69,7 +64,13 @@ export const CollectApp: React.FC<React.PropsWithChildren<CollectAppProps>> = ({
             flexDirection={["column", "row"]}
           >
             <Text variant={["lg-display", "xl"]}>
-              <h1>Collect art and design online</h1>
+              <h1>
+                Collect{" "}
+                {breadcrumbTitle
+                  ? breadcrumbTitle.toLowerCase()
+                  : "art and design"}{" "}
+                online
+              </h1>
             </Text>
             <Spacer y={1} />
             <Text variant="sm-display">
