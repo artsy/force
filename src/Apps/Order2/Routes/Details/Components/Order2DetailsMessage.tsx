@@ -1,4 +1,4 @@
-import { Box, Flex, Link, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2DetailsMessage_order$key } from "__generated__/Order2DetailsMessage_order.graphql"
 import { graphql, useFragment } from "react-relay"
