@@ -91,6 +91,7 @@ export const WireTransferInfo: React.FC<WireTransferInfoProps> = ({
       <Spacer y={1} />
       <Stack gap={0}>
         <Text variant="sm">Account name: Art.sy Inc.</Text>
+        <Text variant="sm">Account number: {details.accountNumber}</Text>
         {details.iban && <Text variant="sm">IBAN: {details.iban}</Text>}
         {details.routingNumber && (
           <Text variant="sm">Routing number: {details.routingNumber}</Text>
@@ -100,14 +101,6 @@ export const WireTransferInfo: React.FC<WireTransferInfoProps> = ({
           <Text variant="sm">Sort Code: {details.sortCode}</Text>
         )}
       </Stack>
-      <Text variant="sm">
-        {details.sortCode && (
-          <>
-            <br />
-            Sort Code: {details.sortCode}
-          </>
-        )}
-      </Text>
       <Spacer y={4} />
       <Text variant="sm" fontWeight="bold">
         Bank address
