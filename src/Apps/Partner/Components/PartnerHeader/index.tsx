@@ -40,8 +40,6 @@ export const PartnerHeader: React.FC<
   const canFollow =
     partner && partner.type !== "Auction House" && !!partner.profile
 
-  const hasFollows = partner.profile?.counts?.follows >= 500
-
   return (
     <>
       <Jump id="PartnerHeader" />
@@ -103,13 +101,13 @@ export const PartnerHeader: React.FC<
 
               {!!partner?.profile?.counts?.follows && (
                 <FollowButtonInlineCount display={["block", "none"]}>
-                  {hasFollows &&
+                  {partner.hasVisibleFollowsCount &&
                     formatFollowerCount(partner.profile.counts.follows)}
                 </FollowButtonInlineCount>
               )}
             </FollowButtonContainer>
 
-            {hasFollows && (
+            {partner.hasVisibleFollowsCount && (
               <Text
                 variant="xs"
                 color="mono60"
@@ -138,6 +136,7 @@ export const PartnerHeaderFragmentContainer = createFragmentContainer(
         name
         type
         slug
+        hasVisibleFollowsCount
         profile {
           counts {
             follows

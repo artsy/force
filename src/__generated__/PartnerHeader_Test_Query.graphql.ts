@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fbeaa8af1b04ca414ffc7b4013f6fdda>>
+ * @generated SignedSource<<9a7c000b09efa7b58552eb2050a2a152>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type PartnerHeader_Test_Query$data = {
 };
 export type PartnerHeader_Test_Query$rawResponse = {
   readonly partner: {
+    readonly hasVisibleFollowsCount: boolean;
     readonly id: string;
     readonly locations: {
       readonly edges: ReadonlyArray<{
@@ -145,6 +146,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "hasVisibleFollowsCount",
             "storageKey": null
           },
           {
@@ -297,7 +305,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "524ed91e14607eab719c86e65873356c",
+    "cacheID": "b07a8f404b8fc747c3bc75a7dbba83d3",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -306,6 +314,12 @@ return {
           "nullable": true,
           "plural": false,
           "type": "Partner"
+        },
+        "partner.hasVisibleFollowsCount": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
         },
         "partner.id": (v2/*: any*/),
         "partner.locations": {
@@ -375,7 +389,7 @@ return {
     },
     "name": "PartnerHeader_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  profile {\n    counts {\n      follows\n    }\n    internalID\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  hasVisibleFollowsCount\n  profile {\n    counts {\n      follows\n    }\n    internalID\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,18 +1,13 @@
-import {
-  HeaderImage,
-  PartnerHeaderFragmentContainer as PartnerHeader,
-} from "Apps/Partner/Components/PartnerHeader"
-import { PartnerHeaderAddress } from "Apps/Partner/Components/PartnerHeader/PartnerHeaderAddress"
-import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { RouterLink } from "System/Components/RouterLink"
+import { PartnerHeaderFragmentContainer as PartnerHeader } from "Apps/Partner/Components/PartnerHeader"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { PartnerHeader_Test_Query } from "__generated__/PartnerHeader_Test_Query.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("Components/RouteTabs")
 
-const { getWrapper } = setupTestWrapper<PartnerHeader_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<PartnerHeader_Test_Query>({
   Component: ({ partner }: any) => {
     return <PartnerHeader partner={partner} />
   },
@@ -27,7 +22,7 @@ const { getWrapper } = setupTestWrapper<PartnerHeader_Test_Query>({
 
 describe("PartnerHeader", () => {
   it("displays basic information about partner profile", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Partner: () => ({
         name: "White cube",
         profile: {
@@ -50,17 +45,16 @@ describe("PartnerHeader", () => {
         },
       }),
     })
-    const text = wrapper.text()
 
-    expect(wrapper.find(HeaderImage).length).toEqual(1)
-    expect(wrapper.find(HeaderImage).prop("src")).toEqual("/img.png")
-    expect(wrapper.find(FollowProfileButtonQueryRenderer).length).toEqual(1)
-    expect(text).toContain("White cube")
-    expect(text).toContain("Jeddah")
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("src", "/img.png")
+    expect(screen.getByText("White cube")).toBeInTheDocument()
+    expect(screen.getByText("Jeddah")).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: /follow/i })).toBeInTheDocument()
   })
 
   it("displays unique address value", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Partner: () => ({
         locations: {
           totalCount: 4,
@@ -90,14 +84,12 @@ describe("PartnerHeader", () => {
       }),
     })
 
-    const Address = wrapper.find(PartnerHeaderAddress)
-
-    expect(Address.length).toEqual(1)
-    expect(Address.text()).toContain("Jeddah")
+    expect(screen.getByText("Jeddah")).toBeInTheDocument()
+    expect(screen.getAllByText("Jeddah")).toHaveLength(1)
   })
 
   it("displays few addresses", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Partner: () => ({
         locations: {
           totalCount: 4,
@@ -127,16 +119,13 @@ describe("PartnerHeader", () => {
       }),
     })
 
-    const Address = wrapper.find(PartnerHeaderAddress)
-
-    expect(Address.length).toEqual(1)
-    expect(Address.text()).toContain(
-      "Jeddah\u00a0\u00a0•\u00a0 New York\u00a0\u00a0•\u00a0 San Francisco",
-    )
+    expect(screen.getByText("Jeddah")).toBeInTheDocument()
+    expect(screen.getByText("New York")).toBeInTheDocument()
+    expect(screen.getByText("San Francisco")).toBeInTheDocument()
   })
 
-  it("does not display address", () => {
-    const { wrapper } = getWrapper({
+  it("does not display address with null city", () => {
+    renderWithRelay({
       Partner: () => ({
         name: "White cube",
         locations: {
@@ -152,11 +141,13 @@ describe("PartnerHeader", () => {
       }),
     })
 
-    expect(wrapper.find(PartnerHeaderAddress).text()).toContain("")
+    expect(
+      screen.queryByText(/Jeddah|New York|San Francisco/),
+    ).not.toBeInTheDocument()
   })
 
   it("displays links to partner profile page", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Partner: () => ({
         name: "White cube",
         slug: "white-cube",
@@ -170,26 +161,18 @@ describe("PartnerHeader", () => {
       }),
     })
 
-    const PartnerNameLink = wrapper
-      .find(RouterLink)
-      .filterWhere(t => t.text() === "White cube")
+    const partnerNameLinks = screen.getAllByRole("link", { name: "White cube" })
+    partnerNameLinks.forEach(partnerNameLink =>
+      expect(partnerNameLink).toHaveAttribute("href", "/partner/white-cube"),
+    )
 
-    const PartnerIconLink = wrapper
-      .find(RouterLink)
-      .filterWhere(
-        c =>
-          c.children().find(HeaderImage).length > 0 &&
-          c.children().find(HeaderImage).prop("src") === "/img.png",
-      )
-
-    expect(PartnerNameLink.length).toEqual(1)
-    expect(PartnerNameLink.first().prop("to")).toEqual("/partner/white-cube")
-    expect(PartnerIconLink.length).toEqual(1)
-    expect(PartnerIconLink.first().prop("to")).toEqual("/partner/white-cube")
+    const image = screen.getByRole("img")
+    const imageLink = image.closest("a")
+    expect(imageLink).toHaveAttribute("href", "/partner/white-cube")
   })
 
   it("doesn't display profile address if there is no info", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Partner: () => ({
         locations: {
           totalCount: 0,
@@ -197,43 +180,50 @@ describe("PartnerHeader", () => {
       }),
     })
 
-    expect(wrapper.find(PartnerHeaderAddress).length).toEqual(0)
+    expect(
+      screen.queryByText(/Jeddah|New York|San Francisco/),
+    ).not.toBeInTheDocument()
   })
 
   it("doesn't display profile icon if there is no info", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Partner: () => ({
         profile: null,
       }),
     })
 
-    expect(wrapper.find(HeaderImage).length).toEqual(0)
+    expect(screen.queryByRole("img")).not.toBeInTheDocument()
   })
 
   it("doesn't display follow button if there is no info", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Partner: () => ({
         profile: null,
       }),
     })
 
-    expect(wrapper.find(FollowProfileButtonQueryRenderer).length).toEqual(0)
+    expect(
+      screen.queryByRole("button", { name: /follow/i }),
+    ).not.toBeInTheDocument()
   })
 
   it("doesn't display follow button if partner type is equal to Auction House", () => {
-    const { wrapper } = getWrapper({
+    renderWithRelay({
       Partner: () => ({
         type: "Auction House",
       }),
     })
 
-    expect(wrapper.find(FollowProfileButtonQueryRenderer).length).toEqual(0)
+    expect(
+      screen.queryByRole("button", { name: /follow/i }),
+    ).not.toBeInTheDocument()
   })
 
-  it("doesn't display the follow count", () => {
-    const { wrapper } = getWrapper({
+  it("doesn't display the follow count when it's below the threshold", () => {
+    renderWithRelay({
       Partner: () => ({
         name: "White cube",
+        hasVisibleFollowsCount: false,
         profile: {
           counts: {
             follows: 100,
@@ -242,13 +232,14 @@ describe("PartnerHeader", () => {
       }),
     })
 
-    expect(wrapper.text()).not.toContain("100 Followers")
+    expect(screen.queryByText("100 Followers")).not.toBeInTheDocument()
   })
 
-  it("displays the follow count", () => {
-    const { wrapper } = getWrapper({
+  it("displays the follow count when it's above the threshold", () => {
+    renderWithRelay({
       Partner: () => ({
         name: "White cube",
+        hasVisibleFollowsCount: true,
         profile: {
           counts: {
             follows: 500,
@@ -257,6 +248,6 @@ describe("PartnerHeader", () => {
       }),
     })
 
-    expect(wrapper.text()).toContain("500 Followers")
+    expect(screen.getByText("500 Followers")).toBeInTheDocument()
   })
 })
