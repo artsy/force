@@ -87,6 +87,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
      */
     "User-Agent": userAgent ? `${userAgent}; ${USER_AGENT}` : USER_AGENT,
     "x-original-session-id": getENV("SESSION_ID"),
+    "x-xapp-token": getENV("ARTSY_XAPP_TOKEN"),
   }
 
   let timeZone
