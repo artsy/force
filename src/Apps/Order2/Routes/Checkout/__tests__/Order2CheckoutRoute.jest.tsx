@@ -116,6 +116,8 @@ describe("Order2CheckoutRoute", () => {
         const { mockResolveLastOperation } =
           await renderWithLoadingComplete(props)
 
+        expect(screen.queryByText("Shipping Method")).toBeVisible()
+
         // Click pickup tab
         expect(screen.queryByText("Free pickup")).not.toBeInTheDocument()
         act(() => {
@@ -224,6 +226,7 @@ describe("Order2CheckoutRoute", () => {
 
         // Verify that the step is complete
         await screen.findByText(pickupCompleteMessage)
+        expect(screen.queryByText("Shipping Method")).not.toBeInTheDocument()
       })
 
       it("shows the pickup details pre-filled if they exist", async () => {

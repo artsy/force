@@ -61,7 +61,6 @@ export const Order2FulfillmentDetailsStep: React.FC<
             initialTabIndex={0}
             onChange={tabInfo => {
               const { tabIndex } = tabInfo ?? {}
-              console.log("**", tabInfo)
               if (tabIndex === 1) {
                 setActiveFulfillmentDetailsTab("PICKUP")
               } else {
