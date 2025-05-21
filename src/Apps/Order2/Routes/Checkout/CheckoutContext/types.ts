@@ -10,7 +10,7 @@ export enum CheckoutStepState {
   UPCOMING = "UPCOMING",
   ACTIVE = "ACTIVE",
   COMPLETED = "COMPLETED",
-  HIDDEN = "HIDDEN", // TODO: Use this for missing fulfillment option/shipping quote step?
+  HIDDEN = "HIDDEN",
 }
 
 export type CheckoutStep = {

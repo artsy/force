@@ -108,12 +108,13 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
       ? orderData.fulfillmentDetails
       : null
 
-  const existingCountryCode = existingPickupValues?.phoneNumber?.countryCode
+  const existingRegionCode = existingPickupValues?.phoneNumber?.regionCode
+
   const initialCountryOptionFromExisting =
-    existingCountryCode &&
+    existingRegionCode &&
     phoneCountryOptions.find(
       option =>
-        option.value.toLowerCase() === existingCountryCode?.toLowerCase(),
+        option.value.toLowerCase() === existingRegionCode?.toLowerCase(),
     )?.value
 
   const initialValues = !!(

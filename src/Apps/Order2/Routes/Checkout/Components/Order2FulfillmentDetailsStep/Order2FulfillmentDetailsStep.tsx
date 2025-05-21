@@ -35,7 +35,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
 
   const fulfillmentOptions = orderData?.fulfillmentOptions
 
-  const isPickupAvailable = fulfillmentOptions?.some(
+  const pickupOption = fulfillmentOptions.find(
     option => option.type === "PICKUP",
   )
 
@@ -54,11 +54,11 @@ export const Order2FulfillmentDetailsStep: React.FC<
         />
       </Box>
       <Box hidden={stepState !== CheckoutStepState.ACTIVE}>
-        {isPickupAvailable ? (
+        {pickupOption ? (
           <Tabs
             data-testid="FulfillmentDetailsStepTabs"
             justifyContent="space-between"
-            initialTabIndex={0}
+            initialTabIndex={pickupOption.selected ? 1 : 0}
             onChange={tabInfo => {
               const { tabIndex } = tabInfo ?? {}
               if (tabIndex === 1) {
@@ -124,6 +124,7 @@ const ORDER_FRAGMENT = graphql`
     }
     fulfillmentOptions {
       type
+      selected
     }
   }
 `

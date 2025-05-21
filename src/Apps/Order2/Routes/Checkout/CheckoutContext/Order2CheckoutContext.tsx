@@ -146,6 +146,9 @@ export const Order2CheckoutContextProvider: React.FC<
 const ORDER_FRAGMENT = graphql`
   fragment Order2CheckoutContext_order on Order {
     mode
+    selectedFulfillmentOption {
+      type
+    }
     lineItems {
       artworkVersion {
         internalID
@@ -179,16 +182,27 @@ const initialStateForOrder = (order: Order2CheckoutContext_order$data) => {
     stepNamesInOrder.unshift(CheckoutStepName.OFFER_AMOUNT)
   }
 
-  // For now, always start from step one
+  // For now, always start from step one, and hide the delivery option
+  // step immediately if the order is pickup
   // TODO: We should probably either reset the order to step one on load
   // or set the current step based on the order data at load time
   const steps = stepNamesInOrder.map((stepName, index) => {
+    if (stepName === CheckoutStepName.DELIVERY_OPTION) {
+      return {
+        name: stepName,
+        state:
+          order.selectedFulfillmentOption?.type === "PICKUP"
+            ? CheckoutStepState.HIDDEN
+            : CheckoutStepState.UPCOMING,
+      }
+    }
     return {
       name: stepName,
       state:
         index === 0 ? CheckoutStepState.ACTIVE : CheckoutStepState.UPCOMING,
     }
   })
+
   return {
     isLoading: true,
     loadingError: null,
@@ -367,6 +381,19 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
       return {
         ...state,
         steps: state.steps.reduce((acc, current) => {
+          const alreadyPassedThisStep = acc
+            .map(step => step.name)
+            .includes(CheckoutStepName.FULFILLMENT_DETAILS)
+
+          if (alreadyPassedThisStep) {
+            return [
+              ...acc,
+              {
+                ...current,
+                state: CheckoutStepState.UPCOMING,
+              },
+            ]
+          }
           if (current.name === CheckoutStepName.FULFILLMENT_DETAILS) {
             return [
               ...acc,
@@ -376,19 +403,7 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
               },
             ]
           }
-          if (
-            acc
-              .map(step => step.name)
-              .includes(CheckoutStepName.FULFILLMENT_DETAILS)
-          ) {
-            return [
-              ...acc,
-              {
-                ...current,
-                state: CheckoutStepState.UPCOMING,
-              },
-            ]
-          }
+
           return [...acc, current]
         }, [] as CheckoutStep[]),
       }
@@ -399,7 +414,9 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
       return {
         ...state,
         steps: state.steps.reduce((acc, current) => {
-          if (current.name === CheckoutStepName.FULFILLMENT_DETAILS) {
+          const isThisStep =
+            current.name === CheckoutStepName.FULFILLMENT_DETAILS
+          if (isThisStep) {
             return [
               ...acc,
               {
@@ -408,8 +425,24 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
               },
             ]
           }
-          if (isPickup && current.name === CheckoutStepName.DELIVERY_OPTION) {
-            return [...acc]
+          if (current.name === CheckoutStepName.DELIVERY_OPTION) {
+            if (isPickup) {
+              return [...acc, { ...current, state: CheckoutStepState.HIDDEN }]
+            }
+          }
+
+          const firstStepAfterCompleted =
+            acc.find(step => step.state === CheckoutStepState.COMPLETED) &&
+            !acc.find(step => step.state === CheckoutStepState.UPCOMING)
+
+          if (firstStepAfterCompleted) {
+            return [
+              ...acc,
+              {
+                ...current,
+                state: CheckoutStepState.ACTIVE,
+              },
+            ]
           }
           return [...acc, current]
         }, [] as CheckoutStep[]),

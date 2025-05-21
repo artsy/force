@@ -247,7 +247,7 @@ describe("Order2CheckoutRoute", () => {
               fulfillmentDetails: {
                 phoneNumber: {
                   originalNumber: "03012345678",
-                  countryCode: "de",
+                  regionCode: "de",
                 },
               },
               selectedFulfillmentOption: {
@@ -264,6 +264,7 @@ describe("Order2CheckoutRoute", () => {
         const pickupTab = within(
           screen.getByTestId(testIDs.fulfillmentDetailsStepTabs),
         ).getByText("Pickup")
+
         act(() => {
           userEvent.click(pickupTab)
         })
@@ -278,6 +279,13 @@ describe("Order2CheckoutRoute", () => {
         expect(screen.getByTestId("PickupPhoneNumberInput")).toHaveValue(
           "03012345678",
         )
+
+        expect(screen.queryByText("Shipping Method")).not.toBeInTheDocument()
+
+        act(() => {
+          userEvent.click(screen.getByText("Delivery"))
+        })
+        expect(screen.queryByText("Shipping Method")).toBeInTheDocument()
       })
     })
   })

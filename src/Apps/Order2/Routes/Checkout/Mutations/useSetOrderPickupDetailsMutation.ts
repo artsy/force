@@ -31,7 +31,6 @@ export const useSetOrderPickupDetailsMutation = () => {
                 ...Order2CollapsibleOrderSummary_order
                 ...Order2FulfillmentDetailsStep_order
                 ...Order2ReviewStep_order
-                ...useLoadCheckout_order
                 ...Order2CheckoutLoadingSkeleton_order
               }
             }

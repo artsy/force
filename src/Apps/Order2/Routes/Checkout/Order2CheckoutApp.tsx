@@ -1,5 +1,8 @@
 import { Column, Flex, GridColumns, Stack, Text } from "@artsy/palette"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutLoadingSkeleton"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
 import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/Order2FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
@@ -24,10 +27,12 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
 
   const { isLoading, steps, activeFulfillmentDetailsTab } = useCheckoutContext()
 
-  const stepNames = steps?.map(step => step.name)
+  const deliveryStepState = steps.find(
+    step => step.name === CheckoutStepName.DELIVERY_OPTION,
+  )?.state
 
   const showDeliveryOptionStep =
-    stepNames?.includes(CheckoutStepName.DELIVERY_OPTION) ||
+    deliveryStepState !== CheckoutStepState.HIDDEN ||
     activeFulfillmentDetailsTab === "DELIVERY"
 
   if (!order) {
