@@ -12,7 +12,7 @@ import type {
   ExpressCheckout_order$data,
   ExpressCheckout_order$key,
 } from "__generated__/ExpressCheckout_order.graphql"
-import { Dispatch, SetStateAction } from "react"
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
@@ -29,9 +29,16 @@ type Seller = Exclude<
 
 export const ExpressCheckout = ({ order, setShowSpinner }: Props) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
+  const [isChrome, setIsChrome] = useState<boolean | null>(null)
 
-  // Use itemsTotal on load, but subsequent updates inside ExpressCheckoutUI
-  // will use the updated buyersTotal.
+  useEffect(() => {
+    const chrome =
+      typeof navigator !== "undefined" && /Chrome/.test(navigator.userAgent)
+    setIsChrome(chrome)
+  }, [])
+
+  if (isChrome === null) return null
+
   const { itemsTotal, seller } = orderData
 
   if (!(itemsTotal && orderData.availableShippingCountries.length)) {
@@ -68,7 +75,11 @@ export const ExpressCheckout = ({ order, setShowSpinner }: Props) => {
   return (
     <>
       <Elements stripe={stripePromise} options={options}>
-        <ExpressCheckoutUI order={orderData} setShowSpinner={setShowSpinner} />
+        <ExpressCheckoutUI
+          order={orderData}
+          setShowSpinner={setShowSpinner}
+          isChrome={isChrome}
+        />
       </Elements>
     </>
   )
