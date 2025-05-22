@@ -11,14 +11,6 @@ interface Order2CollapsibleOrderSummaryProps {
   order: Order2CollapsibleOrderSummary_order$key
 }
 
-// Wrapper component to handle type conversion
-const PricingBreakdownWrapper: React.FC<{
-  order: Order2CollapsibleOrderSummary_order$key
-}> = ({ order }) => {
-  const data = useFragment(FRAGMENT, order)
-  return <Order2PricingBreakdown order={data as any} />
-}
-
 export const Order2CollapsibleOrderSummary: React.FC<
   Order2CollapsibleOrderSummaryProps
 > = ({ order }) => {
@@ -77,7 +69,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
       >
         <Spacer y={1} />
         <Box mb={2}>
-          <PricingBreakdownWrapper order={order} />
+          <Order2PricingBreakdown order={orderData} />
         </Box>
         <Spacer y={1} />
       </Box>
