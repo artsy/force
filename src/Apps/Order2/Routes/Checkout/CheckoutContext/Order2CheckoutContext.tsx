@@ -57,7 +57,7 @@ export type Order2CheckoutContextValue = CheckoutState & CheckoutActions
 export const Order2CheckoutContext =
   createContext<Order2CheckoutContextValue | null>(null)
 
-interface Order2CheckoutContextProviderProps {
+export interface Order2CheckoutContextProviderProps {
   order: Order2CheckoutContext_order$key
   children: React.ReactNode
 }

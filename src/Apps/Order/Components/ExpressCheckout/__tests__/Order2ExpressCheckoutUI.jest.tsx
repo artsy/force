@@ -1,7 +1,7 @@
 import { ExpressCheckoutElement } from "@stripe/react-stripe-js"
 import { fireEvent, waitFor } from "@testing-library/react"
 import { screen } from "@testing-library/react"
-import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
+import type { Order2CheckoutContextValue } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { DeepPartial } from "Utils/typeSupport"
@@ -26,14 +26,12 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
 
 let shippingRateId = "DOMESTIC_FLAT"
 
-const mockShippingContext: DeepPartial<ShippingContextProps> = {
-  actions: {
-    setIsExpressCheckoutLoading: jest.fn(),
-  },
+const mockCheckoutContext: DeepPartial<Order2CheckoutContextValue> = {
+  setExpressCheckoutLoaded: jest.fn(),
 }
 
-jest.mock("Apps/Order/Routes/Shipping/Hooks/useShippingContext", () => ({
-  useShippingContext: () => mockShippingContext,
+jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
+  useCheckoutContext: () => mockCheckoutContext,
 }))
 
 const mockExpressCheckoutElement = ExpressCheckoutElement as jest.Mock
