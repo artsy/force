@@ -230,6 +230,7 @@ const getMessageContent = (order): React.ReactNode => {
       return (
         <>
           <Text variant="sm">Your work is on its way.</Text>
+          {/* TODO: Add shipping tracking info when available */}
           <Spacer y={2} />
           <YourCollectionNote />
         </>

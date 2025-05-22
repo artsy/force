@@ -12,7 +12,7 @@ interface BankDetails {
 const BANK_DETAILS: Record<string, BankDetails> = {
   GBP: {
     transferInfo: [
-      "Account name: Art.sy Inc",
+      "Account name: Art.sy Inc.",
       "Account number: 88005417",
       "IBAN: GB30PNBP16567188005417",
       "International SWIFT: PNBPGB2L",
@@ -31,7 +31,7 @@ const BANK_DETAILS: Record<string, BankDetails> = {
   },
   EUR: {
     transferInfo: [
-      "Account name: Art.sy Inc",
+      "Account name: Art.sy Inc.",
       "Account number: 88005419",
       "IBAN: GB73PNBP16567188005419",
       "International SWIFT: PNBPGB2L",
@@ -49,7 +49,7 @@ const BANK_DETAILS: Record<string, BankDetails> = {
   },
   USD: {
     transferInfo: [
-      "Account name: Art.sy Inc",
+      "Account name: Art.sy Inc.",
       "Account number: 4243851425",
       "Routing number: 121000248",
       "International SWIFT: WFBIUS6S",
