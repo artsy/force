@@ -41,51 +41,44 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   }
 
   return (
-    console.log("Order2CheckoutApp", showDeliveryOptionStep),
-    (
-      <>
-        <Title>Checkout | Artsy</Title>
-        <Meta
-          name="viewport"
-          content={
-            isEigen
-              ? "width=device-width, user-scalable=no"
-              : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
-          }
-        />
-        {isLoading && <Order2CheckoutLoadingSkeleton order={order} />}
-        <GridColumns style={{ display: isLoading ? "none" : "block" }}>
-          <Column span={[12, 8]} start={[1, 2]}>
-            <Stack gap={1} bg="mono5">
-              {/* Collapsible order summary */}
-              <Order2CollapsibleOrderSummary order={order} />
+    <>
+      <Title>Checkout | Artsy</Title>
+      <Meta
+        name="viewport"
+        content={
+          isEigen
+            ? "width=device-width, user-scalable=no"
+            : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
+        }
+      />
+      {isLoading && <Order2CheckoutLoadingSkeleton order={order} />}
+      <GridColumns style={{ display: isLoading ? "none" : "block" }}>
+        <Column span={[12, 8]} start={[1, 2]}>
+          <Stack gap={1} bg="mono5">
+            {/* Collapsible order summary */}
+            <Order2CollapsibleOrderSummary order={order} />
 
-              {/* Fulfillment details Step */}
-              <Order2FulfillmentDetailsStep order={order} />
+            {/* Fulfillment details Step */}
+            <Order2FulfillmentDetailsStep order={order} />
 
-              {/* Shipping method Step */}
-              {showDeliveryOptionStep && (
-                <Flex flexDirection="column" backgroundColor="mono0" p={2}>
-                  <Text
-                    variant="sm-display"
-                    fontWeight="medium"
-                    color="mono100"
-                  >
-                    Shipping Method
-                  </Text>
-                  <Text variant="xs" color="mono60">
-                    Options vary based on address and artwork size
-                  </Text>
-                </Flex>
-              )}
+            {/* Shipping method Step */}
+            {showDeliveryOptionStep && (
+              <Flex flexDirection="column" backgroundColor="mono0" p={2}>
+                <Text variant="sm-display" fontWeight="medium" color="mono100">
+                  Shipping Method
+                </Text>
+                <Text variant="xs" color="mono60">
+                  Options vary based on address and artwork size
+                </Text>
+              </Flex>
+            )}
 
-              <Order2PaymentStep order={order} />
-              <Order2ReviewStep order={order} />
-            </Stack>
-          </Column>
-        </GridColumns>
-      </>
-    )
+            <Order2PaymentStep order={order} />
+            <Order2ReviewStep order={order} />
+          </Stack>
+        </Column>
+      </GridColumns>
+    </>
   )
 }
 
