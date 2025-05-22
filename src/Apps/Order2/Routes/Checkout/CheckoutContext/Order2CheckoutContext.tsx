@@ -514,7 +514,6 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
         }, [] as CheckoutStep[]),
       }
     case "PAYMENT_COMPLETE":
-      console.log("PAYMENT_COMPLETE", action)
       const newSteps = state.steps.reduce((acc, current) => {
         const isThisStep = current.name === CheckoutStepName.PAYMENT
         if (isThisStep) {

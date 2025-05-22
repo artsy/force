@@ -37,36 +37,33 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
   )?.state
 
   return (
-    console.log("====Order2PaymentStep", confirmationToken),
-    (
-      <Flex
-        data-testid="PaymentStep"
-        flexDirection="column"
-        backgroundColor="mono0"
-      >
-        <Box hidden={stepState !== CheckoutStepState.COMPLETED}>
-          <Order2PaymentCompletedView
-            confirmationToken={confirmationToken}
-            onClickEdit={() => editPayment()}
+    <Flex
+      data-testid="PaymentStep"
+      flexDirection="column"
+      backgroundColor="mono0"
+    >
+      <Box hidden={stepState !== CheckoutStepState.COMPLETED}>
+        <Order2PaymentCompletedView
+          confirmationToken={confirmationToken}
+          onClickEdit={() => editPayment()}
+        />
+      </Box>
+      <Box p={2} hidden={stepState !== CheckoutStepState.ACTIVE}>
+        <Flex flexDirection="column">
+          <Text variant="sm-display" fontWeight={500} color="mono100">
+            Payment
+          </Text>
+          <Text variant="xs" color="mono60">
+            Options vary based on price, gallery, and location
+          </Text>
+          <Spacer y={2} />
+          <Order2PaymentForm
+            order={orderData}
+            setConfirmationToken={setConfirmationToken}
           />
-        </Box>
-        <Box p={2} hidden={stepState !== CheckoutStepState.ACTIVE}>
-          <Flex flexDirection="column">
-            <Text variant="sm-display" fontWeight={500} color="mono100">
-              Payment
-            </Text>
-            <Text variant="xs" color="mono60">
-              Options vary based on price, gallery, and location
-            </Text>
-            <Spacer y={2} />
-            <Order2PaymentForm
-              order={orderData}
-              setConfirmationToken={setConfirmationToken}
-            />
-          </Flex>
-        </Box>
-      </Flex>
-    )
+        </Flex>
+      </Box>
+    </Flex>
   )
 }
 
