@@ -10,6 +10,7 @@ import { graphql, useFragment } from "react-relay"
 interface Order2PricingBreakdownProps {
   order: Order2PricingBreakdown_order$key
 }
+
 const TAX_CALCULATION_ARTICLE_URL =
   "https://support.artsy.net/s/article/How-are-taxes-and-customs-fees-calculated"
 
@@ -105,7 +106,7 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
   )
 }
 
-const FRAGMENT = graphql`
+export const FRAGMENT = graphql`
   fragment Order2PricingBreakdown_order on Order {
     pricingBreakdownLines {
       __typename

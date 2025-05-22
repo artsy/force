@@ -100,7 +100,6 @@ describe("Order2PricingBreakdown", () => {
               __typename: "TaxLine",
               displayName: "Tax",
               amountFallbackText: null,
-
               amount: { amount: "99.58", currencySymbol: "$" },
             },
             {
