@@ -237,7 +237,7 @@ const PaymentFormContent = ({ setConfirmationToken }) => {
       <Button variant={"primaryBlack"} width="100%" type="submit">
         Save and Continue
       </Button>
-      {errorMessage && <div>{errorMessage}</div>} //TODO: handle stripe errors
+      {errorMessage && <div>{errorMessage}</div>}
     </form>
   )
 }

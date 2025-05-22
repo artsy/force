@@ -22,15 +22,8 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
 }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
 
-  const {
-    editPayment,
-    confirmationToken,
-    steps,
-    setConfirmationToken,
-    setFulfillmentDetailsComplete,
-  } = useCheckoutContext()!
-
-  setFulfillmentDetailsComplete({ isPickup: false }) // Temporary just to open the payment step
+  const { editPayment, confirmationToken, steps, setConfirmationToken } =
+    useCheckoutContext()!
 
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.PAYMENT,
@@ -42,6 +35,16 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
       flexDirection="column"
       backgroundColor="mono0"
     >
+      <Box p={2} hidden={stepState !== CheckoutStepState.UPCOMING}>
+        <Flex flexDirection="column">
+          <Text variant="sm-display" fontWeight={500} color="mono100">
+            Payment
+          </Text>
+          <Text variant="xs" color="mono60">
+            Options vary based on price, gallery, and location
+          </Text>
+        </Flex>
+      </Box>
       <Box hidden={stepState !== CheckoutStepState.COMPLETED}>
         <Order2PaymentCompletedView
           confirmationToken={confirmationToken}
