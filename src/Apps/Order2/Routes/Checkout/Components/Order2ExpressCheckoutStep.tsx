@@ -1,4 +1,4 @@
-import { ExpressCheckoutQueryRenderer } from "Apps/Order/Components/ExpressCheckout"
+import { Order2ExpressCheckout } from "Apps/Order/Components/ExpressCheckout/Order2ExpressCheckout"
 import type { Order2ExpressCheckoutStep_order$key } from "__generated__/Order2ExpressCheckoutStep_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -6,8 +6,6 @@ interface Order2ExpressCheckoutSectionProps {
   order: Order2ExpressCheckoutStep_order$key
 }
 
-// TODO: Placeholder for the express checkout component loosely based on legacy
-// express checkout
 export const Order2ExpressCheckoutStep: React.FC<
   Order2ExpressCheckoutSectionProps
 > = ({ order }) => {
@@ -26,7 +24,7 @@ export const Order2ExpressCheckoutStep: React.FC<
     return null
   }
 
-  return <ExpressCheckoutQueryRenderer orderID={data.internalID} />
+  return <Order2ExpressCheckout order={data} />
 }
 
 const FRAGMENT = graphql`
@@ -38,5 +36,6 @@ const FRAGMENT = graphql`
         isFixedShippingFeeOnly
       }
     }
+    ...Order2ExpressCheckout_order
   }
 `

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c76d90ce07f29fea5d57c69684075612>>
+ * @generated SignedSource<<c4e41de63038fa95d2c371d42acecb4e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type Order2ExpressCheckoutStep_order$data = {
     } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2ExpressCheckout_order">;
   readonly " $fragmentType": "Order2ExpressCheckoutStep_order";
 };
 export type Order2ExpressCheckoutStep_order$key = {
@@ -74,12 +75,17 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Order2ExpressCheckout_order"
     }
   ],
   "type": "Order",
   "abstractKey": null
 };
 
-(node as any).hash = "61714a97d836b5be922f7517c6cd8464";
+(node as any).hash = "b7061b89a36fc5f7b42f29c9d31b745b";
 
 export default node;

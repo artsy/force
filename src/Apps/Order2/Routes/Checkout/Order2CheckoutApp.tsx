@@ -1,11 +1,11 @@
 import { Column, Flex, GridColumns, Stack, Text } from "@artsy/palette"
-import { Order2ExpressCheckout } from "Apps/Order/Components/ExpressCheckout/Order2ExpressCheckout"
 import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutLoadingSkeleton"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
+import { Order2ExpressCheckoutStep } from "Apps/Order2/Routes/Checkout/Components/Order2ExpressCheckoutStep"
 import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/Order2FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
 import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/Order2PaymentStep/Order2PaymentStep"
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
@@ -61,7 +61,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
 
             {/* Express checkout */}
             <Flex flexDirection="column" backgroundColor="mono0" p={2}>
-              <Order2ExpressCheckout order={order} />
+              <Order2ExpressCheckoutStep order={order} />
             </Flex>
 
             {/* Fulfillment details Step */}
@@ -103,6 +103,7 @@ const FRAGMENT = graphql`
         ...Order2ReviewStep_order
         ...Order2CheckoutLoadingSkeleton_order
         ...Order2ExpressCheckout_order
+        ...Order2ExpressCheckoutStep_order
       }
       addressConnection(first: 10) {
         edges {
