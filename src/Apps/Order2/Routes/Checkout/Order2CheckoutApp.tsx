@@ -6,6 +6,7 @@ import {
 import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutLoadingSkeleton"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
 import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/Order2FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
+import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/Order2PaymentStep/Order2PaymentStep"
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { ErrorPage } from "Components/ErrorPage"
@@ -72,17 +73,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
               </Flex>
             )}
 
-            {/* Payment method Step */}
-            <Flex flexDirection="column" backgroundColor="mono0" p={2}>
-              <Text variant="sm-display" fontWeight="medium" color="mono100">
-                Payment
-              </Text>
-              <Text variant="xs" color="mono60">
-                Options vary based on price, gallery, and location
-              </Text>
-              {/* <PaymentForm /> */}
-            </Flex>
-
+            <Order2PaymentStep order={order} />
             <Order2ReviewStep order={order} />
           </Stack>
         </Column>
@@ -102,6 +93,7 @@ const FRAGMENT = graphql`
         }
         ...Order2CollapsibleOrderSummary_order
         ...Order2FulfillmentDetailsStep_order
+        ...Order2PaymentStep_order
         ...Order2ReviewStep_order
         ...Order2CheckoutLoadingSkeleton_order
       }

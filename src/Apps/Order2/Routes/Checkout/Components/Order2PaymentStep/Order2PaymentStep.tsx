@@ -1,51 +1,72 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
-import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
-import { Order2PaymentForm } from "Apps/Order2/Routes/Checkout/Components/Order2PaymentForm"
+import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { Order2PaymentForm } from "Apps/Order2/Routes/Checkout/Components/Order2PaymentStep/Order2PaymentForm"
 import { Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
-import type { Order2PaymentForm_order$key } from "__generated__/Order2PaymentForm_order.graphql"
-import { useState } from "react"
+import type { Order2PaymentStep_order$key } from "__generated__/Order2PaymentStep_order.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { graphql } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 import { Order2PaymentStepConfirmationTokenQuery } from "__generated__/Order2PaymentStepConfirmationTokenQuery.graphql"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { Order2PaymentCompletedView } from "Apps/Order2/Routes/Checkout/Components/Order2PaymentStep/Order2PaymentCompletedView"
 
 interface Order2PaymentStepProps {
-  order: Order2PaymentForm_order$key
+  order: Order2PaymentStep_order$key
 }
 
 export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
   order,
 }) => {
-  // Temporarily using a local state until we have a global checkout context
-  const [confirmationTokenID, setConfirmationTokenID] = useState<string | null>(
-    null,
-  )
-  const paymentStepComplete = !!confirmationTokenID
+  const orderData = useFragment(ORDER_FRAGMENT, order)
+
+  const {
+    editPayment,
+    confirmationToken,
+    steps,
+    setConfirmationToken,
+    setFulfillmentDetailsComplete,
+  } = useCheckoutContext()!
+
+  setFulfillmentDetailsComplete({ isPickup: false }) // Temporary just to open the payment step
+
+  const stepState = steps?.find(
+    step => step.name === CheckoutStepName.PAYMENT,
+  )?.state
 
   return (
-    <>
-      {!paymentStepComplete && (
-        <Flex flexDirection="column" backgroundColor="mono0" p={2}>
-          <Text variant="sm-display" fontWeight={500} color="mono100">
-            Payment
-          </Text>
-          <Text variant="xs" color="mono60">
-            Options vary based on price, gallery, and location
-          </Text>
-          <Spacer y={2} />
-          <Order2PaymentForm
-            setConfirmationTokenID={setConfirmationTokenID}
-            order={order}
+    console.log("====Order2PaymentStep", confirmationToken),
+    (
+      <Flex
+        data-testid="PaymentStep"
+        flexDirection="column"
+        backgroundColor="mono0"
+      >
+        <Box hidden={stepState !== CheckoutStepState.COMPLETED}>
+          <Order2PaymentCompletedView
+            confirmationToken={confirmationToken}
+            onClickEdit={() => editPayment()}
           />
-        </Flex>
-      )}
-
-      {paymentStepComplete && (
-        <MeConfirmationTokenQueryRenderer
-          tokenID={confirmationTokenID}
-          setConfirmationTokenID={setConfirmationTokenID}
-        />
-      )}
-    </>
+        </Box>
+        <Box p={2} hidden={stepState !== CheckoutStepState.ACTIVE}>
+          <Flex flexDirection="column">
+            <Text variant="sm-display" fontWeight={500} color="mono100">
+              Payment
+            </Text>
+            <Text variant="xs" color="mono60">
+              Options vary based on price, gallery, and location
+            </Text>
+            <Spacer y={2} />
+            <Order2PaymentForm
+              order={orderData}
+              setConfirmationToken={setConfirmationToken}
+            />
+          </Flex>
+        </Box>
+      </Flex>
+    )
   )
 }
 
@@ -123,3 +144,31 @@ export const MeConfirmationTokenQueryRenderer: React.FC<
     />
   )
 }
+
+const ORDER_FRAGMENT = graphql`
+  fragment Order2PaymentStep_order on Order {
+    internalID
+    buyerTotal {
+      minor
+      currencyCode
+    }
+    itemsTotal {
+      minor
+      currencyCode
+    }
+    shippingTotal {
+      minor
+    }
+    taxTotal {
+      minor
+    }
+    seller {
+      __typename
+      ... on Partner {
+        merchantAccount {
+          externalId
+        }
+      }
+    }
+  }
+`

@@ -18,29 +18,20 @@ import { getENV } from "Utils/getENV"
 import { useState } from "react"
 import LockIcon from "@artsy/icons/LockIcon"
 import { RouterLink } from "System/Components/RouterLink"
-import { graphql, useFragment } from "react-relay"
 import createLogger from "Utils/logger"
-import type {
-  Order2PaymentForm_order$data,
-  Order2PaymentForm_order$key,
-} from "__generated__/Order2PaymentForm_order.graphql"
+import { graphql, useRelayEnvironment, fetchQuery } from "react-relay"
+import type { Order2PaymentFormConfirmationTokenQuery } from "__generated__/Order2PaymentFormConfirmationTokenQuery.graphql"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 const logger = createLogger("Order2PaymentForm")
 
 interface Props {
-  order: Order2PaymentForm_order$key
-  setConfirmationTokenID: (id: string) => void
+  order: any
+  setConfirmationToken: (token: any) => void
 }
 
-type Seller = Exclude<
-  Order2PaymentForm_order$data["seller"],
-  { __typename: "%other" }
->
-
-export const Order2PaymentForm = ({ order, setConfirmationTokenID }: Props) => {
-  const orderData = useFragment(FRAGMENT, order)
-  const { itemsTotal, seller } = orderData
+export const Order2PaymentForm = ({ order, setConfirmationToken }: Props) => {
+  const { itemsTotal, seller } = order
 
   if (!itemsTotal) {
     throw new Error("itemsTotal is required")
@@ -49,7 +40,7 @@ export const Order2PaymentForm = ({ order, setConfirmationTokenID }: Props) => {
   const orderOptions: StripeElementsUpdateOptions = {
     amount: itemsTotal.minor,
     currency: itemsTotal.currencyCode.toLowerCase(),
-    onBehalfOf: (seller as Seller)?.merchantAccount?.externalId,
+    onBehalfOf: seller?.merchantAccount?.externalId,
   }
 
   const options: StripeElementsOptions = {
@@ -76,14 +67,15 @@ export const Order2PaymentForm = ({ order, setConfirmationTokenID }: Props) => {
 
   return (
     <Elements stripe={stripePromise} options={options}>
-      <PaymentFormContent setConfirmationTokenID={setConfirmationTokenID} />
+      <PaymentFormContent setConfirmationToken={setConfirmationToken} />
     </Elements>
   )
 }
 
-const PaymentFormContent = ({ setConfirmationTokenID }) => {
+const PaymentFormContent = ({ setConfirmationToken }) => {
   const stripe = useStripe()
   const elements = useElements()
+  const environment = useRelayEnvironment()
 
   if (!(stripe && elements)) {
     return null
@@ -91,8 +83,8 @@ const PaymentFormContent = ({ setConfirmationTokenID }) => {
 
   // From Stripe docs
   const [errorMessage, setErrorMessage] = useState()
-  const [loading, setLoading] = useState(false)
 
+  // TODO: move this to CheckoutContext
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("new")
 
   const paymentElementOptions: StripePaymentElementOptions = {
@@ -111,10 +103,6 @@ const PaymentFormContent = ({ setConfirmationTokenID }) => {
     }
   }
 
-  const onReady = event => {
-    console.log(event.getValue())
-  }
-
   const onClickSavedPaymentMethods = () => {
     setSelectedPaymentMethod("saved")
     elements?.getElement("payment")?.collapse()
@@ -127,14 +115,12 @@ const PaymentFormContent = ({ setConfirmationTokenID }) => {
 
   // From Stripe docs
   const handleError = error => {
-    setLoading(false)
     setErrorMessage(error.message)
   }
 
   // From Stripe docs
   const handleSubmit = async event => {
     event.preventDefault()
-    setLoading(true)
 
     const { error: submitError } = await elements.submit()
     if (submitError) {
@@ -152,9 +138,35 @@ const PaymentFormContent = ({ setConfirmationTokenID }) => {
       handleError(error)
       return
     }
-    setConfirmationTokenID(confirmationToken.id)
 
-    return
+    // TODO: check if there a better way to do this
+    const response = await fetchQuery<Order2PaymentFormConfirmationTokenQuery>(
+      environment,
+      graphql`
+        query Order2PaymentFormConfirmationTokenQuery($id: String!) {
+          me {
+            confirmationToken(id: $id) {
+              paymentMethodPreview {
+                card {
+                  displayBrand
+                  last4
+                }
+              }
+            }
+          }
+        }
+      `,
+      { id: confirmationToken.id },
+      { fetchPolicy: "store-or-network" },
+    ).toPromise()
+
+    if (!response) {
+      logger.error("Failed to load confirmation token")
+      handleError(new Error("Confirmation token not found"))
+      return
+    }
+
+    setConfirmationToken({ confirmationToken: response.me?.confirmationToken })
   }
 
   return (
@@ -186,13 +198,7 @@ const PaymentFormContent = ({ setConfirmationTokenID }) => {
           </Collapse>
         </Box>
       </FadeInBox>
-
-      <PaymentElement
-        options={paymentElementOptions}
-        onChange={onChange}
-        onReady={onReady}
-      />
-
+      <PaymentElement options={paymentElementOptions} onChange={onChange} />
       <Spacer y={1} />
       <FadeInBox>
         <Box
@@ -228,44 +234,10 @@ const PaymentFormContent = ({ setConfirmationTokenID }) => {
         </Box>
       </FadeInBox>
       <Spacer y={2} />
-      <Button
-        variant={"primaryBlack"}
-        width="100%"
-        type="submit"
-        disabled={!stripe || loading}
-      >
+      <Button variant={"primaryBlack"} width="100%" type="submit">
         Save and Continue
       </Button>
-
-      {errorMessage && <div>{errorMessage}</div>}
+      {errorMessage && <div>{errorMessage}</div>} //TODO: handle stripe errors
     </form>
   )
 }
-
-const FRAGMENT = graphql`
-  fragment Order2PaymentForm_order on Order {
-    internalID
-    buyerTotal {
-      minor
-      currencyCode
-    }
-    itemsTotal {
-      minor
-      currencyCode
-    }
-    shippingTotal {
-      minor
-    }
-    taxTotal {
-      minor
-    }
-    seller {
-      __typename
-      ... on Partner {
-        merchantAccount {
-          externalId
-        }
-      }
-    }
-  }
-`

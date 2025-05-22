@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fbd558ee6f3c0716900853df1fef47c5>>
+ * @generated SignedSource<<dca77e105c636815aa047421a577f3be>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Order2PaymentForm_order$data = {
+export type Order2PaymentStep_order$data = {
   readonly buyerTotal: {
     readonly currencyCode: string;
     readonly minor: any;
@@ -36,11 +36,11 @@ export type Order2PaymentForm_order$data = {
   readonly taxTotal: {
     readonly minor: any;
   } | null | undefined;
-  readonly " $fragmentType": "Order2PaymentForm_order";
+  readonly " $fragmentType": "Order2PaymentStep_order";
 };
-export type Order2PaymentForm_order$key = {
-  readonly " $data"?: Order2PaymentForm_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2PaymentForm_order">;
+export type Order2PaymentStep_order$key = {
+  readonly " $data"?: Order2PaymentStep_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2PaymentStep_order">;
 };
 
 const node: ReaderFragment = (function(){
@@ -68,7 +68,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Order2PaymentForm_order",
+  "name": "Order2PaymentStep_order",
   "selections": [
     {
       "alias": null,
@@ -166,6 +166,6 @@ return {
 };
 })();
 
-(node as any).hash = "92ec53d0e0c0800ac7bf0cc63ddc063a";
+(node as any).hash = "e1127aabf22d384d0b1e0f1ca4ad7157";
 
 export default node;
