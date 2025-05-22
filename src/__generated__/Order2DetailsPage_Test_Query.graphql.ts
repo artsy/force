@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c768ca0e9db6153d03d6da3397a000af>>
+ * @generated SignedSource<<e8cd55f9c4dc63f3c185130cd3819a71>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,6 +25,7 @@ export type Order2DetailsPage_Test_Query$rawResponse = {
     readonly order: {
       readonly buyerStateExpiresAt: string | null | undefined;
       readonly code: string;
+      readonly currencyCode: string;
       readonly displayTexts: {
         readonly messageType: DisplayTextsMessageTypeEnum;
         readonly title: string;
@@ -158,6 +159,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "currencyCode",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "internalID",
                 "storageKey": null
               },
@@ -172,12 +180,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "61a32786e85f3e38827d7810119284b9",
+    "cacheID": "203c3298efbd326659a486ca2f4e07fb",
     "id": null,
     "metadata": {},
     "name": "Order2DetailsPage_Test_Query",
     "operationKind": "query",
-    "text": "query Order2DetailsPage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  internalID\n  displayTexts {\n    messageType\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n  ...Order2DetailsMessage_order\n}\n"
+    "text": "query Order2DetailsPage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  displayTexts {\n    messageType\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n  ...Order2DetailsMessage_order\n}\n"
   }
 };
 })();
