@@ -87,8 +87,6 @@ export const Order2ExpressCheckoutUI = ({
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
   const errorRef = useRef<string | null>(null)
-  const [hasMultiplePaymentOptions, setHasMultiplePaymentOptions] =
-    useState<boolean>(false)
   const shippingContext = useShippingContext()
 
   if (!(stripe && elements)) {
@@ -476,10 +474,6 @@ export const Order2ExpressCheckoutUI = ({
       const paymentMethods = e.availablePaymentMethods
 
       if (paymentMethods) {
-        setHasMultiplePaymentOptions(
-          Object.values(paymentMethods).filter(Boolean).length > 1,
-        )
-
         setVisible(true)
 
         orderTracking.expressCheckoutViewed({
@@ -487,6 +481,8 @@ export const Order2ExpressCheckoutUI = ({
           walletType: getAvailablePaymentMethods(paymentMethods),
         })
       }
+    } catch (error) {
+      logger.error("Error handling ready event", error)
     } finally {
       shippingContext.actions.setIsExpressCheckoutLoading(false)
     }
@@ -494,13 +490,9 @@ export const Order2ExpressCheckoutUI = ({
 
   return (
     <Box display={visible ? "block" : "none"}>
-      <Text variant="lg-display">Express checkout</Text>
+      <Text variant="sm-display">Express Checkout</Text>
       <Spacer y={1} />
-      <Box
-        minWidth="240px"
-        maxWidth={hasMultiplePaymentOptions ? "100%" : ["100%", "50%"]}
-        paddingX="1px"
-      >
+      <Box minWidth="240px" maxWidth="100%" paddingX="1px">
         <ExpressCheckoutElement
           options={expressCheckoutOptions}
           onClick={handleOpenExpressCheckout}
@@ -526,7 +518,6 @@ export const Order2ExpressCheckoutUI = ({
         </RouterLink>
         .
       </Text>
-      <Spacer y={4} />
     </Box>
   )
 }
