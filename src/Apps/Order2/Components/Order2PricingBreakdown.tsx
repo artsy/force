@@ -106,7 +106,7 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
   )
 }
 
-export const FRAGMENT = graphql`
+const FRAGMENT = graphql`
   fragment Order2PricingBreakdown_order on Order {
     pricingBreakdownLines {
       __typename
