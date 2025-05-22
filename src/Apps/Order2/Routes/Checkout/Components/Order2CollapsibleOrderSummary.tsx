@@ -1,6 +1,6 @@
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import { Box, Clickable, Flex, Image, Spacer, Text } from "@artsy/palette"
-import { Order2PricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2PricingBreakdown"
+import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2CollapsibleOrderSummary_order$key } from "__generated__/Order2CollapsibleOrderSummary_order.graphql"
 import type * as React from "react"
@@ -9,6 +9,14 @@ import { graphql, useFragment } from "react-relay"
 
 interface Order2CollapsibleOrderSummaryProps {
   order: Order2CollapsibleOrderSummary_order$key
+}
+
+// Wrapper component to handle type conversion
+const PricingBreakdownWrapper: React.FC<{
+  order: Order2CollapsibleOrderSummary_order$key
+}> = ({ order }) => {
+  const data = useFragment(FRAGMENT, order)
+  return <Order2PricingBreakdown order={data as any} />
 }
 
 export const Order2CollapsibleOrderSummary: React.FC<
@@ -69,7 +77,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
       >
         <Spacer y={1} />
         <Box mb={2}>
-          <Order2PricingBreakdown order={orderData} />
+          <PricingBreakdownWrapper order={order} />
         </Box>
         <Spacer y={1} />
       </Box>

@@ -1,6 +1,6 @@
 import ShieldIcon from "@artsy/icons/ShieldIcon"
 import { Box, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
-import { Order2PricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2PricingBreakdown"
+import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2ReviewStep_order$key } from "__generated__/Order2ReviewStep_order.graphql"
 import { graphql, useFragment } from "react-relay"
