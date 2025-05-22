@@ -70,7 +70,7 @@ describe("Order2DetailsMessage", () => {
     })
 
     expect(screen.getByText("Send wire transfer to")).toBeInTheDocument()
-    expect(screen.getByText(/Account name: Art\.sy Inc\./)).toBeInTheDocument()
+    expect(screen.getByText(/Account name: Art.sy Inc/)).toBeInTheDocument()
     expect(screen.getByText(/Account number: 4243851425/)).toBeInTheDocument()
     expect(screen.getByText(/Routing number: 121000248/)).toBeInTheDocument()
     expect(
