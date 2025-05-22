@@ -1,5 +1,11 @@
-import { Box, Spacer, Text } from "@artsy/palette"
-import { Elements, PaymentElement, useElements } from "@stripe/react-stripe-js"
+import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
+import ReceiptIcon from "@artsy/icons/ReceiptIcon"
+import {
+  Elements,
+  PaymentElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js"
 import {
   type StripeElementsOptions,
   type StripeElementsUpdateOptions,
@@ -10,15 +16,40 @@ import { Collapse } from "Apps/Order/Components/Collapse"
 import { FadeInBox } from "Components/FadeInBox"
 import { getENV } from "Utils/getENV"
 import { useState } from "react"
+import LockIcon from "@artsy/icons/LockIcon"
+import { RouterLink } from "System/Components/RouterLink"
+import { graphql, useFragment } from "react-relay"
+import createLogger from "Utils/logger"
+import type {
+  Order2PaymentForm_order$data,
+  Order2PaymentForm_order$key,
+} from "__generated__/Order2PaymentForm_order.graphql"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
+const logger = createLogger("Order2PaymentForm")
 
-export const Order2PaymentForm: React.FC = () => {
+interface Props {
+  order: Order2PaymentForm_order$key
+  setConfirmationTokenID: (id: string) => void
+}
+
+type Seller = Exclude<
+  Order2PaymentForm_order$data["seller"],
+  { __typename: "%other" }
+>
+
+export const Order2PaymentForm = ({ order, setConfirmationTokenID }: Props) => {
+  const orderData = useFragment(FRAGMENT, order)
+  const { itemsTotal, seller } = orderData
+
+  if (!itemsTotal) {
+    throw new Error("itemsTotal is required")
+  }
+
   const orderOptions: StripeElementsUpdateOptions = {
-    amount: 12345,
-    currency: "eur",
-    // onBehalfOf: "acct_14FIYS4fSw9JrcJy", // US
-    onBehalfOf: "acct_1KMqw0A6DHSUKBik", // DE
+    amount: itemsTotal.minor,
+    currency: itemsTotal.currencyCode.toLowerCase(),
+    onBehalfOf: (seller as Seller)?.merchantAccount?.externalId,
   }
 
   const options: StripeElementsOptions = {
@@ -45,13 +76,23 @@ export const Order2PaymentForm: React.FC = () => {
 
   return (
     <Elements stripe={stripePromise} options={options}>
-      <PaymentFormContent />
+      <PaymentFormContent setConfirmationTokenID={setConfirmationTokenID} />
     </Elements>
   )
 }
 
-const PaymentFormContent = () => {
+const PaymentFormContent = ({ setConfirmationTokenID }) => {
+  const stripe = useStripe()
   const elements = useElements()
+
+  if (!(stripe && elements)) {
+    return null
+  }
+
+  // From Stripe docs
+  const [errorMessage, setErrorMessage] = useState()
+  const [loading, setLoading] = useState(false)
+
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("new")
 
   const paymentElementOptions: StripePaymentElementOptions = {
@@ -84,8 +125,40 @@ const PaymentFormContent = () => {
     elements?.getElement("payment")?.collapse()
   }
 
+  // From Stripe docs
+  const handleError = error => {
+    setLoading(false)
+    setErrorMessage(error.message)
+  }
+
+  // From Stripe docs
+  const handleSubmit = async event => {
+    event.preventDefault()
+    setLoading(true)
+
+    const { error: submitError } = await elements.submit()
+    if (submitError) {
+      logger.error(submitError)
+      handleError(submitError)
+      return
+    }
+
+    const { error, confirmationToken } = await stripe.createConfirmationToken({
+      elements,
+    })
+
+    if (error) {
+      logger.error(error)
+      handleError(error)
+      return
+    }
+    setConfirmationTokenID(confirmationToken.id)
+
+    return
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <FadeInBox>
         <Box
           backgroundColor="#EFEFEF"
@@ -95,8 +168,15 @@ const PaymentFormContent = () => {
           style={{ cursor: "pointer" }}
           onClick={onClickSavedPaymentMethods}
         >
-          <Text>Saved Payment Methods</Text>
+          <Flex alignItems="center">
+            <LockIcon fill="mono100" />
+            <Spacer x={1} />
+            <Text color="mono100">Saved payments</Text>
+          </Flex>
           <Collapse open={selectedPaymentMethod === "saved"}>
+            <Text variant="sm" ml="30px">
+              Select a saved payment method or add a new one.
+            </Text>
             <Text variant="sm" p="10px">
               Visa ....1234
             </Text>
@@ -123,30 +203,69 @@ const PaymentFormContent = () => {
           style={{ cursor: "pointer" }}
           onClick={onClickWirePaymentMethods}
         >
-          <Text>Wire Transfer</Text>
+          <Flex alignItems="center">
+            <ReceiptIcon fill="mono100" />
+            <Spacer x={1} />
+            <Text color="mono100">Wire Transfer</Text>
+          </Flex>
           <Collapse open={selectedPaymentMethod === "wire"}>
-            <Text color="mono60" variant="sm">
-              <ul
-                style={{
-                  paddingLeft: "2rem",
-                  margin: "1rem 0",
-                  listStyle: "disc",
-                }}
-              >
-                <li>
-                  To pay by wire transfer, complete checkout to view banking
-                  details and wire transfer instructions.
-                </li>
-                <li>
-                  Please inform your bank that you will be responsible for all
-                  wire transfer fees.
-                </li>
-              </ul>
+            <Text color="mono60" variant="sm" ml="30px">
+              To pay by wire transfer, complete checkout and a member of the
+              Artsy team will contact you with next steps by email.
+            </Text>
+            <Text color="mono60" variant="sm" ml="30px">
+              Please inform your bank that you will be responsible for all wire
+              transfer fees.
+            </Text>
+            <Text color="mono60" variant="sm" ml="30px">
+              You can contact{" "}
+              <RouterLink inline to="mailto:orders@artsy.net">
+                orders@artsy.net
+              </RouterLink>{" "}
+              with any questions.
             </Text>
           </Collapse>
         </Box>
       </FadeInBox>
       <Spacer y={2} />
+      <Button
+        variant={"primaryBlack"}
+        width="100%"
+        type="submit"
+        disabled={!stripe || loading}
+      >
+        Save and Continue
+      </Button>
+
+      {errorMessage && <div>{errorMessage}</div>}
     </form>
   )
 }
+
+const FRAGMENT = graphql`
+  fragment Order2PaymentForm_order on Order {
+    internalID
+    buyerTotal {
+      minor
+      currencyCode
+    }
+    itemsTotal {
+      minor
+      currencyCode
+    }
+    shippingTotal {
+      minor
+    }
+    taxTotal {
+      minor
+    }
+    seller {
+      __typename
+      ... on Partner {
+        merchantAccount {
+          externalId
+        }
+      }
+    }
+  }
+`
