@@ -36,6 +36,7 @@ export const useSetFulfillmentOptionMutation = () => {
                 }
                 availableShippingCountries
                 ...ExpressCheckoutUI_order
+                ...Order2ExpressCheckoutUI_order
               }
             }
             ... on OrderMutationError {

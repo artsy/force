@@ -1,4 +1,5 @@
 import { Column, Flex, GridColumns, Stack, Text } from "@artsy/palette"
+import { Order2ExpressCheckout } from "Apps/Order/Components/ExpressCheckout/Order2ExpressCheckout"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -58,6 +59,11 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
             {/* Collapsible order summary */}
             <Order2CollapsibleOrderSummary order={order} />
 
+            {/* Express checkout */}
+            <Flex flexDirection="column" backgroundColor="mono0" p={2}>
+              <Order2ExpressCheckout order={order} />
+            </Flex>
+
             {/* Fulfillment details Step */}
             <Order2FulfillmentDetailsStep order={order} />
 
@@ -96,6 +102,7 @@ const FRAGMENT = graphql`
         ...Order2PaymentStep_order
         ...Order2ReviewStep_order
         ...Order2CheckoutLoadingSkeleton_order
+        ...Order2ExpressCheckout_order
       }
       addressConnection(first: 10) {
         edges {

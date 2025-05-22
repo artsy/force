@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aef307d945fb0a67ace96b0a2ffa9c1e>>
+ * @generated SignedSource<<0b66bfc768aa5d29c834364331b63212>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,7 @@ export type Order2CheckoutApp_viewer$data = {
         readonly type: FulfillmentOptionTypeEnum;
       }>;
       readonly internalID: string;
-      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutLoadingSkeleton_order" | "Order2CollapsibleOrderSummary_order" | "Order2FulfillmentDetailsStep_order" | "Order2PaymentStep_order" | "Order2ReviewStep_order">;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutLoadingSkeleton_order" | "Order2CollapsibleOrderSummary_order" | "Order2ExpressCheckout_order" | "Order2FulfillmentDetailsStep_order" | "Order2PaymentStep_order" | "Order2ReviewStep_order">;
     };
   } | null | undefined;
   readonly " $fragmentType": "Order2CheckoutApp_viewer";
@@ -122,6 +122,11 @@ return {
                 "args": null,
                 "kind": "FragmentSpread",
                 "name": "Order2CheckoutLoadingSkeleton_order"
+              },
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "Order2ExpressCheckout_order"
               }
             ],
             "storageKey": null
@@ -177,6 +182,6 @@ return {
 };
 })();
 
-(node as any).hash = "2fb6ae8b6a67d29d53535aaf614d9d1a";
+(node as any).hash = "5b8c91b27314dbc5fbb317404b619504";
 
 export default node;
