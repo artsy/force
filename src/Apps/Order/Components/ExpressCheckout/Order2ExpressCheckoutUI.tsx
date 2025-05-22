@@ -35,7 +35,7 @@ import {
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { preventHardReload } from "Apps/Order/OrderApp"
-import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type {
@@ -87,7 +87,7 @@ export const Order2ExpressCheckoutUI = ({
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
   const errorRef = useRef<string | null>(null)
-  const shippingContext = useShippingContext()
+  const { setExpressCheckoutLoaded } = useCheckoutContext()
 
   if (!(stripe && elements)) {
     return null
@@ -484,7 +484,7 @@ export const Order2ExpressCheckoutUI = ({
     } catch (error) {
       logger.error("Error handling ready event", error)
     } finally {
-      shippingContext.actions.setIsExpressCheckoutLoading(false)
+      setExpressCheckoutLoaded(e.availablePaymentMethods)
     }
   }
 
