@@ -3,12 +3,12 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { Order2ExpressCheckout } from "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckout"
+import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
 import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutLoadingSkeleton"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
-import { Order2ExpressCheckoutStep } from "Apps/Order2/Routes/Checkout/Components/Order2ExpressCheckoutStep"
-import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/Order2FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
-import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/Order2PaymentStep/Order2PaymentStep"
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
+import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentStep"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { ErrorPage } from "Components/ErrorPage"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -28,6 +28,13 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   const order = data.me?.order ?? null
 
   const { isLoading, steps, activeFulfillmentDetailsTab } = useCheckoutContext()
+  if (!order) {
+    return <ErrorPage code={404} message="Order not found" />
+  }
+
+  const isOffer = order.mode === "OFFER"
+  const isFixedShipping = order.lineItems[0]?.artwork?.isFixedShippingFeeOnly
+  const isExpressCheckoutEligible = !isOffer && isFixedShipping
 
   const deliveryStepState = steps.find(
     step => step.name === CheckoutStepName.DELIVERY_OPTION,
@@ -36,10 +43,6 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   const showDeliveryOptionStep =
     deliveryStepState !== CheckoutStepState.HIDDEN ||
     activeFulfillmentDetailsTab === "DELIVERY"
-
-  if (!order) {
-    return <ErrorPage code={404} message="Order not found" />
-  }
 
   return (
     <>
@@ -60,9 +63,9 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
             <Order2CollapsibleOrderSummary order={order} />
 
             {/* Express checkout */}
-            <Flex flexDirection="column" backgroundColor="mono0" p={2}>
-              <Order2ExpressCheckoutStep order={order} />
-            </Flex>
+            {isExpressCheckoutEligible && (
+              <Order2ExpressCheckout order={order} />
+            )}
 
             {/* Fulfillment details Step */}
             <Order2FulfillmentDetailsStep order={order} />
@@ -97,13 +100,19 @@ const FRAGMENT = graphql`
         fulfillmentOptions {
           type
         }
+        mode
+        lineItems {
+          artwork {
+            isFixedShippingFeeOnly
+          }
+        }
+        ...Order2ExpressCheckout_order
         ...Order2CollapsibleOrderSummary_order
         ...Order2FulfillmentDetailsStep_order
         ...Order2PaymentStep_order
         ...Order2ReviewStep_order
         ...Order2CheckoutLoadingSkeleton_order
         ...Order2ExpressCheckout_order
-        ...Order2ExpressCheckoutStep_order
       }
       addressConnection(first: 10) {
         edges {

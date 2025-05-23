@@ -1,25 +1,29 @@
+import { Flex } from "@artsy/palette"
 import { Elements } from "@stripe/react-stripe-js"
 import {
   type StripeElementsOptions,
   type StripeElementsUpdateOptions,
   loadStripe,
 } from "@stripe/stripe-js"
-import { Order2ExpressCheckoutUI } from "Apps/Order/Components/ExpressCheckout/Order2ExpressCheckoutUI"
+import { Order2ExpressCheckoutUI } from "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckoutUI"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { getENV } from "Utils/getENV"
+import createLogger from "Utils/logger"
 import type { Order2ExpressCheckoutQuery } from "__generated__/Order2ExpressCheckoutQuery.graphql"
 import type {
   Order2ExpressCheckout_order$data,
   Order2ExpressCheckout_order$key,
 } from "__generated__/Order2ExpressCheckout_order.graphql"
-import { type Dispatch, type SetStateAction, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
+
+const logger = createLogger("Order2ExpressCheckout.tsx")
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
 interface Props {
   order: Order2ExpressCheckout_order$key
-  setShowSpinner?: Dispatch<SetStateAction<boolean>>
 }
 
 type Seller = Exclude<
@@ -27,9 +31,12 @@ type Seller = Exclude<
   { __typename: "%other" }
 >
 
-export const Order2ExpressCheckout = ({ order, setShowSpinner }: Props) => {
+export const Order2ExpressCheckout = ({ order }: Props) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const [isChrome, setIsChrome] = useState<boolean | null>(null)
+  const { expressCheckoutPaymentMethods } = useCheckoutContext()
+
+  const expressCheckoutLoadedEmpty = expressCheckoutPaymentMethods?.length === 0
 
   useEffect(() => {
     const chrome =
@@ -38,6 +45,9 @@ export const Order2ExpressCheckout = ({ order, setShowSpinner }: Props) => {
   }, [])
 
   if (isChrome === null) return null
+  if (expressCheckoutLoadedEmpty) {
+    return null
+  }
 
   const { itemsTotal, seller } = orderData
 
@@ -48,7 +58,7 @@ export const Order2ExpressCheckout = ({ order, setShowSpinner }: Props) => {
   const sellerStripeAccountId = (seller as Seller)?.merchantAccount?.externalId
 
   if (!sellerStripeAccountId) {
-    console.error(
+    logger.error(
       "No seller's Stripe account found. Cannot proceed with Express Checkout.",
     )
     return null
@@ -73,15 +83,11 @@ export const Order2ExpressCheckout = ({ order, setShowSpinner }: Props) => {
   }
 
   return (
-    <>
+    <Flex flexDirection="column" backgroundColor="mono0" p={2}>
       <Elements stripe={stripePromise} options={options}>
-        <Order2ExpressCheckoutUI
-          order={orderData}
-          setShowSpinner={setShowSpinner}
-          isChrome={isChrome}
-        />
+        <Order2ExpressCheckoutUI order={orderData} isChrome={isChrome} />
       </Elements>
-    </>
+    </Flex>
   )
 }
 
@@ -110,12 +116,11 @@ const ORDER_FRAGMENT = graphql`
 
 interface Order2ExpressCheckoutQueryRendererProps {
   orderID: string
-  setShowSpinner?: Dispatch<SetStateAction<boolean>>
 }
 
 export const Order2ExpressCheckoutQueryRenderer: React.FC<
   Order2ExpressCheckoutQueryRendererProps
-> = ({ orderID, setShowSpinner }) => {
+> = ({ orderID }) => {
   return (
     <SystemQueryRenderer<Order2ExpressCheckoutQuery>
       // lazyLoad
@@ -131,12 +136,7 @@ export const Order2ExpressCheckoutQueryRenderer: React.FC<
       variables={{ orderID }}
       render={({ props }) => {
         if (props?.me?.order) {
-          return (
-            <Order2ExpressCheckout
-              order={props.me.order}
-              setShowSpinner={setShowSpinner}
-            />
-          )
+          return <Order2ExpressCheckout order={props.me.order} />
         }
         return null
       }}
