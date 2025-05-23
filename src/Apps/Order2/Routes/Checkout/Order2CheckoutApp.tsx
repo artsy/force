@@ -13,6 +13,7 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { ErrorPage } from "Components/ErrorPage"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { Order2CheckoutApp_viewer$key } from "__generated__/Order2CheckoutApp_viewer.graphql"
+import { useEffect } from "react"
 import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 interface Order2CheckoutAppProps {
@@ -27,7 +28,12 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   const data = useFragment(FRAGMENT, viewer)
   const order = data.me?.order ?? null
 
-  const { isLoading, steps, activeFulfillmentDetailsTab } = useCheckoutContext()
+  const {
+    isLoading,
+    steps,
+    activeFulfillmentDetailsTab,
+    setExpressCheckoutLoaded,
+  } = useCheckoutContext()
   if (!order) {
     return <ErrorPage code={404} message="Order not found" />
   }
@@ -35,6 +41,13 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   const isOffer = order.mode === "OFFER"
   const isFixedShipping = order.lineItems[0]?.artwork?.isFixedShippingFeeOnly
   const isExpressCheckoutEligible = !isOffer && isFixedShipping
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (!isExpressCheckoutEligible) {
+      setExpressCheckoutLoaded([])
+    }
+  }, [])
 
   const deliveryStepState = steps.find(
     step => step.name === CheckoutStepName.DELIVERY_OPTION,
@@ -112,7 +125,6 @@ const FRAGMENT = graphql`
         ...Order2PaymentStep_order
         ...Order2ReviewStep_order
         ...Order2CheckoutLoadingSkeleton_order
-        ...Order2ExpressCheckout_order
       }
       addressConnection(first: 10) {
         edges {

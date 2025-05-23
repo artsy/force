@@ -1,11 +1,4 @@
-import {
-  Box,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Box, Spacer, Text } from "@artsy/palette"
 import {
   ExpressCheckoutElement,
   useElements,
@@ -91,6 +84,7 @@ export const Order2ExpressCheckoutUI = ({
   const orderTracking = useOrderTracking()
 
   const errorRef = useRef<string | null>(null)
+
   const { setExpressCheckoutLoaded } = useCheckoutContext()
 
   if (!(stripe && elements)) {
@@ -716,16 +710,3 @@ function extractEnabledPaymentMethods(
     .filter(([_, isAvailable]) => isAvailable)
     .map(([method]) => method) as ExpressCheckoutPaymentMethod[]
 }
-
-export const EXPRESS_CHECKOUT_PLACEHOLDER = (
-  <Skeleton>
-    <SkeletonText variant="lg-display">Express checkout</SkeletonText>
-    <Spacer y={1} />
-    <SkeletonBox width={["100%", "50%"]} height={50} borderRadius={50} />
-    <Spacer y={1} />
-    <SkeletonText variant="xs" ml={0.5}>
-      By clicking Pay, I agree to Artsy’s General Terms and Conditions of Sale
-    </SkeletonText>
-    <Spacer y={4} />
-  </Skeleton>
-)
