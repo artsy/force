@@ -10,7 +10,7 @@ import { useEffect } from "react"
 import React from "react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { Order2ExpressCheckoutUI } from "../../../../Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckoutUI"
+import { Order2ExpressCheckoutUI } from "../Order2ExpressCheckoutUI"
 
 jest.mock("react-tracking")
 
