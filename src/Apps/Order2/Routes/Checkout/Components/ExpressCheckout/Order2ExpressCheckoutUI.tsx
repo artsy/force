@@ -35,6 +35,7 @@ import {
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { preventHardReload } from "Apps/Order/OrderApp"
+import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
@@ -50,12 +51,11 @@ import type {
   OrderCreditCardWalletTypeEnum,
   useUpdateOrderMutation$data,
 } from "__generated__/useUpdateOrderMutation.graphql"
-import { type Dispatch, type SetStateAction, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2ExpressCheckoutUIProps {
   order: Order2ExpressCheckoutUI_order$key
-  setShowSpinner?: Dispatch<SetStateAction<boolean>>
   isChrome?: boolean
 }
 
@@ -68,13 +68,13 @@ type HandleCancelCallback = NonNullable<
 
 export const Order2ExpressCheckoutUI = ({
   order,
-  setShowSpinner,
   isChrome,
 }: Order2ExpressCheckoutUIProps) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
-  const [visible, setVisible] = useState(false)
+
   const elements = useElements()
   const stripe = useStripe()
+
   const setFulfillmentOptionMutation = useSetFulfillmentOptionMutation()
   const updateOrderMutation = useUpdateOrderMutation()
   const updateOrderShippingAddressMutation =
@@ -83,9 +83,13 @@ export const Order2ExpressCheckoutUI = ({
   const unsetFulfillmentOptionMutation =
     useUnsetOrderFulfillmentOptionMutation()
   const unsetPaymentMethodMutation = useUnsetOrderPaymentMethodMutation()
+
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
+
+  // TODO: integrate with new checkout tracking if necessary
   const orderTracking = useOrderTracking()
+
   const errorRef = useRef<string | null>(null)
   const { setExpressCheckoutLoaded } = useCheckoutContext()
 
@@ -429,8 +433,6 @@ export const Order2ExpressCheckoutUI = ({
         return
       }
 
-      setShowSpinner?.(true)
-
       const submitOrderResult = await submitOrderMutation.submitMutation({
         variables: {
           input: {
@@ -470,26 +472,26 @@ export const Order2ExpressCheckoutUI = ({
   }
 
   const handleReady = e => {
+    let enabledPaymentMethods: ExpressCheckoutPaymentMethod[] = []
     try {
-      const paymentMethods = e.availablePaymentMethods
-
-      if (paymentMethods) {
-        setVisible(true)
-
+      enabledPaymentMethods = extractEnabledPaymentMethods(
+        e.availablePaymentMethods,
+      )
+      if (enabledPaymentMethods) {
         orderTracking.expressCheckoutViewed({
           order: orderData,
-          walletType: getAvailablePaymentMethods(paymentMethods),
+          walletType: enabledPaymentMethods,
         })
       }
     } catch (error) {
       logger.error("Error handling ready event", error)
     } finally {
-      setExpressCheckoutLoaded(e.availablePaymentMethods)
+      setExpressCheckoutLoaded(enabledPaymentMethods)
     }
   }
 
   return (
-    <Box display={visible ? "block" : "none"}>
+    <Box>
       <Text variant="sm-display">Express Checkout</Text>
       <Spacer y={1} />
       <Box minWidth="240px" maxWidth="100%" paddingX="1px">
@@ -707,12 +709,12 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
   }
 }
 
-function getAvailablePaymentMethods(
+function extractEnabledPaymentMethods(
   paymentMethods: AvailablePaymentMethods,
-): string[] {
+): ExpressCheckoutPaymentMethod[] {
   return Object.entries(paymentMethods)
     .filter(([_, isAvailable]) => isAvailable)
-    .map(([method]) => method)
+    .map(([method]) => method) as ExpressCheckoutPaymentMethod[]
 }
 
 export const EXPRESS_CHECKOUT_PLACEHOLDER = (

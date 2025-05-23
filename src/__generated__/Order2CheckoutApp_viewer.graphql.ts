@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5b1b5b20cc6df4ce3a9326b5d25da2cc>>
+ * @generated SignedSource<<a1c0ea8a6f3cd582655c05a403a16140>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ReaderFragment } from 'relay-runtime';
 export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
+export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutApp_viewer$data = {
   readonly me: {
@@ -25,7 +26,13 @@ export type Order2CheckoutApp_viewer$data = {
         readonly type: FulfillmentOptionTypeEnum;
       }>;
       readonly internalID: string;
-      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutLoadingSkeleton_order" | "Order2CollapsibleOrderSummary_order" | "Order2ExpressCheckoutStep_order" | "Order2ExpressCheckout_order" | "Order2FulfillmentDetailsStep_order" | "Order2PaymentStep_order" | "Order2ReviewStep_order">;
+      readonly lineItems: ReadonlyArray<{
+        readonly artwork: {
+          readonly isFixedShippingFeeOnly: boolean | null | undefined;
+        } | null | undefined;
+      } | null | undefined>;
+      readonly mode: OrderModeEnum;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutLoadingSkeleton_order" | "Order2CollapsibleOrderSummary_order" | "Order2ExpressCheckout_order" | "Order2FulfillmentDetailsStep_order" | "Order2PaymentStep_order" | "Order2ReviewStep_order">;
     };
   } | null | undefined;
   readonly " $fragmentType": "Order2CheckoutApp_viewer";
@@ -99,6 +106,47 @@ return {
                 "storageKey": null
               },
               {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "mode",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "LineItem",
+                "kind": "LinkedField",
+                "name": "lineItems",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Artwork",
+                    "kind": "LinkedField",
+                    "name": "artwork",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isFixedShippingFeeOnly",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "Order2ExpressCheckout_order"
+              },
+              {
                 "args": null,
                 "kind": "FragmentSpread",
                 "name": "Order2CollapsibleOrderSummary_order"
@@ -122,16 +170,6 @@ return {
                 "args": null,
                 "kind": "FragmentSpread",
                 "name": "Order2CheckoutLoadingSkeleton_order"
-              },
-              {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "Order2ExpressCheckout_order"
-              },
-              {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "Order2ExpressCheckoutStep_order"
               }
             ],
             "storageKey": null
@@ -187,6 +225,6 @@ return {
 };
 })();
 
-(node as any).hash = "84f8b33dd5a40861060f3925ff141c08";
+(node as any).hash = "af1808d335ebe11dede0933bc4b853ae";
 
 export default node;

@@ -57,7 +57,7 @@ export type Order2CheckoutContextValue = CheckoutState & CheckoutActions
 export const Order2CheckoutContext =
   createContext<Order2CheckoutContextValue | null>(null)
 
-export interface Order2CheckoutContextProviderProps {
+interface Order2CheckoutContextProviderProps {
   order: Order2CheckoutContext_order$key
   children: React.ReactNode
 }
@@ -74,7 +74,6 @@ export const Order2CheckoutContextProvider: React.FC<
     isLoading,
     setLoadingError,
     setLoadingComplete,
-    setExpressCheckoutLoaded,
   } = context
 
   const isExpressCheckoutLoaded = expressCheckoutPaymentMethods !== null
@@ -118,20 +117,6 @@ export const Order2CheckoutContextProvider: React.FC<
       setLoadingComplete()
     }
   }, [...checks])
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: one-time effect
-  useEffect(() => {
-    // TODO: Pass to express checkout so it can register when it has loaded
-    // for now we simulate it taking a little longer than the minimum
-    // (this useEffect is temporary)
-    const expressCheckoutTimeout = setTimeout(() => {
-      setExpressCheckoutLoaded([])
-    }, 2000)
-
-    return () => {
-      clearTimeout(expressCheckoutTimeout)
-    }
-  }, [])
 
   return (
     <Order2CheckoutContext.Provider value={context}>

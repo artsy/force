@@ -1,5 +1,5 @@
 import { Elements } from "@stripe/react-stripe-js"
-import { Order2ExpressCheckout } from "Apps/Order/Components/ExpressCheckout/Order2ExpressCheckout"
+import { Order2ExpressCheckout } from "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckout"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2ExpressCheckout_Test_Query } from "__generated__/Order2ExpressCheckout_Test_Query.graphql"
 import { graphql } from "react-relay"
