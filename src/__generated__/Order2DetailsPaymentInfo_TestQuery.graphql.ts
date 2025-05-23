@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<491f1e85f4d7dda04750041ab6b5daa0>>
+ * @generated SignedSource<<3bb6d8df62fbfd54bf5a7e5c60cda2a4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,54 +10,17 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type DisplayTextsMessageTypeEnum = "APPROVED_PICKUP" | "APPROVED_SHIP" | "APPROVED_SHIP_EXPRESS" | "APPROVED_SHIP_STANDARD" | "APPROVED_SHIP_WHITE_GLOVE" | "CANCELLED_ORDER" | "COMPLETED_PICKUP" | "COMPLETED_SHIP" | "PAYMENT_FAILED" | "PROCESSING_PAYMENT_PICKUP" | "PROCESSING_PAYMENT_SHIP" | "PROCESSING_WIRE" | "SHIPPED" | "SUBMITTED_OFFER" | "SUBMITTED_ORDER" | "UNKNOWN" | "%future added value";
-export type OrderCreditCardWalletTypeEnum = "APPLE_PAY" | "GOOGLE_PAY" | "%future added value";
-export type Order2DetailsPage_Test_Query$variables = Record<PropertyKey, never>;
-export type Order2DetailsPage_Test_Query$data = {
+export type Order2DetailsPaymentInfo_TestQuery$variables = Record<PropertyKey, never>;
+export type Order2DetailsPaymentInfo_TestQuery$data = {
   readonly me: {
     readonly order: {
-      readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsPage_order">;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsPaymentInfo_order">;
     } | null | undefined;
   } | null | undefined;
 };
-export type Order2DetailsPage_Test_Query$rawResponse = {
-  readonly me: {
-    readonly id: string;
-    readonly order: {
-      readonly buyerStateExpiresAt: string | null | undefined;
-      readonly code: string;
-      readonly creditCardWalletType: OrderCreditCardWalletTypeEnum | null | undefined;
-      readonly currencyCode: string;
-      readonly displayTexts: {
-        readonly messageType: DisplayTextsMessageTypeEnum;
-        readonly title: string;
-      };
-      readonly id: string;
-      readonly internalID: string;
-      readonly paymentMethodDetails: {
-        readonly __typename: "BankAccount";
-        readonly id: string;
-        readonly last4: string;
-      } | {
-        readonly __typename: "CreditCard";
-        readonly brand: string;
-        readonly expirationMonth: number;
-        readonly expirationYear: number;
-        readonly id: string;
-        readonly lastDigits: string;
-      } | {
-        readonly __typename: "WireTransfer";
-        readonly isManualPayment: boolean;
-      } | {
-        readonly __typename: string;
-      } | null | undefined;
-    } | null | undefined;
-  } | null | undefined;
-};
-export type Order2DetailsPage_Test_Query = {
-  rawResponse: Order2DetailsPage_Test_Query$rawResponse;
-  response: Order2DetailsPage_Test_Query$data;
-  variables: Order2DetailsPage_Test_Query$variables;
+export type Order2DetailsPaymentInfo_TestQuery = {
+  response: Order2DetailsPaymentInfo_TestQuery$data;
+  variables: Order2DetailsPaymentInfo_TestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -65,7 +28,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "id",
-    "value": "123"
+    "value": "order-id"
   }
 ],
 v1 = {
@@ -74,13 +37,31 @@ v1 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
 };
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "Order2DetailsPage_Test_Query",
+    "name": "Order2DetailsPaymentInfo_TestQuery",
     "selections": [
       {
         "alias": null,
@@ -101,10 +82,10 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "Order2DetailsPage_order"
+                "name": "Order2DetailsPaymentInfo_order"
               }
             ],
-            "storageKey": "order(id:\"123\")"
+            "storageKey": "order(id:\"order-id\")"
           }
         ],
         "storageKey": null
@@ -117,7 +98,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "Order2DetailsPage_Test_Query",
+    "name": "Order2DetailsPaymentInfo_TestQuery",
     "selections": [
       {
         "alias": null,
@@ -135,59 +116,6 @@ return {
             "name": "order",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "code",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "DisplayTexts",
-                "kind": "LinkedField",
-                "name": "displayTexts",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "title",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "messageType",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "buyerStateExpiresAt",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "currencyCode",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "internalID",
-                "storageKey": null
-              },
               {
                 "alias": null,
                 "args": null,
@@ -280,7 +208,7 @@ return {
               },
               (v1/*: any*/)
             ],
-            "storageKey": "order(id:\"123\")"
+            "storageKey": "order(id:\"order-id\")"
           },
           (v1/*: any*/)
         ],
@@ -289,16 +217,61 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d32365e6fcd70457925b6a814badabe4",
+    "cacheID": "0345bdd6ee6bb51bd0c31383e7ba688a",
     "id": null,
-    "metadata": {},
-    "name": "Order2DetailsPage_Test_Query",
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.id": (v2/*: any*/),
+        "me.order": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Order"
+        },
+        "me.order.creditCardWalletType": {
+          "enumValues": [
+            "APPLE_PAY",
+            "GOOGLE_PAY"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "OrderCreditCardWalletTypeEnum"
+        },
+        "me.order.id": (v2/*: any*/),
+        "me.order.paymentMethodDetails": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PaymentMethodUnion"
+        },
+        "me.order.paymentMethodDetails.__typename": (v3/*: any*/),
+        "me.order.paymentMethodDetails.brand": (v3/*: any*/),
+        "me.order.paymentMethodDetails.expirationMonth": (v4/*: any*/),
+        "me.order.paymentMethodDetails.expirationYear": (v4/*: any*/),
+        "me.order.paymentMethodDetails.id": (v2/*: any*/),
+        "me.order.paymentMethodDetails.isManualPayment": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "me.order.paymentMethodDetails.last4": (v3/*: any*/),
+        "me.order.paymentMethodDetails.lastDigits": (v3/*: any*/)
+      }
+    },
+    "name": "Order2DetailsPaymentInfo_TestQuery",
     "operationKind": "query",
-    "text": "query Order2DetailsPage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  displayTexts {\n    messageType\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n  ...Order2DetailsMessage_order\n  ...Order2DetailsPaymentInfo_order\n}\n\nfragment Order2DetailsPaymentInfo_order on Order {\n  creditCardWalletType\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
+    "text": "query Order2DetailsPaymentInfo_TestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DetailsPaymentInfo_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsPaymentInfo_order on Order {\n  creditCardWalletType\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b68af50676405f31177c883fe9ef437a";
+(node as any).hash = "79b45db67396f4cc84e259c2122479ce";
 
 export default node;

@@ -13,11 +13,11 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
-import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import type { Order2DetailsPage_order$key } from "__generated__/Order2DetailsPage_order.graphql"
 import { graphql, useFragment } from "react-relay"
 import { Order2DetailsHeader } from "./Order2DetailsHeader"
 import { Order2DetailsMessage } from "./Order2DetailsMessage"
+import { Order2DetailsPaymentInfo } from "Apps/Order2/Routes/Details/Components/Order2DetailsPaymentInfo"
 
 interface Order2DetailsPageProps {
   order: Order2DetailsPage_order$key
@@ -134,24 +134,7 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
 
         <Spacer y={1} />
 
-        {/* Payment method */}
-        <Box p={2} backgroundColor="mono0">
-          <Text variant="sm" fontWeight={500} color="mono100">
-            Payment method
-          </Text>
-          <Spacer y={1} />
-          <Flex>
-            <BrandCreditCardIcon
-              mr={1}
-              type={"Visa" as Brand}
-              width="26px"
-              height="26px"
-            />
-            <Text variant="xs" color="mono100">
-              •••• 4242 Exp 12/29
-            </Text>
-          </Flex>
-        </Box>
+        <Order2DetailsPaymentInfo order={orderData} />
 
         {/* Help section */}
         <Box p={2}>
@@ -192,6 +175,7 @@ const FRAGMENT = graphql`
   fragment Order2DetailsPage_order on Order {
     ...Order2DetailsHeader_order
     ...Order2DetailsMessage_order
+    ...Order2DetailsPaymentInfo_order
   }
 `
 
