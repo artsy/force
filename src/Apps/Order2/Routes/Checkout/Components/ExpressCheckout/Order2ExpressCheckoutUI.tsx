@@ -1,11 +1,4 @@
-import {
-  Box,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Box, Spacer, Text } from "@artsy/palette"
 import {
   ExpressCheckoutElement,
   useElements,
@@ -35,13 +28,14 @@ import {
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { preventHardReload } from "Apps/Order/OrderApp"
-import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
+import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type {
-  ExpressCheckoutUI_order$data,
-  ExpressCheckoutUI_order$key,
-} from "__generated__/ExpressCheckoutUI_order.graphql"
+  Order2ExpressCheckoutUI_order$data,
+  Order2ExpressCheckoutUI_order$key,
+} from "__generated__/Order2ExpressCheckoutUI_order.graphql"
 import type {
   FulfillmentOptionInputEnum,
   useSetFulfillmentOptionMutation$data,
@@ -50,12 +44,11 @@ import type {
   OrderCreditCardWalletTypeEnum,
   useUpdateOrderMutation$data,
 } from "__generated__/useUpdateOrderMutation.graphql"
-import { type Dispatch, type SetStateAction, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
-interface ExpressCheckoutUIProps {
-  order: ExpressCheckoutUI_order$key
-  setShowSpinner?: Dispatch<SetStateAction<boolean>>
+interface Order2ExpressCheckoutUIProps {
+  order: Order2ExpressCheckoutUI_order$key
   isChrome?: boolean
 }
 
@@ -66,15 +59,15 @@ type HandleCancelCallback = NonNullable<
   React.ComponentProps<typeof ExpressCheckoutElement>["onCancel"]
 >
 
-export const ExpressCheckoutUI = ({
+export const Order2ExpressCheckoutUI = ({
   order,
-  setShowSpinner,
   isChrome,
-}: ExpressCheckoutUIProps) => {
+}: Order2ExpressCheckoutUIProps) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
-  const [visible, setVisible] = useState(false)
+
   const elements = useElements()
   const stripe = useStripe()
+
   const setFulfillmentOptionMutation = useSetFulfillmentOptionMutation()
   const updateOrderMutation = useUpdateOrderMutation()
   const updateOrderShippingAddressMutation =
@@ -83,13 +76,16 @@ export const ExpressCheckoutUI = ({
   const unsetFulfillmentOptionMutation =
     useUnsetOrderFulfillmentOptionMutation()
   const unsetPaymentMethodMutation = useUnsetOrderPaymentMethodMutation()
+
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
+
+  // TODO: integrate with new checkout tracking if necessary
   const orderTracking = useOrderTracking()
+
   const errorRef = useRef<string | null>(null)
-  const [hasMultiplePaymentOptions, setHasMultiplePaymentOptions] =
-    useState<boolean>(false)
-  const shippingContext = useShippingContext()
+
+  const { setExpressCheckoutLoaded } = useCheckoutContext()
 
   if (!(stripe && elements)) {
     return null
@@ -431,8 +427,6 @@ export const ExpressCheckoutUI = ({
         return
       }
 
-      setShowSpinner?.(true)
-
       const submitOrderResult = await submitOrderMutation.submitMutation({
         variables: {
           input: {
@@ -472,37 +466,29 @@ export const ExpressCheckoutUI = ({
   }
 
   const handleReady = e => {
+    let enabledPaymentMethods: ExpressCheckoutPaymentMethod[] = []
     try {
-      const paymentMethods = e.availablePaymentMethods
-
-      if (paymentMethods) {
-        setHasMultiplePaymentOptions(
-          Object.values(paymentMethods).filter(Boolean).length > 1,
-        )
-
-        setVisible(true)
-
+      enabledPaymentMethods = extractEnabledPaymentMethods(
+        e.availablePaymentMethods,
+      )
+      if (enabledPaymentMethods) {
         orderTracking.expressCheckoutViewed({
           order: orderData,
-          walletType: getAvailablePaymentMethods(paymentMethods),
+          walletType: enabledPaymentMethods,
         })
       }
     } catch (error) {
       logger.error("Error handling ready event", error)
     } finally {
-      shippingContext.actions.setIsExpressCheckoutLoading(false)
+      setExpressCheckoutLoaded(enabledPaymentMethods)
     }
   }
 
   return (
-    <Box display={visible ? "block" : "none"}>
-      <Text variant="lg-display">Express checkout</Text>
+    <Box>
+      <Text variant="sm-display">Express Checkout</Text>
       <Spacer y={1} />
-      <Box
-        minWidth="240px"
-        maxWidth={hasMultiplePaymentOptions ? "100%" : ["100%", "50%"]}
-        paddingX="1px"
-      >
+      <Box minWidth="240px" maxWidth="100%" paddingX="1px">
         <ExpressCheckoutElement
           options={expressCheckoutOptions}
           onClick={handleOpenExpressCheckout}
@@ -528,13 +514,12 @@ export const ExpressCheckoutUI = ({
         </RouterLink>
         .
       </Text>
-      <Spacer y={4} />
     </Box>
   )
 }
 
 const ORDER_FRAGMENT = graphql`
-  fragment ExpressCheckoutUI_order on Order {
+  fragment Order2ExpressCheckoutUI_order on Order {
     internalID
     source
     mode
@@ -590,7 +575,7 @@ type UpdateOrderResult = OrderMutationSuccess<
 >["order"]
 
 type ParseableOrder =
-  | ExpressCheckoutUI_order$data
+  | Order2ExpressCheckoutUI_order$data
   | SetFulfillmentOrderResult
   | UpdateOrderResult
 
@@ -718,23 +703,10 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
   }
 }
 
-function getAvailablePaymentMethods(
+function extractEnabledPaymentMethods(
   paymentMethods: AvailablePaymentMethods,
-): string[] {
+): ExpressCheckoutPaymentMethod[] {
   return Object.entries(paymentMethods)
     .filter(([_, isAvailable]) => isAvailable)
-    .map(([method]) => method)
+    .map(([method]) => method) as ExpressCheckoutPaymentMethod[]
 }
-
-export const EXPRESS_CHECKOUT_PLACEHOLDER = (
-  <Skeleton>
-    <SkeletonText variant="lg-display">Express checkout</SkeletonText>
-    <Spacer y={1} />
-    <SkeletonBox width={["100%", "50%"]} height={50} borderRadius={50} />
-    <Spacer y={1} />
-    <SkeletonText variant="xs" ml={0.5}>
-      By clicking Pay, I agree to Artsy’s General Terms and Conditions of Sale
-    </SkeletonText>
-    <Spacer y={4} />
-  </Skeleton>
-)

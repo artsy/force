@@ -16,6 +16,7 @@ import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import type { FulfillmentType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { ExpressCheckoutUI_order$data } from "__generated__/ExpressCheckoutUI_order.graphql"
+import type { Order2ExpressCheckoutUI_order$data } from "__generated__/Order2ExpressCheckoutUI_order.graphql"
 import type { Review_order$data } from "__generated__/Review_order.graphql"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
@@ -105,7 +106,7 @@ export const useOrderTracking = () => {
         order,
         walletType,
       }: {
-        order: ExpressCheckoutUI_order$data
+        order: ExpressCheckoutUI_order$data | Order2ExpressCheckoutUI_order$data
         walletType: string[]
       }) => {
         const payload: ExpressCheckoutViewed = {
@@ -129,7 +130,7 @@ export const useOrderTracking = () => {
         order,
         walletType,
       }: {
-        order: ExpressCheckoutUI_order$data
+        order: ExpressCheckoutUI_order$data | Order2ExpressCheckoutUI_order$data
         walletType: string
       }) => {
         const payload: ClickedExpressCheckout = {
@@ -152,7 +153,7 @@ export const useOrderTracking = () => {
         order,
         walletType,
       }: {
-        order: ExpressCheckoutUI_order$data
+        order: ExpressCheckoutUI_order$data | Order2ExpressCheckoutUI_order$data
         walletType: string
       }) => {
         const payload: ClickedCancelExpressCheckout = {
@@ -175,7 +176,10 @@ export const useOrderTracking = () => {
         order,
         walletType,
       }: {
-        order: ExpressCheckoutUI_order$data | Review_order$data
+        order:
+          | ExpressCheckoutUI_order$data
+          | Review_order$data
+          | Order2ExpressCheckoutUI_order$data
         walletType?: string
       }) => {
         const payload: SubmittedOffer = {
@@ -194,7 +198,10 @@ export const useOrderTracking = () => {
         order,
         walletType,
       }: {
-        order: ExpressCheckoutUI_order$data | Review_order$data
+        order:
+          | ExpressCheckoutUI_order$data
+          | Review_order$data
+          | Order2ExpressCheckoutUI_order$data
         walletType?: string
       }) => {
         const payload: SubmittedOrder = {

@@ -1,14 +1,44 @@
 import { act, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2CheckoutRouteTestQuery } from "__generated__/Order2CheckoutRouteTestQuery.graphql"
 import { merge } from "lodash"
+import { useEffect } from "react"
 import { graphql } from "react-relay"
+import { Order2ExpressCheckout as MockExpressCheckout } from "../Components/ExpressCheckout/Order2ExpressCheckout"
 import { Order2CheckoutRoute } from "../Order2CheckoutRoute"
 
 jest.unmock("react-relay")
 jest.useFakeTimers()
+
+// For now express checkout is entirely mocked and just instantly registers
+// no available payment methods. We can make this more refined if necessary later.
+jest.mock(
+  "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckout",
+  () => {
+    const MockExpressCheckout = jest.fn(() => {
+      const { setExpressCheckoutLoaded, expressCheckoutPaymentMethods } =
+        useCheckoutContext()
+      // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+      useEffect(() => {
+        setExpressCheckoutLoaded([])
+      }, [])
+      return expressCheckoutPaymentMethods == null ? (
+        <div>MockExpressCheckout</div>
+      ) : null
+    })
+
+    return {
+      Order2ExpressCheckout: MockExpressCheckout,
+    }
+  },
+)
+
+beforeEach(() => {
+  ;(MockExpressCheckout as jest.Mock).mockClear()
+})
 
 const { renderWithRelay } = setupTestWrapperTL<Order2CheckoutRouteTestQuery>({
   Component: (props: any) => <Order2CheckoutRoute {...props} />,
@@ -43,6 +73,42 @@ describe("Order2CheckoutRoute", () => {
           screen.queryByLabelText("Checkout loading skeleton"),
         ).not.toBeInTheDocument()
       })
+    })
+  })
+
+  describe("express checkout", () => {
+    it("renders express checkout if eligible but not if it isn't eligible", async () => {
+      const props = {
+        ...baseProps,
+      }
+      props.me.order.lineItems[0].artwork.isFixedShippingFeeOnly = true
+
+      await renderWithRelay({
+        Viewer: () => props,
+      })
+      expect(
+        screen.getByLabelText("Checkout loading skeleton"),
+      ).toBeInTheDocument()
+
+      expect(MockExpressCheckout).toHaveBeenCalled()
+    })
+    // TODO: Make our mock more strategic if necessary.
+    it("does not render express checkout if not eligible", async () => {
+      const props = {
+        ...baseProps,
+      }
+      props.me.order.mode = "BUY"
+      props.me.order.lineItems[0].artwork.isFixedShippingFeeOnly = false
+
+      await renderWithRelay({
+        Viewer: () => props,
+      })
+
+      expect(
+        screen.getByLabelText("Checkout loading skeleton"),
+      ).toBeInTheDocument()
+
+      expect(MockExpressCheckout).not.toHaveBeenCalled()
     })
   })
 
@@ -343,6 +409,7 @@ const baseProps = {
         {
           artwork: {
             slug: "artwork-slug",
+            isFixedShippingFeeOnly: true,
           },
           artworkVersion: {
             internalID: "artwork-version-1",
