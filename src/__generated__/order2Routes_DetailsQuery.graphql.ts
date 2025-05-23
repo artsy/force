@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<84d71d4d102018a17e17430c5a2bd42a>>
+ * @generated SignedSource<<cc005071bb6377f45fb9750ba53bd542>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -324,7 +324,7 @@ return {
                     "args": null,
                     "concreteType": "Money",
                     "kind": "LinkedField",
-                    "name": "buyerTotal",
+                    "name": "totalListPrice",
                     "plural": false,
                     "selections": (v9/*: any*/),
                     "storageKey": null
@@ -431,6 +431,31 @@ return {
                           {
                             "alias": null,
                             "args": null,
+                            "concreteType": "dimensions",
+                            "kind": "LinkedField",
+                            "name": "dimensions",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "in",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "cm",
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
                             "concreteType": "Image",
                             "kind": "LinkedField",
                             "name": "image",
@@ -486,12 +511,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3263807eed9a1c712d0f856098239293",
+    "cacheID": "6444775189375b5415112a5713b16e27",
     "id": null,
     "metadata": {},
     "name": "order2Routes_DetailsQuery",
     "operationKind": "query",
-    "text": "query order2Routes_DetailsQuery(\n  $orderID: ID!\n) {\n  viewer {\n    ...Order2DetailsRoute_viewer_3HPek8\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  displayTexts {\n    messageType\n  }\n}\n\nfragment Order2DetailsOrderSummary_order on Order {\n  ...Order2PricingBreakdown_order\n  source\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      image {\n        resized(height: 380) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n  ...Order2DetailsMessage_order\n  ...Order2DetailsOrderSummary_order\n  ...Order2PricingBreakdown_order\n}\n\nfragment Order2DetailsRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      ...Order2DetailsPage_order\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PricingBreakdown_order on Order {\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
+    "text": "query order2Routes_DetailsQuery(\n  $orderID: ID!\n) {\n  viewer {\n    ...Order2DetailsRoute_viewer_3HPek8\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  displayTexts {\n    messageType\n  }\n}\n\nfragment Order2DetailsOrderSummary_order on Order {\n  ...Order2PricingBreakdown_order\n  source\n  totalListPrice {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      dimensions {\n        in\n        cm\n      }\n      image {\n        resized(height: 380) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n  ...Order2DetailsMessage_order\n  ...Order2DetailsOrderSummary_order\n  ...Order2PricingBreakdown_order\n}\n\nfragment Order2DetailsRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      ...Order2DetailsPage_order\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PricingBreakdown_order on Order {\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
   }
 };
 })();

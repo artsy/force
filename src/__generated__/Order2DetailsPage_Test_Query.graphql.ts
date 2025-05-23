@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c765c9f525af76cae94a2bd4240bc747>>
+ * @generated SignedSource<<d7862f09efebdd6b8eb34d1da12e916b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,9 +25,6 @@ export type Order2DetailsPage_Test_Query$rawResponse = {
     readonly id: string;
     readonly order: {
       readonly buyerStateExpiresAt: string | null | undefined;
-      readonly buyerTotal: {
-        readonly display: string | null | undefined;
-      } | null | undefined;
       readonly code: string;
       readonly currencyCode: string;
       readonly displayTexts: {
@@ -51,6 +48,10 @@ export type Order2DetailsPage_Test_Query$rawResponse = {
             readonly shortDescription: string | null | undefined;
           } | null | undefined;
           readonly date: string | null | undefined;
+          readonly dimensions: {
+            readonly cm: string | null | undefined;
+            readonly in: string | null | undefined;
+          } | null | undefined;
           readonly id: string;
           readonly image: {
             readonly resized: {
@@ -99,6 +100,9 @@ export type Order2DetailsPage_Test_Query$rawResponse = {
       } | null | undefined;
       readonly source: OrderSourceEnum;
       readonly taxTotal: {
+        readonly display: string | null | undefined;
+      } | null | undefined;
+      readonly totalListPrice: {
         readonly display: string | null | undefined;
       } | null | undefined;
     } | null | undefined;
@@ -362,7 +366,7 @@ return {
                 "args": null,
                 "concreteType": "Money",
                 "kind": "LinkedField",
-                "name": "buyerTotal",
+                "name": "totalListPrice",
                 "plural": false,
                 "selections": (v6/*: any*/),
                 "storageKey": null
@@ -469,6 +473,31 @@ return {
                       {
                         "alias": null,
                         "args": null,
+                        "concreteType": "dimensions",
+                        "kind": "LinkedField",
+                        "name": "dimensions",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "in",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "cm",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
                         "concreteType": "Image",
                         "kind": "LinkedField",
                         "name": "image",
@@ -520,12 +549,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d09d3c3da8af0b1218fccad2585218f3",
+    "cacheID": "5d2d2163305e66060077734e975a9259",
     "id": null,
     "metadata": {},
     "name": "Order2DetailsPage_Test_Query",
     "operationKind": "query",
-    "text": "query Order2DetailsPage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  displayTexts {\n    messageType\n  }\n}\n\nfragment Order2DetailsOrderSummary_order on Order {\n  ...Order2PricingBreakdown_order\n  source\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      image {\n        resized(height: 380) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n  ...Order2DetailsMessage_order\n  ...Order2DetailsOrderSummary_order\n  ...Order2PricingBreakdown_order\n}\n\nfragment Order2PricingBreakdown_order on Order {\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
+    "text": "query Order2DetailsPage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  displayTexts {\n    messageType\n  }\n}\n\nfragment Order2DetailsOrderSummary_order on Order {\n  ...Order2PricingBreakdown_order\n  source\n  totalListPrice {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      dimensions {\n        in\n        cm\n      }\n      image {\n        resized(height: 380) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n  ...Order2DetailsMessage_order\n  ...Order2DetailsOrderSummary_order\n  ...Order2PricingBreakdown_order\n}\n\nfragment Order2PricingBreakdown_order on Order {\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
   }
 };
 })();
