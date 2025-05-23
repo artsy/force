@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7f929f33f156661f87d51b52c66a5d36>>
+ * @generated SignedSource<<fdd4bd904ed4b60e7555cc7b22389581>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ import { FragmentRefs } from "relay-runtime";
 export type Order2DetailsMessage_order$data = {
   readonly buyerStateExpiresAt: string | null | undefined;
   readonly code: string;
+  readonly currencyCode: string;
   readonly displayTexts: {
     readonly messageType: DisplayTextsMessageTypeEnum;
   };
@@ -49,6 +50,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "currencyCode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
     },
@@ -75,6 +83,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "ac63312303fcd0bfc71d10cd7c5fc070";
+(node as any).hash = "d4a3de784c48a5844b365765f8ecc8ee";
 
 export default node;

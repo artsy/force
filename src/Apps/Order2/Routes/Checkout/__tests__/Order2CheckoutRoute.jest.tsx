@@ -1,4 +1,4 @@
-import { act, screen, waitFor } from "@testing-library/react"
+import { act, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -77,6 +77,7 @@ describe("Order2CheckoutRoute", () => {
       const testIDs = {
         phoneCountryPicker: "country-picker",
         fulfillmentDetailsStep: "FulfillmentDetailsStep",
+        fulfillmentDetailsStepTabs: "FulfillmentDetailsStepTabs",
         pickupDetailsForm: "PickupDetailsForm",
         // Use with screen.getByRole
         phoneCountryPickerListRole: "listbox",
@@ -114,6 +115,8 @@ describe("Order2CheckoutRoute", () => {
 
         const { mockResolveLastOperation } =
           await renderWithLoadingComplete(props)
+
+        expect(screen.queryByText("Shipping Method")).toBeVisible()
 
         // Click pickup tab
         expect(screen.queryByText("Free pickup")).not.toBeInTheDocument()
@@ -223,6 +226,7 @@ describe("Order2CheckoutRoute", () => {
 
         // Verify that the step is complete
         await screen.findByText(pickupCompleteMessage)
+        expect(screen.queryByText("Shipping Method")).not.toBeInTheDocument()
       })
 
       it("shows the pickup details pre-filled if they exist", async () => {
@@ -243,7 +247,7 @@ describe("Order2CheckoutRoute", () => {
               fulfillmentDetails: {
                 phoneNumber: {
                   originalNumber: "03012345678",
-                  countryCode: "de",
+                  regionCode: "de",
                 },
               },
               selectedFulfillmentOption: {
@@ -253,11 +257,22 @@ describe("Order2CheckoutRoute", () => {
           },
         })
 
+        expect(screen.queryByText("Shipping Method")).not.toBeInTheDocument()
+
+        const editPickup = within(
+          screen.getByTestId(testIDs.fulfillmentDetailsStep),
+        ).getByText("Edit")
+
         act(() => {
-          userEvent.click(screen.getByText("Edit"))
+          userEvent.click(editPickup)
         })
+
+        const pickupTab = within(
+          screen.getByTestId(testIDs.fulfillmentDetailsStepTabs),
+        ).getByText("Pickup")
+
         act(() => {
-          userEvent.click(screen.getByText("Pickup"))
+          userEvent.click(pickupTab)
         })
 
         expect(screen.getByText("Free pickup")).toBeInTheDocument()
@@ -270,6 +285,13 @@ describe("Order2CheckoutRoute", () => {
         expect(screen.getByTestId("PickupPhoneNumberInput")).toHaveValue(
           "03012345678",
         )
+
+        expect(screen.queryByText("Shipping Method")).not.toBeInTheDocument()
+
+        act(() => {
+          userEvent.click(screen.getByText("Delivery"))
+        })
+        expect(screen.queryByText("Shipping Method")).toBeInTheDocument()
       })
     })
   })

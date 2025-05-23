@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5b3a620d3a9122c22edd96794ff87218>>
+ * @generated SignedSource<<d1d8cf340ab10ca8154cbc5bc1c7ecdd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,6 +25,7 @@ export type Order2DetailsMessage_Test_Query$rawResponse = {
     readonly order: {
       readonly buyerStateExpiresAt: string | null | undefined;
       readonly code: string;
+      readonly currencyCode: string;
       readonly displayTexts: {
         readonly messageType: DisplayTextsMessageTypeEnum;
       };
@@ -132,6 +133,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "currencyCode",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "internalID",
                 "storageKey": null
               },
@@ -164,12 +172,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "026726dfaec107b3bf6992676e78181e",
+    "cacheID": "ad9d13880b5046dfddbc8c297366e6f9",
     "id": null,
     "metadata": {},
     "name": "Order2DetailsMessage_Test_Query",
     "operationKind": "query",
-    "text": "query Order2DetailsMessage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsMessage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  internalID\n  displayTexts {\n    messageType\n  }\n}\n"
+    "text": "query Order2DetailsMessage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsMessage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  displayTexts {\n    messageType\n  }\n}\n"
   }
 };
 })();

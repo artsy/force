@@ -1,7 +1,8 @@
-import { Box, Flex, Link, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2DetailsMessage_order$key } from "__generated__/Order2DetailsMessage_order.graphql"
 import { graphql, useFragment } from "react-relay"
+import { WireTransferInfo } from "./WireTransferInfo"
 
 interface Order2DetailsMessageProps {
   order: Order2DetailsMessage_order$key
@@ -72,8 +73,7 @@ const getMessageContent = (order): React.ReactNode => {
             The gallery will confirm by {formattedStateExpireTime}.
           </Text>
           <Text variant="sm">
-            You can <Link>contact the gallery</Link> with any questions about
-            your order.
+            You can contact the gallery with any questions about your order.
           </Text>
         </>
       )
@@ -90,8 +90,7 @@ const getMessageContent = (order): React.ReactNode => {
             The gallery will confirm by {formattedStateExpireTime}.
           </Text>
           <Text variant="sm">
-            You can <Link>contact the gallery</Link> with any questions about
-            your order.
+            You can contact the gallery with any questions about your order.
           </Text>
         </>
       )
@@ -149,45 +148,7 @@ const getMessageContent = (order): React.ReactNode => {
             </Text>
           </NumberedListItem>
           <Spacer y={2} />
-          <Box border="1px solid" borderColor="mono15" p={2}>
-            <Text variant="sm" fontWeight="bold">
-              Send wire transfer to
-            </Text>
-            <Spacer y={1} />
-            <Text variant="sm">
-              Account name: Art.sy Inc.
-              <br />
-              Account number: 424385142
-              <br />
-              Routing number: 121000248
-              <br />
-              International SWIFT: WFBIUS6S
-            </Text>
-            <Spacer y={4} />
-            <Text variant="sm" fontWeight="bold">
-              Bank address
-            </Text>
-            <Spacer y={1} />
-            <Text variant="sm">
-              Wells Fargo Bank, N.A.
-              <br />
-              420 Montgomery Street
-              <br />
-              San Francisco, CA 9410
-            </Text>
-            <Spacer y={4} />
-            <Text variant="sm" fontWeight="bold">
-              Add order #{order.code} to the notes section in your wire
-              transfer.
-            </Text>
-            <Spacer y={1} />
-            <Text variant="sm">
-              If your bank account is not in USD, please reference Artsy’s
-              intermediary bank ING Brussels (Intermediary Bank BIC/SWIFT:
-              PNBPUS3NNYC) along with Artsy’s international SWIFT (WFBIUS6S)
-              when making payment. Ask your bank for further instructions.
-            </Text>
-          </Box>
+          <WireTransferInfo order={order} />
         </>
       )
     case "APPROVED_PICKUP":
@@ -198,8 +159,7 @@ const getMessageContent = (order): React.ReactNode => {
             business days to coordinate pickup.
           </Text>
           <Text variant="sm">
-            You can <Link>contact the gallery</Link> with any questions about
-            your order.
+            You can contact the gallery with any questions about your order.
           </Text>
         </>
       )
@@ -303,6 +263,7 @@ const FRAGMENT = graphql`
   fragment Order2DetailsMessage_order on Order {
     buyerStateExpiresAt
     code
+    currencyCode
     internalID
     displayTexts {
       messageType

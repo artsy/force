@@ -10,7 +10,7 @@ export const Order2FulfillmentDetailsCompletedView = ({
   fulfillmentOption,
   onClickEdit,
 }: Order2FulfillmentDetailsCompletedViewProps) => {
-  if (fulfillmentOption.type === "PICKUP") {
+  if (fulfillmentOption?.type === "PICKUP") {
     return (
       <Flex alignItems="flex-start">
         <CheckmarkIcon

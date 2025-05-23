@@ -50,12 +50,13 @@ import type {
   OrderCreditCardWalletTypeEnum,
   useUpdateOrderMutation$data,
 } from "__generated__/useUpdateOrderMutation.graphql"
-import { Dispatch, SetStateAction, useRef, useState } from "react"
+import { type Dispatch, type SetStateAction, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface ExpressCheckoutUIProps {
   order: ExpressCheckoutUI_order$key
   setShowSpinner?: Dispatch<SetStateAction<boolean>>
+  isChrome?: boolean
 }
 
 const logger = createLogger("ExpressCheckoutUI")
@@ -68,6 +69,7 @@ type HandleCancelCallback = NonNullable<
 export const ExpressCheckoutUI = ({
   order,
   setShowSpinner,
+  isChrome,
 }: ExpressCheckoutUIProps) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const [visible, setVisible] = useState(false)
@@ -91,6 +93,24 @@ export const ExpressCheckoutUI = ({
 
   if (!(stripe && elements)) {
     return null
+  }
+
+  const expressCheckoutOptions: StripeExpressCheckoutElementOptions = {
+    buttonTheme: {
+      applePay: "white-outline",
+      googlePay: "white",
+    },
+    buttonHeight: 50,
+    paymentMethods: {
+      applePay: isChrome ? "never" : "always",
+      googlePay: "always",
+    },
+    layout: {
+      overflow: "never",
+    },
+    buttonType: {
+      googlePay: "plain",
+    },
   }
 
   const checkoutOptions: ClickResolveDetails = {
@@ -509,24 +529,6 @@ export const ExpressCheckoutUI = ({
       <Spacer y={4} />
     </Box>
   )
-}
-
-const expressCheckoutOptions: StripeExpressCheckoutElementOptions = {
-  buttonTheme: {
-    applePay: "white-outline",
-    googlePay: "white",
-  },
-  buttonHeight: 50,
-  paymentMethods: {
-    applePay: "always",
-    googlePay: "always",
-  },
-  layout: {
-    overflow: "never",
-  },
-  buttonType: {
-    googlePay: "plain",
-  },
 }
 
 const ORDER_FRAGMENT = graphql`

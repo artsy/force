@@ -61,6 +61,7 @@ describe("Order2DetailsMessage", () => {
       Order: () => ({
         buyerStateExpiresAt: mockDate,
         code: "123",
+        currencyCode: "USD",
         internalID: "test-id",
         displayTexts: {
           messageType: "PROCESSING_WIRE",
@@ -69,8 +70,8 @@ describe("Order2DetailsMessage", () => {
     })
 
     expect(screen.getByText("Send wire transfer to")).toBeInTheDocument()
-    expect(screen.getByText(/Account name: Art\.sy Inc\./)).toBeInTheDocument()
-    expect(screen.getByText(/Account number: 424385142/)).toBeInTheDocument()
+    expect(screen.getByText(/Account name: Art.sy Inc/)).toBeInTheDocument()
+    expect(screen.getByText(/Account number: 4243851425/)).toBeInTheDocument()
     expect(screen.getByText(/Routing number: 121000248/)).toBeInTheDocument()
     expect(
       screen.getByText(/International SWIFT: WFBIUS6S/),

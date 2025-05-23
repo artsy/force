@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6c0b93f485fadefab9ac48238c31d6bb>>
+ * @generated SignedSource<<f05150165f9222e4cbc577bbfcdfd4a4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,6 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
-export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutRoute_viewer$data = {
   readonly me: {
@@ -21,13 +20,10 @@ export type Order2CheckoutRoute_viewer$data = {
       } | null | undefined> | null | undefined;
     } | null | undefined;
     readonly order: {
-      readonly fulfillmentOptions: ReadonlyArray<{
-        readonly type: FulfillmentOptionTypeEnum;
-      }>;
-      readonly internalID: string;
-      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutLoadingSkeleton_order" | "Order2CollapsibleOrderSummary_order" | "Order2FulfillmentDetailsStep_order" | "Order2ReviewStep_order" | "useLoadCheckout_order">;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutContext_order">;
     } | null | undefined;
   } | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutApp_viewer">;
   readonly " $fragmentType": "Order2CheckoutRoute_viewer";
 };
 export type Order2CheckoutRoute_viewer$key = {
@@ -35,15 +31,7 @@ export type Order2CheckoutRoute_viewer$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutRoute_viewer">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -55,6 +43,17 @@ return {
   "metadata": null,
   "name": "Order2CheckoutRoute_viewer",
   "selections": [
+    {
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "orderID",
+          "variableName": "orderID"
+        }
+      ],
+      "kind": "FragmentSpread",
+      "name": "Order2CheckoutApp_viewer"
+    },
     {
       "alias": null,
       "args": null,
@@ -77,49 +76,10 @@ return {
           "name": "order",
           "plural": false,
           "selections": [
-            (v0/*: any*/),
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "FulfillmentOption",
-              "kind": "LinkedField",
-              "name": "fulfillmentOptions",
-              "plural": true,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "type",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            },
             {
               "args": null,
               "kind": "FragmentSpread",
-              "name": "Order2CollapsibleOrderSummary_order"
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "Order2FulfillmentDetailsStep_order"
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "Order2ReviewStep_order"
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "useLoadCheckout_order"
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "Order2CheckoutLoadingSkeleton_order"
+              "name": "Order2CheckoutContext_order"
             }
           ],
           "storageKey": null
@@ -154,7 +114,13 @@ return {
                   "name": "node",
                   "plural": false,
                   "selections": [
-                    (v0/*: any*/)
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "internalID",
+                      "storageKey": null
+                    }
                   ],
                   "storageKey": null
                 }
@@ -171,8 +137,7 @@ return {
   "type": "Viewer",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "f349de1d0264b6ab69f4656376ab8990";
+(node as any).hash = "b0195e8c31bd09de4ae6049ba9ef8a54";
 
 export default node;
