@@ -9,6 +9,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { Order2DetailsOrderSummary } from "Apps/Order2/Routes/Details/Components/Order2DetailsOrderSummary"
 import { Order2DetailsPaymentInfo } from "Apps/Order2/Routes/Details/Components/Order2DetailsPaymentInfo"
 import type { Order2DetailsPage_order$key } from "__generated__/Order2DetailsPage_order.graphql"
 import { graphql, useFragment } from "react-relay"

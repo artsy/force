@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * @generated SignedSource<<4e17a27fd962db3dc145ad51eea4c6c5>>
+=======
+ * @generated SignedSource<<d7862f09efebdd6b8eb34d1da12e916b>>
+>>>>>>> d4d328d232 (adding list price and dimensions to the artwork summary for Order details)
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,9 +30,6 @@ export type Order2DetailsPage_Test_Query$rawResponse = {
     readonly id: string;
     readonly order: {
       readonly buyerStateExpiresAt: string | null | undefined;
-      readonly buyerTotal: {
-        readonly display: string | null | undefined;
-      } | null | undefined;
       readonly code: string;
       readonly creditCardWalletType: OrderCreditCardWalletTypeEnum | null | undefined;
       readonly currencyCode: string;
@@ -53,6 +54,10 @@ export type Order2DetailsPage_Test_Query$rawResponse = {
             readonly shortDescription: string | null | undefined;
           } | null | undefined;
           readonly date: string | null | undefined;
+          readonly dimensions: {
+            readonly cm: string | null | undefined;
+            readonly in: string | null | undefined;
+          } | null | undefined;
           readonly id: string;
           readonly image: {
             readonly resized: {
@@ -118,6 +123,9 @@ export type Order2DetailsPage_Test_Query$rawResponse = {
       } | null | undefined;
       readonly source: OrderSourceEnum;
       readonly taxTotal: {
+        readonly display: string | null | undefined;
+      } | null | undefined;
+      readonly totalListPrice: {
         readonly display: string | null | undefined;
       } | null | undefined;
     } | null | undefined;
@@ -382,7 +390,7 @@ return {
                 "args": null,
                 "concreteType": "Money",
                 "kind": "LinkedField",
-                "name": "buyerTotal",
+                "name": "totalListPrice",
                 "plural": false,
                 "selections": (v7/*: any*/),
                 "storageKey": null
@@ -483,6 +491,31 @@ return {
                             "storageKey": null
                           },
                           (v8/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "dimensions",
+                        "kind": "LinkedField",
+                        "name": "dimensions",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "in",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "cm",
+                            "storageKey": null
+                          }
                         ],
                         "storageKey": null
                       },
@@ -624,12 +657,20 @@ return {
     ]
   },
   "params": {
+<<<<<<< HEAD
     "cacheID": "9597fa230729259674ead874b9739ac5",
+=======
+    "cacheID": "5d2d2163305e66060077734e975a9259",
+>>>>>>> d4d328d232 (adding list price and dimensions to the artwork summary for Order details)
     "id": null,
     "metadata": {},
     "name": "Order2DetailsPage_Test_Query",
     "operationKind": "query",
+<<<<<<< HEAD
     "text": "query Order2DetailsPage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  displayTexts {\n    messageType\n  }\n}\n\nfragment Order2DetailsOrderSummary_order on Order {\n  ...Order2PricingBreakdown_order\n  source\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      image {\n        resized(height: 380) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n  ...Order2DetailsMessage_order\n  ...Order2DetailsOrderSummary_order\n  ...Order2PricingBreakdown_order\n  ...Order2DetailsPaymentInfo_order\n}\n\nfragment Order2DetailsPaymentInfo_order on Order {\n  creditCardWalletType\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n\nfragment Order2PricingBreakdown_order on Order {\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
+=======
+    "text": "query Order2DetailsPage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  displayTexts {\n    messageType\n  }\n}\n\nfragment Order2DetailsOrderSummary_order on Order {\n  ...Order2PricingBreakdown_order\n  source\n  totalListPrice {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      dimensions {\n        in\n        cm\n      }\n      image {\n        resized(height: 380) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  ...Order2DetailsHeader_order\n  ...Order2DetailsMessage_order\n  ...Order2DetailsOrderSummary_order\n  ...Order2PricingBreakdown_order\n}\n\nfragment Order2PricingBreakdown_order on Order {\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
+>>>>>>> d4d328d232 (adding list price and dimensions to the artwork summary for Order details)
   }
 };
 })();

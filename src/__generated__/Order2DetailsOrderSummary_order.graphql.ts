@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d9fe8eb1b297918d8e526205473b38c3>>
+ * @generated SignedSource<<d03d16c930581081dfea7bb2ede0e6c8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,6 @@ import { ReaderFragment } from 'relay-runtime';
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2DetailsOrderSummary_order$data = {
-  readonly buyerTotal: {
-    readonly display: string | null | undefined;
-  } | null | undefined;
   readonly itemsTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
@@ -28,6 +25,10 @@ export type Order2DetailsOrderSummary_order$data = {
         readonly shortDescription: string | null | undefined;
       } | null | undefined;
       readonly date: string | null | undefined;
+      readonly dimensions: {
+        readonly cm: string | null | undefined;
+        readonly in: string | null | undefined;
+      } | null | undefined;
       readonly image: {
         readonly resized: {
           readonly url: string;
@@ -41,6 +42,9 @@ export type Order2DetailsOrderSummary_order$data = {
   } | null | undefined;
   readonly source: OrderSourceEnum;
   readonly taxTotal: {
+    readonly display: string | null | undefined;
+  } | null | undefined;
+  readonly totalListPrice: {
     readonly display: string | null | undefined;
   } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"Order2PricingBreakdown_order">;
@@ -84,7 +88,7 @@ return {
       "args": null,
       "concreteType": "Money",
       "kind": "LinkedField",
-      "name": "buyerTotal",
+      "name": "totalListPrice",
       "plural": false,
       "selections": (v0/*: any*/),
       "storageKey": null
@@ -195,6 +199,31 @@ return {
             {
               "alias": null,
               "args": null,
+              "concreteType": "dimensions",
+              "kind": "LinkedField",
+              "name": "dimensions",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "in",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "cm",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
               "concreteType": "Image",
               "kind": "LinkedField",
               "name": "image",
@@ -239,6 +268,6 @@ return {
 };
 })();
 
-(node as any).hash = "ca0d10bab8e3d20e5efc26825295f96f";
+(node as any).hash = "f366fa70d9a60f176bf09678189b455b";
 
 export default node;

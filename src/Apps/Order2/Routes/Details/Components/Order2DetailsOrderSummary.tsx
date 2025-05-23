@@ -1,10 +1,10 @@
+import ShieldIcon from "@artsy/icons/ShieldIcon"
 import { Box, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
 import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2DetailsOrderSummary_order$key } from "__generated__/Order2DetailsOrderSummary_order.graphql"
 import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
-import ShieldIcon from "@artsy/icons/ShieldIcon"
 
 interface Order2DetailsOrderSummaryProps {
   order: Order2DetailsOrderSummary_order$key
@@ -43,21 +43,23 @@ export const Order2DetailsOrderSummary: React.FC<
         <Text variant="sm" color="mono60" overflowEllipsis>
           {[artworkVersion?.title, artworkVersion?.date].join(", ")}
         </Text>
-        <Text variant="sm" color="mono60">
-          List price:{" "}
-          {orderData.buyerTotal?.display || orderData.itemsTotal?.display}
-        </Text>
+        {orderData.totalListPrice && (
+          <Text variant="sm" color="mono60">
+            List price: {orderData.totalListPrice.display}
+          </Text>
+        )}
       </Box>
       <Spacer y={2} />
       {artworkVersion?.attributionClass?.shortDescription && (
         <Text variant="sm" color="mono60">
-          {artworkVersion?.attributionClass?.shortDescription}
+          {artworkVersion.attributionClass.shortDescription}
         </Text>
       )}
-      {/* TODO: implement sizing info */}
-      {/* <Text variant="sm" color="mono60">
-        9 2/5 x 11 4/5 in | 24 x 30 cm
-      </Text> */}
+      {artworkVersion?.dimensions && (
+        <Text variant="sm" color="mono60">
+          {artworkVersion.dimensions.in} | {artworkVersion.dimensions.cm}
+        </Text>
+      )}
       <Spacer y={2} />
       <Box mb={2}>
         <Order2PricingBreakdown order={orderData} />
@@ -84,7 +86,7 @@ const FRAGMENT = graphql`
   fragment Order2DetailsOrderSummary_order on Order {
     ...Order2PricingBreakdown_order
     source
-    buyerTotal {
+    totalListPrice {
       display
     }
     itemsTotal {
@@ -106,6 +108,10 @@ const FRAGMENT = graphql`
         date
         attributionClass {
           shortDescription
+        }
+        dimensions {
+          in
+          cm
         }
         image {
           resized(height: 380) {
