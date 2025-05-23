@@ -253,7 +253,7 @@ const useBuildCheckoutContext = (
         payload: { confirmationToken: confirmationToken },
       })
     },
-    [state.confirmationToken], // Is this correct?
+    [],
   )
 
   const editFulfillmentDetails = useCallback(() => {

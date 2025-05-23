@@ -83,8 +83,6 @@ const PaymentFormContent = ({ setConfirmationToken }) => {
 
   // From Stripe docs
   const [errorMessage, setErrorMessage] = useState()
-
-  // TODO: move this to CheckoutContext
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("new")
 
   const paymentElementOptions: StripePaymentElementOptions = {
@@ -139,7 +137,6 @@ const PaymentFormContent = ({ setConfirmationToken }) => {
       return
     }
 
-    // TODO: check if there a better way to do this
     const response = await fetchQuery<Order2PaymentFormConfirmationTokenQuery>(
       environment,
       graphql`
