@@ -34,6 +34,7 @@ interface CheckoutState {
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
   steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
+  confirmationToken: any // Do we need a type for this object?
 }
 
 interface CheckoutActions {
@@ -45,8 +46,10 @@ interface CheckoutActions {
   ) => void
   setFulfillmentDetailsComplete: (args: { isPickup: boolean }) => void
   editFulfillmentDetails: () => void
+  editPayment: () => void
   setLoadingError: (error: CheckoutLoadingError | null) => void
   setLoadingComplete: () => void
+  setConfirmationToken: (args: { confirmationToken: any }) => void
 }
 
 export type Order2CheckoutContextValue = CheckoutState & CheckoutActions
@@ -243,6 +246,16 @@ const useBuildCheckoutContext = (
     [currentStepName],
   )
 
+  const setConfirmationToken = useCallback(
+    ({ confirmationToken }: { confirmationToken: any }) => {
+      dispatch({
+        type: "PAYMENT_COMPLETE",
+        payload: { confirmationToken: confirmationToken },
+      })
+    },
+    [],
+  )
+
   const editFulfillmentDetails = useCallback(() => {
     if (previousStepName !== CheckoutStepName.FULFILLMENT_DETAILS) {
       logger.error(
@@ -255,22 +268,38 @@ const useBuildCheckoutContext = (
     })
   }, [previousStepName])
 
+  const editPayment = useCallback(() => {
+    if (previousStepName !== CheckoutStepName.PAYMENT) {
+      logger.error(
+        `editPayment called when current step is not PAYMENT but ${previousStepName}`,
+      )
+      return
+    }
+    dispatch({
+      type: "EDIT_PAYMENT",
+    })
+  }, [previousStepName])
+
   const actions = useMemo(() => {
     return {
       editFulfillmentDetails,
+      editPayment,
       setActiveFulfillmentDetailsTab,
       setExpressCheckoutLoaded,
       setFulfillmentDetailsComplete,
       setLoadingError,
       setLoadingComplete,
+      setConfirmationToken,
     }
   }, [
     editFulfillmentDetails,
+    editPayment,
     setActiveFulfillmentDetailsTab,
     setExpressCheckoutLoaded,
     setFulfillmentDetailsComplete,
     setLoadingError,
     setLoadingComplete,
+    setConfirmationToken,
   ])
 
   return {
@@ -317,6 +346,7 @@ const initialStateForOrder = (order: Order2CheckoutContext_order$data) => {
     loadingError: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: null,
+    confirmationToken: null,
     steps,
   }
 }
@@ -341,6 +371,13 @@ type Action =
     }
   | {
       type: "EDIT_FULFILLMENT_DETAILS"
+    }
+  | {
+      type: "EDIT_PAYMENT"
+    }
+  | {
+      type: "PAYMENT_COMPLETE"
+      payload: { confirmationToken: any }
     }
   | {
       type: "SET_ACTIVE_FULFILLMENT_DETAILS_TAB"
@@ -442,6 +479,71 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
           }
           return [...acc, current]
         }, [] as CheckoutStep[]),
+      }
+    case "EDIT_PAYMENT":
+      return {
+        ...state,
+        steps: state.steps.reduce((acc, current) => {
+          const isAfterPaymentStep = acc
+            .map(step => step.name)
+            .includes(CheckoutStepName.PAYMENT)
+
+          if (
+            isAfterPaymentStep &&
+            current.state !== CheckoutStepState.HIDDEN
+          ) {
+            return [
+              ...acc,
+              {
+                ...current,
+                state: CheckoutStepState.UPCOMING,
+              },
+            ]
+          }
+          if (current.name === CheckoutStepName.PAYMENT) {
+            return [
+              ...acc,
+              {
+                ...current,
+                state: CheckoutStepState.ACTIVE,
+              },
+            ]
+          }
+
+          return [...acc, current]
+        }, [] as CheckoutStep[]),
+      }
+    case "PAYMENT_COMPLETE":
+      const newSteps = state.steps.reduce((acc, current) => {
+        const isThisStep = current.name === CheckoutStepName.PAYMENT
+        if (isThisStep) {
+          return [
+            ...acc,
+            {
+              ...current,
+              state: CheckoutStepState.COMPLETED,
+            },
+          ]
+        }
+        const firstStepAfterCompleted =
+          acc.find(step => step.state === CheckoutStepState.COMPLETED) &&
+          !acc.find(step => step.state === CheckoutStepState.UPCOMING)
+        if (firstStepAfterCompleted) {
+          return [
+            ...acc,
+            {
+              ...current,
+              state: CheckoutStepState.ACTIVE,
+            },
+          ]
+        }
+        return [...acc, current]
+      }, [] as CheckoutStep[])
+
+      return {
+        ...state,
+        confirmationToken: action.payload.confirmationToken,
+        steps: newSteps,
       }
     default:
       return state

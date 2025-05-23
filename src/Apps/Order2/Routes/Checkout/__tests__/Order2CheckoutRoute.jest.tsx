@@ -259,8 +259,12 @@ describe("Order2CheckoutRoute", () => {
 
         expect(screen.queryByText("Shipping Method")).not.toBeInTheDocument()
 
+        const editPickup = within(
+          screen.getByTestId(testIDs.fulfillmentDetailsStep),
+        ).getByText("Edit")
+
         act(() => {
-          userEvent.click(screen.getByText("Edit"))
+          userEvent.click(editPickup)
         })
 
         const pickupTab = within(
