@@ -72,4 +72,4 @@ export const CollectionsAppFragmentContainer = createFragmentContainer(
 
 const META_DESCRIPTION =
   "Discover collections of art curated by Artsy Specialists. From iconic artist series to trending design, shop " +
-  "collections on the world's largest online art marketplace."
+  "collections on the world’s largest online art marketplace."

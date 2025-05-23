@@ -1,4 +1,4 @@
-import { Box, Flex, Separator, Spacer, Text, color } from "@artsy/palette"
+import { Box, Flex, Separator, Spacer, Text } from "@artsy/palette"
 import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
 import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
 import { ArtworkFilter } from "Components/ArtworkFilter"
@@ -66,7 +66,7 @@ export const CollectApp: React.FC<React.PropsWithChildren<CollectAppProps>> = ({
             <Text variant={["lg-display", "xl"]}>
               <h1>
                 Collect{" "}
-                {breadcrumbTitle
+                {breadcrumbTitle && breadcrumbTitle !== "Collect"
                   ? breadcrumbTitle.toLowerCase()
                   : "art and design"}{" "}
                 online

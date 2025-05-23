@@ -1,4 +1,7 @@
-import { createCollectUrl } from "Apps/Artwork/Utils/createCollectUrl"
+import {
+  type FilterCategory,
+  createCollectUrl,
+} from "Apps/Artwork/Utils/createCollectUrl"
 
 describe("createCollectUrl", () => {
   it("formats the collect page url correctly (large)", async () => {
@@ -51,7 +54,7 @@ describe("createCollectUrl", () => {
   it("doesn't specify category in some cases", () => {
     const result = createCollectUrl({
       dimension: "SMALL",
-      category: "Sound",
+      category: "Sound" as FilterCategory, // Intentionally not a valid category
       artistId: "banksy",
     })
 

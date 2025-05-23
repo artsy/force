@@ -10,7 +10,7 @@ describe("getMetadata", () => {
       expect(title).toBe("Paintings - For Sale on Artsy")
       expect(breadcrumbTitle).toBe("Paintings")
       expect(description).toBe(
-        "Buy, bid, and inquire on over 250,000 paintings on Artsy, the world’s largest online marketplace for art and design.",
+        "Buy, bid, and inquire on over 850,000+ paintings on Artsy, the world’s largest online marketplace for art and design.",
       )
     })
 
@@ -37,7 +37,7 @@ describe("getMetadata", () => {
       expect(title).toBe("Red Art - For Sale on Artsy")
       expect(breadcrumbTitle).toBe("Red Art")
       expect(description).toBe(
-        `Discover and buy red art by the world's leading artists on Artsy.`,
+        "Discover and buy red art by the world’s leading artists on Artsy.",
       )
     })
 

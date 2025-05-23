@@ -10,7 +10,7 @@ describe.skip("/collections", () => {
       .should("have.attr", "content")
       .and(
         "eq",
-        "Discover collections of art curated by Artsy Specialists. From iconic artist series to trending design, shop collections on the world's largest online art marketplace."
+        "Discover collections of art curated by Artsy Specialists. From iconic artist series to trending design, shop collections on the world’s largest online art marketplace.",
       )
   })
 
