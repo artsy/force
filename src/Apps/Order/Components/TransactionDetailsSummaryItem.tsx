@@ -311,7 +311,7 @@ export const TransactionDetailsSummaryItem: FC<
             {isEigen ? (
               <>
                 View and manage all artworks in your Collection through your{" "}
-                <RouterLink inline to={"/my-profile"}>
+                <RouterLink inline to={"/my-collection"}>
                   profile.
                 </RouterLink>
               </>
