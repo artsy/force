@@ -1,4 +1,5 @@
 import { Elements } from "@stripe/react-stripe-js"
+import { screen } from "@testing-library/react"
 import { Order2ExpressCheckout } from "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckout"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2ExpressCheckout_Test_Query } from "__generated__/Order2ExpressCheckout_Test_Query.graphql"
@@ -9,6 +10,15 @@ jest.mock("react-tracking")
 jest.unmock("react-relay")
 
 const mockElements = Elements as jest.Mock
+
+jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => {
+  return {
+    useCheckoutContext: () => ({
+      expressCheckoutPaymentMethods: null,
+      setExpressCheckoutLoaded: jest.fn(),
+    }),
+  }
+})
 
 const { renderWithRelay } =
   setupTestWrapperTL<Order2ExpressCheckout_Test_Query>({
@@ -33,7 +43,7 @@ jest.mock("@stripe/react-stripe-js", () => {
   }
 })
 
-describe("ExpressCheckout", () => {
+describe("Order2ExpressCheckout", () => {
   it("passes correct props to Stripe Elements", async () => {
     renderWithRelay({
       Order: () => ({ ...orderData }),
