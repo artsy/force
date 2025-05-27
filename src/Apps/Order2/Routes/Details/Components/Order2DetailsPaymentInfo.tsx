@@ -48,7 +48,7 @@ const getPaymentMethodContent = (
 ) => {
   const { creditCardWalletType, paymentMethodDetails } = order
 
-  if (!!creditCardWalletType) {
+  if (creditCardWalletType) {
     switch (creditCardWalletType) {
       case "APPLE_PAY":
         return { Icon: ApplePayMarkIcon, text: "Apple Pay" }
