@@ -70,7 +70,7 @@ const getMessageContent = (order): React.ReactNode => {
           </Text>
           <Spacer y={2} />
           <Text variant="sm">
-            The gallery will confirm by {formattedStateExpireTime}.
+            The gallery will confirm by <b>{formattedStateExpireTime}</b>.
           </Text>
           <Text variant="sm">
             You can contact the gallery with any questions about your order.
@@ -87,7 +87,7 @@ const getMessageContent = (order): React.ReactNode => {
           </Text>
           <Spacer y={2} />
           <Text variant="sm">
-            The gallery will confirm by {formattedStateExpireTime}.
+            The gallery will confirm by <b>{formattedStateExpireTime}</b>.
           </Text>
           <Text variant="sm">
             You can contact the gallery with any questions about your order.
@@ -103,7 +103,7 @@ const getMessageContent = (order): React.ReactNode => {
               update your payment details
             </RouterLink>{" "}
             or provide an alternative payment method by{" "}
-            {formattedStateExpireTime}.
+            <b>{formattedStateExpireTime}</b>.
           </Text>
         </>
       )

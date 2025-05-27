@@ -30,7 +30,7 @@ export const Order2DetailsPaymentInfo: React.FC<Props> = ({ order }) => {
         Payment method
       </Text>
 
-      <Spacer y={1} />
+      <Spacer y={0.5} />
 
       <Flex alignItems="center">
         <Icon mr={1} width={18} height={18} />
