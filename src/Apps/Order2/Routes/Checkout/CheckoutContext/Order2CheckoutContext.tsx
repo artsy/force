@@ -8,6 +8,7 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import type {
   Order2CheckoutContext_order$data,
@@ -30,6 +31,8 @@ const MINIMUM_LOADING_MS = 1000
 
 interface CheckoutState {
   isLoading: boolean
+  /** Order is redirecting to the details page */
+  showOrderSubmissionSpinner: boolean
   loadingError: CheckoutLoadingError | null
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
   steps: CheckoutStep[]
@@ -50,6 +53,8 @@ interface CheckoutActions {
   setLoadingError: (error: CheckoutLoadingError | null) => void
   setLoadingComplete: () => void
   setConfirmationToken: (args: { confirmationToken: any }) => void
+  setShowOrderSubmittingSpinner: (isSubmitting: boolean) => void
+  redirectToOrderDetails: () => void
 }
 
 export type Order2CheckoutContextValue = CheckoutState & CheckoutActions
@@ -127,6 +132,7 @@ export const Order2CheckoutContextProvider: React.FC<
 
 const ORDER_FRAGMENT = graphql`
   fragment Order2CheckoutContext_order on Order {
+    internalID
     mode
     selectedFulfillmentOption {
       type
@@ -160,7 +166,15 @@ const useBuildCheckoutContext = (
     [orderData],
   )
 
+  const { router } = useRouter()
   const [state, dispatch] = useReducer(reducer, initialState)
+
+  const redirectToOrderDetails = useCallback(() => {
+    const orderID = orderData.internalID
+    const orderDetailsURL = `/orders2/${orderID}/details`
+
+    router.replace(orderDetailsURL)
+  }, [orderData.internalID, router])
 
   const setExpressCheckoutLoaded = useCallback(
     (availablePaymentMethods: ExpressCheckoutPaymentMethod[]) => {
@@ -184,6 +198,18 @@ const useBuildCheckoutContext = (
       }
     },
     [state.activeFulfillmentDetailsTab],
+  )
+
+  const setShowOrderSubmittingSpinner = useCallback(
+    (isSubmitting: boolean) => {
+      if (state.showOrderSubmissionSpinner !== isSubmitting) {
+        dispatch({
+          type: "SET_SHOW_ORDER_SUBMITTING_SPINNER",
+          payload: { isSubmittingOrder: isSubmitting },
+        })
+      }
+    },
+    [state.showOrderSubmissionSpinner],
   )
 
   // This used only by the useLoadCheckout hook
@@ -275,6 +301,8 @@ const useBuildCheckoutContext = (
       setLoadingError,
       setLoadingComplete,
       setConfirmationToken,
+      setShowOrderSubmittingSpinner,
+      redirectToOrderDetails,
     }
   }, [
     editFulfillmentDetails,
@@ -285,6 +313,8 @@ const useBuildCheckoutContext = (
     setLoadingError,
     setLoadingComplete,
     setConfirmationToken,
+    setShowOrderSubmittingSpinner,
+    redirectToOrderDetails,
   ])
 
   return {
@@ -293,7 +323,9 @@ const useBuildCheckoutContext = (
   }
 }
 
-const initialStateForOrder = (order: Order2CheckoutContext_order$data) => {
+const initialStateForOrder = (
+  order: Order2CheckoutContext_order$data,
+): CheckoutState => {
   const stepNamesInOrder = [
     CheckoutStepName.FULFILLMENT_DETAILS,
     CheckoutStepName.DELIVERY_OPTION,
@@ -328,6 +360,7 @@ const initialStateForOrder = (order: Order2CheckoutContext_order$data) => {
 
   return {
     isLoading: true,
+    showOrderSubmissionSpinner: false,
     loadingError: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: null,
@@ -347,6 +380,10 @@ type Action =
     }
   | {
       type: "LOADING_COMPLETE"
+    }
+  | {
+      type: "SET_SHOW_ORDER_SUBMITTING_SPINNER"
+      payload: { isSubmittingOrder: boolean }
     }
   | {
       type: "FULFILLMENT_DETAILS_COMPLETE"
@@ -529,6 +566,11 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
         ...state,
         confirmationToken: action.payload.confirmationToken,
         steps: newSteps,
+      }
+    case "SET_SHOW_ORDER_SUBMITTING_SPINNER":
+      return {
+        ...state,
+        showOrderSubmissionSpinner: action.payload.isSubmittingOrder,
       }
     default:
       return state

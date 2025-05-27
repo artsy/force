@@ -1,4 +1,5 @@
 import { Column, Flex, GridColumns, Stack, Text } from "@artsy/palette"
+import { SubmittingOrderSpinner } from "Apps/Order/Components/SubmittingOrderSpinner"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -33,6 +34,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     steps,
     activeFulfillmentDetailsTab,
     setExpressCheckoutLoaded,
+    showOrderSubmissionSpinner,
   } = useCheckoutContext()
   if (!order) {
     return <ErrorPage code={404} message="Order not found" />
@@ -69,7 +71,12 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         }
       />
       {isLoading && <Order2CheckoutLoadingSkeleton order={order} />}
-      <GridColumns style={{ display: isLoading ? "none" : "block" }}>
+      {showOrderSubmissionSpinner && <SubmittingOrderSpinner />}
+      <GridColumns
+        style={{
+          display: isLoading || showOrderSubmissionSpinner ? "none" : "block",
+        }}
+      >
         <Column span={[12, 8]} start={[1, 2]}>
           <Stack gap={1} bg="mono5">
             {/* Collapsible order summary */}

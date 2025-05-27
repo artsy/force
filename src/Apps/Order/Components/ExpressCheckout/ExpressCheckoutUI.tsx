@@ -487,8 +487,6 @@ export const ExpressCheckoutUI = ({
           walletType: getAvailablePaymentMethods(paymentMethods),
         })
       }
-    } catch (error) {
-      logger.error("Error handling ready event", error)
     } finally {
       shippingContext.actions.setIsExpressCheckoutLoading(false)
     }

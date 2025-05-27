@@ -85,7 +85,11 @@ export const Order2ExpressCheckoutUI = ({
 
   const errorRef = useRef<string | null>(null)
 
-  const { setExpressCheckoutLoaded } = useCheckoutContext()
+  const {
+    setExpressCheckoutLoaded,
+    redirectToOrderDetails,
+    setShowOrderSubmittingSpinner,
+  } = useCheckoutContext()
 
   if (!(stripe && elements)) {
     return null
@@ -201,12 +205,13 @@ export const Order2ExpressCheckoutUI = ({
         flow: "Express checkout",
       })
 
-      sessionStorage.setItem(
-        "expressCheckoutError",
-        JSON.stringify({
-          title: "An error occurred",
-        }),
-      )
+      // TODO: Implement order error handling
+      // sessionStorage.setItem(
+      //   "expressCheckoutError",
+      //   JSON.stringify({
+      //     title: "An error occurred",
+      //   }),
+      // )
 
       errorRef.current = null
     }
@@ -326,6 +331,7 @@ export const Order2ExpressCheckoutUI = ({
     shippingRate,
   }: StripeExpressCheckoutElementConfirmEvent) => {
     window.removeEventListener("beforeunload", preventHardReload)
+    setShowOrderSubmittingSpinner(true)
 
     const creditCardWalletType =
       expressPaymentType.toUpperCase() as OrderCreditCardWalletTypeEnum
@@ -394,6 +400,7 @@ export const Order2ExpressCheckoutUI = ({
       const { error: submitError } = await elements.submit()
       if (submitError) {
         logger.error(submitError)
+        setShowOrderSubmittingSpinner(false)
         return
       }
 
@@ -424,6 +431,7 @@ export const Order2ExpressCheckoutUI = ({
         // This point is only reached if there's an immediate error when
         // creating the ConfirmationToken. Show the error to customer (for example, payment details incomplete)
         logger.error(error)
+        setShowOrderSubmittingSpinner(false)
         return
       }
 
@@ -441,8 +449,10 @@ export const Order2ExpressCheckoutUI = ({
       )
 
       // Redirect to status page after successful order submission
-      window.location.reload()
+      redirectToOrderDetails()
+      return
     } catch (error) {
+      console.log("Error confirming payment", error)
       logger.error("Error confirming payment", error)
       errorRef.current = error.code || "unknown_error"
 
@@ -454,12 +464,13 @@ export const Order2ExpressCheckoutUI = ({
         flow: "Express checkout",
       })
 
-      sessionStorage.setItem(
-        "expressCheckoutError",
-        JSON.stringify({
-          title: "Payment failed",
-        }),
-      )
+      // TODO: Implement order error handling
+      // sessionStorage.setItem(
+      //   "expressCheckoutError",
+      //   JSON.stringify({
+      //     title: "Payment failed",
+      //   }),
+      // )
 
       resetOrder()
     }
