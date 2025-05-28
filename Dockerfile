@@ -1,4 +1,4 @@
-FROM node:18.15-alpine as builder-base
+FROM node:22.14.0-alpine as builder-base
 
 WORKDIR /app
 
@@ -30,7 +30,7 @@ RUN yarn build
 # Release stage. This stage creates the final docker iamge that will be
 # released. It contains only production dependencies and artifacts.
 #
-FROM node:18.15.0-alpine3.17 as production
+FROM node:22.14.0-alpine as production
 
 RUN apk --no-cache --quiet add \
   bash \

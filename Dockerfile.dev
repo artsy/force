@@ -1,4 +1,4 @@
-FROM node:18.15.0-bullseye-slim
+FROM node:22.14.0-bullseye-slim
 WORKDIR /app
 
 # Install system dependencies
@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
   build-essential \
   git \
   unzip \
-  wget 
+  wget
 
 ENV WATCHMAN_VERSION=v2024.02.05.00
 

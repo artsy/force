@@ -11,7 +11,7 @@ orbs:
 executors:
   node-executor:
     docker:
-      - image: cimg/node:18.20.8
+      - image: cimg/node:22.16.0
 
 not_main_or_staging_or_release: &not_main_or_staging_or_release
   filters:
@@ -95,7 +95,9 @@ jobs:
           path: ./reports/junit/
 
   smoke-tests:
-    executor: cypress/default
+    executor:
+      name: cypress/default
+      node-version: 22.14.0
     working_directory: ~/app
     parallelism: 6
     steps:
@@ -279,7 +281,7 @@ workflows:
           name: check-pr
           pkg-manager: yarn
           yarn-run: danger:ci
-          version: 18.15.0
+          version: 22.14.0
 
       # Relay
       - node/run:
@@ -287,7 +289,7 @@ workflows:
           name: relay
           pkg-manager: yarn
           yarn-run: relay
-          version: 18.15.0
+          version: 22.14.0
 
       # Type-check
       - node/run:
@@ -295,7 +297,7 @@ workflows:
           name: type-check
           pkg-manager: yarn
           yarn-run: type-check
-          version: 18.15.0
+          version: 22.14.0
 
       # Jest Tests
       - test:

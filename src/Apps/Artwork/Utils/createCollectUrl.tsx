@@ -34,36 +34,37 @@ export const createCollectUrl = ({
     artist_id: artistId,
   })
 
-  const path = ["/collect", filterCategories[category]]
+  const path = ["/collect", FILTER_CATEGORIES[category]]
     .filter(Boolean)
     .join("/")
 
   return `${path}?${query}`
 }
 
-export type FilterCategory = keyof typeof filterCategories
+export type FilterCategory = keyof typeof FILTER_CATEGORIES
 
 // these come from MediumFilter.tsx
-const filterCategories = {
+export const FILTER_CATEGORIES = {
   Architecture: "architecture",
   "Books and Portfolios": "books-and-portfolios",
   "Design/Decorative Art": "design",
   "Digital Art": "digital-art",
   "Drawing, Collage or other Work on Paper": "work-on-paper",
+  Drawing: "drawing",
+  "Ephemera or Merchandise": "ephemera-or-merchandise",
   "Fashion Design and Wearable Art": "fashion-design-and-wearable-art",
   Installation: "installation",
   Jewelry: "jewelry",
   "Mixed Media": "mixed-media",
   NFT: "nft",
-  Other: "",
   Painting: "painting",
   "Performance Art": "performance-art",
   Photography: "photography",
   Posters: "poster",
   Print: "prints",
+  Reproduction: "reproduction",
   Sculpture: "sculpture",
-  Sound: "",
   "Textile Arts": "textiles",
   "Video/Film/Animation": "film-slash-video",
   "Work on Paper": "work-on-paper",
-}
+} as const

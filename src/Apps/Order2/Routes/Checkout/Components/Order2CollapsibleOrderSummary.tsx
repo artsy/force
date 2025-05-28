@@ -1,6 +1,6 @@
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import { Box, Clickable, Flex, Image, Spacer, Text } from "@artsy/palette"
-import { Order2PricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2PricingBreakdown"
+import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2CollapsibleOrderSummary_order$key } from "__generated__/Order2CollapsibleOrderSummary_order.graphql"
 import type * as React from "react"
