@@ -26,10 +26,10 @@ import {
   type OrderMutationSuccess,
   validateAndExtractOrderResponse,
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { preventHardReload } from "Apps/Order/OrderApp"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type {
@@ -81,7 +81,7 @@ export const Order2ExpressCheckoutUI = ({
     useState<ExpressPaymentType | null>(null)
 
   // TODO: integrate with new checkout tracking if necessary
-  const orderTracking = useOrderTracking()
+  const orderTracking = useCheckoutTracking()
 
   const errorRef = useRef<string | null>(null)
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f05150165f9222e4cbc577bbfcdfd4a4>>
+ * @generated SignedSource<<22d0bfa303ba72cb2cd4ac7b31fcff31>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,7 @@ export type Order2CheckoutRoute_viewer$data = {
       } | null | undefined> | null | undefined;
     } | null | undefined;
     readonly order: {
+      readonly internalID: string;
       readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutContext_order">;
     } | null | undefined;
   } | null | undefined;
@@ -31,7 +32,15 @@ export type Order2CheckoutRoute_viewer$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutRoute_viewer">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -76,6 +85,7 @@ const node: ReaderFragment = {
           "name": "order",
           "plural": false,
           "selections": [
+            (v0/*: any*/),
             {
               "args": null,
               "kind": "FragmentSpread",
@@ -114,13 +124,7 @@ const node: ReaderFragment = {
                   "name": "node",
                   "plural": false,
                   "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "internalID",
-                      "storageKey": null
-                    }
+                    (v0/*: any*/)
                   ],
                   "storageKey": null
                 }
@@ -137,7 +141,8 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "b0195e8c31bd09de4ae6049ba9ef8a54";
+(node as any).hash = "1f8c496c55172e5d89deada09bae7bd9";
 
 export default node;
