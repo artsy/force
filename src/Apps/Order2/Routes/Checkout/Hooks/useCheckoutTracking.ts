@@ -21,17 +21,17 @@ export const useCheckoutTracking = () => {
   const trackingCalls = useMemo(() => {
     return {
       submittedOrder: ({
-        order,
+        source,
         walletType,
       }: {
-        order: { source: string }
+        source: string
         walletType?: string
       }) => {
         const payload: SubmittedOrder = {
           action: ActionType.submittedOrder,
           context_page_owner_type: contextPageOwnerType,
           order_id: contextPageOwnerId,
-          flow: order.source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
+          flow: source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
           ...(walletType ? { credit_card_wallet_type: walletType } : {}),
         }
 
@@ -87,10 +87,12 @@ export const useCheckoutTracking = () => {
       },
 
       clickedExpressCheckout: ({
-        order,
+        source,
+        mode,
         walletType,
       }: {
-        order: { source: string; mode: string }
+        source: string
+        mode: string
         walletType: string
       }) => {
         const payload: ClickedExpressCheckout = {
@@ -98,9 +100,9 @@ export const useCheckoutTracking = () => {
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
           flow:
-            order.source === "PARTNER_OFFER"
+            source === "PARTNER_OFFER"
               ? "Partner offer"
-              : order.mode === "BUY"
+              : mode === "BUY"
                 ? "Buy now"
                 : "Make offer",
           credit_card_wallet_type: walletType,
@@ -110,10 +112,12 @@ export const useCheckoutTracking = () => {
       },
 
       clickedCancelExpressCheckout: ({
-        order,
+        source,
+        mode,
         walletType,
       }: {
-        order: { source: string; mode: string }
+        source: string
+        mode: string
         walletType: string
       }) => {
         const payload: ClickedCancelExpressCheckout = {
@@ -121,9 +125,9 @@ export const useCheckoutTracking = () => {
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
           flow:
-            order.source === "PARTNER_OFFER"
+            source === "PARTNER_OFFER"
               ? "Partner offer"
-              : order.mode === "BUY"
+              : mode === "BUY"
                 ? "Buy now"
                 : "Make offer",
           credit_card_wallet_type: walletType,

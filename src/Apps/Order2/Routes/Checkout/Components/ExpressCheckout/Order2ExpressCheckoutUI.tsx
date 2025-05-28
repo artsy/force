@@ -161,7 +161,8 @@ export const Order2ExpressCheckoutUI = ({
     setExpressCheckoutType(expressPaymentType)
 
     orderTracking.clickedExpressCheckout({
-      order: orderData,
+      source: orderData.source,
+      mode: orderData.mode,
       walletType: expressPaymentType,
     })
     const { itemsTotal } = orderData
@@ -191,7 +192,8 @@ export const Order2ExpressCheckoutUI = ({
 
     if (!errorRef.current) {
       orderTracking.clickedCancelExpressCheckout({
-        order: orderData,
+        source: orderData.source,
+        mode: orderData.mode,
         walletType: expressCheckoutType as string,
       })
     }
@@ -348,7 +350,7 @@ export const Order2ExpressCheckoutUI = ({
     >
 
     orderTracking.submittedOrder({
-      order: orderData,
+      source: orderData.source,
       walletType: expressPaymentType,
     })
 
@@ -717,6 +719,7 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
 function extractEnabledPaymentMethods(
   paymentMethods: AvailablePaymentMethods,
 ): ExpressCheckoutPaymentMethod[] {
+  if (!paymentMethods) return []
   return Object.entries(paymentMethods)
     .filter(([_, isAvailable]) => isAvailable)
     .map(([method]) => method) as ExpressCheckoutPaymentMethod[]
