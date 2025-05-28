@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<638b176f56aba189fd6d4ea94409c5f2>>
+ * @generated SignedSource<<284eb999cf9488ae5c642fed02303cc3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -60,7 +60,7 @@ export type useUpdateOrderShippingAddressMutation$data = {
         readonly taxTotal: {
           readonly minor: any;
         } | null | undefined;
-        readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutUI_order">;
+        readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutUI_order" | "Order2ExpressCheckoutUI_order">;
       };
     } | {
       // This will never be '%other', but we need some
@@ -278,6 +278,11 @@ return {
                         "kind": "FragmentSpread",
                         "name": "ExpressCheckoutUI_order"
                       },
+                      {
+                        "args": null,
+                        "kind": "FragmentSpread",
+                        "name": "Order2ExpressCheckoutUI_order"
+                      },
                       (v6/*: any*/),
                       (v7/*: any*/),
                       (v9/*: any*/),
@@ -467,16 +472,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7bafa3d31714ef6e65a51e606b557f52",
+    "cacheID": "901eb84221992bac4b47622fa2b8cc4f",
     "id": null,
     "metadata": {},
     "name": "useUpdateOrderShippingAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateOrderShippingAddressMutation(\n  $input: updateOrderShippingAddressInput!\n) {\n  updateOrderShippingAddress(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          internalID\n          ...ExpressCheckoutUI_order\n          fulfillmentOptions {\n            type\n            amount {\n              minor\n              currencyCode\n            }\n            selected\n          }\n          buyerTotal {\n            minor\n            currencyCode\n          }\n          itemsTotal {\n            minor\n          }\n          shippingTotal {\n            minor\n          }\n          taxTotal {\n            minor\n          }\n          availableShippingCountries\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
+    "text": "mutation useUpdateOrderShippingAddressMutation(\n  $input: updateOrderShippingAddressInput!\n) {\n  updateOrderShippingAddress(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          internalID\n          ...ExpressCheckoutUI_order\n          ...Order2ExpressCheckoutUI_order\n          fulfillmentOptions {\n            type\n            amount {\n              minor\n              currencyCode\n            }\n            selected\n          }\n          buyerTotal {\n            minor\n            currencyCode\n          }\n          itemsTotal {\n            minor\n          }\n          shippingTotal {\n            minor\n          }\n          taxTotal {\n            minor\n          }\n          availableShippingCountries\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "96b4be2ec21bbc86eb027b575a3ab442";
+(node as any).hash = "11bc01848ac0ce9c2bf3131756f1cde8";
 
 export default node;
