@@ -80,30 +80,31 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
       />
       {isLoading && <Order2CheckoutLoadingSkeleton order={order} />}
       {expressCheckoutSubmitting && <SubmittingOrderSpinner />}
-      <Box bg="mono5" display="flex" justifyContent="center">
-        <GridColumns
-          pt={[0, "50px"]}
-          maxWidth={["100%", "768px"]}
-          style={{
-            display: isLoading || expressCheckoutSubmitting ? "none" : "grid",
-          }}
-        >
-          <Column span={[12, 8, 8]} start={[1, 1, 1]} bg="pink">
-            <Stack gap={1} bg="mono5">
-              {/* Collapsible order summary */}
-              <Box display={["block", "none"]}>
+      <GridColumns
+        pt={[0, "50px"]}
+        px={[0, 0, 4]}
+        backgroundColor="mono5"
+        style={{
+          display: isLoading || expressCheckoutSubmitting ? "none" : "grid",
+        }}
+      >
+        <Column span={[12, 12, 7]} start={[1, 1, 1]}>
+          <Box
+            maxWidth={"754px"}
+            width="100%"
+            justifySelf={["center", "center", "end"]}
+          >
+            <Stack gap={1}>
+              <Box display={["block", "block", "none"]}>
                 <Order2CollapsibleOrderSummary order={order} />
               </Box>
 
-              {/* Express checkout */}
               {isExpressCheckoutEligible && (
                 <Order2ExpressCheckout order={order} />
               )}
 
-              {/* Fulfillment details Step */}
               <Order2FulfillmentDetailsStep order={order} />
 
-              {/* Shipping method Step */}
               {showDeliveryOptionStep && (
                 <Flex flexDirection="column" backgroundColor="mono0" p={2}>
                   <Text
@@ -121,25 +122,23 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
 
               <Order2PaymentStep order={order} />
             </Stack>
-            <Box display={["block", "none"]}>
-              <Spacer y={1} color="mono5" />
+            <Box display={["block", "block", "none"]}>
+              <Spacer y={1} />
               <Order2ReviewStep order={order} />
             </Box>
-            <Box style={{ height: "800px" }} bg="mono60" />
-          </Column>
-          <Column
-            bg="cyan"
-            start={[1, 9, 9]}
-            span={[12, 4, 4]}
-            display={["none", "block"]}
-          >
-            <Box position="sticky" top={80}>
-              {/* YYYY */}
-              <Order2ReviewStep order={order} />
-            </Box>
-          </Column>
-        </GridColumns>
-      </Box>
+          </Box>
+        </Column>
+
+        <Column
+          start={[1, 1, 8]}
+          span={[12, 12, 5]}
+          display={["none", "none", "block"]}
+        >
+          <Box width={"445px"} position="sticky" top={80}>
+            <Order2ReviewStep order={order} />
+          </Box>
+        </Column>
+      </GridColumns>
     </>
   )
 }
