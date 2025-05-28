@@ -28,8 +28,8 @@ export const Order2DetailsOrderSummary: React.FC<
         <Flex alignItems="center" width="100%" flexDirection="column" m={1}>
           <RouterLink to={`/artwork/${artwork?.slug}`} target="_blank">
             <Image
-              src={artworkImage?.resized?.url}
-              alt={artworkVersion?.title as string}
+              src={artworkImage.resized.url}
+              alt={artworkVersion?.title || "Artwork image"}
             />
           </RouterLink>
         </Flex>
@@ -40,9 +40,18 @@ export const Order2DetailsOrderSummary: React.FC<
         <Text variant="sm" overflowEllipsis>
           {artworkVersion?.artistNames}
         </Text>
-        <Text variant="sm" color="mono60" overflowEllipsis>
-          {[artworkVersion?.title, artworkVersion?.date].join(", ")}
-        </Text>
+        <Flex>
+          <Text variant="sm" color="mono60" minWidth={0} overflowEllipsis>
+            {artworkVersion?.title}
+          </Text>
+
+          {artworkVersion?.date && (
+            <Text variant="sm" color="mono60" flexShrink={0}>
+              {artworkVersion?.title ? ", " : ""}
+              {artworkVersion.date}
+            </Text>
+          )}
+        </Flex>
         {orderData.totalListPrice && (
           <Text variant="sm" color="mono60">
             List price: {orderData.totalListPrice.display}
