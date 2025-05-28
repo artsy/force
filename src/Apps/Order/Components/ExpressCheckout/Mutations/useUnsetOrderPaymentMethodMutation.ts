@@ -1,6 +1,6 @@
-import { useMutation } from "Utils/Hooks/useMutation"
-import type { useUnsetOrderPaymentMethodMutation as useUnsetOrderPaymentMethodMutationType } from "__generated__/useUnsetOrderPaymentMethodMutation.graphql"
+import { useUnsetOrderPaymentMethodMutation as useUnsetOrderPaymentMethodMutationType } from "__generated__/useUnsetOrderPaymentMethodMutation.graphql"
 import { graphql } from "react-relay"
+import { useMutation } from "Utils/Hooks/useMutation"
 
 export const useUnsetOrderPaymentMethodMutation = () => {
   return useMutation<useUnsetOrderPaymentMethodMutationType>({
@@ -14,7 +14,6 @@ export const useUnsetOrderPaymentMethodMutation = () => {
             ... on OrderMutationSuccess {
               order {
                 ...ExpressCheckoutUI_order
-                ...Order2ExpressCheckoutUI_order
               }
             }
             ... on OrderMutationError {
