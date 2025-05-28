@@ -34,7 +34,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     steps,
     activeFulfillmentDetailsTab,
     setExpressCheckoutLoaded,
-    showOrderSubmissionSpinner,
+    expressCheckoutSubmitting,
   } = useCheckoutContext()
   if (!order) {
     return <ErrorPage code={404} message="Order not found" />
@@ -71,10 +71,10 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         }
       />
       {isLoading && <Order2CheckoutLoadingSkeleton order={order} />}
-      {showOrderSubmissionSpinner && <SubmittingOrderSpinner />}
+      {expressCheckoutSubmitting && <SubmittingOrderSpinner />}
       <GridColumns
         style={{
-          display: isLoading || showOrderSubmissionSpinner ? "none" : "block",
+          display: isLoading || expressCheckoutSubmitting ? "none" : "block",
         }}
       >
         <Column span={[12, 8]} start={[1, 2]}>

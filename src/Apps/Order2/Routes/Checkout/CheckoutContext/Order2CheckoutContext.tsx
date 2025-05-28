@@ -32,7 +32,7 @@ const MINIMUM_LOADING_MS = 1000
 interface CheckoutState {
   isLoading: boolean
   /** Order is redirecting to the details page */
-  showOrderSubmissionSpinner: boolean
+  expressCheckoutSubmitting: boolean
   loadingError: CheckoutLoadingError | null
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
   steps: CheckoutStep[]
@@ -47,13 +47,13 @@ interface CheckoutActions {
   setExpressCheckoutLoaded: (
     availablePaymentMethods: ExpressCheckoutPaymentMethod[],
   ) => void
+  setExpressCheckoutSubmitting: (isSubmitting: boolean) => void
   setFulfillmentDetailsComplete: (args: { isPickup: boolean }) => void
   editFulfillmentDetails: () => void
   editPayment: () => void
   setLoadingError: (error: CheckoutLoadingError | null) => void
   setLoadingComplete: () => void
   setConfirmationToken: (args: { confirmationToken: any }) => void
-  setShowOrderSubmittingSpinner: (isSubmitting: boolean) => void
   redirectToOrderDetails: () => void
 }
 
@@ -200,16 +200,16 @@ const useBuildCheckoutContext = (
     [state.activeFulfillmentDetailsTab],
   )
 
-  const setShowOrderSubmittingSpinner = useCallback(
+  const setExpressCheckoutSubmitting = useCallback(
     (isSubmitting: boolean) => {
-      if (state.showOrderSubmissionSpinner !== isSubmitting) {
+      if (state.expressCheckoutSubmitting !== isSubmitting) {
         dispatch({
-          type: "SET_SHOW_ORDER_SUBMITTING_SPINNER",
+          type: "SET_EXPRESS_CHECKOUT_SUBMITTING",
           payload: { isSubmittingOrder: isSubmitting },
         })
       }
     },
-    [state.showOrderSubmissionSpinner],
+    [state.expressCheckoutSubmitting],
   )
 
   // This used only by the useLoadCheckout hook
@@ -296,12 +296,12 @@ const useBuildCheckoutContext = (
       editFulfillmentDetails,
       editPayment,
       setActiveFulfillmentDetailsTab,
+      setExpressCheckoutSubmitting,
       setExpressCheckoutLoaded,
       setFulfillmentDetailsComplete,
       setLoadingError,
       setLoadingComplete,
       setConfirmationToken,
-      setShowOrderSubmittingSpinner,
       redirectToOrderDetails,
     }
   }, [
@@ -313,7 +313,7 @@ const useBuildCheckoutContext = (
     setLoadingError,
     setLoadingComplete,
     setConfirmationToken,
-    setShowOrderSubmittingSpinner,
+    setExpressCheckoutSubmitting,
     redirectToOrderDetails,
   ])
 
@@ -360,7 +360,7 @@ const initialStateForOrder = (
 
   return {
     isLoading: true,
-    showOrderSubmissionSpinner: false,
+    expressCheckoutSubmitting: false,
     loadingError: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: null,
@@ -382,7 +382,7 @@ type Action =
       type: "LOADING_COMPLETE"
     }
   | {
-      type: "SET_SHOW_ORDER_SUBMITTING_SPINNER"
+      type: "SET_EXPRESS_CHECKOUT_SUBMITTING"
       payload: { isSubmittingOrder: boolean }
     }
   | {
@@ -567,10 +567,10 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
         confirmationToken: action.payload.confirmationToken,
         steps: newSteps,
       }
-    case "SET_SHOW_ORDER_SUBMITTING_SPINNER":
+    case "SET_EXPRESS_CHECKOUT_SUBMITTING":
       return {
         ...state,
-        showOrderSubmissionSpinner: action.payload.isSubmittingOrder,
+        expressCheckoutSubmitting: action.payload.isSubmittingOrder,
       }
     default:
       return state

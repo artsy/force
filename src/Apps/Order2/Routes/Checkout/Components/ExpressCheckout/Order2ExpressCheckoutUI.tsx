@@ -88,7 +88,7 @@ export const Order2ExpressCheckoutUI = ({
   const {
     setExpressCheckoutLoaded,
     redirectToOrderDetails,
-    setShowOrderSubmittingSpinner,
+    setExpressCheckoutSubmitting,
   } = useCheckoutContext()
 
   if (!(stripe && elements)) {
@@ -331,7 +331,7 @@ export const Order2ExpressCheckoutUI = ({
     shippingRate,
   }: StripeExpressCheckoutElementConfirmEvent) => {
     window.removeEventListener("beforeunload", preventHardReload)
-    setShowOrderSubmittingSpinner(true)
+    setExpressCheckoutSubmitting(true)
 
     const creditCardWalletType =
       expressPaymentType.toUpperCase() as OrderCreditCardWalletTypeEnum
@@ -400,7 +400,7 @@ export const Order2ExpressCheckoutUI = ({
       const { error: submitError } = await elements.submit()
       if (submitError) {
         logger.error(submitError)
-        setShowOrderSubmittingSpinner(false)
+        setExpressCheckoutSubmitting(false)
         return
       }
 
@@ -431,7 +431,7 @@ export const Order2ExpressCheckoutUI = ({
         // This point is only reached if there's an immediate error when
         // creating the ConfirmationToken. Show the error to customer (for example, payment details incomplete)
         logger.error(error)
-        setShowOrderSubmittingSpinner(false)
+        setExpressCheckoutSubmitting(false)
         return
       }
 

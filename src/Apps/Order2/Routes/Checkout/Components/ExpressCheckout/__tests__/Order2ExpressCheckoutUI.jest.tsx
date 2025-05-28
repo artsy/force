@@ -31,7 +31,7 @@ const mockSetExpressCheckoutLoaded = jest.fn()
 const mockSetShowOrderSubmittingSpinner = jest.fn()
 const mockCheckoutContext: DeepPartial<Order2CheckoutContextValue> = {
   setExpressCheckoutLoaded: mockSetExpressCheckoutLoaded,
-  setShowOrderSubmittingSpinner: mockSetShowOrderSubmittingSpinner,
+  setExpressCheckoutSubmitting: mockSetShowOrderSubmittingSpinner,
   redirectToOrderDetails: mockRedirectToOrderDetails,
 }
 
