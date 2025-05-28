@@ -24,7 +24,7 @@ export const COLOR_OPTIONS = [
   { hex: "#7B5927", value: "brown", name: "Brown" },
   { hex: "#C2C2C2", value: "gray", name: "Gray" },
   { hex: "#E1ADCD", value: "pink", name: "Pink" },
-]
+] as const
 
 type ColorOption = (typeof COLOR_OPTIONS)[number]
 
@@ -122,7 +122,10 @@ export const ColorFilter: React.FC<
   )
   const hasBelowTheFoldColorFilter = intersected.length > 0
   const hasColorFilter = colors.length > 0
-  const resultsSorted = sortResults(colors, COLOR_OPTIONS)
+  const resultsSorted = sortResults(
+    colors,
+    COLOR_OPTIONS.map(({ name, value }) => ({ name, value })),
+  )
 
   return (
     <FilterExpandable label={label} expanded={hasColorFilter || expanded}>

@@ -9,7 +9,7 @@ describe("/collect", () => {
       .should("have.attr", "content")
       .and(
         "eq",
-        "Find artworks by subject matter, style/technique, movement, price, and gallery/institution."
+        "Find artworks by subject matter, style/technique, movement, price, and gallery/institution.",
       )
     cy.get("h1").should("contain", "Collect art and design online")
   })
@@ -17,6 +17,6 @@ describe("/collect", () => {
   it("renders medium-specific content", () => {
     cy.visit("/collect/painting")
     cy.title().should("eq", "Paintings - For Sale on Artsy")
-    cy.get("h1").should("contain", "Collect art and design online")
+    cy.get("h1").should("contain", "Collect paintings online")
   })
 })
