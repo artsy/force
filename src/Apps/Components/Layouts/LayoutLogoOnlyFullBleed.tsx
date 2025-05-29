@@ -1,4 +1,4 @@
-import { Flex, Spacer } from "@artsy/palette"
+import { Box } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { AppToasts } from "Apps/Components/AppToasts"
 import type { BaseLayoutProps } from "Apps/Components/Layouts"
@@ -20,14 +20,7 @@ export const LayoutLogoOnlyFullBleed: FC<
       <AppToasts />
       <LayoutMain overflowX="visible">
         <AppContainer maxWidth="100%" as="main" id="main">
-          <Flex
-            flexDirection="column"
-            position="sticky"
-            top={0}
-            bg="mono0"
-            zIndex={1}
-          >
-            <Spacer y={1} />
+          <Box position="sticky" py={1} top={0} bg="mono0" zIndex={1}>
             <RouterLink
               ml={2}
               onClick={event => {
@@ -40,9 +33,7 @@ export const LayoutLogoOnlyFullBleed: FC<
             >
               <NavBarPrimaryLogo />
             </RouterLink>
-
-            <Spacer y={1} />
-          </Flex>
+          </Box>
           {children}
         </AppContainer>
       </LayoutMain>
