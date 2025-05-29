@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<031827ea3df2e1594c8fd7ee7c0c0f6d>>
+ * @generated SignedSource<<ce70e79172d47b8ac56f799788a69f47>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" |
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutContext_order$data = {
+  readonly internalID: string;
   readonly lineItems: ReadonlyArray<{
     readonly artworkVersion: {
       readonly internalID: string;
@@ -29,12 +30,21 @@ export type Order2CheckoutContext_order$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutContext_order">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "Order2CheckoutContext_order",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -76,13 +86,7 @@ const node: ReaderFragment = {
           "name": "artworkVersion",
           "plural": false,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "internalID",
-              "storageKey": null
-            }
+            (v0/*: any*/)
           ],
           "storageKey": null
         }
@@ -93,7 +97,8 @@ const node: ReaderFragment = {
   "type": "Order",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "ab5a3c82c94b3086312ccffe8eef4f41";
+(node as any).hash = "34b70cd625155dcf2ba83f67141f9d1a";
 
 export default node;

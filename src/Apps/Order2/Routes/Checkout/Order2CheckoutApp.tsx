@@ -1,17 +1,20 @@
 import { Column, Flex, GridColumns, Stack, Text } from "@artsy/palette"
+import { SubmittingOrderSpinner } from "Apps/Order/Components/SubmittingOrderSpinner"
 import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { Order2ExpressCheckout } from "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckout"
+import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
 import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutLoadingSkeleton"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
-import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/Order2FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
-import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/Order2PaymentStep/Order2PaymentStep"
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
+import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentStep"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { ErrorPage } from "Components/ErrorPage"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { Order2CheckoutApp_viewer$key } from "__generated__/Order2CheckoutApp_viewer.graphql"
+import { useEffect } from "react"
 import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 interface Order2CheckoutAppProps {
@@ -26,7 +29,27 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   const data = useFragment(FRAGMENT, viewer)
   const order = data.me?.order ?? null
 
-  const { isLoading, steps, activeFulfillmentDetailsTab } = useCheckoutContext()
+  const {
+    isLoading,
+    steps,
+    activeFulfillmentDetailsTab,
+    setExpressCheckoutLoaded,
+    expressCheckoutSubmitting,
+  } = useCheckoutContext()
+  if (!order) {
+    return <ErrorPage code={404} message="Order not found" />
+  }
+
+  const isOffer = order.mode === "OFFER"
+  const isFixedShipping = order.lineItems[0]?.artwork?.isFixedShippingFeeOnly
+  const isExpressCheckoutEligible = !isOffer && isFixedShipping
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (!isExpressCheckoutEligible) {
+      setExpressCheckoutLoaded([])
+    }
+  }, [])
 
   const deliveryStepState = steps.find(
     step => step.name === CheckoutStepName.DELIVERY_OPTION,
@@ -35,10 +58,6 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   const showDeliveryOptionStep =
     deliveryStepState !== CheckoutStepState.HIDDEN ||
     activeFulfillmentDetailsTab === "DELIVERY"
-
-  if (!order) {
-    return <ErrorPage code={404} message="Order not found" />
-  }
 
   return (
     <>
@@ -52,11 +71,21 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         }
       />
       {isLoading && <Order2CheckoutLoadingSkeleton order={order} />}
-      <GridColumns style={{ display: isLoading ? "none" : "block" }}>
+      {expressCheckoutSubmitting && <SubmittingOrderSpinner />}
+      <GridColumns
+        style={{
+          display: isLoading || expressCheckoutSubmitting ? "none" : "block",
+        }}
+      >
         <Column span={[12, 8]} start={[1, 2]}>
           <Stack gap={1} bg="mono5">
             {/* Collapsible order summary */}
             <Order2CollapsibleOrderSummary order={order} />
+
+            {/* Express checkout */}
+            {isExpressCheckoutEligible && (
+              <Order2ExpressCheckout order={order} />
+            )}
 
             {/* Fulfillment details Step */}
             <Order2FulfillmentDetailsStep order={order} />
@@ -91,6 +120,13 @@ const FRAGMENT = graphql`
         fulfillmentOptions {
           type
         }
+        mode
+        lineItems {
+          artwork {
+            isFixedShippingFeeOnly
+          }
+        }
+        ...Order2ExpressCheckout_order
         ...Order2CollapsibleOrderSummary_order
         ...Order2FulfillmentDetailsStep_order
         ...Order2PaymentStep_order

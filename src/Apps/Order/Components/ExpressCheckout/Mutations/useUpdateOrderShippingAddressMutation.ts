@@ -15,6 +15,7 @@ export const useUpdateOrderShippingAddressMutation = () => {
               order {
                 internalID
                 ...ExpressCheckoutUI_order
+                ...Order2ExpressCheckoutUI_order
                 fulfillmentOptions {
                   type
                   amount {
