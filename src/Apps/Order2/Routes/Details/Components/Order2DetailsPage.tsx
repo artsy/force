@@ -9,6 +9,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { Order2DetailsFulfillmentInfo } from "Apps/Order2/Routes/Details/Components/Order2DetailsFulfillmentInfo"
 import { Order2DetailsOrderSummary } from "Apps/Order2/Routes/Details/Components/Order2DetailsOrderSummary"
 import { Order2DetailsPaymentInfo } from "Apps/Order2/Routes/Details/Components/Order2DetailsPaymentInfo"
 import type { Order2DetailsPage_order$key } from "__generated__/Order2DetailsPage_order.graphql"
@@ -34,19 +35,7 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
 
         <Spacer y={1} />
 
-        {/* Shipping/pickup info */}
-        <Box p={2} backgroundColor="mono0">
-          <Text variant="sm" fontWeight={500} color="mono100">
-            Ship to
-          </Text>
-          <Text variant="xs" color="mono100">
-            Viviana Flores <br />
-            401 Broadway <br />
-            New York, NY 10013 <br />
-            United States <br />
-            (212)456-7890
-          </Text>
-        </Box>
+        <Order2DetailsFulfillmentInfo order={orderData} />
 
         <Spacer y={1} />
 
@@ -94,6 +83,7 @@ const FRAGMENT = graphql`
     ...Order2DetailsOrderSummary_order
     ...Order2PricingBreakdown_order
     ...Order2DetailsPaymentInfo_order
+    ...Order2DetailsFulfillmentInfo_order
   }
 `
 
