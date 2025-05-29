@@ -16,7 +16,7 @@ interface Order2PaymentStepProps {
 export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
   order,
 }) => {
-  const orderData = useFragment(ORDER_FRAGMENT, order)
+  const orderData = useFragment(FRAGMENT, order)
 
   const { editPayment, confirmationToken, steps, setConfirmationToken } =
     useCheckoutContext()!
@@ -73,7 +73,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
   )
 }
 
-const ORDER_FRAGMENT = graphql`
+const FRAGMENT = graphql`
   fragment Order2PaymentStep_order on Order {
     internalID
     buyerTotal {

@@ -6,10 +6,9 @@ interface Order2FulfillmentDetailsCompletedViewProps {
   fulfillmentOption: any
   onClickEdit: () => void
 }
-export const Order2FulfillmentDetailsCompletedView = ({
-  fulfillmentOption,
-  onClickEdit,
-}: Order2FulfillmentDetailsCompletedViewProps) => {
+export const Order2FulfillmentDetailsCompletedView: React.FC<
+  Order2FulfillmentDetailsCompletedViewProps
+> = ({ fulfillmentOption, onClickEdit }) => {
   if (fulfillmentOption?.type === "PICKUP") {
     return (
       <Flex alignItems="flex-start">
