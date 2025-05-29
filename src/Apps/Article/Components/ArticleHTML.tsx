@@ -1,5 +1,7 @@
-import { Box, type BoxProps, THEME } from "@artsy/palette"
+import { ContextModule } from "@artsy/cohesion"
+import { Box, type BoxProps, Flex, THEME } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { toStyle } from "Utils/toStyle"
 import { type FC, useEffect, useState } from "react"
 import styled from "styled-components"
@@ -28,6 +30,29 @@ export const ArticleHTML: FC<React.PropsWithChildren<ArticleHTMLProps>> = ({
       const [_, entity, id] = uri.pathname.split("/")
 
       if (!isSupportedArticleTooltip(entity)) return
+
+      const heading = node.closest("h2")
+      const artistLinks = heading?.querySelectorAll(
+        "a[href^='https://www.artsy.net/artist/']",
+      )
+
+      const isArtistHeading =
+        entity === "artist" && heading && artistLinks?.length === 1
+
+      if (isArtistHeading) {
+        return (
+          <Flex alignItems="center" gap={1} key={[i, id].join("-")}>
+            <ArticleTooltip entity={entity} id={id} href={href}>
+              {node.textContent}
+            </ArticleTooltip>
+            <FollowArtistButtonQueryRenderer
+              id={id}
+              size={["large", "small"]}
+              contextModule={ContextModule.artistHeader}
+            />
+          </Flex>
+        )
+      }
 
       return (
         <ArticleTooltip
