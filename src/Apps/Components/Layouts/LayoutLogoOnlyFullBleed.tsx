@@ -20,7 +20,13 @@ export const LayoutLogoOnlyFullBleed: FC<
       <AppToasts />
       <LayoutMain overflowX="visible">
         <AppContainer maxWidth="100%" as="main" id="main">
-          <Box position="sticky" py={1} top={0} bg="mono0" zIndex={1}>
+          <Box
+            position={["initial", "initial", "sticky"]}
+            py={1}
+            top={0}
+            bg="mono0"
+            zIndex={1}
+          >
             <RouterLink
               ml={2}
               onClick={event => {
