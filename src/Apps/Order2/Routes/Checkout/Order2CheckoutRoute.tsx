@@ -1,6 +1,7 @@
 import { Order2CheckoutContextProvider } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import { Order2CheckoutApp } from "Apps/Order2/Routes/Checkout/Order2CheckoutApp"
 import { ErrorPage } from "Components/ErrorPage"
+import { Analytics } from "System/Contexts/AnalyticsContext"
 import type { Order2CheckoutRoute_viewer$key } from "__generated__/Order2CheckoutRoute_viewer.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -19,9 +20,11 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
   }
 
   return (
-    <Order2CheckoutContextProvider order={order}>
-      <Order2CheckoutApp viewer={data} />
-    </Order2CheckoutContextProvider>
+    <Analytics contextPageOwnerId={order.internalID}>
+      <Order2CheckoutContextProvider order={order}>
+        <Order2CheckoutApp viewer={data} />
+      </Order2CheckoutContextProvider>
+    </Analytics>
   )
 }
 
@@ -31,6 +34,7 @@ const FRAGMENT = graphql`
     ...Order2CheckoutApp_viewer @arguments(orderID: $orderID)
     me {
       order(id: $orderID) {
+        internalID
         ...Order2CheckoutContext_order
       }
       addressConnection(first: 10) {

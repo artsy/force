@@ -1,13 +1,13 @@
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
-import { Order2PaymentForm } from "Apps/Order2/Routes/Checkout/Components/Order2PaymentStep/Order2PaymentForm"
-import type { Order2PaymentStep_order$key } from "__generated__/Order2PaymentStep_order.graphql"
-import { graphql, useFragment } from "react-relay"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { Order2PaymentCompletedView } from "Apps/Order2/Routes/Checkout/Components/Order2PaymentStep/Order2PaymentCompletedView"
+import { Order2PaymentCompletedView } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentCompletedView"
+import { Order2PaymentForm } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentForm"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import type { Order2PaymentStep_order$key } from "__generated__/Order2PaymentStep_order.graphql"
+import { graphql, useFragment } from "react-relay"
 
 interface Order2PaymentStepProps {
   order: Order2PaymentStep_order$key

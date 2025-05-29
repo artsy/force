@@ -8,6 +8,7 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import type {
   Order2CheckoutContext_order$data,
@@ -30,6 +31,8 @@ const MINIMUM_LOADING_MS = 1000
 
 interface CheckoutState {
   isLoading: boolean
+  /** Order is redirecting to the details page */
+  expressCheckoutSubmitting: boolean
   loadingError: CheckoutLoadingError | null
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
   steps: CheckoutStep[]
@@ -44,12 +47,14 @@ interface CheckoutActions {
   setExpressCheckoutLoaded: (
     availablePaymentMethods: ExpressCheckoutPaymentMethod[],
   ) => void
+  setExpressCheckoutSubmitting: (isSubmitting: boolean) => void
   setFulfillmentDetailsComplete: (args: { isPickup: boolean }) => void
   editFulfillmentDetails: () => void
   editPayment: () => void
   setLoadingError: (error: CheckoutLoadingError | null) => void
   setLoadingComplete: () => void
   setConfirmationToken: (args: { confirmationToken: any }) => void
+  redirectToOrderDetails: () => void
 }
 
 export type Order2CheckoutContextValue = CheckoutState & CheckoutActions
@@ -74,7 +79,6 @@ export const Order2CheckoutContextProvider: React.FC<
     isLoading,
     setLoadingError,
     setLoadingComplete,
-    setExpressCheckoutLoaded,
   } = context
 
   const isExpressCheckoutLoaded = expressCheckoutPaymentMethods !== null
@@ -119,20 +123,6 @@ export const Order2CheckoutContextProvider: React.FC<
     }
   }, [...checks])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: one-time effect
-  useEffect(() => {
-    // TODO: Pass to express checkout so it can register when it has loaded
-    // for now we simulate it taking a little longer than the minimum
-    // (this useEffect is temporary)
-    const expressCheckoutTimeout = setTimeout(() => {
-      setExpressCheckoutLoaded([])
-    }, 2000)
-
-    return () => {
-      clearTimeout(expressCheckoutTimeout)
-    }
-  }, [])
-
   return (
     <Order2CheckoutContext.Provider value={context}>
       {children}
@@ -142,6 +132,7 @@ export const Order2CheckoutContextProvider: React.FC<
 
 const ORDER_FRAGMENT = graphql`
   fragment Order2CheckoutContext_order on Order {
+    internalID
     mode
     selectedFulfillmentOption {
       type
@@ -175,7 +166,15 @@ const useBuildCheckoutContext = (
     [orderData],
   )
 
+  const { router } = useRouter()
   const [state, dispatch] = useReducer(reducer, initialState)
+
+  const redirectToOrderDetails = useCallback(() => {
+    const orderID = orderData.internalID
+    const orderDetailsURL = `/orders2/${orderID}/details`
+
+    router.replace(orderDetailsURL)
+  }, [orderData.internalID, router])
 
   const setExpressCheckoutLoaded = useCallback(
     (availablePaymentMethods: ExpressCheckoutPaymentMethod[]) => {
@@ -199,6 +198,18 @@ const useBuildCheckoutContext = (
       }
     },
     [state.activeFulfillmentDetailsTab],
+  )
+
+  const setExpressCheckoutSubmitting = useCallback(
+    (isSubmitting: boolean) => {
+      if (state.expressCheckoutSubmitting !== isSubmitting) {
+        dispatch({
+          type: "SET_EXPRESS_CHECKOUT_SUBMITTING",
+          payload: { isSubmittingOrder: isSubmitting },
+        })
+      }
+    },
+    [state.expressCheckoutSubmitting],
   )
 
   // This used only by the useLoadCheckout hook
@@ -285,11 +296,13 @@ const useBuildCheckoutContext = (
       editFulfillmentDetails,
       editPayment,
       setActiveFulfillmentDetailsTab,
+      setExpressCheckoutSubmitting,
       setExpressCheckoutLoaded,
       setFulfillmentDetailsComplete,
       setLoadingError,
       setLoadingComplete,
       setConfirmationToken,
+      redirectToOrderDetails,
     }
   }, [
     editFulfillmentDetails,
@@ -300,6 +313,8 @@ const useBuildCheckoutContext = (
     setLoadingError,
     setLoadingComplete,
     setConfirmationToken,
+    setExpressCheckoutSubmitting,
+    redirectToOrderDetails,
   ])
 
   return {
@@ -308,7 +323,9 @@ const useBuildCheckoutContext = (
   }
 }
 
-const initialStateForOrder = (order: Order2CheckoutContext_order$data) => {
+const initialStateForOrder = (
+  order: Order2CheckoutContext_order$data,
+): CheckoutState => {
   const stepNamesInOrder = [
     CheckoutStepName.FULFILLMENT_DETAILS,
     CheckoutStepName.DELIVERY_OPTION,
@@ -343,6 +360,7 @@ const initialStateForOrder = (order: Order2CheckoutContext_order$data) => {
 
   return {
     isLoading: true,
+    expressCheckoutSubmitting: false,
     loadingError: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: null,
@@ -362,6 +380,10 @@ type Action =
     }
   | {
       type: "LOADING_COMPLETE"
+    }
+  | {
+      type: "SET_EXPRESS_CHECKOUT_SUBMITTING"
+      payload: { isSubmittingOrder: boolean }
     }
   | {
       type: "FULFILLMENT_DETAILS_COMPLETE"
@@ -544,6 +566,11 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
         ...state,
         confirmationToken: action.payload.confirmationToken,
         steps: newSteps,
+      }
+    case "SET_EXPRESS_CHECKOUT_SUBMITTING":
+      return {
+        ...state,
+        expressCheckoutSubmitting: action.payload.isSubmittingOrder,
       }
     default:
       return state
