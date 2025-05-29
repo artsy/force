@@ -6,10 +6,9 @@ interface Order2PaymentCompletedViewProps {
   confirmationToken: any
   onClickEdit: () => void
 }
-export const Order2PaymentCompletedView = ({
-  confirmationToken,
-  onClickEdit,
-}: Order2PaymentCompletedViewProps) => {
+export const Order2PaymentCompletedView: React.FC<
+  Order2PaymentCompletedViewProps
+> = ({ confirmationToken, onClickEdit }) => {
   return (
     <Flex flexDirection="column" backgroundColor="mono0" p={2}>
       <Flex justifyContent="space-between">

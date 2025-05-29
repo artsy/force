@@ -1,5 +1,6 @@
-import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
+import LockIcon from "@artsy/icons/LockIcon"
 import ReceiptIcon from "@artsy/icons/ReceiptIcon"
+import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
 import {
   Elements,
   PaymentElement,
@@ -14,23 +15,26 @@ import {
 } from "@stripe/stripe-js"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { FadeInBox } from "Components/FadeInBox"
-import { getENV } from "Utils/getENV"
-import { useState } from "react"
-import LockIcon from "@artsy/icons/LockIcon"
 import { RouterLink } from "System/Components/RouterLink"
+import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
-import { graphql, useRelayEnvironment, fetchQuery } from "react-relay"
 import type { Order2PaymentFormConfirmationTokenQuery } from "__generated__/Order2PaymentFormConfirmationTokenQuery.graphql"
+import type React from "react"
+import { useState } from "react"
+import { fetchQuery, graphql, useRelayEnvironment } from "react-relay"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 const logger = createLogger("Order2PaymentForm")
 
-interface Props {
+interface Order2PaymentFormProps {
   order: any
   setConfirmationToken: (token: any) => void
 }
 
-export const Order2PaymentForm = ({ order, setConfirmationToken }: Props) => {
+export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
+  order,
+  setConfirmationToken,
+}) => {
   const { itemsTotal, seller } = order
 
   if (!itemsTotal) {
