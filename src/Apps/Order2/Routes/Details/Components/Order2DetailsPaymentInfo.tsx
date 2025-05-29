@@ -2,12 +2,12 @@ import ApplePayMarkIcon from "@artsy/icons/ApplePayMarkIcon"
 import GooglePayIcon from "@artsy/icons/GooglePayIcon"
 import HomeIcon from "@artsy/icons/HomeIcon"
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
+import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import type {
   Order2DetailsPaymentInfo_order$data,
   Order2DetailsPaymentInfo_order$key,
 } from "__generated__/Order2DetailsPaymentInfo_order.graphql"
-import { Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
-import React from "react"
+import type React from "react"
 import { useFragment } from "react-relay"
 import { graphql } from "relay-runtime"
 
