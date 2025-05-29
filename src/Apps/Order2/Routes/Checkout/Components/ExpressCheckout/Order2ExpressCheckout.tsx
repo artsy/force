@@ -22,7 +22,7 @@ const logger = createLogger("Order2ExpressCheckout.tsx")
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
-interface Props {
+interface Order2ExpressCheckoutProps {
   order: Order2ExpressCheckout_order$key
 }
 
@@ -31,8 +31,10 @@ type Seller = Exclude<
   { __typename: "%other" }
 >
 
-export const Order2ExpressCheckout = ({ order }: Props) => {
-  const orderData = useFragment(ORDER_FRAGMENT, order)
+export const Order2ExpressCheckout: React.FC<Order2ExpressCheckoutProps> = ({
+  order,
+}) => {
+  const orderData = useFragment(FRAGMENT, order)
   const [isChrome, setIsChrome] = useState<boolean | null>(null)
   const { expressCheckoutPaymentMethods } = useCheckoutContext()
 
@@ -91,7 +93,7 @@ export const Order2ExpressCheckout = ({ order }: Props) => {
   )
 }
 
-const ORDER_FRAGMENT = graphql`
+const FRAGMENT = graphql`
   fragment Order2ExpressCheckout_order on Order {
     ...Order2ExpressCheckoutUI_order
     availableShippingCountries
