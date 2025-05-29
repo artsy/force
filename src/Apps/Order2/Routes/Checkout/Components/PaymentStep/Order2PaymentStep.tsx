@@ -36,7 +36,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
           <Text variant="sm-display" fontWeight={500} color="mono100">
             Payment
           </Text>
-          <Text variant="xs" color="mono60">
+          <Text variant={["xs", "xs", "sm"]} color="mono60">
             Options vary based on price, gallery, and location
           </Text>
         </Flex>

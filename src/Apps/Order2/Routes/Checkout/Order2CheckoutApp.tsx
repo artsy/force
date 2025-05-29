@@ -114,7 +114,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
                   >
                     Shipping Method
                   </Text>
-                  <Text variant="xs" color="mono60">
+                  <Text variant={["xs", "xs", "sm"]} color="mono60">
                     Options vary based on address and artwork size
                   </Text>
                 </Flex>
