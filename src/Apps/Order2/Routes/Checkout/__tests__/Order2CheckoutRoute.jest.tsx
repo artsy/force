@@ -136,7 +136,10 @@ describe("Order2CheckoutRoute", () => {
 
       await renderWithLoadingComplete(props)
 
-      expect(screen.getAllByText("Supreme skateboard, 2023")).toHaveLength(2)
+      // There are 3 different summaries on the page. 1 in the collapsible
+      // mobile summary at the top and 2 different review steps for mobile and desktop.
+      const artworkTitles = screen.getAllByText("Supreme skateboard, 2023")
+      expect(artworkTitles).toHaveLength(3)
     })
 
     describe("Checkout with pickup", () => {

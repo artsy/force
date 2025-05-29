@@ -1,4 +1,4 @@
-import { Spacer } from "@artsy/palette"
+import { Box } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { AppToasts } from "Apps/Components/AppToasts"
 import type { BaseLayoutProps } from "Apps/Components/Layouts"
@@ -18,25 +18,28 @@ export const LayoutLogoOnlyFullBleed: FC<
   return (
     <>
       <AppToasts />
-      <LayoutMain>
-        <AppContainer>
-          <Spacer y={[2, 4]} />
-
-          <RouterLink
-            ml={[2, 4]}
-            onClick={event => {
-              if (match.location.pathname.includes("/order") && isEigen) {
-                event.preventDefault()
-              }
-            }}
-            to="/"
-            display="block"
+      <LayoutMain overflowX="visible">
+        <AppContainer maxWidth="100%" as="main" id="main">
+          <Box
+            position={["initial", "initial", "sticky"]}
+            py={1}
+            top={0}
+            bg="mono0"
+            zIndex={1}
           >
-            <NavBarPrimaryLogo />
-          </RouterLink>
-
-          <Spacer y={[2, 4]} />
-
+            <RouterLink
+              ml={2}
+              onClick={event => {
+                if (match.location.pathname.includes("/order") && isEigen) {
+                  event.preventDefault()
+                }
+              }}
+              to="/"
+              display="block"
+            >
+              <NavBarPrimaryLogo />
+            </RouterLink>
+          </Box>
           {children}
         </AppContainer>
       </LayoutMain>
