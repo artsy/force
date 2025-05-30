@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0b34f089f25e7e5404b395278488a11a>>
+ * @generated SignedSource<<769907bbb587e54360dbf1609baf76c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Order2DetailsPage_order$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsFulfillmentInfo_order" | "Order2DetailsHeader_order" | "Order2DetailsMessage_order" | "Order2DetailsOrderSummary_order" | "Order2DetailsPaymentInfo_order" | "Order2PricingBreakdown_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsFulfillmentInfo_order" | "Order2DetailsHeader_order" | "Order2DetailsHelpLinks_order" | "Order2DetailsMessage_order" | "Order2DetailsOrderSummary_order" | "Order2DetailsPaymentInfo_order" | "Order2PricingBreakdown_order">;
   readonly " $fragmentType": "Order2DetailsPage_order";
 };
 export type Order2DetailsPage_order$key = {
@@ -54,12 +54,17 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Order2DetailsFulfillmentInfo_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Order2DetailsHelpLinks_order"
     }
   ],
   "type": "Order",
   "abstractKey": null
 };
 
-(node as any).hash = "b2d9c539a83c462513bc875d941fb92c";
+(node as any).hash = "14d4d3d42c2cb99708e2d852d918e057";
 
 export default node;
