@@ -22,7 +22,7 @@ export const Order2DetailsHelpLinks: React.FC<Order2DetailsHelpLinksProps> = ({
         <Spacer x={1} />
 
         <Box>
-          <Text variant="sm" color="mono100" fontWeight={500}>
+          <Text variant="sm" color="mono100" fontWeight={700}>
             Need help?
           </Text>
 
@@ -50,6 +50,7 @@ export const Order2DetailsHelpLinks: React.FC<Order2DetailsHelpLinksProps> = ({
           </Text>
         </Box>
       </Flex>
+      <Spacer y={4} />
     </Box>
   )
 }
