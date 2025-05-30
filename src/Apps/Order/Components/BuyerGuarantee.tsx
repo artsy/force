@@ -93,7 +93,7 @@ export const BuyerGuarantee: React.FC<
               to={BUYER_GUARANTEE_URL}
               onClick={handleClick}
             >
-              Artsy’s buyer protection
+              Artsy’s Buyer Guarantee
             </RouterLink>
             .
           </Text>

@@ -81,7 +81,7 @@ export const Order2DetailsOrderSummary: React.FC<
           <Text variant="xs" color="mono100">
             Your purchase is protected with{" "}
             <RouterLink inline target="_blank" to={BUYER_GUARANTEE_URL}>
-              Artsy’s buyer protection
+              Artsy’s Buyer Guarantee
             </RouterLink>
             .
           </Text>

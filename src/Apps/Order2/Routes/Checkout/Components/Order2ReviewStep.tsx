@@ -57,7 +57,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           <ShieldIcon fill="mono100" />
           <Spacer x={1} />
           <Text variant="xs" color="mono100">
-            Your purchase is protected with Artsy’s buyer protection.
+            Your purchase is protected with Artsy’s Buyer Guarantee.
           </Text>
         </Flex>
       </Message>

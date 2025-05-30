@@ -74,12 +74,12 @@ export const ShippingQuotes: React.FC<
         {orderData.isOffer ? (
           <>
             Please note that these are estimates and may change once offer is
-            finalized. All options are eligible for Artsy’s Buyer Protection
+            finalized. All options are eligible for Artsy’s Buyer Guarantee
             policy, which protects against damage and loss.
           </>
         ) : (
           <>
-            All options are eligible for Artsy’s Buyer Protection policy, which
+            All options are eligible for Artsy’s Buyer Guarantee policy, which
             protects against damage and loss.
           </>
         )}
