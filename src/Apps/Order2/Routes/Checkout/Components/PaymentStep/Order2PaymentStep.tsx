@@ -33,7 +33,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
     >
       <Box p={2} hidden={stepState !== CheckoutStepState.UPCOMING}>
         <Flex flexDirection="column">
-          <Text variant="sm-display" fontWeight={500} color="mono100">
+          <Text variant="sm-display" fontWeight="bold" color="mono100">
             Payment
           </Text>
           <Text variant={["xs", "xs", "sm"]} color="mono60">
@@ -55,7 +55,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
       {stepState === CheckoutStepState.ACTIVE && (
         <Box p={2}>
           <Flex flexDirection="column">
-            <Text variant="sm-display" fontWeight={500} color="mono100">
+            <Text variant="sm-display" fontWeight="bold" color="mono100">
               Payment
             </Text>
             <Text variant="xs" color="mono60">

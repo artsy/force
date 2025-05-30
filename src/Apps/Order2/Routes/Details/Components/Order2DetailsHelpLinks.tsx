@@ -22,7 +22,7 @@ export const Order2DetailsHelpLinks: React.FC<Order2DetailsHelpLinksProps> = ({
         <Spacer x={1} />
 
         <Box>
-          <Text variant="sm" color="mono100" fontWeight={700}>
+          <Text variant="sm" color="mono100" fontWeight="bold">
             Need help?
           </Text>
 

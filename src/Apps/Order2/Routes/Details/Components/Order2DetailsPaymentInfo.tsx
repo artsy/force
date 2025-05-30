@@ -28,7 +28,7 @@ export const Order2DetailsPaymentInfo: React.FC<
 
   return (
     <Box p={2} backgroundColor="mono0">
-      <Text variant="sm" fontWeight={700} color="mono100">
+      <Text variant="sm" fontWeight="bold" color="mono100">
         Payment method
       </Text>
 
