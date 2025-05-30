@@ -84,10 +84,10 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@40.6.0":
-  version "40.6.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-40.6.0.tgz#28ac401ec4dfead695620cc2f3d8994760c9089f"
-  integrity sha512-GSbtLNjwE3H5DAtdnTthDWZcOOVz9w3B0XHmvRJiftWNGUnbkoBdfXbGynegbG6qau4k4+nj6AldjRfwXi/YjA==
+"@artsy/palette-charts@40.7.0":
+  version "40.7.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-40.7.0.tgz#ac74c33a2e21cf8eeb4b85623b9700b7e3cf7385"
+  integrity sha512-R+QPxSDZWZLqfdtt3VsUk/ieey5N4yD+nTclvbZPbSUG20SJpfFVJ6Xtlc2R3IqGqGtzrKeER1wigWwuUxCCHg==
   dependencies:
     "@seznam/compose-react-refs" "^1.0.6"
     d3-interpolate "^1.3.2"
