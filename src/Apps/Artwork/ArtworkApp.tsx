@@ -73,6 +73,7 @@ const BelowTheFoldArtworkDetails: React.FC<
   return (
     <>
       <Spacer y={6} />
+
       <Join separator={<Spacer y={2} />}>
         <ArtworkDetailsQueryRenderer slug={slug} />
 
