@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<18dcb0596048b31c48bcac809a780b4d>>
+ * @generated SignedSource<<c600491043015e173a05f2caf6b25f81>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type Order2ReviewStep_order$data = {
   readonly buyerTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
+  readonly internalID: string;
   readonly itemsTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
@@ -70,6 +71,13 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Order2PricingBreakdown_order"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -232,6 +240,6 @@ return {
 };
 })();
 
-(node as any).hash = "397ea176292b127da0b449199cd7ba97";
+(node as any).hash = "a41a46d784faf099071eae3ee998af72";
 
 export default node;

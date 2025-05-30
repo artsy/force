@@ -22,6 +22,8 @@ import type { Order2PaymentFormConfirmationTokenQuery } from "__generated__/Orde
 import type React from "react"
 import { useState } from "react"
 import { fetchQuery, graphql, useRelayEnvironment } from "react-relay"
+import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
+import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 const logger = createLogger("Order2PaymentForm")
@@ -45,6 +47,8 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
     amount: itemsTotal.minor,
     currency: itemsTotal.currencyCode.toLowerCase(),
     onBehalfOf: seller?.merchantAccount?.externalId,
+    setupFutureUsage: "off_session",
+    captureMethod: "manual",
   }
 
   const options: StripeElementsOptions = {
@@ -71,15 +75,19 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
 
   return (
     <Elements stripe={stripePromise} options={options}>
-      <PaymentFormContent setConfirmationToken={setConfirmationToken} />
+      <PaymentFormContent
+        order={order}
+        setConfirmationToken={setConfirmationToken}
+      />
     </Elements>
   )
 }
 
-const PaymentFormContent = ({ setConfirmationToken }) => {
+const PaymentFormContent = ({ order, setConfirmationToken }) => {
   const stripe = useStripe()
   const elements = useElements()
   const environment = useRelayEnvironment()
+  const updateOrderMutation = useUpdateOrderMutation()
 
   if (!(stripe && elements)) {
     return null
@@ -167,7 +175,26 @@ const PaymentFormContent = ({ setConfirmationToken }) => {
       return
     }
 
-    setConfirmationToken({ confirmationToken: response.me?.confirmationToken })
+    const updateOrderPaymentMethodResult =
+      await updateOrderMutation.submitMutation({
+        variables: {
+          input: {
+            id: order.internalID,
+            paymentMethod: "CREDIT_CARD",
+          },
+        },
+      })
+
+    validateAndExtractOrderResponse(
+      updateOrderPaymentMethodResult.updateOrder?.orderOrError,
+    )
+
+    setConfirmationToken({
+      confirmationToken: {
+        id: confirmationToken.id,
+        ...response?.me?.confirmationToken,
+      },
+    })
   }
 
   return (
