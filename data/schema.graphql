@@ -2736,6 +2736,7 @@ type Artwork implements Node & Searchable & Sellable {
 
   # Whether a request for price estimate has been submitted for this artwork
   hasPriceEstimateRequest: Boolean
+  hasTitle: Boolean!
 
   # The height as expressed by the original input metric
   height: String
@@ -8749,6 +8750,7 @@ input CreateArtworkImportInput {
   clientMutationId: String
   fileName: String
   parseWithAI: Boolean
+  parseWithAIModel: String
   partnerID: String!
   s3Bucket: String!
   s3Key: String!
@@ -10726,6 +10728,9 @@ type EditionSet implements Sellable {
 
   # In CMS, has the artwork been marked as BNMO?
   listingOptions: ArtworkListingOptions
+
+  # The unit of length of the edition set, expressed in `in` or `cm`
+  metric: String
   price: String
   priceDisplay: String
   priceListed: Money
@@ -16532,6 +16537,9 @@ type Order {
 
   # The seller of the order
   seller: SellerType
+
+  # Display short version of order's artwork location
+  shippingOrigin: String
 
   # The total amount for shipping
   shippingTotal: Money

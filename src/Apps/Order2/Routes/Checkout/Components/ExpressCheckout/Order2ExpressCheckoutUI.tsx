@@ -44,6 +44,7 @@ import type {
   OrderCreditCardWalletTypeEnum,
   useUpdateOrderMutation$data,
 } from "__generated__/useUpdateOrderMutation.graphql"
+import type React from "react"
 import { useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -59,11 +60,10 @@ type HandleCancelCallback = NonNullable<
   React.ComponentProps<typeof ExpressCheckoutElement>["onCancel"]
 >
 
-export const Order2ExpressCheckoutUI = ({
-  order,
-  isChrome,
-}: Order2ExpressCheckoutUIProps) => {
-  const orderData = useFragment(ORDER_FRAGMENT, order)
+export const Order2ExpressCheckoutUI: React.FC<
+  Order2ExpressCheckoutUIProps
+> = ({ order, isChrome }) => {
+  const orderData = useFragment(FRAGMENT, order)
 
   const elements = useElements()
   const stripe = useStripe()
@@ -531,7 +531,7 @@ export const Order2ExpressCheckoutUI = ({
   )
 }
 
-const ORDER_FRAGMENT = graphql`
+const FRAGMENT = graphql`
   fragment Order2ExpressCheckoutUI_order on Order {
     internalID
     source
