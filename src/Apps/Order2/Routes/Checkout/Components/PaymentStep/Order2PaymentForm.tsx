@@ -175,19 +175,23 @@ const PaymentFormContent = ({ order, setConfirmationToken }) => {
       return
     }
 
-    const updateOrderPaymentMethodResult =
-      await updateOrderMutation.submitMutation({
-        variables: {
-          input: {
-            id: order.internalID,
-            paymentMethod: "CREDIT_CARD",
+    try {
+      const updateOrderPaymentMethodResult =
+        await updateOrderMutation.submitMutation({
+          variables: {
+            input: {
+              id: order.internalID,
+              paymentMethod: "CREDIT_CARD",
+            },
           },
-        },
-      })
+        })
 
-    validateAndExtractOrderResponse(
-      updateOrderPaymentMethodResult.updateOrder?.orderOrError,
-    )
+      validateAndExtractOrderResponse(
+        updateOrderPaymentMethodResult.updateOrder?.orderOrError,
+      )
+    } catch (error) {
+      logger.error("Error while updating order payment method", error)
+    }
 
     setConfirmationToken({
       confirmationToken: {

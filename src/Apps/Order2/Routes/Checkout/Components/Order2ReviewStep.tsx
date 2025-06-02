@@ -28,7 +28,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
   const submitOrderMutation = useSubmitOrderMutation()
   const { steps, confirmationToken, redirectToOrderDetails } =
-    useCheckoutContext()!
+    useCheckoutContext()
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.CONFIRMATION,
   )?.state
@@ -53,6 +53,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
 
       redirectToOrderDetails()
     } catch (error) {
+      setLoading(false)
       logger.error("Error while submitting order", error)
     }
   }
