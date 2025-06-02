@@ -1,4 +1,4 @@
-import { Column, GridColumns, Spacer } from "@artsy/palette"
+import { Box, Column, GridColumns, Spacer } from "@artsy/palette"
 import { Order2DetailsFulfillmentInfo } from "Apps/Order2/Routes/Details/Components/Order2DetailsFulfillmentInfo"
 import { Order2DetailsHelpLinks } from "Apps/Order2/Routes/Details/Components/Order2DetailsHelpLinks"
 import { Order2DetailsOrderSummary } from "Apps/Order2/Routes/Details/Components/Order2DetailsOrderSummary"
@@ -16,22 +16,43 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
   const orderData = useFragment(FRAGMENT, order)
 
   return (
-    <GridColumns backgroundColor="mono5">
-      <Column span={[12]} maxWidth="754px">
-        <Order2DetailsHeader order={orderData} />
+    <GridColumns backgroundColor="mono5" py={[0, 4]} px={[0, 0, 4]}>
+      <Column span={[12, 12, 7]} width="100%">
+        <Box
+          width="100%"
+          maxWidth="754px"
+          mx={["auto", "auto", 0]}
+          ml={[0, "auto", "auto"]}
+        >
+          <Order2DetailsHeader order={orderData} />
 
-        <Order2DetailsMessage order={orderData} />
+          <Order2DetailsMessage order={orderData} />
 
+          <Box display={["block", "block", "none"]}>
+            <Order2DetailsOrderSummary order={orderData} />
+          </Box>
+
+          <Spacer y={1} />
+
+          <Order2DetailsFulfillmentInfo order={orderData} />
+
+          <Spacer y={1} />
+
+          <Order2DetailsPaymentInfo order={orderData} />
+
+          <Box display={["block", "block", "none"]}>
+            <Order2DetailsHelpLinks order={orderData} />
+            <Spacer y={[4, 0]} />
+          </Box>
+        </Box>
+      </Column>
+      <Column
+        span={[12, 12, 5]}
+        display={["none", "none", "block"]}
+        maxWidth="445px"
+      >
         <Order2DetailsOrderSummary order={orderData} />
-
         <Spacer y={1} />
-
-        <Order2DetailsFulfillmentInfo order={orderData} />
-
-        <Spacer y={1} />
-
-        <Order2DetailsPaymentInfo order={orderData} />
-
         <Order2DetailsHelpLinks order={orderData} />
       </Column>
     </GridColumns>
