@@ -17,7 +17,7 @@ describe("BuyerGuarantee", () => {
     jest.clearAllMocks()
   })
 
-  describe("when I click on the buyer protection link", () => {
+  describe("when I click on the buyer guarantee link", () => {
     describe("when the parent specified a context module", () => {
       it("tracks an analytics event", () => {
         render(
@@ -27,7 +27,7 @@ describe("BuyerGuarantee", () => {
           />,
         )
 
-        userEvent.click(screen.getByText("Artsy’s buyer protection"))
+        userEvent.click(screen.getByText("Artsy’s Buyer Guarantee"))
 
         expect(trackEvent).toHaveBeenCalledTimes(1)
         expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
@@ -51,7 +51,7 @@ describe("BuyerGuarantee", () => {
           />,
         )
 
-        userEvent.click(screen.getByText("Artsy’s buyer protection"))
+        userEvent.click(screen.getByText("Artsy’s Buyer Guarantee"))
 
         expect(trackEvent).not.toHaveBeenCalled()
       })

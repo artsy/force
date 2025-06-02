@@ -1,10 +1,10 @@
+import { ArtworkStructuredData } from "Apps/Artwork/Components/ArtworkStructuredData"
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
 import type { ArtworkMeta_artwork$key } from "__generated__/ArtworkMeta_artwork.graphql"
 import { Link, Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 import { ArtworkChatBubbleFragmentContainer } from "./ArtworkChatBubble"
-import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/SeoDataForArtwork"
 
 interface ArtworkMetaProps {
   artwork: ArtworkMeta_artwork$key
@@ -21,9 +21,28 @@ export const ArtworkMeta: React.FC<
 
   const addNoIndex = data.isUnlisted || pathname.includes(data?.internalID) // a previously private artwork URL
 
-  const renderImageMetaTags = () => {
-    if (data.isShareable && imageURL) {
-      return (
+  return (
+    <>
+      <Title>{data.meta?.title}</Title>
+      <Meta name="description" content={data.meta?.description} />
+      <Link rel="canonical" href={`${getENV("APP_URL")}${data.href}`} />
+
+      <Meta
+        property="twitter:description"
+        content={data.meta?.longDescription}
+      />
+
+      <Meta property="og:title" content={data.meta?.title} />
+      <Meta property="og:description" content={data.meta?.description} />
+      <Meta property="og:url" content={`${getENV("APP_URL")}${data.href}`} />
+      <Meta
+        property="og:type"
+        content={`${getENV("FACEBOOK_APP_NAMESPACE")}:artwork`}
+      />
+
+      {/* Images */}
+      {imageURL && <Meta name="thumbnail" content={imageURL} />}
+      {data.isShareable && imageURL ? (
         <>
           <Meta property="twitter:card" content="summary_large_image" />
           <Meta property="og:image" content={imageURL} />
@@ -36,41 +55,23 @@ export const ArtworkMeta: React.FC<
             content={data.metaImage?.resized?.height}
           />
         </>
-      )
-    }
+      ) : (
+        <Meta property="twitter:card" content="summary" />
+      )}
 
-    return <Meta property="twitter:card" content="summary" />
-  }
-
-  return (
-    <>
-      <Title>{data.meta?.title}</Title>
-      <Meta name="description" content={data.meta?.description} />
-      {imageURL && <Meta name="thumbnail" content={imageURL} />}
-      <Link rel="canonical" href={`${getENV("APP_URL")}${data.href}`} />
-      <Meta
-        property="twitter:description"
-        content={data.meta?.longDescription}
-      />
-      <Meta property="og:title" content={data.meta?.title} />
-      <Meta property="og:description" content={data.meta?.description} />
-      <Meta property="og:url" content={`${getENV("APP_URL")}${data.href}`} />
-      <Meta
-        property="og:type"
-        content={`${getENV("FACEBOOK_APP_NAMESPACE")}:artwork`}
-      />
-      <SeoDataForArtwork artwork={data} />
-      {renderImageMetaTags()}
       {addNoIndex && <Meta name="robots" content="noindex, follow" />}
+
       <ArtworkChatBubbleFragmentContainer artwork={data} />
+
+      <ArtworkStructuredData artwork={data} />
     </>
   )
 }
 
 const artworkMetaFragment = graphql`
   fragment ArtworkMeta_artwork on Artwork {
-    ...SeoDataForArtwork_artwork
     ...ArtworkChatBubble_artwork
+    ...ArtworkStructuredData_artwork
     href
     internalID
     isShareable

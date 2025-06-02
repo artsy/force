@@ -11,11 +11,13 @@ import type React from "react"
 import { useFragment } from "react-relay"
 import { graphql } from "relay-runtime"
 
-interface Props {
+interface Order2DetailsPaymentInfoProps {
   order: Order2DetailsPaymentInfo_order$key
 }
 
-export const Order2DetailsPaymentInfo: React.FC<Props> = ({ order }) => {
+export const Order2DetailsPaymentInfo: React.FC<
+  Order2DetailsPaymentInfoProps
+> = ({ order }) => {
   const orderData = useFragment(fragment, order)
 
   const { Icon, text } = getPaymentMethodContent(orderData)
@@ -26,7 +28,7 @@ export const Order2DetailsPaymentInfo: React.FC<Props> = ({ order }) => {
 
   return (
     <Box p={2} backgroundColor="mono0">
-      <Text variant="sm" fontWeight={500} color="mono100">
+      <Text variant="sm" fontWeight="bold" color="mono100">
         Payment method
       </Text>
 
