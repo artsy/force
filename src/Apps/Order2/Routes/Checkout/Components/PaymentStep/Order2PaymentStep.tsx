@@ -18,8 +18,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
 }) => {
   const orderData = useFragment(FRAGMENT, order)
 
-  const { editPayment, confirmationToken, steps, setConfirmationToken } =
-    useCheckoutContext()!
+  const { editPayment, confirmationToken, steps } = useCheckoutContext()!
 
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.PAYMENT,
@@ -62,10 +61,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
               Options vary based on price, gallery, and location
             </Text>
             <Spacer y={2} />
-            <Order2PaymentForm
-              order={orderData}
-              setConfirmationToken={setConfirmationToken}
-            />
+            <Order2PaymentForm order={orderData} />
           </Flex>
         </Box>
       )}
