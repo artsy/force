@@ -37,7 +37,7 @@ interface CheckoutState {
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
   steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
-  confirmationToken: any // Do we need a type for this object?
+  confirmationToken: any
 }
 
 interface CheckoutActions {

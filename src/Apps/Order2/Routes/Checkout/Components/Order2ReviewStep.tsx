@@ -1,9 +1,20 @@
 import ShieldIcon from "@artsy/icons/ShieldIcon"
-import { Box, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
+import { Box, Button, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
+import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSubmitOrderMutation"
+import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { RouterLink } from "System/Components/RouterLink"
+import createLogger from "Utils/logger"
 import type { Order2ReviewStep_order$key } from "__generated__/Order2ReviewStep_order.graphql"
+import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
+
+const logger = createLogger("Order2ReviewStep.tsx")
 
 interface Order2ReviewStepProps {
   order: Order2ReviewStep_order$key
@@ -15,6 +26,37 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   const orderData = useFragment(FRAGMENT, order)
   const artwork = orderData.lineItems[0]?.artwork
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
+  const submitOrderMutation = useSubmitOrderMutation()
+  const { steps, confirmationToken, redirectToOrderDetails } =
+    useCheckoutContext()
+  const stepState = steps?.find(
+    step => step.name === CheckoutStepName.CONFIRMATION,
+  )?.state
+
+  const [loading, setLoading] = useState(false)
+  const handleClick = async event => {
+    setLoading(true)
+
+    try {
+      const submitOrderResult = await submitOrderMutation.submitMutation({
+        variables: {
+          input: {
+            id: orderData.internalID,
+            confirmationToken: confirmationToken.id,
+          },
+        },
+      })
+
+      validateAndExtractOrderResponse(
+        submitOrderResult.submitOrder?.orderOrError,
+      )
+
+      redirectToOrderDetails()
+    } catch (error) {
+      setLoading(false)
+      logger.error("Error while submitting order", error)
+    }
+  }
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0" p={2}>
@@ -61,6 +103,17 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           </Text>
         </Flex>
       </Message>
+      <Spacer y={4} />
+      {stepState === CheckoutStepState.ACTIVE && (
+        <Button
+          variant={"primaryBlack"}
+          width="100%"
+          onClick={handleClick}
+          loading={loading}
+        >
+          Submit
+        </Button>
+      )}
     </Flex>
   )
 }
@@ -68,6 +121,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
 const FRAGMENT = graphql`
   fragment Order2ReviewStep_order on Order {
     ...Order2PricingBreakdown_order
+    internalID
     mode
     source
     buyerTotal {
