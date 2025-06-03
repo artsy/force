@@ -14,29 +14,39 @@ import {
   loadStripe,
 } from "@stripe/stripe-js"
 import { Collapse } from "Apps/Order/Components/Collapse"
+import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
+import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { FadeInBox } from "Components/FadeInBox"
 import { RouterLink } from "System/Components/RouterLink"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import type { Order2PaymentFormConfirmationTokenQuery } from "__generated__/Order2PaymentFormConfirmationTokenQuery.graphql"
+import type {
+  Order2PaymentForm_order$data,
+  Order2PaymentForm_order$key,
+} from "__generated__/Order2PaymentForm_order.graphql"
 import type React from "react"
 import { useState } from "react"
-import { fetchQuery, graphql, useRelayEnvironment } from "react-relay"
-import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
-import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import {
+  fetchQuery,
+  graphql,
+  useFragment,
+  useRelayEnvironment,
+} from "react-relay"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 const logger = createLogger("Order2PaymentForm")
 
 interface Order2PaymentFormProps {
-  order: any
+  order: Order2PaymentForm_order$key
 }
 
 export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   order,
 }) => {
-  const { itemsTotal, seller } = order
+  const orderData = useFragment(FRAGMENT, order)
+  const { itemsTotal, seller } = orderData
 
   if (!itemsTotal) {
     throw new Error("itemsTotal is required")
@@ -74,17 +84,21 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
 
   return (
     <Elements stripe={stripePromise} options={options}>
-      <PaymentFormContent order={order} />
+      <PaymentFormContent order={orderData} />
     </Elements>
   )
 }
 
-const PaymentFormContent = ({ order }) => {
+interface PaymentFormContentProps {
+  order: Order2PaymentForm_order$data
+}
+const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   const stripe = useStripe()
   const elements = useElements()
   const environment = useRelayEnvironment()
   const updateOrderMutation = useUpdateOrderMutation()
   const { setConfirmationToken } = useCheckoutContext()
+  const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
 
   if (!(stripe && elements)) {
     return null
@@ -128,6 +142,7 @@ const PaymentFormContent = ({ order }) => {
   // From Stripe docs
   const handleSubmit = async event => {
     event.preventDefault()
+    setIsSubmittingToStripe(true)
 
     const { error: submitError } = await elements.submit()
     if (submitError) {
@@ -188,6 +203,8 @@ const PaymentFormContent = ({ order }) => {
       )
     } catch (error) {
       logger.error("Error while updating order payment method", error)
+    } finally {
+      setIsSubmittingToStripe(false)
     }
 
     setConfirmationToken({
@@ -199,7 +216,7 @@ const PaymentFormContent = ({ order }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form data-testID="paymentForm" onSubmit={handleSubmit}>
       <FadeInBox>
         <Box
           backgroundColor="#EFEFEF"
@@ -263,10 +280,32 @@ const PaymentFormContent = ({ order }) => {
         </Box>
       </FadeInBox>
       <Spacer y={2} />
-      <Button variant={"primaryBlack"} width="100%" type="submit">
+      <Button
+        loading={isSubmittingToStripe}
+        variant={"primaryBlack"}
+        width="100%"
+        type="submit"
+      >
         Save and Continue
       </Button>
       {errorMessage && <div>{errorMessage}</div>}
     </form>
   )
 }
+
+const FRAGMENT = graphql`
+  fragment Order2PaymentForm_order on Order {
+    internalID
+    itemsTotal {
+      minor
+      currencyCode
+    }
+    seller {
+      ... on Partner {
+        merchantAccount {
+          externalId
+        }
+      }
+    }
+  }
+`

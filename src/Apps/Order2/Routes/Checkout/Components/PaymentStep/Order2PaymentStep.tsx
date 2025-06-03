@@ -43,7 +43,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
 
       {/* This is used instead of hidden just to force a clean payment element on edit */}
       {stepState === CheckoutStepState.COMPLETED && (
-        <Box>
+        <Box data-testid="PaymentStep-completed">
           <Order2PaymentCompletedView
             confirmationToken={confirmationToken}
             onClickEdit={() => editPayment()}
@@ -52,7 +52,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
       )}
 
       {stepState === CheckoutStepState.ACTIVE && (
-        <Box p={2}>
+        <Box p={2} data-testid="PaymentStep-active">
           <Flex flexDirection="column">
             <Text variant="sm-display" fontWeight="bold" color="mono100">
               Payment
@@ -71,6 +71,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
 
 const FRAGMENT = graphql`
   fragment Order2PaymentStep_order on Order {
+    ...Order2PaymentForm_order
     internalID
     buyerTotal {
       minor
