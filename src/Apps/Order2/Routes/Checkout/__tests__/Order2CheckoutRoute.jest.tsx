@@ -113,6 +113,7 @@ const orderMutationSuccess = (initialValues, newValues) => {
     },
   }
 }
+
 describe("Order2CheckoutRoute", () => {
   describe("loading process", () => {
     it("renders the Order2CheckoutRoute skeleton, then the real component after some time", async () => {
@@ -341,11 +342,7 @@ describe("Order2CheckoutRoute", () => {
         await screen.findByText(pickupCompleteMessage)
         expect(screen.queryByText("Shipping Method")).not.toBeInTheDocument()
 
-        screen.getByTestId("PaymentStep-active")
-        const paymentForm = await screen.findByTestId("paymentForm")
-        await userEvent.click(
-          within(paymentForm).getByText("Mock enter credit card"),
-        )
+        await userEvent.click(screen.getByText("Mock enter credit card"))
 
         mockElements.submit.mockResolvedValueOnce({
           error: null,
@@ -363,9 +360,7 @@ describe("Order2CheckoutRoute", () => {
           },
         })
 
-        await userEvent.click(
-          within(paymentForm).getByText("Save and Continue"),
-        )
+        await userEvent.click(screen.getByText("Save and Continue"))
 
         expect(mockElements.submit).toHaveBeenCalled()
         expect(mockStripe.createConfirmationToken).toHaveBeenCalled()
