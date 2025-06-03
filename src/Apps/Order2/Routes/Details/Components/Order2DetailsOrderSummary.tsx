@@ -32,13 +32,13 @@ export const Order2DetailsOrderSummary: React.FC<
 
   return (
     <Box backgroundColor="mono0" p={2}>
-      {artworkImage?.url && (
+      {artworkImage?.url && artworkImage.width && artworkImage.height && (
         <Flex alignItems="center" width="100%" flexDirection="column" p={1}>
           <ResponsiveBox
-            aspectWidth={artworkImage.width || 0}
-            aspectHeight={artworkImage.height || 0}
-            maxWidth={artworkImage.width || 0}
-            maxHeight={artworkImage.height || 0}
+            aspectWidth={artworkImage.width}
+            aspectHeight={artworkImage.height}
+            maxWidth={artworkImage.width}
+            maxHeight={artworkImage.height}
           >
             <RouterLink to={`/artwork/${artwork?.slug}`} target="_blank">
               <Image
