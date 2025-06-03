@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<567863e883af1aa84dc87216968eeabd>>
+ * @generated SignedSource<<2fe92b18293fea3bfa53c585febeb582>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,8 +9,6 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
-export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
-export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2DetailsPage_order$data = {
   readonly lineItems: ReadonlyArray<{
@@ -18,8 +16,6 @@ export type Order2DetailsPage_order$data = {
       readonly slug: string;
     } | null | undefined;
   } | null | undefined>;
-  readonly mode: OrderModeEnum;
-  readonly source: OrderSourceEnum;
   readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsFulfillmentInfo_order" | "Order2DetailsHeader_order" | "Order2DetailsHelpLinks_order" | "Order2DetailsMessage_order" | "Order2DetailsOrderSummary_order" | "Order2DetailsPaymentInfo_order" | "Order2PricingBreakdown_order">;
   readonly " $fragmentType": "Order2DetailsPage_order";
 };
@@ -34,20 +30,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "Order2DetailsPage_order",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "mode",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "source",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -117,6 +99,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "6d638d86c626e0d7cd25564679fd252d";
+(node as any).hash = "07f53c14ff2ca7e65224af4fcbb93da2";
 
 export default node;

@@ -69,8 +69,6 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
 
 const FRAGMENT = graphql`
   fragment Order2DetailsPage_order on Order {
-    mode
-    source
     lineItems {
       artwork {
         slug
