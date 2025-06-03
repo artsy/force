@@ -45,7 +45,7 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
 
         const typename = line.__typename
         let variant: "sm" | "sm-display" = "sm"
-        let fontWeight: 400 | 500 = 400
+        let fontWeight: "normal" | "bold" = "normal"
         let color = "mono60"
         let withAsterisk = false
 
@@ -69,7 +69,7 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
             break
           case "TotalLine":
             variant = "sm-display"
-            fontWeight = 500
+            fontWeight = "bold"
             color = "mono100"
             amountText = (line.amount?.display ||
               line.amountFallbackText) as string

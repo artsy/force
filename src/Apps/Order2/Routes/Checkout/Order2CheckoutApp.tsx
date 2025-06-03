@@ -107,11 +107,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
 
               {showDeliveryOptionStep && (
                 <Flex flexDirection="column" backgroundColor="mono0" p={2}>
-                  <Text
-                    variant="sm-display"
-                    fontWeight="medium"
-                    color="mono100"
-                  >
+                  <Text variant="sm-display" fontWeight="bold" color="mono100">
                     Shipping Method
                   </Text>
                   <Text variant={["xs", "xs", "sm"]} color="mono60">

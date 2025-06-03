@@ -15,7 +15,7 @@ export const Order2DetailsHelpLinks: React.FC<Order2DetailsHelpLinksProps> = ({
   const orderData = useFragment(fragment, order)
 
   return (
-    <Box p={2}>
+    <Box p={2} backgroundColor={["mono5", "mono5", "mono0"]}>
       <Flex>
         <MessageIcon fill="mono100" mt={0.5} />
 
@@ -50,7 +50,6 @@ export const Order2DetailsHelpLinks: React.FC<Order2DetailsHelpLinksProps> = ({
           </Text>
         </Box>
       </Flex>
-      <Spacer y={4} />
     </Box>
   )
 }
