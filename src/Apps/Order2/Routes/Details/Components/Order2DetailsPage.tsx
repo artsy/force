@@ -1,6 +1,6 @@
 import { Box, Column, GridColumns, Spacer } from "@artsy/palette"
 import { Order2DetailsFulfillmentInfo } from "Apps/Order2/Routes/Details/Components/Order2DetailsFulfillmentInfo"
-import { Order2DetailsHelpLinks } from "Apps/Order2/Routes/Details/Components/Order2DetailsHelpLinks"
+import { Order2DetailsHelpLinksWithInquiry } from "Apps/Order2/Routes/Details/Components/Order2DetailsHelpLinks"
 import { Order2DetailsOrderSummary } from "Apps/Order2/Routes/Details/Components/Order2DetailsOrderSummary"
 import { Order2DetailsPaymentInfo } from "Apps/Order2/Routes/Details/Components/Order2DetailsPaymentInfo"
 import type { Order2DetailsPage_order$key } from "__generated__/Order2DetailsPage_order.graphql"
@@ -14,6 +14,8 @@ interface Order2DetailsPageProps {
 
 export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
   const orderData = useFragment(FRAGMENT, order)
+
+  const artworkSlug = orderData.lineItems[0]?.artwork?.slug
 
   return (
     <GridColumns backgroundColor="mono5" py={[0, 4]} px={[0, 0, 4]}>
@@ -41,7 +43,10 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
           <Order2DetailsPaymentInfo order={orderData} />
 
           <Box display={["block", "block", "none"]}>
-            <Order2DetailsHelpLinks order={orderData} />
+            <Order2DetailsHelpLinksWithInquiry
+              order={orderData}
+              artworkID={artworkSlug as string}
+            />
             <Spacer y={[4, 0]} />
           </Box>
         </Box>
@@ -53,7 +58,10 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
       >
         <Order2DetailsOrderSummary order={orderData} />
         <Spacer y={1} />
-        <Order2DetailsHelpLinks order={orderData} />
+        <Order2DetailsHelpLinksWithInquiry
+          order={orderData}
+          artworkID={artworkSlug as string}
+        />
       </Column>
     </GridColumns>
   )
@@ -61,6 +69,13 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
 
 const FRAGMENT = graphql`
   fragment Order2DetailsPage_order on Order {
+    mode
+    source
+    lineItems {
+      artwork {
+        slug
+      }
+    }
     ...Order2DetailsHeader_order
     ...Order2DetailsMessage_order
     ...Order2DetailsOrderSummary_order
