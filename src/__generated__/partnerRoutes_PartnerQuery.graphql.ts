@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<425aa01ca1619d1b7fd99c826ab4ce14>>
+ * @generated SignedSource<<112ec66755b5007a01ff69c0821de703>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -75,24 +75,47 @@ v6 = {
   "name": "name",
   "storageKey": null
 },
-v7 = {
+v7 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "url",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "width",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "height",
+    "storageKey": null
+  }
+],
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "city",
   "storageKey": null
 },
-v8 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "totalCount",
   "storageKey": null
 },
-v9 = [
-  (v8/*: any*/)
+v10 = [
+  (v9/*: any*/)
 ],
-v10 = {
+v11 = {
   "kind": "Literal",
   "name": "displayOnPartnerProfile",
   "value": true
@@ -198,6 +221,27 @@ return {
                     "kind": "ScalarField",
                     "name": "url",
                     "storageKey": "url(version:\"wide\")"
+                  },
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 1920
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 1920
+                      }
+                    ],
+                    "concreteType": "ResizedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "resized",
+                    "plural": false,
+                    "selections": (v7/*: any*/),
+                    "storageKey": "resized(height:1920,width:1920)"
                   }
                 ],
                 "storageKey": null
@@ -206,22 +250,10 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "ProfileCounts",
-                "kind": "LinkedField",
-                "name": "counts",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "follows",
-                    "storageKey": null
-                  }
-                ],
+                "kind": "ScalarField",
+                "name": "bio",
                 "storageKey": null
               },
-              (v4/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -230,6 +262,36 @@ return {
                 "name": "icon",
                 "plural": false,
                 "selections": [
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 250
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "version",
+                        "value": [
+                          "untouched-png",
+                          "large",
+                          "square"
+                        ]
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 250
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": (v7/*: any*/),
+                    "storageKey": "cropped(height:250,version:[\"untouched-png\",\"large\",\"square\"],width:250)"
+                  },
                   {
                     "alias": null,
                     "args": [
@@ -273,17 +335,51 @@ return {
                   }
                 ],
                 "storageKey": null
-              }
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ProfileCounts",
+                "kind": "LinkedField",
+                "name": "counts",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "follows",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "href",
+            "storageKey": null
+          },
+          (v6/*: any*/),
           {
             "alias": null,
             "args": [
               {
                 "kind": "Literal",
                 "name": "first",
-                "value": 1
+                "value": 50
               }
             ],
             "concreteType": "LocationConnection",
@@ -314,51 +410,12 @@ return {
                         "name": "address",
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "address2",
-                        "storageKey": null
-                      },
-                      (v7/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "LatLng",
-                        "kind": "LinkedField",
-                        "name": "coordinates",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "lat",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "lng",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
+                      (v8/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "country",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "phone",
                         "storageKey": null
                       },
                       {
@@ -375,6 +432,70 @@ return {
                         "name": "state",
                         "storageKey": null
                       },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "openingHours",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "__typename",
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "FormattedDaySchedules",
+                                "kind": "LinkedField",
+                                "name": "schedules",
+                                "plural": true,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "days",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "hours",
+                                    "storageKey": null
+                                  }
+                                ],
+                                "storageKey": null
+                              }
+                            ],
+                            "type": "OpeningHoursArray",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "text",
+                                "storageKey": null
+                              }
+                            ],
+                            "type": "OpeningHoursText",
+                            "abstractKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
                       (v5/*: any*/)
                     ],
                     "storageKey": null
@@ -383,7 +504,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "locationsConnection(first:1)"
+            "storageKey": "locationsConnection(first:50)"
           },
           {
             "alias": null,
@@ -417,14 +538,6 @@ return {
             ],
             "storageKey": null
           },
-          (v6/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
           {
             "alias": null,
             "args": null,
@@ -453,7 +566,7 @@ return {
             "name": "locationsConnection",
             "plural": false,
             "selections": [
-              (v8/*: any*/),
+              (v9/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -470,7 +583,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v7/*: any*/),
+                      (v8/*: any*/),
                       (v5/*: any*/)
                     ],
                     "storageKey": null
@@ -527,13 +640,13 @@ return {
             "kind": "LinkedField",
             "name": "articlesConnection",
             "plural": false,
-            "selections": (v9/*: any*/),
+            "selections": (v10/*: any*/),
             "storageKey": null
           },
           {
             "alias": "representedArtists",
             "args": [
-              (v10/*: any*/),
+              (v11/*: any*/),
               {
                 "kind": "Literal",
                 "name": "representedBy",
@@ -544,13 +657,13 @@ return {
             "kind": "LinkedField",
             "name": "artistsConnection",
             "plural": false,
-            "selections": (v9/*: any*/),
+            "selections": (v10/*: any*/),
             "storageKey": "artistsConnection(displayOnPartnerProfile:true,representedBy:true)"
           },
           {
             "alias": "notRepresentedArtists",
             "args": [
-              (v10/*: any*/),
+              (v11/*: any*/),
               {
                 "kind": "Literal",
                 "name": "hasPublishedArtworks",
@@ -566,7 +679,7 @@ return {
             "kind": "LinkedField",
             "name": "artistsConnection",
             "plural": false,
-            "selections": (v9/*: any*/),
+            "selections": (v10/*: any*/),
             "storageKey": "artistsConnection(displayOnPartnerProfile:true,hasPublishedArtworks:true,representedBy:false)"
           },
           {
@@ -586,7 +699,7 @@ return {
             "kind": "LinkedField",
             "name": "viewingRoomsConnection",
             "plural": false,
-            "selections": (v9/*: any*/),
+            "selections": (v10/*: any*/),
             "storageKey": "viewingRoomsConnection(statuses:[\"live\",\"closed\",\"scheduled\"])"
           },
           (v5/*: any*/)
@@ -596,12 +709,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4ef4522ef3ac8d7662f03290f462b8bc",
+    "cacheID": "1f6a5261fbbe53249d72a1517b3e2a32",
     "id": null,
     "metadata": {},
     "name": "partnerRoutes_PartnerQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) @cacheable {\n  partner(id: $partnerId) @principalField {\n    partnerType\n    displayFullPartnerPage\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  partnerType\n  displayArtistsSection\n  displayWorksSection\n  counts {\n    eligibleArtworks\n    displayableShows\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  viewingRooms: viewingRoomsConnection(statuses: [live, closed, scheduled]) {\n    totalCount\n  }\n}\n\nfragment PartnerApp_partner on Partner {\n  internalID\n  partnerType\n  displayFullPartnerPage\n  partnerPageEligible\n  isDefaultProfilePublic\n  categories {\n    id\n    name\n  }\n  profile {\n    ...PartnerHeaderImage_profile\n    id\n  }\n  ...PartnerMeta_partner\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  hasVisibleFollowsCount\n  profile {\n    counts {\n      follows\n    }\n    internalID\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerMeta_partner on Partner {\n  locationsConnection(first: 1) {\n    edges {\n      node {\n        address\n        address2\n        city\n        coordinates {\n          lat\n          lng\n        }\n        country\n        phone\n        postalCode\n        state\n        id\n      }\n    }\n  }\n  meta {\n    image\n    title\n    description\n  }\n  name\n  slug\n}\n"
+    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) @cacheable {\n  partner(id: $partnerId) @principalField {\n    partnerType\n    displayFullPartnerPage\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  partnerType\n  displayArtistsSection\n  displayWorksSection\n  counts {\n    eligibleArtworks\n    displayableShows\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  viewingRooms: viewingRoomsConnection(statuses: [live, closed, scheduled]) {\n    totalCount\n  }\n}\n\nfragment PartnerApp_partner on Partner {\n  internalID\n  partnerType\n  displayFullPartnerPage\n  partnerPageEligible\n  isDefaultProfilePublic\n  categories {\n    id\n    name\n  }\n  profile {\n    ...PartnerHeaderImage_profile\n    id\n  }\n  ...PartnerMeta_partner\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  hasVisibleFollowsCount\n  profile {\n    counts {\n      follows\n    }\n    internalID\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerMetaStructuredData_partner on Partner {\n  slug\n  href\n  name\n  profile {\n    bio\n    image {\n      resized(width: 1920, height: 1920) {\n        url\n        width\n        height\n      }\n    }\n    icon {\n      cropped(width: 250, height: 250, version: [\"untouched-png\", \"large\", \"square\"]) {\n        url\n        width\n        height\n      }\n    }\n    id\n  }\n  locationsConnection(first: 50) {\n    edges {\n      node {\n        address\n        city\n        country\n        postalCode\n        state\n        openingHours {\n          __typename\n          ... on OpeningHoursArray {\n            schedules {\n              days\n              hours\n            }\n          }\n          ... on OpeningHoursText {\n            text\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerMeta_partner on Partner {\n  ...PartnerMetaStructuredData_partner\n  meta {\n    image\n    title\n    description\n  }\n  slug\n}\n"
   }
 };
 })();
