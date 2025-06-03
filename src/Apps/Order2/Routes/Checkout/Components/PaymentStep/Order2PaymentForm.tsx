@@ -216,7 +216,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   }
 
   return (
-    <form data-testID="paymentForm" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <FadeInBox>
         <Box
           backgroundColor="#EFEFEF"
