@@ -98,13 +98,14 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   const environment = useRelayEnvironment()
   const updateOrderMutation = useUpdateOrderMutation()
   const { setConfirmationToken } = useCheckoutContext()
-  const [isPaymentMethodSelected, setIsPaymentMethodSelected] = useState(false)
   const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | undefined>()
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [subtitleErrorMessage, setSubtitleErrorMessage] = useState<
     string | undefined
   >()
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("new")
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
+    "none" | "saved" | "stripe" | "wire"
+  >("none")
   const defaultErrorMessage =
     "Something went wrong. Please try again or contact orders@artsy.net"
 
@@ -121,24 +122,21 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
     },
   }
 
-  const onChange = event => {
-    const { elementType, collapsed } = event
+  const onChange = StripePaymentElementChangeEvent => {
+    const { elementType, collapsed } = StripePaymentElementChangeEvent
     if (elementType === "payment" && !collapsed) {
       setSelectedPaymentMethod("stripe")
-      setIsPaymentMethodSelected(true)
     }
   }
 
   const onClickSavedPaymentMethods = () => {
-    setErrorMessage(undefined) // Clear any previous error messages
-    setIsPaymentMethodSelected(true)
+    setErrorMessage(null) // Clear any previous error messages
     setSelectedPaymentMethod("saved")
     elements?.getElement("payment")?.collapse()
   }
 
   const onClickWirePaymentMethods = () => {
-    setErrorMessage(undefined) // Clear any previous error messages
-    setIsPaymentMethodSelected(true)
+    setErrorMessage(null) // Clear any previous error messages
     setSelectedPaymentMethod("wire")
     elements?.getElement("payment")?.collapse()
   }
@@ -151,7 +149,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   const handleSubmit = async event => {
     event.preventDefault()
 
-    if (!isPaymentMethodSelected) {
+    if (selectedPaymentMethod === "none") {
       setSubtitleErrorMessage("Select a payment method")
       return
     }
@@ -245,7 +243,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      {subtitleErrorMessage && !isPaymentMethodSelected && (
+      {subtitleErrorMessage && selectedPaymentMethod === "none" && (
         <Text variant="xs" color="red100" mb={2}>
           {subtitleErrorMessage}
         </Text>
@@ -325,7 +323,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
       )}
       <Button
         loading={isSubmittingToStripe}
-        variant={"primaryBlack"}
+        variant="primaryBlack"
         width="100%"
         type="submit"
       >
