@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<112ec66755b5007a01ff69c0821de703>>
+ * @generated SignedSource<<dcfe9e7d19258810a6eaf90fe124de2b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -102,20 +102,32 @@ v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "city",
+  "name": "href",
   "storageKey": null
 },
 v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "city",
+  "storageKey": null
+},
+v10 = {
+  "kind": "Literal",
+  "name": "representedBy",
+  "value": true
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "totalCount",
   "storageKey": null
 },
-v10 = [
-  (v9/*: any*/)
+v12 = [
+  (v11/*: any*/)
 ],
-v11 = {
+v13 = {
   "kind": "Literal",
   "name": "displayOnPartnerProfile",
   "value": true
@@ -365,13 +377,7 @@ return {
             "name": "slug",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "href",
-            "storageKey": null
-          },
+          (v8/*: any*/),
           (v6/*: any*/),
           {
             "alias": null,
@@ -410,7 +416,7 @@ return {
                         "name": "address",
                         "storageKey": null
                       },
-                      (v8/*: any*/),
+                      (v9/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -508,6 +514,45 @@ return {
           },
           {
             "alias": null,
+            "args": [
+              (v10/*: any*/)
+            ],
+            "concreteType": "ArtistPartnerConnection",
+            "kind": "LinkedField",
+            "name": "allArtistsConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtistPartnerEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Artist",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      (v6/*: any*/),
+                      (v8/*: any*/),
+                      (v5/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v5/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "allArtistsConnection(representedBy:true)"
+          },
+          {
+            "alias": null,
             "args": null,
             "concreteType": "PartnerMeta",
             "kind": "LinkedField",
@@ -566,7 +611,7 @@ return {
             "name": "locationsConnection",
             "plural": false,
             "selections": [
-              (v9/*: any*/),
+              (v11/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -583,7 +628,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v8/*: any*/),
+                      (v9/*: any*/),
                       (v5/*: any*/)
                     ],
                     "storageKey": null
@@ -640,30 +685,26 @@ return {
             "kind": "LinkedField",
             "name": "articlesConnection",
             "plural": false,
-            "selections": (v10/*: any*/),
+            "selections": (v12/*: any*/),
             "storageKey": null
           },
           {
             "alias": "representedArtists",
             "args": [
-              (v11/*: any*/),
-              {
-                "kind": "Literal",
-                "name": "representedBy",
-                "value": true
-              }
+              (v13/*: any*/),
+              (v10/*: any*/)
             ],
             "concreteType": "ArtistPartnerConnection",
             "kind": "LinkedField",
             "name": "artistsConnection",
             "plural": false,
-            "selections": (v10/*: any*/),
+            "selections": (v12/*: any*/),
             "storageKey": "artistsConnection(displayOnPartnerProfile:true,representedBy:true)"
           },
           {
             "alias": "notRepresentedArtists",
             "args": [
-              (v11/*: any*/),
+              (v13/*: any*/),
               {
                 "kind": "Literal",
                 "name": "hasPublishedArtworks",
@@ -679,7 +720,7 @@ return {
             "kind": "LinkedField",
             "name": "artistsConnection",
             "plural": false,
-            "selections": (v10/*: any*/),
+            "selections": (v12/*: any*/),
             "storageKey": "artistsConnection(displayOnPartnerProfile:true,hasPublishedArtworks:true,representedBy:false)"
           },
           {
@@ -699,7 +740,7 @@ return {
             "kind": "LinkedField",
             "name": "viewingRoomsConnection",
             "plural": false,
-            "selections": (v10/*: any*/),
+            "selections": (v12/*: any*/),
             "storageKey": "viewingRoomsConnection(statuses:[\"live\",\"closed\",\"scheduled\"])"
           },
           (v5/*: any*/)
@@ -709,12 +750,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1f6a5261fbbe53249d72a1517b3e2a32",
+    "cacheID": "f7d668b3f5100688c22c8c6249105a73",
     "id": null,
     "metadata": {},
     "name": "partnerRoutes_PartnerQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) @cacheable {\n  partner(id: $partnerId) @principalField {\n    partnerType\n    displayFullPartnerPage\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  partnerType\n  displayArtistsSection\n  displayWorksSection\n  counts {\n    eligibleArtworks\n    displayableShows\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  viewingRooms: viewingRoomsConnection(statuses: [live, closed, scheduled]) {\n    totalCount\n  }\n}\n\nfragment PartnerApp_partner on Partner {\n  internalID\n  partnerType\n  displayFullPartnerPage\n  partnerPageEligible\n  isDefaultProfilePublic\n  categories {\n    id\n    name\n  }\n  profile {\n    ...PartnerHeaderImage_profile\n    id\n  }\n  ...PartnerMeta_partner\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  hasVisibleFollowsCount\n  profile {\n    counts {\n      follows\n    }\n    internalID\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerMetaStructuredData_partner on Partner {\n  slug\n  href\n  name\n  profile {\n    bio\n    image {\n      resized(width: 1920, height: 1920) {\n        url\n        width\n        height\n      }\n    }\n    icon {\n      cropped(width: 250, height: 250, version: [\"untouched-png\", \"large\", \"square\"]) {\n        url\n        width\n        height\n      }\n    }\n    id\n  }\n  locationsConnection(first: 50) {\n    edges {\n      node {\n        address\n        city\n        country\n        postalCode\n        state\n        openingHours {\n          __typename\n          ... on OpeningHoursArray {\n            schedules {\n              days\n              hours\n            }\n          }\n          ... on OpeningHoursText {\n            text\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerMeta_partner on Partner {\n  ...PartnerMetaStructuredData_partner\n  meta {\n    image\n    title\n    description\n  }\n  slug\n}\n"
+    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) @cacheable {\n  partner(id: $partnerId) @principalField {\n    partnerType\n    displayFullPartnerPage\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  partnerType\n  displayArtistsSection\n  displayWorksSection\n  counts {\n    eligibleArtworks\n    displayableShows\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  viewingRooms: viewingRoomsConnection(statuses: [live, closed, scheduled]) {\n    totalCount\n  }\n}\n\nfragment PartnerApp_partner on Partner {\n  internalID\n  partnerType\n  displayFullPartnerPage\n  partnerPageEligible\n  isDefaultProfilePublic\n  categories {\n    id\n    name\n  }\n  profile {\n    ...PartnerHeaderImage_profile\n    id\n  }\n  ...PartnerMeta_partner\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  hasVisibleFollowsCount\n  profile {\n    counts {\n      follows\n    }\n    internalID\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerMetaStructuredData_partner on Partner {\n  slug\n  href\n  name\n  profile {\n    bio\n    image {\n      resized(width: 1920, height: 1920) {\n        url\n        width\n        height\n      }\n    }\n    icon {\n      cropped(width: 250, height: 250, version: [\"untouched-png\", \"large\", \"square\"]) {\n        url\n        width\n        height\n      }\n    }\n    id\n  }\n  locationsConnection(first: 50) {\n    edges {\n      node {\n        address\n        city\n        country\n        postalCode\n        state\n        openingHours {\n          __typename\n          ... on OpeningHoursArray {\n            schedules {\n              days\n              hours\n            }\n          }\n          ... on OpeningHoursText {\n            text\n          }\n        }\n        id\n      }\n    }\n  }\n  allArtistsConnection(representedBy: true) {\n    edges {\n      node {\n        name\n        href\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment PartnerMeta_partner on Partner {\n  ...PartnerMetaStructuredData_partner\n  meta {\n    image\n    title\n    description\n  }\n  slug\n}\n"
   }
 };
 })();

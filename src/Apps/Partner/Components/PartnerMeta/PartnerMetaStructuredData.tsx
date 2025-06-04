@@ -1,10 +1,11 @@
 import { StructuredData } from "Components/Seo/StructuredData"
+import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
 import type { PartnerMetaStructuredData_partner$key } from "__generated__/PartnerMetaStructuredData_partner.graphql"
 import { compact } from "lodash"
 import { useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
-import type { ImageObject, PostalAddress } from "schema-dts"
+import type { ImageObject, Person, PostalAddress } from "schema-dts"
 import { formatOpeningHours } from "./formatOpeningHours"
 
 interface PartnerMetaStructuredDataProps {
@@ -88,6 +89,21 @@ export const PartnerMetaStructuredData: React.FC<
     return undefined
   }, [location])
 
+  const member: Person[] = useMemo(
+    () =>
+      extractNodes(partner.allArtistsConnection).map(artist => {
+        const url = `${getENV("APP_URL")}${artist.href}`
+
+        return {
+          "@type": "Person",
+          name: artist.name ?? undefined,
+          url,
+          sameAs: url,
+        }
+      }),
+    [partner.allArtistsConnection],
+  )
+
   return (
     <StructuredData
       schemaData={{
@@ -105,6 +121,7 @@ export const PartnerMetaStructuredData: React.FC<
         },
         address,
         openingHours,
+        member,
       }}
     />
   )
@@ -155,6 +172,14 @@ const fragment = graphql`
               text
             }
           }
+        }
+      }
+    }
+    allArtistsConnection(representedBy: true) {
+      edges {
+        node {
+          name
+          href
         }
       }
     }
