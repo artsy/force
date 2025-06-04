@@ -110,4 +110,28 @@ describe("Order2DetailsMessage", () => {
 
     expect(screen.getByText("orders@artsy.net")).toBeInTheDocument()
   })
+
+  describe("SHIPPED state tracking information", () => {
+    it("renders tracking number as a link when tracking URL is present", () => {
+      renderWithRelay({
+        Order: () => ({
+          displayTexts: {
+            messageType: "SHIPPED",
+          },
+          deliveryInfo: {
+            trackingNumber: "trackMe",
+            trackingURL: "https://tracking.example.com/trackMe",
+          },
+        }),
+      })
+
+      const trackingLink = screen.getByRole("link", { name: "trackMe" })
+      expect(trackingLink).toBeInTheDocument()
+      expect(trackingLink).toHaveAttribute(
+        "href",
+        "https://tracking.example.com/trackMe",
+      )
+      expect(trackingLink).toHaveAttribute("target", "_blank")
+    })
+  })
 })
