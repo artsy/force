@@ -1,10 +1,11 @@
 import MessageIcon from "@artsy/icons/MessageIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import type { Order2HelpLinks_order$key } from "__generated__/Order2HelpLinks_order.graphql"
+import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 import { withInquiry, WithInquiryProps } from "Components/Inquiry/useInquiry"
 import type React from "react"
 import { useFragment } from "react-relay"
 import { graphql } from "relay-runtime"
-import type { Order2HelpLinks_order$key } from "__generated__/Order2HelpLinks_order.graphql"
 
 interface Order2HelpLinksProps extends WithInquiryProps {
   order: Order2HelpLinks_order$key
@@ -14,9 +15,10 @@ export const Order2HelpLinks: React.FC<
   React.PropsWithChildren<Order2HelpLinksProps>
 > = ({ showInquiry, order, inquiryComponent }) => {
   const orderData = useFragment(fragment, order)
+  const { clickedReadFAQ, clickedAskSpecialist } = useOrder2Tracking()
 
   const onClickReadFAQ = () => {
-    // TODO: track event?
+    clickedReadFAQ(orderData.mode)
     window.open(
       "https://support.artsy.net/s/topic/0TO3b000000UessGAC/buy",
       "_blank",
@@ -24,7 +26,7 @@ export const Order2HelpLinks: React.FC<
   }
 
   const onClickAskSpecialist = () => {
-    // TODO: track event?
+    clickedAskSpecialist(orderData.mode)
     showInquiry({ askSpecialist: true })
   }
 
@@ -72,6 +74,7 @@ export const Order2HelpLinks: React.FC<
 const fragment = graphql`
   fragment Order2HelpLinks_order on Order {
     internalID
+    mode
   }
 `
 

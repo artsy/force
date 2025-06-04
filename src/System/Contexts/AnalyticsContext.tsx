@@ -117,6 +117,8 @@ export const pathToOwnerType = (path: string): PageOwnerType => {
       return OwnerType.ordersReview
     case type === "orders" && tab === "checkout":
       return "orders-checkout-todo" as any // TODO: Cohesion Type is coming
+    case type === "orders" && tab === "details":
+      return OwnerType.ordersDetail
     case type === "collectorProfile" && slug === "saves":
       // Why is this somehow different from OwnerType.savesAndFollows?
       // Why aren't there other cases for collector-profile routes?
