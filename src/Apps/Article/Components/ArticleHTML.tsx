@@ -33,19 +33,12 @@ export const ArticleHTML: FC<React.PropsWithChildren<ArticleHTMLProps>> = ({
       if (!isSupportedArticleTooltip(entity)) return
 
       const heading = node.closest("h2")
-      const artistLinks = heading?.querySelectorAll(
-        "a[href^='https://www.artsy.net/artist/']",
-      )
-
-      const partnerLinks = heading?.querySelectorAll(
-        "a[href^='https://www.artsy.net/partner/']",
-      )
 
       const isArtistHeading =
-        entity === "artist" && heading && artistLinks?.length === 1
+        entity === "artist" && isEligibleFollowHeading(heading, entity)
 
       const isPartnerHeading =
-        entity === "partner" && heading && partnerLinks?.length === 1
+        entity === "partner" && isEligibleFollowHeading(heading, entity)
 
       if (isArtistHeading) {
         return (
@@ -107,6 +100,41 @@ export const ArticleHTML: FC<React.PropsWithChildren<ArticleHTMLProps>> = ({
   }
 
   return <Container dangerouslySetInnerHTML={{ __html: children }} {...rest} />
+}
+
+export const hasAdjacentEntityLinks = (heading: Element | null): boolean => {
+  if (!heading) return false
+
+  let sibling = heading.nextElementSibling
+  while (sibling && sibling.tagName === "H3") {
+    if (sibling.querySelector("a[href*='/artist/'], a[href*='/partner/']")) {
+      return true
+    }
+    sibling = sibling.nextElementSibling
+  }
+
+  return false
+}
+
+export const isEligibleFollowHeading = (
+  heading: Element | null,
+  entity: string,
+): boolean => {
+  if (!heading || heading.tagName !== "H2") return false
+  if (hasAdjacentEntityLinks(heading)) return false
+
+  let expectedPrefix: string | null = null
+
+  if (entity === "artist") {
+    expectedPrefix = "https://www.artsy.net/artist/"
+  } else if (entity === "partner") {
+    expectedPrefix = "https://www.artsy.net/partner/"
+  } else {
+    return false
+  }
+
+  const links = heading.querySelectorAll(`a[href^='${expectedPrefix}']`)
+  return links.length === 1
 }
 
 const Container = styled(Box)`
