@@ -101,8 +101,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [subtitleErrorMessage, setSubtitleErrorMessage] = useState<
-    string | undefined
-  >()
+    string | null
+  >(null)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     "none" | "saved" | "stripe" | "wire"
   >("none")
