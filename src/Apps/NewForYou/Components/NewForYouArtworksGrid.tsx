@@ -1,5 +1,8 @@
 import { Text } from "@artsy/palette"
-import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
+import ArtworkGrid, {
+  ArtworkGridLayout,
+} from "Components/ArtworkGrid/ArtworkGrid"
+import { useRouter } from "System/Hooks/useRouter"
 import type { NewForYouArtworksGrid_viewer$data } from "__generated__/NewForYouArtworksGrid_viewer.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -11,6 +14,12 @@ interface NewForYouArtworksGridProps {
 export const NewForYouArtworksGrid: FC<
   React.PropsWithChildren<NewForYouArtworksGridProps>
 > = ({ viewer }) => {
+  const { match } = useRouter()
+
+  const layout = (
+    match?.location?.query?.layout ?? "masonry"
+  ).toUpperCase() as ArtworkGridLayout
+
   return (
     <>
       {viewer.artworksForUser &&
@@ -18,6 +27,7 @@ export const NewForYouArtworksGrid: FC<
         <ArtworkGrid
           artworks={viewer.artworksForUser}
           columnCount={[2, 3, 4]}
+          layout={layout}
         />
       ) : (
         <Text variant="lg-display" mt={4} color="mono60">

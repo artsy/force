@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d03d16c930581081dfea7bb2ede0e6c8>>
+ * @generated SignedSource<<9e3861df626960868af9a6c243938b9b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,7 +31,9 @@ export type Order2DetailsOrderSummary_order$data = {
       } | null | undefined;
       readonly image: {
         readonly resized: {
+          readonly height: number | null | undefined;
           readonly url: string;
+          readonly width: number | null | undefined;
         } | null | undefined;
       } | null | undefined;
       readonly title: string | null | undefined;
@@ -235,7 +237,12 @@ return {
                     {
                       "kind": "Literal",
                       "name": "height",
-                      "value": 380
+                      "value": 360
+                    },
+                    {
+                      "kind": "Literal",
+                      "name": "width",
+                      "value": 700
                     }
                   ],
                   "concreteType": "ResizedImageUrl",
@@ -249,9 +256,23 @@ return {
                       "kind": "ScalarField",
                       "name": "url",
                       "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "width",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "height",
+                      "storageKey": null
                     }
                   ],
-                  "storageKey": "resized(height:380)"
+                  "storageKey": "resized(height:360,width:700)"
                 }
               ],
               "storageKey": null
@@ -268,6 +289,6 @@ return {
 };
 })();
 
-(node as any).hash = "f366fa70d9a60f176bf09678189b455b";
+(node as any).hash = "2b0b08ac5820f77de1b90ce7b3fcb334";
 
 export default node;

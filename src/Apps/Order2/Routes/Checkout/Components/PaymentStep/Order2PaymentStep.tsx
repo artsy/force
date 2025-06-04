@@ -25,11 +25,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
   )?.state
 
   return (
-    <Flex
-      data-testid="PaymentStep"
-      flexDirection="column"
-      backgroundColor="mono0"
-    >
+    <Flex flexDirection="column" backgroundColor="mono0">
       <Box p={2} hidden={stepState !== CheckoutStepState.UPCOMING}>
         <Flex flexDirection="column">
           <Text variant="sm-display" fontWeight="bold" color="mono100">
@@ -71,6 +67,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
 
 const FRAGMENT = graphql`
   fragment Order2PaymentStep_order on Order {
+    ...Order2PaymentForm_order
     internalID
     buyerTotal {
       minor

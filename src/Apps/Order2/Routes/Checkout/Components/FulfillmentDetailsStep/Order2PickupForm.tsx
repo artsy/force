@@ -132,7 +132,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
 
   return (
     <>
-      <Text fontWeight="medium" color="mono100" variant="sm-display">
+      <Text fontWeight="bold" color="mono100" variant="sm-display">
         Free pickup
       </Text>
       <Text variant="xs" color="mono60" my={1}>

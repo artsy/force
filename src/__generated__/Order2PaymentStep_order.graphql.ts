@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dca77e105c636815aa047421a577f3be>>
+ * @generated SignedSource<<68f4ddc87df9e05ac1577c8d12d522f9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,6 +36,7 @@ export type Order2PaymentStep_order$data = {
   readonly taxTotal: {
     readonly minor: any;
   } | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2PaymentForm_order">;
   readonly " $fragmentType": "Order2PaymentStep_order";
 };
 export type Order2PaymentStep_order$key = {
@@ -70,6 +71,11 @@ return {
   "metadata": null,
   "name": "Order2PaymentStep_order",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Order2PaymentForm_order"
+    },
     {
       "alias": null,
       "args": null,
@@ -166,6 +172,6 @@ return {
 };
 })();
 
-(node as any).hash = "e1127aabf22d384d0b1e0f1ca4ad7157";
+(node as any).hash = "1604d31b7e888afafa559621aa65f620";
 
 export default node;

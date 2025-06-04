@@ -1,5 +1,13 @@
 import ShieldIcon from "@artsy/icons/ShieldIcon"
-import { Box, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Flex,
+  Image,
+  Message,
+  ResponsiveBox,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2DetailsOrderSummary_order$key } from "__generated__/Order2DetailsOrderSummary_order.graphql"
@@ -20,18 +28,28 @@ export const Order2DetailsOrderSummary: React.FC<
 
   const artwork = orderData.lineItems[0]?.artwork
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
-  const artworkImage = artworkVersion?.image
+  const artworkImage = artworkVersion?.image?.resized
 
   return (
     <Box backgroundColor="mono0" p={2}>
-      {artworkImage?.resized?.url && (
-        <Flex alignItems="center" width="100%" flexDirection="column" m={1}>
-          <RouterLink to={`/artwork/${artwork?.slug}`} target="_blank">
-            <Image
-              src={artworkImage.resized.url}
-              alt={artworkVersion?.title || "Artwork image"}
-            />
-          </RouterLink>
+      {artworkImage?.url && artworkImage.width && artworkImage.height && (
+        <Flex alignItems="center" width="100%" flexDirection="column" p={1}>
+          <ResponsiveBox
+            aspectWidth={artworkImage.width}
+            aspectHeight={artworkImage.height}
+            maxWidth={artworkImage.width}
+            maxHeight={artworkImage.height}
+          >
+            <RouterLink to={`/artwork/${artwork?.slug}`} target="_blank">
+              <Image
+                src={artworkImage.url}
+                width="100%"
+                height="100%"
+                alt={artworkVersion?.title || "Artwork image"}
+                lazyLoad
+              />
+            </RouterLink>
+          </ResponsiveBox>
         </Flex>
       )}
 
@@ -123,8 +141,10 @@ const FRAGMENT = graphql`
           cm
         }
         image {
-          resized(height: 380) {
+          resized(height: 360, width: 700) {
             url
+            width
+            height
           }
         }
       }
