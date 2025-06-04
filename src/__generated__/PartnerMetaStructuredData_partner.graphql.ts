@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ba0ff51dd9226a13c05fb3c1019bc0c3>>
+ * @generated SignedSource<<efbc187b1c58415f0cb4ffe68b4d41c4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,14 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerMetaStructuredData_partner$data = {
+  readonly allArtistsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly href: string | null | undefined;
+        readonly name: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly href: string | null | undefined;
   readonly locationsConnection: {
     readonly edges: ReadonlyArray<{
@@ -57,7 +65,21 @@ export type PartnerMetaStructuredData_partner$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = [
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -93,20 +115,8 @@ return {
       "name": "slug",
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "href",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
+    (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -148,7 +158,7 @@ return {
               "kind": "LinkedField",
               "name": "resized",
               "plural": false,
-              "selections": (v0/*: any*/),
+              "selections": (v2/*: any*/),
               "storageKey": "resized(height:1920,width:1920)"
             }
           ],
@@ -189,7 +199,7 @@ return {
               "kind": "LinkedField",
               "name": "cropped",
               "plural": false,
-              "selections": (v0/*: any*/),
+              "selections": (v2/*: any*/),
               "storageKey": "cropped(height:250,version:[\"untouched-png\",\"large\",\"square\"],width:250)"
             }
           ],
@@ -328,6 +338,47 @@ return {
         }
       ],
       "storageKey": "locationsConnection(first:50)"
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "representedBy",
+          "value": true
+        }
+      ],
+      "concreteType": "ArtistPartnerConnection",
+      "kind": "LinkedField",
+      "name": "allArtistsConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtistPartnerEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Artist",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                (v1/*: any*/),
+                (v0/*: any*/)
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "allArtistsConnection(representedBy:true)"
     }
   ],
   "type": "Partner",
@@ -335,6 +386,6 @@ return {
 };
 })();
 
-(node as any).hash = "b0cf9fe238bf7a64e5319a0482387881";
+(node as any).hash = "4f3b2455314e15667ce289696a9aeda0";
 
 export default node;
