@@ -1,4 +1,4 @@
-import { Box, Flex, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Text } from "@artsy/palette"
 import {
   CheckoutStepName,
   CheckoutStepState,
