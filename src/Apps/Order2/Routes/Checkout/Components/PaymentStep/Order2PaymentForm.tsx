@@ -115,6 +115,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
       defaultCollapsed: true,
       radios: false,
     },
+    wallets: {
+      applePay: "never",
+      googlePay: "never",
+    },
   }
 
   const onChange = event => {
