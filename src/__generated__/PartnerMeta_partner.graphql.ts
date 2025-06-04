@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<afd3887750959f9bb905d465931d6424>>
+ * @generated SignedSource<<c3035799f25a8f320bda98646a8efd02>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,30 +11,13 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerMeta_partner$data = {
-  readonly locationsConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly address: string | null | undefined;
-        readonly address2: string | null | undefined;
-        readonly city: string | null | undefined;
-        readonly coordinates: {
-          readonly lat: number | null | undefined;
-          readonly lng: number | null | undefined;
-        } | null | undefined;
-        readonly country: string | null | undefined;
-        readonly phone: string | null | undefined;
-        readonly postalCode: string | null | undefined;
-        readonly state: string | null | undefined;
-      } | null | undefined;
-    } | null | undefined> | null | undefined;
-  } | null | undefined;
   readonly meta: {
     readonly description: string | null | undefined;
     readonly image: string | null | undefined;
     readonly title: string | null | undefined;
   } | null | undefined;
-  readonly name: string | null | undefined;
   readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerMetaStructuredData_partner">;
   readonly " $fragmentType": "PartnerMeta_partner";
 };
 export type PartnerMeta_partner$key = {
@@ -49,117 +32,9 @@ const node: ReaderFragment = {
   "name": "PartnerMeta_partner",
   "selections": [
     {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 1
-        }
-      ],
-      "concreteType": "LocationConnection",
-      "kind": "LinkedField",
-      "name": "locationsConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "LocationEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Location",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "address",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "address2",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "city",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "LatLng",
-                  "kind": "LinkedField",
-                  "name": "coordinates",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "lat",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "lng",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "country",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "phone",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "postalCode",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "state",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "locationsConnection(first:1)"
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "PartnerMetaStructuredData_partner"
     },
     {
       "alias": null,
@@ -197,13 +72,6 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
     }
@@ -212,6 +80,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "fa6bf65fcb4cf96ca003cd619d351ea1";
+(node as any).hash = "2d13af1d1398c7b1b7d3cb9d0e5ec54b";
 
 export default node;
