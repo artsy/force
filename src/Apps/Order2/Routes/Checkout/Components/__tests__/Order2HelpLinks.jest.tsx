@@ -2,6 +2,7 @@ import { fireEvent, screen } from "@testing-library/dom"
 import { Order2HelpLinks } from "Apps/Order2/Routes/Checkout/Components/Order2HelpLinks"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2DetailsPage_Test_Query } from "__generated__/Order2DetailsPage_Test_Query.graphql"
+import { useTracking } from "react-tracking"
 import { graphql } from "relay-runtime"
 
 jest.unmock("react-relay")
@@ -13,7 +14,7 @@ describe("Order2HelpLinks", () => {
         order={props.me.order}
         artworkID="artwork-id"
         hideInquiry={jest.fn()}
-        showInquiry={props.showInquiry}
+        showInquiry={props.showInquiry || jest.fn}
         inquiryComponent={<></>}
         isInquiryVisible={false}
       />
@@ -61,7 +62,47 @@ describe("Order2HelpLinks", () => {
     )
   })
 
-  // TODO: EMI-2494
-  // describe("analytics", () => {
-  // })
+  describe("analytics", () => {
+    const mockTrackEvent = jest.fn()
+
+    beforeAll(() => {
+      ;(useTracking as jest.Mock).mockImplementation(() => ({
+        trackEvent: mockTrackEvent,
+      }))
+    })
+
+    afterEach(() => {
+      mockTrackEvent.mockReset()
+    })
+
+    it("tracks clicks on help link", () => {
+      renderWithRelay()
+
+      expect(screen.getByText("Visit our help center")).toBeInTheDocument()
+
+      fireEvent.click(screen.getByText("Visit our help center"))
+
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action_type: "Click",
+        subject: "Visit our help center",
+        type: "button",
+        flow: "buy now",
+      })
+    })
+
+    it("tracks opening the contact specialist modal", () => {
+      renderWithRelay()
+
+      expect(screen.getByText("ask a question")).toBeInTheDocument()
+
+      fireEvent.click(screen.getByText("ask a question"))
+
+      expect(mockTrackEvent).toBeCalledWith({
+        action_type: "Click",
+        subject: "ask a specialist",
+        type: "button",
+        flow: "buy now",
+      })
+    })
+  })
 })
