@@ -53,10 +53,6 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
             <Text variant="sm-display" fontWeight="bold" color="mono100">
               Payment
             </Text>
-            <Text variant="xs" color="mono60">
-              Options vary based on price, gallery, and location
-            </Text>
-            <Spacer y={2} />
             <Order2PaymentForm order={orderData} />
           </Flex>
         </Box>
