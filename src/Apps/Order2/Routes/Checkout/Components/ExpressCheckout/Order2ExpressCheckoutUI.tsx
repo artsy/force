@@ -499,7 +499,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   return (
     <Box>
-      <Text variant="sm-display">Express Checkout</Text>
+      <Text variant="sm-display">Express checkout</Text>
       <Spacer y={1} />
       <Box minWidth="240px" maxWidth="100%" paddingX="1px">
         <ExpressCheckoutElement
