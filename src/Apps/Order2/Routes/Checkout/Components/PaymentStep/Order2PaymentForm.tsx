@@ -37,6 +37,8 @@ import {
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 const logger = createLogger("Order2PaymentForm")
+const defaultErrorMessage =
+  "Something went wrong. Please try again or contact orders@artsy.net"
 
 interface Order2PaymentFormProps {
   order: Order2PaymentForm_order$key
@@ -104,10 +106,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
     string | null
   >(null)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
-    "none" | "saved" | "stripe" | "wire"
-  >("none")
-  const defaultErrorMessage =
-    "Something went wrong. Please try again or contact orders@artsy.net"
+    null | "saved" | "stripe" | "wire"
+  >(null)
 
   if (!(stripe && elements)) {
     return null
@@ -149,7 +149,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   const handleSubmit = async event => {
     event.preventDefault()
 
-    if (selectedPaymentMethod === "none") {
+    if (!selectedPaymentMethod) {
       setSubtitleErrorMessage("Select a payment method")
       return
     }
@@ -243,7 +243,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      {subtitleErrorMessage && selectedPaymentMethod === "none" && (
+      {subtitleErrorMessage && !selectedPaymentMethod && (
         <Text variant="xs" color="red100" mb={2}>
           {subtitleErrorMessage}
         </Text>
