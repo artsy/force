@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import ShieldIcon from "@artsy/icons/ShieldIcon"
 import {
   Box,
@@ -101,7 +102,9 @@ export const Order2DetailsOrderSummary: React.FC<
           <Text variant="xs" color="mono100">
             Your purchase is protected with{" "}
             <RouterLink
-              onClick={tracking.clickedBuyerProtection}
+              onClick={() =>
+                tracking.clickedBuyerProtection(ContextModule.ordersDetail)
+              }
               inline
               target="_blank"
               to={BUYER_GUARANTEE_URL}
