@@ -25,7 +25,7 @@ const BUYER_GUARANTEE_URL =
 export const Order2DetailsOrderSummary: React.FC<
   Order2DetailsOrderSummaryProps
 > = ({ order }) => {
-  const { clickedBuyerProtection } = useOrder2Tracking()
+  const tracking = useOrder2Tracking()
   const orderData = useFragment(FRAGMENT, order)
 
   const artwork = orderData.lineItems[0]?.artwork
@@ -101,7 +101,7 @@ export const Order2DetailsOrderSummary: React.FC<
           <Text variant="xs" color="mono100">
             Your purchase is protected with{" "}
             <RouterLink
-              onClick={clickedBuyerProtection}
+              onClick={tracking.clickedBuyerProtection}
               inline
               target="_blank"
               to={BUYER_GUARANTEE_URL}
