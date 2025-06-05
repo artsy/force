@@ -286,6 +286,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
           marginBottom="10px"
           style={{ cursor: "pointer" }}
           onClick={onClickWirePaymentMethods}
+          data-testid={"PaymentFormWire"}
         >
           <Flex alignItems="center">
             <ReceiptIcon fill="mono100" />
