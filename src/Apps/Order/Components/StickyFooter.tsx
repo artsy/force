@@ -1,3 +1,4 @@
+import { ActionType, ContextModule } from "@artsy/cohesion"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
@@ -8,6 +9,7 @@ import {
 import type { FC } from "react"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 
 interface StickyFooterProps extends WithInquiryProps {
   artworkID: string
@@ -22,6 +24,7 @@ export const StickyFooter: FC<React.PropsWithChildren<StickyFooterProps>> = ({
   orderSource,
 }) => {
   const { trackEvent } = useTracking()
+  const { contextPageOwnerType, contextPageOwnerId } = useAnalyticsContext()
 
   const onClickReadFAQ = () => {
     trackEvent({
@@ -39,9 +42,10 @@ export const StickyFooter: FC<React.PropsWithChildren<StickyFooterProps>> = ({
 
   const onClickAskSpecialist = () => {
     trackEvent({
-      action_type: DeprecatedSchema.ActionType.Click,
-      subject: DeprecatedSchema.Subject.BNMOAskSpecialist,
-      type: "button",
+      action: ActionType.clickedAskSpecialist,
+      context_module: ContextModule,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_type: contextPageOwnerType,
       flow: orderType === "OFFER" ? "make offer" : "buy now",
     })
     showInquiry({ askSpecialist: true })
