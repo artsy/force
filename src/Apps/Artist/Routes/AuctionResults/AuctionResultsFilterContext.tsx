@@ -5,7 +5,7 @@ import {
 import { type Metric, getSupportedMetric } from "Utils/metrics"
 import { omit } from "lodash"
 import * as React from "react"
-import { useContext, useReducer, useState } from "react"
+import { useContext, useReducer, useRef, useState } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 
 export type Slice =
@@ -145,7 +145,15 @@ export const AuctionResultsFilterContextProvider: React.FC<
   const [shouldStageFilterChanges, setShouldStageFilterChanges] =
     useState(false)
 
+  const isInitialRender = useRef(true)
+
   useDeepCompareEffect(() => {
+    // Skip onChange call on initial render to prevent automatic URL updates with default values
+    if (isInitialRender.current) {
+      isInitialRender.current = false
+      return
+    }
+
     if (onChange) {
       onChange(omit(auctionResultsFilterState, ["reset"]))
     }
