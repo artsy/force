@@ -82,8 +82,8 @@ const getMessageContent = (order): React.ReactNode => {
         <>
           <Text variant="sm">
             Thank you! Your offer has been submitted. You will receive an email
-            shortly with all the details. Please note making an offer doesn’t
-            guarantee you the work.
+            shortly with all the details. Please note making an offer
+            doesn&rsquo;t guarantee you the work.
           </Text>
           <Spacer y={2} />
           <Text variant="sm">
