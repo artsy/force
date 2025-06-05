@@ -465,51 +465,29 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
 
     case "FULFILLMENT_DETAILS_COMPLETE":
       const { isPickup } = action.payload
-      // Update steps to mark FULFILLMENT_DETAILS as completed and remove DELIVERY_OPTION if isPickup
-      let nextStepActivated = false
+      let hasActivatedNext = false
 
       return {
         ...state,
-        steps: state.steps.reduce((acc, current) => {
-          const isThisStep =
-            current.name === CheckoutStepName.FULFILLMENT_DETAILS
-          if (isThisStep) {
-            return [
-              ...acc,
-              {
-                ...current,
-                state: CheckoutStepState.COMPLETED,
-              },
-            ]
+        steps: state.steps.map(step => {
+          // Mark fulfillment details as completed
+          if (step.name === CheckoutStepName.FULFILLMENT_DETAILS) {
+            return { ...step, state: CheckoutStepState.COMPLETED }
           }
 
-          if (current.name === CheckoutStepName.DELIVERY_OPTION) {
-            if (isPickup) {
-              return [...acc, { ...current, state: CheckoutStepState.HIDDEN }]
-            }
+          // Hide delivery option if pickup is selected
+          if (step.name === CheckoutStepName.DELIVERY_OPTION && isPickup) {
+            return { ...step, state: CheckoutStepState.HIDDEN }
           }
 
-          // Only activate the first upcoming step after FULFILLMENT_DETAILS is completed
-          if (
-            !nextStepActivated &&
-            current.state === CheckoutStepState.UPCOMING &&
-            acc.some(
-              step =>
-                step.name === CheckoutStepName.FULFILLMENT_DETAILS &&
-                step.state === CheckoutStepState.COMPLETED,
-            )
-          ) {
-            nextStepActivated = true
-            return [
-              ...acc,
-              {
-                ...current,
-                state: CheckoutStepState.ACTIVE,
-              },
-            ]
+          // Activate the first upcoming step
+          if (!hasActivatedNext && step.state === CheckoutStepState.UPCOMING) {
+            hasActivatedNext = true
+            return { ...step, state: CheckoutStepState.ACTIVE }
           }
-          return [...acc, current]
-        }, [] as CheckoutStep[]),
+
+          return step
+        }),
       }
     case "EDIT_PAYMENT":
       return {
