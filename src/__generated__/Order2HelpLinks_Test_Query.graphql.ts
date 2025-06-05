@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f1938e37f7df8b56ae6202a9d376f152>>
+ * @generated SignedSource<<739e0c6137f309033e1daaf64df02fe6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Order2DetailsHelpLinks_Test_Query$variables = Record<PropertyKey, never>;
-export type Order2DetailsHelpLinks_Test_Query$data = {
+export type Order2HelpLinks_Test_Query$variables = Record<PropertyKey, never>;
+export type Order2HelpLinks_Test_Query$data = {
   readonly me: {
     readonly order: {
-      readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsHelpLinks_order">;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2HelpLinks_order">;
     } | null | undefined;
   } | null | undefined;
 };
-export type Order2DetailsHelpLinks_Test_Query$rawResponse = {
+export type Order2HelpLinks_Test_Query$rawResponse = {
   readonly me: {
     readonly id: string;
     readonly order: {
@@ -27,10 +27,10 @@ export type Order2DetailsHelpLinks_Test_Query$rawResponse = {
     } | null | undefined;
   } | null | undefined;
 };
-export type Order2DetailsHelpLinks_Test_Query = {
-  rawResponse: Order2DetailsHelpLinks_Test_Query$rawResponse;
-  response: Order2DetailsHelpLinks_Test_Query$data;
-  variables: Order2DetailsHelpLinks_Test_Query$variables;
+export type Order2HelpLinks_Test_Query = {
+  rawResponse: Order2HelpLinks_Test_Query$rawResponse;
+  response: Order2HelpLinks_Test_Query$data;
+  variables: Order2HelpLinks_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -53,7 +53,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "Order2DetailsHelpLinks_Test_Query",
+    "name": "Order2HelpLinks_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -74,7 +74,7 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "Order2DetailsHelpLinks_order"
+                "name": "Order2HelpLinks_order"
               }
             ],
             "storageKey": "order(id:\"123\")"
@@ -90,7 +90,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "Order2DetailsHelpLinks_Test_Query",
+    "name": "Order2HelpLinks_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -126,16 +126,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8c8e5ad0ffdcecd5f0e413c090879f89",
+    "cacheID": "0e896c61c9e7e2ec8cb2fee0ad97deba",
     "id": null,
     "metadata": {},
-    "name": "Order2DetailsHelpLinks_Test_Query",
+    "name": "Order2HelpLinks_Test_Query",
     "operationKind": "query",
-    "text": "query Order2DetailsHelpLinks_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsHelpLinks_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsHelpLinks_order on Order {\n  internalID\n}\n"
+    "text": "query Order2HelpLinks_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2HelpLinks_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n}\n"
   }
 };
 })();
 
-(node as any).hash = "9055536d95056cedbe5697b8f1c5d0d8";
+(node as any).hash = "03044d1ea8b45c690926b08f7e0cd5bb";
 
 export default node;

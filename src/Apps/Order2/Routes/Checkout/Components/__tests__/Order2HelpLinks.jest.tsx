@@ -1,15 +1,15 @@
 import { fireEvent, screen } from "@testing-library/dom"
 import { Order2DetailsPage_Test_Query } from "__generated__/Order2DetailsPage_Test_Query.graphql"
-import { Order2DetailsHelpLinks } from "Apps/Order2/Routes/Details/Components/Order2DetailsHelpLinks"
+import { Order2HelpLinks } from "Apps/Order2/Routes/Checkout/Components/Order2HelpLinks"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "relay-runtime"
 
 jest.unmock("react-relay")
 
-describe("Order2DetailsHelpLinks", () => {
+describe("Order2HelpLinks", () => {
   const { renderWithRelay } = setupTestWrapperTL<Order2DetailsPage_Test_Query>({
     Component: (props: any) => (
-      <Order2DetailsHelpLinks
+      <Order2HelpLinks
         order={props.me.order}
         artworkID="artwork-id"
         hideInquiry={jest.fn()}
@@ -19,10 +19,10 @@ describe("Order2DetailsHelpLinks", () => {
       />
     ),
     query: graphql`
-      query Order2DetailsHelpLinks_Test_Query @raw_response_type {
+      query Order2HelpLinks_Test_Query @raw_response_type {
         me {
           order(id: "123") {
-            ...Order2DetailsHelpLinks_order
+            ...Order2HelpLinks_order
           }
         }
       }

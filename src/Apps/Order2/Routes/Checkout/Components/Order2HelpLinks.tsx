@@ -1,17 +1,17 @@
 import MessageIcon from "@artsy/icons/MessageIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
-import type { Order2DetailsHelpLinks_order$key } from "__generated__/Order2DetailsHelpLinks_order.graphql"
 import { withInquiry, WithInquiryProps } from "Components/Inquiry/useInquiry"
 import type React from "react"
 import { useFragment } from "react-relay"
 import { graphql } from "relay-runtime"
+import type { Order2HelpLinks_order$key } from "__generated__/Order2HelpLinks_order.graphql"
 
-interface Order2DetailsHelpLinksProps extends WithInquiryProps {
-  order: Order2DetailsHelpLinks_order$key
+interface Order2HelpLinksProps extends WithInquiryProps {
+  order: Order2HelpLinks_order$key
 }
 
-export const Order2DetailsHelpLinks: React.FC<
-  React.PropsWithChildren<Order2DetailsHelpLinksProps>
+export const Order2HelpLinks: React.FC<
+  React.PropsWithChildren<Order2HelpLinksProps>
 > = ({ showInquiry, order, inquiryComponent }) => {
   const orderData = useFragment(fragment, order)
 
@@ -70,11 +70,9 @@ export const Order2DetailsHelpLinks: React.FC<
 }
 
 const fragment = graphql`
-  fragment Order2DetailsHelpLinks_order on Order {
+  fragment Order2HelpLinks_order on Order {
     internalID
   }
 `
 
-export const Order2DetailsHelpLinksWithInquiry = withInquiry(
-  Order2DetailsHelpLinks,
-)
+export const Order2HelpLinksWithInquiry = withInquiry(Order2HelpLinks)
