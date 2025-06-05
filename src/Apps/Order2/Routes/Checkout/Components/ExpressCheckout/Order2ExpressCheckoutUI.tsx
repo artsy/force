@@ -28,7 +28,7 @@ import {
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { preventHardReload } from "Apps/Order/OrderApp"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { ErrorBanner } from "Apps/Order2/Routes/Checkout/Components/ErrorBanner"
+import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { RouterLink } from "System/Components/RouterLink"
@@ -100,7 +100,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
     if (errorDetails) {
       setError(errorDetails)
-      // sessionStorage.removeItem("expressCheckoutError")
+      sessionStorage.removeItem("expressCheckoutError")
     }
   }, [])
 
@@ -469,7 +469,6 @@ export const Order2ExpressCheckoutUI: React.FC<
       redirectToOrderDetails()
       return
     } catch (error) {
-      console.log("Error confirming payment", error)
       logger.error("Error confirming payment", error)
       errorRef.current = error.code || "unknown_error"
 
@@ -515,7 +514,12 @@ export const Order2ExpressCheckoutUI: React.FC<
     <Box>
       <Text variant="sm-display">Express checkout</Text>
       <Spacer y={1} />
-      {error && <ErrorBanner error={error} />}
+      {error && (
+        <>
+          <CheckoutErrorBanner error={error} />
+          <Spacer y={1} />
+        </>
+      )}
       <Box minWidth="240px" maxWidth="100%" paddingX="1px">
         <ExpressCheckoutElement
           options={expressCheckoutOptions}
