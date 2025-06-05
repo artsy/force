@@ -6,9 +6,9 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { Order2HelpLinks_order$data } from "__generated__/Order2HelpLinks_order.graphql"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
-import { Order2DetailsHelpLinks_order$data } from "__generated__/Order2DetailsHelpLinks_order.graphql"
 
 export const useOrder2Tracking = () => {
   const { trackEvent } = useTracking()
@@ -20,9 +20,7 @@ export const useOrder2Tracking = () => {
 
   const tracks = useMemo(() => {
     return {
-      clickedAskSpecialist: (
-        orderType: Order2DetailsHelpLinks_order$data["mode"],
-      ) => {
+      clickedAskSpecialist: (orderType: Order2HelpLinks_order$data["mode"]) => {
         const payload = {
           action_type: DeprecatedSchema.ActionType.Click,
           subject: DeprecatedSchema.Subject.BNMOAskSpecialist,
@@ -32,9 +30,7 @@ export const useOrder2Tracking = () => {
 
         trackEvent(payload)
       },
-      clickedReadFAQ: (
-        orderType: Order2DetailsHelpLinks_order$data["mode"],
-      ) => {
+      clickedReadFAQ: (orderType: Order2HelpLinks_order$data["mode"]) => {
         const payload = {
           action_type: DeprecatedSchema.ActionType.Click,
           subject: DeprecatedSchema.Subject.BNMOReadFAQ,
