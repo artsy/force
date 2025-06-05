@@ -18,10 +18,10 @@ export const Order2HelpLinks: React.FC<
   React.PropsWithChildren<Order2HelpLinksProps>
 > = ({ showInquiry, order, inquiryComponent }) => {
   const orderData = useFragment(fragment, order)
-  const { clickedReadFAQ, clickedAskSpecialist } = useOrder2Tracking()
+  const tracking = useOrder2Tracking()
 
   const onClickReadFAQ = () => {
-    clickedReadFAQ(orderData.mode)
+    tracking.clickedReadFAQ(orderData.mode)
     window.open(
       "https://support.artsy.net/s/topic/0TO3b000000UessGAC/buy",
       "_blank",
@@ -29,7 +29,7 @@ export const Order2HelpLinks: React.FC<
   }
 
   const onClickAskSpecialist = () => {
-    clickedAskSpecialist(orderData.mode)
+    tracking.clickedAskSpecialist(orderData.mode)
     showInquiry({ askSpecialist: true })
   }
 
