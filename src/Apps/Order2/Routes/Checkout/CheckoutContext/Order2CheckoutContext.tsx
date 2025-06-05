@@ -466,6 +466,8 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
     case "FULFILLMENT_DETAILS_COMPLETE":
       const { isPickup } = action.payload
       // Update steps to mark FULFILLMENT_DETAILS as completed and remove DELIVERY_OPTION if isPickup
+      let nextStepActivated = false
+
       return {
         ...state,
         steps: state.steps.reduce((acc, current) => {
@@ -480,17 +482,24 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
               },
             ]
           }
+
           if (current.name === CheckoutStepName.DELIVERY_OPTION) {
             if (isPickup) {
               return [...acc, { ...current, state: CheckoutStepState.HIDDEN }]
             }
           }
 
-          const firstStepAfterCompleted =
-            acc.find(step => step.state === CheckoutStepState.COMPLETED) &&
-            !acc.find(step => step.state === CheckoutStepState.UPCOMING)
-
-          if (firstStepAfterCompleted) {
+          // Only activate the first upcoming step after FULFILLMENT_DETAILS is completed
+          if (
+            !nextStepActivated &&
+            current.state === CheckoutStepState.UPCOMING &&
+            acc.some(
+              step =>
+                step.name === CheckoutStepName.FULFILLMENT_DETAILS &&
+                step.state === CheckoutStepState.COMPLETED,
+            )
+          ) {
+            nextStepActivated = true
             return [
               ...acc,
               {
