@@ -103,6 +103,7 @@ const testIDs = {
   pickupDetailsForm: "PickupDetailsForm",
   // Use with screen.getByRole
   phoneCountryPickerListRole: "listbox",
+  paymentFormWire: "PaymentFormWire",
 }
 
 const orderMutationSuccess = (initialValues, newValues) => {
@@ -504,6 +505,100 @@ describe("Order2CheckoutRoute", () => {
           userEvent.click(screen.getByText("Delivery"))
         })
         expect(screen.queryByText("Shipping method")).toBeInTheDocument()
+      })
+    })
+
+    describe("within the payment section", () => {
+      describe("error handling when saving and continuing", () => {
+        it("shows an error if no payment method is selected", async () => {
+          const props = {
+            ...baseProps,
+            me: {
+              ...baseProps.me,
+              order: {
+                ...baseProps.me.order,
+                fulfillmentOptions: [
+                  {
+                    type: "PICKUP",
+                    __typename: "PickupFulfillmentOption",
+                    selected: true,
+                  },
+                  { type: "DOMESTIC_FLAT" },
+                ],
+                fulfillmentDetails: {
+                  phoneNumber: {
+                    originalNumber: "03012345678",
+                    regionCode: "de",
+                  },
+                },
+                selectedFulfillmentOption: {
+                  type: "PICKUP",
+                },
+              },
+            },
+          }
+          const initialOrder = props.me.order
+
+          const { mockResolveLastOperation } =
+            await renderWithLoadingComplete(props)
+
+          await waitFor(() => {
+            act(() => {
+              userEvent.click(screen.getByText("Continue to Payment"))
+            })
+          })
+
+          // PICKUP MUTATIONS
+          await act(async () => {
+            await waitFor(() => {
+              return mockResolveLastOperation({
+                setOrderFulfillmentOptionPayload: () =>
+                  orderMutationSuccess(initialOrder, {
+                    selectedFulfillmentOption: {
+                      type: "PICKUP",
+                    },
+                  }),
+              })
+            })
+            await flushPromiseQueue()
+          })
+
+          await act(async () => {
+            await waitFor(() => {
+              return mockResolveLastOperation({
+                updateOrderShippingAddressPayload: () =>
+                  orderMutationSuccess(initialOrder, {
+                    selectedFulfillmentOption: {
+                      type: "PICKUP",
+                    },
+                    fulfillmentDetails: {
+                      phoneNumber: {
+                        originalNumber: "03012345678",
+                        countryCode: "de",
+                      },
+                    },
+                  }),
+              })
+            })
+
+            await flushPromiseQueue()
+          })
+
+          await userEvent.click(screen.getByText("Save and Continue"))
+          expect(
+            screen.getByText("Select a payment method"),
+          ).toBeInTheDocument()
+
+          const wirePaymentOption = screen.getByTestId(testIDs.paymentFormWire)
+          act(() => {
+            userEvent.click(wirePaymentOption)
+          })
+          await waitFor(() => {
+            expect(
+              screen.queryByLabelText("Select a payment method"),
+            ).not.toBeInTheDocument()
+          })
+        })
       })
     })
   })
