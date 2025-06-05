@@ -91,6 +91,8 @@ export const Order2ExpressCheckoutUI: React.FC<
     redirectToOrderDetails,
     setExpressCheckoutSubmitting,
     expressCheckoutSubmitting,
+    standardCheckoutEngaged,
+    setStandardCheckoutEngaged,
   } = useCheckoutContext()
 
   useEffect(() => {
@@ -171,6 +173,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     expressPaymentType,
     resolve,
   }: StripeExpressCheckoutElementClickEvent) => {
+    setStandardCheckoutEngaged(false)
     setExpressCheckoutType(expressPaymentType)
 
     orderTracking.clickedExpressCheckout({
@@ -514,7 +517,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     <Box>
       <Text variant="sm-display">Express checkout</Text>
       <Spacer y={1} />
-      {error && (
+      {error && !standardCheckoutEngaged && (
         <>
           <CheckoutErrorBanner error={error} />
           <Spacer y={1} />

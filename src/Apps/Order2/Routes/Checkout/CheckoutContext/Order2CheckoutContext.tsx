@@ -38,6 +38,7 @@ interface CheckoutState {
   steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
   confirmationToken: any
+  standardCheckoutEngaged: boolean
 }
 
 interface CheckoutActions {
@@ -55,6 +56,7 @@ interface CheckoutActions {
   setLoadingComplete: () => void
   setConfirmationToken: (args: { confirmationToken: any }) => void
   redirectToOrderDetails: () => void
+  setStandardCheckoutEngaged: (engaged: boolean) => void
 }
 
 export type Order2CheckoutContextValue = CheckoutState & CheckoutActions
@@ -224,6 +226,13 @@ const useBuildCheckoutContext = (
     dispatch({ type: "LOADING_COMPLETE" })
   }, [])
 
+  const setStandardCheckoutEngaged = useCallback((engaged: boolean) => {
+    dispatch({
+      type: "SET_STANDARD_CHECKOUT_ENGAGED",
+      payload: { engaged },
+    })
+  }, [])
+
   const currentStepName = state.steps.find(
     step => step.state === CheckoutStepState.ACTIVE,
   )?.name
@@ -303,6 +312,7 @@ const useBuildCheckoutContext = (
       setLoadingComplete,
       setConfirmationToken,
       redirectToOrderDetails,
+      setStandardCheckoutEngaged,
     }
   }, [
     editFulfillmentDetails,
@@ -315,6 +325,7 @@ const useBuildCheckoutContext = (
     setConfirmationToken,
     setExpressCheckoutSubmitting,
     redirectToOrderDetails,
+    setStandardCheckoutEngaged,
   ])
 
   return {
@@ -366,6 +377,7 @@ const initialStateForOrder = (
     activeFulfillmentDetailsTab: null,
     confirmationToken: null,
     steps,
+    standardCheckoutEngaged: false,
   }
 }
 
@@ -404,6 +416,10 @@ type Action =
   | {
       type: "SET_ACTIVE_FULFILLMENT_DETAILS_TAB"
       payload: { activeFulfillmentDetailsTab: "DELIVERY" | "PICKUP" | null }
+    }
+  | {
+      type: "SET_STANDARD_CHECKOUT_ENGAGED"
+      payload: { engaged: boolean }
     }
 
 const reducer = (state: CheckoutState, action: Action): CheckoutState => {
@@ -581,6 +597,11 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
       return {
         ...state,
         expressCheckoutSubmitting: action.payload.isSubmittingOrder,
+      }
+    case "SET_STANDARD_CHECKOUT_ENGAGED":
+      return {
+        ...state,
+        standardCheckoutEngaged: action.payload.engaged,
       }
     default:
       return state
