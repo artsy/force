@@ -17,6 +17,7 @@ describe("Order2HelpLinks", () => {
         showInquiry={props.showInquiry || jest.fn}
         inquiryComponent={<></>}
         isInquiryVisible={false}
+        {...props}
       />
     ),
     query: graphql`

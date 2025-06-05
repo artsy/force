@@ -1,9 +1,11 @@
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   ActionType,
+  ClickedAskSpecialist,
   ClickedBuyerProtection,
+  ClickedVisitHelpCenter,
   ContextModule,
   OwnerType,
+  PageOwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { Order2HelpLinks_order$data } from "__generated__/Order2HelpLinks_order.graphql"
@@ -16,34 +18,44 @@ export const useOrder2Tracking = () => {
 
   const contextPageOwnerId = analytics.contextPageOwnerId as string
   const contextPageOwnerSlug = analytics.contextPageOwnerSlug as string
-  const contextPageOwnerType = analytics.contextPageOwnerType as OwnerType
+  const contextPageOwnerType = analytics.contextPageOwnerType as PageOwnerType
 
   const tracks = useMemo(() => {
     return {
-      clickedAskSpecialist: (orderType: Order2HelpLinks_order$data["mode"]) => {
-        const payload = {
-          action_type: DeprecatedSchema.ActionType.Click,
-          subject: DeprecatedSchema.Subject.BNMOAskSpecialist,
-          type: "button",
+      clickedAskSpecialist: (
+        contextModule: ContextModule,
+        orderType: Order2HelpLinks_order$data["mode"],
+      ) => {
+        const payload: ClickedAskSpecialist = {
+          action: ActionType.clickedAskSpecialist,
+          context_module: contextModule,
+          context_page_owner_id: contextPageOwnerId,
+          context_page_owner_type: contextPageOwnerType,
           flow: orderType === "OFFER" ? "make offer" : "buy now",
         }
 
         trackEvent(payload)
       },
-      clickedReadFAQ: (orderType: Order2HelpLinks_order$data["mode"]) => {
-        const payload = {
-          action_type: DeprecatedSchema.ActionType.Click,
-          subject: DeprecatedSchema.Subject.BNMOReadFAQ,
-          type: "button",
-          flow: orderType === "OFFER" ? "make offer" : "buy now",
+      clickedVisitHelpCenter: (
+        contextModule: ContextModule,
+        orderType: Order2HelpLinks_order$data["mode"],
+      ) => {
+        const payload: ClickedVisitHelpCenter = {
+          action: ActionType.clickedVisitHelpCenter,
+          context_module: contextModule,
+          context_page_owner_id: contextPageOwnerId,
+          context_page_owner_type: contextPageOwnerType,
+          destination_page_owner_type: OwnerType.articles,
+          destination_page_owner_slug: "0TO3b000000UessGAC/buy",
+          flow: orderType === "OFFER" ? "Make offer" : "Buy now",
         }
 
         trackEvent(payload)
       },
-      clickedBuyerProtection: () => {
+      clickedBuyerProtection: (contextModule: ContextModule) => {
         const payload: ClickedBuyerProtection = {
           action: ActionType.clickedBuyerProtection,
-          context_module: ContextModule.ordersDetail,
+          context_module: contextModule,
           context_page_owner_id: contextPageOwnerId,
           context_page_owner_type: contextPageOwnerType,
           destination_page_owner_type: OwnerType.articles,
