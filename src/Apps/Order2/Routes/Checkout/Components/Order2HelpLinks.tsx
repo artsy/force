@@ -46,7 +46,7 @@ export const Order2HelpLinks: React.FC<
               Need help?
             </Text>
 
-            <Text variant="xs" color="mono100">
+            <Text variant="xs" color="mono60">
               <Clickable
                 data-test="help-center-link"
                 data-context={orderData.internalID}
