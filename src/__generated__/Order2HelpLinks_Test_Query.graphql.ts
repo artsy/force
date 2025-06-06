@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<739e0c6137f309033e1daaf64df02fe6>>
+ * @generated SignedSource<<874203a6377ab871771cc1ac2a0acad8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type Order2HelpLinks_Test_Query$variables = Record<PropertyKey, never>;
 export type Order2HelpLinks_Test_Query$data = {
   readonly me: {
@@ -24,6 +25,7 @@ export type Order2HelpLinks_Test_Query$rawResponse = {
     readonly order: {
       readonly id: string;
       readonly internalID: string;
+      readonly mode: OrderModeEnum;
     } | null | undefined;
   } | null | undefined;
 };
@@ -115,6 +117,13 @@ return {
                 "name": "internalID",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "mode",
+                "storageKey": null
+              },
               (v1/*: any*/)
             ],
             "storageKey": "order(id:\"123\")"
@@ -126,12 +135,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0e896c61c9e7e2ec8cb2fee0ad97deba",
+    "cacheID": "492e5e36b5f9bf34de4408c66370bffd",
     "id": null,
     "metadata": {},
     "name": "Order2HelpLinks_Test_Query",
     "operationKind": "query",
-    "text": "query Order2HelpLinks_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2HelpLinks_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n}\n"
+    "text": "query Order2HelpLinks_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2HelpLinks_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n}\n"
   }
 };
 })();
