@@ -16,6 +16,8 @@ export const Order2DetailsFulfillmentInfo: React.FC<
   const { fulfillmentDetails, selectedFulfillmentOption, shippingOrigin } =
     orderData
 
+  if (!selectedFulfillmentOption) return null
+
   const isPickup = selectedFulfillmentOption?.type === "PICKUP"
 
   return (

@@ -1,6 +1,6 @@
 import LockIcon from "@artsy/icons/LockIcon"
 import ReceiptIcon from "@artsy/icons/ReceiptIcon"
-import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
+import { Box, Button, Flex, Message, Spacer, Text } from "@artsy/palette"
 import {
   Elements,
   PaymentElement,
@@ -37,6 +37,8 @@ import {
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 const logger = createLogger("Order2PaymentForm")
+const defaultErrorMessage =
+  "Something went wrong. Please try again or contact orders@artsy.net"
 
 interface Order2PaymentFormProps {
   order: Order2PaymentForm_order$key
@@ -99,14 +101,17 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   const updateOrderMutation = useUpdateOrderMutation()
   const { setConfirmationToken } = useCheckoutContext()
   const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [subtitleErrorMessage, setSubtitleErrorMessage] = useState<
+    string | null
+  >(null)
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
+    null | "saved" | "stripe" | "wire"
+  >(null)
 
   if (!(stripe && elements)) {
     return null
   }
-
-  // From Stripe docs
-  const [errorMessage, setErrorMessage] = useState()
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("new")
 
   const paymentElementOptions: StripePaymentElementOptions = {
     layout: {
@@ -121,106 +126,133 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
     },
   }
 
-  const onChange = event => {
-    const { elementType, collapsed } = event
+  const onChange = StripePaymentElementChangeEvent => {
+    const { elementType, collapsed } = StripePaymentElementChangeEvent
     if (elementType === "payment" && !collapsed) {
-      setSelectedPaymentMethod("new")
+      setSelectedPaymentMethod("stripe")
     }
   }
 
   const onClickSavedPaymentMethods = () => {
+    setErrorMessage(null) // Clear any previous error messages
     setSelectedPaymentMethod("saved")
     elements?.getElement("payment")?.collapse()
   }
 
   const onClickWirePaymentMethods = () => {
+    setErrorMessage(null) // Clear any previous error messages
     setSelectedPaymentMethod("wire")
     elements?.getElement("payment")?.collapse()
   }
 
-  // From Stripe docs
   const handleError = error => {
     setErrorMessage(error.message)
+    setIsSubmittingToStripe(false)
   }
 
-  // From Stripe docs
   const handleSubmit = async event => {
     event.preventDefault()
-    setIsSubmittingToStripe(true)
 
-    const { error: submitError } = await elements.submit()
-    if (submitError) {
-      logger.error(submitError)
-      handleError(submitError)
+    if (!selectedPaymentMethod) {
+      setSubtitleErrorMessage("Select a payment method")
       return
     }
 
-    const { error, confirmationToken } = await stripe.createConfirmationToken({
-      elements,
-    })
+    if (selectedPaymentMethod === "stripe") {
+      setIsSubmittingToStripe(true)
 
-    if (error) {
-      logger.error(error)
-      handleError(error)
-      return
-    }
+      const { error: submitError } = await elements.submit()
+      if (submitError) {
+        logger.error(submitError)
+        handleError(submitError)
+        return
+      }
 
-    const response = await fetchQuery<Order2PaymentFormConfirmationTokenQuery>(
-      environment,
-      graphql`
-        query Order2PaymentFormConfirmationTokenQuery($id: String!) {
-          me {
-            confirmationToken(id: $id) {
-              paymentMethodPreview {
-                card {
-                  displayBrand
-                  last4
+      const { error, confirmationToken } = await stripe.createConfirmationToken(
+        {
+          elements,
+        },
+      )
+
+      if (error) {
+        logger.error(error)
+        handleError(error)
+        return
+      }
+
+      const response =
+        await fetchQuery<Order2PaymentFormConfirmationTokenQuery>(
+          environment,
+          graphql`
+            query Order2PaymentFormConfirmationTokenQuery($id: String!) {
+              me {
+                confirmationToken(id: $id) {
+                  paymentMethodPreview {
+                    card {
+                      displayBrand
+                      last4
+                    }
+                  }
                 }
               }
             }
-          }
-        }
-      `,
-      { id: confirmationToken.id },
-      { fetchPolicy: "store-or-network" },
-    ).toPromise()
+          `,
+          { id: confirmationToken.id },
+          { fetchPolicy: "store-or-network" },
+        ).toPromise()
 
-    if (!response) {
-      logger.error("Failed to load confirmation token")
-      handleError(new Error("Confirmation token not found"))
-      return
-    }
+      if (!response) {
+        logger.error("Failed to fetch confirmation token from Gravity")
+        handleError(new Error(defaultErrorMessage))
+        return
+      }
 
-    try {
-      const updateOrderPaymentMethodResult =
-        await updateOrderMutation.submitMutation({
-          variables: {
-            input: {
-              id: order.internalID,
-              paymentMethod: "CREDIT_CARD",
+      try {
+        const updateOrderPaymentMethodResult =
+          await updateOrderMutation.submitMutation({
+            variables: {
+              input: {
+                id: order.internalID,
+                paymentMethod: "CREDIT_CARD",
+              },
             },
-          },
-        })
+          })
 
-      validateAndExtractOrderResponse(
-        updateOrderPaymentMethodResult.updateOrder?.orderOrError,
-      )
-    } catch (error) {
-      logger.error("Error while updating order payment method", error)
-    } finally {
-      setIsSubmittingToStripe(false)
+        validateAndExtractOrderResponse(
+          updateOrderPaymentMethodResult.updateOrder?.orderOrError,
+        )
+      } catch (error) {
+        logger.error("Error while updating order payment method", error)
+        handleError(new Error(defaultErrorMessage))
+      } finally {
+        setIsSubmittingToStripe(false)
+      }
+
+      setConfirmationToken({
+        confirmationToken: {
+          id: confirmationToken.id,
+          ...response?.me?.confirmationToken,
+        },
+      })
     }
 
-    setConfirmationToken({
-      confirmationToken: {
-        id: confirmationToken.id,
-        ...response?.me?.confirmationToken,
-      },
-    })
+    if (selectedPaymentMethod === "wire") {
+      handleError(new Error("Wire transfer not supported yet"))
+    }
+
+    if (selectedPaymentMethod === "saved") {
+      handleError(new Error("Saved payment method not supported yet"))
+    }
   }
 
   return (
     <form onSubmit={handleSubmit}>
+      {subtitleErrorMessage && !selectedPaymentMethod && (
+        <Text variant="xs" color="red100" mb={2}>
+          {subtitleErrorMessage}
+        </Text>
+      )}
+      <Spacer y={2} />
       <FadeInBox>
         <Box
           backgroundColor="#EFEFEF"
@@ -258,6 +290,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
           marginBottom="10px"
           style={{ cursor: "pointer" }}
           onClick={onClickWirePaymentMethods}
+          data-testid={"PaymentFormWire"}
         >
           <Flex alignItems="center">
             <ReceiptIcon fill="mono100" />
@@ -284,15 +317,23 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
         </Box>
       </FadeInBox>
       <Spacer y={2} />
+      {/* Stripe error messages are displayed within the Payment Element, so we don't need to handle them here. */}
+      {errorMessage && selectedPaymentMethod !== "stripe" && (
+        <>
+          <Message variant="error" title="An error occurred">
+            {errorMessage}
+          </Message>
+          <Spacer y={4} />
+        </>
+      )}
       <Button
         loading={isSubmittingToStripe}
-        variant={"primaryBlack"}
+        variant="primaryBlack"
         width="100%"
         type="submit"
       >
         Save and Continue
       </Button>
-      {errorMessage && <div>{errorMessage}</div>}
     </form>
   )
 }

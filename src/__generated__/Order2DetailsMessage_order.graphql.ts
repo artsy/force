@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fdd4bd904ed4b60e7555cc7b22389581>>
+ * @generated SignedSource<<ecbdbaf162127285fc3d6320f04f0985>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,13 @@ export type Order2DetailsMessage_order$data = {
   readonly buyerStateExpiresAt: string | null | undefined;
   readonly code: string;
   readonly currencyCode: string;
+  readonly deliveryInfo: {
+    readonly estimatedDelivery: string | null | undefined;
+    readonly estimatedDeliveryWindow: string | null | undefined;
+    readonly shipperName: string | null | undefined;
+    readonly trackingNumber: string | null | undefined;
+    readonly trackingURL: string | null | undefined;
+  } | null | undefined;
   readonly displayTexts: {
     readonly messageType: DisplayTextsMessageTypeEnum;
   };
@@ -77,12 +84,58 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "DeliveryInfo",
+      "kind": "LinkedField",
+      "name": "deliveryInfo",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "shipperName",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "trackingNumber",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "trackingURL",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "estimatedDelivery",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "estimatedDeliveryWindow",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Order",
   "abstractKey": null
 };
 
-(node as any).hash = "d4a3de784c48a5844b365765f8ecc8ee";
+(node as any).hash = "1a5c2bf181daccef0b8b7c9e2fcf3ca0";
 
 export default node;

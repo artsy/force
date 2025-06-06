@@ -15,7 +15,6 @@ import type {
   Order2ExpressCheckout_order$data,
   Order2ExpressCheckout_order$key,
 } from "__generated__/Order2ExpressCheckout_order.graphql"
-import { useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2ExpressCheckout.tsx")
@@ -35,18 +34,10 @@ export const Order2ExpressCheckout: React.FC<Order2ExpressCheckoutProps> = ({
   order,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const [isChrome, setIsChrome] = useState<boolean | null>(null)
   const { expressCheckoutPaymentMethods } = useCheckoutContext()
 
   const expressCheckoutLoadedEmpty = expressCheckoutPaymentMethods?.length === 0
 
-  useEffect(() => {
-    const chrome =
-      typeof navigator !== "undefined" && /Chrome/.test(navigator.userAgent)
-    setIsChrome(chrome)
-  }, [])
-
-  if (isChrome === null) return null
   if (expressCheckoutLoadedEmpty) {
     return null
   }
@@ -87,7 +78,7 @@ export const Order2ExpressCheckout: React.FC<Order2ExpressCheckoutProps> = ({
   return (
     <Flex flexDirection="column" backgroundColor="mono0" p={2}>
       <Elements stripe={stripePromise} options={options}>
-        <Order2ExpressCheckoutUI order={orderData} isChrome={isChrome} />
+        <Order2ExpressCheckoutUI order={orderData} />
       </Elements>
     </Flex>
   )

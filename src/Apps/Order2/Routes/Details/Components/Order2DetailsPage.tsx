@@ -1,6 +1,6 @@
 import { Box, Column, GridColumns, Spacer } from "@artsy/palette"
 import { Order2DetailsFulfillmentInfo } from "Apps/Order2/Routes/Details/Components/Order2DetailsFulfillmentInfo"
-import { Order2DetailsHelpLinksWithInquiry } from "Apps/Order2/Routes/Details/Components/Order2DetailsHelpLinks"
+import { Order2HelpLinksWithInquiry } from "Apps/Order2/Routes/Checkout/Components/Order2HelpLinks"
 import { Order2DetailsOrderSummary } from "Apps/Order2/Routes/Details/Components/Order2DetailsOrderSummary"
 import { Order2DetailsPaymentInfo } from "Apps/Order2/Routes/Details/Components/Order2DetailsPaymentInfo"
 import type { Order2DetailsPage_order$key } from "__generated__/Order2DetailsPage_order.graphql"
@@ -43,7 +43,7 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
           <Order2DetailsPaymentInfo order={orderData} />
 
           <Box display={["block", "block", "none"]}>
-            <Order2DetailsHelpLinksWithInquiry
+            <Order2HelpLinksWithInquiry
               order={orderData}
               artworkID={artworkSlug as string}
             />
@@ -58,7 +58,7 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
       >
         <Order2DetailsOrderSummary order={orderData} />
         <Spacer y={1} />
-        <Order2DetailsHelpLinksWithInquiry
+        <Order2HelpLinksWithInquiry
           order={orderData}
           artworkID={artworkSlug as string}
         />
@@ -80,6 +80,6 @@ const FRAGMENT = graphql`
     ...Order2PricingBreakdown_order
     ...Order2DetailsPaymentInfo_order
     ...Order2DetailsFulfillmentInfo_order
-    ...Order2DetailsHelpLinks_order
+    ...Order2HelpLinks_order
   }
 `

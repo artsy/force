@@ -3,6 +3,7 @@ import {
   Column,
   Flex,
   GridColumns,
+  Separator,
   Spacer,
   Stack,
   Text,
@@ -16,6 +17,7 @@ import { Order2ExpressCheckout } from "Apps/Order2/Routes/Checkout/Components/Ex
 import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
 import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutLoadingSkeleton"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
+import { Order2HelpLinksWithInquiry } from "Apps/Order2/Routes/Checkout/Components/Order2HelpLinks"
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentStep"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
@@ -36,6 +38,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
 
   const data = useFragment(FRAGMENT, viewer)
   const order = data.me?.order ?? null
+  const artworkSlug = order?.lineItems[0]?.artwork?.slug
 
   const {
     isLoading,
@@ -108,7 +111,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
               {showDeliveryOptionStep && (
                 <Flex flexDirection="column" backgroundColor="mono0" p={2}>
                   <Text variant="sm-display" fontWeight="bold" color="mono100">
-                    Shipping Method
+                    Shipping method
                   </Text>
                   <Text variant={["xs", "xs", "sm"]} color="mono60">
                     Options vary based on address and artwork size
@@ -121,6 +124,10 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
             <Box display={["block", "block", "none"]}>
               <Spacer y={1} />
               <Order2ReviewStep order={order} />
+              <Order2HelpLinksWithInquiry
+                order={order}
+                artworkID={artworkSlug as string}
+              />
             </Box>
           </Box>
         </Column>
@@ -132,6 +139,11 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         >
           <Box width={"445px"} position="sticky" top={80}>
             <Order2ReviewStep order={order} />
+            <Separator as="hr" />
+            <Order2HelpLinksWithInquiry
+              order={order}
+              artworkID={artworkSlug as string}
+            />
           </Box>
         </Column>
       </GridColumns>
@@ -151,6 +163,7 @@ const FRAGMENT = graphql`
         mode
         lineItems {
           artwork {
+            slug
             isFixedShippingFeeOnly
           }
         }
@@ -160,6 +173,7 @@ const FRAGMENT = graphql`
         ...Order2PaymentStep_order
         ...Order2ReviewStep_order
         ...Order2CheckoutLoadingSkeleton_order
+        ...Order2HelpLinks_order
       }
       addressConnection(first: 10) {
         edges {

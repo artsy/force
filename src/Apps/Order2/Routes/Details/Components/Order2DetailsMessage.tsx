@@ -82,8 +82,8 @@ const getMessageContent = (order): React.ReactNode => {
         <>
           <Text variant="sm">
             Thank you! Your offer has been submitted. You will receive an email
-            shortly with all the details. Please note making an offer doesn’t
-            guarantee you the work.
+            shortly with all the details. Please note making an offer
+            doesn&rsquo;t guarantee you the work.
           </Text>
           <Spacer y={2} />
           <Text variant="sm">
@@ -227,10 +227,64 @@ const getMessageContent = (order): React.ReactNode => {
         </>
       )
     case "SHIPPED":
+      const {
+        shipperName,
+        trackingNumber,
+        trackingURL,
+        estimatedDelivery,
+        estimatedDeliveryWindow,
+      } = order.deliveryInfo
+
+      const isDeliveryInfoPresent =
+        shipperName ||
+        trackingNumber ||
+        trackingURL ||
+        estimatedDelivery ||
+        estimatedDeliveryWindow
+
+      const formattedEstimatedDelivery =
+        estimatedDelivery &&
+        new Date(estimatedDelivery).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        })
+      const estimatedDeliveryDisplay =
+        (estimatedDeliveryWindow || formattedEstimatedDelivery) &&
+        (estimatedDeliveryWindow
+          ? estimatedDeliveryWindow
+          : formattedEstimatedDelivery)
+
       return (
         <>
           <Text variant="sm">Your work is on its way.</Text>
-          {/* TODO: Add shipping tracking info when available */}
+          {isDeliveryInfoPresent && (
+            <>
+              <Spacer y={2} />
+              {shipperName && <Text variant="sm">Shipper: {shipperName}</Text>}
+              {trackingNumber && (
+                <Text variant="sm">
+                  Tracking:{" "}
+                  {trackingURL ? (
+                    <RouterLink
+                      to={trackingURL}
+                      target="_blank"
+                      display="inline"
+                    >
+                      {trackingNumber}
+                    </RouterLink>
+                  ) : (
+                    trackingNumber
+                  )}
+                </Text>
+              )}
+              {estimatedDeliveryDisplay && (
+                <Text variant="sm">
+                  Estimated delivery: {estimatedDeliveryDisplay}
+                </Text>
+              )}
+            </>
+          )}
           <Spacer y={2} />
           <YourCollectionNote />
         </>
@@ -267,6 +321,13 @@ const FRAGMENT = graphql`
     internalID
     displayTexts {
       messageType
+    }
+    deliveryInfo {
+      shipperName
+      trackingNumber
+      trackingURL
+      estimatedDelivery
+      estimatedDeliveryWindow
     }
   }
 `

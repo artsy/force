@@ -4,7 +4,7 @@ import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import type { SortOptions } from "Components/SortFilter"
 import { DEFAULT_METRIC, type Metric, getSupportedMetric } from "Utils/metrics"
 import { isArray, omit } from "lodash"
-import { useContext, useReducer, useState } from "react"
+import { useContext, useReducer, useRef, useState } from "react"
 import * as React from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { hasFilters } from "./Utils/hasFilters"
@@ -267,6 +267,7 @@ export const ArtworkFilterContextProvider: React.FC<
   ZeroState,
 }) => {
   const camelCasedFilters: ArtworkFiltersState = paramsToCamelCase(filters)
+
   const defaultSort = sortOptions?.[0].value ?? initialArtworkFilterState.sort
   const defaultMetric = userPreferredMetric ?? initialArtworkFilterState.metric
   const defaultFilters = {
@@ -297,7 +298,15 @@ export const ArtworkFilterContextProvider: React.FC<
   const [followedArtists, setFollowedArtists] =
     useState<FollowedArtists>(_followedArtists)
 
+  const isInitialRender = useRef(true)
+
   useDeepCompareEffect(() => {
+    // Skip onChange call on initial render to prevent automatic URL updates with default values
+    if (isInitialRender.current) {
+      isInitialRender.current = false
+      return
+    }
+
     if (onChange) {
       onChange(omit(artworkFilterState, ["reset"]))
     }
