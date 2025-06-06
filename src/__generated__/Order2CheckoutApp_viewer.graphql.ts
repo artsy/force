@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7192feea1bdaaa34aafb4d2f6f6c715d>>
+ * @generated SignedSource<<343f59e38e04d7fa33f0e456c6e8ddad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,7 +33,7 @@ export type Order2CheckoutApp_viewer$data = {
         } | null | undefined;
       } | null | undefined>;
       readonly mode: OrderModeEnum;
-      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutLoadingSkeleton_order" | "Order2CollapsibleOrderSummary_order" | "Order2DeliveryOptionsStep_order" | "Order2ExpressCheckout_order" | "Order2FulfillmentDetailsStep_order" | "Order2HelpLinks_order" | "Order2PaymentStep_order" | "Order2ReviewStep_order">;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutLoadingSkeleton_order" | "Order2CollapsibleOrderSummary_order" | "Order2ExpressCheckout_order" | "Order2FulfillmentDetailsStep_order" | "Order2HelpLinks_order" | "Order2PaymentStep_order" | "Order2ReviewStep_order">;
     };
   } | null | undefined;
   readonly " $fragmentType": "Order2CheckoutApp_viewer";
@@ -183,11 +183,6 @@ return {
                 "args": null,
                 "kind": "FragmentSpread",
                 "name": "Order2HelpLinks_order"
-              },
-              {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "Order2DeliveryOptionsStep_order"
               }
             ],
             "storageKey": null
@@ -243,6 +238,6 @@ return {
 };
 })();
 
-(node as any).hash = "a10522009753e52bede66eb3a8a906bd";
+(node as any).hash = "9d91419c88d4354f9646230cbc6bc4cb";
 
 export default node;

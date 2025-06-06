@@ -1,19 +1,28 @@
 import { Box, Flex, Text } from "@artsy/palette"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import type { Order2DeliveryOptionsStep_order$key } from "__generated__/Order2DeliveryOptionsStep_order.graphql"
 
-interface Order2DeliveryOptionsStepProps {
-  order: Order2DeliveryOptionsStep_order$key
-}
+interface Order2DeliveryOptionsStepProps {}
 
 export const Order2DeliveryOptionsStep: React.FC<
   Order2DeliveryOptionsStepProps
-> = ({ order }) => {
-  const { activeFulfillmentDetailsTab } = useCheckoutContext()!
+> = () => {
+  const { steps } = useCheckoutContext()!
+
+  const stepState = steps?.find(
+    step => step.name === CheckoutStepName.DELIVERY_OPTION,
+  )?.state
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
-      <Box p={2} hidden={activeFulfillmentDetailsTab !== "DELIVERY"}>
+      <Box
+        p={2}
+        hidden={stepState !== CheckoutStepState.UPCOMING}
+        data-testid="DeliveryOptionsStep"
+      >
         <Flex flexDirection="column">
           <Text variant="sm-display" fontWeight="bold" color="mono100">
             Shipping method

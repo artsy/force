@@ -87,7 +87,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
                 <Order2ExpressCheckout order={order} />
               )}
               <Order2FulfillmentDetailsStep order={order} />
-              <Order2DeliveryOptionsStep order={order} />
+              <Order2DeliveryOptionsStep />
               <Order2PaymentStep order={order} />
             </Stack>
             <Box display={["block", "block", "none"]}>
@@ -143,7 +143,6 @@ const FRAGMENT = graphql`
         ...Order2ReviewStep_order
         ...Order2CheckoutLoadingSkeleton_order
         ...Order2HelpLinks_order
-        ...Order2DeliveryOptionsStep_order
       }
       addressConnection(first: 10) {
         edges {

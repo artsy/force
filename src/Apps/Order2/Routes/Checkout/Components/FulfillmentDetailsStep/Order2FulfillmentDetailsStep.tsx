@@ -20,12 +20,8 @@ export const Order2FulfillmentDetailsStep: React.FC<
 > = ({ order }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
 
-  const {
-    editFulfillmentDetails,
-    steps,
-    setActiveFulfillmentDetailsTab,
-    activeFulfillmentDetailsTab,
-  } = useCheckoutContext()!
+  const { editFulfillmentDetails, steps, setActiveFulfillmentDetailsTab } =
+    useCheckoutContext()!
 
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
@@ -42,12 +38,6 @@ export const Order2FulfillmentDetailsStep: React.FC<
   const pickupOption = fulfillmentOptions.find(
     option => option.type === "PICKUP",
   )
-
-  // Order2DeliveryOptionsStep is relying on the activeFulfillmentDetailsTab being set,
-  // so we need to ensure it is set to a default value
-  if (activeFulfillmentDetailsTab === null) {
-    setActiveFulfillmentDetailsTab("DELIVERY")
-  }
 
   return (
     <Flex
