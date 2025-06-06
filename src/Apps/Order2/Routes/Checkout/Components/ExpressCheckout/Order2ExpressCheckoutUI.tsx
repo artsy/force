@@ -50,7 +50,6 @@ import { graphql, useFragment } from "react-relay"
 
 interface Order2ExpressCheckoutUIProps {
   order: Order2ExpressCheckoutUI_order$key
-  isChrome?: boolean
 }
 
 const logger = createLogger("ExpressCheckoutUI")
@@ -62,7 +61,7 @@ type HandleCancelCallback = NonNullable<
 
 export const Order2ExpressCheckoutUI: React.FC<
   Order2ExpressCheckoutUIProps
-> = ({ order, isChrome }) => {
+> = ({ order }) => {
   const orderData = useFragment(FRAGMENT, order)
 
   const elements = useElements()
@@ -89,6 +88,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     setExpressCheckoutLoaded,
     redirectToOrderDetails,
     setExpressCheckoutSubmitting,
+    expressCheckoutSubmitting,
   } = useCheckoutContext()
 
   if (!(stripe && elements)) {
@@ -102,7 +102,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     },
     buttonHeight: 50,
     paymentMethods: {
-      applePay: isChrome ? "never" : "always",
+      applePay: "always",
       googlePay: "always",
     },
     layout: {
@@ -219,7 +219,10 @@ export const Order2ExpressCheckoutUI: React.FC<
     }
 
     setExpressCheckoutType(null)
-    resetOrder()
+
+    if (!expressCheckoutSubmitting) {
+      resetOrder()
+    }
   }
 
   // User selects a shipping address
