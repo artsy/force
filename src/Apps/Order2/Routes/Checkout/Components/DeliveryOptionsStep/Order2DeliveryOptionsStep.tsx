@@ -1,11 +1,6 @@
 import { Box, Flex, Text } from "@artsy/palette"
-import {
-  CheckoutStepName,
-  CheckoutStepState,
-} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { Order2DeliveryOptionsStep_order$key } from "__generated__/Order2DeliveryOptionsStep_order.graphql"
-import { graphql, useFragment } from "react-relay"
 
 interface Order2DeliveryOptionsStepProps {
   order: Order2DeliveryOptionsStep_order$key
@@ -14,13 +9,7 @@ interface Order2DeliveryOptionsStepProps {
 export const Order2DeliveryOptionsStep: React.FC<
   Order2DeliveryOptionsStepProps
 > = ({ order }) => {
-  const orderData = useFragment(FRAGMENT, order)
-
-  const { steps, activeFulfillmentDetailsTab } = useCheckoutContext()!
-
-  const stepState = steps?.find(
-    step => step.name === CheckoutStepName.DELIVERY_OPTION,
-  )?.state
+  const { activeFulfillmentDetailsTab } = useCheckoutContext()!
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
@@ -37,9 +26,3 @@ export const Order2DeliveryOptionsStep: React.FC<
     </Flex>
   )
 }
-
-const FRAGMENT = graphql`
-  fragment Order2DeliveryOptionsStep_order on Order {
-    internalID
-  }
-`
