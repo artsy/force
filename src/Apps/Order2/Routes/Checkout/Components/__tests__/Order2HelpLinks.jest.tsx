@@ -7,6 +7,14 @@ import { graphql } from "relay-runtime"
 
 jest.unmock("react-relay")
 
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerId: "order-id",
+    contextPageOwnerSlug: "page-owner-slug",
+    contextPageOwnerType: "page-owner-type",
+  })),
+}))
+
 describe("Order2HelpLinks", () => {
   const { renderWithRelay } = setupTestWrapperTL<Order2DetailsPage_Test_Query>({
     Component: (props: any) => (
@@ -77,31 +85,35 @@ describe("Order2HelpLinks", () => {
     })
 
     it("tracks clicks on help link", () => {
-      renderWithRelay()
+      renderWithRelay({}, { contextModule: "context-module" })
 
       expect(screen.getByText("Visit our help center")).toBeInTheDocument()
 
       fireEvent.click(screen.getByText("Visit our help center"))
 
       expect(mockTrackEvent).toHaveBeenCalledWith({
-        action_type: "Click",
-        subject: "Visit our help center",
-        type: "button",
-        flow: "buy now",
+        action: "clickedVisitHelpCenter",
+        context_module: "context-module",
+        context_page_owner_id: "order-id",
+        context_page_owner_type: "page-owner-type",
+        destination_page_owner_slug: "0TO3b000000UessGAC/buy",
+        destination_page_owner_type: "articles",
+        flow: "Buy now",
       })
     })
 
     it("tracks opening the contact specialist modal", () => {
-      renderWithRelay()
+      renderWithRelay({}, { contextModule: "context-module" })
 
       expect(screen.getByText("ask a question")).toBeInTheDocument()
 
       fireEvent.click(screen.getByText("ask a question"))
 
       expect(mockTrackEvent).toBeCalledWith({
-        action_type: "Click",
-        subject: "ask a specialist",
-        type: "button",
+        action: "clickedAskSpecialist",
+        context_module: "context-module",
+        context_page_owner_id: "order-id",
+        context_page_owner_type: "page-owner-type",
         flow: "buy now",
       })
     })
