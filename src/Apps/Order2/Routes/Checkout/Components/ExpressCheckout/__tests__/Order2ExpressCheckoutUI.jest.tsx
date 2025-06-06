@@ -29,10 +29,12 @@ let shippingRateId = "DOMESTIC_FLAT"
 const mockRedirectToOrderDetails = jest.fn()
 const mockSetExpressCheckoutLoaded = jest.fn()
 const mockSetShowOrderSubmittingSpinner = jest.fn()
+const mockSetStandardCheckoutEngaged = jest.fn()
 const mockCheckoutContext: DeepPartial<Order2CheckoutContextValue> = {
   setExpressCheckoutLoaded: mockSetExpressCheckoutLoaded,
   setExpressCheckoutSubmitting: mockSetShowOrderSubmittingSpinner,
   redirectToOrderDetails: mockRedirectToOrderDetails,
+  setStandardCheckoutEngaged: mockSetStandardCheckoutEngaged,
 }
 
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
@@ -573,8 +575,7 @@ describe("ExpressCheckoutUI", () => {
       })
     })
 
-    // TODO: Express checkout error handling is not implemented yet.
-    xit("stores error and tracks error message viewed event when there is an error", async () => {
+    it("stores error and tracks error message viewed event when there is an error", async () => {
       const mockErrorRef = { current: "test_error_code" }
       jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
 
