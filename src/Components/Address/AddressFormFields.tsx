@@ -7,7 +7,6 @@ import {
   PhoneInput,
   Select,
 } from "@artsy/palette"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
 import {
   type Address,
@@ -94,8 +93,6 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
     setFieldValue,
   } = useFormikContext<V>()
 
-  const { setStandardCheckoutEngaged } = useCheckoutContext()
-
   const dataTestIdPrefix = "addressFormFields"
 
   const countryInputOptions = useMemo(() => {
@@ -146,9 +143,6 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           onBlur={handleBlur}
           error={touchedAddress?.name && errorsAddress?.name}
           required
-          onFocus={() => {
-            setStandardCheckoutEngaged(true)
-          }}
         />
       </Column>
 
