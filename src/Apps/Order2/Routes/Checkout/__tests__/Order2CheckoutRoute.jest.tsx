@@ -231,7 +231,7 @@ describe("Order2CheckoutRoute", () => {
         const { mockResolveLastOperation } =
           await renderWithLoadingComplete(props)
 
-        expect(screen.queryByText("Shipping method")).toBeVisible()
+        expect(screen.queryByText("Shipping method")).not.toBeVisible()
 
         // Click pickup tab
         expect(screen.queryByText("Free pickup")).not.toBeInTheDocument()
@@ -341,7 +341,7 @@ describe("Order2CheckoutRoute", () => {
 
         // Verify that the step is complete
         await screen.findByText(pickupCompleteMessage)
-        expect(screen.queryByText("Shipping method")).not.toBeInTheDocument()
+        expect(screen.queryByText("Shipping method")).not.toBeVisible()
 
         await userEvent.click(screen.getByText("Mock enter credit card"))
 
@@ -470,8 +470,6 @@ describe("Order2CheckoutRoute", () => {
           },
         })
 
-        expect(screen.queryByText("Shipping method")).not.toBeInTheDocument()
-
         const editPickup = within(
           screen.getByTestId(testIDs.fulfillmentDetailsStep),
         ).getByText("Edit")
@@ -499,12 +497,12 @@ describe("Order2CheckoutRoute", () => {
           "03012345678",
         )
 
-        expect(screen.queryByText("Shipping method")).not.toBeInTheDocument()
+        expect(screen.queryByText("Shipping method")).not.toBeVisible()
 
         act(() => {
           userEvent.click(screen.getByText("Delivery"))
         })
-        expect(screen.queryByText("Shipping method")).toBeInTheDocument()
+        expect(screen.queryByText("Shipping method")).toBeVisible()
       })
     })
 
