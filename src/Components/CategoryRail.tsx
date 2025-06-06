@@ -79,7 +79,10 @@ export const CategoryRailFragmentContainer = createFragmentContainer(
         ...EntityHeaderGene_gene
         name
         href
-        filterArtworks: filterArtworksConnection(first: 10) {
+        filterArtworks: filterArtworksConnection(
+          first: 10
+          sort: "-decayed_merch"
+        ) {
           edges {
             node {
               internalID
