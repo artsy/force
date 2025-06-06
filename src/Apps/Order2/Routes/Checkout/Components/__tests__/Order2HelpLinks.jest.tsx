@@ -1,7 +1,7 @@
 import { fireEvent, screen } from "@testing-library/dom"
-import { Order2DetailsPage_Test_Query } from "__generated__/Order2DetailsPage_Test_Query.graphql"
 import { Order2HelpLinks } from "Apps/Order2/Routes/Checkout/Components/Order2HelpLinks"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { Order2DetailsPage_Test_Query } from "__generated__/Order2DetailsPage_Test_Query.graphql"
 import { graphql } from "relay-runtime"
 
 jest.unmock("react-relay")

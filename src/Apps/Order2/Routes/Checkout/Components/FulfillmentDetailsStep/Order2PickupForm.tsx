@@ -137,7 +137,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
       </Text>
       <Text variant="xs" color="mono60" my={1}>
         After your order is confirmed, a specialist will contact you with
-        details on how to pick up the work.
+        details on how to pickup the work.
       </Text>
       <Formik<PickupFormValues>
         initialValues={initialValues}

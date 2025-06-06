@@ -23,7 +23,7 @@ export const Order2DetailsFulfillmentInfo: React.FC<
   return (
     <Box p={2} backgroundColor="mono0">
       <Text variant="sm" fontWeight="bold" color="mono100">
-        {isPickup ? "Pick up" : "Ship to"}
+        {isPickup ? "Pickup" : "Ship to"}
       </Text>
 
       <Spacer y={0.5} />

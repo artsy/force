@@ -94,12 +94,12 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
       <Box mb={2}>
         <Order2PricingBreakdown order={orderData} />
       </Box>
-      <Message variant="default">
+      <Message variant="default" p={1}>
         <Flex>
           <ShieldIcon fill="mono100" />
           <Spacer x={1} />
           <Text variant="xs" color="mono100">
-            Your purchase is protected with Artsy’s Buyer Guarantee.
+            Your purchase is protected with Artsy&rsquo;s Buyer Guarantee.
           </Text>
         </Flex>
       </Message>

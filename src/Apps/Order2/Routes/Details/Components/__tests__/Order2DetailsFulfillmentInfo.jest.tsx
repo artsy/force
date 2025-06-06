@@ -56,7 +56,7 @@ describe("Order2DetailsFulfillmentInfo", () => {
       }),
     })
 
-    expect(screen.getByText("Pick up")).toBeInTheDocument()
+    expect(screen.getByText("Pickup")).toBeInTheDocument()
     expect(screen.getByText("New York, NY, 10011")).toBeInTheDocument()
   })
 

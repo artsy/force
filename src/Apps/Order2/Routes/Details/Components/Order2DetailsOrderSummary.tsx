@@ -92,14 +92,14 @@ export const Order2DetailsOrderSummary: React.FC<
         <Order2PricingBreakdown order={orderData} />
       </Box>
       <Spacer y={4} />
-      <Message variant="default">
+      <Message variant="default" p={1}>
         <Flex>
           <ShieldIcon fill="mono100" />
           <Spacer x={1} />
           <Text variant="xs" color="mono100">
             Your purchase is protected with{" "}
             <RouterLink inline target="_blank" to={BUYER_GUARANTEE_URL}>
-              Artsy’s Buyer Guarantee
+              Artsy&rsquo;s Buyer Guarantee
             </RouterLink>
             .
           </Text>

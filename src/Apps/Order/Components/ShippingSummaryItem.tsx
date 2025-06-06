@@ -32,7 +32,7 @@ const ShippingSummaryItem = ({
   ) : (
     <StepSummaryItem
       title={
-        <>Pick up ({lineItems?.edges?.[0]?.node?.artwork?.shippingOrigin})</>
+        <>Pickup ({lineItems?.edges?.[0]?.node?.artwork?.shippingOrigin})</>
       }
       /* Fixes spacing issues with title when no pickup description copy is present */
       mb={showPickupCopy(state) ? undefined : -1}
