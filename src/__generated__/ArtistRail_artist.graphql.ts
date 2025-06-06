@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9a2b69e4afe7aef353d55a2c1ebcea92>>
+ * @generated SignedSource<<e4799edabf88e0ecde5638316d00315a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistRail_artist$data = {
-  readonly artworksConnection: {
+  readonly filterArtworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
@@ -53,17 +53,22 @@ const node: ReaderFragment = {
           "kind": "Literal",
           "name": "first",
           "value": 10
+        },
+        {
+          "kind": "Literal",
+          "name": "sort",
+          "value": "-decayed_merch"
         }
       ],
-      "concreteType": "ArtworkConnection",
+      "concreteType": "FilterArtworksConnection",
       "kind": "LinkedField",
-      "name": "artworksConnection",
+      "name": "filterArtworksConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "ArtworkEdge",
+          "concreteType": "FilterArtworksEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -95,13 +100,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "artworksConnection(first:10)"
+      "storageKey": "filterArtworksConnection(first:10,sort:\"-decayed_merch\")"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "b65cc544c0dc2494ef6b51408a48f565";
+(node as any).hash = "becb8252736843a838a99b3e5822ad91";
 
 export default node;
