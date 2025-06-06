@@ -412,6 +412,21 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
       return {
         ...state,
         activeFulfillmentDetailsTab: action.payload.activeFulfillmentDetailsTab,
+        steps: state.steps.map(step => {
+          if (step.name === CheckoutStepName.DELIVERY_OPTION) {
+            const shouldHide =
+              action.payload.activeFulfillmentDetailsTab === "PICKUP"
+            return {
+              ...step,
+              state: shouldHide
+                ? CheckoutStepState.HIDDEN
+                : step.state === CheckoutStepState.HIDDEN
+                  ? CheckoutStepState.UPCOMING
+                  : step.state,
+            }
+          }
+          return step
+        }),
       }
     case "SET_EXPRESS_CHECKOUT_LOADED":
       return {
