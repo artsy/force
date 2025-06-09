@@ -1,5 +1,4 @@
 import loadable from "@loadable/component"
-import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import type { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
 
@@ -13,7 +12,6 @@ const ArtistSeriesApp = loadable(
 export const artistSeriesRoutes: RouteProps[] = [
   {
     path: "/artist-series/:slug",
-    serverCacheTTL: serverCacheTTLs.artistSeries,
     getComponent: () => ArtistSeriesApp,
     onPreloadJS: () => {
       ArtistSeriesApp.preload()

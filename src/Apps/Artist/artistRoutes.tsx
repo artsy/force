@@ -1,6 +1,5 @@
 import loadable from "@loadable/component"
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
-import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import type { RouteProps } from "System/Router/Route"
 import { RedirectException } from "found"
@@ -103,7 +102,6 @@ export const artistRoutes: RouteProps[] = [
   {
     path: "/artist/:artistID",
     ignoreScrollBehaviorBetweenChildren: true,
-    serverCacheTTL: serverCacheTTLs.artist,
     getComponent: () => ArtistApp,
     onServerSideRender: enableArtistPageCTA,
     onPreloadJS: () => {
@@ -121,7 +119,6 @@ export const artistRoutes: RouteProps[] = [
     children: [
       {
         path: "",
-        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => WorksForSaleRoute,
         onServerSideRender: redirectWithCanonicalParams,
         onPreloadJS: () => {
@@ -138,7 +135,6 @@ export const artistRoutes: RouteProps[] = [
       },
       {
         path: "auction-results",
-        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => AuctionResultsRoute,
         onPreloadJS: () => {
           AuctionResultsRoute.preload()
@@ -195,7 +191,6 @@ export const artistRoutes: RouteProps[] = [
       },
       {
         path: "about",
-        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => OverviewRoute,
         onServerSideRender: enableArtistPageCTA,
         onPreloadJS: () => {
@@ -213,7 +208,6 @@ export const artistRoutes: RouteProps[] = [
   },
   {
     path: "/artist/:artistID",
-    serverCacheTTL: serverCacheTTLs.artist,
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => ArtistSubApp,
     query: graphql`
@@ -226,7 +220,6 @@ export const artistRoutes: RouteProps[] = [
     children: [
       {
         path: "articles/:artworkId?",
-        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => ArticlesRoute,
         onPreloadJS: () => {
           ArticlesRoute.preload()
@@ -241,7 +234,6 @@ export const artistRoutes: RouteProps[] = [
       },
       {
         path: "cv",
-        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => CVRoute,
         onPreloadJS: () => {
           CVRoute.preload()
@@ -256,7 +248,6 @@ export const artistRoutes: RouteProps[] = [
       },
       {
         path: "series",
-        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => ArtistSeriesRoute,
         onPreloadJS: () => {
           ArtistSeriesRoute.preload()
@@ -271,7 +262,6 @@ export const artistRoutes: RouteProps[] = [
       },
       {
         path: "shows",
-        serverCacheTTL: serverCacheTTLs.artist,
         getComponent: () => ShowsRoute,
         onPreloadJS: () => {
           ShowsRoute.preload()
@@ -298,7 +288,6 @@ export const artistRoutes: RouteProps[] = [
   },
   {
     path: "/auction-result/:auctionResultId",
-    serverCacheTTL: serverCacheTTLs.artist,
     getComponent: () => AuctionResultRoute,
     onServerSideRender: enableArtistPageCTA,
     onPreloadJS: () => {
