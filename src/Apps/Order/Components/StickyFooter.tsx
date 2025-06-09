@@ -80,7 +80,7 @@ export const StickyFooter: FC<React.PropsWithChildren<StickyFooterProps>> = ({
                 textDecoration="underline"
                 onClick={onClickAskSpecialist}
               >
-                <Text variant="xs">ask a question</Text>
+                <Text variant="xs">ask a question.</Text>
               </Clickable>
               .
             </>
