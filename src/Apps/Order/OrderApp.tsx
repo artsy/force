@@ -64,7 +64,10 @@ const OrderApp: FC<React.PropsWithChildren<OrderAppProps>> = props => {
   }, [])
 
   const handleTransition = () => newLocation => {
-    const isToTheSameApp = newLocation?.pathname?.includes("/orders/")
+    // Regex to test for both 'orders' and 'orders2' pages
+    // as we plan to do a staged release where Order and Order2
+    // will exist in parallel in production for some time
+    const isToTheSameApp = /\/orders?2?\//.test(newLocation?.pathname ?? "")
     const isRedirect = newLocation?.action === "PUSH"
 
     if (isToTheSameApp || isRedirect) {
