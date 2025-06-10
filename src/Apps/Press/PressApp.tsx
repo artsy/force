@@ -3,6 +3,7 @@ import { PageHTML } from "Apps/Page/Components/PageHTML"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
 import type { PressApp_page$data } from "__generated__/PressApp_page.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -14,9 +15,13 @@ interface PressAppProps {
 const PressApp: FC<React.PropsWithChildren<PressAppProps>> = ({ page }) => {
   if (!page.content) return null
 
+  const {
+    match: { location },
+  } = useRouter()
+
   return (
     <>
-      <MetaTags title={`${page.name} | Artsy`} />
+      <MetaTags title={`${page.name} | Artsy`} pathname={location.pathname} />
 
       <Spacer y={4} />
 

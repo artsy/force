@@ -107,7 +107,7 @@ export const ShowsCity: React.FC<React.PropsWithChildren<ShowsCityProps>> = ({
 
   return (
     <>
-      <ShowsMeta cityName={city.name} />
+      <ShowsMeta cityName={city.name} pathname={`/shows/${city.slug}`} />
 
       <Spacer y={4} />
 
