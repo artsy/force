@@ -26,7 +26,7 @@ const ArtistRail: FC<React.PropsWithChildren<ArtistRailProps>> = ({
 }) => {
   if (!artist || !artist.name) return null
 
-  const artworks = extractNodes(artist.artworksConnection)
+  const artworks = extractNodes(artist.filterArtworksConnection)
 
   return (
     <>
@@ -77,7 +77,7 @@ export const ArtistRailFragmentContainer = createFragmentContainer(ArtistRail, {
     fragment ArtistRail_artist on Artist {
       ...EntityHeaderArtist_artist
       name
-      artworksConnection(first: 10) {
+      filterArtworksConnection(first: 10, sort: "-decayed_merch") {
         edges {
           node {
             internalID

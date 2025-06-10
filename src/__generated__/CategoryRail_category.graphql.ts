@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c35d9ffe1c097639e093b6fca7965eff>>
+ * @generated SignedSource<<47d2e33d6b384339d5ae95cb9a36d368>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -61,6 +61,11 @@ const node: ReaderFragment = {
           "kind": "Literal",
           "name": "first",
           "value": 10
+        },
+        {
+          "kind": "Literal",
+          "name": "sort",
+          "value": "-decayed_merch"
         }
       ],
       "concreteType": "FilterArtworksConnection",
@@ -103,13 +108,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "filterArtworksConnection(first:10)"
+      "storageKey": "filterArtworksConnection(first:10,sort:\"-decayed_merch\")"
     }
   ],
   "type": "Gene",
   "abstractKey": null
 };
 
-(node as any).hash = "db825c6989cbbbd43370acf8c760f4c7";
+(node as any).hash = "eee9d7605c2388dcceb8091f1558ffff";
 
 export default node;
