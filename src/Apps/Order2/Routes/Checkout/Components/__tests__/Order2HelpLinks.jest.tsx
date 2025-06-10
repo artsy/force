@@ -2,9 +2,18 @@ import { fireEvent, screen } from "@testing-library/dom"
 import { Order2HelpLinks } from "Apps/Order2/Routes/Checkout/Components/Order2HelpLinks"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2DetailsPage_Test_Query } from "__generated__/Order2DetailsPage_Test_Query.graphql"
+import { useTracking } from "react-tracking"
 import { graphql } from "relay-runtime"
 
 jest.unmock("react-relay")
+
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerId: "order-id",
+    contextPageOwnerSlug: "page-owner-slug",
+    contextPageOwnerType: "page-owner-type",
+  })),
+}))
 
 describe("Order2HelpLinks", () => {
   const { renderWithRelay } = setupTestWrapperTL<Order2DetailsPage_Test_Query>({
@@ -13,9 +22,10 @@ describe("Order2HelpLinks", () => {
         order={props.me.order}
         artworkID="artwork-id"
         hideInquiry={jest.fn()}
-        showInquiry={props.showInquiry}
+        showInquiry={props.showInquiry || jest.fn}
         inquiryComponent={<></>}
         isInquiryVisible={false}
+        {...props}
       />
     ),
     query: graphql`
@@ -61,7 +71,51 @@ describe("Order2HelpLinks", () => {
     )
   })
 
-  // TODO: EMI-2494
-  // describe("analytics", () => {
-  // })
+  describe("analytics", () => {
+    const mockTrackEvent = jest.fn()
+
+    beforeAll(() => {
+      ;(useTracking as jest.Mock).mockImplementation(() => ({
+        trackEvent: mockTrackEvent,
+      }))
+    })
+
+    afterEach(() => {
+      mockTrackEvent.mockReset()
+    })
+
+    it("tracks clicks on help link", () => {
+      renderWithRelay({}, { contextModule: "context-module" })
+
+      expect(screen.getByText("Visit our help center")).toBeInTheDocument()
+
+      fireEvent.click(screen.getByText("Visit our help center"))
+
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action: "clickedVisitHelpCenter",
+        context_module: "context-module",
+        context_page_owner_id: "order-id",
+        context_page_owner_type: "page-owner-type",
+        destination_page_owner_slug: "0TO3b000000UessGAC/buy",
+        destination_page_owner_type: "articles",
+        flow: "Buy now",
+      })
+    })
+
+    it("tracks opening the contact specialist modal", () => {
+      renderWithRelay({}, { contextModule: "context-module" })
+
+      expect(screen.getByText("ask a question")).toBeInTheDocument()
+
+      fireEvent.click(screen.getByText("ask a question"))
+
+      expect(mockTrackEvent).toBeCalledWith({
+        action: "clickedAskSpecialist",
+        context_module: "context-module",
+        context_page_owner_id: "order-id",
+        context_page_owner_type: "page-owner-type",
+        flow: "buy now",
+      })
+    })
+  })
 })
