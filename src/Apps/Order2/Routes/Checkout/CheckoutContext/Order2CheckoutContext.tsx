@@ -416,13 +416,21 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
           if (step.name === CheckoutStepName.DELIVERY_OPTION) {
             const shouldHide =
               action.payload.activeFulfillmentDetailsTab === "PICKUP"
-            return {
-              ...step,
-              state: shouldHide
-                ? CheckoutStepState.HIDDEN
-                : step.state === CheckoutStepState.HIDDEN
-                  ? CheckoutStepState.UPCOMING
-                  : step.state,
+            if (shouldHide) {
+              return {
+                ...step,
+                state: CheckoutStepState.HIDDEN,
+              }
+            } else if (step.state === CheckoutStepState.HIDDEN) {
+              return {
+                ...step,
+                state: CheckoutStepState.UPCOMING,
+              }
+            } else {
+              return {
+                ...step,
+                state: step.state,
+              }
             }
           }
           return step
