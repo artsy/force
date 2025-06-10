@@ -73,6 +73,9 @@ export const Order2DetailsOrderSummary: React.FC<
             </Text>
           )}
         </Flex>
+        <Text variant="sm" color="mono60">
+          {artwork?.partner?.name}
+        </Text>
         {orderData.totalListPrice && (
           <Text variant="sm" color="mono60">
             List price: {orderData.totalListPrice.display}
@@ -138,6 +141,9 @@ const FRAGMENT = graphql`
     lineItems {
       artwork {
         slug
+        partner {
+          name
+        }
       }
       artworkVersion {
         title
