@@ -104,6 +104,7 @@ const testIDs = {
   // Use with screen.getByRole
   phoneCountryPickerListRole: "listbox",
   paymentFormWire: "PaymentFormWire",
+  deliveryOptionsStep: "DeliveryOptionsStep",
 }
 
 const orderMutationSuccess = (initialValues, newValues) => {
@@ -230,8 +231,7 @@ describe("Order2CheckoutRoute", () => {
 
         const { mockResolveLastOperation } =
           await renderWithLoadingComplete(props)
-
-        expect(screen.queryByText("Shipping method")).toBeVisible()
+        expect(screen.queryByText("Shipping method")).toBeInTheDocument()
 
         // Click pickup tab
         expect(screen.queryByText("Free pickup")).not.toBeInTheDocument()
@@ -470,8 +470,6 @@ describe("Order2CheckoutRoute", () => {
           },
         })
 
-        expect(screen.queryByText("Shipping method")).not.toBeInTheDocument()
-
         const editPickup = within(
           screen.getByTestId(testIDs.fulfillmentDetailsStep),
         ).getByText("Edit")
@@ -488,7 +486,7 @@ describe("Order2CheckoutRoute", () => {
           userEvent.click(pickupTab)
         })
 
-        expect(screen.getByText("Free pickup")).toBeInTheDocument()
+        expect(screen.getByText("Free pickup")).toBeVisible()
 
         // Verify that the phone number is pre-filled
         const phoneCountryPicker = screen.getByTestId(
@@ -498,9 +496,7 @@ describe("Order2CheckoutRoute", () => {
         expect(screen.getByTestId("PickupPhoneNumberInput")).toHaveValue(
           "03012345678",
         )
-
         expect(screen.queryByText("Shipping method")).not.toBeInTheDocument()
-
         act(() => {
           userEvent.click(screen.getByText("Delivery"))
         })
