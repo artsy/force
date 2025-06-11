@@ -10,11 +10,11 @@ export const Order2DetailsHeader = ({ order }: Order2DetailsHeaderProps) => {
   const orderData = useFragment(FRAGMENT, order)
 
   return (
-    <Box backgroundColor="mono0" p={4}>
+    <Box backgroundColor="mono0" p={[2, 4]}>
       {/* Title */}
-      <Text variant="xl">{orderData.displayTexts.title}</Text>
+      <Text variant={["lg", "xl"]}>{orderData.displayTexts.title}</Text>
       {/* Order # */}
-      <Text variant="sm">Order #{orderData.code} </Text>
+      <Text variant={["xs", "sm"]}>Order #{orderData.code} </Text>
     </Box>
   )
 }

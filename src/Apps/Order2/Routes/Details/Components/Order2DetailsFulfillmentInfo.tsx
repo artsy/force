@@ -21,14 +21,14 @@ export const Order2DetailsFulfillmentInfo: React.FC<
   const isPickup = selectedFulfillmentOption?.type === "PICKUP"
 
   return (
-    <Box p={4} backgroundColor="mono0">
+    <Box p={[2, 4]} backgroundColor="mono0">
       <Text variant="sm" fontWeight="bold" color="mono100">
         {isPickup ? "Pickup" : "Ship to"}
       </Text>
 
       <Spacer y={0.5} />
 
-      <Text variant="sm" color="mono100">
+      <Text variant={["xs", "sm"]} color="mono100">
         {isPickup ? shippingOrigin : getShippingContent(fulfillmentDetails)}
       </Text>
     </Box>

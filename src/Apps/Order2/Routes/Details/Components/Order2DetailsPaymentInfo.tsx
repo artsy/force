@@ -27,7 +27,7 @@ export const Order2DetailsPaymentInfo: React.FC<
   }
 
   return (
-    <Box p={4} backgroundColor="mono0">
+    <Box p={[2, 4]} backgroundColor="mono0">
       <Text variant="sm" fontWeight="bold" color="mono100">
         Payment method
       </Text>
@@ -37,7 +37,7 @@ export const Order2DetailsPaymentInfo: React.FC<
       <Flex alignItems="center">
         <Icon mr={1} width={18} height={18} />
 
-        <Text variant="sm" color="mono100">
+        <Text variant={["xs", "sm"]} color="mono100">
           {text}
         </Text>
       </Flex>
