@@ -12,7 +12,7 @@ export const Order2DetailsMessage = ({ order }: Order2DetailsMessageProps) => {
   const orderData = useFragment(FRAGMENT, order)
 
   return (
-    <Box backgroundColor="mono0" p={2}>
+    <Box backgroundColor="mono0" p={[2, 4]}>
       {getMessageContent(orderData)}
     </Box>
   )
@@ -72,6 +72,7 @@ const getMessageContent = (order): React.ReactNode => {
           <Text variant="sm">
             The gallery will confirm by <b>{formattedStateExpireTime}</b>.
           </Text>
+          <Spacer y={2} />
           <Text variant="sm">
             You can contact the gallery with any questions about your order.
           </Text>
@@ -89,6 +90,7 @@ const getMessageContent = (order): React.ReactNode => {
           <Text variant="sm">
             The gallery will confirm by <b>{formattedStateExpireTime}</b>.
           </Text>
+          <Spacer y={2} />
           <Text variant="sm">
             You can contact the gallery with any questions about your order.
           </Text>
@@ -158,6 +160,7 @@ const getMessageContent = (order): React.ReactNode => {
             Thank you for your purchase. A specialist will contact you within 2
             business days to coordinate pickup.
           </Text>
+          <Spacer y={2} />
           <Text variant="sm">
             You can contact the gallery with any questions about your order.
           </Text>
