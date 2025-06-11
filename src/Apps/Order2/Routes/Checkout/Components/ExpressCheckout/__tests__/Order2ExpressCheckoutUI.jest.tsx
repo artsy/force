@@ -29,12 +29,12 @@ let shippingRateId = "DOMESTIC_FLAT"
 const mockRedirectToOrderDetails = jest.fn()
 const mockSetExpressCheckoutLoaded = jest.fn()
 const mockSetShowOrderSubmittingSpinner = jest.fn()
-const mockSetStandardCheckoutEngaged = jest.fn()
+const mockSetCheckoutMode = jest.fn()
 const mockCheckoutContext: DeepPartial<Order2CheckoutContextValue> = {
   setExpressCheckoutLoaded: mockSetExpressCheckoutLoaded,
   setExpressCheckoutSubmitting: mockSetShowOrderSubmittingSpinner,
   redirectToOrderDetails: mockRedirectToOrderDetails,
-  setStandardCheckoutEngaged: mockSetStandardCheckoutEngaged,
+  setCheckoutMode: mockSetCheckoutMode,
 }
 
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({

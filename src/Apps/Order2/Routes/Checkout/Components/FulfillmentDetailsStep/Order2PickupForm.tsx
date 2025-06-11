@@ -35,7 +35,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
 }) => {
   const orderData = useFragment(FRAGMENT, order)
 
-  const { setFulfillmentDetailsComplete, setStandardCheckoutEngaged } =
+  const { setFulfillmentDetailsComplete, setCheckoutMode } =
     useCheckoutContext()
 
   const fulfillmentOptions = orderData?.fulfillmentOptions
@@ -182,7 +182,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
                 width="100%"
                 type="submit"
                 onClick={() => {
-                  setStandardCheckoutEngaged(true)
+                  setCheckoutMode("standard")
                   formikContext.handleSubmit()
                 }}
                 loading={formikContext.isSubmitting}

@@ -17,7 +17,7 @@ const validationSchema = yup
   .shape(addressFormFieldsValidator({ withPhoneNumber: true }))
 
 export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = () => {
-  const { setStandardCheckoutEngaged } = useCheckoutContext()
+  const { setCheckoutMode } = useCheckoutContext()
 
   // Placeholders
   const initialValues = {
@@ -55,7 +55,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = () => {
             <Button
               type="submit"
               onClick={() => {
-                setStandardCheckoutEngaged(true)
+                setCheckoutMode("standard")
                 formikContext.handleSubmit()
               }}
             >
