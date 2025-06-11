@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<43c92b67cd3b588dc2e2a94c5d6056fb>>
+ * @generated SignedSource<<dd27773fc171aa41810ec604f8eac7b0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -1312,6 +1312,7 @@ return {
             "DIMENSION_RANGE",
             "FOLLOWED_ARTISTS",
             "GALLERY",
+            "IMPORT_SOURCE",
             "INSTITUTION",
             "LOCATION_CITY",
             "MAJOR_PERIOD",
