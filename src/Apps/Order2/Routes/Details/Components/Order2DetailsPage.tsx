@@ -1,6 +1,7 @@
+import { ContextModule } from "@artsy/cohesion"
 import { Box, Column, GridColumns, Spacer } from "@artsy/palette"
-import { Order2DetailsFulfillmentInfo } from "Apps/Order2/Routes/Details/Components/Order2DetailsFulfillmentInfo"
 import { Order2HelpLinksWithInquiry } from "Apps/Order2/Routes/Checkout/Components/Order2HelpLinks"
+import { Order2DetailsFulfillmentInfo } from "Apps/Order2/Routes/Details/Components/Order2DetailsFulfillmentInfo"
 import { Order2DetailsOrderSummary } from "Apps/Order2/Routes/Details/Components/Order2DetailsOrderSummary"
 import { Order2DetailsPaymentInfo } from "Apps/Order2/Routes/Details/Components/Order2DetailsPaymentInfo"
 import type { Order2DetailsPage_order$key } from "__generated__/Order2DetailsPage_order.graphql"
@@ -46,6 +47,7 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
             <Order2HelpLinksWithInquiry
               order={orderData}
               artworkID={artworkSlug as string}
+              contextModule={ContextModule.ordersDetail}
             />
             <Spacer y={[4, 0]} />
           </Box>
@@ -61,6 +63,7 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
         <Order2HelpLinksWithInquiry
           order={orderData}
           artworkID={artworkSlug as string}
+          contextModule={ContextModule.ordersDetail}
         />
       </Column>
     </GridColumns>

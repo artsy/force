@@ -1,18 +1,13 @@
 import {
   Box,
   Column,
-  Flex,
   GridColumns,
   Separator,
   Spacer,
   Stack,
-  Text,
 } from "@artsy/palette"
 import { SubmittingOrderSpinner } from "Apps/Order/Components/SubmittingOrderSpinner"
-import {
-  CheckoutStepName,
-  CheckoutStepState,
-} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { Order2DeliveryOptionsStep } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/Order2DeliveryOptionsStep"
 import { Order2ExpressCheckout } from "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckout"
 import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
 import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutLoadingSkeleton"
@@ -40,13 +35,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   const order = data.me?.order ?? null
   const artworkSlug = order?.lineItems[0]?.artwork?.slug
 
-  const {
-    isLoading,
-    steps,
-    activeFulfillmentDetailsTab,
-    setExpressCheckoutLoaded,
-    expressCheckoutSubmitting,
-  } = useCheckoutContext()
+  const { isLoading, setExpressCheckoutLoaded, expressCheckoutSubmitting } =
+    useCheckoutContext()
   if (!order) {
     return <ErrorPage code={404} message="Order not found" />
   }
@@ -61,14 +51,6 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
       setExpressCheckoutLoaded([])
     }
   }, [])
-
-  const deliveryStepState = steps.find(
-    step => step.name === CheckoutStepName.DELIVERY_OPTION,
-  )?.state
-
-  const showDeliveryOptionStep =
-    deliveryStepState !== CheckoutStepState.HIDDEN ||
-    activeFulfillmentDetailsTab === "DELIVERY"
 
   return (
     <>
@@ -101,24 +83,11 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
               <Box display={["block", "block", "none"]}>
                 <Order2CollapsibleOrderSummary order={order} />
               </Box>
-
               {isExpressCheckoutEligible && (
                 <Order2ExpressCheckout order={order} />
               )}
-
               <Order2FulfillmentDetailsStep order={order} />
-
-              {showDeliveryOptionStep && (
-                <Flex flexDirection="column" backgroundColor="mono0" p={2}>
-                  <Text variant="sm-display" fontWeight="bold" color="mono100">
-                    Shipping method
-                  </Text>
-                  <Text variant={["xs", "xs", "sm"]} color="mono60">
-                    Options vary based on address and artwork size
-                  </Text>
-                </Flex>
-              )}
-
+              <Order2DeliveryOptionsStep />
               <Order2PaymentStep order={order} />
             </Stack>
             <Box display={["block", "block", "none"]}>
@@ -127,6 +96,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
               <Order2HelpLinksWithInquiry
                 order={order}
                 artworkID={artworkSlug as string}
+                // @ts-expect-error TODO: update when we have checkout context menu
+                contextModule=""
               />
             </Box>
           </Box>
@@ -143,6 +114,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
             <Order2HelpLinksWithInquiry
               order={order}
               artworkID={artworkSlug as string}
+              // @ts-expect-error TODO: update when we have checkout context menu
+              contextModule=""
             />
           </Box>
         </Column>

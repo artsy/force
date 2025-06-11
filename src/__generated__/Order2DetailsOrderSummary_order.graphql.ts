@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9e3861df626960868af9a6c243938b9b>>
+ * @generated SignedSource<<39c15a496d5a23e837b326bd44d84a3f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,9 @@ export type Order2DetailsOrderSummary_order$data = {
   } | null | undefined;
   readonly lineItems: ReadonlyArray<{
     readonly artwork: {
+      readonly partner: {
+        readonly name: string | null | undefined;
+      } | null | undefined;
       readonly slug: string;
     } | null | undefined;
     readonly artworkVersion: {
@@ -146,6 +149,24 @@ return {
               "args": null,
               "kind": "ScalarField",
               "name": "slug",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Partner",
+              "kind": "LinkedField",
+              "name": "partner",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "name",
+                  "storageKey": null
+                }
+              ],
               "storageKey": null
             }
           ],
@@ -289,6 +310,6 @@ return {
 };
 })();
 
-(node as any).hash = "2b0b08ac5820f77de1b90ce7b3fcb334";
+(node as any).hash = "40d966d36b85875e4bc3f6857198b208";
 
 export default node;

@@ -412,6 +412,29 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
       return {
         ...state,
         activeFulfillmentDetailsTab: action.payload.activeFulfillmentDetailsTab,
+        steps: state.steps.map(step => {
+          if (step.name === CheckoutStepName.DELIVERY_OPTION) {
+            const shouldHide =
+              action.payload.activeFulfillmentDetailsTab === "PICKUP"
+            if (shouldHide) {
+              return {
+                ...step,
+                state: CheckoutStepState.HIDDEN,
+              }
+            } else if (step.state === CheckoutStepState.HIDDEN) {
+              return {
+                ...step,
+                state: CheckoutStepState.UPCOMING,
+              }
+            } else {
+              return {
+                ...step,
+                state: step.state,
+              }
+            }
+          }
+          return step
+        }),
       }
     case "SET_EXPRESS_CHECKOUT_LOADED":
       return {
@@ -465,42 +488,29 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
 
     case "FULFILLMENT_DETAILS_COMPLETE":
       const { isPickup } = action.payload
-      // Update steps to mark FULFILLMENT_DETAILS as completed and remove DELIVERY_OPTION if isPickup
+      let hasActivatedNext = false
+
       return {
         ...state,
-        steps: state.steps.reduce((acc, current) => {
-          const isThisStep =
-            current.name === CheckoutStepName.FULFILLMENT_DETAILS
-          if (isThisStep) {
-            return [
-              ...acc,
-              {
-                ...current,
-                state: CheckoutStepState.COMPLETED,
-              },
-            ]
-          }
-          if (current.name === CheckoutStepName.DELIVERY_OPTION) {
-            if (isPickup) {
-              return [...acc, { ...current, state: CheckoutStepState.HIDDEN }]
-            }
+        steps: state.steps.map(step => {
+          // Mark fulfillment details as completed
+          if (step.name === CheckoutStepName.FULFILLMENT_DETAILS) {
+            return { ...step, state: CheckoutStepState.COMPLETED }
           }
 
-          const firstStepAfterCompleted =
-            acc.find(step => step.state === CheckoutStepState.COMPLETED) &&
-            !acc.find(step => step.state === CheckoutStepState.UPCOMING)
-
-          if (firstStepAfterCompleted) {
-            return [
-              ...acc,
-              {
-                ...current,
-                state: CheckoutStepState.ACTIVE,
-              },
-            ]
+          // Hide delivery option if pickup is selected
+          if (step.name === CheckoutStepName.DELIVERY_OPTION && isPickup) {
+            return { ...step, state: CheckoutStepState.HIDDEN }
           }
-          return [...acc, current]
-        }, [] as CheckoutStep[]),
+
+          // Activate the first upcoming step
+          if (!hasActivatedNext && step.state === CheckoutStepState.UPCOMING) {
+            hasActivatedNext = true
+            return { ...step, state: CheckoutStepState.ACTIVE }
+          }
+
+          return step
+        }),
       }
     case "EDIT_PAYMENT":
       return {

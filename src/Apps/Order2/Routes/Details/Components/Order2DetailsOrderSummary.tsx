@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import ShieldIcon from "@artsy/icons/ShieldIcon"
 import {
   Box,
@@ -9,6 +10,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
+import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2DetailsOrderSummary_order$key } from "__generated__/Order2DetailsOrderSummary_order.graphql"
 import type * as React from "react"
@@ -24,6 +26,7 @@ const BUYER_GUARANTEE_URL =
 export const Order2DetailsOrderSummary: React.FC<
   Order2DetailsOrderSummaryProps
 > = ({ order }) => {
+  const tracking = useOrder2Tracking()
   const orderData = useFragment(FRAGMENT, order)
 
   const artwork = orderData.lineItems[0]?.artwork
@@ -70,6 +73,9 @@ export const Order2DetailsOrderSummary: React.FC<
             </Text>
           )}
         </Flex>
+        <Text variant="sm" color="mono60">
+          {artwork?.partner?.name}
+        </Text>
         {orderData.totalListPrice && (
           <Text variant="sm" color="mono60">
             List price: {orderData.totalListPrice.display}
@@ -98,7 +104,14 @@ export const Order2DetailsOrderSummary: React.FC<
           <Spacer x={1} />
           <Text variant="xs" color="mono100">
             Your purchase is protected with{" "}
-            <RouterLink inline target="_blank" to={BUYER_GUARANTEE_URL}>
+            <RouterLink
+              onClick={() =>
+                tracking.clickedBuyerProtection(ContextModule.ordersDetail)
+              }
+              inline
+              target="_blank"
+              to={BUYER_GUARANTEE_URL}
+            >
               Artsy&rsquo;s Buyer Guarantee
             </RouterLink>
             .
@@ -128,6 +141,9 @@ const FRAGMENT = graphql`
     lineItems {
       artwork {
         slug
+        partner {
+          name
+        }
       }
       artworkVersion {
         title

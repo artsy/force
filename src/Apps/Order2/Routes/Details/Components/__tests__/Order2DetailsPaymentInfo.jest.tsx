@@ -56,11 +56,11 @@ describe("Order2DetailsPaymentInfo", () => {
     renderWithRelay({
       Order: () => ({
         creditCardWalletType: null,
-        paymentMethodDetails: { __typename: "BankAccount" },
+        paymentMethodDetails: { __typename: "BankAccount", last4: 2468 },
       }),
     })
 
-    expect(screen.getByText("Bank transfer")).toBeInTheDocument()
+    expect(screen.getByText("Bank transfer •••• 2468")).toBeInTheDocument()
   })
 
   it("renders wire transfer order payment details", () => {
