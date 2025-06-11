@@ -34,7 +34,7 @@ export const Order2DetailsOrderSummary: React.FC<
   const artworkImage = artworkVersion?.image?.resized
 
   return (
-    <Box backgroundColor="mono0" p={2}>
+    <Box backgroundColor="mono0" p={4}>
       {artworkImage?.url && artworkImage.width && artworkImage.height && (
         <Flex alignItems="center" width="100%" flexDirection="column" p={1}>
           <ResponsiveBox
