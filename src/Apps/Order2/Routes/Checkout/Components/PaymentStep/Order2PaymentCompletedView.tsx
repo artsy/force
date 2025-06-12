@@ -15,7 +15,7 @@ export const Order2PaymentCompletedView: React.FC<
         <Flex alignItems="center">
           <CheckmarkIcon fill="mono100" />
           <Spacer x={1} />
-          <Text variant="sm-display" fontWeight="bold" color="mono100">
+          <Text variant="md" fontWeight="400" color="mono100">
             Payment
           </Text>
         </Flex>
@@ -25,7 +25,9 @@ export const Order2PaymentCompletedView: React.FC<
           type="button"
           onClick={onClickEdit}
         >
-          Edit
+          <Text variant="xs" fontWeight="400" color="mono100">
+            Edit
+          </Text>
         </Clickable>
       </Flex>
       <Flex alignItems="center" ml="30px" mt={1}>

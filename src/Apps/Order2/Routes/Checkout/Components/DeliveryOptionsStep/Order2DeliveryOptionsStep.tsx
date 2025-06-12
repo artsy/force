@@ -22,13 +22,13 @@ export const Order2DeliveryOptionsStep: React.FC<
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
-      <Box p={2} data-testid="DeliveryOptionsStep">
+      <Box py={2} px={4} data-testid="DeliveryOptionsStep">
         <Flex flexDirection="column">
-          <Text variant="sm-display" fontWeight="bold" color="mono100">
+          <Text variant="md" fontWeight="400" color="mono100">
             Shipping method
           </Text>
           <Text variant={["xs", "xs", "sm"]} color="mono60">
-            Options vary based on address and artwork size
+            Methods vary based on location and artwork size
           </Text>
         </Flex>
       </Box>
