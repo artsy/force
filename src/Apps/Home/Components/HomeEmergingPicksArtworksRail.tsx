@@ -37,7 +37,7 @@ export const HomeEmergingPicksArtworksRail: React.FC<
   return (
     <Rail
       title="Curators’ Picks"
-      subTitle="The best works on Artsy, all available now."
+      subTitle="Fresh, standout works handpicked by our chief curator."
       viewAllLabel="View All Works"
       viewAllHref="/collection/curators-picks-emerging"
       viewAllOnClick={() => {

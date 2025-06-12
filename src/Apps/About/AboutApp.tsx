@@ -38,7 +38,7 @@ export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
       />
 
       <FullBleedHeader
-        src="https://files.artsy.net/images/00_CVP_About_Hero%20(1).png"
+        src="https://files.artsy.net/images/00_CVP_About_Hero-1.png"
         caption="Detail of Cassi Namoda, A Strange Song, 2022. Detail of Alex Katz,
             Day Lily 1, 1969."
       >
@@ -394,7 +394,7 @@ const SECTION_DATA: SectionProps[] = [
       "Follow artists for updates on their latest works and career milestones.",
     caption: "Amy Beager, Pixie Dust, 2022.",
     href: "/artists",
-    imageUrl: "https://files.artsy.net/images/08_CVP_About_Follow (2).png",
+    imageUrl: "https://files.artsy.net/images/08_CVP_About_Follow-2.png",
   },
 ]
 
