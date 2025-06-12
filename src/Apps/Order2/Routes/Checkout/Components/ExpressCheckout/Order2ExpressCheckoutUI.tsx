@@ -28,6 +28,7 @@ import {
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { preventHardReload } from "Apps/Order/OrderApp"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { RouterLink } from "System/Components/RouterLink"
@@ -45,7 +46,7 @@ import type {
   useUpdateOrderMutation$data,
 } from "__generated__/useUpdateOrderMutation.graphql"
 import type React from "react"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2ExpressCheckoutUIProps {
@@ -78,6 +79,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
+  const [error, setError] = useState<object | null>(null)
 
   // TODO: integrate with new checkout tracking if necessary
   const orderTracking = useCheckoutTracking()
@@ -89,7 +91,20 @@ export const Order2ExpressCheckoutUI: React.FC<
     redirectToOrderDetails,
     setExpressCheckoutSubmitting,
     expressCheckoutSubmitting,
+    checkoutMode,
+    setCheckoutMode,
   } = useCheckoutContext()
+
+  useEffect(() => {
+    const storedError = sessionStorage.getItem("expressCheckoutError")
+
+    const errorDetails = storedError ? JSON.parse(storedError) : null
+
+    if (errorDetails) {
+      setError(errorDetails)
+      sessionStorage.removeItem("expressCheckoutError")
+    }
+  }, [])
 
   if (!(stripe && elements)) {
     return null
@@ -158,6 +173,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     expressPaymentType,
     resolve,
   }: StripeExpressCheckoutElementClickEvent) => {
+    setCheckoutMode("express")
     setExpressCheckoutType(expressPaymentType)
 
     orderTracking.clickedExpressCheckout({
@@ -207,13 +223,12 @@ export const Order2ExpressCheckoutUI: React.FC<
         flow: "Express checkout",
       })
 
-      // TODO: Implement order error handling
-      // sessionStorage.setItem(
-      //   "expressCheckoutError",
-      //   JSON.stringify({
-      //     title: "An error occurred",
-      //   }),
-      // )
+      sessionStorage.setItem(
+        "expressCheckoutError",
+        JSON.stringify({
+          title: "An error occurred",
+        }),
+      )
 
       errorRef.current = null
     }
@@ -457,7 +472,6 @@ export const Order2ExpressCheckoutUI: React.FC<
       redirectToOrderDetails()
       return
     } catch (error) {
-      console.log("Error confirming payment", error)
       logger.error("Error confirming payment", error)
       errorRef.current = error.code || "unknown_error"
 
@@ -469,13 +483,12 @@ export const Order2ExpressCheckoutUI: React.FC<
         flow: "Express checkout",
       })
 
-      // TODO: Implement order error handling
-      // sessionStorage.setItem(
-      //   "expressCheckoutError",
-      //   JSON.stringify({
-      //     title: "Payment failed",
-      //   }),
-      // )
+      sessionStorage.setItem(
+        "expressCheckoutError",
+        JSON.stringify({
+          title: "Payment failed",
+        }),
+      )
 
       resetOrder()
     }
@@ -504,6 +517,12 @@ export const Order2ExpressCheckoutUI: React.FC<
     <Box>
       <Text variant="sm-display">Express checkout</Text>
       <Spacer y={1} />
+      {error && checkoutMode === "express" && (
+        <>
+          <CheckoutErrorBanner error={error} />
+          <Spacer y={1} />
+        </>
+      )}
       <Box minWidth="240px" maxWidth="100%" paddingX="1px">
         <ExpressCheckoutElement
           options={expressCheckoutOptions}

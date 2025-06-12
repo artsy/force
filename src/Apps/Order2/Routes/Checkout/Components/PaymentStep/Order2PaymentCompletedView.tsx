@@ -10,7 +10,7 @@ export const Order2PaymentCompletedView: React.FC<
   Order2PaymentCompletedViewProps
 > = ({ confirmationToken, onClickEdit }) => {
   return (
-    <Flex flexDirection="column" backgroundColor="mono0" p={2}>
+    <Flex flexDirection="column" backgroundColor="mono0">
       <Flex justifyContent="space-between">
         <Flex alignItems="center">
           <CheckmarkIcon fill="mono100" />

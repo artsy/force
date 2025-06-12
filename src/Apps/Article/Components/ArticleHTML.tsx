@@ -81,7 +81,6 @@ export const ArticleHTML: FC<React.PropsWithChildren<ArticleHTMLProps>> = ({
         </ArticleTooltip>
       )
     } catch {
-      // If we can't parse the URL, just return the node un-transformed.
       return
     }
   }
@@ -102,14 +101,31 @@ export const ArticleHTML: FC<React.PropsWithChildren<ArticleHTMLProps>> = ({
   return <Container dangerouslySetInnerHTML={{ __html: children }} {...rest} />
 }
 
-export const hasAdjacentEntityLinks = (heading: Element | null): boolean => {
+export const hasConflictingAdjacentEntityLinks = (
+  heading: Element | null,
+  originalEntity: string,
+): boolean => {
   if (!heading) return false
 
   let sibling = heading.nextElementSibling
   while (sibling && sibling.tagName === "H3") {
-    if (sibling.querySelector("a[href*='/artist/'], a[href*='/partner/']")) {
-      return true
+    const entityLinks = sibling.querySelectorAll(
+      "a[href*='/artist/'], a[href*='/partner/']",
+    )
+
+    for (const link of Array.from(entityLinks)) {
+      const href = (link as HTMLAnchorElement).href
+      const isArtist = href.includes("/artist/")
+      const isPartner = href.includes("/partner/")
+
+      if (
+        (originalEntity === "artist" && isArtist) ||
+        (originalEntity === "partner" && isPartner)
+      ) {
+        return true
+      }
     }
+
     sibling = sibling.nextElementSibling
   }
 
@@ -121,17 +137,17 @@ export const isEligibleFollowHeading = (
   entity: string,
 ): boolean => {
   if (!heading || heading.tagName !== "H2") return false
-  if (hasAdjacentEntityLinks(heading)) return false
+  if (hasConflictingAdjacentEntityLinks(heading, entity)) return false
 
-  let expectedPrefix: string | null = null
+  const hasComma = Array.from(heading.childNodes).some(node => {
+    return node.nodeType === Node.TEXT_NODE && node.textContent?.includes(",")
+  })
+  if (hasComma) return false
 
-  if (entity === "artist") {
-    expectedPrefix = "https://www.artsy.net/artist/"
-  } else if (entity === "partner") {
-    expectedPrefix = "https://www.artsy.net/partner/"
-  } else {
-    return false
-  }
+  const expectedPrefix =
+    entity === "artist"
+      ? "https://www.artsy.net/artist/"
+      : "https://www.artsy.net/partner/"
 
   const links = heading.querySelectorAll(`a[href^='${expectedPrefix}']`)
   return links.length === 1

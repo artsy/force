@@ -37,26 +37,21 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
         </Flex>
       </Box>
 
-      {/* This is used instead of hidden just to force a clean payment element on edit */}
-      {stepState === CheckoutStepState.COMPLETED && (
-        <Box>
-          <Order2PaymentCompletedView
-            confirmationToken={confirmationToken}
-            onClickEdit={() => editPayment()}
-          />
-        </Box>
-      )}
+      <Box p={2} hidden={stepState !== CheckoutStepState.COMPLETED}>
+        <Order2PaymentCompletedView
+          confirmationToken={confirmationToken}
+          onClickEdit={() => editPayment()}
+        />
+      </Box>
 
-      {stepState === CheckoutStepState.ACTIVE && (
-        <Box p={2}>
-          <Flex flexDirection="column">
-            <Text variant="sm-display" fontWeight="bold" color="mono100">
-              Payment
-            </Text>
-            <Order2PaymentForm order={orderData} />
-          </Flex>
-        </Box>
-      )}
+      <Box p={2} hidden={stepState !== CheckoutStepState.ACTIVE}>
+        <Flex flexDirection="column">
+          <Text variant="sm-display" fontWeight="bold" color="mono100">
+            Payment
+          </Text>
+          <Order2PaymentForm order={orderData} />
+        </Flex>
+      </Box>
     </Flex>
   )
 }

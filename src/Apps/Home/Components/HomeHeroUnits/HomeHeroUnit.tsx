@@ -32,10 +32,12 @@ export interface HomeHeroUnitBaseProps {
     desktop: {
       text: string
       url: string
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
     }
     mobile: {
       text: string
       url: string
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
     }
   }
   index: number
@@ -55,8 +57,9 @@ const HomeHeroUnitBaseSmall: React.FC<HomeHeroUnitBaseProps> = ({
 
   const { trackEvent } = useTracking()
 
-  const handleClick = () => {
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     onClick?.()
+    link.mobile.onClick?.(event)
 
     const payload: ClickedHeroUnitGroup = {
       action: ActionType.clickedHeroUnitGroup,
@@ -141,8 +144,9 @@ const HomeHeroUnitBaseLarge: React.FC<HomeHeroUnitBaseProps> = ({
 
   const { trackEvent } = useTracking()
 
-  const handleClick = () => {
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     onClick?.()
+    link.desktop.onClick?.(event)
 
     const payload: ClickedHeroUnitGroup = {
       action: ActionType.clickedHeroUnitGroup,
