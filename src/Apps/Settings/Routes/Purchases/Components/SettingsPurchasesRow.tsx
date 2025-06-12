@@ -211,7 +211,7 @@ const SettingsPurchasesRow: FC<
   // TODO: figure out how to move it to the server
   let buyerDisplayState: BuyerDisplayStateEnum = order.displayState
   if (
-    buyerDisplayState == "SUBMITTED" &&
+    buyerDisplayState === "SUBMITTED" &&
     !!buyerAction &&
     [
       "OFFER_RECEIVED",
