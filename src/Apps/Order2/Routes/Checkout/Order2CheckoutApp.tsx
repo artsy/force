@@ -78,7 +78,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
             maxWidth={"754px"}
             width="100%"
             minHeight="100vh"
-            justifySelf={["center", "center", "end"]}
+            mx={["auto", "auto", "auto"]}
+            mr={[0, 0, 0]}
           >
             <Stack gap={1}>
               <Box display={["block", "block", "none"]}>
