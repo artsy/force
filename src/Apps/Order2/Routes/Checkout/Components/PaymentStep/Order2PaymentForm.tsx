@@ -1,14 +1,6 @@
 import LockIcon from "@artsy/icons/LockIcon"
 import ReceiptIcon from "@artsy/icons/ReceiptIcon"
-import {
-  Box,
-  Button,
-  Flex,
-
-  Spacer,
-  Text,
-  useTheme,
-} from "@artsy/palette"
+import { Box, Button, Flex, Spacer, Text, useTheme } from "@artsy/palette"
 import {
   Elements,
   PaymentElement,
@@ -273,9 +265,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
       {errorMessage && selectedPaymentMethod !== "stripe" && (
         <>
           <Spacer y={2} />
-          <Message variant="error" title="An error occurred">
-            {errorMessage}
-          </Message>
+          <CheckoutErrorBanner error={{ message: errorMessage }} />
           <Spacer y={2} />
         </>
       )}
@@ -357,14 +347,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
           </Collapse>
         </Box>
       </FadeInBox>
-      <Spacer y={2} />
-      {/* Stripe error messages are displayed within the Payment Element, so we don't need to handle them here. */}
-      {errorMessage && selectedPaymentMethod !== "stripe" && (
-        <>
-          <CheckoutErrorBanner error={{ message: errorMessage }} />
-          <Spacer y={4} />
-        </>
-      )}
+      <Spacer y={4} />
       <Button
         loading={isSubmittingToStripe}
         variant="primaryBlack"
