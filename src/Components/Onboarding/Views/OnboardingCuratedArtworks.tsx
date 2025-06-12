@@ -7,9 +7,7 @@ export const OnboardingCuratedArtworks: FC<
   return (
     <OnboardingMarketingCollectionQueryRenderer
       slug="curators-picks-emerging"
-      description={
-        <>The best works by rising talents on Artsy, all available now.</>
-      }
+      description={<>Fresh, standout works handpicked by our chief curator.</>}
     />
   )
 }
