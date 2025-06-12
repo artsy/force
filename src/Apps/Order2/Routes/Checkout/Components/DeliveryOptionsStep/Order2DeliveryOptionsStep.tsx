@@ -22,7 +22,7 @@ export const Order2DeliveryOptionsStep: React.FC<
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
-      <Box py={2} px={4} data-testid="DeliveryOptionsStep">
+      <Box py={2} px={[2, 4]} data-testid="DeliveryOptionsStep">
         <Flex flexDirection="column">
           <Text variant="md" fontWeight="400" color="mono100">
             Shipping method

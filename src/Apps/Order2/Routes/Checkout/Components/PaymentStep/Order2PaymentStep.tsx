@@ -26,7 +26,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
-      <Box py={2} px={4} hidden={stepState !== CheckoutStepState.UPCOMING}>
+      <Box py={2} px={[2, 4]} hidden={stepState !== CheckoutStepState.UPCOMING}>
         <Flex flexDirection="column">
           <Text variant="md" fontWeight="400" color="mono100">
             Payment
@@ -37,14 +37,18 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
         </Flex>
       </Box>
 
-      <Box py={2} px={4} hidden={stepState !== CheckoutStepState.COMPLETED}>
+      <Box
+        py={2}
+        px={[2, 4]}
+        hidden={stepState !== CheckoutStepState.COMPLETED}
+      >
         <Order2PaymentCompletedView
           confirmationToken={confirmationToken}
           onClickEdit={() => editPayment()}
         />
       </Box>
 
-      <Box py={2} px={4} hidden={stepState !== CheckoutStepState.ACTIVE}>
+      <Box py={2} px={[2, 4]} hidden={stepState !== CheckoutStepState.ACTIVE}>
         <Flex flexDirection="column">
           <Text variant="md" fontWeight="400" color="mono100">
             Payment

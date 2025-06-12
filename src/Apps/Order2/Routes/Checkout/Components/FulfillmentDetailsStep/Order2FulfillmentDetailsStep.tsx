@@ -46,7 +46,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
       backgroundColor="mono0"
       py={2}
     >
-      <Box px={4} hidden={stepState !== CheckoutStepState.COMPLETED}>
+      <Box px={[2, 4]} hidden={stepState !== CheckoutStepState.COMPLETED}>
         <Order2FulfillmentDetailsCompletedView
           fulfillmentDetails={savedFulfillmentDetails}
           onClickEdit={() => editFulfillmentDetails()}
@@ -70,18 +70,18 @@ export const Order2FulfillmentDetailsStep: React.FC<
             }}
           >
             <Tab name={<Text variant="sm-display">Delivery</Text>}>
-              <Box px={4}>
+              <Box px={[2, 4]}>
                 <Order2DeliveryForm order={orderData} />
               </Box>
             </Tab>
             <Tab name={<Text variant="sm-display">Pickup</Text>}>
-              <Box px={4}>
+              <Box px={[2, 4]}>
                 <Order2PickupForm order={orderData} />
               </Box>
             </Tab>
           </Tabs>
         ) : (
-          <Box px={4} hidden={stepState !== CheckoutStepState.ACTIVE}>
+          <Box px={[2, 4]} hidden={stepState !== CheckoutStepState.ACTIVE}>
             <Order2DeliveryForm order={orderData} />
           </Box>
         )}
