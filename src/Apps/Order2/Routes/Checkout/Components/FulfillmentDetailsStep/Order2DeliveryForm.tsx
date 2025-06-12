@@ -1,4 +1,5 @@
 import { Button, Flex, Spacer, Text } from "@artsy/palette"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import {
   AddressFormFields,
   addressFormFieldsValidator,
@@ -16,6 +17,8 @@ const validationSchema = yup
   .shape(addressFormFieldsValidator({ withPhoneNumber: true }))
 
 export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = () => {
+  const { setCheckoutMode } = useCheckoutContext()
+
   // Placeholders
   const initialValues = {
     address: {
@@ -49,7 +52,13 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = () => {
           <Flex flexDirection={"column"} mb={2}>
             <AddressFormFields withPhoneNumber />
             <Spacer y={4} />
-            <Button type="submit" onClick={() => formikContext.handleSubmit()}>
+            <Button
+              type="submit"
+              onClick={() => {
+                setCheckoutMode("standard")
+                formikContext.handleSubmit()
+              }}
+            >
               See Shipping Methods
             </Button>
           </Flex>

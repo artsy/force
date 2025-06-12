@@ -28,6 +28,7 @@ import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2CheckoutContext.tsx")
 const MINIMUM_LOADING_MS = 1000
+const CHECKOUT_MODE_STORAGE_KEY = "checkout_mode"
 
 interface CheckoutState {
   isLoading: boolean
@@ -38,6 +39,7 @@ interface CheckoutState {
   steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
   confirmationToken: any
+  checkoutMode: CheckoutMode
 }
 
 interface CheckoutActions {
@@ -55,9 +57,11 @@ interface CheckoutActions {
   setLoadingComplete: () => void
   setConfirmationToken: (args: { confirmationToken: any }) => void
   redirectToOrderDetails: () => void
+  setCheckoutMode: (mode: CheckoutMode) => void
 }
 
 export type Order2CheckoutContextValue = CheckoutState & CheckoutActions
+type CheckoutMode = "standard" | "express"
 
 export const Order2CheckoutContext =
   createContext<Order2CheckoutContextValue | null>(null)
@@ -224,6 +228,15 @@ const useBuildCheckoutContext = (
     dispatch({ type: "LOADING_COMPLETE" })
   }, [])
 
+  const setCheckoutMode = useCallback((mode: CheckoutMode) => {
+    setStorageValue(CHECKOUT_MODE_STORAGE_KEY, mode)
+
+    dispatch({
+      type: "SET_CHECKOUT_MODE",
+      payload: { mode },
+    })
+  }, [])
+
   const currentStepName = state.steps.find(
     step => step.state === CheckoutStepState.ACTIVE,
   )?.name
@@ -303,6 +316,7 @@ const useBuildCheckoutContext = (
       setLoadingComplete,
       setConfirmationToken,
       redirectToOrderDetails,
+      setCheckoutMode,
     }
   }, [
     editFulfillmentDetails,
@@ -315,6 +329,7 @@ const useBuildCheckoutContext = (
     setConfirmationToken,
     setExpressCheckoutSubmitting,
     redirectToOrderDetails,
+    setCheckoutMode,
   ])
 
   return {
@@ -326,6 +341,11 @@ const useBuildCheckoutContext = (
 const initialStateForOrder = (
   order: Order2CheckoutContext_order$data,
 ): CheckoutState => {
+  const savedCheckoutMode = getStorageValue(
+    CHECKOUT_MODE_STORAGE_KEY,
+    "standard",
+  ) as CheckoutMode
+
   const stepNamesInOrder = [
     CheckoutStepName.FULFILLMENT_DETAILS,
     CheckoutStepName.DELIVERY_OPTION,
@@ -366,6 +386,7 @@ const initialStateForOrder = (
     activeFulfillmentDetailsTab: null,
     confirmationToken: null,
     steps,
+    checkoutMode: savedCheckoutMode || "standard",
   }
 }
 
@@ -404,6 +425,10 @@ type Action =
   | {
       type: "SET_ACTIVE_FULFILLMENT_DETAILS_TAB"
       payload: { activeFulfillmentDetailsTab: "DELIVERY" | "PICKUP" | null }
+    }
+  | {
+      type: "SET_CHECKOUT_MODE"
+      payload: { mode: CheckoutMode }
     }
 
 const reducer = (state: CheckoutState, action: Action): CheckoutState => {
@@ -582,7 +607,27 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
         ...state,
         expressCheckoutSubmitting: action.payload.isSubmittingOrder,
       }
+    case "SET_CHECKOUT_MODE":
+      setStorageValue(CHECKOUT_MODE_STORAGE_KEY, action.payload.mode)
+      return {
+        ...state,
+        checkoutMode: action.payload.mode,
+      }
     default:
       return state
+  }
+}
+
+const getStorageValue = (key: string, defaultValue: string): string => {
+  if (typeof window !== "undefined") {
+    const saved = localStorage.getItem(key)
+    return saved !== null ? saved : defaultValue
+  }
+  return defaultValue
+}
+
+const setStorageValue = (key: string, value: string): void => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem(key, value)
   }
 }
