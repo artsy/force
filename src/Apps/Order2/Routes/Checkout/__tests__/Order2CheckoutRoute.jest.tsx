@@ -148,7 +148,7 @@ const assertTracked = (...expectedEvents) => {
   }
   expect(mockTrackEvent).toHaveBeenCalledTimes(expectedEvents.length)
   expectedEvents.forEach((event, index) => {
-    expect(mockTrackEvent.mock.calls[index][0]).toMatchObject({
+    expect(mockTrackEvent.mock.calls[index][0]).toEqual({
       ...standardValues,
       ...event,
     })

@@ -105,6 +105,7 @@ export const useCheckoutTracking = () => {
           flow: source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
           ...(walletType ? { credit_card_wallet_type: walletType } : {}),
         }
+
         trackEvent(payload)
       },
 
