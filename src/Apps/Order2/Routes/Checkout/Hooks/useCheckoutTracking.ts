@@ -18,8 +18,79 @@ export const useCheckoutTracking = () => {
   const contextPageOwnerSlug = analytics.contextPageOwnerSlug as string
   const contextPageOwnerType = analytics.contextPageOwnerType as OwnerType
 
-  const trackingCalls = useMemo(() => {
+  const checkoutTracking = useMemo(() => {
     return {
+      clickedExpressCheckout: ({
+        source,
+        mode,
+        walletType,
+      }: {
+        source: string
+        mode: string
+        walletType: string
+      }) => {
+        const payload: ClickedExpressCheckout = {
+          action: ActionType.clickedExpressCheckout,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+          flow:
+            source === "PARTNER_OFFER"
+              ? "Partner offer"
+              : mode === "BUY"
+                ? "Buy now"
+                : "Make offer",
+          credit_card_wallet_type: walletType,
+        }
+
+        trackEvent(payload)
+      },
+      expressCheckoutViewed: ({
+        order,
+        walletType,
+      }: {
+        order: { source: string; mode: string }
+        walletType: string[]
+      }) => {
+        const payload: ExpressCheckoutViewed = {
+          action: ActionType.expressCheckoutViewed,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+          context_page_owner_slug: contextPageOwnerSlug,
+          flow:
+            order.source === "PARTNER_OFFER"
+              ? "Partner offer"
+              : order.mode === "BUY"
+                ? "Buy now"
+                : "Make offer",
+          credit_card_wallet_types: walletType,
+        }
+
+        trackEvent(payload)
+      },
+      clickedCancelExpressCheckout: ({
+        source,
+        mode,
+        walletType,
+      }: {
+        source: string
+        mode: string
+        walletType: string
+      }) => {
+        const payload: ClickedCancelExpressCheckout = {
+          action: ActionType.clickedCancelExpressCheckout,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+          flow:
+            source === "PARTNER_OFFER"
+              ? "Partner offer"
+              : mode === "BUY"
+                ? "Buy now"
+                : "Make offer",
+          credit_card_wallet_type: walletType,
+        }
+
+        trackEvent(payload)
+      },
       submittedOrder: ({
         source,
         walletType,
@@ -34,7 +105,6 @@ export const useCheckoutTracking = () => {
           flow: source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
           ...(walletType ? { credit_card_wallet_type: walletType } : {}),
         }
-
         trackEvent(payload)
       },
 
@@ -61,80 +131,6 @@ export const useCheckoutTracking = () => {
 
         trackEvent(payload)
       },
-
-      expressCheckoutViewed: ({
-        order,
-        walletType,
-      }: {
-        order: { source: string; mode: string }
-        walletType: string[]
-      }) => {
-        const payload: ExpressCheckoutViewed = {
-          action: ActionType.expressCheckoutViewed,
-          context_page_owner_type: contextPageOwnerType,
-          context_page_owner_id: contextPageOwnerId,
-          context_page_owner_slug: contextPageOwnerSlug,
-          flow:
-            order.source === "PARTNER_OFFER"
-              ? "Partner offer"
-              : order.mode === "BUY"
-                ? "Buy now"
-                : "Make offer",
-          credit_card_wallet_types: walletType,
-        }
-
-        trackEvent(payload)
-      },
-
-      clickedExpressCheckout: ({
-        source,
-        mode,
-        walletType,
-      }: {
-        source: string
-        mode: string
-        walletType: string
-      }) => {
-        const payload: ClickedExpressCheckout = {
-          action: ActionType.clickedExpressCheckout,
-          context_page_owner_type: contextPageOwnerType,
-          context_page_owner_id: contextPageOwnerId,
-          flow:
-            source === "PARTNER_OFFER"
-              ? "Partner offer"
-              : mode === "BUY"
-                ? "Buy now"
-                : "Make offer",
-          credit_card_wallet_type: walletType,
-        }
-
-        trackEvent(payload)
-      },
-
-      clickedCancelExpressCheckout: ({
-        source,
-        mode,
-        walletType,
-      }: {
-        source: string
-        mode: string
-        walletType: string
-      }) => {
-        const payload: ClickedCancelExpressCheckout = {
-          action: ActionType.clickedCancelExpressCheckout,
-          context_page_owner_type: contextPageOwnerType,
-          context_page_owner_id: contextPageOwnerId,
-          flow:
-            source === "PARTNER_OFFER"
-              ? "Partner offer"
-              : mode === "BUY"
-                ? "Buy now"
-                : "Make offer",
-          credit_card_wallet_type: walletType,
-        }
-
-        trackEvent(payload)
-      },
     }
   }, [
     trackEvent,
@@ -143,5 +139,5 @@ export const useCheckoutTracking = () => {
     contextPageOwnerType,
   ])
 
-  return trackingCalls
+  return checkoutTracking
 }

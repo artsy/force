@@ -116,7 +116,7 @@ export const pathToOwnerType = (path: string): PageOwnerType => {
     case type === "orders" && tab === "review":
       return OwnerType.ordersReview
     case type === "orders" && tab === "checkout":
-      return "orders-checkout-todo" as any // TODO: Cohesion Type is coming
+      return OwnerType.ordersCheckout
     case type === "orders" && tab === "details":
       return OwnerType.ordersDetail
     case type === "collectorProfile" && slug === "saves":
