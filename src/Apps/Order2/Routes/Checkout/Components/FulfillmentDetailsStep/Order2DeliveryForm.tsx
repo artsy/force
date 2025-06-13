@@ -42,7 +42,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = () => {
       <Text fontWeight="400" color="mono100" variant={["sm-display", "md"]}>
         Delivery address
       </Text>
-      <Spacer y={1} />
+      <Spacer y={2} />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

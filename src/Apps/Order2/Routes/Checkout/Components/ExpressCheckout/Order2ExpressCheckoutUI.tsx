@@ -516,7 +516,7 @@ export const Order2ExpressCheckoutUI: React.FC<
   return (
     <Box>
       <Text variant={["sm-display", "md"]}>Express checkout</Text>
-      <Spacer y={2} />
+      <Spacer y={[1, 2]} />
       {error && checkoutMode === "express" && (
         <>
           <CheckoutErrorBanner error={error} />
@@ -537,7 +537,7 @@ export const Order2ExpressCheckoutUI: React.FC<
           onConfirm={onConfirm}
         />
       </Box>
-      <Text variant="xs" color="mono60" mt={2}>
+      <Text variant="xs" color="mono60" mt={[1, 2]}>
         <>By clicking Pay, I agree to Artsy’s </>
         <RouterLink
           inline

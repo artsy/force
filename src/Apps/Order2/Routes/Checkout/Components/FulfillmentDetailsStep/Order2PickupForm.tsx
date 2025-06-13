@@ -141,7 +141,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
         After your order is confirmed, a specialist will contact you with
         details on how to pickup the work.
       </Text>
-      <Spacer y={4} />
+      <Spacer y={[2, 4]} />
       <Formik<PickupFormValues>
         initialValues={initialValues}
         validationSchema={VALIDATION_SCHEMA}
