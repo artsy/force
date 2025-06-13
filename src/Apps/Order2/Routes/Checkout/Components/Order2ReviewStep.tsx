@@ -8,6 +8,7 @@ import {
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type { Order2ReviewStep_order$key } from "__generated__/Order2ReviewStep_order.graphql"
@@ -23,6 +24,7 @@ interface Order2ReviewStepProps {
 export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   order,
 }) => {
+  const checkoutTracking = useCheckoutTracking()
   const orderData = useFragment(FRAGMENT, order)
   const artwork = orderData.lineItems[0]?.artwork
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
@@ -35,6 +37,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
 
   const [loading, setLoading] = useState(false)
   const handleClick = async event => {
+    checkoutTracking.submittedOrder({ source: orderData.source })
     setLoading(true)
 
     try {

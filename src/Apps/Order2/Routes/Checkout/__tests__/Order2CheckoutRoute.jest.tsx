@@ -7,15 +7,31 @@ import type { Order2CheckoutRouteTestQuery } from "__generated__/Order2CheckoutR
 import { merge } from "lodash"
 import { useEffect } from "react"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import { Order2ExpressCheckout as MockExpressCheckout } from "../Components/ExpressCheckout/Order2ExpressCheckout"
 import { Order2CheckoutRoute } from "../Order2CheckoutRoute"
 
 jest.unmock("react-relay")
 jest.useFakeTimers()
+jest.mock("react-tracking")
 
 const mockStripe = {
   createConfirmationToken: jest.fn(),
 }
+
+jest.mock("System/Hooks/useAnalyticsContext", () => {
+  const actual = jest.requireActual("System/Hooks/useAnalyticsContext")
+  const { OwnerType } = jest.requireActual("@artsy/cohesion")
+  // This value is set in src/System/Contexts/AnalyticsContext
+  const contextPageOwnerType = OwnerType.ordersCheckout
+  return {
+    ...actual,
+    useAnalyticsContext: () => ({
+      ...actual.useAnalyticsContext(),
+      contextPageOwnerType,
+    }),
+  }
+})
 
 const mockElements = {
   getElement: () => ({
@@ -81,7 +97,12 @@ jest.mock(
   },
 )
 
+const mockTrackEvent = jest.fn()
 beforeEach(() => {
+  mockTrackEvent.mockClear()
+  ;(useTracking as jest.Mock).mockImplementation(() => ({
+    trackEvent: mockTrackEvent,
+  }))
   ;(MockExpressCheckout as jest.Mock).mockClear()
 })
 
@@ -114,6 +135,25 @@ const orderMutationSuccess = (initialValues, newValues) => {
       order: merge(initialValues, newValues),
     },
   }
+}
+
+/**
+ *  Assert that the given events were tracked in order.
+ *  Then clear the mock for the next assertion.
+ */
+const assertTracked = (...expectedEvents) => {
+  const standardValues = {
+    context_page_owner_type: "orders-checkout",
+    order_id: "order-id",
+  }
+  expect(mockTrackEvent).toHaveBeenCalledTimes(expectedEvents.length)
+  expectedEvents.forEach((event, index) => {
+    expect(mockTrackEvent.mock.calls[index][0]).toMatchObject({
+      ...standardValues,
+      ...event,
+    })
+  })
+  mockTrackEvent.mockClear()
 }
 
 describe("Order2CheckoutRoute", () => {
@@ -435,6 +475,11 @@ describe("Order2CheckoutRoute", () => {
           })
 
           await flushPromiseQueue()
+        })
+
+        assertTracked({
+          action: "submittedOrder",
+          flow: "Buy now",
         })
 
         expect(mockRouter.replace).toHaveBeenCalledWith(
