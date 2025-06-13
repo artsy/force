@@ -5,6 +5,7 @@ import {
   type ErrorMessageViewed,
   type ExpressCheckoutViewed,
   type OwnerType,
+  type SubmittedOffer,
   type SubmittedOrder,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -94,16 +95,65 @@ export const useCheckoutTracking = () => {
       submittedOrder: ({
         source,
         walletType,
+        mode,
       }: {
         source: string
         walletType?: string
+        mode: "BUY" | "OFFER" | string
       }) => {
-        const payload: SubmittedOrder = {
-          action: ActionType.submittedOrder,
+        const expressCheckoutValues = walletType
+          ? { credit_card_wallet_type: walletType }
+          : {}
+
+        const [action, flow] = buyOrOfferValue(
+          mode,
+          [ActionType.submittedOrder, ActionType.submittedOffer],
+          [
+            source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
+            "Make offer",
+          ],
+        )
+        const payload: SubmittedOrder | SubmittedOffer = {
           context_page_owner_type: contextPageOwnerType,
           order_id: contextPageOwnerId,
-          flow: source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
-          ...(walletType ? { credit_card_wallet_type: walletType } : {}),
+          action,
+          flow,
+          ...expressCheckoutValues,
+        }
+
+        trackEvent(payload)
+      },
+
+      clickedPaymentMethod: ({
+        mode,
+        source,
+        paymentMethod,
+        amountMinor,
+        currency,
+      }: {
+        mode: string
+        source: string
+        paymentMethod:
+          | "US_BANK_ACCOUNT"
+          | "CREDIT_CARD"
+          | "WIRE_TRANSFER"
+          | string
+        amountMinor: number | null
+        currency: string
+      }) => {
+        const [flow] = buyOrOfferValue(mode, [
+          source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
+          "Make offer",
+        ])
+        const payload = {
+          context_page_owner_type: contextPageOwnerType,
+          order_id: contextPageOwnerId,
+          action: "clickedPaymentMethod",
+          flow,
+          subject: "click payment method",
+          payment_method: paymentMethod,
+          amount: amountMinor,
+          currency,
         }
         trackEvent(payload)
       },
@@ -141,3 +191,11 @@ export const useCheckoutTracking = () => {
 
   return checkoutTracking
 }
+
+const buyOrOfferValue = (
+  buyOrOffer: "BUY" | "OFFER" | string,
+  ...values: Array<[any, any]>
+) =>
+  values.map(([buyValue, offerValue]) =>
+    buyOrOffer === "OFFER" ? offerValue : buyValue,
+  )

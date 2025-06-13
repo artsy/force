@@ -37,7 +37,10 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
 
   const [loading, setLoading] = useState(false)
   const handleClick = async event => {
-    checkoutTracking.submittedOrder({ source: orderData.source })
+    checkoutTracking.submittedOrder({
+      source: orderData.source,
+      mode: orderData.mode,
+    })
     setLoading(true)
 
     try {
