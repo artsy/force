@@ -60,7 +60,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 4]}>
-      <Text variant="md" fontWeight="400" color="mono100">
+      <Text variant={["sm-display", "md"]} fontWeight="400" color="mono100">
         Order summary
       </Text>
       <Flex py={1} justifyContent="space-between" alignItems="flex-start">

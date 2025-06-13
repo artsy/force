@@ -16,7 +16,11 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
           <Flex alignItems="center">
             <CheckmarkIcon fill="mono100" />
             <Spacer x={1} />
-            <Text variant="md" fontWeight="400" color="mono100">
+            <Text
+              variant={["sm-display", "md"]}
+              fontWeight="400"
+              color="mono100"
+            >
               Pickup
             </Text>
           </Flex>
@@ -45,7 +49,7 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
     <Flex>
       <CheckmarkIcon height={20} width={20} fill="mono100" />
       <Box flexGrow={1} mx={0.5} />
-      <Text variant="md" fontWeight="400" color="mono100">
+      <Text variant={["sm-display", "md"]} fontWeight="400" color="mono100">
         Delivery
       </Text>
       <Text variant="xs" fontWeight="400" color="mono100">

@@ -515,7 +515,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   return (
     <Box>
-      <Text variant="md">Express checkout</Text>
+      <Text variant={["sm-display", "md"]}>Express checkout</Text>
       <Spacer y={2} />
       {error && checkoutMode === "express" && (
         <>
