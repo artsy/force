@@ -25,7 +25,7 @@ export const LayoutLogoOnlyFullBleed: FC<
             py={1}
             top={0}
             bg="mono0"
-            zIndex={1}
+            zIndex={2}
           >
             <RouterLink
               ml={2}

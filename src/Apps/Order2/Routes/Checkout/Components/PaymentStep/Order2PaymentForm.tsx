@@ -1,6 +1,6 @@
 import LockIcon from "@artsy/icons/LockIcon"
 import ReceiptIcon from "@artsy/icons/ReceiptIcon"
-import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
+import { Box, Button, Flex, Spacer, Text, useTheme } from "@artsy/palette"
 import {
   Elements,
   PaymentElement,
@@ -63,22 +63,30 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
     captureMethod: "manual",
   }
 
+  const { theme } = useTheme()
+
   const options: StripeElementsOptions = {
     mode: "payment",
     appearance: {
       variables: {
         accordionItemSpacing: "10px",
+        fontFamily: theme.fonts.sans,
+        colorPrimary: theme.colors.mono100, // accordion is selected
+        colorTextSecondary: theme.colors.mono100, // accordion is not selected
       },
       rules: {
         ".AccordionItem": {
+          lineHeight: "26px",
+          fontSize: "16px",
+          fontWeight: "normal",
           border: "none",
-          backgroundColor: "#EFEFEF",
-        },
-        ".AccordionItem:focus-visible": {
-          border: "1px solid black",
+          backgroundColor: theme.colors.mono5,
         },
         ".AccordionItem--selected": {
-          border: "1px solid black",
+          lineHeight: "26px",
+          fontSize: "16px",
+          fontWeight: "bold",
+          border: "1px solid #E7E7E7", // mono10
         },
       },
     },
@@ -253,10 +261,18 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
           {subtitleErrorMessage}
         </Text>
       )}
+      {/* Stripe error messages are displayed within the Payment Element, so we don't need to handle them here. */}
+      {errorMessage && selectedPaymentMethod !== "stripe" && (
+        <>
+          <Spacer y={2} />
+          <CheckoutErrorBanner error={{ message: errorMessage }} />
+          <Spacer y={2} />
+        </>
+      )}
       <Spacer y={2} />
       <FadeInBox>
         <Box
-          backgroundColor="#EFEFEF"
+          backgroundColor="mono5"
           borderRadius="5px"
           padding="1rem"
           marginBottom="10px"
@@ -265,11 +281,18 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
         >
           <Flex alignItems="center">
             <LockIcon fill="mono100" />
-            <Spacer x={1} />
-            <Text color="mono100">Saved payments</Text>
+            {/* Spacer has to be 31px to match Stripe's spacing */}
+            <Spacer x="31px" />
+            <Text
+              variant="sm"
+              color="mono100"
+              fontWeight={selectedPaymentMethod === "saved" ? "bold" : "normal"}
+            >
+              Saved payments
+            </Text>
           </Flex>
           <Collapse open={selectedPaymentMethod === "saved"}>
-            <Text variant="sm" ml="30px">
+            <Text variant="sm" ml="50px">
               Select a saved payment method or add a new one.
             </Text>
             <Text variant="sm" p="10px">
@@ -285,7 +308,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
       <Spacer y={1} />
       <FadeInBox>
         <Box
-          backgroundColor="#EFEFEF"
+          backgroundColor="mono5"
           borderRadius="5px"
           padding="1rem"
           marginBottom="10px"
@@ -295,19 +318,26 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
         >
           <Flex alignItems="center">
             <ReceiptIcon fill="mono100" />
-            <Spacer x={1} />
-            <Text color="mono100">Wire Transfer</Text>
+            {/* Spacer has to be 31px to match Stripe's spacing */}
+            <Spacer x="31px" />
+            <Text
+              variant="sm"
+              color="mono100"
+              fontWeight={selectedPaymentMethod === "wire" ? "bold" : "normal"}
+            >
+              Wire Transfer
+            </Text>
           </Flex>
           <Collapse open={selectedPaymentMethod === "wire"}>
-            <Text color="mono60" variant="sm" ml="30px">
+            <Text color="mono100" variant="sm" ml="50px" mb={1}>
               To pay by wire transfer, complete checkout and a member of the
               Artsy team will contact you with next steps by email.
             </Text>
-            <Text color="mono60" variant="sm" ml="30px">
+            <Text color="mono100" variant="sm" ml="50px" mb={1}>
               Please inform your bank that you will be responsible for all wire
               transfer fees.
             </Text>
-            <Text color="mono60" variant="sm" ml="30px">
+            <Text color="mono100" variant="sm" ml="50px">
               You can contact{" "}
               <RouterLink inline to="mailto:orders@artsy.net">
                 orders@artsy.net
@@ -317,14 +347,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
           </Collapse>
         </Box>
       </FadeInBox>
-      <Spacer y={2} />
-      {/* Stripe error messages are displayed within the Payment Element, so we don't need to handle them here. */}
-      {errorMessage && selectedPaymentMethod !== "stripe" && (
-        <>
-          <CheckoutErrorBanner error={{ message: errorMessage }} />
-          <Spacer y={4} />
-        </>
-      )}
+      <Spacer y={4} />
       <Button
         loading={isSubmittingToStripe}
         variant="primaryBlack"
