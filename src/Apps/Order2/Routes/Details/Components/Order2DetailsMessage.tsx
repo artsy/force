@@ -305,11 +305,51 @@ const getMessageContent = (order): React.ReactNode => {
           <YourCollectionNote />
         </>
       )
-    case "CANCELLED_ORDER":
+    case "CANCELLED":
       return (
         <Text variant="sm">
-          You can contact <ContactOrdersLink /> with any questions.
+          Your order could not be processed. You can contact{" "}
+          <ContactOrdersLink /> with any questions.
         </Text>
+      )
+    case "DECLINED_BY_BUYER":
+      return (
+        <>
+          <Text variant="sm">
+            Thank you for your response. The seller will be informed of your
+            decision to decline the offer, ending the current negotiation.
+          </Text>
+          <Spacer y={2} />
+          <Text variant="sm">
+            We’d love to hear your feedback—reach out to us at{" "}
+            <ContactOrdersLink /> with any thoughts.
+          </Text>
+        </>
+      )
+    case "DECLINED_BY_SELLER":
+      return (
+        <>
+          <Text variant="sm">
+            Unfortunately, the seller declined your offer, ending the current
+            negotiation.
+          </Text>
+          <Text variant="sm">
+            You can contact the gallery with any questions.
+          </Text>
+        </>
+      )
+    case "REFUNDED":
+      return (
+        <>
+          <Text variant="sm">
+            Your refund will appear on your bank statement within 5-7 business
+            days.
+          </Text>
+          <Spacer y={2} />
+          <Text variant="sm">
+            You can contact <ContactOrdersLink /> with any questions.
+          </Text>
+        </>
       )
     default:
       return ""

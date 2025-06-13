@@ -24,6 +24,11 @@ const SettingsPurchases: FC<
   const [loading, setLoading] = useState(false)
 
   const orders = extractNodes(me.orders)
+
+  if (orders.length === 0) {
+    return <Message>Orders can not be loaded at this time.</Message>
+  }
+
   const hasNextPage = me.orders?.pageInfo.hasNextPage ?? false
   const endCursor = me.orders?.pageInfo.endCursor!
   const pageCursors = me.orders?.pageCursors
