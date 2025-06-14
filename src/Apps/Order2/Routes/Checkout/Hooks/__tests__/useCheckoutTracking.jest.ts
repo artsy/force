@@ -43,32 +43,34 @@ beforeEach(() => {
 })
 
 describe("useCheckoutTracking", () => {
-  describe("clickedPaymentMethod", () => {
+  describe("mode and source hook props", () => {
     it("tracks correct flow for buy, offer and partner offer", () => {
-      const { result } = renderHook(() => useCheckoutTracking())
+      const { result, rerender } = renderHook(
+        props => useCheckoutTracking(props),
+        {
+          initialProps: { source: "artwork", mode: "BUY" },
+        },
+      )
 
       act(() => {
-        result.current.clickedPaymentMethod({
-          mode: "BUY",
-          amountMinor: 4242,
-          currency: "USD",
+        result.current.submittedOrder({ walletType: "applePay" })
+        rerender({
           source: "artwork",
-          paymentMethod: "CREDIT_CARD",
-        })
-        result.current.clickedPaymentMethod({
           mode: "OFFER",
-          amountMinor: 4242,
-          currency: "USD",
-          source: "artwork",
-          paymentMethod: "CREDIT_CARD",
         })
-        result.current.clickedPaymentMethod({
-          mode: "BUY",
-          amountMinor: 4242,
-          currency: "USD",
+      })
+
+      act(() => {
+        result.current.submittedOrder({ walletType: "applePay" })
+
+        rerender({
           source: "PARTNER_OFFER",
-          paymentMethod: "CREDIT_CARD",
+          mode: "BUY",
         })
+      })
+
+      act(() => {
+        result.current.submittedOrder({ walletType: "applePay" })
       })
 
       assertTracked(
@@ -81,13 +83,19 @@ describe("useCheckoutTracking", () => {
         },
       )
     })
+  })
+
+  describe("clickedPaymentMethod", () => {
     it("tracks clicked payment method passing amountMinor and currency values through", () => {
-      const { result } = renderHook(() => useCheckoutTracking())
+      const { result } = renderHook(() =>
+        useCheckoutTracking({
+          source: "artwork",
+          mode: "BUY",
+        }),
+      )
 
       act(() => {
         result.current.clickedPaymentMethod({
-          mode: "BUY",
-          source: "artwork",
           paymentMethod: "CREDIT_CARD",
           amountMinor: 12345,
           currency: "USD",
@@ -106,12 +114,15 @@ describe("useCheckoutTracking", () => {
   })
   describe("submittedOrder", () => {
     it("tracks submitted order event with optional wallet type", () => {
-      const { result } = renderHook(() => useCheckoutTracking())
+      const { result } = renderHook(() =>
+        useCheckoutTracking({
+          source: "artwork",
+          mode: "BUY",
+        }),
+      )
 
       act(() => {
         result.current.submittedOrder({
-          source: "artwork",
-          mode: "BUY",
           walletType: "applePay",
         })
       })
@@ -123,10 +134,7 @@ describe("useCheckoutTracking", () => {
       })
 
       act(() => {
-        result.current.submittedOrder({
-          source: "artwork",
-          mode: "BUY",
-        })
+        result.current.submittedOrder()
       })
 
       assertTracked({
@@ -136,10 +144,15 @@ describe("useCheckoutTracking", () => {
     })
 
     it("tracks submitted offer event", () => {
-      const { result } = renderHook(() => useCheckoutTracking())
+      const { result } = renderHook(() =>
+        useCheckoutTracking({
+          source: "artwork",
+          mode: "OFFER",
+        }),
+      )
 
       act(() => {
-        result.current.submittedOrder({ source: "artwork", mode: "OFFER" })
+        result.current.submittedOrder()
       })
 
       assertTracked({
@@ -149,10 +162,15 @@ describe("useCheckoutTracking", () => {
     })
 
     it("tracks submitted order event with partner offer", () => {
-      const { result } = renderHook(() => useCheckoutTracking())
+      const { result } = renderHook(() =>
+        useCheckoutTracking({
+          source: "PARTNER_OFFER",
+          mode: "BUY",
+        }),
+      )
 
       act(() => {
-        result.current.submittedOrder({ source: "PARTNER_OFFER", mode: "BUY" })
+        result.current.submittedOrder()
       })
 
       assertTracked({

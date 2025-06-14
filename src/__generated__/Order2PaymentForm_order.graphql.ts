@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0c180ff706ea644b61a5cbc51a03a4d0>>
+ * @generated SignedSource<<8b3c6848961f37cf8bb4049f62966111>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,8 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2PaymentForm_order$data = {
   readonly internalID: string;
@@ -16,11 +18,13 @@ export type Order2PaymentForm_order$data = {
     readonly currencyCode: string;
     readonly minor: any;
   } | null | undefined;
+  readonly mode: OrderModeEnum;
   readonly seller: {
     readonly merchantAccount?: {
       readonly externalId: string;
     } | null | undefined;
   } | null | undefined;
+  readonly source: OrderSourceEnum;
   readonly " $fragmentType": "Order2PaymentForm_order";
 };
 export type Order2PaymentForm_order$key = {
@@ -34,6 +38,20 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "Order2PaymentForm_order",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "mode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -107,6 +125,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "c219452c7f04e265b343a83772257827";
+(node as any).hash = "2d6d53da45804e96e0844d959f212c9e";
 
 export default node;

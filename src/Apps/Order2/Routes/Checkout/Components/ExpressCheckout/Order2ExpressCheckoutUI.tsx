@@ -30,7 +30,6 @@ import { preventHardReload } from "Apps/Order/OrderApp"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type {
@@ -81,9 +80,6 @@ export const Order2ExpressCheckoutUI: React.FC<
     useState<ExpressPaymentType | null>(null)
   const [error, setError] = useState<object | null>(null)
 
-  // TODO: integrate with new checkout tracking if necessary
-  const orderTracking = useCheckoutTracking()
-
   const errorRef = useRef<string | null>(null)
 
   const {
@@ -93,6 +89,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     expressCheckoutSubmitting,
     checkoutMode,
     setCheckoutMode,
+    checkoutTracking,
   } = useCheckoutContext()
 
   useEffect(() => {
@@ -176,9 +173,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     setCheckoutMode("express")
     setExpressCheckoutType(expressPaymentType)
 
-    orderTracking.clickedExpressCheckout({
-      source: orderData.source,
-      mode: orderData.mode,
+    checkoutTracking.clickedExpressCheckout({
       walletType: expressPaymentType,
     })
     const { itemsTotal } = orderData
@@ -207,15 +202,13 @@ export const Order2ExpressCheckoutUI: React.FC<
     logger.warn("Express checkout element cancelled - resetting")
 
     if (!errorRef.current) {
-      orderTracking.clickedCancelExpressCheckout({
-        source: orderData.source,
-        mode: orderData.mode,
+      checkoutTracking.clickedCancelExpressCheckout({
         walletType: expressCheckoutType as string,
       })
     }
 
     if (errorRef.current) {
-      orderTracking.errorMessageViewed({
+      checkoutTracking.errorMessageViewed({
         error_code: errorRef.current,
         title: "An error occurred",
         message:
@@ -367,8 +360,7 @@ export const Order2ExpressCheckoutUI: React.FC<
       StripeExpressCheckoutElementConfirmEvent["billingDetails"]
     >
 
-    orderTracking.submittedOrder({
-      source: orderData.source,
+    checkoutTracking.submittedOrder({
       walletType: expressPaymentType,
     })
 
@@ -475,7 +467,7 @@ export const Order2ExpressCheckoutUI: React.FC<
       logger.error("Error confirming payment", error)
       errorRef.current = error.code || "unknown_error"
 
-      orderTracking.errorMessageViewed({
+      checkoutTracking.errorMessageViewed({
         error_code: errorRef.current,
         title: "Payment failed",
         message:
@@ -501,8 +493,7 @@ export const Order2ExpressCheckoutUI: React.FC<
         e.availablePaymentMethods,
       )
       if (enabledPaymentMethods) {
-        orderTracking.expressCheckoutViewed({
-          order: orderData,
+        checkoutTracking.expressCheckoutViewed({
           walletType: enabledPaymentMethods,
         })
       }

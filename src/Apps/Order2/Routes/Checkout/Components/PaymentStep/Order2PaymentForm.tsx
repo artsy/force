@@ -18,6 +18,7 @@ import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mu
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+
 import { FadeInBox } from "Components/FadeInBox"
 import { RouterLink } from "System/Components/RouterLink"
 import { getENV } from "Utils/getENV"
@@ -108,7 +109,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   const elements = useElements()
   const environment = useRelayEnvironment()
   const updateOrderMutation = useUpdateOrderMutation()
-  const { setConfirmationToken } = useCheckoutContext()
+  const { setConfirmationToken, checkoutTracking } = useCheckoutContext()
+
   const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [subtitleErrorMessage, setSubtitleErrorMessage] = useState<
@@ -149,6 +151,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   }
 
   const onClickWirePaymentMethods = () => {
+    checkoutTracking.clickedPaymentMethod({
+      paymentMethod: "WIRE_TRANSFER",
+      amountMinor: order.itemsTotal?.minor,
+      currency: order.itemsTotal?.currencyCode ?? "",
+    })
     setErrorMessage(null) // Clear any previous error messages
     setSelectedPaymentMethod("wire")
     elements?.getElement("payment")?.collapse()
@@ -362,6 +369,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
 
 const FRAGMENT = graphql`
   fragment Order2PaymentForm_order on Order {
+    mode
+    source
     internalID
     itemsTotal {
       minor

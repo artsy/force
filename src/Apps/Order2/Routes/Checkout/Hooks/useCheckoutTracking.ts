@@ -12,107 +12,73 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
 
-export const useCheckoutTracking = () => {
+export const useCheckoutTracking = ({
+  source,
+  mode,
+}: {
+  source: string
+  mode: "BUY" | "OFFER" | string
+}) => {
   const { trackEvent } = useTracking()
   const analytics = useAnalyticsContext()
   const contextPageOwnerId = analytics.contextPageOwnerId as string
   const contextPageOwnerSlug = analytics.contextPageOwnerSlug as string
   const contextPageOwnerType = analytics.contextPageOwnerType as OwnerType
-
+  const [flow] = buyOrOfferValue(mode, [
+    source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
+    "Make offer",
+  ])
   const checkoutTracking = useMemo(() => {
     return {
-      clickedExpressCheckout: ({
-        source,
-        mode,
-        walletType,
-      }: {
-        source: string
-        mode: string
-        walletType: string
-      }) => {
+      clickedExpressCheckout: ({ walletType }: { walletType: string }) => {
         const payload: ClickedExpressCheckout = {
           action: ActionType.clickedExpressCheckout,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
-          flow:
-            source === "PARTNER_OFFER"
-              ? "Partner offer"
-              : mode === "BUY"
-                ? "Buy now"
-                : "Make offer",
+          flow,
           credit_card_wallet_type: walletType,
         }
 
         trackEvent(payload)
       },
-      expressCheckoutViewed: ({
-        order,
-        walletType,
-      }: {
-        order: { source: string; mode: string }
-        walletType: string[]
-      }) => {
+      expressCheckoutViewed: ({ walletType }: { walletType: string[] }) => {
         const payload: ExpressCheckoutViewed = {
           action: ActionType.expressCheckoutViewed,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
           context_page_owner_slug: contextPageOwnerSlug,
-          flow:
-            order.source === "PARTNER_OFFER"
-              ? "Partner offer"
-              : order.mode === "BUY"
-                ? "Buy now"
-                : "Make offer",
+          flow,
           credit_card_wallet_types: walletType,
         }
 
         trackEvent(payload)
       },
       clickedCancelExpressCheckout: ({
-        source,
-        mode,
         walletType,
       }: {
-        source: string
-        mode: string
         walletType: string
       }) => {
         const payload: ClickedCancelExpressCheckout = {
           action: ActionType.clickedCancelExpressCheckout,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
-          flow:
-            source === "PARTNER_OFFER"
-              ? "Partner offer"
-              : mode === "BUY"
-                ? "Buy now"
-                : "Make offer",
+          // order_id: contextPageOwnerId, // TODO: Clarify whether we are using order_id
+          flow,
           credit_card_wallet_type: walletType,
         }
 
         trackEvent(payload)
       },
-      submittedOrder: ({
-        source,
-        walletType,
-        mode,
-      }: {
-        source: string
-        walletType?: string
-        mode: "BUY" | "OFFER" | string
-      }) => {
+      submittedOrder: (args: { walletType?: string } = {}) => {
+        const { walletType } = args
         const expressCheckoutValues = walletType
           ? { credit_card_wallet_type: walletType }
           : {}
 
-        const [action, flow] = buyOrOfferValue(
-          mode,
-          [ActionType.submittedOrder, ActionType.submittedOffer],
-          [
-            source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
-            "Make offer",
-          ],
-        )
+        const [action] = buyOrOfferValue(mode, [
+          ActionType.submittedOrder,
+          ActionType.submittedOffer,
+        ])
         const payload: SubmittedOrder | SubmittedOffer = {
           context_page_owner_type: contextPageOwnerType,
           order_id: contextPageOwnerId,
@@ -125,14 +91,10 @@ export const useCheckoutTracking = () => {
       },
 
       clickedPaymentMethod: ({
-        mode,
-        source,
         paymentMethod,
         amountMinor,
         currency,
       }: {
-        mode: string
-        source: string
         paymentMethod:
           | "US_BANK_ACCOUNT"
           | "CREDIT_CARD"
@@ -187,6 +149,9 @@ export const useCheckoutTracking = () => {
     contextPageOwnerId,
     contextPageOwnerSlug,
     contextPageOwnerType,
+    flow,
+    mode,
+    source,
   ])
 
   return checkoutTracking

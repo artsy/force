@@ -8,6 +8,7 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import type {
@@ -43,6 +44,7 @@ interface CheckoutState {
 }
 
 interface CheckoutActions {
+  checkoutTracking: ReturnType<typeof useCheckoutTracking>
   setActiveFulfillmentDetailsTab: (
     activeFulfillmentDetailsTab: FulfillmentDetailsTab | null,
   ) => void
@@ -138,6 +140,7 @@ const ORDER_FRAGMENT = graphql`
   fragment Order2CheckoutContext_order on Order {
     internalID
     mode
+    source
     selectedFulfillmentOption {
       type
     }
@@ -169,6 +172,7 @@ const useBuildCheckoutContext = (
     () => initialStateForOrder(orderData),
     [orderData],
   )
+  const checkoutTracking = useCheckoutTracking(orderData)
 
   const { router } = useRouter()
   const [state, dispatch] = useReducer(reducer, initialState)
@@ -306,6 +310,7 @@ const useBuildCheckoutContext = (
 
   const actions = useMemo(() => {
     return {
+      checkoutTracking,
       editFulfillmentDetails,
       editPayment,
       setActiveFulfillmentDetailsTab,
@@ -319,6 +324,7 @@ const useBuildCheckoutContext = (
       setCheckoutMode,
     }
   }, [
+    checkoutTracking,
     editFulfillmentDetails,
     editPayment,
     setActiveFulfillmentDetailsTab,
