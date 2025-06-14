@@ -99,28 +99,62 @@ export const useCheckoutTracking = () => {
       }: {
         source: string
         walletType?: string
-        mode: string
+        mode: "BUY" | "OFFER" | string
       }) => {
-        let action: ActionType.submittedOrder | ActionType.submittedOffer
-        let flow: string
         const expressCheckoutValues = walletType
           ? { credit_card_wallet_type: walletType }
           : {}
-        if (mode === "OFFER") {
-          action = ActionType.submittedOffer
-          flow = "Make offer"
-        } else {
-          action = ActionType.submittedOrder
-          flow = source === "PARTNER_OFFER" ? "Partner offer" : "Buy now"
-        }
+
+        const [action, flow] = buyOrOfferValue(
+          mode,
+          [ActionType.submittedOrder, ActionType.submittedOffer],
+          [
+            source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
+            "Make offer",
+          ],
+        )
         const payload: SubmittedOrder | SubmittedOffer = {
-          action,
-          flow,
           context_page_owner_type: contextPageOwnerType,
           order_id: contextPageOwnerId,
+          action,
+          flow,
           ...expressCheckoutValues,
         }
 
+        trackEvent(payload)
+      },
+
+      clickedPaymentMethod: ({
+        mode,
+        source,
+        paymentMethod,
+        amountMinor,
+        currency,
+      }: {
+        mode: string
+        source: string
+        paymentMethod:
+          | "US_BANK_ACCOUNT"
+          | "CREDIT_CARD"
+          | "WIRE_TRANSFER"
+          | string
+        amountMinor: number | null
+        currency: string
+      }) => {
+        const [flow] = buyOrOfferValue(mode, [
+          source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
+          "Make offer",
+        ])
+        const payload = {
+          context_page_owner_type: contextPageOwnerType,
+          order_id: contextPageOwnerId,
+          action: "clickedPaymentMethod",
+          flow,
+          subject: "click payment method",
+          payment_method: paymentMethod,
+          amount: amountMinor,
+          currency,
+        }
         trackEvent(payload)
       },
 
@@ -157,3 +191,11 @@ export const useCheckoutTracking = () => {
 
   return checkoutTracking
 }
+
+const buyOrOfferValue = (
+  buyOrOffer: "BUY" | "OFFER" | string,
+  ...values: Array<[any, any]>
+) =>
+  values.map(([buyValue, offerValue]) =>
+    buyOrOffer === "OFFER" ? offerValue : buyValue,
+  )

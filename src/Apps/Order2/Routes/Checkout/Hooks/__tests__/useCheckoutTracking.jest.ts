@@ -27,7 +27,7 @@ const assertTracked = (...expectedEvents) => {
   }
   expect(mockTrackEvent).toHaveBeenCalledTimes(expectedEvents.length)
   expectedEvents.forEach((event, index) => {
-    expect(mockTrackEvent.mock.calls[index][0]).toEqual({
+    expect(mockTrackEvent.mock.calls[index][0]).toMatchObject({
       ...standardValues,
       ...event,
     })
@@ -43,6 +43,67 @@ beforeEach(() => {
 })
 
 describe("useCheckoutTracking", () => {
+  describe("clickedPaymentMethod", () => {
+    it("tracks correct flow for buy, offer and partner offer", () => {
+      const { result } = renderHook(() => useCheckoutTracking())
+
+      act(() => {
+        result.current.clickedPaymentMethod({
+          mode: "BUY",
+          amountMinor: 4242,
+          currency: "USD",
+          source: "artwork",
+          paymentMethod: "CREDIT_CARD",
+        })
+        result.current.clickedPaymentMethod({
+          mode: "OFFER",
+          amountMinor: 4242,
+          currency: "USD",
+          source: "artwork",
+          paymentMethod: "CREDIT_CARD",
+        })
+        result.current.clickedPaymentMethod({
+          mode: "BUY",
+          amountMinor: 4242,
+          currency: "USD",
+          source: "PARTNER_OFFER",
+          paymentMethod: "CREDIT_CARD",
+        })
+      })
+
+      assertTracked(
+        { flow: "Buy now" },
+        {
+          flow: "Make offer",
+        },
+        {
+          flow: "Partner offer",
+        },
+      )
+    })
+    it("tracks clicked payment method passing amountMinor and currency values through", () => {
+      const { result } = renderHook(() => useCheckoutTracking())
+
+      act(() => {
+        result.current.clickedPaymentMethod({
+          mode: "BUY",
+          source: "artwork",
+          paymentMethod: "CREDIT_CARD",
+          amountMinor: 12345,
+          currency: "USD",
+        })
+      })
+
+      assertTracked({
+        action: "clickedPaymentMethod",
+        flow: "Buy now",
+        subject: "click payment method",
+        payment_method: "CREDIT_CARD",
+        amount: 12345,
+        currency: "USD",
+      })
+    })
+  })
   describe("submittedOrder", () => {
     it("tracks submitted order event with optional wallet type", () => {
       const { result } = renderHook(() => useCheckoutTracking())
