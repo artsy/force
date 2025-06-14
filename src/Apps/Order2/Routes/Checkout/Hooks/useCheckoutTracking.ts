@@ -24,10 +24,12 @@ export const useCheckoutTracking = ({
   const contextPageOwnerId = analytics.contextPageOwnerId as string
   const contextPageOwnerSlug = analytics.contextPageOwnerSlug as string
   const contextPageOwnerType = analytics.contextPageOwnerType as OwnerType
-  const [flow] = buyOrOfferValue(mode, [
+  const flow = buyOrOfferValue(
+    mode,
     source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
     "Make offer",
-  ])
+  )
+
   const checkoutTracking = useMemo(() => {
     return {
       clickedExpressCheckout: ({ walletType }: { walletType: string }) => {
@@ -75,10 +77,11 @@ export const useCheckoutTracking = ({
           ? { credit_card_wallet_type: walletType }
           : {}
 
-        const [action] = buyOrOfferValue(mode, [
+        const action = buyOrOfferValue(
+          mode,
           ActionType.submittedOrder,
           ActionType.submittedOffer,
-        ])
+        )
         const payload: SubmittedOrder | SubmittedOffer = {
           context_page_owner_type: contextPageOwnerType,
           order_id: contextPageOwnerId,
@@ -103,10 +106,11 @@ export const useCheckoutTracking = ({
         amountMinor: number | null
         currency: string
       }) => {
-        const [flow] = buyOrOfferValue(mode, [
+        const flow = buyOrOfferValue(
+          mode,
           source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
           "Make offer",
-        ])
+        )
         const payload = {
           context_page_owner_type: contextPageOwnerType,
           order_id: contextPageOwnerId,
@@ -157,10 +161,8 @@ export const useCheckoutTracking = ({
   return checkoutTracking
 }
 
-const buyOrOfferValue = (
+const buyOrOfferValue = <B, O>(
   buyOrOffer: "BUY" | "OFFER" | string,
-  ...values: Array<[any, any]>
-) =>
-  values.map(([buyValue, offerValue]) =>
-    buyOrOffer === "OFFER" ? offerValue : buyValue,
-  )
+  ifBuy: B,
+  ifOffer: O,
+) => (buyOrOffer === "OFFER" ? ifOffer : ifBuy)
