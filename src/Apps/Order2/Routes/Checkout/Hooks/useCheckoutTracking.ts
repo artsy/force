@@ -5,6 +5,7 @@ import {
   type ErrorMessageViewed,
   type ExpressCheckoutViewed,
   type OwnerType,
+  type SubmittedOffer,
   type SubmittedOrder,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -94,16 +95,30 @@ export const useCheckoutTracking = () => {
       submittedOrder: ({
         source,
         walletType,
+        mode,
       }: {
         source: string
         walletType?: string
+        mode: string
       }) => {
-        const payload: SubmittedOrder = {
-          action: ActionType.submittedOrder,
+        let action: ActionType.submittedOrder | ActionType.submittedOffer
+        let flow: string
+        const expressCheckoutValues = walletType
+          ? { credit_card_wallet_type: walletType }
+          : {}
+        if (mode === "OFFER") {
+          action = ActionType.submittedOffer
+          flow = "Make offer"
+        } else {
+          action = ActionType.submittedOrder
+          flow = source === "PARTNER_OFFER" ? "Partner offer" : "Buy now"
+        }
+        const payload: SubmittedOrder | SubmittedOffer = {
+          action,
+          flow,
           context_page_owner_type: contextPageOwnerType,
           order_id: contextPageOwnerId,
-          flow: source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
-          ...(walletType ? { credit_card_wallet_type: walletType } : {}),
+          ...expressCheckoutValues,
         }
 
         trackEvent(payload)

@@ -44,11 +44,54 @@ beforeEach(() => {
 
 describe("useCheckoutTracking", () => {
   describe("submittedOrder", () => {
+    it("tracks submitted order event with optional wallet type", () => {
+      const { result } = renderHook(() => useCheckoutTracking())
+
+      act(() => {
+        result.current.submittedOrder({
+          source: "artwork",
+          mode: "BUY",
+          walletType: "applePay",
+        })
+      })
+
+      assertTracked({
+        action: "submittedOrder",
+        flow: "Buy now",
+        credit_card_wallet_type: "applePay",
+      })
+
+      act(() => {
+        result.current.submittedOrder({
+          source: "artwork",
+          mode: "BUY",
+        })
+      })
+
+      assertTracked({
+        action: "submittedOrder",
+        flow: "Buy now",
+      })
+    })
+
+    it("tracks submitted offer event", () => {
+      const { result } = renderHook(() => useCheckoutTracking())
+
+      act(() => {
+        result.current.submittedOrder({ source: "artwork", mode: "OFFER" })
+      })
+
+      assertTracked({
+        action: "submittedOffer",
+        flow: "Make offer",
+      })
+    })
+
     it("tracks submitted order event with partner offer", () => {
       const { result } = renderHook(() => useCheckoutTracking())
 
       act(() => {
-        result.current.submittedOrder({ source: "PARTNER_OFFER" })
+        result.current.submittedOrder({ source: "PARTNER_OFFER", mode: "BUY" })
       })
 
       assertTracked({
