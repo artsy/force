@@ -27,14 +27,15 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   const artwork = orderData.lineItems[0]?.artwork
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
   const submitOrderMutation = useSubmitOrderMutation()
-  const { steps, confirmationToken, redirectToOrderDetails } =
+  const { steps, confirmationToken, redirectToOrderDetails, checkoutTracking } =
     useCheckoutContext()
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.CONFIRMATION,
   )?.state
 
   const [loading, setLoading] = useState(false)
-  const handleClick = async event => {
+  const handleClick = async _event => {
+    checkoutTracking.submittedOrder()
     setLoading(true)
 
     try {

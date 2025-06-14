@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ce70e79172d47b8ac56f799788a69f47>>
+ * @generated SignedSource<<9c32ed7307f1b0dbd0bdd7f2015c78e3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutContext_order$data = {
   readonly internalID: string;
@@ -23,6 +24,7 @@ export type Order2CheckoutContext_order$data = {
   readonly selectedFulfillmentOption: {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
+  readonly source: OrderSourceEnum;
   readonly " $fragmentType": "Order2CheckoutContext_order";
 };
 export type Order2CheckoutContext_order$key = {
@@ -50,6 +52,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "mode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
       "storageKey": null
     },
     {
@@ -99,6 +108,6 @@ return {
 };
 })();
 
-(node as any).hash = "34b70cd625155dcf2ba83f67141f9d1a";
+(node as any).hash = "e4731e1640a3bc5ddc6455bd97afa902";
 
 export default node;
