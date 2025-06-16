@@ -40,7 +40,19 @@ describe("Order2DetailsMessage", () => {
     ["SHIPPED", "Your work is on its way"],
     ["COMPLETED_PICKUP", "We hope you love your purchase"],
     ["COMPLETED_SHIP", "We hope you love your purchase"],
-    ["CANCELLED_ORDER", "You can contact"],
+    ["CANCELLED", "Your order could not be processed. You can contact"],
+    [
+      "DECLINED_BY_BUYER",
+      "Thank you for your response. The seller will be informed of your decision to decline the offer, ending the current negotiation.",
+    ],
+    [
+      "DECLINED_BY_SELLER",
+      "Unfortunately, the seller declined your offer, ending the current negotiation.",
+    ],
+    [
+      "REFUNDED",
+      "Your refund will appear on your bank statement within 5-7 business days.",
+    ],
   ])("renders correct message for %s", (messageType, expectedText) => {
     renderWithRelay({
       Order: () => ({
@@ -103,7 +115,7 @@ describe("Order2DetailsMessage", () => {
         code: "123",
         internalID: "test-id",
         displayTexts: {
-          messageType: "CANCELLED_ORDER",
+          messageType: "CANCELLED",
         },
       }),
     })
