@@ -138,7 +138,7 @@ export const shippingQuoteDescriptions = {
   select:
     "Inside delivery shipped via a white glove shipping service with custom packaging. Delivery timing variable.",
   premium:
-    "Room-of-choice delivery handled via trained technicians with specialized packaging and climate-controlled transportation. Recommended for high-value works. Delivery timing variable.",
+    "This service includes custom packing, transportation on a fine art shuttle, and in-home delivery. Recommended for high-value works. Delivery timing variable.",
   // International shipping quotes
   economy:
     "Delivers to your door in 5-7 business days once packaged and shipped via a common carrier, depending on destination and prompt payment of applicable duties and taxes.",
