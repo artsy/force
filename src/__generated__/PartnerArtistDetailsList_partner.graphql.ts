@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<302141aea78d6b44dbc31d52b7e4281f>>
+ * @generated SignedSource<<2ddfb1005e5f53b55b8dc5ea78ae912e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,7 @@ export type PartnerArtistDetailsList_partner$data = {
     } | null | undefined> | null | undefined;
   } | null | undefined;
   readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistDetails_partner">;
   readonly " $fragmentType": "PartnerArtistDetailsList_partner";
 };
 export type PartnerArtistDetailsList_partner$key = {
@@ -63,6 +64,11 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "PartnerArtistDetails_partner"
     },
     {
       "alias": "artists",
@@ -189,6 +195,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "af9c4c3e0383de29ee45e0c4c7aad63a";
+(node as any).hash = "e75f7d9f62c0e53c81d66f21d64f01d8";
 
 export default node;
