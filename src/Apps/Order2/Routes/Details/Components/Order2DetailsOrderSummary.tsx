@@ -11,6 +11,7 @@ import {
 } from "@artsy/palette"
 import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
 import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
+import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2DetailsOrderSummary_order$key } from "__generated__/Order2DetailsOrderSummary_order.graphql"
 import type * as React from "react"
@@ -19,9 +20,6 @@ import { graphql, useFragment } from "react-relay"
 interface Order2DetailsOrderSummaryProps {
   order: Order2DetailsOrderSummary_order$key
 }
-
-const BUYER_GUARANTEE_URL =
-  "https://support.artsy.net/s/article/The-Artsy-Guarantee"
 
 export const Order2DetailsOrderSummary: React.FC<
   Order2DetailsOrderSummaryProps

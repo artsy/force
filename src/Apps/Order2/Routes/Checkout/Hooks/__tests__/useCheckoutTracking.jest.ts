@@ -21,14 +21,9 @@ jest.mock("System/Hooks/useAnalyticsContext", () => {
  *  Then clear the mock for the next assertion.
  */
 const assertTracked = (...expectedEvents) => {
-  const standardValues = {
-    context_page_owner_type: "orders-checkout",
-    order_id: "order-id",
-  }
   expect(mockTrackEvent).toHaveBeenCalledTimes(expectedEvents.length)
   expectedEvents.forEach((event, index) => {
     expect(mockTrackEvent.mock.calls[index][0]).toMatchObject({
-      ...standardValues,
       ...event,
     })
   })
@@ -74,14 +69,50 @@ describe("useCheckoutTracking", () => {
       })
 
       assertTracked(
-        { flow: "Buy now" },
+        {
+          flow: "Buy now",
+          context_page_owner_type: "orders-checkout",
+          order_id: "order-id",
+        },
         {
           flow: "Make offer",
+          context_page_owner_type: "orders-checkout",
+          order_id: "order-id",
         },
         {
           flow: "Partner offer",
+          context_page_owner_type: "orders-checkout",
+          order_id: "order-id",
         },
       )
+    })
+  })
+
+  describe("clickedBuyerProtection", () => {
+    /*
+     *    action: "clickedBuyerProtection",
+     *    context_module: "OrdersCheckout",
+     *    context_page_owner_type: "orders-checkout",
+     *    context_page_owner_id: "57e60c68-a198-431e-8a02-6ecb01e3a99b",
+     *    destination_page_owner_type: "articles",
+     *    destination_page_owner_slug: "360048946973-How-does-Artsy-protect-me"
+     */
+    it("tracks click", () => {
+      const { result } = renderHook(() =>
+        useCheckoutTracking({
+          source: "artwork",
+          mode: "BUY",
+        }),
+      )
+
+      act(() => {
+        result.current.clickedBuyerProtection()
+      })
+
+      assertTracked({
+        action: "clickedBuyerProtection",
+        context_module: "ordersCheckout",
+      })
     })
   })
 
@@ -109,6 +140,8 @@ describe("useCheckoutTracking", () => {
         payment_method: "CREDIT_CARD",
         amount: 12345,
         currency: "USD",
+        context_page_owner_type: "orders-checkout",
+        order_id: "order-id",
       })
     })
   })
@@ -176,6 +209,8 @@ describe("useCheckoutTracking", () => {
       assertTracked({
         action: "submittedOrder",
         flow: "Partner offer",
+        context_page_owner_type: "orders-checkout",
+        order_id: "order-id",
       })
     })
   })

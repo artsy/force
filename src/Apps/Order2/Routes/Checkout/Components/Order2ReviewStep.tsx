@@ -8,6 +8,7 @@ import {
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type { Order2ReviewStep_order$key } from "__generated__/Order2ReviewStep_order.graphql"
@@ -96,28 +97,41 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           </Text>
         </Box>
       </Flex>
-      <Box mb={2}>
+      <Box>
         <Order2PricingBreakdown order={orderData} />
       </Box>
+      <Spacer y={2} />
       <Message variant="default" p={1}>
         <Flex>
           <ShieldIcon fill="mono100" />
           <Spacer x={1} />
           <Text variant="xs" color="mono100">
-            Your purchase is protected with Artsy&rsquo;s Buyer Guarantee.
+            Your purchase is protected with{" "}
+            <RouterLink
+              onClick={() => checkoutTracking.clickedBuyerProtection()}
+              inline
+              target="_blank"
+              to={BUYER_GUARANTEE_URL}
+            >
+              Artsy&rsquo;s Buyer Guarantee
+            </RouterLink>
+            .
           </Text>
         </Flex>
       </Message>
       <Spacer y={2} />
       {stepState === CheckoutStepState.ACTIVE && (
-        <Button
-          variant={"primaryBlack"}
-          width="100%"
-          onClick={handleClick}
-          loading={loading}
-        >
-          Submit
-        </Button>
+        <>
+          <Spacer y={2} />
+          <Button
+            variant={"primaryBlack"}
+            width="100%"
+            onClick={handleClick}
+            loading={loading}
+          >
+            Submit
+          </Button>
+        </>
       )}
     </Flex>
   )

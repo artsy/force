@@ -1,14 +1,14 @@
 import {
   ActionType,
-  ClickedAskSpecialist,
-  ClickedBuyerProtection,
-  ClickedVisitHelpCenter,
-  ContextModule,
+  type ClickedAskSpecialist,
+  type ClickedBuyerProtection,
+  type ClickedVisitHelpCenter,
+  type ContextModule,
   OwnerType,
-  PageOwnerType,
+  type PageOwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { Order2HelpLinks_order$data } from "__generated__/Order2HelpLinks_order.graphql"
+import type { Order2HelpLinks_order$data } from "__generated__/Order2HelpLinks_order.graphql"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
 
@@ -17,7 +17,6 @@ export const useOrder2Tracking = () => {
   const analytics = useAnalyticsContext()
 
   const contextPageOwnerId = analytics.contextPageOwnerId as string
-  const contextPageOwnerSlug = analytics.contextPageOwnerSlug as string
   const contextPageOwnerType = analytics.contextPageOwnerType as PageOwnerType
 
   const tracks = useMemo(() => {
@@ -65,12 +64,7 @@ export const useOrder2Tracking = () => {
         trackEvent(payload)
       },
     }
-  }, [
-    trackEvent,
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  ])
+  }, [trackEvent, contextPageOwnerId, contextPageOwnerType])
 
   return tracks
 }

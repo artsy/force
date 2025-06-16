@@ -2,12 +2,14 @@ import {
   ActionType,
   type ClickedCancelExpressCheckout,
   type ClickedExpressCheckout,
+  ContextModule,
   type ErrorMessageViewed,
   type ExpressCheckoutViewed,
   type OwnerType,
   type SubmittedOffer,
   type SubmittedOrder,
 } from "@artsy/cohesion"
+import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
@@ -20,6 +22,7 @@ export const useCheckoutTracking = ({
   mode: "BUY" | "OFFER" | string
 }) => {
   const { trackEvent } = useTracking()
+  const order2Tracking = useOrder2Tracking()
   const analytics = useAnalyticsContext()
   const contextPageOwnerId = analytics.contextPageOwnerId as string
   const contextPageOwnerSlug = analytics.contextPageOwnerSlug as string
@@ -93,6 +96,9 @@ export const useCheckoutTracking = ({
         trackEvent(payload)
       },
 
+      clickedBuyerProtection: () =>
+        order2Tracking.clickedBuyerProtection(ContextModule.ordersCheckout),
+
       clickedPaymentMethod: ({
         paymentMethod,
         amountMinor,
@@ -156,6 +162,7 @@ export const useCheckoutTracking = ({
     flow,
     mode,
     source,
+    order2Tracking.clickedBuyerProtection,
   ])
 
   return checkoutTracking
