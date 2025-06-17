@@ -19,7 +19,7 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
   const artworkSlug = orderData.lineItems[0]?.artwork?.slug
 
   return (
-    <GridColumns backgroundColor="mono5" py={[0, 4]} px={[0, 0, 4]}>
+    <GridColumns py={[0, 4]} px={[0, 0, 4]}>
       <Column span={[12, 12, 7]} width="100%">
         <Box
           width="100%"

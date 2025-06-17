@@ -66,18 +66,18 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
       {isLoading && <Order2CheckoutLoadingSkeleton order={order} />}
       {expressCheckoutSubmitting && <SubmittingOrderSpinner />}
       <GridColumns
-        pt={[0, "50px"]}
+        py={[0, 4]}
         px={[0, 0, 4]}
-        backgroundColor="mono5"
         style={{
           display: isLoading || expressCheckoutSubmitting ? "none" : "grid",
         }}
       >
-        <Column span={[12, 12, 7]} start={[1, 1, 1]}>
+        <Column span={[12, 12, 7]} width="100%">
           <Box
-            maxWidth={"754px"}
             width="100%"
-            justifySelf={["center", "center", "end"]}
+            maxWidth="754px"
+            mx={["auto", "auto", 0]}
+            ml={[0, "auto", "auto"]}
           >
             <Stack gap={1}>
               <Box display={["block", "block", "none"]}>
@@ -104,20 +104,18 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         </Column>
 
         <Column
-          start={[1, 1, 8]}
           span={[12, 12, 5]}
           display={["none", "none", "block"]}
+          maxWidth="445px"
         >
-          <Box width={"445px"} position="sticky" top={80}>
-            <Order2ReviewStep order={order} />
-            <Separator as="hr" />
-            <Order2HelpLinksWithInquiry
-              order={order}
-              artworkID={artworkSlug as string}
-              // @ts-expect-error TODO: update when we have checkout context menu
-              contextModule=""
-            />
-          </Box>
+          <Order2ReviewStep order={order} />
+          <Separator as="hr" />
+          <Order2HelpLinksWithInquiry
+            order={order}
+            artworkID={artworkSlug as string}
+            // @ts-expect-error TODO: update when we have checkout context menu
+            contextModule=""
+          />
         </Column>
       </GridColumns>
     </>
