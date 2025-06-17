@@ -46,7 +46,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
       backgroundColor="mono0"
       py={2}
     >
-      <Box px={2} hidden={stepState !== CheckoutStepState.COMPLETED}>
+      <Box px={[2, 4]} hidden={stepState !== CheckoutStepState.COMPLETED}>
         <Order2FulfillmentDetailsCompletedView
           fulfillmentDetails={savedFulfillmentDetails}
           onClickEdit={() => editFulfillmentDetails()}
@@ -56,6 +56,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
       <Box hidden={stepState !== CheckoutStepState.ACTIVE}>
         {pickupOption ? (
           <Tabs
+            fill
             data-testid="FulfillmentDetailsStepTabs"
             justifyContent="space-between"
             initialTabIndex={pickupOption.selected ? 1 : 0}
@@ -68,31 +69,19 @@ export const Order2FulfillmentDetailsStep: React.FC<
               }
             }}
           >
-            <Tab
-              name={
-                <Text mx={50} variant="xs">
-                  Delivery
-                </Text>
-              }
-            >
-              <Box px={2}>
+            <Tab name={<Text variant="sm-display">Delivery</Text>}>
+              <Box px={[2, 4]}>
                 <Order2DeliveryForm order={orderData} />
               </Box>
             </Tab>
-            <Tab
-              name={
-                <Text mx={50} variant="xs">
-                  Pickup
-                </Text>
-              }
-            >
-              <Box px={2}>
+            <Tab name={<Text variant="sm-display">Pickup</Text>}>
+              <Box px={[2, 4]}>
                 <Order2PickupForm order={orderData} />
               </Box>
             </Tab>
           </Tabs>
         ) : (
-          <Box px={2} hidden={stepState !== CheckoutStepState.ACTIVE}>
+          <Box px={[2, 4]} hidden={stepState !== CheckoutStepState.ACTIVE}>
             <Order2DeliveryForm order={orderData} />
           </Box>
         )}

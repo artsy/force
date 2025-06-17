@@ -46,7 +46,7 @@ export const Order2HelpLinks: React.FC<
           <Spacer x={1} />
 
           <Box>
-            <Text variant="sm" color="mono100" fontWeight="bold">
+            <Text variant="sm" color="mono100" fontWeight="medium">
               Need help?
             </Text>
 
