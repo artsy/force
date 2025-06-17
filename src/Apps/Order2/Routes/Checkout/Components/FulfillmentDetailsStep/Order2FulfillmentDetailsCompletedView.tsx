@@ -18,7 +18,7 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
             <Spacer x={1} />
             <Text
               variant={["sm-display", "md"]}
-              fontWeight="400"
+              fontWeight="normal"
               color="mono100"
             >
               Pickup
@@ -30,13 +30,13 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
             type="button"
             onClick={onClickEdit}
           >
-            <Text variant="xs" fontWeight="400" color="mono100">
+            <Text variant="xs" fontWeight="normal" color="mono100">
               Edit
             </Text>
           </Clickable>
         </Flex>
         <Flex alignItems="center" ml="30px" mt={1}>
-          <Text variant="xs" fontWeight="400" color="mono100">
+          <Text variant="xs" fontWeight="normal" color="mono100">
             After your order is confirmed, a specialist will contact you within
             2 business days to coordinate pickup.
           </Text>
@@ -49,10 +49,10 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
     <Flex>
       <CheckmarkIcon height={20} width={20} fill="mono100" />
       <Box flexGrow={1} mx={0.5} />
-      <Text variant={["sm-display", "md"]} fontWeight="400" color="mono100">
+      <Text variant={["sm-display", "md"]} fontWeight="normal" color="mono100">
         Delivery
       </Text>
-      <Text variant="xs" fontWeight="400" color="mono100">
+      <Text variant="xs" fontWeight="normal" color="mono100">
         This is just some text to show the delivery details. It's not ready yet.
       </Text>
     </Flex>
