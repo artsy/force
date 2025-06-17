@@ -494,7 +494,7 @@ export const Order2ExpressCheckoutUI: React.FC<
       )
       if (enabledPaymentMethods) {
         checkoutTracking.expressCheckoutViewed({
-          walletType: enabledPaymentMethods,
+          walletTypes: enabledPaymentMethods,
         })
       }
     } catch (error) {

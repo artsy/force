@@ -66,14 +66,14 @@ export const useCheckoutTracking = ({
         trackEvent(payload)
       },
 
-      expressCheckoutViewed: ({ walletType }: { walletType: string[] }) => {
+      expressCheckoutViewed: ({ walletTypes }: { walletTypes: string[] }) => {
         const payload: ExpressCheckoutViewed = {
           action: ActionType.expressCheckoutViewed,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
           context_page_owner_slug: contextPageOwnerSlug,
           flow,
-          credit_card_wallet_types: walletType,
+          credit_card_wallet_types: walletTypes,
         }
 
         trackEvent(payload)
