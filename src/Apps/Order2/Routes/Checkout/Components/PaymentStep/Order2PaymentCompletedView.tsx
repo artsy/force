@@ -17,7 +17,7 @@ export const Order2PaymentCompletedView: React.FC<
           <Spacer x={1} />
           <Text
             variant={["sm-display", "md"]}
-            fontWeight="normal"
+            fontWeight={["bold", "normal"]}
             color="mono100"
           >
             Payment

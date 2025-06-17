@@ -26,7 +26,7 @@ export const Order2DeliveryOptionsStep: React.FC<
         <Flex flexDirection="column">
           <Text
             variant={["sm-display", "md"]}
-            fontWeight="normal"
+            fontWeight={["bold", "normal"]}
             color="mono100"
           >
             Shipping method
