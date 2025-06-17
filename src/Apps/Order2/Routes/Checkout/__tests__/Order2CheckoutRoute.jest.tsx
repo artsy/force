@@ -154,9 +154,14 @@ function expectTrackedEvents(
   },
   expectedEvents,
 ) {
+  const mockTrackEventCalls = mockTrackEvent.mock.calls.map(call => call[0])
+  expect(mockTrackEventCalls.map(call => call.action)).toEqual(
+    expectedEvents.map(event => event.action),
+  )
+
   expectedEvents.forEach((event, index) => {
     if (exact) {
-      expect(mockTrackEvent.mock.calls[index][0]).toEqual({
+      expect(mockTrackEventCalls[index]).toEqual({
         ...standardValues,
         ...event,
       })
@@ -168,7 +173,6 @@ function expectTrackedEvents(
       })
     }
   })
-  expect(mockTrackEvent).toHaveBeenCalledTimes(expectedEvents.length)
   mockTrackEvent.mockClear()
 }
 
@@ -213,6 +217,7 @@ describe("Order2CheckoutRoute", () => {
 
       expect(MockExpressCheckout).toHaveBeenCalled()
     })
+
     // TODO: Make our mock more strategic if necessary.
     it("does not render express checkout if not eligible", async () => {
       const props = {
@@ -493,23 +498,41 @@ describe("Order2CheckoutRoute", () => {
           await flushPromiseQueue()
         })
 
+        await flushPromiseQueue()
+
         expectTrackedEvents({ mockTrackEvent }, [
+          {
+            action: "orderProgressionViewed",
+            context_module: "ordersFulfillment",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+          },
           {
             action: "clickedFulfillmentTab",
             context_page_owner_id: "order-id",
-            context_page_owner_type: "orders-checkout",
             flow: "Buy now",
             method: "Pickup",
           },
           {
+            action: "orderProgressionViewed",
+            context_module: "ordersPayment",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+          },
+          {
             action: "clickedPaymentMethod",
             amount: '<mock-value-for-field-"minor">',
-            context_page_owner_type: "orders-checkout",
             currency: '<mock-value-for-field-"currencyCode">',
             flow: "Buy now",
             order_id: "order-id",
             payment_method: "CREDIT_CARD",
             subject: "click payment method",
+          },
+          {
+            action: "orderProgressionViewed",
+            context_module: "ordersReview",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
           },
           {
             action: "submittedOrder",
@@ -561,6 +584,12 @@ describe("Order2CheckoutRoute", () => {
 
         expectTrackedEvents({ mockTrackEvent }, [
           {
+            action: "orderProgressionViewed",
+            context_module: "ordersFulfillment",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+          },
+          {
             action: "clickedChangeShippingAddress",
             context_module: "ordersCheckout",
             context_page_owner_id: "order-id",
@@ -590,6 +619,14 @@ describe("Order2CheckoutRoute", () => {
           userEvent.click(screen.getByText("Delivery"))
         })
         expect(screen.queryByText("Shipping method")).toBeInTheDocument()
+        expectTrackedEvents({ mockTrackEvent }, [
+          {
+            action: "clickedFulfillmentTab",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+            method: "Delivery",
+          },
+        ])
       })
     })
 

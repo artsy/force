@@ -2,6 +2,7 @@ import {
   ActionType,
   type ClickedAskSpecialist,
   type ClickedBuyerProtection,
+  type ClickedImportFees,
   type ClickedVisitHelpCenter,
   type ContextModule,
   OwnerType,
@@ -60,6 +61,20 @@ export const useOrder2Tracking = () => {
           destination_page_owner_slug: "The-Artsy-Guarantee",
         }
 
+        trackEvent(payload)
+      },
+
+      clickedImportFees: (contextModule: ContextModule, flow) => {
+        const payload: ClickedImportFees = {
+          action: ActionType.clickedImportFees,
+          context_module: contextModule,
+          context_page_owner_id: contextPageOwnerId,
+          context_page_owner_type: contextPageOwnerType,
+          destination_page_owner_type: OwnerType.articles,
+          destination_page_owner_slug:
+            "How-are-taxes-and-customs-fees-calculated",
+          flow,
+        }
         trackEvent(payload)
       },
     }

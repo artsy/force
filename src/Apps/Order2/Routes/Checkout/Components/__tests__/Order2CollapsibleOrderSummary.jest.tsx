@@ -91,11 +91,30 @@ describe("Order2CollapsibleOrderSummary", () => {
     expect(screen.getByText("Test Artist")).toBeInTheDocument()
   })
 
+  it("tracks a click on the import fees link", async () => {
+    await renderWithRelay({
+      Order: () => mockOrder,
+    })
+
+    const importFeesLink = screen.getByText("may apply at import")
+    fireEvent.click(importFeesLink)
+
+    expect(mockTrackEvent).toHaveBeenCalledTimes(1)
+    expect(mockTrackEvent).toHaveBeenCalledWith({
+      action: "clickedImportFees",
+      context_page_owner_id: "123",
+      context_page_owner_type: "order",
+      flow: "Buy now",
+      context_module: "ordersCheckout",
+      destination_page_owner_slug: "How-are-taxes-and-customs-fees-calculated",
+      destination_page_owner_type: "articles",
+    })
+  })
+
   it("tracks a click to expand and unexpand the summary", async () => {
     await renderWithRelay({
       Order: () => mockOrder,
     })
-    // expect(screen.getByText(/\*Additional duties and taxes/)).not.toBeVisible()
     const toggleButton = screen.getByText("$42,000")
     fireEvent.click(toggleButton)
 
@@ -110,7 +129,6 @@ describe("Order2CollapsibleOrderSummary", () => {
 
     mockTrackEvent.mockClear()
 
-    // You may need to adjust the assertion depending on how collapse works
     fireEvent.click(toggleButton)
 
     expect(mockTrackEvent).toHaveBeenCalledTimes(1)

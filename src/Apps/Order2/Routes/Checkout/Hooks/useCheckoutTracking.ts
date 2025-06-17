@@ -9,6 +9,7 @@ import {
   ContextModule,
   type ErrorMessageViewed,
   type ExpressCheckoutViewed,
+  type OrderProgressionViewed,
   type PageOwnerType,
   type SubmittedOffer,
   type SubmittedOrder,
@@ -119,6 +120,9 @@ export const useCheckoutTracking = ({
       clickedBuyerProtection: () =>
         order2Tracking.clickedBuyerProtection(ContextModule.ordersCheckout),
 
+      clickedImportFees: () =>
+        order2Tracking.clickedImportFees(ContextModule.ordersCheckout, flow),
+
       clickedPaymentMethod: ({
         paymentMethod,
         amountMinor,
@@ -166,6 +170,24 @@ export const useCheckoutTracking = ({
         trackEvent(payload)
       },
 
+      orderProgressionViewed: (
+        contextModule:
+          | ContextModule.ordersOffer
+          | ContextModule.ordersFulfillment
+          | ContextModule.ordersShippingMethods
+          | ContextModule.ordersPayment
+          | ContextModule.ordersReview,
+      ) => {
+        const payload: OrderProgressionViewed = {
+          action: ActionType.orderProgressionViewed,
+          context_module: contextModule,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+          flow,
+        }
+        trackEvent(payload)
+      },
+
       errorMessageViewed: ({
         error_code,
         title,
@@ -189,6 +211,7 @@ export const useCheckoutTracking = ({
 
         trackEvent(payload)
       },
+
       toggledCollapsibleOrderSummary: (expanded: boolean) => {
         const payload: ToggledCollapsibleOrderSummary = {
           action: ActionType.toggledCollapsibleOrderSummary,
@@ -209,6 +232,7 @@ export const useCheckoutTracking = ({
     mode,
     source,
     order2Tracking.clickedBuyerProtection,
+    order2Tracking.clickedImportFees,
   ])
 
   return checkoutTracking

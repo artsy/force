@@ -72,7 +72,10 @@ export const Order2CollapsibleOrderSummary: React.FC<
       >
         <Spacer y={1} />
         <Box mb={2}>
-          <Order2PricingBreakdown order={orderData} />
+          <Order2PricingBreakdown
+            order={orderData}
+            trackClickedImportFees={checkoutTracking.clickedImportFees}
+          />
         </Box>
         <Spacer y={1} />
       </Box>

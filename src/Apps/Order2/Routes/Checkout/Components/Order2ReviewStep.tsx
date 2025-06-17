@@ -30,6 +30,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   const submitOrderMutation = useSubmitOrderMutation()
   const { steps, confirmationToken, redirectToOrderDetails, checkoutTracking } =
     useCheckoutContext()
+
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.CONFIRMATION,
   )?.state

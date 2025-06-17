@@ -588,6 +588,20 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
             },
           ]
         }
+
+        const shouldBeHidden = current.state === CheckoutStepState.HIDDEN
+        if (shouldBeHidden) {
+          // no change for hidden steps on payment complete
+          return [...acc, current]
+        }
+
+        if (current.state === CheckoutStepState.COMPLETED) {
+          return [...acc, current]
+        }
+
+        // We've already returned if it is completed or hidden, so this
+        // must be an upcoming step. If it is the first one, then
+        // we activate it, otherwise we leave it as upcoming.
         const firstStepAfterCompleted =
           acc.find(step => step.state === CheckoutStepState.COMPLETED) &&
           !acc.find(step => step.state === CheckoutStepState.UPCOMING)
