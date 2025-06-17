@@ -58,18 +58,17 @@ describe("offer utils", () => {
         {
           key: "price-option-max",
           value: 100,
-          description: "List price (high chance of acceptance)",
+          description: "List price",
         },
         {
           key: "price-option-mid",
           value: 90,
-          description: "10% below the list price (good chance of acceptance)",
+          description: "10% below the list price",
         },
         {
           key: "price-option-min",
           value: 80,
-          description:
-            "20% below the list price (substantial reduction, lower chance of acceptance)",
+          description: "20% below the list price",
         },
       ])
     })
@@ -104,17 +103,17 @@ describe("offer utils", () => {
         {
           key: "price-option-max",
           value: 150,
-          description: "Top-end of range (high chance of acceptance)",
+          description: "Top-end of range",
         },
         {
           key: "price-option-mid",
           value: 125,
-          description: "Midpoint (good chance of acceptance)",
+          description: "Midpoint",
         },
         {
           key: "price-option-min",
           value: 100,
-          description: "Low-end of range (lower chance of acceptance)",
+          description: "Low-end of range",
         },
       ])
     })

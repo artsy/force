@@ -121,11 +121,7 @@ describe("PriceOptions", () => {
       fireEvent.click(radios[0])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject(
-            "Top-end of range (high chance of acceptance)",
-            200,
-            "USD",
-          ),
+          getTrackingObject("Top-end of range", 200, "USD"),
         ),
       )
       fireEvent.click(radios[1])
@@ -205,13 +201,7 @@ describe("PriceOptions", () => {
     it("correctly tracks the clicking of an option", async () => {
       fireEvent.click(radios[0])
       expect(trackEvent).toHaveBeenLastCalledWith(
-        expect.objectContaining(
-          getTrackingObject(
-            "List price (high chance of acceptance)",
-            100,
-            "EUR",
-          ),
-        ),
+        expect.objectContaining(getTrackingObject("List price", 100, "EUR")),
       )
 
       fireEvent.click(radios[1])
