@@ -11739,6 +11739,7 @@ input FlagArtworkImportCellInput {
   clientMutationId: String
   columnName: String!
   flaggedValue: String
+  originalValue: String
   rowID: String!
   userNote: String!
 }
