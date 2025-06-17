@@ -1,6 +1,5 @@
-import { Box, Clickable, Step, Stepper } from "@artsy/palette"
+import { Clickable, Step, Stepper } from "@artsy/palette"
 import { useRouter } from "System/Hooks/useRouter"
-import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
 import type { OrderStepper_order$data } from "__generated__/OrderStepper_order.graphql"
 import { type FC, useMemo } from "react"
@@ -124,26 +123,12 @@ export const OrderStepper: FC<React.PropsWithChildren<OrderStepperProps>> = ({
   }
 
   return (
-    <>
-      <Media between={["xs", "md"]}>
-        <Box>
-          <StepperComponent
-            steps={steps}
-            currentStep={currentStep}
-            completedOrderSteps={completedOrderSteps}
-            onStepClick={handleStepClick}
-          />
-        </Box>
-      </Media>
-      <Media greaterThan="sm">
-        <StepperComponent
-          steps={steps}
-          currentStep={currentStep}
-          completedOrderSteps={completedOrderSteps}
-          onStepClick={handleStepClick}
-        />
-      </Media>
-    </>
+    <StepperComponent
+      steps={steps}
+      currentStep={currentStep}
+      completedOrderSteps={completedOrderSteps}
+      onStepClick={handleStepClick}
+    />
   )
 }
 
