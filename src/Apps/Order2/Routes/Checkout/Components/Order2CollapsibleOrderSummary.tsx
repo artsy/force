@@ -1,6 +1,7 @@
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import { Box, Clickable, Flex, Image, Spacer, Text } from "@artsy/palette"
 import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2CollapsibleOrderSummary_order$key } from "__generated__/Order2CollapsibleOrderSummary_order.graphql"
 import type * as React from "react"
@@ -14,6 +15,7 @@ interface Order2CollapsibleOrderSummaryProps {
 export const Order2CollapsibleOrderSummary: React.FC<
   Order2CollapsibleOrderSummaryProps
 > = ({ order }) => {
+  const { checkoutTracking } = useCheckoutContext()
   const orderData = useFragment(FRAGMENT, order)
   const [isExpanded, setIsExpanded] = useState(false)
 
@@ -21,6 +23,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
 
   const handleToggle = () => {
+    checkoutTracking.toggledCollapsibleOrderSummary(!isExpanded)
     setIsExpanded(!isExpanded)
   }
 

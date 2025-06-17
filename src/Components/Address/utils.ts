@@ -44,7 +44,7 @@ export const basicPhoneValidator = {
 
 export const richPhoneValidators = {
   phoneNumber: Yup.string()
-    .required("Phone Number is required")
+    .required("Phone number is required")
     .test({
       name: "phone-number-is-valid",
       message: "Please enter a valid phone number",
@@ -56,7 +56,7 @@ export const richPhoneValidators = {
       },
     }),
   phoneNumberCountryCode: Yup.string().required(
-    "Phone Number Country Code is required",
+    "Phone number country code is required",
   ),
 }
 

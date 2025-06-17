@@ -49,6 +49,7 @@ jest.mock("@stripe/react-stripe-js", () => {
         onClick={() =>
           onChange({
             elementType: "payment",
+            value: { type: "card" },
           })
         }
       >
@@ -141,18 +142,33 @@ const orderMutationSuccess = (initialValues, newValues) => {
  *  Assert that the given events were tracked in order.
  *  Then clear the mock for the next assertion.
  */
-const assertTracked = (...expectedEvents) => {
-  const standardValues = {
-    context_page_owner_type: "orders-checkout",
-    order_id: "order-id",
-  }
-  expect(mockTrackEvent).toHaveBeenCalledTimes(expectedEvents.length)
+function expectTrackedEvents(
+  {
+    mockTrackEvent,
+    standardValues = { context_page_owner_type: "orders-checkout" },
+    exact = true,
+  }: {
+    mockTrackEvent: jest.Mock
+    standardValues?: any
+    exact?: boolean
+  },
+  expectedEvents,
+) {
   expectedEvents.forEach((event, index) => {
-    expect(mockTrackEvent.mock.calls[index][0]).toEqual({
-      ...standardValues,
-      ...event,
-    })
+    if (exact) {
+      expect(mockTrackEvent.mock.calls[index][0]).toEqual({
+        ...standardValues,
+        ...event,
+      })
+    } else {
+      // If not exact, we only check that the event contains the expected values
+      expect(mockTrackEvent.mock.calls[index][0]).toMatchObject({
+        ...standardValues,
+        ...event,
+      })
+    }
   })
+  expect(mockTrackEvent).toHaveBeenCalledTimes(expectedEvents.length)
   mockTrackEvent.mockClear()
 }
 
@@ -287,7 +303,7 @@ describe("Order2CheckoutRoute", () => {
         act(() => {
           userEvent.click(submitButton)
         })
-        await screen.findByText("Phone Number is required")
+        await screen.findByText("Phone number is required")
 
         // Select country code
         expect(screen.queryByText(/🇩🇪/)).not.toBeInTheDocument()
@@ -311,7 +327,7 @@ describe("Order2CheckoutRoute", () => {
 
         await waitFor(() => {
           expect(
-            screen.queryByText("Phone Number is required"),
+            screen.queryByText("Phone number is required"),
           ).not.toBeInTheDocument()
         })
         expect(submitButton).not.toBeDisabled()
@@ -477,17 +493,37 @@ describe("Order2CheckoutRoute", () => {
           await flushPromiseQueue()
         })
 
-        assertTracked({
-          action: "submittedOrder",
-          flow: "Buy now",
-        })
+        expectTrackedEvents({ mockTrackEvent }, [
+          {
+            action: "clickedFulfillmentTab",
+            context_page_owner_id: "order-id",
+            context_page_owner_type: "orders-checkout",
+            flow: "Buy now",
+            method: "Pickup",
+          },
+          {
+            action: "clickedPaymentMethod",
+            amount: '<mock-value-for-field-"minor">',
+            context_page_owner_type: "orders-checkout",
+            currency: '<mock-value-for-field-"currencyCode">',
+            flow: "Buy now",
+            order_id: "order-id",
+            payment_method: "CREDIT_CARD",
+            subject: "click payment method",
+          },
+          {
+            action: "submittedOrder",
+            flow: "Buy now",
+            order_id: "order-id",
+          },
+        ])
 
         expect(mockRouter.replace).toHaveBeenCalledWith(
           "/orders2/order-id/details",
         )
       })
 
-      it("shows the pickup details pre-filled if they exist", async () => {
+      it("shows the pickup details pre-filled if they exist and allows clicking edit", async () => {
         await renderWithLoadingComplete({
           ...baseProps,
           me: {
@@ -523,6 +559,14 @@ describe("Order2CheckoutRoute", () => {
           userEvent.click(editPickup)
         })
 
+        expectTrackedEvents({ mockTrackEvent }, [
+          {
+            action: "clickedChangeShippingAddress",
+            context_module: "ordersCheckout",
+            context_page_owner_id: "order-id",
+          },
+        ])
+
         const pickupTab = within(
           screen.getByTestId(testIDs.fulfillmentDetailsStepTabs),
         ).getByText("Pickup")
@@ -550,6 +594,10 @@ describe("Order2CheckoutRoute", () => {
     })
 
     describe("within the payment section", () => {
+      it.todo(
+        // TODO: Example of this assertion is above forclickedChangeShippingAddress
+        "Allows clicking the edit button to change payment method",
+      )
       describe("error handling when saving and continuing", () => {
         it("shows an error if no payment method is selected", async () => {
           const props = {

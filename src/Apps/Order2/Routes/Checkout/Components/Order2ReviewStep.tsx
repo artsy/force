@@ -124,7 +124,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         <>
           <Spacer y={2} />
           <Button
-            variant={"primaryBlack"}
+            variant="primaryBlack"
             width="100%"
             onClick={handleClick}
             loading={loading}

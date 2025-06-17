@@ -8,7 +8,6 @@ import {
   type PageOwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import type { Order2HelpLinks_order$data } from "__generated__/Order2HelpLinks_order.graphql"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
 
@@ -23,7 +22,7 @@ export const useOrder2Tracking = () => {
     return {
       clickedAskSpecialist: (
         contextModule: ContextModule,
-        orderType: Order2HelpLinks_order$data["mode"],
+        orderType: string,
       ) => {
         const payload: ClickedAskSpecialist = {
           action: ActionType.clickedAskSpecialist,
@@ -37,7 +36,7 @@ export const useOrder2Tracking = () => {
       },
       clickedVisitHelpCenter: (
         contextModule: ContextModule,
-        orderType: Order2HelpLinks_order$data["mode"],
+        orderType: string,
       ) => {
         const payload: ClickedVisitHelpCenter = {
           action: ActionType.clickedVisitHelpCenter,
