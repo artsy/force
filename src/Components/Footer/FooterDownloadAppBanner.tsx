@@ -7,9 +7,11 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { useAuthDialog } from "Components/AuthDialog"
 import { DownloadAppBadge } from "Components/DownloadAppBadges/DownloadAppBadge"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import {
   DOWNLOAD_APP_URLS,
   Device,
@@ -27,6 +29,8 @@ export const FooterDownloadAppBanner = () => {
   const { match } = useRouter()
 
   const { device, downloadAppUrl } = useDeviceDetection()
+  const { showAuthDialog } = useAuthDialog()
+  const { isLoggedIn } = useSystemContext()
 
   if (
     IGNORE_PATHS.includes(match.location.pathname) ||
@@ -51,8 +55,8 @@ export const FooterDownloadAppBanner = () => {
           px={[2, 4]}
           py={[6, 2]}
         >
-          <Text variant="xl" textAlign="center">
-            Meet your new art advisor.
+          <Text variant="xl" textAlign="center" style={{ textWrap: "balance" }}>
+            Discover and Buy Art that Moves You
           </Text>
 
           <Media at="xs">
@@ -76,15 +80,31 @@ export const FooterDownloadAppBanner = () => {
           <Media greaterThan="xs">
             <Spacer y={2} />
 
-            <Button
-              variant="secondaryBlack"
-              // @ts-ignore
-              as={RouterLink}
-              to="/meet-your-new-art-advisor"
-              minWidth={[0, 0, 200, 250]}
-            >
-              Discover Artsy
-            </Button>
+            {isLoggedIn ? (
+              <Button
+                variant="secondaryBlack"
+                minWidth={[0, 0, 200, 250]}
+                // @ts-ignore
+                as={RouterLink}
+                to="/meet-your-new-art-advisor"
+              >
+                Get the app
+              </Button>
+            ) : (
+              <Button
+                variant="secondaryBlack"
+                minWidth={[0, 0, 200, 250]}
+                onClick={() => {
+                  showAuthDialog({
+                    analytics: {
+                      contextModule: ContextModule.footer,
+                    },
+                  })
+                }}
+              >
+                Sign Up
+              </Button>
+            )}
           </Media>
         </Column>
 
