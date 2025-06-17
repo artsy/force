@@ -5,6 +5,7 @@ import {
   type ClickedChangeShippingAddress,
   type ClickedExpressCheckout,
   type ClickedFulfillmentTab,
+  type ClickedOrderProgression,
   type ClickedPaymentMethod,
   ContextModule,
   type ErrorMessageViewed,
@@ -166,6 +167,17 @@ export const useCheckoutTracking = ({
           context_module: ContextModule.ordersCheckout,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
+        }
+        trackEvent(payload)
+      },
+
+      clickedOrderProgression: (contextModule: ContextModule) => {
+        const payload: ClickedOrderProgression = {
+          action: ActionType.clickedOrderProgression,
+          context_module: contextModule,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+          flow,
         }
         trackEvent(payload)
       },

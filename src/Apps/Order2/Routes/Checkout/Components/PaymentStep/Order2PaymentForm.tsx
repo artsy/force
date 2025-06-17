@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import LockIcon from "@artsy/icons/LockIcon"
 import ReceiptIcon from "@artsy/icons/ReceiptIcon"
 import { Box, Button, Flex, Spacer, Text, useTheme } from "@artsy/palette"
@@ -192,6 +193,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
       setSubtitleErrorMessage("Select a payment method")
       return
     }
+
+    checkoutTracking.clickedOrderProgression(ContextModule.ordersPayment)
 
     if (isSelectedPaymentMethodStripe) {
       setIsSubmittingToStripe(true)

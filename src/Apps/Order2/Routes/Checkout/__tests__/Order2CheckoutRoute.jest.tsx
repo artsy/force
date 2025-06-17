@@ -514,6 +514,12 @@ describe("Order2CheckoutRoute", () => {
             method: "Pickup",
           },
           {
+            action: "clickedOrderProgression",
+            context_module: "ordersFulfillment",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+          },
+          {
             action: "orderProgressionViewed",
             context_module: "ordersPayment",
             context_page_owner_id: "order-id",
@@ -527,6 +533,12 @@ describe("Order2CheckoutRoute", () => {
             order_id: "order-id",
             payment_method: "CREDIT_CARD",
             subject: "click payment method",
+          },
+          {
+            action: "clickedOrderProgression",
+            context_module: "ordersPayment",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
           },
           {
             action: "orderProgressionViewed",
@@ -632,9 +644,10 @@ describe("Order2CheckoutRoute", () => {
 
     describe("within the payment section", () => {
       it.todo(
-        // TODO: Example of this assertion is above forclickedChangeShippingAddress
+        // TODO: Example of this assertion is above for clickedChangeShippingAddress
         "Allows clicking the edit button to change payment method",
       )
+
       describe("error handling when saving and continuing", () => {
         it("shows an error if no payment method is selected", async () => {
           const props = {
