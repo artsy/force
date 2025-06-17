@@ -16,9 +16,22 @@ export const Order2DetailsFulfillmentInfo: React.FC<
   const { fulfillmentDetails, selectedFulfillmentOption, shippingOrigin } =
     orderData
 
-  if (!selectedFulfillmentOption) return null
-
+  const isBlankFulfillmentDetails =
+    !fulfillmentDetails ||
+    Object.values(fulfillmentDetails).every(
+      part =>
+        !part ||
+        part === undefined ||
+        (typeof part === "string" && part.trim() === ""),
+    )
   const isPickup = selectedFulfillmentOption?.type === "PICKUP"
+
+  if (
+    (isPickup && !shippingOrigin) ||
+    (!isPickup && isBlankFulfillmentDetails)
+  ) {
+    return null
+  }
 
   return (
     <Box p={[2, 4]} backgroundColor="mono0">
@@ -49,32 +62,32 @@ const getShippingContent = (fulfillmentDetails): React.ReactNode => {
   return (
     <>
       {name && (
-        <Text variant="xs" color="mono100">
+        <Text variant={["xs", "sm"]} color="mono100">
           {name}
         </Text>
       )}
       {addressLine1 && (
-        <Text variant="xs" color="mono100">
+        <Text variant={["xs", "sm"]} color="mono100">
           {addressLine1}
         </Text>
       )}
       {addressLine2 && (
-        <Text variant="xs" color="mono100">
+        <Text variant={["xs", "sm"]} color="mono100">
           {addressLine2}
         </Text>
       )}
       {(city || region || postalCode) && (
-        <Text variant="xs" color="mono100">
+        <Text variant={["xs", "sm"]} color="mono100">
           {[city, region, postalCode].filter(Boolean).join(", ")}
         </Text>
       )}
       {country && (
-        <Text variant="xs" color="mono100">
+        <Text variant={["xs", "sm"]} color="mono100">
           {country}
         </Text>
       )}
       {phoneNumber && (
-        <Text variant="xs" color="mono100">
+        <Text variant={["xs", "sm"]} color="mono100">
           {phoneNumber.display}
         </Text>
       )}
