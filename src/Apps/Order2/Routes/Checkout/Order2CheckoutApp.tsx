@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import {
   Box,
   Column,
@@ -7,6 +8,10 @@ import {
   Stack,
 } from "@artsy/palette"
 import { SubmittingOrderSpinner } from "Apps/Order/Components/SubmittingOrderSpinner"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2DeliveryOptionsStep } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/Order2DeliveryOptionsStep"
 import { Order2ExpressCheckout } from "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckout"
 import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
@@ -35,8 +40,13 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   const order = data.me?.order ?? null
   const artworkSlug = order?.lineItems[0]?.artwork?.slug
 
-  const { isLoading, setExpressCheckoutLoaded, expressCheckoutSubmitting } =
-    useCheckoutContext()
+  const {
+    isLoading,
+    setExpressCheckoutLoaded,
+    expressCheckoutSubmitting,
+    steps,
+    checkoutTracking,
+  } = useCheckoutContext()
   if (!order) {
     return <ErrorPage code={404} message="Order not found" />
   }
@@ -51,6 +61,29 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
       setExpressCheckoutLoaded([])
     }
   }, [])
+
+  const activeStep = steps.find(step => step.state === CheckoutStepState.ACTIVE)
+  useEffect(() => {
+    switch (activeStep?.name) {
+      case CheckoutStepName.CONFIRMATION:
+        checkoutTracking.orderProgressionViewed(ContextModule.ordersReview)
+        break
+      case CheckoutStepName.FULFILLMENT_DETAILS:
+        checkoutTracking.orderProgressionViewed(ContextModule.ordersFulfillment)
+        break
+      case CheckoutStepName.PAYMENT:
+        checkoutTracking.orderProgressionViewed(ContextModule.ordersPayment)
+        break
+      case CheckoutStepName.OFFER_AMOUNT:
+        checkoutTracking.orderProgressionViewed(ContextModule.ordersOffer)
+        break
+      case CheckoutStepName.DELIVERY_OPTION:
+        checkoutTracking.orderProgressionViewed(
+          ContextModule.ordersShippingMethods,
+        )
+        break
+    }
+  }, [activeStep?.name, checkoutTracking])
 
   return (
     <>

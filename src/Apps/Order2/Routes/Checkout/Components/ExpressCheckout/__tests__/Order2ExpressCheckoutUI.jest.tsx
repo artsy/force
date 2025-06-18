@@ -2,6 +2,7 @@ import { ExpressCheckoutElement } from "@stripe/react-stripe-js"
 import { fireEvent, waitFor } from "@testing-library/react"
 import { screen } from "@testing-library/react"
 import type { Order2CheckoutContextValue } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
+import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { DeepPartial } from "Utils/typeSupport"
@@ -38,7 +39,16 @@ const mockCheckoutContext: DeepPartial<Order2CheckoutContextValue> = {
 }
 
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
-  useCheckoutContext: () => mockCheckoutContext,
+  useCheckoutContext: () => {
+    const checkoutTracking = useCheckoutTracking({
+      source: "artwork page",
+      mode: "BUY",
+    })
+    return {
+      checkoutTracking,
+      ...mockCheckoutContext,
+    }
+  },
 }))
 
 const mockExpressCheckoutElement = ExpressCheckoutElement as jest.Mock

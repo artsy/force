@@ -19,6 +19,10 @@ const isOrderMutationError = <T extends { __typename?: string }>(
   return data?.__typename === "OrderMutationError"
 }
 
+/**
+ * Validates the response from an order mutation and extracts the success data,
+ * refining its type to a success in the process. Throws an error if this fails.
+ */
 export const validateAndExtractOrderResponse = <
   T extends { __typename?: string },
 >(

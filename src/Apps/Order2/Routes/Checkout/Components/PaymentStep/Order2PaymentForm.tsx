@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import LockIcon from "@artsy/icons/LockIcon"
 import ReceiptIcon from "@artsy/icons/ReceiptIcon"
 import { Box, Button, Flex, Spacer, Text, useTheme } from "@artsy/palette"
@@ -10,6 +11,7 @@ import {
 import {
   type StripeElementsOptions,
   type StripeElementsUpdateOptions,
+  type StripePaymentElementChangeEvent,
   type StripePaymentElementOptions,
   loadStripe,
 } from "@stripe/stripe-js"
@@ -18,6 +20,7 @@ import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mu
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+
 import { FadeInBox } from "Components/FadeInBox"
 import { RouterLink } from "System/Components/RouterLink"
 import { getENV } from "Utils/getENV"
@@ -108,15 +111,18 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   const elements = useElements()
   const environment = useRelayEnvironment()
   const updateOrderMutation = useUpdateOrderMutation()
-  const { setConfirmationToken } = useCheckoutContext()
+  const { setConfirmationToken, checkoutTracking } = useCheckoutContext()
+
   const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [subtitleErrorMessage, setSubtitleErrorMessage] = useState<
     string | null
   >(null)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
-    null | "saved" | "stripe" | "wire"
+    null | "saved" | "stripe-card" | "wire" | "stripe-other"
   >(null)
+
+  const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
 
   if (!(stripe && elements)) {
     return null
@@ -135,10 +141,26 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
     },
   }
 
-  const onChange = StripePaymentElementChangeEvent => {
-    const { elementType, collapsed } = StripePaymentElementChangeEvent
+  const onChange = (event: StripePaymentElementChangeEvent) => {
+    const { elementType, collapsed, value } = event
+    logger.warn("PaymentElement onChange event", {
+      event,
+    })
     if (elementType === "payment" && !collapsed) {
-      setSelectedPaymentMethod("stripe")
+      if (value.type === "card") {
+        // Only track this the first time it happens
+        if (selectedPaymentMethod !== "stripe-card") {
+          checkoutTracking.clickedPaymentMethod({
+            paymentMethod: "CREDIT_CARD",
+            amountMinor: order.itemsTotal?.minor,
+            currency: order.itemsTotal?.currencyCode ?? "",
+          })
+        }
+        setSelectedPaymentMethod("stripe-card")
+      } else {
+        // TODO
+        setSelectedPaymentMethod("stripe-other")
+      }
     }
   }
 
@@ -149,6 +171,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   }
 
   const onClickWirePaymentMethods = () => {
+    checkoutTracking.clickedPaymentMethod({
+      paymentMethod: "WIRE_TRANSFER",
+      amountMinor: order.itemsTotal?.minor,
+      currency: order.itemsTotal?.currencyCode ?? "",
+    })
     setErrorMessage(null) // Clear any previous error messages
     setSelectedPaymentMethod("wire")
     elements?.getElement("payment")?.collapse()
@@ -167,7 +194,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
       return
     }
 
-    if (selectedPaymentMethod === "stripe") {
+    checkoutTracking.clickedOrderProgression(ContextModule.ordersPayment)
+
+    if (isSelectedPaymentMethodStripe) {
       setIsSubmittingToStripe(true)
 
       const { error: submitError } = await elements.submit()
@@ -262,7 +291,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
         </Text>
       )}
       {/* Stripe error messages are displayed within the Payment Element, so we don't need to handle them here. */}
-      {errorMessage && selectedPaymentMethod !== "stripe" && (
+      {errorMessage && !isSelectedPaymentMethodStripe && (
         <>
           <Spacer y={2} />
           <CheckoutErrorBanner error={{ message: errorMessage }} />
@@ -347,7 +376,14 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
           </Collapse>
         </Box>
       </FadeInBox>
-      <Spacer y={4} />
+      <Spacer y={2} />
+      {/* Stripe error messages are displayed within the Payment Element, so we don't need to handle them here. */}
+      {errorMessage && !isSelectedPaymentMethodStripe && (
+        <>
+          <CheckoutErrorBanner error={{ message: errorMessage }} />
+          <Spacer y={4} />
+        </>
+      )}
       <Button
         loading={isSubmittingToStripe}
         variant="primaryBlack"
@@ -362,6 +398,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
 
 const FRAGMENT = graphql`
   fragment Order2PaymentForm_order on Order {
+    mode
+    source
     internalID
     itemsTotal {
       minor

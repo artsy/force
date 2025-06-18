@@ -20,8 +20,8 @@ export const Order2FulfillmentDetailsStep: React.FC<
 > = ({ order }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
 
-  const { editFulfillmentDetails, steps, setActiveFulfillmentDetailsTab } =
-    useCheckoutContext()!
+  const { steps, setActiveFulfillmentDetailsTab, checkoutTracking } =
+    useCheckoutContext()
 
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
@@ -49,7 +49,6 @@ export const Order2FulfillmentDetailsStep: React.FC<
       <Box px={[2, 4]} hidden={stepState !== CheckoutStepState.COMPLETED}>
         <Order2FulfillmentDetailsCompletedView
           fulfillmentDetails={savedFulfillmentDetails}
-          onClickEdit={() => editFulfillmentDetails()}
           fulfillmentOption={selectedFulfillmentOption}
         />
       </Box>
@@ -63,8 +62,10 @@ export const Order2FulfillmentDetailsStep: React.FC<
             onChange={tabInfo => {
               const { tabIndex } = tabInfo ?? {}
               if (tabIndex === 1) {
+                checkoutTracking.clickedFulfillmentTab("Pickup")
                 setActiveFulfillmentDetailsTab("PICKUP")
               } else {
+                checkoutTracking.clickedFulfillmentTab("Delivery")
                 setActiveFulfillmentDetailsTab("DELIVERY")
               }
             }}

@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import ShieldIcon from "@artsy/icons/ShieldIcon"
 import { Box, Button, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
 import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSubmitOrderMutation"
@@ -8,6 +9,7 @@ import {
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type { Order2ReviewStep_order$key } from "__generated__/Order2ReviewStep_order.graphql"
@@ -27,14 +29,16 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   const artwork = orderData.lineItems[0]?.artwork
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
   const submitOrderMutation = useSubmitOrderMutation()
-  const { steps, confirmationToken, redirectToOrderDetails } =
+  const { steps, confirmationToken, redirectToOrderDetails, checkoutTracking } =
     useCheckoutContext()
+
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.CONFIRMATION,
   )?.state
 
   const [loading, setLoading] = useState(false)
-  const handleClick = async event => {
+  const handleClick = async _event => {
+    checkoutTracking.clickedOrderProgression(ContextModule.ordersReview)
     setLoading(true)
 
     try {
@@ -51,6 +55,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         submitOrderResult.submitOrder?.orderOrError,
       )
 
+      checkoutTracking.submittedOrder()
       redirectToOrderDetails()
     } catch (error) {
       setLoading(false)
@@ -95,28 +100,41 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           </Text>
         </Box>
       </Flex>
-      <Box mb={2}>
+      <Box>
         <Order2PricingBreakdown order={orderData} />
       </Box>
+      <Spacer y={2} />
       <Message variant="default" p={1}>
         <Flex>
           <ShieldIcon fill="mono100" />
           <Spacer x={1} />
           <Text variant="xs" color="mono100">
-            Your purchase is protected with Artsy&rsquo;s Buyer Guarantee.
+            Your purchase is protected with{" "}
+            <RouterLink
+              onClick={() => checkoutTracking.clickedBuyerProtection()}
+              inline
+              target="_blank"
+              to={BUYER_GUARANTEE_URL}
+            >
+              Artsy&rsquo;s Buyer Guarantee
+            </RouterLink>
+            .
           </Text>
         </Flex>
       </Message>
       <Spacer y={2} />
       {stepState === CheckoutStepState.ACTIVE && (
-        <Button
-          variant={"primaryBlack"}
-          width="100%"
-          onClick={handleClick}
-          loading={loading}
-        >
-          Submit
-        </Button>
+        <>
+          <Spacer y={2} />
+          <Button
+            variant="primaryBlack"
+            width="100%"
+            onClick={handleClick}
+            loading={loading}
+          >
+            Submit
+          </Button>
+        </>
       )}
     </Flex>
   )
