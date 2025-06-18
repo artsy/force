@@ -78,7 +78,7 @@ describe("Footer", () => {
 
     it("renders the app download banner", () => {
       const wrapper = getWrapper("lg")
-      expect(wrapper.text()).toContain("Meet your new art advisor.")
+      expect(wrapper.text()).toContain("Discover and Buy Art that Moves You")
     })
 
     it("hides the app download banner if we are on an ignored route", () => {
@@ -87,7 +87,9 @@ describe("Footer", () => {
       }))
 
       const wrapper = getWrapper("lg")
-      expect(wrapper.text()).not.toContain("Meet your new art advisor.")
+      expect(wrapper.text()).not.toContain(
+        "Discover and Buy Art that Moves You",
+      )
     })
 
     it("hides the app download banner if the artwork is unlisted", async () => {

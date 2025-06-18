@@ -26,9 +26,13 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
-      <Box p={2} hidden={stepState !== CheckoutStepState.UPCOMING}>
+      <Box py={2} px={[2, 4]} hidden={stepState !== CheckoutStepState.UPCOMING}>
         <Flex flexDirection="column">
-          <Text variant="sm-display" fontWeight="bold" color="mono100">
+          <Text
+            variant={["sm-display", "md"]}
+            fontWeight={["bold", "normal"]}
+            color="mono100"
+          >
             Payment
           </Text>
           <Text variant={["xs", "xs", "sm"]} color="mono60">
@@ -37,16 +41,24 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
         </Flex>
       </Box>
 
-      <Box p={2} hidden={stepState !== CheckoutStepState.COMPLETED}>
+      <Box
+        py={2}
+        px={[2, 4]}
+        hidden={stepState !== CheckoutStepState.COMPLETED}
+      >
         <Order2PaymentCompletedView
           confirmationToken={confirmationToken}
           onClickEdit={() => editPayment()}
         />
       </Box>
 
-      <Box p={2} hidden={stepState !== CheckoutStepState.ACTIVE}>
+      <Box py={2} px={[2, 4]} hidden={stepState !== CheckoutStepState.ACTIVE}>
         <Flex flexDirection="column">
-          <Text variant="sm-display" fontWeight="bold" color="mono100">
+          <Text
+            variant={["sm-display", "md"]}
+            fontWeight={["bold", "normal"]}
+            color="mono100"
+          >
             Payment
           </Text>
           <Order2PaymentForm order={orderData} />

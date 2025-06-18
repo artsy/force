@@ -12,12 +12,12 @@ export const HomeHeroUnitLoggedOut: React.FC<{ index: number }> = ({
 
   return (
     <HomeHeroUnitBase
-      title="Your guide to the art world"
-      body="Artsy makes it easy to discover artists and artworks you'll love"
-      imageUrl="https://files.artsy.net/images/90s-mirror.jpg"
+      title="Discover and Buy Art that Moves You."
+      body="Artsy makes it easy to discover artists and artworks you’ll love."
+      imageUrl="https://files.artsy.net/images/new-works-for-you-hero.jpg"
       link={{
         desktop: {
-          text: "Sign up",
+          text: "Sign Up",
           url: "/signup",
           onClick: e => {
             e.preventDefault()

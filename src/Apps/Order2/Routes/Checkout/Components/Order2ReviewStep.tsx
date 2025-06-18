@@ -59,8 +59,12 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   }
 
   return (
-    <Flex flexDirection="column" backgroundColor="mono0" p={2}>
-      <Text variant="sm-display" fontWeight="bold" color="mono100">
+    <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 4]}>
+      <Text
+        variant={["sm-display", "md"]}
+        fontWeight={["bold", "normal"]}
+        color="mono100"
+      >
         Order summary
       </Text>
       <Flex py={1} justifyContent="space-between" alignItems="flex-start">
@@ -103,7 +107,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           </Text>
         </Flex>
       </Message>
-      <Spacer y={4} />
+      <Spacer y={2} />
       {stepState === CheckoutStepState.ACTIVE && (
         <Button
           variant={"primaryBlack"}

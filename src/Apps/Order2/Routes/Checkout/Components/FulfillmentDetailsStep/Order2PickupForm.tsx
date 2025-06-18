@@ -133,13 +133,15 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
 
   return (
     <>
-      <Text fontWeight="bold" color="mono100" variant="sm-display">
+      <Text fontWeight="normal" color="mono100" variant={["sm-display", "md"]}>
         Free pickup
       </Text>
-      <Text variant="xs" color="mono60" my={1}>
+      <Spacer y={1} />
+      <Text variant="sm-display" color="mono60">
         After your order is confirmed, a specialist will contact you with
         details on how to pickup the work.
       </Text>
+      <Spacer y={[2, 4]} />
       <Formik<PickupFormValues>
         initialValues={initialValues}
         validationSchema={VALIDATION_SCHEMA}
