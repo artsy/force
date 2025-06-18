@@ -8,6 +8,7 @@ import {
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type { Order2ReviewStep_order$key } from "__generated__/Order2ReviewStep_order.graphql"
@@ -18,10 +19,12 @@ const logger = createLogger("Order2ReviewStep.tsx")
 
 interface Order2ReviewStepProps {
   order: Order2ReviewStep_order$key
+  dialog: Dialog
 }
 
-export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
+const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
   order,
+  dialog,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
   const artwork = orderData.lineItems[0]?.artwork
@@ -34,6 +37,24 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   )?.state
 
   const [loading, setLoading] = useState(false)
+
+  const handleSubmitError = (error: any) => {
+    logger.error({
+      ...error,
+      orderId: orderData.internalID,
+      shouldLogErrorToSentry: true,
+    })
+
+    const title = "An error occurred"
+    const message =
+      "Something went wrong while submitting your order. Please try again."
+
+    dialog.showErrorDialog({
+      title: title,
+      message: message,
+    })
+  }
+
   const handleClick = async event => {
     setLoading(true)
 
@@ -55,6 +76,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
     } catch (error) {
       setLoading(false)
       logger.error("Error while submitting order", error)
+      handleSubmitError(error)
     }
   }
 
@@ -121,6 +143,8 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
     </Flex>
   )
 }
+
+export const Order2ReviewStep = injectDialog(Order2ReviewStepComponent)
 
 const FRAGMENT = graphql`
   fragment Order2ReviewStep_order on Order {
