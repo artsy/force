@@ -7,6 +7,7 @@ import {
   Stack,
 } from "@artsy/palette"
 import { SubmittingOrderSpinner } from "Apps/Order/Components/SubmittingOrderSpinner"
+import { ConnectedModalDialog } from "Apps/Order/Dialogs"
 import { Order2DeliveryOptionsStep } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/Order2DeliveryOptionsStep"
 import { Order2ExpressCheckout } from "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckout"
 import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
@@ -22,6 +23,8 @@ import type { Order2CheckoutApp_viewer$key } from "__generated__/Order2CheckoutA
 import { useEffect } from "react"
 import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
+// eslint-disable-next-line no-restricted-imports
+import { Provider } from "unstated"
 interface Order2CheckoutAppProps {
   viewer: Order2CheckoutApp_viewer$key
 }
@@ -53,7 +56,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   }, [])
 
   return (
-    <>
+    <Provider>
       <Title>Checkout | Artsy</Title>
       <Meta
         name="viewport"
@@ -120,7 +123,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           </Box>
         </Column>
       </GridColumns>
-    </>
+      <ConnectedModalDialog />
+    </Provider>
   )
 }
 
