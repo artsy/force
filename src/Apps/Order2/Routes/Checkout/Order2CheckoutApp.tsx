@@ -108,14 +108,16 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           display={["none", "none", "block"]}
           maxWidth="445px"
         >
-          <Order2ReviewStep order={order} />
-          <Separator as="hr" />
-          <Order2HelpLinksWithInquiry
-            order={order}
-            artworkID={artworkSlug as string}
-            // @ts-expect-error TODO: update when we have checkout context menu
-            contextModule=""
-          />
+          <Box position={["initial", "initial", "fixed"]}>
+            <Order2ReviewStep order={order} />
+            <Separator as="hr" />
+            <Order2HelpLinksWithInquiry
+              order={order}
+              artworkID={artworkSlug as string}
+              // @ts-expect-error TODO: update when we have checkout context menu
+              contextModule=""
+            />
+          </Box>
         </Column>
       </GridColumns>
     </>
