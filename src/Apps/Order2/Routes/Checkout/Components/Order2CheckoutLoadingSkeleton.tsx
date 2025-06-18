@@ -49,7 +49,7 @@ const Order2CollapsibleOrderSummarySkeleton: React.FC<
 > = props => {
   return (
     <GridColumns py={[0, 4]} px={[0, 0, 4]}>
-      <Column span={[12, 12, 7]} width="100%">
+      <Column span={[12, 12, 6]} start={[1, 1, 2]}>
         <Box
           width="100%"
           maxWidth="754px"
@@ -88,11 +88,7 @@ const Order2CollapsibleOrderSummarySkeleton: React.FC<
         </Box>
       </Column>
 
-      <Column
-        span={[12, 12, 5]}
-        display={["none", "none", "block"]}
-        maxWidth="445px"
-      >
+      <Column span={[12, 12, 3]} start={[1, 1, 8]}>
         {/* Order summary skeleton for desktop */}
         <Box backgroundColor="mono0" p={2}>
           <SkeletonText variant="lg-display" mb={2}>

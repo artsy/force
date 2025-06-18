@@ -72,13 +72,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           display: isLoading || expressCheckoutSubmitting ? "none" : "grid",
         }}
       >
-        <Column span={[12, 12, 7]} width="100%">
-          <Box
-            width="100%"
-            maxWidth="754px"
-            mx={["auto", "auto", 0]}
-            ml={[0, "auto", "auto"]}
-          >
+        <Column span={[12, 12, 6]} start={[1, 1, 2]}>
+          <Box width="100%" mx={["auto", "auto", 0]} ml={[0, "auto", "auto"]}>
             <Stack gap={1}>
               <Box display={["block", "block", "none"]}>
                 <Order2CollapsibleOrderSummary order={order} />
@@ -103,11 +98,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           </Box>
         </Column>
 
-        <Column
-          span={[12, 12, 5]}
-          display={["none", "none", "block"]}
-          maxWidth="445px"
-        >
+        <Column span={[12, 12, 3]} start={[1, 1, 8]}>
           <Box position={["initial", "initial", "fixed"]}>
             <Order2ReviewStep order={order} />
             <Separator as="hr" />
