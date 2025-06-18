@@ -88,7 +88,7 @@ const Order2CollapsibleOrderSummarySkeleton: React.FC<
         </Box>
       </Column>
 
-      <Column span={[12, 12, 3]} start={[1, 1, 8]}>
+      <Column span={[12, 12, 4, 3]} start={[1, 1, 8, 8]}>
         {/* Order summary skeleton for desktop */}
         <Box backgroundColor="mono0" p={2}>
           <SkeletonText variant="lg-display" mb={2}>

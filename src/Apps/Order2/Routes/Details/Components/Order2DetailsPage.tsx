@@ -20,44 +20,33 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
 
   return (
     <GridColumns py={[0, 4]} px={[0, 0, 4]}>
-      <Column span={[12, 12, 7]} width="100%">
-        <Box
-          width="100%"
-          maxWidth="754px"
-          mx={["auto", "auto", 0]}
-          ml={[0, "auto", "auto"]}
-        >
-          <Order2DetailsHeader order={orderData} />
+      <Column span={[12, 12, 6]} start={[1, 1, 2]}>
+        <Order2DetailsHeader order={orderData} />
 
-          <Order2DetailsMessage order={orderData} />
+        <Order2DetailsMessage order={orderData} />
 
-          <Box display={["block", "block", "none"]}>
-            <Order2DetailsOrderSummary order={orderData} />
-          </Box>
+        <Box display={["block", "block", "none"]}>
+          <Order2DetailsOrderSummary order={orderData} />
+        </Box>
 
-          <Spacer y={1} />
+        <Spacer y={1} />
 
-          <Order2DetailsFulfillmentInfo order={orderData} />
+        <Order2DetailsFulfillmentInfo order={orderData} />
 
-          <Spacer y={1} />
+        <Spacer y={1} />
 
-          <Order2DetailsPaymentInfo order={orderData} />
+        <Order2DetailsPaymentInfo order={orderData} />
 
-          <Box display={["block", "block", "none"]}>
-            <Order2HelpLinksWithInquiry
-              order={orderData}
-              artworkID={artworkSlug as string}
-              contextModule={ContextModule.ordersDetail}
-            />
-            <Spacer y={[4, 0]} />
-          </Box>
+        <Box display={["block", "block", "none"]}>
+          <Order2HelpLinksWithInquiry
+            order={orderData}
+            artworkID={artworkSlug as string}
+            contextModule={ContextModule.ordersDetail}
+          />
+          <Spacer y={[4, 0]} />
         </Box>
       </Column>
-      <Column
-        span={[12, 12, 5]}
-        display={["none", "none", "block"]}
-        maxWidth="445px"
-      >
+      <Column span={[12, 12, 4, 3]} start={[1, 1, 8, 8]}>
         <Order2DetailsOrderSummary order={orderData} />
         <Spacer y={1} />
         <Order2HelpLinksWithInquiry

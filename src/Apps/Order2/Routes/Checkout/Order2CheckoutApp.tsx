@@ -73,32 +73,30 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         }}
       >
         <Column span={[12, 12, 6]} start={[1, 1, 2]}>
-          <Box width="100%" mx={["auto", "auto", 0]} ml={[0, "auto", "auto"]}>
-            <Stack gap={1}>
-              <Box display={["block", "block", "none"]}>
-                <Order2CollapsibleOrderSummary order={order} />
-              </Box>
-              {isExpressCheckoutEligible && (
-                <Order2ExpressCheckout order={order} />
-              )}
-              <Order2FulfillmentDetailsStep order={order} />
-              <Order2DeliveryOptionsStep />
-              <Order2PaymentStep order={order} />
-            </Stack>
+          <Stack gap={1}>
             <Box display={["block", "block", "none"]}>
-              <Spacer y={1} />
-              <Order2ReviewStep order={order} />
-              <Order2HelpLinksWithInquiry
-                order={order}
-                artworkID={artworkSlug as string}
-                // @ts-expect-error TODO: update when we have checkout context menu
-                contextModule=""
-              />
+              <Order2CollapsibleOrderSummary order={order} />
             </Box>
+            {isExpressCheckoutEligible && (
+              <Order2ExpressCheckout order={order} />
+            )}
+            <Order2FulfillmentDetailsStep order={order} />
+            <Order2DeliveryOptionsStep />
+            <Order2PaymentStep order={order} />
+          </Stack>
+          <Box display={["block", "block", "none"]}>
+            <Spacer y={1} />
+            <Order2ReviewStep order={order} />
+            <Order2HelpLinksWithInquiry
+              order={order}
+              artworkID={artworkSlug as string}
+              // @ts-expect-error TODO: update when we have checkout context menu
+              contextModule=""
+            />
           </Box>
         </Column>
 
-        <Column span={[12, 12, 3]} start={[1, 1, 8]}>
+        <Column span={[12, 12, 4, 3]} start={[1, 1, 8, 8]}>
           <Box position={["initial", "initial", "fixed"]}>
             <Order2ReviewStep order={order} />
             <Separator as="hr" />
