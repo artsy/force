@@ -1,4 +1,5 @@
 import { aboutRoutes } from "Apps/About/aboutRoutes"
+import { about2Routes } from "Apps/About2/about2Routes"
 import { adminRoutes } from "Apps/Admin/adminRoutes"
 import { alertRoutes } from "Apps/Alert/alertRoutes"
 import { artAppraisalsRoutes } from "Apps/ArtAppraisals/artAppraisalsRoutes"
@@ -65,6 +66,7 @@ import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
 
 const ROUTES = buildAppRoutes([
   aboutRoutes,
+  about2Routes,
   adminRoutes,
   artAppraisalsRoutes,
   articleRoutes,
