@@ -9497,6 +9497,18 @@ type CreatePartnerShowSuccess {
   show: Show
 }
 
+type CreatePurchaseFailure {
+  mutationError: GravityMutationError
+}
+
+union CreatePurchaseResponseOrError =
+  | CreatePurchaseFailure
+  | CreatePurchaseSuccess
+
+type CreatePurchaseSuccess {
+  purchase: Purchase
+}
+
 type CreateSaleAgreementFailure {
   mutationError: GravityMutationError
 }
@@ -15553,6 +15565,9 @@ type Mutation {
   createPartnerShowEvent(
     input: CreatePartnerShowEventMutationInput!
   ): CreatePartnerShowEventMutationPayload
+
+  # Create a purchase
+  createPurchase(input: createPurchaseInput!): createPurchasePayload
 
   # Creates a static Markdown-backed sale agreement.
   createSaleAgreement(
@@ -26098,6 +26113,31 @@ union createPartnerOfferResponseOrError =
 type createPartnerOfferSuccess {
   partner: Partner
   partnerOffer: PartnerOffer
+}
+
+input createPurchaseInput {
+  artsyCommission: Float
+  artworkID: String
+  clientMutationId: String
+  discoverAdminID: String
+  email: String
+  fairID: String
+  note: String
+  ownerID: String
+  ownerType: String
+  saleAdminID: String
+  saleDate: String
+  saleID: String
+
+  # Sale price in USD.
+  salePrice: Float
+  source: String
+  userID: String
+}
+
+type createPurchasePayload {
+  clientMutationId: String
+  responseOrError: CreatePurchaseResponseOrError
 }
 
 type createUserAdminNoteFailure {
