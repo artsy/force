@@ -10,7 +10,7 @@ export const Order2DetailsHeader = ({ order }: Order2DetailsHeaderProps) => {
   const orderData = useFragment(FRAGMENT, order)
 
   return (
-    <Box backgroundColor="mono0" p={[2, 4]}>
+    <Box backgroundColor="mono0" px={[2, 4]} pt={[2, 4]} pb={2}>
       {/* Title */}
       <Text variant={["lg", "xl"]}>{orderData.displayTexts.title}</Text>
       {/* Order # */}

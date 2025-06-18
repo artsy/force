@@ -87,16 +87,20 @@ export const WireTransferInfo: React.FC<WireTransferInfoProps> = ({
         Send wire transfer to
       </Text>
       <Stack gap={0} mt={1} mb={4}>
-        {details.transferInfo.map(rowText => (
-          <Text variant="sm">{rowText}</Text>
+        {details.transferInfo.map((rowText, index) => (
+          <Text variant="sm" key={index}>
+            {rowText}
+          </Text>
         ))}
       </Stack>
       <Text variant="sm" fontWeight="bold">
         Bank address
       </Text>
       <Stack gap={0} mt={1} mb={4}>
-        {details.bankAddress.map(rowText => (
-          <Text variant="sm">{rowText}</Text>
+        {details.bankAddress.map((rowText, index) => (
+          <Text variant="sm" key={index}>
+            {rowText}
+          </Text>
         ))}
       </Stack>
       <Text variant="sm" fontWeight="bold">
