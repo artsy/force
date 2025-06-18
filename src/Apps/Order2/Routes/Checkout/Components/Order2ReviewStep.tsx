@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import ShieldIcon from "@artsy/icons/ShieldIcon"
 import { Box, Button, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
 import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSubmitOrderMutation"
@@ -37,7 +38,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
 
   const [loading, setLoading] = useState(false)
   const handleClick = async _event => {
-    checkoutTracking.submittedOrder()
+    checkoutTracking.clickedOrderProgression(ContextModule.ordersReview)
     setLoading(true)
 
     try {
@@ -54,6 +55,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         submitOrderResult.submitOrder?.orderOrError,
       )
 
+      checkoutTracking.submittedOrder()
       redirectToOrderDetails()
     } catch (error) {
       setLoading(false)

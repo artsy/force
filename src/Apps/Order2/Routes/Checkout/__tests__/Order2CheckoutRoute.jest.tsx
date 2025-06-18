@@ -547,6 +547,12 @@ describe("Order2CheckoutRoute", () => {
             flow: "Buy now",
           },
           {
+            action: "clickedOrderProgression",
+            context_module: "ordersReview",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+          },
+          {
             action: "submittedOrder",
             flow: "Buy now",
             order_id: "order-id",
