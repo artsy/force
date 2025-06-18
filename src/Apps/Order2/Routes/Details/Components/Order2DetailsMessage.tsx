@@ -12,7 +12,7 @@ export const Order2DetailsMessage = ({ order }: Order2DetailsMessageProps) => {
   const orderData = useFragment(FRAGMENT, order)
 
   return (
-    <Box backgroundColor="mono0" p={[2, 4]}>
+    <Box backgroundColor="mono0" px={[2, 4]} pb={[2, 4]} pt={2}>
       {getMessageContent(orderData)}
     </Box>
   )

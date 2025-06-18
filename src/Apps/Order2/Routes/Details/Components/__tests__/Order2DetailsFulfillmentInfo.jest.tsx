@@ -24,7 +24,7 @@ describe("Order2DetailsFulfillmentInfo", () => {
       `,
     })
 
-  it("renders shipping information correctly", () => {
+  it("renders shipping information correctly for shipped order", () => {
     renderWithRelay({
       Order: () => ({
         selectedFulfillmentOption: { type: "DOMESTIC_FLAT" },
@@ -60,15 +60,50 @@ describe("Order2DetailsFulfillmentInfo", () => {
     expect(screen.getByText("New York, NY, 10011")).toBeInTheDocument()
   })
 
-  it("handles missing fulfillment details gracefully", () => {
+  it("renders when only partial fulfillmentDetails is present but fulfillment is unknown", () => {
     renderWithRelay({
       Order: () => ({
-        selectedFulfillmentOption: { type: "SHIPPING_TBD" },
-        fulfillmentDetails: {},
+        selectedFulfillmentOption: null,
+        fulfillmentDetails: {
+          name: "Andy Warhol",
+          addressLine1: "222 West 23rd Street",
+        },
       }),
     })
 
     expect(screen.getByText("Ship to")).toBeInTheDocument()
-    // Should not throw any errors with empty fulfillment details
+    expect(screen.getByText("Andy Warhol")).toBeInTheDocument()
+    expect(screen.getByText("222 West 23rd Street")).toBeInTheDocument()
+  })
+
+  it("returns null for non pickup orders if fulfillmentDetails are empty", () => {
+    const { container } = renderWithRelay({
+      Order: () => ({
+        selectedFulfillmentOption: { type: "DOMESTIC_FLAT" },
+        fulfillmentDetails: {
+          name: "",
+          addressLine1: "",
+          addressLine2: "",
+          city: "",
+          region: "",
+          postalCode: "",
+          country: "",
+          phoneNumber: null,
+        },
+      }),
+    })
+
+    expect(container).toBeEmptyDOMElement()
+  })
+
+  it("returns null for pickup orders if shippingOrigin is not present", () => {
+    const { container } = renderWithRelay({
+      Order: () => ({
+        selectedFulfillmentOption: { type: "PICKUP" },
+        shippingOrigin: null,
+      }),
+    })
+
+    expect(container).toBeEmptyDOMElement()
   })
 })
