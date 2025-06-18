@@ -1,3 +1,8 @@
+import { Spacer } from "@artsy/palette"
+import { About2Header } from "Apps/About2/Components/About2Header"
+import { About2Hero } from "Apps/About2/Components/About2Hero"
+import { About2Nav } from "Apps/About2/Components/About2Nav"
+import { About2Stats } from "Apps/About2/Components/About2Stats"
 import { MetaTags } from "Components/MetaTags"
 
 export const DESCRIPTION =
@@ -12,6 +17,20 @@ export const About2App: React.FC<React.PropsWithChildren<unknown>> = () => {
         imageURL="https://files.artsy.net/images/00_CVP_About_Hero_og.png"
         pathname="/about"
       />
+
+      <About2Nav />
+
+      <Spacer y={4} />
+
+      <About2Header />
+
+      <Spacer y={4} />
+
+      <About2Hero />
+
+      <Spacer y={[4, 6]} />
+
+      <About2Stats />
     </>
   )
 }
