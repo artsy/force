@@ -102,7 +102,7 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => {
-            trackClickedImportFees && trackClickedImportFees()
+            trackClickedImportFees?.()
           }}
         >
           may apply at import

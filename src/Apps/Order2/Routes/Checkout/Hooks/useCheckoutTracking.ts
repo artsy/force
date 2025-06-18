@@ -118,9 +118,11 @@ export const useCheckoutTracking = ({
         trackEvent(payload)
       },
 
+      // Loaded from the more generic shared useOrder2Tracking hook
       clickedBuyerProtection: () =>
         order2Tracking.clickedBuyerProtection(ContextModule.ordersCheckout),
 
+      // Loaded from the more generic shared useOrder2Tracking hook
       clickedImportFees: () =>
         order2Tracking.clickedImportFees(ContextModule.ordersCheckout, flow),
 
