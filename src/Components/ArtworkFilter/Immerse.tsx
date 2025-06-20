@@ -52,50 +52,55 @@ const Immerse: React.FC<ImmerseProps> = props => {
   return (
     <div className="immerse">
       <Container>
-        <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
-          {/* Prefetch prev/next image using link tags */}
-          {nextArtwork?.immersiveImage?.resized?.src && (
-            <Link
-              rel="prefetch"
-              href={nextArtwork.immersiveImage.resized.src}
-              as="image"
-            />
-          )}
-          {prevArtwork?.immersiveImage?.resized?.src && (
-            <Link
-              rel="prefetch"
-              href={prevArtwork.immersiveImage.resized.src}
-              as="image"
-            />
-          )}
+        <a href={`/artwork/${currentArtwork.slug}`} target="_new">
+          <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
+            {/* Prefetch prev/next image using link tags */}
+            {nextArtwork?.immersiveImage?.resized?.src && (
+              <Link
+                rel="prefetch"
+                href={nextArtwork.immersiveImage.resized.src}
+                as="image"
+              />
+            )}
+            {prevArtwork?.immersiveImage?.resized?.src && (
+              <Link
+                rel="prefetch"
+                href={prevArtwork.immersiveImage.resized.src}
+                as="image"
+              />
+            )}
 
-          {/* display blurhash if still loading */}
-          {isLoading && currentArtwork?.immersiveImage?.blurhash && (
-            <Blurhash
-              hash={currentArtwork.immersiveImage.blurhash}
-              width={`${currentArtwork.immersiveImage.aspectRatio * 85}vh`}
-              height={"85vh"}
-              resolutionX={32}
-              resolutionY={32}
-              punch={1}
-              aria-hidden="true"
-            />
-          )}
+            {/* display blurhash if still loading */}
+            {isLoading && currentArtwork?.immersiveImage?.blurhash && (
+              <Blurhash
+                hash={currentArtwork.immersiveImage.blurhash}
+                width={`${currentArtwork.immersiveImage.aspectRatio * 85}vh`}
+                height={"85vh"}
+                resolutionX={32}
+                resolutionY={32}
+                punch={1}
+                aria-hidden="true"
+              />
+            )}
 
-          <Image
-            src={currentArtwork?.immersiveImage?.resized?.src}
-            alt={currentArtwork.formattedMetadata ?? "…"}
-            style={{
-              height: "85vh",
-              objectFit: "contain",
-              visibility: isLoading ? "hidden" : "visible",
-            }}
-            onLoad={() => setIsLoading(false)}
-            onError={() => setIsLoading(false)}
-            display={isLoading ? "none" : "block"}
-          />
-          <Text color="mono60">{currentArtwork.formattedMetadata ?? "…"}</Text>
-        </Flex>
+            <Image
+              src={currentArtwork?.immersiveImage?.resized?.src}
+              alt={currentArtwork.formattedMetadata ?? "…"}
+              style={{
+                height: "85vh",
+                objectFit: "contain",
+                visibility: isLoading ? "hidden" : "visible",
+              }}
+              onLoad={() => setIsLoading(false)}
+              onError={() => setIsLoading(false)}
+              display={isLoading ? "none" : "block"}
+            />
+
+            <Text color="mono60">
+              {currentArtwork.formattedMetadata ?? "…"}
+            </Text>
+          </Flex>
+        </a>
       </Container>
     </div>
   )
