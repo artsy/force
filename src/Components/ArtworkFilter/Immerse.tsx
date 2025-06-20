@@ -1,15 +1,21 @@
 import styled from "styled-components"
-import { useEffect, useCallback } from "react"
+import { useEffect, useCallback, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Immerse_filtered_artworks$data } from "__generated__/Immerse_filtered_artworks.graphql"
+import { extractNodes } from "Utils/extractNodes"
+import { Flex, Image, Text } from "@artsy/palette"
 
 interface ImmerseProps {
   filtered_artworks: Immerse_filtered_artworks$data
   onClose?: () => void
 }
 
-export const Immerse: React.FC<ImmerseProps> = props => {
-  const { onClose } = props
+const Immerse: React.FC<ImmerseProps> = props => {
+  const { onClose, filtered_artworks } = props
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  const artworks = extractNodes(filtered_artworks)
+  const currentArtwork = artworks[currentIndex]
 
   // Handle ESC key press
   const handleKeyDown = useCallback(
@@ -35,10 +41,14 @@ export const Immerse: React.FC<ImmerseProps> = props => {
   return (
     <div className="immerse">
       <Container>
-        <h1>Immerse</h1>
-        <p>This is the Immerse component.</p>
-        <p>It can be used to display immersive content or experiences.</p>
-        <pre style={{ whiteSpace: "pre-wrap" }}>{JSON.stringify(props)}</pre>
+        <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
+          <Image
+            src={currentArtwork?.immersiveImage?.resized?.src}
+            alt={currentArtwork.formattedMetadata ?? "…"}
+            style={{ height: "85vh", objectFit: "contain" }}
+          />
+          <Text color="mono60">{currentArtwork.formattedMetadata ?? "…"}</Text>
+        </Flex>
       </Container>
     </div>
   )
@@ -50,6 +60,15 @@ export const ImmerseContainer = createFragmentContainer(Immerse, {
       edges {
         node {
           slug
+          formattedMetadata
+          immersiveImage: image(includeAll: false) {
+            resized(height: 1000, version: ["main", "larger", "large"]) {
+              height
+              width
+              src
+              srcSet
+            }
+          }
         }
       }
     }

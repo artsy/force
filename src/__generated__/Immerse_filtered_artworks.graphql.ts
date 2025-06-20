@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e39fb1d45df5573d6a28ca599395a842>>
+ * @generated SignedSource<<6628f587d2e96296b4d145d9f010a5e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,15 @@ import { FragmentRefs } from "relay-runtime";
 export type Immerse_filtered_artworks$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
+      readonly formattedMetadata: string | null | undefined;
+      readonly immersiveImage: {
+        readonly resized: {
+          readonly height: number | null | undefined;
+          readonly src: string;
+          readonly srcSet: string;
+          readonly width: number | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
       readonly slug: string;
     } | null | undefined;
   } | null | undefined> | null | undefined;
@@ -51,6 +60,84 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "slug",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "formattedMetadata",
+              "storageKey": null
+            },
+            {
+              "alias": "immersiveImage",
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "includeAll",
+                  "value": false
+                }
+              ],
+              "concreteType": "Image",
+              "kind": "LinkedField",
+              "name": "image",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "height",
+                      "value": 1000
+                    },
+                    {
+                      "kind": "Literal",
+                      "name": "version",
+                      "value": [
+                        "main",
+                        "larger",
+                        "large"
+                      ]
+                    }
+                  ],
+                  "concreteType": "ResizedImageUrl",
+                  "kind": "LinkedField",
+                  "name": "resized",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "height",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "width",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "src",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "srcSet",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": "resized(height:1000,version:[\"main\",\"larger\",\"large\"])"
+                }
+              ],
+              "storageKey": "image(includeAll:false)"
             }
           ],
           "storageKey": null
@@ -63,6 +150,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2d0ded85629825066b54a501a773af65";
+(node as any).hash = "cc13cde76d432a85f7a1d2a2d9f82a8b";
 
 export default node;
