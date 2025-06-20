@@ -5,6 +5,7 @@ import { Immerse_filtered_artworks$data } from "__generated__/Immerse_filtered_a
 import { extractNodes } from "Utils/extractNodes"
 import { Flex, Image, Text } from "@artsy/palette"
 import { Blurhash } from "react-blurhash"
+import { Link } from "react-head"
 
 interface ImmerseProps {
   filtered_artworks: Immerse_filtered_artworks$data
@@ -18,6 +19,8 @@ const Immerse: React.FC<ImmerseProps> = props => {
 
   const artworks = extractNodes(filtered_artworks)
   const currentArtwork = artworks[currentIndex]
+  const nextArtwork = artworks[currentIndex + 1]
+  const prevArtwork = artworks[currentIndex - 1]
 
   // Handle key press events (ESC, left/right arrows)
   const handleKeyDown = useCallback(
@@ -50,7 +53,23 @@ const Immerse: React.FC<ImmerseProps> = props => {
     <div className="immerse">
       <Container>
         <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
-          {/* display blurhash while loading */}
+          {/* Prefetch prev/next image using link tags */}
+          {nextArtwork?.immersiveImage?.resized?.src && (
+            <Link
+              rel="prefetch"
+              href={nextArtwork.immersiveImage.resized.src}
+              as="image"
+            />
+          )}
+          {prevArtwork?.immersiveImage?.resized?.src && (
+            <Link
+              rel="prefetch"
+              href={prevArtwork.immersiveImage.resized.src}
+              as="image"
+            />
+          )}
+
+          {/* display blurhash if still loading */}
           {isLoading && currentArtwork?.immersiveImage?.blurhash && (
             <Blurhash
               hash={currentArtwork.immersiveImage.blurhash}
@@ -62,6 +81,7 @@ const Immerse: React.FC<ImmerseProps> = props => {
               aria-hidden="true"
             />
           )}
+
           <Image
             src={currentArtwork?.immersiveImage?.resized?.src}
             alt={currentArtwork.formattedMetadata ?? "…"}
