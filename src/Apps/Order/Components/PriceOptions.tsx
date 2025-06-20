@@ -59,8 +59,8 @@ export const PriceOptions: React.FC<
 
   const [customValue, setCustomValue] = useState<number | undefined>(lastOffer)
   const [toggle, setToggle] = useState(!!lastOffer)
-  const [selectedRadio, setSelectedRadio] = useState<string>(
-    selectedPriceOption || "price-option-max",
+  const [selectedRadio, setSelectedRadio] = useState<string | undefined>(
+    selectedPriceOption,
   )
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -71,13 +71,6 @@ export const PriceOptions: React.FC<
       onChange(selectedPriceValue!)
     }
   }, [])
-
-  useEffect(() => {
-    if (showError) {
-      setSelectedRadio("price-option-custom")
-      setToggle(true)
-    }
-  }, [showError])
 
   useEffect(() => {
     if (toggle) trackClick("Different amount", 0)
@@ -112,67 +105,78 @@ export const PriceOptions: React.FC<
   const { jumpTo } = useJump()
 
   return (
-    <RadioGroup onSelect={setSelectedRadio} defaultValue={selectedRadio}>
-      {compact(priceOptions)
-        .map(({ value, description, key }) => (
-          <BorderedRadio
-            value={key}
-            label={asCurrency(value!)}
-            onSelect={() => {
-              onChange(value)
-              setToggle(false)
-              setCustomValue(undefined)
-              trackClick(description, value)
-            }}
-            key={key}
-          >
-            <Text variant="sm" color="mono60">
-              {description}
-            </Text>
-          </BorderedRadio>
-        ))
-        .concat(
-          <BorderedRadio
-            value="price-option-custom"
-            label="Different amount"
-            error={showError}
-            onSelect={() => {
-              onChange(customValue || 0)
-              !toggle && setToggle(true)
-            }}
-          >
-            {toggle && (
-              <Jump key="price-option-custom" id="price-option-custom">
-                <Flex flexDirection="column" mt={2}>
-                  <OfferInput
-                    id="OfferForm_offerValue"
-                    showError={showError}
-                    value={customValue}
-                    onChange={event => {
-                      setCustomValue(event)
-                      onChange(event)
-                    }}
-                    onFocus={() => {
-                      onFocus()
-                      if (device !== Device.iPhone)
-                        jumpTo("price-option-custom")
-                    }}
-                    noTitle
-                  />
-                  {(!customValue || customValue < minPrice) &&
-                    !isPartnerOfferOrder && (
-                      <MinPriceWarning
-                        isPriceRange={!!artwork?.isPriceRange}
-                        minPrice={asCurrency(minPrice) as string}
-                        orderID={order.internalID}
-                      />
-                    )}
-                </Flex>
-              </Jump>
-            )}
-          </BorderedRadio>,
-        )}
-    </RadioGroup>
+    <>
+      <Jump id="offer-value-title">
+        <Text variant="lg-display" color={showError ? "red100" : undefined}>
+          Select an option
+        </Text>
+      </Jump>
+      <Text variant="xs" mt={4} mb={1} color={showError ? "red100" : undefined}>
+        Your offer
+      </Text>
+      <RadioGroup onSelect={setSelectedRadio} defaultValue={selectedRadio}>
+        {compact(priceOptions)
+          .map(({ value, description, key }) => (
+            <BorderedRadio
+              value={key}
+              label={asCurrency(value!)}
+              onSelect={() => {
+                onChange(value)
+                setToggle(false)
+                setCustomValue(undefined)
+                trackClick(description, value)
+              }}
+              error={showError}
+              key={key}
+            >
+              <Text variant="sm" color="mono60">
+                {description}
+              </Text>
+            </BorderedRadio>
+          ))
+          .concat(
+            <BorderedRadio
+              value="price-option-custom"
+              label="Different amount"
+              error={showError}
+              onSelect={() => {
+                onChange(customValue || 0)
+                !toggle && setToggle(true)
+              }}
+            >
+              {toggle && (
+                <Jump key="price-option-custom" id="price-option-custom">
+                  <Flex flexDirection="column" mt={2}>
+                    <OfferInput
+                      id="OfferForm_offerValue"
+                      showError={showError}
+                      value={customValue}
+                      onChange={event => {
+                        setCustomValue(event)
+                        onChange(event)
+                      }}
+                      onFocus={() => {
+                        onFocus()
+                        if (device !== Device.iPhone)
+                          jumpTo("price-option-custom")
+                      }}
+                      noTitle
+                    />
+                    {(!customValue || customValue < minPrice) &&
+                      !isPartnerOfferOrder && (
+                        <MinPriceWarning
+                          isPriceRange={!!artwork?.isPriceRange}
+                          minPrice={asCurrency(minPrice) as string}
+                          orderID={order.internalID}
+                        />
+                      )}
+                  </Flex>
+                </Jump>
+              )}
+            </BorderedRadio>,
+          )}
+      </RadioGroup>
+    </>
   )
 }
 

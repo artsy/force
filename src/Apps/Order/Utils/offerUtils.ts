@@ -38,8 +38,8 @@ export const getInitialOfferState = (
   lastOffer?: number,
 ) => {
   let lastOfferValue: number | undefined = undefined
-  let selectedPriceOption = listPriceOptions[0]?.key
-  let selectedPriceValue = listPriceOptions[0]?.value
+  let selectedPriceOption: string | undefined = undefined
+  let selectedPriceValue: number | undefined = undefined
 
   if (lastOffer) {
     const matchingPriceOption = listPriceOptions.find(

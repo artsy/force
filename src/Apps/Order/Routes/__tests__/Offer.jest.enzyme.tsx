@@ -178,6 +178,7 @@ describe("Offer InitialMutation", () => {
       const page = new OrderAppTestPage(wrapper)
 
       expect(page.transactionSummary.text()).toContain("Your offer")
+      await page.selectRandomPriceOption() // hack to initialize the page's offervalue, otherwise it resets to undefined on selection below
 
       await page.selectPriceOption(0)
       expect(page.transactionSummary.text()).toContain("Your offerUS$16,000.00")
@@ -305,6 +306,8 @@ describe("Offer InitialMutation", () => {
         CommerceOrder: () => testOffer,
       })
       const page = new OrderAppTestPage(wrapper)
+      await page.selectRandomPriceOption() // hack to initialize the page's offervalue, otherwise it resets to undefined on selection below
+
       await page.selectRandomPriceOption()
       await page.clickSubmit()
 
