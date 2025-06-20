@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6628f587d2e96296b4d145d9f010a5e6>>
+ * @generated SignedSource<<b4d2b2abfa1ec7c4da0678ed4c0496c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,8 @@ export type Immerse_filtered_artworks$data = {
     readonly node: {
       readonly formattedMetadata: string | null | undefined;
       readonly immersiveImage: {
+        readonly aspectRatio: number;
+        readonly blurhash: string | null | undefined;
         readonly resized: {
           readonly height: number | null | undefined;
           readonly src: string;
@@ -84,6 +86,20 @@ const node: ReaderFragment = {
               "selections": [
                 {
                   "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "aspectRatio",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "blurhash",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
                   "args": [
                     {
                       "kind": "Literal",
@@ -150,6 +166,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "cc13cde76d432a85f7a1d2a2d9f82a8b";
+(node as any).hash = "a8e7ad015f71edd4a8f1089b91ee7023";
 
 export default node;
