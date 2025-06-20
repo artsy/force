@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import {
   Button,
   Column,
@@ -35,7 +36,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
 }) => {
   const orderData = useFragment(FRAGMENT, order)
 
-  const { setFulfillmentDetailsComplete, setCheckoutMode } =
+  const { setFulfillmentDetailsComplete, setCheckoutMode, checkoutTracking } =
     useCheckoutContext()
 
   const fulfillmentOptions = orderData?.fulfillmentOptions
@@ -60,6 +61,10 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
       }
 
       try {
+        checkoutTracking.clickedOrderProgression(
+          ContextModule.ordersFulfillment,
+        )
+
         const setOrderFulfillmentOptionResult =
           await setOrderFulfillmentOption.submitMutation({
             variables: {
@@ -101,6 +106,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
       orderData.internalID,
       pickupFulfillmentOption,
       setFulfillmentDetailsComplete,
+      checkoutTracking.clickedOrderProgression,
     ],
   )
 

@@ -9,6 +9,9 @@ import { graphql, useFragment } from "react-relay"
 
 interface Order2PricingBreakdownProps {
   order: Order2PricingBreakdown_order$key
+  // TODO: Track from inside the component when details
+  // and checkout pages both call this
+  trackClickedImportFees?: () => void
 }
 
 const TAX_CALCULATION_ARTICLE_URL =
@@ -34,6 +37,7 @@ const isKnownLineType = (
 
 export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
   order,
+  trackClickedImportFees,
 }) => {
   const { pricingBreakdownLines } = useFragment(FRAGMENT, order)
   return (
@@ -97,6 +101,9 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
           to={TAX_CALCULATION_ARTICLE_URL}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => {
+            trackClickedImportFees?.()
+          }}
         >
           may apply at import
         </RouterLink>

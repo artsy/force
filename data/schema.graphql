@@ -3292,6 +3292,7 @@ type ArtworkImportRowEdge {
 }
 
 type ArtworkImportRowError {
+  blocking: Boolean!
   errorType: ArtworkImportError
 
   # A globally unique ID.
@@ -10989,6 +10990,30 @@ type ExchangeError {
   message: String!
 }
 
+type ExcludeArtistFromDiscoveryFailure {
+  mutationError: GravityMutationError
+}
+
+input ExcludeArtistFromDiscoveryInput {
+  artistId: String!
+  clientMutationId: String
+}
+
+type ExcludeArtistFromDiscoveryPayload {
+  clientMutationId: String
+
+  # On success: the excluded artist information.
+  excludeArtistFromDiscoveryOrError: ExcludeArtistFromDiscoveryResponseOrError
+}
+
+union ExcludeArtistFromDiscoveryResponseOrError =
+  | ExcludeArtistFromDiscoveryFailure
+  | ExcludeArtistFromDiscoverySuccess
+
+type ExcludeArtistFromDiscoverySuccess {
+  artistId: String
+}
+
 enum ExhibitionPeriodFormat {
   # Long formatted period e.g. February 25 – May 24, 2015
   LONG
@@ -15787,6 +15812,11 @@ type Mutation {
 
   # Mark sale as ended.
   endSale(input: EndSaleInput!): EndSalePayload
+
+  # Excludes an artist from appearing in Infinite Discovery recommendations.
+  excludeArtistFromDiscovery(
+    input: ExcludeArtistFromDiscoveryInput!
+  ): ExcludeArtistFromDiscoveryPayload
   flagArtworkImportCell(
     input: FlagArtworkImportCellInput!
   ): FlagArtworkImportCellPayload

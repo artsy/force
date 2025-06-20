@@ -7,15 +7,31 @@ import type { Order2CheckoutRouteTestQuery } from "__generated__/Order2CheckoutR
 import { merge } from "lodash"
 import { useEffect } from "react"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import { Order2ExpressCheckout as MockExpressCheckout } from "../Components/ExpressCheckout/Order2ExpressCheckout"
 import { Order2CheckoutRoute } from "../Order2CheckoutRoute"
 
 jest.unmock("react-relay")
 jest.useFakeTimers()
+jest.mock("react-tracking")
 
 const mockStripe = {
   createConfirmationToken: jest.fn(),
 }
+
+jest.mock("System/Hooks/useAnalyticsContext", () => {
+  const actual = jest.requireActual("System/Hooks/useAnalyticsContext")
+  const { OwnerType } = jest.requireActual("@artsy/cohesion")
+  // This value is set in src/System/Contexts/AnalyticsContext
+  const contextPageOwnerType = OwnerType.ordersCheckout
+  return {
+    ...actual,
+    useAnalyticsContext: () => ({
+      ...actual.useAnalyticsContext(),
+      contextPageOwnerType,
+    }),
+  }
+})
 
 const mockElements = {
   getElement: () => ({
@@ -33,6 +49,7 @@ jest.mock("@stripe/react-stripe-js", () => {
         onClick={() =>
           onChange({
             elementType: "payment",
+            value: { type: "card" },
           })
         }
       >
@@ -81,7 +98,12 @@ jest.mock(
   },
 )
 
+const mockTrackEvent = jest.fn()
 beforeEach(() => {
+  mockTrackEvent.mockClear()
+  ;(useTracking as jest.Mock).mockImplementation(() => ({
+    trackEvent: mockTrackEvent,
+  }))
   ;(MockExpressCheckout as jest.Mock).mockClear()
 })
 
@@ -114,6 +136,44 @@ const orderMutationSuccess = (initialValues, newValues) => {
       order: merge(initialValues, newValues),
     },
   }
+}
+
+/**
+ *  Assert that the given events were tracked in order.
+ *  Then clear the mock for the next assertion.
+ */
+function expectTrackedEvents(
+  {
+    mockTrackEvent,
+    standardValues = { context_page_owner_type: "orders-checkout" },
+    exact = true,
+  }: {
+    mockTrackEvent: jest.Mock
+    standardValues?: any
+    exact?: boolean
+  },
+  expectedEvents,
+) {
+  const mockTrackEventCalls = mockTrackEvent.mock.calls.map(call => call[0])
+  expect(mockTrackEventCalls.map(call => call.action)).toEqual(
+    expectedEvents.map(event => event.action),
+  )
+
+  expectedEvents.forEach((event, index) => {
+    if (exact) {
+      expect(mockTrackEventCalls[index]).toEqual({
+        ...standardValues,
+        ...event,
+      })
+    } else {
+      // If not exact, we only check that the event contains the expected values
+      expect(mockTrackEvent.mock.calls[index][0]).toMatchObject({
+        ...standardValues,
+        ...event,
+      })
+    }
+  })
+  mockTrackEvent.mockClear()
 }
 
 describe("Order2CheckoutRoute", () => {
@@ -157,6 +217,7 @@ describe("Order2CheckoutRoute", () => {
 
       expect(MockExpressCheckout).toHaveBeenCalled()
     })
+
     // TODO: Make our mock more strategic if necessary.
     it("does not render express checkout if not eligible", async () => {
       const props = {
@@ -247,7 +308,7 @@ describe("Order2CheckoutRoute", () => {
         act(() => {
           userEvent.click(submitButton)
         })
-        await screen.findByText("Phone Number is required")
+        await screen.findByText("Phone number is required")
 
         // Select country code
         expect(screen.queryByText(/🇩🇪/)).not.toBeInTheDocument()
@@ -271,7 +332,7 @@ describe("Order2CheckoutRoute", () => {
 
         await waitFor(() => {
           expect(
-            screen.queryByText("Phone Number is required"),
+            screen.queryByText("Phone number is required"),
           ).not.toBeInTheDocument()
         })
         expect(submitButton).not.toBeDisabled()
@@ -437,12 +498,73 @@ describe("Order2CheckoutRoute", () => {
           await flushPromiseQueue()
         })
 
+        await flushPromiseQueue()
+
+        expectTrackedEvents({ mockTrackEvent }, [
+          {
+            action: "orderProgressionViewed",
+            context_module: "ordersFulfillment",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+          },
+          {
+            action: "clickedFulfillmentTab",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+            method: "Pickup",
+          },
+          {
+            action: "clickedOrderProgression",
+            context_module: "ordersFulfillment",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+          },
+          {
+            action: "orderProgressionViewed",
+            context_module: "ordersPayment",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+          },
+          {
+            action: "clickedPaymentMethod",
+            amount: '<mock-value-for-field-"minor">',
+            currency: '<mock-value-for-field-"currencyCode">',
+            flow: "Buy now",
+            order_id: "order-id",
+            payment_method: "CREDIT_CARD",
+            subject: "click payment method",
+          },
+          {
+            action: "clickedOrderProgression",
+            context_module: "ordersPayment",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+          },
+          {
+            action: "orderProgressionViewed",
+            context_module: "ordersReview",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+          },
+          {
+            action: "clickedOrderProgression",
+            context_module: "ordersReview",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+          },
+          {
+            action: "submittedOrder",
+            flow: "Buy now",
+            order_id: "order-id",
+          },
+        ])
+
         expect(mockRouter.replace).toHaveBeenCalledWith(
           "/orders2/order-id/details",
         )
       })
 
-      it("shows the pickup details pre-filled if they exist", async () => {
+      it("shows the pickup details pre-filled if they exist and allows clicking edit", async () => {
         await renderWithLoadingComplete({
           ...baseProps,
           me: {
@@ -478,6 +600,20 @@ describe("Order2CheckoutRoute", () => {
           userEvent.click(editPickup)
         })
 
+        expectTrackedEvents({ mockTrackEvent }, [
+          {
+            action: "orderProgressionViewed",
+            context_module: "ordersFulfillment",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+          },
+          {
+            action: "clickedChangeShippingAddress",
+            context_module: "ordersCheckout",
+            context_page_owner_id: "order-id",
+          },
+        ])
+
         const pickupTab = within(
           screen.getByTestId(testIDs.fulfillmentDetailsStepTabs),
         ).getByText("Pickup")
@@ -501,10 +637,23 @@ describe("Order2CheckoutRoute", () => {
           userEvent.click(screen.getByText("Delivery"))
         })
         expect(screen.queryByText("Shipping method")).toBeInTheDocument()
+        expectTrackedEvents({ mockTrackEvent }, [
+          {
+            action: "clickedFulfillmentTab",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+            method: "Delivery",
+          },
+        ])
       })
     })
 
     describe("within the payment section", () => {
+      it.todo(
+        // TODO: Example of this assertion is above for clickedChangeShippingAddress
+        "Allows clicking the edit button to change payment method",
+      )
+
       describe("error handling when saving and continuing", () => {
         it("shows an error if no payment method is selected", async () => {
           const props = {

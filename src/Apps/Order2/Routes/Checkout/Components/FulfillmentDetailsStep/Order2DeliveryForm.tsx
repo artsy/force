@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import { Button, Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import {
@@ -17,7 +18,7 @@ const validationSchema = yup
   .shape(addressFormFieldsValidator({ withPhoneNumber: true }))
 
 export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = () => {
-  const { setCheckoutMode } = useCheckoutContext()
+  const { setCheckoutMode, checkoutTracking } = useCheckoutContext()
 
   // Placeholders
   const initialValues = {
@@ -36,7 +37,9 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = () => {
   const onSubmit = (
     values: FormikValues,
     formikHelpers: FormikHelpers<FormikValues>,
-  ) => {}
+  ) => {
+    checkoutTracking.clickedOrderProgression(ContextModule.ordersFulfillment)
+  }
   return (
     <>
       <Text

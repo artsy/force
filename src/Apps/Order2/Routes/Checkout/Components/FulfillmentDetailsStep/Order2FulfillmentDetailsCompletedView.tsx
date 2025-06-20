@@ -1,14 +1,21 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 
 interface Order2FulfillmentDetailsCompletedViewProps {
   fulfillmentDetails: any
   fulfillmentOption: any
-  onClickEdit: () => void
 }
 export const Order2FulfillmentDetailsCompletedView: React.FC<
   Order2FulfillmentDetailsCompletedViewProps
-> = ({ fulfillmentOption, onClickEdit }) => {
+> = ({ fulfillmentOption }) => {
+  const { editFulfillmentDetails, checkoutTracking } = useCheckoutContext()
+
+  const onClickEdit = () => {
+    checkoutTracking.clickedChangeShippingAddress()
+    editFulfillmentDetails()
+  }
+
   if (fulfillmentOption?.type === "PICKUP") {
     return (
       <Flex flexDirection="column" backgroundColor="mono0">

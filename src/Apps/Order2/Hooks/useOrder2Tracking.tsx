@@ -1,14 +1,15 @@
 import {
   ActionType,
-  ClickedAskSpecialist,
-  ClickedBuyerProtection,
-  ClickedVisitHelpCenter,
-  ContextModule,
+  type ClickedAskSpecialist,
+  type ClickedBuyerProtection,
+  type ClickedImportFees,
+  type ClickedVisitHelpCenter,
+  type ContextModule,
   OwnerType,
-  PageOwnerType,
+  type PageOwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { Order2HelpLinks_order$data } from "__generated__/Order2HelpLinks_order.graphql"
+import type { Order2HelpLinks_order$data } from "__generated__/Order2HelpLinks_order.graphql"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
 
@@ -17,7 +18,6 @@ export const useOrder2Tracking = () => {
   const analytics = useAnalyticsContext()
 
   const contextPageOwnerId = analytics.contextPageOwnerId as string
-  const contextPageOwnerSlug = analytics.contextPageOwnerSlug as string
   const contextPageOwnerType = analytics.contextPageOwnerType as PageOwnerType
 
   const tracks = useMemo(() => {
@@ -38,7 +38,7 @@ export const useOrder2Tracking = () => {
       },
       clickedVisitHelpCenter: (
         contextModule: ContextModule,
-        orderType: Order2HelpLinks_order$data["mode"],
+        orderType: string,
       ) => {
         const payload: ClickedVisitHelpCenter = {
           action: ActionType.clickedVisitHelpCenter,
@@ -64,13 +64,22 @@ export const useOrder2Tracking = () => {
 
         trackEvent(payload)
       },
+
+      clickedImportFees: (contextModule: ContextModule, flow) => {
+        const payload: ClickedImportFees = {
+          action: ActionType.clickedImportFees,
+          context_module: contextModule,
+          context_page_owner_id: contextPageOwnerId,
+          context_page_owner_type: contextPageOwnerType,
+          destination_page_owner_type: OwnerType.articles,
+          destination_page_owner_slug:
+            "How-are-taxes-and-customs-fees-calculated",
+          flow,
+        }
+        trackEvent(payload)
+      },
     }
-  }, [
-    trackEvent,
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  ])
+  }, [trackEvent, contextPageOwnerId, contextPageOwnerType])
 
   return tracks
 }
