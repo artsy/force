@@ -10,10 +10,13 @@ import { Link } from "react-head"
 interface ImmerseProps {
   filtered_artworks: Immerse_filtered_artworks$data
   onClose?: () => void
+  resizeFromMain?: boolean
 }
 
 const Immerse: React.FC<ImmerseProps> = props => {
   const { onClose, filtered_artworks } = props
+  const resizeFromMain = props.resizeFromMain ?? false
+
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -21,6 +24,17 @@ const Immerse: React.FC<ImmerseProps> = props => {
   const currentArtwork = artworks[currentIndex]
   const nextArtwork = artworks[currentIndex + 1]
   const prevArtwork = artworks[currentIndex - 1]
+
+  // preferred image urls
+  const currentImageSrc = resizeFromMain
+    ? currentArtwork?.immersiveImage?.resized?.src
+    : currentArtwork?.immersiveImage?.url
+  const nextImageSrc = resizeFromMain
+    ? nextArtwork?.immersiveImage?.resized?.src
+    : nextArtwork?.immersiveImage?.url
+  const prevImageSrc = resizeFromMain
+    ? prevArtwork?.immersiveImage?.resized?.src
+    : prevArtwork?.immersiveImage?.url
 
   // Handle key press events (ESC, left/right arrows)
   const handleKeyDown = useCallback(
@@ -52,22 +66,18 @@ const Immerse: React.FC<ImmerseProps> = props => {
   return (
     <div className="immerse">
       <Container>
-        <a href={`/artwork/${currentArtwork.slug}`} target="_new">
+        <a
+          href={`/artwork/${currentArtwork.slug}`}
+          target="_new"
+          style={{ textDecoration: "none" }}
+        >
           <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
             {/* Prefetch prev/next image using link tags */}
-            {nextArtwork?.immersiveImage?.resized?.src && (
-              <Link
-                rel="prefetch"
-                href={nextArtwork.immersiveImage.resized.src}
-                as="image"
-              />
+            {nextImageSrc && (
+              <Link rel="prefetch" href={nextImageSrc} as="image" />
             )}
-            {prevArtwork?.immersiveImage?.resized?.src && (
-              <Link
-                rel="prefetch"
-                href={prevArtwork.immersiveImage.resized.src}
-                as="image"
-              />
+            {prevImageSrc && (
+              <Link rel="prefetch" href={prevImageSrc} as="image" />
             )}
 
             {/* display blurhash if still loading */}
@@ -84,7 +94,7 @@ const Immerse: React.FC<ImmerseProps> = props => {
             )}
 
             <Image
-              src={currentArtwork?.immersiveImage?.resized?.src}
+              src={currentImageSrc as string}
               alt={currentArtwork.formattedMetadata ?? "…"}
               style={{
                 height: "85vh",
@@ -113,9 +123,10 @@ export const ImmerseContainer = createFragmentContainer(Immerse, {
         node {
           slug
           formattedMetadata
-          immersiveImage: image(includeAll: false) {
+          immersiveImage: image {
             aspectRatio
             blurhash
+            url(version: ["larger", "large"])
             resized(height: 1000, version: ["main", "larger", "large"]) {
               height
               width

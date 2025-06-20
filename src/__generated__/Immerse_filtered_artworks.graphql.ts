@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b4d2b2abfa1ec7c4da0678ed4c0496c6>>
+ * @generated SignedSource<<9b158ab2844ad395d4b58a1bb251168e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type Immerse_filtered_artworks$data = {
           readonly srcSet: string;
           readonly width: number | null | undefined;
         } | null | undefined;
+        readonly url: string | null | undefined;
       } | null | undefined;
       readonly slug: string;
     } | null | undefined;
@@ -72,13 +73,7 @@ const node: ReaderFragment = {
             },
             {
               "alias": "immersiveImage",
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "includeAll",
-                  "value": false
-                }
-              ],
+              "args": null,
               "concreteType": "Image",
               "kind": "LinkedField",
               "name": "image",
@@ -97,6 +92,22 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "blurhash",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "version",
+                      "value": [
+                        "larger",
+                        "large"
+                      ]
+                    }
+                  ],
+                  "kind": "ScalarField",
+                  "name": "url",
+                  "storageKey": "url(version:[\"larger\",\"large\"])"
                 },
                 {
                   "alias": null,
@@ -153,7 +164,7 @@ const node: ReaderFragment = {
                   "storageKey": "resized(height:1000,version:[\"main\",\"larger\",\"large\"])"
                 }
               ],
-              "storageKey": "image(includeAll:false)"
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -166,6 +177,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a8e7ad015f71edd4a8f1089b91ee7023";
+(node as any).hash = "e2fd9f6fc060aa3d37e87b4a2504ab4f";
 
 export default node;
