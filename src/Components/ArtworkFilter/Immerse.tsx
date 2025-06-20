@@ -17,14 +17,18 @@ const Immerse: React.FC<ImmerseProps> = props => {
   const artworks = extractNodes(filtered_artworks)
   const currentArtwork = artworks[currentIndex]
 
-  // Handle ESC key press
+  // Handle key press events (ESC, left/right arrows)
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === "Escape" && onClose) {
         onClose()
+      } else if (event.key === "ArrowLeft") {
+        setCurrentIndex(prev => Math.max(0, prev - 1))
+      } else if (event.key === "ArrowRight") {
+        setCurrentIndex(prev => Math.min(artworks.length - 1, prev + 1))
       }
     },
-    [onClose],
+    [onClose, artworks.length],
   )
 
   // scroll-lock and key events
