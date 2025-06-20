@@ -3,7 +3,7 @@ import { StructuredData } from "Components/Seo/StructuredData"
 import { DOWNLOAD_APP_URLS, Device } from "Utils/Hooks/useDeviceDetection"
 import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
 
-export const About2StructuredData = () => {
+export const AboutStructuredData = () => {
   return (
     <>
       <StructuredData
