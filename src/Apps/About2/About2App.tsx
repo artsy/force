@@ -1,8 +1,17 @@
-import { Spacer } from "@artsy/palette"
-import { About2Header } from "Apps/About2/Components/About2Header"
-import { About2Hero } from "Apps/About2/Components/About2Hero"
-import { About2Nav } from "Apps/About2/Components/About2Nav"
-import { About2Stats } from "Apps/About2/Components/About2Stats"
+import { Spacer, Stack } from "@artsy/palette"
+import { AboutCareers } from "Apps/About2/Components/AboutCareers"
+import { AboutContact } from "Apps/About2/Components/AboutContact"
+import { AboutDownload } from "Apps/About2/Components/AboutDownload"
+import { AboutHeader } from "Apps/About2/Components/AboutHeader"
+import { AboutHero } from "Apps/About2/Components/AboutHero"
+import { AboutJoin } from "Apps/About2/Components/AboutJoin"
+import { AboutMissionAndVision } from "Apps/About2/Components/AboutMissionAndVision"
+import { AboutNav, AboutNavProvider } from "Apps/About2/Components/AboutNav"
+import { AboutOurStory } from "Apps/About2/Components/AboutOurStory"
+import { AboutOurTeam } from "Apps/About2/Components/AboutOurTeam"
+import { AboutPress } from "Apps/About2/Components/AboutPress"
+import { AboutStats } from "Apps/About2/Components/AboutStats"
+import { AboutWhatWeDo } from "Apps/About2/Components/AboutWhatWeDo"
 import { MetaTags } from "Components/MetaTags"
 
 export const DESCRIPTION =
@@ -10,7 +19,7 @@ export const DESCRIPTION =
 
 export const About2App: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
-    <>
+    <AboutNavProvider>
       <MetaTags
         title="About | Artsy"
         description={DESCRIPTION}
@@ -18,19 +27,41 @@ export const About2App: React.FC<React.PropsWithChildren<unknown>> = () => {
         pathname="/about"
       />
 
-      <About2Nav />
+      <AboutNav />
 
       <Spacer y={4} />
 
-      <About2Header />
+      <AboutHeader />
 
       <Spacer y={4} />
 
-      <About2Hero />
+      <AboutHero />
 
       <Spacer y={[4, 6]} />
 
-      <About2Stats />
-    </>
+      <AboutStats />
+
+      <Spacer y={12} />
+
+      <Stack gap={12}>
+        <AboutMissionAndVision />
+
+        <AboutOurStory />
+
+        <AboutWhatWeDo />
+
+        <AboutOurTeam />
+
+        <AboutCareers />
+
+        <AboutDownload />
+
+        <AboutPress />
+
+        <AboutJoin />
+
+        <AboutContact />
+      </Stack>
+    </AboutNavProvider>
   )
 }
