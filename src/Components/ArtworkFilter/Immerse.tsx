@@ -42,11 +42,17 @@ const Immerse: React.FC<ImmerseProps> = props => {
       if (event.key === "Escape" && onClose) {
         onClose()
       } else if (event.key === "ArrowLeft") {
-        setCurrentIndex(prev => Math.max(0, prev - 1))
-        setIsLoading(true)
+        setCurrentIndex(previousIndex => {
+          const nextIndex = Math.max(0, previousIndex - 1)
+          if (previousIndex != nextIndex) setIsLoading(true)
+          return nextIndex
+        })
       } else if (event.key === "ArrowRight") {
-        setCurrentIndex(prev => Math.min(artworks.length - 1, prev + 1))
-        setIsLoading(true)
+        setCurrentIndex(previousIndex => {
+          const nextIndex = Math.min(artworks.length - 1, previousIndex + 1)
+          if (previousIndex != nextIndex) setIsLoading(true)
+          return nextIndex
+        })
       }
     },
     [onClose, artworks.length],
