@@ -58,6 +58,7 @@ import { ArtworkFilters } from "./ArtworkFilters"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
+import { ImmerseContainer } from "Components/ArtworkFilter/Immerse"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
@@ -133,6 +134,7 @@ export const BaseArtworkFilter: React.FC<
 
   const [isLoading, setIsLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const [isImmersed, setIsImmersed] = useState(false)
 
   const handleOpen = () => {
     setIsOpen(true)
@@ -405,7 +407,19 @@ export const BaseArtworkFilter: React.FC<
                         </Flex>
                       </HorizontalOverflow>
 
-                      <ArtworkFilterSort {...(stuck ? { offset: 20 } : {})} />
+                      <Flex>
+                        <Button
+                          variant={"secondaryNeutral"}
+                          size={"small"}
+                          onClick={() => {
+                            setIsImmersed(true)
+                          }}
+                        >
+                          Immerse
+                        </Button>
+
+                        <ArtworkFilterSort {...(stuck ? { offset: 20 } : {})} />
+                      </Flex>
 
                       <ArtworkFilterDrawer open={isOpen} onClose={handleClose}>
                         {Filters ? Filters : <ArtworkFilters user={user} />}
@@ -417,6 +431,13 @@ export const BaseArtworkFilter: React.FC<
             )
           }}
         </Sticky>
+
+        {isImmersed && (
+          <ImmerseContainer
+            filtered_artworks={viewer.filtered_artworks}
+            onClose={() => setIsImmersed(false)}
+          />
+        )}
 
         <Spacer y={2} />
 
@@ -452,6 +473,7 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
       @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
         filtered_artworks: artworksConnection(input: $input) {
           ...ArtworkFilterArtworkGrid_filtered_artworks
+          ...Immerse_filtered_artworks
           counts {
             total(format: "0,0")
           }
