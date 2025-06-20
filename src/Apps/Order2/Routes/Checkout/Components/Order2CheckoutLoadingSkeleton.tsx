@@ -48,12 +48,13 @@ const Order2CollapsibleOrderSummarySkeleton: React.FC<
   Order2CollapsibleOrderSummarySkeletonProps
 > = props => {
   return (
-    <GridColumns pt={[0, "50px"]} px={[0, 0, 4]}>
-      <Column span={[12, 12, 7]} start={[1, 1, 1]}>
+    <GridColumns py={[0, 4]} px={[0, 0, 4]}>
+      <Column span={[12, 12, 6]} start={[1, 1, 2]}>
         <Box
-          maxWidth={"754px"}
           width="100%"
-          justifySelf={["center", "center", "end"]}
+          maxWidth="754px"
+          mx={["auto", "auto", 0]}
+          ml={[0, "auto", "auto"]}
         >
           <Stack gap={1}>
             <Box display={["block", "block", "none"]}>
@@ -87,30 +88,24 @@ const Order2CollapsibleOrderSummarySkeleton: React.FC<
         </Box>
       </Column>
 
-      <Column
-        start={[1, 1, 8]}
-        span={[12, 12, 5]}
-        display={["none", "none", "block"]}
-      >
-        <Box width={"445px"} position="sticky" top={80} right={4}>
-          {/* Order summary skeleton for desktop */}
-          <Box backgroundColor="mono0" p={2}>
-            <SkeletonText variant="lg-display" mb={2}>
-              Order summary
-            </SkeletonText>
-            <Flex mb={2}>
-              <SkeletonBox width={60} height={60} mr={2} />
-              <Box flex={1}>
-                <SkeletonText variant="sm" mb={1}>
-                  {props.artworkArtistNames}
-                </SkeletonText>
-                <SkeletonText variant="xs" mb={1}>
-                  {props.artworkTitle}, {props.artworkDate}
-                </SkeletonText>
-                <SkeletonText variant="sm">{props.artworkPrice}</SkeletonText>
-              </Box>
-            </Flex>
-          </Box>
+      <Column span={[12, 12, 4, 3]} start={[1, 1, 8, 8]}>
+        {/* Order summary skeleton for desktop */}
+        <Box backgroundColor="mono0" p={2}>
+          <SkeletonText variant="lg-display" mb={2}>
+            Order summary
+          </SkeletonText>
+          <Flex mb={2}>
+            <SkeletonBox width={60} height={60} mr={2} />
+            <Box flex={1}>
+              <SkeletonText variant="sm" mb={1}>
+                {props.artworkArtistNames}
+              </SkeletonText>
+              <SkeletonText variant="xs" mb={1}>
+                {props.artworkTitle}, {props.artworkDate}
+              </SkeletonText>
+              <SkeletonText variant="sm">{props.artworkPrice}</SkeletonText>
+            </Box>
+          </Flex>
         </Box>
       </Column>
     </GridColumns>

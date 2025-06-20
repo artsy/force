@@ -99,49 +99,38 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
       {isLoading && <Order2CheckoutLoadingSkeleton order={order} />}
       {expressCheckoutSubmitting && <SubmittingOrderSpinner />}
       <GridColumns
-        pt={[0, "50px"]}
+        py={[0, 4]}
         px={[0, 0, 4]}
-        backgroundColor="mono5"
         style={{
           display: isLoading || expressCheckoutSubmitting ? "none" : "grid",
         }}
       >
-        <Column span={[12, 12, 7]} start={[1, 1, 1]}>
-          <Box
-            maxWidth={"754px"}
-            width="100%"
-            justifySelf={["center", "center", "end"]}
-          >
-            <Stack gap={1}>
-              <Box display={["block", "block", "none"]}>
-                <Order2CollapsibleOrderSummary order={order} />
-              </Box>
-              {isExpressCheckoutEligible && (
-                <Order2ExpressCheckout order={order} />
-              )}
-              <Order2FulfillmentDetailsStep order={order} />
-              <Order2DeliveryOptionsStep />
-              <Order2PaymentStep order={order} />
-            </Stack>
+        <Column span={[12, 12, 6]} start={[1, 1, 2]}>
+          <Stack gap={1}>
             <Box display={["block", "block", "none"]}>
-              <Spacer y={1} />
-              <Order2ReviewStep order={order} />
-              <Order2HelpLinksWithInquiry
-                order={order}
-                artworkID={artworkSlug as string}
-                // @ts-expect-error TODO: update when we have checkout context menu
-                contextModule=""
-              />
+              <Order2CollapsibleOrderSummary order={order} />
             </Box>
+            {isExpressCheckoutEligible && (
+              <Order2ExpressCheckout order={order} />
+            )}
+            <Order2FulfillmentDetailsStep order={order} />
+            <Order2DeliveryOptionsStep />
+            <Order2PaymentStep order={order} />
+          </Stack>
+          <Box display={["block", "block", "none"]}>
+            <Spacer y={1} />
+            <Order2ReviewStep order={order} />
+            <Order2HelpLinksWithInquiry
+              order={order}
+              artworkID={artworkSlug as string}
+              // @ts-expect-error TODO: update when we have checkout context menu
+              contextModule=""
+            />
           </Box>
         </Column>
 
-        <Column
-          start={[1, 1, 8]}
-          span={[12, 12, 5]}
-          display={["none", "none", "block"]}
-        >
-          <Box width={"445px"} position="sticky" top={80}>
+        <Column span={[12, 12, 4, 3]} start={[1, 1, 8, 8]}>
+          <Box position={["initial", "initial", "fixed"]}>
             <Order2ReviewStep order={order} />
             <Separator as="hr" />
             <Order2HelpLinksWithInquiry

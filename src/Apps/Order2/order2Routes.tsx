@@ -48,7 +48,7 @@ export const order2Routes: RouteProps[] = [
     children: [
       {
         path: "checkout",
-        layout: "LogoOnlyFullBleed",
+        layout: "Checkout",
         Component: CheckoutRoute,
         shouldWarnBeforeLeaving: true,
         prepareVariables: params => ({ orderID: params.orderID }),
@@ -99,7 +99,7 @@ export const order2Routes: RouteProps[] = [
       {
         path: "details",
         Component: DetailsRoute,
-        layout: "FullBleed",
+        layout: "OrderDetails",
         query: graphql`
           query order2Routes_DetailsQuery($orderID: ID!) {
             viewer {
