@@ -90,7 +90,12 @@ const Immerse: React.FC<ImmerseProps> = props => {
   }, [handleKeyDown])
 
   return (
-    <div className="immerse">
+    <>
+      {/* Prefetch prev/next image using link tags */}
+      {nextImageSrc && <Link rel="prefetch" href={nextImageSrc} as="image" />}
+      {prevImageSrc && <Link rel="prefetch" href={prevImageSrc} as="image" />}
+
+      {/* Visual debugger */}
       {DEBUG && (
         <Debug>
           {JSON.stringify(
@@ -108,69 +113,64 @@ const Immerse: React.FC<ImmerseProps> = props => {
           )}
         </Debug>
       )}
-      <Container>
-        {onClose && (
-          <Button
-            onClick={onClose}
-            variant={"tertiary"}
-            position="fixed"
-            top={20}
-            right={20}
-          >
-            <CollapseIcon mr={0.5} /> Close
-          </Button>
-        )}
-        {isPageLoading ? (
-          <Text>Loading more artworks…</Text>
-        ) : (
-          <a
-            href={`/artwork/${currentArtwork.slug}`}
-            target="_new"
-            style={{ textDecoration: "none" }}
-          >
-            <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
-              {/* Prefetch prev/next image using link tags */}
-              {nextImageSrc && (
-                <Link rel="prefetch" href={nextImageSrc} as="image" />
-              )}
-              {prevImageSrc && (
-                <Link rel="prefetch" href={prevImageSrc} as="image" />
-              )}
 
-              {/* display blurhash if still loading */}
-              {isLoading && currentArtwork?.immersiveImage?.blurhash && (
-                <Blurhash
-                  hash={currentArtwork.immersiveImage.blurhash}
-                  width={`${currentArtwork.immersiveImage.aspectRatio * 85}vh`}
-                  height={"85vh"}
-                  resolutionX={32}
-                  resolutionY={32}
-                  punch={1}
-                  aria-hidden="true"
+      <div className="immerse">
+        <Container>
+          {onClose && (
+            <Button
+              onClick={onClose}
+              variant={"tertiary"}
+              position="fixed"
+              top={20}
+              right={20}
+            >
+              <CollapseIcon mr={0.5} /> Close
+            </Button>
+          )}
+          {isPageLoading ? (
+            <Text>Loading more artworks…</Text>
+          ) : (
+            <a
+              href={`/artwork/${currentArtwork.slug}`}
+              target="_new"
+              style={{ textDecoration: "none" }}
+            >
+              <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
+                {/* display blurhash if still loading */}
+                {isLoading && currentArtwork?.immersiveImage?.blurhash && (
+                  <Blurhash
+                    hash={currentArtwork.immersiveImage.blurhash}
+                    width={`${currentArtwork.immersiveImage.aspectRatio * 85}vh`}
+                    height={"85vh"}
+                    resolutionX={32}
+                    resolutionY={32}
+                    punch={1}
+                    aria-hidden="true"
+                  />
+                )}
+
+                <Image
+                  src={currentImageSrc}
+                  alt={currentArtwork.formattedMetadata ?? "…"}
+                  style={{
+                    height: "85vh",
+                    objectFit: "contain",
+                    visibility: isLoading ? "hidden" : "visible",
+                  }}
+                  onLoad={() => setIsLoading(false)}
+                  onError={() => setIsLoading(false)}
+                  display={isLoading ? "none" : "block"}
                 />
-              )}
 
-              <Image
-                src={currentImageSrc}
-                alt={currentArtwork.formattedMetadata ?? "…"}
-                style={{
-                  height: "85vh",
-                  objectFit: "contain",
-                  visibility: isLoading ? "hidden" : "visible",
-                }}
-                onLoad={() => setIsLoading(false)}
-                onError={() => setIsLoading(false)}
-                display={isLoading ? "none" : "block"}
-              />
-
-              <Text color="mono60">
-                {currentArtwork.formattedMetadata ?? "…"}
-              </Text>
-            </Flex>
-          </a>
-        )}
-      </Container>
-    </div>
+                <Text color="mono60">
+                  {currentArtwork.formattedMetadata ?? "…"}
+                </Text>
+              </Flex>
+            </a>
+          )}
+        </Container>
+      </div>
+    </>
   )
 }
 
