@@ -3,10 +3,11 @@ import { useEffect, useCallback, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Immerse_filtered_artworks$data } from "__generated__/Immerse_filtered_artworks.graphql"
 import { extractNodes } from "Utils/extractNodes"
-import { Flex, Image, Text } from "@artsy/palette"
+import { Button, Flex, Image, Text } from "@artsy/palette"
 import { Blurhash } from "react-blurhash"
 import { Link } from "react-head"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
+import CollapseIcon from "@artsy/icons/CollapseIcon"
 
 interface ImmerseProps {
   filtered_artworks: Immerse_filtered_artworks$data
@@ -96,6 +97,17 @@ const Immerse: React.FC<ImmerseProps> = props => {
         )}
       </Debug>
       <Container>
+        {onClose && (
+          <Button
+            onClick={onClose}
+            variant={"tertiary"}
+            position="fixed"
+            top={20}
+            right={20}
+          >
+            <CollapseIcon mr={0.5} /> Close
+          </Button>
+        )}
         {isPageLoading ? (
           <Text>Loading more artworks…</Text>
         ) : (
