@@ -60,24 +60,35 @@ const Immerse: React.FC<ImmerseProps> = props => {
   // Handle key press events (ESC, left/right arrows)
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
-      if (event.key === "Escape" && onClose) {
-        onClose()
-      } else if (event.key === "ArrowLeft") {
-        const newIndex = Math.max(0, currentIndex - 1)
-        if (newIndex !== currentIndex) {
-          setCurrentIndex(newIndex)
-          setIsLoading(true)
-        } else {
-          navigateToPreviousPage()
+      switch (event.key) {
+        case "Escape":
+          if (onClose) {
+            onClose()
+          }
+          break
+        case "ArrowLeft": {
+          const newIndex = Math.max(0, currentIndex - 1)
+          if (newIndex !== currentIndex) {
+            setCurrentIndex(newIndex)
+            setIsLoading(true)
+          } else {
+            navigateToPreviousPage()
+          }
+          break
         }
-      } else if (event.key === "ArrowRight") {
-        const newIndex = Math.min(artworks.length - 1, currentIndex + 1)
-        if (newIndex !== currentIndex) {
-          setCurrentIndex(newIndex)
-          setIsLoading(true)
-        } else {
-          navigateToNextPage()
+        case "ArrowRight": {
+          const newIndex = Math.min(artworks.length - 1, currentIndex + 1)
+          if (newIndex !== currentIndex) {
+            setCurrentIndex(newIndex)
+            setIsLoading(true)
+          } else {
+            navigateToNextPage()
+          }
+          break
         }
+        default:
+          // No action for other keys
+          break
       }
     },
     [
