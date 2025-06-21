@@ -8,6 +8,7 @@ import { Blurhash } from "react-blurhash"
 import { Link } from "react-head"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import CollapseIcon from "@artsy/icons/CollapseIcon"
+import { themeGet } from "@styled-system/theme-get"
 
 interface ImmerseProps {
   filtered_artworks: Immerse_filtered_artworks$data
@@ -195,7 +196,7 @@ const Container = styled.div`
   left: 0px;
   right: 0px;
   bottom: 0px;
-  background-color: rgba(255, 255, 255, 0.97);
+  background-color: ${themeGet("colors.mono0")};
   color: black;
   display: flex;
   flex-direction: column;
@@ -218,12 +219,12 @@ const Debug = styled.div<{ enabled?: boolean }>`
   top: 0px;
   left: 0px;
   padding: 10px;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: ${themeGet("colors.mono10")};
+  background-color-opacity: 0.8;
   z-index: 1001;
   font-size: 12px;
   font-family: monospace;
   white-space: pre-wrap;
-  width: 30rem;
   overflow: scroll;
   max-height: 100vh;
   box-sizing: border-box;
