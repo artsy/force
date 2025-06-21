@@ -35,6 +35,8 @@ const Immerse: React.FC<ImmerseProps> = props => {
   const nextImageSrc = nextArtwork?.immersiveImage?.url as string
   const prevImageSrc = prevArtwork?.immersiveImage?.url as string
 
+  const isArtworkMissing = !currentArtwork || !currentImageSrc
+
   const navigateToPreviousPage = useCallback(() => {
     const page = filters?.page ?? 1
     if (page > 1) {
@@ -111,10 +113,6 @@ const Immerse: React.FC<ImmerseProps> = props => {
     }
   }, [handleKeyDown])
 
-  if (!currentArtwork || !currentImageSrc) {
-    return <Text>No artwork to display</Text>
-  }
-
   return (
     <>
       {/* Prefetch prev/next image using link tags */}
@@ -155,6 +153,8 @@ const Immerse: React.FC<ImmerseProps> = props => {
           )}
           {isPageLoading ? (
             <Text>Loading more artworks…</Text>
+          ) : isArtworkMissing ? (
+            <Text>No artwork to display</Text>
           ) : (
             <a
               href={`/artwork/${currentArtwork.slug}`}
