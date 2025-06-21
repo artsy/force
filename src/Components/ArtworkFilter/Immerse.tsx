@@ -51,7 +51,17 @@ const Immerse: React.FC<ImmerseProps> = props => {
       } else if (event.key === "ArrowLeft") {
         setCurrentIndex(previousIndex => {
           const nextIndex = Math.max(0, previousIndex - 1)
-          if (previousIndex != nextIndex) setIsLoading(true)
+          if (previousIndex != nextIndex) {
+            setIsLoading(true)
+          } else {
+            // page backward
+            const page = ctx?.filters?.page ?? 0
+            if (page && page > 1) {
+              const nextPage = page - 1
+              ctx.setFilter("page", nextPage)
+              return 29
+            }
+          }
           return nextIndex
         })
       } else if (event.key === "ArrowRight") {
@@ -60,10 +70,14 @@ const Immerse: React.FC<ImmerseProps> = props => {
           if (previousIndex != nextIndex) {
             setIsLoading(true)
           } else {
+            // page forward
             if (filtered_artworks.pageInfo.hasNextPage) {
-              const nextPage = (ctx?.filters?.page ?? 0) + 1
-              ctx.setFilter("page", nextPage)
-              setCurrentIndex(0)
+              const page = ctx?.filters?.page
+              if (page) {
+                const nextPage = page + 1
+                ctx.setFilter("page", nextPage)
+                return 0
+              }
             }
           }
           return nextIndex
@@ -94,6 +108,7 @@ const Immerse: React.FC<ImmerseProps> = props => {
               currentIndex,
               isPageLoading,
               isLoading,
+              hasNextPage: filtered_artworks.pageInfo.hasNextPage,
               filters: ctx.filters,
             },
             null,
@@ -171,6 +186,7 @@ export const ImmerseContainer = createFragmentContainer(Immerse, {
   filtered_artworks: graphql`
     fragment Immerse_filtered_artworks on FilterArtworksConnection {
       pageInfo {
+        # hasPreviousPage # seems broken
         hasNextPage
       }
       edges {
