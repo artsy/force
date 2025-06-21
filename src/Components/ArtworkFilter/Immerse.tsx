@@ -13,6 +13,14 @@ import { themeGet } from "@styled-system/theme-get"
 const DEBUG = false
 const ITEMS_PER_PAGE = 30
 
+/**
+ * TODO:
+ *
+ * -[ ] improve accessibility
+ * -[ ] add HiDPI support
+ * -[ ] add tests & update fixtures
+ */
+
 interface ImmerseProps {
   isLoading?: boolean
   filtered_artworks: Immerse_filtered_artworks$data
