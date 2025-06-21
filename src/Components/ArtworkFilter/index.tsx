@@ -59,6 +59,7 @@ import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
 import { ImmerseContainer } from "Components/ArtworkFilter/Immerse"
+import ExpandIcon from "@artsy/icons/ExpandIcon"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
@@ -407,15 +408,16 @@ export const BaseArtworkFilter: React.FC<
                         </Flex>
                       </HorizontalOverflow>
 
-                      <Flex>
+                      <Flex gap={1}>
                         <Button
-                          variant={"secondaryNeutral"}
+                          variant={"tertiary"}
                           size={"small"}
                           onClick={() => {
                             setIsImmersed(true)
                           }}
                         >
-                          Immerse
+                          <ExpandIcon mr={0.5} />
+                          Immersive
                         </Button>
 
                         <ArtworkFilterSort {...(stuck ? { offset: 20 } : {})} />
@@ -434,6 +436,7 @@ export const BaseArtworkFilter: React.FC<
 
         {isImmersed && (
           <ImmerseContainer
+            isLoading={isLoading}
             filtered_artworks={viewer.filtered_artworks}
             onClose={() => setIsImmersed(false)}
           />

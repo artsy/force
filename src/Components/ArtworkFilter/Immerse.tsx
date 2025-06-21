@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { useEffect, useCallback, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Immerse_filtered_artworks$data } from "__generated__/Immerse_filtered_artworks.graphql"
@@ -6,26 +6,29 @@ import { extractNodes } from "Utils/extractNodes"
 import { Flex, Image, Text } from "@artsy/palette"
 import { Blurhash } from "react-blurhash"
 import { Link } from "react-head"
+import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 
 interface ImmerseProps {
   filtered_artworks: Immerse_filtered_artworks$data
   onClose?: () => void
   resizeFromMain?: boolean
+  isLoading?: boolean
 }
 
 const Immerse: React.FC<ImmerseProps> = props => {
-  const { onClose, filtered_artworks } = props
+  const { onClose, filtered_artworks, isLoading: isPageLoading } = props
   const resizeFromMain = props.resizeFromMain ?? false
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
+  const ctx = useArtworkFilterContext()
 
   const artworks = extractNodes(filtered_artworks)
   const currentArtwork = artworks[currentIndex]
   const nextArtwork = artworks[currentIndex + 1]
   const prevArtwork = artworks[currentIndex - 1]
 
-  // preferred image urls
+  // preferred image urls - resize from "main"? or just "larger" as-is?
   const currentImageSrc = resizeFromMain
     ? currentArtwork?.immersiveImage?.resized?.src
     : currentArtwork?.immersiveImage?.url
@@ -50,7 +53,15 @@ const Immerse: React.FC<ImmerseProps> = props => {
       } else if (event.key === "ArrowRight") {
         setCurrentIndex(previousIndex => {
           const nextIndex = Math.min(artworks.length - 1, previousIndex + 1)
-          if (previousIndex != nextIndex) setIsLoading(true)
+          if (previousIndex != nextIndex) {
+            setIsLoading(true)
+          } else {
+            if (filtered_artworks.pageInfo.hasNextPage) {
+              const nextPage = (ctx?.filters?.page ?? 0) + 1
+              ctx.setFilter("page", nextPage)
+              setCurrentIndex(0)
+            }
+          }
           return nextIndex
         })
       }
@@ -71,52 +82,69 @@ const Immerse: React.FC<ImmerseProps> = props => {
 
   return (
     <div className="immerse">
+      <Debug enabled={false}>
+        {JSON.stringify(
+          {
+            currentPage: ctx.filters?.page,
+            currentIndex,
+            isPageLoading,
+            isLoading,
+            filters: ctx.filters,
+          },
+          null,
+          2,
+        )}
+      </Debug>
       <Container>
-        <a
-          href={`/artwork/${currentArtwork.slug}`}
-          target="_new"
-          style={{ textDecoration: "none" }}
-        >
-          <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
-            {/* Prefetch prev/next image using link tags */}
-            {nextImageSrc && (
-              <Link rel="prefetch" href={nextImageSrc} as="image" />
-            )}
-            {prevImageSrc && (
-              <Link rel="prefetch" href={prevImageSrc} as="image" />
-            )}
+        {isPageLoading ? (
+          <Text>Loading more artworks…</Text>
+        ) : (
+          <a
+            href={`/artwork/${currentArtwork.slug}`}
+            target="_new"
+            style={{ textDecoration: "none" }}
+          >
+            <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
+              {/* Prefetch prev/next image using link tags */}
+              {nextImageSrc && (
+                <Link rel="prefetch" href={nextImageSrc} as="image" />
+              )}
+              {prevImageSrc && (
+                <Link rel="prefetch" href={prevImageSrc} as="image" />
+              )}
 
-            {/* display blurhash if still loading */}
-            {isLoading && currentArtwork?.immersiveImage?.blurhash && (
-              <Blurhash
-                hash={currentArtwork.immersiveImage.blurhash}
-                width={`${currentArtwork.immersiveImage.aspectRatio * 85}vh`}
-                height={"85vh"}
-                resolutionX={32}
-                resolutionY={32}
-                punch={1}
-                aria-hidden="true"
+              {/* display blurhash if still loading */}
+              {isLoading && currentArtwork?.immersiveImage?.blurhash && (
+                <Blurhash
+                  hash={currentArtwork.immersiveImage.blurhash}
+                  width={`${currentArtwork.immersiveImage.aspectRatio * 85}vh`}
+                  height={"85vh"}
+                  resolutionX={32}
+                  resolutionY={32}
+                  punch={1}
+                  aria-hidden="true"
+                />
+              )}
+
+              <Image
+                src={currentImageSrc as string}
+                alt={currentArtwork.formattedMetadata ?? "…"}
+                style={{
+                  height: "85vh",
+                  objectFit: "contain",
+                  visibility: isLoading ? "hidden" : "visible",
+                }}
+                onLoad={() => setIsLoading(false)}
+                onError={() => setIsLoading(false)}
+                display={isLoading ? "none" : "block"}
               />
-            )}
 
-            <Image
-              src={currentImageSrc as string}
-              alt={currentArtwork.formattedMetadata ?? "…"}
-              style={{
-                height: "85vh",
-                objectFit: "contain",
-                visibility: isLoading ? "hidden" : "visible",
-              }}
-              onLoad={() => setIsLoading(false)}
-              onError={() => setIsLoading(false)}
-              display={isLoading ? "none" : "block"}
-            />
-
-            <Text color="mono60">
-              {currentArtwork.formattedMetadata ?? "…"}
-            </Text>
-          </Flex>
-        </a>
+              <Text color="mono60">
+                {currentArtwork.formattedMetadata ?? "…"}
+              </Text>
+            </Flex>
+          </a>
+        )}
       </Container>
     </div>
   )
@@ -125,6 +153,9 @@ const Immerse: React.FC<ImmerseProps> = props => {
 export const ImmerseContainer = createFragmentContainer(Immerse, {
   filtered_artworks: graphql`
     fragment Immerse_filtered_artworks on FilterArtworksConnection {
+      pageInfo {
+        hasNextPage
+      }
       edges {
         node {
           slug
@@ -161,4 +192,27 @@ const Container = styled.div`
   z-index: 1000;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px); /* For Safari */
+`
+const Debug = styled.div<{ enabled?: boolean }>`
+  ${props =>
+    props.enabled
+      ? css`
+          display: block;
+        `
+      : css`
+          display: none;
+        `}
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  font-size: 12px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  width: 30rem;
+  overflow: scroll;
+  max-height: 100vh;
+  box-sizing: border-box;
 `
