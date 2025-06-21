@@ -86,6 +86,7 @@ export const TagArtworkFilterRefetchContainer = createRefetchContainer(
             total(format: "0,0")
           }
           ...ArtworkFilterArtworkGrid_filtered_artworks
+          ...Immerse_filtered_artworks
         }
       }
     `,
