@@ -113,6 +113,12 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
             id: "ggg123",
             slug: "yayoi-kusama-pumpkin-2222222222222222",
             href: "/artwork/yayoi-kusama-pumpkin-2222222222222222",
+            formattedMetadata: "Yayoi Kusama, Pumpkin 2222, 2020",
+            immersiveImage: {
+              aspectRatio: 1.43,
+              blurhash: "abcd1234",
+              url: "https://test.artsy.net/image",
+            },
             internalID: "zzz123",
             image: {
               internalID: "imageabc123",
@@ -190,6 +196,12 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
             id: "abc123",
             slug: "yayoi-kusama-pumpkin-33333333333333333",
             href: "/artwork/yayoi-kusama-pumpkin-33333333333333333",
+            formattedMetadata: "Yayoi Kusama, Pumpkin, 2020",
+            immersiveImage: {
+              aspectRatio: 1.43,
+              blurhash: "abcd1234",
+              url: "https://test.artsy.net/image2",
+            },
             internalID: "xxx123",
             image: {
               internalID: "yyy123",

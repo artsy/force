@@ -7,7 +7,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
       counts: {
         total: 0,
       },
-      id: "RmlsdGVyQXJ0d29ya3M6eyJhZ2dyZWdhdGlvbnMiOlsidG90YWwiXSwia2V5d29yZCI6ImFuZHkgd2FyaG9sIn0=",
+      id: "RmlsdGVyckFydHdvcmtzOi0x",
       pageInfo: {
         hasNextPage: true,
         endCursor: "YXJyYXljb25uZWN0aW9uOjI5",
@@ -50,6 +50,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1rZW5ueS1idXJyZWxs",
             slug: "andy-warhol-kenny-burrell",
             href: "/artwork/andy-warhol-kenny-burrell",
+            formattedMetadata:
+              "Andy Warhol, 'Kenny Burrell', 1956, Print, Screenprint on paper, Ambleside Gallery",
+            immersiveImage: {
+              aspectRatio: 1.35,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/lTTEGbhqyyMC8IraJuGTtw/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -93,6 +100,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1kb2xsYXJzLTEtZnMtaWktZG90LTI3NA==",
             slug: "andy-warhol-dollars-1-fs-ii-dot-274",
             href: "/artwork/andy-warhol-dollars-1-fs-ii-dot-274",
+            formattedMetadata:
+              "Andy Warhol, '$(1) FS II.274', 1982, Print, Screenprint on paper, Gallery Art",
+            immersiveImage: {
+              aspectRatio: 0.79,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/QNBY1kx6foZiKrB7msMWmw/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -136,6 +150,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1wZWFjaGVz",
             slug: "andy-warhol-peaches",
             href: "/artwork/andy-warhol-peaches",
+            formattedMetadata:
+              "Andy Warhol, 'Peaches', 1978, Print, Screenprint on paper, DTR Modern Galleries",
+            immersiveImage: {
+              aspectRatio: 1.33,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/RkBOuh6bjwu-pY9a3CzaHA/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -179,6 +200,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1hY3RyZXNzLXNob3RzLWFuZHktd2FyaG9sLW55LWRhaWx5LW5ld3MtMTk2OA==",
             slug: "andy-warhol-actress-shots-andy-warhol-ny-daily-news-1968",
             href: "/artwork/andy-warhol-actress-shots-andy-warhol-ny-daily-news-1968",
+            formattedMetadata:
+              "Andy Warhol, '\"ACTRESS SHOTS ANDY WARHOL\" NY Daily News, 1968', 1968, Print, Newspaper clipping, VINCE fine arts/ephemera",
+            immersiveImage: {
+              aspectRatio: 1.07,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/L8Vjqhum4XX6sqiEXUg3Fg/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -223,6 +251,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1jb3Ntb3M=",
             slug: "andy-warhol-cosmos",
             href: "/artwork/andy-warhol-cosmos",
+            formattedMetadata:
+              "Andy Warhol, 'COSMOS', ca. 1984, Print, Screenprint on paper, Gallery Art",
+            immersiveImage: {
+              aspectRatio: 0.78,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/Lzonx30NloDXcs0FdKUjDw/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -266,6 +301,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1sZWUtaWFjb2NjYS0y",
             slug: "andy-warhol-lee-iacocca-2",
             href: "/artwork/andy-warhol-lee-iacocca-2",
+            formattedMetadata:
+              "Andy Warhol, 'Lee Iacocca', 1985, Print, Screenprint on paper, Robert Fontaine Gallery",
+            immersiveImage: {
+              aspectRatio: 0.82,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/NuQp4MqjsqRaiPpC9hu5BA/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -309,6 +351,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1zaG9lLTE4",
             slug: "andy-warhol-shoe-18",
             href: "/artwork/andy-warhol-shoe-18",
+            formattedMetadata:
+              "Andy Warhol, 'Shoe', 1958, Drawing, Collage or other Work on Paper, Ink on paper, McClain Gallery",
+            immersiveImage: {
+              aspectRatio: 1.42,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/123zBWZmYy_OC9d9tV3ajQ/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -352,6 +401,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1zZXdpbmctbWFjaGluZQ==",
             slug: "andy-warhol-sewing-machine",
             href: "/artwork/andy-warhol-sewing-machine",
+            formattedMetadata:
+              "Andy Warhol, 'Sewing Machine', 1952, Drawing, Collage or other Work on Paper, Ink on paper, Joseph K. Levene Fine Art, Ltd.",
+            immersiveImage: {
+              aspectRatio: 1,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/MySOcyJvvgWT6US5jFafRA/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -395,6 +451,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1zdXBlcm1hbi1mLWFuZC1zLWlpLTI2MC0z",
             slug: "andy-warhol-superman-f-and-s-ii-260-3",
             href: "/artwork/andy-warhol-superman-f-and-s-ii-260-3",
+            formattedMetadata:
+              "Andy Warhol, 'Superman (F. & S. II. 260)', 1981, Print, Screenprint on paper, David Benrimon Fine Art",
+            immersiveImage: {
+              aspectRatio: 1,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/JfQvrm5cdR-D0O7hqqbEZg/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -438,6 +501,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1iaXJtaW5naGFtLXJhY2UtcmlvdC0xMA==",
             slug: "andy-warhol-birmingham-race-riot-10",
             href: "/artwork/andy-warhol-birmingham-race-riot-10",
+            formattedMetadata:
+              "Andy Warhol, 'Birmingham Race Riot', 1964, Print, Screenprint on paper, Graves International Art",
+            immersiveImage: {
+              aspectRatio: 1.21,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/TuMBh41hMifd0F7EaheI9w/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -481,6 +551,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1ub3J0aHdlc3QtY29hc3QtbWFzay1mcy1paS1kb3QtMzgwLTI=",
             slug: "andy-warhol-northwest-coast-mask-fs-ii-dot-380-2",
             href: "/artwork/andy-warhol-northwest-coast-mask-fs-ii-dot-380-2",
+            formattedMetadata:
+              "Andy Warhol, 'NORTHWEST COAST MASK FS II.380', 1986, Print, Screenprint on paper, Gallery Art",
+            immersiveImage: {
+              aspectRatio: 1,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/6y_-lwRBHGbGgw6KmsdCmQ/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -524,6 +601,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1yYXJlLW9yaWdpbmFsLWFuZHktd2FyaG9sLXJlY29yZC1hcnQ=",
             slug: "andy-warhol-rare-original-andy-warhol-record-art",
             href: "/artwork/andy-warhol-rare-original-andy-warhol-record-art",
+            formattedMetadata:
+              "Andy Warhol, 'Rare original Andy Warhol record art', 1964, Mixed Media, Vinyl record album cover, Lot 180",
+            immersiveImage: {
+              aspectRatio: 1,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/nhUiLKacJVUqpMSXQ30nJA/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -568,6 +652,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1hbmR5LXdhcmhvbC1waGlsaXAtZmFnYW4tYW5kLWdlcmFyZC1tYWxhbmdh",
             slug: "andy-warhol-andy-warhol-philip-fagan-and-gerard-malanga",
             href: "/artwork/andy-warhol-andy-warhol-philip-fagan-and-gerard-malanga",
+            formattedMetadata:
+              "Andy Warhol, 'Andy Warhol, Philip Fagan & Gerard Malanga', 1964, Photography, Black and white photograph, Joseph K. Levene Fine Art, Ltd.",
+            immersiveImage: {
+              aspectRatio: 0.58,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/EjLVZTsT0Ve41R6ProKQPQ/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -612,6 +703,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1hbmR5LXdhcmhvbC1waG90b2dyYXBoLW9mLWNvcm5lbGlhLWd1ZXN0LTE5ODU=",
             slug: "andy-warhol-andy-warhol-photograph-of-cornelia-guest-1985",
             href: "/artwork/andy-warhol-andy-warhol-photograph-of-cornelia-guest-1985",
+            formattedMetadata:
+              "Andy Warhol, 'Andy Warhol, Photograph of Cornelia Guest, 1985', 1985, Photography, Gelatin silver print, Hedges Projects",
+            immersiveImage: {
+              aspectRatio: 0.8,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/PWBFswpR5-Ai0lCrpRO5YA/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -656,6 +754,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1hbmR5LXdhcmhvbC1waG90b2dyYXBoLW9mLXRpbW90aHktaHV0dG9uLTE5ODA=",
             slug: "andy-warhol-andy-warhol-photograph-of-timothy-hutton-1980",
             href: "/artwork/andy-warhol-andy-warhol-photograph-of-timothy-hutton-1980",
+            formattedMetadata:
+              "Andy Warhol, 'Andy Warhol, Photograph of Timothy Hutton, 1980', 1980, Photography, Gelatin silver print, Hedges Projects",
+            immersiveImage: {
+              aspectRatio: 0.76,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/_Gp2Tqu2040tCbVzm5ZSOg/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -700,6 +805,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1tdWhhbW1lZC1hbGktMQ==",
             slug: "andy-warhol-muhammed-ali-1",
             href: "/artwork/andy-warhol-muhammed-ali-1",
+            formattedMetadata:
+              "Andy Warhol, 'Muhammed Ali', 1978, Print, Screenprint on paper, Samuel Owen Gallery",
+            immersiveImage: {
+              aspectRatio: 0.75,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/mdtpEgwYjBZOLAnbV_wT3A/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -743,6 +855,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC11bnRpdGxlZC1qb24tZ291bGQtMQ==",
             slug: "andy-warhol-untitled-jon-gould-1",
             href: "/artwork/andy-warhol-untitled-jon-gould-1",
+            formattedMetadata:
+              "Andy Warhol, 'UNTITLED ( JON GOULD)', 1982, Photography, Polaroid photograph, Gallery Art",
+            immersiveImage: {
+              aspectRatio: 0.73,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/m08CoClNXzF2xnjrCxy5Kg/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -786,6 +905,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1nZXJvbmltby1mcy1paS1kb3QtMzg0LTEy",
             slug: "andy-warhol-geronimo-fs-ii-dot-384-12",
             href: "/artwork/andy-warhol-geronimo-fs-ii-dot-384-12",
+            formattedMetadata:
+              "Andy Warhol, 'GERONIMO FS II.384', 1986, Print, Screenprint on paper, Gallery Art",
+            immersiveImage: {
+              aspectRatio: 1,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/XzLLLPlzBCa4VLRv-x9Llw/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -829,6 +955,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1qYXNvbi1tY2NveQ==",
             slug: "andy-warhol-jason-mccoy",
             href: "/artwork/andy-warhol-jason-mccoy",
+            formattedMetadata:
+              "Andy Warhol, 'Jason McCoy', ca. 1975, Photography, Gelatin silver print, Alpha 137 Gallery",
+            immersiveImage: {
+              aspectRatio: 0.78,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/1wd-zBc5RUMqVxXxWwvD2Q/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -872,6 +1005,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1kb2xsYXJzLXF1YWRyYW50LWZzLWlpLWRvdC0yODQtMQ==",
             slug: "andy-warhol-dollars-quadrant-fs-ii-dot-284-1",
             href: "/artwork/andy-warhol-dollars-quadrant-fs-ii-dot-284-1",
+            formattedMetadata:
+              "Andy Warhol, '$ (QUADRANT) FS II.284', 1982, Print, Screenprint on paper, Gallery Art",
+            immersiveImage: {
+              aspectRatio: 0.79,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/kHTEwjm-QJPlM0woOxF3RQ/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -915,6 +1055,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1sYWRpZXMtYW5kLWdlbnRsZW1lbi1mcy1paS1kb3QtMTMwLTE=",
             slug: "andy-warhol-ladies-and-gentlemen-fs-ii-dot-130-1",
             href: "/artwork/andy-warhol-ladies-and-gentlemen-fs-ii-dot-130-1",
+            formattedMetadata:
+              "Andy Warhol, 'LADIES & GENTLEMEN FS II.130', 1975, Print, Screenprint on paper, Gallery Art",
+            immersiveImage: {
+              aspectRatio: 0.65,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/o_SwQjGrVcVDI3ZBFw_p1A/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -958,6 +1105,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1tYW8tZi1kb3Qtcy1paS1kb3QtOTU=",
             slug: "andy-warhol-mao-f-dot-s-ii-dot-95",
             href: "/artwork/andy-warhol-mao-f-dot-s-ii-dot-95",
+            formattedMetadata:
+              "Andy Warhol, 'Mao F.S.II.95', 1972, Print, Screenprint on paper, DTR Modern Galleries",
+            immersiveImage: {
+              aspectRatio: 0.99,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/NQ-02-O7u2EcAK3VVVuBpg/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -1001,6 +1155,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1sYWRpZXMtYW5kLWdlbnRsZW1lbi1mcy1paS1kb3QtMTI3LTE=",
             slug: "andy-warhol-ladies-and-gentlemen-fs-ii-dot-127-1",
             href: "/artwork/andy-warhol-ladies-and-gentlemen-fs-ii-dot-127-1",
+            formattedMetadata:
+              "Andy Warhol, 'LADIES & GENTLEMEN FS II.127', 1975, Print, Screenprint on paper, Gallery Art",
+            immersiveImage: {
+              aspectRatio: 0.69,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/fqXp8pPB9Gq_skirBR-Ttw/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -1044,6 +1205,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC10cnVjay05",
             slug: "andy-warhol-truck-9",
             href: "/artwork/andy-warhol-truck-9",
+            formattedMetadata:
+              "Andy Warhol, 'Truck', 1985, Print, Screenprint on paper, HG Contemporary",
+            immersiveImage: {
+              aspectRatio: 1.24,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/-RLvowuSRvkjZP9aPrdXhg/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -1087,6 +1255,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1icmlsbG8tMQ==",
             slug: "andy-warhol-brillo-1",
             href: "/artwork/andy-warhol-brillo-1",
+            formattedMetadata:
+              "Andy Warhol, 'Brillo ', 1970, Print, Screenprint on paper, Alpha 137 Gallery",
+            immersiveImage: {
+              aspectRatio: 0.87,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/bXDSjJjt3mNnTtUbmv3-GQ/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -1130,6 +1305,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1wbGFpbnMtaW5kaWFuLXNoaWVsZC1mcy1paS1kb3QtMzgyLTM=",
             slug: "andy-warhol-plains-indian-shield-fs-ii-dot-382-3",
             href: "/artwork/andy-warhol-plains-indian-shield-fs-ii-dot-382-3",
+            formattedMetadata:
+              "Andy Warhol, 'PLAINS INDIAN SHIELD FS II.382', 1986, Print, Screenprint on paper, Gallery Art",
+            immersiveImage: {
+              aspectRatio: 1,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/YTOAMMo5veMFGqxWRfGGKw/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -1173,6 +1355,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1tYXJ0aGEtZ3JhaGFtLTE1",
             slug: "andy-warhol-martha-graham-15",
             href: "/artwork/andy-warhol-martha-graham-15",
+            formattedMetadata:
+              "Andy Warhol, 'Martha Graham', ca. 1980, Photography, Gelatin silver print, Long-Sharp Gallery",
+            immersiveImage: {
+              aspectRatio: 0.88,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/LQ_-wbit7h14pg_rRZlUxg/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -1216,6 +1405,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1maXNoLWZzLWlpaWEtZG90LTM5LTE=",
             slug: "andy-warhol-fish-fs-iiia-dot-39-1",
             href: "/artwork/andy-warhol-fish-fs-iiia-dot-39-1",
+            formattedMetadata:
+              "Andy Warhol, 'FISH FS IIIA.39', 1983, Print, Screenprint on paper, Gallery Art",
+            immersiveImage: {
+              aspectRatio: 0.69,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/sxPJfeQIEfyw4ZIPs3CUBA/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -1259,6 +1455,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC11bnRpdGxlZC1mZW1hbGUtZmlndXJl",
             slug: "andy-warhol-untitled-female-figure",
             href: "/artwork/andy-warhol-untitled-female-figure",
+            formattedMetadata:
+              "Andy Warhol, 'Untitled (Female Figure)', ca. 1956, Drawing, Collage or other Work on Paper, Ink on paper, Long-Sharp Gallery",
+            immersiveImage: {
+              aspectRatio: 0.74,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/riZWHaE2IEQhiNHwmFjiKw/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
@@ -1302,6 +1505,13 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             id: "QXJ0d29yazphbmR5LXdhcmhvbC1sYWRpZXMtYW5kLWdlbnRsZW1lbi1mcy1paS1kb3QtMTI4LTI=",
             slug: "andy-warhol-ladies-and-gentlemen-fs-ii-dot-128-2",
             href: "/artwork/andy-warhol-ladies-and-gentlemen-fs-ii-dot-128-2",
+            formattedMetadata:
+              "Andy Warhol, 'LADIES & GENTLEMEN FS II.128', 1975, Print, Screenprint on paper, Gallery Art",
+            immersiveImage: {
+              aspectRatio: 0.62,
+              blurhash: "abcd1234",
+              url: "https://d32dm0rphc51dk.cloudfront.net/GIsZlmTq9UiTCEVIwx709g/larger.jpg",
+            },
             image: {
               internalID: "5bbe671fa13448002a77b29e",
               resized: {
