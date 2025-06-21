@@ -70,7 +70,7 @@ export const PartnerArtistDetailsList: React.FC<
             <PartnerArtistDetailsFragmentContainer
               key={edge.id}
               partnerArtist={edge}
-              partnerId={partner.slug}
+              partner={partner}
             />
           )
         })}
@@ -111,6 +111,7 @@ export const PartnerArtistDetailsListPaginationContainer =
           after: { type: "String" }
         ) {
           slug
+          ...PartnerArtistDetails_partner
           artists: artistsConnection(
             first: $first
             after: $after
