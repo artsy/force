@@ -11,6 +11,7 @@ import CollapseIcon from "@artsy/icons/CollapseIcon"
 import { themeGet } from "@styled-system/theme-get"
 
 const DEBUG = false
+const ITEMS_PER_PAGE = 30
 
 interface ImmerseProps {
   isLoading?: boolean
@@ -23,7 +24,7 @@ const Immerse: React.FC<ImmerseProps> = props => {
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
-  const ctx = useArtworkFilterContext()
+  const { filters, setFilter } = useArtworkFilterContext()
 
   const artworks = extractNodes(filtered_artworks)
   const currentArtwork = artworks[currentIndex]
@@ -46,11 +47,11 @@ const Immerse: React.FC<ImmerseProps> = props => {
             setIsLoading(true)
           } else {
             // page backward
-            const page = ctx?.filters?.page ?? 0
-            if (page && page > 1) {
+            const page = filters?.page ?? 1
+            if (page > 1) {
               const nextPage = page - 1
-              ctx.setFilter("page", nextPage)
-              return 29
+              setFilter("page", nextPage)
+              return ITEMS_PER_PAGE - 1
             }
           }
           return nextIndex
@@ -63,10 +64,10 @@ const Immerse: React.FC<ImmerseProps> = props => {
           } else {
             // page forward
             if (filtered_artworks.pageInfo.hasNextPage) {
-              const page = ctx?.filters?.page
+              const page = filters?.page
               if (page) {
                 const nextPage = page + 1
-                ctx.setFilter("page", nextPage)
+                setFilter("page", nextPage)
                 return 0
               }
             }
@@ -75,7 +76,7 @@ const Immerse: React.FC<ImmerseProps> = props => {
         })
       }
     },
-    [onClose, artworks.length],
+    [onClose, artworks.length, filters, setFilter, filtered_artworks],
   )
 
   // scroll-lock and key events
@@ -89,6 +90,10 @@ const Immerse: React.FC<ImmerseProps> = props => {
     }
   }, [handleKeyDown])
 
+  if (!currentArtwork || !currentImageSrc) {
+    return <Text>No artwork to display</Text>
+  }
+
   return (
     <>
       {/* Prefetch prev/next image using link tags */}
@@ -100,12 +105,12 @@ const Immerse: React.FC<ImmerseProps> = props => {
         <Debug>
           {JSON.stringify(
             {
-              currentPage: ctx.filters?.page,
+              currentPage: filters?.page,
               currentIndex,
               isPageLoading,
               isLoading,
               hasNextPage: filtered_artworks.pageInfo.hasNextPage,
-              filters: ctx.filters,
+              filters: filters,
               currentArtwork,
             },
             null,
