@@ -35,48 +35,58 @@ const Immerse: React.FC<ImmerseProps> = props => {
   const nextImageSrc = nextArtwork?.immersiveImage?.url as string
   const prevImageSrc = prevArtwork?.immersiveImage?.url as string
 
+  const navigateToPreviousPage = useCallback(() => {
+    const page = filters?.page ?? 1
+    if (page > 1) {
+      setFilter("page", page - 1)
+      setCurrentIndex(ITEMS_PER_PAGE - 1)
+      setIsLoading(true)
+      return true
+    }
+    return false
+  }, [filters?.page, setFilter])
+
+  const navigateToNextPage = useCallback(() => {
+    if (filtered_artworks.pageInfo.hasNextPage) {
+      const page = filters?.page ?? 1
+      setFilter("page", page + 1)
+      setCurrentIndex(0)
+      setIsLoading(true)
+      return true
+    }
+    return false
+  }, [filters?.page, setFilter, filtered_artworks.pageInfo.hasNextPage])
+
   // Handle key press events (ESC, left/right arrows)
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === "Escape" && onClose) {
         onClose()
       } else if (event.key === "ArrowLeft") {
-        setCurrentIndex(previousIndex => {
-          const nextIndex = Math.max(0, previousIndex - 1)
-          if (previousIndex != nextIndex) {
-            setIsLoading(true)
-          } else {
-            // page backward
-            const page = filters?.page ?? 1
-            if (page > 1) {
-              const nextPage = page - 1
-              setFilter("page", nextPage)
-              return ITEMS_PER_PAGE - 1
-            }
-          }
-          return nextIndex
-        })
+        const newIndex = Math.max(0, currentIndex - 1)
+        if (newIndex !== currentIndex) {
+          setCurrentIndex(newIndex)
+          setIsLoading(true)
+        } else {
+          navigateToPreviousPage()
+        }
       } else if (event.key === "ArrowRight") {
-        setCurrentIndex(previousIndex => {
-          const nextIndex = Math.min(artworks.length - 1, previousIndex + 1)
-          if (previousIndex != nextIndex) {
-            setIsLoading(true)
-          } else {
-            // page forward
-            if (filtered_artworks.pageInfo.hasNextPage) {
-              const page = filters?.page
-              if (page) {
-                const nextPage = page + 1
-                setFilter("page", nextPage)
-                return 0
-              }
-            }
-          }
-          return nextIndex
-        })
+        const newIndex = Math.min(artworks.length - 1, currentIndex + 1)
+        if (newIndex !== currentIndex) {
+          setCurrentIndex(newIndex)
+          setIsLoading(true)
+        } else {
+          navigateToNextPage()
+        }
       }
     },
-    [onClose, artworks.length, filters, setFilter, filtered_artworks],
+    [
+      currentIndex,
+      artworks.length,
+      onClose,
+      navigateToPreviousPage,
+      navigateToNextPage,
+    ],
   )
 
   // scroll-lock and key events
