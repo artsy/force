@@ -13,15 +13,13 @@ import { themeGet } from "@styled-system/theme-get"
 const DEBUG = false
 
 interface ImmerseProps {
+  isLoading?: boolean
   filtered_artworks: Immerse_filtered_artworks$data
   onClose?: () => void
-  resizeFromMain?: boolean
-  isLoading?: boolean
 }
 
 const Immerse: React.FC<ImmerseProps> = props => {
   const { onClose, filtered_artworks, isLoading: isPageLoading } = props
-  const resizeFromMain = props.resizeFromMain ?? false
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
@@ -32,16 +30,9 @@ const Immerse: React.FC<ImmerseProps> = props => {
   const nextArtwork = artworks[currentIndex + 1]
   const prevArtwork = artworks[currentIndex - 1]
 
-  // preferred image urls - resize from "main"? or just "larger" as-is?
-  const currentImageSrc = resizeFromMain
-    ? currentArtwork?.immersiveImage?.resized?.src
-    : currentArtwork?.immersiveImage?.url
-  const nextImageSrc = resizeFromMain
-    ? nextArtwork?.immersiveImage?.resized?.src
-    : nextArtwork?.immersiveImage?.url
-  const prevImageSrc = resizeFromMain
-    ? prevArtwork?.immersiveImage?.resized?.src
-    : prevArtwork?.immersiveImage?.url
+  const currentImageSrc = currentArtwork?.immersiveImage?.url as string
+  const nextImageSrc = nextArtwork?.immersiveImage?.url as string
+  const prevImageSrc = prevArtwork?.immersiveImage?.url as string
 
   // Handle key press events (ESC, left/right arrows)
   const handleKeyDown = useCallback(
@@ -110,6 +101,7 @@ const Immerse: React.FC<ImmerseProps> = props => {
               isLoading,
               hasNextPage: filtered_artworks.pageInfo.hasNextPage,
               filters: ctx.filters,
+              currentArtwork,
             },
             null,
             2,
@@ -159,7 +151,7 @@ const Immerse: React.FC<ImmerseProps> = props => {
               )}
 
               <Image
-                src={currentImageSrc as string}
+                src={currentImageSrc}
                 alt={currentArtwork.formattedMetadata ?? "…"}
                 style={{
                   height: "85vh",
@@ -197,12 +189,6 @@ export const ImmerseContainer = createFragmentContainer(Immerse, {
             aspectRatio
             blurhash
             url(version: ["larger", "large"])
-            resized(height: 1000, version: ["main", "larger", "large"]) {
-              height
-              width
-              src
-              srcSet
-            }
           }
         }
       }

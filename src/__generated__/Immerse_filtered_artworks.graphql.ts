@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0fc7333e6abce771ff1c7752a6951adf>>
+ * @generated SignedSource<<117e8fc640f1dedd60800b0f3237d9cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,12 +17,6 @@ export type Immerse_filtered_artworks$data = {
       readonly immersiveImage: {
         readonly aspectRatio: number;
         readonly blurhash: string | null | undefined;
-        readonly resized: {
-          readonly height: number | null | undefined;
-          readonly src: string;
-          readonly srcSet: string;
-          readonly width: number | null | undefined;
-        } | null | undefined;
         readonly url: string | null | undefined;
       } | null | undefined;
       readonly slug: string;
@@ -129,60 +123,6 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "url",
                   "storageKey": "url(version:[\"larger\",\"large\"])"
-                },
-                {
-                  "alias": null,
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "height",
-                      "value": 1000
-                    },
-                    {
-                      "kind": "Literal",
-                      "name": "version",
-                      "value": [
-                        "main",
-                        "larger",
-                        "large"
-                      ]
-                    }
-                  ],
-                  "concreteType": "ResizedImageUrl",
-                  "kind": "LinkedField",
-                  "name": "resized",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "height",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "width",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "src",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "srcSet",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": "resized(height:1000,version:[\"main\",\"larger\",\"large\"])"
                 }
               ],
               "storageKey": null
@@ -198,6 +138,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "6389034363c4f9885335ef4420883ed4";
+(node as any).hash = "1f1a1c2c0c7e17bf8773a3d054469100";
 
 export default node;
