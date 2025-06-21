@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 import { useEffect, useCallback, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Immerse_filtered_artworks$data } from "__generated__/Immerse_filtered_artworks.graphql"
@@ -9,6 +9,8 @@ import { Link } from "react-head"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import CollapseIcon from "@artsy/icons/CollapseIcon"
 import { themeGet } from "@styled-system/theme-get"
+
+const DEBUG = false
 
 interface ImmerseProps {
   filtered_artworks: Immerse_filtered_artworks$data
@@ -84,19 +86,21 @@ const Immerse: React.FC<ImmerseProps> = props => {
 
   return (
     <div className="immerse">
-      <Debug enabled={false}>
-        {JSON.stringify(
-          {
-            currentPage: ctx.filters?.page,
-            currentIndex,
-            isPageLoading,
-            isLoading,
-            filters: ctx.filters,
-          },
-          null,
-          2,
-        )}
-      </Debug>
+      {DEBUG && (
+        <Debug>
+          {JSON.stringify(
+            {
+              currentPage: ctx.filters?.page,
+              currentIndex,
+              isPageLoading,
+              isLoading,
+              filters: ctx.filters,
+            },
+            null,
+            2,
+          )}
+        </Debug>
+      )}
       <Container>
         {onClose && (
           <Button
@@ -206,15 +210,7 @@ const Container = styled.div`
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px); /* For Safari */
 `
-const Debug = styled.div<{ enabled?: boolean }>`
-  ${props =>
-    props.enabled
-      ? css`
-          display: block;
-        `
-      : css`
-          display: none;
-        `}
+const Debug = styled.div`
   position: fixed;
   top: 0px;
   left: 0px;
