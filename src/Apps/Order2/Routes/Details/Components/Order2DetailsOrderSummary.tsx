@@ -41,7 +41,17 @@ export const Order2DetailsOrderSummary: React.FC<
             maxWidth={artworkImage.width}
             maxHeight={artworkImage.height}
           >
-            <RouterLink to={`/artwork/${artwork?.slug}`} target="_blank">
+            {artwork?.slug && artwork?.published ? (
+              <RouterLink to={`/artwork/${artwork?.slug}`} target="_blank">
+                <Image
+                  src={artworkImage.url}
+                  width="100%"
+                  height="100%"
+                  alt={artworkVersion?.title || "Artwork image"}
+                  lazyLoad
+                />
+              </RouterLink>
+            ) : (
               <Image
                 src={artworkImage.url}
                 width="100%"
@@ -49,7 +59,7 @@ export const Order2DetailsOrderSummary: React.FC<
                 alt={artworkVersion?.title || "Artwork image"}
                 lazyLoad
               />
-            </RouterLink>
+            )}
           </ResponsiveBox>
         </Flex>
       )}
@@ -139,6 +149,7 @@ const FRAGMENT = graphql`
     lineItems {
       artwork {
         slug
+        published
         partner {
           name
         }

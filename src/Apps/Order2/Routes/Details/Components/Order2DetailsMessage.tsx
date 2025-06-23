@@ -88,11 +88,12 @@ const getMessageContent = (order): React.ReactNode => {
           </Text>
           <Spacer y={2} />
           <Text variant="sm">
-            The gallery will confirm by <b>{formattedStateExpireTime}</b>.
+            The gallery will respond to your offer by{" "}
+            <b>{formattedStateExpireTime}</b>.
           </Text>
           <Spacer y={2} />
           <Text variant="sm">
-            You can contact the gallery with any questions about your order.
+            You can contact the gallery with any questions about your offer.
           </Text>
         </>
       )
