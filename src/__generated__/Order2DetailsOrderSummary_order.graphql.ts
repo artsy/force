@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<39c15a496d5a23e837b326bd44d84a3f>>
+ * @generated SignedSource<<7ab00262c6f5551b9cff05575009735f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,7 @@ export type Order2DetailsOrderSummary_order$data = {
       readonly partner: {
         readonly name: string | null | undefined;
       } | null | undefined;
+      readonly published: boolean;
       readonly slug: string;
     } | null | undefined;
     readonly artworkVersion: {
@@ -149,6 +150,13 @@ return {
               "args": null,
               "kind": "ScalarField",
               "name": "slug",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "published",
               "storageKey": null
             },
             {
@@ -310,6 +318,6 @@ return {
 };
 })();
 
-(node as any).hash = "40d966d36b85875e4bc3f6857198b208";
+(node as any).hash = "133d120821052d90c7c37f87126d7187";
 
 export default node;
