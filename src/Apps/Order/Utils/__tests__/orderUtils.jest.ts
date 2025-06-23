@@ -22,7 +22,7 @@ describe("order utils", () => {
     })
 
     describe("when currently selected order payment payment is invalid (paymentSet is false)", () => {
-      it("returns CREDIT_CARD if available payment methods includes it", () => {
+      it("returns undefined if multiple available payment methods are present", () => {
         expect(
           getInitialPaymentMethodValue({
             paymentSet: false,
@@ -33,17 +33,7 @@ describe("order utils", () => {
               "WIRE_TRANSFER",
             ],
           } as unknown as Payment_order$data),
-        ).toEqual("CREDIT_CARD")
-      })
-
-      it("returns US_BANK_ACCOUNT if available payment methods doesn't include CREDIT_CARD but include US_BANK_ACCOUNT", () => {
-        expect(
-          getInitialPaymentMethodValue({
-            paymentSet: false,
-            paymentMethod: "CREDIT_CARD",
-            availablePaymentMethods: ["WIRE_TRANSFER", "US_BANK_ACCOUNT"],
-          } as unknown as Payment_order$data),
-        ).toEqual("US_BANK_ACCOUNT")
+        ).toEqual(undefined)
       })
 
       it("returns WIRE_TRANSFER if available payment methods doesn't include CREDIT_CARD or US_BANK_ACCOUNT", () => {
