@@ -238,7 +238,7 @@ const getNotificationTypes = (
   type: NotificationType,
 ): NotificationTypesEnum[] | undefined => {
   if (type === "alerts") {
-    return ["ARTWORK_ALERT"]
+    return ["ARTWORK_ALERT", "ARTWORK_PRICE_DROPPED"]
   }
   if (type === "follows") {
     return ["ARTWORK_PUBLISHED"]
