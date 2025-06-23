@@ -6,18 +6,20 @@ import { Order2DetailsOrderSummary } from "../Order2DetailsOrderSummary"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<Order2DetailsOrderSummary_Test_Query>({
-  Component: ({ me }) => me?.order && <Order2DetailsOrderSummary order={me.order!} />,
-  query: graphql`
-    query Order2DetailsOrderSummary_Test_Query @raw_response_type {
-      me {
-        order(id: "123") {
-          ...Order2DetailsOrderSummary_order
+const { renderWithRelay } =
+  setupTestWrapperTL<Order2DetailsOrderSummary_Test_Query>({
+    Component: ({ me }) =>
+      me?.order && <Order2DetailsOrderSummary order={me.order!} />,
+    query: graphql`
+      query Order2DetailsOrderSummary_Test_Query @raw_response_type {
+        me {
+          order(id: "123") {
+            ...Order2DetailsOrderSummary_order
+          }
         }
       }
-    }
-  `,
-})
+    `,
+  })
 
 describe("Order2DetailsOrderSummary", () => {
   it("renders artwork image, artist, title, partner, and price", () => {
@@ -52,8 +54,80 @@ describe("Order2DetailsOrderSummary", () => {
       }),
     })
 
-    expect(screen.getByText(/Your purchase is protected with/)).toBeInTheDocument()
+    expect(
+      screen.getByText(/Your purchase is protected with/),
+    ).toBeInTheDocument()
     expect(screen.getByText(/Artsy’s Buyer Guarantee/)).toBeInTheDocument()
+  })
+
+  it("renders artwork image wrapped in a link if artwork.slug and artwork.published are present", () => {
+    renderWithRelay({
+      Order: () => ({
+        ...orderData,
+        lineItems: [
+          {
+            ...orderData.lineItems[0],
+            artwork: {
+              ...orderData.lineItems[0].artwork,
+              slug: "test-artwork-slug",
+              published: true,
+            },
+          },
+        ],
+      }),
+    })
+
+    const image = screen.getByAltText("Test Artwork Title")
+    const parentLink = image.closest("a")
+    expect(parentLink).toHaveAttribute("href", "/artwork/test-artwork-slug")
+  })
+
+  it("renders artwork image NOT wrapped in a link if artwork.published is false", () => {
+    renderWithRelay({
+      Order: () => ({
+        ...orderData,
+        lineItems: [
+          {
+            ...orderData.lineItems[0],
+            artwork: {
+              ...orderData.lineItems[0].artwork,
+              slug: "artwork-test",
+              published: false,
+            },
+          },
+        ],
+      }),
+    })
+
+    const image = screen.getByAltText("Test Artwork Title")
+    expect(image).toBeInTheDocument()
+
+    const parentLink = image.closest("a")
+    expect(parentLink).toBeNull()
+  })
+
+  it("renders artwork image NOT wrapped in a link if artwork.slug is missing", () => {
+    renderWithRelay({
+      Order: () => ({
+        ...orderData,
+        lineItems: [
+          {
+            ...orderData.lineItems[0],
+            artwork: {
+              ...orderData.lineItems[0].artwork,
+              slug: null,
+              published: true,
+            },
+          },
+        ],
+      }),
+    })
+
+    const image = screen.getByAltText("Test Artwork Title")
+    expect(image).toBeInTheDocument()
+
+    const parentLink = image.closest("a")
+    expect(parentLink).toBeNull()
   })
 })
 
