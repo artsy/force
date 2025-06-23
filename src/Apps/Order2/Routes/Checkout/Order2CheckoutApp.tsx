@@ -129,7 +129,11 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           </Box>
         </Column>
 
-        <Column span={[12, 12, 4, 3]} start={[1, 1, 8, 8]}>
+        <Column
+          span={[12, 12, 4, 3]}
+          start={[1, 1, 8, 8]}
+          display={["none", "none", "block"]}
+        >
           <Box position={["initial", "initial", "fixed"]}>
             <Order2ReviewStep order={order} />
             <Separator as="hr" />
