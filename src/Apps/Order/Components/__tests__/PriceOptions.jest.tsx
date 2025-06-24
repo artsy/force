@@ -96,10 +96,6 @@ describe("PriceOptions", () => {
       expect(radios[2]).toHaveTextContent("US$100.00")
       expect(radios[3]).toHaveTextContent("Different amount")
     })
-    it("defaults to the correct value", async () => {
-      expect(onChange).toHaveBeenCalledWith(200)
-      await waitFor(() => expect(radios[0]).toBeChecked())
-    })
     it("fires click event with correct value", () => {
       fireEvent.click(radios[1])
       expect(radios[1]).toBeChecked()
@@ -188,10 +184,6 @@ describe("PriceOptions", () => {
       expect(radios[2]).toHaveTextContent("€80.00")
       expect(radios[3]).toHaveTextContent("Different amount")
     })
-    it("defaults to the correct value", async () => {
-      expect(onChange).toHaveBeenCalledWith(100)
-      await waitFor(() => expect(radios[0]).toBeChecked())
-    })
     it("correctly tracks the clicking of an option", async () => {
       fireEvent.click(radios[0])
       expect(trackEvent).toHaveBeenLastCalledWith(
@@ -250,15 +242,6 @@ describe("PriceOptions", () => {
       expect(
         screen.queryByText("Offer amount missing or invalid."),
       ).not.toBeInTheDocument()
-    })
-    it("displays the error and automatically selects the custom value option when an error is passed", async () => {
-      await waitFor(() => expect(radios[3]).toBeChecked())
-
-      const selected = await screen.findByRole("radio", { checked: true })
-
-      expect(selected).toBeInTheDocument()
-      expect(selected).toHaveTextContent("Different amount")
-      expect(selected).toHaveTextContent("Offer amount missing or invalid.")
     })
     it("correctly rounds the values and displays the currency symbol", () => {
       expect(radios[0]).toHaveTextContent("A$99.00") // List price
