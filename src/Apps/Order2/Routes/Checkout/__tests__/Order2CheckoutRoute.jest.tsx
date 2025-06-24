@@ -247,7 +247,6 @@ describe("Order2CheckoutRoute", () => {
         // CheckoutContext MINIMUM_LOADING_MS
         jest.advanceTimersByTime(1000)
       })
-      // console.log("Ran all timers")
       await waitFor(() => {
         expect(
           screen.queryByLabelText("Checkout loading skeleton"),
