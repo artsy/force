@@ -19349,6 +19349,9 @@ type Query {
     near: Near
     sort: FairSorts
     status: EventStatus
+
+    # Search term to match against fair names for authenticated users
+    term: String
   ): FairConnection
 
   # A Feature
@@ -25147,6 +25150,9 @@ type Viewer {
     near: Near
     sort: FairSorts
     status: EventStatus
+
+    # Search term to match against fair names for authenticated users
+    term: String
   ): FairConnection
 
   # A Feature
