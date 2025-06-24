@@ -19297,7 +19297,7 @@ type Query {
     first: Int
     last: Int
     size: Int = 12
-  ): [MarketingCollection]
+  ): [MarketingCollection!]
 
   # A namespace external partners (provided by Galaxy)
   external: External!
@@ -25095,7 +25095,7 @@ type Viewer {
     first: Int
     last: Int
     size: Int = 12
-  ): [MarketingCollection]
+  ): [MarketingCollection!]
 
   # A namespace external partners (provided by Galaxy)
   external: External!
