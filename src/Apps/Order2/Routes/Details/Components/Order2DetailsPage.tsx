@@ -73,7 +73,7 @@ const FRAGMENT = graphql`
     ...Order2DetailsHeader_order
     ...Order2DetailsMessage_order
     ...Order2DetailsOrderSummary_order
-    ...Order2PricingBreakdown_order
+    ...Order2DetailsPricingBreakdown_order
     ...Order2DetailsPaymentInfo_order
     ...Order2DetailsFulfillmentInfo_order
     ...Order2HelpLinks_order

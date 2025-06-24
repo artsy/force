@@ -1,30 +1,29 @@
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { Order2PricingBreakdownTestQuery } from "__generated__/Order2PricingBreakdownTestQuery.graphql"
+import type { Order2DetailsPricingBreakdownTestQuery } from "__generated__/Order2DetailsPricingBreakdownTestQuery.graphql"
 import { graphql } from "react-relay"
-import { Order2PricingBreakdown } from "../Order2PricingBreakdown"
+import { Order2DetailsPricingBreakdown } from "../Order2DetailsPricingBreakdown"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<Order2PricingBreakdownTestQuery>(
-  {
+const { renderWithRelay } =
+  setupTestWrapperTL<Order2DetailsPricingBreakdownTestQuery>({
     Component: props => {
       const order = props.me!.order!
-      return <Order2PricingBreakdown order={order} />
+      return <Order2DetailsPricingBreakdown order={order} />
     },
     query: graphql`
-      query Order2PricingBreakdownTestQuery @relay_test_operation {
+      query Order2DetailsPricingBreakdownTestQuery @relay_test_operation {
         me {
           order(id: "test-order") {
-            ...Order2PricingBreakdown_order
+            ...Order2DetailsPricingBreakdown_order
           }
         }
       }
     `,
-  },
-)
+  })
 
-describe("Order2PricingBreakdown", () => {
+describe("Order2DetailsPricingBreakdown", () => {
   it("renders pricing breakdown lines with fallback text if amount is null", () => {
     renderWithRelay({
       Me: () => ({
