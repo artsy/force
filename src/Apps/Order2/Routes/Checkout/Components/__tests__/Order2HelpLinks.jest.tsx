@@ -114,7 +114,7 @@ describe("Order2HelpLinks", () => {
         context_module: "context-module",
         context_page_owner_id: "order-id",
         context_page_owner_type: "page-owner-type",
-        flow: "buy now",
+        flow: "Buy now",
       })
     })
   })

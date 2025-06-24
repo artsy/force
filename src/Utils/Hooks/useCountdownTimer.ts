@@ -49,10 +49,10 @@ const calculatePercentage = (startTime: string, endTime: string) => {
   return percent
 }
 
-export const LOADING_MESSAGE = "Calculating time"
+const LOADING_MESSAGE = "Calculating time"
 
 type RemainingTime =
-  | "Calculating time"
+  | typeof LOADING_MESSAGE
   | "Expired"
   | Omit<string, typeof LOADING_MESSAGE | "Expired">
 
@@ -77,7 +77,6 @@ export const useCountdownTimer = ({
   const ONE_MINUTE = 60000
 
   const isLoading = remainingTime === LOADING_MESSAGE
-  console.log("**", { remainingTime, isLoading })
 
   useEffect(() => {
     const timeTillExpiration = calculateTime(endTime, includeSeconds)

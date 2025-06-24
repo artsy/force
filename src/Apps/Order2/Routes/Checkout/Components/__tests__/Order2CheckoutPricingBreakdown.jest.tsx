@@ -1,10 +1,31 @@
 import { screen } from "@testing-library/react"
+import type { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { DeepPartial } from "Utils/typeSupport"
 import type { Order2CheckoutPricingBreakdownTestQuery } from "__generated__/Order2CheckoutPricingBreakdownTestQuery.graphql"
 import { graphql } from "react-relay"
 import { Order2CheckoutPricingBreakdown } from "../Order2CheckoutPricingBreakdown"
 
 jest.unmock("react-relay")
+
+let mockCheckoutContext: DeepPartial<ReturnType<typeof useCheckoutContext>>
+jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
+  useCheckoutContext: () => {
+    const checkoutTracking = useCheckoutTracking({
+      source: "artwork page",
+      mode: "BUY",
+    })
+    return {
+      checkoutTracking,
+      ...mockCheckoutContext,
+    }
+  },
+}))
+
+beforeEach(() => {
+  mockCheckoutContext = {}
+})
 
 const { renderWithRelay } =
   setupTestWrapperTL<Order2CheckoutPricingBreakdownTestQuery>({
@@ -128,5 +149,34 @@ describe("Order2PricingBreakdown", () => {
     // Total
     const totalRow = screen.getByText("Total").parentElement
     expect(totalRow).toHaveTextContent("$US 1052.57")
+  })
+
+  it("renders the partner offer timer if present", () => {
+    mockCheckoutContext.partnerOffer = {
+      timer: {
+        remainingTime: "2d 3h",
+      },
+    }
+
+    renderWithRelay({
+      Me: () => ({
+        order: {
+          source: "PARTNER_OFFER",
+          buyerStateExpiresAt: "2023-10-01T00:00:00Z",
+          pricingBreakdownLines: [
+            {
+              __typename: "SubtotalLine",
+              displayName: "Gallery offer",
+              amount: {
+                amount: "1000",
+                currencySymbol: "$",
+              },
+            },
+          ],
+        },
+      }),
+    })
+
+    expect(screen.getByText("Exp. 2d 3h")).toBeInTheDocument()
   })
 })

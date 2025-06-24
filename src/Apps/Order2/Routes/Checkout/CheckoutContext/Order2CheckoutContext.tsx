@@ -103,10 +103,6 @@ export const Order2CheckoutContextProvider: React.FC<
   const isPartnerOfferLoadingComplete =
     !partnerOffer || !partnerOffer.timer.isLoading
 
-  console.log("**", {
-    isPartnerOfferLoadingComplete,
-    partnerOffer,
-  })
   const checks = [
     minimumLoadingPassed,
     orderValidated,
@@ -197,11 +193,6 @@ const usePartnerOfferOnOrder = (orderData: {
   const partnerOfferStartTime = hasPartnerOffer
     ? DateTime.fromISO(partnerOfferEndTime).minus({ days: 3 }).toString()
     : ""
-
-  console.log("**", {
-    partnerOfferEndTime,
-    partnerOfferStartTime,
-  })
 
   const partnerOfferTimer = useCountdownTimer({
     startTime: partnerOfferStartTime,

@@ -61,14 +61,16 @@ export const Order2CheckoutPricingBreakdown: React.FC<
               ? `${line.amount.currencySymbol}${line.amount.amount}`
               : ""
 
-            // TODO
             if (partnerOffer) {
               color = "blue100"
-              fontWeight = "bold"
+
               secondLine = (
-                <Text variant="sm-display" color="blue100" mt={0.5}>
-                  <StopwatchIcon />
-                  {partnerOffer.timer.remainingTime}
+                <Text variant="xs" color="blue100">
+                  <Flex alignItems="center">
+                    <StopwatchIcon height={18} />
+                    <Spacer x={0.5} />
+                    Exp. {partnerOffer.timer.remainingTime}
+                  </Flex>
                 </Text>
               )
             }
