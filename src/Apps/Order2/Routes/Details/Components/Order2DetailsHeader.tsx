@@ -14,9 +14,9 @@ export const Order2DetailsHeader = ({ order }: Order2DetailsHeaderProps) => {
       {/* Title */}
       <Text variant={["lg", "xl"]}>{orderData.displayTexts.title}</Text>
       {/* Order # */}
-      {/* data-test attribute below used for integrity now. # */}
+      {/* data-test attribute below used for integrity now. */}
       <Text variant={["xs", "sm"]} data-test="OrderCode">
-        Order #{orderData.code}{" "}
+        Order #{orderData.code}
       </Text>
     </Box>
   )
