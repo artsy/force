@@ -126,8 +126,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
             <Order2HelpLinksWithInquiry
               order={order}
               artworkID={artworkSlug as string}
-              // @ts-expect-error TODO: update when we have checkout context menu
-              contextModule=""
+              contextModule={ContextModule.ordersCheckout}
             />
           </Box>
         </Column>
@@ -143,8 +142,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
             <Order2HelpLinksWithInquiry
               order={order}
               artworkID={artworkSlug as string}
-              // @ts-expect-error TODO: update when we have checkout context menu
-              contextModule=""
+              contextModule={ContextModule.ordersCheckout}
             />
           </Box>
         </Column>

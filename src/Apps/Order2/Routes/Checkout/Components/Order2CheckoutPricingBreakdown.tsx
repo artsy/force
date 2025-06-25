@@ -1,5 +1,6 @@
 import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import { Flex, Spacer, Text } from "@artsy/palette"
+import type { Order2CheckoutContextValue } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { RouterLink } from "System/Components/RouterLink"
 import type {
@@ -15,24 +16,6 @@ interface Order2CheckoutPricingBreakdownProps {
 
 const TAX_CALCULATION_ARTICLE_URL =
   "https://support.artsy.net/s/article/How-are-taxes-and-customs-fees-calculated"
-
-const knownLineTypes = [
-  "ShippingLine",
-  "TaxLine",
-  "SubtotalLine",
-  "TotalLine",
-] as const
-
-type KnownLineType = Extract<
-  Order2CheckoutPricingBreakdown_order$data["pricingBreakdownLines"][number],
-  { __typename: (typeof knownLineTypes)[number] }
->
-
-const isKnownLineType = (
-  line: Order2CheckoutPricingBreakdown_order$data["pricingBreakdownLines"][number],
-): line is KnownLineType => {
-  return !!line && knownLineTypes.includes(line.__typename as any)
-}
 
 export const Order2CheckoutPricingBreakdown: React.FC<
   Order2CheckoutPricingBreakdownProps
@@ -61,7 +44,7 @@ export const Order2CheckoutPricingBreakdown: React.FC<
               ? `${line.amount.currencySymbol}${line.amount.amount}`
               : ""
 
-            if (partnerOffer) {
+            if (isValidTimer(partnerOffer)) {
               color = "blue100"
 
               secondLine = (
@@ -173,3 +156,33 @@ const FRAGMENT = graphql`
     }
   }
 `
+
+const knownLineTypes = [
+  "ShippingLine",
+  "TaxLine",
+  "SubtotalLine",
+  "TotalLine",
+] as const
+
+type KnownLineType = Extract<
+  Order2CheckoutPricingBreakdown_order$data["pricingBreakdownLines"][number],
+  { __typename: (typeof knownLineTypes)[number] }
+>
+
+const isKnownLineType = (
+  line: Order2CheckoutPricingBreakdown_order$data["pricingBreakdownLines"][number],
+): line is KnownLineType => {
+  return !!line && knownLineTypes.includes(line.__typename as any)
+}
+
+const isValidTimer = (
+  partnerOffer?: Order2CheckoutContextValue["partnerOffer"],
+): partnerOffer is NonNullable<Order2CheckoutContextValue["partnerOffer"]> => {
+  if (!partnerOffer?.timer?.remainingTime?.length) {
+    return false
+  }
+  return (
+    !partnerOffer?.timer.remainingTime.startsWith("NaN") &&
+    !partnerOffer.timer.isExpired
+  )
+}

@@ -155,6 +155,7 @@ describe("Order2PricingBreakdown", () => {
     mockCheckoutContext.partnerOffer = {
       timer: {
         remainingTime: "2d 3h",
+        isExpired: false,
       },
     }
 
@@ -162,7 +163,6 @@ describe("Order2PricingBreakdown", () => {
       Me: () => ({
         order: {
           source: "PARTNER_OFFER",
-          buyerStateExpiresAt: "2023-10-01T00:00:00Z",
           pricingBreakdownLines: [
             {
               __typename: "SubtotalLine",
@@ -178,5 +178,62 @@ describe("Order2PricingBreakdown", () => {
     })
 
     expect(screen.getByText("Exp. 2d 3h")).toBeInTheDocument()
+  })
+
+  it("does not render a partner offer if the timer is somehow invalid", () => {
+    mockCheckoutContext.partnerOffer = {
+      timer: {
+        remainingTime: "NaNh NaNm",
+        isExpired: false,
+      },
+    }
+
+    renderWithRelay({
+      Me: () => ({
+        order: {
+          source: "PARTNER_OFFER",
+          pricingBreakdownLines: [
+            {
+              __typename: "SubtotalLine",
+              displayName: "Gallery offer",
+              amount: {
+                amount: "1000",
+                currencySymbol: "$",
+              },
+            },
+          ],
+        },
+      }),
+    })
+
+    expect(screen.queryByText("Exp.", { exact: false })).not.toBeInTheDocument()
+  })
+  it("does not render a partner offer if the timer is somehow expired", () => {
+    mockCheckoutContext.partnerOffer = {
+      timer: {
+        remainingTime: "Expired",
+        isExpired: true,
+      },
+    }
+
+    renderWithRelay({
+      Me: () => ({
+        order: {
+          source: "PARTNER_OFFER",
+          pricingBreakdownLines: [
+            {
+              __typename: "SubtotalLine",
+              displayName: "Gallery offer",
+              amount: {
+                amount: "1000",
+                currencySymbol: "$",
+              },
+            },
+          ],
+        },
+      }),
+    })
+
+    expect(screen.queryByText("Exp.", { exact: false })).not.toBeInTheDocument()
   })
 })

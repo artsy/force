@@ -50,11 +50,12 @@ const calculatePercentage = (startTime: string, endTime: string) => {
 }
 
 const LOADING_MESSAGE = "Calculating time"
+const EXPIRATION_MESSAGE = "Expired"
 
 type RemainingTime =
   | typeof LOADING_MESSAGE
-  | "Expired"
-  | Omit<string, typeof LOADING_MESSAGE | "Expired">
+  | typeof EXPIRATION_MESSAGE
+  | Omit<string, typeof LOADING_MESSAGE | typeof EXPIRATION_MESSAGE>
 
 interface TimerProps {
   startTime: string
@@ -77,6 +78,7 @@ export const useCountdownTimer = ({
   const ONE_MINUTE = 60000
 
   const isLoading = remainingTime === LOADING_MESSAGE
+  const isExpired = remainingTime === EXPIRATION_MESSAGE
 
   useEffect(() => {
     const timeTillExpiration = calculateTime(endTime, includeSeconds)
@@ -99,5 +101,5 @@ export const useCountdownTimer = ({
     return () => clearInterval(interval)
   }, [startTime, endTime, remainingTime, includeSeconds, imminentTime])
 
-  return { remainingTime, isImminent, percentComplete, isLoading }
+  return { remainingTime, isImminent, percentComplete, isLoading, isExpired }
 }
