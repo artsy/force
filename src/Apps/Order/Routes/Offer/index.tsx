@@ -141,6 +141,11 @@ export const OfferRoute: FC<React.PropsWithChildren<OfferRouteProps>> = ({
   }
 
   const onContinueButtonPressed = async () => {
+    if (offerValue === undefined) {
+      setFormIsDirty(true)
+      jumpTo("offer-value-title", { behavior: "smooth" })
+      return
+    }
     if (offerValue <= 0 || offerNoteValue.exceedsCharacterLimit) {
       setFormIsDirty(true)
       jumpTo("price-option-custom", { behavior: "smooth" })
@@ -256,16 +261,14 @@ export const OfferRoute: FC<React.PropsWithChildren<OfferRouteProps>> = ({
           )}
           {!isInquiryCheckout && showPriceOptions && (
             <>
-              <Text variant="lg-display">Select an option</Text>
-              <Text variant="xs" mt={4} mb={1}>
-                Your offer
-              </Text>
               <PriceOptionsFragmentContainer
                 artwork={artwork}
                 order={order}
                 onChange={offerValue => setOfferValue(offerValue)}
                 onFocus={onOfferInputFocus}
-                showError={formIsDirty && offerValue <= 0}
+                showError={
+                  formIsDirty && (offerValue <= 0 || offerValue === undefined)
+                }
               />
             </>
           )}

@@ -11,11 +11,11 @@ describe("offer utils", () => {
       { key: "price-option-mid", value: 90, description: "Mid Price" },
       { key: "price-option-min", value: 80, description: "Min Price" },
     ]
-    it("returns first option if custom offer is undefined", () => {
+    it("returns undefined if custom offer is undefined", () => {
       expect(getInitialOfferState(priceOptions, undefined)).toEqual({
         lastOffer: undefined,
-        selectedPriceOption: "price-option-max",
-        selectedPriceValue: 100,
+        selectedPriceOption: undefined,
+        selectedPriceValue: undefined,
       })
     })
 

@@ -8,6 +8,7 @@ import {
   Stack,
 } from "@artsy/palette"
 import { SubmittingOrderSpinner } from "Apps/Order/Components/SubmittingOrderSpinner"
+import { ConnectedModalDialog } from "Apps/Order/Dialogs"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -27,6 +28,8 @@ import type { Order2CheckoutApp_viewer$key } from "__generated__/Order2CheckoutA
 import { useEffect } from "react"
 import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
+// eslint-disable-next-line no-restricted-imports
+import { Provider } from "unstated"
 interface Order2CheckoutAppProps {
   viewer: Order2CheckoutApp_viewer$key
 }
@@ -86,7 +89,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   }, [activeStep?.name, checkoutTracking])
 
   return (
-    <>
+    <Provider>
       <Title>Checkout | Artsy</Title>
       <Meta
         name="viewport"
@@ -129,7 +132,11 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           </Box>
         </Column>
 
-        <Column span={[12, 12, 4, 3]} start={[1, 1, 8, 8]}>
+        <Column
+          span={[12, 12, 4, 3]}
+          start={[1, 1, 8, 8]}
+          display={["none", "none", "block"]}
+        >
           <Box position={["initial", "initial", "fixed"]}>
             <Order2ReviewStep order={order} />
             <Separator as="hr" />
@@ -142,7 +149,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           </Box>
         </Column>
       </GridColumns>
-    </>
+      <ConnectedModalDialog />
+    </Provider>
   )
 }
 

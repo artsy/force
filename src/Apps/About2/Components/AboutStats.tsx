@@ -1,6 +1,6 @@
 import { Column, GridColumns, Text } from "@artsy/palette"
 
-export const About2Stats = () => {
+export const AboutStats = () => {
   return (
     <GridColumns textAlign={["left", "center"]}>
       <Column

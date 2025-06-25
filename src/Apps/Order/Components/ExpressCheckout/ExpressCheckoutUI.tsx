@@ -56,7 +56,6 @@ import { graphql, useFragment } from "react-relay"
 interface ExpressCheckoutUIProps {
   order: ExpressCheckoutUI_order$key
   setShowSpinner?: Dispatch<SetStateAction<boolean>>
-  isChrome?: boolean
 }
 
 const logger = createLogger("ExpressCheckoutUI")
@@ -69,7 +68,6 @@ type HandleCancelCallback = NonNullable<
 export const ExpressCheckoutUI = ({
   order,
   setShowSpinner,
-  isChrome,
 }: ExpressCheckoutUIProps) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const [visible, setVisible] = useState(false)
@@ -90,6 +88,8 @@ export const ExpressCheckoutUI = ({
   const [hasMultiplePaymentOptions, setHasMultiplePaymentOptions] =
     useState<boolean>(false)
   const shippingContext = useShippingContext()
+  const [expressCheckoutSubmitting, setExpressCheckoutSubmitting] =
+    useState(false)
 
   if (!(stripe && elements)) {
     return null
@@ -102,7 +102,7 @@ export const ExpressCheckoutUI = ({
     },
     buttonHeight: 50,
     paymentMethods: {
-      applePay: isChrome ? "never" : "always",
+      applePay: "always",
       googlePay: "always",
     },
     layout: {
@@ -216,7 +216,10 @@ export const ExpressCheckoutUI = ({
     }
 
     setExpressCheckoutType(null)
-    resetOrder()
+
+    if (!expressCheckoutSubmitting) {
+      resetOrder()
+    }
   }
 
   // User selects a shipping address
@@ -330,6 +333,7 @@ export const ExpressCheckoutUI = ({
     shippingRate,
   }: StripeExpressCheckoutElementConfirmEvent) => {
     window.removeEventListener("beforeunload", preventHardReload)
+    setExpressCheckoutSubmitting(true)
 
     const creditCardWalletType =
       expressPaymentType.toUpperCase() as OrderCreditCardWalletTypeEnum
@@ -398,6 +402,7 @@ export const ExpressCheckoutUI = ({
       const { error: submitError } = await elements.submit()
       if (submitError) {
         logger.error(submitError)
+        setExpressCheckoutSubmitting(false)
         return
       }
 
@@ -428,6 +433,7 @@ export const ExpressCheckoutUI = ({
         // This point is only reached if there's an immediate error when
         // creating the ConfirmationToken. Show the error to customer (for example, payment details incomplete)
         logger.error(error)
+        setExpressCheckoutSubmitting(false)
         return
       }
 

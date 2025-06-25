@@ -1,6 +1,6 @@
 import { Column, GridColumns, Text } from "@artsy/palette"
 
-export const About2Header = () => {
+export const AboutHeader = () => {
   return (
     <GridColumns>
       <Column

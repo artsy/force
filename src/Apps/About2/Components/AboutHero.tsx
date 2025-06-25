@@ -1,6 +1,6 @@
 import { Column, GridColumns, ResponsiveBox } from "@artsy/palette"
 
-export const About2Hero = () => {
+export const AboutHero = () => {
   return (
     <GridColumns gridColumnGap={0}>
       <Column span={[6, 4]}>

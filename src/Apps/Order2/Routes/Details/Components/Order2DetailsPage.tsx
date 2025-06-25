@@ -46,7 +46,11 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
           <Spacer y={[4, 0]} />
         </Box>
       </Column>
-      <Column span={[12, 12, 4, 3]} start={[1, 1, 8, 8]}>
+      <Column
+        span={[12, 12, 4, 3]}
+        start={[1, 1, 8, 8]}
+        display={["none", "none", "block"]}
+      >
         <Order2DetailsOrderSummary order={orderData} />
         <Spacer y={1} />
         <Order2HelpLinksWithInquiry
