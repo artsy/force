@@ -120,6 +120,27 @@ describe("ArtworkTopContextBarShow", () => {
     ).toBeInTheDocument()
   })
 
+  it("renders upcoming show information correctly", () => {
+    renderWithRelay({
+      Show: () => ({
+        name: "Impressionist & Modern Art",
+        href: "/show/impressionist-modern-art",
+        status: "upcoming",
+        thumbnail: {
+          url: "https://example.com/show-image.jpg",
+        },
+        partner: {
+          name: "Gagosian Gallery",
+        },
+      }),
+    })
+
+    expect(screen.getByText("Impressionist & Modern Art")).toBeInTheDocument()
+    expect(
+      screen.getByText("Upcoming show at Gagosian Gallery"),
+    ).toBeInTheDocument()
+  })
+
   it("handles missing partner name", () => {
     renderWithRelay({
       Show: () => ({
