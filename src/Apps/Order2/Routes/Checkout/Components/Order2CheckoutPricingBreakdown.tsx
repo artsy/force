@@ -48,13 +48,16 @@ export const Order2CheckoutPricingBreakdown: React.FC<
               color = "blue100"
 
               secondLine = (
-                <Text variant="xs" color="blue100">
-                  <Flex alignItems="center">
-                    <StopwatchIcon height={18} />
-                    <Spacer x={0.5} />
-                    Exp. {partnerOffer.timer.remainingTime}
-                  </Flex>
-                </Text>
+                <>
+                  <Text variant="xs" color="blue100">
+                    <Flex alignItems="center">
+                      <StopwatchIcon height={18} />
+                      <Spacer x={0.5} />
+                      Exp. {partnerOffer.timer.remainingTime}
+                    </Flex>
+                  </Text>
+                  <Spacer y={0.5} />
+                </>
               )
             }
 
@@ -90,7 +93,7 @@ export const Order2CheckoutPricingBreakdown: React.FC<
                 {amountText}
               </Text>
             </Flex>
-            {secondLine && secondLine}
+            {secondLine}
           </Fragment>
         )
       })}
