@@ -95,7 +95,7 @@ export const Order2DetailsOrderSummary: React.FC<
         </Text>
         {price && (
           <Text variant="sm" color="mono60">
-            List price: {price || "Not publicly listed"}
+            List price: {price}
           </Text>
         )}
       </Box>
