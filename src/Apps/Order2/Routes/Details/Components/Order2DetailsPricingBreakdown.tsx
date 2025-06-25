@@ -1,17 +1,18 @@
+import { ContextModule } from "@artsy/cohesion"
 import { Flex, Spacer, Text } from "@artsy/palette"
+import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import type {
-  Order2PricingBreakdown_order$data,
-  Order2PricingBreakdown_order$key,
-} from "__generated__/Order2PricingBreakdown_order.graphql"
+  Order2DetailsPricingBreakdown_order$data,
+  Order2DetailsPricingBreakdown_order$key,
+} from "__generated__/Order2DetailsPricingBreakdown_order.graphql"
 import { Fragment } from "react"
 import { graphql, useFragment } from "react-relay"
 
-interface Order2PricingBreakdownProps {
-  order: Order2PricingBreakdown_order$key
+interface Order2DetailsPricingBreakdownProps {
+  order: Order2DetailsPricingBreakdown_order$key
   // TODO: Track from inside the component when details
   // and checkout pages both call this
-  trackClickedImportFees?: () => void
 }
 
 const TAX_CALCULATION_ARTICLE_URL =
@@ -25,21 +26,21 @@ const knownLineTypes = [
 ] as const
 
 type KnownLineType = Extract<
-  Order2PricingBreakdown_order$data["pricingBreakdownLines"][number],
+  Order2DetailsPricingBreakdown_order$data["pricingBreakdownLines"][number],
   { __typename: (typeof knownLineTypes)[number] }
 >
 
 const isKnownLineType = (
-  line: Order2PricingBreakdown_order$data["pricingBreakdownLines"][number],
+  line: Order2DetailsPricingBreakdown_order$data["pricingBreakdownLines"][number],
 ): line is KnownLineType => {
   return !!line && knownLineTypes.includes(line.__typename as any)
 }
 
-export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
-  order,
-  trackClickedImportFees,
-}) => {
-  const { pricingBreakdownLines } = useFragment(FRAGMENT, order)
+export const Order2DetailsPricingBreakdown: React.FC<
+  Order2DetailsPricingBreakdownProps
+> = ({ order }) => {
+  const { pricingBreakdownLines, source, mode } = useFragment(FRAGMENT, order)
+  const orderTracking = useOrder2Tracking(source, mode)
   return (
     <>
       {pricingBreakdownLines.map((line, index) => {
@@ -101,9 +102,9 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
           to={TAX_CALCULATION_ARTICLE_URL}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => {
-            trackClickedImportFees?.()
-          }}
+          onClick={() =>
+            orderTracking.clickedImportFees(ContextModule.ordersDetail)
+          }
         >
           may apply at import
         </RouterLink>
@@ -114,7 +115,9 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
 }
 
 const FRAGMENT = graphql`
-  fragment Order2PricingBreakdown_order on Order {
+  fragment Order2DetailsPricingBreakdown_order on Order {
+    mode
+    source
     pricingBreakdownLines {
       __typename
       ... on ShippingLine {

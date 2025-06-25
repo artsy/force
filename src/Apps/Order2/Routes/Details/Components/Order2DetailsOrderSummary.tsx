@@ -9,8 +9,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
 import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
+import { Order2DetailsPricingBreakdown } from "Apps/Order2/Routes/Details/Components/Order2DetailsPricingBreakdown"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2DetailsOrderSummary_order$key } from "__generated__/Order2DetailsOrderSummary_order.graphql"
@@ -24,8 +24,8 @@ interface Order2DetailsOrderSummaryProps {
 export const Order2DetailsOrderSummary: React.FC<
   Order2DetailsOrderSummaryProps
 > = ({ order }) => {
-  const tracking = useOrder2Tracking()
   const orderData = useFragment(FRAGMENT, order)
+  const tracking = useOrder2Tracking(orderData.source, orderData.mode)
 
   const artwork = orderData.lineItems[0]?.artwork
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
@@ -103,7 +103,7 @@ export const Order2DetailsOrderSummary: React.FC<
       )}
       <Spacer y={2} />
       <Box mb={2}>
-        <Order2PricingBreakdown order={orderData} />
+        <Order2DetailsPricingBreakdown order={orderData} />
       </Box>
       <Spacer y={4} />
       <Message variant="default" p={1}>
@@ -132,8 +132,9 @@ export const Order2DetailsOrderSummary: React.FC<
 
 const FRAGMENT = graphql`
   fragment Order2DetailsOrderSummary_order on Order {
-    ...Order2PricingBreakdown_order
+    ...Order2DetailsPricingBreakdown_order
     source
+    mode
     totalListPrice {
       display
     }

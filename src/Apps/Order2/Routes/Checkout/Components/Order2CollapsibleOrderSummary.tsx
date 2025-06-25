@@ -1,6 +1,6 @@
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import { Box, Clickable, Flex, Image, Spacer, Text } from "@artsy/palette"
-import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
+import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2CollapsibleOrderSummary_order$key } from "__generated__/Order2CollapsibleOrderSummary_order.graphql"
@@ -72,10 +72,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
       >
         <Spacer y={1} />
         <Box mb={2}>
-          <Order2PricingBreakdown
-            order={orderData}
-            trackClickedImportFees={checkoutTracking.clickedImportFees}
-          />
+          <Order2CheckoutPricingBreakdown order={orderData} />
         </Box>
         <Spacer y={1} />
       </Box>
@@ -85,7 +82,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
 
 const FRAGMENT = graphql`
   fragment Order2CollapsibleOrderSummary_order on Order {
-    ...Order2PricingBreakdown_order
+    ...Order2CheckoutPricingBreakdown_order
     source
     buyerTotal {
       display

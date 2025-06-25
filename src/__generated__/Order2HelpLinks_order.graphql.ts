@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<729ea8af696e0ea1473c7a7732fe66a6>>
+ * @generated SignedSource<<ed913dbaed4edec0fc9c2320cb5eb0c9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,10 +10,12 @@
 
 import { ReaderFragment } from 'relay-runtime';
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2HelpLinks_order$data = {
   readonly internalID: string;
   readonly mode: OrderModeEnum;
+  readonly source: OrderSourceEnum;
   readonly " $fragmentType": "Order2HelpLinks_order";
 };
 export type Order2HelpLinks_order$key = {
@@ -40,12 +42,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "mode",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
+      "storageKey": null
     }
   ],
   "type": "Order",
   "abstractKey": null
 };
 
-(node as any).hash = "e3ac31d28ee3d94803d009fcb63aae39";
+(node as any).hash = "4d2bec71dc368fe2b79db6de1102ec42";
 
 export default node;
