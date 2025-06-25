@@ -1,6 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Column, GridColumns, Spacer } from "@artsy/palette"
-import { Order2HelpLinksWithInquiry } from "Apps/Order2/Routes/Checkout/Components/Order2HelpLinks"
+import { Order2HelpLinksWithInquiry } from "Apps/Order2/Components/Order2HelpLinks"
 import { Order2DetailsFulfillmentInfo } from "Apps/Order2/Routes/Details/Components/Order2DetailsFulfillmentInfo"
 import { Order2DetailsOrderSummary } from "Apps/Order2/Routes/Details/Components/Order2DetailsOrderSummary"
 import { Order2DetailsPaymentInfo } from "Apps/Order2/Routes/Details/Components/Order2DetailsPaymentInfo"

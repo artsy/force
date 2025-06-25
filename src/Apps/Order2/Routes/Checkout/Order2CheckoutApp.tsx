@@ -9,6 +9,7 @@ import {
 } from "@artsy/palette"
 import { SubmittingOrderSpinner } from "Apps/Order/Components/SubmittingOrderSpinner"
 import { ConnectedModalDialog } from "Apps/Order/Dialogs"
+import { Order2HelpLinksWithInquiry } from "Apps/Order2/Components/Order2HelpLinks"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -18,7 +19,6 @@ import { Order2ExpressCheckout } from "Apps/Order2/Routes/Checkout/Components/Ex
 import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
 import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutLoadingSkeleton"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
-import { Order2HelpLinksWithInquiry } from "Apps/Order2/Routes/Checkout/Components/Order2HelpLinks"
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentStep"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
