@@ -13807,6 +13807,7 @@ enum LengthUnitPreference {
 # A line item in an order
 type LineItem {
   artwork: Artwork
+  artworkOrEditionSet: ArtworkOrEditionSetType
   artworkVersion: ArtworkVersion
   currencyCode: String!
 
