@@ -3178,7 +3178,8 @@ type ArtworkImport implements Node {
     timezone: String
   ): String
   createdBy: ArtworkImportCreatedBy
-  currency: String
+  currency: String!
+  dimensionMetric: String!
   fileName: String!
 
   # A globally unique ID.
@@ -8753,6 +8754,8 @@ type CreateArtworkImportFailure {
 input CreateArtworkImportInput {
   async: Boolean
   clientMutationId: String
+  currency: String
+  dimensionMetric: String
   fileName: String
   parseWithAI: Boolean
   parseWithAIModel: String
@@ -16013,6 +16016,9 @@ type Mutation {
   updateArtwork(
     input: UpdateArtworkMutationInput!
   ): UpdateArtworkMutationPayload
+  updateArtworkImport(
+    input: UpdateArtworkImportInput!
+  ): UpdateArtworkImportPayload
   updateArtworkImportRow(
     input: UpdateArtworkImportRowInput!
   ): UpdateArtworkImportRowPayload
@@ -22566,6 +22572,25 @@ input UpdateArtworkEditionSetInput {
   shippingWeightMetric: String
 }
 
+type UpdateArtworkImportFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateArtworkImportInput {
+  clientMutationId: String
+  currency: String
+  dimensionMetric: String
+}
+
+type UpdateArtworkImportPayload {
+  artworkImportOrError: UpdateArtworkImportResponseOrError
+  clientMutationId: String
+}
+
+union UpdateArtworkImportResponseOrError =
+  | UpdateArtworkImportFailure
+  | UpdateArtworkImportSuccess
+
 type UpdateArtworkImportRowFailure {
   mutationError: GravityMutationError
 }
@@ -22588,6 +22613,11 @@ union UpdateArtworkImportRowResponseOrError =
   | UpdateArtworkImportRowSuccess
 
 type UpdateArtworkImportRowSuccess {
+  artworkImport: ArtworkImport
+  success: Boolean!
+}
+
+type UpdateArtworkImportSuccess {
   artworkImport: ArtworkImport
   success: Boolean!
 }
