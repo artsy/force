@@ -148,7 +148,6 @@ const orderData = {
         artistNames: "Test Artist",
         date: "2023",
         attributionClass: { shortDescription: "Limited Edition" },
-        dimensions: { in: "20 × 30 in", cm: "50 × 76 cm" },
         image: {
           resized: {
             url: "https://example.com/image.jpg",
@@ -156,6 +155,11 @@ const orderData = {
             height: 360,
           },
         },
+      },
+      artworkOrEditionSet: {
+        __typename: "Artwork",
+        price: "$10,000",
+        dimensions: { in: "20 × 30 in", cm: "50 × 76 cm" },
       },
     },
   ],
