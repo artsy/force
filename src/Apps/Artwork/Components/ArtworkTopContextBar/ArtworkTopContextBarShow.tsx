@@ -36,9 +36,15 @@ export const ArtworkTopContextBarShow: React.FC<
     { fetchPolicy: "store-or-network" },
   )
 
-  if (!data.show) return null
-
   const { show } = data
+
+  if (!show?.status) return null
+
+  const statusMessage = {
+    running: "Current show",
+    closed: "Past show",
+    upcoming: "Upcoming show",
+  }[show.status]
 
   return (
     <TopContextBar
@@ -50,7 +56,7 @@ export const ArtworkTopContextBarShow: React.FC<
       <Stack gap={1} flexDirection="row">
         {show.name}
         <Box as="span" color="mono60">
-          {show.status === "running" ? "Current show" : "Past show"}
+          {statusMessage}
           {show.partner?.name ? ` at ${show.partner.name}` : null}
         </Box>
       </Stack>
