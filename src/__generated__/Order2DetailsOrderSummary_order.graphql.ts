@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<50f3bfdd5235ff54c0e7f227991fea74>>
+ * @generated SignedSource<<1a292362c0dbb2e5744fc0a788e6f218>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,16 +24,31 @@ export type Order2DetailsOrderSummary_order$data = {
       readonly published: boolean;
       readonly slug: string;
     } | null | undefined;
+    readonly artworkOrEditionSet: {
+      readonly __typename: "Artwork";
+      readonly dimensions: {
+        readonly cm: string | null | undefined;
+        readonly in: string | null | undefined;
+      } | null | undefined;
+      readonly price: string | null | undefined;
+    } | {
+      readonly __typename: "EditionSet";
+      readonly dimensions: {
+        readonly cm: string | null | undefined;
+        readonly in: string | null | undefined;
+      } | null | undefined;
+      readonly price: string | null | undefined;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    } | null | undefined;
     readonly artworkVersion: {
       readonly artistNames: string | null | undefined;
       readonly attributionClass: {
         readonly shortDescription: string | null | undefined;
       } | null | undefined;
       readonly date: string | null | undefined;
-      readonly dimensions: {
-        readonly cm: string | null | undefined;
-        readonly in: string | null | undefined;
-      } | null | undefined;
       readonly image: {
         readonly resized: {
           readonly height: number | null | undefined;
@@ -70,6 +85,40 @@ var v0 = [
     "args": null,
     "kind": "ScalarField",
     "name": "display",
+    "storageKey": null
+  }
+],
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "price",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "dimensions",
+    "kind": "LinkedField",
+    "name": "dimensions",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "in",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "cm",
+        "storageKey": null
+      }
+    ],
     "storageKey": null
   }
 ];
@@ -192,6 +241,36 @@ return {
         {
           "alias": null,
           "args": null,
+          "concreteType": null,
+          "kind": "LinkedField",
+          "name": "artworkOrEditionSet",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "__typename",
+              "storageKey": null
+            },
+            {
+              "kind": "InlineFragment",
+              "selections": (v1/*: any*/),
+              "type": "Artwork",
+              "abstractKey": null
+            },
+            {
+              "kind": "InlineFragment",
+              "selections": (v1/*: any*/),
+              "type": "EditionSet",
+              "abstractKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": "ArtworkVersion",
           "kind": "LinkedField",
           "name": "artworkVersion",
@@ -231,31 +310,6 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "shortDescription",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "dimensions",
-              "kind": "LinkedField",
-              "name": "dimensions",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "in",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "cm",
                   "storageKey": null
                 }
               ],
@@ -327,6 +381,6 @@ return {
 };
 })();
 
-(node as any).hash = "48bc0b62d1dacc377e104a1c38e644e3";
+(node as any).hash = "209c94ff262a4d59495e01c67ebfcd21";
 
 export default node;

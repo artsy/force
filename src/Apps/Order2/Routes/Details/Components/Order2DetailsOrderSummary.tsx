@@ -30,6 +30,15 @@ export const Order2DetailsOrderSummary: React.FC<
   const artwork = orderData.lineItems[0]?.artwork
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
   const artworkImage = artworkVersion?.image?.resized
+  const artworkOrEditionSet = orderData.lineItems[0]?.artworkOrEditionSet
+  const isArtworkOrEdition =
+    artworkOrEditionSet &&
+    (artworkOrEditionSet.__typename === "Artwork" ||
+      artworkOrEditionSet.__typename === "EditionSet")
+  const dimensions = isArtworkOrEdition
+    ? artworkOrEditionSet.dimensions
+    : undefined
+  const price = isArtworkOrEdition ? artworkOrEditionSet.price : undefined
 
   return (
     <Box backgroundColor="mono0" px={[2, 4]} py={2}>
@@ -84,9 +93,9 @@ export const Order2DetailsOrderSummary: React.FC<
         <Text variant="sm" color="mono60">
           {artwork?.partner?.name}
         </Text>
-        {orderData.totalListPrice && (
+        {price && (
           <Text variant="sm" color="mono60">
-            List price: {orderData.totalListPrice.display}
+            List price: {price}
           </Text>
         )}
       </Box>
@@ -96,9 +105,9 @@ export const Order2DetailsOrderSummary: React.FC<
           {artworkVersion.attributionClass.shortDescription}
         </Text>
       )}
-      {artworkVersion?.dimensions && (
+      {dimensions && (
         <Text variant="sm" color="mono60">
-          {artworkVersion.dimensions.in} | {artworkVersion.dimensions.cm}
+          {dimensions.in} | {dimensions.cm}
         </Text>
       )}
       <Spacer y={2} />
@@ -155,16 +164,29 @@ const FRAGMENT = graphql`
           name
         }
       }
+      artworkOrEditionSet {
+        __typename
+        ... on Artwork {
+          price
+          dimensions {
+            in
+            cm
+          }
+        }
+        ... on EditionSet {
+          price
+          dimensions {
+            in
+            cm
+          }
+        }
+      }
       artworkVersion {
         title
         artistNames
         date
         attributionClass {
           shortDescription
-        }
-        dimensions {
-          in
-          cm
         }
         image {
           resized(height: 360, width: 700) {
