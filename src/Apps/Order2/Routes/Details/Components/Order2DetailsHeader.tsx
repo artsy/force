@@ -14,7 +14,10 @@ export const Order2DetailsHeader = ({ order }: Order2DetailsHeaderProps) => {
       {/* Title */}
       <Text variant={["lg", "xl"]}>{orderData.displayTexts.title}</Text>
       {/* Order # */}
-      <Text variant={["xs", "sm"]}>Order #{orderData.code} </Text>
+      {/* data-test attribute below used for integrity now. */}
+      <Text variant={["xs", "sm"]} data-test="OrderCode">
+        Order #{orderData.code}
+      </Text>
     </Box>
   )
 }

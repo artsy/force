@@ -13807,6 +13807,7 @@ enum LengthUnitPreference {
 # A line item in an order
 type LineItem {
   artwork: Artwork
+  artworkOrEditionSet: ArtworkOrEditionSetType
   artworkVersion: ArtworkVersion
   currencyCode: String!
 
@@ -19297,7 +19298,7 @@ type Query {
     first: Int
     last: Int
     size: Int = 12
-  ): [MarketingCollection]
+  ): [MarketingCollection!]
 
   # A namespace external partners (provided by Galaxy)
   external: External!
@@ -19349,6 +19350,9 @@ type Query {
     near: Near
     sort: FairSorts
     status: EventStatus
+
+    # Search term to match against fair names for authenticated users
+    term: String
   ): FairConnection
 
   # A Feature
@@ -25095,7 +25099,7 @@ type Viewer {
     first: Int
     last: Int
     size: Int = 12
-  ): [MarketingCollection]
+  ): [MarketingCollection!]
 
   # A namespace external partners (provided by Galaxy)
   external: External!
@@ -25147,6 +25151,9 @@ type Viewer {
     near: Near
     sort: FairSorts
     status: EventStatus
+
+    # Search term to match against fair names for authenticated users
+    term: String
   ): FairConnection
 
   # A Feature
