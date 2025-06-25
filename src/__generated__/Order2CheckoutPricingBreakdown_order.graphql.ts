@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<12d244087c84150d6394dfbeebadbc49>>
+ * @generated SignedSource<<2863f0bbb6f60bcf8094dbd678f5a625>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,8 +9,10 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type Order2PricingBreakdown_order$data = {
+export type Order2CheckoutPricingBreakdown_order$data = {
+  readonly buyerStateExpiresAt: string | null | undefined;
   readonly pricingBreakdownLines: ReadonlyArray<{
     readonly __typename: "ShippingLine";
     readonly amount: {
@@ -46,11 +48,12 @@ export type Order2PricingBreakdown_order$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null | undefined>;
-  readonly " $fragmentType": "Order2PricingBreakdown_order";
+  readonly source: OrderSourceEnum;
+  readonly " $fragmentType": "Order2CheckoutPricingBreakdown_order";
 };
-export type Order2PricingBreakdown_order$key = {
-  readonly " $data"?: Order2PricingBreakdown_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2PricingBreakdown_order">;
+export type Order2CheckoutPricingBreakdown_order$key = {
+  readonly " $data"?: Order2CheckoutPricingBreakdown_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutPricingBreakdown_order">;
 };
 
 const node: ReaderFragment = (function(){
@@ -102,8 +105,22 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Order2PricingBreakdown_order",
+  "name": "Order2CheckoutPricingBreakdown_order",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "buyerStateExpiresAt",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -176,6 +193,6 @@ return {
 };
 })();
 
-(node as any).hash = "3fa6f328fe15e31041983dd37748dcef";
+(node as any).hash = "85bd35f0baa6502b0051eb9dc38d3944";
 
 export default node;

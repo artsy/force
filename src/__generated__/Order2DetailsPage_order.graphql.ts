@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d4e3e7db700b9e0d1e683aaa7b4e1d15>>
+ * @generated SignedSource<<93cb73f2538eccce682f7a811ea7c275>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type Order2DetailsPage_order$data = {
       readonly slug: string;
     } | null | undefined;
   } | null | undefined>;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsFulfillmentInfo_order" | "Order2DetailsHeader_order" | "Order2DetailsMessage_order" | "Order2DetailsOrderSummary_order" | "Order2DetailsPaymentInfo_order" | "Order2HelpLinks_order" | "Order2PricingBreakdown_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsFulfillmentInfo_order" | "Order2DetailsHeader_order" | "Order2DetailsMessage_order" | "Order2DetailsOrderSummary_order" | "Order2DetailsPaymentInfo_order" | "Order2DetailsPricingBreakdown_order" | "Order2HelpLinks_order">;
   readonly " $fragmentType": "Order2DetailsPage_order";
 };
 export type Order2DetailsPage_order$key = {
@@ -77,7 +77,7 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Order2PricingBreakdown_order"
+      "name": "Order2DetailsPricingBreakdown_order"
     },
     {
       "args": null,
@@ -99,6 +99,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "805c42175223056cbd4988384c19a134";
+(node as any).hash = "025a1daeefb3507ea4e4f9c2af345f08";
 
 export default node;

@@ -20,10 +20,10 @@ export const Order2HelpLinks: React.FC<
   React.PropsWithChildren<Order2HelpLinksProps>
 > = ({ showInquiry, order, inquiryComponent, contextModule }) => {
   const orderData = useFragment(fragment, order)
-  const tracking = useOrder2Tracking()
+  const tracking = useOrder2Tracking(orderData.source, orderData.mode)
 
   const onClickReadFAQ = () => {
-    tracking.clickedVisitHelpCenter(contextModule, orderData.mode)
+    tracking.clickedVisitHelpCenter(contextModule)
     window.open(
       "https://support.artsy.net/s/topic/0TO3b000000UessGAC/buy",
       "_blank",
@@ -31,7 +31,7 @@ export const Order2HelpLinks: React.FC<
   }
 
   const onClickAskSpecialist = () => {
-    tracking.clickedAskSpecialist(contextModule, orderData.mode)
+    tracking.clickedAskSpecialist(contextModule)
     showInquiry({ askSpecialist: true })
   }
 
@@ -39,7 +39,7 @@ export const Order2HelpLinks: React.FC<
     <>
       {inquiryComponent}
 
-      <Box p={2} backgroundColor={["mono5", "mono5", "mono0"]}>
+      <Box px={[2, 4]} py={2} backgroundColor={["mono5", "mono5", "mono0"]}>
         <Flex>
           <MessageIcon fill="mono100" mt={0.5} />
 
@@ -81,6 +81,7 @@ const fragment = graphql`
   fragment Order2HelpLinks_order on Order {
     internalID
     mode
+    source
   }
 `
 

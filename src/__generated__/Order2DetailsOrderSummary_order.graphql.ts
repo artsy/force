@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c93cba2ba0a9a2943e1ab904a63d17da>>
+ * @generated SignedSource<<1a292362c0dbb2e5744fc0a788e6f218>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2DetailsOrderSummary_order$data = {
@@ -58,6 +59,7 @@ export type Order2DetailsOrderSummary_order$data = {
       readonly title: string | null | undefined;
     } | null | undefined;
   } | null | undefined>;
+  readonly mode: OrderModeEnum;
   readonly shippingTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
@@ -68,7 +70,7 @@ export type Order2DetailsOrderSummary_order$data = {
   readonly totalListPrice: {
     readonly display: string | null | undefined;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2PricingBreakdown_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsPricingBreakdown_order">;
   readonly " $fragmentType": "Order2DetailsOrderSummary_order";
 };
 export type Order2DetailsOrderSummary_order$key = {
@@ -129,13 +131,20 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Order2PricingBreakdown_order"
+      "name": "Order2DetailsPricingBreakdown_order"
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "mode",
       "storageKey": null
     },
     {
@@ -372,6 +381,6 @@ return {
 };
 })();
 
-(node as any).hash = "2ac6cdd4ce531ea7f1cedb1a862f9eef";
+(node as any).hash = "209c94ff262a4d59495e01c67ebfcd21";
 
 export default node;

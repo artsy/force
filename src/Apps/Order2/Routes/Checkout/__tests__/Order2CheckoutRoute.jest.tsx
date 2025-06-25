@@ -190,7 +190,8 @@ describe("Order2CheckoutRoute", () => {
       ).toBeInTheDocument()
 
       act(() => {
-        jest.runAllTimers()
+        // CheckoutContext MINIMUM_LOADING_MS
+        jest.advanceTimersByTime(1000)
       })
 
       await waitFor(() => {
@@ -243,9 +244,9 @@ describe("Order2CheckoutRoute", () => {
       const renderResult = await renderWithRelay({ Viewer: () => props })
 
       act(() => {
-        jest.runAllTimers()
+        // CheckoutContext MINIMUM_LOADING_MS
+        jest.advanceTimersByTime(1000)
       })
-
       await waitFor(() => {
         expect(
           screen.queryByLabelText("Checkout loading skeleton"),

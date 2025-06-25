@@ -25,11 +25,11 @@ export const useCheckoutTracking = ({
   source,
   mode,
 }: {
-  source: string
-  mode: "BUY" | "OFFER" | string
+  source: "PARTNER_OFFER" | unknown
+  mode: "BUY" | "OFFER" | unknown
 }) => {
   const { trackEvent } = useTracking()
-  const order2Tracking = useOrder2Tracking()
+  const order2Tracking = useOrder2Tracking(source, mode)
   const analytics = useAnalyticsContext()
   const contextPageOwnerId = analytics.contextPageOwnerId as string
   const contextPageOwnerSlug = analytics.contextPageOwnerSlug as string
@@ -124,7 +124,7 @@ export const useCheckoutTracking = ({
 
       // Loaded from the more generic shared useOrder2Tracking hook
       clickedImportFees: () =>
-        order2Tracking.clickedImportFees(ContextModule.ordersCheckout, flow),
+        order2Tracking.clickedImportFees(ContextModule.ordersCheckout),
 
       clickedPaymentMethod: ({
         paymentMethod,
@@ -253,7 +253,7 @@ export const useCheckoutTracking = ({
 }
 
 const buyOrOfferValue = <B, O>(
-  buyOrOffer: "BUY" | "OFFER" | string,
+  buyOrOffer: "BUY" | "OFFER" | unknown,
   ifBuy: B,
   ifOffer: O,
 ) => (buyOrOffer === "OFFER" ? ifOffer : ifBuy)

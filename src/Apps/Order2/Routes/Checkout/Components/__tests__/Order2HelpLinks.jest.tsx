@@ -1,5 +1,5 @@
 import { fireEvent, screen } from "@testing-library/dom"
-import { Order2HelpLinks } from "Apps/Order2/Routes/Checkout/Components/Order2HelpLinks"
+import { Order2HelpLinks } from "Apps/Order2/Components/Order2HelpLinks"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2DetailsPage_Test_Query } from "__generated__/Order2DetailsPage_Test_Query.graphql"
 import { useTracking } from "react-tracking"
@@ -114,7 +114,7 @@ describe("Order2HelpLinks", () => {
         context_module: "context-module",
         context_page_owner_id: "order-id",
         context_page_owner_type: "page-owner-type",
-        flow: "buy now",
+        flow: "Buy now",
       })
     })
   })

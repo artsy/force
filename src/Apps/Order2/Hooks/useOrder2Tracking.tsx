@@ -9,37 +9,42 @@ import {
   type PageOwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import type { Order2HelpLinks_order$data } from "__generated__/Order2HelpLinks_order.graphql"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
 
-export const useOrder2Tracking = () => {
+export const useOrder2Tracking = (
+  source: "PARTNER_OFFER" | unknown,
+  mode: "BUY" | "OFFER" | unknown,
+) => {
   const { trackEvent } = useTracking()
+
   const analytics = useAnalyticsContext()
 
   const contextPageOwnerId = analytics.contextPageOwnerId as string
   const contextPageOwnerType = analytics.contextPageOwnerType as PageOwnerType
 
+  // Buy now, Make offer, or Partner offer
+  const flow =
+    mode === "OFFER"
+      ? "Make offer"
+      : source === "PARTNER_OFFER"
+        ? "Partner offer"
+        : "Buy now"
+
   const tracks = useMemo(() => {
     return {
-      clickedAskSpecialist: (
-        contextModule: ContextModule,
-        orderType: Order2HelpLinks_order$data["mode"],
-      ) => {
+      clickedAskSpecialist: (contextModule: ContextModule) => {
         const payload: ClickedAskSpecialist = {
           action: ActionType.clickedAskSpecialist,
           context_module: contextModule,
           context_page_owner_id: contextPageOwnerId,
           context_page_owner_type: contextPageOwnerType,
-          flow: orderType === "OFFER" ? "make offer" : "buy now",
+          flow,
         }
 
         trackEvent(payload)
       },
-      clickedVisitHelpCenter: (
-        contextModule: ContextModule,
-        orderType: string,
-      ) => {
+      clickedVisitHelpCenter: (contextModule: ContextModule) => {
         const payload: ClickedVisitHelpCenter = {
           action: ActionType.clickedVisitHelpCenter,
           context_module: contextModule,
@@ -47,7 +52,7 @@ export const useOrder2Tracking = () => {
           context_page_owner_type: contextPageOwnerType,
           destination_page_owner_type: OwnerType.articles,
           destination_page_owner_slug: "0TO3b000000UessGAC/buy",
-          flow: orderType === "OFFER" ? "Make offer" : "Buy now",
+          flow,
         }
 
         trackEvent(payload)
@@ -65,7 +70,7 @@ export const useOrder2Tracking = () => {
         trackEvent(payload)
       },
 
-      clickedImportFees: (contextModule: ContextModule, flow) => {
+      clickedImportFees: (contextModule: ContextModule) => {
         const payload: ClickedImportFees = {
           action: ActionType.clickedImportFees,
           context_module: contextModule,
@@ -79,7 +84,7 @@ export const useOrder2Tracking = () => {
         trackEvent(payload)
       },
     }
-  }, [trackEvent, contextPageOwnerId, contextPageOwnerType])
+  }, [trackEvent, contextPageOwnerId, contextPageOwnerType, flow])
 
   return tracks
 }

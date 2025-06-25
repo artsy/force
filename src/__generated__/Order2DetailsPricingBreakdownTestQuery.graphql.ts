@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ec7e759934d8b9ccfb0c2673220663f5>>
+ * @generated SignedSource<<ee4d7df48d6873b7dfda1440c5a1b956>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Order2PricingBreakdownTestQuery$variables = Record<PropertyKey, never>;
-export type Order2PricingBreakdownTestQuery$data = {
+export type Order2DetailsPricingBreakdownTestQuery$variables = Record<PropertyKey, never>;
+export type Order2DetailsPricingBreakdownTestQuery$data = {
   readonly me: {
     readonly order: {
-      readonly " $fragmentSpreads": FragmentRefs<"Order2PricingBreakdown_order">;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsPricingBreakdown_order">;
     } | null | undefined;
   } | null | undefined;
 };
-export type Order2PricingBreakdownTestQuery = {
-  response: Order2PricingBreakdownTestQuery$data;
-  variables: Order2PricingBreakdownTestQuery$variables;
+export type Order2DetailsPricingBreakdownTestQuery = {
+  response: Order2DetailsPricingBreakdownTestQuery$data;
+  variables: Order2DetailsPricingBreakdownTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -105,7 +105,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "Order2PricingBreakdownTestQuery",
+    "name": "Order2DetailsPricingBreakdownTestQuery",
     "selections": [
       {
         "alias": null,
@@ -126,7 +126,7 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "Order2PricingBreakdown_order"
+                "name": "Order2DetailsPricingBreakdown_order"
               }
             ],
             "storageKey": "order(id:\"test-order\")"
@@ -142,7 +142,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "Order2PricingBreakdownTestQuery",
+    "name": "Order2DetailsPricingBreakdownTestQuery",
     "selections": [
       {
         "alias": null,
@@ -160,6 +160,20 @@ return {
             "name": "order",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "mode",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "source",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -237,7 +251,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "347896f935428c47c26c3d4c687144cb",
+    "cacheID": "98e88000f4c1d184932a7391d1972513",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -255,6 +269,15 @@ return {
           "type": "Order"
         },
         "me.order.id": (v6/*: any*/),
+        "me.order.mode": {
+          "enumValues": [
+            "BUY",
+            "OFFER"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "OrderModeEnum"
+        },
         "me.order.pricingBreakdownLines": {
           "enumValues": null,
           "nullable": false,
@@ -272,16 +295,27 @@ return {
         "me.order.pricingBreakdownLines.amount.currencySymbol": (v8/*: any*/),
         "me.order.pricingBreakdownLines.amount.display": (v8/*: any*/),
         "me.order.pricingBreakdownLines.amountFallbackText": (v8/*: any*/),
-        "me.order.pricingBreakdownLines.displayName": (v7/*: any*/)
+        "me.order.pricingBreakdownLines.displayName": (v7/*: any*/),
+        "me.order.source": {
+          "enumValues": [
+            "ARTWORK_PAGE",
+            "INQUIRY",
+            "PARTNER_OFFER",
+            "PRIVATE_SALE"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "OrderSourceEnum"
+        }
       }
     },
-    "name": "Order2PricingBreakdownTestQuery",
+    "name": "Order2DetailsPricingBreakdownTestQuery",
     "operationKind": "query",
-    "text": "query Order2PricingBreakdownTestQuery {\n  me {\n    order(id: \"test-order\") {\n      ...Order2PricingBreakdown_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PricingBreakdown_order on Order {\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
+    "text": "query Order2DetailsPricingBreakdownTestQuery {\n  me {\n    order(id: \"test-order\") {\n      ...Order2DetailsPricingBreakdown_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsPricingBreakdown_order on Order {\n  mode\n  source\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "dbac9586b71148a8d18eeaa130661fcd";
+(node as any).hash = "488efa6deadedf0ba007a22a66b7645a";
 
 export default node;
