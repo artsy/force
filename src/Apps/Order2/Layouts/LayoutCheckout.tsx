@@ -1,4 +1,4 @@
-import { Box, Flex } from "@artsy/palette"
+import { Box, Flex, Spacer } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { AppToasts } from "Apps/Components/AppToasts"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
@@ -44,6 +44,8 @@ export const LayoutCheckout: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
         <AppContainer as="main" id="main" flex={1}>
           {children}
         </AppContainer>
+
+        {isEigen && <Spacer y={2} />}
       </Flex>
     </>
   )
