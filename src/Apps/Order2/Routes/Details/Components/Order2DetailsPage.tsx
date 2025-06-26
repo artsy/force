@@ -20,12 +20,12 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
 
   return (
     <GridColumns py={[0, 4]} px={[0, 0, 4]}>
-      <Column span={[12, 12, 6]} start={[1, 1, 2]}>
+      <Column span={[12, 6, 6, 5]} start={[1, 2, 2, 3]}>
         <Order2DetailsHeader order={orderData} />
 
         <Order2DetailsMessage order={orderData} />
 
-        <Box display={["block", "block", "none"]}>
+        <Box display={["block", "none"]}>
           <Order2DetailsOrderSummary order={orderData} />
         </Box>
 
@@ -37,7 +37,7 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
 
         <Order2DetailsPaymentInfo order={orderData} />
 
-        <Box display={["block", "block", "none"]}>
+        <Box display={["block", "none"]}>
           <Order2HelpLinksWithInquiry
             order={orderData}
             artworkID={artworkSlug as string}
@@ -47,9 +47,9 @@ export const Order2DetailsPage = ({ order }: Order2DetailsPageProps) => {
         </Box>
       </Column>
       <Column
-        span={[12, 12, 4, 3]}
-        start={[1, 1, 8, 8]}
-        display={["none", "none", "block"]}
+        span={[12, 4, 4, 3]}
+        start={[1, 8, 8, 8]}
+        display={["none", "block"]}
       >
         <Order2DetailsOrderSummary order={orderData} />
         <Spacer y={1} />
