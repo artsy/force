@@ -9,8 +9,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
 import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
+import { Order2DetailsPricingBreakdown } from "Apps/Order2/Routes/Details/Components/Order2DetailsPricingBreakdown"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2DetailsOrderSummary_order$key } from "__generated__/Order2DetailsOrderSummary_order.graphql"
@@ -24,15 +24,24 @@ interface Order2DetailsOrderSummaryProps {
 export const Order2DetailsOrderSummary: React.FC<
   Order2DetailsOrderSummaryProps
 > = ({ order }) => {
-  const tracking = useOrder2Tracking()
   const orderData = useFragment(FRAGMENT, order)
+  const tracking = useOrder2Tracking(orderData.source, orderData.mode)
 
   const artwork = orderData.lineItems[0]?.artwork
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
   const artworkImage = artworkVersion?.image?.resized
+  const artworkOrEditionSet = orderData.lineItems[0]?.artworkOrEditionSet
+  const isArtworkOrEdition =
+    artworkOrEditionSet &&
+    (artworkOrEditionSet.__typename === "Artwork" ||
+      artworkOrEditionSet.__typename === "EditionSet")
+  const dimensions = isArtworkOrEdition
+    ? artworkOrEditionSet.dimensions
+    : undefined
+  const price = isArtworkOrEdition ? artworkOrEditionSet.price : undefined
 
   return (
-    <Box backgroundColor="mono0" p={[2, 4]}>
+    <Box backgroundColor="mono0" px={[2, 4]} py={2}>
       {artworkImage?.url && artworkImage.width && artworkImage.height && (
         <Flex alignItems="center" width="100%" flexDirection="column" p={1}>
           <ResponsiveBox
@@ -84,9 +93,9 @@ export const Order2DetailsOrderSummary: React.FC<
         <Text variant="sm" color="mono60">
           {artwork?.partner?.name}
         </Text>
-        {orderData.totalListPrice && (
+        {price && (
           <Text variant="sm" color="mono60">
-            List price: {orderData.totalListPrice.display}
+            List price: {price}
           </Text>
         )}
       </Box>
@@ -96,14 +105,14 @@ export const Order2DetailsOrderSummary: React.FC<
           {artworkVersion.attributionClass.shortDescription}
         </Text>
       )}
-      {artworkVersion?.dimensions && (
+      {dimensions && (
         <Text variant="sm" color="mono60">
-          {artworkVersion.dimensions.in} | {artworkVersion.dimensions.cm}
+          {dimensions.in} | {dimensions.cm}
         </Text>
       )}
       <Spacer y={2} />
       <Box mb={2}>
-        <Order2PricingBreakdown order={orderData} />
+        <Order2DetailsPricingBreakdown order={orderData} />
       </Box>
       <Spacer y={4} />
       <Message variant="default" p={1}>
@@ -132,8 +141,9 @@ export const Order2DetailsOrderSummary: React.FC<
 
 const FRAGMENT = graphql`
   fragment Order2DetailsOrderSummary_order on Order {
-    ...Order2PricingBreakdown_order
+    ...Order2DetailsPricingBreakdown_order
     source
+    mode
     totalListPrice {
       display
     }
@@ -154,16 +164,29 @@ const FRAGMENT = graphql`
           name
         }
       }
+      artworkOrEditionSet {
+        __typename
+        ... on Artwork {
+          price
+          dimensions {
+            in
+            cm
+          }
+        }
+        ... on EditionSet {
+          price
+          dimensions {
+            in
+            cm
+          }
+        }
+      }
       artworkVersion {
         title
         artistNames
         date
         attributionClass {
           shortDescription
-        }
-        dimensions {
-          in
-          cm
         }
         image {
           resized(height: 360, width: 700) {

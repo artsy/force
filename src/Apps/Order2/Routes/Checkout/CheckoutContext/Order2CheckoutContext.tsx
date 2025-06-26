@@ -10,12 +10,14 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { useRouter } from "System/Hooks/useRouter"
+import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import createLogger from "Utils/logger"
 import type {
   Order2CheckoutContext_order$data,
   Order2CheckoutContext_order$key,
 } from "__generated__/Order2CheckoutContext_order.graphql"
 import { every } from "lodash"
+import { DateTime } from "luxon"
 import type React from "react"
 import {
   createContext,
@@ -62,7 +64,12 @@ interface CheckoutActions {
   setCheckoutMode: (mode: CheckoutMode) => void
 }
 
-export type Order2CheckoutContextValue = CheckoutState & CheckoutActions
+export type Order2CheckoutContextValue = CheckoutState &
+  CheckoutActions & {
+    partnerOffer: {
+      timer: ReturnType<typeof useCountdownTimer>
+    } | null
+  }
 type CheckoutMode = "standard" | "express"
 
 export const Order2CheckoutContext =
@@ -85,6 +92,7 @@ export const Order2CheckoutContextProvider: React.FC<
     isLoading,
     setLoadingError,
     setLoadingComplete,
+    partnerOffer,
   } = context
 
   const isExpressCheckoutLoaded = expressCheckoutPaymentMethods !== null
@@ -92,7 +100,15 @@ export const Order2CheckoutContextProvider: React.FC<
   const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
   const [orderValidated, setOrderValidated] = useState(false)
 
-  const checks = [minimumLoadingPassed, orderValidated, isExpressCheckoutLoaded]
+  const isPartnerOfferLoadingComplete =
+    !partnerOffer || !partnerOffer.timer.isLoading
+
+  const checks = [
+    minimumLoadingPassed,
+    orderValidated,
+    isExpressCheckoutLoaded,
+    isPartnerOfferLoadingComplete,
+  ]
 
   // Validate order and get into good initial checkout state on load
   // - artwork version match
@@ -141,6 +157,7 @@ const ORDER_FRAGMENT = graphql`
     internalID
     mode
     source
+    buyerStateExpiresAt
     selectedFulfillmentOption {
       type
     }
@@ -165,6 +182,31 @@ const validateOrder = (order: Order2CheckoutContext_order$data) => {
   return
 }
 
+const usePartnerOfferOnOrder = (orderData: {
+  source: "PARTNER_OFFER" | unknown
+  buyerStateExpiresAt?: string | null
+}) => {
+  const hasPartnerOffer = orderData.source === "PARTNER_OFFER"
+
+  const partnerOfferEndTime =
+    (hasPartnerOffer && orderData.buyerStateExpiresAt) || ""
+  const partnerOfferStartTime = hasPartnerOffer
+    ? DateTime.fromISO(partnerOfferEndTime).minus({ days: 3 }).toString()
+    : ""
+
+  const partnerOfferTimer = useCountdownTimer({
+    startTime: partnerOfferStartTime,
+    endTime: partnerOfferEndTime,
+    imminentTime: 1,
+  })
+
+  return hasPartnerOffer
+    ? {
+        timer: partnerOfferTimer,
+      }
+    : null
+}
+
 const useBuildCheckoutContext = (
   orderData: Order2CheckoutContext_order$data,
 ): Order2CheckoutContextValue => {
@@ -173,6 +215,7 @@ const useBuildCheckoutContext = (
     [orderData],
   )
   const checkoutTracking = useCheckoutTracking(orderData)
+  const partnerOffer = usePartnerOfferOnOrder(orderData)
 
   const { router } = useRouter()
   const [state, dispatch] = useReducer(reducer, initialState)
@@ -341,6 +384,7 @@ const useBuildCheckoutContext = (
   return {
     ...state,
     ...actions,
+    partnerOffer,
   }
 }
 

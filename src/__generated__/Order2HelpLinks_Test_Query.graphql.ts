@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<874203a6377ab871771cc1ac2a0acad8>>
+ * @generated SignedSource<<56713aa08b436a6b5bd128567b4a3e2c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 export type Order2HelpLinks_Test_Query$variables = Record<PropertyKey, never>;
 export type Order2HelpLinks_Test_Query$data = {
   readonly me: {
@@ -26,6 +27,7 @@ export type Order2HelpLinks_Test_Query$rawResponse = {
       readonly id: string;
       readonly internalID: string;
       readonly mode: OrderModeEnum;
+      readonly source: OrderSourceEnum;
     } | null | undefined;
   } | null | undefined;
 };
@@ -124,6 +126,13 @@ return {
                 "name": "mode",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "source",
+                "storageKey": null
+              },
               (v1/*: any*/)
             ],
             "storageKey": "order(id:\"123\")"
@@ -135,12 +144,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "492e5e36b5f9bf34de4408c66370bffd",
+    "cacheID": "60d250640b461c25f2e32b9c4738dd4a",
     "id": null,
     "metadata": {},
     "name": "Order2HelpLinks_Test_Query",
     "operationKind": "query",
-    "text": "query Order2HelpLinks_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2HelpLinks_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n}\n"
+    "text": "query Order2HelpLinks_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2HelpLinks_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n  source\n}\n"
   }
 };
 })();

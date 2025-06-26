@@ -3,11 +3,11 @@ import ShieldIcon from "@artsy/icons/ShieldIcon"
 import { Box, Button, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
 import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSubmitOrderMutation"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
 import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
@@ -123,7 +123,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
         </Box>
       </Flex>
       <Box>
-        <Order2PricingBreakdown order={orderData} />
+        <Order2CheckoutPricingBreakdown order={orderData} />
       </Box>
       <Spacer y={2} />
       <Message variant="default" p={1}>
@@ -166,7 +166,7 @@ export const Order2ReviewStep = injectDialog(Order2ReviewStepComponent)
 
 const FRAGMENT = graphql`
   fragment Order2ReviewStep_order on Order {
-    ...Order2PricingBreakdown_order
+    ...Order2CheckoutPricingBreakdown_order
     internalID
     mode
     source

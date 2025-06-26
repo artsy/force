@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7ab00262c6f5551b9cff05575009735f>>
+ * @generated SignedSource<<1a292362c0dbb2e5744fc0a788e6f218>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2DetailsOrderSummary_order$data = {
@@ -23,16 +24,31 @@ export type Order2DetailsOrderSummary_order$data = {
       readonly published: boolean;
       readonly slug: string;
     } | null | undefined;
+    readonly artworkOrEditionSet: {
+      readonly __typename: "Artwork";
+      readonly dimensions: {
+        readonly cm: string | null | undefined;
+        readonly in: string | null | undefined;
+      } | null | undefined;
+      readonly price: string | null | undefined;
+    } | {
+      readonly __typename: "EditionSet";
+      readonly dimensions: {
+        readonly cm: string | null | undefined;
+        readonly in: string | null | undefined;
+      } | null | undefined;
+      readonly price: string | null | undefined;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    } | null | undefined;
     readonly artworkVersion: {
       readonly artistNames: string | null | undefined;
       readonly attributionClass: {
         readonly shortDescription: string | null | undefined;
       } | null | undefined;
       readonly date: string | null | undefined;
-      readonly dimensions: {
-        readonly cm: string | null | undefined;
-        readonly in: string | null | undefined;
-      } | null | undefined;
       readonly image: {
         readonly resized: {
           readonly height: number | null | undefined;
@@ -43,6 +59,7 @@ export type Order2DetailsOrderSummary_order$data = {
       readonly title: string | null | undefined;
     } | null | undefined;
   } | null | undefined>;
+  readonly mode: OrderModeEnum;
   readonly shippingTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
@@ -53,7 +70,7 @@ export type Order2DetailsOrderSummary_order$data = {
   readonly totalListPrice: {
     readonly display: string | null | undefined;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2PricingBreakdown_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsPricingBreakdown_order">;
   readonly " $fragmentType": "Order2DetailsOrderSummary_order";
 };
 export type Order2DetailsOrderSummary_order$key = {
@@ -70,6 +87,40 @@ var v0 = [
     "name": "display",
     "storageKey": null
   }
+],
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "price",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "dimensions",
+    "kind": "LinkedField",
+    "name": "dimensions",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "in",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "cm",
+        "storageKey": null
+      }
+    ],
+    "storageKey": null
+  }
 ];
 return {
   "argumentDefinitions": [],
@@ -80,13 +131,20 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Order2PricingBreakdown_order"
+      "name": "Order2DetailsPricingBreakdown_order"
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "mode",
       "storageKey": null
     },
     {
@@ -183,6 +241,36 @@ return {
         {
           "alias": null,
           "args": null,
+          "concreteType": null,
+          "kind": "LinkedField",
+          "name": "artworkOrEditionSet",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "__typename",
+              "storageKey": null
+            },
+            {
+              "kind": "InlineFragment",
+              "selections": (v1/*: any*/),
+              "type": "Artwork",
+              "abstractKey": null
+            },
+            {
+              "kind": "InlineFragment",
+              "selections": (v1/*: any*/),
+              "type": "EditionSet",
+              "abstractKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": "ArtworkVersion",
           "kind": "LinkedField",
           "name": "artworkVersion",
@@ -222,31 +310,6 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "shortDescription",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "dimensions",
-              "kind": "LinkedField",
-              "name": "dimensions",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "in",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "cm",
                   "storageKey": null
                 }
               ],
@@ -318,6 +381,6 @@ return {
 };
 })();
 
-(node as any).hash = "133d120821052d90c7c37f87126d7187";
+(node as any).hash = "209c94ff262a4d59495e01c67ebfcd21";
 
 export default node;

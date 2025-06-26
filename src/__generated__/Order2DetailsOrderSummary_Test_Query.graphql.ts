@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cbf35b7b1a770960cb3c39c827455e21>>
+ * @generated SignedSource<<13107337329ddbf6c17ff04d65483a27>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 export type Order2DetailsOrderSummary_Test_Query$variables = Record<PropertyKey, never>;
 export type Order2DetailsOrderSummary_Test_Query$data = {
@@ -37,6 +38,29 @@ export type Order2DetailsOrderSummary_Test_Query$rawResponse = {
           readonly published: boolean;
           readonly slug: string;
         } | null | undefined;
+        readonly artworkOrEditionSet: {
+          readonly __typename: "Artwork";
+          readonly __isNode: "Artwork";
+          readonly dimensions: {
+            readonly cm: string | null | undefined;
+            readonly in: string | null | undefined;
+          } | null | undefined;
+          readonly id: string;
+          readonly price: string | null | undefined;
+        } | {
+          readonly __typename: "EditionSet";
+          readonly __isNode: "EditionSet";
+          readonly dimensions: {
+            readonly cm: string | null | undefined;
+            readonly in: string | null | undefined;
+          } | null | undefined;
+          readonly id: string;
+          readonly price: string | null | undefined;
+        } | {
+          readonly __typename: string;
+          readonly __isNode: string;
+          readonly id: string;
+        } | null | undefined;
         readonly artworkVersion: {
           readonly artistNames: string | null | undefined;
           readonly attributionClass: {
@@ -44,10 +68,6 @@ export type Order2DetailsOrderSummary_Test_Query$rawResponse = {
             readonly shortDescription: string | null | undefined;
           } | null | undefined;
           readonly date: string | null | undefined;
-          readonly dimensions: {
-            readonly cm: string | null | undefined;
-            readonly in: string | null | undefined;
-          } | null | undefined;
           readonly id: string;
           readonly image: {
             readonly resized: {
@@ -60,6 +80,7 @@ export type Order2DetailsOrderSummary_Test_Query$rawResponse = {
         } | null | undefined;
         readonly id: string;
       } | null | undefined>;
+      readonly mode: OrderModeEnum;
       readonly pricingBreakdownLines: ReadonlyArray<{
         readonly __typename: "ShippingLine";
         readonly amount: {
@@ -124,17 +145,24 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "displayName",
+  "name": "__typename",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "amountFallbackText",
+  "name": "displayName",
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "amountFallbackText",
+  "storageKey": null
+},
+v4 = {
   "alias": null,
   "args": null,
   "concreteType": "Money",
@@ -159,12 +187,12 @@ v3 = {
   ],
   "storageKey": null
 },
-v4 = [
-  (v1/*: any*/),
-  (v2/*: any*/),
-  (v3/*: any*/)
-],
 v5 = [
+  (v2/*: any*/),
+  (v3/*: any*/),
+  (v4/*: any*/)
+],
+v6 = [
   {
     "alias": null,
     "args": null,
@@ -173,11 +201,43 @@ v5 = [
     "storageKey": null
   }
 ],
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "price",
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "dimensions",
+  "kind": "LinkedField",
+  "name": "dimensions",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "in",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "cm",
+      "storageKey": null
+    }
+  ],
   "storageKey": null
 };
 return {
@@ -243,59 +303,8 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "concreteType": null,
-                "kind": "LinkedField",
-                "name": "pricingBreakdownLines",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "__typename",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "InlineFragment",
-                    "selections": (v4/*: any*/),
-                    "type": "ShippingLine",
-                    "abstractKey": null
-                  },
-                  {
-                    "kind": "InlineFragment",
-                    "selections": (v4/*: any*/),
-                    "type": "TaxLine",
-                    "abstractKey": null
-                  },
-                  {
-                    "kind": "InlineFragment",
-                    "selections": [
-                      (v1/*: any*/),
-                      (v3/*: any*/)
-                    ],
-                    "type": "SubtotalLine",
-                    "abstractKey": null
-                  },
-                  {
-                    "kind": "InlineFragment",
-                    "selections": [
-                      (v1/*: any*/),
-                      (v2/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Money",
-                        "kind": "LinkedField",
-                        "name": "amount",
-                        "plural": false,
-                        "selections": (v5/*: any*/),
-                        "storageKey": null
-                      }
-                    ],
-                    "type": "TotalLine",
-                    "abstractKey": null
-                  }
-                ],
+                "kind": "ScalarField",
+                "name": "mode",
                 "storageKey": null
               },
               {
@@ -308,11 +317,63 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "concreteType": null,
+                "kind": "LinkedField",
+                "name": "pricingBreakdownLines",
+                "plural": true,
+                "selections": [
+                  (v1/*: any*/),
+                  {
+                    "kind": "InlineFragment",
+                    "selections": (v5/*: any*/),
+                    "type": "ShippingLine",
+                    "abstractKey": null
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": (v5/*: any*/),
+                    "type": "TaxLine",
+                    "abstractKey": null
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      (v2/*: any*/),
+                      (v4/*: any*/)
+                    ],
+                    "type": "SubtotalLine",
+                    "abstractKey": null
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      (v2/*: any*/),
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Money",
+                        "kind": "LinkedField",
+                        "name": "amount",
+                        "plural": false,
+                        "selections": (v6/*: any*/),
+                        "storageKey": null
+                      }
+                    ],
+                    "type": "TotalLine",
+                    "abstractKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "Money",
                 "kind": "LinkedField",
                 "name": "totalListPrice",
                 "plural": false,
-                "selections": (v5/*: any*/),
+                "selections": (v6/*: any*/),
                 "storageKey": null
               },
               {
@@ -322,7 +383,7 @@ return {
                 "kind": "LinkedField",
                 "name": "itemsTotal",
                 "plural": false,
-                "selections": (v5/*: any*/),
+                "selections": (v6/*: any*/),
                 "storageKey": null
               },
               {
@@ -332,7 +393,7 @@ return {
                 "kind": "LinkedField",
                 "name": "shippingTotal",
                 "plural": false,
-                "selections": (v5/*: any*/),
+                "selections": (v6/*: any*/),
                 "storageKey": null
               },
               {
@@ -342,7 +403,7 @@ return {
                 "kind": "LinkedField",
                 "name": "taxTotal",
                 "plural": false,
-                "selections": (v5/*: any*/),
+                "selections": (v6/*: any*/),
                 "storageKey": null
               },
               {
@@ -390,11 +451,50 @@ return {
                             "name": "name",
                             "storageKey": null
                           },
-                          (v6/*: any*/)
+                          (v7/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v6/*: any*/)
+                      (v7/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "artworkOrEditionSet",
+                    "plural": false,
+                    "selections": [
+                      (v1/*: any*/),
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          (v8/*: any*/),
+                          (v9/*: any*/)
+                        ],
+                        "type": "Artwork",
+                        "abstractKey": null
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          (v8/*: any*/),
+                          (v9/*: any*/),
+                          (v7/*: any*/)
+                        ],
+                        "type": "EditionSet",
+                        "abstractKey": null
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          (v7/*: any*/)
+                        ],
+                        "type": "Node",
+                        "abstractKey": "__isNode"
+                      }
                     ],
                     "storageKey": null
                   },
@@ -442,32 +542,7 @@ return {
                             "name": "shortDescription",
                             "storageKey": null
                           },
-                          (v6/*: any*/)
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "dimensions",
-                        "kind": "LinkedField",
-                        "name": "dimensions",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "in",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "cm",
-                            "storageKey": null
-                          }
+                          (v7/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -525,31 +600,31 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v6/*: any*/)
+                      (v7/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v6/*: any*/)
+                  (v7/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v6/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": "order(id:\"123\")"
           },
-          (v6/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "7312273fa8af48c24628b8db2d5f7a74",
+    "cacheID": "291e3eab7a8ab4d5f3dd99b9a54d496b",
     "id": null,
     "metadata": {},
     "name": "Order2DetailsOrderSummary_Test_Query",
     "operationKind": "query",
-    "text": "query Order2DetailsOrderSummary_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsOrderSummary_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsOrderSummary_order on Order {\n  ...Order2PricingBreakdown_order\n  source\n  totalListPrice {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      published\n      partner {\n        name\n        id\n      }\n      id\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      dimensions {\n        in\n        cm\n      }\n      image {\n        resized(height: 360, width: 700) {\n          url\n          width\n          height\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PricingBreakdown_order on Order {\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
+    "text": "query Order2DetailsOrderSummary_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsOrderSummary_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsOrderSummary_order on Order {\n  ...Order2DetailsPricingBreakdown_order\n  source\n  mode\n  totalListPrice {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      published\n      partner {\n        name\n        id\n      }\n      id\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        price\n        dimensions {\n          in\n          cm\n        }\n      }\n      ... on EditionSet {\n        price\n        dimensions {\n          in\n          cm\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      image {\n        resized(height: 360, width: 700) {\n          url\n          width\n          height\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsPricingBreakdown_order on Order {\n  mode\n  source\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
   }
 };
 })();

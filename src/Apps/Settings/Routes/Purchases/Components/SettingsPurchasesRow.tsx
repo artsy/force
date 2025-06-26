@@ -198,11 +198,12 @@ const SettingsPurchasesRow: FC<
   React.PropsWithChildren<SettingsPurchasesRowProps>
 > = ({ order }) => {
   const [lineItem] = extractNodes(order?.lineItems)
-  const { artwork, artworkVersion, fulfillments } = lineItem
+  const { artwork, artworkVersion, fulfillments, shipment } = lineItem
   const { requestedFulfillment, buyerAction } = order
 
   const orderCreatedAt = DateTime.fromISO(order.createdAt)
   const trackingId = fulfillments?.edges?.[0]?.node?.trackingId
+  const trackingUrl = shipment?.trackingUrl
   const image = artworkVersion?.image?.cropped
 
   const isPrivateSale = order.source === "private_sale"
@@ -220,6 +221,12 @@ const SettingsPurchasesRow: FC<
     ].includes(buyerAction)
   ) {
     buyerDisplayState = "OFFER_RECEIVED"
+  }
+  // if fulfilment with trackingId is present the order is partner shipped
+  // and we do not want to display it as delivered.
+  // We want the end state to be IN_TRANSIT for pargtner shipped orders
+  if (buyerDisplayState === "FULFILLED" && trackingId) {
+    buyerDisplayState = "IN_TRANSIT"
   }
 
   const { trackEvent } = useTracking()
@@ -252,14 +259,15 @@ const SettingsPurchasesRow: FC<
             {ORDER_LABELS[buyerDisplayState]}
           </Text>
 
-          {trackingId && (
+          {/* Only whant to add tracking if order is arta shippied and url is present  */}
+          {trackingUrl && (
             <>
               <Text variant="sm-display" mx={1}>
                 •
               </Text>
 
               <RouterLink
-                to={`https://google.com/search?q=${trackingId}`}
+                to={trackingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -469,6 +477,9 @@ export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
                     trackingId
                   }
                 }
+              }
+              shipment {
+                trackingUrl
               }
             }
           }
