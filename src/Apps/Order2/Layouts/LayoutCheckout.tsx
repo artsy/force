@@ -5,14 +5,12 @@ import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import type { BaseLayoutProps } from "Apps/Components/Layouts"
 import { NavBarPrimaryLogo } from "Components/NavBar/NavBarPrimaryLogo"
 import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { FC } from "react"
 
 export const LayoutCheckout: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
   children,
 }) => {
-  const { match } = useRouter()
   const { isEigen } = useSystemContext()
 
   return (
@@ -26,18 +24,13 @@ export const LayoutCheckout: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
         bg="mono0"
         zIndex={1}
       >
-        <HorizontalPadding>
-          <RouterLink
-            onClick={event => {
-              if (match.location.pathname.includes("/order") && isEigen) {
-                event.preventDefault()
-              }
-            }}
-            to="/"
-          >
-            <NavBarPrimaryLogo />
-          </RouterLink>
-        </HorizontalPadding>
+        {!isEigen && (
+          <HorizontalPadding>
+            <RouterLink to="/">
+              <NavBarPrimaryLogo />
+            </RouterLink>
+          </HorizontalPadding>
+        )}
       </Box>
 
       <Flex
