@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b958c709fa2e868b33d8fe403821c390>>
+ * @generated SignedSource<<fb6de582f1b03d8735b7413b57beef1f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -442,6 +442,7 @@ return {
           "enumValues": [
             "ARTICLE_FEATURED_ARTIST",
             "ARTWORK_ALERT",
+            "ARTWORK_PRICE_DROPPED",
             "ARTWORK_PUBLISHED",
             "COLLECTOR_PROFILE_UPDATE_PROMPT",
             "PARTNER_OFFER_CREATED",

@@ -27,6 +27,7 @@ import type {
 } from "__generated__/NotificationQuery.graphql"
 import { Suspense, useEffect } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
+import { ArtworkPriceDroppedNotification } from "Components/Notifications/ArtworkPriceDroppedNotification"
 
 const logger = createLogger("NotificationItem")
 
@@ -34,6 +35,7 @@ const logger = createLogger("NotificationItem")
 export const NOTIFICATION_MAX_WIDTH = 600
 export const SUPPORTED_NOTIFICATION_TYPES: NotificationTypesEnum[] = [
   "ARTWORK_ALERT",
+  "ARTWORK_PRICE_DROPPED",
   "ARTWORK_PUBLISHED",
   "ARTICLE_FEATURED_ARTIST",
   "PARTNER_OFFER_CREATED",
@@ -107,6 +109,10 @@ const Notification: React.FC<React.PropsWithChildren<NotificationProps>> = ({
       return <AlertNotification notification={notification} />
     }
 
+    case "ARTWORK_PRICE_DROPPED": {
+      return <ArtworkPriceDroppedNotification notification={notification} />
+    }
+
     case "ARTWORK_PUBLISHED":
       return <ArtworkPublishedNotification notification={notification} />
 
@@ -156,6 +162,7 @@ const notificationQuery = graphql`
     me {
       notification(id: $internalID) {
         ...AlertNotification_notification
+        ...ArtworkPriceDroppedNotification_notification
         ...ArtworkPublishedNotification_notification
         ...ArticleFeaturedArtistNotification_notification
         ...PartnerOfferCreatedNotification_notification

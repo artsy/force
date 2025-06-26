@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3350c724a52cc620f90df143187de3d5>>
+ * @generated SignedSource<<fb08824bf7c6470fa0b8bdaaa04d6eea>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "COLLECTOR_PROFILE_UPDATE_PROMPT" | "PARTNER_OFFER_CREATED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
+export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PRICE_DROPPED" | "ARTWORK_PUBLISHED" | "COLLECTOR_PROFILE_UPDATE_PROMPT" | "PARTNER_OFFER_CREATED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 export type NotificationQuery$variables = {
   internalID: string;
 };
@@ -21,7 +21,7 @@ export type NotificationQuery$data = {
       readonly internalID: string;
       readonly notificationType: NotificationTypesEnum;
       readonly targetHref: string;
-      readonly " $fragmentSpreads": FragmentRefs<"AlertNotification_notification" | "ArticleFeaturedArtistNotification_notification" | "ArtworkPublishedNotification_notification" | "PartnerOfferCreatedNotification_notification" | "PartnerShowOpenedNotification_notification" | "ViewingRoomPublishedNotification_notification">;
+      readonly " $fragmentSpreads": FragmentRefs<"AlertNotification_notification" | "ArticleFeaturedArtistNotification_notification" | "ArtworkPriceDroppedNotification_notification" | "ArtworkPublishedNotification_notification" | "PartnerOfferCreatedNotification_notification" | "PartnerShowOpenedNotification_notification" | "ViewingRoomPublishedNotification_notification">;
     } | null | undefined;
   } | null | undefined;
 };
@@ -512,28 +512,141 @@ v35 = {
   ],
   "storageKey": null
 },
-v36 = {
+v36 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "isUnlisted",
+    "storageKey": null
+  },
+  (v3/*: any*/),
+  (v7/*: any*/),
+  (v8/*: any*/),
+  (v9/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "CollectorSignals",
+    "kind": "LinkedField",
+    "name": "collectorSignals",
+    "plural": false,
+    "selections": [
+      (v10/*: any*/),
+      (v11/*: any*/),
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "PartnerOfferToCollector",
+        "kind": "LinkedField",
+        "name": "partnerOffer",
+        "plural": false,
+        "selections": [
+          (v12/*: any*/),
+          (v14/*: any*/),
+          (v2/*: any*/)
+        ],
+        "storageKey": null
+      }
+    ],
+    "storageKey": null
+  },
+  (v15/*: any*/),
+  (v16/*: any*/),
+  (v18/*: any*/),
+  (v19/*: any*/),
+  (v21/*: any*/),
+  (v22/*: any*/),
+  {
+    "alias": null,
+    "args": (v17/*: any*/),
+    "concreteType": "Partner",
+    "kind": "LinkedField",
+    "name": "partner",
+    "plural": false,
+    "selections": [
+      (v20/*: any*/),
+      (v7/*: any*/),
+      (v2/*: any*/)
+    ],
+    "storageKey": "partner(shallow:true)"
+  },
+  (v24/*: any*/),
+  (v26/*: any*/),
+  (v27/*: any*/),
+  (v29/*: any*/),
+  (v30/*: any*/),
+  (v31/*: any*/),
+  (v35/*: any*/),
+  (v2/*: any*/)
+],
+v37 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v37 = {
+v38 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Alert",
+  "kind": "LinkedField",
+  "name": "alert",
+  "plural": false,
+  "selections": [
+    (v3/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artists",
+      "plural": true,
+      "selections": [
+        (v20/*: any*/),
+        (v37/*: any*/),
+        (v2/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "SearchCriteriaLabel",
+      "kind": "LinkedField",
+      "name": "labels",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "displayValue",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    (v2/*: any*/)
+  ],
+  "storageKey": null
+},
+v39 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v38 = {
+v40 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "srcSet",
   "storageKey": null
 },
-v39 = {
+v41 = {
   "alias": null,
   "args": null,
   "concreteType": "Profile",
@@ -573,6 +686,11 @@ return {
                 "args": null,
                 "kind": "FragmentSpread",
                 "name": "AlertNotification_notification"
+              },
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "ArtworkPriceDroppedNotification_notification"
               },
               {
                 "args": null,
@@ -658,74 +776,7 @@ return {
                         "kind": "LinkedField",
                         "name": "node",
                         "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "isUnlisted",
-                            "storageKey": null
-                          },
-                          (v3/*: any*/),
-                          (v7/*: any*/),
-                          (v8/*: any*/),
-                          (v9/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "CollectorSignals",
-                            "kind": "LinkedField",
-                            "name": "collectorSignals",
-                            "plural": false,
-                            "selections": [
-                              (v10/*: any*/),
-                              (v11/*: any*/),
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "PartnerOfferToCollector",
-                                "kind": "LinkedField",
-                                "name": "partnerOffer",
-                                "plural": false,
-                                "selections": [
-                                  (v12/*: any*/),
-                                  (v14/*: any*/),
-                                  (v2/*: any*/)
-                                ],
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": null
-                          },
-                          (v15/*: any*/),
-                          (v16/*: any*/),
-                          (v18/*: any*/),
-                          (v19/*: any*/),
-                          (v21/*: any*/),
-                          (v22/*: any*/),
-                          {
-                            "alias": null,
-                            "args": (v17/*: any*/),
-                            "concreteType": "Partner",
-                            "kind": "LinkedField",
-                            "name": "partner",
-                            "plural": false,
-                            "selections": [
-                              (v20/*: any*/),
-                              (v7/*: any*/),
-                              (v2/*: any*/)
-                            ],
-                            "storageKey": "partner(shallow:true)"
-                          },
-                          (v24/*: any*/),
-                          (v26/*: any*/),
-                          (v27/*: any*/),
-                          (v29/*: any*/),
-                          (v30/*: any*/),
-                          (v31/*: any*/),
-                          (v35/*: any*/),
-                          (v2/*: any*/)
-                        ],
+                        "selections": (v36/*: any*/),
                         "storageKey": null
                       }
                     ],
@@ -766,53 +817,80 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": [
+                      (v38/*: any*/)
+                    ],
+                    "type": "AlertNotificationItem",
+                    "abstractKey": null
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      (v38/*: any*/),
                       {
                         "alias": null,
-                        "args": null,
-                        "concreteType": "Alert",
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "first",
+                            "value": 100
+                          }
+                        ],
+                        "concreteType": "PriceDropConnection",
                         "kind": "LinkedField",
-                        "name": "alert",
+                        "name": "priceDropsConnection",
                         "plural": false,
                         "selections": [
-                          (v3/*: any*/),
                           {
                             "alias": null,
                             "args": null,
-                            "concreteType": "Artist",
+                            "concreteType": "PriceDropEdge",
                             "kind": "LinkedField",
-                            "name": "artists",
-                            "plural": true,
-                            "selections": [
-                              (v20/*: any*/),
-                              (v36/*: any*/),
-                              (v2/*: any*/)
-                            ],
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "SearchCriteriaLabel",
-                            "kind": "LinkedField",
-                            "name": "labels",
+                            "name": "edges",
                             "plural": true,
                             "selections": [
                               {
                                 "alias": null,
                                 "args": null,
-                                "kind": "ScalarField",
-                                "name": "displayValue",
+                                "concreteType": "PriceDrop",
+                                "kind": "LinkedField",
+                                "name": "node",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "oldPrice",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "newPrice",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "concreteType": "Artwork",
+                                    "kind": "LinkedField",
+                                    "name": "artwork",
+                                    "plural": false,
+                                    "selections": (v36/*: any*/),
+                                    "storageKey": null
+                                  }
+                                ],
                                 "storageKey": null
                               }
                             ],
                             "storageKey": null
-                          },
-                          (v2/*: any*/)
+                          }
                         ],
-                        "storageKey": null
+                        "storageKey": "priceDropsConnection(first:100)"
                       }
                     ],
-                    "type": "AlertNotificationItem",
+                    "type": "ArtworkPriceDroppedNotificationItem",
                     "abstractKey": null
                   },
                   {
@@ -835,7 +913,7 @@ return {
                             "storageKey": null
                           },
                           (v20/*: any*/),
-                          (v36/*: any*/),
+                          (v37/*: any*/),
                           (v2/*: any*/)
                         ],
                         "storageKey": null
@@ -910,8 +988,8 @@ return {
                                 "name": "cropped",
                                 "plural": false,
                                 "selections": [
-                                  (v37/*: any*/),
-                                  (v38/*: any*/),
+                                  (v39/*: any*/),
+                                  (v40/*: any*/),
                                   (v33/*: any*/),
                                   (v34/*: any*/)
                                 ],
@@ -949,7 +1027,7 @@ return {
                                 "plural": false,
                                 "selections": [
                                   (v20/*: any*/),
-                                  (v36/*: any*/),
+                                  (v37/*: any*/),
                                   (v3/*: any*/),
                                   (v7/*: any*/),
                                   (v2/*: any*/)
@@ -1022,7 +1100,7 @@ return {
                         "selections": [
                           (v7/*: any*/),
                           (v20/*: any*/),
-                          (v39/*: any*/),
+                          (v41/*: any*/),
                           (v2/*: any*/)
                         ],
                         "storageKey": null
@@ -1117,15 +1195,15 @@ return {
                                         "name": "cropped",
                                         "plural": false,
                                         "selections": [
-                                          (v37/*: any*/),
-                                          (v38/*: any*/)
+                                          (v39/*: any*/),
+                                          (v40/*: any*/)
                                         ],
                                         "storageKey": "cropped(height:450,version:[\"larger\",\"large\"],width:600)"
                                       }
                                     ],
                                     "storageKey": null
                                   },
-                                  (v36/*: any*/),
+                                  (v37/*: any*/),
                                   (v2/*: any*/)
                                 ],
                                 "storageKey": null
@@ -1153,7 +1231,7 @@ return {
                         "selections": [
                           (v20/*: any*/),
                           (v7/*: any*/),
-                          (v39/*: any*/),
+                          (v41/*: any*/),
                           (v2/*: any*/)
                         ],
                         "storageKey": null
@@ -1285,7 +1363,7 @@ return {
                         "plural": false,
                         "selections": [
                           (v3/*: any*/),
-                          (v36/*: any*/),
+                          (v37/*: any*/),
                           (v7/*: any*/),
                           (v8/*: any*/),
                           (v31/*: any*/),
@@ -1422,16 +1500,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "dd1054dd515863e1fb4f39c34f61cc59",
+    "cacheID": "438d0c983b86a656b361ddaa4308dd45",
     "id": null,
     "metadata": {},
     "name": "NotificationQuery",
     "operationKind": "query",
-    "text": "query NotificationQuery(\n  $internalID: String!\n) {\n  me {\n    notification(id: $internalID) {\n      ...AlertNotification_notification\n      ...ArtworkPublishedNotification_notification\n      ...ArticleFeaturedArtistNotification_notification\n      ...PartnerOfferCreatedNotification_notification\n      ...PartnerShowOpenedNotification_notification\n      ...ViewingRoomPublishedNotification_notification\n      id\n      internalID\n      notificationType\n      targetHref\n    }\n    id\n  }\n}\n\nfragment AlertNotification_notification on Notification {\n  artworksConnection(first: 10) {\n    ...NotificationArtworkList_artworksConnection\n    totalCount\n  }\n  headline\n  item {\n    __typename\n    ... on AlertNotificationItem {\n      alert {\n        internalID\n        artists {\n          name\n          slug\n          id\n        }\n        labels {\n          displayValue\n        }\n        id\n      }\n    }\n  }\n  notificationType\n  ...NotificationTypeLabel_notification\n}\n\nfragment ArticleFeaturedArtistNotification_notification on Notification {\n  headline\n  item {\n    __typename\n    ... on ArticleFeaturedArtistNotificationItem {\n      article {\n        href\n        thumbnailTitle\n        byline\n        publishedAt(format: \"MMM D, YYYY\")\n        thumbnailImage {\n          cropped(width: 910, height: 607) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n      artistsConnection(first: 10) {\n        edges {\n          node {\n            name\n            slug\n            internalID\n            href\n            id\n          }\n        }\n      }\n    }\n  }\n  notificationType\n  ...NotificationTypeLabel_notification\n}\n\nfragment ArtworkPublishedNotification_notification on Notification {\n  artworksConnection(first: 10) {\n    ...NotificationArtworkList_artworksConnection\n    totalCount\n  }\n  headline\n  item {\n    __typename\n    ... on ArtworkPublishedNotificationItem {\n      artists {\n        internalID\n        isFollowed\n        name\n        slug\n        id\n      }\n    }\n  }\n  notificationType\n  ...NotificationTypeLabel_notification\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  saleArtwork {\n    lotID\n    id\n  }\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    primaryLabel\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...PrimaryLabelLine_artwork\n  ...BidTimerLine_artwork\n  ...HoverDetails_artwork\n}\n\nfragment ExclusiveAccessBadge_artwork on Artwork {\n  isUnlisted\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n  sale {\n    isOpen\n    id\n  }\n}\n\nfragment NotificationArtworkList_artworksConnection on ArtworkConnection {\n  edges {\n    node {\n      ...NotificationArtwork_artwork\n      internalID\n      id\n    }\n  }\n}\n\nfragment NotificationArtwork_artwork on Artwork {\n  ...ExclusiveAccessBadge_artwork\n  ...Metadata_artwork\n  artistNames\n  href\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n  title\n}\n\nfragment NotificationPartnerShow_show on Show {\n  location {\n    city\n    id\n  }\n  exhibitionPeriod\n  startAt\n  endAt\n  name\n  description\n  href\n  coverImage {\n    cropped(width: 600, height: 450, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n  slug\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n\nfragment NotificationViewingRoom_viewingRoom on ViewingRoom {\n  title\n  href\n  introStatement\n  image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n\nfragment NotificationViewingRoomsList_viewingRoomsConnection on ViewingRoomsConnection {\n  edges {\n    node {\n      ...NotificationViewingRoom_viewingRoom\n      internalID\n    }\n  }\n}\n\nfragment PartnerOfferArtwork_artwork on Artwork {\n  internalID\n  slug\n  href\n  title\n  artistNames\n  price\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n  partner(shallow: true) {\n    profile {\n      icon {\n        url(version: \"square140\")\n      }\n      id\n    }\n    id\n  }\n  collectorSignals {\n    partnerOffer {\n      endAt\n      id\n    }\n    increasedInterest\n    curatorsPick\n  }\n  ...Metadata_artwork\n}\n\nfragment PartnerOfferCreatedNotification_notification on Notification {\n  headline\n  targetHref\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      partnerOffer {\n        internalID\n        endAt\n        isAvailable\n        note\n        source\n        priceWithDiscount {\n          display\n        }\n        id\n      }\n    }\n  }\n  offerArtworksConnection: artworksConnection(first: 1) {\n    edges {\n      node {\n        ...PartnerOfferArtwork_artwork\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerShowOpenedNotification_notification on Notification {\n  headline\n  item {\n    __typename\n    ... on ShowOpenedNotificationItem {\n      partner {\n        href\n        name\n        profile {\n          internalID\n          id\n        }\n        id\n      }\n      showsConnection {\n        edges {\n          node {\n            internalID\n            ...NotificationPartnerShow_show\n            id\n          }\n        }\n      }\n    }\n  }\n  ...NotificationTypeLabel_notification\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n}\n\nfragment ViewingRoomPublishedNotification_notification on Notification {\n  headline\n  item {\n    __typename\n    ... on ViewingRoomPublishedNotificationItem {\n      partner {\n        name\n        href\n        profile {\n          internalID\n          id\n        }\n        id\n      }\n      viewingRoomsConnection(first: 10) {\n        ...NotificationViewingRoomsList_viewingRoomsConnection\n      }\n    }\n  }\n  notificationType\n  ...NotificationTypeLabel_notification\n}\n"
+    "text": "query NotificationQuery(\n  $internalID: String!\n) {\n  me {\n    notification(id: $internalID) {\n      ...AlertNotification_notification\n      ...ArtworkPriceDroppedNotification_notification\n      ...ArtworkPublishedNotification_notification\n      ...ArticleFeaturedArtistNotification_notification\n      ...PartnerOfferCreatedNotification_notification\n      ...PartnerShowOpenedNotification_notification\n      ...ViewingRoomPublishedNotification_notification\n      id\n      internalID\n      notificationType\n      targetHref\n    }\n    id\n  }\n}\n\nfragment AlertNotification_notification on Notification {\n  artworksConnection(first: 10) {\n    ...NotificationArtworkList_artworksConnection\n    totalCount\n  }\n  headline\n  item {\n    __typename\n    ... on AlertNotificationItem {\n      alert {\n        internalID\n        artists {\n          name\n          slug\n          id\n        }\n        labels {\n          displayValue\n        }\n        id\n      }\n    }\n  }\n  notificationType\n  ...NotificationTypeLabel_notification\n}\n\nfragment ArticleFeaturedArtistNotification_notification on Notification {\n  headline\n  item {\n    __typename\n    ... on ArticleFeaturedArtistNotificationItem {\n      article {\n        href\n        thumbnailTitle\n        byline\n        publishedAt(format: \"MMM D, YYYY\")\n        thumbnailImage {\n          cropped(width: 910, height: 607) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n      artistsConnection(first: 10) {\n        edges {\n          node {\n            name\n            slug\n            internalID\n            href\n            id\n          }\n        }\n      }\n    }\n  }\n  notificationType\n  ...NotificationTypeLabel_notification\n}\n\nfragment ArtworkPriceDroppedNotification_notification on Notification {\n  headline\n  item {\n    __typename\n    ... on ArtworkPriceDroppedNotificationItem {\n      alert {\n        internalID\n        artists {\n          name\n          slug\n          id\n        }\n        labels {\n          displayValue\n        }\n        id\n      }\n      priceDropsConnection(first: 100) {\n        ...PriceDropsList_priceDropsConnection\n      }\n    }\n  }\n  notificationType\n  ...NotificationTypeLabel_notification\n}\n\nfragment ArtworkPublishedNotification_notification on Notification {\n  artworksConnection(first: 10) {\n    ...NotificationArtworkList_artworksConnection\n    totalCount\n  }\n  headline\n  item {\n    __typename\n    ... on ArtworkPublishedNotificationItem {\n      artists {\n        internalID\n        isFollowed\n        name\n        slug\n        id\n      }\n    }\n  }\n  notificationType\n  ...NotificationTypeLabel_notification\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  saleArtwork {\n    lotID\n    id\n  }\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    primaryLabel\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...PrimaryLabelLine_artwork\n  ...BidTimerLine_artwork\n  ...HoverDetails_artwork\n}\n\nfragment ExclusiveAccessBadge_artwork on Artwork {\n  isUnlisted\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n  sale {\n    isOpen\n    id\n  }\n}\n\nfragment NotificationArtworkList_artworksConnection on ArtworkConnection {\n  edges {\n    node {\n      ...NotificationArtwork_artwork\n      internalID\n      id\n    }\n  }\n}\n\nfragment NotificationArtwork_artwork on Artwork {\n  ...ExclusiveAccessBadge_artwork\n  ...Metadata_artwork\n  artistNames\n  href\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n  title\n}\n\nfragment NotificationPartnerShow_show on Show {\n  location {\n    city\n    id\n  }\n  exhibitionPeriod\n  startAt\n  endAt\n  name\n  description\n  href\n  coverImage {\n    cropped(width: 600, height: 450, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n  slug\n}\n\nfragment NotificationTypeLabel_notification on Notification {\n  notificationType\n  publishedAt(format: \"RELATIVE\")\n}\n\nfragment NotificationViewingRoom_viewingRoom on ViewingRoom {\n  title\n  href\n  introStatement\n  image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n\nfragment NotificationViewingRoomsList_viewingRoomsConnection on ViewingRoomsConnection {\n  edges {\n    node {\n      ...NotificationViewingRoom_viewingRoom\n      internalID\n    }\n  }\n}\n\nfragment PartnerOfferArtwork_artwork on Artwork {\n  internalID\n  slug\n  href\n  title\n  artistNames\n  price\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n  partner(shallow: true) {\n    profile {\n      icon {\n        url(version: \"square140\")\n      }\n      id\n    }\n    id\n  }\n  collectorSignals {\n    partnerOffer {\n      endAt\n      id\n    }\n    increasedInterest\n    curatorsPick\n  }\n  ...Metadata_artwork\n}\n\nfragment PartnerOfferCreatedNotification_notification on Notification {\n  headline\n  targetHref\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      partnerOffer {\n        internalID\n        endAt\n        isAvailable\n        note\n        source\n        priceWithDiscount {\n          display\n        }\n        id\n      }\n    }\n  }\n  offerArtworksConnection: artworksConnection(first: 1) {\n    edges {\n      node {\n        ...PartnerOfferArtwork_artwork\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerShowOpenedNotification_notification on Notification {\n  headline\n  item {\n    __typename\n    ... on ShowOpenedNotificationItem {\n      partner {\n        href\n        name\n        profile {\n          internalID\n          id\n        }\n        id\n      }\n      showsConnection {\n        edges {\n          node {\n            internalID\n            ...NotificationPartnerShow_show\n            id\n          }\n        }\n      }\n    }\n  }\n  ...NotificationTypeLabel_notification\n}\n\nfragment PriceDrop_priceDrop on PriceDrop {\n  oldPrice\n  newPrice\n  artwork {\n    ...ExclusiveAccessBadge_artwork\n    ...Metadata_artwork\n    artistNames\n    href\n    image {\n      src: url(version: [\"larger\", \"large\"])\n      width\n      height\n    }\n    title\n    id\n  }\n}\n\nfragment PriceDropsList_priceDropsConnection on PriceDropConnection {\n  edges {\n    node {\n      ...PriceDrop_priceDrop\n      artwork {\n        internalID\n        ...NotificationArtwork_artwork\n        id\n      }\n    }\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n}\n\nfragment ViewingRoomPublishedNotification_notification on Notification {\n  headline\n  item {\n    __typename\n    ... on ViewingRoomPublishedNotificationItem {\n      partner {\n        name\n        href\n        profile {\n          internalID\n          id\n        }\n        id\n      }\n      viewingRoomsConnection(first: 10) {\n        ...NotificationViewingRoomsList_viewingRoomsConnection\n      }\n    }\n  }\n  notificationType\n  ...NotificationTypeLabel_notification\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c5aad69e50ff30717ac6b135b8b412c6";
+(node as any).hash = "b6e93ddd273292958cf4a4d45a4dd46c";
 
 export default node;
