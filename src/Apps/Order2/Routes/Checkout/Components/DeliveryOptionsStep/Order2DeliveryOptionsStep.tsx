@@ -4,20 +4,58 @@ import {
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import type { Order2DeliveryOptionsStep_order$key } from "__generated__/Order2DeliveryOptionsStep_order.graphql"
+import { graphql, useFragment } from "react-relay"
 
-interface Order2DeliveryOptionsStepProps {}
+type Order2DeliveryOptionsStepProps = {
+  order: Order2DeliveryOptionsStep_order$key
+}
 
 export const Order2DeliveryOptionsStep: React.FC<
   Order2DeliveryOptionsStepProps
-> = () => {
+> = ({ order }) => {
   const { steps } = useCheckoutContext()
+  const orderData = useFragment(FRAGMENT, order)
 
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.DELIVERY_OPTION,
   )?.state
 
-  if (stepState !== CheckoutStepState.UPCOMING) {
+  if (stepState === CheckoutStepState.ACTIVE) {
     return null
+  }
+
+  if (stepState === CheckoutStepState.COMPLETED) {
+    const selectedFulfillmentOptionType =
+      orderData.selectedFulfillmentOption?.type
+
+    const isFlatShipping = ["DOMESTIC_FLAT", "INTERNATIONAL_FLAT"].includes(
+      selectedFulfillmentOptionType || "",
+    )
+    const shippingLabel: string = isFlatShipping
+      ? "Flat rate shipping"
+      : "Shipping somehow"
+    return (
+      <Flex flexDirection="column" backgroundColor="mono0">
+        <Box py={2} px={[2, 4]} data-testid="DeliveryOptionsStep">
+          <Flex flexDirection="column">
+            <Text
+              variant={["sm-display", "md"]}
+              fontWeight={["bold", "normal"]}
+              color="mono100"
+            >
+              Shipping method
+            </Text>
+            <Text variant={["xs", "xs", "sm"]} color="mono60">
+              {[
+                shippingLabel,
+                orderData.selectedFulfillmentOption?.amount?.display,
+              ].join(" - ")}
+            </Text>
+          </Flex>
+        </Box>
+      </Flex>
+    )
   }
 
   return (
@@ -39,3 +77,16 @@ export const Order2DeliveryOptionsStep: React.FC<
     </Flex>
   )
 }
+
+const FRAGMENT = graphql`
+  fragment Order2DeliveryOptionsStep_order on Order {
+    internalID
+    selectedFulfillmentOption {
+      type
+
+      amount {
+        display
+      }
+    }
+  }
+`

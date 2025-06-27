@@ -76,6 +76,22 @@ export const calculateCheckoutSteps = ({
       }
       deliveryOptionStep.state = CheckoutStepState.HIDDEN
     }
+
+    if (
+      order.selectedFulfillmentOption.type === "DOMESTIC_FLAT" ||
+      order.selectedFulfillmentOption.type === "INTERNATIONAL_FLAT"
+    ) {
+      const deliveryOptionStep = steps.find(
+        step => step.name === CheckoutStepName.DELIVERY_OPTION,
+      )
+      if (!deliveryOptionStep) {
+        logger.error(
+          "Delivery option step not found in the steps array. This should not happen.",
+        )
+        return steps
+      }
+      deliveryOptionStep.state = CheckoutStepState.COMPLETED
+    }
   }
 
   // mark payment step finished if we have a confirmation tokens stored

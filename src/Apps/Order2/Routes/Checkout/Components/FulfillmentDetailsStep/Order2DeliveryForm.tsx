@@ -120,6 +120,10 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           setFulfillmentOptionResult.setOrderFulfillmentOption?.orderOrError,
         ).order
 
+        // TODO: This is the wrong place to update the steps from bc it requires passing
+        // the order from the result and the result has to contain specific values to calculate the steps.
+        // but then you have closure and hooks issues to deal with. maybe the
+        // context should be calling this when things change. (but there is also the hidden step for pickup case which could get screwy)
         updateCheckoutSteps({
           order: updatedFulfillmentOptionOrder,
           context: checkoutContext,
