@@ -1,7 +1,9 @@
-import { RedirectException } from "found"
 import { order2Routes } from "../order2Routes"
+import { Resolver } from "found-relay"
+import { getFarceResult } from "found/server"
+import type { FarceRedirectResult } from "found/server"
+import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 
-// Mock the required dependencies
 jest.mock("Apps/Order/redirects", () => ({
   newCheckoutEnabled: jest.fn(() => true),
   newDetailsEnabled: jest.fn(() => true),
@@ -14,68 +16,67 @@ jest.mock("Utils/logger", () => ({
   })),
 }))
 
+const featureFlags = {
+  isEnabled: jest.fn(() => false),
+}
+
 describe("order2Routes redirect logic", () => {
-  const mockMatch = {
-    context: {
-      featureFlags: {},
-    },
-    location: {
-      pathname: "/orders2/test-order-id/checkout",
-    },
-  }
+  async function render(url: string, mockData): Promise<FarceRedirectResult> {
+    const environment = createMockEnvironment()
 
-  const mockViewer = {
-    me: {
-      order: {
-        internalID: "test-order-id",
-        mode: "BUY",
-        buyerState: "INCOMPLETE",
+    environment.mock.queueOperationResolver(operation =>
+      MockPayloadGenerator.generate(operation, mockData as any),
+    )
+
+    const result = await getFarceResult({
+      render: props => {
+        return <div>hello</div>
       },
-    },
-  }
-
-  describe("checkout route redirects", () => {
-    it("redirects to details page when buyerState is not INCOMPLETE", () => {
-      const checkoutRoute = order2Routes[0].children?.[0] // checkout route
-      const renderFn = checkoutRoute?.render
-
-      const propsWithSubmittedOrder = {
-        viewer: {
-          ...mockViewer,
-          me: {
-            ...mockViewer.me,
-            order: {
-              ...mockViewer.me.order,
-              buyerState: "SUBMITTED",
-            },
-          },
-        },
-        match: mockMatch,
-      }
-
-      expect(() => {
-        renderFn?.({
-          props: propsWithSubmittedOrder,
-          Component: jest.fn(),
-        })
-      }).toThrow(RedirectException)
+      resolver: new Resolver(environment),
+      routeConfig: order2Routes,
+      url,
+      matchContext: {
+        featureFlags,
+      },
     })
 
-    it("does not redirect when buyerState is INCOMPLETE", () => {
-      const checkoutRoute = order2Routes[0].children?.[0] // checkout route
-      const renderFn = checkoutRoute?.render
+    return result as FarceRedirectResult
+  }
 
-      const propsWithIncompleteOrder = {
-        viewer: mockViewer,
-        match: mockMatch,
+  const mockResolver = data => ({
+    Viewer: () => ({
+      me: {
+        order: {
+          internalID: "test-order-id",
+          mode: "BUY",
+          ...data,
+        },
+      },
+    }),
+  })
+
+  describe("checkout route redirects", () => {
+    it("redirects to details page when buyerState is not INCOMPLETE", async () => {
+      const res = await render(
+        "/orders2/test-order-id/checkout",
+        mockResolver({
+          buyerState: "SUBMITTED",
+        }),
+      )
+      expect(res.redirect.url).toMatch(/\/orders2\/.*\/details/)
+    })
+
+    it("does not redirect when buyerState is INCOMPLETE", async () => {
+      try {
+        await render(
+          "/orders2/test-order-id/checkout",
+          mockResolver({
+            buyerState: "INCOMPLETE",
+          }),
+        )
+      } catch (error) {
+        expect(error.message).toBe("No redirect found for order")
       }
-
-      expect(() => {
-        renderFn?.({
-          props: propsWithIncompleteOrder,
-          Component: jest.fn(),
-        })
-      }).not.toThrow()
     })
   })
 })
