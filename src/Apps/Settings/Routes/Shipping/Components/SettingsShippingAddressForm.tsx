@@ -242,7 +242,7 @@ export const SettingsShippingAddressForm: FC<
                 <Column span={6}>
                   <Input
                     name="attributes.addressLine1"
-                    title="Address Line 1"
+                    title="Street address"
                     placeholder="Add address"
                     autoComplete="address-line1"
                     value={values.attributes.addressLine1}

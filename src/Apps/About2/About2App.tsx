@@ -11,6 +11,7 @@ import { AboutOurStory } from "Apps/About2/Components/AboutOurStory"
 import { AboutOurTeam } from "Apps/About2/Components/AboutOurTeam"
 import { AboutPress } from "Apps/About2/Components/AboutPress"
 import { AboutStats } from "Apps/About2/Components/AboutStats"
+import { AboutTagline } from "Apps/About2/Components/AboutTagline"
 import { AboutWhatWeDo } from "Apps/About2/Components/AboutWhatWeDo"
 import { MetaTags } from "Components/MetaTags"
 
@@ -45,6 +46,8 @@ export const About2App: React.FC<React.PropsWithChildren<unknown>> = () => {
 
       <Stack gap={12}>
         <AboutMissionAndVision />
+
+        <AboutTagline />
 
         <AboutOurStory />
 

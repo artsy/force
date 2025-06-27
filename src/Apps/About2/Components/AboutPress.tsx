@@ -6,6 +6,7 @@ import {
   Image,
   Stack,
   Text,
+  useTheme,
 } from "@artsy/palette"
 import {
   AboutPressShelf,
@@ -16,6 +17,8 @@ import { RouterLink } from "System/Components/RouterLink"
 import { Suspense } from "react"
 
 export const AboutPress = () => {
+  const { theme } = useTheme()
+
   return (
     <AboutSection id="press">
       <GridColumns gridRowGap={4}>
@@ -42,7 +45,12 @@ export const AboutPress = () => {
                   key={name}
                   src={src}
                   alt={name}
-                  style={{ aspectRatio: `${width} / ${height}` }}
+                  style={{
+                    aspectRatio: `${width} / ${height}`,
+                    ...(theme.name === "dark" && {
+                      filter: "invert(1) hue-rotate(180deg)",
+                    }),
+                  }}
                   loading="lazy"
                 />
               ))}

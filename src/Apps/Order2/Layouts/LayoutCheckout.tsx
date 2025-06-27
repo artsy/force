@@ -1,18 +1,16 @@
-import { Box, Flex } from "@artsy/palette"
+import { Box, Flex, Spacer } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { AppToasts } from "Apps/Components/AppToasts"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import type { BaseLayoutProps } from "Apps/Components/Layouts"
 import { NavBarPrimaryLogo } from "Components/NavBar/NavBarPrimaryLogo"
 import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { FC } from "react"
 
 export const LayoutCheckout: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
   children,
 }) => {
-  const { match } = useRouter()
   const { isEigen } = useSystemContext()
 
   return (
@@ -26,18 +24,13 @@ export const LayoutCheckout: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
         bg="mono0"
         zIndex={1}
       >
-        <HorizontalPadding>
-          <RouterLink
-            onClick={event => {
-              if (match.location.pathname.includes("/order") && isEigen) {
-                event.preventDefault()
-              }
-            }}
-            to="/"
-          >
-            <NavBarPrimaryLogo />
-          </RouterLink>
-        </HorizontalPadding>
+        {!isEigen && (
+          <HorizontalPadding>
+            <RouterLink to="/">
+              <NavBarPrimaryLogo />
+            </RouterLink>
+          </HorizontalPadding>
+        )}
       </Box>
 
       <Flex
@@ -51,6 +44,8 @@ export const LayoutCheckout: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
         <AppContainer as="main" id="main" flex={1}>
           {children}
         </AppContainer>
+
+        {isEigen && <Spacer y={2} />}
       </Flex>
     </>
   )

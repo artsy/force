@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<48473a8b93685c294ef1871b20a6b9b6>>
+ * @generated SignedSource<<4d31e3da3a0e3cffe24b0390dad916b0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -344,7 +344,7 @@ return {
                         "storageKey": null
                       },
                       {
-                        "alias": null,
+                        "alias": "thumbnail",
                         "args": null,
                         "concreteType": "Image",
                         "kind": "LinkedField",
@@ -357,12 +357,14 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 138
+                                "value": 200
                               },
                               {
                                 "kind": "Literal",
-                                "name": "width",
-                                "value": 185
+                                "name": "version",
+                                "value": [
+                                  "square"
+                                ]
                               }
                             ],
                             "concreteType": "ResizedImageUrl",
@@ -378,7 +380,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "resized(height:138,width:185)"
+                            "storageKey": "resized(height:200,version:[\"square\"])"
                           }
                         ],
                         "storageKey": null
@@ -402,7 +404,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "dc825fdb0a134524efbc712772bbd63e",
+    "cacheID": "1a2a1a78dbf8959d033ff57f39ee4c41",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -448,19 +450,19 @@ return {
         "me.order.lineItems.artworkVersion.artistNames": (v8/*: any*/),
         "me.order.lineItems.artworkVersion.date": (v8/*: any*/),
         "me.order.lineItems.artworkVersion.id": (v7/*: any*/),
-        "me.order.lineItems.artworkVersion.image": {
+        "me.order.lineItems.artworkVersion.thumbnail": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Image"
         },
-        "me.order.lineItems.artworkVersion.image.resized": {
+        "me.order.lineItems.artworkVersion.thumbnail.resized": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "me.order.lineItems.artworkVersion.image.resized.url": (v10/*: any*/),
+        "me.order.lineItems.artworkVersion.thumbnail.resized.url": (v10/*: any*/),
         "me.order.lineItems.artworkVersion.title": (v8/*: any*/),
         "me.order.lineItems.id": (v7/*: any*/),
         "me.order.pricingBreakdownLines": {
@@ -495,7 +497,7 @@ return {
     },
     "name": "Order2CollapsibleOrderSummaryTestQuery",
     "operationKind": "query",
-    "text": "query Order2CollapsibleOrderSummaryTestQuery {\n  me {\n    order(id: \"123\") {\n      ...Order2CollapsibleOrderSummary_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n\nfragment Order2CollapsibleOrderSummary_order on Order {\n  ...Order2CheckoutPricingBreakdown_order\n  source\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      image {\n        resized(width: 185, height: 138) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query Order2CollapsibleOrderSummaryTestQuery {\n  me {\n    order(id: \"123\") {\n      ...Order2CollapsibleOrderSummary_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n\nfragment Order2CollapsibleOrderSummary_order on Order {\n  ...Order2CheckoutPricingBreakdown_order\n  source\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      thumbnail: image {\n        resized(height: 200, version: [\"square\"]) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

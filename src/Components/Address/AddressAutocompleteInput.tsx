@@ -332,7 +332,7 @@ export const AddressAutocompleteInput = ({
       placeholder={placeholder}
       loading={state.loading || state.fetching}
       options={autocompleteOptions}
-      title="Address line 1"
+      title="Street address"
       value={value}
       error={error}
       onChange={event => {

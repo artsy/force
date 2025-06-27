@@ -384,7 +384,7 @@ const FulfillmentDetailsFormLayout = (
                   tabIndex={tabbableIf("new_address")}
                   name="attributes.addressLine1"
                   placeholder="Street address"
-                  title="Address line 1"
+                  title="Street address"
                   value={values.attributes.addressLine1}
                   onChange={withBackToFulfillmentDetails(handleChange)}
                   onSelect={option => {
