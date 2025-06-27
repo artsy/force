@@ -48,8 +48,8 @@ const Order2CollapsibleOrderSummarySkeleton: React.FC<
   Order2CollapsibleOrderSummarySkeletonProps
 > = props => {
   return (
-    <GridColumns py={[0, 4]} px={[0, 0, 4]}>
-      <Column span={[12, 12, 6]} start={[1, 1, 2]}>
+    <GridColumns py={[0, 4]} px={[0, 4]}>
+      <Column span={[12, 7, 6, 5]} start={[1, 1, 2, 3]}>
         <Stack gap={1}>
           <Box display={["block", "block", "none"]}>
             <Flex height={60} py={1} px={2} backgroundColor="mono0">
@@ -82,9 +82,9 @@ const Order2CollapsibleOrderSummarySkeleton: React.FC<
       </Column>
 
       <Column
-        span={[12, 12, 4, 3]}
-        start={[1, 1, 8, 8]}
-        display={["none", "none", "block"]}
+        span={[12, 5, 4, 3]}
+        start={[1, 8, 8, 8]}
+        display={["none", "block"]}
       >
         {/* Order summary skeleton for desktop */}
         <Box backgroundColor="mono0" p={2}>

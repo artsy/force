@@ -18,7 +18,7 @@ export const LayoutCheckout: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
       <AppToasts />
 
       <Box
-        position={["initial", "initial", "sticky"]}
+        position={["initial", "sticky"]}
         py={1}
         top={0}
         bg="mono0"
