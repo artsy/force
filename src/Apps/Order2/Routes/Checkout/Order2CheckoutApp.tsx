@@ -103,14 +103,14 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
       {expressCheckoutSubmitting && <SubmittingOrderSpinner />}
       <GridColumns
         py={[0, 4]}
-        px={[0, 0, 4]}
+        px={[0, 4]}
         style={{
           display: isLoading || expressCheckoutSubmitting ? "none" : "grid",
         }}
       >
-        <Column span={[12, 12, 6]} start={[1, 1, 2]}>
+        <Column span={[12, 7, 6, 5]} start={[1, 1, 2, 3]}>
           <Stack gap={1}>
-            <Box display={["block", "block", "none"]}>
+            <Box display={["block", "none"]}>
               <Order2CollapsibleOrderSummary order={order} />
             </Box>
             {isExpressCheckoutEligible && (
@@ -120,7 +120,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
             <Order2DeliveryOptionsStep />
             <Order2PaymentStep order={order} />
           </Stack>
-          <Box display={["block", "block", "none"]}>
+          <Box display={["block", "none"]}>
             <Spacer y={1} />
             <Order2ReviewStep order={order} />
             <Order2HelpLinksWithInquiry
@@ -132,11 +132,11 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         </Column>
 
         <Column
-          span={[12, 12, 4, 3]}
-          start={[1, 1, 8, 8]}
-          display={["none", "none", "block"]}
+          span={[12, 5, 4, 3]}
+          start={[1, 8, 8, 8]}
+          display={["none", "block"]}
         >
-          <Box position={["initial", "initial", "fixed"]}>
+          <Box position={["initial", "fixed"]}>
             <Order2ReviewStep order={order} />
             <Separator as="hr" />
             <Order2HelpLinksWithInquiry
