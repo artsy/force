@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<893861d5559ab549165d997070e56ee0>>
+ * @generated SignedSource<<c6c666348ebdc99f234e20fcc729e287>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -80,11 +80,13 @@ v7 = {
   "name": "internalID",
   "storageKey": null
 },
-v8 = {
-  "kind": "Literal",
-  "name": "format",
-  "value": "HTML"
-},
+v8 = [
+  {
+    "kind": "Literal",
+    "name": "format",
+    "value": "HTML"
+  }
+],
 v9 = [
   {
     "alias": null,
@@ -357,14 +359,7 @@ return {
           },
           {
             "alias": null,
-            "args": [
-              (v8/*: any*/),
-              {
-                "kind": "Literal",
-                "name": "partnerBio",
-                "value": false
-              }
-            ],
+            "args": (v8/*: any*/),
             "concreteType": "ArtistBlurb",
             "kind": "LinkedField",
             "name": "biographyBlurb",
@@ -376,16 +371,9 @@ return {
                 "kind": "ScalarField",
                 "name": "text",
                 "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "credit",
-                "storageKey": null
               }
             ],
-            "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
+            "storageKey": "biographyBlurb(format:\"HTML\")"
           },
           {
             "alias": null,
@@ -418,9 +406,7 @@ return {
               },
               {
                 "alias": null,
-                "args": [
-                  (v8/*: any*/)
-                ],
+                "args": (v8/*: any*/),
                 "kind": "ScalarField",
                 "name": "description",
                 "storageKey": "description(format:\"HTML\")"
@@ -527,12 +513,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5c456c5ab7bae2242c9525875ef81409",
+    "cacheID": "fca9062ad29b9a4932d3ea8558cdfd87",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ArtistAppQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArtistAppQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistApp_artist\n    id\n  }\n}\n\nfragment ArtistApp_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistHeader_artist\n  internalID\n  slug\n  name\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML, partnerBio: false) {\n    text\n    credit\n  }\n  insights {\n    kind\n    ...ArtistCareerHighlight_insight\n  }\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    title\n    imageTitle\n    href\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  slug\n  name\n  nationality\n  birthday\n  deathday\n  href\n  isInSeoExperiment\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  alternateNames\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  meta(page: ABOUT) {\n    title\n    description\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query artistRoutes_ArtistAppQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistApp_artist\n    id\n  }\n}\n\nfragment ArtistApp_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistHeader_artist\n  internalID\n  slug\n  name\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML) {\n    text\n  }\n  insights {\n    kind\n    ...ArtistCareerHighlight_insight\n  }\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    title\n    imageTitle\n    href\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  slug\n  name\n  nationality\n  birthday\n  deathday\n  href\n  isInSeoExperiment\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  alternateNames\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  meta(page: ABOUT) {\n    title\n    description\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
