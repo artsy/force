@@ -33,7 +33,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
         <RouterLink flex={0} to={`/artwork/${artwork?.slug}`} target="_blank">
           <Image
             mr={1}
-            src={artworkVersion?.image?.resized?.url}
+            src={artworkVersion?.thumbnail?.resized?.url}
             alt={artworkVersion?.title as string}
             width={40}
             height={40}
@@ -104,8 +104,8 @@ const FRAGMENT = graphql`
         title
         artistNames
         date
-        image {
-          resized(width: 185, height: 138) {
+        thumbnail: image {
+          resized(height: 200, version: ["square"]) {
             url
           }
         }
