@@ -181,7 +181,7 @@ const extractLineItemMetadata = (
   lineItem: NonNullable<Order2ReviewStep_order$data["lineItems"][number]>,
 ) => {
   const { artwork, artworkVersion, artworkOrEditionSet } = lineItem
-  const { title, artistNames, date, image } = artworkVersion || {}
+
   const isArtworkOrEdition =
     artworkOrEditionSet &&
     (artworkOrEditionSet.__typename === "Artwork" ||
@@ -194,12 +194,12 @@ const extractLineItemMetadata = (
 
   return {
     slug: artwork?.slug,
-    image: image,
+    image: artworkVersion?.image,
+    title: artworkVersion?.title,
+    artistNames: artworkVersion?.artistNames,
+    date: artworkVersion?.date,
     price,
     dimensions,
-    title,
-    artistNames,
-    date,
     attributionClass,
   }
 }
