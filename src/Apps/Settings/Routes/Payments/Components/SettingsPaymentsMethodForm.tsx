@@ -197,7 +197,7 @@ export const SettingsPaymentsMethodForm: FC<
                 <Column span={6}>
                   <Input
                     name="addressLine1"
-                    title="Address Line 1"
+                    title="Street address"
                     placeholder="Add address"
                     autoComplete="address-line1"
                     value={values.addressLine1}

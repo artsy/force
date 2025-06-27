@@ -211,7 +211,7 @@ export const AddressForm: React.FC<
             flip={false}
             id="AddressForm_addressLine1"
             placeholder="Street address"
-            title="Address line 1"
+            title="Street address"
             value={value?.addressLine1}
             onChange={changeEventHandler("addressLine1")}
             options={autocompleteOptions}
@@ -246,7 +246,7 @@ export const AddressForm: React.FC<
             tabIndex={tabIndex}
             id="AddressForm_addressLine1"
             placeholder="Street address"
-            title="Address line 1"
+            title="Street address"
             value={value?.addressLine1}
             onChange={changeEventHandler("addressLine1")}
             error={getError("addressLine1")}
