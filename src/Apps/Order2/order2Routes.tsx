@@ -59,6 +59,7 @@ export const order2Routes: RouteProps[] = [
                 order(id: $orderID) {
                   internalID
                   mode
+                  buyerState
                 }
               }
               ...Order2CheckoutRoute_viewer @arguments(orderID: $orderID)
@@ -81,6 +82,11 @@ export const order2Routes: RouteProps[] = [
           if (!order) {
             logger.warn("No order found - checkout page")
             return <ErrorPage code={404} />
+          }
+
+          if (order.buyerState !== "INCOMPLETE") {
+            const redirectUrl = `/orders2/${order.internalID}/details`
+            throw new RedirectException(redirectUrl)
           }
 
           if (!newCheckoutEnabled({ order, featureFlags })) {

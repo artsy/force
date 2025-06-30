@@ -47,8 +47,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const hasImage = isValidImage(image)
   const altText =
     artist.coverArtwork?.imageTitle ?? `Artwork by ${artist.name!}`
-  const hasPartnerSuppliedBio = !!artist.biographyBlurb?.credit
-  const hasBio = artist.biographyBlurb?.text && !hasPartnerSuppliedBio
+  const hasBio = artist.biographyBlurb?.text
   const hasVerifiedRepresentatives = artist?.verifiedRepresentatives?.length > 0
   const hasInsights = artist.insights.length > 0
   const hasRightDetails = hasVerifiedRepresentatives || hasInsights
@@ -252,9 +251,8 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         counts {
           follows
         }
-        biographyBlurb(format: HTML, partnerBio: false) {
+        biographyBlurb(format: HTML) {
           text
-          credit
         }
         insights {
           kind

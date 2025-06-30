@@ -1,5 +1,4 @@
-import { Spacer, Stack } from "@artsy/palette"
-import { AboutCareers } from "Apps/About2/Components/AboutCareers"
+import { Box, Spacer, Stack } from "@artsy/palette"
 import { AboutContact } from "Apps/About2/Components/AboutContact"
 import { AboutDownload } from "Apps/About2/Components/AboutDownload"
 import { AboutHeader } from "Apps/About2/Components/AboutHeader"
@@ -11,6 +10,7 @@ import { AboutOurStory } from "Apps/About2/Components/AboutOurStory"
 import { AboutOurTeam } from "Apps/About2/Components/AboutOurTeam"
 import { AboutPress } from "Apps/About2/Components/AboutPress"
 import { AboutStats } from "Apps/About2/Components/AboutStats"
+import { AboutTagline } from "Apps/About2/Components/AboutTagline"
 import { AboutWhatWeDo } from "Apps/About2/Components/AboutWhatWeDo"
 import { MetaTags } from "Components/MetaTags"
 
@@ -46,15 +46,17 @@ export const About2App: React.FC<React.PropsWithChildren<unknown>> = () => {
       <Stack gap={12}>
         <AboutMissionAndVision />
 
+        <AboutTagline />
+
         <AboutOurStory />
 
         <AboutWhatWeDo />
 
-        <AboutOurTeam />
+        <Box>
+          <AboutOurTeam />
 
-        <AboutCareers />
-
-        <AboutDownload />
+          <AboutDownload />
+        </Box>
 
         <AboutPress />
 
