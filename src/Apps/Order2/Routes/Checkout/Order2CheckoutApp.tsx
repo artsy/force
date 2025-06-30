@@ -136,7 +136,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           start={[1, 8, 8, 8]}
           display={["none", "block"]}
         >
-          <Box position={["initial", "fixed"]}>
+          <Box position={["initial", "sticky"]} top="100px">
             <Order2ReviewStep order={order} />
             <Separator as="hr" />
             <Order2HelpLinksWithInquiry

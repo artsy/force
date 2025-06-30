@@ -35,7 +35,6 @@ export const LayoutCheckout: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
 
       <Flex
         width="100%"
-        overflowX="hidden"
         minHeight="100vh"
         flexDirection="column"
         backgroundColor="mono5"
