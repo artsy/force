@@ -20,7 +20,7 @@ import {
 import { Media } from "Utils/Responsive"
 import { resized } from "Utils/resized"
 
-const IGNORE_PATHS = ["/meet-your-new-art-advisor"]
+const IGNORE_PATHS = ["/meet-your-new-art-advisor", "/about2"]
 
 const APP_BANNER_SRC =
   "https://files.artsy.net/images/new-works-for-you-footer.jpg"
