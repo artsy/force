@@ -1,3 +1,4 @@
+import { calculateCheckoutSteps } from "Apps/Order2/Routes/Checkout/CheckoutContext/calculateCheckoutSteps"
 import type {
   CheckoutLoadingError,
   CheckoutStep,
@@ -158,9 +159,14 @@ const ORDER_FRAGMENT = graphql`
     mode
     source
     buyerStateExpiresAt
+
     selectedFulfillmentOption {
       type
     }
+    fulfillmentDetails {
+      __typename
+    }
+
     lineItems {
       artworkVersion {
         internalID
@@ -407,25 +413,10 @@ const initialStateForOrder = (
     stepNamesInOrder.unshift(CheckoutStepName.OFFER_AMOUNT)
   }
 
-  // For now, always start from step one, and hide the delivery option
-  // step immediately if the order is pickup
-  // TODO: We should probably either reset the order to step one on load
-  // or set the current step based on the order data at load time
-  const steps = stepNamesInOrder.map((stepName, index) => {
-    if (stepName === CheckoutStepName.DELIVERY_OPTION) {
-      return {
-        name: stepName,
-        state:
-          order.selectedFulfillmentOption?.type === "PICKUP"
-            ? CheckoutStepState.HIDDEN
-            : CheckoutStepState.UPCOMING,
-      }
-    }
-    return {
-      name: stepName,
-      state:
-        index === 0 ? CheckoutStepState.ACTIVE : CheckoutStepState.UPCOMING,
-    }
+  const steps = calculateCheckoutSteps({
+    order,
+    context: {},
+    freshStart: true,
   })
 
   return {

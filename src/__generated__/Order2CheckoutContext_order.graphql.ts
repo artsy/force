@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6bae1474ab55760d1faa8de978715058>>
+ * @generated SignedSource<<fc1940ddeddf3a866b871cf8e41b2150>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,9 @@ export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PR
 import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutContext_order$data = {
   readonly buyerStateExpiresAt: string | null | undefined;
+  readonly fulfillmentDetails: {
+    readonly __typename: "FulfillmentDetails";
+  } | null | undefined;
   readonly internalID: string;
   readonly lineItems: ReadonlyArray<{
     readonly artworkVersion: {
@@ -90,6 +93,24 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "FulfillmentDetails",
+      "kind": "LinkedField",
+      "name": "fulfillmentDetails",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "LineItem",
       "kind": "LinkedField",
       "name": "lineItems",
@@ -116,6 +137,6 @@ return {
 };
 })();
 
-(node as any).hash = "08de7502377354ab7d2de6a7d89ce4f0";
+(node as any).hash = "8711adf24dd771a67a9c83aa053292f0";
 
 export default node;
