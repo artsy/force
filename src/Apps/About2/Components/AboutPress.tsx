@@ -34,11 +34,13 @@ export const AboutPress = () => {
           <Box
             display="flex"
             justifyContent="space-between"
-            alignItems="center"
+            alignItems={["flex-start", "center"]}
+            flexDirection={["column", "row"]}
+            gap={2}
           >
             <Text variant="sm-display">Featured by:</Text>
 
-            <Stack gap={2} flexDirection="row">
+            <Stack gap={2} flexDirection="row" flexWrap="wrap">
               {LOGOS.map(({ src, name, width, height }) => (
                 <Image
                   height={18}
@@ -64,9 +66,11 @@ export const AboutPress = () => {
           <Box
             display="flex"
             justifyContent="space-between"
-            alignItems="center"
+            alignItems={["flex-start", "center"]}
+            flexDirection={["column", "row"]}
+            gap={2}
           >
-            <Text variant="lg-display">
+            <Text variant={["sm-display", "lg-display"]}>
               Contact: <a href="mailto:press@artsy.net">press@artsy.net</a>
             </Text>
 

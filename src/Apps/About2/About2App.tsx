@@ -43,7 +43,7 @@ export const About2App: React.FC<React.PropsWithChildren<unknown>> = () => {
 
       <Spacer y={12} />
 
-      <Stack gap={12}>
+      <Stack gap={[6, 12]}>
         <AboutMissionAndVision />
 
         <AboutTagline />

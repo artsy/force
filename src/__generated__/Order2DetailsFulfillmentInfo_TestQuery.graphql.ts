@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6b297d07082459d5d8ae7d4674535312>>
+ * @generated SignedSource<<9d650503506e1252ed9ad9135140d78a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -177,10 +177,16 @@ return {
                     "selections": [
                       {
                         "alias": null,
-                        "args": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "format",
+                            "value": "INTERNATIONAL"
+                          }
+                        ],
                         "kind": "ScalarField",
                         "name": "display",
-                        "storageKey": null
+                        "storageKey": "display(format:\"INTERNATIONAL\")"
                       }
                     ],
                     "storageKey": null
@@ -224,7 +230,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "63b3c80743d3f02f34b3f9d0b7316777",
+    "cacheID": "8d158c31290b56ec7a0e7d28190d2ffc",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -284,7 +290,7 @@ return {
     },
     "name": "Order2DetailsFulfillmentInfo_TestQuery",
     "operationKind": "query",
-    "text": "query Order2DetailsFulfillmentInfo_TestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DetailsFulfillmentInfo_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsFulfillmentInfo_order on Order {\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n}\n"
+    "text": "query Order2DetailsFulfillmentInfo_TestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DetailsFulfillmentInfo_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsFulfillmentInfo_order on Order {\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n}\n"
   }
 };
 })();
