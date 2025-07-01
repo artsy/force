@@ -31,7 +31,7 @@ export const AboutDownload = () => {
         width="100%"
         height="100%"
         alt="Download the Artsy app"
-        loading="lazy"
+        lazyLoad
         position="absolute"
         top={0}
         left={0}
@@ -66,7 +66,7 @@ export const AboutDownload = () => {
                     width="100%"
                     height="auto"
                     alt="Download the Artsy app"
-                    loading="lazy"
+                    lazyLoad
                     position="absolute"
                     bottom={0}
                     left={0}
@@ -117,7 +117,7 @@ export const AboutDownload = () => {
                         width="100%"
                         height="auto"
                         alt="Download on the App Store"
-                        loading="lazy"
+                        lazyLoad
                         m="auto"
                         style={{
                           objectFit: "contain",
