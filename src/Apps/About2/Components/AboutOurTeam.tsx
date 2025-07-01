@@ -3,6 +3,7 @@ import {
   Column,
   FullBleed,
   GridColumns,
+  Image,
   ResponsiveBox,
   Stack,
   Text,
@@ -12,6 +13,7 @@ import { AboutSection } from "Apps/About2/Components/AboutSection"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { RouterLink } from "System/Components/RouterLink"
+import { cropped, resized } from "Utils/resized"
 import styled from "styled-components"
 
 export const AboutOurTeam = () => {
@@ -42,7 +44,17 @@ export const AboutOurTeam = () => {
                       aspectHeight={1}
                       bg="mono60"
                       maxWidth="100%"
-                    />
+                    >
+                      <Image
+                        {...cropped(
+                          "https://files.artsy.net/images/about2-jeffrey-yin.jpg",
+                          { width: 700, height: 700 },
+                        )}
+                        width="100%"
+                        height="100%"
+                        alt=""
+                      />
+                    </ResponsiveBox>
 
                     <Stack gap={1}>
                       <Text variant="sm-display">Chief Executive Officer</Text>
@@ -57,14 +69,24 @@ export const AboutOurTeam = () => {
                       aspectHeight={1}
                       bg="mono60"
                       maxWidth="100%"
-                    />
+                    >
+                      <Image
+                        {...resized(
+                          "https://files.artsy.net/images/about2-carter-cleveland.jpg",
+                          { width: 700 },
+                        )}
+                        width="100%"
+                        height="100%"
+                        alt=""
+                      />
+                    </ResponsiveBox>
 
                     <Stack gap={1}>
                       <Text variant={["sm-display", "lg-display"]}>
                         Founder of Artsy
                       </Text>
 
-                      <Text variant="xl">Carter Cleaveland</Text>
+                      <Text variant="xl">Carter Cleveland</Text>
                     </Stack>
                   </Stack>
                 </Stack>
@@ -78,11 +100,21 @@ export const AboutOurTeam = () => {
                   height="100%"
                 >
                   <ResponsiveBox
-                    aspectWidth={5}
-                    aspectHeight={7}
+                    aspectWidth={1200}
+                    aspectHeight={1532}
                     bg="mono60"
                     maxWidth="100%"
-                  />
+                  >
+                    <Image
+                      {...resized(
+                        "https://files.artsy.net/images/about2-jeffrey-yin.jpg",
+                        { width: 700 },
+                      )}
+                      width="100%"
+                      height="100%"
+                      alt=""
+                    />
+                  </ResponsiveBox>
 
                   <Stack gap={1}>
                     <Text variant="lg-display">Chief Executive Officer</Text>
@@ -123,17 +155,17 @@ const MORE_TEAM_MEMBERS = [
   {
     name: "Dustyn Kim",
     title: "Head of Collector Services & Private Sales",
-    src: "#TODO",
+    src: "https://files.artsy.net/images/about2-dustyn-kim-c.jpg",
   },
   {
     name: "Alex Forbes",
     title: "Head of Collector Services & Private Sales",
-    src: "#TODO",
+    src: "https://files.artsy.net/images/about2-alex-forbes-c.jpg",
   },
   {
     name: "Casey Lesser",
     title: "Head of Collector Services & Private Sales",
-    src: "#TODO",
+    src: "https://files.artsy.net/images/about2-casey-lesser-c.jpg",
   },
 ]
 
@@ -143,11 +175,7 @@ interface AboutOurTeamItemProps {
   src: string
 }
 
-const AboutOurTeamItem = ({
-  name,
-  title,
-  src: _src,
-}: AboutOurTeamItemProps) => {
+const AboutOurTeamItem = ({ name, title, src }: AboutOurTeamItemProps) => {
   const { theme } = useTheme()
 
   const bg = {
@@ -171,7 +199,15 @@ const AboutOurTeamItem = ({
           width={[100, "60%", "50%"]}
           style={{ aspectRatio: 1 }}
           borderRadius="50%"
-        />
+          overflow="hidden"
+        >
+          <Image
+            {...cropped(src, { width: 300, height: 300 })}
+            width="100%"
+            height="100%"
+            alt=""
+          />
+        </Box>
 
         <Stack gap={1} textAlign={["left", "center"]}>
           <Text variant="lg-display">{name}</Text>
