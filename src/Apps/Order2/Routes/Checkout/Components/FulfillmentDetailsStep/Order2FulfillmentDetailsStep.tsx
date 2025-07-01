@@ -8,6 +8,7 @@ import { Order2FulfillmentDetailsCompletedView } from "Apps/Order2/Routes/Checko
 import { Order2PickupForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2PickupForm"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { Order2FulfillmentDetailsStep_order$key } from "__generated__/Order2FulfillmentDetailsStep_order.graphql"
+import { useEffect } from "react"
 
 import { graphql, useFragment } from "react-relay"
 
@@ -26,6 +27,10 @@ export const Order2FulfillmentDetailsStep: React.FC<
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
   )?.state
+
+  // useEffect(() => {
+  //   console.log("** steps", steps)
+  // }, [steps])
 
   // TODO: This is to see saved data coming through and may be
   // promoted to some higher-level context/dispatch in the future
@@ -46,12 +51,11 @@ export const Order2FulfillmentDetailsStep: React.FC<
       backgroundColor="mono0"
       py={2}
     >
-      <Box px={[2, 4]} hidden={stepState !== CheckoutStepState.COMPLETED}>
-        <Order2FulfillmentDetailsCompletedView
-          fulfillmentDetails={savedFulfillmentDetails}
-          fulfillmentOption={selectedFulfillmentOption}
-        />
-      </Box>
+      {stepState === CheckoutStepState.COMPLETED && (
+        <Box px={[2, 4]}>
+          <Order2FulfillmentDetailsCompletedView order={orderData} />
+        </Box>
+      )}
       <Box hidden={stepState !== CheckoutStepState.ACTIVE}>
         {pickupOption ? (
           <Tabs
@@ -94,6 +98,8 @@ export const Order2FulfillmentDetailsStep: React.FC<
 const ORDER_FRAGMENT = graphql`
   fragment Order2FulfillmentDetailsStep_order on Order {
     ...Order2PickupForm_order
+    ...Order2DeliveryForm_order
+    ...Order2FulfillmentDetailsCompletedView_order
     id
     fulfillmentDetails {
       phoneNumber {

@@ -117,7 +117,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
               <Order2ExpressCheckout order={order} />
             )}
             <Order2FulfillmentDetailsStep order={order} />
-            <Order2DeliveryOptionsStep />
+            <Order2DeliveryOptionsStep order={order} />
             <Order2PaymentStep order={order} />
           </Stack>
           <Box display={["block", "none"]}>
@@ -171,6 +171,7 @@ const FRAGMENT = graphql`
         ...Order2ExpressCheckout_order
         ...Order2CollapsibleOrderSummary_order
         ...Order2FulfillmentDetailsStep_order
+        ...Order2DeliveryOptionsStep_order
         ...Order2PaymentStep_order
         ...Order2ReviewStep_order
         ...Order2CheckoutLoadingSkeleton_order
