@@ -11,6 +11,8 @@ import { AddressAutocompleteInput } from "Components/Address/AddressAutocomplete
 import {
   type Address,
   basicPhoneValidator,
+  isPostalCodeRequired,
+  isRegionRequired,
   richPhoneValidators,
   yupAddressValidator,
 } from "Components/Address/utils"
@@ -39,6 +41,7 @@ interface Props {
 /**
  * Validation schema for address form fields. Arguments match the
  * <AddressFormFields/> component - e.g. to include phone number validation
+ *
  * @example
  * ```tsx
  * const validationSchema = yup.object().shape({
@@ -250,7 +253,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           onChange={handleChange}
           onBlur={handleBlur}
           error={touchedAddress?.region && errorsAddress?.region}
-          required
+          required={isRegionRequired(values.address.country)}
         />
       </Column>
 
@@ -266,7 +269,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           onChange={handleChange}
           onBlur={handleBlur}
           error={touchedAddress?.postalCode && errorsAddress?.postalCode}
-          required
+          required={isPostalCodeRequired(values.address.country)}
         />
       </Column>
 
@@ -308,10 +311,10 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
             inputValue={values.phoneNumber}
             placeholder="(000) 000 0000"
             error={
-              (touched.phoneNumberCountryCode &&
-                (errors.phoneNumberCountryCode as string | undefined)) ||
               (touched.phoneNumber &&
-                (errors.phoneNumber as string | undefined))
+                (errors.phoneNumber as string | undefined)) ||
+              (touched.phoneNumberCountryCode &&
+                (errors.phoneNumberCountryCode as string | undefined))
             }
             required
           />

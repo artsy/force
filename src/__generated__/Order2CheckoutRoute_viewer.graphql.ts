@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<22d0bfa303ba72cb2cd4ac7b31fcff31>>
+ * @generated SignedSource<<f3d9e5283276c3ba17cb11780f4d78e5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,10 +21,9 @@ export type Order2CheckoutRoute_viewer$data = {
     } | null | undefined;
     readonly order: {
       readonly internalID: string;
-      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutContext_order">;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutApp_order" | "Order2CheckoutContext_order">;
     } | null | undefined;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutApp_viewer">;
   readonly " $fragmentType": "Order2CheckoutRoute_viewer";
 };
 export type Order2CheckoutRoute_viewer$key = {
@@ -53,17 +52,6 @@ return {
   "name": "Order2CheckoutRoute_viewer",
   "selections": [
     {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "orderID",
-          "variableName": "orderID"
-        }
-      ],
-      "kind": "FragmentSpread",
-      "name": "Order2CheckoutApp_viewer"
-    },
-    {
       "alias": null,
       "args": null,
       "concreteType": "Me",
@@ -90,6 +78,11 @@ return {
               "args": null,
               "kind": "FragmentSpread",
               "name": "Order2CheckoutContext_order"
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "Order2CheckoutApp_order"
             }
           ],
           "storageKey": null
@@ -143,6 +136,6 @@ return {
 };
 })();
 
-(node as any).hash = "1f8c496c55172e5d89deada09bae7bd9";
+(node as any).hash = "1dda868a9fdd9664177e9210db608447";
 
 export default node;
