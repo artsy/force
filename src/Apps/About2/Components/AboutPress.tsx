@@ -53,7 +53,7 @@ export const AboutPress = () => {
                       filter: "invert(1) hue-rotate(180deg)",
                     }),
                   }}
-                  lazyLoad
+                  loading="lazy"
                 />
               ))}
             </Stack>
