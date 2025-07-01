@@ -122,17 +122,6 @@ const { renderWithRelay } = setupTestWrapperTL<Order2CheckoutRouteTestQuery>({
   `,
 })
 
-const testIDs = {
-  phoneCountryPicker: "country-picker",
-  fulfillmentDetailsStep: "FulfillmentDetailsStep",
-  fulfillmentDetailsStepTabs: "FulfillmentDetailsStepTabs",
-  pickupDetailsForm: "PickupDetailsForm",
-  // Use with screen.getByRole
-  phoneCountryPickerListRole: "listbox",
-  paymentFormWire: "PaymentFormWire",
-  deliveryOptionsStep: "DeliveryOptionsStep",
-}
-
 const orderMutationSuccess = (initialValues, newValues) => {
   return {
     orderOrError: {
@@ -178,6 +167,144 @@ function expectTrackedEvents(
     }
   })
   mockTrackEvent.mockClear()
+}
+
+const testIDs = {
+  phoneCountryPicker: "country-picker",
+  fulfillmentDetailsStep: "FulfillmentDetailsStep",
+  fulfillmentDetailsStepTabs: "FulfillmentDetailsStepTabs",
+  pickupDetailsForm: "PickupDetailsForm",
+  // Use with screen.getByRole
+  phoneCountryPickerListRole: "listbox",
+  paymentFormWire: "PaymentFormWire",
+  deliveryOptionsStep: "DeliveryOptionsStep",
+}
+
+const helpers = {
+  async waitForLoadingComplete() {
+    act(() => {
+      // CheckoutContext MINIMUM_LOADING_MS
+      jest.advanceTimersByTime(1000)
+    })
+    await waitFor(() => {
+      expect(
+        screen.queryByLabelText("Checkout loading skeleton"),
+      ).not.toBeInTheDocument()
+    })
+  },
+
+  async selectCountryCode(countryPicker, optionText: string) {
+    act(() => {
+      userEvent.click(countryPicker)
+    })
+
+    const countryOptions = screen.getAllByText(optionText, {
+      exact: false,
+    })
+
+    // To account for the possibility that country option is showing something
+    // in its input value, take the second
+    const countryOption = countryOptions[countryOptions.length - 1]
+
+    act(() => {
+      userEvent.click(countryOption)
+    })
+  },
+
+  async fillInMockCreditCard({ mockResolveLastOperation, initialOrder }) {
+    await userEvent.click(screen.getByText("Mock enter credit card"))
+
+    mockElements.submit.mockResolvedValueOnce({
+      error: null,
+    })
+    mockStripe.createConfirmationToken.mockResolvedValueOnce({
+      error: null,
+      confirmationToken: {
+        id: "confirmation-token-id",
+        paymentMethodPreview: {
+          card: {
+            displayBrand: "Visa",
+            last4: "5309",
+          },
+        },
+      },
+    })
+
+    await userEvent.click(screen.getByText("Save and Continue"))
+
+    expect(mockElements.submit).toHaveBeenCalled()
+    expect(mockStripe.createConfirmationToken).toHaveBeenCalled()
+
+    await act(async () => {
+      const confirmationTokenQuery = await waitFor(() => {
+        return mockResolveLastOperation({
+          Me: () => {
+            return {
+              confirmationToken: {
+                paymentMethodPreview: {
+                  card: {
+                    displayBrand: "Visa",
+                    last4: "5309",
+                  },
+                },
+              },
+            }
+          },
+        })
+      })
+
+      expect(confirmationTokenQuery.operationName).toBe(
+        "Order2PaymentFormConfirmationTokenQuery",
+      )
+      expect(confirmationTokenQuery.operation.request.variables).toEqual({
+        id: "confirmation-token-id",
+      })
+      await flushPromiseQueue()
+
+      const updateOrderPaymentMethodMutation = await mockResolveLastOperation({
+        updateOrderPayload: () =>
+          orderMutationSuccess(initialOrder, {
+            paymentMethod: "CREDIT_CARD",
+          }),
+      })
+      expect(updateOrderPaymentMethodMutation.operationName).toBe(
+        "useUpdateOrderMutation",
+      )
+      expect(updateOrderPaymentMethodMutation.operationVariables.input).toEqual(
+        {
+          id: "order-id",
+          paymentMethod: "CREDIT_CARD",
+        },
+      )
+
+      await flushPromiseQueue()
+    })
+
+    // Verify that the payment step is complete
+    const creditCardPreviewText = await screen.findByText("•••• 5309")
+    expect(await creditCardPreviewText).toBeInTheDocument()
+  },
+
+  async submitOrder({ mockResolveLastOperation, initialOrder }) {
+    const reviewOrderSubmitButton = screen.getAllByText("Submit")[0]
+    await userEvent.click(reviewOrderSubmitButton)
+
+    await act(async () => {
+      const submitOrderMutation = await waitFor(() => {
+        return mockResolveLastOperation({
+          submitOrder: () => orderMutationSuccess(initialOrder, {}),
+        })
+      })
+
+      expect(submitOrderMutation.operationName).toBe("useSubmitOrderMutation")
+      expect(submitOrderMutation.operationVariables.input).toEqual({
+        id: "order-id",
+        confirmationToken: "confirmation-token-id",
+      })
+
+      await flushPromiseQueue()
+    })
+  },
 }
 
 describe("Order2CheckoutRoute", () => {
@@ -243,350 +370,232 @@ describe("Order2CheckoutRoute", () => {
     })
   })
 
-  describe("with loading complete", () => {
-    const renderWithLoadingComplete = async props => {
-      const renderResult = await renderWithRelay({ Viewer: () => props })
+  it("renders the Order2CheckoutRoute with order data", async () => {
+    const props = { ...baseProps }
+    props.me.order.lineItems[0].artworkVersion.title = "Supreme skateboard"
+    props.me.order.lineItems[0].artworkVersion.artistNames = "Artist Name"
+    props.me.order.lineItems[0].artworkVersion.date = "2023"
 
-      act(() => {
-        // CheckoutContext MINIMUM_LOADING_MS
-        jest.advanceTimersByTime(1000)
-      })
-      await waitFor(() => {
-        expect(
-          screen.queryByLabelText("Checkout loading skeleton"),
-        ).not.toBeInTheDocument()
-      })
-      return renderResult
-    }
+    renderWithRelay({ Viewer: () => props })
 
-    it("renders the Order2CheckoutRoute with order data", async () => {
-      const props = { ...baseProps }
-      props.me.order.lineItems[0].artworkVersion.title = "Supreme skateboard"
-      props.me.order.lineItems[0].artworkVersion.artistNames = "Artist Name"
-      props.me.order.lineItems[0].artworkVersion.date = "2023"
+    await helpers.waitForLoadingComplete()
 
-      await renderWithLoadingComplete(props)
+    // There are 3 different summaries on the page. 1 in the collapsible
+    // mobile summary at the top and 2 different review steps for mobile and desktop.
+    const artworkTitles = screen.getAllByText("Supreme skateboard, 2023")
+    expect(artworkTitles).toHaveLength(3)
+  })
 
-      // There are 3 different summaries on the page. 1 in the collapsible
-      // mobile summary at the top and 2 different review steps for mobile and desktop.
-      const artworkTitles = screen.getAllByText("Supreme skateboard, 2023")
-      expect(artworkTitles).toHaveLength(3)
-    })
-
-    describe("Checkout with pickup", () => {
-      it.each([
-        ["", false],
-        [" one time use", true],
-      ])(
-        "allows the user to progress through order submission with pickup +%s credit card",
-        async (_, oneTimeUse) => {
-          const props = {
-            ...baseProps,
-            me: {
-              ...baseProps.me,
-              order: {
-                ...baseProps.me.order,
-                fulfillmentOptions: [
-                  {
-                    type: "PICKUP",
-                    __typename: "PickupFulfillmentOption",
-                  },
-                  { type: "DOMESTIC_FLAT" },
-                ],
-                fulfillmentDetails: null,
-                selectedFulfillmentOption: null,
-              },
-            },
-          }
-          const initialOrder = props.me.order
-
-          const { mockResolveLastOperation } =
-            await renderWithLoadingComplete(props)
-          expect(screen.queryByText("Shipping method")).toBeInTheDocument()
-
-          // Click pickup tab
-          expect(screen.queryByText("Free pickup")).not.toBeInTheDocument()
-          act(() => {
-            userEvent.click(screen.getByText("Pickup"))
-          })
-          expect(screen.getByText("Free pickup")).toBeInTheDocument()
-          expect(screen.queryByText("Eagle, CO, US")).toBeInTheDocument()
-
-          // Verify submit button is present and disabled
-          const submitButton = screen.getByText("Continue to Payment")
-
-          // Verify submit button does not work
-          act(() => {
-            userEvent.click(submitButton)
-          })
-          await screen.findByText("Phone number is required")
-
-          // Select country code
-          expect(screen.queryByText(/🇩🇪/)).not.toBeInTheDocument()
-          const countryPicker = screen.getByTestId(testIDs.phoneCountryPicker)
-          act(() => {
-            userEvent.click(countryPicker)
-          })
-
-          const germanyOption = screen.getByText(/🇩🇪/)
-          act(() => {
-            userEvent.click(germanyOption)
-          })
-
-          // Type a phone number, error goes away
-          const phoneInput = screen.getByTestId("PickupPhoneNumberInput")
-
-          act(() => {
-            // TODO: Does not trigger phone validation mutation - why?
-            userEvent.type(phoneInput, "03012345678")
-          })
-
-          await waitFor(() => {
-            expect(
-              screen.queryByText("Phone number is required"),
-            ).not.toBeInTheDocument()
-          })
-          expect(submitButton).not.toBeDisabled()
-
-          // Submit form again (why waitFor? says no pointer events otherwise)
-          const pickupCompleteMessage =
-            "After your order is confirmed, a specialist will contact you within 2 business days to coordinate pickup."
-          expect(
-            screen.queryByText(pickupCompleteMessage),
-          ).not.toBeInTheDocument()
-          await waitFor(() => {
-            act(() => {
-              userEvent.click(screen.getByText("Continue to Payment"))
-            })
-          })
-
-          // Run back-to-back mutations and verify they happened in the correct order
-          await act(async () => {
-            const setFulfilmentTypeOperation = await waitFor(() => {
-              return mockResolveLastOperation({
-                setOrderFulfillmentOptionPayload: () =>
-                  orderMutationSuccess(initialOrder, {
-                    selectedFulfillmentOption: {
-                      type: "PICKUP",
-                    },
-                  }),
-              })
-            })
-
-            expect(setFulfilmentTypeOperation.operationName).toBe(
-              "useSetOrderFulfillmentOptionMutation",
-            )
-            expect(setFulfilmentTypeOperation.operationVariables.input).toEqual(
+  describe("Checkout with pickup", () => {
+    it("allows the user to progress through order submission with pickup + credit card", async () => {
+      const props = {
+        ...baseProps,
+        me: {
+          ...baseProps.me,
+          order: {
+            ...baseProps.me.order,
+            fulfillmentOptions: [
               {
-                id: "order-id",
-                fulfillmentOption: { type: "PICKUP" },
+                type: "PICKUP",
+                __typename: "PickupFulfillmentOption",
               },
-            )
-          })
-
-          await act(async () => {
-            const setPickupDetailsOperation = await waitFor(() => {
-              return mockResolveLastOperation({
-                updateOrderShippingAddressPayload: () =>
-                  orderMutationSuccess(initialOrder, {
-                    selectedFulfillmentOption: {
-                      type: "PICKUP",
-                    },
-                    fulfillmentDetails: {
-                      phoneNumber: {
-                        originalNumber: "03012345678",
-                        countryCode: "de",
-                      },
-                    },
-                  }),
-              })
-            })
-
-            expect(setPickupDetailsOperation.operationName).toBe(
-              "useSetOrderPickupDetailsMutation",
-            )
-            expect(setPickupDetailsOperation.operationVariables.input).toEqual({
-              id: "order-id",
-              buyerPhoneNumber: "03012345678",
-              buyerPhoneNumberCountryCode: "de",
-            })
-            await flushPromiseQueue()
-          })
-
-          // Verify that the step is complete
-          await screen.findByText(pickupCompleteMessage)
-          expect(screen.queryByText("Shipping method")).not.toBeInTheDocument()
-
-          await userEvent.click(screen.getByText("Mock enter credit card"))
-
-          mockElements.submit.mockResolvedValueOnce({
-            error: null,
-          })
-          mockStripe.createConfirmationToken.mockResolvedValueOnce({
-            error: null,
-            confirmationToken: {
-              id: "confirmation-token-id",
-              paymentMethodPreview: {
-                card: {
-                  displayBrand: "Visa",
-                  last4: "5309",
-                },
-              },
-            },
-          })
-
-          if (oneTimeUse) {
-            await userEvent.click(
-              screen.getByText("Save credit card for later use"),
-            )
-          }
-
-          await userEvent.click(screen.getByText("Save and Continue"))
-
-          expect(mockElements.submit).toHaveBeenCalled()
-          expect(mockStripe.createConfirmationToken).toHaveBeenCalled()
-
-          await act(async () => {
-            const confirmationTokenQuery = await waitFor(() => {
-              return mockResolveLastOperation({
-                Me: () => {
-                  return {
-                    confirmationToken: {
-                      paymentMethodPreview: {
-                        card: {
-                          displayBrand: "Visa",
-                          last4: "5309",
-                        },
-                      },
-                    },
-                  }
-                },
-              })
-            })
-
-            expect(confirmationTokenQuery.operationName).toBe(
-              "Order2PaymentFormConfirmationTokenQuery",
-            )
-            expect(confirmationTokenQuery.operation.request.variables).toEqual({
-              id: "confirmation-token-id",
-            })
-            await flushPromiseQueue()
-
-            const updateOrderPaymentMethodMutation =
-              await mockResolveLastOperation({
-                updateOrderPayload: () =>
-                  orderMutationSuccess(initialOrder, {
-                    paymentMethod: "CREDIT_CARD",
-                  }),
-              })
-            expect(updateOrderPaymentMethodMutation.operationName).toBe(
-              "useUpdateOrderMutation",
-            )
-            expect(
-              updateOrderPaymentMethodMutation.operationVariables.input,
-            ).toEqual({
-              id: "order-id",
-              paymentMethod: "CREDIT_CARD",
-            })
-
-            await flushPromiseQueue()
-          })
-
-          // Verify that the payment step is complete
-          const creditCardPreviewText = await screen.findByText("•••• 5309")
-          expect(await creditCardPreviewText).toBeInTheDocument()
-
-          const reviewOrderSubmitButton = screen.getAllByText("Submit")[0]
-          await userEvent.click(reviewOrderSubmitButton)
-
-          await act(async () => {
-            const submitOrderMutation = await waitFor(() => {
-              return mockResolveLastOperation({
-                submitOrder: () => orderMutationSuccess(initialOrder, {}),
-              })
-            })
-
-            expect(submitOrderMutation.operationName).toBe(
-              "useSubmitOrderMutation",
-            )
-            expect(submitOrderMutation.operationVariables.input).toEqual({
-              id: "order-id",
-              confirmationToken: "confirmation-token-id",
-              oneTimeUse: oneTimeUse,
-            })
-
-            await flushPromiseQueue()
-          })
-
-          await flushPromiseQueue()
-
-          expectTrackedEvents({ mockTrackEvent }, [
-            {
-              action: "orderProgressionViewed",
-              context_module: "ordersFulfillment",
-              context_page_owner_id: "order-id",
-              flow: "Buy now",
-            },
-            {
-              action: "clickedFulfillmentTab",
-              context_page_owner_id: "order-id",
-              flow: "Buy now",
-              method: "Pickup",
-            },
-            {
-              action: "clickedOrderProgression",
-              context_module: "ordersFulfillment",
-              context_page_owner_id: "order-id",
-              flow: "Buy now",
-            },
-            {
-              action: "orderProgressionViewed",
-              context_module: "ordersPayment",
-              context_page_owner_id: "order-id",
-              flow: "Buy now",
-            },
-            {
-              action: "clickedPaymentMethod",
-              amount: '<mock-value-for-field-"minor">',
-              currency: '<mock-value-for-field-"currencyCode">',
-              flow: "Buy now",
-              order_id: "order-id",
-              payment_method: "CREDIT_CARD",
-              subject: "click payment method",
-            },
-            {
-              action: "clickedOrderProgression",
-              context_module: "ordersPayment",
-              context_page_owner_id: "order-id",
-              flow: "Buy now",
-            },
-            {
-              action: "orderProgressionViewed",
-              context_module: "ordersReview",
-              context_page_owner_id: "order-id",
-              flow: "Buy now",
-            },
-            {
-              action: "clickedOrderProgression",
-              context_module: "ordersReview",
-              context_page_owner_id: "order-id",
-              flow: "Buy now",
-            },
-            {
-              action: "submittedOrder",
-              flow: "Buy now",
-              order_id: "order-id",
-            },
-          ])
-
-          expect(mockRouter.replace).toHaveBeenCalledWith(
-            "/orders2/order-id/details",
-          )
+              { type: "DOMESTIC_FLAT" },
+            ],
+            fulfillmentDetails: null,
+            selectedFulfillmentOption: null,
+          },
         },
+      }
+      const initialOrder = props.me.order
+
+      const { mockResolveLastOperation } = renderWithRelay({
+        Viewer: () => props,
+      })
+
+      await helpers.waitForLoadingComplete()
+
+      expect(screen.queryByText("Shipping method")).toBeInTheDocument()
+
+      // Click pickup tab
+      expect(screen.queryByText("Free pickup")).not.toBeInTheDocument()
+      act(() => {
+        userEvent.click(screen.getByText("Pickup"))
+      })
+      expect(screen.getByText("Free pickup")).toBeInTheDocument()
+
+      // Verify submit button is present and disabled
+      const submitButton = screen.getByText("Continue to Payment")
+
+      // Verify submit button does not work
+      act(() => {
+        userEvent.click(submitButton)
+      })
+      await screen.findByText("Phone number is required")
+
+      helpers.selectCountryCode(
+        screen.getByTestId(testIDs.phoneCountryPicker),
+        "+ 49",
       )
 
-      it("shows the pickup details pre-filled if they exist and allows clicking edit", async () => {
-        await renderWithLoadingComplete({
+      // Type a phone number, error goes away
+      const phoneInput = screen.getByTestId("PickupPhoneNumberInput")
+
+      act(() => {
+        // TODO: Does not trigger phone validation mutation - why?
+        userEvent.type(phoneInput, "03012345678")
+      })
+
+      await waitFor(() => {
+        expect(
+          screen.queryByText("Phone number is required"),
+        ).not.toBeInTheDocument()
+      })
+      expect(submitButton).not.toBeDisabled()
+
+      // Submit form again (why waitFor? says no pointer events otherwise)
+      const pickupCompleteMessage =
+        "After your order is confirmed, a specialist will contact you within 2 business days to coordinate pickup."
+      expect(screen.queryByText(pickupCompleteMessage)).not.toBeInTheDocument()
+      await waitFor(() => {
+        act(() => {
+          userEvent.click(screen.getByText("Continue to Payment"))
+        })
+      })
+
+      // Run back-to-back mutations and verify they happened in the correct order
+      await act(async () => {
+        const setFulfilmentTypeOperation = await waitFor(() => {
+          return mockResolveLastOperation({
+            setOrderFulfillmentOptionPayload: () =>
+              orderMutationSuccess(initialOrder, {
+                selectedFulfillmentOption: {
+                  type: "PICKUP",
+                },
+              }),
+          })
+        })
+
+        expect(setFulfilmentTypeOperation.operationName).toBe(
+          "useSetOrderFulfillmentOptionMutation",
+        )
+        expect(setFulfilmentTypeOperation.operationVariables.input).toEqual({
+          id: "order-id",
+          fulfillmentOption: { type: "PICKUP" },
+        })
+      })
+
+      await act(async () => {
+        const setPickupDetailsOperation = await waitFor(() => {
+          return mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(initialOrder, {
+                selectedFulfillmentOption: {
+                  type: "PICKUP",
+                },
+                fulfillmentDetails: {
+                  phoneNumber: {
+                    originalNumber: "03012345678",
+                    countryCode: "de",
+                  },
+                },
+              }),
+          })
+        })
+
+        expect(setPickupDetailsOperation.operationName).toBe(
+          "useSetOrderPickupDetailsMutation",
+        )
+        expect(setPickupDetailsOperation.operationVariables.input).toEqual({
+          id: "order-id",
+          buyerPhoneNumber: "03012345678",
+          buyerPhoneNumberCountryCode: "de",
+        })
+        await flushPromiseQueue()
+      })
+
+      // Verify that the step is complete
+      await screen.findByText(pickupCompleteMessage)
+      expect(screen.queryByText("Shipping method")).not.toBeInTheDocument()
+
+      await helpers.fillInMockCreditCard({
+        mockResolveLastOperation,
+        initialOrder,
+      })
+
+      await helpers.submitOrder({
+        mockResolveLastOperation,
+        initialOrder,
+      })
+
+      await flushPromiseQueue()
+
+      expectTrackedEvents({ mockTrackEvent }, [
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersFulfillment",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
+          action: "clickedFulfillmentTab",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+          method: "Pickup",
+        },
+        {
+          action: "clickedOrderProgression",
+          context_module: "ordersFulfillment",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersPayment",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
+          action: "clickedPaymentMethod",
+          amount: '<mock-value-for-field-"minor">',
+          currency: '<mock-value-for-field-"currencyCode">',
+          flow: "Buy now",
+          order_id: "order-id",
+          payment_method: "CREDIT_CARD",
+          subject: "click payment method",
+        },
+        {
+          action: "clickedOrderProgression",
+          context_module: "ordersPayment",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersReview",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
+          action: "clickedOrderProgression",
+          context_module: "ordersReview",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
+          action: "submittedOrder",
+          flow: "Buy now",
+          order_id: "order-id",
+        },
+      ])
+
+      expect(mockRouter.replace).toHaveBeenCalledWith(
+        "/orders2/order-id/details",
+      )
+    })
+
+    it("shows the pickup details pre-filled if they exist", async () => {
+      renderWithRelay({
+        Viewer: () => ({
           ...baseProps,
           me: {
             ...baseProps.me,
@@ -611,159 +620,358 @@ describe("Order2CheckoutRoute", () => {
               },
             },
           },
-        })
-
-        const editPickup = within(
-          screen.getByTestId(testIDs.fulfillmentDetailsStep),
-        ).getByText("Edit")
-
-        act(() => {
-          userEvent.click(editPickup)
-        })
-
-        expectTrackedEvents({ mockTrackEvent }, [
-          {
-            action: "orderProgressionViewed",
-            context_module: "ordersFulfillment",
-            context_page_owner_id: "order-id",
-            flow: "Buy now",
-          },
-          {
-            action: "clickedChangeShippingAddress",
-            context_module: "ordersCheckout",
-            context_page_owner_id: "order-id",
-          },
-        ])
-
-        const pickupTab = within(
-          screen.getByTestId(testIDs.fulfillmentDetailsStepTabs),
-        ).getByText("Pickup")
-
-        act(() => {
-          userEvent.click(pickupTab)
-        })
-
-        expect(screen.getByText("Free pickup")).toBeVisible()
-
-        // Verify that the phone number is pre-filled
-        const phoneCountryPicker = screen.getByTestId(
-          testIDs.phoneCountryPicker,
-        )
-        expect(phoneCountryPicker).toHaveTextContent("🇩🇪")
-        expect(screen.getByTestId("PickupPhoneNumberInput")).toHaveValue(
-          "03012345678",
-        )
-        expect(screen.queryByText("Shipping method")).not.toBeInTheDocument()
-        act(() => {
-          userEvent.click(screen.getByText("Delivery"))
-        })
-        expect(screen.queryByText("Shipping method")).toBeInTheDocument()
-        expectTrackedEvents({ mockTrackEvent }, [
-          {
-            action: "clickedFulfillmentTab",
-            context_page_owner_id: "order-id",
-            flow: "Buy now",
-            method: "Delivery",
-          },
-        ])
+        }),
       })
-    })
 
-    describe("within the payment section", () => {
-      it.todo(
-        // TODO: Example of this assertion is above for clickedChangeShippingAddress
-        "Allows clicking the edit button to change payment method",
+      await helpers.waitForLoadingComplete()
+
+      const pickupTab = within(
+        screen.getByTestId(testIDs.fulfillmentDetailsStepTabs),
+      ).getByText("Pickup")
+
+      act(() => {
+        userEvent.click(pickupTab)
+      })
+
+      // Verify that the phone number is pre-filled
+      const phoneCountryPicker = screen.getByTestId(testIDs.phoneCountryPicker)
+      expect(phoneCountryPicker).toHaveTextContent("🇩🇪")
+      expect(screen.getByTestId("PickupPhoneNumberInput")).toHaveValue(
+        "03012345678",
+      )
+    })
+  })
+
+  describe("Checkout with flat-rate shipping", () => {
+    it("allows the user to progress through order submission with flat-rate shipping + credit card", async () => {
+      const props = {
+        ...baseProps,
+        me: {
+          ...baseProps.me,
+          order: {
+            ...baseProps.me.order,
+            fulfillmentOptions: [
+              // { type: "PICKUP", __typename: "PickupFulfillmentOption" },
+              {
+                type: "DOMESTIC_FLAT",
+              },
+            ],
+            fulfillmentDetails: null,
+            selectedFulfillmentOption: null,
+          },
+        },
+      }
+      const initialOrder = props.me.order
+
+      const { mockResolveLastOperation, env } = renderWithRelay({
+        Viewer: () => props,
+      })
+
+      await helpers.waitForLoadingComplete()
+
+      expect(screen.getByText("Shipping method")).toBeInTheDocument()
+
+      const submitButton = screen.getByText("See Shipping Methods")
+
+      // Verify submit button does not work
+      act(() => {
+        userEvent.click(submitButton)
+      })
+
+      await screen.findByText("Phone number is required")
+      let requiredMessages = screen.getAllByText("required", {
+        exact: false,
+      })
+
+      expect(requiredMessages.map(el => el.textContent)).toEqual([
+        "Full name is required",
+        "Country is required",
+        "Street address is required",
+        "City is required",
+        "Phone number is required",
+      ])
+
+      expect(env.mock.getAllOperations()).toHaveLength(0)
+
+      const addressInputValue = {
+        name: "John Doe",
+        country: "US",
+        addressLine1: "123 Main St",
+        addressLine2: "Apt 4B",
+        city: "New York",
+        region: "NY",
+        postalCode: "10001",
+        phoneNumberCountryCode: "🇺🇸 + 1",
+        phoneNumber: "1234567890",
+      }
+
+      const countrySelect = screen.getByLabelText("Country")
+
+      await act(async () => {
+        userEvent.selectOptions(countrySelect, addressInputValue.country)
+      })
+
+      const [
+        nameInput,
+        addressLine1Input,
+        addressLine2Input,
+        cityInput,
+        regionInput,
+        postalCodeInput,
+        phoneNumberInput,
+        countryPicker,
+      ] = await Promise.all([
+        screen.findByPlaceholderText("Add full name"),
+        screen.findByLabelText("Street address"),
+        screen.findByLabelText("Apt, floor, suite, etc. (optional)"),
+        screen.findByLabelText("City"),
+        screen.findByLabelText("State, region or province"),
+        screen.findByLabelText("ZIP/Postal code"),
+        screen.findByTestId("addressFormFields.phoneNumber"),
+        screen.findByTestId(testIDs.phoneCountryPicker),
+      ])
+
+      helpers.selectCountryCode(
+        countryPicker,
+        addressInputValue.phoneNumberCountryCode,
       )
 
-      describe("error handling when saving and continuing", () => {
-        it("shows an error if no payment method is selected", async () => {
-          const props = {
-            ...baseProps,
-            me: {
-              ...baseProps.me,
-              order: {
-                ...baseProps.me.order,
-                fulfillmentOptions: [
-                  {
-                    type: "PICKUP",
-                    __typename: "PickupFulfillmentOption",
-                    selected: true,
-                  },
-                  { type: "DOMESTIC_FLAT" },
-                ],
+      await act(async () => {
+        userEvent.type(nameInput, addressInputValue.name)
+        userEvent.type(addressLine1Input, addressInputValue.addressLine1)
+        userEvent.type(addressLine2Input, addressInputValue.addressLine2)
+        userEvent.type(cityInput, addressInputValue.city)
+        userEvent.type(regionInput, addressInputValue.region)
+        userEvent.type(postalCodeInput, addressInputValue.postalCode)
+        userEvent.type(phoneNumberInput, addressInputValue.phoneNumber)
+        userEvent.selectOptions(countrySelect, addressInputValue.country)
+      })
+
+      // Theory: This is required because the phone input
+      // validation is debounced which must be blocking every other validation
+      // update.
+      jest.advanceTimersByTime(250)
+
+      await waitFor(() => {
+        requiredMessages = screen.getAllByText("required", {
+          exact: false,
+        })
+
+        expect(requiredMessages.map(el => el.textContent)).toEqual([
+          "*Required",
+          "*Required",
+          "*Required",
+          "*Required",
+          "*Required",
+          "*Required",
+          "*Required",
+        ])
+      })
+
+      act(() => {
+        userEvent.click(submitButton)
+      })
+
+      let setShippingAddressOperation
+      await act(async () => {
+        const operation = await waitFor(() => {
+          return mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(initialOrder, {
+                selectedFulfillmentOption: {
+                  type: "DOMESTIC_FLAT",
+                },
                 fulfillmentDetails: {
                   phoneNumber: {
-                    originalNumber: "03012345678",
-                    regionCode: "de",
+                    originalNumber: "1234567890",
+                    countryCode: "us",
+                  },
+                  address: {
+                    name: "John Doe",
+                    addressLine1: "123 Main St",
+                    addressLine2: "Apt 4B",
+                    city: "New York",
+                    region: "NY",
+                    postalCode: "10001",
+                    country: "US",
                   },
                 },
+              }),
+          })
+        })
+        await flushPromiseQueue()
+        setShippingAddressOperation = operation
+      })
+
+      expect(setShippingAddressOperation.operationName).toBe(
+        "useOrder2UpdateShippingAddressMutation",
+      )
+
+      const submitPaymentButton = await screen.findByText("Continue to Payment")
+
+      let setFulfillmentOptionOperation
+      userEvent.click(submitPaymentButton)
+
+      await act(async () => {
+        // Shipping MUTATIONS
+        const operation = await waitFor(() => {
+          return mockResolveLastOperation({
+            setOrderFulfillmentOptionPayload: () =>
+              orderMutationSuccess(initialOrder, {
                 selectedFulfillmentOption: {
+                  type: "DOMESTIC_FLAT",
+                },
+              }),
+          })
+        })
+        await flushPromiseQueue()
+        setFulfillmentOptionOperation = operation
+      })
+
+      expect(setFulfillmentOptionOperation.operationName).toBe(
+        "useOrder2SetFulfillmentOptionMutation",
+      )
+
+      await helpers.fillInMockCreditCard({
+        mockResolveLastOperation,
+        initialOrder,
+      })
+
+      await helpers.submitOrder({
+        mockResolveLastOperation,
+        initialOrder,
+      })
+
+      expectTrackedEvents({ mockTrackEvent, exact: false }, [
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersFulfillment",
+        },
+        {
+          action: "clickedOrderProgression",
+          context_module: "ordersFulfillment",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersShippingMethods",
+        },
+        {
+          action: "clickedPaymentMethod",
+          payment_method: "CREDIT_CARD",
+        },
+        {
+          action: "clickedOrderProgression",
+          context_module: "ordersPayment",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersReview",
+        },
+        {
+          action: "clickedOrderProgression",
+          context_module: "ordersReview",
+        },
+        {
+          action: "submittedOrder",
+        },
+      ])
+    })
+  })
+
+  describe("within the payment section", () => {
+    it.todo(
+      // TODO: Example of this assertion is above for clickedChangeShippingAddress
+      "Allows clicking the edit button to change payment method",
+    )
+
+    describe("error handling when saving and continuing", () => {
+      it("shows an error if no payment method is selected", async () => {
+        const props = {
+          ...baseProps,
+          me: {
+            ...baseProps.me,
+            order: {
+              ...baseProps.me.order,
+              fulfillmentOptions: [
+                {
                   type: "PICKUP",
+                  __typename: "PickupFulfillmentOption",
+                  selected: true,
+                },
+                { type: "DOMESTIC_FLAT" },
+              ],
+              fulfillmentDetails: {
+                phoneNumber: {
+                  originalNumber: "03012345678",
+                  regionCode: "de",
                 },
               },
+              selectedFulfillmentOption: {
+                type: "PICKUP",
+              },
             },
-          }
-          const initialOrder = props.me.order
+          },
+        }
+        const initialOrder = props.me.order
 
-          const { mockResolveLastOperation } =
-            await renderWithLoadingComplete(props)
+        const { mockResolveLastOperation } = await renderWithRelay({
+          Viewer: () => props,
+        })
+        await helpers.waitForLoadingComplete()
 
-          await waitFor(() => {
-            act(() => {
-              userEvent.click(screen.getByText("Continue to Payment"))
-            })
-          })
-
-          // PICKUP MUTATIONS
-          await act(async () => {
-            await waitFor(() => {
-              return mockResolveLastOperation({
-                setOrderFulfillmentOptionPayload: () =>
-                  orderMutationSuccess(initialOrder, {
-                    selectedFulfillmentOption: {
-                      type: "PICKUP",
-                    },
-                  }),
-              })
-            })
-            await flushPromiseQueue()
-          })
-
-          await act(async () => {
-            await waitFor(() => {
-              return mockResolveLastOperation({
-                updateOrderShippingAddressPayload: () =>
-                  orderMutationSuccess(initialOrder, {
-                    selectedFulfillmentOption: {
-                      type: "PICKUP",
-                    },
-                    fulfillmentDetails: {
-                      phoneNumber: {
-                        originalNumber: "03012345678",
-                        countryCode: "de",
-                      },
-                    },
-                  }),
-              })
-            })
-
-            await flushPromiseQueue()
-          })
-
-          await userEvent.click(screen.getByText("Save and Continue"))
-          expect(
-            screen.getByText("Select a payment method"),
-          ).toBeInTheDocument()
-
-          const wirePaymentOption = screen.getByTestId(testIDs.paymentFormWire)
+        await waitFor(() => {
           act(() => {
-            userEvent.click(wirePaymentOption)
+            userEvent.click(screen.getByText("Continue to Payment"))
           })
+        })
+
+        // PICKUP MUTATIONS
+        await act(async () => {
           await waitFor(() => {
-            expect(
-              screen.queryByLabelText("Select a payment method"),
-            ).not.toBeInTheDocument()
+            return mockResolveLastOperation({
+              setOrderFulfillmentOptionPayload: () =>
+                orderMutationSuccess(initialOrder, {
+                  selectedFulfillmentOption: {
+                    type: "PICKUP",
+                  },
+                }),
+            })
           })
+          await flushPromiseQueue()
+        })
+
+        await act(async () => {
+          await waitFor(() => {
+            return mockResolveLastOperation({
+              updateOrderShippingAddressPayload: () =>
+                orderMutationSuccess(initialOrder, {
+                  selectedFulfillmentOption: {
+                    type: "PICKUP",
+                  },
+                  fulfillmentDetails: {
+                    phoneNumber: {
+                      originalNumber: "03012345678",
+                      countryCode: "de",
+                    },
+                  },
+                }),
+            })
+          })
+
+          await flushPromiseQueue()
+        })
+
+        await userEvent.click(screen.getByText("Save and Continue"))
+        expect(screen.getByText("Select a payment method")).toBeInTheDocument()
+
+        const wirePaymentOption = screen.getByTestId(testIDs.paymentFormWire)
+        act(() => {
+          userEvent.click(wirePaymentOption)
+        })
+        await waitFor(() => {
+          expect(
+            screen.queryByLabelText("Select a payment method"),
+          ).not.toBeInTheDocument()
         })
       })
     })

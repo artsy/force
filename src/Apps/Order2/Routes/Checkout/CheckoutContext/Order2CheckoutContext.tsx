@@ -48,16 +48,40 @@ interface CheckoutState {
 
 interface CheckoutActions {
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
-  setActiveFulfillmentDetailsTab: (
-    activeFulfillmentDetailsTab: FulfillmentDetailsTab | null,
-  ) => void
   setExpressCheckoutLoaded: (
     availablePaymentMethods: ExpressCheckoutPaymentMethod[],
   ) => void
   setExpressCheckoutSubmitting: (isSubmitting: boolean) => void
-  setFulfillmentDetailsComplete: (args: { isPickup: boolean }) => void
+  setFulfillmentDetailsComplete: (args: {
+    isPickup?: boolean
+    isFlatShipping?: boolean
+  }) => void
+
+<<<<<<< HEAD
+  setActiveFulfillmentDetailsTab: (
+    activeFulfillmentDetailsTab: FulfillmentDetailsTab | null,
+  ) => void
+
+<<<<<<< HEAD
+=======
+  setFulfillmentDetailsComplete: (args?: { isPickup?: boolean }) => void
+>>>>>>> b5baf7903b (Revert "calculateCheckoutProgress")
   editFulfillmentDetails: () => void
+
+  setDeliveryOptionsComplete: () => void
+  editDeliveryOptions: () => void
+
+<<<<<<< HEAD
   editPayment: () => void
+=======
+  setEditingStep: (stepName: CheckoutStepName) => void
+  updateCheckoutProgress: (args: CalculateStepsArgs) => void
+>>>>>>> 18d7aa993d (calculateCheckoutProgress)
+=======
+  setConfirmationToken: (args: { confirmationToken: any }) => void
+  editPayment: () => void
+>>>>>>> b5baf7903b (Revert "calculateCheckoutProgress")
+
   setLoadingError: (error: CheckoutLoadingError | null) => void
   setLoadingComplete: () => void
   setConfirmationToken: (args: {
@@ -292,21 +316,9 @@ const useBuildCheckoutContext = (
     step => step.state === CheckoutStepState.ACTIVE,
   )?.name
 
-  const previousStepName = state.steps.reduce(
-    (acc, current) => {
-      if (current.state === CheckoutStepState.ACTIVE) {
-        return acc
-      }
-      if (current.state === CheckoutStepState.COMPLETED) {
-        return current.name
-      }
-      return acc
-    },
-    null as CheckoutStepName | null,
-  )
-
   const setFulfillmentDetailsComplete = useCallback(
-    ({ isPickup }: { isPickup: boolean }) => {
+    (args?: { isPickup?: boolean }) => {
+      const isPickup = args?.isPickup ?? false
       if (currentStepName !== CheckoutStepName.FULFILLMENT_DETAILS) {
         logger.error(
           `setFulfillmentDetailsComplete called when current step is not FULFILLMENT_DETAILS but ${currentStepName}`,
@@ -321,7 +333,24 @@ const useBuildCheckoutContext = (
     [currentStepName],
   )
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b5baf7903b (Revert "calculateCheckoutProgress")
+  const setDeliveryOptionsComplete = useCallback(() => {
+    if (currentStepName !== CheckoutStepName.DELIVERY_OPTION) {
+      logger.error(
+        `setDeliveryOptionsComplete called when current step is not DELIVERY_OPTION but ${currentStepName}`,
+      )
+      return
+    }
+    dispatch({
+      type: "DELIVERY_OPTIONS_COMPLETE",
+    })
+  }, [currentStepName])
+
   const setConfirmationToken = useCallback(
+<<<<<<< HEAD
     ({
       confirmationToken,
       saveCreditCard,
@@ -332,44 +361,58 @@ const useBuildCheckoutContext = (
       dispatch({
         type: "PAYMENT_COMPLETE",
         payload: { confirmationToken, saveCreditCard },
+=======
+  const updateCheckoutProgress = useCallback(
+    ({ order, newConfirmationToken }: CalculateStepsArgs) => {
+      const progress = calculateCheckoutProgress({
+        order,
+        checkoutState: state,
+        newConfirmationToken,
+      })
+      dispatch({
+        type: "UPDATE_CHECKOUT_PROGRESS",
+        payload: progress,
+>>>>>>> 18d7aa993d (calculateCheckoutProgress)
+=======
+    ({ confirmationToken }: { confirmationToken: any }) => {
+      dispatch({
+        type: "PAYMENT_COMPLETE",
+        payload: { confirmationToken: confirmationToken },
+>>>>>>> b5baf7903b (Revert "calculateCheckoutProgress")
       })
     },
     [],
   )
 
   const editFulfillmentDetails = useCallback(() => {
-    if (previousStepName !== CheckoutStepName.FULFILLMENT_DETAILS) {
-      logger.error(
-        `editFulfillmentDetails called when previous step is not FULFILLMENT_DETAILS but ${previousStepName}`,
-      )
-      return
-    }
     dispatch({
       type: "EDIT_FULFILLMENT_DETAILS",
     })
-  }, [previousStepName])
+  }, [])
+
+  const editDeliveryOptions = useCallback(() => {
+    dispatch({
+      type: "EDIT_FULFILLMENT_DETAILS",
+    })
+  }, [])
 
   const editPayment = useCallback(() => {
-    if (previousStepName !== CheckoutStepName.PAYMENT) {
-      logger.error(
-        `editPayment called when current step is not PAYMENT but ${previousStepName}`,
-      )
-      return
-    }
     dispatch({
       type: "EDIT_PAYMENT",
     })
-  }, [previousStepName])
+  }, [])
 
   const actions = useMemo(() => {
     return {
       checkoutTracking,
       editFulfillmentDetails,
+      editDeliveryOptions,
       editPayment,
       setActiveFulfillmentDetailsTab,
       setExpressCheckoutSubmitting,
       setExpressCheckoutLoaded,
       setFulfillmentDetailsComplete,
+      setDeliveryOptionsComplete,
       setLoadingError,
       setLoadingComplete,
       setConfirmationToken,
@@ -378,17 +421,19 @@ const useBuildCheckoutContext = (
     }
   }, [
     checkoutTracking,
+    setDeliveryOptionsComplete,
+    editDeliveryOptions,
     editFulfillmentDetails,
     editPayment,
-    setActiveFulfillmentDetailsTab,
-    setExpressCheckoutLoaded,
-    setFulfillmentDetailsComplete,
-    setLoadingError,
-    setLoadingComplete,
-    setConfirmationToken,
-    setExpressCheckoutSubmitting,
     redirectToOrderDetails,
+    setActiveFulfillmentDetailsTab,
     setCheckoutMode,
+    setConfirmationToken,
+    setExpressCheckoutLoaded,
+    setExpressCheckoutSubmitting,
+    setFulfillmentDetailsComplete,
+    setLoadingComplete,
+    setLoadingError,
   ])
 
   return {
@@ -445,8 +490,15 @@ const initialStateForOrder = (
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: null,
     confirmationToken: null,
+<<<<<<< HEAD
+<<<<<<< HEAD
     saveCreditCard: true,
     steps,
+=======
+>>>>>>> 18d7aa993d (calculateCheckoutProgress)
+=======
+    steps,
+>>>>>>> b5baf7903b (Revert "calculateCheckoutProgress")
     checkoutMode: savedCheckoutMode || "standard",
   }
 }
@@ -470,18 +522,24 @@ type Action =
   | {
       type: "FULFILLMENT_DETAILS_COMPLETE"
       payload: {
-        isPickup: boolean
+        isPickup?: boolean
       }
     }
   | {
       type: "EDIT_FULFILLMENT_DETAILS"
     }
   | {
-      type: "EDIT_PAYMENT"
+      type: "DELIVERY_OPTIONS_COMPLETE"
+    }
+  | {
+      type: "EDIT_DELIVERY_OPTIONS"
     }
   | {
       type: "PAYMENT_COMPLETE"
       payload: { confirmationToken: any; saveCreditCard: boolean }
+    }
+  | {
+      type: "EDIT_PAYMENT"
     }
   | {
       type: "SET_ACTIVE_FULFILLMENT_DETAILS_TAB"
@@ -571,7 +629,43 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
           return [...acc, current]
         }, [] as CheckoutStep[]),
       }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b5baf7903b (Revert "calculateCheckoutProgress")
+    case "EDIT_DELIVERY_OPTIONS":
+      return {
+        ...state,
+        steps: state.steps.reduce((acc, current) => {
+          const isAfterDeliveryOptionsStep = acc
+            .map(step => step.name)
+            .includes(CheckoutStepName.DELIVERY_OPTION)
 
+          if (
+            isAfterDeliveryOptionsStep &&
+            current.state !== CheckoutStepState.HIDDEN
+          ) {
+            return [
+              ...acc,
+              {
+                ...current,
+                state: CheckoutStepState.UPCOMING,
+              },
+            ]
+          }
+          if (current.name === CheckoutStepName.DELIVERY_OPTION) {
+            return [
+              ...acc,
+              {
+                ...current,
+                state: CheckoutStepState.ACTIVE,
+              },
+            ]
+          }
+
+          return [...acc, current]
+        }, [] as CheckoutStep[]),
+      }
     case "FULFILLMENT_DETAILS_COMPLETE":
       const { isPickup } = action.payload
       let hasActivatedNext = false
@@ -598,6 +692,40 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
           return step
         }),
       }
+    case "DELIVERY_OPTIONS_COMPLETE":
+      return {
+        ...state,
+        steps: state.steps.reduce((acc, current) => {
+          const isAfterDeliveryOptionsStep = acc
+            .map(step => step.name)
+            .includes(CheckoutStepName.DELIVERY_OPTION)
+
+          if (
+            isAfterDeliveryOptionsStep &&
+            current.state !== CheckoutStepState.HIDDEN
+          ) {
+            return [
+              ...acc,
+              {
+                ...current,
+                state: CheckoutStepState.UPCOMING,
+              },
+            ]
+          }
+          if (current.name === CheckoutStepName.DELIVERY_OPTION) {
+            return [
+              ...acc,
+              {
+                ...current,
+                state: CheckoutStepState.COMPLETED,
+              },
+            ]
+          }
+
+          return [...acc, current]
+        }, [] as CheckoutStep[]),
+      }
+
     case "EDIT_PAYMENT":
       return {
         ...state,
@@ -675,8 +803,16 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
       return {
         ...state,
         confirmationToken: action.payload.confirmationToken,
+<<<<<<< HEAD
         saveCreditCard: action.payload.saveCreditCard,
         steps: newSteps,
+=======
+      if (typeof confirmationToken !== "undefined") {
+        newState.confirmationToken = confirmationToken
+>>>>>>> 18d7aa993d (calculateCheckoutProgress)
+=======
+        steps: newSteps,
+>>>>>>> b5baf7903b (Revert "calculateCheckoutProgress")
       }
     case "SET_EXPRESS_CHECKOUT_SUBMITTING":
       return {
