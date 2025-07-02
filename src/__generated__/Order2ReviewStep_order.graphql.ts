@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9c6cecaa2538632802848d5ad878a9b3>>
+ * @generated SignedSource<<f1035e7b170df1634521d5aee844a475>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,8 +24,30 @@ export type Order2ReviewStep_order$data = {
     readonly artwork: {
       readonly slug: string;
     } | null | undefined;
+    readonly artworkOrEditionSet: {
+      readonly __typename: "Artwork";
+      readonly dimensions: {
+        readonly cm: string | null | undefined;
+        readonly in: string | null | undefined;
+      } | null | undefined;
+      readonly price: string | null | undefined;
+    } | {
+      readonly __typename: "EditionSet";
+      readonly dimensions: {
+        readonly cm: string | null | undefined;
+        readonly in: string | null | undefined;
+      } | null | undefined;
+      readonly price: string | null | undefined;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    } | null | undefined;
     readonly artworkVersion: {
       readonly artistNames: string | null | undefined;
+      readonly attributionClass: {
+        readonly shortDescription: string | null | undefined;
+      } | null | undefined;
       readonly date: string | null | undefined;
       readonly image: {
         readonly resized: {
@@ -58,6 +80,40 @@ var v0 = [
     "args": null,
     "kind": "ScalarField",
     "name": "display",
+    "storageKey": null
+  }
+],
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "price",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "dimensions",
+    "kind": "LinkedField",
+    "name": "dimensions",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "in",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "cm",
+        "storageKey": null
+      }
+    ],
     "storageKey": null
   }
 ];
@@ -162,6 +218,36 @@ return {
         {
           "alias": null,
           "args": null,
+          "concreteType": null,
+          "kind": "LinkedField",
+          "name": "artworkOrEditionSet",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "__typename",
+              "storageKey": null
+            },
+            {
+              "kind": "InlineFragment",
+              "selections": (v1/*: any*/),
+              "type": "Artwork",
+              "abstractKey": null
+            },
+            {
+              "kind": "InlineFragment",
+              "selections": (v1/*: any*/),
+              "type": "EditionSet",
+              "abstractKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": "ArtworkVersion",
           "kind": "LinkedField",
           "name": "artworkVersion",
@@ -186,6 +272,24 @@ return {
               "args": null,
               "kind": "ScalarField",
               "name": "date",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "AttributionClass",
+              "kind": "LinkedField",
+              "name": "attributionClass",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "shortDescription",
+                  "storageKey": null
+                }
+              ],
               "storageKey": null
             },
             {
@@ -240,6 +344,6 @@ return {
 };
 })();
 
-(node as any).hash = "b26ea46d16a02d67a7a40a29e5debff7";
+(node as any).hash = "2f7fc1d2c6cd64b2aa7233b44b1fe55d";
 
 export default node;
