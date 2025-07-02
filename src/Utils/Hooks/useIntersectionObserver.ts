@@ -62,7 +62,7 @@ export const useIntersectionObserver = ({
     return () => {
       observer.disconnect()
     }
-  }, [ref, observer])
+  }, [observer])
 
   return { ref }
 }

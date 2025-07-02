@@ -5,7 +5,12 @@ import { AboutHeader } from "Apps/About2/Components/AboutHeader"
 import { AboutHero } from "Apps/About2/Components/AboutHero"
 import { AboutJoin } from "Apps/About2/Components/AboutJoin"
 import { AboutMissionAndVision } from "Apps/About2/Components/AboutMissionAndVision"
-import { AboutNav, AboutNavProvider } from "Apps/About2/Components/AboutNav"
+import {
+  AboutNav,
+  AboutNavEntry,
+  AboutNavExit,
+  AboutNavProvider,
+} from "Apps/About2/Components/AboutNav"
 import { AboutOurStory } from "Apps/About2/Components/AboutOurStory"
 import { AboutOurTeam } from "Apps/About2/Components/AboutOurTeam"
 import { AboutPress } from "Apps/About2/Components/AboutPress"
@@ -26,6 +31,8 @@ export const About2App: React.FC<React.PropsWithChildren<unknown>> = () => {
         imageURL="https://files.artsy.net/images/00_CVP_About_Hero_og.png"
         pathname="/about"
       />
+
+      <AboutNavEntry />
 
       <AboutNav />
 
@@ -64,6 +71,8 @@ export const About2App: React.FC<React.PropsWithChildren<unknown>> = () => {
 
         <AboutContact />
       </Stack>
+
+      <AboutNavExit />
     </AboutNavProvider>
   )
 }

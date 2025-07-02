@@ -1,5 +1,6 @@
 import { Pill, Stack, useTheme } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { useJump } from "Utils/Hooks/useJump"
 import { createContext, useContext, useState } from "react"
 
@@ -104,4 +105,35 @@ export const useAboutNav = () => {
   }
 
   return context
+}
+
+export const AboutNavEntry = () => {
+  const { activate } = useAboutNav()
+
+  const { ref } = useIntersectionObserver({
+    once: false,
+    options: {
+      threshold: 0,
+    },
+    onIntersection: () => {
+      activate(null)
+    },
+  })
+
+  return <div ref={ref as any} />
+}
+
+export const AboutNavExit = () => {
+  const { show, hide } = useAboutNav()
+
+  const { ref } = useIntersectionObserver({
+    once: false,
+    options: {
+      threshold: 0,
+    },
+    onIntersection: hide,
+    onOffIntersection: show,
+  })
+
+  return <div ref={ref as any} />
 }
