@@ -104,7 +104,6 @@ const FRAGMENT = graphql`
     internalID
     selectedFulfillmentOption {
       type
-
       amount {
         display
       }

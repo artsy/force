@@ -47,30 +47,23 @@ interface CheckoutState {
 
 interface CheckoutActions {
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
+  setActiveFulfillmentDetailsTab: (
+    activeFulfillmentDetailsTab: FulfillmentDetailsTab | null,
+  ) => void
   setExpressCheckoutLoaded: (
     availablePaymentMethods: ExpressCheckoutPaymentMethod[],
   ) => void
   setExpressCheckoutSubmitting: (isSubmitting: boolean) => void
-
   setFulfillmentDetailsComplete: (args: {
     isPickup?: boolean
     isFlatShipping?: boolean
   }) => void
-
-  setActiveFulfillmentDetailsTab: (
-    activeFulfillmentDetailsTab: FulfillmentDetailsTab | null,
-  ) => void
-
-  setConfirmationToken: (args: { confirmationToken: any }) => void
-
   editFulfillmentDetails: () => void
   editPayment: () => void
-
   setLoadingError: (error: CheckoutLoadingError | null) => void
   setLoadingComplete: () => void
-
+  setConfirmationToken: (args: { confirmationToken: any }) => void
   redirectToOrderDetails: () => void
-
   setCheckoutMode: (mode: CheckoutMode) => void
 }
 

@@ -41,8 +41,6 @@ interface Props {
  * Validation schema for address form fields. Arguments match the
  * <AddressFormFields/> component - e.g. to include phone number validation
  *
- * TODO: Presence of *required message in the forms does not match the schema for conditional things like region and postal code
- *
  * @example
  * ```tsx
  * const validationSchema = yup.object().shape({

@@ -674,7 +674,6 @@ describe("Order2CheckoutRoute", () => {
         userEvent.click(submitButton)
       })
 
-      // screen.debug(fulfillmentDetailsStep)
       await screen.findByText("Phone number is required")
       let requiredMessages = screen.getAllByText("required", {
         exact: false,
