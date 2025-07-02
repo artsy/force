@@ -54,7 +54,7 @@ export const FeatureFeaturedLink: React.FC<
 
         {!img && title && (
           <Text variant="lg-display" color="mono100" my={2}>
-            <RouterLink to={href}>{title || "—"}</RouterLink>
+            {title || "—"}
           </Text>
         )}
 
