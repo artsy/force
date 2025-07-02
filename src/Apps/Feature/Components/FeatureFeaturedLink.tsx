@@ -70,20 +70,14 @@ export const FeatureFeaturedLink: React.FC<
           <Text variant="lg-display" mt={0.5} lineClamp={3}>
             {title}
           </Text>
-
-          {description &&
-            (size === "full" ? (
-              <HTML
-                variant="lg-display"
-                color="mono60"
-                mt={1}
-                html={description}
-              />
-            ) : (
-              <HTML variant="sm" color="mono60" mt={0.5} html={description} />
-            ))}
         </Flex>
       </Figure>
+      {description &&
+        (size === "full" ? (
+          <HTML variant="lg-display" color="mono60" mt={1} html={description} />
+        ) : (
+          <HTML variant="sm" color="mono60" mt={0.5} html={description} />
+        ))}
     </Flex>
   )
 }
@@ -132,7 +126,7 @@ export const FeatureFeaturedLinkFragmentContainer = createFragmentContainer(
 )
 
 const Figure = styled(RouterLink)<RouterLinkProps>`
-  &:hover + div {
+  &:hover {
     color: ${themeGet("colors.blue100")};
   }
 `
