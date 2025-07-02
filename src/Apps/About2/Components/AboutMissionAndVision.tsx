@@ -1,5 +1,13 @@
-import { Column, GridColumns, ResponsiveBox, Stack, Text } from "@artsy/palette"
+import {
+  Column,
+  GridColumns,
+  Image,
+  ResponsiveBox,
+  Stack,
+  Text,
+} from "@artsy/palette"
 import { AboutSection } from "Apps/About2/Components/AboutSection"
+import { resized } from "Utils/resized"
 
 export const AboutMissionAndVision = () => {
   return (
@@ -34,30 +42,54 @@ export const AboutMissionAndVision = () => {
           <Column
             span={5}
             display="flex"
+            alignItems="center"
             justifyContent="center"
             order={[0, 1]}
           >
             <ResponsiveBox
-              aspectWidth={4}
-              aspectHeight={3}
+              aspectWidth={1600}
+              aspectHeight={1066}
               maxWidth="100%"
               bg="mono10"
-            />
+            >
+              <Image
+                {...resized(
+                  "https://files.artsy.net/images/about2-mission-1.jpg",
+                  { width: 650 },
+                )}
+                width="100%"
+                height="100%"
+                alt=""
+                lazyLoad
+              />
+            </ResponsiveBox>
           </Column>
 
           <Column
             span={5}
             start={2}
             display="flex"
+            alignItems="center"
             justifyContent="center"
             order={2}
           >
             <ResponsiveBox
-              aspectWidth={4}
-              aspectHeight={3}
+              aspectWidth={1600}
+              aspectHeight={1066}
               maxWidth="100%"
               bg="mono10"
-            />
+            >
+              <Image
+                {...resized(
+                  "https://files.artsy.net/images/about2-mission-2.jpg",
+                  { width: 650 },
+                )}
+                width="100%"
+                height="100%"
+                alt=""
+                lazyLoad
+              />
+            </ResponsiveBox>
           </Column>
 
           <Column

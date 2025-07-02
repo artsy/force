@@ -9,17 +9,17 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { AboutDownloadQRCode } from "Apps/About2/Components/AboutDownloadQRCode"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
+import { cropped } from "Utils/resized"
 import styled from "styled-components"
 
 const ABOUT_DOWNLOAD_BACKDROP_IMAGE =
   "https://files.artsy.net/images/about2-download-backdrop-cropped.jpg"
 const ABOUT_DOWNLOAD_FOREGROUND_IMAGE =
   "https://files.artsy.net/images/about2-new-works-for-you-phone-trimmed.png"
-const ABOUT_DOWNLOAD_IOS_APP_STORE_QR_CODE =
-  "https://files.artsy.net/images/artsy-ios-app-store.svg"
 
 export const AboutDownload = () => {
   const { downloadAppUrl } = useDeviceDetection()
@@ -27,11 +27,14 @@ export const AboutDownload = () => {
   return (
     <FullBleed bg="mono100" color="mono0" position="relative">
       <Image
-        src={ABOUT_DOWNLOAD_BACKDROP_IMAGE}
+        {...cropped(ABOUT_DOWNLOAD_BACKDROP_IMAGE, {
+          width: 1800,
+          height: 1080,
+        })}
         width="100%"
         height="100%"
         alt="Download the Artsy app"
-        loading="lazy"
+        lazyLoad
         position="absolute"
         top={0}
         left={0}
@@ -112,17 +115,7 @@ export const AboutDownload = () => {
                         minWidth: "80px",
                       }}
                     >
-                      <Image
-                        src={ABOUT_DOWNLOAD_IOS_APP_STORE_QR_CODE}
-                        width="100%"
-                        height="auto"
-                        alt="Download on the App Store"
-                        loading="lazy"
-                        m="auto"
-                        style={{
-                          objectFit: "contain",
-                        }}
-                      />
+                      <AboutDownloadQRCode />
                     </Box>
 
                     <Button
