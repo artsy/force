@@ -8,7 +8,6 @@ import { Order2FulfillmentDetailsCompletedView } from "Apps/Order2/Routes/Checko
 import { Order2PickupForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2PickupForm"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { Order2FulfillmentDetailsStep_order$key } from "__generated__/Order2FulfillmentDetailsStep_order.graphql"
-import { useEffect } from "react"
 
 import { graphql, useFragment } from "react-relay"
 
@@ -28,18 +27,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
     step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
   )?.state
 
-  // useEffect(() => {
-  //   console.log("** steps", steps)
-  // }, [steps])
-
-  // TODO: This is to see saved data coming through and may be
-  // promoted to some higher-level context/dispatch in the future
-  // Question: should this come from the context where step is?
-  const savedFulfillmentDetails = orderData?.fulfillmentDetails
-  const selectedFulfillmentOption = orderData?.selectedFulfillmentOption
-
   const fulfillmentOptions = orderData?.fulfillmentOptions
-
   const pickupOption = fulfillmentOptions.find(
     option => option.type === "PICKUP",
   )

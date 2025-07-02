@@ -24,24 +24,23 @@ import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/Paymen
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { ErrorPage } from "Components/ErrorPage"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import type { Order2CheckoutApp_viewer$key } from "__generated__/Order2CheckoutApp_viewer.graphql"
+import type { Order2CheckoutApp_order$key } from "__generated__/Order2CheckoutApp_order.graphql"
 import { useEffect } from "react"
 import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import { Provider } from "unstated"
 interface Order2CheckoutAppProps {
-  viewer: Order2CheckoutApp_viewer$key
+  order: Order2CheckoutApp_order$key
 }
 
 export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
-  viewer,
+  order,
 }) => {
   const { isEigen } = useSystemContext()
 
-  const data = useFragment(FRAGMENT, viewer)
-  const order = data.me?.order ?? null
-  const artworkSlug = order?.lineItems[0]?.artwork?.slug
+  const orderData = useFragment(FRAGMENT, order)
+  const artworkSlug = orderData?.lineItems[0]?.artwork?.slug
 
   const {
     isLoading,
@@ -54,8 +53,9 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     return <ErrorPage code={404} message="Order not found" />
   }
 
-  const isOffer = order.mode === "OFFER"
-  const isFixedShipping = order.lineItems[0]?.artwork?.isFixedShippingFeeOnly
+  const isOffer = orderData.mode === "OFFER"
+  const isFixedShipping =
+    orderData.lineItems[0]?.artwork?.isFixedShippingFeeOnly
   const isExpressCheckoutEligible = !isOffer && isFixedShipping
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -99,7 +99,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
             : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
         }
       />
-      {isLoading && <Order2CheckoutLoadingSkeleton order={order} />}
+      {isLoading && <Order2CheckoutLoadingSkeleton order={orderData} />}
       {expressCheckoutSubmitting && <SubmittingOrderSpinner />}
       <GridColumns
         py={[0, 4]}
@@ -111,20 +111,20 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         <Column span={[12, 7, 6, 5]} start={[1, 1, 2, 3]}>
           <Stack gap={1}>
             <Box display={["block", "none"]}>
-              <Order2CollapsibleOrderSummary order={order} />
+              <Order2CollapsibleOrderSummary order={orderData} />
             </Box>
             {isExpressCheckoutEligible && (
-              <Order2ExpressCheckout order={order} />
+              <Order2ExpressCheckout order={orderData} />
             )}
-            <Order2FulfillmentDetailsStep order={order} />
-            <Order2DeliveryOptionsStep order={order} />
-            <Order2PaymentStep order={order} />
+            <Order2FulfillmentDetailsStep order={orderData} />
+            <Order2DeliveryOptionsStep order={orderData} />
+            <Order2PaymentStep order={orderData} />
           </Stack>
           <Box display={["block", "none"]}>
             <Spacer y={1} />
-            <Order2ReviewStep order={order} />
+            <Order2ReviewStep order={orderData} />
             <Order2HelpLinksWithInquiry
-              order={order}
+              order={orderData}
               artworkID={artworkSlug as string}
               contextModule={ContextModule.ordersCheckout}
             />
@@ -137,10 +137,10 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           display={["none", "block"]}
         >
           <Box position={["initial", "sticky"]} top="100px">
-            <Order2ReviewStep order={order} />
+            <Order2ReviewStep order={orderData} />
             <Separator as="hr" />
             <Order2HelpLinksWithInquiry
-              order={order}
+              order={orderData}
               artworkID={artworkSlug as string}
               contextModule={ContextModule.ordersCheckout}
             />
@@ -153,37 +153,25 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
 }
 
 const FRAGMENT = graphql`
-  fragment Order2CheckoutApp_viewer on Viewer
-  @argumentDefinitions(orderID: { type: "ID!" }) {
-    me {
-      order(id: $orderID) @required(action: NONE) {
-        internalID
-        fulfillmentOptions {
-          type
-        }
-        mode
-        lineItems {
-          artwork {
-            slug
-            isFixedShippingFeeOnly
-          }
-        }
-        ...Order2ExpressCheckout_order
-        ...Order2CollapsibleOrderSummary_order
-        ...Order2FulfillmentDetailsStep_order
-        ...Order2DeliveryOptionsStep_order
-        ...Order2PaymentStep_order
-        ...Order2ReviewStep_order
-        ...Order2CheckoutLoadingSkeleton_order
-        ...Order2HelpLinks_order
-      }
-      addressConnection(first: 10) {
-        edges {
-          node {
-            internalID
-          }
-        }
+  fragment Order2CheckoutApp_order on Order {
+    internalID
+    fulfillmentOptions {
+      type
+    }
+    mode
+    lineItems {
+      artwork {
+        slug
+        isFixedShippingFeeOnly
       }
     }
+    ...Order2ExpressCheckout_order
+    ...Order2CollapsibleOrderSummary_order
+    ...Order2FulfillmentDetailsStep_order
+    ...Order2DeliveryOptionsStep_order
+    ...Order2PaymentStep_order
+    ...Order2ReviewStep_order
+    ...Order2CheckoutLoadingSkeleton_order
+    ...Order2HelpLinks_order
   }
 `

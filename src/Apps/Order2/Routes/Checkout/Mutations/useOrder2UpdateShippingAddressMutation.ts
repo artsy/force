@@ -13,32 +13,11 @@ export const useOrder2UpdateShippingAddressMutation = () => {
             __typename
             ... on OrderMutationSuccess {
               order {
-                internalID
-                ...ExpressCheckoutUI_order
-                ...Order2ExpressCheckoutUI_order
-
+                ...Order2CheckoutApp_order
+                ...Order2CheckoutContext_order
                 fulfillmentOptions {
                   type
-                  amount {
-                    minor
-                    currencyCode
-                  }
-                  selected
                 }
-                buyerTotal {
-                  minor
-                  currencyCode
-                }
-                itemsTotal {
-                  minor
-                }
-                shippingTotal {
-                  minor
-                }
-                taxTotal {
-                  minor
-                }
-                availableShippingCountries
               }
             }
             ... on OrderMutationError {

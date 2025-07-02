@@ -2,7 +2,6 @@ import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { Order2FulfillmentDetailsCompletedView_order$key } from "__generated__/Order2FulfillmentDetailsCompletedView_order.graphql"
-import { useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2FulfillmentDetailsCompletedViewProps {
@@ -13,10 +12,6 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
 > = ({ order }) => {
   const { editFulfillmentDetails, checkoutTracking } = useCheckoutContext()
   const orderData = useFragment(FRAGMENT, order)
-
-  // useEffect(() => {
-  //   console.log("** completed", orderData)
-  // }, [orderData])
 
   const fulfillmentDetails = orderData?.fulfillmentDetails || ({} as any)
   const selectedFulfillmentOption =

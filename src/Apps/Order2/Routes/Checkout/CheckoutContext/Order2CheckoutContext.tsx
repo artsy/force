@@ -344,16 +344,10 @@ const useBuildCheckoutContext = (
   )
 
   const editFulfillmentDetails = useCallback(() => {
-    if (previousStepName !== CheckoutStepName.FULFILLMENT_DETAILS) {
-      logger.error(
-        `editFulfillmentDetails called when previous step is not FULFILLMENT_DETAILS but ${previousStepName}`,
-      )
-      return
-    }
     dispatch({
       type: "EDIT_FULFILLMENT_DETAILS",
     })
-  }, [previousStepName])
+  }, [])
 
   const editPayment = useCallback(() => {
     if (previousStepName !== CheckoutStepName.PAYMENT) {

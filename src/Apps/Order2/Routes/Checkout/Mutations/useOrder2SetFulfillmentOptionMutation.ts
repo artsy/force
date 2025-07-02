@@ -13,38 +13,8 @@ export const useOrder2SetFulfillmentOptionMutation = () => {
             __typename
             ... on OrderMutationSuccess {
               order {
-                internalID
-                fulfillmentOptions {
-                  amount {
-                    minor
-                  }
-                  selected
-                  type
-                }
-                ## Required to recalculate checkout steps
-                selectedFulfillmentOption {
-                  type
-                }
-                mode
-                fulfillmentDetails {
-                  __typename
-                }
-                buyerTotal {
-                  minor
-                  currencyCode
-                }
-                itemsTotal {
-                  minor
-                }
-                shippingTotal {
-                  minor
-                }
-                taxTotal {
-                  minor
-                }
-                availableShippingCountries
-                ...ExpressCheckoutUI_order
-                ...Order2ExpressCheckoutUI_order
+                ...Order2CheckoutApp_order
+                ...Order2CheckoutContext_order
               }
             }
             ... on OrderMutationError {
