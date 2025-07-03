@@ -68,6 +68,23 @@ describe("Order2DetailsMessage", () => {
     expect(screen.getByText(new RegExp(expectedText))).toBeInTheDocument()
   })
 
+  it("renders contact gallery link for SUBMITTED_OFFER", () => {
+    renderWithRelay({
+      Order: () => ({
+        buyerStateExpiresAt: mockDate,
+        code: "123",
+        internalID: "test-id",
+        displayTexts: {
+          messageType: "SUBMITTED_OFFER",
+        },
+        impulseConversationId: "conv-123",
+      }),
+    })
+    expect(
+      screen.getByRole("link", { name: "contact the gallery" }),
+    ).toHaveAttribute("href", "/user/conversations/conv-123")
+  })
+
   it("renders wire transfer details for PROCESSING_WIRE", () => {
     renderWithRelay({
       Order: () => ({
