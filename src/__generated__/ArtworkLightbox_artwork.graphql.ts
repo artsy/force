@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d81072ea0562f2e6f59f75a045df7851>>
+ * @generated SignedSource<<e9bed1daa7d6f3210633bee8562df893>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkLightbox_artwork$data = {
+  readonly caption: string | null | undefined;
   readonly formattedMetadata: string | null | undefined;
   readonly images: ReadonlyArray<{
     readonly fallback: {
@@ -120,6 +121,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "caption",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "formattedMetadata",
       "storageKey": null
     },
@@ -222,6 +230,6 @@ return {
 };
 })();
 
-(node as any).hash = "72c3a12b84c5f05f81798d377ab3b71c";
+(node as any).hash = "c380599947a00f3c3a6ac52e0e6b4d30";
 
 export default node;

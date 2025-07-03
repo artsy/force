@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd181ec17a8ff9e75584b848b59ac4c4>>
+ * @generated SignedSource<<4bcee667c3ab491e3cd67128e3589946>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -112,13 +112,13 @@ v8 = {
 },
 v9 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
   "type": "String"
 },
 v10 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "String"
 },
@@ -199,6 +199,13 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "caption",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -453,7 +460,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "120d877e0d66c01dd4c6c3de5514567b",
+    "cacheID": "894ae1e45fbde9616dfddcc4ac52d655",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -463,13 +470,14 @@ return {
           "plural": false,
           "type": "Artwork"
         },
+        "artwork.caption": (v9/*: any*/),
         "artwork.figures": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "ArtworkFigures"
         },
-        "artwork.figures.__typename": (v9/*: any*/),
+        "artwork.figures.__typename": (v10/*: any*/),
         "artwork.figures.deepZoom": {
           "enumValues": null,
           "nullable": true,
@@ -482,7 +490,7 @@ return {
           "plural": false,
           "type": "DeepZoomImage"
         },
-        "artwork.figures.deepZoom.Image.Format": (v10/*: any*/),
+        "artwork.figures.deepZoom.Image.Format": (v9/*: any*/),
         "artwork.figures.deepZoom.Image.Overlap": (v11/*: any*/),
         "artwork.figures.deepZoom.Image.Size": {
           "enumValues": null,
@@ -493,15 +501,15 @@ return {
         "artwork.figures.deepZoom.Image.Size.Height": (v11/*: any*/),
         "artwork.figures.deepZoom.Image.Size.Width": (v11/*: any*/),
         "artwork.figures.deepZoom.Image.TileSize": (v11/*: any*/),
-        "artwork.figures.deepZoom.Image.Url": (v10/*: any*/),
-        "artwork.figures.deepZoom.Image.xmlns": (v10/*: any*/),
+        "artwork.figures.deepZoom.Image.Url": (v9/*: any*/),
+        "artwork.figures.deepZoom.Image.xmlns": (v9/*: any*/),
         "artwork.figures.id": (v12/*: any*/),
         "artwork.figures.internalID": (v13/*: any*/),
         "artwork.figures.isZoomable": (v14/*: any*/),
-        "artwork.figures.playerUrl": (v9/*: any*/),
+        "artwork.figures.playerUrl": (v10/*: any*/),
         "artwork.figures.videoHeight": (v15/*: any*/),
         "artwork.figures.videoWidth": (v15/*: any*/),
-        "artwork.formattedMetadata": (v10/*: any*/),
+        "artwork.formattedMetadata": (v9/*: any*/),
         "artwork.id": (v12/*: any*/),
         "artwork.images": {
           "enumValues": null,
@@ -516,21 +524,21 @@ return {
           "type": "CroppedImageUrl"
         },
         "artwork.images.fallback.height": (v15/*: any*/),
-        "artwork.images.fallback.src": (v9/*: any*/),
-        "artwork.images.fallback.srcSet": (v9/*: any*/),
+        "artwork.images.fallback.src": (v10/*: any*/),
+        "artwork.images.fallback.srcSet": (v10/*: any*/),
         "artwork.images.fallback.width": (v15/*: any*/),
         "artwork.images.internalID": (v13/*: any*/),
         "artwork.images.isDefault": (v14/*: any*/),
         "artwork.images.mobileLightboxSource": (v16/*: any*/),
         "artwork.images.mobileLightboxSource.height": (v11/*: any*/),
-        "artwork.images.mobileLightboxSource.src": (v9/*: any*/),
-        "artwork.images.mobileLightboxSource.srcSet": (v9/*: any*/),
+        "artwork.images.mobileLightboxSource.src": (v10/*: any*/),
+        "artwork.images.mobileLightboxSource.srcSet": (v10/*: any*/),
         "artwork.images.mobileLightboxSource.width": (v11/*: any*/),
-        "artwork.images.placeholder": (v10/*: any*/),
+        "artwork.images.placeholder": (v9/*: any*/),
         "artwork.images.resized": (v16/*: any*/),
         "artwork.images.resized.height": (v11/*: any*/),
-        "artwork.images.resized.src": (v9/*: any*/),
-        "artwork.images.resized.srcSet": (v9/*: any*/),
+        "artwork.images.resized.src": (v10/*: any*/),
+        "artwork.images.resized.srcSet": (v10/*: any*/),
         "artwork.images.resized.width": (v11/*: any*/),
         "artwork.images.versions": {
           "enumValues": null,
@@ -545,7 +553,7 @@ return {
     },
     "name": "ArtworkImageBrowserLarge_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkImageBrowserLarge_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserLarge_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserLarge_artwork on Artwork {\n  ...ArtworkLightbox_artwork_FOvjt\n  ...ArtworkVideoPlayer_artwork_FOvjt\n  isSetVideoAsCover\n  figures(includeAll: false) {\n    __typename\n    ... on Image {\n      ...DeepZoom_image\n      __typename\n      internalID\n      isZoomable\n    }\n    ... on Video {\n      __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork_FOvjt on Artwork {\n  formattedMetadata\n  images(includeAll: false) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    mobileLightboxSource: resized(quality: 50, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork_FOvjt on Artwork {\n  internalID\n  slug\n  figures(includeAll: false) {\n    __typename\n    ... on Video {\n      __typename\n      playerUrl\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
+    "text": "query ArtworkImageBrowserLarge_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserLarge_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserLarge_artwork on Artwork {\n  ...ArtworkLightbox_artwork_FOvjt\n  ...ArtworkVideoPlayer_artwork_FOvjt\n  isSetVideoAsCover\n  figures(includeAll: false) {\n    __typename\n    ... on Image {\n      ...DeepZoom_image\n      __typename\n      internalID\n      isZoomable\n    }\n    ... on Video {\n      __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork_FOvjt on Artwork {\n  caption\n  formattedMetadata\n  images(includeAll: false) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    mobileLightboxSource: resized(quality: 50, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork_FOvjt on Artwork {\n  internalID\n  slug\n  figures(includeAll: false) {\n    __typename\n    ... on Video {\n      __typename\n      playerUrl\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
   }
 };
 })();
