@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<177606d5eea3a7bafacc938550fca338>>
+ * @generated SignedSource<<46172896c6f1a0e3ef6603d87c2721d0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,6 +37,7 @@ export type Order2DetailsMessage_Test_Query$rawResponse = {
         readonly messageType: DisplayTextsMessageTypeEnum;
       };
       readonly id: string;
+      readonly impulseConversationId: string | null | undefined;
       readonly internalID: string;
     } | null | undefined;
   } | null | undefined;
@@ -153,6 +154,13 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "kind": "ScalarField",
+                "name": "impulseConversationId",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "DisplayTexts",
                 "kind": "LinkedField",
                 "name": "displayTexts",
@@ -225,12 +233,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0bca8a581ab71e4c435d91e57d86b52c",
+    "cacheID": "2f3c109a75dff495720b52b17eb51026",
     "id": null,
     "metadata": {},
     "name": "Order2DetailsMessage_Test_Query",
     "operationKind": "query",
-    "text": "query Order2DetailsMessage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsMessage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n}\n"
+    "text": "query Order2DetailsMessage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsMessage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n}\n"
   }
 };
 })();
