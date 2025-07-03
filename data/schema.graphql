@@ -1695,7 +1695,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
   biographyBlurb(
     format: Format
 
-    # If true, will return featured bio over Artsy one.
+    # DEPRECATED: Artsy bios are always returned over featured bios.
     partnerBio: Boolean = true
   ): ArtistBlurb
   birthday: String
@@ -2621,6 +2621,9 @@ type Artwork implements Node & Searchable & Sellable {
 
   # Can a user request a lot conditions report for this artwork?
   canRequestLotConditionsReport: Boolean
+
+  # This field is intended for use exclusively on the individual Artwork page for alt tags
+  caption: String
 
   # Represents the "**medium type**", such as _Painting_. (This field is also commonly referred to as just "medium", but should not be confused with the artwork attribute called `medium`.)
   category: String @deprecated(reason: "Prefer to use `mediumType`.")
@@ -8757,8 +8760,6 @@ type CreateArtworkImportFailure {
 input CreateArtworkImportInput {
   async: Boolean
   clientMutationId: String
-  currency: String
-  dimensionMetric: String
   fileName: String
   parseWithAI: Boolean
   parseWithAIModel: String
@@ -10640,6 +10641,41 @@ input DisableSecondFactorInput {
 type DisableSecondFactorPayload {
   clientMutationId: String
   secondFactorOrErrors: SecondFactorOrErrorsUnion!
+}
+
+# A connection to a list of items.
+type DiscoveryCategoriesConnectionConnection {
+  # A list of edges.
+  edges: [DiscoveryCategoriesConnectionEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type DiscoveryCategoriesConnectionEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: DiscoveryCategory
+}
+
+# A category for discovering and browsing art
+type DiscoveryCategory {
+  # The ID of the category
+  category: String!
+
+  # The URL of the image representing this category
+  imageUrl: String
+
+  # The slug of the category
+  slug: String
+
+  # The display title of the category
+  title: String!
 }
 
 input DislikeArtworkInput {
@@ -12942,6 +12978,7 @@ type HomeViewSectionArtworks implements HomeViewSectionGeneric & Node {
 
   # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
   ownerType: String
+  trackItemImpressions: Boolean!
 }
 
 # An auction results section in the home view
@@ -16019,9 +16056,6 @@ type Mutation {
   updateArtwork(
     input: UpdateArtworkMutationInput!
   ): UpdateArtworkMutationPayload
-  updateArtworkImport(
-    input: UpdateArtworkImportInput!
-  ): UpdateArtworkImportPayload
   updateArtworkImportRow(
     input: UpdateArtworkImportRowInput!
   ): UpdateArtworkImportRowPayload
@@ -16672,6 +16706,9 @@ type Order {
 
   # A globally unique ID.
   id: ID!
+
+  # Impulse conversation Id for the order
+  impulseConversationId: String
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
@@ -19346,6 +19383,14 @@ type Query {
     osWeights: [Float] = [0.6, 0.4]
   ): ArtworkConnection
 
+  # A connection of discovery categories for browsing art
+  discoveryCategoriesConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): DiscoveryCategoriesConnectionConnection
+
   # Discovery Marketing Collections for personalized recommendations
   discoveryMarketingCollections(
     after: String
@@ -19573,6 +19618,7 @@ type Query {
     artistID: String
     before: String
     category: String
+    categorySlug: String
     first: Int
     isFeaturedArtistContent: Boolean
     last: Int
@@ -22617,25 +22663,6 @@ input UpdateArtworkEditionSetInput {
   shippingWeightMetric: String
 }
 
-type UpdateArtworkImportFailure {
-  mutationError: GravityMutationError
-}
-
-input UpdateArtworkImportInput {
-  clientMutationId: String
-  currency: String
-  dimensionMetric: String
-}
-
-type UpdateArtworkImportPayload {
-  artworkImportOrError: UpdateArtworkImportResponseOrError
-  clientMutationId: String
-}
-
-union UpdateArtworkImportResponseOrError =
-  | UpdateArtworkImportFailure
-  | UpdateArtworkImportSuccess
-
 type UpdateArtworkImportRowFailure {
   mutationError: GravityMutationError
 }
@@ -22658,11 +22685,6 @@ union UpdateArtworkImportRowResponseOrError =
   | UpdateArtworkImportRowSuccess
 
 type UpdateArtworkImportRowSuccess {
-  artworkImport: ArtworkImport
-  success: Boolean!
-}
-
-type UpdateArtworkImportSuccess {
   artworkImport: ArtworkImport
   success: Boolean!
 }
@@ -25167,6 +25189,14 @@ type Viewer {
     osWeights: [Float] = [0.6, 0.4]
   ): ArtworkConnection
 
+  # A connection of discovery categories for browsing art
+  discoveryCategoriesConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): DiscoveryCategoriesConnectionConnection
+
   # Discovery Marketing Collections for personalized recommendations
   discoveryMarketingCollections(
     after: String
@@ -25391,6 +25421,7 @@ type Viewer {
     artistID: String
     before: String
     category: String
+    categorySlug: String
     first: Int
     isFeaturedArtistContent: Boolean
     last: Int
