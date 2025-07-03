@@ -29,7 +29,7 @@ describe("parsePressArticles", () => {
         date: "April 2025",
         title:
           "69%: Collectors who believe the market lacks transparency, according to Artsy",
-        source: "Rafael Pic, Le Quotidien de l'Art",
+        source: "Rafael Pic, Le Quotidien de l’Art",
         blurb: `“Artsy today unveils the results of its art market survey, based on voluntary responses from 1,236 collectors and 384 art market professionals, a sample representing more than 60 different countries (even though 40% of the professionals and 57% of the collectors are based in the United States). The survey reveals that 59% of collectors purchased artworks online in 2024, and 76% of galleries offered works through this channel.
 
 “One result is particularly surprising, especially in an era of supposedly free and abundant information: 69% of respondents feel that transparency (regarding prices, provenance, or a work’s past history) is seriously lacking, and that this hinders their purchasing decisions.”`,
@@ -54,7 +54,7 @@ const MARKDOWN = `## May 2025
 “But, while galleries say they want to attract younger and first-time collectors, their tactics suggest a lack of execution or, perhaps, commitment. 43 percent said they plan to invest more in online sales this year, while just 19 percent describe themselves as leaders in adopting new technology. Over half, meanwhile, said they made no transparency improvements last year.”
 
 ### [69%: Collectors who believe the market lacks transparency, according to Artsy](https://www.lequotidiendelart.com/articles/27297-69.html)
-#### _Rafael Pic, Le Quotidien de l'Art_
+#### _Rafael Pic, Le Quotidien de l’Art_
 “Artsy today unveils the results of its art market survey, based on voluntary responses from 1,236 collectors and 384 art market professionals, a sample representing more than 60 different countries (even though 40% of the professionals and 57% of the collectors are based in the United States). The survey reveals that 59% of collectors purchased artworks online in 2024, and 76% of galleries offered works through this channel.
 
 “One result is particularly surprising, especially in an era of supposedly free and abundant information: 69% of respondents feel that transparency (regarding prices, provenance, or a work’s past history) is seriously lacking, and that this hinders their purchasing decisions.”
@@ -63,7 +63,7 @@ const MARKDOWN = `## May 2025
 #### _Il Sole 24 Ore Milan, Silvia Anna Barrilà_
 “The principle of ‘Form Follows Function,’ according to which the shape of an object should be determined by its function, seems less and less like a diktat in contemporary design, where the boundaries with art are increasingly blurred.
 
-“‘Today we see the success of pieces that blend art and design, like Daniel Arsham’s Dino Chair,’ explains Casey Lesser, chief curator at the platform Artsy, where Friedman Benda sells the New York artist and designer's chairs for $9,500. “Or the armchairs born from the collaboration between the Campana Brothers and Kaws, or even the clocks by Maarten Baas (recent works start at €50,000–70,000). Galleries like Carpenters Workshop Gallery in London or the American gallery The Future Perfect no longer make distinctions between the two fields.’”
+“‘Today we see the success of pieces that blend art and design, like Daniel Arsham’s Dino Chair,’ explains Casey Lesser, chief curator at the platform Artsy, where Friedman Benda sells the New York artist and designer’s chairs for $9,500. “Or the armchairs born from the collaboration between the Campana Brothers and Kaws, or even the clocks by Maarten Baas (recent works start at €50,000–70,000). Galleries like Carpenters Workshop Gallery in London or the American gallery The Future Perfect no longer make distinctions between the two fields.’”
 
 ## March 2025
 ### [“Artsy Unveils ‘Women on the Pulse,’ a Monthlong Tribute to Women in the Arts”](https://artplugged.co.uk/artsy-women-on-the-pulse-womens-history-month/)
@@ -72,7 +72,7 @@ const MARKDOWN = `## May 2025
 
 ### [“Exploring the Photography Market with Artsy: An Interview with Casey Lesser”](https://www.all-about-photo.com/photo-articles/photo-article/1818/exploring-the-photography-market-with-artsy-an-interview-with-casey-lesser)
 #### _Sandrine Hermand-Grisel, All About Photo_
-“In this exclusive interview, Casey Lesser, Artsy's Chief Curator and Editor-in-Chief, shares insights into the current photography market, emerging trends, and how digital tools are shaping the way collectors engage with the medium. From the growing demand for portraiture to the impact of price transparency, Lesser offers a behind-the-scenes look at the evolving landscape of photography collecting.”
+“In this exclusive interview, Casey Lesser, Artsy’s Chief Curator and Editor-in-Chief, shares insights into the current photography market, emerging trends, and how digital tools are shaping the way collectors engage with the medium. From the growing demand for portraiture to the impact of price transparency, Lesser offers a behind-the-scenes look at the evolving landscape of photography collecting.”
 
 ## February 2025
 ### Artsy x Art Relief LA Auction featured in Breakfast with ARTnews newsletter
@@ -98,7 +98,7 @@ const MARKDOWN = `## May 2025
 
 ### [Artsy Launches "Black-Owned Galleries Now" to Celebrate Black History Month 2025](https://www.buyblack.org/articles/artsy-launches-black-owned-galleries-now-to-celebrate-black-history-month-2025)
 #### _BuyBlack.org_
-“Artsy, the world's largest online platform for discovering and collecting art, is excited to introduce its latest campaign, Black-Owned Galleries Now. This dedicated online showcase will highlight the work of Black artists, curated and presented by over 50 Black-owned galleries, in celebration of Black History Month."
+“Artsy, the world’s largest online platform for discovering and collecting art, is excited to introduce its latest campaign, Black-Owned Galleries Now. This dedicated online showcase will highlight the work of Black artists, curated and presented by over 50 Black-owned galleries, in celebration of Black History Month."
 
 ## December 2024
 ### [With highest jump in demand, Indian artists draw global spotlight in 2024](https://timesofindia.indiatimes.com/india/with-highest-jump-in-demand-indian-artists-draw-global-spotlight-in-2024/articleshow/116549179.cms)
@@ -106,8 +106,8 @@ const MARKDOWN = `## May 2025
 “Indian artists experienced the strongest surge in demand in 2024, according to a recent report on the global art market. late legend uch as M F Husian, the barefoot painter, and S H Raza, known for his signature ‘bindu’, led the charge, alongside a new wave of contemporary talents such as Raghave Babbar and Tanya Goel, states the survey released by Artsy, an online marketplace for buying and selling fine art."
 
 ### [+32 %: La croissance des artistes indiens sur Artsy](https://www.lequotidiendelart.com/articles/26674-32.html)
-#### _Rafael Pic, Le Quotidien de l'Art_
-“Launched in 2012, Artsy lists more than 1.6 million artworks for sale, representing more than 94,000 artists and more than 3,100 galleries from 100 different countries (with collectors spread even further across 190 countries). It's therefore a good observatory for detecting underlying movements in the market. Its 2024 report, unveiled this Monday, provides some interesting insights.” 
+#### _Rafael Pic, Le Quotidien de l’Art_
+“Launched in 2012, Artsy lists more than 1.6 million artworks for sale, representing more than 94,000 artists and more than 3,100 galleries from 100 different countries (with collectors spread even further across 190 countries). It’s therefore a good observatory for detecting underlying movements in the market. Its 2024 report, unveiled this Monday, provides some interesting insights.”
 
 ### [Artsy Shares Key Insights from Its Art Market Report: The Artsy Market Recap 2024](https://artplugged.co.uk/artsy-key-report-insights-artsy-market-recap-2024/)
 #### _Art Plugged_
@@ -165,7 +165,7 @@ Yin joined _First Move with Julia Chatterley_ on November 21st to discuss Artsy,
 
 ### [Artsy President Dustyn Kim featured in Billionaire Magazine feature “Women in Art”](https://www.bllnr.com/art-craftmanship/women-in-art)
 #### _Victoria L. Valentine, Culture Type_
-“Earlier this year, Dustyn Kim became the first female president at Artsy, the world’s largest online art marketplace, which launched a decade ago. Since she joined the company in 2017 coming from a tech background, Kim has helped to grow a client base of 4,000 galleries, fairs, auction houses and art institutions and 3.2 million users. 
+“Earlier this year, Dustyn Kim became the first female president at Artsy, the world’s largest online art marketplace, which launched a decade ago. Since she joined the company in 2017 coming from a tech background, Kim has helped to grow a client base of 4,000 galleries, fairs, auction houses and art institutions and 3.2 million users.
 
-“Kim’s mother was an artist and worked in the art world, which also significantly influenced her. ‘Her passion for creativity deeply influenced me from a young age and fostered a lifelong appreciation for the arts. I saw first-hand how challenging the traditional art world can be for artists. That personal connection played a significant role in leading me to Artsy,' she says.”
+“Kim’s mother was an artist and worked in the art world, which also significantly influenced her. ‘Her passion for creativity deeply influenced me from a young age and fostered a lifelong appreciation for the arts. I saw first-hand how challenging the traditional art world can be for artists. That personal connection played a significant role in leading me to Artsy,’ she says.”
 `
