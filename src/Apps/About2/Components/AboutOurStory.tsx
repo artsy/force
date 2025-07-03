@@ -1,17 +1,37 @@
-import { Column, GridColumns, ResponsiveBox, Text } from "@artsy/palette"
+import { Column, GridColumns, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { AboutSection } from "Apps/About2/Components/AboutSection"
+import { resized } from "Utils/resized"
 
 export const AboutOurStory = () => {
+  const { srcSet, src } = resized(
+    "https://files.artsy.net/images/about2-story.jpg",
+    { width: 800 },
+  )
+
   return (
     <AboutSection id="our-story">
       <GridColumns gridRowGap={4}>
-        <Column span={6} display="flex" justifyContent="center">
+        <Column
+          span={6}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
           <ResponsiveBox
-            aspectWidth={1}
-            aspectHeight={1}
+            aspectWidth={1890}
+            aspectHeight={1839}
             maxWidth="100%"
             bg="mono10"
-          />
+          >
+            <Image
+              src={src}
+              srcSet={srcSet}
+              width="100%"
+              height="100%"
+              alt=""
+              lazyLoad
+            />
+          </ResponsiveBox>
         </Column>
 
         <Column

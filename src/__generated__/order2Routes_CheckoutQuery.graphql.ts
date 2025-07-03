@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<240f2604efa8265c7d10124cfb36e06b>>
+ * @generated SignedSource<<47ff9ab65c92fd9dfdb5602d4237636f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -109,40 +109,80 @@ v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "display",
-  "storageKey": null
-},
-v11 = [
-  (v7/*: any*/),
-  (v8/*: any*/),
-  (v10/*: any*/)
-],
-v12 = [
-  (v7/*: any*/),
-  (v10/*: any*/)
-],
-v13 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "price",
+  "storageKey": null
+},
+v12 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "dimensions",
+  "kind": "LinkedField",
+  "name": "dimensions",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "in",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "cm",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v13 = {
+  "kind": "InlineFragment",
+  "selections": [
+    (v5/*: any*/)
+  ],
+  "type": "Node",
+  "abstractKey": "__isNode"
+},
 v14 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "display",
+  "storageKey": null
+},
+v15 = [
+  (v7/*: any*/),
+  (v8/*: any*/),
+  (v14/*: any*/)
+],
+v16 = [
+  (v7/*: any*/),
+  (v14/*: any*/)
+],
+v17 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "displayName",
   "storageKey": null
 },
-v15 = {
+v18 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "amountFallbackText",
   "storageKey": null
 },
-v16 = {
+v19 = {
   "alias": null,
   "args": null,
   "concreteType": "Money",
@@ -167,10 +207,10 @@ v16 = {
   ],
   "storageKey": null
 },
-v17 = [
-  (v14/*: any*/),
-  (v15/*: any*/),
-  (v16/*: any*/)
+v20 = [
+  (v17/*: any*/),
+  (v18/*: any*/),
+  (v19/*: any*/)
 ];
 return {
   "fragment": {
@@ -399,6 +439,25 @@ return {
                           {
                             "alias": null,
                             "args": null,
+                            "concreteType": "AttributionClass",
+                            "kind": "LinkedField",
+                            "name": "attributionClass",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "shortDescription",
+                                "storageKey": null
+                              },
+                              (v5/*: any*/)
+                            ],
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
                             "concreteType": "Image",
                             "kind": "LinkedField",
                             "name": "image",
@@ -431,6 +490,38 @@ return {
                           (v2/*: any*/)
                         ],
                         "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "artworkOrEditionSet",
+                        "plural": false,
+                        "selections": [
+                          (v10/*: any*/),
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v11/*: any*/),
+                              (v12/*: any*/)
+                            ],
+                            "type": "Artwork",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v11/*: any*/),
+                              (v12/*: any*/),
+                              (v5/*: any*/)
+                            ],
+                            "type": "EditionSet",
+                            "abstractKey": null
+                          },
+                          (v13/*: any*/)
+                        ],
+                        "storageKey": null
                       }
                     ],
                     "storageKey": null
@@ -449,7 +540,7 @@ return {
                     "kind": "LinkedField",
                     "name": "buyerTotal",
                     "plural": false,
-                    "selections": (v11/*: any*/),
+                    "selections": (v15/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -459,7 +550,7 @@ return {
                     "kind": "LinkedField",
                     "name": "itemsTotal",
                     "plural": false,
-                    "selections": (v11/*: any*/),
+                    "selections": (v15/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -469,7 +560,7 @@ return {
                     "kind": "LinkedField",
                     "name": "shippingTotal",
                     "plural": false,
-                    "selections": (v12/*: any*/),
+                    "selections": (v16/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -479,7 +570,7 @@ return {
                     "kind": "LinkedField",
                     "name": "taxTotal",
                     "plural": false,
-                    "selections": (v12/*: any*/),
+                    "selections": (v16/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -589,7 +680,7 @@ return {
                     "name": "seller",
                     "plural": false,
                     "selections": [
-                      (v13/*: any*/),
+                      (v10/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
@@ -615,14 +706,7 @@ return {
                         "type": "Partner",
                         "abstractKey": null
                       },
-                      {
-                        "kind": "InlineFragment",
-                        "selections": [
-                          (v5/*: any*/)
-                        ],
-                        "type": "Node",
-                        "abstractKey": "__isNode"
-                      }
+                      (v13/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -641,24 +725,24 @@ return {
                     "name": "pricingBreakdownLines",
                     "plural": true,
                     "selections": [
-                      (v13/*: any*/),
+                      (v10/*: any*/),
                       {
                         "kind": "InlineFragment",
-                        "selections": (v17/*: any*/),
+                        "selections": (v20/*: any*/),
                         "type": "ShippingLine",
                         "abstractKey": null
                       },
                       {
                         "kind": "InlineFragment",
-                        "selections": (v17/*: any*/),
+                        "selections": (v20/*: any*/),
                         "type": "TaxLine",
                         "abstractKey": null
                       },
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v14/*: any*/),
-                          (v16/*: any*/)
+                          (v17/*: any*/),
+                          (v19/*: any*/)
                         ],
                         "type": "SubtotalLine",
                         "abstractKey": null
@@ -666,8 +750,8 @@ return {
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v14/*: any*/),
-                          (v15/*: any*/),
+                          (v17/*: any*/),
+                          (v18/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -676,7 +760,7 @@ return {
                             "name": "amount",
                             "plural": false,
                             "selections": [
-                              (v10/*: any*/)
+                              (v14/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -753,12 +837,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e32a44c3009a85c30abc5a1349f0392a",
+    "cacheID": "594a4f1e9d53554a3acf9f403f3b6937",
     "id": null,
     "metadata": {},
     "name": "order2Routes_CheckoutQuery",
     "operationKind": "query",
-    "text": "query order2Routes_CheckoutQuery(\n  $orderID: ID!\n) {\n  viewer {\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        buyerState\n        id\n      }\n      id\n    }\n    ...Order2CheckoutRoute_viewer_3HPek8\n  }\n}\n\nfragment Order2CheckoutApp_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      internalID\n      fulfillmentOptions {\n        type\n      }\n      mode\n      lineItems {\n        artwork {\n          slug\n          isFixedShippingFeeOnly\n          id\n        }\n        id\n      }\n      ...Order2ExpressCheckout_order\n      ...Order2CollapsibleOrderSummary_order\n      ...Order2FulfillmentDetailsStep_order\n      ...Order2PaymentStep_order\n      ...Order2ReviewStep_order\n      ...Order2CheckoutLoadingSkeleton_order\n      ...Order2HelpLinks_order\n      id\n    }\n    addressConnection(first: 10) {\n      edges {\n        node {\n          internalID\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  internalID\n  mode\n  source\n  buyerStateExpiresAt\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artworkVersion {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutLoadingSkeleton_order on Order {\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  lineItems {\n    artworkVersion {\n      title\n      artistNames\n      date\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n\nfragment Order2CheckoutRoute_viewer_3HPek8 on Viewer {\n  ...Order2CheckoutApp_viewer_3HPek8\n  me {\n    order(id: $orderID) {\n      internalID\n      ...Order2CheckoutContext_order\n      id\n    }\n    addressConnection(first: 10) {\n      edges {\n        node {\n          internalID\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2CollapsibleOrderSummary_order on Order {\n  ...Order2CheckoutPricingBreakdown_order\n  source\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      thumbnail: image {\n        resized(height: 200, version: [\"square\"]) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Order2ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2ExpressCheckout_order on Order {\n  ...Order2ExpressCheckoutUI_order\n  availableShippingCountries\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Order2FulfillmentDetailsStep_order on Order {\n  ...Order2PickupForm_order\n  id\n  fulfillmentDetails {\n    phoneNumber {\n      countryCode\n      regionCode\n      originalNumber\n    }\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  fulfillmentOptions {\n    type\n    selected\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n  source\n}\n\nfragment Order2PaymentForm_order on Order {\n  mode\n  source\n  internalID\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Order2PaymentStep_order on Order {\n  ...Order2PaymentForm_order\n  internalID\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Order2PickupForm_order on Order {\n  internalID\n  fulfillmentOptions {\n    type\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  fulfillmentDetails {\n    phoneNumber {\n      countryCode\n      regionCode\n      originalNumber\n    }\n  }\n}\n\nfragment Order2ReviewStep_order on Order {\n  ...Order2CheckoutPricingBreakdown_order\n  internalID\n  mode\n  source\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      image {\n        resized(width: 185, height: 138) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query order2Routes_CheckoutQuery(\n  $orderID: ID!\n) {\n  viewer {\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        buyerState\n        id\n      }\n      id\n    }\n    ...Order2CheckoutRoute_viewer_3HPek8\n  }\n}\n\nfragment Order2CheckoutApp_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      internalID\n      fulfillmentOptions {\n        type\n      }\n      mode\n      lineItems {\n        artwork {\n          slug\n          isFixedShippingFeeOnly\n          id\n        }\n        id\n      }\n      ...Order2ExpressCheckout_order\n      ...Order2CollapsibleOrderSummary_order\n      ...Order2FulfillmentDetailsStep_order\n      ...Order2PaymentStep_order\n      ...Order2ReviewStep_order\n      ...Order2CheckoutLoadingSkeleton_order\n      ...Order2HelpLinks_order\n      id\n    }\n    addressConnection(first: 10) {\n      edges {\n        node {\n          internalID\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  internalID\n  mode\n  source\n  buyerStateExpiresAt\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artworkVersion {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutLoadingSkeleton_order on Order {\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  lineItems {\n    artworkVersion {\n      title\n      artistNames\n      date\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n\nfragment Order2CheckoutRoute_viewer_3HPek8 on Viewer {\n  ...Order2CheckoutApp_viewer_3HPek8\n  me {\n    order(id: $orderID) {\n      internalID\n      ...Order2CheckoutContext_order\n      id\n    }\n    addressConnection(first: 10) {\n      edges {\n        node {\n          internalID\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2CollapsibleOrderSummary_order on Order {\n  ...Order2CheckoutPricingBreakdown_order\n  source\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      thumbnail: image {\n        resized(height: 200, version: [\"square\"]) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Order2ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2ExpressCheckout_order on Order {\n  ...Order2ExpressCheckoutUI_order\n  availableShippingCountries\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Order2FulfillmentDetailsStep_order on Order {\n  ...Order2PickupForm_order\n  id\n  fulfillmentDetails {\n    phoneNumber {\n      countryCode\n      regionCode\n      originalNumber\n    }\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  fulfillmentOptions {\n    type\n    selected\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n  source\n}\n\nfragment Order2PaymentForm_order on Order {\n  mode\n  source\n  internalID\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Order2PaymentStep_order on Order {\n  ...Order2PaymentForm_order\n  internalID\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Order2PickupForm_order on Order {\n  internalID\n  fulfillmentOptions {\n    type\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  fulfillmentDetails {\n    phoneNumber {\n      countryCode\n      regionCode\n      originalNumber\n    }\n  }\n}\n\nfragment Order2ReviewStep_order on Order {\n  ...Order2CheckoutPricingBreakdown_order\n  internalID\n  mode\n  source\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        price\n        dimensions {\n          in\n          cm\n        }\n      }\n      ... on EditionSet {\n        price\n        dimensions {\n          in\n          cm\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      image {\n        resized(width: 185, height: 138) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

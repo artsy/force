@@ -33,8 +33,8 @@ export const FeatureFeaturedLink: React.FC<
 
   return (
     <Flex flexDirection="column" {...rest}>
-      {img && (
-        <Figure to={href}>
+      <Figure to={href} display="block" textDecoration="none">
+        {img && (
           <ResponsiveBox
             aspectWidth={img.width ?? 0}
             aspectHeight={img.height ?? 0}
@@ -50,40 +50,34 @@ export const FeatureFeaturedLink: React.FC<
               lazyLoad
             />
           </ResponsiveBox>
-        </Figure>
-      )}
+        )}
 
-      {!img && title && (
-        <Text variant="lg-display" color="mono100" my={2}>
-          <RouterLink to={href}>{title || "—"}</RouterLink>
-        </Text>
-      )}
-
-      <Flex flexDirection={size === "large" ? ["column", "row"] : "column"}>
-        <Spacer y={1} />
-
-        {subtitle && (
-          <Text variant="xs" fontWeight="bold">
-            {subtitle}
+        {!img && title && (
+          <Text variant="lg-display" color="mono100" my={2}>
+            {title || "—"}
           </Text>
         )}
 
-        <Text variant="lg-display" mt={0.5} lineClamp={3}>
-          {title}
-        </Text>
+        <Flex flexDirection={size === "large" ? ["column", "row"] : "column"}>
+          <Spacer y={1} />
 
-        {description &&
-          (size === "full" ? (
-            <HTML
-              variant="lg-display"
-              color="mono60"
-              mt={1}
-              html={description}
-            />
-          ) : (
-            <HTML variant="sm" color="mono60" mt={0.5} html={description} />
-          ))}
-      </Flex>
+          {subtitle && (
+            <Text variant="xs" fontWeight="bold">
+              {subtitle}
+            </Text>
+          )}
+
+          <Text variant="lg-display" mt={0.5} lineClamp={3}>
+            {title}
+          </Text>
+        </Flex>
+      </Figure>
+      {description &&
+        (size === "full" ? (
+          <HTML variant="lg-display" color="mono60" mt={1} html={description} />
+        ) : (
+          <HTML variant="sm" color="mono60" mt={0.5} html={description} />
+        ))}
     </Flex>
   )
 }
@@ -132,7 +126,7 @@ export const FeatureFeaturedLinkFragmentContainer = createFragmentContainer(
 )
 
 const Figure = styled(RouterLink)<RouterLinkProps>`
-  &:hover + div {
+  &:hover {
     color: ${themeGet("colors.blue100")};
   }
 `

@@ -3,17 +3,20 @@ import ShieldIcon from "@artsy/icons/ShieldIcon"
 import { Box, Button, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
 import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSubmitOrderMutation"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
-import type { Order2ReviewStep_order$key } from "__generated__/Order2ReviewStep_order.graphql"
+import type {
+  Order2ReviewStep_order$data,
+  Order2ReviewStep_order$key,
+} from "__generated__/Order2ReviewStep_order.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -29,11 +32,11 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
   dialog,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const artwork = orderData.lineItems[0]?.artwork
-  const artworkVersion = orderData.lineItems[0]?.artworkVersion
   const submitOrderMutation = useSubmitOrderMutation()
   const { steps, confirmationToken, redirectToOrderDetails, checkoutTracking } =
     useCheckoutContext()
+
+  const artworkData = extractLineItemMetadata(orderData.lineItems[0]!)
 
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.CONFIRMATION,
@@ -95,31 +98,41 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
         Order summary
       </Text>
       <Flex py={1} justifyContent="space-between" alignItems="flex-start">
-        <RouterLink flex={0} to={`/artwork/${artwork?.slug}`} target="_blank">
+        <RouterLink
+          flex={0}
+          to={`/artwork/${artworkData.slug}`}
+          target="_blank"
+        >
           <Image
             mr={1}
-            src={artworkVersion?.image?.resized?.url}
-            alt={artworkVersion?.title || ""}
+            src={artworkData?.image?.resized?.url}
+            alt={artworkData.title || ""}
             width="65px"
           />
         </RouterLink>
         <Box overflow="hidden" flex={1}>
           <Text overflowEllipsis variant="sm" color="mono100">
-            {artworkVersion?.artistNames}
+            {artworkData.artistNames}
           </Text>
           <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-            {artworkVersion?.title}, {artworkVersion?.date}
+            {[artworkData.title, artworkData.date].join(", ")}
           </Text>
           <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-            List price: $1,000,000
+            List price: {artworkData.price}
           </Text>
           <Spacer y={0.5} />
-          <Text overflowEllipsis variant="xs" color="mono60" textAlign="left">
-            From an unknown edition
-          </Text>
-          <Text overflowEllipsis variant="xs" color="mono60" textAlign="left">
-            78 x 78 x 6in (27.9 x 27.9 x 8.9 cm)
-          </Text>
+          {artworkData.attributionClass?.shortDescription && (
+            <Text overflowEllipsis variant="xs" color="mono60" textAlign="left">
+              {artworkData.attributionClass.shortDescription}
+            </Text>
+          )}
+          {artworkData.dimensions && (
+            <Text overflowEllipsis variant="xs" color="mono60" textAlign="left">
+              {[artworkData.dimensions.in, artworkData.dimensions.cm].join(
+                " | ",
+              )}
+            </Text>
+          )}
         </Box>
       </Flex>
       <Box>
@@ -164,6 +177,33 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
 
 export const Order2ReviewStep = injectDialog(Order2ReviewStepComponent)
 
+const extractLineItemMetadata = (
+  lineItem: NonNullable<Order2ReviewStep_order$data["lineItems"][number]>,
+) => {
+  const { artwork, artworkVersion, artworkOrEditionSet } = lineItem
+
+  const isArtworkOrEdition =
+    artworkOrEditionSet &&
+    (artworkOrEditionSet.__typename === "Artwork" ||
+      artworkOrEditionSet.__typename === "EditionSet")
+  const dimensions = isArtworkOrEdition
+    ? artworkOrEditionSet.dimensions
+    : undefined
+  const price = isArtworkOrEdition ? artworkOrEditionSet.price : undefined
+  const attributionClass = artworkVersion?.attributionClass
+
+  return {
+    slug: artwork?.slug,
+    image: artworkVersion?.image,
+    title: artworkVersion?.title,
+    artistNames: artworkVersion?.artistNames,
+    date: artworkVersion?.date,
+    price,
+    dimensions,
+    attributionClass,
+  }
+}
+
 const FRAGMENT = graphql`
   fragment Order2ReviewStep_order on Order {
     ...Order2CheckoutPricingBreakdown_order
@@ -186,10 +226,30 @@ const FRAGMENT = graphql`
       artwork {
         slug
       }
+      artworkOrEditionSet {
+        __typename
+        ... on Artwork {
+          price
+          dimensions {
+            in
+            cm
+          }
+        }
+        ... on EditionSet {
+          price
+          dimensions {
+            in
+            cm
+          }
+        }
+      }
       artworkVersion {
         title
         artistNames
         date
+        attributionClass {
+          shortDescription
+        }
         image {
           resized(width: 185, height: 138) {
             url

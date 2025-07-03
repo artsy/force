@@ -3,11 +3,13 @@ import {
   Column,
   FullBleed,
   GridColumns,
+  Image,
   Stack,
   Text,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { cropped } from "Utils/resized"
 
 export const AboutJoin = () => {
   return (
@@ -18,7 +20,27 @@ export const AboutJoin = () => {
       textAlign={["left", "center"]}
       py={4}
     >
-      <AppContainer>
+      <Image
+        {...cropped("https://files.artsy.net/images/about2-join.jpg", {
+          width: 2000,
+          height: 781,
+        })}
+        width="100%"
+        height="100%"
+        alt=""
+        loading="lazy"
+        position="absolute"
+        top={0}
+        left={0}
+        right={0}
+        bottom={0}
+        zIndex={0}
+        style={{
+          objectFit: "cover",
+        }}
+      />
+
+      <AppContainer position="relative" zIndex={1}>
         <HorizontalPadding py={[0, 4]}>
           <GridColumns>
             <Column span={10} start={2}>

@@ -44,7 +44,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
             {artworkVersion?.artistNames}
           </Text>
           <Text overflowEllipsis variant="xs" color="mono60">
-            {artworkVersion?.title}, {artworkVersion?.date}
+            {[artworkVersion?.title, artworkVersion?.date].join(", ")}
           </Text>
         </Box>
         <Clickable display="flex" onClick={handleToggle} flexShrink={0}>
