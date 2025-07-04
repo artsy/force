@@ -93,7 +93,13 @@ const getMessageContent = (order): React.ReactNode => {
           </Text>
           <Spacer y={2} />
           <Text variant="sm">
-            You can contact the gallery with any questions about your offer.
+            You can{" "}
+            <RouterLink
+              to={`/user/conversations/${order.impulseConversationId}`}
+            >
+              contact the gallery
+            </RouterLink>{" "}
+            with any questions about your offer.
           </Text>
         </>
       )
@@ -363,6 +369,7 @@ const FRAGMENT = graphql`
     code
     currencyCode
     internalID
+    impulseConversationId
     displayTexts {
       messageType
     }

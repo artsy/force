@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d741480cc2a84014e87800f29849a5d5>>
+ * @generated SignedSource<<71cdbafdb63415c714f5da35b96191aa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,6 +25,7 @@ export type Order2DetailsMessage_order$data = {
   readonly displayTexts: {
     readonly messageType: DisplayTextsMessageTypeEnum;
   };
+  readonly impulseConversationId: string | null | undefined;
   readonly internalID: string;
   readonly " $fragmentType": "Order2DetailsMessage_order";
 };
@@ -65,6 +66,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "impulseConversationId",
       "storageKey": null
     },
     {
@@ -136,6 +144,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "1a5c2bf181daccef0b8b7c9e2fcf3ca0";
+(node as any).hash = "f87da796df218afc454f46697843fd3f";
 
 export default node;

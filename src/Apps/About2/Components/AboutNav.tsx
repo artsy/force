@@ -1,7 +1,16 @@
-import { Pill, Stack, useTheme } from "@artsy/palette"
+import { Box, HorizontalOverflow, Pill, Stack, useTheme } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { useJump } from "Utils/Hooks/useJump"
-import { createContext, useContext, useState } from "react"
+import { Media } from "Utils/Responsive"
+import {
+  createContext,
+  createRef,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 
 export const SECTIONS = [
   { id: "mission-and-vision", label: "Mission and vision" },
@@ -19,43 +28,90 @@ export const AboutNav = () => {
   const { active, activate, visible } = useAboutNav()
   const { jumpTo } = useJump()
 
+  const items = useMemo(() => {
+    return SECTIONS.map(section => {
+      const ref = createRef<HTMLDivElement>()
+
+      return {
+        id: section.id,
+        ref,
+        node: (
+          <Pill
+            key={section.id}
+            ref={ref as any}
+            selected={active === section.id}
+            onClick={() => {
+              activate(section.id)
+              jumpTo(section.id)
+            }}
+          >
+            {section.label}
+          </Pill>
+        ),
+      }
+    })
+  }, [active, activate, jumpTo])
+
+  useEffect(() => {
+    if (!active) return
+
+    const item = items.find(item => item.id === active)
+
+    if (!item) return
+
+    item.ref.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    })
+  }, [active, items])
+
   return (
-    <Stack
-      gap={1}
-      p={1}
-      borderRadius={999}
-      flexDirection="row"
-      bg="mono0"
-      width="fit-content"
-      position="fixed"
-      bottom={2}
-      left="50%"
-      zIndex={Z.globalNav}
-      style={{
-        boxShadow: theme.effects.dropShadow,
-        transition: "opacity 0.3s ease-in-out, transform 0.3s ease-in-out",
-        ...(visible
-          ? { opacity: 1, transform: "translateX(-50%) translateY(0)" }
-          : {
-              opacity: 0,
-              transform: "translateX(-50%) translateY(10%)",
-            }),
-      }}
-      display={["none", "flex"]}
-    >
-      {SECTIONS.map(section => (
-        <Pill
-          key={section.id}
-          selected={active === section.id}
-          onClick={() => {
-            activate(section.id)
-            jumpTo(section.id)
+    <>
+      <Media at="xs">
+        <Box
+          bg="mono0"
+          width="100%"
+          position="fixed"
+          bottom={0}
+          left={0}
+          zIndex={Z.globalNav}
+        >
+          <HorizontalOverflow>
+            <Stack gap={1} p={1} flexDirection="row">
+              {items.map(item => item.node)}
+            </Stack>
+          </HorizontalOverflow>
+        </Box>
+      </Media>
+
+      <Media greaterThan="xs">
+        <Stack
+          gap={1}
+          p={1}
+          borderRadius={999}
+          flexDirection="row"
+          bg="mono0"
+          width="fit-content"
+          position="fixed"
+          bottom={2}
+          left="50%"
+          zIndex={Z.globalNav}
+          style={{
+            boxShadow: theme.effects.dropShadow,
+            transition: "opacity 0.3s ease-in-out, transform 0.3s ease-in-out",
+            ...(visible
+              ? { opacity: 1, transform: "translateX(-50%) translateY(0)" }
+              : {
+                  opacity: 0,
+                  transform: "translateX(-50%) translateY(10%)",
+                }),
           }}
         >
-          {section.label}
-        </Pill>
-      ))}
-    </Stack>
+          {items.map(item => item.node)}
+        </Stack>
+      </Media>
+    </>
   )
 }
 
@@ -104,4 +160,35 @@ export const useAboutNav = () => {
   }
 
   return context
+}
+
+export const AboutNavEntry = () => {
+  const { activate } = useAboutNav()
+
+  const { ref } = useIntersectionObserver({
+    once: false,
+    options: {
+      threshold: 0,
+    },
+    onIntersection: () => {
+      activate(null)
+    },
+  })
+
+  return <div ref={ref as any} />
+}
+
+export const AboutNavExit = () => {
+  const { show, hide } = useAboutNav()
+
+  const { ref } = useIntersectionObserver({
+    once: false,
+    options: {
+      threshold: 0,
+    },
+    onIntersection: hide,
+    onOffIntersection: show,
+  })
+
+  return <div ref={ref as any} />
 }
