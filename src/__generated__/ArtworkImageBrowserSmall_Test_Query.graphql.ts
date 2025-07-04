@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0e092182355488a93ba66576a19eee79>>
+ * @generated SignedSource<<6fcf2166e00e0f9f10f0ababc9c3cf70>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -119,13 +119,13 @@ v9 = {
 },
 v10 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
   "type": "String"
 },
 v11 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "String"
 },
@@ -206,6 +206,13 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "caption",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -462,7 +469,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "083ac25f200ec0f0c3d27c194faf018a",
+    "cacheID": "0aaa76c644f1e6d9c9bf81b91539b3b0",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -472,13 +479,14 @@ return {
           "plural": false,
           "type": "Artwork"
         },
+        "artwork.caption": (v10/*: any*/),
         "artwork.figures": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "ArtworkFigures"
         },
-        "artwork.figures.__typename": (v10/*: any*/),
+        "artwork.figures.__typename": (v11/*: any*/),
         "artwork.figures.deepZoom": {
           "enumValues": null,
           "nullable": true,
@@ -491,7 +499,7 @@ return {
           "plural": false,
           "type": "DeepZoomImage"
         },
-        "artwork.figures.deepZoom.Image.Format": (v11/*: any*/),
+        "artwork.figures.deepZoom.Image.Format": (v10/*: any*/),
         "artwork.figures.deepZoom.Image.Overlap": (v12/*: any*/),
         "artwork.figures.deepZoom.Image.Size": {
           "enumValues": null,
@@ -502,16 +510,16 @@ return {
         "artwork.figures.deepZoom.Image.Size.Height": (v12/*: any*/),
         "artwork.figures.deepZoom.Image.Size.Width": (v12/*: any*/),
         "artwork.figures.deepZoom.Image.TileSize": (v12/*: any*/),
-        "artwork.figures.deepZoom.Image.Url": (v11/*: any*/),
-        "artwork.figures.deepZoom.Image.xmlns": (v11/*: any*/),
+        "artwork.figures.deepZoom.Image.Url": (v10/*: any*/),
+        "artwork.figures.deepZoom.Image.xmlns": (v10/*: any*/),
         "artwork.figures.id": (v13/*: any*/),
         "artwork.figures.internalID": (v14/*: any*/),
         "artwork.figures.isZoomable": (v15/*: any*/),
-        "artwork.figures.playerUrl": (v10/*: any*/),
-        "artwork.figures.type": (v10/*: any*/),
+        "artwork.figures.playerUrl": (v11/*: any*/),
+        "artwork.figures.type": (v11/*: any*/),
         "artwork.figures.videoHeight": (v16/*: any*/),
         "artwork.figures.videoWidth": (v16/*: any*/),
-        "artwork.formattedMetadata": (v11/*: any*/),
+        "artwork.formattedMetadata": (v10/*: any*/),
         "artwork.id": (v13/*: any*/),
         "artwork.images": {
           "enumValues": null,
@@ -526,21 +534,21 @@ return {
           "type": "CroppedImageUrl"
         },
         "artwork.images.fallback.height": (v16/*: any*/),
-        "artwork.images.fallback.src": (v10/*: any*/),
-        "artwork.images.fallback.srcSet": (v10/*: any*/),
+        "artwork.images.fallback.src": (v11/*: any*/),
+        "artwork.images.fallback.srcSet": (v11/*: any*/),
         "artwork.images.fallback.width": (v16/*: any*/),
         "artwork.images.internalID": (v14/*: any*/),
         "artwork.images.isDefault": (v15/*: any*/),
         "artwork.images.mobileLightboxSource": (v17/*: any*/),
         "artwork.images.mobileLightboxSource.height": (v12/*: any*/),
-        "artwork.images.mobileLightboxSource.src": (v10/*: any*/),
-        "artwork.images.mobileLightboxSource.srcSet": (v10/*: any*/),
+        "artwork.images.mobileLightboxSource.src": (v11/*: any*/),
+        "artwork.images.mobileLightboxSource.srcSet": (v11/*: any*/),
         "artwork.images.mobileLightboxSource.width": (v12/*: any*/),
-        "artwork.images.placeholder": (v11/*: any*/),
+        "artwork.images.placeholder": (v10/*: any*/),
         "artwork.images.resized": (v17/*: any*/),
         "artwork.images.resized.height": (v12/*: any*/),
-        "artwork.images.resized.src": (v10/*: any*/),
-        "artwork.images.resized.srcSet": (v10/*: any*/),
+        "artwork.images.resized.src": (v11/*: any*/),
+        "artwork.images.resized.srcSet": (v11/*: any*/),
         "artwork.images.resized.width": (v12/*: any*/),
         "artwork.images.versions": {
           "enumValues": null,
@@ -555,7 +563,7 @@ return {
     },
     "name": "ArtworkImageBrowserSmall_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkImageBrowserSmall_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserSmall_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserSmall_artwork on Artwork {\n  ...ArtworkLightbox_artwork_FOvjt\n  ...ArtworkVideoPlayer_artwork_FOvjt\n  isSetVideoAsCover\n  figures(includeAll: false) {\n    __typename\n    ... on Image {\n      ...DeepZoom_image\n      internalID\n      isZoomable\n      type: __typename\n    }\n    ... on Video {\n      type: __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork_FOvjt on Artwork {\n  formattedMetadata\n  images(includeAll: false) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    mobileLightboxSource: resized(quality: 50, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork_FOvjt on Artwork {\n  internalID\n  slug\n  figures(includeAll: false) {\n    __typename\n    ... on Video {\n      __typename\n      playerUrl\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
+    "text": "query ArtworkImageBrowserSmall_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserSmall_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserSmall_artwork on Artwork {\n  ...ArtworkLightbox_artwork_FOvjt\n  ...ArtworkVideoPlayer_artwork_FOvjt\n  isSetVideoAsCover\n  figures(includeAll: false) {\n    __typename\n    ... on Image {\n      ...DeepZoom_image\n      internalID\n      isZoomable\n      type: __typename\n    }\n    ... on Video {\n      type: __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork_FOvjt on Artwork {\n  caption\n  formattedMetadata\n  images(includeAll: false) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    mobileLightboxSource: resized(quality: 50, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork_FOvjt on Artwork {\n  internalID\n  slug\n  figures(includeAll: false) {\n    __typename\n    ... on Video {\n      __typename\n      playerUrl\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
   }
 };
 })();
