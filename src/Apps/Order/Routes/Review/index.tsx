@@ -171,11 +171,6 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
         const orderId = order.internalID
         const conversationId = order.impulseConversationId
 
-        const artworkId = get(
-          order,
-          o => o.lineItems?.edges?.[0]?.node?.artwork?.slug,
-        )
-
         if (isEigen) {
           if (order.mode === "OFFER") {
             if (
@@ -230,9 +225,9 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
         if (order.source === "inquiry") {
           return router.push(`/user/conversations/${conversationId}`)
         }
-        // Make offer from the artwork page redirects to the artwork page with a confirmation modal
+        // Make offer from the artwork page redirects to the status page
         if (order.mode === "OFFER") {
-          return router.push(`/artwork/${artworkId}?order-submitted=${orderId}`)
+          return router.push(`/orders/${orderId}/status`)
         }
         // Purchase from the artwork page redirects to the status page
         return router.push(`/orders/${orderId}/status`)
