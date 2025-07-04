@@ -54,7 +54,10 @@ interface CheckoutActions {
     availablePaymentMethods: ExpressCheckoutPaymentMethod[],
   ) => void
   setExpressCheckoutSubmitting: (isSubmitting: boolean) => void
-  setFulfillmentDetailsComplete: (args: { isPickup: boolean }) => void
+  setFulfillmentDetailsComplete: (args: {
+    isPickup?: boolean
+    isFlatShipping?: boolean
+  }) => void
   editFulfillmentDetails: () => void
   editPayment: () => void
   setLoadingError: (error: CheckoutLoadingError | null) => void
@@ -302,7 +305,13 @@ const useBuildCheckoutContext = (
   )
 
   const setFulfillmentDetailsComplete = useCallback(
-    ({ isPickup }: { isPickup: boolean }) => {
+    ({
+      isPickup,
+      isFlatShipping,
+    }: {
+      isPickup?: boolean
+      isFlatShipping?: boolean
+    }) => {
       if (currentStepName !== CheckoutStepName.FULFILLMENT_DETAILS) {
         logger.error(
           `setFulfillmentDetailsComplete called when current step is not FULFILLMENT_DETAILS but ${currentStepName}`,
@@ -311,7 +320,7 @@ const useBuildCheckoutContext = (
       }
       dispatch({
         type: "FULFILLMENT_DETAILS_COMPLETE",
-        payload: { isPickup },
+        payload: { isPickup, isFlatShipping },
       })
     },
     [currentStepName],
@@ -328,16 +337,10 @@ const useBuildCheckoutContext = (
   )
 
   const editFulfillmentDetails = useCallback(() => {
-    if (previousStepName !== CheckoutStepName.FULFILLMENT_DETAILS) {
-      logger.error(
-        `editFulfillmentDetails called when previous step is not FULFILLMENT_DETAILS but ${previousStepName}`,
-      )
-      return
-    }
     dispatch({
       type: "EDIT_FULFILLMENT_DETAILS",
     })
-  }, [previousStepName])
+  }, [])
 
   const editPayment = useCallback(() => {
     if (previousStepName !== CheckoutStepName.PAYMENT) {
@@ -459,7 +462,8 @@ type Action =
   | {
       type: "FULFILLMENT_DETAILS_COMPLETE"
       payload: {
-        isPickup: boolean
+        isPickup?: boolean
+        isFlatShipping?: boolean
       }
     }
   | {
@@ -562,7 +566,7 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
       }
 
     case "FULFILLMENT_DETAILS_COMPLETE":
-      const { isPickup } = action.payload
+      const { isPickup, isFlatShipping } = action.payload
       let hasActivatedNext = false
 
       return {
@@ -576,6 +580,13 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
           // Hide delivery option if pickup is selected
           if (step.name === CheckoutStepName.DELIVERY_OPTION && isPickup) {
             return { ...step, state: CheckoutStepState.HIDDEN }
+          }
+
+          if (
+            step.name === CheckoutStepName.DELIVERY_OPTION &&
+            isFlatShipping
+          ) {
+            return { ...step, state: CheckoutStepState.COMPLETED }
           }
 
           // Activate the first upcoming step
