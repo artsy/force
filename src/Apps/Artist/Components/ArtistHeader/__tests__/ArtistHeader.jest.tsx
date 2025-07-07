@@ -187,6 +187,72 @@ describe("ArtistHeaderFragmentContainer", () => {
         screen.getByText(/Pablo Picasso was a Spanish painter/),
       ).toBeInTheDocument()
     })
+
+    it("renders bio with credit when both text and credit are present", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          biographyBlurb: {
+            text: "Pablo Picasso was a Spanish painter and sculptor.",
+            credit: "Courtesy of the Museum of Modern Art",
+          },
+        }),
+      })
+
+      expect(
+        screen.getByText(
+          "Pablo Picasso was a Spanish painter and sculptor. Courtesy of the Museum of Modern Art",
+        ),
+      ).toBeInTheDocument()
+    })
+
+    it("renders bio with only text when credit is null", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          biographyBlurb: {
+            text: "Pablo Picasso was a Spanish painter and sculptor.",
+            credit: null,
+          },
+        }),
+      })
+
+      expect(
+        screen.getByText("Pablo Picasso was a Spanish painter and sculptor."),
+      ).toBeInTheDocument()
+    })
+
+    it("renders bio with only text when credit is empty string", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          biographyBlurb: {
+            text: "Pablo Picasso was a Spanish painter and sculptor.",
+            credit: "",
+          },
+        }),
+      })
+
+      expect(
+        screen.getByText("Pablo Picasso was a Spanish painter and sculptor."),
+      ).toBeInTheDocument()
+    })
+
+    it("does not render bio section when only credit is present without text", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          biographyBlurb: {
+            text: null,
+            credit: "Courtesy of the Museum of Modern Art",
+          },
+        }),
+      })
+
+      expect(
+        screen.queryByText(/Courtesy of the Museum/),
+      ).not.toBeInTheDocument()
+    })
   })
 
   describe("Cover artwork", () => {

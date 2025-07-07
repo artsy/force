@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<81c3d80ea9dcc361910f2317ceeabdcc>>
+ * @generated SignedSource<<df0b4c314b01db216a2fe760de7ebde6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "ARTSY_VANGUARD_YEAR
 import { FragmentRefs } from "relay-runtime";
 export type ArtistHeader_artist$data = {
   readonly biographyBlurb: {
+    readonly credit: string | null | undefined;
     readonly text: string | null | undefined;
   } | null | undefined;
   readonly counts: {
@@ -150,6 +151,13 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "text",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "credit",
           "storageKey": null
         }
       ],
@@ -340,6 +348,6 @@ return {
 };
 })();
 
-(node as any).hash = "dad6c9804912c1d31142ea5de0358588";
+(node as any).hash = "c224dda436b4f73fca88cbeed8d625f6";
 
 export default node;
