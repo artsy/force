@@ -79,9 +79,6 @@ const getMessageContent = (order): React.ReactNode => {
         </>
       )
     case "SUBMITTED_OFFER":
-      const conversationsUrl = order.impulseConversationId
-        ? `/user/conversations/${order.impulseConversationId}`
-        : "/user/conversations"
       return (
         <>
           <Text variant="sm">
@@ -97,15 +94,15 @@ const getMessageContent = (order): React.ReactNode => {
           <Spacer y={2} />
           <Text variant="sm">
             You can{" "}
-            <a
-              href={conversationsUrl}
-              onClick={e => {
-                e.preventDefault()
-                window.location.assign(conversationsUrl)
-              }}
-            >
-              contact the gallery
-            </a>{" "}
+            {!!order.impulseConversationId ? (
+              <RouterLink
+                to={`/user/conversations/${order.impulseConversationId}`}
+              >
+                contact the gallery
+              </RouterLink>
+            ) : (
+              <a href={"/user/conversations"}>contact the gallery</a>
+            )}{" "}
             with any questions about your offer.
           </Text>
         </>
