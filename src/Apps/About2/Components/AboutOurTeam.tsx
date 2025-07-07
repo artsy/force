@@ -137,7 +137,7 @@ export const AboutOurTeam = () => {
                   <Text variant="lg-display">Looking to join our team?</Text>
 
                   <Text variant="lg-display">
-                    <AboutOurTeamCareersLink to="/careers">
+                    <AboutOurTeamCareersLink to="/jobs">
                       Careers at Artsy
                     </AboutOurTeamCareersLink>
                   </Text>
