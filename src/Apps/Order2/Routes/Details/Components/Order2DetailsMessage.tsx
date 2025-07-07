@@ -94,11 +94,15 @@ const getMessageContent = (order): React.ReactNode => {
           <Spacer y={2} />
           <Text variant="sm">
             You can{" "}
-            <RouterLink
-              to={`/user/conversations/${order.impulseConversationId}`}
-            >
-              contact the gallery
-            </RouterLink>{" "}
+            {!!order.impulseConversationId ? (
+              <RouterLink
+                to={`/user/conversations/${order.impulseConversationId}`}
+              >
+                contact the gallery
+              </RouterLink>
+            ) : (
+              <a href={"/user/conversations"}>contact the gallery</a>
+            )}{" "}
             with any questions about your offer.
           </Text>
         </>
