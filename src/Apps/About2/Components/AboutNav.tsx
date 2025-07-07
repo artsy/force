@@ -76,6 +76,16 @@ export const AboutNav = () => {
           bottom={0}
           left={0}
           zIndex={Z.globalNav}
+          style={{
+            boxShadow: theme.effects.dropShadow,
+            transition: "opacity 0.3s ease-in-out, transform 0.3s ease-in-out",
+            ...(visible
+              ? { opacity: 1, transform: "translateY(0)" }
+              : {
+                  opacity: 0,
+                  transform: "translateY(10%)",
+                }),
+          }}
         >
           <HorizontalOverflow>
             <Stack gap={1} p={1} flexDirection="row">
@@ -178,7 +188,7 @@ export const AboutNavEntry = () => {
   return <div ref={ref as any} />
 }
 
-export const AboutNavExit = () => {
+export const AboutNavExit = ({ children }: { children: React.ReactNode }) => {
   const { show, hide } = useAboutNav()
 
   const { ref } = useIntersectionObserver({
@@ -190,5 +200,5 @@ export const AboutNavExit = () => {
     onOffIntersection: show,
   })
 
-  return <div ref={ref as any} />
+  return <div ref={ref as any}>{children}</div>
 }
