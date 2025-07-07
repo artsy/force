@@ -19,8 +19,7 @@ import { AboutTagline } from "Apps/About2/Components/AboutTagline"
 import { AboutWhatWeDo } from "Apps/About2/Components/AboutWhatWeDo"
 import { MetaTags } from "Components/MetaTags"
 
-export const DESCRIPTION =
-  "Artsy’s mission is to expand the art market to support more artists and art in the world."
+export const DESCRIPTION = "Artsy is the leading global online art marketplace."
 
 export const About2App: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
