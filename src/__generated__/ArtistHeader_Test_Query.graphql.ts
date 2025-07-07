@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7e11d2aeffb2642063756b43bf5e63ef>>
+ * @generated SignedSource<<cc044f8228ca917fc85cba075547cef6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -197,6 +197,13 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "text",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "credit",
                 "storageKey": null
               }
             ],
@@ -408,7 +415,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0f6dd77298109086dcb6919993122618",
+    "cacheID": "4b9541f9f74650f28e546bccdd01b296",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -424,6 +431,7 @@ return {
           "plural": false,
           "type": "ArtistBlurb"
         },
+        "artist.biographyBlurb.credit": (v7/*: any*/),
         "artist.biographyBlurb.text": (v7/*: any*/),
         "artist.counts": {
           "enumValues": null,
@@ -527,7 +535,7 @@ return {
     },
     "name": "ArtistHeader_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistHeader_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeader_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML) {\n    text\n  }\n  insights {\n    kind\n    ...ArtistCareerHighlight_insight\n  }\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    title\n    imageTitle\n    href\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    id\n  }\n}\n"
+    "text": "query ArtistHeader_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeader_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  insights {\n    kind\n    ...ArtistCareerHighlight_insight\n  }\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    title\n    imageTitle\n    href\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    id\n  }\n}\n"
   }
 };
 })();

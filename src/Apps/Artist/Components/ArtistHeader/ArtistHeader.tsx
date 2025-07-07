@@ -47,7 +47,13 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const hasImage = isValidImage(image)
   const altText =
     artist.coverArtwork?.imageTitle ?? `Artwork by ${artist.name!}`
-  const hasBio = artist.biographyBlurb?.text
+  const biographyText = artist.biographyBlurb?.text
+  const biographyCredit = artist.biographyBlurb?.credit
+  const hasBio = !!biographyText
+  const biographyContent =
+    hasBio && biographyCredit
+      ? `${biographyText} ${biographyCredit}`
+      : biographyText
   const hasVerifiedRepresentatives = artist?.verifiedRepresentatives?.length > 0
   const hasInsights = artist.insights.length > 0
   const hasRightDetails = hasVerifiedRepresentatives || hasInsights
@@ -155,9 +161,9 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
           </Flex>
         </Flex>
 
-        {hasBio && (
+        {biographyContent && (
           <Bio variant="sm">
-            <ReadMore maxChars={250} content={artist.biographyBlurb.text} />
+            <ReadMore maxChars={250} content={biographyContent} />
           </Bio>
         )}
 
@@ -253,6 +259,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         }
         biographyBlurb(format: HTML) {
           text
+          credit
         }
         insights {
           kind
