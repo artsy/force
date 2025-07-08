@@ -13,10 +13,10 @@ import {
 } from "react"
 
 export const SECTIONS = [
-  { id: "mission-and-vision", label: "Mission and vision" },
-  { id: "our-story", label: "Our story" },
-  { id: "what-we-do", label: "What we do" },
-  { id: "our-team", label: "Our team" },
+  { id: "mission-and-vision", label: "Mission and Vision" },
+  { id: "our-story", label: "Our Story" },
+  { id: "what-we-do", label: "What We Do" },
+  { id: "our-team", label: "Our Team" },
   { id: "press", label: "Press" },
   { id: "contact", label: "Contact" },
 ] as const

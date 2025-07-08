@@ -29,7 +29,7 @@ export const AboutPress = () => {
           flexDirection="column"
           gap={4}
         >
-          <Text variant="xl">Artsy In the Media</Text>
+          <Text variant="xl">Artsy in the Media</Text>
 
           <Box
             display="flex"
@@ -38,7 +38,7 @@ export const AboutPress = () => {
             flexDirection={["column", "row"]}
             gap={2}
           >
-            <Text variant="sm-display">Featured by:</Text>
+            <Text variant="sm-display">Featured By:</Text>
 
             <Stack gap={2} flexDirection="row" flexWrap="wrap">
               {LOGOS.map(({ src, name, width, height }) => (

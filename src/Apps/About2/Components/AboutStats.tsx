@@ -19,14 +19,14 @@ export const AboutStats = () => {
       <Column span={[12, 4]} display="flex" flexDirection="column" gap={[1, 2]}>
         <Text variant={["xxl", "xxxl"]}>1M+</Text>
         <Text variant="sm-display" color="mono60">
-          Artworks available
+          Artworks Available
         </Text>
       </Column>
 
       <Column span={[12, 3]} display="flex" flexDirection="column" gap={[1, 2]}>
         <Text variant={["xxl", "xxxl"]}>3K</Text>
         <Text variant="sm-display" color="mono60">
-          Partner galleries and auction houses
+          Partner Galleries and Auction Houses
         </Text>
       </Column>
     </GridColumns>
