@@ -25,8 +25,12 @@ export type Section = (typeof SECTIONS)[number]["id"]
 
 export const AboutNav = () => {
   const { theme } = useTheme()
+
   const { active, activate, visible } = useAboutNav()
+
   const { jumpTo } = useJump()
+
+  const [isScrolling, setIsScrolling] = useState(false)
 
   const items = useMemo(() => {
     return SECTIONS.map(section => {
@@ -39,10 +43,15 @@ export const AboutNav = () => {
           <Pill
             key={section.id}
             ref={ref as any}
-            selected={active === section.id}
+            selected={active === section.id && !isScrolling}
             onClick={() => {
+              setIsScrolling(true)
               activate(section.id)
-              jumpTo(section.id)
+              jumpTo(section.id, {
+                onComplete: () => {
+                  setIsScrolling(false)
+                },
+              })
             }}
           >
             {section.label}
@@ -50,10 +59,10 @@ export const AboutNav = () => {
         ),
       }
     })
-  }, [active, activate, jumpTo])
+  }, [active, activate, jumpTo, isScrolling])
 
   useEffect(() => {
-    if (!active) return
+    if (!active || isScrolling) return
 
     const item = items.find(item => item.id === active)
 
@@ -64,7 +73,7 @@ export const AboutNav = () => {
       block: "nearest",
       inline: "center",
     })
-  }, [active, items])
+  }, [active, items, isScrolling])
 
   return (
     <>
