@@ -143,7 +143,10 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
         Free pickup
       </Text>
       <Spacer y={1} />
-      <Text variant="sm-display" color="mono60">
+      <Text variant="sm" color="mono60">
+        {orderData.shippingOrigin}
+      </Text>
+      <Text variant="sm" color="mono60">
         After your order is confirmed, a specialist will contact you with
         details on how to pickup the work.
       </Text>
@@ -226,5 +229,6 @@ const FRAGMENT = graphql`
         originalNumber
       }
     }
+    shippingOrigin
   }
 `

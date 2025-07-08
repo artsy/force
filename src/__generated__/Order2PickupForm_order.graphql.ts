@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d688a43de4923ccc112458f572f31085>>
+ * @generated SignedSource<<5445e5291d1bcbd7c5d20df67ba0a12d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,6 +26,7 @@ export type Order2PickupForm_order$data = {
   readonly selectedFulfillmentOption: {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
+  readonly shippingOrigin: string | null | undefined;
   readonly " $fragmentType": "Order2PickupForm_order";
 };
 export type Order2PickupForm_order$key = {
@@ -118,6 +119,13 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shippingOrigin",
+      "storageKey": null
     }
   ],
   "type": "Order",
@@ -125,6 +133,6 @@ return {
 };
 })();
 
-(node as any).hash = "109ddd6926945d2ec382e11c538b07af";
+(node as any).hash = "a4c7ae27a74c738881294412f4f633d2";
 
 export default node;
