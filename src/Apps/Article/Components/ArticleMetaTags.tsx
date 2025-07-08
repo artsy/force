@@ -38,6 +38,8 @@ const ArticleMetaTags: FC<React.PropsWithChildren<ArticleMetaTagsProps>> = ({
         property="article:publisher"
         content="https://www.facebook.com/artsy"
       />
+
+      <Meta name="robots" content="max-image-preview:large" />
     </>
   )
 }
